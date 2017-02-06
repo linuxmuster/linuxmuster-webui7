@@ -70,9 +70,9 @@ install: build
 	# Add here commands to install the package.
 	dh_install
 	# fixing default not being installed
-	mkdir -p debian/linuxmuster-webui
-	cp -r etc debian/linuxmuster-webui
-	cp -r usr debian/linuxmuster-webui
+	mkdir -p debian/linuxmuster-webui7
+	cp -r lib debian/linuxmuster-webui7
+	cp -r usr debian/linuxmuster-webui7
 
 # Build architecture-independent files here.
 # Pass -i to all debhelper commands in this target to reduce clutter.

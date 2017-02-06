@@ -1,0 +1,175 @@
+<br/>
+
+<progress-spinner ng:show="teachers == null"></progress-spinner>
+
+<div ng:show="teachers != null">
+    <uib:tabset>
+        <uib:tab heading="{{'Defaults'|translate}}">
+            <br/>
+            <table class="lm-table lm-table-padded">
+                <tr>
+                    <th translate>Name</th>
+                    <th>/home</th>
+                    <th>/var</th>
+                    <th translate>Mail</th>
+                    <th></th>
+                </tr>
+                <tr ng:repeat="quota in defaultQuotas">
+                    <td>
+                        {{quota.name}}
+                    </td>
+                    <td>
+                        <input type="number" ng:model="quotas[quota.login].home" class="form-control" />
+                    </td>
+                    <td>
+                        <input type="number" ng:model="quotas[quota.login].var" class="form-control" />
+                    </td>
+                    <td>
+                        <input type="number" ng:model="quotas[quota.login].mail" class="form-control" />
+                    </td>
+                </tr>
+            </table>
+        </uib:tab>
+        <uib:tab heading="{{'Teachers'|translate}}">
+            <br/>
+            <table class="lm-table lm-table-padded">
+                <tr>
+                    <th translate>Name</th>
+                    <th>/home</th>
+                    <th>/var</th>
+                    <th translate>Mail</th>
+                </tr>
+                <tr ng:repeat="teacher in teachers">
+                    <td>
+                        {{teacher.first_name}} {{teacher.last_name}}
+                    </td>
+                    <td>
+                        <input type="number" ng:model="teacher.quota.home" class="form-control" />
+                    </td>
+                    <td>
+                        <input type="number" ng:model="teacher.quota.var" class="form-control" />
+                    </td>
+                    <td>
+                        <input type="number" ng:model="teacher.mailquota" class="form-control" />
+                    </td>
+                </tr>
+            </table>
+        </uib:tab>
+        <uib:tab heading="{{'Students'|translate}}">
+            <br/>
+            <table class="lm-table lm-table-padded">
+                <tr>
+                    <th translate>Login</th>
+                    <th translate>Name</th>
+                    <th>/home</th>
+                    <th>/var</th>
+                    <th translate>Mail</th>
+                    <th></th>
+                </tr>
+                <tr ng:repeat="(login, quota) in quotas" ng:if="!isSpecialQuota(login) && !isDefaultQuota(login)">
+                    <td>
+                        {{login}}
+                    </td>
+                    <td>
+                        {{getStudentName(login)}}
+                    </td>
+                    <td>
+                        <input type="number" ng:model="quota.home" class="form-control" />
+                    </td>
+                    <td>
+                        <input type="number" ng:model="quota.var" class="form-control" />
+                    </td>
+                    <td>
+                        <input type="number" ng:model="quota.mail" class="form-control" />
+                    </td>
+                    <td>
+                        <button class="btn btn-default" ng:click="remove(login)">
+                            <i class="fa fa-trash-o"></i>
+                        </button>
+                    </td>
+                </tr>
+            </table>
+            <input type="text" placeholder="Add new" ng:model="_.addNewSpecial" typeahead-editable="false" typeahead-min-length="3" uib-typeahead="user[1].uid[0] as user[1].cn[0] for user in findUsers($viewValue) | limitTo:8" class="form-control" />
+        </uib:tab>
+        <uib:tab heading="{{'Classes'|translate}}">
+            <br/>
+            <table class="lm-table lm-table-padded">
+                <tr>
+                    <th translate>Name</th>
+                    <th>/home</th>
+                    <th>/var</th>
+                    <th translate>Mail</th>
+                </tr>
+                <tr ng:repeat="class in classes">
+                    <td>
+                        {{class.name}}
+                    </td>
+                    <td>
+                        <input type="number" ng:model="class.quota.home" class="form-control" />
+                    </td>
+                    <td>
+                        <input type="number" ng:model="class.quota.var" class="form-control" />
+                    </td>
+                    <td>
+                        <input type="number" ng:model="class.mailquota" class="form-control" />
+                    </td>
+                </tr>
+            </table>
+        </uib:tab>
+        <uib:tab heading="{{'Projects'|translate}}">
+            <br/>
+            <table class="lm-table lm-table-padded">
+                <tr>
+                    <th translate>Name</th>
+                    <th>/home</th>
+                    <th>/var</th>
+                </tr>
+                <tr ng:repeat="project in projects">
+                    <td>
+                        {{project.name}}
+                    </td>
+                    <td>
+                        <input type="number" ng:model="project.quota.home" class="form-control" />
+                    </td>
+                    <td>
+                        <input type="number" ng:model="project.quota.var" class="form-control" />
+                    </td>
+                </tr>
+            </table>
+        </uib:tab>
+        <uib:tab heading="{{'Special'|translate}}">
+            <br/>
+            <table class="lm-table lm-table-padded">
+                <tr>
+                    <th translate>Name</th>
+                    <th>/home</th>
+                    <th>/var</th>
+                    <th translate>Mail</th>
+                    <th></th>
+                </tr>
+                <tr ng:repeat="quota in specialQuotas">
+                    <td>
+                        {{quota.name}}
+                    </td>
+                    <td>
+                        <input type="number" ng:model="quotas[quota.login].home" class="form-control" />
+                    </td>
+                    <td>
+                        <input type="number" ng:model="quotas[quota.login].var" class="form-control" />
+                    </td>
+                    <td>
+                        <input type="number" ng:model="quotas[quota.login].mail" class="form-control" />
+                    </td>
+                </tr>
+            </table>
+        </uib:tab>
+    </uib:tabset>
+
+    <div class="floating-toolbar-padder"></div>
+
+    <floating-toolbar>
+        <button ng:click="backups()" class="btn btn-default btn-flat pull-right"><i class="fa fa-history"></i></button>
+        <button ng:click="save()" class="btn btn-default btn-flat" translate>Save</button>
+        <button ng:click="saveApply()" class="btn btn-default btn-flat" translate>Save & apply</button>
+    </floating-toolbar>
+</div>

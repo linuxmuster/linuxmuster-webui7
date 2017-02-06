@@ -1,0 +1,54 @@
+<br/>
+
+<progress-spinner ng:show="configs == null"></progress-spinner>
+
+<div ng:show="configs != null">
+    <uib:tabset>
+        <uib:tab heading="{{'Groups'|translate}}">
+            <br/>
+            <div class="list-group">
+                <div class="list-group-item list-group-item-small" ng:repeat="config in configs|orderBy:'toString()'">
+                    <a class="list-group-btn" ng:click="deleteConfig(config)">
+                        <i class="fa fa-trash-o"></i>
+                    </a>
+                    <a class="list-group-btn" ng:click="duplicateConfig(config)">
+                        <i class="fa fa-copy"></i>
+                    </a>
+                    <a class="list-group-main" ng:click="editConfig(config)">
+                        {{config.substring('start.conf.'.length)}}
+                    </a>
+                </div>
+            </div>
+
+            <div class="floating-toolbar-padder"></div>
+
+            <floating-toolbar>
+                <div uib-dropdown class="dropup">
+                    <button class="btn btn-default btn-flat" uib-dropdown-toggle>
+                        <i class="fa fa-plus"></i> Create <i class="fa fa-caret-up"></i>
+                    </button>
+                    <ul uib-dropdown-menu class="scrollable">
+                        <li><a ng:click="createConfig()">Empty</a></li>
+                        <li ng:repeat="example in examples"><a ng:click="createConfig(example)">{{example}}</a></li>
+                    </ul>
+                </div>
+            </floating-toolbar>
+        </uib:tab>
+        <uib:tab heading="{{'Images'|translate}}">
+            <br/>
+            <div class="list-group">
+                <div class="list-group-item list-group-item-small" ng:repeat="image in images|orderBy:'name'">
+                    <a class="list-group-btn" ng:click="deleteImage(image)">
+                        <i class="fa fa-trash-o"></i>
+                    </a>
+                    <a class="list-group-btn" ng:click="duplicateImage(image)">
+                        <i class="fa fa-copy"></i>
+                    </a>
+                    <a class="list-group-main" ng:click="editImage(image)">
+                        {{image.name}}
+                    </a>
+                </div>
+            </div>
+        </uib:tab>
+    </uib:tabset>
+</div>

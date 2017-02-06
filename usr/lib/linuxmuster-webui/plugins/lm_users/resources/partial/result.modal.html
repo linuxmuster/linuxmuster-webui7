@@ -1,0 +1,57 @@
+<div class="modal-header">
+    <h4 translate>Check result</h4>
+</div>
+<div class="modal-body">
+    <uib:tabset>
+        <uib:tab heading="{{'Summary'|translate}}">
+            <br/>
+            <div class="alert alert-danger" ng:show="data.error">
+                <i class="fa fa-warning"></i> <span translate>Check failed</span>: {{data.error}}
+            </div>
+            <div ng:show="!data.error">
+                <div class="alert alert-info">
+                    <i class="fa fa-info-circle"></i> <span translate>Users to be added</span>: {{data.add.length}}
+                </div>
+                <div class="alert alert-info">
+                    <i class="fa fa-info-circle"></i> <span translate>Users to be moved</span>: {{data.move.length}}
+                </div>
+                <div class="alert alert-info">
+                    <i class="fa fa-info-circle"></i> <span translate>Users to be killed</span>: {{data.kill.length}}
+                </div>
+                <div class="alert alert-danger" ng:show="data.errors.length > 0">
+                    <i class="fa fa-warning"></i> <span translate>Errors found</span>: {{data.errors.length}}
+                </div>
+                <br/>
+                <span checkbox ng:model="_.doAdd" ng:show="data.add" text="{{'Add new users'|translate}}"></span>
+                <br/>
+                <span checkbox ng:model="_.doMove" ng:show="data.move" text="{{'Move users'|translate}}"></span>
+                <br/>
+                <span checkbox ng:model="_.doKill" ng:show="data.kill" text="{{'Kill users'|translate}}"></span>
+            </div>
+        </uib:tab>
+        <uib:tab heading="{{'Report'|translate}}">
+            <br/>
+            <pre ng:bind="data.report"></pre>
+        </uib:tab>
+        <uib:tab heading="{{'Added users'|translate}}" ng:show="data.add.length > 0">
+            <br/>
+            <pre ng:bind="x" ng:repeat="x in data.add track by $index"></pre>
+        </uib:tab>
+        <uib:tab heading="{{'Moved users'|translate}}" ng:show="data.move.length > 0">
+            <br/>
+            <pre ng:bind="x" ng:repeat="x in data.move track by $index"></pre>
+        </uib:tab>
+        <uib:tab heading="{{'Killed users'|translate}}" ng:show="data.kill.length > 0">
+            <br/>
+            <pre ng:bind="x" ng:repeat="x in data.kill track by $index"></pre>
+        </uib:tab>
+        <uib:tab heading="{{'Errors'|translate}}" ng:show="data.errors.length > 0">
+            <br/>
+            <pre ng:bind="x" ng:repeat="x in data.errors track by $index"></pre>
+        </uib:tab>
+    </uib:tabset>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default btn-flat" ng:click="apply()" translate ng:disabled="!_.doAdd && !_.doMove && !_.doKill">Apply</button>
+    <button class="btn btn-default btn-flat" ng:click="cancel()" translate>Cancel</button>
+</div>

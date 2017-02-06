@@ -1,0 +1,1 @@
+{"": "", "Name": "", "Special": "", "Update complete": "", "Update failed": "", "Quotas": "", "Applying changes": "", "Main admin": "", "Web admin": "", "Classes": "", "Program admin": "", "Details": "", "Mail": "", "Webspace": "", "Close": "", "Login": "", "Save": "", "Saved": "", "Projects": "", "Teachers": ""}

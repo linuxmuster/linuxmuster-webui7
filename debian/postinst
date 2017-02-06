@@ -1,0 +1,66 @@
+#!/bin/sh
+set -e
+
+case "$1" in
+    install|configure)
+        ajcfg="/etc/ajenti/config.yml"
+        webuietc="/usr/lib/linuxmuster-webui/etc"
+     if [ ! -f $webuietc/.installed ];
+      then
+	# do first install
+	easy_install -U pip
+	pip install -U pip wheel setuptools distribute
+	pip install -r $webuietc/requirements.txt
+	echo "search server information.."
+	#bindn=$(cat /etc/ldap/slapd.conf | grep rootdn | awk '{print $2}' | sed -e 's/"//g')
+	#bindpw=$(cat /etc/ldap/slapd.conf | grep rootpw | awk '{print $2}')
+	#suffix=$(cat /etc/ldap/slapd.conf | grep suffix | awk '{print $2}' | sed -e 's/"//g')
+	#hostname=$(hostname --fqdn)
+	#ipaddress=$(hostname --ip-address)
+        echo "configure ajcfg.."
+	#cp $webuietc/templates/config.yml $ajcfg
+	#sed -i s/%%HOSTNAME%%/$hostname/ $ajcfg
+	#sed -i s/%%IPADDRESS%%/$ipaddress/ $ajcfg
+	#sed -i s/%%BINDDN%%/$bindn/ $ajcfg
+	#sed -i s/%%BINDPW%%/$bindpw/ $ajcfg
+	#sed -i s/%%SUFFIX%%/$suffix/ $ajcfg
+	echo "link ajcfg to linuxmuster-webui folder"
+	ln -s $ajcfg $webuietc
+	echo "configure systemctl.."
+	systemctl daemon-reload
+	systemctl enable linuxmuster-webui
+	#echo "set port 8000 to allow.."
+	#sed -i 's/tcp .*/&,8000/' /etc/linuxmuster/allowed_ports
+	#service linuxmuster-base restart
+	systemctl start linuxmuster-webui
+	touch $webuietc/.installed
+	echo "---------------------------------------------------------------"
+	echo "linuxmuster-webui is now installed!  https://$ipaddress:8000"
+	echo "---------------------------------------------------------------"
+     else
+	# do update
+	echo "---------------------------------------------------------------"
+        echo "updating linuxmuster-webui"
+        echo "---------------------------------------------------------------"
+	echo "Stop linuxmuster-webui"
+	systemctl stop linuxmuster-webui
+	pip install -r $webuietc/requirements.txt -q
+	echo "Start linuxmuster-webui"
+	systemctl start linuxmuster-webui
+        echo "---------------------------------------------------------------"
+        echo "updating linuxmuster-webui ..done"
+        echo "---------------------------------------------------------------"
+     fi
+        ;;
+    upgrade|abort-upgrade)
+        ;;
+
+    *)
+        echo "postinst called with unknown argument \`$1'" >&2
+        exit 0
+        ;;
+esac
+
+#DEBHELPER#
+
+exit 0

@@ -1,0 +1,1 @@
+{"": "", "User Management": "", "Download CSV": "CSV Herunterladen", "Device Management": "", "Quota": "", "Drop a CSV file here to import": "Datei hier hin schieben um sie zu importieren", "Cancel": "Abbrechen", "Settings & Defaults": "", "Save": "Speichern"}

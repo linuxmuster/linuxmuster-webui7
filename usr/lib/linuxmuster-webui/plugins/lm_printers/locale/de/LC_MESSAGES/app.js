@@ -1,0 +1,1 @@
+{"": "", "Save": "Speichern", "Saved": "Gespeichert", "Printers": "Drucker", "Close": "Schlie\u00dfen", "{{printer.name}}": "", "Type to search...": ""}

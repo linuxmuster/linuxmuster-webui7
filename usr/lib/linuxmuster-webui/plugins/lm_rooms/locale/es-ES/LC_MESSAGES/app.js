@@ -1,0 +1,1 @@
+{"": "", "Room Defaults": "Sala por defecto", "Saved": "Guardado", "Update complete": "Actualizaci\u00f3n completa", "Update failed": "Ha fallado la actualizaci\u00f3n", "Applying changes": "Aplicando cambios", "EDV Rooms": "", "Details": "Detalles", "Close": "Cerrar", "Apply": "Aplicar", "Save": "Guardar", "Type to search...": "Escriba para buscar...", "Rooms": "Salas"}

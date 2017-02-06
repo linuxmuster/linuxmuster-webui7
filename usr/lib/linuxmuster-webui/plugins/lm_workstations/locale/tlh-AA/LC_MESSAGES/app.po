@@ -1,0 +1,144 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ajenti\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-07-18 21:02+0200\n"
+"PO-Revision-Date: 2016-05-21 17:19-0400\n"
+"Last-Translator: eugenepankov <john.pankov@gmail.com>\n"
+"Language-Team: Klingon\n"
+"Language: tlh_AA\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: crowdin.com\n"
+"X-Crowdin-Project: ajenti\n"
+"X-Crowdin-Language: tlh-AA\n"
+"X-Crowdin-File: /2.0/lm_workstations.po\n"
+
+#: plugins/lm_workstations/resources/partial/index.html:104
+msgid "Add a workstation"
+msgstr ""
+
+#: plugins/lm_workstations/resources/partial/apply.modal.html:10
+msgid "Close"
+msgstr ""
+
+#: plugins/lm_workstations/resources/partial/apply.modal.html:9
+msgid "Details"
+msgstr ""
+
+#: plugins/lm_workstations/resources/partial/index.html:82
+msgid "Domain-Host"
+msgstr ""
+
+#: plugins/lm_workstations/resources/partial/index.html:115
+msgid "Edit CSV"
+msgstr ""
+
+#: plugins/lm_workstations/resources/partial/index.html:23
+msgid "Fields"
+msgstr ""
+
+#: plugins/lm_workstations/resources/partial/apply.modal.html:2
+msgid "Importing workstation"
+msgstr ""
+
+#: plugins/lm_workstations/resources/partial/index.html:81
+msgid "IP-Host"
+msgstr ""
+
+#: plugins/lm_workstations/resources/partial/index.html:87
+msgid "No PXE"
+msgstr ""
+
+#: plugins/lm_workstations/resources/partial/index.html:90
+msgid "OPSI-PXE"
+msgstr ""
+
+#: plugins/lm_workstations/resources/partial/index.html:88
+#: plugins/lm_workstations/resources/js/controllers/index.controller.coffee:95
+msgid "PXE"
+msgstr ""
+
+#: plugins/lm_workstations/resources/partial/index.html:89
+msgid "PXE + OPSI"
+msgstr ""
+
+#: plugins/lm_workstations/resources/partial/index.html:33
+msgid "Rows"
+msgstr ""
+
+#: plugins/lm_workstations/resources/partial/index.html:113
+msgid "Save"
+msgstr ""
+
+#: plugins/lm_workstations/resources/partial/index.html:114
+msgid "Save &amp; import"
+msgstr ""
+
+#: plugins/lm_workstations/main.py:15
+#: plugins/lm_workstations/resources/js/controllers/index.controller.coffee:27
+msgid "Workstations"
+msgstr ""
+
+#: plugins/lm_workstations/main.py:30
+msgid "Read/write workstations"
+msgstr ""
+
+#: plugins/lm_workstations/main.py:35
+msgid "Import workstation"
+msgstr ""
+
+#: plugins/lm_workstations/resources/js/controllers/index.controller.coffee:15
+msgid "Import complete"
+msgstr ""
+
+#: plugins/lm_workstations/resources/js/controllers/index.controller.coffee:17
+msgid "Import failed"
+msgstr ""
+
+#: plugins/lm_workstations/resources/js/controllers/index.controller.coffee:31
+#: plugins/lm_workstations/resources/js/controllers/index.controller.coffee:68
+msgid "Room"
+msgstr ""
+
+#: plugins/lm_workstations/resources/js/controllers/index.controller.coffee:35
+#: plugins/lm_workstations/resources/js/controllers/index.controller.coffee:74
+msgid "Group"
+msgstr ""
+
+#: plugins/lm_workstations/resources/js/controllers/index.controller.coffee:39
+#: plugins/lm_workstations/resources/js/controllers/index.controller.coffee:71
+msgid "Hostname"
+msgstr ""
+
+#: plugins/lm_workstations/resources/js/controllers/index.controller.coffee:43
+#: plugins/lm_workstations/resources/js/controllers/index.controller.coffee:77
+msgid "MAC"
+msgstr ""
+
+#: plugins/lm_workstations/resources/js/controllers/index.controller.coffee:47
+#: plugins/lm_workstations/resources/js/controllers/index.controller.coffee:80
+msgid "IP"
+msgstr ""
+
+#: plugins/lm_workstations/resources/js/controllers/index.controller.coffee:83
+msgid "Office Key"
+msgstr ""
+
+#: plugins/lm_workstations/resources/js/controllers/index.controller.coffee:86
+msgid "Windows Key"
+msgstr ""
+
+#: plugins/lm_workstations/resources/js/controllers/index.controller.coffee:89
+msgid "User-defined"
+msgstr ""
+
+#: plugins/lm_workstations/resources/js/controllers/index.controller.coffee:92
+msgid "Account type"
+msgstr ""
+
+#: plugins/lm_workstations/resources/js/controllers/index.controller.coffee:106
+msgid "Saved"
+msgstr ""

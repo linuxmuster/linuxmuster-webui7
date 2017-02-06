@@ -1,0 +1,403 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ajenti\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-07-18 21:02+0200\n"
+"PO-Revision-Date: 2016-05-21 17:19-0400\n"
+"Last-Translator: eugenepankov <john.pankov@gmail.com>\n"
+"Language-Team: Russian\n"
+"Language: ru_RU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: crowdin.com\n"
+"X-Crowdin-Project: ajenti\n"
+"X-Crowdin-Language: ru\n"
+"X-Crowdin-File: /2.0/lm_users.po\n"
+
+#: plugins/lm_users/resources/partial/extra-courses.html:69
+msgid "Add a course"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/extra-students.html:61
+#: plugins/lm_users/resources/partial/students.html:76
+msgid "Add a student"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/teachers.html:80
+msgid "Add a teacher"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/result.modal.html:25
+msgid "Add new users"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/result.modal.html:36
+msgid "Added users"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/print-passwords.html:8
+#: plugins/lm_users/resources/js/controllers/printPasswords.controller.coffee:13
+msgid "All users"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/result.modal.html:55
+msgid "Apply"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/apply.modal.html:2
+msgid "Applying changes"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/extra-courses.html:28
+#: plugins/lm_users/resources/js/controllers/extraCourses.controller.coffee:16
+msgid "Base name"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/extra-courses.html:30
+#: plugins/lm_users/resources/partial/extra-students.html:30
+#: plugins/lm_users/resources/partial/students.html:49
+#: plugins/lm_users/resources/js/controllers/students.controller.coffee:24
+#: plugins/lm_users/resources/js/controllers/teachers.controller.coffee:24
+#: plugins/lm_users/resources/js/controllers/teachers.controller.coffee:42
+#: plugins/lm_users/resources/js/controllers/extraStudents.controller.coffee:24
+#: plugins/lm_users/resources/js/controllers/extraCourses.controller.coffee:20
+msgid "Birthday"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/print-passwords.options.modal.html:25
+#: plugins/lm_users/resources/partial/result.modal.html:56
+msgid "Cancel"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/teacher-passwords.html:27
+msgid "Change password"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/check.modal.html:6
+#: plugins/lm_users/resources/partial/result.modal.html:9
+#: plugins/lm_users/resources/js/controllers/checkModal.controller.coffee:48
+msgid "Check failed"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/result.modal.html:2
+msgid "Check result"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/check.modal.html:2
+msgid "Checking users"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/extra-students.html:27
+#: plugins/lm_users/resources/partial/students.html:46
+#: plugins/lm_users/resources/js/controllers/students.controller.coffee:12
+#: plugins/lm_users/resources/js/controllers/extraStudents.controller.coffee:12
+msgid "Class"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/apply.modal.html:9
+#: plugins/lm_users/resources/partial/check.modal.html:12
+msgid "Close"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/extra-courses.html:29
+#: plugins/lm_users/resources/js/controllers/extraCourses.controller.coffee:24
+msgid "Count"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/extra-courses.html:27
+#: plugins/lm_users/resources/js/controllers/extraCourses.controller.coffee:12
+msgid "Course"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/teacher-passwords.html:42
+msgid "Custom password"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/extra-courses.html:79
+#: plugins/lm_users/resources/partial/extra-students.html:71
+#: plugins/lm_users/resources/partial/students.html:88
+#: plugins/lm_users/resources/partial/teachers.html:92
+msgid "Edit CSV"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/result.modal.html:48
+msgid "Errors"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/result.modal.html:22
+msgid "Errors found"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/teachers.html:23
+msgid "Fields"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/extra-students.html:29
+#: plugins/lm_users/resources/partial/students.html:48
+#: plugins/lm_users/resources/js/controllers/students.controller.coffee:16
+#: plugins/lm_users/resources/js/controllers/teachers.controller.coffee:16
+#: plugins/lm_users/resources/js/controllers/extraStudents.controller.coffee:16
+msgid "First name"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/print-passwords.options.modal.html:6
+msgid "Format"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/extra-courses.html:31
+#: plugins/lm_users/resources/js/controllers/extraCourses.controller.coffee:28
+msgid "GECOS"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/teacher-passwords.html:32
+#: plugins/lm_users/resources/js/controllers/teacherPasswords.controller.coffee:17
+msgid "Initial password"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/result.modal.html:29
+msgid "Kill users"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/result.modal.html:44
+msgid "Killed users"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/extra-students.html:28
+#: plugins/lm_users/resources/partial/students.html:47
+#: plugins/lm_users/resources/js/controllers/students.controller.coffee:20
+#: plugins/lm_users/resources/js/controllers/teachers.controller.coffee:20
+#: plugins/lm_users/resources/js/controllers/extraStudents.controller.coffee:20
+msgid "Last name"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/extra-students.html:31
+#: plugins/lm_users/resources/js/controllers/teachers.controller.coffee:12
+#: plugins/lm_users/resources/js/controllers/teachers.controller.coffee:48
+#: plugins/lm_users/resources/js/controllers/extraStudents.controller.coffee:28
+msgid "Login"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/result.modal.html:27
+msgid "Move users"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/result.modal.html:40
+msgid "Moved users"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/print-passwords.options.modal.html:20
+msgid "One per page"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/print-passwords.options.modal.html:18
+msgid "Options"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/extra-courses.html:32
+msgid "Password"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/print-passwords.options.modal.html:24
+msgid "Print"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/teacher-passwords.html:37
+msgid "Random password"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/print-passwords.html:11
+#: plugins/lm_users/resources/js/controllers/printPasswords.controller.coffee:13
+msgid "Recently added"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/extra-courses.html:33
+msgid "Removal date"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/extra-courses.html:59
+#: plugins/lm_users/resources/partial/extra-students.html:51
+msgid "Remove"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/result.modal.html:32
+msgid "Report"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/students.html:23
+#: plugins/lm_users/resources/partial/teachers.html:33
+msgid "Rows"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/extra-courses.html:77
+#: plugins/lm_users/resources/partial/extra-students.html:69
+#: plugins/lm_users/resources/partial/students.html:86
+#: plugins/lm_users/resources/partial/teachers.html:90
+msgid "Save"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/extra-courses.html:78
+#: plugins/lm_users/resources/partial/extra-students.html:70
+#: plugins/lm_users/resources/partial/students.html:87
+#: plugins/lm_users/resources/partial/teachers.html:91
+msgid "Save &amp; check"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/teacher-passwords.html:55
+msgid "Select all"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/teacher-passwords.html:64
+msgid "Set custom password for selected"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/teacher-passwords.html:58
+msgid "Set initial password for selected"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/teacher-passwords.html:61
+msgid "Set random password for selected"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/teacher-passwords.html:21
+msgid "Show password"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/result.modal.html:6
+msgid "Summary"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/result.modal.html:13
+msgid "Users to be added"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/result.modal.html:19
+msgid "Users to be killed"
+msgstr ""
+
+#: plugins/lm_users/resources/partial/result.modal.html:16
+msgid "Users to be moved"
+msgstr ""
+
+#: plugins/lm_users/main.py:15
+#: plugins/lm_users/resources/js/controllers/students.controller.coffee:8
+msgid "Students"
+msgstr ""
+
+#: plugins/lm_users/main.py:22
+#: plugins/lm_users/resources/js/controllers/teachers.controller.coffee:8
+msgid "Teachers"
+msgstr ""
+
+#: plugins/lm_users/main.py:27
+msgid "Teachers List"
+msgstr ""
+
+#: plugins/lm_users/main.py:33
+#: plugins/lm_users/resources/js/controllers/teacherPasswords.controller.coffee:8
+msgid "Teacher Passwords"
+msgstr ""
+
+#: plugins/lm_users/main.py:42
+msgid "Extra Users"
+msgstr ""
+
+#: plugins/lm_users/main.py:47
+#: plugins/lm_users/resources/js/controllers/extraStudents.controller.coffee:8
+msgid "Extra Students"
+msgstr ""
+
+#: plugins/lm_users/main.py:53
+#: plugins/lm_users/resources/js/controllers/extraCourses.controller.coffee:8
+msgid "Extra Courses"
+msgstr ""
+
+#: plugins/lm_users/main.py:62
+#: plugins/lm_users/resources/js/controllers/printPasswords.controller.coffee:28
+msgid "Print Passwords"
+msgstr ""
+
+#: plugins/lm_users/main.py:76
+msgid "Read students"
+msgstr ""
+
+#: plugins/lm_users/main.py:81
+msgid "Write students"
+msgstr ""
+
+#: plugins/lm_users/main.py:86
+msgid "Read teachers"
+msgstr ""
+
+#: plugins/lm_users/main.py:91
+msgid "Write teachers"
+msgstr ""
+
+#: plugins/lm_users/main.py:96
+msgid "Read extra students"
+msgstr ""
+
+#: plugins/lm_users/main.py:101
+msgid "Write extra students"
+msgstr ""
+
+#: plugins/lm_users/main.py:106
+msgid "Read extra courses"
+msgstr ""
+
+#: plugins/lm_users/main.py:111
+msgid "Write extra courses"
+msgstr ""
+
+#: plugins/lm_users/main.py:116
+msgid "Check user changes"
+msgstr ""
+
+#: plugins/lm_users/main.py:121
+msgid "Apply user changes"
+msgstr ""
+
+#: plugins/lm_users/main.py:126
+msgid "Read/write passwords"
+msgstr ""
+
+#: plugins/lm_users/resources/js/controllers/students.controller.coffee:52
+#: plugins/lm_users/resources/js/controllers/teachers.controller.coffee:73
+#: plugins/lm_users/resources/js/controllers/extraCourses.controller.coffee:55
+msgid "Saved"
+msgstr ""
+
+#: plugins/lm_users/resources/js/controllers/teacherPasswords.controller.coffee:21
+msgid "Initial password set"
+msgstr ""
+
+#: plugins/lm_users/resources/js/controllers/teacherPasswords.controller.coffee:26
+#: plugins/lm_users/resources/js/controllers/teacherPasswords.controller.coffee:29
+msgid "New password"
+msgstr ""
+
+#: plugins/lm_users/resources/js/controllers/teacherPasswords.controller.coffee:33
+msgid "New password set"
+msgstr ""
+
+#: plugins/lm_users/resources/js/controllers/teachers.controller.coffee:36
+msgid "Last Name"
+msgstr ""
+
+#: plugins/lm_users/resources/js/controllers/teachers.controller.coffee:39
+msgid "First Name"
+msgstr ""
+
+#: plugins/lm_users/resources/js/controllers/teachers.controller.coffee:45
+msgid "Desired Password"
+msgstr ""
+
+#: plugins/lm_users/resources/js/controllers/checkModal.controller.coffee:32
+msgid "Changes applied"
+msgstr ""
+
+#: plugins/lm_users/resources/js/controllers/checkModal.controller.coffee:36
+msgid "Failed"
+msgstr ""

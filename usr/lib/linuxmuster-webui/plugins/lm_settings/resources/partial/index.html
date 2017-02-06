@@ -1,0 +1,223 @@
+<br/>
+
+<progress-spinner ng:show="settings == null"></progress-spinner>
+
+<div ng:show="settings != null">
+    <uib:tabset>
+        <uib:tab heading="{{'General'|translate}}">
+            <br/>
+            <table class="lm-table lm-table-padded">
+                <tr>
+                    <td width="40%"></td>
+                    <td width="30%" translate>Min</td>
+                    <td width="30%" translate>Max</td>
+                </tr>
+        		<tr>
+                    <td>
+                        <label translate>Students per class</label>
+                    </td>
+                    <td>
+                        <input type="number" class="form-control" ng:model="settings.mindest_schueler_anzahl_pro_klasse" />
+                    </td>
+                    <td>
+                        <input type="number" class="form-control" ng:model="settings.maximale_schueler_anzahl_pro_klasse" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label translate>Age of students</label>
+                    </td>
+                    <td>
+                        <input type="number" class="form-control" ng:model="settings.geburts_jahreszahl_start" />
+                    </td>
+                    <td>
+                        <input type="number" class="form-control" ng:model="settings.geburts_jahreszahl_stop" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label translate>Log level</label>
+                    </td>
+                    <td colspan="2">
+                        <select class="form-control" ng:model="settings.log_level" ng:options="x.value as x.name for x in logLevels"></select>
+                <tr>
+                    <td>
+                        <label translate>Filter star classes</label>
+                    </td>
+                    <td colspan="2">
+                        <span checkbox ng:model="settings.splan_sternchenklassen_filtern" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label translate>Global share folder</label>
+                    </td>
+                    <td colspan="2">
+                        <span class="label label-success" ng:show="schoolShareEnabled"><i class="fa fa-check"></i> Active</span>
+                        <span class="label label-warning" ng:show="!schoolShareEnabled"><i class="fa fa-times"></i> Disabled</span>
+                        <button class="btn btn-default" ng:click="setSchoolShare(true)" ng:show="!schoolShareEnabled">Enable</button>
+                        <button class="btn btn-default" ng:click="setSchoolShare(false)" ng:show="schoolShareEnabled">Disable</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label translate>Use quotas</label>
+                    </td>
+                    <td colspan="2">
+                        <span checkbox ng:model="settings.use_quota" />
+                    </td>
+                </tr>
+            </table>
+        </uib:tab>
+        <uib:tab heading="{{'Encoding'|translate}}">
+            <br/>
+            <div class="form-group">
+                <label translate>Students encoding</label>
+                <select class="form-control" ng:model="settings.encoding_students" ng:options="x for x in encodings" />
+            </div>
+            <div class="form-group">
+                <label translate>Teachers encoding</label>
+                <select class="form-control" ng:model="settings.encoding_teachers" ng:options="x for x in encodings" />
+            </div>
+            <div class="form-group">
+                <label translate>Extra courses encoding</label>
+                <select class="form-control" ng:model="settings.encoding_courses_extra" ng:options="x for x in encodings" />
+            </div>
+            <div class="form-group">
+                <label translate>Extra students encoding</label>
+                <select class="form-control" ng:model="settings.encoding_students_extra" ng:options="x for x in encodings" />
+            </div>
+        </uib:tab>
+        <uib:tab heading="{{'Email'|translate}}">
+            <br/>
+            <div class="form-group">
+                <label translate>Mail aliases</label>
+                <select class="form-control" ng:model="settings.mail_aliases">
+                    <option translate value="vorname.nachname">firstname.lastname</option>
+                    <option translate value="vorname_nachname">firstname_lastname</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <span checkbox text="{{'Mail quota warnings'|translate}}" ng:model="settings.mailquota_warnings" />
+                <span checkbox text="{{'Send warnings to root'|translate}}" ng:model="settings.mailquota_warnings_root" ng:show="settings.mailquota_warnings" style="margin-left:30px" />
+            </div>
+            <div class="form-group" ng:show="settings.mailquota_warnings">
+                <label translate>Mail quota warning at % left</label>
+                <input type="number" class="form-control" ng:model="settings.mailquota_warn_percentage" />
+            </div>
+            <div class="form-group" ng:show="settings.mailquota_warnings">
+                <label translate>Mail quota warning at KB left</label>
+                <input type="number" class="form-control" ng:model="settings.mailquota_warn_kb" />
+            </div>
+        </uib:tab>
+        <uib:tab heading="{{'Login and removal'|translate}}">
+            <br/>
+            <table class="lm-table lm-table-padded">
+                <tr>
+                    <th width="40%"></th>
+                    <th translate>Teachers</th>
+                    <th translate>Students</th>
+                </tr>
+                <tr>
+                    <td>
+                        <label translate>Random password</label>
+                    </td>
+                    <td>
+                        <span checkbox ng:model="settings.lehrer_zufall_passwort" />
+                    </td>
+                    <td>
+                        <span checkbox ng:model="settings.schueler_zufall_passwort" />
+                    </td>
+                </tr>
+                <tr ng:show="settings.lehrer_zufall_passwort || settings.schueler_zufall_passwort" >
+                    <td>
+                        <label translate>Password length</label>
+                    </td>
+                    <td>
+                        <input type="number" class="form-control" ng:model="settings.zufall_passwort_anzahl_lehrer" ng:show="settings.lehrer_zufall_passwort" />
+                    </td>
+                    <td>
+                        <input type="number" class="form-control" ng:model="settings.zufall_passwort_anzahl_schueler" ng:show="settings.schueler_zufall_passwort" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label translate>SSH access</label>
+                    </td>
+                    <td>
+                        <span checkbox ng:model="settings.lehrer_per_ssh" />
+                    </td>
+                    <td>
+                        <span checkbox ng:model="settings.schueler_per_ssh" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label translate>Change Samba password on first login</label>
+                    </td>
+                    <td>
+                        <span checkbox ng:model="settings.teacher_samba_pw_must_change" />
+                    </td>
+                    <td>
+                        <span checkbox ng:model="settings.student_samba_pw_must_change" />
+                    </td>
+                </tr>
+                    <td>
+                        <label translate>Tolerance after departure (days)</label>
+                    </td>
+                    <td>
+                        <input type="number" class="form-control" ng:model="settings.lehrer_duldung_tage" />
+                    </td>
+                    <td>
+                        <input type="number" class="form-control" ng:model="settings.schueler_duldung_tage" />
+                    </td>
+                </tr>
+                    <td>
+                        <label translate>Removal after departure (days)</label>
+                    </td>
+                    <td>
+                        <input type="number" class="form-control" ng:model="settings.lehrer_deaktivierung_tage" />
+                    </td>
+                    <td>
+                        <input type="number" class="form-control" ng:model="settings.schueler_deaktivierung_tage" />
+                    </td>
+                </tr>
+            </table>
+        </uib:tab>
+        <uib:tab heading="{{'Printing data'|translate}}">
+            <br/>
+            <div class="form-group">
+                <label translate>School name</label>
+                <input type="text" class="form-control" ng:model="settings.schul_name" />
+            </div>
+            <div class="form-group">
+                <label translate>Internal FQDN for printing</label>
+                <input type="text" class="form-control" ng:model="settings.server_fqdn_internal_print" />
+            </div>
+            <div class="form-group">
+                <label translate>External FQDN for printing</label>
+                <input type="text" class="form-control" ng:model="settings.server_fqdn_external_print" />
+            </div>
+            <div class="form-group">
+                <label translate>Samba domain for printing</label>
+                <input type="text" class="form-control" ng:model="settings.smb_domain_print" />
+            </div>
+            <div class="form-group">
+                <label translate>MOODLE URL</label>
+                <input type="text" class="form-control" ng:model="settings.moodle_url" />
+            </div>
+            <div class="form-group">
+                <label translate>Admin e-mail</label>
+                <input type="text" class="form-control" ng:model="settings.admins_print" />
+            </div>
+        </uib:tab>
+    </uib:tabset>
+
+
+    <div class="floating-toolbar-padder"></div>
+
+    <floating-toolbar>
+        <button ng:click="backups()" class="btn btn-default btn-flat pull-right"><i class="fa fa-history"></i></button>
+        <button ng:click="save()" class="btn btn-default btn-flat" translate>Save</button>
+    </floating-toolbar>
+</div>

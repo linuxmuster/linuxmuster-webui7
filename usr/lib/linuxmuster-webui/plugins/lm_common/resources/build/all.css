@@ -1,0 +1,72 @@
+[uib\:typeahead].scrollable > .dropdown-menu,
+[uib\:typeahead].scrollable + .dropdown-menu {
+  max-height: 300px;
+  overflow: auto;
+}
+.lm-table {
+  width: 100%;
+}
+.lm-table th {
+  padding: 2px 5px;
+}
+.lm-table-inputs th {
+  padding-left: 10px;
+}
+.lm-table-padded td {
+  padding: 4px 5px;
+}
+[uib-dropdown-menu].scrollable {
+  max-height: 300px;
+  overflow-y: auto;
+}
+html body.customized #loading-bar .bar {
+  background: #233c4c;
+}
+html body.customized .container > .row > .sidebar .sidebar-item.active > div > .expander,
+html body.customized .container > .row > .sidebar .sidebar-item.active > div > .link,
+html body.customized .container > .sidebar .sidebar-item.active > div > .expander,
+html body.customized .container > .sidebar .sidebar-item.active > div > .link {
+  background: #233c4c;
+}
+html body.customized .container > .row > .sidebar .sidebar-item h5,
+html body.customized .container > .sidebar .sidebar-item h5 {
+  color: #233c4c;
+}
+html body.customized .form-control:focus {
+  border-bottom-color: #233c4c;
+}
+html body.customized .form-control:focus + .input-group-addon {
+  border-bottom-color: #233c4c;
+}
+html body.customized .form-control:focus + .input-group-addon a i {
+  color: #233c4c;
+}
+html body.customized .navbar-brand .title {
+  color: #233c4c;
+}
+html body.customized .navbar-brand.navigation-toggle {
+  color: #233c4c;
+}
+html body.customized .btn-primary {
+  background: #233c4c;
+  border: #AA1A00;
+}
+html body.customized .btn-flat {
+  color: #233c4c;
+}
+html body.customized *[checkbox].active i.on {
+  color: #233c4c;
+}
+html body.customized smart-progress .progress .progress-bar {
+  background: #233c4c;
+}
+html body.customized progress-spinner .one {
+  border-left-color: #233c4c;
+  border-top-color: #233c4c;
+}
+html body.customized .nav-tabs > li.active > a,
+html body.customized .nav-tabs > li.active > a:hover {
+  border-bottom: 1px solid #233c4c;
+  color: #233c4c;
+}
+

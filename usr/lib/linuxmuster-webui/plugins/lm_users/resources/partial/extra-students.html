@@ -1,0 +1,74 @@
+<br/>
+
+<progress-spinner ng:show="students == null"></progress-spinner>
+
+<div ng:show="students != null">
+    <div class="input-group">
+        <input ng:model="filter" type="search" autofocus class="form-control" placeholder="Filter" />
+        <div uib-dropdown class="input-group-btn">
+            <button class="btn btn-default" uib-dropdown-toggle>
+                <i class="fa fa-sort-amount-asc"></i> {{sort.name}}
+                <span class="caret"></span>
+            </button>
+            <ul uib-dropdown-menu class="dropdown-menu-right" style="width:150px">
+                <li ng:repeat="sort in sorts">
+                    <a ng:click="$parent.sort = sort">
+                        <i class="fa fa-sort-amount-asc"></i> {{sort.name}}
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <br/>
+
+    <table class="lm-table">
+        <tr>
+            <th translate>Class</th>
+            <th translate>Last name</th>
+            <th translate>First name</th>
+            <th translate>Birthday</th>
+            <th translate>Login</th>
+            <th></th>
+        </tr>
+        <tr ng:repeat="student in students|filter:filter|orderBy:['-_isNew', sort.fx]" ng:show="student.class[0] != '#'">
+            <td>
+                <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="student.class" placeholder="Class" class="form-control" />
+            </td>
+            <td>
+                <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="student.last_name" placeholder="Last name" class="form-control" />
+            </td>
+            <td>
+                <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="student.first_name" placeholder="First name" class="form-control" />
+            </td>
+            <td width="150">
+                <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="student.birthday" placeholder="Birthday" class="form-control" />
+            </td>
+            <td>
+                <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="student.login" placeholder="Login" class="form-control" />
+            </td>
+            <td width="1">
+                <button class="btn btn-default" ng:click="remove(student)" title="{{'Remove'|translate}}">
+                    <i class="fa fa-trash-o"></i>
+                </button>
+            </td>
+        </tr>
+    </table>
+
+    <br/>
+
+    <button class="btn btn-default" ng:click="add()">
+        <i class="fa fa-plus"></i> <span translate>Add a student</span>
+    </button>
+
+    <br/>
+
+    <div class="floating-toolbar-padder"></div>
+
+    <floating-toolbar>
+        <button ng:click="backups()" class="btn btn-default btn-flat pull-right"><i class="fa fa-history"></i></button>
+        <button ng:click="save()" class="btn btn-default btn-flat" translate>Save</button>
+        <button ng:click="saveAndCheck()" class="btn btn-default btn-flat" translate>Save &amp; check</button>
+        <button ng:click="editCSV()" class="btn btn-default btn-flat" translate>Edit CSV</button>
+    </floating-toolbar>
+</div>

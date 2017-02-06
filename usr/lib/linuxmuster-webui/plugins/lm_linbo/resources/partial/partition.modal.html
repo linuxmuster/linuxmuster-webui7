@@ -1,0 +1,165 @@
+<div class="modal-header">
+    <h4>{{partition.Dev}}</h4>
+</div>
+<div class="modal-body">
+    <uib:tabset>
+        <uib:tab heading="{{'Partition'|translate}}">
+            <br/>
+            <div class="form-group">
+                <label translate>Label</label>
+                <input type="text" ng:model="partition.Label" pattern="[A-Za-z0-9_]{0,128}" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label translate>Size</label>
+                <input type="text" ng:model="partition.Size" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label translate>Flags</label>
+                <br/>
+                <span checkbox ng:model="partition.Bootable" text="Bootable"></span>
+            </div>
+            <div class="form-group" ng:show="showAdvanced">
+                <label translate>Partition type</label>
+                <select ng:model="partition.Id" class="form-control">
+                    <option value="c">c (Win95 FAT32)</option>
+                    <option value="ef">ef (EFI)</option>
+                    <option value="5">5 (Extended)</option>
+                    <option value="7">7 (WinNT NTFS)</option>
+                    <option value="82">82 (Linux-Swap)</option>
+                    <option value="83">83 (Linux native)</option>
+                </select>
+            </div>
+            <div class="form-group" ng:show="showAdvanced">
+                <label translate>Filesystem</label>
+                <select ng:model="partition.FSType" class="form-control">
+                    <option value="">None</option>
+                    <option value="vfat">FAT</option>
+                    <option value="ntfs">NTFS</option>
+                    <option value="ext3">Ext3</option>
+                    <option value="ext4">Ext4</option>
+                    <option value="swap">Swap</option>
+                    <option value="reiserfs">ReiserFS</option>
+                </select>
+            </div>
+        </uib:tab>
+        <uib:tab heading="{{'OS'|translate}}" ng:if="os">
+            <br/>
+            <div class="form-group">
+                <table width="100%">
+                    <tr>
+                        <td width="49%">
+                            <label translate>Name</label>
+                            <input type="text" ng:model="os.Name" class="form-control" />
+                        </td>
+                        <td>
+                        </td>
+                        <td width="49%">
+                            <label translate>Version</label>
+                            <input type="text" ng:model="os.Version" class="form-control" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="form-group">
+                <table width="100%">
+                    <tr>
+                        <td width="49%">
+                            <label translate>Default</label>
+                            <select ng:model="os.DefaultAction" class="form-control">
+                                <option value="start">Start</option>
+                                <option value="sync">Sync & start</option>
+                                <option value="new">New start</option>
+                            </select>
+                        </td>
+                        <td>
+                        </td>
+                        <td width="49%">
+                            <label translate>Icon</label>
+                            <div uib-dropdown>
+                                <button class="btn btn-default btn-block" uib-dropdown-toggle>
+                                    <img src="/api/filesystem/read//var/linbo/icons/{{os.IconName}}" style="max-width: 32px;" />
+                                    <i class="fa fa-caret-down"></i>
+                                </button>
+                                <ul uib-dropdown-menu class="dropdown-menu-right" style="width: 150px !important; min-width: 0;">
+                                    <li ng:repeat="icon in icons" ng:show="icon.substring(0, 6) != 'linbo_'">
+                                        <a ng:click="os.IconName = icon">
+                                            <img src="/api/filesystem/read//var/linbo/icons/{{icon}}" style="max-width: 32px;" />&emsp; {{icon}}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="form-group">
+                <table width="100%">
+                    <tr>
+                        <td width="49%">
+                            <label translate>Base image</label>
+                            <select ng:model="os.BaseImage" ng:options="x for x in images" class="form-control">
+                                <option value="">None</option>
+                            </select>
+                        </td>
+                        <td>
+                        </td>
+                        <td width="49%">
+                            <label translate>Differential image</label>
+                            <select ng:model="os.Image" ng:options="x for x in diffImages" class="form-control">
+                                <option value="">None</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="form-group">
+                <label translate>Boot buttons</label>
+                <br/>
+                <span checkbox ng:model="os.StartEnabled" text="Start"></span>
+                <br/>
+                <span checkbox ng:model="os.SyncEnabled" text="Sync & start"></span>
+                <br/>
+                <span checkbox ng:model="os.NewEnabled" text="New start"></span>
+                <br/>
+                <span checkbox ng:model="os.Autostart" text="Autostart"></span>
+            </div>
+            <div class="form-group" ng:show="os.Autostart">
+                <label translate>Autostart timeout</label>
+                <input type="text" ng:model="os.AutostartTimeout" class="form-control" />
+            </div>
+            <div class="form-group" ng:if="partition.FSType == 'ntfs'" ng:show="showAdvanced">
+                <label translate>Kernel</label>
+                <select ng:model="os.Kernel" class="form-control">
+                    <option>auto</option>
+                    <option>grub.exe</option>
+                    <option>reboot</option>
+                </select>
+            </div>
+            <div class="form-group" ng:if="partition.FSType != 'ntfs'" ng:show="showAdvanced">
+                <label translate>Kernel</label>
+                <input type="text" ng:model="os.Kernel" class="form-control" />
+            </div>
+            <div class="form-group" ng:if="partition.FSType != 'ntfs'" ng:show="showAdvanced">
+                <label translate>Initrd</label>
+                <input type="text" ng:model="os.Initrd" class="form-control" />
+            </div>
+            <div class="form-group" ng:show="showAdvanced" ng:show="showAdvanced">
+                <label translate>Additional kernel parameters</label>
+                <input type="text" ng:model="os.Append" class="form-control" />
+            </div>
+            <div class="form-group" ng:show="showAdvanced">
+                <label translate>Options</label>
+                <br/>
+                <span checkbox ng:model="os.Hidden" text="Hidden"></span>
+                <br/>
+            </div>
+        </uib:tab>
+    </uib:tabset>
+</div>
+
+</div>
+<div class="modal-footer">
+    <a class="btn btn-default btn-flat" ng:click="save()" translate>Save</a>
+    <a class="btn btn-default btn-flat" ng:show="!showAdvanced" ng:click="showAdvanced = true" translate>Advanced</a>
+    <a class="btn btn-default btn-flat" ng:click="close()" translate>Close</a>
+</div>

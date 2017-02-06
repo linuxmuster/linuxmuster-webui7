@@ -1,0 +1,262 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-07-18 21:02+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: plugins/lm_linbo/resources/partial/config.modal.html:115
+msgid "Add <span class=\"caret\"></span>"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/partition.modal.html:147
+msgid "Additional kernel parameters"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/partition.modal.html:163
+msgid "Advanced"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/config.modal.html:105
+msgid "Auto partition formatting"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/config.modal.html:103
+msgid "Auto partition recovery"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/config.modal.html:107
+msgid "Auto update cache"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/partition.modal.html:127
+msgid "Autostart timeout"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/partition.modal.html:99
+msgid "Base image"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/partition.modal.html:116
+msgid "Boot buttons"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/config.modal.html:192
+msgid "Cache"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/config.modal.html:211
+#: plugins/lm_linbo/resources/partial/image.modal.html:39
+#: plugins/lm_linbo/resources/partial/partition.modal.html:164
+msgid "Close"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/config.modal.html:186
+msgid "Data"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/partition.modal.html:67
+msgid "Default"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/image.modal.html:9
+msgid "Description"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/partition.modal.html:107
+msgid "Differential image"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/config.modal.html:90
+msgid "Download type"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/config.modal.html:171
+msgid "EFI"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/config.modal.html:42
+msgid "Error color"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/config.modal.html:189
+msgid "Extended"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/partition.modal.html:33
+msgid "Filesystem"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/partition.modal.html:17
+msgid "Flags"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/config.modal.html:6
+#: plugins/lm_linbo/resources/partial/image.modal.html:6
+msgid "General"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/index.html:7
+msgid "Groups"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/partition.modal.html:77
+msgid "Icon"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/index.html:33
+msgid "Images"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/image.modal.html:13
+msgid "Info"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/partition.modal.html:143
+msgid "Initrd"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/partition.modal.html:131
+#: plugins/lm_linbo/resources/partial/partition.modal.html:139
+msgid "Kernel"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/config.modal.html:111
+msgid "Kernel options"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/partition.modal.html:9
+msgid "Label"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/config.modal.html:174
+msgid "MSR"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/partition.modal.html:51
+msgid "Name"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/config.modal.html:202
+msgid "New disk"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/partition.modal.html:151
+msgid "Options"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/partition.modal.html:45
+msgid "OS"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/config.modal.html:27
+msgid "Output color"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/partition.modal.html:6
+msgid "Partition"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/partition.modal.html:22
+msgid "Partition type"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/config.modal.html:129
+msgid "Partitions"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/image.modal.html:21
+msgid "Registry patch"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/config.modal.html:167
+msgid "Remove this disk"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/config.modal.html:69
+msgid "Root logout timeout"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/config.modal.html:209
+#: plugins/lm_linbo/resources/partial/image.modal.html:38
+#: plugins/lm_linbo/resources/partial/partition.modal.html:162
+msgid "Save"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/config.modal.html:14
+#: plugins/lm_linbo/resources/partial/config.modal.html:29
+#: plugins/lm_linbo/resources/partial/config.modal.html:44
+msgid "Select color"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/image.modal.html:17
+#: plugins/lm_linbo/resources/partial/partition.modal.html:13
+msgid "Size"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/config.modal.html:101
+msgid "Start options"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/config.modal.html:183
+#: plugins/lm_linbo/resources/js/controllers/index.controller.coffee:148
+msgid "Swap"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/config.modal.html:79
+msgid "System type"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/config.modal.html:12
+msgid "Text color"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/config.modal.html:63
+msgid "TFTP server"
+msgstr ""
+
+#: plugins/lm_linbo/resources/partial/partition.modal.html:57
+msgid "Version"
+msgstr ""
+
+#: plugins/lm_linbo/main.py:15
+#: plugins/lm_linbo/resources/js/controllers/index.controller.coffee:358
+msgid "LINBO"
+msgstr ""
+
+#: plugins/lm_linbo/main.py:30
+msgid "Read/write start.conf"
+msgstr ""
+
+#: plugins/lm_linbo/main.py:35
+msgid "Read/write images"
+msgstr ""
+
+#: plugins/lm_linbo/main.py:40
+msgid "Read examples"
+msgstr ""
+
+#: plugins/lm_linbo/main.py:45
+msgid "Read/write icons"
+msgstr ""
+
+#: plugins/lm_linbo/resources/js/controllers/index.controller.coffee:150
+msgid "LINBO Cache"
+msgstr ""
+
+#: plugins/lm_linbo/resources/js/controllers/index.controller.coffee:413
+#: plugins/lm_linbo/resources/js/controllers/index.controller.coffee:454
+msgid "Saved"
+msgstr ""

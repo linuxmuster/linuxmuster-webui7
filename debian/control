@@ -1,10 +1,10 @@
-Source: linuxmuster-webui
+Source: linuxmuster-webui7
 Section: admin
 Priority: optional
-Maintainer: Thomas Schmitt <thomas@linuxmuster.net>
+Maintainer: Maurice Cazautet <maurice.cazautet@netzint.de>
 Build-Depends: debhelper (>= 4.0.0), fakeroot
 
-Package: linuxmuster-webui
+Package: linuxmuster-webui7
 Architecture: all
 Depends: python-pip, python-dev, python-lxml, libffi-dev, libssl-dev, libjpeg-dev, libpng-dev, uuid-dev, python-dbus, build-essential, python-augeas, python-apt, ntpdate, libldap2-dev, libsasl2-dev, python-ldap, build-essential
 Homepage: www.linuxmuster.net

@@ -1,5 +1,5 @@
-linuxmuster-webui (1.0.0-0) lmn7-testing; urgency=medium
+linuxmuster-webui7 (1.0.0-0) lmn7-testing; urgency=medium
 
-  * Copy and prepare linuxmuster-webui babo62 for lmn7
+  * Initial upload WebUI for lmn7
 
  -- Maurice Cazautet <maurice.cazautet@netzint.de>  Mon, 06 Feb 2017 20:02:54 +0100

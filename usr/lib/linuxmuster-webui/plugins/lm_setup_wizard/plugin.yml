@@ -12,4 +12,7 @@ resources:
     - 'js/init.controller.es'
     - 'partial/init-welcome.html'
     - 'partial/init-school.html'
+    - 'partial/init-network.html'
+    - 'partial/init-passwords.html'
+    - 'partial/init-setup.html'
     - 'ng:lm.setup_wizard'

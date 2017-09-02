@@ -1,9 +1,10 @@
 import ConfigParser
 import os
+import subprocess
 
 from jadi import component
 from aj.api.http import url, HttpPlugin
-from aj.api.endpoint import endpoint
+from aj.api.endpoint import endpoint, EndpointError
 
 
 @component(HttpPlugin)
@@ -26,3 +27,16 @@ class Handler(HttpPlugin):
 
         with open('/tmp/setup.ini', 'w') as f:
             cfg.write(f)
+
+    @url(r'/api/lm/setup-wizard/provision')
+    @endpoint(api=True)
+    def handle_api_provision(self, http_context):
+        if http_context.method != 'POST':
+            return
+        try:
+            subprocess.check_call(
+                'linuxmuster-setup.py -c /tmp/setup.ini > /tmp/linuxmuster-setup.log',
+                shell=True
+            )
+        except Exception as e:
+            raise EndpointError(None, message=str(e))

@@ -73,15 +73,45 @@ angular.module('lm.setup_wizard').controller('InitNetworkController', function (
   };
 });
 
-angular.module('lm.setup_wizard').controller('InitPasswordsController', function ($location, $http, gettext, pageTitle) {
+angular.module('lm.setup_wizard').controller('InitPasswordsController', function ($location, $http, gettext, pageTitle, notify) {
   var _this3 = this;
 
   pageTitle.set(gettext('Setup Wizard'));
   this.ini = {};
 
-  this.apply = function () {
+  this.finish = function () {
+    if (_this3.ini.adminpw != _this3.adminpwConfirmation) {
+      notify.error('Password do not match');
+      return;
+    }
+    if (!_this3.enableOPSI) {
+      delete _this3.ini['opsiip'];
+    }
+    if (!_this3.enableFirewall) {
+      delete _this3.ini['firewallip'];
+      delete _this3.ini['firewallpw'];
+    }
+    if (!_this3.enableSMTPRelay) {
+      delete _this3.ini['smtprelay'];
+    }
     $http.post('/api/lm/setup-wizard/update-ini', _this3.ini).then(function () {
       return $location.path('/view/lm/init/setup');
     });
+  };
+});
+
+angular.module('lm.setup_wizard').controller('InitSetupController', function ($location, $http, gettext, pageTitle, notify) {
+  var _this4 = this;
+
+  pageTitle.set(gettext('Setup Wizard'));
+  this.isWorking = true;
+  $http.post('/api/lm/setup-wizard/provision').then(function () {
+    _this4.isWorking = false;
+    notify.success(gettext('Setup complete'));
+  }).catch(function () {
+    _this4.isWorking = true;
+  });
+  this.close = function () {
+    $location.path('/');
   };
 });

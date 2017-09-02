@@ -58,13 +58,41 @@ angular.module('lm.setup_wizard').controller('InitNetworkController', function (
   }
 })
 
-angular.module('lm.setup_wizard').controller('InitPasswordsController', function ($location, $http, gettext, pageTitle) {
+angular.module('lm.setup_wizard').controller('InitPasswordsController', function ($location, $http, gettext, pageTitle, notify) {
   pageTitle.set(gettext('Setup Wizard'))
   this.ini = {}
 
-  this.apply = () => {
+  this.finish = () => {
+    if (this.ini.adminpw != this.adminpwConfirmation) {
+      notify.error('Password do not match')
+      return
+    }
+    if (!this.enableOPSI) {
+      delete this.ini['opsiip']
+    }
+    if (!this.enableFirewall) {
+      delete this.ini['firewallip']
+      delete this.ini['firewallpw']
+    }
+    if (!this.enableSMTPRelay) {
+      delete this.ini['smtprelay']
+    }
     $http.post('/api/lm/setup-wizard/update-ini', this.ini).then(() => {
       return $location.path('/view/lm/init/setup')
     })
+  }
+})
+
+angular.module('lm.setup_wizard').controller('InitSetupController', function ($location, $http, gettext, pageTitle, notify) {
+  pageTitle.set(gettext('Setup Wizard'))
+  this.isWorking = true
+  $http.post('/api/lm/setup-wizard/provision').then(() => {
+    this.isWorking = false
+    notify.success(gettext('Setup complete'))
+  }).catch(() => {
+    this.isWorking = true
+  })
+  this.close = () => {
+    $location.path('/')
   }
 })

@@ -1,10 +1,12 @@
 <dialog>
     <div class="modal-header">
-		<h3 translate class="pvshell-boss-link">Setup</h3>
+		<h3 translate>Setup</h3>
     </div>
-    <div class="modal-body">
+    <div class="modal-body scrollable">
+        <progress-spinner ng:show="$ctrl.isWorking"></progress-spinner>
+        <lm-log path="'/tmp/linuxmuster-setup.log'"></lm-log>
     </div>
-    <div class="modal-footer">
-        <a ng:click="cancel()" class="btn btn-primary btn-flat" translate>Cancel</a>
+    <div class="modal-footer" ng:show="!$ctrl.isWorking">
+        <a ng:click="$ctrl.close()" class="btn btn-default btn-flat" translate>Close</a>
     </div>
 </dialog>

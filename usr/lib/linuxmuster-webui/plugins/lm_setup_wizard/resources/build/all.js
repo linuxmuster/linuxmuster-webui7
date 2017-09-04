@@ -2,9 +2,11 @@
 
 angular.module('lm.setup_wizard', ['core']);
 
-angular.module('lm.setup_wizard').run(function (config, $location) {
-    config.promise.then(function () {
-        if (!config.data.linuxmuster || !config.data.linuxmuster.initialized) {
+angular.module('lm.setup_wizard').run(function (config, $location, identity) {
+    identity.promise.then(function () {
+        return config.promise;
+    }).then(function () {
+        if (identity.user && (!config.data.linuxmuster || !config.data.linuxmuster.initialized)) {
             return $location.path('/view/lm/init/welcome');
         }
     });

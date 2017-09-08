@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('lm.setup_wizard', ['core']);
+angular.module('lm.setup_wizard', ['core', 'ajenti.network']);
 
 angular.module('lm.setup_wizard').run(function (config, $location, identity) {
     identity.promise.then(function () {
@@ -62,11 +62,18 @@ angular.module('lm.setup_wizard').controller('InitSchoolController', function ($
   };
 });
 
-angular.module('lm.setup_wizard').controller('InitNetworkController', function ($location, $http, gettext, pageTitle) {
+angular.module('lm.setup_wizard').controller('InitNetworkController', function ($location, $http, gettext, pageTitle, network) {
   var _this2 = this;
 
   pageTitle.set(gettext('Setup Wizard'));
   this.ini = {};
+  this.interfaces = [];
+
+  network.getConfig().then(function (interfaces) {
+    _this2.interfaces = interfaces.map(function (x) {
+      return x.name;
+    });
+  });
 
   this.apply = function () {
     $http.post('/api/lm/setup-wizard/update-ini', _this2.ini).then(function () {

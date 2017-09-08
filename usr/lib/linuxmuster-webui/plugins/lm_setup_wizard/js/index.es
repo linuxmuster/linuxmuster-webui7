@@ -1,5 +1,6 @@
 angular.module('lm.setup_wizard', [
     'core',
+    'ajenti.network',
 ])
 
 angular.module('lm.setup_wizard').run((config, $location, identity) => {

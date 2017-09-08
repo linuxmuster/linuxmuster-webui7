@@ -47,9 +47,14 @@ angular.module('lm.setup_wizard').controller('InitSchoolController', function ($
   }
 })
 
-angular.module('lm.setup_wizard').controller('InitNetworkController', function ($location, $http, gettext, pageTitle) {
+angular.module('lm.setup_wizard').controller('InitNetworkController', function ($location, $http, gettext, pageTitle, network) {
   pageTitle.set(gettext('Setup Wizard'))
   this.ini = {}
+  this.interfaces = []
+
+  network.getConfig().then(interfaces => {
+    this.interfaces = interfaces.map(x => x.name)
+  })
 
   this.apply = () => {
     $http.post('/api/lm/setup-wizard/update-ini', this.ini).then(() => {

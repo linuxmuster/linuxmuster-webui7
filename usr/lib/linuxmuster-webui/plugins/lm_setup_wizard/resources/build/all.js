@@ -2,14 +2,16 @@
 
 angular.module('lm.setup_wizard', ['core', 'ajenti.network']);
 
-angular.module('lm.setup_wizard').run(function (config, $location, identity) {
-    identity.promise.then(function () {
-        return config.promise;
-    }).then(function () {
-        if (identity.user && (!config.data.linuxmuster || !config.data.linuxmuster.initialized)) {
-            return $location.path('/view/lm/init/welcome');
+angular.module('lm.setup_wizard').run(function ($http, $location, identity) {
+  identity.promise.then(function () {
+    if (identity.user) {
+      $http.get('/api/lm/setup-wizard/is-configured').then(function (response) {
+        if (!response.data) {
+          $location.path('/view/lm/init/welcome');
         }
-    });
+      });
+    }
+  });
 });
 'use strict';
 

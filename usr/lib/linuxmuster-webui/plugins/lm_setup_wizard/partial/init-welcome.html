@@ -7,6 +7,10 @@
         <p>
             Please follow the next few steps to quickly configure your system
         </p>
+        <div class="form-group">
+            <label translate>System language</label>
+            <select class="form-control" ng:model="$ctrl.config.data.language" ng:options="x as x for x in $ctrl.languages"></select>
+        </div>
         <div style="height: 200px; overflow: auto;">
             License text here
         </div>

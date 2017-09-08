@@ -31,8 +31,15 @@ angular.module('lm.setup_wizard').config(function($routeProvider) {
 })
 
 
-angular.module('lm.setup_wizard').controller('InitWelcomeController', function (gettext, pageTitle) {
+angular.module('lm.setup_wizard').controller('InitWelcomeController', function (gettext, pageTitle, $http, config) {
   pageTitle.set(gettext('Setup Wizard'))
+  this.config = config
+  $http.get('/api/core/languages').then(response => this.languages = response.data)
+
+  this.apply = async () => {
+    await this.config.save()
+    $location.path('/view/lm/init/network')
+  }
 })
 
 
@@ -40,10 +47,9 @@ angular.module('lm.setup_wizard').controller('InitSchoolController', function ($
   pageTitle.set(gettext('Setup Wizard'))
   this.ini = {}
 
-  this.apply = () => {
-    $http.post('/api/lm/setup-wizard/update-ini', this.ini).then(() => {
-      return $location.path('/view/lm/init/network')
-    })
+  this.apply = async () => {
+    await $http.post('/api/lm/setup-wizard/update-ini', this.ini)
+    $location.path('/view/lm/init/network')
   }
 })
 

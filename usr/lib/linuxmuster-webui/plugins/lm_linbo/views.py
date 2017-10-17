@@ -9,7 +9,7 @@ from aj.plugins.lm_common.api import lm_backup_file
 
 @component(HttpPlugin)
 class Handler(HttpPlugin):
-    LINBO_PATH = '/var/linbo'
+    LINBO_PATH = '/srv/linbo'
 
     def __init__(self, context):
         self.context = context

@@ -5,6 +5,7 @@ ajenti.plugin.auth-users==0.27
 ajenti.plugin.core==0.88
 ajenti.plugin.dashboard==0.35
 ajenti.plugin.filesystem==0.41
+ajenti.plugin.network==0.20
 ajenti.plugin.passwd==0.21
 ajenti.plugin.plugins==0.41
 ajenti.plugin.settings==0.23

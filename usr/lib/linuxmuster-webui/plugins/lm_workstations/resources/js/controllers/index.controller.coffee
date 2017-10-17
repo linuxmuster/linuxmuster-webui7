@@ -116,8 +116,8 @@ angular.module('lm.workstations').controller 'LMWorkstationsController', ($scope
             )
 
     $scope.editCSV = () ->
-        lmFileEditor.show('/etc/linuxmuster/workstations').then () ->
+        lmFileEditor.show('/etc/linuxmuster/sophomorix/default-school/devices.csv').then () ->
             $route.reload()
 
     $scope.backups = () ->
-        lmFileBackups.show('/etc/linuxmuster/workstations')
+        lmFileBackups.show('/etc/linuxmuster/sophomorix/default-school/devices.csv')

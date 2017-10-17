@@ -18,7 +18,7 @@ class Handler(HttpPlugin):
     @authorize('lm:workstations')
     @endpoint(api=True)
     def handle_api_workstations(self, http_context):
-        path = '/etc/linuxmuster/workstations'
+        path = '/etc/linuxmuster/sophomorix/default-school/devices.csv'
         fieldnames = [
             'room',
             'hostname',
@@ -50,6 +50,6 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_workstations_import(self, http_context):
         try:
-            subprocess.check_call('import_workstations > /tmp/import_workstations.log', shell=True)
+            subprocess.check_call('linuxmuster-import-devices.py > /tmp/import_workstations.log', shell=True)
         except Exception as e:
             raise EndpointError(None, message=str(e))

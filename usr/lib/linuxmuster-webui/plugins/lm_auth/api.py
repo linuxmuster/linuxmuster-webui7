@@ -12,12 +12,12 @@ class LMAuthenticationProvider(AuthenticationProvider):
     id = 'lm'
     name = _('Linux Muster LDAP')
 
-
     def __init__(self, context):
         self.context = context
 
     def authenticate(self, username, password):
         if username == 'root':
+
             return OSAuthenticationProvider.get(self.context).authenticate(username, password)
 
         # get ajenti yaml parameters
@@ -55,19 +55,25 @@ class LMAuthenticationProvider(AuthenticationProvider):
         ldappermissions = l.search_s(userDN,ldap.SCOPE_SUBTREE,attrlist=['SophomorixUserPermissions'],)
         permissions = {}
         # convert python list we get from AD to dict
-        for b in ldappermissions[0][1]['SophomorixUserPermissions']:
-            i = b.split(': ')
-            if i[1] == 'false': # translate strings to real bool values
-                i[1] = False
-            else:
-                i[1] = True
-            permissions[i[0]] = i[1]
+        if ldappermissions[0][1]: # is false if no values in SophomorixUserPermissions
+            for b in ldappermissions[0][1]['SophomorixUserPermissions']:
+                i = b.split(': ')
+                try:
+                    i[1]
+                    if i[1] == 'false': # translate strings to real bool values
+                        i[1] = False
+                    else:
+                        i[1] = True
+                    permissions[i[0]] = i[1]
+                except Exception as e:
+                    raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(e))
+                    logging.error(str(e))
 
         return {
-                'username': username,
-                'password': password,
-                'permissions': permissions,
-                }
+            'username': username,
+            'password': password,
+            'permissions': permissions,
+            }
 
     def authorize(self, username, permission):
         if username == 'root':

@@ -1,5 +1,8 @@
 import os
 import time
+import ldap
+import aj
+import logging
 
 
 class CSVSpaceStripper:
@@ -29,3 +32,31 @@ def lm_backup_file(path):
 
     with open(dir + '/.' + name + '.bak.' + str(int(time.time())), 'w') as f:
         f.write(open(path).read())
+
+
+def lmn_getUserLdapValue( user, field ):
+    params = aj.config.data['linuxmuster']['ldap']
+    searchFilter = "(&(cn=%s)(objectClass=user))" % user
+    l = ldap.initialize('ldap://' + params['host'])
+    try:
+        l.set_option(ldap.OPT_REFERRALS, 0)
+        l.protocol_version = ldap.VERSION3
+        l.bind_s(params['binddn'],  params['bindpw'] )
+    except Exception as e:
+        logging.error(str(e))
+        return False
+    try:
+        res = l.search_s(params['searchdn'], ldap.SCOPE_SUBTREE, searchFilter)
+        userDN = res[0][0]
+    except ldap.LDAPError, e:
+        print e
+    soph = l.search_s(
+    userDN,
+    ldap.SCOPE_SUBTREE,
+    attrlist=[field],
+    )
+    searchstring =  soph[0][1][field][0]
+    l.unbind_s()
+    return searchstring
+
+

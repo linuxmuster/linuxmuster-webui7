@@ -8,6 +8,7 @@ from aj.api.endpoint import endpoint, EndpointError
 from aj.plugins.lm_common.api import CSVSpaceStripper
 from aj.auth import authorize
 from aj.plugins.lm_common.api import lm_backup_file
+from aj.plugins.lm_common.api import lmn_getUserLdapValue
 
 
 @component(HttpPlugin)
@@ -18,7 +19,7 @@ class Handler(HttpPlugin):
     @url(r'/api/lm/users/students')
     @endpoint(api=True)
     def handle_api_students(self, http_context):
-        path = '/etc/sophomorix/user/schueler.txt'
+        path = '/etc/linuxmuster/sophomorix/default-school/students.csv'
         fieldnames = [
             'class',
             'last_name',
@@ -55,7 +56,7 @@ class Handler(HttpPlugin):
     @url(r'/api/lm/users/teachers')
     @endpoint(api=True)
     def handle_api_teachers(self, http_context):
-        path = '/etc/sophomorix/user/lehrer.txt'
+        path = '/etc/linuxmuster/sophomorix/default-school/teachers.csv'
         fieldnames = [
             'class',
             'last_name',
@@ -97,7 +98,7 @@ class Handler(HttpPlugin):
     @url(r'/api/lm/users/extra-students')
     @endpoint(api=True)
     def handle_api_extra_students(self, http_context):
-        path = '/etc/sophomorix/user/extraschueler.txt'
+        path = '/etc/linuxmuster/sophomorix/default-school/extrastudents.csv'
         fieldnames = [
             'class',
             'last_name',
@@ -243,10 +244,9 @@ class Handler(HttpPlugin):
         action = http_context.json_body()['action']
         users = http_context.json_body()['users']
         user = ','.join([x.strip() for x in users])
+        ## Passwort auslesen
         if action == 'get':
-            for l in subprocess.check_output('sophomorix-user -u %s' % user, shell=True).splitlines():
-                if 'FirstPassword' in l:
-                    return l.split()[-2]
+            return lmn_getUserLdapValue(user, 'sophomorixFirstPassword')
         if action == 'set-initial':
             subprocess.check_call('sophomorix-passwd -u %s --reset' % user, shell=True)
         if action == 'set-random':

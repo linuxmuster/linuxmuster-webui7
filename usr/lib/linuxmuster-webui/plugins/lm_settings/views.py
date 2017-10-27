@@ -5,6 +5,15 @@ from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint
 from aj.auth import authorize
 from aj.plugins.lm_common.api import lm_backup_file
+from configparser import ConfigParser
+
+class IniParser(ConfigParser):
+    def as_dict(self):
+        d = dict(self._sections)
+        for k in d:
+            d[k] = dict(self._defaults, **d[k])
+            d[k].pop('__name__', None)
+        return d
 
 
 @component(HttpPlugin)
@@ -27,28 +36,33 @@ class Handler(HttpPlugin):
     @authorize('lm:settings')
     @endpoint(api=True)
     def handle_api_settings(self, http_context):
-        path = '/etc/sophomorix/user/sophomorix.conf'
+        path = '/etc/linuxmuster/sophomorix/default-school/school.conf'
         if http_context.method == 'GET':
-            result = {}
-            for line in open(path):
-                if line.startswith(('$', '#$')):
-                    line = line.strip().lstrip('#$').rstrip(';')
-                    k, v = line.split('=', 1)
-                    k = k.strip()
-                    v = v.strip()
+            parser = IniParser()
+            parser.read(path)
+            settings = parser.as_dict()
+            # Old Code
+            #result = {}
+            #for line in open(path):
+            #    if line.startswith(('$', '#$')):
+            #        line = line.strip().lstrip('#$').rstrip(';')
+            #        k, v = line.split('=', 1)
+            #        k = k.strip()
+            #        v = v.strip()
+            #        if v[0] == '"':
+            #            v = v.strip('"')
+            #            v = {'yes': True, 'no': False}.get(v, v)
+            #        else:
+            #            v = int(v)
+            #        result[k] = v
 
-                    if v[0] == '"':
-                        v = v.strip('"')
-                        v = {'yes': True, 'no': False}.get(v, v)
-                    else:
-                        v = int(v)
+            #if 'admins_print' in result:
+            #    for k, v in self.EMAIL_REVERSE_MAPPING.items():
+            #        result['admins_print'] = result['admins_print'].replace(k, v)
+            #return result
+            return settings
 
-                    result[k] = v
 
-            if 'admins_print' in result:
-                for k, v in self.EMAIL_REVERSE_MAPPING.items():
-                    result['admins_print'] = result['admins_print'].replace(k, v)
-            return result
         if http_context.method == 'POST':
             content = ''
             data = http_context.json_body()

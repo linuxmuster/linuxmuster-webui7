@@ -8,7 +8,7 @@ angular.module('lm.users').controller 'LMUsersTeacherPasswordsController', ($sco
     pageTitle.set(gettext('Teacher Passwords'))
 
     $http.get('/api/lm/settings').then (resp) ->
-        $scope.encoding = lmEncodingMap[resp.data.encoding_teachers] or 'ISO8859-1'
+        $scope.encoding = resp.data["userfile.teachers.csv"].encoding or 'ISO8859-1'
         $http.get("/api/lm/users/teachers?encoding=#{$scope.encoding}").then (resp) ->
             $scope.teachers = resp.data
 

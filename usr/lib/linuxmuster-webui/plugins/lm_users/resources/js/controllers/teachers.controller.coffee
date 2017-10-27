@@ -50,7 +50,8 @@ angular.module('lm.users').controller 'LMUsersTeachersController', ($scope, $htt
 
 
     $http.get('/api/lm/settings').then (resp) ->
-        $scope.encoding = lmEncodingMap[resp.data.encoding_teachers] or 'ISO8859-1'
+        $scope.encoding = resp.data["userfile.teachers.csv"].encoding or 'ISO8859-1'
+        #$scope.encoding = lmEncodingMap[resp.data.school.encoding] or 'ISO8859-1'
         $http.get("/api/lm/users/teachers?encoding=#{$scope.encoding}").then (resp) ->
             $scope.teachers = resp.data
 
@@ -62,7 +63,7 @@ angular.module('lm.users').controller 'LMUsersTeachersController', ($scope, $htt
         $scope.teachers.remove(teacher)
 
     $scope.editCSV = () ->
-        lmFileEditor.show('/etc/sophomorix/user/lehrer.txt', $scope.encoding).then () ->
+        lmFileEditor.show('/etc/linuxmuster/sophomorix/default-school/teachers.csv', $scope.encoding).then () ->
             $route.reload()
 
     $scope.save = () ->
@@ -81,4 +82,4 @@ angular.module('lm.users').controller 'LMUsersTeachersController', ($scope, $htt
             )
 
     $scope.backups = () ->
-        lmFileBackups.show('/etc/sophomorix/user/lehrer.txt', $scope.encoding)
+        lmFileBackups.show('/etc/linuxmuster/sophomorix/default-school/teachers.csv', $scope.encoding)

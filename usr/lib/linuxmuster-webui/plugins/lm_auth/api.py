@@ -33,12 +33,13 @@ class LMAuthenticationProvider(AuthenticationProvider):
         except Exception as e:
             logging.error(str(e))
             return False
-
         try:
             res = l.search_s(params['searchdn'], ldap.SCOPE_SUBTREE, searchFilter)
             userDN = res[0][0]
         except ldap.LDAPError, e:
             print e
+
+
         l.unbind_s()
 
         #userbind

@@ -34,7 +34,7 @@ def lm_backup_file(path):
         f.write(open(path).read())
 
 
-def lmn_getUserLdapValue( user, field ):
+def lmn_getUserLdapValue(user, field):
     params = aj.config.data['linuxmuster']['ldap']
     searchFilter = "(&(cn=%s)(objectClass=user))" % user
     l = ldap.initialize('ldap://' + params['host'])

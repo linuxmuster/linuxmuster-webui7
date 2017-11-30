@@ -13,6 +13,8 @@ angular.module('lm.setup_wizard').run(function ($http, $location, identity) {
     }
   });
 });
+
+
 'use strict';
 
 angular.module('lm.setup_wizard').config(function ($routeProvider) {
@@ -56,24 +58,10 @@ angular.module('lm.setup_wizard').controller('InitWelcomeController', function (
     return _this.languages = response.data;
   });
 
-  this.apply = babelHelpers.asyncToGenerator(regeneratorRuntime.mark(function _callee() {
-    return regeneratorRuntime.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            _context.next = 2;
-            return _this.config.save();
-
-          case 2:
-            $location.path('/view/lm/init/network');
-
-          case 3:
-          case 'end':
-            return _context.stop();
-        }
-      }
-    }, _callee, _this);
-  }));
+  this.apply = async function () {
+    await _this.config.save();
+    $location.path('/view/lm/init/network');
+  };
 });
 
 angular.module('lm.setup_wizard').controller('InitSchoolController', function ($location, $http, gettext, pageTitle) {
@@ -82,24 +70,10 @@ angular.module('lm.setup_wizard').controller('InitSchoolController', function ($
   pageTitle.set(gettext('Setup Wizard'));
   this.ini = {};
 
-  this.apply = babelHelpers.asyncToGenerator(regeneratorRuntime.mark(function _callee2() {
-    return regeneratorRuntime.wrap(function _callee2$(_context2) {
-      while (1) {
-        switch (_context2.prev = _context2.next) {
-          case 0:
-            _context2.next = 2;
-            return $http.post('/api/lm/setup-wizard/update-ini', _this2.ini);
-
-          case 2:
-            $location.path('/view/lm/init/network');
-
-          case 3:
-          case 'end':
-            return _context2.stop();
-        }
-      }
-    }, _callee2, _this2);
-  }));
+  this.apply = async function () {
+    await $http.post('/api/lm/setup-wizard/update-ini', _this2.ini);
+    $location.path('/view/lm/init/network');
+  };
 });
 
 angular.module('lm.setup_wizard').controller('InitNetworkController', function ($location, $http, gettext, pageTitle, network) {
@@ -164,3 +138,5 @@ angular.module('lm.setup_wizard').controller('InitSetupController', function ($l
     $location.path('/');
   };
 });
+
+

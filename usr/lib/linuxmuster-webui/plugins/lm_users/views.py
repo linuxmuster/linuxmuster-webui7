@@ -176,43 +176,48 @@ class Handler(HttpPlugin):
     @authorize('lm:users:check')
     @endpoint(api=True)
     def handle_api_users_check(self, http_context):
-        path = '/tmp/sophomorix-check.log'
-        open(path, 'w').close()
-        try:
-            subprocess.check_call('sophomorix-check > %s' % path, shell=True, env={'LC_ALL': 'C'})
-        except Exception as e:
-            raise EndpointError(str(e))
+        #path = '/tmp/sophomorix-check.log'
+        #open(path, 'w').close()
+        #try:
+        #    subprocess.check_call('sophomorix-check > %s' % path, shell=True, env={'LC_ALL': 'C'})
+        #except Exception as e:
+        #    raise EndpointError(str(e))
+        jsonS =  subprocess.call('sophomorix-check -j 1>/dev/null', shell=True),
+        raise Exception(str(jsonS))
 
         results = {
             'add': [],
             'move': [],
             'kill': [],
             'errors': [],
-            'report': open('/var/lib/sophomorix/check-result/report.admin').read().decode('utf-8', errors='ignore'),
-        }
+        #   'report': open('/var/lib/sophomorix/check-result/report.admin').read().decode('utf-8', errors='ignore'),
+        #      subprocess.check_call('sophomorix-passwd -u %s --reset' % user, shell=True)
 
-        lines = open('/tmp/sophomorix-check.log').read().decode('utf-8', errors='ignore').splitlines()
-        while lines:
-            l = lines.pop(0)
-            if 'Fehlerhafter Datensatz' in l:
-                s = ''
-                while lines[0][0] != '#':
-                    s += lines[0].strip() + '\n'
-                    lines.pop(0)
-                results['errors'].append(s)
-            if 'Looking for tolerated users to be moved/deactivated' in l or 'Looking for users to be tolerated' in l:
-                while lines[0][0] != '#':
-                    s = lines.pop(0).strip()
-                    if '--->' in s:
-                        results['move'].append(s)
-            if 'Looking for users to be added' in l:
-                while lines[0][0] != '#':
-                    results['add'].append(lines.pop(0).strip())
-            if 'killable users to be killed' in l:
-                while lines[0][0] != '#':
-                    s = lines.pop(0).strip()
-                    if '--->' in s:
-                        results['kill'].append(s)
+           }
+
+
+        #lines = open('/tmp/sophomorix-check.log').read().decode('utf-8', errors='ignore').splitlines()
+        #while lines:
+        #    l = lines.pop(0)
+        #    if 'Fehlerhafter Datensatz' in l:
+        #        s = ''
+        #        while lines[0][0] != '#':
+        #            s += lines[0].strip() + '\n'
+        #            lines.pop(0)
+        #        results['errors'].append(s)
+        #    if 'Looking for tolerated users to be moved/deactivated' in l or 'Looking for users to be tolerated' in l:
+        #        while lines[0][0] != '#':
+        #            s = lines.pop(0).strip()
+        #            if '--->' in s:
+        #                results['move'].append(s)
+        #    if 'Looking for users to be added' in l:
+        #        while lines[0][0] != '#':
+        #            results['add'].append(lines.pop(0).strip())
+        #    if 'killable users to be killed' in l:
+        #        while lines[0][0] != '#':
+        #            s = lines.pop(0).strip()
+        #            if '--->' in s:
+        #                results['kill'].append(s)
 
         return results
 

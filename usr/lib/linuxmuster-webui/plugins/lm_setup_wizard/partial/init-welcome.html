@@ -1,0 +1,22 @@
+<dialog>
+    <div class="modal-header">
+    	<h3 translate>Welcome to linuxmuster.net V7</h3>
+    </div>
+    <div class="modal-body">
+        <img src="/resources/lm_common/resources/img/logo-full.png" / />
+        <p>
+            Please follow the next few steps to quickly configure your system
+        </p>
+        <div class="form-group">
+            <label translate>System language</label>
+            <select class="form-control" ng:model="$ctrl.config.data.language" ng:options="x as x for x in $ctrl.languages"></select>
+        </div>
+        <div style="height: 200px; overflow: auto;">
+            License text here
+        </div>
+        <span checkbox ng:model="$ctrl.licenseAccepted" text="I accept the license terms" />
+    </div>
+    <div class="modal-footer">
+        <a href="/view/lm/init/school" class="btn btn-default btn-flat" ng:disabled="!$ctrl.licenseAccepted" translate>Next</a>
+    </div>
+</dialog>

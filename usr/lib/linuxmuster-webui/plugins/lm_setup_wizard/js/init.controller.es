@@ -75,7 +75,11 @@ angular.module('lm.setup_wizard').controller('InitPasswordsController', function
 
   this.finish = () => {
     if (this.ini.adminpw != this.adminpwConfirmation) {
-      notify.error('Password do not match')
+      notify.error('Administrator password missmatch')
+      return
+    }
+    if (this.ini.firewallpw != this.firewallpwConfirmation) {
+      notify.error('Firewall password missmatch')
       return
     }
     if (!this.enableOPSI) {

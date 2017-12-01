@@ -1,0 +1,30 @@
+auth:
+  allow_sudo: true
+  emails: {}
+  provider: lm
+  users:
+bind:
+  host: 0.0.0.0
+  mode: tcp
+  port: 8000
+color: default
+language: %%LANGUAGE%%
+linuxmuster:
+  initialized: false
+  is-configured: false
+  ldap:
+    binddn: %%SEARCHDN%%
+    bindpw: %%BINDPW%%
+    host: %%HOSTNAME%%
+    searchdn: %%BINDDN%%
+  provision: false
+max_sessions: 9
+name: server
+restricted_user: nobody
+ssl:
+  certificate: /etc/ajenti/ajenti.pem
+  client_auth:
+    certificates: []
+    enable: false
+    force: false
+  enable: true

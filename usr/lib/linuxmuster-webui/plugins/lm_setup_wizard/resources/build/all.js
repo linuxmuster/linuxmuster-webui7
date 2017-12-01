@@ -107,6 +107,10 @@ angular.module('lm.setup_wizard').controller('InitPasswordsController', function
       notify.error('Password do not match');
       return;
     }
+    if (_this4.ini.firewallpw != _this4.firewallpwConfirmation) {
+      notify.error('Password do not match');
+      return;
+    }
     if (!_this4.enableOPSI) {
       delete _this4.ini['opsiip'];
     }

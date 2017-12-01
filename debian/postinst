@@ -26,6 +26,8 @@ case "$1" in
 	#sed -i s/%%SUFFIX%%/$suffix/ $ajcfg
 	echo "link ajcfg to linuxmuster-webui folder"
 	ln -s $ajcfg $webuietc
+  echo "copy setup entrypoint"
+  cp /usr/lib/linuxmuster-webui/plugins/lm_setup_wizard/y_webui-permissions.py /usr/lib/linuxmuster/setup.d/
 	echo "configure systemctl.."
 	systemctl daemon-reload
 	systemctl enable linuxmuster-webui

@@ -104,11 +104,11 @@ angular.module('lm.setup_wizard').controller('InitPasswordsController', function
 
   this.finish = function () {
     if (_this4.ini.adminpw != _this4.adminpwConfirmation) {
-      notify.error('Password do not match');
+      notify.error('Administrator password missmatch');
       return;
     }
     if (_this4.ini.firewallpw != _this4.firewallpwConfirmation) {
-      notify.error('Password do not match');
+      notify.error('Firewall password missmatch');
       return;
     }
     if (!_this4.enableOPSI) {

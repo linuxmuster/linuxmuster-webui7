@@ -40,7 +40,7 @@ class Handler(HttpPlugin):
             return
         try:
             subprocess.check_call(
-                'linuxmuster-setup.py -u -c /tmp/setup.ini >> /tmp/linuxmuster-setup.log & ; wait $!'
+                'linuxmuster-setup.py -u -c /tmp/setup.ini >> /tmp/linuxmuster-setup.log & ; wait $!',
                 shell=True
             )
         except Exception as e:

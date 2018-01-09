@@ -55,7 +55,10 @@ def lmn_getUserLdapValue(user, field):
     ldap.SCOPE_SUBTREE,
     attrlist=[field],
     )
-    searchstring =  soph[0][1][field][0]
+    try:
+        searchstring =  soph[0][1][field][0]
+    except Exception as e:
+        raise Exception('Field error. Either LDAP field does not exist or ajenti binduser does not have sufficient permissions:\n' 'Searched field was: ' + str(e) +' received information for filter:  ' + str(soph))
     l.unbind_s()
     return searchstring
 

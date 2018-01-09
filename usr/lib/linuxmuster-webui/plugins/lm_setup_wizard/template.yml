@@ -13,10 +13,10 @@ linuxmuster:
   initialized: false
   is-configured: false
   ldap:
-    binddn: %%SEARCHDN%%
+    binddn: %%BINDUSER%%
     bindpw: %%BINDPW%%
-    host: %%HOSTNAME%%
-    searchdn: %%BINDDN%%
+    host: %%SERVERNAME%%
+    searchdn: %%BASEDN%%
   provision: false
 max_sessions: 9
 name: server

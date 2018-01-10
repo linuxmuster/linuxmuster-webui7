@@ -20,6 +20,7 @@ class CSVSpaceStripper:
 
     def next(self):
         return self.f.next().decode(encoding='utf-8', errors='ignore').strip()
+        #return self.f.next().decode(self.encoding, errors='ignore').strip()
 
 
 def lm_backup_file(path):

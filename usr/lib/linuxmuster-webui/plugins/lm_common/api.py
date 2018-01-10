@@ -3,6 +3,8 @@ import time
 import ldap
 import aj
 import logging
+import subprocess
+import json
 
 
 class CSVSpaceStripper:
@@ -17,7 +19,7 @@ class CSVSpaceStripper:
         return self
 
     def next(self):
-        return self.f.next().decode(self.encoding, errors='ignore').strip()
+        return self.f.next().decode(encoding='utf-8', errors='ignore').strip()
 
 
 def lm_backup_file(path):
@@ -56,10 +58,19 @@ def lmn_getUserLdapValue(user, field):
     attrlist=[field],
     )
     try:
-        searchstring =  soph[0][1][field][0]
+        resultString =  soph[0][1][field][0]
     except Exception as e:
         raise Exception('Field error. Either LDAP field does not exist or ajenti binduser does not have sufficient permissions:\n' 'Searched field was: ' + str(e) +' received information for filter:  ' + str(soph))
     l.unbind_s()
-    return searchstring
+    return resultString
 
-
+def lmn_getUserSophomorixValue(user, field):
+    #get json string from sophomorix
+    jsonS =  subprocess.Popen('sophomorix-user --info --user '+ user + ' -jj 1>/dev/null',stdout=subprocess.PIPE, stderr=subprocess.STDOUT,  shell=True).stdout.read()
+    #parse string to dict
+    jsonObj = json.loads(jsonS,encoding='latin1')
+    try:
+        resultString =  jsonObj['USERS'][user][field]
+    except Exception as e:
+        raise Exception('Field error. Either sophomorix field does not exist or ajenti binduser does not have sufficient permissions:\n' 'Searched field was: ' + str(e) +' received information for filter:  ' + str(jsonObj))
+    return resultString

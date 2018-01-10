@@ -8,7 +8,7 @@ from aj.api.endpoint import endpoint, EndpointError
 from aj.plugins.lm_common.api import CSVSpaceStripper
 from aj.auth import authorize
 from aj.plugins.lm_common.api import lm_backup_file
-from aj.plugins.lm_common.api import lmn_getUserLdapValue
+from aj.plugins.lm_common.api import lmn_getUserSophomorixValue
 
 
 @component(HttpPlugin)
@@ -251,7 +251,7 @@ class Handler(HttpPlugin):
         user = ','.join([x.strip() for x in users])
         ## Passwort auslesen
         if action == 'get':
-            return lmn_getUserLdapValue(user, 'sophomorixFirstPassword')
+            return lmn_getUserSophomorixValue(user, 'sophomorixFirstPassword')
         if action == 'set-initial':
             subprocess.check_call('sophomorix-passwd -u %s --reset' % user, shell=True)
         if action == 'set-random':

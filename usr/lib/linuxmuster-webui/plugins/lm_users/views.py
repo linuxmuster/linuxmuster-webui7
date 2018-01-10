@@ -253,15 +253,17 @@ class Handler(HttpPlugin):
         if action == 'get':
             return lmn_getUserSophomorixValue(user, 'sophomorixFirstPassword')
         if action == 'set-initial':
-            subprocess.check_call('sophomorix-passwd -u %s --reset' % user, shell=True)
+            subprocess.check_call('sophomorix-passwd --set-firstpassword -u %s' % user, shell=True)
         if action == 'set-random':
-            r = []
-            for l in subprocess.check_output('sophomorix-passwd -u %s --random' % user, shell=True).splitlines():
-                if 'Setting password' in l:
-                    r.append({
-                        'user': l.split()[4],
-                        'password': l.split()[-1],
-                    })
+            subprocess.check_call('sophomorix-passwd -u %s --random' user, shell=True)
+            # alter code mit ausgabe des Passwords
+            #r = []
+            #for l in subprocess.check_output('sophomorix-passwd -u %s --random' % user, shell=True).splitlines():
+            #    if 'Setting password' in l:
+            #        r.append({
+            #            'user': l.split()[4],
+            #            'password': l.split()[-1],
+            #        })
             return r
         if action == 'set':
             subprocess.check_call('sophomorix-passwd -u %s --pass "%s"' % (user, http_context.json_body()['password']), shell=True)

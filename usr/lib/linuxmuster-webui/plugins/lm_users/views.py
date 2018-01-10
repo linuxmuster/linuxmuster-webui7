@@ -190,16 +190,13 @@ class Handler(HttpPlugin):
         # json string to dict
         jsonObj = json.loads(jsonS,encoding='latin1')
         ##print jsonObj['SUMMARY'][1]['ADD']['RESULT']
-        raise Exception(str(jsonObj))
-
-
+        #raise Exception(str(jsonObj))
         results = {
             'add': [],
             'move': [],
             'kill': [],
             'errors': [],
         #   'report': open('/var/lib/sophomorix/check-result/report.admin').read().decode('utf-8', errors='ignore'),
-        #      subprocess.check_call('sophomorix-passwd -u %s --reset' % user, shell=True)
 
            }
 

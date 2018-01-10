@@ -182,8 +182,13 @@ class Handler(HttpPlugin):
         #    subprocess.check_call('sophomorix-check > %s' % path, shell=True, env={'LC_ALL': 'C'})
         #except Exception as e:
         #    raise EndpointError(str(e))
-        jsonS =  subprocess.call('sophomorix-check -j 1>/dev/null', shell=True),
-        raise Exception(str(jsonS))
+        jsonS = subprocess.Popen('sophomorix-check -jj 1>/dev/null',stdout=subprocess.PIPE, stderr=subprocess.STDOUT,  shell=True).stdout.read()
+        # remove everything before the first { to get rid of real error messages in stderr
+        jsonS = jsonS[jsonS.find('{'):
+        # json string to dict
+        jsonObj = json.loads(jsonS,encoding='latin1')
+        #print jsonObj['SUMMARY'][1]['ADD']['RESULT']
+        #raise Exception(str(jsonS))
 
         results = {
             'add': [],
@@ -191,7 +196,6 @@ class Handler(HttpPlugin):
             'kill': [],
             'errors': [],
         #   'report': open('/var/lib/sophomorix/check-result/report.admin').read().decode('utf-8', errors='ignore'),
-        #      subprocess.check_call('sophomorix-passwd -u %s --reset' % user, shell=True)
 
            }
 

@@ -378,9 +378,16 @@
 
   angular.module('lm.users').controller('LMUsersTeacherPasswordsController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) {
     pageTitle.set(gettext('Teacher Passwords'));
+
+    /*
+    $http.get('/api/lm/settings').then (resp) ->
+        $scope.encoding = resp.data["userfile.teachers.csv"].encoding or 'ISO8859-1'
+        $http.get("/api/lm/users/teachers?encoding=#{$scope.encoding}").then (resp) ->
+            $scope.teachers = resp.data
+     */
     $http.get('/api/lm/settings').then(function(resp) {
       $scope.encoding = resp.data["userfile.teachers.csv"].encoding || 'ISO8859-1';
-      return $http.get("/api/lm/users/teachers?encoding=" + $scope.encoding).then(function(resp) {
+      return $http.get("/api/lm/ldapUsers/teachers?encoding=" + $scope.encoding).then(function(resp) {
         return $scope.teachers = resp.data;
       });
     });

@@ -7,10 +7,23 @@ angular.module('lm.users').config ($routeProvider) ->
 angular.module('lm.users').controller 'LMUsersTeacherPasswordsController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) ->
     pageTitle.set(gettext('Teacher Passwords'))
 
+    # im ersten block wird definiert wo die nutzer herkommen
+    ###
     $http.get('/api/lm/settings').then (resp) ->
         $scope.encoding = resp.data["userfile.teachers.csv"].encoding or 'ISO8859-1'
         $http.get("/api/lm/users/teachers?encoding=#{$scope.encoding}").then (resp) ->
             $scope.teachers = resp.data
+    ###
+    # ende org
+
+
+
+    $http.get('/api/lm/settings').then (resp) ->
+        $scope.encoding = resp.data["userfile.teachers.csv"].encoding or 'ISO8859-1'
+        $http.get("/api/lm/ldapUsers/teachers?encoding=#{$scope.encoding}").then (resp) ->
+            $scope.teachers = resp.data
+
+
 
     $scope.showInitialPassword = (teachers) ->
         $http.post('/api/lm/users/password', {users: (x.login for x in teachers), action: 'get'}).then (resp) ->

@@ -60,6 +60,7 @@ class Handler(HttpPlugin):
             #    for k, v in self.EMAIL_REVERSE_MAPPING.items():
             #        result['admins_print'] = result['admins_print'].replace(k, v)
             #return result
+            #raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(settings))
             return settings
 
 

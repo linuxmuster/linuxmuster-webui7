@@ -95,6 +95,48 @@ class Handler(HttpPlugin):
                         encoding=http_context.query.get('encoding', 'utf-8')
                     ).writerows(data)
 
+    @url(r'/api/lm/ldapUsers/teachers')
+    @endpoint(api=True)
+    def handle_api_teachers(self, http_context):
+        fieldnames = [
+            'class',
+            'last_name',
+            'first_name',
+            'birthday',
+            'login',
+            'password',
+            'usertoken',
+            'quota',
+            'mailquota',
+            'reserved',
+        ]
+        if http_context.method == 'GET':
+            with authorize('lm:users:teachers:read'):
+
+                return list(
+                    csv.DictReader(
+                        CSVSpaceStripper(
+                            open(path),
+                            encoding=http_context.query.get('encoding', 'utf-8')
+                        ),
+                        delimiter=';',
+                        fieldnames=fieldnames
+                    )
+                )
+        if http_context.method == 'POST':
+            with authorize('lm:users:teachers:write'):
+                data = http_context.json_body()
+                for item in data:
+                    item.pop('_isNew', None)
+                lm_backup_file(path)
+                with open(path, 'w') as f:
+                    csv.DictWriter(
+                        f,
+                        delimiter=';',
+                        fieldnames=fieldnames,
+                        encoding=http_context.query.get('encoding', 'utf-8')
+                    ).writerows(data)
+
     @url(r'/api/lm/users/extra-students')
     @endpoint(api=True)
     def handle_api_extra_students(self, http_context):
@@ -256,7 +298,9 @@ class Handler(HttpPlugin):
         user = ','.join([x.strip() for x in users])
         ## Passwort auslesen
         if action == 'get':
-            return lmn_getUserSophomorixValue(user, 'sophomorixFirstPassword')
+            #return lmn_getUserSophomorixValue(user, 'sophomorixFirstPassword')
+            return lmn_getSophomorixValue('sophomorix-user --info -jj', user, '/USERS/'+user+'/sophomorixFirstPassword')
+            #return lmn_getUserSophomorixValue(sophomorix-command, '['USERS'][user][sophomorixFirstPassword]')
         if action == 'set-initial':
             subprocess.check_call('sophomorix-passwd --set-firstpassword -u %s' % user, shell=True)
         if action == 'set-random':

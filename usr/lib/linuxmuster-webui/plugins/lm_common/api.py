@@ -95,7 +95,8 @@ def lmn_getUserLdapValue(user, field):
 
 
 def lmn_getSophomorixValue(sophomorixCommand, sophomorixParamater, jsonpath):
-    jsonS =  subprocess.Popen(sophomorixCommand sophomorixParameter  ' 1>/dev/null ',stdout=subprocess.PIPE, stderr=subprocess.STDOUT,  shell=True).stdout.read()
+    # only error log is going to be processed. standard output is thrown away
+    jsonS =  subprocess.Popen(sophomorixCommand, sophomorixParameter + ' 1>/dev/null ',stdout=subprocess.PIPE, stderr=subprocess.STDOUT,  shell=True).stdout.read()
     #jsonS =  subprocess.Popen('sophomorix-user --info -jj --user ' + user +  ' 1>/dev/null ',stdout=subprocess.PIPE, stderr=subprocess.STDOUT,  shell=True).stdout.read()
     # ignore everything before the first {
     jsonS = jsonS[jsonS.find('{'):]

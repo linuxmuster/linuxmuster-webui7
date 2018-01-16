@@ -15,6 +15,7 @@ resources:
     - 'resources/js/controllers/extraStudents.controller.coffee'
     - 'resources/js/controllers/extraCourses.controller.coffee'
     - 'resources/js/controllers/teacherPasswords.controller.coffee'
+    - 'resources/js/controllers/ati-teacherPasswords.controller.coffee'
     - 'resources/js/controllers/printPasswords.controller.coffee'
     - 'resources/js/controllers/checkModal.controller.coffee'
     - 'resources/partial/students.html'
@@ -27,4 +28,5 @@ resources:
     - 'resources/partial/check.modal.html'
     - 'resources/partial/result.modal.html'
     - 'resources/partial/teacher-passwords.html'
+    - 'resources/partial/ati-teacher-passwords.html'
     - 'ng:lm.users'

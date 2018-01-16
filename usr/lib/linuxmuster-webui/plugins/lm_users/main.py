@@ -35,6 +35,12 @@ class ItemProvider(SidebarItemProvider):
                         'url': '/view/lm/users/teacher-passwords',
                         'weight': 15,
                     },
+                    {
+                        'name': _('ATi Teacher Passwords'),
+                        'icon': 'key',
+                        'url': '/view/lm/users/ati-teacher-passwords',
+                        'weight': 15,
+                    },
                 ],
             },
             {

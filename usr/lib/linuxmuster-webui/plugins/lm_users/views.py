@@ -8,7 +8,7 @@ from aj.api.endpoint import endpoint, EndpointError
 from aj.plugins.lm_common.api import CSVSpaceStripper
 from aj.auth import authorize
 from aj.plugins.lm_common.api import lm_backup_file
-from aj.plugins.lm_common.api import lmn_getUserSophomorixValue
+from aj.plugins.lm_common.api import lmn_getSophomorixValue
 
 
 @component(HttpPlugin)
@@ -95,48 +95,22 @@ class Handler(HttpPlugin):
                         encoding=http_context.query.get('encoding', 'utf-8')
                     ).writerows(data)
 
-    # ATi - temp getting teachers userlist from LDAP. Most likely we switch this to sophomorix
-    #@url(r'/api/lm/ldapUsers/teachers')
-    #@endpoint(api=True)
-    #def handle_api_teachers(self, http_context):
-    #    fieldnames = [
-    #        'class',
-    #        'last_name',
-    #        'first_name',
-    #        'birthday',
-    #        'login',
-    #        'password',
-    #        'usertoken',
-    #        'quota',
-    #        'mailquota',
-    #        'reserved',
-    #    ]
-    #    if http_context.method == 'GET':
-    #        with authorize('lm:users:teachers:read'):
+    @url(r'/api/lm/sophomorixUsers/teachers')
+    @endpoint(api=True)
+    def handle_api_sophomorix_teachers(self, http_context):
+        # path = '/etc/linuxmuster/sophomorix/default-school/students.csv'#
+        if http_context.method == 'GET':
+            schoolname = 'default-school'
+            teachersList = []
+            with authorize('lm:users:teachers:read'):
+                teachers = lmn_getSophomorixValue('sophomorix-user --info -jj', 'LISTS/USER_by_sophomorixSchoolname/'+schoolname+'/teacher')
+                for item in range(len(teachers)):
+                    teachersList.append({'sAMAccountName': teachers[item]}.copy())
+                return teachersList
 
-    #            return list(
-    #                csv.DictReader(
-    #                    CSVSpaceStripper(
-    #                        open(path),
-    #                        encoding=http_context.query.get('encoding', 'utf-8')
-    #                    ),
-    #                    delimiter=';',
-    #                    fieldnames=fieldnames
-    #                )
-    #            )
-    #    if http_context.method == 'POST':
-    #        with authorize('lm:users:teachers:write'):
-    #            data = http_context.json_body()
-    #            for item in data:
-    #                item.pop('_isNew', None)
-    #            lm_backup_file(path)
-    #            with open(path, 'w') as f:
-    #                csv.DictWriter(
-    #                    f,
-    #                    delimiter=';',
-    #                    fieldnames=fieldnames,
-    #                    encoding=http_context.query.get('encoding', 'utf-8')
-    #                ).writerows(data)
+        if http_context.method == 'POST':
+            with authorize('lm:users:teachers:write'):
+                return 0
 
     @url(r'/api/lm/users/extra-students')
     @endpoint(api=True)
@@ -219,16 +193,16 @@ class Handler(HttpPlugin):
     @authorize('lm:users:check')
     @endpoint(api=True)
     def handle_api_users_check(self, http_context):
-        #path = '/tmp/sophomorix-check.log'
-        #open(path, 'w').close()
-        #try:
-        #    subprocess.check_call('sophomorix-check > %s' % path, shell=True, env={'LC_ALL': 'C'})
-        #except Exception as e:
-        #    raise EndpointError(str(e))
-        ##jsonS =  subprocess.call('sophomorix-check -j 1>/dev/null', shell=True),
-        ##raise Exception(str(jsonS))
-        jsonS = subprocess.Popen('sophomorix-check -jj 1>/dev/null',stdout=subprocess.PIPE, stderr=subprocess.STDOUT,  shell=True).stdout.read()
-        ## remove everything before the first { to get rid of real error messages in stderr
+        # path = '/tmp/sophomorix-check.log'
+        # open(path, 'w').close()
+        # try:
+        #     subprocess.check_call('sophomorix-check > %s' % path, shell=True, env={'LC_ALL': 'C'})
+        # except Exception as e:
+        #     raise EndpointError(str(e))
+        # #jsonS =  subprocess.call('sophomorix-check -j 1>/dev/null', shell=True),
+        # #raise Exception(str(jsonS))
+        jsonS = subprocess.Popen('sophomorix-check -jj 1>/dev/null', stdout=subprocess.PIPE, stderr=subprocess.STDOUT,  shell=True).stdout.read()
+        # remove everything before the first { to get rid of real error messages in stderr
         jsonS = jsonS[jsonS.find('{'):]
         # json string to dict
         jsonObj = json.loads(jsonS,encoding='latin1')
@@ -242,8 +216,6 @@ class Handler(HttpPlugin):
         #   'report': open('/var/lib/sophomorix/check-result/report.admin').read().decode('utf-8', errors='ignore'),
 
            }
-
-
         #lines = open('/tmp/sophomorix-check.log').read().decode('utf-8', errors='ignore').splitlines()
         #while lines:
         #    l = lines.pop(0)
@@ -299,8 +271,7 @@ class Handler(HttpPlugin):
         user = ','.join([x.strip() for x in users])
         ## Passwort auslesen
         if action == 'get':
-            return lmn_getUserSophomorixValue(user, 'sophomorixFirstPassword')
-            #return lmn_getSophomorixValue('sophomorix-user --info -jj', user, '/USERS/'+user+'/sophomorixFirstPassword')
+            return lmn_getSophomorixValue('sophomorix-user --info -jj -u %s' % user, '/USERS/'+user+'/sophomorixFirstPassword')
         if action == 'set-initial':
             subprocess.check_call('sophomorix-passwd --set-firstpassword -u %s' % user, shell=True)
         if action == 'set-random':

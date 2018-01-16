@@ -32,6 +32,13 @@ class ItemProvider(SidebarItemProvider):
             },
             {
                 'attach': None,
+                'id': 'category:classroom',
+                'name': _('Classroom'),
+                'children': [
+                ]
+            },
+            {
+                'attach': None,
                 'id': 'category:settingsdefaults',
                 'name': _('Settings & Defaults'),
                 'children': [

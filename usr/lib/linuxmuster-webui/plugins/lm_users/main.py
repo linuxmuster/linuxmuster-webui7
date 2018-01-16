@@ -21,6 +21,7 @@ class ItemProvider(SidebarItemProvider):
                 'attach': 'category:usermanagement',
                 'name': _('Teachers'),
                 'icon': 'briefcase',
+                'url': '/view/lm/users/teachers',
                 'weight': 15,
                 'children': [
                     {
@@ -47,6 +48,7 @@ class ItemProvider(SidebarItemProvider):
                 'attach': 'category:usermanagement',
                 'name': _('Extra Users'),
                 'icon': 'users',
+                'url': '/view/lm/users/extra-students',
                 'weight': 20,
                 'children': [
                     {

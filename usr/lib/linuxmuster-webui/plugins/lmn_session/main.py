@@ -15,10 +15,10 @@ class ItemProvider(SidebarItemProvider):
         return [
             {
                 # attach the item to the 'general' category
-                'attach': 'category:usermanagment',
+                'attach': 'category:classroom',
                 'name': 'Session',
-                'icon': 'Users',
-                'url': '/view/demo2',
+                'icon': 'users',
+                'url': '/view/lmn/session',
                 'children': []
             }
         ]

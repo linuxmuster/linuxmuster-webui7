@@ -4,9 +4,9 @@
 angular.module('ajenti.demo2', ['core']);
 
 angular.module('ajenti.demo2').config(function ($routeProvider) {
-    $routeProvider.when('/view/demo2', {
-        templateUrl: '/demo_2_ui:resources/index.html',
-        controller: 'Demo2IndexController'
+    $routeProvider.when('/view/lmn/session', {
+        templateUrl: '/session:resources/index.html',
+        controller: 'SessionIndexController'
     });
 });
 

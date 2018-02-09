@@ -561,7 +561,8 @@
   angular.module('lm.users').controller('LMUsersATiTeacherPasswordsController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) {
     pageTitle.set(gettext('ATi Teacher Passwords'));
     $http.get("/api/lm/sophomorixUsers/teachers").then(function(resp) {
-      return $scope.teachers = resp.data;
+      $scope.teachers = resp.data;
+      return console.log($scope.teachers);
     });
     $scope.showInitialPassword = function(teachers) {
       var x;

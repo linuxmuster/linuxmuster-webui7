@@ -107,6 +107,7 @@ class Handler(HttpPlugin):
                 for item in users:
                     #teachersList.append({'sAMAccountName': teachers[item]['sAMAccountName'], 'givenName': teachers[item]['sophomorixFirstnameASCII'], 'sn': teachers[item]['sophomorixSurnameASCII']}.copy())
                     usersList.append({'sAMAccountName': users[item]['sAMAccountName'], 'givenName': users[item]['givenName'], 'sn': users[item]['sn'], 'mail': users[item]['mail']}.copy())
+                #raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(usersList))
                 return usersList
 
         if http_context.method == 'POST':

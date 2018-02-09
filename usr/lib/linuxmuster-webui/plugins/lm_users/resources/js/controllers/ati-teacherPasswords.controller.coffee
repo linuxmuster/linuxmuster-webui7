@@ -10,13 +10,12 @@ angular.module('lm.users').controller 'LMUsersATiTeacherPasswordsController', ($
     $http.get("/api/lm/sophomorixUsers/teachers").then (resp) ->
         $scope.teachers = resp.data
 
-
 ## legacy functions
     $scope.showInitialPassword = (teachers) ->
         #console.log teachers                          # ATi What we Send {sAMAccountName: "schoen", $$hashKey: "object:318"}
         $http.post('/api/lm/users/password', {users: (x.sAMAccountName for x in teachers), action: 'get'}).then (resp) ->
             messagebox.show(title: gettext('Initial password'), text: resp.data, positive: 'OK')
-    
+
     $scope.showEmail = (teachers) ->
         #console.log teachers                          # ATi What we Send {sAMAccountName: "schoen", $$hashKey: "object:318"}
         messagebox.show(title: gettext('Initial password'), text: resp.data, positive: 'OK')

@@ -97,12 +97,13 @@ def lmn_getUserLdapValue(user, field):
 def lmn_getSophomorixValue(sophomorixCommand, jsonpath):
     # only error log is going to be processed. standard output is thrown away
     jsonS =  subprocess.Popen(sophomorixCommand +' 1>/dev/null ',stdout=subprocess.PIPE, stderr=subprocess.STDOUT,  shell=True).stdout.read()
-    #jsonS =  subprocess.Popen('sophomorix-user --info -jj --user ' + user +  ' 1>/dev/null ',stdout=subprocess.PIPE, stderr=subprocess.STDOUT,  shell=True).stdout.read()
     # ignore everything before the first {
     jsonS = jsonS[jsonS.find('{'):]
     jsonDict = json.loads(jsonS,encoding='latin1')
     try:
+        # dpath slower but capability of complex jsonpaths
         resultString = dpath.util.get(jsonDict, jsonpath)
+        #resultString = (jsonDict[jsonpath])
     except Exception as e:
         raise Exception('Field error. Either sophomorix field does not exist or ajenti binduser does not have sufficient permissions:\n' 'Searched field was: ' + str(e) +' received information for filter:  ' + str(jsonObj))
     return resultString

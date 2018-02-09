@@ -584,6 +584,13 @@
         });
       });
     };
+    $scope.showEmail = function(teachers) {
+      return messagebox.show({
+        title: gettext('Initial password'),
+        text: resp.data,
+        positive: 'OK'
+      });
+    };
     $scope.setInitialPassword = function(teachers) {
       var x;
       return $http.post('/api/lm/sophomorixUsers/password', {

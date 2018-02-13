@@ -106,7 +106,13 @@ class Handler(HttpPlugin):
                 users = lmn_getSophomorixValue('sophomorix-query --schoolbase '+schoolname+ ' --teacher --user-full  -jj ', 'USER')
                 for item in users:
                     #teachersList.append({'sAMAccountName': teachers[item]['sAMAccountName'], 'givenName': teachers[item]['sophomorixFirstnameASCII'], 'sn': teachers[item]['sophomorixSurnameASCII']}.copy())
-                    usersList.append({'sAMAccountName': users[item]['sAMAccountName'], 'givenName': users[item]['givenName'], 'sn': users[item]['sn'], 'mail': users[item]['mail']}.copy())
+                    #raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(item))
+                    usersList.append({'sAMAccountName': users[item]['sAMAccountName'],
+                        'givenName': users[item]['givenName'],
+                        'sn': users[item]['sn'],
+                        'mail': users[item]['mail'],
+                        'sophomorixBirthdate': users[item]['sophomorixBirthdate'],
+                        'sophomorixFirstPassword': users[item]['sophomorixFirstPassword']}.copy())
                 #raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(usersList))
                 return usersList
 

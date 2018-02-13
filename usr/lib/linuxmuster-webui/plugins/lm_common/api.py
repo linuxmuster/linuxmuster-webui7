@@ -101,7 +101,7 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath):
     jsonS = jsonS[jsonS.find('{'):]
     jsonDict = json.loads(jsonS,encoding='latin1')
     try:
-        # dpath slower but capability of complex jsonpaths
+        # dpath slower but capability of complex jsonpaths -> test with 500 teachers no difference
         resultString = dpath.util.get(jsonDict, jsonpath)
         #resultString = (jsonDict[jsonpath])
     except Exception as e:

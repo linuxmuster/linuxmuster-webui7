@@ -11,7 +11,7 @@ dependencies:
 resources:
     - 'resources/js/module.coffee'
     - 'resources/js/controllers/students.controller.coffee'
-    - 'resources/js/controllers/teachers.controller.coffee'
+    - 'resources/js/controllers/teachers-list.controller.coffee'
     - 'resources/js/controllers/extraStudents.controller.coffee'
     - 'resources/js/controllers/extraCourses.controller.coffee'
     - 'resources/js/controllers/teacherPasswords.controller.coffee'
@@ -19,7 +19,7 @@ resources:
     - 'resources/js/controllers/printPasswords.controller.coffee'
     - 'resources/js/controllers/checkModal.controller.coffee'
     - 'resources/partial/students.html'
-    - 'resources/partial/teachers.html'
+    - 'resources/partial/teachers-list.html'
     - 'resources/partial/extra-students.html'
     - 'resources/partial/extra-courses.html'
     - 'resources/partial/print-passwords.html'

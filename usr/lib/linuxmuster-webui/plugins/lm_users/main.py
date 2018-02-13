@@ -24,21 +24,21 @@ class ItemProvider(SidebarItemProvider):
                 'weight': 15,
                 'children': [
                     {
-                        'name': _('Teachers List'),
+                        'name': _('Teachers'),
                         'icon': 'briefcase',
-                        'url': '/view/lm/users/teachers',
+                        'url': '/view/lm/users/ati-teacher-passwords',
                         'weight': 10,
                     },
                     {
                         'name': _('Teacher Passwords'),
                         'icon': 'key',
                         'url': '/view/lm/users/teacher-passwords',
-                        'weight': 15,
+                        'weight': 11,
                     },
                     {
-                        'name': _('ATi Teacher Passwords'),
-                        'icon': 'key',
-                        'url': '/view/lm/users/ati-teacher-passwords',
+                        'name': _('Teachers List'),
+                        'icon': 'briefcase',
+                        'url': '/view/lm/users/teachers-list',
                         'weight': 15,
                     },
                 ],

@@ -1,0 +1,47 @@
+<br/>
+<div>
+    <div class="input-group">
+        <input ng:model="filter" type="search" autofocus class="form-control" placeholder="Filter" />
+        <div uib-dropdown class="input-group-btn">
+            <button class="btn btn-default" uib-dropdown-toggle>
+                <i class="fa fa-sort-amount-asc"></i> {{sort.name}}
+                <span class="caret"></span>
+            </button>
+            <ul uib-dropdown-menu class="dropdown-menu-right" style="width:150px">
+                <li ng:repeat="sort in sorts">
+                    <a ng:click="$parent.sort = sort">
+                        <i class="fa fa-sort-amount-asc"></i> {{sort.name}}
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div uib-button class="input-group-btn">
+            <button class="btn btn-default" uib-button ng:click="DeleteNewSession()">
+                <span translate>Delete Session</span>
+            </button>
+        </div>
+
+
+        <div uib-button class="input-group-btn">
+            <button class="btn btn-default" uib-button ng:click="showSessions()">
+                <span translate>New Session</span>
+            </button>
+        </div>
+
+        <div uib-dropdown class="input-group-btn" auto-close="outsideClick">
+            <button class="btn btn-default" uib-dropdown-toggle>
+                <i class="fa fa-users"></i> {{'Sessions'|translate}}
+                <span class="caret"></span>
+            </button>
+            <ul uib-dropdown-menu class="dropdown-menu-right" style="width:200px">
+                <li><a ng:click="paging.pageSize = 10"><i class="fa fa-list-ol"></i> 10</a></li>
+
+                <li ng:repeat="size in [10, 20, 50, 100, 500, 1000]">
+                    <a ng:click="paging.pageSize = size"><i class="fa fa-list-ol"></i> {{size}} teacher</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <br/>

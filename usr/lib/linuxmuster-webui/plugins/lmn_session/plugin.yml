@@ -1,4 +1,3 @@
-# This file describes the plugin
 name: lmn_session
 author: Linux Muster
 email: andreas.till@netzint.de
@@ -6,14 +5,12 @@ url: http://linuxmuster.net
 version: '0.1'
 title: 'Session'
 icon: users
-# dependency on Core is required for UI plugins
 dependencies:
-    - !!python/object:aj.plugins.PluginDependency {
-        plugin_name: core
-    }
+    - !!python/object:aj.plugins.PluginDependency { plugin_name: core}
     - !!python/object:aj.plugins.PluginDependency { plugin_name: lm_common }
-
 resources:
-    - 'resources/module.es' # angular module
-    - 'resources/index.html' # view template
-    - 'ng:ajenti.demo2' # instructs ajenti to load Angular module 'ajenti.demo2'
+    - 'resources/js/module.coffee'
+    - 'resources/js/controllers/session.controller.coffee' # angular module
+    - 'resources/partial/session.html' # view
+    - 'ng:lmn.session'
+

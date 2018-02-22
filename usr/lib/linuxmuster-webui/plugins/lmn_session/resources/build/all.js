@@ -15,20 +15,143 @@
 
   angular.module('lmn.session').controller('LMNSessionController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) {
     pageTitle.set(gettext('Session'));
-    $scope.showSessions = function() {
-      return $http.post('/api/lmn/sessions', {
-        action: 'getSessions'
+    $scope.currentSession = {
+      name: "",
+      comment: ""
+    };
+    $scope.sorts = [
+      {
+        name: gettext('Login name'),
+        fx: function(x) {
+          return x.sAMAccountName;
+        }
+      }, {
+        name: gettext('Lastname'),
+        fx: function(x) {
+          return x.sn;
+        }
+      }, {
+        name: gettext('Firstname'),
+        fx: function(x) {
+          return x.givenName;
+        }
+      }, {
+        name: gettext('Email'),
+        fx: function(x) {
+          return x.mail;
+        }
+      }
+    ];
+    $scope.fields = {
+      sAMAccountName: {
+        visible: true,
+        name: gettext('Loginname')
+      },
+      sn: {
+        visible: true,
+        name: gettext('Lastname')
+      },
+      givenName: {
+        visible: true,
+        name: gettext('Firstname')
+      },
+      examMode: {
+        visible: true,
+        name: gettext('Exam-Mode')
+      },
+      wifiaccess: {
+        visible: true,
+        name: gettext('WifiAccess')
+      },
+      internetaccess: {
+        visible: true,
+        name: gettext('Internet')
+      },
+      intranetaccess: {
+        visible: true,
+        name: gettext('Intranet')
+      },
+      webfilter: {
+        visible: true,
+        name: gettext('Webfilter')
+      },
+      printing: {
+        visible: true,
+        name: gettext('Printing')
+      }
+    };
+    $scope.checkboxModel = {
+      value1: false,
+      value2: 'true'
+    };
+    $scope.killSession = function(username, session) {
+      return $http.post('/api/lmn/session/sessions', {
+        action: 'kill-sessions',
+        session: session
       }).then(function(resp) {
         return messagebox.show({
-          title: gettext('Initial password'),
-          text: resp.data,
+          title: gettext('Sessions Removed'),
+          text: 'Session ' + session(+'removed', {
+            positive: 'OK'
+          })
+        });
+      });
+    };
+    $scope.newSession = function(username) {
+      return $http.post('/api/lmn/session/sessions', {
+        action: 'new-session',
+        username: username
+      }).then(function(resp) {
+        var sessions;
+        return $scope["new"] - (sessions = resp.data);
+      });
+    };
+    $scope.showSessions = function(username) {
+      return $http.post('/api/lmn/session/sessions', {
+        action: 'get-sessions',
+        username: username
+      }).then(function(resp) {
+        $scope.sessions = resp.data;
+        return messagebox.show({
+          title: gettext('Current Sessions'),
+          text: $scope.sessions,
           positive: 'OK'
         });
       });
     };
-    return $http.get("/api/lmn/session/senssions").then(function(resp) {
-      return $scope.sessions = resp.data;
-    });
+    $scope.getSessions = function(username) {
+      return $http.post('/api/lmn/session/sessions', {
+        action: 'get-sessions',
+        username: username
+      }).then(function(resp) {
+        return $scope.sessions = resp.data;
+      });
+    };
+    $scope.renameSession = function(username, session) {
+      return $uibModal.open({
+        templateUrl: '/lm_linbo:resources/partial/image.modal.html',
+        controller: 'LMLINBOImageModalController'
+      }).result.then(function(result) {
+        return $http.post('/api/lmn/session/sessions', {
+          action: 'rename-sessions',
+          username: username,
+          session: session,
+          comment: comment
+        }).then(function(resp) {
+          return notify.success(gettext('Saved'));
+        });
+      });
+    };
+    $scope.getParticipants = function(username, session) {
+      return $http.post('/api/lmn/session/sessions', {
+        action: 'get-participants',
+        username: username,
+        session: session
+      }).then(function(resp) {
+        return $scope.participants = resp.data;
+      });
+    };
+    return $http.get("/api/lmn/session/").then(function(resp) {});
   });
 
 }).call(this);

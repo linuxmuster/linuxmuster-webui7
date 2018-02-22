@@ -12,29 +12,48 @@ from aj.plugins.lm_common.api import lmn_getSophomorixValue
 @component(HttpPlugin)
 class Handler(HttpPlugin):
     def __init__(self, context):
-       self.context = context
+        self.context = context
 
     @url(r'/api/lmn/session/sessions')
     @endpoint(api=True)
     def handle_api_session_sessions(self, http_context):
+        #sessionsList = []
         action = http_context.json_body()['action']
-    #    if http_context.method == 'GET':
         if action == 'get-sessions':
-            supervisor = "ba"
-            sessionsList = []
+            supervisor = http_context.json_body()['username']
+            #sessionsList = []
             with authorize('lm:users:teachers:read'):
                 sessions = lmn_getSophomorixValue('sophomorix-session -i -jj ', 'SUPERVISOR/'+supervisor+'/sophomorixSessions')
-                for item in sessions:
-                    #teachersList.append({'sAMAccountName': teachers[item]['sAMAccountName'], 'givenName': teachers[item]['sophomorixFirstnameASCII'], 'sn': teachers[item]['sophomorixSurnameASCII']}.copy())
-                    raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(item))
-                    #sessionsList.append({'sAMAccountName': users[item]['sAMAccountName'],
-                    #   'givenName': users[item]['givenName'],
-                    #   'sn': users[item]['sn'],
-                    #   'mail': users[item]['mail'],
-                    #   'sophomorixBirthdate': users[item]['sophomorixBirthdate'],
-                    #   'sophomorixFirstPassword': users[item]['sophomorixFirstPassword']}.copy())
-                    #raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(usersList))
-        return sessionsList
+                #for session in sessions:
+                #    sessionsList.append({'session': session,
+                #    'comment': sessions[session]['COMMENT']}.copy())
+            return sessions#List
+        if action == 'get-participants':
+            supervisor = http_context.json_body()['username']
+            session = http_context.json_body()['session']
+            with authorize('lm:users:teachers:read'):
+                    participants = lmn_getSophomorixValue('sophomorix-session -i -jj ', 'SUPERVISOR/'+supervisor+'/sophomorixSessions/'+session+'/PARTICIPANTS')
+            return participants
+        if action == 'kill-sessions':
+            session = http_context.json_body()['session']
+            with authorize('lm:users:teachers:read'):
+                #raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(session))
+                result = lmn_getSophomorixValue('sophomorix-session -j --session '+session+' --kill', 'OUTPUT')
+                return result
+        if action == 'rename-sessions':
+            session = http_context.json_body()['session']
+            comment = http_context.json_body()['comment']
+            with authorize('lm:users:teachers:read'):
+                #raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(session))
+                result = lmn_getSophomorixValue('sophomorix-session --session '+session+' --comment '+ comment , 'OUTPUT')
+                return result
+        if action == 'new-session':
+            supervisor = http_context.json_body()['username']
+            with authorize('lm:users:teachers:read'):
+                result = lmn_getSophomorixValue('sophomorix-session --create --supervisor '+ supervisor+' -j', 'OUTPUT')
+                return result
+
+
 
         if http_context.method == 'POST':
             with authorize('lm:users:teachers:write'):

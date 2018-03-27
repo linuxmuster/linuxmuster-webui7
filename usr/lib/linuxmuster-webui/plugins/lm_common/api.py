@@ -21,7 +21,7 @@ class CSVSpaceStripper:
 
     def next(self):
         return self.f.next().decode(encoding='utf-8', errors='ignore').strip()
-        #return self.f.next().decode(self.encoding, errors='ignore').strip()
+        # return self.f.next().decode(self.encoding, errors='ignore').strip()
 
 
 def lm_backup_file(path):
@@ -37,6 +37,7 @@ def lm_backup_file(path):
     with open(dir + '/.' + name + '.bak.' + str(int(time.time())), 'w') as f:
         f.write(open(path).read())
 
+
 def lmn_getLDAPGroupmembers(group, field):
     params = aj.config.data['linuxmuster']['ldap']
     searchFilter = "(&(cn=%s)(objectClass=group))" % group
@@ -44,26 +45,28 @@ def lmn_getLDAPGroupmembers(group, field):
     try:
         l.set_option(ldap.OPT_REFERRALS, 0)
         l.protocol_version = ldap.VERSION3
-        l.bind_s(params['binddn'],  params['bindpw'] )
+        l.bind_s(params['binddn'],  params['bindpw'])
     except Exception as e:
         logging.error(str(e))
         return False
     try:
         res = l.search_s(params['searchdn'], ldap.SCOPE_SUBTREE, searchFilter)
         userDN = res[0][0]
-    except ldap.LDAPError, e:
-        print e
+    except Exception as e:
+    # except ldap.LDAPError, e:
+        print(e)
     soph = l.search_s(
     userDN,
     ldap.SCOPE_SUBTREE,
     attrlist=[field],
     )
     try:
-        resultString =  soph[0][1][field][0]
+        resultString = soph[0][1][field][0]
     except Exception as e:
-        raise Exception('Field error. Either LDAP field does not exist or ajenti binduser does not have sufficient permissions:\n' 'Searched field was: ' + str(e) +' received information for filter:  ' + str(soph))
+        raise Exception('Field error. Either LDAP field does not exist or ajenti binduser does not have sufficient permissions:\n' 'Searched field was: ' + str(e) + ' received information for filter:  ' + str(soph))
     l.unbind_s()
     return resultString
+
 
 def lmn_getUserLdapValue(user, field):
     params = aj.config.data['linuxmuster']['ldap']
@@ -72,50 +75,50 @@ def lmn_getUserLdapValue(user, field):
     try:
         l.set_option(ldap.OPT_REFERRALS, 0)
         l.protocol_version = ldap.VERSION3
-        l.bind_s(params['binddn'],  params['bindpw'] )
+        l.bind_s(params['binddn'],  params['bindpw'])
     except Exception as e:
         logging.error(str(e))
         return False
     try:
         res = l.search_s(params['searchdn'], ldap.SCOPE_SUBTREE, searchFilter)
         userDN = res[0][0]
-    except ldap.LDAPError, e:
-        print e
+    except Exception as e:
+    #except ldap.LDAPError, e:
+        print(e)
     soph = l.search_s(
     userDN,
     ldap.SCOPE_SUBTREE,
     attrlist=[field],
     )
     try:
-        resultString =  soph[0][1][field][0]
+        resultString = soph[0][1][field][0]
     except Exception as e:
-        raise Exception('Field error. Either LDAP field does not exist or ajenti binduser does not have sufficient permissions:\n' 'Searched field was: ' + str(e) +' received information for filter:  ' + str(soph))
+        raise Exception('Field error. Either LDAP field does not exist or ajenti binduser does not have sufficient permissions:\n' 'Searched field was: ' + str(e) + ' received information for filter:  ' + str(soph))
     l.unbind_s()
     return resultString
 
 
 def lmn_getSophomorixValue(sophomorixCommand, jsonpath):
     # only error log is going to be processed. standard output is thrown away
-    jsonS =  subprocess.Popen(sophomorixCommand +' 1>/dev/null ',stdout=subprocess.PIPE, stderr=subprocess.STDOUT,  shell=True).stdout.read()
-    #jsonS =  subprocess.Popen('sophomorix-user --info -jj --user ' + user +  ' 1>/dev/null ',stdout=subprocess.PIPE, stderr=subprocess.STDOUT,  shell=True).stdout.read()
-    # ignore everything before the first {
-    jsonS = jsonS[jsonS.find('{'):]
-    jsonDict = json.loads(jsonS,encoding='latin1')
+    jsonS = subprocess.Popen(sophomorixCommand + ' 1>/dev/null ', stdout=subprocess.PIPE, stderr=subprocess.STDOUT,  shell=True).stdout.read()
+    # jsonS is everything between sophomorix json headers
+    jsonS = jsonS.split("# JSON-begin", 1)[1]
+    jsonS = jsonS.split("# JSON-end", 1)[0]
+    jsonDict = json.loads(jsonS, encoding='latin1')
     try:
         resultString = dpath.util.get(jsonDict, jsonpath)
     except Exception as e:
-        raise Exception('Field error. Either sophomorix field does not exist or ajenti binduser does not have sufficient permissions:\n' 'Searched field was: ' + str(e) +' received information for filter:  ' + str(jsonObj))
+        raise Exception('Field error. Either sophomorix field does not exist or ajenti binduser does not have sufficient permissions:\n' 'Searched field was: ' + str(e) + ' received information for filter:  ' + str(jsonDict))
     return resultString
 
 
-
 def lmn_getUserSophomorixValue(user, field):
-    #get json string from sophomorix
-    jsonS =  subprocess.Popen('sophomorix-user --info --user '+ user + ' -jj 1>/dev/null',stdout=subprocess.PIPE, stderr=subprocess.STDOUT,  shell=True).stdout.read()
-    #parse string to dict
-    jsonObj = json.loads(jsonS,encoding='latin1')
+    # get json string from sophomorix
+    jsonS = subprocess.Popen('sophomorix-user --info --user ' + user + ' -jj 1>/dev/null', stdout=subprocess.PIPE, stderr=subprocess.STDOUT,  shell=True).stdout.read()
+    # parse string to dict
+    jsonObj = json.loads(jsonS, encoding='latin1')
     try:
-        resultString =  jsonObj['USERS'][user][field]
+        resultString = jsonObj['USERS'][user][field]
     except Exception as e:
-        raise Exception('Field error. Either sophomorix field does not exist or ajenti binduser does not have sufficient permissions:\n' 'Searched field was: ' + str(e) +' received information for filter:  ' + str(jsonObj))
+        raise Exception('Field error. Either sophomorix field does not exist or ajenti binduser does not have sufficient permissions:\n' 'Searched field was: ' + str(e) + ' received information for filter:  ' + str(jsonObj))
     return resultString

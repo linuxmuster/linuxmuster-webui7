@@ -7,6 +7,7 @@ from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize
 from aj.plugins.lm_common.api import lmn_getSophomorixValue
+from aj.plugins.lm_common.api import lmn_getLDAPGroupmembers
 
 
 @component(HttpPlugin)
@@ -33,6 +34,13 @@ class Handler(HttpPlugin):
             session = http_context.json_body()['session']
             with authorize('lm:users:teachers:read'):
                     participants = lmn_getSophomorixValue('sophomorix-session -i -jj ', 'SUPERVISOR/'+supervisor+'/sophomorixSessions/'+session+'/PARTICIPANTS')
+                    # Convert PERL bool to python bool
+                    for key, value in participants.iteritems():
+                        for key in value:
+                            if value[key] == 'TRUE':
+                                value[key] = True
+                            if value[key] == 'FALSE':
+                                value[key] = False
             return participants
         if action == 'kill-sessions':
             session = http_context.json_body()['session']
@@ -40,21 +48,33 @@ class Handler(HttpPlugin):
                 #raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(session))
                 result = lmn_getSophomorixValue('sophomorix-session -j --session '+session+' --kill', 'OUTPUT')
                 return result
-        if action == 'rename-sessions':
+        if action == 'rename-session':
             session = http_context.json_body()['session']
             comment = http_context.json_body()['comment']
             with authorize('lm:users:teachers:read'):
-                #raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(session))
-                result = lmn_getSophomorixValue('sophomorix-session --session '+session+' --comment '+ comment , 'OUTPUT')
+                #raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(comment)+ str(session))
+                result = lmn_getSophomorixValue('sophomorix-session -j --session '+session+' --comment "'+ comment +'"' , 'OUTPUT')
                 return result
         if action == 'new-session':
             supervisor = http_context.json_body()['username']
+            comment = http_context.json_body()['comment']
             with authorize('lm:users:teachers:read'):
-                result = lmn_getSophomorixValue('sophomorix-session --create --supervisor '+ supervisor+' -j', 'OUTPUT')
+                result = lmn_getSophomorixValue('sophomorix-session --create --supervisor '+ supervisor+' -j --comment "'+ comment +'"', 'OUTPUT')
                 return result
-
-
-
         if http_context.method == 'POST':
             with authorize('lm:users:teachers:write'):
                 return 0
+
+
+
+    @url(r'/api/lmn/session/user-search')
+    #@authorize('lmn:session:user-search')
+    @endpoint(api=True)
+    def handle_api_ldap_search(self, http_context):
+        with authorize('lm:users:teachers:read'):
+            #TODO: sophomorix-query auf Namen
+            users = lmn_getSophomorixValue('sophomorix-query -jj --student --teacher --user-full --sam \"*'+ http_context.query['q']+ '*\" ', 'USER')
+            #users = lmn_getLDAPGroupmembers('teachers','member')
+        return list(users)
+
+

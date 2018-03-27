@@ -21,24 +21,25 @@ class ItemProvider(SidebarItemProvider):
                 'attach': 'category:usermanagement',
                 'name': _('Teachers'),
                 'icon': 'briefcase',
+                'url': '/view/lm/users/teachers',
                 'weight': 15,
                 'children': [
                     {
-                        'name': _('Teachers'),
+                        'name': _('Teachers List'),
                         'icon': 'briefcase',
-                        'url': '/view/lm/users/ati-teacher-passwords',
+                        'url': '/view/lm/users/teachers',
                         'weight': 10,
                     },
                     {
                         'name': _('Teacher Passwords'),
                         'icon': 'key',
                         'url': '/view/lm/users/teacher-passwords',
-                        'weight': 11,
+                        'weight': 15,
                     },
                     {
-                        'name': _('Teachers List'),
-                        'icon': 'briefcase',
-                        'url': '/view/lm/users/teachers-list',
+                        'name': _('ATi Teacher Passwords'),
+                        'icon': 'key',
+                        'url': '/view/lm/users/ati-teacher-passwords',
                         'weight': 15,
                     },
                 ],
@@ -47,6 +48,7 @@ class ItemProvider(SidebarItemProvider):
                 'attach': 'category:usermanagement',
                 'name': _('Extra Users'),
                 'icon': 'users',
+                'url': '/view/lm/users/extra-students',
                 'weight': 20,
                 'children': [
                     {

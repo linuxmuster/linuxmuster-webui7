@@ -3,6 +3,19 @@ angular.module('lmn.session').config ($routeProvider) ->
         controller: 'LMNSessionController'
         templateUrl: '/lmn_session:resources/partial/session.html'
 
+#angular.module('lmn.session').controller 'LMNSESSIONModalController', ($scope, $uibModalInstance, $http, gettext, notify, messagebox, username, session, comment) ->
+#    $scope.username = username
+#    $scope.session = session
+#    $scope.comment = comment
+#
+#    $scope.save = () ->
+#       $uibModalInstance.close(session)
+#
+#    $scope.close = () ->
+#       $uibModalInstance.dismiss()
+
+
+
 angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) ->
     pageTitle.set(gettext('Session'))
 
@@ -63,17 +76,21 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
 
     $scope.checkboxModel = {
        value1 : false,
-       value2 : 'true'
+       value2 : true
     }
 
     $scope.killSession = (username,session) ->
-                #if confirm "Delete Session ?"
-                $http.post('/api/lmn/session/sessions', {action: 'kill-sessions', session: session}).then (resp) ->
-                    messagebox.show(title: gettext('Sessions Removed'), text: 'Session '+session +'removed', positive: 'OK')
+                messagebox.show(text: "Delete '#{session}'?", positive: 'Delete', negative: 'Cancel').then () ->
+                    $http.post('/api/lmn/session/sessions', {action: 'kill-sessions', session: session}).then (resp) ->
+                        notify.success gettext('Session Deleted')
 
     $scope.newSession = (username) ->
-                $http.post('/api/lmn/session/sessions', {action: 'new-session', username: username}).then (resp) ->
-                    $scope.new-sessions = resp.data
+                messagebox.prompt(gettext('Session Name'), '---').then (msg) ->
+                    if not msg.value
+                        return
+                    $http.post('/api/lmn/session/sessions', {action: 'new-session', username: username, comment: msg.value}).then (resp) ->
+                        $scope.new-sessions = resp.data
+                        notify.success gettext('Session Created')
 
     $scope.showSessions = (username) ->
                 $http.post('/api/lmn/session/sessions', {action: 'get-sessions', username: username}).then (resp) ->
@@ -84,25 +101,32 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                 $http.post('/api/lmn/session/sessions', {action: 'get-sessions', username: username}).then (resp) ->
                     $scope.sessions = resp.data
 
-    $scope.renameSession = (username, session) ->
-                $uibModal.open(
-                   templateUrl: '/lm_linbo:resources/partial/image.modal.html'
-                   controller: 'LMLINBOImageModalController'
-                   #resolve:
-                   #   image: () -> angular.copy(image)
-                   #   images: () -> $scope.images
-                ).result.then (result) ->
-                   $http.post('/api/lmn/session/sessions', {action: 'rename-sessions', username: username, session: session, comment: comment}).then (resp) ->
-                      notify.success gettext('Saved')
 
 
+    $scope.renameSession = (username, session, comment) ->
+        #messagebox.show(title: gettext('Current Sessions'), text: $scope.sessions, positive: 'OK')
+                messagebox.prompt(gettext('Session Name'), comment).then (msg) ->
+                    if not msg.value
+                        return
+                    $http.post('/api/lmn/session/sessions', {action: 'rename-session', session: session, comment: msg.value}).then (resp) ->
+                        notify.success gettext('Session Renamed')
 
     $scope.getParticipants = (username,session) ->
                 $http.post('/api/lmn/session/sessions', {action: 'get-participants', username: username, session: session}).then (resp) ->
                     $scope.participants = resp.data
 
+    $scope.findUsers = (q) ->
+                return $http.get("/api/lmn/session/user-search?q=#{q}").then (resp) ->
+                            $scope.users = resp.data
+                            console.log resp.data
+                            return resp.data
 
-    $http.get("/api/lmn/session/").then (resp) ->
+    $scope.$watch '_.addUser', () ->
+               if $scope._.addUser
+                      $scope.quotas[$scope._.addUser] = angular.copy($scope.standardQuota)
+                          $scope._.addNewSpecial = null
+
+    $http.get("/api/lmn/session").then (resp) ->
     #$http.get("/api/lmn/session/sessions").then (username,session) ->
                 #$http.post('/api/lmn/session/sessions', {action: 'get-participants', username: username, session: session}).then (resp) ->
                     #$scope.sessions = resp.data

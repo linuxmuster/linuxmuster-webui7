@@ -1,6 +1,5 @@
 import unicodecsv as csv
 import os
-import json
 import subprocess
 
 from jadi import component
@@ -99,22 +98,15 @@ class Handler(HttpPlugin):
     @url(r'/api/lm/sophomorixUsers/teachers')
     @endpoint(api=True)
     def handle_api_sophomorix_teachers(self, http_context):
+        # path = '/etc/linuxmuster/sophomorix/default-school/students.csv'#
         if http_context.method == 'GET':
             schoolname = 'default-school'
-            usersList = []
+            teachersList = []
             with authorize('lm:users:teachers:read'):
-                users = lmn_getSophomorixValue('sophomorix-query --schoolbase '+schoolname+ ' --teacher --user-full  -jj ', 'USER')
-                for item in users:
-                    #teachersList.append({'sAMAccountName': teachers[item]['sAMAccountName'], 'givenName': teachers[item]['sophomorixFirstnameASCII'], 'sn': teachers[item]['sophomorixSurnameASCII']}.copy())
-                    #raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(item))
-                    usersList.append({'sAMAccountName': users[item]['sAMAccountName'],
-                        'givenName': users[item]['givenName'],
-                        'sn': users[item]['sn'],
-                        'mail': users[item]['mail'],
-                        'sophomorixBirthdate': users[item]['sophomorixBirthdate'],
-                        'sophomorixFirstPassword': users[item]['sophomorixFirstPassword']}.copy())
-                #raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(usersList))
-                return usersList
+                teachers = lmn_getSophomorixValue('sophomorix-user --info -jj', 'LISTS/USER_by_sophomorixSchoolname/'+schoolname+'/teacher')
+                for item in range(len(teachers)):
+                    teachersList.append({'sAMAccountName': teachers[item]}.copy())
+                return teachersList
 
         if http_context.method == 'POST':
             with authorize('lm:users:teachers:write'):

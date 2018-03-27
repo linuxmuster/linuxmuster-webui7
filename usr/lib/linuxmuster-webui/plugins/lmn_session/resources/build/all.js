@@ -82,28 +82,36 @@
     };
     $scope.checkboxModel = {
       value1: false,
-      value2: 'true'
+      value2: true
     };
     $scope.killSession = function(username, session) {
-      return $http.post('/api/lmn/session/sessions', {
-        action: 'kill-sessions',
-        session: session
-      }).then(function(resp) {
-        return messagebox.show({
-          title: gettext('Sessions Removed'),
-          text: 'Session ' + session(+'removed', {
-            positive: 'OK'
-          })
+      return messagebox.show({
+        text: "Delete '" + session + "'?",
+        positive: 'Delete',
+        negative: 'Cancel'
+      }).then(function() {
+        return $http.post('/api/lmn/session/sessions', {
+          action: 'kill-sessions',
+          session: session
+        }).then(function(resp) {
+          return notify.success(gettext('Session Deleted'));
         });
       });
     };
     $scope.newSession = function(username) {
-      return $http.post('/api/lmn/session/sessions', {
-        action: 'new-session',
-        username: username
-      }).then(function(resp) {
-        var sessions;
-        return $scope["new"] - (sessions = resp.data);
+      return messagebox.prompt(gettext('Session Name'), '---').then(function(msg) {
+        if (!msg.value) {
+          return;
+        }
+        return $http.post('/api/lmn/session/sessions', {
+          action: 'new-session',
+          username: username,
+          comment: msg.value
+        }).then(function(resp) {
+          var sessions;
+          $scope["new"] - (sessions = resp.data);
+          return notify.success(gettext('Session Created'));
+        });
       });
     };
     $scope.showSessions = function(username) {
@@ -127,18 +135,17 @@
         return $scope.sessions = resp.data;
       });
     };
-    $scope.renameSession = function(username, session) {
-      return $uibModal.open({
-        templateUrl: '/lm_linbo:resources/partial/image.modal.html',
-        controller: 'LMLINBOImageModalController'
-      }).result.then(function(result) {
+    $scope.renameSession = function(username, session, comment) {
+      return messagebox.prompt(gettext('Session Name'), comment).then(function(msg) {
+        if (!msg.value) {
+          return;
+        }
         return $http.post('/api/lmn/session/sessions', {
-          action: 'rename-sessions',
-          username: username,
+          action: 'rename-session',
           session: session,
-          comment: comment
+          comment: msg.value
         }).then(function(resp) {
-          return notify.success(gettext('Saved'));
+          return notify.success(gettext('Session Renamed'));
         });
       });
     };
@@ -151,7 +158,14 @@
         return $scope.participants = resp.data;
       });
     };
-    return $http.get("/api/lmn/session/").then(function(resp) {});
+    $scope.findUsers = function(q) {
+      return $http.get("/api/lmn/session/user-search?q=" + q).then(function(resp) {
+        $scope.users = resp.data;
+        console.log(resp.data);
+        return resp.data;
+      });
+    };
+    return $http.get("/api/lmn/session").then(function(resp) {});
   });
 
 }).call(this);

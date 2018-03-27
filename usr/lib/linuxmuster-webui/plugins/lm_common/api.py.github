@@ -51,8 +51,9 @@ def lmn_getLDAPGroupmembers(group, field):
     try:
         res = l.search_s(params['searchdn'], ldap.SCOPE_SUBTREE, searchFilter)
         userDN = res[0][0]
-    except ldap.LDAPError, e:
-        print e
+    except Exception as e:
+    #except ldap.LDAPError, e:
+        print (e)
     soph = l.search_s(
     userDN,
     ldap.SCOPE_SUBTREE,
@@ -79,8 +80,9 @@ def lmn_getUserLdapValue(user, field):
     try:
         res = l.search_s(params['searchdn'], ldap.SCOPE_SUBTREE, searchFilter)
         userDN = res[0][0]
-    except ldap.LDAPError, e:
-        print e
+    #except ldap.LDAPError, e:
+    except Exception as e:
+        print (e)
     soph = l.search_s(
     userDN,
     ldap.SCOPE_SUBTREE,
@@ -104,7 +106,7 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath):
     try:
         resultString = dpath.util.get(jsonDict, jsonpath)
     except Exception as e:
-        raise Exception('Field error. Either sophomorix field does not exist or ajenti binduser does not have sufficient permissions:\n' 'Searched field was: ' + str(e) +' received information for filter:  ' + str(jsonObj))
+        raise Exception('Field error. Either sophomorix field does not exist or ajenti binduser does not have sufficient permissions:\n' 'Searched field was: ' + str(e) +' received information for filter:  ' + str(jsonDict))
     return resultString
 
 
@@ -119,3 +121,4 @@ def lmn_getUserSophomorixValue(user, field):
     except Exception as e:
         raise Exception('Field error. Either sophomorix field does not exist or ajenti binduser does not have sufficient permissions:\n' 'Searched field was: ' + str(e) +' received information for filter:  ' + str(jsonObj))
     return resultString
+

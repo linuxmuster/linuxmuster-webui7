@@ -112,6 +112,7 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath):
     return resultString
 
 
+# deprecated
 def lmn_getUserSophomorixValue(user, field):
     # get json string from sophomorix
     jsonS = subprocess.Popen('sophomorix-user --info --user ' + user + ' -jj 1>/dev/null', stdout=subprocess.PIPE, stderr=subprocess.STDOUT,  shell=True).stdout.read()

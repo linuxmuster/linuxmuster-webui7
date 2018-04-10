@@ -183,10 +183,18 @@
     $scope.findUsers = function(q) {
       return $http.get("/api/lmn/session/user-search?q=" + q).then(function(resp) {
         $scope.users = resp.data;
-        console.log(resp.data);
         return resp.data;
       });
     };
+    $scope.$watch('_.addUser', function() {
+      if ($scope._.addUser) {
+        return messagebox.show({
+          title: gettext('No Sessions'),
+          text: $scope._.addUser,
+          positive: 'OK'
+        });
+      }
+    });
     return $http.get("/api/lmn/session").then(function(resp) {});
   });
 

@@ -80,5 +80,7 @@ class Handler(HttpPlugin):
                 return 0
         userList = []
         for user in users:
-            userList.append(users[user]['displayName'])
+            userList.append(users[user])
+
+        #raise Exception('Field error. Either LDAP field does not exist or' + str(userList))
         return userList

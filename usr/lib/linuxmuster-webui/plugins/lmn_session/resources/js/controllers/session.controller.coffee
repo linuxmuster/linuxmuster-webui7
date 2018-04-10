@@ -138,11 +138,12 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
     $scope.findUsers = (q) ->
                 return $http.get("/api/lmn/session/user-search?q=#{q}").then (resp) ->
                             $scope.users = resp.data
-                            console.log resp.data
+                            # console.log resp.data
                             return resp.data
 
-    #$scope.$watch '_.addUser', () ->
-    #            if $scope._.addUser
+    $scope.$watch '_.addUser', () ->
+                if $scope._.addUser
+                    messagebox.show(title: gettext('No Sessions'), text: $scope._.addUser, positive: 'OK')
     #                $scope.quotas[$scope._.addUser] = angular.copy($scope.standardQuota)
     #                $scope._.addNewSpecial = null
 

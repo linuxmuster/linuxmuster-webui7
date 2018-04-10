@@ -1,7 +1,7 @@
 <br/>
 <div>
     <div class="input-group">
-        <input type="text" placeholder="Add new" ng:model="_.addUser" typeahead-editable="false" typeahead-min-length="2" uib-typeahead="user for user in findUsers($viewValue) | limitTo:10" class="form-control" />
+        <input type="text" placeholder="Add new" ng:model="_.addUser" typeahead-editable="false" typeahead-min-length="2" uib-typeahead="user.sAMAccountName as user.displayName for user in findUsers($viewValue) | limitTo:10" class="form-control" />
 
 
         <!-- <input ng:model="filter" type="search" autofocus class="form-control" placeholder="Filter" />-->
@@ -72,7 +72,7 @@
             </ul>
         </div>
     </div>
-    <h4 style="display:{{visible.sessionname}}">{currentSession.name}} | {{currentSession.comment}}</h4>
+    <h4 style="display:{{visible.sessionname}}">{{currentSession.name}} | {{currentSession.comment}}</h4>
 
     <table class="table">
         <tr style="display:{{visible.table}};">

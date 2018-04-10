@@ -98,17 +98,21 @@ def lmn_getUserLdapValue(user, field):
     return resultString
 
 
-def lmn_getSophomorixValue(sophomorixCommand, jsonpath):
+def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
     # only error log is going to be processed. standard output is thrown away
     jsonS = subprocess.Popen(sophomorixCommand + ' 1>/dev/null ', stdout=subprocess.PIPE, stderr=subprocess.STDOUT,  shell=True).stdout.read()
     # jsonS is everything between sophomorix json headers
     jsonS = jsonS.split("# JSON-begin", 1)[1]
     jsonS = jsonS.split("# JSON-end", 1)[0]
     jsonDict = json.loads(jsonS, encoding='latin1')
-    try:
+    if ignoreErrors == False:
+        try:
+            resultString = dpath.util.get(jsonDict, jsonpath)
+        except Exception as e:
+            pass
+            raise Exception('Field error. Either sophomorix field does not exist or ajenti binduser does not have sufficient permissions:\n' 'Searched field was: ' + str(e) + ' received information for filter:  ' + str(jsonDict))
+    else:
         resultString = dpath.util.get(jsonDict, jsonpath)
-    except Exception as e:
-        raise Exception('Field error. Either sophomorix field does not exist or ajenti binduser does not have sufficient permissions:\n' 'Searched field was: ' + str(e) + ' received information for filter:  ' + str(jsonDict))
     return resultString
 
 

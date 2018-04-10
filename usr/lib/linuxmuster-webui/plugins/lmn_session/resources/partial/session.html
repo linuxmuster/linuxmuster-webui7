@@ -72,10 +72,10 @@
             </ul>
         </div>
     </div>
-    <h4>{{currentSession.name}} | {{currentSession.comment}}</h4>
+    <h4 style="display:{{visible.sessionname}}">{{currentSession.name}} | {{currentSession.comment}}</h4>
 
     <table class="table">
-        <tr>
+        <tr style="display:{{visible.table}};">
             <th></th> <!--empty checkopox field-->
 
             <th ng:repeat="(id, field) in fields" ng:if="field.visible">{{field.name}}</th>
@@ -150,6 +150,9 @@
                 <td><input type="text"  ng:model="participant.group_printing" placeholder="printing"  class="form-control" readonly/></td>-->
         </tr>
     </table>
+
+    <div><center><h3>{{info.message}}<h3></center></div>
+
     <!--
         <div class="list-group">
         <a class="list-group-item" ng:repeat="participant in participants">
@@ -163,13 +166,12 @@
     -->
 
 
+<!--
         <span checkbox ng:model="checkboxModel.value1" ng-true-value="'TRUE'" ng-false-value='FALSE' ></span>
         <span checkbox ng:model="checkboxModel.value2" ng-true-value="'TRUE'" ng-false-value="'FALSE'" ></span>
         <br>
         <tt>value1 = {{checkboxModel.value1}}</tt><br/>
         <tt>value2 = {{checkboxModel.value2}}</tt><br/>
-        {{ BULLSHIT | lowercase }}
-        {{ lowercase_expression | lowercase}}
         <div>Current sessionname: {{currentSession.name}}</div>
         <div>Current sessionname: {{sessions}}</div>
         <div>Test: {{participants}}</div>
@@ -184,3 +186,4 @@
         <br>
         Current sessioncomment: {{currentSession.comment}}
         <br/>
+-->

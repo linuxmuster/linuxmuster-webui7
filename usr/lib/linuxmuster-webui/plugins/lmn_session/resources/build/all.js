@@ -84,6 +84,13 @@
       value1: false,
       value2: true
     };
+    $scope.visible = {
+      table: 'none',
+      sessionname: 'none'
+    };
+    $scope.info = {
+      message: ''
+    };
     $scope.killSession = function(username, session) {
       return messagebox.show({
         text: "Delete '" + session + "'?",
@@ -132,6 +139,13 @@
         action: 'get-sessions',
         username: username
       }).then(function(resp) {
+        if (resp.data === 0) {
+          messagebox.show({
+            title: gettext('No Sessions'),
+            text: 'No session found! Please create a session first.',
+            positive: 'OK'
+          });
+        }
         return $scope.sessions = resp.data;
       });
     };
@@ -155,6 +169,14 @@
         username: username,
         session: session
       }).then(function(resp) {
+        $scope.visible.sessionname = 'show';
+        if (resp.data === 0) {
+          $scope.visible.table = 'none';
+          $scope.info.message = 'This session appears to be empty. Start adding users by using the top search bar!';
+        } else {
+          $scope.info.message = '';
+          $scope.visible.table = 'show';
+        }
         return $scope.participants = resp.data;
       });
     };

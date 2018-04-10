@@ -24,7 +24,11 @@ class Handler(HttpPlugin):
             supervisor = http_context.json_body()['username']
             #sessionsList = []
             with authorize('lm:users:teachers:read'):
-                sessions = lmn_getSophomorixValue('sophomorix-session -i -jj ', 'SUPERVISOR/'+supervisor+'/sophomorixSessions')
+                try:
+                    sessions = lmn_getSophomorixValue('sophomorix-session -i -jj ', 'SUPERVISOR/'+supervisor+'/sophomorixSessions', True)
+                # Most likeley key error 'cause no sessions for this user exist
+                except Exception as e:
+                    return 0
                 #for session in sessions:
                 #    sessionsList.append({'session': session,
                 #    'comment': sessions[session]['COMMENT']}.copy())
@@ -33,7 +37,10 @@ class Handler(HttpPlugin):
             supervisor = http_context.json_body()['username']
             session = http_context.json_body()['session']
             with authorize('lm:users:teachers:read'):
-                    participants = lmn_getSophomorixValue('sophomorix-session -i -jj ', 'SUPERVISOR/'+supervisor+'/sophomorixSessions/'+session+'/PARTICIPANTS')
+                    try:
+                        participants = lmn_getSophomorixValue('sophomorix-session -i -jj ', 'SUPERVISOR/'+supervisor+'/sophomorixSessions/'+session+'/PARTICIPANTS', True)
+                    except Exception as e:
+                        return 0
                     # Convert PERL bool to python bool
                     for key, value in participants.iteritems():
                         for key in value:

@@ -159,7 +159,7 @@
 
     <floating-toolbar>
     <button ng:click="saveApply()" class="btn btn-default btn-flat" translate>Save & apply</button>
-    <button ng:click="cancel()" class="btn btn-default btn-flat" translate>Cancel</button>
+    <button ng:click="cancel(identity.user,currentSession.name)" class="btn btn-default btn-flat" translate>Cancel</button>
     </floating-toolbar>
 
 
@@ -185,13 +185,18 @@
         <div>Current sessionname: {{currentSession.name}}</div>
         <div>Current sessionname: {{sessions}}</div>
         -->
+        <!--
         <div>Test: {{participants}}</div>
 
         <br>
         <br>
+        Current sessioncomment: {{currentSession.comment}}
+        Current sessioncomment: {{currentSession.name}}
+        <br/>
+        <br>
 
         <div>Test2: {{participants.frayka}}</div>
-<!--
+
         <div>All Sessions Current User{{sessions}}</div>
         <br>
         {{identity}}
@@ -199,6 +204,7 @@
         {{identity.user}}
         <br>
         <br>
+        Current sessionID: {{currentSession.name}}
         Current sessioncomment: {{currentSession.comment}}
         <br/>
--->
+        -->

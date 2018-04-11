@@ -1,8 +1,14 @@
 <br/>
 <div>
     <div class="input-group">
-        <input type="text" placeholder="Add new" ng:model="_.addUser" typeahead-editable="false" typeahead-min-length="2" uib-typeahead="user.sAMAccountName as user.displayName for user in findUsers($viewValue) | limitTo:10" class="form-control" />
+        <input type="text" placeholder="Add new" ng:model="_.addParticipant" typeahead-editable="false" typeahead-min-length="2" uib-typeahead="user as user.sophomorixAdminClass+' '+user.displayName+ ' '+user.sAMAccountName  for user in findUsers($viewValue) | limitTo:10" class="form-control" />
 
+        <oi-select
+              oi-options="list.id as list.description for list in lists"
+                ng-model="tags"
+                  multiple
+                    placeholder="Select">
+        </oi-select>
 
         <!-- <input ng:model="filter" type="search" autofocus class="form-control" placeholder="Filter" />-->
         <div uib-dropdown class="input-group-btn">
@@ -64,7 +70,7 @@
                 <span class="caret"></span>
             </button>
             <ul uib-dropdown-menu class="dropdown-menu-right" style="width:350px">
-                <li ng:repeat="(id, session) in sessions">
+                    <li ng:repeat="(id, session) in sessions">
                     <a ng:click="getParticipants(identity.user,id); currentSession.name=id; currentSession.comment=session.COMMENT"><i class="fa fa-list-ol"></i> {{session.COMMENT}} | {{id}}</a>
                 </li>
 
@@ -105,15 +111,11 @@
                         </li>
                     </ul>
                 </span>
-            </td>   
+            </td>
             <td><input type="text"  ng:model="id" placeholder="givenName"  class="form-control" readonly/></td>
             <td><input type="text"  ng:model="participant.givenName" placeholder="givenName"  class="form-control" readonly/></td>
             <td><input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="participant.sn" placeholder="Last name" class="form-control" readonly/> </td>
             <td><input type="text"  ng:model="participant.sophomorixExamMode" placeholder="exammode"  class="form-control" readonly/></td>
-            <!--<td><input type="text"  ng:model="participant.group_internetaccess" placeholder="exammode"  class="form-control" readonly/></td>
-            <td><input type="text"  ng:model="participant.group_intranetaccess" placeholder="exammode"  class="form-control" readonly/></td>
-            <td><input type="text"  ng:model="participant.group_webfilter" placeholder="exammode"  class="form-control" readonly/></td>
-            <td><input type="text"  ng:model="participant.group_printing" placeholder="exammode"  class="form-control" readonly/></td>-->
             <td width="1"> <span checkbox ng:model="participant.group_wifiaccess"></span></td>
             <td width="1"><span checkbox ng:model="participant.group_internetaccess" ></span></td>
             <td width="1"> <span checkbox ng:model="participant.group_intranetaccess"></span></td>
@@ -142,7 +144,8 @@
                         </li>
                     </ul>
                 </span>
-            </td>   
+            </td>
+            <td><button class="btn btn-default" ng:click="removeParticipant(id)"> <i class="fa fa-trash"></i></td>
 
             <!-- <td><input type="text"  ng:model="participant.group_internetaccess" placeholder="internetaccess"  class="form-control" readonly/></td>
                 <td><input type="text"  ng:model="participant.group_intranetaccess" placeholder="intranetaccess"  class="form-control" readonly/></td>
@@ -153,7 +156,12 @@
 
     <div><center><h3>{{info.message}}<h3></center></div>
 
-    {{user}}
+
+    <floating-toolbar>
+    <button ng:click="saveApply()" class="btn btn-default btn-flat" translate>Save & apply</button>
+    <button ng:click="cancel()" class="btn btn-default btn-flat" translate>Cancel</button>
+    </floating-toolbar>
+
 
     <!--
         <div class="list-group">
@@ -168,17 +176,22 @@
     -->
 
 
-<!--
         <span checkbox ng:model="checkboxModel.value1" ng-true-value="'TRUE'" ng-false-value='FALSE' ></span>
         <span checkbox ng:model="checkboxModel.value2" ng-true-value="'TRUE'" ng-false-value="'FALSE'" ></span>
         <br>
+        <!--
         <tt>value1 = {{checkboxModel.value1}}</tt><br/>
         <tt>value2 = {{checkboxModel.value2}}</tt><br/>
         <div>Current sessionname: {{currentSession.name}}</div>
         <div>Current sessionname: {{sessions}}</div>
+        -->
         <div>Test: {{participants}}</div>
-        <div>Test2: {{participants.frayka}}</div>
 
+        <br>
+        <br>
+
+        <div>Test2: {{participants.frayka}}</div>
+<!--
         <div>All Sessions Current User{{sessions}}</div>
         <br>
         {{identity}}

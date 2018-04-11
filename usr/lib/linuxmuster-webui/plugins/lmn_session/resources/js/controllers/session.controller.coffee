@@ -89,6 +89,8 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
         message : ''
     }
 
+    $scope._ =
+            addParticipant: null
 
 
     $scope.killSession = (username,session) ->
@@ -133,6 +135,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                     else
                         $scope.info.message = ''
                         $scope.visible.table = 'show'
+                    console.log resp.data
                     $scope.participants = resp.data
 
     $scope.findUsers = (q) ->
@@ -141,11 +144,17 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                             # console.log resp.data
                             return resp.data
 
-    $scope.$watch '_.addUser', () ->
-                if $scope._.addUser
-                    messagebox.show(title: gettext('No Sessions'), text: $scope._.addUser, positive: 'OK')
-    #                $scope.quotas[$scope._.addUser] = angular.copy($scope.standardQuota)
-    #                $scope._.addNewSpecial = null
+    $scope.$watch '_.addParticipant', () ->
+                if $scope._.addParticipant
+                    $scope.info.message = ''
+                    $scope.visible.table = 'show'
+                    $scope.participants[$scope._.addParticipant.sAMAccountName] = angular.copy({"givenName":$scope._.addParticipant.givenName,"sn":$scope._.addParticipant.sn,"sophomorixExamMode":$scope._.addParticipant.sophomorixExamMode,"group_webfilter":false,"group_intranetaccess":false,"group_printing":false,"sophomorixStatus":"U","sophomorixRole":" --- ","group_internetaccess":false,"sophomorixAdminClass":"---","user_existing":true,"group_wifiaccess":false})
+                    $scope._.addParticipant = null
+
+    $scope.removeParticipant = (participant) ->
+                console.log $scope.participants
+                console.log participant
+                delete $scope.participants[participant]
 
     $http.get("/api/lmn/session").then (resp) ->
     #$http.get("/api/lmn/session/sessions").then (username,session) ->

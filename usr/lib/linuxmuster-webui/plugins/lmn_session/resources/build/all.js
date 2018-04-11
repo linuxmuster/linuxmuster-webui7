@@ -91,6 +91,9 @@
     $scope.info = {
       message: ''
     };
+    $scope._ = {
+      addParticipant: null
+    };
     $scope.killSession = function(username, session) {
       return messagebox.show({
         text: "Delete '" + session + "'?",
@@ -177,6 +180,7 @@
           $scope.info.message = '';
           $scope.visible.table = 'show';
         }
+        console.log(resp.data);
         return $scope.participants = resp.data;
       });
     };
@@ -186,15 +190,32 @@
         return resp.data;
       });
     };
-    $scope.$watch('_.addUser', function() {
-      if ($scope._.addUser) {
-        return messagebox.show({
-          title: gettext('No Sessions'),
-          text: $scope._.addUser,
-          positive: 'OK'
+    $scope.$watch('_.addParticipant', function() {
+      if ($scope._.addParticipant) {
+        $scope.info.message = '';
+        $scope.visible.table = 'show';
+        $scope.participants[$scope._.addParticipant.sAMAccountName] = angular.copy({
+          "givenName": $scope._.addParticipant.givenName,
+          "sn": $scope._.addParticipant.sn,
+          "sophomorixExamMode": $scope._.addParticipant.sophomorixExamMode,
+          "group_webfilter": false,
+          "group_intranetaccess": false,
+          "group_printing": false,
+          "sophomorixStatus": "U",
+          "sophomorixRole": " --- ",
+          "group_internetaccess": false,
+          "sophomorixAdminClass": "---",
+          "user_existing": true,
+          "group_wifiaccess": false
         });
+        return $scope._.addParticipant = null;
       }
     });
+    $scope.removeParticipant = function(participant) {
+      console.log($scope.participants);
+      console.log(participant);
+      return delete $scope.participants[participant];
+    };
     return $http.get("/api/lmn/session").then(function(resp) {});
   });
 

@@ -28,21 +28,21 @@ class Permissions (PermissionProvider):
             {
                 'id': 'lm:linbo:configs',
                 'name': _('Read/write start.conf'),
-                'default': True,
+                'default': False,
             },
             {
                 'id': 'lm:linbo:images',
                 'name': _('Read/write images'),
-                'default': True,
+                'default': False,
             },
             {
                 'id': 'lm:linbo:examples',
                 'name': _('Read examples'),
-                'default': True,
+                'default': False,
             },
             {
                 'id': 'lm:linbo:icons',
                 'name': _('Read/write icons'),
-                'default': True,
+                'default': False,
             },
         ]

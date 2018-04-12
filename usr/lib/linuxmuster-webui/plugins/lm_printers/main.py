@@ -28,6 +28,6 @@ class Permissions (PermissionProvider):
             {
                 'id': 'lm:printers',
                 'name': _('Configure printers'),
-                'default': True,
+                'default': False,
             },
         ]

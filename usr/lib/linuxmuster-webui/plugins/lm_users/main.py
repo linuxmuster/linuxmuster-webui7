@@ -82,56 +82,56 @@ class Permissions (PermissionProvider):
             {
                 'id': 'lm:users:students:read',
                 'name': _('Read students'),
-                'default': True,
+                'default': False,
             },
             {
                 'id': 'lm:users:students:write',
                 'name': _('Write students'),
-                'default': True,
+                'default': False,
             },
             {
                 'id': 'lm:users:teachers:read',
                 'name': _('Read teachers'),
-                'default': True,
+                'default': False,
             },
             {
                 'id': 'lm:users:teachers:write',
                 'name': _('Write teachers'),
-                'default': True,
+                'default': False,
             },
             {
                 'id': 'lm:users:extra-students:read',
                 'name': _('Read extra students'),
-                'default': True,
+                'default': False,
             },
             {
                 'id': 'lm:users:extra-students:write',
                 'name': _('Write extra students'),
-                'default': True,
+                'default': False,
             },
             {
                 'id': 'lm:users:extra-courses:read',
                 'name': _('Read extra courses'),
-                'default': True,
+                'default': False,
             },
             {
                 'id': 'lm:users:extra-courses:write',
                 'name': _('Write extra courses'),
-                'default': True,
+                'default': False,
             },
             {
                 'id': 'lm:users:check',
                 'name': _('Check user changes'),
-                'default': True,
+                'default': False,
             },
             {
                 'id': 'lm:users:apply',
                 'name': _('Apply user changes'),
-                'default': True,
+                'default': False,
             },
             {
                 'id': 'lm:users:passwords',
                 'name': _('Read/write passwords'),
-                'default': True,
+                'default': False,
             },
         ]

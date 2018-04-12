@@ -27,6 +27,6 @@ class Permissions (PermissionProvider):
             {
                 'id': 'lm:settings',
                 'name': _('Configure settings'),
-                'default': True,
+                'default': False,
             },
         ]

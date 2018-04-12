@@ -27,11 +27,11 @@ class Permissions (PermissionProvider):
             {
                 'id': 'lm:rooms:configure',
                 'name': _('Configure room defaults'),
-                'default': True,
+                'default': False,
             },
             {
                 'id': 'lm:rooms:apply',
                 'name': _('Set room defaults'),
-                'default': True,
+                'default': False,
             },
         ]

@@ -28,11 +28,11 @@ class Permissions (PermissionProvider):
             {
                 'id': 'lm:workstations',
                 'name': _('Read/write workstations'),
-                'default': True,
+                'default': False,
             },
             {
                 'id': 'lm:workstations:import',
                 'name': _('Import workstation'),
-                'default': True,
+                'default': False,
             },
         ]

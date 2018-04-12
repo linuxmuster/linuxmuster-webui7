@@ -26,6 +26,6 @@ class Permissions (PermissionProvider):
             {
                 'id': 'lm:users:teachers:write',
                 'name': _('Write students'),
-                'default': True,
+                'default': False,
             },
         ]

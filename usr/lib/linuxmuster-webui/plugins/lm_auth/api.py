@@ -53,11 +53,11 @@ class LMAuthenticationProvider(AuthenticationProvider):
             logging.error(str(e))
             return False
 
-        ldappermissions = l.search_s(userDN,ldap.SCOPE_SUBTREE,attrlist=['SophomorixUserPermissions'],)
+        ldappermissions = l.search_s(userDN,ldap.SCOPE_SUBTREE,attrlist=['sophomorixWebuiPermissionsCalculated'],)
         permissions = {}
         # convert python list we get from AD to dict
         if ldappermissions[0][1]: # is false if no values in SophomorixUserPermissions
-            for b in ldappermissions[0][1]['SophomorixUserPermissions']:
+            for b in ldappermissions[0][1]['sophomorixWebuiPermissionsCalculated']:
                 i = b.split(': ')
                 try:
                     i[1]

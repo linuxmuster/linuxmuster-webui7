@@ -27,16 +27,16 @@ class Permissions (PermissionProvider):
             {
                 'id': 'lm:quotas:ldap-search',
                 'name': _('Read LDAP'),
-                'default': True,
+                'default': False,
             },
             {
                 'id': 'lm:quotas:configure',
                 'name': _('Configure quotas'),
-                'default': True,
+                'default': False,
             },
             {
                 'id': 'lm:quotas:apply',
                 'name': _('Set quotas'),
-                'default': True,
+                'default': False,
             },
         ]

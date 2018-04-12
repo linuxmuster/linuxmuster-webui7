@@ -162,13 +162,9 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                     #$scope.sessions = resp.data
                 #$scope.sessions = resp.data
 
-    $scope.saveApply = () ->
-        $scope.save().then () ->
-            $uibModal.open(
-                templateUrl: '/lm_quotas:resources/partial/apply.modal.html'
-                controller: 'LMQuotasApplyModalController'
-                backdrop: 'static'
-            )
+    $scope.saveApply = (participants, session) ->
+                $http.post('/api/lmn/session/sessions', {action: 'save-session', participants: participants, session: session}).then (resp) ->
+
 
     $scope.cancel = (username,session) ->
         $scope.getParticipants(username,session)

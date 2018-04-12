@@ -63,6 +63,16 @@ class Handler(HttpPlugin):
             with authorize('lm:users:teachers:read'):
                 result = lmn_getSophomorixValue('sophomorix-session --create --supervisor ' + supervisor + ' -j --comment "' + comment + '"', 'OUTPUT')
                 return result
+        if action == 'save-session':
+            session = http_context.json_body()['session']
+            participants  = http_context.json_body()['participants']
+            participantsList = []
+            for participant in participants:
+                participantsList.append(participant)
+            string = ",".join(participantsList)
+            #raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(participantslist))
+            lmn_getSophomorixValue('sophomorix-session --session ' + session + ' -j --participants ' + string, 'OUTPUT')
+            return result
         if http_context.method == 'POST':
             with authorize('lm:users:teachers:write'):
                 return 0

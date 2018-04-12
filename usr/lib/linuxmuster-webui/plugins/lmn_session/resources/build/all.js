@@ -217,14 +217,12 @@
       return delete $scope.participants[participant];
     };
     $http.get("/api/lmn/session").then(function(resp) {});
-    $scope.saveApply = function() {
-      return $scope.save().then(function() {
-        return $uibModal.open({
-          templateUrl: '/lm_quotas:resources/partial/apply.modal.html',
-          controller: 'LMQuotasApplyModalController',
-          backdrop: 'static'
-        });
-      });
+    $scope.saveApply = function(participants, session) {
+      return $http.post('/api/lmn/session/sessions', {
+        action: 'save-session',
+        participants: participants,
+        session: session
+      }).then(function(resp) {});
     };
     return $scope.cancel = function(username, session) {
       return $scope.getParticipants(username, session);

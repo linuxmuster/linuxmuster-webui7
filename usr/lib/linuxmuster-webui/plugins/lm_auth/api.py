@@ -7,10 +7,13 @@ import aj
 from aj.auth import AuthenticationProvider, OSAuthenticationProvider
 
 
+
 @component(AuthenticationProvider)
 class LMAuthenticationProvider(AuthenticationProvider):
     id = 'lm'
     name = _('Linux Muster LDAP')
+
+
 
     def __init__(self, context):
         self.context = context
@@ -19,6 +22,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
         if username == 'root':
 
             return OSAuthenticationProvider.get(self.context).authenticate(username, password)
+
 
         # get ajenti yaml parameters
         params = aj.config.data['linuxmuster']['ldap']
@@ -91,3 +95,4 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
     def get_profile(self, username):
         return {}
+

@@ -24,20 +24,6 @@
                 </li>
             </ul>
         </div>
-        <!--
-
-            <div uib-button class="input-group-btn">
-            <button class="btn btn-default" uib-button ng:click="killSession(identity.user, currentSession.name)">
-            <span translate>Delete Session</span>
-            </button>
-            </div>
-            <div uib-button class="input-group-btn">
-            <button class="btn btn-default" uib-button ng:click="showSessions(identity.user)">
-            <span translate>New Session</span>
-            </button>
-            </div>
-
-        -->
         <div uib-dropdown class="input-group-btn" auto-close="outsideClick">
             <button class="btn btn-default" uib-dropdown-toggle>
                 {{'Edit Sessions'|translate}}
@@ -86,20 +72,21 @@
             <th ng:repeat="(id, field) in fields" ng:if="field.visible">{{field.name}}</th>
             <th></th>
         </tr>
-        <tr ng:repeat="(id, participant) in participants">
+        <tr style="display:{{visible.table}};"  ng:repeat="(id, participant) in participants">
             <!--<td><input type="text"  ng:model="id" placeholder="givenName"  class="form-control" readonly/></td>
             <td>< "participant.givenName" placeholder="givenName"  class="form" readonly/></td>
             <td><input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="participant.sn" placeholder="Last name" class="form-control" readonly/> </td>
             -->
+            <!--      <span id=supervalue2 checkbox ng:model="checkboxModel.value2"  ng-click="changeClass('supervalue2')" ></span>-->
             <td class="ng-binding"><i> {{id}}</i> <br> {{participant.sophomorixAdminClass}} </td>
             <td class="ng-binding"><b>  {{participant.givenName}} </b><br> {{participant.sn}} </td>
             <!--            <td class ="ng-binding"><b> {{participant.sn}}</b> </td>-->
             <td class="text-center" ><input type="text"  ng:model="participant.sophomorixExamMode" placeholder="exammode"  class="form-control" readonly/></td>
-            <td width="1" style="text-align:center;"> <span checkbox ng:model="participant.group_wifiaccess"></span></td>
-            <td width="1" style="text-align:center;"><span checkbox ng:model="participant.group_internetaccess" ></span></td>
-            <td width="1" style="text-align:center;"> <span checkbox ng:model="participant.group_intranetaccess"></span></td>
-            <td width="1" style="text-align:center;"> <span checkbox ng:model="participant.group_webfilter"></span></td>
-            <td width="1" style="text-align:center;"> <span checkbox ng:model="participant.group_printing" ></span></td>
+            <td width="1" style="text-align:center;"> <span checkbox id="{{id}}.wifi" ng-click="changeClass(id+'.wifi')" ng:model="participant.group_wifiaccess">"</span></td>
+            <td width="1" style="text-align:center;"> <span checkbox id="{{id}}.internet" ng-click="changeClass(id+'.internet')" ng:model="participant.group_internetaccess"></span></td>
+            <td width="1" style="text-align:center;"> <span checkbox id="{{id}}.intranet" ng-click="changeClass(id+'.intranet')" ng:model="participant.group_intranetaccess"></span></td>
+            <td width="1" style="text-align:center;"> <span checkbox id="{{id}}.webfilter" ng-click="changeClass(id+'.webfilter')" ng:model="participant.group_webfilter"></span></td>
+            <td width="1" style="text-align:center;"> <span checkbox id="{{id}}.printing" ng-click="changeClass(id+'.printing')" ng:model="participant.group_printing" ></span></td>
             <td width="1">
                 <span uib-dropdown>
                     <button class="btn btn-default" uib-dropdown-toggle>
@@ -137,7 +124,7 @@
 
 
     <floating-toolbar>
-    <button ng:click="saveApply(participants,currentSession.name)" class="btn btn-default btn-flat" translate>Save & apply</button>
+    <button ng:click="saveApply(identity.user,participants,currentSession.name)" class="btn btn-default btn-flat" translate>Save & apply</button>
     <button ng:click="cancel(identity.user,currentSession.name)" class="btn btn-default btn-flat" translate>Cancel</button>
     </floating-toolbar>
 
@@ -155,21 +142,34 @@
     -->
 
 <!--
--->
-        <span checkbox  ng:model="checkboxModel.value1" ng-true-value="'TRUE'" ng-false-value='FALSE' class="changedButton" ></span>
+        <span checkbox ng:model="checkboxModel.value1" ng-class="{classRed:'true'}"  ng-click="changeColor(value1)" ></span>
+    -->
+<!--
+        <span checkbox  ng:model="checkboxModel.value1" ng-true-value="'TRUE'" ng-false-value='FALSE' ng-class="className"{{className}}  ng-click="changeColor()" ></span>
+        <span checkbox  ng:model="checkboxModel.value1" ng-class = "{'checked': checkboxModel.value1, 'unchecked' : !checkboxModel.value1}"></span>
         <span checkbox ng:model="checkboxModel.value2" ng-true-value="'TRUE'" ng-false-value="'FALSE'" ng-click="" ></span>
-        <span checkbox  ng:model="checkboxModel.value2" ng-true-value="'TRUE'" ng-false-value="'FALSE'"  ng-class = "{'checked': inventory.productName, 'unchecked' : !inventory.productName}"></span>
-        <br>a
+        <span checkbox  ng:model="checkboxModel.value2" ng-class = "{'checked': checkboxModel.value2, 'unchecked' : !checkboxModel.value2}"></span>
+         <span checkbox ng:model="checkboxModel.value2" ng-class="value2"{{className}}  ng-click="changeColor()" ></span>
+        <span checkbox ng:model="checkboxModel.value2" ng-class="{changed:selectedBox=='value2'}"  ng-click="changeColor(value2)" ></span>
+        <span checkbox ng:model="checkboxModel.value2" ng-class="test2"{{className}}  ng-click="changeColor('')" ></span>
+-->
+
+<!--
+
+        <span id=supervalue1 checkbox ng:model="checkboxModel.value1"  ng-click="changeClass('supervalue1')" ></span>
+       <span id=supervalue2 checkbox ng:model="checkboxModel.value2"  ng-click="changeClass('supervalue2')" ></span>
+
+        <br>
+        {{className}}
+        {{className[item]}}
 
 
-
-        <!--
         <tt>value1 = {{checkboxModel.value1}}</tt><br/>
         <tt>value2 = {{checkboxModel.value2}}</tt><br/>
-        -->
         <div>Current sessionname: {{currentSession.name}}</div>
-        <div>Current sessionname: {{sessions}}</div>
-        <div>Test: {{participants}}</div>
+        <div>sessions: {{sessions}}</div>
+        <div>Mitglieder: {{participants}}</div>
+        -->
 
         <br>
         <br>
@@ -177,9 +177,9 @@
         Current sessioncomment: {{currentSession.name}}
         <br/>
         <br>
+        <div>Test2: {{participants}}</div>
 
-        <div>Test2: {{participants.frayka}}</div>
-
+<!--
         <div>All Sessions Current User{{sessions}}</div>
         <br>
         {{identity}}
@@ -190,3 +190,4 @@
         Current sessionID: {{currentSession.name}}
         Current sessioncomment: {{currentSession.comment}}
         <br/>
+-->

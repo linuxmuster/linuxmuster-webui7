@@ -96,10 +96,21 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
             addParticipant: null
 
 
+    $scope.changeClass = (item) ->
+        if document.getElementById(item).className.match (/(?:^|\s)changed(?!\S)/)
+            document.getElementById(item).className = document.getElementById(item).className.replace( /(?:^|\s)changed(?!\S)/g , '' )
+        else
+            document.getElementById(item).className += " changed"
+
+
     $scope.killSession = (username,session) ->
                 messagebox.show(text: "Delete '#{session}'?", positive: 'Delete', negative: 'Cancel').then () ->
                     $http.post('/api/lmn/session/sessions', {action: 'kill-sessions', session: session}).then (resp) ->
-                        notify.success gettext('Session Deleted')
+                        #notify.success gettext('Session Deleted')
+                        $scope.visible.sessionname = 'none'
+                        $scope.visible.table = 'none'
+                        $scope.info.message = ''
+                        notify.success gettext(resp.data)
 
     $scope.newSession = (username) ->
                 messagebox.prompt(gettext('Session Name'), '---').then (msg) ->
@@ -118,6 +129,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                 $http.post('/api/lmn/session/sessions', {action: 'get-sessions', username: username}).then (resp) ->
                     #if resp.data is 0
                         #messagebox.show(title: gettext('No Sessions'), text: 'No session found! Please create a session first.', positive: 'OK')
+                    #console.log $scope.sessions
                     $scope.sessions = resp.data
 
 
@@ -132,14 +144,13 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
     $scope.getParticipants = (username,session) ->
                 $http.post('/api/lmn/session/sessions', {action: 'get-participants', username: username, session: session}).then (resp) ->
                     $scope.visible.sessionname = 'show'
-                    if resp.data is 0
-                        $scope.visible.table = 'none'
-                        $scope.info.message = 'This session appears to be empty. Start adding users by using the top search bar!'
+                    $scope.participants = resp.data
+                    if $scope.participants[0]?
+                       $scope.visible.table = 'none'
+                       $scope.info.message = 'This session appears to be empty. Start adding users by using the top search bar!'
                     else
                         $scope.info.message = ''
                         $scope.visible.table = 'show'
-                    console.log resp.data
-                    $scope.participants = resp.data
 
     $scope.findUsers = (q) ->
                 return $http.get("/api/lmn/session/user-search?q=#{q}").then (resp) ->
@@ -149,8 +160,15 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
 
     $scope.$watch '_.addParticipant', () ->
                 if $scope._.addParticipant
+                    if $scope.participants[0]?
+                                delete $scope.participants['0']
                     $scope.info.message = ''
                     $scope.visible.table = 'show'
+                    console.log $scope._.addParticipant
+                    # Add Managementgroups list if missing. This happens when all managementgroup attributes are false, causing the json tree to skip this key
+                    if not $scope._.addParticipant.MANAGEMENTGROUPS?
+                                $scope._.addParticipant.MANAGEMENTGROUPS = []
+
                     $scope.participants[$scope._.addParticipant.sAMAccountName] = angular.copy({"givenName":$scope._.addParticipant.givenName,"sn":$scope._.addParticipant.sn,
                     "sophomorixExamMode":$scope._.addParticipant.sophomorixExamMode,
                     "group_webfilter":$scope._.addParticipant.MANAGEMENTGROUPS.webfilter,
@@ -163,8 +181,8 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                     $scope._.addParticipant = null
 
     $scope.removeParticipant = (participant) ->
-                console.log $scope.participants
-                console.log participant
+        #console.log $scope.participants
+        #console.log participant
                 delete $scope.participants[participant]
 
     $http.get("/api/lmn/session").then (resp) ->
@@ -173,10 +191,17 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                     #$scope.sessions = resp.data
                 #$scope.sessions = resp.data
 
-    $scope.saveApply = (participants, session) ->
+    $scope.saveApply = (username,participants, session) ->
                 $http.post('/api/lmn/session/sessions', {action: 'save-session', participants: participants, session: session}).then (resp) ->
+                    delete $scope.participants
+                    # TODO 
+                    # Instead of deleting participants remove changed class from elements
+                    $scope.output = resp.data
+                    $scope.getParticipants(username,session)
+                    notify.success gettext($scope.output)
 
 
     $scope.cancel = (username,session) ->
+        delete $scope.participants
         $scope.getParticipants(username,session)
 

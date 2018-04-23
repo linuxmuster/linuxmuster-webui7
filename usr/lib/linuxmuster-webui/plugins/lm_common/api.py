@@ -100,7 +100,7 @@ def lmn_getUserLdapValue(user, field):
 
 def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
     # only error log is going to be processed. standard output is thrown away
-    jsonS = subprocess.Popen(sophomorixCommand + ' 1>/dev/null ', stdout=subprocess.PIPE, stderr=subprocess.STDOUT,  shell=True).stdout.read()
+    jsonS = subprocess.Popen(sophomorixCommand + ' 1>/dev/null', stdout=subprocess.PIPE, stderr=subprocess.STDOUT,  shell=True).stdout.read()
     # jsonS is everything between sophomorix json headers
     jsonS = jsonS.split("# JSON-begin", 1)[1]
     jsonS = jsonS.split("# JSON-end", 1)[0]

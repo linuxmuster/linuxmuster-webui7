@@ -109,6 +109,13 @@
     $scope._ = {
       addParticipant: null
     };
+    $scope.changeClass = function(item) {
+      if (document.getElementById(item).className.match(/(?:^|\s)changed(?!\S)/)) {
+        return document.getElementById(item).className = document.getElementById(item).className.replace(/(?:^|\s)changed(?!\S)/g, '');
+      } else {
+        return document.getElementById(item).className += " changed";
+      }
+    };
     $scope.killSession = function(username, session) {
       return messagebox.show({
         text: `Delete '${session}'?`,
@@ -119,7 +126,11 @@
           action: 'kill-sessions',
           session: session
         }).then(function(resp) {
-          return notify.success(gettext('Session Deleted'));
+          //notify.success gettext('Session Deleted')
+          $scope.visible.sessionname = 'none';
+          $scope.visible.table = 'none';
+          $scope.info.message = '';
+          return notify.success(gettext(resp.data));
         });
       });
     };
@@ -159,6 +170,7 @@
       }).then(function(resp) {
         //if resp.data is 0
         //messagebox.show(title: gettext('No Sessions'), text: 'No session found! Please create a session first.', positive: 'OK')
+        //console.log $scope.sessions
         return $scope.sessions = resp.data;
       });
     };
@@ -184,15 +196,14 @@
         session: session
       }).then(function(resp) {
         $scope.visible.sessionname = 'show';
-        if (resp.data === 0) {
+        $scope.participants = resp.data;
+        if ($scope.participants[0] != null) {
           $scope.visible.table = 'none';
-          $scope.info.message = 'This session appears to be empty. Start adding users by using the top search bar!';
+          return $scope.info.message = 'This session appears to be empty. Start adding users by using the top search bar!';
         } else {
           $scope.info.message = '';
-          $scope.visible.table = 'show';
+          return $scope.visible.table = 'show';
         }
-        console.log(resp.data);
-        return $scope.participants = resp.data;
       });
     };
     $scope.findUsers = function(q) {
@@ -204,8 +215,16 @@
     };
     $scope.$watch('_.addParticipant', function() {
       if ($scope._.addParticipant) {
+        if ($scope.participants[0] != null) {
+          delete $scope.participants['0'];
+        }
         $scope.info.message = '';
         $scope.visible.table = 'show';
+        console.log($scope._.addParticipant);
+        // Add Managementgroups list if missing. This happens when all managementgroup attributes are false, causing the json tree to skip this key
+        if ($scope._.addParticipant.MANAGEMENTGROUPS == null) {
+          $scope._.addParticipant.MANAGEMENTGROUPS = [];
+        }
         $scope.participants[$scope._.addParticipant.sAMAccountName] = angular.copy({
           "givenName": $scope._.addParticipant.givenName,
           "sn": $scope._.addParticipant.sn,
@@ -224,8 +243,8 @@
       }
     });
     $scope.removeParticipant = function(participant) {
-      console.log($scope.participants);
-      console.log(participant);
+      //console.log $scope.participants
+      //console.log participant
       return delete $scope.participants[participant];
     };
     $http.get("/api/lmn/session").then(function(resp) {});
@@ -233,14 +252,22 @@
     //$http.post('/api/lmn/session/sessions', {action: 'get-participants', username: username, session: session}).then (resp) ->
     //$scope.sessions = resp.data
     //$scope.sessions = resp.data
-    $scope.saveApply = function(participants, session) {
+    $scope.saveApply = function(username, participants, session) {
       return $http.post('/api/lmn/session/sessions', {
         action: 'save-session',
         participants: participants,
         session: session
-      }).then(function(resp) {});
+      }).then(function(resp) {
+        delete $scope.participants;
+        // TODO 
+        // Instead of deleting participants remove changed class from elements
+        $scope.output = resp.data;
+        $scope.getParticipants(username, session);
+        return notify.success(gettext($scope.output));
+      });
     };
     return $scope.cancel = function(username, session) {
+      delete $scope.participants;
       return $scope.getParticipants(username, session);
     };
   });

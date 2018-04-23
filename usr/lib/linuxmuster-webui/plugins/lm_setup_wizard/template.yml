@@ -19,12 +19,12 @@ linuxmuster:
     searchdn: %%BASEDN%%
   provision: false
 max_sessions: 9
-name: server
+name: %%SERVERNAME%%.%%DOMAINNAME%%
 restricted_user: nobody
 ssl:
-  certificate: /etc/ajenti/ajenti.pem
+  certificate:
   client_auth:
     certificates: []
     enable: false
     force: false
-  enable: true
+  enable: false

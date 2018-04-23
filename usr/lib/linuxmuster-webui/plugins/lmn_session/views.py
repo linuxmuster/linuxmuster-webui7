@@ -1,7 +1,3 @@
-import os
-import json
-import subprocess
-
 from jadi import component
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
@@ -64,20 +60,58 @@ class Handler(HttpPlugin):
                 result = lmn_getSophomorixValue('sophomorix-session --create --supervisor ' + supervisor + ' -j --comment "' + comment + '"', 'OUTPUT')
                 return result
         if action == 'save-session':
+            def checkIfUserInManagementGroup(participant, managementgroup, managementList, noManagementList):
+                try:
+                    boolean = participants[participant][managementgroup]
+                    if boolean is True:
+                        managementList.append(participant)
+                    else:
+                        noManagementList.append(participant)
+                except KeyError:
+                    noManagementList.append(participant)
+                    pass
+                return 0
+
             session = http_context.json_body()['session']
-            participants  = http_context.json_body()['participants']
+            participants = http_context.json_body()['participants']
             participantsList = []
+            # managementGroups
+            wifiList, noWifiList, internetList, noInternetList, intranetList, noIntranetList, webfilterList, noWebfilterList, printingList, noPrintingList = [], [], [], [], [], [], [], [], [], []
             for participant in participants:
                 participantsList.append(participant)
-            string = ",".join(participantsList)
-            #raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(participantslist))
-            lmn_getSophomorixValue('sophomorix-session --session ' + session + ' -j --participants ' + string, 'OUTPUT')
+                checkIfUserInManagementGroup(participant, 'group_wifiaccess', wifiList, noWifiList)
+                checkIfUserInManagementGroup(participant, 'group_internetaccess', internetList, noInternetList)
+                checkIfUserInManagementGroup(participant, 'group_intranetaccess', intranetList, noIntranetList)
+                checkIfUserInManagementGroup(participant, 'group_webfilter', webfilterList, noWebfilterList)
+                checkIfUserInManagementGroup(participant, 'group_printing', printingList, noPrintingList)
+
+            participantsCSV = ",".join(participantsList)
+
+            wifiListCSV = ",".join(wifiList)
+            noWifiListCSV = ",".join(noWifiList)
+            internetListCSV = ",".join(internetList)
+            noInternetListCSV = ",".join(noInternetList)
+            intranetListCSV = ",".join(intranetList)
+            noIntranetListCSV = ",".join(noIntranetList)
+            webfilterListCSV = ",".join(webfilterList)
+            noWebfilterListCSV = ",".join(noWebfilterList)
+            printingListCSV = ",".join(printingList)
+            noPrintingListCSV = ",".join(noPrintingList)
+
+            # raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str('sophomorix-managementgroup --wifi '+ wifiListCSV + ' --nowifi ' + noWifiListCSV))
+            result = lmn_getSophomorixValue('sophomorix-managementgroup \
+                                            --wifi ' + wifiListCSV + ' --nowifi ' + noWifiListCSV +
+                                            ' --internet ' + internetListCSV + ' --nointernet ' + noInternetListCSV +
+                                            ' --intranet ' + intranetListCSV + ' --nointranet ' + noIntranetListCSV +
+                                            ' --webfilter ' + webfilterListCSV + ' --nowebfilter ' + noWebfilterListCSV +
+                                            ' --printing ' + printingListCSV + ' --noprinting ' + noPrintingListCSV +
+                                            ' -jj ', 'OUTPUT')
+            # raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(participants))
+            result = lmn_getSophomorixValue('sophomorix-session --session ' + session + ' -j --participants ' + participantsCSV, 'OUTPUT')
             return result
         if http_context.method == 'POST':
             with authorize('lm:users:teachers:write'):
                 return 0
-
-
 
     @url(r'/api/lmn/session/user-search')
     #@authorize('lmn:session:user-search')
@@ -85,12 +119,12 @@ class Handler(HttpPlugin):
     def handle_api_ldap_search(self, http_context):
         with authorize('lm:users:teachers:read'):
             try:
-                users = lmn_getSophomorixValue('sophomorix-query -jj --student --teacher --user-full --anyname \"*' + http_context.query['q'] + '*\" ', 'USER' ,True)
+                users = lmn_getSophomorixValue('sophomorix-query -jj --student --teacher --user-full --anyname \"*' + http_context.query['q'] + '*\" ', 'USER', True)
             except Exception:
                 return 0
         userList = []
         for user in users:
             userList.append(users[user])
 
-        #raise Exception('Field error. Either LDAP field does not exist or' + str(userList))
+        # raise Exception('Field error. Either LDAP field does not exist or' + str(userList))
         return userList

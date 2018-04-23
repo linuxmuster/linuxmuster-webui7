@@ -48,12 +48,15 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
        sAMAccountName:
           visible: true
           name: gettext('Loginname')
-       sn:
+       name:
           visible: true
-          name: gettext('Lastname')
-       givenName:
-          visible: true
-          name: gettext('Firstname')
+          name: gettext('Name')
+       #sn:
+       #  visible: true
+       #  name: gettext('Lastname')
+       #givenName:
+       #   visible: true
+       #   name: gettext('Firstname')
        examMode:
           visible: true
           name: gettext('Exam-Mode')
@@ -113,8 +116,8 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
 
     $scope.getSessions = (username) ->
                 $http.post('/api/lmn/session/sessions', {action: 'get-sessions', username: username}).then (resp) ->
-                    if resp.data is 0
-                        messagebox.show(title: gettext('No Sessions'), text: 'No session found! Please create a session first.', positive: 'OK')
+                    #if resp.data is 0
+                        #messagebox.show(title: gettext('No Sessions'), text: 'No session found! Please create a session first.', positive: 'OK')
                     $scope.sessions = resp.data
 
 
@@ -148,7 +151,15 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                 if $scope._.addParticipant
                     $scope.info.message = ''
                     $scope.visible.table = 'show'
-                    $scope.participants[$scope._.addParticipant.sAMAccountName] = angular.copy({"givenName":$scope._.addParticipant.givenName,"sn":$scope._.addParticipant.sn,"sophomorixExamMode":$scope._.addParticipant.sophomorixExamMode,"group_webfilter":false,"group_intranetaccess":false,"group_printing":false,"sophomorixStatus":"U","sophomorixRole":" --- ","group_internetaccess":false,"sophomorixAdminClass":"---","user_existing":true,"group_wifiaccess":false})
+                    $scope.participants[$scope._.addParticipant.sAMAccountName] = angular.copy({"givenName":$scope._.addParticipant.givenName,"sn":$scope._.addParticipant.sn,
+                    "sophomorixExamMode":$scope._.addParticipant.sophomorixExamMode,
+                    "group_webfilter":$scope._.addParticipant.MANAGEMENTGROUPS.webfilter,
+                    "group_intranetaccess":$scope._.addParticipant.MANAGEMENTGROUPS.intranet,
+                    "group_printing":$scope._.addParticipant.MANAGEMENTGROUPS.printing,
+                    "sophomorixStatus":"U","sophomorixRole":$scope._.addParticipant.sophomorixRole,
+                    "group_internetaccess":$scope._.addParticipant.MANAGEMENTGROUPS.internet,
+                    "sophomorixAdminClass":$scope._.addParticipant.sophomorixAdminClass,
+                    "user_existing":true,"group_wifiaccess":$scope._.addParticipant.MANAGEMENTGROUPS.wifi})
                     $scope._.addParticipant = null
 
     $scope.removeParticipant = (participant) ->

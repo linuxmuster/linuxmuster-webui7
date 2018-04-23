@@ -82,45 +82,24 @@
 
     <table class="table">
         <tr style="display:{{visible.table}};">
-            <th></th> <!--empty checkopox field-->
 
             <th ng:repeat="(id, field) in fields" ng:if="field.visible">{{field.name}}</th>
             <th></th>
         </tr>
         <tr ng:repeat="(id, participant) in participants">
-            <td width="1">
-                <span uib-dropdown>
-                    <button class="btn btn-default" uib-dropdown-toggle>
-                        <i class="fa fa-info-circle"></i>
-                    </button>
-                    <ul uib-dropdown-menu class="dropdown-menu-right" style="width:150px">
-                        <li>
-                            <a ng:click="setInitialPassword([teacher])" translate>
-                                Initial password
-                            </a>
-                        </li>
-                        <li>
-                            <a ng:click="setRandomPassword([teacher])" translate>
-                                Random password
-                            </a>
-                        </li>
-                        <li>
-                            <a ng:click="setCustomPassword([teacher])" translate>
-                                Custom password
-                            </a>
-                        </li>
-                    </ul>
-                </span>
-            </td>
-            <td><input type="text"  ng:model="id" placeholder="givenName"  class="form-control" readonly/></td>
-            <td><input type="text"  ng:model="participant.givenName" placeholder="givenName"  class="form-control" readonly/></td>
+            <!--<td><input type="text"  ng:model="id" placeholder="givenName"  class="form-control" readonly/></td>
+            <td>< "participant.givenName" placeholder="givenName"  class="form" readonly/></td>
             <td><input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="participant.sn" placeholder="Last name" class="form-control" readonly/> </td>
-            <td><input type="text"  ng:model="participant.sophomorixExamMode" placeholder="exammode"  class="form-control" readonly/></td>
-            <td width="1"> <span checkbox ng:model="participant.group_wifiaccess"></span></td>
-            <td width="1"><span checkbox ng:model="participant.group_internetaccess" ></span></td>
-            <td width="1"> <span checkbox ng:model="participant.group_intranetaccess"></span></td>
-            <td width="1"> <span checkbox ng:model="participant.group_webfilter"></span></td>
-            <td width="1"> <span checkbox ng:model="participant.group_printing"></span></td>
+            -->
+            <td class="ng-binding"><i> {{id}}</i> <br> {{participant.sophomorixAdminClass}} </td>
+            <td class="ng-binding"><b>  {{participant.givenName}} </b><br> {{participant.sn}} </td>
+            <!--            <td class ="ng-binding"><b> {{participant.sn}}</b> </td>-->
+            <td class="text-center" ><input type="text"  ng:model="participant.sophomorixExamMode" placeholder="exammode"  class="form-control" readonly/></td>
+            <td width="1" style="text-align:center;"> <span checkbox ng:model="participant.group_wifiaccess"></span></td>
+            <td width="1" style="text-align:center;"><span checkbox ng:model="participant.group_internetaccess" ></span></td>
+            <td width="1" style="text-align:center;"> <span checkbox ng:model="participant.group_intranetaccess"></span></td>
+            <td width="1" style="text-align:center;"> <span checkbox ng:model="participant.group_webfilter"></span></td>
+            <td width="1" style="text-align:center;"> <span checkbox ng:model="participant.group_printing" ></span></td>
             <td width="1">
                 <span uib-dropdown>
                     <button class="btn btn-default" uib-dropdown-toggle>
@@ -175,17 +154,21 @@
         </div>
     -->
 
+<!--
+-->
+        <span checkbox  ng:model="checkboxModel.value1" ng-true-value="'TRUE'" ng-false-value='FALSE' class="changedButton" ></span>
+        <span checkbox ng:model="checkboxModel.value2" ng-true-value="'TRUE'" ng-false-value="'FALSE'" ng-click="" ></span>
+        <span checkbox  ng:model="checkboxModel.value2" ng-true-value="'TRUE'" ng-false-value="'FALSE'"  ng-class = "{'checked': inventory.productName, 'unchecked' : !inventory.productName}"></span>
+        <br>a
 
-        <span checkbox ng:model="checkboxModel.value1" ng-true-value="'TRUE'" ng-false-value='FALSE' ></span>
-        <span checkbox ng:model="checkboxModel.value2" ng-true-value="'TRUE'" ng-false-value="'FALSE'" ></span>
-        <br>
+
+
         <!--
         <tt>value1 = {{checkboxModel.value1}}</tt><br/>
         <tt>value2 = {{checkboxModel.value2}}</tt><br/>
+        -->
         <div>Current sessionname: {{currentSession.name}}</div>
         <div>Current sessionname: {{sessions}}</div>
-        -->
-        <!--
         <div>Test: {{participants}}</div>
 
         <br>
@@ -207,4 +190,3 @@
         Current sessionID: {{currentSession.name}}
         Current sessioncomment: {{currentSession.comment}}
         <br/>
-        -->

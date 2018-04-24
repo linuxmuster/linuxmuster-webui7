@@ -19,7 +19,6 @@ angular.module('lmn.session').config ($routeProvider) ->
 angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) ->
     pageTitle.set(gettext('Session'))
 
-
     $scope.currentSession = {
         name: ""
         comment: ""
@@ -47,16 +46,10 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
     $scope.fields = {
        sAMAccountName:
           visible: true
-          name: gettext('Loginname')
+          name: gettext('Loginname / Class')
        name:
           visible: true
           name: gettext('Name')
-       #sn:
-       #  visible: true
-       #  name: gettext('Lastname')
-       #givenName:
-       #   visible: true
-       #   name: gettext('Firstname')
        examMode:
           visible: true
           name: gettext('Exam-Mode')
@@ -99,6 +92,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
     $scope.visible = {
        table : 'none',
        sessionname : 'none',
+       mainpage: 'show'
     }
 
 
@@ -115,6 +109,13 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
             document.getElementById(item).className = document.getElementById(item).className.replace( /(?:^|\s)changed(?!\S)/g , '' )
         else
             document.getElementById(item).className += " changed"
+
+    $scope.resetClass = () ->
+        result = document.getElementsByClassName("changed")
+        while result.length
+            result[0].className = result[0].className.replace( /(?:^|\s)changed(?!\S)/g , '' )
+        return
+
 
     $scope.selectAll = (item) ->
         managementgroup = 'group_'+item
@@ -137,6 +138,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                         #notify.success gettext('Session Deleted')
                         $scope.visible.sessionname = 'none'
                         $scope.visible.table = 'none'
+                        $scope.visible.mainpage = 'show'
                         $scope.info.message = ''
                         notify.success gettext(resp.data)
 
@@ -169,11 +171,13 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                         notify.success gettext('Session Renamed')
 
     $scope.getParticipants = (username,session) ->
+                $scope.resetClass()
                 # Reset select all checkboxes when loading participants
                 angular.forEach $scope.fields, (field) ->
                     field.checkboxStatus = false
                 $http.post('/api/lmn/session/sessions', {action: 'get-participants', username: username, session: session}).then (resp) ->
                     $scope.visible.sessionname = 'show'
+                    $scope.visible.mainpage = 'none'
                     $scope.participants = resp.data
                     if $scope.participants[0]?
                        $scope.visible.table = 'none'
@@ -189,6 +193,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                             return resp.data
 
     $scope.$watch '_.addParticipant', () ->
+                console.log $scope.identity.user
                 if $scope._.addParticipant
                     if $scope.participants[0]?
                                 delete $scope.participants['0']
@@ -215,23 +220,47 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
         #console.log participant
                 delete $scope.participants[participant]
 
-    $http.get("/api/lmn/session").then (resp) ->
-    #$http.get("/api/lmn/session/sessions").then (username,session) ->
-                #$http.post('/api/lmn/session/sessions', {action: 'get-participants', username: username, session: session}).then (resp) ->
-                    #$scope.sessions = resp.data
-                #$scope.sessions = resp.data
 
     $scope.saveApply = (username,participants, session) ->
                 $http.post('/api/lmn/session/sessions', {action: 'save-session', participants: participants, session: session}).then (resp) ->
-                    delete $scope.participants
+                    #delete $scope.participants
                     # TODO 
                     # Instead of deleting participants remove changed class from elements
                     $scope.output = resp.data
                     $scope.getParticipants(username,session)
                     notify.success gettext($scope.output)
 
-
-    $scope.cancel = (username,session) ->
-        delete $scope.participants
-        $scope.getParticipants(username,session)
-
+# TODO Find a solution for this
+#    sleep = (ms) ->
+#        start = new Date().getTime()
+#        continue while new Date().getTime() - start < ms
+#
+#    $scope.cancel = (username,session) ->
+#        delete $scope.participants
+#        $scope.getParticipants(username,session)
+#
+#    console.log $scope.identity
+##    sleep 2000
+#    console.log $scope.identity.user
+#    #console.log $scope[1]
+#    #console.log $scope.user
+#    #console.log $scope.promise
+#
+# #   $http.get('/api/lmn/session/sessions', {action: 'get-sessions', username: username}).then (resp) ->
+#    #$http.get("/api/lmn/session").then (resp) ->
+#    #            return resp.data
+#    #            #$http.post('/api/lmn/session/sessions', {action: 'get-sessions', username: username}).then (resp) ->
+#    #            #    $scope.sessions = resp.data
+#    #            console.log "username"
+#    #            #$scope.getSessions(username)
+#    ##$http.get("/api/lmn/session/sessions").then (username,session) ->
+#    #            #$http.post('/api/lmn/session/sessions', {action: 'get-participants', username: username, session: session}).then (resp) ->
+#    #                #$scope.sessions = resp.data
+#    #            #$scope.sessions = resp.data
+#
+#
+#    $scope.$watch 'locationChangeSuccess', ->
+#        # do something
+#        console.log 'huhu'
+#        console.log identity.user
+#        return

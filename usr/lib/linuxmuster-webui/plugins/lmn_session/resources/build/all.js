@@ -58,18 +58,12 @@
     $scope.fields = {
       sAMAccountName: {
         visible: true,
-        name: gettext('Loginname')
+        name: gettext('Loginname / Class')
       },
       name: {
         visible: true,
         name: gettext('Name')
       },
-      //sn:
-      //  visible: true
-      //  name: gettext('Lastname')
-      //givenName:
-      //   visible: true
-      //   name: gettext('Firstname')
       examMode: {
         visible: true,
         name: gettext('Exam-Mode')
@@ -116,7 +110,8 @@
     };
     $scope.visible = {
       table: 'none',
-      sessionname: 'none'
+      sessionname: 'none',
+      mainpage: 'show'
     };
     $scope.info = {
       message: ''
@@ -129,6 +124,16 @@
         return document.getElementById(item).className = document.getElementById(item).className.replace(/(?:^|\s)changed(?!\S)/g, '');
       } else {
         return document.getElementById(item).className += " changed";
+      }
+    };
+    $scope.resetClass = function() {
+      var result;
+      //console.log $scope.participants
+      //angular.forEach $scope.participants, (participant, id) ->
+      //            angular.forEach participant,(item) ->
+      result = document.getElementsByClassName("changed");
+      while (result.length) {
+        result[0].className = result[0].className.replace(/(?:^|\s)changed(?!\S)/g, '');
       }
     };
     $scope.selectAll = function(item) {
@@ -164,6 +169,7 @@
           //notify.success gettext('Session Deleted')
           $scope.visible.sessionname = 'none';
           $scope.visible.table = 'none';
+          $scope.visible.mainpage = 'show';
           $scope.info.message = '';
           return notify.success(gettext(resp.data));
         });
@@ -224,6 +230,7 @@
       });
     };
     $scope.getParticipants = function(username, session) {
+      $scope.resetClass();
       // Reset select all checkboxes when loading participants
       angular.forEach($scope.fields, function(field) {
         return field.checkboxStatus = false;
@@ -234,6 +241,7 @@
         session: session
       }).then(function(resp) {
         $scope.visible.sessionname = 'show';
+        $scope.visible.mainpage = 'none';
         $scope.participants = resp.data;
         if ($scope.participants[0] != null) {
           $scope.visible.table = 'none';
@@ -252,6 +260,7 @@
       });
     };
     $scope.$watch('_.addParticipant', function() {
+      console.log($scope.identity.user);
       if ($scope._.addParticipant) {
         if ($scope.participants[0] != null) {
           delete $scope.participants['0'];
@@ -285,18 +294,13 @@
       //console.log participant
       return delete $scope.participants[participant];
     };
-    $http.get("/api/lmn/session").then(function(resp) {});
-    //$http.get("/api/lmn/session/sessions").then (username,session) ->
-    //$http.post('/api/lmn/session/sessions', {action: 'get-participants', username: username, session: session}).then (resp) ->
-    //$scope.sessions = resp.data
-    //$scope.sessions = resp.data
-    $scope.saveApply = function(username, participants, session) {
+    return $scope.saveApply = function(username, participants, session) {
       return $http.post('/api/lmn/session/sessions', {
         action: 'save-session',
         participants: participants,
         session: session
       }).then(function(resp) {
-        delete $scope.participants;
+        //delete $scope.participants
         // TODO 
         // Instead of deleting participants remove changed class from elements
         $scope.output = resp.data;
@@ -304,11 +308,41 @@
         return notify.success(gettext($scope.output));
       });
     };
-    return $scope.cancel = function(username, session) {
-      delete $scope.participants;
-      return $scope.getParticipants(username, session);
-    };
   });
+
+  // TODO Find a solution for this
+//    sleep = (ms) ->
+//        start = new Date().getTime()
+//        continue while new Date().getTime() - start < ms
+
+//    $scope.cancel = (username,session) ->
+//        delete $scope.participants
+//        $scope.getParticipants(username,session)
+
+//    console.log $scope.identity
+//#    sleep 2000
+//    console.log $scope.identity.user
+//    #console.log $scope[1]
+//    #console.log $scope.user
+//    #console.log $scope.promise
+
+// #   $http.get('/api/lmn/session/sessions', {action: 'get-sessions', username: username}).then (resp) ->
+//    #$http.get("/api/lmn/session").then (resp) ->
+//    #            return resp.data
+//    #            #$http.post('/api/lmn/session/sessions', {action: 'get-sessions', username: username}).then (resp) ->
+//    #            #    $scope.sessions = resp.data
+//    #            console.log "username"
+//    #            #$scope.getSessions(username)
+//    ##$http.get("/api/lmn/session/sessions").then (username,session) ->
+//    #            #$http.post('/api/lmn/session/sessions', {action: 'get-participants', username: username, session: session}).then (resp) ->
+//    #                #$scope.sessions = resp.data
+//    #            #$scope.sessions = resp.data
+
+//    $scope.$watch 'locationChangeSuccess', ->
+//        # do something
+//        console.log 'huhu'
+//        console.log identity.user
+//        return
 
 }).call(this);
 

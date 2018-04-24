@@ -125,11 +125,18 @@
 
     <div><center><h3>{{info.message}}<h3></center></div>
 
-
     <floating-toolbar>
     <button ng:click="saveApply(identity.user,participants,currentSession.name)" class="btn btn-default btn-flat" translate>Save & apply</button>
     <button ng:click="cancel(identity.user,currentSession.name)" class="btn btn-default btn-flat" translate>Cancel</button>
     </floating-toolbar>
+
+<div style="display:{{visible.mainpage}}" ng:show="sessions != null">
+    <div class="list-group">
+        <a class="list-group-item" ng:repeat="(id, session) in sessions" ng:click="getParticipants(identity.user,id); currentSession.name=id; currentSession.comment=session.COMMENT">
+            <i class="fa fa-users"></i> {{session.COMMENT}}   |   {{id}}
+        </a>
+    </div>
+
 
 
     <!--
@@ -172,7 +179,6 @@
         <div>Current sessionname: {{currentSession.name}}</div>
         <div>sessions: {{sessions}}</div>
         <div>Mitglieder: {{participants}}</div>
-        -->
 
         <br>
         <br>
@@ -182,12 +188,17 @@
         <br>
         <div>Test2: {{participants}}</div>
 
-<!--
         <div>All Sessions Current User{{sessions}}</div>
         <br>
-        {{identity}}
-        <br>
+
+
+
+        
         {{identity.user}}
+        <br>
+        -->
+<!--
+        {{identity}}
         <br>
         <br>
         Current sessionID: {{currentSession.name}}

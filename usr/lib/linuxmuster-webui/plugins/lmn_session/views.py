@@ -135,7 +135,7 @@ class Handler(HttpPlugin):
     def handle_api_ldap_search(self, http_context):
         with authorize('lm:users:teachers:read'):
             try:
-                users = lmn_getSophomorixValue('sophomorix-query -jj --student --teacher --user-full --anyname \"*' + http_context.query['q'] + '*\" ', 'USER', True)
+                users = lmn_getSophomorixValue('sophomorix-query -jj --student --user-full --anyname \"*' + http_context.query['q'] + '*\" ', 'USER', True)
             except Exception:
                 return 0
         userList = []

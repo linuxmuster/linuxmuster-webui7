@@ -69,7 +69,9 @@
     <table class="table">
         <tr style="display:{{visible.table}};">
 
-            <th ng:repeat="(id, field) in fields" ng:if="field.visible">{{field.name}}</th>
+            <th ng:repeat="(id, field) in fields" ng:if="field.visible">{{field.name}}
+                <span checkbox id="{{id}}.all" ng:if="field.checkboxAll" ng-click="selectAll(id)" ng:model=field.checkboxStatus>"</span></th>
+            <!-- <span checkbox id="{{id}}.all" ng:if="field.checkboxAll" ng-click="checkAll(id+'.all')" ng:model="false">"</span></th>-->
             <th></th>
         </tr>
         <tr style="display:{{visible.table}};"  ng:repeat="(id, participant) in participants">
@@ -82,9 +84,10 @@
             <td class="ng-binding"><b>  {{participant.givenName}} </b><br> {{participant.sn}} </td>
             <!--            <td class ="ng-binding"><b> {{participant.sn}}</b> </td>-->
             <td class="text-center" ><input type="text"  ng:model="participant.sophomorixExamMode" placeholder="exammode"  class="form-control" readonly/></td>
-            <td width="1" style="text-align:center;"> <span checkbox id="{{id}}.wifi" ng-click="changeClass(id+'.wifi')" ng:model="participant.group_wifiaccess">"</span></td>
-            <td width="1" style="text-align:center;"> <span checkbox id="{{id}}.internet" ng-click="changeClass(id+'.internet')" ng:model="participant.group_internetaccess"></span></td>
-            <td width="1" style="text-align:center;"> <span checkbox id="{{id}}.intranet" ng-click="changeClass(id+'.intranet')" ng:model="participant.group_intranetaccess"></span></td>
+            <td width="1" style="text-align:center;"> <span checkbox id="{{id}}.examModeCheckBox" ng-click="changeClass(id+'.examModeCheckBox')" ng:model="participant.sophomorixExamMode">"</span></td>
+            <td width="1" style="text-align:center;"> <span checkbox id="{{id}}.wifiaccess" ng-click="changeClass(id+'.wifiaccess')" ng:model="participant.group_wifiaccess">"</span></td>
+            <td width="1" style="text-align:center;"> <span checkbox id="{{id}}.internetaccess" ng-click="changeClass(id+'.internetaccess')" ng:model="participant.group_internetaccess"></span></td>
+            <td width="1" style="text-align:center;"> <span checkbox id="{{id}}.intranetaccess" ng-click="changeClass(id+'.intranetaccess')" ng:model="participant.group_intranetaccess"></span></td>
             <td width="1" style="text-align:center;"> <span checkbox id="{{id}}.webfilter" ng-click="changeClass(id+'.webfilter')" ng:model="participant.group_webfilter"></span></td>
             <td width="1" style="text-align:center;"> <span checkbox id="{{id}}.printing" ng-click="changeClass(id+'.printing')" ng:model="participant.group_printing" ></span></td>
             <td width="1">

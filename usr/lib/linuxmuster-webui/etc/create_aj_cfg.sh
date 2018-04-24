@@ -1,7 +1,7 @@
 #!/bin/bash
 setupini="/var/lib/linuxmuster/setup.ini"
-ajtemplate="/usr/lib/linuxmuster-webui/plugins/lm_setup_wizard/template.yml"
-ajcfg="/etc/ajenti/config.yml.testing"
+ajtemplate="/usr/lib/linuxmuster-webui/etc/template.yml"
+ajcfg="/etc/ajenti/config.yml"
 
 basedn=$(cat $setupini |  grep basedn | awk '{print $3}')
 bindpw=$(cat /etc/linuxmuster/.secret/global-binduser)
@@ -20,6 +20,7 @@ sed -i s/%%LANGUAGE%%/$language/ $ajcfg
 sed -i s/%%SERVERNAME%%/$servername/ $ajcfg
 sed -i s/%%DOMAINNAME%%/$domainname/ $ajcfg
 
+# Create empty files if needed
 #touch /etc/linuxmuster/sophomorix/default-school/students.csv
 #touch /etc/linuxmuster/sophomorix/default-school/teachers.csv
 #touch /etc/linuxmuster/sophomorix/default-school/devices.csv

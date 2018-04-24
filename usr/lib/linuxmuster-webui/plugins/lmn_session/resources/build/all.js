@@ -74,25 +74,40 @@
         visible: true,
         name: gettext('Exam-Mode')
       },
+      examModeCheckbox: {
+        visible: true,
+        name: gettext('Exam-Mode'),
+        checkboxAll: true,
+        checkboxStatus: false
+      },
       wifiaccess: {
         visible: true,
-        name: gettext('WifiAccess')
+        name: gettext('WifiAccess'),
+        checkboxAll: true,
+        checkboxStatus: false
       },
       internetaccess: {
         visible: true,
-        name: gettext('Internet')
+        name: gettext('Internet'),
+        checkboxAll: true,
+        checkboxStatus: false
       },
       intranetaccess: {
         visible: true,
-        name: gettext('Intranet')
+        name: gettext('Intranet'),
+        checkboxAll: true
       },
       webfilter: {
         visible: true,
-        name: gettext('Webfilter')
+        name: gettext('Webfilter'),
+        checkboxAll: true,
+        checkboxStatus: false
       },
       printing: {
         visible: true,
-        name: gettext('Printing')
+        name: gettext('Printing'),
+        checkboxAll: true,
+        checkboxStatus: false
       }
     };
     $scope.checkboxModel = {
@@ -114,6 +129,26 @@
         return document.getElementById(item).className = document.getElementById(item).className.replace(/(?:^|\s)changed(?!\S)/g, '');
       } else {
         return document.getElementById(item).className += " changed";
+      }
+    };
+    $scope.selectAll = function(item) {
+      var managementgroup;
+      managementgroup = 'group_' + item;
+      console.log($scope.participants);
+      if ($scope.fields[item].checkboxStatus === true) {
+        angular.forEach($scope.participants, function(participant, id) {
+          if (participant[managementgroup] === true) {
+            participant[managementgroup] = false;
+            return $scope.changeClass(id + '.' + item);
+          }
+        });
+      } else {
+        angular.forEach($scope.participants, function(participant, id) {
+          if (participant[managementgroup] === false) {
+            participant[managementgroup] = true;
+            return $scope.changeClass(id + '.' + item);
+          }
+        });
       }
     };
     $scope.killSession = function(username, session) {
@@ -175,7 +210,6 @@
       });
     };
     $scope.renameSession = function(username, session, comment) {
-      //messagebox.show(title: gettext('Current Sessions'), text: $scope.sessions, positive: 'OK')
       return messagebox.prompt(gettext('Session Name'), comment).then(function(msg) {
         if (!msg.value) {
           return;
@@ -190,6 +224,10 @@
       });
     };
     $scope.getParticipants = function(username, session) {
+      // Reset select all checkboxes when loading participants
+      angular.forEach($scope.fields, function(field) {
+        return field.checkboxStatus = false;
+      });
       return $http.post('/api/lmn/session/sessions', {
         action: 'get-participants',
         username: username,

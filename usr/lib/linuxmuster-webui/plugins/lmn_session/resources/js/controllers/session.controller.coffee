@@ -60,21 +60,35 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
        examMode:
           visible: true
           name: gettext('Exam-Mode')
+       examModeCheckbox:
+          visible: true
+          name: gettext('Exam-Mode')
+          checkboxAll: true
+          checkboxStatus: false
        wifiaccess:
           visible: true
           name: gettext('WifiAccess')
+          checkboxAll: true
+          checkboxStatus: false
        internetaccess:
           visible: true
           name: gettext('Internet')
+          checkboxAll: true
+          checkboxStatus: false
        intranetaccess:
           visible: true
           name: gettext('Intranet')
+          checkboxAll: true
        webfilter:
           visible: true
           name: gettext('Webfilter')
+          checkboxAll: true
+          checkboxStatus: false
        printing:
           visible: true
           name: gettext('Printing')
+          checkboxAll: true
+          checkboxStatus: false
     }
 
     $scope.checkboxModel = {
@@ -102,6 +116,20 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
         else
             document.getElementById(item).className += " changed"
 
+    $scope.selectAll = (item) ->
+        managementgroup = 'group_'+item
+        console.log $scope.participants
+        if $scope.fields[item].checkboxStatus is true
+            angular.forEach $scope.participants, (participant, id) ->
+                if participant[managementgroup] is true
+                    participant[managementgroup] = false
+                    $scope.changeClass(id+'.'+item)
+        else
+            angular.forEach $scope.participants, (participant,id) ->
+                if participant[managementgroup] is false
+                    participant[managementgroup] = true
+                    $scope.changeClass(id+'.'+item)
+        return
 
     $scope.killSession = (username,session) ->
                 messagebox.show(text: "Delete '#{session}'?", positive: 'Delete', negative: 'Cancel').then () ->
@@ -134,7 +162,6 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
 
 
     $scope.renameSession = (username, session, comment) ->
-        #messagebox.show(title: gettext('Current Sessions'), text: $scope.sessions, positive: 'OK')
                 messagebox.prompt(gettext('Session Name'), comment).then (msg) ->
                     if not msg.value
                         return
@@ -142,6 +169,9 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                         notify.success gettext('Session Renamed')
 
     $scope.getParticipants = (username,session) ->
+                # Reset select all checkboxes when loading participants
+                angular.forEach $scope.fields, (field) ->
+                    field.checkboxStatus = false
                 $http.post('/api/lmn/session/sessions', {action: 'get-participants', username: username, session: session}).then (resp) ->
                     $scope.visible.sessionname = 'show'
                     $scope.participants = resp.data

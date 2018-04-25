@@ -10,6 +10,13 @@ language=$(cat $setupini |  grep country | awk '{print $3}')
 servername=$(cat $setupini |  grep servername | awk '{print $3}')
 domainname=$(cat $setupini |  grep domainname | awk '{print $3}')
 
+if [ -f $ajcfg ]; then
+   rm  $ajcfg
+else
+   echo "File $FILE does not exist."
+fi
+
+
 rm $ajcfg
 cp $ajtemplate $ajcfg
 

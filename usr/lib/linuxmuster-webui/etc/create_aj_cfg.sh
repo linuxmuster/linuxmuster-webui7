@@ -16,8 +16,6 @@ else
    echo "File $FILE does not exist."
 fi
 
-
-rm $ajcfg
 cp $ajtemplate $ajcfg
 
 sed -i s/%%BINDUSER%%/$binduser/ $ajcfg

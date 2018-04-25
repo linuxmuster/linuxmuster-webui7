@@ -8,7 +8,6 @@ case "$1" in
      if [ ! -f $webuietc/.installed ];
       then
 	# do first install
-	easy_install -U pip
 	pip install -U pip wheel setuptools distribute
 	pip install -r $webuietc/requirements.txt
 	echo "search server information.."

@@ -70,36 +70,42 @@
       },
       examModeCheckbox: {
         visible: true,
-        name: gettext('Exam-Mode'),
+        icon: "fa fa-exclamation-triangle",
+        title: gettext('Exam-Mode'),
         checkboxAll: true,
         checkboxStatus: false
       },
       wifiaccess: {
         visible: true,
-        name: gettext('WifiAccess'),
+        icon: "fa fa-wifi",
+        title: gettext('Wifi-Access'),
         checkboxAll: true,
         checkboxStatus: false
       },
       internetaccess: {
         visible: true,
-        name: gettext('Internet'),
+        icon: "fa fa-internet-explorer",
+        title: gettext('Internet-Access'),
         checkboxAll: true,
         checkboxStatus: false
       },
       intranetaccess: {
         visible: true,
-        name: gettext('Intranet'),
+        icon: "fa fa-server",
+        title: gettext('Intranet Access'),
         checkboxAll: true
       },
       webfilter: {
         visible: true,
-        name: gettext('Webfilter'),
+        icon: "fa fa-filter",
+        title: gettext('Webfilter'),
         checkboxAll: true,
         checkboxStatus: false
       },
       printing: {
         visible: true,
-        name: gettext('Printing'),
+        icon: "fa fa-print",
+        title: gettext('Printing'),
         checkboxAll: true,
         checkboxStatus: false
       }
@@ -117,7 +123,8 @@
       message: ''
     };
     $scope._ = {
-      addParticipant: null
+      addParticipant: null,
+      addClass: null
     };
     $scope.changeClass = function(item) {
       if (document.getElementById(item).className.match(/(?:^|\s)changed(?!\S)/)) {
@@ -128,9 +135,6 @@
     };
     $scope.resetClass = function() {
       var result;
-      //console.log $scope.participants
-      //angular.forEach $scope.participants, (participant, id) ->
-      //            angular.forEach participant,(item) ->
       result = document.getElementsByClassName("changed");
       while (result.length) {
         result[0].className = result[0].className.replace(/(?:^|\s)changed(?!\S)/g, '');
@@ -259,8 +263,14 @@
         return resp.data;
       });
     };
+    $scope.findSchoolClasses = function(q) {
+      return $http.get(`/api/lmn/session/schoolClass-search?q=${q}`).then(function(resp) {
+        $scope.class = resp.data;
+        console.log(resp.data);
+        return resp.data;
+      });
+    };
     $scope.$watch('_.addParticipant', function() {
-      console.log($scope.identity.user);
       if ($scope._.addParticipant) {
         if ($scope.participants[0] != null) {
           delete $scope.participants['0'];
@@ -287,6 +297,16 @@
           "group_wifiaccess": $scope._.addParticipant.MANAGEMENTGROUPS.wifi
         });
         return $scope._.addParticipant = null;
+      }
+    });
+    $scope.$watch('_.addSchoolClass', function() {
+      if ($scope._.addSchoolClass) {
+        //if $scope.participants[0]?
+        //            delete $scope.participants['0']
+        $scope.info.message = '';
+        $scope.visible.table = 'show';
+        console.log($scope._.addSchoolClass);
+        return $scope._.addSchoolClass = null;
       }
     });
     $scope.removeParticipant = function(participant) {

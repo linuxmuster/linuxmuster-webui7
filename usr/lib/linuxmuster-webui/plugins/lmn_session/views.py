@@ -31,7 +31,7 @@ class Handler(HttpPlugin):
                     try:
                         participants = lmn_getSophomorixValue('sophomorix-session -i -jj ', 'SUPERVISOR/'+supervisor+'/sophomorixSessions/'+session+'/PARTICIPANTS', True)
                     except Exception:
-                        participants= {'0':{"givenName":"null","sophomorixExamMode":"---","group_wifiaccess":False,"group_intranetaccess":False,"group_printing":False,"sophomorixStatus":"U","sophomorixRole":"","group_internetaccess":False,"sophomorixAdminClass":"","group_webfilter":False,"user_existing":False,"sn":""}}
+                        participants = {'0': {"givenName": "null", "sophomorixExamMode": "---", "group_wifiaccess": False, "group_intranetaccess": False, "group_printing": False, "sophomorixStatus": "U", "sophomorixRole": "", "group_internetaccess": False, "sophomorixAdminClass": "", "group_webfilter": False, "user_existing": False, "sn": ""}}
                         #return ["frayka"["test":"null"]]
                     # Convert PERL bool to python bool
                     for key, value in participants.iteritems():
@@ -99,8 +99,6 @@ class Handler(HttpPlugin):
             printingListCSV = ",".join(printingList)
             noPrintingListCSV = ",".join(noPrintingList)
 
-
-            # raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str('sophomorix-managementgroup --wifi '+ wifiListCSV + ' --nowifi ' + noWifiListCSV))
             try:
                 result = lmn_getSophomorixValue('sophomorix-managementgroup \
                                                 --wifi "' + wifiListCSV + '" --nowifi "' + noWifiListCSV +
@@ -116,9 +114,9 @@ class Handler(HttpPlugin):
                                                  '" --intranet "' + intranetListCSV + '" --nointranet "' + noIntranetListCSV +
                                                  '" --webfilter "' + webfilterListCSV + '" --nowebfilter "' + noWebfilterListCSV +
                                                  '" --printing "' + printingListCSV + '" --noprinting "' + noPrintingListCSV +
-                                                 '" -jj ')+"\n Error was: "+ str(e))
+                                                 '" -jj ') + "\n Error was: " + str(e))
             try:
-                result = lmn_getSophomorixValue('sophomorix-session --session ' + session + ' -j --participants ' + participantsCSV, 'OUTPUT/0/LOG')
+                result = lmn_getSophomorixValue('sophomorix-session --session ' + session + ' -j --participants "' + participantsCSV + '"', 'OUTPUT/0/LOG')
             except Exception:
                 raise Exception('Error:\n' + str('sophomorix-session --session ' + session + ' -j --participants ' + participantsCSV))
 
@@ -130,17 +128,28 @@ class Handler(HttpPlugin):
                 return 0
 
     @url(r'/api/lmn/session/user-search')
-    #@authorize('lmn:session:user-search')
     @endpoint(api=True)
-    def handle_api_ldap_search(self, http_context):
+    def handle_api_ldap_user_search(self, http_context):
         with authorize('lm:users:teachers:read'):
             try:
-                users = lmn_getSophomorixValue('sophomorix-query -jj --student --user-full --anyname \"*' + http_context.query['q'] + '*\" ', 'USER', True)
+                users = lmn_getSophomorixValue('sophomorix-query -jj --schoolbase default-school --student --user-full --anyname \"*' + http_context.query['q'] + '*\" ', 'USER', True)
             except Exception:
                 return 0
         userList = []
         for user in users:
             userList.append(users[user])
-
-        # raise Exception('Field error. Either LDAP field does not exist or' + str(userList))
         return userList
+
+    @url(r'/api/lmn/session/schoolClass-search')
+    @endpoint(api=True)
+    def handle_api_ldap_group_search(self, http_context):
+        with authorize('lm:users:teachers:read'):
+            try:
+                schoolClasses = lmn_getSophomorixValue('sophomorix-query -jj --schoolbase default-school --group-members --sam \"*' + http_context.query['q'] + '*\" ', 'MEMBERS', True)
+            except Exception:
+                return 0
+        schoolClassList = []
+        for schoolClass in schoolClasses:
+            schoolClassList.append(schoolClasses[schoolClass])
+        raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(schoolClassList))
+        return schoolClasses

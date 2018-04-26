@@ -1,7 +1,9 @@
 <br/>
 <div>
     <div class="input-group">
-        <input type="text" placeholder="Add new" ng:model="_.addParticipant" typeahead-editable="false" typeahead-min-length="2" uib-typeahead="user as user.sophomorixAdminClass+' '+user.displayName+ ' '+user.sAMAccountName  for user in findUsers($viewValue) | limitTo:10" class="form-control" />
+        <input type="text" style="width:70%" placeholder="Add Student" ng:model="_.addParticipant" typeahead-editable="false" typeahead-min-length="2" uib-typeahead="user as user.sophomorixAdminClass+' '+user.displayName+ ' '+user.sAMAccountName  for user in findUsers($viewValue) | limitTo:10" class="form-control" />
+        <input type="text" style="width:30%" placeholder="Add Class" ng:model="_.addSchoolClass" typeahead-editable="false" typeahead-min-length="1" uib-typeahead="schoolClass as schoolClass  for schoolClass in findSchoolClasses($viewValue) | limitTo:10" class="form-control" />
+
 
         <oi-select
               oi-options="list.id as list.description for list in lists"
@@ -69,8 +71,8 @@
     <table class="table">
         <tr style="display:{{visible.table}};">
 
-            <th ng:repeat="(id, field) in fields" ng:if="field.visible">{{field.name}}
-                <span checkbox id="{{id}}.all" ng:if="field.checkboxAll" ng-click="selectAll(id)" ng:model=field.checkboxStatus>"</span></th>
+            <th ng:repeat="(id, field) in fields" ng:if="field.visible"><div title="{{field.title}}" class="{{field.icon}}" style="font-size:20px;"></div> {{field.name}}
+                <span checkbox style="float:right;" id="{{id}}.all" ng:if="field.checkboxAll" ng-click="selectAll(id)" ng:model=field.checkboxStatus>"</span></th>
             <!-- <span checkbox id="{{id}}.all" ng:if="field.checkboxAll" ng-click="checkAll(id+'.all')" ng:model="false">"</span></th>-->
             <th></th>
         </tr>

@@ -23,6 +23,35 @@
 
   //    $scope.close = () ->
   //       $uibModalInstance.dismiss()
+  angular.module('lmn.session').controller('LMSESSIONUserInfoModalController', function($scope, $uibModal, $uibModalInstance, $http, gettext, messagebox, pageTitle, id) {
+    console.log("test");
+    console.log(id);
+    //messagebox.show(title: gettext('Initial password'), text: 'test', positive: 'OK')
+    //$scope.image = image
+    //$scope.imagesWithReg = (x for x in images when x.reg)
+    //$scope.imagesWithPostsync = (x for x in images when x.postsync)
+
+    //$http.get('/api/lm/linbo/examples-regs').then (resp) ->
+    //   $scope.exampleRegs = resp.data
+
+    //$scope.setExampleReg = (name) ->
+    //   filesystem.read("/var/linbo/examples/#{name}").then (content) ->
+    //      $scope.image.reg = content
+
+    //$http.get('/api/lm/linbo/examples-postsyncs').then (resp) ->
+    //   $scope.examplePostsyncs = resp.data
+
+    //$scope.setExamplePostsync = (name) ->
+    //   filesystem.read("/var/linbo/examples/#{name}").then (content) ->
+    //      $scope.image.postsync = content
+    $scope.save = function() {
+      return $uibModalInstance.close();
+    };
+    return $scope.close = function() {
+      return $uibModalInstance.dismiss();
+    };
+  });
+
   angular.module('lmn.session').controller('LMNSessionController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) {
     pageTitle.set(gettext('Session'));
     $scope.currentSession = {
@@ -66,11 +95,11 @@
       },
       examMode: {
         visible: true,
-        name: gettext('Exam-Mode')
+        name: gettext('Exam-Supervisor')
       },
       examModeCheckbox: {
         visible: true,
-        icon: "fa fa-exclamation-triangle",
+        icon: "fa fa-graduation-cap",
         title: gettext('Exam-Mode'),
         checkboxAll: true,
         checkboxStatus: false
@@ -84,7 +113,7 @@
       },
       internetaccess: {
         visible: true,
-        icon: "fa fa-internet-explorer",
+        icon: "fa fa-globe",
         title: gettext('Internet-Access'),
         checkboxAll: true,
         checkboxStatus: false
@@ -314,23 +343,82 @@
       //console.log participant
       return delete $scope.participants[participant];
     };
-    return $scope.saveApply = function(username, participants, session) {
+    $scope.saveApply = function(username, participants, session) {
       return $http.post('/api/lmn/session/sessions', {
         action: 'save-session',
         participants: participants,
         session: session
       }).then(function(resp) {
-        //delete $scope.participants
-        // TODO 
-        // Instead of deleting participants remove changed class from elements
         $scope.output = resp.data;
         $scope.getParticipants(username, session);
         return notify.success(gettext($scope.output));
       });
     };
+    $scope.showInitialPassword = function(id) {
+      return $http.post('/api/lm/users/password', {
+        users: id,
+        action: 'get'
+      }).then(function(resp) {
+        return messagebox.show({
+          title: gettext('Initial password'),
+          text: resp.data,
+          positive: 'OK'
+        });
+      });
+    };
+    $scope.setInitialPassword = function(id) {
+      return $http.post('/api/lm/sophomorixUsers/password', {
+        users: id,
+        action: 'set-initial'
+      }).then(function(resp) {
+        return notify.success(gettext('Initial password set'));
+      });
+    };
+    $scope.setRandomPassword = function(id) {
+      return messagebox.show({
+        title: gettext('Not Implemented'),
+        text: 'Not implemented yet',
+        positive: 'OK'
+      });
+    };
+    //$http.post('/api/lm/users/password', {users: id, action: 'set-random'}).then (resp) ->
+    //    text = ("#{x.user}: #{x.password}" for x in resp.data).join(',\n')
+    //    messagebox.show(title: gettext('New password'), text: text, positive: 'OK')
+    $scope.setCustomPassword = function(id) {
+      return messagebox.prompt(gettext('New password')).then(function(msg) {
+        if (!msg.value) {
+          return;
+        }
+        return $http.post('/api/lm/users/password', {
+          users: id,
+          action: 'set',
+          password: msg.value
+        }).then(function(resp) {
+          return notify.success(gettext('New password set'));
+        });
+      });
+    };
+    return $scope.userInfo = function(id) {
+      //$http.get("/api/lm/linbo/config/#{configName}").then (resp) ->
+      //    config = resp.data
+      return $uibModal.open({
+        templateUrl: '/lmn_session:resources/partial/session.modal.html',
+        controller: 'LMSESSIONUserInfoModalController',
+        size: 'mg',
+        resolve: {
+          id: function() {
+            return id;
+          }
+        }
+      });
+    };
   });
 
-  // TODO Find a solution for this
+  //.result.then (result) ->
+//   $http.post("/api/lm/linbo/config/#{configName}", result).then (resp) ->
+//      notify.success gettext('Saved')
+
+// TODO Find a solution for this
 //    sleep = (ms) ->
 //        start = new Date().getTime()
 //        continue while new Date().getTime() - start < ms

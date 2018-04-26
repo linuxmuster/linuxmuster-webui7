@@ -1,27 +1,6 @@
 <div class="modal-header">
-    <h4>{{session}} | {{comment}}</h4>
+    <h4>Not implemented {{id}}</h4>
 </div>
-<div class="modal-body">
-    <uib:tabset>
-        <uib:tab heading="{{'Session'|translate}}">
-            <br/>
-            <div class="form-group">
-                <table width="100%">
-                    <tr>
-                        <td width="49%">
-                            <label translate>Session Name</label>
-                            <input ng:model="comment" type="text" class="form-control" />
-                        </td>
-                        <td>
-                        </td>
-                    </tr>
-               </table>
-            </div>
-        </uib:tab>
-    </uib:tabset>
-</div>
-
 <div class="modal-footer">
-    <a class="btn btn-default btn-flat" ng:click="save()" translate>Save</a>
     <a class="btn btn-default btn-flat" ng:click="close()" translate>Close</a>
 </div>

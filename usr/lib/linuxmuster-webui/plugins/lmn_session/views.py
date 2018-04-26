@@ -145,11 +145,10 @@ class Handler(HttpPlugin):
     def handle_api_ldap_group_search(self, http_context):
         with authorize('lm:users:teachers:read'):
             try:
-                schoolClasses = lmn_getSophomorixValue('sophomorix-query -jj --schoolbase default-school --group-members --sam \"*' + http_context.query['q'] + '*\" ', 'MEMBERS', True)
+                schoolClasses = lmn_getSophomorixValue('sophomorix-query -jj --schoolbase default-school --sam \"*' + http_context.query['q'] + '*\" ', 'GROUP', True)
             except Exception:
                 return 0
         schoolClassList = []
         for schoolClass in schoolClasses:
             schoolClassList.append(schoolClasses[schoolClass])
-        raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(schoolClassList))
         return schoolClasses

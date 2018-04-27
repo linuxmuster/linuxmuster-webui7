@@ -12,13 +12,17 @@ case "$1" in
 	pip install -r $webuietc/requirements.txt
 	echo "link ajcfg to linuxmuster-webui folder"
 	ln -s $ajcfg $webuietc
+	# Set default permissions from true to false
+	echo "set reverse permissions"
+	sed -i "s/: True,/: False,/g" /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/main.py
+	# systemctl einrichten und starten
 	echo "configure systemctl.."
 	systemctl daemon-reload
 	systemctl enable linuxmuster-webui
 	systemctl start linuxmuster-webui
 	touch $webuietc/.installed
 	echo "---------------------------------------------------------------"
-	echo "linuxmuster-webui is now installed but not initialised!  https://$ipaddress:8000"
+	echo "linuxmuster-webui is now installed but not initialised!  http://$ipaddress:8000"
 	echo "---------------------------------------------------------------"
      else
 	# do update
@@ -28,6 +32,10 @@ case "$1" in
 	echo "Stop linuxmuster-webui"
 	systemctl stop linuxmuster-webui
 	pip install -r $webuietc/requirements.txt -q
+	# Set default permissions from true to false
+	echo "set reverse permissions"
+	sed -i "s/: True,/: False,/g" /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/main.py
+	# start webui
 	echo "Start linuxmuster-webui"
 	systemctl start linuxmuster-webui
         echo "---------------------------------------------------------------"

@@ -25,6 +25,9 @@ sed -i s/%%LANGUAGE%%/$language/ $ajcfg
 sed -i s/%%SERVERNAME%%/$servername/ $ajcfg
 sed -i s/%%DOMAINNAME%%/$domainname/ $ajcfg
 
+echo "Run Sophomorix-UI to add permissions"
+sophomorix-ui >/dev/null 2>&1
+
 # Create empty files if needed
 #touch /etc/linuxmuster/sophomorix/default-school/students.csv
 #touch /etc/linuxmuster/sophomorix/default-school/teachers.csv

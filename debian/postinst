@@ -10,33 +10,15 @@ case "$1" in
 	# do first install
 	pip install -U pip wheel setuptools distribute
 	pip install -r $webuietc/requirements.txt
-	echo "search server information.."
-	#bindn=$(cat /etc/ldap/slapd.conf | grep rootdn | awk '{print $2}' | sed -e 's/"//g')
-	#bindpw=$(cat /etc/ldap/slapd.conf | grep rootpw | awk '{print $2}')
-	#suffix=$(cat /etc/ldap/slapd.conf | grep suffix | awk '{print $2}' | sed -e 's/"//g')
-	#hostname=$(hostname --fqdn)
-	#ipaddress=$(hostname --ip-address)
-        echo "configure ajcfg.."
-	#cp $webuietc/templates/config.yml $ajcfg
-	#sed -i s/%%HOSTNAME%%/$hostname/ $ajcfg
-	#sed -i s/%%IPADDRESS%%/$ipaddress/ $ajcfg
-	#sed -i s/%%BINDDN%%/$bindn/ $ajcfg
-	#sed -i s/%%BINDPW%%/$bindpw/ $ajcfg
-	#sed -i s/%%SUFFIX%%/$suffix/ $ajcfg
 	echo "link ajcfg to linuxmuster-webui folder"
 	ln -s $ajcfg $webuietc
-  echo "copy setup entrypoint"
-  #cp /usr/lib/linuxmuster-webui/plugins/lm_setup_wizard/y_webui-permissions.py /usr/lib/linuxmuster/setup.d/
 	echo "configure systemctl.."
 	systemctl daemon-reload
 	systemctl enable linuxmuster-webui
-	#echo "set port 8000 to allow.."
-	#sed -i 's/tcp .*/&,8000/' /etc/linuxmuster/allowed_ports
-	#service linuxmuster-base restart
 	systemctl start linuxmuster-webui
 	touch $webuietc/.installed
 	echo "---------------------------------------------------------------"
-	echo "linuxmuster-webui is now installed!  https://$ipaddress:8000"
+	echo "linuxmuster-webui is now installed but not initialised!  https://$ipaddress:8000"
 	echo "---------------------------------------------------------------"
      else
 	# do update

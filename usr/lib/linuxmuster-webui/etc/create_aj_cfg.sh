@@ -13,7 +13,7 @@ domainname=$(cat $setupini |  grep domainname | awk '{print $3}')
 if [ -f $ajcfg ]; then
    rm  $ajcfg
 else
-   echo "File $FILE does not exist."
+   echo "File $ajcfg does not exist."
 fi
 
 cp $ajtemplate $ajcfg

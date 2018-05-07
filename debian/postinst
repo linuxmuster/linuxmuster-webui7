@@ -24,7 +24,7 @@ case "$1" in
 	touch $webuietc/.installed
 	hostname=$(hostname --fqdn)
 	echo "---------------------------------------------------------------"
-	echo "linuxmuster-webui is now installed but not initialised!  https://$hostname:8000"
+	echo "linuxmuster-webui is now installed but not initialised!  http://$hostname:8000"
 	echo "---------------------------------------------------------------"
      else
 	# do update

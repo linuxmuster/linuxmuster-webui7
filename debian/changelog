@@ -1,3 +1,9 @@
+linuxmuster-webui7 (1.0.8-1) ALPHA; urgency=medium
+
+  * Fix AJ-Setup
+
+ -- Maurice Cazautet <maurice.cazautet@netzint.de>  Mon, 07 May 2018 14:19:49 +0000
+
 linuxmuster-webui7 (1.0.7-7) lmn7-testing; urgency=medium
 
   * Initial upload WebUI for lmn7

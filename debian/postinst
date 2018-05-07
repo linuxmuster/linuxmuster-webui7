@@ -9,6 +9,7 @@ case "$1" in
       then
 	# do first install
 	pip install -U pip wheel setuptools distribute
+	hash -r
 	pip install -r $webuietc/requirements.txt
 	echo "link ajcfg to linuxmuster-webui folder"
 	ln -s $ajcfg $webuietc
@@ -21,8 +22,9 @@ case "$1" in
 	systemctl enable linuxmuster-webui
 	systemctl start linuxmuster-webui
 	touch $webuietc/.installed
+	hostname=$(hostname --fqdn)
 	echo "---------------------------------------------------------------"
-	echo "linuxmuster-webui is now installed but not initialised!  http://$ipaddress:8000"
+	echo "linuxmuster-webui is now installed but not initialised!  https://$hostname:8000"
 	echo "---------------------------------------------------------------"
      else
 	# do update

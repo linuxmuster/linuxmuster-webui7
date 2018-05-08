@@ -71,29 +71,23 @@ angular.module('lm.setup_wizard').controller('InitSchoolController', function ($
   this.ini = {};
 
   this.apply = async function () {
-    if (_this2.ini.adminpw != _this2.adminpwConfirmation) {
-      notify.error('Administrator password missmatch');
-      return;
-    }
     await $http.post('/api/lm/setup-wizard/update-ini', _this2.ini);
     $location.path('/view/lm/init/network');
   };
 });
 
-angular.module('lm.setup_wizard').controller('InitNetworkController', function ($location, $http, gettext, pageTitle, network) {
+angular.module('lm.setup_wizard').controller('InitNetworkController', function ($location, $http, gettext, pageTitle, notify) {
   var _this3 = this;
 
   pageTitle.set(gettext('Setup Wizard'));
   this.ini = {};
   this.interfaces = [];
 
-  network.getConfig().then(function (interfaces) {
-    _this3.interfaces = interfaces.map(function (x) {
-      return x.name;
-    });
-  });
-
   this.apply = function () {
+    if (_this3.ini.adminpw != _this3.adminpwConfirmation) {
+      notify.error('Administrator password missmatch');
+      return;
+    }
     $http.post('/api/lm/setup-wizard/update-ini', _this3.ini).then(function () {
       return $location.path('/view/lm/init/passwords');
     });

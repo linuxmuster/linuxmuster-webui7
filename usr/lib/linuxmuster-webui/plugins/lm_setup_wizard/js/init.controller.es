@@ -48,25 +48,22 @@ angular.module('lm.setup_wizard').controller('InitSchoolController', function ($
   this.ini = {}
 
   this.apply = async () => {
-    if (this.ini.adminpw != this.adminpwConfirmation) {
-      notify.error('Administrator password missmatch')
-      return
-    }
     await $http.post('/api/lm/setup-wizard/update-ini', this.ini)
     $location.path('/view/lm/init/network')
   }
 })
 
-angular.module('lm.setup_wizard').controller('InitNetworkController', function ($location, $http, gettext, pageTitle, network) {
+angular.module('lm.setup_wizard').controller('InitNetworkController', function ($location, $http, gettext, pageTitle, notify) {
   pageTitle.set(gettext('Setup Wizard'))
   this.ini = {}
   this.interfaces = []
 
-  network.getConfig().then(interfaces => {
-    this.interfaces = interfaces.map(x => x.name)
-  })
 
   this.apply = () => {
+    if (this.ini.adminpw != this.adminpwConfirmation) {
+      notify.error('Administrator password missmatch')
+      return
+    }
     $http.post('/api/lm/setup-wizard/update-ini', this.ini).then(() => {
       return $location.path('/view/lm/init/passwords')
     })

@@ -9,11 +9,11 @@ dependencies:
     - !!python/object:aj.plugins.PluginDependency { plugin_name: core }
     - !!python/object:aj.plugins.PluginDependency { plugin_name: network }
 resources:
-    - 'resources/js/index.es'
-    - 'resources/js/init.controller.es'
-    - 'resources/partial/init-welcome.html'
-    - 'resources/partial/init-school.html'
-    - 'resources/partial/init-network.html'
-    - 'resources/partial/init-passwords.html'
-    - 'resources/partial/init-setup.html'
+    - 'js/index.es'
+    - 'js/init.controller.es'
+    - 'partial/init-welcome.html'
+    - 'partial/init-school.html'
+    - 'partial/init-network.html'
+    - 'partial/init-passwords.html'
+    - 'partial/init-setup.html'
     - 'ng:lm.setup_wizard'

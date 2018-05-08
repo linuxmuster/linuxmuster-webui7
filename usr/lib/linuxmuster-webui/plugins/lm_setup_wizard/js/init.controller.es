@@ -78,19 +78,23 @@ angular.module('lm.setup_wizard').controller('InitPasswordsController', function
       notify.error('Administrator password missmatch')
       return
     }
-    if (this.ini.firewallpw != this.firewallpwConfirmation) {
-      notify.error('Firewall password missmatch')
+    console.log(this.ini.smtppw)
+    console.log(this.smtppwConfirmation)
+    if (this.ini.smtppw != this.smtppwConfirmation) {
+      notify.error('SMTP password missmatch')
       return
     }
     if (!this.enableOPSI) {
       delete this.ini['opsiip']
     }
-    if (!this.enableFirewall) {
-      delete this.ini['firewallip']
-      delete this.ini['firewallpw']
+    if (!this.enableDocker) {
+      delete this.ini['dockerip']
     }
-    if (!this.enableSMTPRelay) {
+    if (!this.enableMail) {
+      delete this.ini['mailip']
       delete this.ini['smtprelay']
+      delete this.ini['smtpuser']
+      delete this.ini['smtppw']
     }
     $http.post('/api/lm/setup-wizard/update-ini', this.ini).then(() => {
       return $location.path('/view/lm/init/setup')

@@ -71,6 +71,10 @@ angular.module('lm.setup_wizard').controller('InitSchoolController', function ($
   this.ini = {};
 
   this.apply = async function () {
+    if (_this2.ini.adminpw != _this2.adminpwConfirmation) {
+      notify.error('Administrator password missmatch');
+      return;
+    }
     await $http.post('/api/lm/setup-wizard/update-ini', _this2.ini);
     $location.path('/view/lm/init/network');
   };
@@ -103,12 +107,6 @@ angular.module('lm.setup_wizard').controller('InitPasswordsController', function
   this.ini = {};
 
   this.finish = function () {
-    if (_this4.ini.adminpw != _this4.adminpwConfirmation) {
-      notify.error('Administrator password missmatch');
-      return;
-    }
-    console.log(_this4.ini.smtppw);
-    console.log(_this4.smtppwConfirmation);
     if (_this4.ini.smtppw != _this4.smtppwConfirmation) {
       notify.error('SMTP password missmatch');
       return;

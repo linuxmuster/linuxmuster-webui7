@@ -64,28 +64,72 @@ angular.module('lm.setup_wizard').controller('InitWelcomeController', function (
   };
 });
 
-angular.module('lm.setup_wizard').controller('InitSchoolController', function ($location, $http, gettext, pageTitle) {
+angular.module('lm.setup_wizard').controller('InitSchoolController', function ($location, $http, gettext, pageTitle, notify) {
   var _this2 = this;
 
   pageTitle.set(gettext('Setup Wizard'));
   this.ini = {};
-
   this.apply = async function () {
+    $dataMissing = false;
+    console.log($dataMissing);
+    if (_this2.ini.schoolname == null || _this2.ini.schoolname == '') {
+      document.getElementById('schoolname-input').style.background = 'rgba(255, 178, 178, 0.29)';
+      document.getElementById('schoolname-input').style.borderColor = 'red';
+      $dataMissing = true;
+    }
+    if (_this2.ini.location == null || _this2.ini.location == '') {
+      document.getElementById('location-input').style.background = 'rgba(255, 178, 178, 0.29)';
+      document.getElementById('location-input').style.borderColor = 'red';
+      $dataMissing = true;
+    }
+    if (_this2.ini.state == null || _this2.ini.state == '') {
+      document.getElementById('state-input').style.background = 'rgba(255, 178, 178, 0.29)';
+      document.getElementById('state-input').style.borderColor = 'red';
+      $dataMissing = true;
+    }
+    if (_this2.ini.country == null || _this2.ini.country == '') {
+      document.getElementById('country-input').style.background = 'rgba(255, 178, 178, 0.29)';
+      document.getElementById('country-input').style.borderColor = 'red';
+      $dataMissing = true;
+    }
+    if (_this2.ini.servername == null || _this2.ini.servername == '') {
+      document.getElementById('servername-input').style.background = 'rgba(255, 178, 178, 0.29)';
+      document.getElementById('servername-input').style.borderColor = 'red';
+      $dataMissing = true;
+    }
+    if (_this2.ini.domainname == null || _this2.ini.domainname == '') {
+      document.getElementById('domainname-input').style.background = 'rgba(255, 178, 178, 0.29)';
+      document.getElementById('domainname-input').style.borderColor = 'red';
+      $dataMissing = true;
+    }
+
+    if ($dataMissing == true) {
+      notify.error('Required data missing');
+      return;
+    }
     await $http.post('/api/lm/setup-wizard/update-ini', _this2.ini);
     $location.path('/view/lm/init/network');
   };
 });
 
-angular.module('lm.setup_wizard').controller('InitNetworkController', function ($location, $http, gettext, pageTitle, notify) {
+angular.module('lm.setup_wizard').controller('InitNetworkController', function ($scope, $location, $http, gettext, pageTitle, notify) {
   var _this3 = this;
 
   pageTitle.set(gettext('Setup Wizard'));
+
+  $scope.info = {
+    message: ''
+  };
+
   this.ini = {};
-  this.interfaces = [];
 
   this.apply = function () {
     if (_this3.ini.adminpw != _this3.adminpwConfirmation) {
       notify.error('Administrator password missmatch');
+      return;
+    }
+    if (!isStrongPwd1(_this3.ini.adminpw)) {
+      notify.error('Password too weak');
       return;
     }
     $http.post('/api/lm/setup-wizard/update-ini', _this3.ini).then(function () {
@@ -138,5 +182,11 @@ angular.module('lm.setup_wizard').controller('InitSetupController', function ($l
     $location.path('/');
   };
 });
+
+function isStrongPwd1(password) {
+  var regExp = /(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*()]|(?=.*\d)).{8,}/;
+  var validPassword = regExp.test(password);
+  return validPassword;
+}
 
 

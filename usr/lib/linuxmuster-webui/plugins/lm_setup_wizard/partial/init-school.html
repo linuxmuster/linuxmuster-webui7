@@ -5,21 +5,21 @@
     <div style="height: 430px;" class="modal-body scrollable">
         <div class="form-group">
             <label translate>School name</label>
-            <input type="text" class="form-control" placeholder="{{'e.g.: Linuxmuster-Example School'|translate}}" ng:model="$ctrl.ini.schoolname" />
+            <input id="schoolname-input" type="text" class="form-control" placeholder="{{'e.g.: Linuxmuster-Example School'|translate}}" ng:model="$ctrl.ini.schoolname" />
         </div>
         <table class="lm-table lm-table-padded">
         <tr>
         <td width="40%"><div class="form-group">
             <label translate>Location</label>
-            <input type="text" class="form-control" placeholder="{{'e.g.: Guetenbach'|translate}}" ng:model="$ctrl.ini.location" />
+            <input id="location-input" type="text" class="form-control" placeholder="{{'e.g.: Guetenbach'|translate}}" ng:model="$ctrl.ini.location" />
         </div></td>
         <td width="40%"><div class="form-group">
             <label translate>State</label>
-            <input type="text" class="form-control" placeholder="{{'e.g.: Baden-Wuerttemberg'|translate}}" ng:model="$ctrl.ini.state" />
+            <input id="state-input" type="text" class="form-control" placeholder="{{'e.g.: Baden-Wuerttemberg'|translate}}" ng:model="$ctrl.ini.state" />
         </div></td>
         <td width="20%"><div class="form-group">
             <label translate>Country Code</label>
-            <input type="text" class="form-control" placeholder="{{'e.g.: DE'|translate}}" ng:model="$ctrl.ini.country" />
+            <input id="country-input" type="text" class="form-control" placeholder="{{'e.g.: DE'|translate}}" ng:model="$ctrl.ini.country" />
         </div></td>
         </tr>
         </table>
@@ -28,11 +28,11 @@
         <tr>
         <td width="40%"><div class="form-group">
             <label translate>Server name</label>
-            <input type="text" class="form-control" placeholder="{{'e.g.: server'|translate}}" ng:model="$ctrl.ini.servername" />
+            <input id="servername-input" type="text" class="form-control" placeholder="{{'e.g.: server'|translate}}" ng:model="$ctrl.ini.servername" />
         </div></td>
  	<td width="60%"><div class="form-group">
             <label translate>Domain name</label>
-            <input type="text" class="form-control" placeholder="{{'e.g.: linuxmuster.lan'|translate}}" ng:model="$ctrl.ini.domainname" />
+            <input id="domainname-input" type="text" class="form-control" placeholder="{{'e.g.: linuxmuster.lan'|translate}}" ng:model="$ctrl.ini.domainname"  />
         </div></td>
         </tr>
         </table>

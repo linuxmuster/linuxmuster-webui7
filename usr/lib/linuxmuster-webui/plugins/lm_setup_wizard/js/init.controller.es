@@ -43,25 +43,64 @@ angular.module('lm.setup_wizard').controller('InitWelcomeController', function (
 })
 
 
-angular.module('lm.setup_wizard').controller('InitSchoolController', function ($location, $http, gettext, pageTitle) {
+angular.module('lm.setup_wizard').controller('InitSchoolController', function ($location, $http, gettext, pageTitle, notify) {
   pageTitle.set(gettext('Setup Wizard'))
   this.ini = {}
-
   this.apply = async () => {
+    $dataMissing=false
+    console.log($dataMissing)
+    if (this.ini.schoolname == null || this.ini.schoolname == '') {
+      document.getElementById('schoolname-input').style.background = 'rgba(255, 178, 178, 0.29)'
+      document.getElementById('schoolname-input').style.borderColor = 'red'
+      $dataMissing=true
+    }
+    if (this.ini.location == null || this.ini.location == '') {
+      document.getElementById('location-input').style.background = 'rgba(255, 178, 178, 0.29)'
+      document.getElementById('location-input').style.borderColor = 'red'
+      $dataMissing=true
+    }
+    if (this.ini.state == null || this.ini.state == '') {
+      document.getElementById('state-input').style.background = 'rgba(255, 178, 178, 0.29)'
+      document.getElementById('state-input').style.borderColor = 'red'
+      $dataMissing=true
+    }
+    if (this.ini.country == null || this.ini.country == '') {
+      document.getElementById('country-input').style.background = 'rgba(255, 178, 178, 0.29)'
+      document.getElementById('country-input').style.borderColor = 'red'
+      $dataMissing=true
+    }
+    if (this.ini.servername == null || this.ini.servername == '') {
+      document.getElementById('servername-input').style.background = 'rgba(255, 178, 178, 0.29)'
+      document.getElementById('servername-input').style.borderColor = 'red'
+      $dataMissing=true
+    }
+    if (this.ini.domainname == null || this.ini.domainname == '') {
+      document.getElementById('domainname-input').style.background = 'rgba(255, 178, 178, 0.29)'
+      document.getElementById('domainname-input').style.borderColor = 'red'
+      $dataMissing=true
+    }
+
+    if ($dataMissing == true){
+      notify.error('Required data missing')
+      return
+    }
     await $http.post('/api/lm/setup-wizard/update-ini', this.ini)
     $location.path('/view/lm/init/network')
   }
 })
 
-angular.module('lm.setup_wizard').controller('InitNetworkController', function ($location, $http, gettext, pageTitle, notify) {
+
+
+angular.module('lm.setup_wizard').controller('InitNetworkController', function ($scope, $location, $http, gettext, pageTitle, notify) {
   pageTitle.set(gettext('Setup Wizard'))
   this.ini = {}
-  this.interfaces = []
-
-
   this.apply = () => {
     if (this.ini.adminpw != this.adminpwConfirmation) {
       notify.error('Administrator password missmatch')
+      return
+    }
+    if (!isStrongPwd1(this.ini.adminpw)){
+      notify.error('Password too weak')
       return
     }
     $http.post('/api/lm/setup-wizard/update-ini', this.ini).then(() => {
@@ -110,3 +149,9 @@ angular.module('lm.setup_wizard').controller('InitSetupController', function ($l
     $location.path('/')
   }
 })
+
+function isStrongPwd1(password) {
+        var regExp = /(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*()]|(?=.*\d)).{8,}/;
+        var validPassword = regExp.test(password);
+        return validPassword;
+}

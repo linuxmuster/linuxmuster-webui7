@@ -30,15 +30,15 @@ angular.module('lm.setup_wizard').config(function ($routeProvider) {
     controllerAs: '$ctrl'
   });
 
-  $routeProvider.when('/view/lm/init/network', {
-    templateUrl: '/lm_setup_wizard:partial/init-network.html',
-    controller: 'InitNetworkController',
+  $routeProvider.when('/view/lm/init/account', {
+    templateUrl: '/lm_setup_wizard:partial/init-account.html',
+    controller: 'InitAccountController',
     controllerAs: '$ctrl'
   });
 
-  $routeProvider.when('/view/lm/init/passwords', {
-    templateUrl: '/lm_setup_wizard:partial/init-passwords.html',
-    controller: 'InitPasswordsController',
+  $routeProvider.when('/view/lm/init/externalservices', {
+    templateUrl: '/lm_setup_wizard:partial/init-externalServices.html',
+    controller: 'InitExternalServicesController',
     controllerAs: '$ctrl'
   });
 
@@ -60,7 +60,7 @@ angular.module('lm.setup_wizard').controller('InitWelcomeController', function (
 
   this.apply = async function () {
     await _this.config.save();
-    $location.path('/view/lm/init/network');
+    $location.path('/view/lm/init/account');
   };
 });
 
@@ -108,21 +108,15 @@ angular.module('lm.setup_wizard').controller('InitSchoolController', function ($
       return;
     }
     await $http.post('/api/lm/setup-wizard/update-ini', _this2.ini);
-    $location.path('/view/lm/init/network');
+    $location.path('/view/lm/init/account');
   };
 });
 
-angular.module('lm.setup_wizard').controller('InitNetworkController', function ($scope, $location, $http, gettext, pageTitle, notify) {
+angular.module('lm.setup_wizard').controller('InitAccountController', function ($scope, $location, $http, gettext, pageTitle, notify) {
   var _this3 = this;
 
   pageTitle.set(gettext('Setup Wizard'));
-
-  $scope.info = {
-    message: ''
-  };
-
   this.ini = {};
-
   this.apply = function () {
     if (_this3.ini.adminpw != _this3.adminpwConfirmation) {
       notify.error('Administrator password missmatch');
@@ -133,12 +127,12 @@ angular.module('lm.setup_wizard').controller('InitNetworkController', function (
       return;
     }
     $http.post('/api/lm/setup-wizard/update-ini', _this3.ini).then(function () {
-      return $location.path('/view/lm/init/passwords');
+      return $location.path('/view/lm/init/externalservices');
     });
   };
 });
 
-angular.module('lm.setup_wizard').controller('InitPasswordsController', function ($location, $http, gettext, pageTitle, notify) {
+angular.module('lm.setup_wizard').controller('InitExternalServicesController', function ($location, $http, gettext, pageTitle, notify) {
   var _this4 = this;
 
   pageTitle.set(gettext('Setup Wizard'));

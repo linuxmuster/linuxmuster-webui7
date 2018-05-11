@@ -27,11 +27,14 @@ class Handler(HttpPlugin):
             'ip',
             'officeKey',
             'windowsKey',
-            'lmnReserved',
-            'userReserved',
+            'dhcpOptions',
+            'sophomorixRole',
             'accountType',
             'pxeFlag',
-            'options',
+            'lmnReserved1',
+            'lmnReserved2',
+            'lmnReserved3',
+            'sophomorixComment',
         ]
         if http_context.method == 'GET':
             return list(

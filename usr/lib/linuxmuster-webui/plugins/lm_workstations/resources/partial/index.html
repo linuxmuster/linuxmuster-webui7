@@ -22,7 +22,7 @@
             <button class="btn btn-default" uib-dropdown-toggle>
                 <i class="fa fa-ellipsis-h"></i> <span translate>Fields</span> <span class="caret"></span>
             </button>
-            <ul uib-dropdown-menu class="dropdown-menu-right" style="width:150px">
+            <ul uib-dropdown-menu class="dropdown-menu-right" style="width:190px">
                 <li ng:repeat="(id, field) in fields">
                     <span checkbox ng:model="field.visible" text="{{field.name}}"></span>
                 </li>
@@ -73,14 +73,17 @@
             <td ng:if="fields.windowsKey.visible">
                 <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="workstation.windowsKey" placeholder="Windows-Key" class="form-control" />
             </td>
-            <td ng:if="fields.userReserved.visible">
-                <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="workstation.userReserved" placeholder="User" class="form-control" />
+            <td ng:if="fields.dhcpOptions.visible">
+                <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="workstation.dhcpOptions" placeholder="DHCP-Options" class="form-control" />
             </td>
             <td width="100" ng:if="fields.accountType.visible">
                 <select ng:model="workstation.accountType" class="form-control">
                     <option value="0" translate>IP-Host</option>
                     <option value="1" translate>Domain-Host</option>
                 </select>
+            </td>
+            <td ng:if="fields.sophomorixRole.visible">
+                <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="workstation.sophomorixRole" placeholder="Sophomorix-Role" class="form-control" />
             </td>
             <td width="100" ng:if="fields.pxeFlag.visible">
                 <select ng:model="workstation.pxeFlag" class="form-control">
@@ -89,6 +92,18 @@
                     <option value="2" translate>PXE + OPSI</option>
                     <option value="3" translate>OPSI-PXE</option>
                 </select>
+            </td>
+            <td ng:if="fields.lmnReserved1.visible">
+                <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="workstation.lmnReserved1" placeholder="LMN-Reserved1" class="form-control" />
+            </td>
+            <td ng:if="fields.lmnReserved2.visible">
+                <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="workstation.lmnReserved2" placeholder="LMN-Reserved2" class="form-control" />
+            </td>
+            <td ng:if="fields.lmnReserved3.visible">
+                <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="workstation.lmnReserved3" placeholder="LMN-Reserved3" class="form-control" />
+            </td>
+            <td ng:if="fields.sophomorixComment.visible">
+                <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="workstation.sophomorixComment" placeholder="Sophomorix-Comment" class="form-control" />
             </td>
             <td width="1">
                 <button class="btn btn-default" ng:click="remove(workstation)" title="Remove">

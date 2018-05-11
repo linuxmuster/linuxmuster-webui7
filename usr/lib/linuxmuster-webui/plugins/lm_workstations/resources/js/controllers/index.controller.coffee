@@ -86,15 +86,30 @@ angular.module('lm.workstations').controller 'LMWorkstationsController', ($scope
         windowsKey:
             visible: false
             name: gettext('Windows Key')
-        userReserved:
+        dhcpOptions:
             visible: false
-            name: gettext('User-defined')
+            name: gettext('DHCP-Options')
+        sophomorixRole:
+            visible: false
+            name: gettext('Sophomorix-Role')
         accountType:
             visible: false
             name: gettext('Account type')
         pxeFlag:
             visible: true
             name: gettext('PXE')
+        lmnReserved1:
+            visible: false
+            name: gettext('LMN-Reserved')
+        lmnReserved2:
+            visible: false
+            name: gettext('LMN-Reserved')
+        lmnReserved3:
+            visible: false
+            name: gettext('LMN-Reserved')
+        sophomorixComment:
+            visible: false
+            name: gettext('Sophomorix-Comment')
     }
 
     $http.get('/api/lm/workstations').then (resp) ->

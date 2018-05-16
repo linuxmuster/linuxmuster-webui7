@@ -49,35 +49,21 @@ angular.module('lm.setup_wizard').controller('InitSchoolController', function ($
   this.ini = {}
   this.apply = async () => {
     $dataMissing=false
-    if (this.ini.schoolname == null || this.ini.schoolname == '') {
-      document.getElementById('schoolname-input').style.background = 'rgba(255, 178, 178, 0.29)'
-      document.getElementById('schoolname-input').style.borderColor = 'red'
-      $dataMissing=true
-    }
-    if (this.ini.location == null || this.ini.location == '') {
-      document.getElementById('location-input').style.background = 'rgba(255, 178, 178, 0.29)'
-      document.getElementById('location-input').style.borderColor = 'red'
-      $dataMissing=true
-    }
-    if (this.ini.state == null || this.ini.state == '') {
-      document.getElementById('state-input').style.background = 'rgba(255, 178, 178, 0.29)'
-      document.getElementById('state-input').style.borderColor = 'red'
-      $dataMissing=true
-    }
-    if (this.ini.country == null || this.ini.country == '') {
-      document.getElementById('country-input').style.background = 'rgba(255, 178, 178, 0.29)'
-      document.getElementById('country-input').style.borderColor = 'red'
-      $dataMissing=true
-    }
-    if (this.ini.servername == null || this.ini.servername == '') {
-      document.getElementById('servername-input').style.background = 'rgba(255, 178, 178, 0.29)'
-      document.getElementById('servername-input').style.borderColor = 'red'
-      $dataMissing=true
-    }
-    if (this.ini.domainname == null || this.ini.domainname == '') {
-      document.getElementById('domainname-input').style.background = 'rgba(255, 178, 178, 0.29)'
-      document.getElementById('domainname-input').style.borderColor = 'red'
-      $dataMissing=true
+
+    var fields=["schoolname","location","state","country", "servername","domainname"]
+
+    for (var i=0; i < fields.length; i++){
+      var field=fields[i]
+      if (this.ini[field] == null || this.ini[field] == '') {
+        document.getElementById(field+'-input').style.background = 'rgba(255, 178, 178, 0.29)'
+        document.getElementById(field+'-input').style.borderColor = 'red'
+        $dataMissing=true
+      }
+      else {
+        document.getElementById(field+'-input').style.background = ''
+        document.getElementById(field+'-input').style.borderColor = ''
+      }
+
     }
 
     if ($dataMissing == true){
@@ -149,6 +135,11 @@ angular.module('lm.setup_wizard').controller('InitSetupController', function ($l
     $location.path('/')
   }
 })
+
+function resetColor(id){
+        document.getElementById(id).style.background = ''
+        document.getElementById(id).style.borderColor = ''
+}
 
 function isStrongPwd1(password) {
         var regExp = /(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*()]|(?=.*\d)).{7,}/;

@@ -74,38 +74,19 @@ angular.module('lm.setup_wizard').controller('InitSchoolController', function ($
   this.ini = {};
   this.apply = async function () {
     $dataMissing = false;
-    console.log($dataMissing);
-    console.log(_this2.ini.schoolname);
-    console.log(_this2.ini.country);
-    if (_this2.ini.schoolname == null || _this2.ini.schoolname == '') {
-      document.getElementById('schoolname-input').style.background = 'rgba(255, 178, 178, 0.29)';
-      document.getElementById('schoolname-input').style.borderColor = 'red';
-      $dataMissing = true;
-    }
-    if (_this2.ini.location == null || _this2.ini.location == '') {
-      document.getElementById('location-input').style.background = 'rgba(255, 178, 178, 0.29)';
-      document.getElementById('location-input').style.borderColor = 'red';
-      $dataMissing = true;
-    }
-    if (_this2.ini.state == null || _this2.ini.state == '') {
-      document.getElementById('state-input').style.background = 'rgba(255, 178, 178, 0.29)';
-      document.getElementById('state-input').style.borderColor = 'red';
-      $dataMissing = true;
-    }
-    if (_this2.ini.country == null || _this2.ini.country == '') {
-      document.getElementById('country-input').style.background = 'rgba(255, 178, 178, 0.29)';
-      document.getElementById('country-input').style.borderColor = 'red';
-      $dataMissing = true;
-    }
-    if (_this2.ini.servername == null || _this2.ini.servername == '') {
-      document.getElementById('servername-input').style.background = 'rgba(255, 178, 178, 0.29)';
-      document.getElementById('servername-input').style.borderColor = 'red';
-      $dataMissing = true;
-    }
-    if (_this2.ini.domainname == null || _this2.ini.domainname == '') {
-      document.getElementById('domainname-input').style.background = 'rgba(255, 178, 178, 0.29)';
-      document.getElementById('domainname-input').style.borderColor = 'red';
-      $dataMissing = true;
+
+    var fields = ["schoolname", "location", "state", "country", "servername", "domainname"];
+
+    for (var i = 0; i < fields.length; i++) {
+      var field = fields[i];
+      if (_this2.ini[field] == null || _this2.ini[field] == '') {
+        document.getElementById(field + '-input').style.background = 'rgba(255, 178, 178, 0.29)';
+        document.getElementById(field + '-input').style.borderColor = 'red';
+        $dataMissing = true;
+      } else {
+        document.getElementById(field + '-input').style.background = '';
+        document.getElementById(field + '-input').style.borderColor = '';
+      }
     }
 
     if ($dataMissing == true) {
@@ -181,6 +162,11 @@ angular.module('lm.setup_wizard').controller('InitSetupController', function ($l
     $location.path('/');
   };
 });
+
+function resetColor(id) {
+  document.getElementById(id).style.background = '';
+  document.getElementById(id).style.borderColor = '';
+}
 
 function isStrongPwd1(password) {
   var regExp = /(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*()]|(?=.*\d)).{7,}/;

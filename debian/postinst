@@ -11,8 +11,8 @@ case "$1" in
 	pip install -U pip wheel setuptools distribute
 	hash -r
 	pip install -r $webuietc/requirements.txt
-	echo "link ajcfg to linuxmuster-webui folder"
-	ln -s $ajcfg $webuietc
+	#echo "link ajcfg to linuxmuster-webui folder"
+	#ln -s $ajcfg $webuietc
 	# Set default permissions from true to false
 	echo "set reverse permissions"
 	sed -i "s/: True,/: False,/g" /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/main.py

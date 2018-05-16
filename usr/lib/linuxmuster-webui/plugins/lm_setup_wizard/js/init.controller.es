@@ -151,7 +151,7 @@ angular.module('lm.setup_wizard').controller('InitSetupController', function ($l
 })
 
 function isStrongPwd1(password) {
-        var regExp = /(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*()]|(?=.*\d)).{8,}/;
+        var regExp = /(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*()]|(?=.*\d)).{7,}/;
         var validPassword = regExp.test(password);
         return validPassword;
 }

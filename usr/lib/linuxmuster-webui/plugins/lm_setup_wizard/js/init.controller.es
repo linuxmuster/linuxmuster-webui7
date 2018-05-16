@@ -45,10 +45,10 @@ angular.module('lm.setup_wizard').controller('InitWelcomeController', function (
 
 angular.module('lm.setup_wizard').controller('InitSchoolController', function ($location, $http, gettext, pageTitle, notify) {
   pageTitle.set(gettext('Setup Wizard'))
+  $http.get('/api/core/languages').then(response => this.languages = response.data)
   this.ini = {}
   this.apply = async () => {
     $dataMissing=false
-    console.log($dataMissing)
     if (this.ini.schoolname == null || this.ini.schoolname == '') {
       document.getElementById('schoolname-input').style.background = 'rgba(255, 178, 178, 0.29)'
       document.getElementById('schoolname-input').style.borderColor = 'red'

@@ -68,10 +68,15 @@ angular.module('lm.setup_wizard').controller('InitSchoolController', function ($
   var _this2 = this;
 
   pageTitle.set(gettext('Setup Wizard'));
+  $http.get('/api/core/languages').then(function (response) {
+    return _this2.languages = response.data;
+  });
   this.ini = {};
   this.apply = async function () {
     $dataMissing = false;
     console.log($dataMissing);
+    console.log(_this2.ini.schoolname);
+    console.log(_this2.ini.country);
     if (_this2.ini.schoolname == null || _this2.ini.schoolname == '') {
       document.getElementById('schoolname-input').style.background = 'rgba(255, 178, 178, 0.29)';
       document.getElementById('schoolname-input').style.borderColor = 'red';

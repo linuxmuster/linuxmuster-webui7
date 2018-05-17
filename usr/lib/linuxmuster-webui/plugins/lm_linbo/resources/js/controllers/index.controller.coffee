@@ -93,13 +93,26 @@ angular.module('lm.linbo').controller 'LMLINBOConfigModalController', ($scope, $
     ]
 
     $scope.disks = []
+
     diskMap = {}
+    console.log($scope.disks)
 
     $http.get('/api/lm/linbo/images').then (resp) ->
         $scope.oses = resp.data
+        console.log($scope.disks)
+        console.log(diskMap)
 
     for _partition in config.partitions
-        _device = _partition.Dev.substring(0, '/dev/sdX'.length)
+        # Determine the position of the partition integer.
+        # Different devices have it on a different position
+        if _partition['Dev'].indexOf("nvme") != -1
+            _device = _partition.Dev.substring(0, '/dev/nvme0p'.length)
+        if _partition['Dev'].indexOf("mmcblk") != -1
+            _device = _partition.Dev.substring(0, '/dev/mmcblk0p'.length)
+        if _partition['Dev'].indexOf("sd") != -1
+            _device = _partition.Dev.substring(0, '/dev/sdX'.length)
+
+
         if not diskMap[_device]
             diskMap[_device] = {
                 name: _device
@@ -111,6 +124,7 @@ angular.module('lm.linbo').controller 'LMLINBOConfigModalController', ($scope, $
 
     for disk in $scope.disks
         disk.partitions.sort (a, b) -> if a.Dev > b.Dev then 1 else -1
+
 
     $scope.addDisk = () ->
         disk = 'a'
@@ -400,7 +414,7 @@ angular.module('lm.linbo').controller 'LMLINBOController', ($scope, $http, $uibM
                         $route.reload()
 
     $scope.deleteConfig = (configName) ->
-        messagebox.show(text: "Delete '#{configName}'?", positive: 'Delete', negative: 'Cancel').then () ->
+        messagebox.prompt(text: "Delete '#{configName}'?", positive: 'Delete', negative: 'Cancel').then () ->
             $http.delete("/api/lm/linbo/config/#{configName}").then () ->
                 $route.reload()
 

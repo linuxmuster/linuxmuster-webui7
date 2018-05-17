@@ -10,6 +10,7 @@ ajenti.plugin.passwd==0.21
 ajenti.plugin.plugins==0.41
 ajenti.plugin.settings==0.23
 ajenti.plugin.network==0.20
+gevent==1.2.2
 unicodecsv==0.14.1
 configparser==3.5.0
 dpath==1.4.2

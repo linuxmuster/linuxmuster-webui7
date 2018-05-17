@@ -127,10 +127,12 @@
             </div>
         </uib:tab>
         <uib:tab heading="{{'Partitions'|translate}}">
+            {{disks}}
+            {{diskTypes}}
             <div sv:root has-relative-parent=".modal-content" sv:on-sort="rebuildDisks()">
                 <div ng:repeat="disk in disks">
                     <br/>
-                    <label>{{disk.name}}</label>
+                    <input id="state-input" type="text" class="form-control" ng:model="disk.name" style="font-weight:bold; width:150px" />
                     <div sv:part="disk.partitions" style="
                             overflow: hidden;
                             border: 1px solid #ccc;

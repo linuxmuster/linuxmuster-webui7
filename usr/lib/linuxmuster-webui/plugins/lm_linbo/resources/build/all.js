@@ -105,13 +105,26 @@
     $scope.colors = ['white', 'black', 'lightCyan', 'cyan', 'darkCyan', 'orange', 'red', 'darkRed', 'pink', 'magenta', 'darkMagenta', 'lightGreen', 'green', 'darkGreen', 'lightYellow', 'yellow', 'gold', 'lightBlue', 'blue', 'darkBlue', 'lightGray', 'gray', 'darkGray'];
     $scope.disks = [];
     diskMap = {};
+    console.log($scope.disks);
     $http.get('/api/lm/linbo/images').then(function(resp) {
-      return $scope.oses = resp.data;
+      $scope.oses = resp.data;
+      console.log($scope.disks);
+      return console.log(diskMap);
     });
     ref = config.partitions;
     for (i = 0, len = ref.length; i < len; i++) {
       _partition = ref[i];
-      _device = _partition.Dev.substring(0, '/dev/sdX'.length);
+      // Determine the position of the partition integer.
+      // Different devices have it on a different position
+      if (_partition['Dev'].indexOf("nvme") !== -1) {
+        _device = _partition.Dev.substring(0, '/dev/nvme0p'.length);
+      }
+      if (_partition['Dev'].indexOf("mmcblk") !== -1) {
+        _device = _partition.Dev.substring(0, '/dev/mmcblk0p'.length);
+      }
+      if (_partition['Dev'].indexOf("sd") !== -1) {
+        _device = _partition.Dev.substring(0, '/dev/sdX'.length);
+      }
       if (!diskMap[_device]) {
         diskMap[_device] = {
           name: _device,
@@ -503,7 +516,7 @@
       });
     };
     $scope.deleteConfig = function(configName) {
-      return messagebox.show({
+      return messagebox.prompt({
         text: `Delete '${configName}'?`,
         positive: 'Delete',
         negative: 'Cancel'

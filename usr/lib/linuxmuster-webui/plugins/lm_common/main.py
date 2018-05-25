@@ -40,7 +40,7 @@ class ItemProvider(SidebarItemProvider):
             {
                 'attach': None,
                 'id': 'category:class',
-                'name': _('Class'),
+                'name': _('Class Management'),
                 'children': [
                 ]
             },

@@ -1,1 +1,0 @@
-{"": "", "Room Defaults": "Raumstandards", "Saved": "Gespeichert", "Update complete": "Update abgeschlossen", "Update failed": "Update fehlgeschlagen", "Applying changes": "\u00c4nderungen werden \u00dcbernommen", "EDV Rooms": "", "Details": "Details", "Close": "Schlie\u00dfen", "Apply": "\u00dcbernehmen", "Save": "Speichern", "Type to search...": "", "Rooms": "R\u00e4ume"}

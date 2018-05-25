@@ -11,10 +11,10 @@ class ItemProvider(SidebarItemProvider):
     def provide(self):
         return [
             {
-                'attach': 'category:settingsdefaults',
+                'attach': 'category:schoolsettingsdefaults',
                 'name': _('Settings'),
                 'icon': 'wrench',
-                'url': '/view/lm/settings',
+                'url': '/view/lm/schoolsettings',
                 'children': [],
             },
         ]

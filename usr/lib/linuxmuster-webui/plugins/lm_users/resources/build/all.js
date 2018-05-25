@@ -357,7 +357,7 @@
       return $scope.courses.remove(course);
     };
     $scope.editCSV = function() {
-      return lmFileEditor.show('/etc/sophomorix/user/extrakurse.txt', $scope.encoding).then(function() {
+      return lmFileEditor.show('/etc/linuxmuster/sophomorix/default-school/extraclasses.csv', $scope.encoding).then(function() {
         return $route.reload();
       });
     };
@@ -376,7 +376,7 @@
       });
     };
     return $scope.backups = function() {
-      return lmFileBackups.show('/etc/sophomorix/user/extrakurse.txt', $scope.encoding);
+      return lmFileBackups.show('/etc/linuxmuster/sophomorix/default-school/extraclasses.csv', $scope.encoding);
     };
   });
 

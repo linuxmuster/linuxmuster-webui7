@@ -203,3 +203,26 @@
 
 }).call(this);
 
+'use strict';
+
+angular.module('lm.common').directive('messageboxContainer2', function (messagebox) {
+    return {
+        restrict: 'E',
+        template: '\n            <dialog "ng:show="message.visible" style="z-index: 1050" ng:repeat="message in messagebox.messages">\n                <div class="modal-header">\n                    <h4>{{message.title|translate}}</h4>\n                </div>\n                <div class="modal-body" ng:class="{scrollable: message.scrollable}">\n                    <div ng:show="message.progress">\n                        <progress-spinner></progress-spinner>\n                    </div>\n                    {{message.text|translate}}\n                    <ng:include ng:if="message.template" src="message.template"></ng:include>\n                    <div ng:show="message.prompt">\n                        <label>{{message.prompt}}</label>\n                        <input type="text" ng:model="message.value" ng:enter="doPositive(message)" class="form-control" autofocus />\n                    </div>\n                </div>\n                <div class="modal-footer">\n                    <a ng:click="doPositive(message)" ng:show="message.positive" class="positive btn btn-default btn-flat">{{message.positive|translate}}</a>\n                    <a ng:click="doNegative(message)" ng:show="message.negative" class="negative btn btn-default btn-flat">{{message.negative|translate}}</a>\n                </div>\n            </dialog>',
+        link: function link($scope, element, attrs) {
+            $scope.messagebox = messagebox;
+
+            $scope.doPositive = function (msg) {
+                msg.q.resolve(msg);
+                messagebox.close(msg);
+            };
+
+            $scope.doNegative = function (msg) {
+                msg.q.reject(msg);
+                messagebox.close(msg);
+            };
+        }
+    };
+});
+
+

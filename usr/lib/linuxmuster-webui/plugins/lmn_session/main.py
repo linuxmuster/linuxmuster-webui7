@@ -11,10 +11,18 @@ class ItemProvider(SidebarItemProvider):
     def provide(self):
         return [
             {
-                'attach': 'category:classroom',
-                'name': 'Session',
-                'icon': 'users',
-                'url': '/view/lmn/session',
+            'attach': 'category:class',
+            'name': _('Session'),
+            'icon': 'users',
+            'url': '/view/lmn/session',
+            'weight': 20,
+            },
+            {
+            'attach': 'category:class',
+            'name': _('Print Passwords'),
+            'icon': 'print',
+            'url': '/view/lm/users/print-passwords',
+            'weight': 25,
             }
         ]
 

@@ -19,7 +19,8 @@ class Handler(HttpPlugin):
             supervisor = http_context.json_body()['username']
             with authorize('lm:users:teachers:read'):
                 try:
-                    sessions = lmn_getSophomorixValue('sophomorix-session -i -jj ', 'SUPERVISOR/'+supervisor+'/sophomorixSessions', True)
+                    sophomorixCommand = ['sophomorix-session', '-i', '-jj']
+                    sessions = lmn_getSophomorixValue(sophomorixCommand, 'SUPERVISOR/'+supervisor+'/sophomorixSessions', True)
                 # Most likeley key error 'cause no sessions for this user exist
                 except Exception:
                     return 0
@@ -29,7 +30,8 @@ class Handler(HttpPlugin):
             session = http_context.json_body()['session']
             with authorize('lm:users:teachers:read'):
                     try:
-                        participants = lmn_getSophomorixValue('sophomorix-session -i -jj ', 'SUPERVISOR/'+supervisor+'/sophomorixSessions/'+session+'/PARTICIPANTS', True)
+                        sophomorixCommand = ['sophomorix-session', '-i', '-jj']
+                        participants = lmn_getSophomorixValue(sophomorixCommand, 'SUPERVISOR/'+supervisor+'/sophomorixSessions/'+session+'/PARTICIPANTS', True)
                     except Exception:
                         participants = {'0': {"givenName": "null", "sophomorixExamMode": "---", "group_wifiaccess": False, "group_intranetaccess": False, "group_printing": False, "sophomorixStatus": "U", "sophomorixRole": "", "group_internetaccess": False, "sophomorixAdminClass": "", "group_webfilter": False, "user_existing": False, "sn": ""}}
                         #return ["frayka"["test":"null"]]
@@ -45,20 +47,23 @@ class Handler(HttpPlugin):
             session = http_context.json_body()['session']
             with authorize('lm:users:teachers:read'):
                 # raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(session))
-                result = lmn_getSophomorixValue('sophomorix-session -j --session '+session+' --kill', 'OUTPUT/0/LOG')
+                sophomorixCommand = ['sophomorix-session', '-j', '--session', session, '--kill']
+                result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
                 return result
         if action == 'rename-session':
             session = http_context.json_body()['session']
             comment = http_context.json_body()['comment']
             with authorize('lm:users:teachers:read'):
                 # raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(comment)+ str(session))
-                result = lmn_getSophomorixValue('sophomorix-session -j --session '+session+' --comment "' + comment + '"', 'OUTPUT/0/LOG')
+                sophomorixCommand = ['sophomorix-session', '-j', '--session', session, '--comment', comment]
+                result = lmn_getSophomorixValue(sophomorixCommand , 'OUTPUT/0/LOG')
                 return result
         if action == 'new-session':
             supervisor = http_context.json_body()['username']
             comment = http_context.json_body()['comment']
             with authorize('lm:users:teachers:read'):
-                result = lmn_getSophomorixValue('sophomorix-session --create --supervisor ' + supervisor + ' -j --comment "' + comment + '"', 'OUTPUT/0/LOG')
+                sophomorixCommand = ['sophomorix-session', '--create', '--supervisor', supervisor,  '-j', '--comment', comment]
+                result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
                 return result
         if action == 'save-session':
             def checkIfUserInManagementGroup(participant, managementgroup, managementList, noManagementList):
@@ -100,13 +105,21 @@ class Handler(HttpPlugin):
             noPrintingListCSV = ",".join(noPrintingList)
 
             try:
-                result = lmn_getSophomorixValue('sophomorix-managementgroup \
-                                                --wifi "' + wifiListCSV + '" --nowifi "' + noWifiListCSV +
-                                                '" --internet "' + internetListCSV + '" --nointernet "' + noInternetListCSV +
-                                                '" --intranet "' + intranetListCSV + '" --nointranet "' + noIntranetListCSV +
-                                                '" --webfilter "' + webfilterListCSV + '" --nowebfilter "' + noWebfilterListCSV +
-                                                '" --printing "' + printingListCSV + '" --noprinting "' + noPrintingListCSV +
-                                                '" -jj ', 'OUTPUT/0/LOG')
+                sophomorixCommand = ['sophomorix-managementgroup', \
+                                                '--wifi', wifiListCSV, '--nowifi', noWifiListCSV,\
+                                                '--internet', internetListCSV, '--nointernet', noInternetListCSV,\
+                                                '--intranet', intranetListCSV, '--nointranet',  noIntranetListCSV,\
+                                                '--webfilter', webfilterListCSV, '--nowebfilter',  noWebfilterListCSV,\
+                                                '--printing', printingListCSV, '--noprinting', noPrintingListCSV, \
+                                                '-jj']
+                result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
+                #result = lmn_getSophomorixValue('sophomorix-managementgroup \
+                #                                --wifi "' + wifiListCSV + '" --nowifi "' + noWifiListCSV +
+                #                                '" --internet "' + internetListCSV + '" --nointernet "' + noInternetListCSV +
+                #                                '" --intranet "' + intranetListCSV + '" --nointranet "' + noIntranetListCSV +
+                #                                '" --webfilter "' + webfilterListCSV + '" --nowebfilter "' + noWebfilterListCSV +
+                #                                '" --printing "' + printingListCSV + '" --noprinting "' + noPrintingListCSV +
+                #                                '" -jj ', 'OUTPUT/0/LOG')
             except Exception as e:
                 raise Exception('Error:\n' + str('sophomorix-managementgroup \
                                                  --wifi "' + wifiListCSV + '" --nowifi "' + noWifiListCSV +
@@ -116,7 +129,8 @@ class Handler(HttpPlugin):
                                                  '" --printing "' + printingListCSV + '" --noprinting "' + noPrintingListCSV +
                                                  '" -jj ') + "\n Error was: " + str(e))
             try:
-                result = lmn_getSophomorixValue('sophomorix-session --session ' + session + ' -j --participants "' + participantsCSV + '"', 'OUTPUT/0/LOG')
+                sophomorixCommand = ['sophomorix-session', '--session', session,  '-j', '--participants', participantsCSV]
+                result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
             except Exception:
                 raise Exception('Error:\n' + str('sophomorix-session --session ' + session + ' -j --participants ' + participantsCSV))
 
@@ -132,7 +146,8 @@ class Handler(HttpPlugin):
     def handle_api_ldap_user_search(self, http_context):
         with authorize('lm:users:teachers:read'):
             try:
-                users = lmn_getSophomorixValue('sophomorix-query -jj --schoolbase default-school --student --user-full --anyname \"*' + http_context.query['q'] + '*\" ', 'USER', True)
+                sophomorixCommand = ['sophomorix-query', '-jj', '--schoolbase', 'default-school', '--student', '--user-full', '--anyname', '*'+http_context.query['q']+'*']
+                users = lmn_getSophomorixValue(sophomorixCommand, 'USER', True)
             except Exception:
                 return 0
         userList = []
@@ -145,7 +160,8 @@ class Handler(HttpPlugin):
     def handle_api_ldap_group_search(self, http_context):
         with authorize('lm:users:teachers:read'):
             try:
-                schoolClasses = lmn_getSophomorixValue('sophomorix-query -jj --schoolbase default-school --sam \"*' + http_context.query['q'] + '*\" ', 'GROUP', True)
+                sophomorixCommand = ['sophomorix-query', '-jj', '--schoolbase', 'default-school', '--sam', '*'+http_context.query['q']+'*']
+                schoolClasses = lmn_getSophomorixValue(sophomorixCommand, 'GROUP', True)
             except Exception:
                 return 0
         schoolClassList = []

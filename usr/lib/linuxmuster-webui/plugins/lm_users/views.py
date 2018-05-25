@@ -103,7 +103,8 @@ class Handler(HttpPlugin):
             schoolname = 'default-school'
             teachersList = []
             with authorize('lm:users:teachers:read'):
-                teachers = lmn_getSophomorixValue('sophomorix-user --info -jj', 'LISTS/USER_by_sophomorixSchoolname/'+schoolname+'/teacher')
+                sophomorixCommand = ['sophomorix-user', '--info', '-jj']
+                teachers = lmn_getSophomorixValue(sophomorixCommand, 'LISTS/USER_by_sophomorixSchoolname/'+schoolname+'/teacher')
                 for item in range(len(teachers)):
                     teachersList.append({'sAMAccountName': teachers[item]}.copy())
                 return teachersList
@@ -271,7 +272,8 @@ class Handler(HttpPlugin):
         user = ','.join([x.strip() for x in users])
         ## Passwort auslesen
         if action == 'get':
-            return lmn_getSophomorixValue('sophomorix-user --info -jj -u %s' % user, '/USERS/'+user+'/sophomorixFirstPassword')
+            sophomorixCommand = ['sophomorix-user', '--info', '-jj', '-u', user]
+            return lmn_getSophomorixValue(sophomorixCommand, '/USERS/'+user+'/sophomorixFirstPassword')
         if action == 'set-initial':
             subprocess.check_call('sophomorix-passwd --set-firstpassword -u %s' % user, shell=True)
         if action == 'set-random':

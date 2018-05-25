@@ -100,7 +100,8 @@ def lmn_getUserLdapValue(user, field):
 
 def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
     # only error log is going to be processed. standard output is thrown away
-    jsonS = subprocess.Popen(sophomorixCommand + ' 1>/dev/null', stdout=subprocess.PIPE, stderr=subprocess.STDOUT,  shell=True).stdout.read()
+    sophomorixCommand.append('1>/dev/null')
+    jsonS = subprocess.Popen(sophomorixCommand, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=False).stdout.read()
     # jsonS is everything between sophomorix json headers
     jsonS = jsonS.split("# JSON-begin", 1)[1]
     jsonS = jsonS.split("# JSON-end", 1)[0]
@@ -117,13 +118,13 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
 
 
 # deprecated
-def lmn_getUserSophomorixValue(user, field):
-    # get json string from sophomorix
-    jsonS = subprocess.Popen('sophomorix-user --info --user ' + user + ' -jj 1>/dev/null', stdout=subprocess.PIPE, stderr=subprocess.STDOUT,  shell=True).stdout.read()
-    # parse string to dict
-    jsonObj = json.loads(jsonS, encoding='latin1')
-    try:
-        resultString = jsonObj['USERS'][user][field]
-    except Exception as e:
-        raise Exception('Field error. Either sophomorix field does not exist or ajenti binduser does not have sufficient permissions:\n' 'Searched field was: ' + str(e) + ' received information for filter:  ' + str(jsonObj))
-    return resultString
+#def lmn_getUserSophomorixValue(user, field):
+#    # get json string from sophomorix
+#    jsonS = subprocess.Popen('sophomorix-user --info --user ' + user + ' -jj 1>/dev/null', stdout=subprocess.PIPE, stderr=subprocess.STDOUT,  shell=True).stdout.read()
+#    # parse string to dict
+#    jsonObj = json.loads(jsonS, encoding='latin1')
+#    try:
+#        resultString = jsonObj['USERS'][user][field]
+#    except Exception as e:
+#        raise Exception('Field error. Either sophomorix field does not exist or ajenti binduser does not have sufficient permissions:\n' 'Searched field was: ' + str(e) + ' received information for filter:  ' + str(jsonObj))
+#    return resultString

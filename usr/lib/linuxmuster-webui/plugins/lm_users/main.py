@@ -11,66 +11,46 @@ class ItemProvider(SidebarItemProvider):
     def provide(self):
         return [
             {
-                'attach': 'category:usermanagement',
+                'attach': 'category:listmanagement',
                 'name': _('Students'),
                 'icon': 'users',
                 'url': '/view/lm/users/students',
                 'weight': 10,
             },
             {
-                'attach': 'category:usermanagement',
-                'name': _('Teachers'),
+                'attach': 'category:listmanagement',
+                'name': _('Teachers List'),
                 'icon': 'briefcase',
                 'url': '/view/lm/users/teachers',
-                'weight': 15,
-                'children': [
-                    {
-                        'name': _('Teachers List'),
-                        'icon': 'briefcase',
-                        'url': '/view/lm/users/teachers',
-                        'weight': 10,
-                    },
-                    {
-                        'name': _('Teacher Passwords'),
-                        'icon': 'key',
-                        'url': '/view/lm/users/teacher-passwords',
-                        'weight': 15,
-                    },
-                    {
-                        'name': _('ATi Teacher Passwords'),
-                        'icon': 'key',
-                        'url': '/view/lm/users/ati-teacher-passwords',
-                        'weight': 15,
-                    },
-                ],
+                'weight': 10,
             },
             {
                 'attach': 'category:usermanagement',
-                'name': _('Extra Users'),
+                'name': _('Teacher Passwords'),
+                'icon': 'key',
+                'url': '/view/lm/users/teacher-passwords',
+                'weight': 15,
+            },
+            {
+                'attach': 'category:usermanagement',
+                'name': _('ATi Teacher Passwords'),
+                'icon': 'key',
+                'url': '/view/lm/users/ati-teacher-passwords',
+                'weight': 15,
+            },
+            {
+                'attach': 'category:listmanagement',
+                'name': _('Extra Students'),
                 'icon': 'users',
                 'url': '/view/lm/users/extra-students',
-                'weight': 20,
-                'children': [
-                    {
-                        'name': _('Extra Students'),
-                        'icon': 'users',
-                        'url': '/view/lm/users/extra-students',
-                        'weight': 25,
-                    },
-                    {
-                        'name': _('Extra Courses'),
-                        'icon': 'users',
-                        'url': '/view/lm/users/extra-courses',
-                        'weight': 30,
-                    },
-                ],
+                'weight': 25,
             },
             {
-                'attach': 'category:usermanagement',
-                'name': _('Print Passwords'),
-                'icon': 'print',
-                'url': '/view/lm/users/print-passwords',
-                'weight': 25,
+                'attach': 'category:listmanagement',
+                'name': _('Extra Courses'),
+                'icon': 'users',
+                'url': '/view/lm/users/extra-courses',
+                'weight': 30,
             },
         ]
 

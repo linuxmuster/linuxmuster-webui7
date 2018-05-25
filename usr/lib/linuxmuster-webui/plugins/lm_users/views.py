@@ -153,7 +153,7 @@ class Handler(HttpPlugin):
     @url(r'/api/lm/users/extra-courses')
     @endpoint(api=True)
     def handle_api_extra_courses(self, http_context):
-        path = '/etc/sophomorix/user/extrakurse.txt'
+        path = '/etc/linuxmuster/sophomorix/default-school/extraclasses.csv'
         fieldnames = [
             'course',
             'base_name',

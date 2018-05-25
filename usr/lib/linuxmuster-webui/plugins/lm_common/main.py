@@ -18,6 +18,13 @@ class ItemProvider(SidebarItemProvider):
             },
             {
                 'attach': None,
+                'id': 'category:listmanagement',
+                'name': _('List Management'),
+                'children': [
+                ]
+            },
+            {
+                'attach': None,
                 'id': 'category:quota',
                 'name': _('Quota'),
                 'children': [
@@ -32,15 +39,22 @@ class ItemProvider(SidebarItemProvider):
             },
             {
                 'attach': None,
-                'id': 'category:classroom',
-                'name': _('Classroom'),
+                'id': 'category:class',
+                'name': _('Class'),
                 'children': [
                 ]
             },
             {
                 'attach': None,
-                'id': 'category:settingsdefaults',
-                'name': _('Settings & Defaults'),
+                'id': 'category:schoolsettingsdefaults',
+                'name': _('School Settings'),
+                'children': [
+                ]
+            },
+            {
+                'attach': None,
+                'id': 'category:globalsettingsdefaults',
+                'name': _('Global Settings'),
                 'children': [
                 ]
             },

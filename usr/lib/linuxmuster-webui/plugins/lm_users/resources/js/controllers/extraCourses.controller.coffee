@@ -47,7 +47,7 @@ angular.module('lm.users').controller 'LMUsersExtraCoursesController', ($scope, 
         $scope.courses.remove(course)
 
     $scope.editCSV = () ->
-        lmFileEditor.show('/etc/sophomorix/user/extrakurse.txt', $scope.encoding).then () ->
+        lmFileEditor.show('/etc/linuxmuster/sophomorix/default-school/extraclasses.csv', $scope.encoding).then () ->
             $route.reload()
 
     $scope.save = () ->
@@ -62,4 +62,4 @@ angular.module('lm.users').controller 'LMUsersExtraCoursesController', ($scope, 
                 backdrop: 'static'
             )
     $scope.backups = () ->
-        lmFileBackups.show('/etc/sophomorix/user/extrakurse.txt', $scope.encoding)
+        lmFileBackups.show('/etc/linuxmuster/sophomorix/default-school/extraclasses.csv', $scope.encoding)

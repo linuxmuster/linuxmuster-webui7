@@ -1,1 +1,0 @@
-{"": "", "Room Defaults": "", "Saved": "", "Update complete": "", "Update failed": "", "Applying changes": "Aplicando altera\u00e7\u00f5es", "EDV Rooms": "", "Details": "", "Close": "", "Apply": "Aplicar", "Save": "", "Type to search...": "Digite para pesquisar...", "Rooms": "Salas"}

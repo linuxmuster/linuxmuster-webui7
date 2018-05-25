@@ -11,7 +11,7 @@ class ItemProvider(SidebarItemProvider):
     def provide(self):
         return [
             {
-                'attach': 'category:settingsdefaults',
+                'attach': 'category:schoolsettingsdefaults',
                 'name': _('Quotas'),
                 'icon': 'folder-o',
                 'url': '/view/lm/quotas',

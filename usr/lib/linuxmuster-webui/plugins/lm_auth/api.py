@@ -91,8 +91,6 @@ class LMAuthenticationProvider(AuthenticationProvider):
         systemString = ['sophomorix-passwd', '-u', username, '--pass', new_password]
         subprocess.check_call(systemString, shell=False)
 
-        #subprocess.check_call('sophomorix-passwd -u %s --pass "%s"' % (username, new_password), shell=True)
-
     def get_isolation_uid(self, username):
         return 0
 

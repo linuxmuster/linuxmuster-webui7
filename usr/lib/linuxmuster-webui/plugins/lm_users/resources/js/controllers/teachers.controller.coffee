@@ -1,85 +1,59 @@
 angular.module('lm.users').config ($routeProvider) ->
     $routeProvider.when '/view/lm/users/teachers',
         controller: 'LMUsersTeachersController'
-        templateUrl: '/lm_users:resources/partial/teachers.html'
+        templateUrl: '/lm_users:resources/partial/ati-teacher-passwords.html'
 
 
-angular.module('lm.users').controller 'LMUsersTeachersController', ($scope, $http, $location, $route, $uibModal, gettext, lmEncodingMap, notify, messagebox, pageTitle, lmFileEditor, lmFileBackups) ->
+angular.module('lm.users').controller 'LMUsersTeachersController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) ->
     pageTitle.set(gettext('Teachers'))
 
-    $scope.sorts = [
-        {
-            name: gettext('Login')
-            fx: (x) -> x.login
-        }
-        {
-            name: gettext('First name')
-            fx: (x) -> x.first_name
-        }
-        {
-            name: gettext('Last name')
-            fx: (x) -> x.last_name
-        }
-        {
-            name: gettext('Birthday')
-            fx: (x) -> x.birthday
-        }
-    ]
-    $scope.sort = $scope.sorts[0]
-    $scope.paging =
-        page: 1
-        pageSize: 100
-
-    $scope.fields = {
-        last_name:
-            visible: true
-            name: gettext('Last Name')
-        first_name:
-            visible: true
-            name: gettext('First Name')
-        birthday:
-            visible: true
-            name: gettext('Birthday')
-        password:
-            visible: false
-            name: gettext('Desired Password')
-        login:
-            visible: true
-            name: gettext('Login')
-    }
+    $http.get("/api/lm/sophomorixUsers/teachers").then (resp) ->
+        $scope.teachers = resp.data
 
 
-    $http.get('/api/lm/settings').then (resp) ->
-        $scope.encoding = resp.data["userfile.teachers.csv"].encoding or 'ISO8859-1'
-        #$scope.encoding = lmEncodingMap[resp.data.school.encoding] or 'ISO8859-1'
-        $http.get("/api/lm/users/teachers?encoding=#{$scope.encoding}").then (resp) ->
-            $scope.teachers = resp.data
+## legacy functions
+    $scope.showInitialPassword = (teachers) ->
+        #console.log teachers                          # ATi What we Send {sAMAccountName: "schoen", $$hashKey: "object:318"}
+        $http.post('/api/lm/users/password', {users: (x.sAMAccountName for x in teachers), action: 'get'}).then (resp) ->
+            messagebox.show(title: gettext('Initial password'), text: resp.data, positive: 'OK')
 
-    $scope.add = () ->
-        $scope.paging.page = Math.floor(($scope.teachers.length - 1) / $scope.paging.pageSize) + 1
-        $scope.teachers.push {class: 'Lehrer', _isNew: true}
 
-    $scope.remove = (teacher) ->
-        $scope.teachers.remove(teacher)
+    $scope.setInitialPassword = (teachers) ->
+        $http.post('/api/lm/sophomorixUsers/password', {users: (x.sAMAccountName for x in teachers), action: 'set-initial'}).then (resp) ->
+            notify.success gettext('Initial password set')
 
-    $scope.editCSV = () ->
-        lmFileEditor.show('/etc/linuxmuster/sophomorix/default-school/teachers.csv', $scope.encoding).then () ->
-            $route.reload()
+    $scope.setRandomPassword = (teachers) ->
+        $http.post('/api/lm/users/password', {users: (x.sAMAccountName for x in teachers), action: 'set-random'}).then (resp) ->
+            text = ("#{x.user}: #{x.password}" for x in resp.data).join(',\n')
+            messagebox.show(title: gettext('New password'), text: text, positive: 'OK')
 
-    $scope.save = () ->
+    $scope.setCustomPassword = (teachers) ->
+        messagebox.prompt(gettext('New password')).then (msg) ->
+            if not msg.value
+                return
+            $http.post('/api/lm/users/password', {users: (x.sAMAccountName for x in teachers), action: 'set', password: msg.value}).then (resp) ->
+                notify.success gettext('New password set')
+
+    $scope.haveSelection = () ->
+        if $scope.teachers
+            for x in $scope.teachers
+                if x.selected
+                    return true
+        return false
+
+    $scope.batchSetInitialPassword = () ->
+        $scope.setInitialPassword((x for x in $scope.teachers when x.selected))
+
+    $scope.batchSetRandomPassword = () ->
+        $scope.setRandomPassword((x for x in $scope.teachers when x.selected))
+
+    $scope.batchSetCustomPassword = () ->
+        $scope.setCustomPassword((x for x in $scope.teachers when x.selected))
+
+    $scope.selectAll = () ->
         for teacher in $scope.teachers
-            if teacher.isNew
-                delete teacher['isNew']
-        return $http.post("/api/lm/users/teachers?encoding=#{$scope.encoding}", $scope.teachers).then () ->
-            notify.success gettext('Saved')
+            teacher.selected = true
 
-    $scope.saveAndCheck = () ->
-        $scope.save().then () ->
-            $uibModal.open(
-                templateUrl: '/lm_users:resources/partial/check.modal.html'
-                controller: 'LMUsersCheckModalController'
-                backdrop: 'static'
-            )
 
-    $scope.backups = () ->
-        lmFileBackups.show('/etc/linuxmuster/sophomorix/default-school/teachers.csv', $scope.encoding)
+
+

@@ -22,6 +22,10 @@ case "$1" in
 	systemctl enable linuxmuster-webui
 	systemctl start linuxmuster-webui
 	touch $webuietc/.installed
+    touch /etc/linuxmuster/sophomorix/default-school/students.csv
+    touch /etc/linuxmuster/sophomorix/default-school/teachers.csv
+    touch /etc/linuxmuster/sophomorix/default-school/extrastudents.csv
+    touch /etc/linuxmuster/sophomorix/default-school/extraclasses.csv
 	hostname=$(hostname --fqdn)
 	ipaddress=$(hostname --ip-address)
 	echo "---------------------------------------------------------------"

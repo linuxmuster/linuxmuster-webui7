@@ -21,7 +21,7 @@ class ItemProvider(SidebarItemProvider):
                 'attach': 'category:listmanagement',
                 'name': _('Teachers List'),
                 'icon': 'briefcase',
-                'url': '/view/lm/users/teachers',
+                'url': '/view/lm/users/teachers-list',
                 'weight': 10,
             },
             {
@@ -33,9 +33,9 @@ class ItemProvider(SidebarItemProvider):
             },
             {
                 'attach': 'category:usermanagement',
-                'name': _('ATi Teacher Passwords'),
+                'name': _('Teachers'),
                 'icon': 'key',
-                'url': '/view/lm/users/ati-teacher-passwords',
+                'url': '/view/lm/users/teachers',
                 'weight': 15,
             },
             {

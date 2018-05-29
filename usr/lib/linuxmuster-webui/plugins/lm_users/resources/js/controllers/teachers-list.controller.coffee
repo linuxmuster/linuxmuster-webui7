@@ -70,7 +70,7 @@ angular.module('lm.users').controller 'LMUsersTeachersListController', ($scope, 
         for teacher in $scope.teachers
             if teacher.isNew
                 delete teacher['isNew']
-        return $http.post("/api/lm/users/teachers?encoding=#{$scope.encoding}", $scope.teachers).then () ->
+        return $http.post("/api/lm/users/teachers-list?encoding=#{$scope.encoding}", $scope.teachers).then () ->
             notify.success gettext('Saved')
 
     $scope.saveAndCheck = () ->

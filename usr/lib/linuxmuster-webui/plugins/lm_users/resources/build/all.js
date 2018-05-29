@@ -94,11 +94,192 @@
   angular.module('lm.users').config(function($routeProvider) {
     return $routeProvider.when('/view/lm/users/teachers', {
       controller: 'LMUsersTeachersController',
-      templateUrl: '/lm_users:resources/partial/teachers.html'
+      templateUrl: '/lm_users:resources/partial/ati-teacher-passwords.html'
     });
   });
 
-  angular.module('lm.users').controller('LMUsersTeachersController', function($scope, $http, $location, $route, $uibModal, gettext, lmEncodingMap, notify, messagebox, pageTitle, lmFileEditor, lmFileBackups) {
+  angular.module('lm.users').controller('LMUsersTeachersController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) {
+    pageTitle.set(gettext('Teachers'));
+    $http.get("/api/lm/sophomorixUsers/teachers").then(function(resp) {
+      return $scope.teachers = resp.data;
+    });
+    //# legacy functions
+    $scope.showInitialPassword = function(teachers) {
+      var x;
+      //console.log teachers                          # ATi What we Send {sAMAccountName: "schoen", $$hashKey: "object:318"}
+      return $http.post('/api/lm/users/password', {
+        users: (function() {
+          var i, len, results;
+          results = [];
+          for (i = 0, len = teachers.length; i < len; i++) {
+            x = teachers[i];
+            results.push(x.sAMAccountName);
+          }
+          return results;
+        })(),
+        action: 'get'
+      }).then(function(resp) {
+        return messagebox.show({
+          title: gettext('Initial password'),
+          text: resp.data,
+          positive: 'OK'
+        });
+      });
+    };
+    $scope.setInitialPassword = function(teachers) {
+      var x;
+      return $http.post('/api/lm/sophomorixUsers/password', {
+        users: (function() {
+          var i, len, results;
+          results = [];
+          for (i = 0, len = teachers.length; i < len; i++) {
+            x = teachers[i];
+            results.push(x.sAMAccountName);
+          }
+          return results;
+        })(),
+        action: 'set-initial'
+      }).then(function(resp) {
+        return notify.success(gettext('Initial password set'));
+      });
+    };
+    $scope.setRandomPassword = function(teachers) {
+      var x;
+      return $http.post('/api/lm/users/password', {
+        users: (function() {
+          var i, len, results;
+          results = [];
+          for (i = 0, len = teachers.length; i < len; i++) {
+            x = teachers[i];
+            results.push(x.sAMAccountName);
+          }
+          return results;
+        })(),
+        action: 'set-random'
+      }).then(function(resp) {
+        var text;
+        text = ((function() {
+          var i, len, ref, results;
+          ref = resp.data;
+          results = [];
+          for (i = 0, len = ref.length; i < len; i++) {
+            x = ref[i];
+            results.push(`${x.user}: ${x.password}`);
+          }
+          return results;
+        })()).join(',\n');
+        return messagebox.show({
+          title: gettext('New password'),
+          text: text,
+          positive: 'OK'
+        });
+      });
+    };
+    $scope.setCustomPassword = function(teachers) {
+      return messagebox.prompt(gettext('New password')).then(function(msg) {
+        var x;
+        if (!msg.value) {
+          return;
+        }
+        return $http.post('/api/lm/users/password', {
+          users: (function() {
+            var i, len, results;
+            results = [];
+            for (i = 0, len = teachers.length; i < len; i++) {
+              x = teachers[i];
+              results.push(x.sAMAccountName);
+            }
+            return results;
+          })(),
+          action: 'set',
+          password: msg.value
+        }).then(function(resp) {
+          return notify.success(gettext('New password set'));
+        });
+      });
+    };
+    $scope.haveSelection = function() {
+      var i, len, ref, x;
+      if ($scope.teachers) {
+        ref = $scope.teachers;
+        for (i = 0, len = ref.length; i < len; i++) {
+          x = ref[i];
+          if (x.selected) {
+            return true;
+          }
+        }
+      }
+      return false;
+    };
+    $scope.batchSetInitialPassword = function() {
+      var x;
+      return $scope.setInitialPassword((function() {
+        var i, len, ref, results;
+        ref = $scope.teachers;
+        results = [];
+        for (i = 0, len = ref.length; i < len; i++) {
+          x = ref[i];
+          if (x.selected) {
+            results.push(x);
+          }
+        }
+        return results;
+      })());
+    };
+    $scope.batchSetRandomPassword = function() {
+      var x;
+      return $scope.setRandomPassword((function() {
+        var i, len, ref, results;
+        ref = $scope.teachers;
+        results = [];
+        for (i = 0, len = ref.length; i < len; i++) {
+          x = ref[i];
+          if (x.selected) {
+            results.push(x);
+          }
+        }
+        return results;
+      })());
+    };
+    $scope.batchSetCustomPassword = function() {
+      var x;
+      return $scope.setCustomPassword((function() {
+        var i, len, ref, results;
+        ref = $scope.teachers;
+        results = [];
+        for (i = 0, len = ref.length; i < len; i++) {
+          x = ref[i];
+          if (x.selected) {
+            results.push(x);
+          }
+        }
+        return results;
+      })());
+    };
+    return $scope.selectAll = function() {
+      var i, len, ref, results, teacher;
+      ref = $scope.teachers;
+      results = [];
+      for (i = 0, len = ref.length; i < len; i++) {
+        teacher = ref[i];
+        results.push(teacher.selected = true);
+      }
+      return results;
+    };
+  });
+
+}).call(this);
+
+// Generated by CoffeeScript 2.3.1
+(function() {
+  angular.module('lm.users').config(function($routeProvider) {
+    return $routeProvider.when('/view/lm/users/teachers-list', {
+      controller: 'LMUsersTeachersListController',
+      templateUrl: '/lm_users:resources/partial/teachers-list.html'
+    });
+  });
+
+  angular.module('lm.users').controller('LMUsersTeachersListController', function($scope, $http, $location, $route, $uibModal, gettext, lmEncodingMap, notify, messagebox, pageTitle, lmFileEditor, lmFileBackups) {
     pageTitle.set(gettext('Teachers'));
     $scope.sorts = [
       {
@@ -184,7 +365,7 @@
           delete teacher['isNew'];
         }
       }
-      return $http.post(`/api/lm/users/teachers?encoding=${$scope.encoding}`, $scope.teachers).then(function() {
+      return $http.post(`/api/lm/users/teachers-list?encoding=${$scope.encoding}`, $scope.teachers).then(function() {
         return notify.success(gettext('Saved'));
       });
     };
@@ -568,14 +749,14 @@
 // Generated by CoffeeScript 2.3.1
 (function() {
   angular.module('lm.users').config(function($routeProvider) {
-    return $routeProvider.when('/view/lm/users/ati-teacher-passwords', {
-      controller: 'LMUsersATiTeacherPasswordsController',
+    return $routeProvider.when('/view/lm/users/teachers', {
+      controller: 'LMUsersTeachersController',
       templateUrl: '/lm_users:resources/partial/ati-teacher-passwords.html'
     });
   });
 
-  angular.module('lm.users').controller('LMUsersATiTeacherPasswordsController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) {
-    pageTitle.set(gettext('ATi Teacher Passwords'));
+  angular.module('lm.users').controller('LMUsersTeachersController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) {
+    pageTitle.set(gettext('Teachers'));
     $http.get("/api/lm/sophomorixUsers/teachers").then(function(resp) {
       return $scope.teachers = resp.data;
     });

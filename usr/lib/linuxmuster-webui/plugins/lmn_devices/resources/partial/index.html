@@ -76,20 +76,24 @@
             <td ng:if="fields.dhcpOptions.visible">
                 <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.dhcpOptions" placeholder="DHCP-Options" class="form-control" />
             </td>
+            <td ng:if="fields.sophomorixRole.visible">
+                <select ng:model="device.sophomorixRole" class="form-control">
+                    <option value="firewall" translate>Firewall</option>
+                    <option value="switch" translate>Switch</option>
+                    <option value="printer" translate>Printer</option>
+                </select>
+            </td>
             <td width="100" ng:if="fields.accountType.visible">
                 <select ng:model="device.accountType" class="form-control">
                     <option value="0" translate>IP-Host</option>
-                    <option value="1" translate>Domain-Host</option>
+                    <option value="1" translate>AD-Host</option>
                 </select>
-            </td>
-            <td ng:if="fields.sophomorixRole.visible">
-                <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.sophomorixRole" placeholder="Sophomorix-Role" class="form-control" />
             </td>
             <td width="100" ng:if="fields.pxeFlag.visible">
                 <select ng:model="device.pxeFlag" class="form-control">
                     <option value="0" translate>No PXE</option>
-                    <option value="1" translate>PXE</option>
-                    <option value="2" translate>PXE + OPSI</option>
+                    <option value="1" translate>Linbo-PXE</option>
+                    <option value="2" translate>Linbo-PXE + OPSI-MGMT</option>
                     <option value="3" translate>OPSI-PXE</option>
                 </select>
             </td>

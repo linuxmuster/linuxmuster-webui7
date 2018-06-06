@@ -117,11 +117,11 @@
         name: gettext('DHCP-Options')
       },
       sophomorixRole: {
-        visible: false,
+        visible: true,
         name: gettext('Sophomorix-Role')
       },
       accountType: {
-        visible: false,
+        visible: true,
         name: gettext('Account type')
       },
       pxeFlag: {

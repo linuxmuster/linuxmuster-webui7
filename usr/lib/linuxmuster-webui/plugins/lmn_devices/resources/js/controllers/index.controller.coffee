@@ -60,7 +60,7 @@ angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $
         $scope.filter = ''
         $scope.devices.push {
             _isNew: true
-            accountType: '1',
+            sophomorixRole: 'classroom-studentcomputer',
             pxeFlag: '1',
         }
 

@@ -79,7 +79,7 @@
       $scope.filter = '';
       return $scope.devices.push({
         _isNew: true,
-        accountType: '1',
+        sophomorixRole: 'classroom-studentcomputer',
         pxeFlag: '1'
       });
     };

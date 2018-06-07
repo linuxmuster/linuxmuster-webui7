@@ -120,25 +120,25 @@
         visible: true,
         name: gettext('Sophomorix-Role')
       },
-      accountType: {
-        visible: true,
-        name: gettext('Account type')
+      lmnReserved10: {
+        visible: false,
+        name: gettext('LMN-Reserved 10')
       },
       pxeFlag: {
         visible: true,
         name: gettext('PXE')
       },
-      lmnReserved1: {
+      lmnReserved12: {
         visible: false,
-        name: gettext('LMN-Reserved')
+        name: gettext('LMN-Reserved 12')
       },
-      lmnReserved2: {
+      lmnReserved13: {
         visible: false,
-        name: gettext('LMN-Reserved')
+        name: gettext('LMN-Reserved 13')
       },
-      lmnReserved3: {
+      lmnReserved14: {
         visible: false,
-        name: gettext('LMN-Reserved')
+        name: gettext('LMN-Reserved 14')
       },
       sophomorixComment: {
         visible: false,

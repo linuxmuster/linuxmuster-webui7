@@ -1,7 +1,7 @@
 angular.module('lm.users').config ($routeProvider) ->
-    $routeProvider.when '/view/lm/users/students',
+    $routeProvider.when '/view/lm/users/students-list',
         controller: 'LMUsersStudentsController'
-        templateUrl: '/lm_users:resources/partial/students.html'
+        templateUrl: '/lm_users:resources/partial/students-list.html'
 
 
 angular.module('lm.users').controller 'LMUsersStudentsController', ($scope, $http, $location, $route, $uibModal, gettext, notify, lmEncodingMap, messagebox, pageTitle, lmFileEditor, lmFileBackups) ->

@@ -12,9 +12,9 @@ class ItemProvider(SidebarItemProvider):
         return [
             {
                 'attach': 'category:listmanagement',
-                'name': _('Students'),
+                'name': _('Students List'),
                 'icon': 'users',
-                'url': '/view/lm/users/students',
+                'url': '/view/lm/users/students-list',
                 'weight': 10,
             },
             {
@@ -26,17 +26,31 @@ class ItemProvider(SidebarItemProvider):
             },
             {
                 'attach': 'category:usermanagement',
-                'name': _('Teacher Passwords'),
-                'icon': 'key',
-                'url': '/view/lm/users/teacher-passwords',
-                'weight': 15,
-            },
-            {
-                'attach': 'category:usermanagement',
                 'name': _('Teachers'),
                 'icon': 'key',
                 'url': '/view/lm/users/teachers',
                 'weight': 15,
+            },
+            {
+                'attach': 'category:usermanagement',
+                'name': _('Students'),
+                'icon': 'key',
+                'url': '/view/lm/users/students',
+                'weight': 15,
+            },
+            {
+                'attach': 'category:usermanagement',
+                'name': _('School-Admins'),
+                'icon': 'key',
+                'url': '/view/lm/users/schooladmins',
+                'weight': 20,
+            },
+            {
+                'attach': 'category:usermanagement',
+                'name': _('Global-Admins'),
+                'icon': 'key',
+                'url': '/view/lm/users/globaladmins',
+                'weight': 21,
             },
             {
                 'attach': 'category:listmanagement',

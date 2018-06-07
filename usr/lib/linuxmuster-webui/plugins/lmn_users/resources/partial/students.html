@@ -1,23 +1,28 @@
 <br/>
 
-<progress-spinner ng:show="teachers == null"></progress-spinner>
+<progress-spinner ng:show="students == null"></progress-spinner>
 
-<div ng:show="teachers != null">
-    <input ng:model="filter" type="search" autofocus class="form-control" placeholder="Filter" />
+<div ng:show="students != null">
+    <input ng:model="filter" type="search" autofocus class="form-control" placeholder="Filter" typeahead-min-length="1" />
 
-    <br/>
 
-    <table style="width:100%">
-        <tr ng:repeat="teacher in teachers|filter:filter" ng:show="teacher.class[0] != '#'">
-            <td>
-                <span checkbox ng:model="teacher.selected"></span>
-                <b>{{teacher.first_name}} {{teacher.last_name}}</b>
-                <i>
-                    / {{teacher.sAMAccountName}}
-                </i>
+    <table class="table" style="width:100%">
+        <tr><th> </th>
+            <th width="120"> Loginname / Class </th>
+            <th> Name </th></tr>
+        <tr ng:repeat="student in students|filter:filter" ng:show="student.class[0] != '#'">
+            <td width="30" style="text-align:center;">
+                <span checkbox ng:model="student.selected"></span>
             </td>
+            <td width="1" style="text-align:left;">
+                <i>{{student.sAMAccountName}}</i> <br> {{student.sophomorixAdminClass}}
+            </td>
+            <td>
+                <b>{{student.givenName}}</b> <br> {{student.sn}}
+            </td>
+
             <td width="1">
-                <button class="btn btn-default" ng:click="showInitialPassword([teacher])">
+                <button class="btn btn-default" ng:click="showInitialPassword([student])">
                     <i class="fa fa-key"></i> <span translate>Show password</span>
                 </button>
             </td>
@@ -29,17 +34,17 @@
                     </button>
                     <ul uib-dropdown-menu class="dropdown-menu-right" style="width:150px">
                         <li>
-                            <a ng:click="setInitialPassword([teacher])" translate>
+                            <a ng:click="setInitialPassword([student])" translate>
                                 Initial password
                             </a>
                         </li>
                         <li>
-                            <a ng:click="setRandomPassword([teacher])" translate>
+                            <a ng:click="setRandomPassword([student])" translate>
                                 Random password
                             </a>
                         </li>
                         <li>
-                            <a ng:click="setCustomPassword([teacher])" translate>
+                            <a ng:click="setCustomPassword([student])" translate>
                                 Custom password
                             </a>
                         </li>

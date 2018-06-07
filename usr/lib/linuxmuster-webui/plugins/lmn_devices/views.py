@@ -29,11 +29,11 @@ class Handler(HttpPlugin):
             'windowsKey',
             'dhcpOptions',
             'sophomorixRole',
-            'accountType',
+            'lmnReserved10',
             'pxeFlag',
-            'lmnReserved1',
-            'lmnReserved2',
-            'lmnReserved3',
+            'lmnReserved12',
+            'lmnReserved13',
+            'lmnReserved14',
             'sophomorixComment',
         ]
         if http_context.method == 'GET':

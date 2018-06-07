@@ -92,21 +92,21 @@ angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $
         sophomorixRole:
             visible: true
             name: gettext('Sophomorix-Role')
-        accountType:
-            visible: true
-            name: gettext('Account type')
+        lmnReserved10:
+            visible: false
+            name: gettext('LMN-Reserved 10')
         pxeFlag:
             visible: true
             name: gettext('PXE')
-        lmnReserved1:
+        lmnReserved12:
             visible: false
-            name: gettext('LMN-Reserved')
-        lmnReserved2:
+            name: gettext('LMN-Reserved 12')
+        lmnReserved13:
             visible: false
-            name: gettext('LMN-Reserved')
-        lmnReserved3:
+            name: gettext('LMN-Reserved 13')
+        lmnReserved14:
             visible: false
-            name: gettext('LMN-Reserved')
+            name: gettext('LMN-Reserved 14')
         sophomorixComment:
             visible: false
             name: gettext('Sophomorix-Comment')

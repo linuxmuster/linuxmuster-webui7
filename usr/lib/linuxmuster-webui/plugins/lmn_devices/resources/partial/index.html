@@ -96,11 +96,8 @@
                     <option value="addc" translate>Domain-Controller</option>
                 </select>
             </td>
-            <td width="100" ng:if="fields.accountType.visible">
-                <select ng:model="device.accountType" class="form-control">
-                    <option value="0" translate>IP-Host</option>
-                    <option value="1" translate>AD-Host</option>
-                </select>
+            <td ng:if="fields.lmnReserved10.visible">
+                <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.lmnReserved1" placeholder="LMN-Reserved10" class="form-control" />
             </td>
             <td width="100" ng:if="fields.pxeFlag.visible">
                 <select ng:model="device.pxeFlag" class="form-control">
@@ -110,14 +107,14 @@
                     <option value="3" translate>OPSI-PXE</option>
                 </select>
             </td>
-            <td ng:if="fields.lmnReserved1.visible">
-                <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.lmnReserved1" placeholder="LMN-Reserved1" class="form-control" />
+            <td ng:if="fields.lmnReserved12.visible">
+                <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.lmnReserved1" placeholder="LMN-Reserved12" class="form-control" />
             </td>
-            <td ng:if="fields.lmnReserved2.visible">
-                <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.lmnReserved2" placeholder="LMN-Reserved2" class="form-control" />
+            <td ng:if="fields.lmnReserved13.visible">
+                <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.lmnReserved2" placeholder="LMN-Reserved13" class="form-control" />
             </td>
-            <td ng:if="fields.lmnReserved3.visible">
-                <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.lmnReserved3" placeholder="LMN-Reserved3" class="form-control" />
+            <td ng:if="fields.lmnReserved14.visible">
+                <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.lmnReserved3" placeholder="LMN-Reserved14" class="form-control" />
             </td>
             <td ng:if="fields.sophomorixComment.visible">
                 <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.sophomorixComment" placeholder="Sophomorix-Comment" class="form-control" />

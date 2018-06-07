@@ -98,19 +98,66 @@ class Handler(HttpPlugin):
     @url(r'/api/lm/sophomorixUsers/teachers')
     @endpoint(api=True)
     def handle_api_sophomorix_teachers(self, http_context):
-        # path = '/etc/linuxmuster/sophomorix/default-school/students.csv'#
         if http_context.method == 'GET':
             schoolname = 'default-school'
             teachersList = []
             with authorize('lm:users:teachers:read'):
-                sophomorixCommand = ['sophomorix-user', '--info', '-jj']
-                teachers = lmn_getSophomorixValue(sophomorixCommand, 'LISTS/USER_by_sophomorixSchoolname/'+schoolname+'/teacher')
-                for item in range(len(teachers)):
-                    teachersList.append({'sAMAccountName': teachers[item]}.copy())
+                sophomorixCommand = ['sophomorix-query', '--teacher', '--schoolbase', schoolname, '--user-full', '-jj']
+                teachers = lmn_getSophomorixValue(sophomorixCommand, 'USER')
+                for teacher in teachers:
+                    teachersList.append(teachers[teacher])
                 return teachersList
 
         if http_context.method == 'POST':
             with authorize('lm:users:teachers:write'):
+                return 0
+
+    @url(r'/api/lm/sophomorixUsers/students')
+    @endpoint(api=True)
+    def handle_api_sophomorix_students(self, http_context):
+        if http_context.method == 'GET':
+            schoolname = 'default-school'
+            studentsList = []
+            with authorize('lm:users:students:read'):
+                sophomorixCommand = ['sophomorix-query', '--student', '--schoolbase', schoolname, '--user-full', '-jj']
+                students = lmn_getSophomorixValue(sophomorixCommand, 'USER')
+                for student in students:
+                    studentsList.append(students[student])
+                return studentsList
+        if http_context.method == 'POST':
+            with authorize('lm:users:students:write'):
+                return 0
+
+    @url(r'/api/lm/sophomorixUsers/schooladmins')
+    @endpoint(api=True)
+    def handle_api_sophomorix_schooladmins(self, http_context):
+        if http_context.method == 'GET':
+            schoolname = 'default-school'
+            schooladminsList = []
+            with authorize('lm:users:schooladmins:read'):
+                sophomorixCommand = ['sophomorix-query', '--schooladministrator', '--user-full', '-jj']
+                schooladmins = lmn_getSophomorixValue(sophomorixCommand, 'USER', True)
+                for schooladmin in schooladmins:
+                    schooladminsList.append(schooladmins[schooladmin])
+                return schooladminsList
+        if http_context.method == 'POST':
+            with authorize('lm:users:schooladmins:write'):
+                return 0
+
+    @url(r'/api/lm/sophomorixUsers/globaladmins')
+    @endpoint(api=True)
+    def handle_api_sophomorix_globaladmins(self, http_context):
+        if http_context.method == 'GET':
+            schoolname = 'default-school'
+            globaladminsList = []
+            with authorize('lm:users:globaladmins:read'):
+                sophomorixCommand = ['sophomorix-query', '--globaladministrator', '--user-full', '-jj']
+                globaladmins = lmn_getSophomorixValue(sophomorixCommand, 'USER')
+                for globaladmin in globaladmins:
+                    globaladminsList.append(globaladmins[globaladmin])
+                return globaladminsList
+        if http_context.method == 'POST':
+            with authorize('lm:users:globaladmins:write'):
                 return 0
 
     @url(r'/api/lm/users/extra-students')

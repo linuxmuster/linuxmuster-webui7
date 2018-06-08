@@ -94,6 +94,26 @@ class Permissions (PermissionProvider):
                 'default': False,
             },
             {
+                'id': 'lm:users:schooladmins:read',
+                'name': _('Read schooladmins'),
+                'default': False,
+            },
+            {
+                'id': 'lm:users:schooladmins:write',
+                'name': _('Write schooladmins'),
+                'default': False,
+            },
+            {
+                'id': 'lm:users:globaladmins:read',
+                'name': _('Read globaladmins'),
+                'default': False,
+            },
+            {
+                'id': 'lm:users:globaladmins:write',
+                'name': _('Write globaladmins'),
+                'default': False,
+            },
+            {
                 'id': 'lm:users:extra-students:read',
                 'name': _('Read extra students'),
                 'default': False,

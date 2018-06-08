@@ -17,7 +17,7 @@ class Handler(HttpPlugin):
         action = http_context.json_body()['action']
         if action == 'get-sessions':
             supervisor = http_context.json_body()['username']
-            with authorize('lm:users:teachers:read'):
+            with authorize('lm:users:students:read'):
                 try:
                     sophomorixCommand = ['sophomorix-session', '-i', '-jj']
                     sessions = lmn_getSophomorixValue(sophomorixCommand, 'SUPERVISOR/'+supervisor+'/sophomorixSessions', True)
@@ -28,7 +28,7 @@ class Handler(HttpPlugin):
         if action == 'get-participants':
             supervisor = http_context.json_body()['username']
             session = http_context.json_body()['session']
-            with authorize('lm:users:teachers:read'):
+            with authorize('lm:users:students:read'):
                     try:
                         sophomorixCommand = ['sophomorix-session', '-i', '-jj']
                         participants = lmn_getSophomorixValue(sophomorixCommand, 'SUPERVISOR/'+supervisor+'/sophomorixSessions/'+session+'/PARTICIPANTS', True)
@@ -45,7 +45,7 @@ class Handler(HttpPlugin):
             return participants
         if action == 'kill-sessions':
             session = http_context.json_body()['session']
-            with authorize('lm:users:teachers:read'):
+            with authorize('lm:users:students:read'):
                 # raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(session))
                 sophomorixCommand = ['sophomorix-session', '-j', '--session', session, '--kill']
                 result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
@@ -53,7 +53,7 @@ class Handler(HttpPlugin):
         if action == 'rename-session':
             session = http_context.json_body()['session']
             comment = http_context.json_body()['comment']
-            with authorize('lm:users:teachers:read'):
+            with authorize('lm:users:students:read'):
                 # raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(comment)+ str(session))
                 sophomorixCommand = ['sophomorix-session', '-j', '--session', session, '--comment', comment]
                 result = lmn_getSophomorixValue(sophomorixCommand , 'OUTPUT/0/LOG')
@@ -61,7 +61,7 @@ class Handler(HttpPlugin):
         if action == 'new-session':
             supervisor = http_context.json_body()['username']
             comment = http_context.json_body()['comment']
-            with authorize('lm:users:teachers:read'):
+            with authorize('lm:users:students:read'):
                 sophomorixCommand = ['sophomorix-session', '--create', '--supervisor', supervisor,  '-j', '--comment', comment]
                 result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
                 return result
@@ -138,13 +138,13 @@ class Handler(HttpPlugin):
             return result
 
         if http_context.method == 'POST':
-            with authorize('lm:users:teachers:write'):
+            with authorize('lm:users:students:write'):
                 return 0
 
     @url(r'/api/lmn/session/user-search')
     @endpoint(api=True)
     def handle_api_ldap_user_search(self, http_context):
-        with authorize('lm:users:teachers:read'):
+        with authorize('lm:users:students:read'):
             try:
                 sophomorixCommand = ['sophomorix-query', '-jj', '--schoolbase', 'default-school', '--student', '--user-full', '--anyname', '*'+http_context.query['q']+'*']
                 users = lmn_getSophomorixValue(sophomorixCommand, 'USER', True)
@@ -158,7 +158,7 @@ class Handler(HttpPlugin):
     @url(r'/api/lmn/session/schoolClass-search')
     @endpoint(api=True)
     def handle_api_ldap_group_search(self, http_context):
-        with authorize('lm:users:teachers:read'):
+        with authorize('lm:users:students:read'):
             try:
                 sophomorixCommand = ['sophomorix-query', '-jj', '--schoolbase', 'default-school', '--sam', '*'+http_context.query['q']+'*']
                 schoolClasses = lmn_getSophomorixValue(sophomorixCommand, 'GROUP', True)

@@ -341,6 +341,7 @@ class Handler(HttpPlugin):
     @authorize('lm:users:passwords')
     @endpoint(api=True)
     def handle_api_users_print(self, http_context):
+        school = 'default-school'
         if http_context.method == 'GET':
             return [
                 l.split('-->')[-1].strip()
@@ -351,7 +352,7 @@ class Handler(HttpPlugin):
             data = http_context.json_body()
             cmd = 'sophomorix-print'
             if data['recent'] is None:
-                cmd += ' -a'
+                cmd += ' --school '+ school
             else:
                 cmd += ' --back-in-time %s' % data['recent']
             if data['one_per_page']:

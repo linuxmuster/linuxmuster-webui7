@@ -15,6 +15,7 @@ angular.module('lm.settings').controller 'LMSettingsController', ($scope, $http,
     ]
 
     $scope.encodings = [
+        'auto',
         'ascii',
         '8859-1',
         '8859-15',
@@ -22,18 +23,19 @@ angular.module('lm.settings').controller 'LMSettingsController', ($scope, $http,
         'utf8',
     ]
 
-    $http.get('/api/lm/settings').then (resp) ->
+    $http.get('/api/lm/schoolsettings').then (resp) ->
+        console.log(resp.data)
         $scope.settings = resp.data
 
-    $http.get('/api/lm/settings/school-share').then (resp) ->
+    $http.get('/api/lm/schoolsettings/school-share').then (resp) ->
         $scope.schoolShareEnabled = resp.data
 
     $scope.setSchoolShare = (enabled) ->
         $scope.schoolShareEnabled = enabled
-        $http.post('/api/lm/settings/school-share', enabled)
+        $http.post('/api/lm/schoolsettings/school-share', enabled)
 
     $scope.save = () ->
-        $http.post('/api/lm/settings', $scope.settings).then () ->
+        $http.post('/api/lm/schoolsettings', $scope.settings).then () ->
             notify.success gettext('Saved')
 
     $scope.backups = () ->

@@ -1,9 +1,9 @@
 angular.module('lm.users').controller 'LMUsersCheckResultsModalController', ($scope, $uibModalInstance, $uibModal, data) ->
     $scope.data = data
     $scope._ = {
-        doAdd: data.add.length > 0
-        doMove: data.move.length > 0
-        doKill: data.kill.length > 0
+        doAdd: data['SUMMARY'][1]['ADD']['RESULT'] > 0
+        doMove: data['SUMMARY'][2]['UPDATE']['RESULT'] > 0
+        doKill: data['SUMMARY'][3]['KILL']['RESULT'] > 0
     }
 
     $scope.apply = () ->
@@ -54,6 +54,7 @@ angular.module('lm.users').controller 'LMUsersCheckModalController', ($scope, $h
             resolve:
                 data: () -> data
         )
+        console.log(data)
 
     $scope.close = () ->
         $uibModalInstance.close()

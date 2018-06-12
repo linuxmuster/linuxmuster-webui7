@@ -56,6 +56,8 @@
     };
     $http.get('/api/lm/schoolsettings').then(function(resp) {
       $scope.encoding = resp.data["userfile.students.csv"].encoding || 'ISO8859-1';
+      //TODO: Use real encoding
+      $scope.encoding = 'ISO8859-1';
       return $http.get(`/api/lm/users/students-list?encoding=${$scope.encoding}`).then(function(resp) {
         return $scope.students = resp.data;
       });
@@ -103,10 +105,8 @@
     $http.get("/api/lm/sophomorixUsers/teachers").then(function(resp) {
       return $scope.teachers = resp.data;
     });
-    //# legacy functions
     $scope.showInitialPassword = function(teachers) {
       var x;
-      //console.log teachers                          # ATi What we Send {sAMAccountName: "schoen", $$hashKey: "object:318"}
       return $http.post('/api/lm/users/password', {
         users: (function() {
           var i, len, results;
@@ -284,10 +284,8 @@
     $http.get("/api/lm/sophomorixUsers/students").then(function(resp) {
       return $scope.students = resp.data;
     });
-    //# legacy functions
     $scope.showInitialPassword = function(students) {
       var x;
-      //console.log students                          # ATi What we Send {sAMAccountName: "schoen", $$hashKey: "object:318"}
       return $http.post('/api/lm/users/password', {
         users: (function() {
           var i, len, results;
@@ -1117,10 +1115,8 @@
     $http.get("/api/lm/sophomorixUsers/teachers").then(function(resp) {
       return $scope.teachers = resp.data;
     });
-    //# legacy functions
     $scope.showInitialPassword = function(teachers) {
       var x;
-      //console.log teachers                          # ATi What we Send {sAMAccountName: "schoen", $$hashKey: "object:318"}
       return $http.post('/api/lm/users/password', {
         users: (function() {
           var i, len, results;
@@ -1345,9 +1341,9 @@
   angular.module('lm.users').controller('LMUsersCheckResultsModalController', function($scope, $uibModalInstance, $uibModal, data) {
     $scope.data = data;
     $scope._ = {
-      doAdd: data.add.length > 0,
-      doMove: data.move.length > 0,
-      doKill: data.kill.length > 0
+      doAdd: data['SUMMARY'][1]['ADD']['RESULT'] > 0,
+      doMove: data['SUMMARY'][2]['UPDATE']['RESULT'] > 0,
+      doKill: data['SUMMARY'][3]['KILL']['RESULT'] > 0
     };
     $scope.apply = function() {
       var msg;
@@ -1395,7 +1391,7 @@
       return notify.error(gettext('Check failed'), resp.data.message);
     });
     $scope.showCheckResults = function(data) {
-      return $uibModal.open({
+      $uibModal.open({
         templateUrl: '/lm_users:resources/partial/result.modal.html',
         controller: 'LMUsersCheckResultsModalController',
         resolve: {
@@ -1404,6 +1400,7 @@
           }
         }
       });
+      return console.log(data);
     };
     return $scope.close = function() {
       return $uibModalInstance.close();

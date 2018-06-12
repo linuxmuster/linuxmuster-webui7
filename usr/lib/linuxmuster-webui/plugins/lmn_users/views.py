@@ -16,7 +16,7 @@ class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
 
-    @url(r'/api/lm/users/students')
+    @url(r'/api/lm/users/students-list')
     @endpoint(api=True)
     def handle_api_students(self, http_context):
         school = 'default-school'
@@ -54,7 +54,7 @@ class Handler(HttpPlugin):
                         encoding=http_context.query.get('encoding', 'utf-8')
                     ).writerows(data)
 
-    @url(r'/api/lm/users/teachers')
+    @url(r'/api/lm/users/teachers-list')
     @endpoint(api=True)
     def handle_api_teachers(self, http_context):
         school = 'default-school'

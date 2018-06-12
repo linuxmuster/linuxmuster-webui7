@@ -1,10 +1,10 @@
 angular.module('lm.users').config ($routeProvider) ->
     $routeProvider.when '/view/lm/users/students-list',
-        controller: 'LMUsersStudentsController'
+        controller: 'LMUsersStudentsListController'
         templateUrl: '/lm_users:resources/partial/students-list.html'
 
 
-angular.module('lm.users').controller 'LMUsersStudentsController', ($scope, $http, $location, $route, $uibModal, gettext, notify, lmEncodingMap, messagebox, pageTitle, lmFileEditor, lmFileBackups) ->
+angular.module('lm.users').controller 'LMUsersStudentsListController', ($scope, $http, $location, $route, $uibModal, gettext, notify, lmEncodingMap, messagebox, pageTitle, lmFileEditor, lmFileBackups) ->
     pageTitle.set(gettext('Students'))
 
     $scope.sorts = [
@@ -35,9 +35,9 @@ angular.module('lm.users').controller 'LMUsersStudentsController', ($scope, $htt
         $scope.filter = ''
         $scope.students.push {first_name: 'New', _isNew: true}
 
-    $http.get('/api/lm/settings').then (resp) ->
+    $http.get('/api/lm/schoolsettings').then (resp) ->
         $scope.encoding = resp.data["userfile.students.csv"].encoding or 'ISO8859-1'
-        $http.get("/api/lm/users/students?encoding=#{$scope.encoding}").then (resp) ->
+        $http.get("/api/lm/users/students-list?encoding=#{$scope.encoding}").then (resp) ->
             $scope.students = resp.data
 
     $scope.remove = (student) ->
@@ -48,7 +48,7 @@ angular.module('lm.users').controller 'LMUsersStudentsController', ($scope, $htt
             $route.reload()
 
     $scope.save = () ->
-        return $http.post("/api/lm/users/students?encoding=#{$scope.encoding}", $scope.students).then () ->
+        return $http.post("/api/lm/users/students-list?encoding=#{$scope.encoding}", $scope.students).then () ->
             notify.success gettext('Saved')
 
     $scope.saveAndCheck = () ->

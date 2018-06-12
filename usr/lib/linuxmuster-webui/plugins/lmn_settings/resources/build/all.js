@@ -29,19 +29,20 @@
         value: 2
       }
     ];
-    $scope.encodings = ['ascii', '8859-1', '8859-15', 'win1252', 'utf8'];
-    $http.get('/api/lm/settings').then(function(resp) {
+    $scope.encodings = ['auto', 'ascii', '8859-1', '8859-15', 'win1252', 'utf8'];
+    $http.get('/api/lm/schoolsettings').then(function(resp) {
+      console.log(resp.data);
       return $scope.settings = resp.data;
     });
-    $http.get('/api/lm/settings/school-share').then(function(resp) {
+    $http.get('/api/lm/schoolsettings/school-share').then(function(resp) {
       return $scope.schoolShareEnabled = resp.data;
     });
     $scope.setSchoolShare = function(enabled) {
       $scope.schoolShareEnabled = enabled;
-      return $http.post('/api/lm/settings/school-share', enabled);
+      return $http.post('/api/lm/schoolsettings/school-share', enabled);
     };
     $scope.save = function() {
-      return $http.post('/api/lm/settings', $scope.settings).then(function() {
+      return $http.post('/api/lm/schoolsettings', $scope.settings).then(function() {
         return notify.success(gettext('Saved'));
       });
     };

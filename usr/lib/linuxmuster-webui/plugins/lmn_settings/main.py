@@ -12,7 +12,7 @@ class ItemProvider(SidebarItemProvider):
         return [
             {
                 'attach': 'category:schoolsettingsdefaults',
-                'name': _('Settings'),
+                'name': _('School Settings'),
                 'icon': 'wrench',
                 'url': '/view/lm/schoolsettings',
                 'children': [],
@@ -25,7 +25,7 @@ class Permissions (PermissionProvider):
     def provide(self):
         return [
             {
-                'id': 'lm:settings',
+                'id': 'lm:schoolsettings',
                 'name': _('Configure settings'),
                 'default': False,
             },

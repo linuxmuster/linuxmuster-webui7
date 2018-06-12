@@ -893,7 +893,7 @@
       return $scope.teachers.remove(teacher);
     };
     $scope.editCSV = function() {
-      return lmFileEditor.show('/etc/linuxmuster/sophomorix/default-school/teachers.csv', $scope.encoding).then(function() {
+      return lmFileEditor.show('/etc/linuxmuster/sophomorix/default-school/teachers.csv', 'ISO8859-1').then(function() {
         return $route.reload();
       });
     };

@@ -19,7 +19,8 @@ class Handler(HttpPlugin):
     @url(r'/api/lm/users/students')
     @endpoint(api=True)
     def handle_api_students(self, http_context):
-        path = '/etc/linuxmuster/sophomorix/default-school/students.csv'
+        school = 'default-school'
+        path = '/etc/linuxmuster/sophomorix/'+school+'/students.csv'
         fieldnames = [
             'class',
             'last_name',
@@ -56,7 +57,8 @@ class Handler(HttpPlugin):
     @url(r'/api/lm/users/teachers')
     @endpoint(api=True)
     def handle_api_teachers(self, http_context):
-        path = '/etc/linuxmuster/sophomorix/default-school/teachers.csv'
+        school = 'default-school'
+        path = '/etc/linuxmuster/sophomorix/'+school+'/teachers.csv'
         fieldnames = [
             'class',
             'last_name',

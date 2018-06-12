@@ -63,7 +63,7 @@ angular.module('lm.users').controller 'LMUsersTeachersListController', ($scope, 
         $scope.teachers.remove(teacher)
 
     $scope.editCSV = () ->
-        lmFileEditor.show('/etc/linuxmuster/sophomorix/default-school/teachers.csv', $scope.encoding).then () ->
+        lmFileEditor.show('/etc/linuxmuster/sophomorix/default-school/teachers.csv', 'ISO8859-1').then () ->
             $route.reload()
 
     $scope.save = () ->

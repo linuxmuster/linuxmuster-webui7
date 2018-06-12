@@ -37,6 +37,8 @@ angular.module('lm.users').controller 'LMUsersStudentsListController', ($scope, 
 
     $http.get('/api/lm/schoolsettings').then (resp) ->
         $scope.encoding = resp.data["userfile.students.csv"].encoding or 'ISO8859-1'
+        #TODO: Use real encoding
+        $scope.encoding =  'ISO8859-1'
         $http.get("/api/lm/users/students-list?encoding=#{$scope.encoding}").then (resp) ->
             $scope.students = resp.data
 

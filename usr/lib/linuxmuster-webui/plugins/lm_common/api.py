@@ -106,8 +106,12 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
     jsonS = jsonS.split("# JSON-begin", 1)[1]
     jsonS = jsonS.split("# JSON-end", 1)[0]
     jsonDict = json.loads(jsonS, encoding='latin1')
+    # if empty jsonpath is returned dont use dpath
+    if jsonpath is '':
+        return jsonDict
     if ignoreErrors == False:
         try:
+            resultString = dpath.util.get(jsonDict, jsonpath)
             resultString = dpath.util.get(jsonDict, jsonpath)
         except Exception as e:
             pass
@@ -115,16 +119,3 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
     else:
         resultString = dpath.util.get(jsonDict, jsonpath)
     return resultString
-
-
-# deprecated
-#def lmn_getUserSophomorixValue(user, field):
-#    # get json string from sophomorix
-#    jsonS = subprocess.Popen('sophomorix-user --info --user ' + user + ' -jj 1>/dev/null', stdout=subprocess.PIPE, stderr=subprocess.STDOUT,  shell=True).stdout.read()
-#    # parse string to dict
-#    jsonObj = json.loads(jsonS, encoding='latin1')
-#    try:
-#        resultString = jsonObj['USERS'][user][field]
-#    except Exception as e:
-#        raise Exception('Field error. Either sophomorix field does not exist or ajenti binduser does not have sufficient permissions:\n' 'Searched field was: ' + str(e) + ' received information for filter:  ' + str(jsonObj))
-#    return resultString

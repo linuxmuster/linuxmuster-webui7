@@ -10,10 +10,7 @@ angular.module('lm.users').controller 'LMUsersStudentsController', ($scope, $htt
     $http.get("/api/lm/sophomorixUsers/students").then (resp) ->
         $scope.students = resp.data
 
-
-## legacy functions
     $scope.showInitialPassword = (students) ->
-        #console.log students                          # ATi What we Send {sAMAccountName: "schoen", $$hashKey: "object:318"}
         $http.post('/api/lm/users/password', {users: (x.sAMAccountName for x in students), action: 'get'}).then (resp) ->
             messagebox.show(title: gettext('Initial password'), text: resp.data, positive: 'OK')
 

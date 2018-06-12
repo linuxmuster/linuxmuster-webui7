@@ -34,7 +34,7 @@ angular.module('lm.users').controller 'LMUsersExtraCoursesController', ($scope, 
         page: 1
         pageSize: 100
 
-    $http.get('/api/lm/settings').then (resp) ->
+    $http.get('/api/lm/schoolsettings').then (resp) ->
         $scope.encoding = lmEncodingMap[resp.data.encoding_courses_extra] or 'ISO8859-1'
         $http.get("/api/lm/users/extra-courses?encoding=#{$scope.encoding}").then (resp) ->
             $scope.courses = resp.data

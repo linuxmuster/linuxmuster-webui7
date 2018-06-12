@@ -6,9 +6,6 @@ from aj.api.endpoint import endpoint
 from aj.auth import authorize
 from aj.plugins.lm_common.api import lm_backup_file
 from configparser import ConfigParser
-#from localconfig import ConfigParser
-#from localconfig import config
-#import localconfig
 
 class IniParser(ConfigParser):
     def as_dict(self):
@@ -42,10 +39,8 @@ class Handler(HttpPlugin):
         school = 'default-school'
         path = '/etc/linuxmuster/sophomorix/'+school+'/school.conf'
         if http_context.method == 'GET':
-            # Old Code
-            #Parse csv config file
+            # Parse csv config file
             config = ConfigParser()
-            config.read(path)
             config.read(path)
             settings = {}
             for section in config.sections():
@@ -59,7 +54,6 @@ class Handler(HttpPlugin):
                    if val == 'yes':
                         val = True
                    settings[section][key] = val
-
             return settings
 
 
@@ -114,7 +108,6 @@ class Handler(HttpPlugin):
                         originalLine = originalLine.replace(v, newValue)
                         if newValue not in v:
                             originalLine = originalLine.lstrip('#')
-                        debug= debug +1
                 content += originalLine
 
 

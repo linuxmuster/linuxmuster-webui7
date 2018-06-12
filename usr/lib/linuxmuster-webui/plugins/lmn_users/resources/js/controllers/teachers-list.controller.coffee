@@ -49,10 +49,9 @@ angular.module('lm.users').controller 'LMUsersTeachersListController', ($scope, 
     }
 
 
-    $http.get('/api/lm/settings').then (resp) ->
+    $http.get('/api/lm/schoolsettings').then (resp) ->
         $scope.encoding = resp.data["userfile.teachers.csv"].encoding or 'ISO8859-1'
-        #$scope.encoding = lmEncodingMap[resp.data.school.encoding] or 'ISO8859-1'
-        $http.get("/api/lm/users/teachers?encoding=#{$scope.encoding}").then (resp) ->
+        $http.get("/api/lm/users/teachers-list?encoding=#{$scope.encoding}").then (resp) ->
             $scope.teachers = resp.data
 
     $scope.add = () ->

@@ -8,12 +8,12 @@
 (function() {
   angular.module('lm.users').config(function($routeProvider) {
     return $routeProvider.when('/view/lm/users/students-list', {
-      controller: 'LMUsersStudentsController',
+      controller: 'LMUsersStudentsListController',
       templateUrl: '/lm_users:resources/partial/students-list.html'
     });
   });
 
-  angular.module('lm.users').controller('LMUsersStudentsController', function($scope, $http, $location, $route, $uibModal, gettext, notify, lmEncodingMap, messagebox, pageTitle, lmFileEditor, lmFileBackups) {
+  angular.module('lm.users').controller('LMUsersStudentsListController', function($scope, $http, $location, $route, $uibModal, gettext, notify, lmEncodingMap, messagebox, pageTitle, lmFileEditor, lmFileBackups) {
     pageTitle.set(gettext('Students'));
     $scope.sorts = [
       {
@@ -54,9 +54,9 @@
         _isNew: true
       });
     };
-    $http.get('/api/lm/settings').then(function(resp) {
+    $http.get('/api/lm/schoolsettings').then(function(resp) {
       $scope.encoding = resp.data["userfile.students.csv"].encoding || 'ISO8859-1';
-      return $http.get(`/api/lm/users/students?encoding=${$scope.encoding}`).then(function(resp) {
+      return $http.get(`/api/lm/users/students-list?encoding=${$scope.encoding}`).then(function(resp) {
         return $scope.students = resp.data;
       });
     });
@@ -69,7 +69,7 @@
       });
     };
     $scope.save = function() {
-      return $http.post(`/api/lm/users/students?encoding=${$scope.encoding}`, $scope.students).then(function() {
+      return $http.post(`/api/lm/users/students-list?encoding=${$scope.encoding}`, $scope.students).then(function() {
         return notify.success(gettext('Saved'));
       });
     };
@@ -875,10 +875,9 @@
         name: gettext('Login')
       }
     };
-    $http.get('/api/lm/settings').then(function(resp) {
+    $http.get('/api/lm/schoolsettings').then(function(resp) {
       $scope.encoding = resp.data["userfile.teachers.csv"].encoding || 'ISO8859-1';
-      //$scope.encoding = lmEncodingMap[resp.data.school.encoding] or 'ISO8859-1'
-      return $http.get(`/api/lm/users/teachers?encoding=${$scope.encoding}`).then(function(resp) {
+      return $http.get(`/api/lm/users/teachers-list?encoding=${$scope.encoding}`).then(function(resp) {
         return $scope.teachers = resp.data;
       });
     });
@@ -974,7 +973,7 @@
       page: 1,
       pageSize: 100
     };
-    $http.get('/api/lm/settings').then(function(resp) {
+    $http.get('/api/lm/schoolsettings').then(function(resp) {
       $scope.encoding = lmEncodingMap[resp.data.encoding_students_extra] || 'ISO8859-1';
       return $http.get(`/api/lm/users/extra-students?encoding=${$scope.encoding}`).then(function(resp) {
         return $scope.students = resp.data;
@@ -1063,7 +1062,7 @@
       page: 1,
       pageSize: 100
     };
-    $http.get('/api/lm/settings').then(function(resp) {
+    $http.get('/api/lm/schoolsettings').then(function(resp) {
       $scope.encoding = lmEncodingMap[resp.data.encoding_courses_extra] || 'ISO8859-1';
       return $http.get(`/api/lm/users/extra-courses?encoding=${$scope.encoding}`).then(function(resp) {
         return $scope.courses = resp.data;

@@ -29,7 +29,7 @@
         value: 2
       }
     ];
-    $scope.encodings = ['auto', 'ascii', '8859-1', '8859-15', 'win1252', 'utf8'];
+    $scope.encodings = ['auto', 'ASCII', 'ISO_8859-1', 'ISO_8859-15', 'WIN-1252', 'UTF-8'];
     $http.get('/api/lm/schoolsettings').then(function(resp) {
       console.log(resp.data);
       return $scope.settings = resp.data;

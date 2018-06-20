@@ -50,7 +50,11 @@ angular.module('lm.users').controller 'LMUsersTeachersListController', ($scope, 
 
 
     $http.get('/api/lm/schoolsettings').then (resp) ->
+        school = 'default-school'
         $scope.encoding = resp.data["userfile.teachers.csv"].encoding or 'ISO8859-1'
+        if $scope.encoding is 'auto'
+            $http.post('/api/lmn/schoolsettings/determine-encoding', {path: '/etc/linuxmuster/sophomorix/'+school+'/teachers.csv'}).then (response) ->
+                $scope.encoding = response.data
         $http.get("/api/lm/users/teachers-list?encoding=#{$scope.encoding}").then (resp) ->
             $scope.teachers = resp.data
 

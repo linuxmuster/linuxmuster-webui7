@@ -31,31 +31,23 @@
     ];
     $scope.encodings = ['auto', 'ASCII', 'ISO_8859-1', 'ISO_8859-15', 'WIN-1252', 'UTF-8'];
     $http.get('/api/lm/schoolsettings').then(function(resp) {
-      var encoding, file, i, len, ref, school, userfile;
-      school = 'default-school';
+      var i, len, ref, userfile;
       console.log(resp.data);
-      encoding = {};
-      ref = ['userfile.students.csv'];
-      //TODO: Remove comments
-      //for file in ['userfile.students.csv', 'userfile.teachers.csv', 'userfile.extrastudents.csv', 'classfile.extraclasses']
+      ref = ['userfile.teachers.csv'];
+      //for userfile in ['userfile.students.csv', 'userfile.teachers.csv', 'userfile.extrastudents.csv', 'classfile.extraclasses']
       for (i = 0, len = ref.length; i < len; i++) {
-        file = ref[i];
-        //console.log (file)
-        userfile = file.substring(file.indexOf('.') + 1);
-        //console.log (userfile)
-        if (resp.data[file]['encoding'] === 'auto') {
-          //console.log('is auto')
+        userfile = ref[i];
+        console.log(userfile);
+        if (resp.data[userfile]['encoding'] === 'auto') {
+          console.log('is auto');
           $http.post('/api/lmn/schoolsettings/determine-encoding', {
-            path: '/etc/linuxmuster/sophomorix/' + school + '/' + userfile,
-            file: file
+            file: '/etc/linuxmuster/sophomorix/default-school/students.csv'
           }).then(function(response) {
-            return encoding[response['config']['data']['file']] = response.data;
+            console.log(resp);
+            return resp.data['userfile.students.csv']['determined-encoding'] = response.data;
           });
         }
       }
-      //console.log(encoding)
-      //console.log(encoding)
-      $scope.encoding = encoding;
       return $scope.settings = resp.data;
     });
     $http.get('/api/lm/schoolsettings/school-share').then(function(resp) {

@@ -34,6 +34,7 @@ class Handler(HttpPlugin):
         self.context = context
 
     @url(r'/api/lmn/schoolsettings/determine-encoding')
+    @authorize('lm:schoolsettings')
     @endpoint(api=True)
     def handle_api_session_sessions(self, http_context):
         fileToCheck = http_context.json_body()['path']

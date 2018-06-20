@@ -21,6 +21,8 @@ class Handler(HttpPlugin):
     def handle_api_students(self, http_context):
         school = 'default-school'
         path = '/etc/linuxmuster/sophomorix/'+school+'/students.csv'
+        if os.path.isfile(path) is False:
+            os.mknod(path)
         fieldnames = [
             'class',
             'last_name',
@@ -59,6 +61,8 @@ class Handler(HttpPlugin):
     def handle_api_teachers(self, http_context):
         school = 'default-school'
         path = '/etc/linuxmuster/sophomorix/'+school+'/teachers.csv'
+        if os.path.isfile(path) is False:
+            os.mknod(path)
         fieldnames = [
             'class',
             'last_name',
@@ -165,7 +169,10 @@ class Handler(HttpPlugin):
     @url(r'/api/lm/users/extra-students')
     @endpoint(api=True)
     def handle_api_extra_students(self, http_context):
-        path = '/etc/linuxmuster/sophomorix/default-school/extrastudents.csv'
+        school = 'default-school'
+        path = '/etc/linuxmuster/sophomorix/'+school+'/extrastudents.csv'
+        if os.path.isfile(path) is False:
+            os.mknod(path)
         fieldnames = [
             'class',
             'last_name',
@@ -203,7 +210,10 @@ class Handler(HttpPlugin):
     @url(r'/api/lm/users/extra-courses')
     @endpoint(api=True)
     def handle_api_extra_courses(self, http_context):
-        path = '/etc/linuxmuster/sophomorix/default-school/extraclasses.csv'
+        school = 'default-school'
+        path = '/etc/linuxmuster/sophomorix/'+school+'/extraclasses.csv'
+        if os.path.isfile(path) is False:
+            os.mknod(path)
         fieldnames = [
             'course',
             'base_name',
@@ -275,7 +285,7 @@ class Handler(HttpPlugin):
         action = http_context.json_body()['action']
         users = http_context.json_body()['users']
         user = ','.join([x.strip() for x in users])
-        ## Passwort auslesen
+        # Read Password
         if action == 'get':
             sophomorixCommand = ['sophomorix-user', '--info', '-jj', '-u', user]
             return lmn_getSophomorixValue(sophomorixCommand, '/USERS/'+user+'/sophomorixFirstPassword')
@@ -283,15 +293,6 @@ class Handler(HttpPlugin):
             subprocess.check_call('sophomorix-passwd --set-firstpassword -u %s' % user, shell=True)
         if action == 'set-random':
             subprocess.check_call('sophomorix-passwd -u %s --random' % user, shell=True)
-            # alter code mit ausgabe des Passwords
-            #r = []
-            #for l in subprocess.check_output('sophomorix-passwd -u %s --random' % user, shell=True).splitlines():
-            #    if 'Setting password' in l:
-            #        r.append({
-            #            'user': l.split()[4],
-            #            'password': l.split()[-1],
-            #        })
-            #return r
         if action == 'set':
             subprocess.check_call('sophomorix-passwd -u %s --pass "%s"' % (user, http_context.json_body()['password']), shell=True)
 
@@ -310,7 +311,7 @@ class Handler(HttpPlugin):
             data = http_context.json_body()
             cmd = 'sophomorix-print'
             if data['recent'] is None:
-                cmd += ' --school '+ school
+                cmd += ' --school ' + school
             else:
                 cmd += ' --back-in-time %s' % data['recent']
             if data['one_per_page']:

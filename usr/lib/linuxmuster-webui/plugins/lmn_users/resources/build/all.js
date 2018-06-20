@@ -55,9 +55,16 @@
       });
     };
     $http.get('/api/lm/schoolsettings').then(function(resp) {
-      $scope.encoding = resp.data["userfile.students.csv"].encoding || 'ISO8859-1';
-      //TODO: Use real encoding
-      $scope.encoding = 'ISO8859-1';
+      var school;
+      school = 'default-school';
+      $scope.encoding = resp.data["userfile.students.csv"].encoding;
+      if ($scope.encoding === 'auto') {
+        $http.post('/api/lmn/schoolsettings/determine-encoding', {
+          path: '/etc/linuxmuster/sophomorix/' + school + '/students.csv'
+        }).then(function(response) {
+          return $scope.encoding = response.data;
+        });
+      }
       return $http.get(`/api/lm/users/students-list?encoding=${$scope.encoding}`).then(function(resp) {
         return $scope.students = resp.data;
       });
@@ -874,7 +881,16 @@
       }
     };
     $http.get('/api/lm/schoolsettings').then(function(resp) {
+      var school;
+      school = 'default-school';
       $scope.encoding = resp.data["userfile.teachers.csv"].encoding || 'ISO8859-1';
+      if ($scope.encoding === 'auto') {
+        $http.post('/api/lmn/schoolsettings/determine-encoding', {
+          path: '/etc/linuxmuster/sophomorix/' + school + '/teachers.csv'
+        }).then(function(response) {
+          return $scope.encoding = response.data;
+        });
+      }
       return $http.get(`/api/lm/users/teachers-list?encoding=${$scope.encoding}`).then(function(resp) {
         return $scope.teachers = resp.data;
       });

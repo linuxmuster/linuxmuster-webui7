@@ -103,15 +103,19 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
     sophomorixCommand.append('1>/dev/null')
     jsonS = subprocess.Popen(sophomorixCommand, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=False).stdout.read()
     # jsonS is everything between sophomorix json headers
-    jsonS = jsonS.split("# JSON-begin", 1)[1]
-    jsonS = jsonS.split("# JSON-end", 1)[0]
-    jsonDict = json.loads(jsonS, encoding='latin1')
+    # Use only if JSON-begin existst
+    if '# JSON-begin' in jsonS:
+        jsonS = jsonS.split("# JSON-begin", 1)[1]
+        jsonS = jsonS.split("# JSON-end", 1)[0]
+    file = open("/tmp/testfile123.txt","a")
+    file.write(jsonS)
+    file.close()
+    jsonDict = json.loads(jsonS, encoding='UTF-8')
     # if empty jsonpath is returned dont use dpath
     if jsonpath is '':
         return jsonDict
     if ignoreErrors == False:
         try:
-            resultString = dpath.util.get(jsonDict, jsonpath)
             resultString = dpath.util.get(jsonDict, jsonpath)
         except Exception as e:
             pass

@@ -5,6 +5,7 @@ from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint
 from aj.auth import authorize
 from aj.plugins.lm_common.api import lm_backup_file
+from aj.plugins.lm_common.api import lmn_getSophomorixValue
 from configparser import ConfigParser
 
 class IniParser(ConfigParser):
@@ -31,6 +32,15 @@ class Handler(HttpPlugin):
 
     def __init__(self, context):
         self.context = context
+
+    @url(r'/api/lmn/schoolsettings/determine-encoding')
+    @endpoint(api=True)
+    def handle_api_session_sessions(self, http_context):
+        fileToCheck = http_context.json_body()['path']
+        sophomorixCommand = ['sophomorix-check', '--analyze-encoding', fileToCheck, '-jj']
+        encoding = lmn_getSophomorixValue(sophomorixCommand, 'SUMMARY/0/ANALYZE-ENCODING/ENCODING')
+        return encoding
+
 
     @url(r'/api/lm/schoolsettings')
     @authorize('lm:schoolsettings')
@@ -71,7 +81,6 @@ class Handler(HttpPlugin):
                     return 'yes' if v else 'no'
                 else:
                     return '%s' % v
-
 
             section_name = ''
             set_control = 0

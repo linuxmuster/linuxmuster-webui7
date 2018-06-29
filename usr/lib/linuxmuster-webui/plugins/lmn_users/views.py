@@ -9,6 +9,8 @@ from aj.plugins.lm_common.api import CSVSpaceStripper
 from aj.auth import authorize
 from aj.plugins.lm_common.api import lm_backup_file
 from aj.plugins.lm_common.api import lmn_getSophomorixValue
+from aj.plugins.lm_common.api import lmn_genRandomPW
+
 
 
 @component(HttpPlugin)
@@ -283,18 +285,22 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_users_password(self, http_context):
         action = http_context.json_body()['action']
-        users = http_context.json_body()['users']
-        user = ','.join([x.strip() for x in users])
+        user = http_context.json_body()['user']
         # Read Password
         if action == 'get':
             sophomorixCommand = ['sophomorix-user', '--info', '-jj', '-u', user]
             return lmn_getSophomorixValue(sophomorixCommand, '/USERS/'+user+'/sophomorixFirstPassword')
         if action == 'set-initial':
-            subprocess.check_call('sophomorix-passwd --set-firstpassword -u %s' % user, shell=True)
+            sophomorixCommand = ['sophomorix-passwd', '--set-firstpassword', '-jj', '-u', user]
+            return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
         if action == 'set-random':
-            subprocess.check_call('sophomorix-passwd -u %s --random' % user, shell=True)
+            password = lmn_genRandomPW()
+            sophomorixCommand = ['sophomorix-passwd', '-u', user, '--pass', password, '-jj']
+            return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
         if action == 'set':
-            subprocess.check_call('sophomorix-passwd -u %s --pass "%s"' % (user, http_context.json_body()['password']), shell=True)
+            password = http_context.json_body()['password']
+            sophomorixCommand = ['sophomorix-passwd', '-u', user, '--pass', password, '-jj']
+            return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
 
     @url(r'/api/lm/users/print')
     @authorize('lm:users:passwords')

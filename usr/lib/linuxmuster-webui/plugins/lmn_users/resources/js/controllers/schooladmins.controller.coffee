@@ -10,28 +10,29 @@ angular.module('lm.users').controller 'LMUsersSchooladminsController', ($scope, 
     $http.get("/api/lm/sophomorixUsers/schooladmins").then (resp) ->
         $scope.schooladmins = resp.data
 
-
-## legacy functions
-    $scope.showInitialPassword = (schooladmins) ->
-        $http.post('/api/lm/users/password', {users: (x.sAMAccountName for x in schooladmins), action: 'get'}).then (resp) ->
-            messagebox.show(title: gettext('Initial password'), text: resp.data, positive: 'OK')
+    $scope.showInitialPassword = (user) ->
+       $http.post('/api/lm/users/password', {user: username, action: 'get'}).then (resp) ->
+          messagebox.show(title: gettext('Initial password'), text: resp.data, positive: 'OK')
 
 
-    $scope.setInitialPassword = (schooladmins) ->
-        $http.post('/api/lm/sophomorixUsers/password', {users: (x.sAMAccountName for x in schooladmins), action: 'set-initial'}).then (resp) ->
-            notify.success gettext('Initial password set')
+    $scope.setInitialPassword = (user) ->
+       username = (user[0]['sAMAccountName'])
+       $http.post('/api/lm/users/password', {user: username, action: 'set-initial'}).then (resp) ->
+          notify.success gettext('Initial password set')
 
-    $scope.setRandomPassword = (schooladmins) ->
-        $http.post('/api/lm/users/password', {users: (x.sAMAccountName for x in schooladmins), action: 'set-random'}).then (resp) ->
-            text = ("#{x.user}: #{x.password}" for x in resp.data).join(',\n')
-            messagebox.show(title: gettext('New password'), text: text, positive: 'OK')
+    $scope.setRandomPassword = (user) ->
+       username = (user[0]['sAMAccountName'])
+       $http.post('/api/lm/users/password', {user: username, action: 'set-random'}).then (resp) ->
+          notify.success gettext('Random password set')
 
-    $scope.setCustomPassword = (schooladmins) ->
-        messagebox.prompt(gettext('New password')).then (msg) ->
-            if not msg.value
-                return
-            $http.post('/api/lm/users/password', {users: (x.sAMAccountName for x in schooladmins), action: 'set', password: msg.value}).then (resp) ->
-                notify.success gettext('New password set')
+    $scope.setCustomPassword = (user) ->
+       $uibModal.open(
+          templateUrl: '/lm_users:resources/partial/customPassword.modal.html'
+          controller: 'LMNUsersCustomPasswordController'
+          size: 'mg'
+          resolve:
+             user: () -> user
+       )
 
     $scope.haveSelection = () ->
         if $scope.schooladmins

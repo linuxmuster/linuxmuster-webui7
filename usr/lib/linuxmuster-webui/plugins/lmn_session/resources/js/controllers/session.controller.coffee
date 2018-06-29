@@ -15,8 +15,8 @@ angular.module('lmn.session').config ($routeProvider) ->
 #       $uibModalInstance.dismiss()
 
 angular.module('lmn.session').controller 'LMSESSIONUserInfoModalController', ($scope, $uibModal, $uibModalInstance, $http, gettext, messagebox, pageTitle, id ) ->
-    console.log "test"
-    console.log id
+    #console.log "test"
+    #console.log id
     #messagebox.show(title: gettext('Initial password'), text: 'test', positive: 'OK')
     #$scope.image = image
     #$scope.imagesWithReg = (x for x in images when x.reg)
@@ -79,14 +79,18 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
        name:
           visible: true
           name: gettext('Name')
-       examMode:
+       examModeSupervisor:
           visible: true
           name: gettext('Exam-Supervisor')
-       examModeCheckbox:
+       sophomorixRole:
+          visible: false
+          name: gettext('sophomorixRole')
+       exammode:
           visible: true
           icon:"fa fa-graduation-cap"
           title: gettext('Exam-Mode')
-          checkboxAll: true
+          checkboxAll: false
+          examBox: true
           checkboxStatus: false
        wifiaccess:
           visible: true
@@ -155,6 +159,9 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
 
     $scope.selectAll = (item) ->
         managementgroup = 'group_'+item
+        if item is 'exammode'
+            managementgroup = 'exammode_boolean'
+        console.log item
         console.log $scope.participants
         if $scope.fields[item].checkboxStatus is true
             angular.forEach $scope.participants, (participant, id) ->
@@ -215,6 +222,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                     $scope.visible.sessionname = 'show'
                     $scope.visible.mainpage = 'none'
                     $scope.participants = resp.data
+                    console.log($scope.participants)
                     if $scope.participants[0]?
                        $scope.visible.table = 'none'
                        $scope.info.message = 'This session appears to be empty. Start adding users by using the top search bar!'
@@ -266,38 +274,45 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                     $scope._.addSchoolClass = null
 
     $scope.removeParticipant = (participant) ->
-        #console.log $scope.participants
-        #console.log participant
                 delete $scope.participants[participant]
 
+    $scope.changeExamSupervisor = (participant, supervisor) ->
+                $http.post('/api/lmn/session/sessions', {action: 'change-exam-supervisor', supervisor: supervisor, participant: participant}).then (resp) ->
+                console.log ('test')
+                console.log (participant)
+                console.log (supervisor)
 
     $scope.saveApply = (username,participants, session) ->
-                $http.post('/api/lmn/session/sessions', {action: 'save-session', participants: participants, session: session}).then (resp) ->
+                $http.post('/api/lmn/session/sessions', {action: 'save-session',username: username, participants: participants, session: session}).then (resp) ->
                     $scope.output = resp.data
                     $scope.getParticipants(username,session)
                     notify.success gettext($scope.output)
 
-    $scope.showInitialPassword = (id) ->
-                $http.post('/api/lm/users/password', {users: id, action: 'get'}).then (resp) ->
+    $scope.showInitialPassword = (user) ->
+                username = (user[0])
+                $http.post('/api/lm/users/password', {user: username, action: 'get'}).then (resp) ->
                     messagebox.show(title: gettext('Initial password'), text: resp.data, positive: 'OK')
 
-    $scope.setInitialPassword = (id) ->
-                $http.post('/api/lm/sophomorixUsers/password', {users: id, action: 'set-initial'}).then (resp) ->
+    $scope.setInitialPassword = (user) ->
+                username = (user[0])
+                $http.post('/api/lm/users/password', {user: username, action: 'set-initial'}).then (resp) ->
                     notify.success gettext('Initial password set')
 
-    $scope.setRandomPassword = (id) ->
-                messagebox.show(title: gettext('Not Implemented'), text: 'Not implemented yet', positive: 'OK')
-                #$http.post('/api/lm/users/password', {users: id, action: 'set-random'}).then (resp) ->
-                #    text = ("#{x.user}: #{x.password}" for x in resp.data).join(',\n')
-                #    messagebox.show(title: gettext('New password'), text: text, positive: 'OK')
+    $scope.setRandomPassword = (user) ->
+            username = (user[0])
+            $http.post('/api/lm/users/password', {user: username, action: 'set-random'}).then (resp) ->
+                notify.success gettext('Random password set')
 
-    $scope.setCustomPassword = (id) ->
-                messagebox.prompt(gettext('New password')).then (msg) ->
-                    if not msg.value
-                        return
-                    $http.post('/api/lm/users/password', {users: id, action: 'set', password: msg.value}).then (resp) ->
-                        notify.success gettext('New password set')
 
+    $scope.setCustomPassword = (user) ->
+            username = (user[0])
+            $uibModal.open(
+                    templateUrl: '/lm_users:resources/partial/customPassword.modal.html'
+                    controller: 'LMNUsersCustomPasswordController'
+                    size: 'mg'
+                    resolve:
+                        user: () -> username
+            )
 
     $scope.userInfo = (id) ->
                 #$http.get("/api/lm/linbo/config/#{configName}").then (resp) ->

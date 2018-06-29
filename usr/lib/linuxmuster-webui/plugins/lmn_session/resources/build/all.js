@@ -24,8 +24,8 @@
   //    $scope.close = () ->
   //       $uibModalInstance.dismiss()
   angular.module('lmn.session').controller('LMSESSIONUserInfoModalController', function($scope, $uibModal, $uibModalInstance, $http, gettext, messagebox, pageTitle, id) {
-    console.log("test");
-    console.log(id);
+    //console.log "test"
+    //console.log id
     //messagebox.show(title: gettext('Initial password'), text: 'test', positive: 'OK')
     //$scope.image = image
     //$scope.imagesWithReg = (x for x in images when x.reg)
@@ -93,15 +93,20 @@
         visible: true,
         name: gettext('Name')
       },
-      examMode: {
+      examModeSupervisor: {
         visible: true,
         name: gettext('Exam-Supervisor')
       },
-      examModeCheckbox: {
+      sophomorixRole: {
+        visible: false,
+        name: gettext('sophomorixRole')
+      },
+      exammode: {
         visible: true,
         icon: "fa fa-graduation-cap",
         title: gettext('Exam-Mode'),
-        checkboxAll: true,
+        checkboxAll: false,
+        examBox: true,
         checkboxStatus: false
       },
       wifiaccess: {
@@ -172,6 +177,10 @@
     $scope.selectAll = function(item) {
       var managementgroup;
       managementgroup = 'group_' + item;
+      if (item === 'exammode') {
+        managementgroup = 'exammode_boolean';
+      }
+      console.log(item);
       console.log($scope.participants);
       if ($scope.fields[item].checkboxStatus === true) {
         angular.forEach($scope.participants, function(participant, id) {
@@ -276,6 +285,7 @@
         $scope.visible.sessionname = 'show';
         $scope.visible.mainpage = 'none';
         $scope.participants = resp.data;
+        console.log($scope.participants);
         if ($scope.participants[0] != null) {
           $scope.visible.table = 'none';
           return $scope.info.message = 'This session appears to be empty. Start adding users by using the top search bar!';
@@ -339,13 +349,22 @@
       }
     });
     $scope.removeParticipant = function(participant) {
-      //console.log $scope.participants
-      //console.log participant
       return delete $scope.participants[participant];
+    };
+    $scope.changeExamSupervisor = function(participant, supervisor) {
+      $http.post('/api/lmn/session/sessions', {
+        action: 'change-exam-supervisor',
+        supervisor: supervisor,
+        participant: participant
+      }).then(function(resp) {});
+      console.log('test');
+      console.log(participant);
+      return console.log(supervisor);
     };
     $scope.saveApply = function(username, participants, session) {
       return $http.post('/api/lmn/session/sessions', {
         action: 'save-session',
+        username: username,
         participants: participants,
         session: session
       }).then(function(resp) {
@@ -354,9 +373,11 @@
         return notify.success(gettext($scope.output));
       });
     };
-    $scope.showInitialPassword = function(id) {
+    $scope.showInitialPassword = function(user) {
+      var username;
+      username = user[0];
       return $http.post('/api/lm/users/password', {
-        users: id,
+        user: username,
         action: 'get'
       }).then(function(resp) {
         return messagebox.show({
@@ -366,36 +387,38 @@
         });
       });
     };
-    $scope.setInitialPassword = function(id) {
-      return $http.post('/api/lm/sophomorixUsers/password', {
-        users: id,
+    $scope.setInitialPassword = function(user) {
+      var username;
+      username = user[0];
+      return $http.post('/api/lm/users/password', {
+        user: username,
         action: 'set-initial'
       }).then(function(resp) {
         return notify.success(gettext('Initial password set'));
       });
     };
-    $scope.setRandomPassword = function(id) {
-      return messagebox.show({
-        title: gettext('Not Implemented'),
-        text: 'Not implemented yet',
-        positive: 'OK'
+    $scope.setRandomPassword = function(user) {
+      var username;
+      username = user[0];
+      return $http.post('/api/lm/users/password', {
+        user: username,
+        action: 'set-random'
+      }).then(function(resp) {
+        return notify.success(gettext('Random password set'));
       });
     };
-    //$http.post('/api/lm/users/password', {users: id, action: 'set-random'}).then (resp) ->
-    //    text = ("#{x.user}: #{x.password}" for x in resp.data).join(',\n')
-    //    messagebox.show(title: gettext('New password'), text: text, positive: 'OK')
-    $scope.setCustomPassword = function(id) {
-      return messagebox.prompt(gettext('New password')).then(function(msg) {
-        if (!msg.value) {
-          return;
+    $scope.setCustomPassword = function(user) {
+      var username;
+      username = user[0];
+      return $uibModal.open({
+        templateUrl: '/lm_users:resources/partial/customPassword.modal.html',
+        controller: 'LMNUsersCustomPasswordController',
+        size: 'mg',
+        resolve: {
+          user: function() {
+            return username;
+          }
         }
-        return $http.post('/api/lm/users/password', {
-          users: id,
-          action: 'set',
-          password: msg.value
-        }).then(function(resp) {
-          return notify.success(gettext('New password set'));
-        });
       });
     };
     return $scope.userInfo = function(id) {

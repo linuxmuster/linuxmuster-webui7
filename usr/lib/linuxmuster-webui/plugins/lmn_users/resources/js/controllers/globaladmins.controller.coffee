@@ -10,28 +10,33 @@ angular.module('lm.users').controller 'LMUsersSchooladminsController', ($scope, 
     $http.get("/api/lm/sophomorixUsers/globaladmins").then (resp) ->
         $scope.globaladmins = resp.data
 
+    $scope.showInitialPassword = (user) ->
+      username = (user[0]['sAMAccountName'])
+      $http.post('/api/lm/users/password', {user: username, action: 'get'}).then (resp) ->
+        messagebox.show(title: gettext('Initial password'), text: resp.data, positive: 'OK')
 
-## legacy functions
-    $scope.showInitialPassword = (globaladmins) ->
-        $http.post('/api/lm/users/password', {users: (x.sAMAccountName for x in globaladmins), action: 'get'}).then (resp) ->
-            messagebox.show(title: gettext('Initial password'), text: resp.data, positive: 'OK')
 
+    $scope.setInitialPassword = (user) ->
+      console.log (user)
+      username = (user[0]['sAMAccountName'])
+      $http.post('/api/lm/users/password', {user: username, action: 'set-initial'}).then (resp) ->
+        notify.success gettext('Initial password set')
 
-    $scope.setInitialPassword = (globaladmins) ->
-        $http.post('/api/lm/sophomorixUsers/password', {users: (x.sAMAccountName for x in globaladmins), action: 'set-initial'}).then (resp) ->
-            notify.success gettext('Initial password set')
+    $scope.setRandomPassword = (user) ->
+      console.log (user)
+      username = (user[0]['sAMAccountName'])
+      $http.post('/api/lm/users/password', {user: username, action: 'set-random'}).then (resp) ->
+        notify.success gettext('Random password set')
 
-    $scope.setRandomPassword = (globaladmins) ->
-        $http.post('/api/lm/users/password', {users: (x.sAMAccountName for x in globaladmins), action: 'set-random'}).then (resp) ->
-            text = ("#{x.user}: #{x.password}" for x in resp.data).join(',\n')
-            messagebox.show(title: gettext('New password'), text: text, positive: 'OK')
+    $scope.setCustomPassword = (user) ->
+      $uibModal.open(
+        templateUrl: '/lm_users:resources/partial/customPassword.modal.html'
+        controller: 'LMNUsersCustomPasswordController'
+        size: 'mg'
+        resolve:
+          user: () -> user
+      )
 
-    $scope.setCustomPassword = (globaladmins) ->
-        messagebox.prompt(gettext('New password')).then (msg) ->
-            if not msg.value
-                return
-            $http.post('/api/lm/users/password', {users: (x.sAMAccountName for x in globaladmins), action: 'set', password: msg.value}).then (resp) ->
-                notify.success gettext('New password set')
 
     $scope.haveSelection = () ->
         if $scope.globaladmins

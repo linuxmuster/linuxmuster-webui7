@@ -112,18 +112,9 @@
     $http.get("/api/lm/sophomorixUsers/teachers").then(function(resp) {
       return $scope.teachers = resp.data;
     });
-    $scope.showInitialPassword = function(teachers) {
-      var x;
+    $scope.showInitialPassword = function(user) {
       return $http.post('/api/lm/users/password', {
-        users: (function() {
-          var i, len, results;
-          results = [];
-          for (i = 0, len = teachers.length; i < len; i++) {
-            x = teachers[i];
-            results.push(x.sAMAccountName);
-          }
-          return results;
-        })(),
+        user: username,
         action: 'get'
       }).then(function(resp) {
         return messagebox.show({
@@ -133,76 +124,36 @@
         });
       });
     };
-    $scope.setInitialPassword = function(teachers) {
-      var x;
-      return $http.post('/api/lm/sophomorixUsers/password', {
-        users: (function() {
-          var i, len, results;
-          results = [];
-          for (i = 0, len = teachers.length; i < len; i++) {
-            x = teachers[i];
-            results.push(x.sAMAccountName);
-          }
-          return results;
-        })(),
+    $scope.setInitialPassword = function(user) {
+      var username;
+      username = user[0]['sAMAccountName'];
+      return $http.post('/api/lm/users/password', {
+        user: username,
         action: 'set-initial'
       }).then(function(resp) {
         return notify.success(gettext('Initial password set'));
       });
     };
-    $scope.setRandomPassword = function(teachers) {
-      var x;
+    $scope.setRandomPassword = function(user) {
+      var username;
+      username = user[0]['sAMAccountName'];
       return $http.post('/api/lm/users/password', {
-        users: (function() {
-          var i, len, results;
-          results = [];
-          for (i = 0, len = teachers.length; i < len; i++) {
-            x = teachers[i];
-            results.push(x.sAMAccountName);
-          }
-          return results;
-        })(),
+        user: username,
         action: 'set-random'
       }).then(function(resp) {
-        var text;
-        text = ((function() {
-          var i, len, ref, results;
-          ref = resp.data;
-          results = [];
-          for (i = 0, len = ref.length; i < len; i++) {
-            x = ref[i];
-            results.push(`${x.user}: ${x.password}`);
-          }
-          return results;
-        })()).join(',\n');
-        return messagebox.show({
-          title: gettext('New password'),
-          text: text,
-          positive: 'OK'
-        });
+        return notify.success(gettext('Random password set'));
       });
     };
-    $scope.setCustomPassword = function(teachers) {
-      return messagebox.prompt(gettext('New password')).then(function(msg) {
-        var x;
-        if (!msg.value) {
-          return;
+    $scope.setCustomPassword = function(user) {
+      return $uibModal.open({
+        templateUrl: '/lm_users:resources/partial/customPassword.modal.html',
+        controller: 'LMNUsersCustomPasswordController',
+        size: 'mg',
+        resolve: {
+          user: function() {
+            return user;
+          }
         }
-        return $http.post('/api/lm/users/password', {
-          users: (function() {
-            var i, len, results;
-            results = [];
-            for (i = 0, len = teachers.length; i < len; i++) {
-              x = teachers[i];
-              results.push(x.sAMAccountName);
-            }
-            return results;
-          })(),
-          action: 'set',
-          password: msg.value
-        }).then(function(resp) {
-          return notify.success(gettext('New password set'));
-        });
       });
     };
     $scope.haveSelection = function() {
@@ -291,18 +242,11 @@
     $http.get("/api/lm/sophomorixUsers/students").then(function(resp) {
       return $scope.students = resp.data;
     });
-    $scope.showInitialPassword = function(students) {
-      var x;
+    $scope.showInitialPassword = function(user) {
+      var username;
+      username = user[0]['sAMAccountName'];
       return $http.post('/api/lm/users/password', {
-        users: (function() {
-          var i, len, results;
-          results = [];
-          for (i = 0, len = students.length; i < len; i++) {
-            x = students[i];
-            results.push(x.sAMAccountName);
-          }
-          return results;
-        })(),
+        user: username,
         action: 'get'
       }).then(function(resp) {
         return messagebox.show({
@@ -312,76 +256,38 @@
         });
       });
     };
-    $scope.setInitialPassword = function(students) {
-      var x;
-      return $http.post('/api/lm/sophomorixUsers/password', {
-        users: (function() {
-          var i, len, results;
-          results = [];
-          for (i = 0, len = students.length; i < len; i++) {
-            x = students[i];
-            results.push(x.sAMAccountName);
-          }
-          return results;
-        })(),
+    $scope.setInitialPassword = function(user) {
+      var username;
+      username = user[0]['sAMAccountName'];
+      return $http.post('/api/lm/users/password', {
+        user: username,
         action: 'set-initial'
       }).then(function(resp) {
         return notify.success(gettext('Initial password set'));
       });
     };
-    $scope.setRandomPassword = function(students) {
-      var x;
+    $scope.setRandomPassword = function(user) {
+      var username;
+      username = user[0]['sAMAccountName'];
       return $http.post('/api/lm/users/password', {
-        users: (function() {
-          var i, len, results;
-          results = [];
-          for (i = 0, len = students.length; i < len; i++) {
-            x = students[i];
-            results.push(x.sAMAccountName);
-          }
-          return results;
-        })(),
+        user: username,
         action: 'set-random'
       }).then(function(resp) {
-        var text;
-        text = ((function() {
-          var i, len, ref, results;
-          ref = resp.data;
-          results = [];
-          for (i = 0, len = ref.length; i < len; i++) {
-            x = ref[i];
-            results.push(`${x.user}: ${x.password}`);
-          }
-          return results;
-        })()).join(',\n');
-        return messagebox.show({
-          title: gettext('New password'),
-          text: text,
-          positive: 'OK'
-        });
+        return notify.success(gettext('Random password set'));
       });
     };
-    $scope.setCustomPassword = function(students) {
-      return messagebox.prompt(gettext('New password')).then(function(msg) {
-        var x;
-        if (!msg.value) {
-          return;
+    $scope.setCustomPassword = function(user) {
+      var username;
+      username = user[0]['sAMAccountName'];
+      return $uibModal.open({
+        templateUrl: '/lm_users:resources/partial/customPassword.modal.html',
+        controller: 'LMNUsersCustomPasswordController',
+        size: 'mg',
+        resolve: {
+          user: function() {
+            return username;
+          }
         }
-        return $http.post('/api/lm/users/password', {
-          users: (function() {
-            var i, len, results;
-            results = [];
-            for (i = 0, len = students.length; i < len; i++) {
-              x = students[i];
-              results.push(x.sAMAccountName);
-            }
-            return results;
-          })(),
-          action: 'set',
-          password: msg.value
-        }).then(function(resp) {
-          return notify.success(gettext('New password set'));
-        });
       });
     };
     $scope.haveSelection = function() {
@@ -470,19 +376,9 @@
     $http.get("/api/lm/sophomorixUsers/schooladmins").then(function(resp) {
       return $scope.schooladmins = resp.data;
     });
-    //# legacy functions
-    $scope.showInitialPassword = function(schooladmins) {
-      var x;
+    $scope.showInitialPassword = function(user) {
       return $http.post('/api/lm/users/password', {
-        users: (function() {
-          var i, len, results;
-          results = [];
-          for (i = 0, len = schooladmins.length; i < len; i++) {
-            x = schooladmins[i];
-            results.push(x.sAMAccountName);
-          }
-          return results;
-        })(),
+        user: username,
         action: 'get'
       }).then(function(resp) {
         return messagebox.show({
@@ -492,76 +388,36 @@
         });
       });
     };
-    $scope.setInitialPassword = function(schooladmins) {
-      var x;
-      return $http.post('/api/lm/sophomorixUsers/password', {
-        users: (function() {
-          var i, len, results;
-          results = [];
-          for (i = 0, len = schooladmins.length; i < len; i++) {
-            x = schooladmins[i];
-            results.push(x.sAMAccountName);
-          }
-          return results;
-        })(),
+    $scope.setInitialPassword = function(user) {
+      var username;
+      username = user[0]['sAMAccountName'];
+      return $http.post('/api/lm/users/password', {
+        user: username,
         action: 'set-initial'
       }).then(function(resp) {
         return notify.success(gettext('Initial password set'));
       });
     };
-    $scope.setRandomPassword = function(schooladmins) {
-      var x;
+    $scope.setRandomPassword = function(user) {
+      var username;
+      username = user[0]['sAMAccountName'];
       return $http.post('/api/lm/users/password', {
-        users: (function() {
-          var i, len, results;
-          results = [];
-          for (i = 0, len = schooladmins.length; i < len; i++) {
-            x = schooladmins[i];
-            results.push(x.sAMAccountName);
-          }
-          return results;
-        })(),
+        user: username,
         action: 'set-random'
       }).then(function(resp) {
-        var text;
-        text = ((function() {
-          var i, len, ref, results;
-          ref = resp.data;
-          results = [];
-          for (i = 0, len = ref.length; i < len; i++) {
-            x = ref[i];
-            results.push(`${x.user}: ${x.password}`);
-          }
-          return results;
-        })()).join(',\n');
-        return messagebox.show({
-          title: gettext('New password'),
-          text: text,
-          positive: 'OK'
-        });
+        return notify.success(gettext('Random password set'));
       });
     };
-    $scope.setCustomPassword = function(schooladmins) {
-      return messagebox.prompt(gettext('New password')).then(function(msg) {
-        var x;
-        if (!msg.value) {
-          return;
+    $scope.setCustomPassword = function(user) {
+      return $uibModal.open({
+        templateUrl: '/lm_users:resources/partial/customPassword.modal.html',
+        controller: 'LMNUsersCustomPasswordController',
+        size: 'mg',
+        resolve: {
+          user: function() {
+            return user;
+          }
         }
-        return $http.post('/api/lm/users/password', {
-          users: (function() {
-            var i, len, results;
-            results = [];
-            for (i = 0, len = schooladmins.length; i < len; i++) {
-              x = schooladmins[i];
-              results.push(x.sAMAccountName);
-            }
-            return results;
-          })(),
-          action: 'set',
-          password: msg.value
-        }).then(function(resp) {
-          return notify.success(gettext('New password set'));
-        });
       });
     };
     $scope.haveSelection = function() {
@@ -650,19 +506,11 @@
     $http.get("/api/lm/sophomorixUsers/globaladmins").then(function(resp) {
       return $scope.globaladmins = resp.data;
     });
-    //# legacy functions
-    $scope.showInitialPassword = function(globaladmins) {
-      var x;
+    $scope.showInitialPassword = function(user) {
+      var username;
+      username = user[0]['sAMAccountName'];
       return $http.post('/api/lm/users/password', {
-        users: (function() {
-          var i, len, results;
-          results = [];
-          for (i = 0, len = globaladmins.length; i < len; i++) {
-            x = globaladmins[i];
-            results.push(x.sAMAccountName);
-          }
-          return results;
-        })(),
+        user: username,
         action: 'get'
       }).then(function(resp) {
         return messagebox.show({
@@ -672,76 +520,38 @@
         });
       });
     };
-    $scope.setInitialPassword = function(globaladmins) {
-      var x;
-      return $http.post('/api/lm/sophomorixUsers/password', {
-        users: (function() {
-          var i, len, results;
-          results = [];
-          for (i = 0, len = globaladmins.length; i < len; i++) {
-            x = globaladmins[i];
-            results.push(x.sAMAccountName);
-          }
-          return results;
-        })(),
+    $scope.setInitialPassword = function(user) {
+      var username;
+      console.log(user);
+      username = user[0]['sAMAccountName'];
+      return $http.post('/api/lm/users/password', {
+        user: username,
         action: 'set-initial'
       }).then(function(resp) {
         return notify.success(gettext('Initial password set'));
       });
     };
-    $scope.setRandomPassword = function(globaladmins) {
-      var x;
+    $scope.setRandomPassword = function(user) {
+      var username;
+      console.log(user);
+      username = user[0]['sAMAccountName'];
       return $http.post('/api/lm/users/password', {
-        users: (function() {
-          var i, len, results;
-          results = [];
-          for (i = 0, len = globaladmins.length; i < len; i++) {
-            x = globaladmins[i];
-            results.push(x.sAMAccountName);
-          }
-          return results;
-        })(),
+        user: username,
         action: 'set-random'
       }).then(function(resp) {
-        var text;
-        text = ((function() {
-          var i, len, ref, results;
-          ref = resp.data;
-          results = [];
-          for (i = 0, len = ref.length; i < len; i++) {
-            x = ref[i];
-            results.push(`${x.user}: ${x.password}`);
-          }
-          return results;
-        })()).join(',\n');
-        return messagebox.show({
-          title: gettext('New password'),
-          text: text,
-          positive: 'OK'
-        });
+        return notify.success(gettext('Random password set'));
       });
     };
-    $scope.setCustomPassword = function(globaladmins) {
-      return messagebox.prompt(gettext('New password')).then(function(msg) {
-        var x;
-        if (!msg.value) {
-          return;
+    $scope.setCustomPassword = function(user) {
+      return $uibModal.open({
+        templateUrl: '/lm_users:resources/partial/customPassword.modal.html',
+        controller: 'LMNUsersCustomPasswordController',
+        size: 'mg',
+        resolve: {
+          user: function() {
+            return user;
+          }
         }
-        return $http.post('/api/lm/users/password', {
-          users: (function() {
-            var i, len, results;
-            results = [];
-            for (i = 0, len = globaladmins.length; i < len; i++) {
-              x = globaladmins[i];
-              results.push(x.sAMAccountName);
-            }
-            return results;
-          })(),
-          action: 'set',
-          password: msg.value
-        }).then(function(resp) {
-          return notify.success(gettext('New password set'));
-        });
       });
     };
     $scope.haveSelection = function() {
@@ -1131,18 +941,9 @@
     $http.get("/api/lm/sophomorixUsers/teachers").then(function(resp) {
       return $scope.teachers = resp.data;
     });
-    $scope.showInitialPassword = function(teachers) {
-      var x;
+    $scope.showInitialPassword = function(user) {
       return $http.post('/api/lm/users/password', {
-        users: (function() {
-          var i, len, results;
-          results = [];
-          for (i = 0, len = teachers.length; i < len; i++) {
-            x = teachers[i];
-            results.push(x.sAMAccountName);
-          }
-          return results;
-        })(),
+        user: username,
         action: 'get'
       }).then(function(resp) {
         return messagebox.show({
@@ -1152,76 +953,36 @@
         });
       });
     };
-    $scope.setInitialPassword = function(teachers) {
-      var x;
-      return $http.post('/api/lm/sophomorixUsers/password', {
-        users: (function() {
-          var i, len, results;
-          results = [];
-          for (i = 0, len = teachers.length; i < len; i++) {
-            x = teachers[i];
-            results.push(x.sAMAccountName);
-          }
-          return results;
-        })(),
+    $scope.setInitialPassword = function(user) {
+      var username;
+      username = user[0]['sAMAccountName'];
+      return $http.post('/api/lm/users/password', {
+        user: username,
         action: 'set-initial'
       }).then(function(resp) {
         return notify.success(gettext('Initial password set'));
       });
     };
-    $scope.setRandomPassword = function(teachers) {
-      var x;
+    $scope.setRandomPassword = function(user) {
+      var username;
+      username = user[0]['sAMAccountName'];
       return $http.post('/api/lm/users/password', {
-        users: (function() {
-          var i, len, results;
-          results = [];
-          for (i = 0, len = teachers.length; i < len; i++) {
-            x = teachers[i];
-            results.push(x.sAMAccountName);
-          }
-          return results;
-        })(),
+        user: username,
         action: 'set-random'
       }).then(function(resp) {
-        var text;
-        text = ((function() {
-          var i, len, ref, results;
-          ref = resp.data;
-          results = [];
-          for (i = 0, len = ref.length; i < len; i++) {
-            x = ref[i];
-            results.push(`${x.user}: ${x.password}`);
-          }
-          return results;
-        })()).join(',\n');
-        return messagebox.show({
-          title: gettext('New password'),
-          text: text,
-          positive: 'OK'
-        });
+        return notify.success(gettext('Random password set'));
       });
     };
-    $scope.setCustomPassword = function(teachers) {
-      return messagebox.prompt(gettext('New password')).then(function(msg) {
-        var x;
-        if (!msg.value) {
-          return;
+    $scope.setCustomPassword = function(user) {
+      return $uibModal.open({
+        templateUrl: '/lm_users:resources/partial/customPassword.modal.html',
+        controller: 'LMNUsersCustomPasswordController',
+        size: 'mg',
+        resolve: {
+          user: function() {
+            return user;
+          }
         }
-        return $http.post('/api/lm/users/password', {
-          users: (function() {
-            var i, len, results;
-            results = [];
-            for (i = 0, len = teachers.length; i < len; i++) {
-              x = teachers[i];
-              results.push(x.sAMAccountName);
-            }
-            return results;
-          })(),
-          action: 'set',
-          password: msg.value
-        }).then(function(resp) {
-          return notify.success(gettext('New password set'));
-        });
       });
     };
     $scope.haveSelection = function() {
@@ -1420,6 +1181,44 @@
     };
     return $scope.close = function() {
       return $uibModalInstance.close();
+    };
+  });
+
+}).call(this);
+
+// Generated by CoffeeScript 2.3.1
+(function() {
+  var isStrongPwd1;
+
+  isStrongPwd1 = function(password) {
+    var regExp, validPassword;
+    regExp = /(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*()]|(?=.*\d)).{7,}/;
+    validPassword = regExp.test(password);
+    return validPassword;
+  };
+
+  angular.module('lm.users').controller('LMNUsersCustomPasswordController', function($scope, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, user) {
+    $scope.save = function(userpw) {
+      if (!$scope.userpw) {
+        notify.error(gettext("You have to enter a password"));
+        return;
+      }
+      if (!isStrongPwd1($scope.userpw)) {
+        notify.error(gettext("Password too weak"));
+        return;
+      } else {
+        $http.post('/api/lm/users/password', {
+          user: user,
+          action: 'set',
+          password: $scope.userpw
+        }).then(function(resp) {
+          return notify.success(gettext('New password set'));
+        });
+      }
+      return $uibModalInstance.dismiss();
+    };
+    return $scope.close = function() {
+      return $uibModalInstance.dismiss();
     };
   });
 

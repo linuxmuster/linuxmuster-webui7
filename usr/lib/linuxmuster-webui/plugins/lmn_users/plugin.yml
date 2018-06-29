@@ -21,6 +21,7 @@ resources:
     - 'resources/js/controllers/teachers.controller.coffee'
     - 'resources/js/controllers/printPasswords.controller.coffee'
     - 'resources/js/controllers/checkModal.controller.coffee'
+    - 'resources/js/controllers/customPassword.controller.coffee'
     - 'resources/partial/students-list.html'
     - 'resources/partial/teachers-list.html'
     - 'resources/partial/extra-students.html'
@@ -34,4 +35,5 @@ resources:
     - 'resources/partial/students.html'
     - 'resources/partial/schooladmins.html'
     - 'resources/partial/globaladmins.html'
+    - 'resources/partial/customPassword.modal.html'
     - 'ng:lm.users'

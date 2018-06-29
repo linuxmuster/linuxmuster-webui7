@@ -31,7 +31,7 @@ class Handler(HttpPlugin):
             with authorize('lm:users:students:read'):
                     try:
                         sophomorixCommand = ['sophomorix-session', '-i', '-jj']
-                        participants = lmn_getSophomorixValue(sophomorixCommand, 'SUPERVISOR/'+supervisor+'/sophomorixSessions/'+session+'/PARTICIPANTS', True)
+                        participants = lmn_getSophomorixValue(sophomorixCommand, 'ID/'+session+'/PARTICIPANTS', True)
                     except Exception:
                         participants = {'0': {"givenName": "null", "sophomorixExamMode": "---", "group_wifiaccess": False, "group_intranetaccess": False, "group_printing": False, "sophomorixStatus": "U", "sophomorixRole": "", "group_internetaccess": False, "sophomorixAdminClass": "", "group_webfilter": False, "user_existing": False, "sn": ""}}
                         #return ["frayka"["test":"null"]]
@@ -65,6 +65,21 @@ class Handler(HttpPlugin):
                 sophomorixCommand = ['sophomorix-session', '--create', '--supervisor', supervisor,  '-j', '--comment', comment]
                 result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
                 return result
+        if action == 'change-exam-supervisor':
+            supervisor = http_context.json_body()['supervisor']
+            participant= http_context.json_body()['participant']
+            comment = http_context.json_body()['comment']
+            with authorize('lm:users:students:read'):
+                try:
+                    sophomorixCommand = ['sophomorix-exam-mode', '--unset', '--subdir', session, '-j', '--participants', participant]
+                    result = lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
+                except Exception:
+                    raise Exception('Error:\n' + str('sophomorix-exam-mode --set --supervisor ' + supervisor + ' -j --participants ' + participant))
+                try:
+                    sophomorixCommand = ['sophomorix-exam-mode', '--set', '--supervisor', supervisor, '-j', '--participants', participant]
+                    result = lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
+                except Exception:
+                    raise Exception('Error:\n' + str('sophomorix-exam-mode --unset --subdir ' + session + ' -j --participants ' + participant))
         if action == 'save-session':
             def checkIfUserInManagementGroup(participant, managementgroup, managementList, noManagementList):
                 try:
@@ -79,20 +94,30 @@ class Handler(HttpPlugin):
                 return 0
 
             session = http_context.json_body()['session']
+            supervisor = http_context.json_body()['username']
             participants = http_context.json_body()['participants']
             participantsList = []
 
-            wifiList, noWifiList, internetList, noInternetList, intranetList, noIntranetList, webfilterList, noWebfilterList, printingList, noPrintingList = [], [], [], [], [], [], [], [], [], []
+            examModeList, noExamModeList, wifiList, noWifiList, internetList, noInternetList, intranetList, noIntranetList, webfilterList, noWebfilterList, printingList, noPrintingList = [], [], [], [], [], [], [], [], [], [], [], []
+            # Remove -exam in username to keep username as it is insead of saving -exam usernames in session
             for participant in participants:
+                if participant.endswith('-exam'):
+                    participant = participant.replace('-exam','')
+                # Fill lists from WebUI Output
                 participantsList.append(participant)
+                checkIfUserInManagementGroup(participant, 'exammode_boolean', examModeList, noExamModeList)
                 checkIfUserInManagementGroup(participant, 'group_wifiaccess', wifiList, noWifiList)
                 checkIfUserInManagementGroup(participant, 'group_internetaccess', internetList, noInternetList)
                 checkIfUserInManagementGroup(participant, 'group_intranetaccess', intranetList, noIntranetList)
                 checkIfUserInManagementGroup(participant, 'group_webfilter', webfilterList, noWebfilterList)
                 checkIfUserInManagementGroup(participant, 'group_printing', printingList, noPrintingList)
 
-            participantsCSV = ",".join(participantsList)
 
+
+            # Create CSV lists we need for sophomorix
+            participantsCSV = ",".join(participantsList)
+            examModeListCSV = ",".join(examModeList)
+            noExamModeListCSV = ",".join(noExamModeList)
             wifiListCSV = ",".join(wifiList)
             noWifiListCSV = ",".join(noWifiList)
             internetListCSV = ",".join(internetList)
@@ -104,6 +129,9 @@ class Handler(HttpPlugin):
             printingListCSV = ",".join(printingList)
             noPrintingListCSV = ",".join(noPrintingList)
 
+            #raise Exception('Error:\n' + str(noExamModeListCSV))
+
+            # Set managementgroups
             try:
                 sophomorixCommand = ['sophomorix-managementgroup', \
                                                 '--wifi', wifiListCSV, '--nowifi', noWifiListCSV,\
@@ -113,13 +141,6 @@ class Handler(HttpPlugin):
                                                 '--printing', printingListCSV, '--noprinting', noPrintingListCSV, \
                                                 '-jj']
                 result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
-                #result = lmn_getSophomorixValue('sophomorix-managementgroup \
-                #                                --wifi "' + wifiListCSV + '" --nowifi "' + noWifiListCSV +
-                #                                '" --internet "' + internetListCSV + '" --nointernet "' + noInternetListCSV +
-                #                                '" --intranet "' + intranetListCSV + '" --nointranet "' + noIntranetListCSV +
-                #                                '" --webfilter "' + webfilterListCSV + '" --nowebfilter "' + noWebfilterListCSV +
-                #                                '" --printing "' + printingListCSV + '" --noprinting "' + noPrintingListCSV +
-                #                                '" -jj ', 'OUTPUT/0/LOG')
             except Exception as e:
                 raise Exception('Error:\n' + str('sophomorix-managementgroup \
                                                  --wifi "' + wifiListCSV + '" --nowifi "' + noWifiListCSV +
@@ -128,13 +149,27 @@ class Handler(HttpPlugin):
                                                  '" --webfilter "' + webfilterListCSV + '" --nowebfilter "' + noWebfilterListCSV +
                                                  '" --printing "' + printingListCSV + '" --noprinting "' + noPrintingListCSV +
                                                  '" -jj ') + "\n Error was: " + str(e))
+            # Save session members
             try:
                 sophomorixCommand = ['sophomorix-session', '--session', session,  '-j', '--participants', participantsCSV]
                 result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
             except Exception:
                 raise Exception('Error:\n' + str('sophomorix-session --session ' + session + ' -j --participants ' + participantsCSV))
+            # Put chosen members in exam mode
+            try:
+                if examModeListCSV != "":
+                    sophomorixCommand = ['sophomorix-exam-mode', '--set', '--supervisor', supervisor, '-j', '--participants', examModeListCSV]
+                    result = lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
+            except Exception:
+                raise Exception('Error:\n' + str('sophomorix-exam-mode --set --supervisor ' + supervisor + ' -j --participants ' + examModeListCSV))
+            # Remove chosen members from exam mode
+            try:
+                if noExamModeListCSV != "":
+                    sophomorixCommand = ['sophomorix-exam-mode', '--unset', '--subdir', session, '-j', '--participants', noExamModeListCSV]
+                    result = lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
+            except Exception:
+                raise Exception('Error:\n' + str('sophomorix-exam-mode --unset --subdir ' + session + ' -j --participants ' + noExamModeListCSV))
 
-            # raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(participants))
             return result
 
         if http_context.method == 'POST':

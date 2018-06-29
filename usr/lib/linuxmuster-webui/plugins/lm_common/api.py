@@ -6,6 +6,9 @@ import logging
 import subprocess
 import json
 import dpath
+import string
+import random
+import re
 
 
 class CSVSpaceStripper:
@@ -107,7 +110,7 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
     if '# JSON-begin' in jsonS:
         jsonS = jsonS.split("# JSON-begin", 1)[1]
         jsonS = jsonS.split("# JSON-end", 1)[0]
-    file = open("/tmp/testfile123.txt","a")
+    file = open("/tmp/getSophomorixValueDebugoutput.txt","a")
     file.write(jsonS)
     file.close()
     jsonDict = json.loads(jsonS, encoding='UTF-8')
@@ -123,3 +126,13 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
     else:
         resultString = dpath.util.get(jsonDict, jsonpath)
     return resultString
+
+def lmn_genRandomPW():
+    regex = r"(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*()]|(?=.*\d)).{7,}"
+    s = "@#$%^&*()?+-_"
+    password = ''.join(random.SystemRandom().choice(string.ascii_letters+ string.digits + str(s)) for _ in range(10))
+    matches = re.search(regex, password)
+    if matches:
+        return password
+    else:
+        lmn_genRandomPW()

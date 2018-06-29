@@ -4,7 +4,6 @@
         <input type="text" style="width:70%" placeholder="Add Student" ng:model="_.addParticipant" typeahead-editable="false" typeahead-min-length="2" uib-typeahead="user as user.sophomorixAdminClass+' '+user.displayName+ ' '+user.sAMAccountName  for user in findUsers($viewValue) | limitTo:10" class="form-control" />
         <input type="text" style="width:30%" placeholder="Add Class" ng:model="_.addSchoolClass" typeahead-editable="false" typeahead-min-length="1" uib-typeahead="schoolClass as schoolClass.sAMAccountName  for schoolClass in findSchoolClasses($viewValue) | limitTo:10" class="form-control" />
 
-
         <oi-select
               oi-options="list.id as list.description for list in lists"
                 ng-model="tags"
@@ -71,16 +70,30 @@
 
     <table class="table">
         <tr style="display:{{visible.table}};">
-
-            <th ng:repeat="(id, field) in fields" ng:if="field.visible"><div title="{{field.title}}" class="{{field.icon}}" style="font-size:20px;"></div> {{field.name}}
+            <th ng:repeat="(id, field) in fields" ng:if="field.visible"><div title="{{field.title}}" class="{{field.icon}}" style="font-size:20px;"></div> <br>{{field.name}}
+                <span checkbox style="float:right;" id="{{id}}.all" ng:if="field.examBox" ng-click="selectAll('exammode')" ng:model=field.checkboxStatus>"</span>
                 <span checkbox style="float:right;" id="{{id}}.all" ng:if="field.checkboxAll" ng-click="selectAll(id)" ng:model=field.checkboxStatus>"</span></th>
             <th></th>
         </tr>
         <tr style="display:{{visible.table}};"  ng:repeat="(id, participant) in participants">
             <td class="ng-binding"><i> {{id}}</i> <br> {{participant.sophomorixAdminClass}} </td>
             <td class="ng-binding"><b>  {{participant.givenName}} </b><br> {{participant.sn}} </td>
-            <td class="text-center" ><input type="text"  ng:model="participant.sophomorixExamMode" placeholder="exammode"  class="form-control" readonly/></td>
-            <td width="1" style="text-align:center;"> <span checkbox id="{{id}}.examModeCheckBox" ng-click="changeClass(id+'.examModeCheckBox')" ng:model="participant.sophomorixExamMode">"</span></td>
+            <!--     <td class="text-center" ><input type="text"  ng:model="participant.sophomorixExamMode" placeholder="sophomorixExammode"  class="form-control" readonly/></td>-->
+            <td class="ng-binding"><span style="display:inline-block; width:100px; font-size:100%"  class="label label-danger" ng:show="participant.sophomorixRole == 'examuser'"><i class="fa fa-graduation-cap"></i> {{participant.sophomorixExamMode}}</span></td>
+            <td width="1" style="text-align:center;"> <span title="Exam by another supervisor" checkbox id="{{id}}.exammode" ng-click="changeClass(id+'.exammode')" ng:model="participant.exammode_boolean" ng:show="participant.sophomorixExamMode == identity.user || participant.sophomorixExamMode == '---'"></span>
+                <span uib-dropdown>
+                    <button class="btn btn-primary btn-xs" style="color:orange; background:white; font-size:20px" ng:show="participant.sophomorixExamMode != identity.user && participant.sophomorixExamMode != '---'" uib-dropdown-toggle>
+                        <i class="fa fa-exclamation-triangle"></i>
+                    </button>
+                    <ul uib-dropdown-menu class="dropdown-menu-right" >
+                        <li>
+                            <a ng:click="changeExamSupervisor([id, identity.user])" translate>
+                               End running exam and start own exam
+                            </a>
+                        </li>
+                    </ul>
+            </td>
+
             <td width="1" style="text-align:center;"> <span checkbox id="{{id}}.wifiaccess" ng-click="changeClass(id+'.wifiaccess')" ng:model="participant.group_wifiaccess">"</span></td>
             <td width="1" style="text-align:center;"> <span checkbox id="{{id}}.internetaccess" ng-click="changeClass(id+'.internetaccess')" ng:model="participant.group_internetaccess"></span></td>
             <td width="1" style="text-align:center;"> <span checkbox id="{{id}}.intranetaccess" ng-click="changeClass(id+'.intranetaccess')" ng:model="participant.group_intranetaccess"></span></td>
@@ -99,17 +112,17 @@
                         </li>
                         <li>
                             <a ng:click="setInitialPassword([id])" translate>
-                               Reset initial password
-                            </a>
-                        </li>
-                        <li>
-                            <a ng:click="setCustomPassword([id])" translate>
-                                Set initial password
+                               Set Initial password
                             </a>
                         </li>
                         <li>
                             <a ng:click="setRandomPassword([id])" translate>
-                                Set random initial password
+                                Set Random password
+                            </a>
+                        </li>
+                        <li>
+                            <a ng:click="setCustomPassword([id])" translate>
+                                Set Custom password
                             </a>
                         </li>
                         <li>
@@ -132,21 +145,27 @@
     </floating-toolbar>
 
     <!-- Tutorial -->
+    <!--
 <div style="display:{{visible.mainpage}}" >
     <div>
         <h1>
             test 3
         </h1>
     </div>
+    -->
     <!--
     <div class="list-group">
         <a class="list-group-item" ng:repeat="(id, session) in sessions" ng:click="getParticipants(identity.user,id); currentSession.name=id; currentSession.comment=session.COMMENT">
             <i class="fa fa-users"></i> {{session.COMMENT}}   |   {{id}}
         </a>
     -->
-    </div>
+    <!--
 
+user
+{{identity}}
+        {{identity.user}}
 
+    -->
 
     <!--
         <div class="list-group">
@@ -190,7 +209,6 @@
 
         <div>All Sessions Current User{{sessions}}</div>
         <br>
-
 
 
         

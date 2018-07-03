@@ -78,7 +78,7 @@
       return $scope.exampleRegs = resp.data;
     });
     $scope.setExampleReg = function(name) {
-      return filesystem.read(`/var/linbo/examples/${name}`).then(function(content) {
+      return filesystem.read(`/srv/linbo/examples/${name}`).then(function(content) {
         return $scope.image.reg = content;
       });
     };
@@ -86,7 +86,7 @@
       return $scope.examplePostsyncs = resp.data;
     });
     $scope.setExamplePostsync = function(name) {
-      return filesystem.read(`/var/linbo/examples/${name}`).then(function(content) {
+      return filesystem.read(`/srv/linbo/examples/${name}`).then(function(content) {
         return $scope.image.postsync = content;
       });
     };
@@ -468,7 +468,7 @@
       return $uibModalInstance.close(config);
     };
     $scope.backups = function() {
-      return lmFileBackups.show('/var/linbo/start.conf.' + $scope.config.config.LINBO.Group).then(function() {
+      return lmFileBackups.show('/srv/linbo/start.conf.' + $scope.config.config.LINBO.Group).then(function() {
         return $uibModalInstance.dismiss();
       });
     };
@@ -582,13 +582,13 @@
             newFileName += image.cloop ? '.cloop' : '.rsync';
           }
           tasks.start('aj.plugins.filesystem.tasks.Transfer', [], {
-            destination: `/var/linbo/${newFileName}`,
+            destination: `/srv/linbo/${newFileName}`,
             items: [
               {
                 mode: 'copy',
                 item: {
                   name: image.name,
-                  path: `/var/linbo/${image.name}`
+                  path: `/srv/linbo/${image.name}`
                 }
               }
             ]

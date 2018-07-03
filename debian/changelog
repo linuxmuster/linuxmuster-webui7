@@ -1,3 +1,64 @@
+linuxmuster-webui7 (1.0.18-3) UNRELEASED; urgency=medium
+
+  * Current snapshot build 4577af102fa6e66eec531d9ee228e9a191b63d8f
+  * extended session module for handling exams
+  * batch password changing is  currently broken
+  * fixed encoding erros
+
+ -- Andreas Till <andreas.till@netzint.de>  Fr, 29 Jun 2018 16:39:20 +0200
+
+linuxmuster-webui7 (1.0.18-2) UNRELEASED; urgency=medium
+
+  * Current snapshot build bc4b69dcf5b5f2d099202c56de7f7ca6fec4a0e8
+
+ -- Andreas Till <andreas.till@netzint.de>  Wed, 20 Jun 2018 16:11:39 +0200
+
+linuxmuster-webui7 (1.0.18-1) UNRELEASED; urgency=medium
+
+  * Current snapshot build a5109eff6bca8f837e3f71cce3322f4cec46cd00
+  * Updated webui-permissions
+
+ -- Andreas Till <andreas.till@netzint.de>  Wed, 20 Jun 2018 15:25:4 +0200
+
+linuxmuster-webui7 (1.0.17-1) UNRELEASED; urgency=medium
+
+  * Current snapshot build cdafc9a12a350067d2c6e917677c45e8563d8e12
+  * Fixed Encoding Issues
+  * Added function to determine encoding from sophomorix-check
+  * WebUI now creates empty userlists if none are present
+
+ -- Andreas Till <andreas.till@netzint.de>  Wed, 20 Jun 2018 14:52:21 +0200
+
+linuxmuster-webui7 (1.0.16-1) UNRELEASED; urgency=medium
+
+  * Current snapshot build
+
+ -- Andreas Till <andreas.till@netzint.de>  Thu, 07 Jun 2018 17:37:02 +0200
+
+linuxmuster-webui7 (1.0.15-1) UNRELEASED; urgency=medium
+
+  * Current snapshot build
+
+ -- Andreas Till <andreas.till@netzint.de>  Thu, 07 Jun 2018 13:37:02 +0200
+
+linuxmuster-webui7 (1.0.14-1) UNRELEASED; urgency=medium
+
+  * Current snapshot build
+
+ -- Andreas Till <andreas.till@netzint.de>  Thu, 07 Jun 2018 12:14:10 +0200
+
+linuxmuster-webui7 (1.0.13-1) UNRELEASED; urgency=medium
+
+  * Current snapshot build
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri, 25 May 2018 15:17:10 +0200
+
+linuxmuster-webui7 (1.0.12-1) UNRELEASED; urgency=medium
+
+  * Current snapshot build
+
+ -- Andreas Till <andreas.till@netzint.de>  Thu, 17 May 2018 11:17:09 +0200
+
 linuxmuster-webui7 (1.0.11-1) ALPHA; urgency=medium
 
   * Current build 

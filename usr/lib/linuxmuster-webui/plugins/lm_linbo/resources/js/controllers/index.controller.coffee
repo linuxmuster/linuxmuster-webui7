@@ -37,14 +37,14 @@ angular.module('lm.linbo').controller 'LMLINBOImageModalController', ($scope, $u
         $scope.exampleRegs = resp.data
 
     $scope.setExampleReg = (name) ->
-        filesystem.read("/var/linbo/examples/#{name}").then (content) ->
+        filesystem.read("/srv/linbo/examples/#{name}").then (content) ->
             $scope.image.reg = content
 
     $http.get('/api/lm/linbo/examples-postsyncs').then (resp) ->
         $scope.examplePostsyncs = resp.data
 
     $scope.setExamplePostsync = (name) ->
-        filesystem.read("/var/linbo/examples/#{name}").then (content) ->
+        filesystem.read("/srv/linbo/examples/#{name}").then (content) ->
             $scope.image.postsync = content
 
     $scope.save = () ->
@@ -376,7 +376,7 @@ angular.module('lm.linbo').controller 'LMLINBOConfigModalController', ($scope, $
         $uibModalInstance.close(config)
 
     $scope.backups = () ->
-        lmFileBackups.show('/var/linbo/start.conf.' + $scope.config.config.LINBO.Group).then () ->
+        lmFileBackups.show('/srv/linbo/start.conf.' + $scope.config.config.LINBO.Group).then () ->
             $uibModalInstance.dismiss()
 
     $scope.close = () ->
@@ -457,12 +457,12 @@ angular.module('lm.linbo').controller 'LMLINBOController', ($scope, $http, $uibM
                 tasks.start(
                     'aj.plugins.filesystem.tasks.Transfer',
                     [],
-                    destination: "/var/linbo/#{newFileName}",
+                    destination: "/srv/linbo/#{newFileName}",
                     items: [{
                         mode: 'copy'
                         item:
                             name: image.name
-                            path: "/var/linbo/#{image.name}"
+                            path: "/srv/linbo/#{image.name}"
                     }]
                 )
 

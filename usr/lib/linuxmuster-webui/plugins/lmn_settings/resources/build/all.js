@@ -40,6 +40,7 @@
       //for file in ['userfile.students.csv', 'userfile.teachers.csv', 'userfile.extrastudents.csv', 'classfile.extraclasses']
       for (i = 0, len = ref.length; i < len; i++) {
         file = ref[i];
+        // for file in ['userfile.students.csv', 'userfile.teachers.csv']
         //console.log (file)
         userfile = file.substring(file.indexOf('.') + 1);
         //console.log (userfile)

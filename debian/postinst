@@ -38,6 +38,8 @@ case "$1" in
         echo "---------------------------------------------------------------"
 	echo "Stop linuxmuster-webui"
     sed -i -e  's/dialog ng:show="message.visible" ng:repeat="message in messagebox.messages"/dialog ng:show="message.visible" style="z-index: 1050" ng:repeat="message in messagebox.messages"/' /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/resources/js/core/directives/messageboxContainer.es
+    rm -rf /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/resources/build/
+    cp -R /usr/lib/linuxmuster-webui/etc/core-build/* /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/resources/build/
 	systemctl stop linuxmuster-webui
 	pip install -r $webuietc/requirements.txt -q
 	# Set default permissions from true to false

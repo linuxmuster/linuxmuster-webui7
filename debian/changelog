@@ -1,3 +1,16 @@
+linuxmuster-webui7 (1.0.18-5) UNRELEASED; urgency=medium
+
+  * Current snapshot build 4b34b59b07d16e7ac62f0ec0a208976bf102e686
+
+ -- Andreas Till <andreas.till@netzint.de>  Tu, 03 Jul 2018 11:29:03 +0200
+
+linuxmuster-webui7 (1.0.18-4) UNRELEASED; urgency=medium
+
+  * Current snapshot build 628f05d89cd7d9011c5dc0b46bd2d5ff15478085
+  * fixede linbo remove parition bug
+
+ -- Andreas Till <andreas.till@netzint.de>  Tu, 03 Jul 2018 10:45:20 +0200
+
 linuxmuster-webui7 (1.0.18-3) UNRELEASED; urgency=medium
 
   * Current snapshot build 4577af102fa6e66eec531d9ee228e9a191b63d8f

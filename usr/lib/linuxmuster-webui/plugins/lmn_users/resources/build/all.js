@@ -147,13 +147,15 @@
       });
     };
     $scope.setCustomPassword = function(user) {
+      var username;
+      username = user[0]['sAMAccountName'];
       return $uibModal.open({
         templateUrl: '/lm_users:resources/partial/customPassword.modal.html',
         controller: 'LMNUsersCustomPasswordController',
         size: 'mg',
         resolve: {
           user: function() {
-            return user;
+            return username;
           }
         }
       });
@@ -978,13 +980,15 @@
       });
     };
     $scope.setCustomPassword = function(user) {
+      var username;
+      username = user[0]['sAMAccountName'];
       return $uibModal.open({
         templateUrl: '/lm_users:resources/partial/customPassword.modal.html',
         controller: 'LMNUsersCustomPasswordController',
         size: 'mg',
         resolve: {
           user: function() {
-            return user;
+            return username;
           }
         }
       });

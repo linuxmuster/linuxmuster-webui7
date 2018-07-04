@@ -26,12 +26,13 @@ angular.module('lm.users').controller 'LMUsersTeachersController', ($scope, $htt
           notify.success gettext('Random password set')
 
     $scope.setCustomPassword = (user) ->
+       username = (user[0]['sAMAccountName'])
        $uibModal.open(
           templateUrl: '/lm_users:resources/partial/customPassword.modal.html'
           controller: 'LMNUsersCustomPasswordController'
           size: 'mg'
           resolve:
-             user: () -> user
+             user: () -> username
        )
 
     $scope.haveSelection = () ->

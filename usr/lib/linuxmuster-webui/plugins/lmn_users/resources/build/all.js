@@ -113,6 +113,8 @@
       return $scope.teachers = resp.data;
     });
     $scope.showInitialPassword = function(user) {
+      var username;
+      username = user[0]['sAMAccountName'];
       return $http.post('/api/lm/users/password', {
         user: username,
         action: 'get'
@@ -942,6 +944,8 @@
       return $scope.teachers = resp.data;
     });
     $scope.showInitialPassword = function(user) {
+      var username;
+      username = user[0]['sAMAccountName'];
       return $http.post('/api/lm/users/password', {
         user: username,
         action: 'get'

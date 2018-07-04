@@ -10,6 +10,7 @@ angular.module('lm.users').controller 'LMUsersTeachersController', ($scope, $htt
         $scope.teachers = resp.data
 
     $scope.showInitialPassword = (user) ->
+       username = (user[0]['sAMAccountName'])
        $http.post('/api/lm/users/password', {user: username, action: 'get'}).then (resp) ->
           messagebox.show(title: gettext('Initial password'), text: resp.data, positive: 'OK')
 

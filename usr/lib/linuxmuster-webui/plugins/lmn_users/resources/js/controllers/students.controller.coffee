@@ -21,8 +21,9 @@ angular.module('lm.users').controller 'LMUsersStudentsController', ($scope, $htt
             notify.success gettext('Initial password set')
 
     $scope.setRandomPassword = (user) ->
-        username = (user[0]['sAMAccountName'])
-        $http.post('/api/lm/users/password', {user: username, action: 'set-random'}).then (resp) ->
+        #username = (user[0]['sAMAccountName'])
+        $http.post('/api/lm/users/password',{users: (x[0]['sAMAccountName'] for x in user), action: 'set-random'}).then (resp) ->
+            console.log (x[0]['sAMAccountName'])
             notify.success gettext('Random password set')
 
     $scope.setCustomPassword = (user) ->

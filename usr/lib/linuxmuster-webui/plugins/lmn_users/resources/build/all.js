@@ -271,12 +271,21 @@
       });
     };
     $scope.setRandomPassword = function(user) {
-      var username;
-      username = user[0]['sAMAccountName'];
+      var x;
+      //username = (user[0]['sAMAccountName'])
       return $http.post('/api/lm/users/password', {
-        user: username,
+        users: (function() {
+          var i, len, results;
+          results = [];
+          for (i = 0, len = user.length; i < len; i++) {
+            x = user[i];
+            results.push(x[0]['sAMAccountName']);
+          }
+          return results;
+        })(),
         action: 'set-random'
       }).then(function(resp) {
+        console.log(x[0]['sAMAccountName']);
         return notify.success(gettext('Random password set'));
       });
     };

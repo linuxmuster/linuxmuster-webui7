@@ -113,10 +113,17 @@
       return $scope.teachers = resp.data;
     });
     $scope.showInitialPassword = function(user) {
-      var username;
-      username = user[0]['sAMAccountName'];
+      var x;
       return $http.post('/api/lm/users/password', {
-        user: username,
+        users: (function() {
+          var i, len, results;
+          results = [];
+          for (i = 0, len = user.length; i < len; i++) {
+            x = user[i];
+            results.push(x['sAMAccountName']);
+          }
+          return results;
+        })(),
         action: 'get'
       }).then(function(resp) {
         return messagebox.show({
@@ -127,35 +134,47 @@
       });
     };
     $scope.setInitialPassword = function(user) {
-      var username;
-      username = user[0]['sAMAccountName'];
+      var x;
       return $http.post('/api/lm/users/password', {
-        user: username,
+        users: (function() {
+          var i, len, results;
+          results = [];
+          for (i = 0, len = user.length; i < len; i++) {
+            x = user[i];
+            results.push(x['sAMAccountName']);
+          }
+          return results;
+        })(),
         action: 'set-initial'
       }).then(function(resp) {
         return notify.success(gettext('Initial password set'));
       });
     };
     $scope.setRandomPassword = function(user) {
-      var username;
-      username = user[0]['sAMAccountName'];
+      var x;
       return $http.post('/api/lm/users/password', {
-        user: username,
+        users: (function() {
+          var i, len, results;
+          results = [];
+          for (i = 0, len = user.length; i < len; i++) {
+            x = user[i];
+            results.push(x['sAMAccountName']);
+          }
+          return results;
+        })(),
         action: 'set-random'
       }).then(function(resp) {
         return notify.success(gettext('Random password set'));
       });
     };
     $scope.setCustomPassword = function(user) {
-      var username;
-      username = user[0]['sAMAccountName'];
       return $uibModal.open({
         templateUrl: '/lm_users:resources/partial/customPassword.modal.html',
         controller: 'LMNUsersCustomPasswordController',
         size: 'mg',
         resolve: {
-          user: function() {
-            return username;
+          users: function() {
+            return user;
           }
         }
       });
@@ -247,10 +266,17 @@
       return $scope.students = resp.data;
     });
     $scope.showInitialPassword = function(user) {
-      var username;
-      username = user[0]['sAMAccountName'];
+      var x;
       return $http.post('/api/lm/users/password', {
-        user: username,
+        users: (function() {
+          var i, len, results;
+          results = [];
+          for (i = 0, len = user.length; i < len; i++) {
+            x = user[i];
+            results.push(x['sAMAccountName']);
+          }
+          return results;
+        })(),
         action: 'get'
       }).then(function(resp) {
         return messagebox.show({
@@ -261,10 +287,17 @@
       });
     };
     $scope.setInitialPassword = function(user) {
-      var username;
-      username = user[0]['sAMAccountName'];
+      var x;
       return $http.post('/api/lm/users/password', {
-        user: username,
+        users: (function() {
+          var i, len, results;
+          results = [];
+          for (i = 0, len = user.length; i < len; i++) {
+            x = user[i];
+            results.push(x['sAMAccountName']);
+          }
+          return results;
+        })(),
         action: 'set-initial'
       }).then(function(resp) {
         return notify.success(gettext('Initial password set'));
@@ -272,33 +305,29 @@
     };
     $scope.setRandomPassword = function(user) {
       var x;
-      //username = (user[0]['sAMAccountName'])
       return $http.post('/api/lm/users/password', {
         users: (function() {
           var i, len, results;
           results = [];
           for (i = 0, len = user.length; i < len; i++) {
             x = user[i];
-            results.push(x[0]['sAMAccountName']);
+            results.push(x['sAMAccountName']);
           }
           return results;
         })(),
         action: 'set-random'
       }).then(function(resp) {
-        console.log(x[0]['sAMAccountName']);
         return notify.success(gettext('Random password set'));
       });
     };
     $scope.setCustomPassword = function(user) {
-      var username;
-      username = user[0]['sAMAccountName'];
       return $uibModal.open({
         templateUrl: '/lm_users:resources/partial/customPassword.modal.html',
         controller: 'LMNUsersCustomPasswordController',
         size: 'mg',
         resolve: {
-          user: function() {
-            return username;
+          users: function() {
+            return user;
           }
         }
       });
@@ -390,8 +419,17 @@
       return $scope.schooladmins = resp.data;
     });
     $scope.showInitialPassword = function(user) {
+      var x;
       return $http.post('/api/lm/users/password', {
-        user: username,
+        user: (function() {
+          var i, len, results;
+          results = [];
+          for (i = 0, len = user.length; i < len; i++) {
+            x = user[i];
+            results.push(x['sAMAccountName']);
+          }
+          return results;
+        })(),
         action: 'get'
       }).then(function(resp) {
         return messagebox.show({
@@ -402,20 +440,34 @@
       });
     };
     $scope.setInitialPassword = function(user) {
-      var username;
-      username = user[0]['sAMAccountName'];
+      var x;
       return $http.post('/api/lm/users/password', {
-        user: username,
+        user: (function() {
+          var i, len, results;
+          results = [];
+          for (i = 0, len = user.length; i < len; i++) {
+            x = user[i];
+            results.push(x['sAMAccountName']);
+          }
+          return results;
+        })(),
         action: 'set-initial'
       }).then(function(resp) {
         return notify.success(gettext('Initial password set'));
       });
     };
     $scope.setRandomPassword = function(user) {
-      var username;
-      username = user[0]['sAMAccountName'];
+      var x;
       return $http.post('/api/lm/users/password', {
-        user: username,
+        user: (function() {
+          var i, len, results;
+          results = [];
+          for (i = 0, len = user.length; i < len; i++) {
+            x = user[i];
+            results.push(x['sAMAccountName']);
+          }
+          return results;
+        })(),
         action: 'set-random'
       }).then(function(resp) {
         return notify.success(gettext('Random password set'));
@@ -427,7 +479,7 @@
         controller: 'LMNUsersCustomPasswordController',
         size: 'mg',
         resolve: {
-          user: function() {
+          users: function() {
             return user;
           }
         }
@@ -520,10 +572,17 @@
       return $scope.globaladmins = resp.data;
     });
     $scope.showInitialPassword = function(user) {
-      var username;
-      username = user[0]['sAMAccountName'];
+      var x;
       return $http.post('/api/lm/users/password', {
-        user: username,
+        user: (function() {
+          var i, len, results;
+          results = [];
+          for (i = 0, len = user.length; i < len; i++) {
+            x = user[i];
+            results.push(x['sAMAccountName']);
+          }
+          return results;
+        })(),
         action: 'get'
       }).then(function(resp) {
         return messagebox.show({
@@ -534,22 +593,34 @@
       });
     };
     $scope.setInitialPassword = function(user) {
-      var username;
-      console.log(user);
-      username = user[0]['sAMAccountName'];
+      var x;
       return $http.post('/api/lm/users/password', {
-        user: username,
+        user: (function() {
+          var i, len, results;
+          results = [];
+          for (i = 0, len = user.length; i < len; i++) {
+            x = user[i];
+            results.push(x['sAMAccountName']);
+          }
+          return results;
+        })(),
         action: 'set-initial'
       }).then(function(resp) {
         return notify.success(gettext('Initial password set'));
       });
     };
     $scope.setRandomPassword = function(user) {
-      var username;
-      console.log(user);
-      username = user[0]['sAMAccountName'];
+      var x;
       return $http.post('/api/lm/users/password', {
-        user: username,
+        user: (function() {
+          var i, len, results;
+          results = [];
+          for (i = 0, len = user.length; i < len; i++) {
+            x = user[i];
+            results.push(x['sAMAccountName']);
+          }
+          return results;
+        })(),
         action: 'set-random'
       }).then(function(resp) {
         return notify.success(gettext('Random password set'));
@@ -561,7 +632,7 @@
         controller: 'LMNUsersCustomPasswordController',
         size: 'mg',
         resolve: {
-          user: function() {
+          users: function() {
             return user;
           }
         }
@@ -955,10 +1026,17 @@
       return $scope.teachers = resp.data;
     });
     $scope.showInitialPassword = function(user) {
-      var username;
-      username = user[0]['sAMAccountName'];
+      var x;
       return $http.post('/api/lm/users/password', {
-        user: username,
+        users: (function() {
+          var i, len, results;
+          results = [];
+          for (i = 0, len = user.length; i < len; i++) {
+            x = user[i];
+            results.push(x['sAMAccountName']);
+          }
+          return results;
+        })(),
         action: 'get'
       }).then(function(resp) {
         return messagebox.show({
@@ -969,35 +1047,47 @@
       });
     };
     $scope.setInitialPassword = function(user) {
-      var username;
-      username = user[0]['sAMAccountName'];
+      var x;
       return $http.post('/api/lm/users/password', {
-        user: username,
+        users: (function() {
+          var i, len, results;
+          results = [];
+          for (i = 0, len = user.length; i < len; i++) {
+            x = user[i];
+            results.push(x['sAMAccountName']);
+          }
+          return results;
+        })(),
         action: 'set-initial'
       }).then(function(resp) {
         return notify.success(gettext('Initial password set'));
       });
     };
     $scope.setRandomPassword = function(user) {
-      var username;
-      username = user[0]['sAMAccountName'];
+      var x;
       return $http.post('/api/lm/users/password', {
-        user: username,
+        users: (function() {
+          var i, len, results;
+          results = [];
+          for (i = 0, len = user.length; i < len; i++) {
+            x = user[i];
+            results.push(x['sAMAccountName']);
+          }
+          return results;
+        })(),
         action: 'set-random'
       }).then(function(resp) {
         return notify.success(gettext('Random password set'));
       });
     };
     $scope.setCustomPassword = function(user) {
-      var username;
-      username = user[0]['sAMAccountName'];
       return $uibModal.open({
         templateUrl: '/lm_users:resources/partial/customPassword.modal.html',
         controller: 'LMNUsersCustomPasswordController',
         size: 'mg',
         resolve: {
-          user: function() {
-            return username;
+          users: function() {
+            return user;
           }
         }
       });
@@ -1214,8 +1304,9 @@
     return validPassword;
   };
 
-  angular.module('lm.users').controller('LMNUsersCustomPasswordController', function($scope, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, user) {
+  angular.module('lm.users').controller('LMNUsersCustomPasswordController', function($scope, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, users) {
     $scope.save = function(userpw) {
+      var x;
       if (!$scope.userpw) {
         notify.error(gettext("You have to enter a password"));
         return;
@@ -1225,7 +1316,15 @@
         return;
       } else {
         $http.post('/api/lm/users/password', {
-          user: user,
+          users: (function() {
+            var i, len, results;
+            results = [];
+            for (i = 0, len = users.length; i < len; i++) {
+              x = users[i];
+              results.push(x['sAMAccountName']);
+            }
+            return results;
+          })(),
           action: 'set',
           password: $scope.userpw
         }).then(function(resp) {

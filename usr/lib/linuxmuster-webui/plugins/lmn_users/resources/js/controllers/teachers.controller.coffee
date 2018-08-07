@@ -10,29 +10,25 @@ angular.module('lm.users').controller 'LMUsersTeachersController', ($scope, $htt
         $scope.teachers = resp.data
 
     $scope.showInitialPassword = (user) ->
-       username = (user[0]['sAMAccountName'])
-       $http.post('/api/lm/users/password', {user: username, action: 'get'}).then (resp) ->
+       $http.post('/api/lm/users/password', {users: ( x['sAMAccountName'] for x in user ), action: 'get'}).then (resp) ->
           messagebox.show(title: gettext('Initial password'), text: resp.data, positive: 'OK')
 
 
     $scope.setInitialPassword = (user) ->
-       username = (user[0]['sAMAccountName'])
-       $http.post('/api/lm/users/password', {user: username, action: 'set-initial'}).then (resp) ->
+       $http.post('/api/lm/users/password', {users: (x['sAMAccountName'] for x in user), action: 'set-initial'}).then (resp) ->
           notify.success gettext('Initial password set')
 
     $scope.setRandomPassword = (user) ->
-       username = (user[0]['sAMAccountName'])
-       $http.post('/api/lm/users/password', {user: username, action: 'set-random'}).then (resp) ->
+       $http.post('/api/lm/users/password', {users: (x['sAMAccountName'] for x in user), action: 'set-random'}).then (resp) ->
           notify.success gettext('Random password set')
 
     $scope.setCustomPassword = (user) ->
-       username = (user[0]['sAMAccountName'])
        $uibModal.open(
           templateUrl: '/lm_users:resources/partial/customPassword.modal.html'
           controller: 'LMNUsersCustomPasswordController'
           size: 'mg'
           resolve:
-             user: () -> username
+             users: () -> user
        )
 
     $scope.haveSelection = () ->
@@ -54,7 +50,4 @@ angular.module('lm.users').controller 'LMUsersTeachersController', ($scope, $htt
     $scope.selectAll = () ->
         for teacher in $scope.teachers
             teacher.selected = true
-
-
-
 

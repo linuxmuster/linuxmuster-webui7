@@ -11,21 +11,16 @@ angular.module('lm.users').controller 'LMUsersSchooladminsController', ($scope, 
         $scope.globaladmins = resp.data
 
     $scope.showInitialPassword = (user) ->
-      username = (user[0]['sAMAccountName'])
-      $http.post('/api/lm/users/password', {user: username, action: 'get'}).then (resp) ->
+      $http.post('/api/lm/users/password', {user: ( x['sAMAccountName'] for x in user ), action: 'get'}).then (resp) ->
         messagebox.show(title: gettext('Initial password'), text: resp.data, positive: 'OK')
 
 
     $scope.setInitialPassword = (user) ->
-      console.log (user)
-      username = (user[0]['sAMAccountName'])
-      $http.post('/api/lm/users/password', {user: username, action: 'set-initial'}).then (resp) ->
+      $http.post('/api/lm/users/password', {user: ( x['sAMAccountName'] for x in user ), action: 'set-initial'}).then (resp) ->
         notify.success gettext('Initial password set')
 
     $scope.setRandomPassword = (user) ->
-      console.log (user)
-      username = (user[0]['sAMAccountName'])
-      $http.post('/api/lm/users/password', {user: username, action: 'set-random'}).then (resp) ->
+      $http.post('/api/lm/users/password', {user: ( x['sAMAccountName'] for x in user ), action: 'set-random'}).then (resp) ->
         notify.success gettext('Random password set')
 
     $scope.setCustomPassword = (user) ->
@@ -34,7 +29,7 @@ angular.module('lm.users').controller 'LMUsersSchooladminsController', ($scope, 
         controller: 'LMNUsersCustomPasswordController'
         size: 'mg'
         resolve:
-          user: () -> user
+          users: () -> user
       )
 
 

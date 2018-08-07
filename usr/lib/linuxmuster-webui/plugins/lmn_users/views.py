@@ -11,8 +11,6 @@ from aj.plugins.lm_common.api import lm_backup_file
 from aj.plugins.lm_common.api import lmn_getSophomorixValue
 from aj.plugins.lm_common.api import lmn_genRandomPW
 
-
-
 @component(HttpPlugin)
 class Handler(HttpPlugin):
     def __init__(self, context):
@@ -285,7 +283,8 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_users_password(self, http_context):
         action = http_context.json_body()['action']
-        user = http_context.json_body()['user']
+        users = http_context.json_body()['users']
+        user = ','.join([x.strip() for x in users])
         # Read Password
         if action == 'get':
             sophomorixCommand = ['sophomorix-user', '--info', '-jj', '-u', user]
@@ -294,6 +293,7 @@ class Handler(HttpPlugin):
             sophomorixCommand = ['sophomorix-passwd', '--set-firstpassword', '-jj', '-u', user]
             return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
         if action == 'set-random':
+            # TODO: Random for every user. Now every user in batch mode gets the same password
             password = lmn_genRandomPW()
             sophomorixCommand = ['sophomorix-passwd', '-u', user, '--pass', password, '-jj']
             return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')

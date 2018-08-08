@@ -3,8 +3,16 @@
 <progress-spinner ng:show="globaladmins == null"></progress-spinner>
 
 <div ng:show="globaladmins != null">
-    <input ng:model="filter" type="search" autofocus class="form-control" placeholder="Filter" typeahead-min-length="1" />
 
+    <div ng:show="globaladmins[0] == 'none'">
+    <br>
+    <div class="alert alert-info">
+            <i class="fa fa-info-circle"></i> <span translate="">There are no School-Administrator to manage yet. You can add a School-Administrator using the buttons below</span>.
+    </div>
+    </div>
+
+<div ng:show="globaladmins[0] != 'none'">
+    <input ng:model="filter" type="search" autofocus class="form-control" placeholder="Filter" typeahead-min-length="1" />
 
     <table class="table" style="width:100%">
         <tr><th> </th>
@@ -56,6 +64,10 @@
 
     <br/>
 
+</div>
+    <button ng:click="addGlobalAdmin()" ng:show="globaladmins != null" class="btn btn-default" translate>
+        <i class="fa fa-user-plus"></i> <span translate>  Add global administrator</span>
+    </button>
     <button ng:click="selectAll()" class="btn btn-default">
         <i class="fa fa-asterisk"></i> <span translate>Select all</span>
     </button>
@@ -69,4 +81,3 @@
     <button ng:click="batchSetCustomPassword()" ng:show="haveSelection()" class="btn btn-default" translate>
         Set custom password for selected
     </button>
-</div>

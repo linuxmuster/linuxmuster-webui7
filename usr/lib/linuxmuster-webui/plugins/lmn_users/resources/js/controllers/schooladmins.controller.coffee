@@ -8,6 +8,7 @@ angular.module('lm.users').controller 'LMUsersSchooladminsController', ($scope, 
     pageTitle.set(gettext('Schooladmins'))
 
     $http.get("/api/lm/sophomorixUsers/schooladmins").then (resp) ->
+        console.log('schooladmins')
         $scope.schooladmins = resp.data
 
     $scope.showInitialPassword = (user) ->

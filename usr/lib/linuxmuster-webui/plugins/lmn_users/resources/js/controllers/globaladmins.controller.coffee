@@ -1,14 +1,15 @@
 angular.module('lm.users').config ($routeProvider) ->
     $routeProvider.when '/view/lm/users/globaladmins',
-        controller: 'LMUsersSchooladminsController'
+        controller: 'LMUsersGloballadminsController'
         templateUrl: '/lm_users:resources/partial/globaladmins.html'
 
 
-angular.module('lm.users').controller 'LMUsersSchooladminsController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) ->
-    pageTitle.set(gettext('Schooladmins'))
+angular.module('lm.users').controller 'LMUsersGloballadminsController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) ->
+    pageTitle.set(gettext('Globalladmins'))
 
     $http.get("/api/lm/sophomorixUsers/globaladmins").then (resp) ->
         $scope.globaladmins = resp.data
+        console.log ('globaladmins')
 
     $scope.showInitialPassword = (user) ->
       $http.post('/api/lm/users/password', {user: ( x['sAMAccountName'] for x in user ), action: 'get'}).then (resp) ->

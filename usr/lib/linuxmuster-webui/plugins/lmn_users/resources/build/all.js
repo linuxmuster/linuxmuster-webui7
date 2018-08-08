@@ -416,6 +416,7 @@
   angular.module('lm.users').controller('LMUsersSchooladminsController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) {
     pageTitle.set(gettext('Schooladmins'));
     $http.get("/api/lm/sophomorixUsers/schooladmins").then(function(resp) {
+      console.log('schooladmins');
       return $scope.schooladmins = resp.data;
     });
     $scope.showInitialPassword = function(user) {
@@ -561,15 +562,16 @@
 (function() {
   angular.module('lm.users').config(function($routeProvider) {
     return $routeProvider.when('/view/lm/users/globaladmins', {
-      controller: 'LMUsersSchooladminsController',
+      controller: 'LMUsersGloballadminsController',
       templateUrl: '/lm_users:resources/partial/globaladmins.html'
     });
   });
 
-  angular.module('lm.users').controller('LMUsersSchooladminsController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) {
-    pageTitle.set(gettext('Schooladmins'));
+  angular.module('lm.users').controller('LMUsersGloballadminsController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) {
+    pageTitle.set(gettext('Globalladmins'));
     $http.get("/api/lm/sophomorixUsers/globaladmins").then(function(resp) {
-      return $scope.globaladmins = resp.data;
+      $scope.globaladmins = resp.data;
+      return console.log('globaladmins');
     });
     $scope.showInitialPassword = function(user) {
       var x;

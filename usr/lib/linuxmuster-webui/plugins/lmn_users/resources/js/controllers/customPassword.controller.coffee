@@ -5,7 +5,9 @@ isStrongPwd1 = (password) ->
 
 
 angular.module('lm.users').controller 'LMNUsersCustomPasswordController', ($scope, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, users) ->
-
+    console.log (users)
+    #$scope.username = users: (x['sAMAccountName'] for x in users)
+    $scope.username = users
     $scope.save = (userpw) ->
         if not $scope.userpw
             notify.error gettext("You have to enter a password")

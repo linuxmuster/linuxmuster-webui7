@@ -3,25 +3,23 @@ angular.module('lm.users').config ($routeProvider) ->
         controller: 'LMUsersGloballadminsController'
         templateUrl: '/lm_users:resources/partial/globaladmins.html'
 
-
 angular.module('lm.users').controller 'LMUsersGloballadminsController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) ->
     pageTitle.set(gettext('Globalladmins'))
 
     $http.get("/api/lm/sophomorixUsers/globaladmins").then (resp) ->
         $scope.globaladmins = resp.data
-        console.log ('globaladmins')
 
     $scope.showInitialPassword = (user) ->
-      $http.post('/api/lm/users/password', {user: ( x['sAMAccountName'] for x in user ), action: 'get'}).then (resp) ->
+      $http.post('/api/lm/users/password', {users: ( x['sAMAccountName'] for x in user ), action: 'get'}).then (resp) ->
         messagebox.show(title: gettext('Initial password'), text: resp.data, positive: 'OK')
 
 
     $scope.setInitialPassword = (user) ->
-      $http.post('/api/lm/users/password', {user: ( x['sAMAccountName'] for x in user ), action: 'set-initial'}).then (resp) ->
+      $http.post('/api/lm/users/password', {users: ( x['sAMAccountName'] for x in user ), action: 'set-initial'}).then (resp) ->
         notify.success gettext('Initial password set')
 
     $scope.setRandomPassword = (user) ->
-      $http.post('/api/lm/users/password', {user: ( x['sAMAccountName'] for x in user ), action: 'set-random'}).then (resp) ->
+      $http.post('/api/lm/users/password', {users: ( x['sAMAccountName'] for x in user ), action: 'set-random'}).then (resp) ->
         notify.success gettext('Random password set')
 
     $scope.setCustomPassword = (user) ->
@@ -33,6 +31,14 @@ angular.module('lm.users').controller 'LMUsersGloballadminsController', ($scope,
           users: () -> user
       )
 
+    $scope.addGlobalAdmin = () ->
+      $uibModal.open(
+        templateUrl: '/lm_users:resources/partial/addAdmin.modal.html'
+        controller: 'LMNUsersAddAdminController'
+        size: 'mg'
+        resolve:
+          role: () -> angular.copy('global-admin')
+      )
 
     $scope.haveSelection = () ->
         if $scope.globaladmins

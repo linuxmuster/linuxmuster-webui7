@@ -318,6 +318,25 @@ class Handler(HttpPlugin):
             sophomorixCommand = ['sophomorix-passwd', '-u', user, '--pass', password, '-jj']
             return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
 
+    @url(r'/api/lm/users/add-school-admin')
+    @authorize('lm:users:schooladmins:create')
+    @endpoint(api=True)
+    def handle_api_users_schooladmins_create(self, http_context):
+        school = 'default-school'
+        with authorize('lm:users:schooladmins:create'):
+            user = http_context.json_body()['user']
+            sophomorixCommand = ['sophomorix-admin', '--create-school-admin', user, '--school', school, '--random-passwd-save', '-jj']
+            return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
+
+    @url(r'/api/lm/users/add-global-admin')
+    @authorize('lm:users:globaladmins:create')
+    @endpoint(api=True)
+    def handle_api_users_globaladmins_create(self, http_context):
+        with authorize('lm:users:globaladmins:create'):
+            user = http_context.json_body()['user']
+        sophomorixCommand = ['sophomorix-admin', '--create-global-admin', user, '--random-passwd-save', '-jj']
+        return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
+
     @url(r'/api/lm/users/print')
     @authorize('lm:users:passwords')
     @endpoint(api=True)

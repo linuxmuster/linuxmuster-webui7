@@ -148,4 +148,14 @@ class Permissions (PermissionProvider):
                 'name': _('Read/write passwords'),
                 'default': False,
             },
+            {
+                'id': 'lm:users:schooladmins:create',
+                'name': _('Add school admins'),
+                'default': False,
+            },
+            {
+                'id': 'lm:users:globaladmins:create',
+                'name': _('Add global admins'),
+                'default': False,
+            },
         ]

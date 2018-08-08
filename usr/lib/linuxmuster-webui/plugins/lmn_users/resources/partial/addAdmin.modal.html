@@ -1,0 +1,14 @@
+    <div class="modal-header">
+        <h3 translate>Add Administrator</h3>
+    </div>
+    <div  style="height: 200px;" class="modal-body scrollable">
+       <div class="form-group">
+          <label> New {{role}}: </label>
+          <input ng:model="username"  class="form-control" placeholder="username" />
+       </div>
+    </div>
+    <div class="modal-footer">
+       <a class="btn btn-default btn-flat" ng:click="close()" translate>Cancel</a>
+       <a class="btn btn-default btn-flat" ng:click="save(username)" translate>Accept</a>
+    </div>
+

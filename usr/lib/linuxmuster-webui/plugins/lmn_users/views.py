@@ -11,6 +11,7 @@ from aj.plugins.lm_common.api import lm_backup_file
 from aj.plugins.lm_common.api import lmn_getSophomorixValue
 from aj.plugins.lm_common.api import lmn_genRandomPW
 
+
 @component(HttpPlugin)
 class Handler(HttpPlugin):
     def __init__(self, context):
@@ -109,10 +110,14 @@ class Handler(HttpPlugin):
             teachersList = []
             with authorize('lm:users:teachers:read'):
                 sophomorixCommand = ['sophomorix-query', '--teacher', '--schoolbase', schoolname, '--user-full', '-jj']
-                teachers = lmn_getSophomorixValue(sophomorixCommand, 'USER')
-                for teacher in teachers:
-                    teachersList.append(teachers[teacher])
-                return teachersList
+                teachersCheck = lmn_getSophomorixValue(sophomorixCommand, 'LISTS/USER')
+                if len(teachersCheck) != 0:
+                    teachers = lmn_getSophomorixValue(sophomorixCommand, 'USER')
+                    for teacher in teachers:
+                        teachersList.append(teachers[teacher])
+                    return teachersList
+                else:
+                    return ["none"]
 
         if http_context.method == 'POST':
             with authorize('lm:users:teachers:write'):
@@ -126,10 +131,15 @@ class Handler(HttpPlugin):
             studentsList = []
             with authorize('lm:users:students:read'):
                 sophomorixCommand = ['sophomorix-query', '--student', '--schoolbase', schoolname, '--user-full', '-jj']
-                students = lmn_getSophomorixValue(sophomorixCommand, 'USER')
-                for student in students:
-                    studentsList.append(students[student])
-                return studentsList
+                studentsCheck = lmn_getSophomorixValue(sophomorixCommand, 'LISTS/USER')
+                if len(studentsCheck) != 0:
+                    students = lmn_getSophomorixValue(sophomorixCommand, 'USER')
+                    for student in students:
+                        studentsList.append(students[student])
+                    return studentsList
+                else:
+                    return ["none"]
+
         if http_context.method == 'POST':
             with authorize('lm:users:students:write'):
                 return 0
@@ -138,14 +148,17 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_sophomorix_schooladmins(self, http_context):
         if http_context.method == 'GET':
-            schoolname = 'default-school'
             schooladminsList = []
             with authorize('lm:users:schooladmins:read'):
                 sophomorixCommand = ['sophomorix-query', '--schooladministrator', '--user-full', '-jj']
-                schooladmins = lmn_getSophomorixValue(sophomorixCommand, 'USER', True)
-                for schooladmin in schooladmins:
-                    schooladminsList.append(schooladmins[schooladmin])
-                return schooladminsList
+                schooladminsCheck = lmn_getSophomorixValue(sophomorixCommand, 'LISTS/USER')
+                if len(schooladminsCheck) != 0:
+                    schooladmins = lmn_getSophomorixValue(sophomorixCommand, 'USER')
+                    for schooladmin in schooladmins:
+                        schooladminsList.append(schooladmins[schooladmin])
+                    return schooladminsList
+                else:
+                    return ["none"]
         if http_context.method == 'POST':
             with authorize('lm:users:schooladmins:write'):
                 return 0
@@ -154,14 +167,17 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_sophomorix_globaladmins(self, http_context):
         if http_context.method == 'GET':
-            schoolname = 'default-school'
             globaladminsList = []
             with authorize('lm:users:globaladmins:read'):
                 sophomorixCommand = ['sophomorix-query', '--globaladministrator', '--user-full', '-jj']
-                globaladmins = lmn_getSophomorixValue(sophomorixCommand, 'USER')
-                for globaladmin in globaladmins:
-                    globaladminsList.append(globaladmins[globaladmin])
-                return globaladminsList
+                globaladminsCheck = lmn_getSophomorixValue(sophomorixCommand, 'LISTS/USER')
+                if len(globaladminsCheck) != 0:
+                    globaladmins = lmn_getSophomorixValue(sophomorixCommand, 'USER')
+                    for globaladmin in globaladmins:
+                        globaladminsList.append(globaladmins[globaladmin])
+                    return globaladminsList
+                else:
+                    return ["none"]
         if http_context.method == 'POST':
             with authorize('lm:users:globaladmins:write'):
                 return 0

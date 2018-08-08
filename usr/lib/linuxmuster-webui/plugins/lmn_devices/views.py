@@ -35,6 +35,7 @@ class Handler(HttpPlugin):
             'lmnReserved13',
             'lmnReserved14',
             'sophomorixComment',
+            'options',
         ]
         if http_context.method == 'GET':
             return list(
@@ -44,6 +45,7 @@ class Handler(HttpPlugin):
             data = http_context.json_body()
             for item in data:
                 item.pop('_isNew', None)
+                item.pop('null', None)
             lm_backup_file(path)
             with open(path, 'w') as f:
                 csv.DictWriter(f, delimiter=';', fieldnames=fieldnames).writerows(data)

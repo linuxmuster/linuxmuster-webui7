@@ -6,6 +6,30 @@ angular.module('lm.users').config ($routeProvider) ->
 angular.module('lm.users').controller 'LMUsersStudentsController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) ->
     pageTitle.set(gettext('Students'))
 
+    $scope.sorts = [
+       {
+          name: gettext('Class')
+          fx: (x) -> x.sophomorixAdminClass
+       }
+       {
+          name: gettext('First name')
+          fx: (x) -> x.givenName
+       }
+       {
+          name: gettext('Last name')
+          fx: (x) -> x.sn
+       }
+       {
+          name: gettext('Birthday')
+          fx: (x) -> x.sophomorixBirthdate
+       }
+    ]
+    $scope.sort = $scope.sorts[0]
+    $scope.paging =
+       page: 1
+       pageSize: 50
+
+
     $http.get("/api/lm/sophomorixUsers/students").then (resp) ->
         $scope.students = resp.data
 

@@ -3,12 +3,22 @@ angular.module('lm.users').config ($routeProvider) ->
         controller: 'LMUsersSchooladminsController'
         templateUrl: '/lm_users:resources/partial/schooladmins.html'
 
-
 angular.module('lm.users').controller 'LMUsersSchooladminsController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) ->
     pageTitle.set(gettext('Schooladmins'))
 
+    $scope.sorts = [
+     {
+       name: gettext('Login')
+       fx: (x) -> x.sAMAccountName
+     }
+    ]
+    $scope.sort = $scope.sorts[0]
+    $scope.paging =
+     page: 1
+     pageSize: 50
+
+
     $http.get("/api/lm/sophomorixUsers/schooladmins").then (resp) ->
-        console.log('schooladmins')
         $scope.schooladmins = resp.data
 
     $scope.showInitialPassword = (user) ->
@@ -32,6 +42,7 @@ angular.module('lm.users').controller 'LMUsersSchooladminsController', ($scope, 
           resolve:
              users: () -> user
        )
+
     $scope.addSchoolAdmin = () ->
             $uibModal.open(
                 templateUrl: '/lm_users:resources/partial/addAdmin.modal.html'

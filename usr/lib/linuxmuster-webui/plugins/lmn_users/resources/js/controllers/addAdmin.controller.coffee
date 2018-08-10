@@ -1,6 +1,7 @@
 angular.module('lm.users').controller 'LMNUsersAddAdminController', ($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, role) ->
 
     $scope.role = role
+    console.log ('test')
     $scope.save = (username) ->
         if not $scope.username
             notify.error gettext("You have to enter a username")

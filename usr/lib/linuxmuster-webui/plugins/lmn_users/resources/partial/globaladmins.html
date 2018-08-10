@@ -48,69 +48,68 @@
         </div>
     </div>
 
+    <table class="table" style="width:100%">
+        <tr><th> </th>
+            <th width="120"> Loginname / Class </th>
+            <th> Name </th></tr>
+        <tr ng:repeat="globaladmin in globaladmins|filter:filter|orderBy:['-_isNew', sort.fx]|page:paging.page:paging.pageSize" ng:show="globaladmin.class[0] != '#'">
+            <td width="30" style="text-align:center;">
+                <span checkbox ng:model="globaladmin.selected"></span>
+            </td>
+            <td width="1" style="text-align:left;">
+                <i>{{globaladmin.sAMAccountName}}</i> <br> {{globaladmin.sophomorixAdminClass}}
+            </td>
+            <td>
+                <b>{{globaladmin.givenName}}</b> <br> {{globaladmin.sn}}
+            </td>
 
-        <table class="table" style="width:100%">
-            <tr><th> </th>
-                <th width="120"> Loginname / Class </th>
-                <th> Name </th></tr>
-            <tr ng:repeat="globaladmin in globaladmins|filter:filter|orderBy:['-_isNew', sort.fx]|page:paging.page:paging.pageSize" ng:show="globaladmin.class[0] != '#'">
-                <td width="30" style="text-align:center;">
-                    <span checkbox ng:model="globaladmin.selected"></span>
-                </td>
-                <td width="1" style="text-align:left;">
-                    <i>{{globaladmin.sAMAccountName}}</i> <br> {{globaladmin.sophomorixAdminClass}}
-                </td>
-                <td>
-                    <b>{{globaladmin.givenName}}</b> <br> {{globaladmin.sn}}
-                </td>
-
-                <td width="1">
-                    <button class="btn btn-default" ng:click="showInitialPassword([globaladmin])">
-                        <i class="fa fa-key"></i> <span translate>Show password</span>
+            <td width="1">
+                <button class="btn btn-default" ng:click="showInitialPassword([globaladmin])">
+                    <i class="fa fa-key"></i> <span translate>Show password</span>
+                </button>
+            </td>
+            <td width="1">
+                <span uib-dropdown>
+                    <button class="btn btn-default" uib-dropdown-toggle>
+                        <i class="fa fa-arrow-right"></i> <span translate>Change password</span>
+                        <span class="caret"></span>
                     </button>
-                </td>
-                <td width="1">
-                    <span uib-dropdown>
-                        <button class="btn btn-default" uib-dropdown-toggle>
-                            <i class="fa fa-arrow-right"></i> <span translate>Change password</span>
-                            <span class="caret"></span>
-                        </button>
-                        <ul uib-dropdown-menu class="dropdown-menu-right">
-                            <li>
-                                <a ng:click="setInitialPassword([globaladmin])" translate>
-                                    Initial password
-                                </a>
-                            </li>
-                            <li>
-                                <a ng:click="setRandomPassword([globaladmin])" translate>
-                                    Random password
-                                </a>
-                            </li>
-                            <li>
-                                <a ng:click="setCustomPassword([globaladmin])" translate>
-                                    Custom password
-                                </a>
-                            </li>
-                        </ul>
-                    </span>
-                </td>
-            </tr>
-        </table>
+                    <ul uib-dropdown-menu class="dropdown-menu-right">
+                        <li>
+                            <a ng:click="setInitialPassword([globaladmin])" translate>
+                                Initial password
+                            </a>
+                        </li>
+                        <li>
+                            <a ng:click="setRandomPassword([globaladmin])" translate>
+                                Random password
+                            </a>
+                        </li>
+                        <li>
+                            <a ng:click="setCustomPassword([globaladmin])" translate>
+                                Custom password
+                            </a>
+                        </li>
+                    </ul>
+                </span>
+            </td>
+        </tr>
+    </table>
 
-        <br/>
+    <br/>
 
-    </div>
-
-    <ul uib-pagination ng:show="globaladmins.length > paging.pageSize"  ng-model="paging.page" total-items="globaladmins.length" items-per-page="paging.pageSize" max-size="10" rotate="true" boundary-links="true"></ul>
-
-    <div class="floating-toolbar-padder"></div>
-    <floating-toolbar>
-        <button ng:click="addGlobalAdmin()" ng:show="globaladmins != null" class="btn btn-default btn-flat pull-left" translate><i class="fa fa-user-plus"></i> <span translate>  Add global administrator</span></button>
-        <button ng:click="selectAll()" class="btn btn-default btn-flat pull-left"> <i class="fa fa-asterisk"></i> <span translate>Select all</span></button>
-        <button ng:click="batchSetInitialPassword()" ng:show="haveSelection()" class="btn btn-default btn-flat pull-right" translate>Set initial password for selected</button>
-        <button ng:click="batchSetRandomPassword()" ng:show="haveSelection()" class="btn btn-default btn-flat pull-right" translate>Set random password for selected</button>
-        <button ng:click="batchSetCustomPassword()" ng:show="haveSelection()" class="btn btn-default btn-flat pull-right" translate>Set custom password for selected</button>
-        <br>
 </div>
+
+<ul uib-pagination ng:show="globaladmins.length > paging.pageSize"  ng-model="paging.page" total-items="globaladmins.length" items-per-page="paging.pageSize" max-size="10" rotate="true" boundary-links="true"></ul>
+
+<div class="floating-toolbar-padder"></div>
+<floating-toolbar>
+    <button ng:click="addGlobalAdmin()" ng:show="globaladmins != null" class="btn btn-default btn-flat pull-left" translate><i class="fa fa-user-plus"></i> <span translate>  Add global administrator</span></button>
+    <button ng:click="selectAll()" class="btn btn-default btn-flat pull-left"> <i class="fa fa-asterisk"></i> <span translate>Select all</span></button>
+    <button ng:click="batchSetInitialPassword()" ng:show="haveSelection()" class="btn btn-default btn-flat pull-right" translate>Set initial password for selected</button>
+    <button ng:click="batchSetRandomPassword()" ng:show="haveSelection()" class="btn btn-default btn-flat pull-right" translate>Set random password for selected</button>
+    <button ng:click="batchSetCustomPassword()" ng:show="haveSelection()" class="btn btn-default btn-flat pull-right" translate>Set custom password for selected</button>
+    <br>
+    </div>
 
 

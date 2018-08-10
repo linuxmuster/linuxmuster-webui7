@@ -1,5 +1,4 @@
 <br/>
-
 <progress-spinner ng:show="schooladmins == null"></progress-spinner>
 
 <div ng:show="schooladmins != null">
@@ -13,7 +12,6 @@
 
     <div ng:show="schooladmins[0] != 'none'">
         <div class="input-group">
-
             <input ng:model="filter" type="search" autofocus class="form-control" placeholder="Filter" typeahead-min-length="1" />
             <div uib-dropdown class="input-group-btn">
                 <button class="btn btn-default" uib-dropdown-toggle>
@@ -50,62 +48,61 @@
         </div>
     </div>
 
-</div>
-<table class="table" style="width:100%">
-    <tr><th> </th>
-        <th width="120"> Loginname / Class </th>
-        <th> Name </th></tr>
-    <tr ng:repeat="schooladmin in schooladmins|filter:filter|orderBy:['-_isNew', sort.fx]|page:paging.page:paging.pageSize" ng:show="schooladmin.class[0] != '#'">
-        <td width="30" style="text-align:center;">
-            <span checkbox ng:model="schooladmin.selected"></span>
-        </td>
-        <td width="1" style="text-align:left;">
-            <i>{{schooladmin.sAMAccountName}}</i> <br> {{schooladmin.sophomorixAdminClass}}
-        </td>
-        <td>
-            <b>{{schooladmin.givenName}}</b> <br> {{schooladmin.sn}}
-        </td>
+    <table class="table" style="width:100%">
+        <tr><th> </th>
+            <th width="120"> Loginname / Class </th>
+            <th> Name </th></tr>
+        <tr ng:repeat="schooladmin in schooladmins|filter:filter|orderBy:['-_isNew', sort.fx]|page:paging.page:paging.pageSize" ng:show="schooladmin.class[0] != '#'">
+            <td width="30" style="text-align:center;">
+                <span checkbox ng:model="schooladmin.selected"></span>
+            </td>
+            <td width="1" style="text-align:left;">
+                <i>{{schooladmin.sAMAccountName}}</i> <br> {{schooladmin.sophomorixAdminClass}}
+            </td>
+            <td>
+                <b>{{schooladmin.givenName}}</b> <br> {{schooladmin.sn}}
+            </td>
 
-        <td width="1">
-            <button class="btn btn-default" ng:click="showInitialPassword([schooladmin])">
-                <i class="fa fa-key"></i> <span translate>Show password</span>
-            </button>
-        </td>
-        <td width="1">
-            <span uib-dropdown>
-                <button class="btn btn-default" uib-dropdown-toggle>
-                    <i class="fa fa-arrow-right"></i> <span translate>Change password</span>
-                    <span class="caret"></span>
+            <td width="1">
+                <button class="btn btn-default" ng:click="showInitialPassword([schooladmin])">
+                    <i class="fa fa-key"></i> <span translate>Show password</span>
                 </button>
-                <ul uib-dropdown-menu class="dropdown-menu-right">
-                    <li>
-                        <a ng:click="setInitialPassword([schooladmin])" translate>
-                            Initial password
-                        </a>
-                    </li>
-                    <li>
-                        <a ng:click="setRandomPassword([schooladmin])" translate>
-                            Random password
-                        </a>
-                    </li>
-                    <li>
-                        <a ng:click="setCustomPassword([schooladmin])" translate>
-                            Custom password
-                        </a>
-                    </li>
-                </ul>
-            </span>
-        </td>
-    </tr>
-</table>
+            </td>
+            <td width="1">
+                <span uib-dropdown>
+                    <button class="btn btn-default" uib-dropdown-toggle>
+                        <i class="fa fa-arrow-right"></i> <span translate>Change password</span>
+                        <span class="caret"></span>
+                    </button>
+                    <ul uib-dropdown-menu class="dropdown-menu-right">
+                        <li>
+                            <a ng:click="setInitialPassword([schooladmin])" translate>
+                                Initial password
+                            </a>
+                        </li>
+                        <li>
+                            <a ng:click="setRandomPassword([schooladmin])" translate>
+                                Random password
+                            </a>
+                        </li>
+                        <li>
+                            <a ng:click="setCustomPassword([schooladmin])" translate>
+                                Custom password
+                            </a>
+                        </li>
+                    </ul>
+                </span>
+            </td>
+        </tr>
+    </table>
 
-<br/>
+    <br/>
 </div>
 <ul uib-pagination ng:show="schoolladmins.length > paging.pageSize"  ng-model="paging.page" total-items="schoolladmins.length" items-per-page="paging.pageSize" max-size="10" rotate="true" boundary-links="true"></ul>
 
 <div class="floating-toolbar-padder"></div>
 <floating-toolbar>
-    <button ng:click="addSchoolAdmin()" ng:show="globaladmins != null" class="btn btn-default btn-flat pull-left" translate><i class="fa fa-user-plus"></i> <span translate>  Add global administrator</span></button>
+    <button ng:click="addSchoolAdmin()" ng:show="schooladmins != null" class="btn btn-default btn-flat pull-left" translate><i class="fa fa-user-plus"></i> <span translate>  Add global administrator</span></button>
     <button ng:click="selectAll()" class="btn btn-default btn-flat pull-left"> <i class="fa fa-asterisk"></i> <span translate>Select all</span></button>
     <button ng:click="batchSetInitialPassword()" ng:show="haveSelection()" class="btn btn-default btn-flat pull-right" translate>Set initial password for selected</button>
     <button ng:click="batchSetRandomPassword()" ng:show="haveSelection()" class="btn btn-default btn-flat pull-right" translate>Set random password for selected</button>

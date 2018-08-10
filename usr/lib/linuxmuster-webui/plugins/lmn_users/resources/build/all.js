@@ -109,6 +109,37 @@
 
   angular.module('lm.users').controller('LMUsersTeachersController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) {
     pageTitle.set(gettext('Teachers'));
+    $scope.sorts = [
+      {
+        name: gettext('First name'),
+        fx: function(x) {
+          return x.givenName;
+        }
+      },
+      {
+        name: gettext('Last name'),
+        fx: function(x) {
+          return x.sn;
+        }
+      },
+      {
+        name: gettext('Login'),
+        fx: function(x) {
+          return x.sAMAccountName;
+        }
+      },
+      {
+        name: gettext('Birthday'),
+        fx: function(x) {
+          return x.sophomorixBirthdate;
+        }
+      }
+    ];
+    $scope.sort = $scope.sorts[0];
+    $scope.paging = {
+      page: 1,
+      pageSize: 50
+    };
     $http.get("/api/lm/sophomorixUsers/teachers").then(function(resp) {
       return $scope.teachers = resp.data;
     });
@@ -262,6 +293,37 @@
 
   angular.module('lm.users').controller('LMUsersStudentsController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) {
     pageTitle.set(gettext('Students'));
+    $scope.sorts = [
+      {
+        name: gettext('Class'),
+        fx: function(x) {
+          return x.sophomorixAdminClass;
+        }
+      },
+      {
+        name: gettext('First name'),
+        fx: function(x) {
+          return x.givenName;
+        }
+      },
+      {
+        name: gettext('Last name'),
+        fx: function(x) {
+          return x.sn;
+        }
+      },
+      {
+        name: gettext('Birthday'),
+        fx: function(x) {
+          return x.sophomorixBirthdate;
+        }
+      }
+    ];
+    $scope.sort = $scope.sorts[0];
+    $scope.paging = {
+      page: 1,
+      pageSize: 50
+    };
     $http.get("/api/lm/sophomorixUsers/students").then(function(resp) {
       return $scope.students = resp.data;
     });
@@ -415,8 +477,20 @@
 
   angular.module('lm.users').controller('LMUsersSchooladminsController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) {
     pageTitle.set(gettext('Schooladmins'));
+    $scope.sorts = [
+      {
+        name: gettext('Login'),
+        fx: function(x) {
+          return x.sAMAccountName;
+        }
+      }
+    ];
+    $scope.sort = $scope.sorts[0];
+    $scope.paging = {
+      page: 1,
+      pageSize: 50
+    };
     $http.get("/api/lm/sophomorixUsers/schooladmins").then(function(resp) {
-      console.log('schooladmins');
       return $scope.schooladmins = resp.data;
     });
     $scope.showInitialPassword = function(user) {
@@ -581,6 +655,19 @@
 
   angular.module('lm.users').controller('LMUsersGloballadminsController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) {
     pageTitle.set(gettext('Globalladmins'));
+    $scope.sorts = [
+      {
+        name: gettext('Login'),
+        fx: function(x) {
+          return x.sAMAccountName;
+        }
+      }
+    ];
+    $scope.sort = $scope.sorts[0];
+    $scope.paging = {
+      page: 1,
+      pageSize: 50
+    };
     $http.get("/api/lm/sophomorixUsers/globaladmins").then(function(resp) {
       return $scope.globaladmins = resp.data;
     });
@@ -1047,6 +1134,37 @@
 
   angular.module('lm.users').controller('LMUsersTeachersController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) {
     pageTitle.set(gettext('Teachers'));
+    $scope.sorts = [
+      {
+        name: gettext('First name'),
+        fx: function(x) {
+          return x.givenName;
+        }
+      },
+      {
+        name: gettext('Last name'),
+        fx: function(x) {
+          return x.sn;
+        }
+      },
+      {
+        name: gettext('Login'),
+        fx: function(x) {
+          return x.sAMAccountName;
+        }
+      },
+      {
+        name: gettext('Birthday'),
+        fx: function(x) {
+          return x.sophomorixBirthdate;
+        }
+      }
+    ];
+    $scope.sort = $scope.sorts[0];
+    $scope.paging = {
+      page: 1,
+      pageSize: 50
+    };
     $http.get("/api/lm/sophomorixUsers/teachers").then(function(resp) {
       return $scope.teachers = resp.data;
     });
@@ -1372,6 +1490,7 @@
 (function() {
   angular.module('lm.users').controller('LMNUsersAddAdminController', function($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, role) {
     $scope.role = role;
+    console.log('test');
     $scope.save = function(username) {
       if (!$scope.username) {
         notify.error(gettext("You have to enter a username"));

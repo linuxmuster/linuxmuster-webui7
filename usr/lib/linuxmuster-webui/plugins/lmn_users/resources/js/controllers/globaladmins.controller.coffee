@@ -6,6 +6,18 @@ angular.module('lm.users').config ($routeProvider) ->
 angular.module('lm.users').controller 'LMUsersGloballadminsController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) ->
     pageTitle.set(gettext('Globalladmins'))
 
+    $scope.sorts = [
+     {
+       name: gettext('Login')
+       fx: (x) -> x.sAMAccountName
+     }
+    ]
+    $scope.sort = $scope.sorts[0]
+    $scope.paging =
+     page: 1
+     pageSize: 50
+
+
     $http.get("/api/lm/sophomorixUsers/globaladmins").then (resp) ->
         $scope.globaladmins = resp.data
 

@@ -62,6 +62,7 @@
     </button>
 
     <br/>
+    <ul uib-pagination ng:show="students.length > paging.pageSize"  ng-model="paging.page" total-items="students.length" items-per-page="paging.pageSize" max-size="10" rotate="true" boundary-links="true"></ul>
 
     <div class="floating-toolbar-padder"></div>
 

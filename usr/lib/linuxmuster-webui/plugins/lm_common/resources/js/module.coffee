@@ -9,7 +9,7 @@ angular.module('lm.common').run (customization) ->
     # customization.plugins.core.bodyClass = 'customized'
     customization.plugins.core.title = ' '
     customization.plugins.core.faviconURL = '/resources/lm_common/resources/img/favicon.png'
-    customization.plugins.core.logoURL = '/resources/lm_common/resources/img/logo-small.png'
+    customization.plugins.core.logoURL = '/resources/lm_common/resources/img/logo-text-white.png'
     customization.plugins.core.bigLogoURL = '/resources/lm_common/resources/img/logo-full.png'
     customization.plugins.core.hidePersonaLogin = true
 

@@ -560,6 +560,39 @@
         }
       });
     };
+    $scope.deleteSchoolAdmin = function(user) {
+      var x;
+      return messagebox.show({
+        title: gettext('Delete User'),
+        text: gettext("Delete school-administrator " + ((function() {
+          var i, len, results;
+          results = [];
+          for (i = 0, len = user.length; i < len; i++) {
+            x = user[i];
+            results.push(x['sAMAccountName']);
+          }
+          return results;
+        })()) + '?'),
+        positive: 'Delete',
+        negative: 'Cancel'
+      }).then(function() {
+        return $http.post('/api/lm/users/change-school-admin', {
+          users: (function() {
+            var i, len, results;
+            results = [];
+            for (i = 0, len = user.length; i < len; i++) {
+              x = user[i];
+              results.push(x['sAMAccountName']);
+            }
+            return results;
+          })(),
+          action: 'delete'
+        }).then(function(resp) {
+          $route.reload();
+          return notify.success(gettext('User deleted'));
+        });
+      });
+    };
     $scope.addSchoolAdmin = function() {
       return $uibModal.open({
         templateUrl: '/lm_users:resources/partial/addAdmin.modal.html',
@@ -736,6 +769,39 @@
             return user;
           }
         }
+      });
+    };
+    $scope.deleteGlobalAdmin = function(user) {
+      var x;
+      return messagebox.show({
+        title: gettext('Delete User'),
+        text: gettext("Delete global-administrator " + ((function() {
+          var i, len, results;
+          results = [];
+          for (i = 0, len = user.length; i < len; i++) {
+            x = user[i];
+            results.push(x['sAMAccountName']);
+          }
+          return results;
+        })()) + '?'),
+        positive: 'Delete',
+        negative: 'Cancel'
+      }).then(function() {
+        return $http.post('/api/lm/users/change-global-admin', {
+          users: (function() {
+            var i, len, results;
+            results = [];
+            for (i = 0, len = user.length; i < len; i++) {
+              x = user[i];
+              results.push(x['sAMAccountName']);
+            }
+            return results;
+          })(),
+          action: 'delete'
+        }).then(function(resp) {
+          $route.reload();
+          return notify.success(gettext('User deleted'));
+        });
       });
     };
     $scope.addGlobalAdmin = function() {
@@ -1490,14 +1556,14 @@
 (function() {
   angular.module('lm.users').controller('LMNUsersAddAdminController', function($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, role) {
     $scope.role = role;
-    console.log('test');
     $scope.save = function(username) {
       if (!$scope.username) {
         notify.error(gettext("You have to enter a username"));
       } else {
         notify.success(gettext('Adding administrator...'));
-        $http.post('/api/lm/users/add-' + role, {
-          user: username
+        $http.post('/api/lm/users/change-' + role, {
+          action: 'create',
+          users: username
         }).then(function(resp) {
           notify.success(gettext('Administrator added'));
           return $route.reload();

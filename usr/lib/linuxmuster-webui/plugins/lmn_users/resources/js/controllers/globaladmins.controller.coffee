@@ -43,6 +43,13 @@ angular.module('lm.users').controller 'LMUsersGloballadminsController', ($scope,
           users: () -> user
       )
 
+    $scope.deleteGlobalAdmin = (user) ->
+        messagebox.show(title: gettext('Delete User'), text: gettext("Delete global-administrator "+ ( x['sAMAccountName'] for x in user ) + '?'), positive: 'Delete', negative: 'Cancel').then () ->
+            $http.post('/api/lm/users/change-global-admin', {users: ( x['sAMAccountName'] for x in user ), action: 'delete'}).then (resp) ->
+                    $route.reload()
+                    notify.success gettext('User deleted')
+
+
     $scope.addGlobalAdmin = () ->
       $uibModal.open(
         templateUrl: '/lm_users:resources/partial/addAdmin.modal.html'

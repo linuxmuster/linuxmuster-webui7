@@ -2,7 +2,7 @@
 <div>
     <div class="input-group">
         <input type="text" style="width:70%" placeholder="Add Student" ng:model="_.addParticipant" typeahead-editable="false" typeahead-min-length="2" uib-typeahead="user as user.sophomorixAdminClass+' '+user.displayName+ ' '+user.sAMAccountName  for user in findUsers($viewValue) | limitTo:10" class="form-control" />
-        <input type="text" style="width:30%" placeholder="Add Class" ng:model="_.addSchoolClass" typeahead-editable="false" typeahead-min-length="1" uib-typeahead="schoolClass as schoolClass.sAMAccountName  for schoolClass in findSchoolClasses($viewValue) | limitTo:10" class="form-control" />
+        <input type="text" style="width:30%" placeholder="Add Class" ng:model="_.addSchoolClass" typeahead-editable="false" typeahead-min-length="1" uib-typeahead="schoolClass as schoolClass for schoolClass in findSchoolClasses($viewValue) | limitTo:10" class="form-control" />
 
         <oi-select
               oi-options="list.id as list.description for list in lists"

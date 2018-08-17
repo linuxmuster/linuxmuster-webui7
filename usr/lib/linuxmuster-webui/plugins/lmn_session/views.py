@@ -179,9 +179,10 @@ class Handler(HttpPlugin):
     @url(r'/api/lmn/session/user-search')
     @endpoint(api=True)
     def handle_api_ldap_user_search(self, http_context):
+        school = 'default-school'
         with authorize('lm:users:students:read'):
             try:
-                sophomorixCommand = ['sophomorix-query', '-jj', '--schoolbase', 'default-school', '--student', '--user-full', '--anyname', '*'+http_context.query['q']+'*']
+                sophomorixCommand = ['sophomorix-query', '-jj', '--schoolbase', school, '--student', '--user-full', '--anyname', '*'+http_context.query['q']+'*']
                 users = lmn_getSophomorixValue(sophomorixCommand, 'USER', True)
             except Exception:
                 return 0
@@ -193,10 +194,11 @@ class Handler(HttpPlugin):
     @url(r'/api/lmn/session/schoolClass-search')
     @endpoint(api=True)
     def handle_api_ldap_group_search(self, http_context):
+        school = 'default-school'
         with authorize('lm:users:students:read'):
             try:
-                sophomorixCommand = ['sophomorix-query', '-jj', '--schoolbase', 'default-school', '--sam', '*'+http_context.query['q']+'*']
-                schoolClasses = lmn_getSophomorixValue(sophomorixCommand, 'GROUP', True)
+                sophomorixCommand = ['sophomorix-query', '-jj', '--schoolbase', school, '--class', '--group-members', '--sam', '*'+http_context.query['q']+'*']
+                schoolClasses = lmn_getSophomorixValue(sophomorixCommand, 'MEMBERS', True)
             except Exception:
                 return 0
         schoolClassList = []

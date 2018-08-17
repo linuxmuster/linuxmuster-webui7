@@ -43,6 +43,13 @@ angular.module('lm.users').controller 'LMUsersSchooladminsController', ($scope, 
              users: () -> user
        )
 
+    $scope.deleteSchoolAdmin = (user) ->
+        messagebox.show(title: gettext('Delete User'), text: gettext("Delete school-administrator "+ ( x['sAMAccountName'] for x in user ) + '?'), positive: 'Delete', negative: 'Cancel').then () ->
+            $http.post('/api/lm/users/change-school-admin', {users: ( x['sAMAccountName'] for x in user ), action: 'delete'}).then (resp) ->
+                $route.reload()
+                notify.success gettext('User deleted')
+
+
     $scope.addSchoolAdmin = () ->
             $uibModal.open(
                 templateUrl: '/lm_users:resources/partial/addAdmin.modal.html'

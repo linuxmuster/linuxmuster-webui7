@@ -158,4 +158,14 @@ class Permissions (PermissionProvider):
                 'name': _('Add global admins'),
                 'default': False,
             },
+            {
+                'id': 'lm:users:schooladmins:delete',
+                'name': _('Delte school admins'),
+                'default': False,
+            },
+            {
+                'id': 'lm:users:globaladmins:delete',
+                'name': _('Delete global admins'),
+                'default': False,
+            },
         ]

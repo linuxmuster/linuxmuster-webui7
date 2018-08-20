@@ -83,9 +83,14 @@
                 <th></th>
             </tr>
             <tr style="display:{{visible.table}};"  ng:repeat="(id, participant) in participants">
-                <td class="ng-binding"><i> {{id}}</i> <br> {{participant.sophomorixAdminClass}} </td>
-                <td class="ng-binding"><b>  {{participant.givenName}} </b><br> {{participant.sn}} </td>
-                <!--     <td class="text-center" ><input type="text"  ng:model="participant.sophomorixExamMode" placeholder="sophomorixExammode"  class="form-control" readonly/></td>-->
+                <td class="ng-binding"> <a href="#"  ng-click="showDetails = ! showDetails"> <b> {{participant.givenName}}, {{participant.sn}} </b> </a>{{participant.sophomorixAdminClass}}, <br><i> {{id}}</i>
+                    <div ng-show="showDetails"><img src="https://openclipart.org/image/2400px/svg_to_png/211821/matt-icons_preferences-desktop-personal.png" style="height:75px;"</img></div> </td>
+                <td>
+                    <div class="button-group">
+                        <button type="button" class="btn btn-default" ng:click="notImplemented()" translate >Share</button><button type="button" class="btn btn-default" ng:click="notImplemented()" translate>Collect</button>
+                    </div>
+                    <div ng-show="showDetails"> <br> <button type="button" class="btn btn-default" ng:click="notImplemented()" translate >Available Files</button> </div> </td>
+                </td>
                 <td class="ng-binding"><span style="display:inline-block; width:100px; font-size:100%"  class="label label-danger" ng:show="participant.sophomorixRole == 'examuser'"><i class="fa fa-graduation-cap"></i> {{participant.sophomorixExamMode}}</span></td>
                 <td width="1" style="text-align:center;"> <span title="Exam by another supervisor" checkbox id="{{id}}.exammode" ng-click="changeClass(id+'.exammode')" ng:model="participant.exammode_boolean" ng:show="participant.sophomorixExamMode == identity.user || participant.sophomorixExamMode == '---'"></span>
                     <span uib-dropdown>
@@ -156,7 +161,6 @@
                 </ul>
             </div>
 
-            <button ng:click="share()" ng:show="currentSession.name != ''" class="btn btn-default btn-flat pull-left" translate><i class="fa fa-user-plus"></i> <span translate>  Add school administrator</span></button>
             <button ng:click="saveApply(identity.user,participants,currentSession.name)" ng:show="currentSession.name != ''" class="btn btn-default btn-flat pull-right" translate>Save & apply</button>
             <button ng:click="cancel(identity.user,currentSession.name)" ng:show="currentSession.name != ''" class="btn btn-default btn-flat pull-right" translate>Cancel</button>
         </floating-toolbar>

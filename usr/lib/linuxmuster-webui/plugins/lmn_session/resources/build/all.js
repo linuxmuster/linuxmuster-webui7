@@ -87,11 +87,11 @@
     $scope.fields = {
       sAMAccountName: {
         visible: true,
-        name: gettext('Loginname / Class')
+        name: gettext('Userdata')
       },
-      name: {
+      transfer: {
         visible: true,
-        name: gettext('Name')
+        name: gettext('Transfer')
       },
       examModeSupervisor: {
         visible: true,
@@ -458,27 +458,27 @@
         }
       });
     };
-    return $scope.userInfo = function(id) {
-      //$http.get("/api/lm/linbo/config/#{configName}").then (resp) ->
-      //    config = resp.data
+    $scope.notImplemented = function(user) {
+      return messagebox.show({
+        title: gettext('Not implemented'),
+        positive: 'OK'
+      });
+    };
+    return $scope.userInfo = function(user) {
       return $uibModal.open({
-        templateUrl: '/lmn_session:resources/partial/session.modal.html',
-        controller: 'LMSESSIONUserInfoModalController',
-        size: 'mg',
+        templateUrl: '/lm_users:resources/partial/userDetails.modal.html',
+        controller: 'LMNUserDetailsController',
+        size: 'lg',
         resolve: {
           id: function() {
-            return id;
+            return user;
           }
         }
       });
     };
   });
 
-  //.result.then (result) ->
-//   $http.post("/api/lm/linbo/config/#{configName}", result).then (resp) ->
-//      notify.success gettext('Saved')
-
-// TODO Find a solution for this
+  // TODO Find a solution for this
 //    sleep = (ms) ->
 //        start = new Date().getTime()
 //        continue while new Date().getTime() - start < ms

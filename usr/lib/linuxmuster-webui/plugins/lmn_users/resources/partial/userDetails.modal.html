@@ -1,0 +1,14 @@
+<div class="modal-header">
+    <h4 translate >User Details {{id}}</h4>
+</div>
+<progress-spinner ng:show="students == null"></progress-spinner>
+<div ng:show="students != null">
+    <h3>{{students[0]['givenName']}} {{students[0]['sn']}}</h3>
+
+<div translate> Group Membership:</div>
+<li ng:repeat="group in students[0]['memberOf']"><a ng:click="createConfig(example)">{{group}}</a></li>
+
+</div>
+<div class="modal-footer">
+    <a class="btn btn-default btn-flat" ng:click="close()" translate>Close</a>
+</div>

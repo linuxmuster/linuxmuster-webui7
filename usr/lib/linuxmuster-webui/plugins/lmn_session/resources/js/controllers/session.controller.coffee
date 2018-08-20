@@ -75,10 +75,10 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
     $scope.fields = {
        sAMAccountName:
           visible: true
-          name: gettext('Loginname / Class')
-       name:
+          name: gettext('Userdata')
+        transfer:
           visible: true
-          name: gettext('Name')
+          name: gettext('Transfer')
        examModeSupervisor:
           visible: true
           name: gettext('Exam-Supervisor')
@@ -339,19 +339,17 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                         user: () -> username
             )
 
-    $scope.userInfo = (id) ->
-                #$http.get("/api/lm/linbo/config/#{configName}").then (resp) ->
-                #    config = resp.data
+    $scope.notImplemented = (user) ->
+                messagebox.show(title: gettext('Not implemented'), positive: 'OK')
+
+    $scope.userInfo = (user) ->
                 $uibModal.open(
-                    templateUrl: '/lmn_session:resources/partial/session.modal.html'
-                    controller: 'LMSESSIONUserInfoModalController'
-                    size: 'mg'
+                    templateUrl: '/lm_users:resources/partial/userDetails.modal.html'
+                    controller: 'LMNUserDetailsController'
+                    size: 'lg'
                     resolve:
-                        id: () -> id
+                        id: () -> user
                 )
-                #.result.then (result) ->
-                #   $http.post("/api/lm/linbo/config/#{configName}", result).then (resp) ->
-                #      notify.success gettext('Saved')
 
 
 

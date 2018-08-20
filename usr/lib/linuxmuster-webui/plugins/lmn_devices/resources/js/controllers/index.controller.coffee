@@ -115,6 +115,25 @@ angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $
     $http.get('/api/lm/devices').then (resp) ->
         $scope.devices = resp.data
 
+    $http.get('/api/lm/leases').then (resp) ->
+        $scope.leases = resp.data
+        $log.debug($scope.leases)
+        
+    $scope.lease_fields = {
+        mac:
+            visible: true
+            name: 'Mac-Adresse'
+        ip:
+            visible: true
+            name: 'IP-Adresse'
+        registered:
+            visible: true
+            name: 'Registered in devices.csv'
+        active:
+            visible: true
+            name: 'Lease active'
+    }
+
     $scope.remove = (device) ->
         $scope.devices.remove(device)
 

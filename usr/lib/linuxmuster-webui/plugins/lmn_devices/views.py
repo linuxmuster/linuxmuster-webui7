@@ -9,6 +9,7 @@ from aj.plugins.lm_common.api import lm_backup_file
 from aj.auth import authorize
 
 
+
 @component(HttpPlugin)
 class Handler(HttpPlugin):
     def __init__(self, context):
@@ -58,3 +59,31 @@ class Handler(HttpPlugin):
             subprocess.check_call('linuxmuster-import-devices > /tmp/import_devices.log', shell=True)
         except Exception as e:
             raise EndpointError(None, message=str(e))
+
+    @url(r'/api/lm/leases')
+    @authorize('lm:leases')
+    @endpoint(api=True)
+    def handle_api_leasees(self, http_context):
+        from isc_dhcp_leases import Lease, IscDhcpLeases
+        import socket 
+
+        leases   = IscDhcpLeases('/var/lib/dhcp/dhcpd.leases')
+        dhcpList = leases.get()
+        active   = leases.get_current()
+        dhcpList.sort(key=lambda x: x.ip)
+        items = sorted(dhcpList, key=lambda item: socket.inet_aton(item.ip))
+        
+        result = []
+        
+        for l in items:
+                registered = False
+                active = False
+                with open("/etc/linuxmuster/sophomorix/default-school/devices.csv", "r") as f:
+                        contents = f.read().split()
+                if l.ethernet in contents:
+                        registered = True
+                if l.active:
+                        active = True
+                result.append({'IP':l.ip, 'MAC':l.ethernet, 'registered':registered, 'active':active})
+        if http_context.method == 'GET':
+            return result

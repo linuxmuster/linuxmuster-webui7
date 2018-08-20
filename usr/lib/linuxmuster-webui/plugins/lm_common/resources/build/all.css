@@ -3,6 +3,11 @@
   max-height: 300px;
   overflow: auto;
 }
+.navbar,
+.navbar-brand {
+  background-color: #233c4c;
+  opacity: 1;
+}
 .lm-table {
   width: 100%;
 }
@@ -20,53 +25,53 @@
   overflow-y: auto;
 }
 html body.customized #loading-bar .bar {
-  background: #233c4c;
+  background: #ff8f00;
 }
 html body.customized .container > .row > .sidebar .sidebar-item.active > div > .expander,
 html body.customized .container > .row > .sidebar .sidebar-item.active > div > .link,
 html body.customized .container > .sidebar .sidebar-item.active > div > .expander,
 html body.customized .container > .sidebar .sidebar-item.active > div > .link {
-  background: #233c4c;
+  background: #ff8f00;
 }
 html body.customized .container > .row > .sidebar .sidebar-item h5,
 html body.customized .container > .sidebar .sidebar-item h5 {
-  color: #233c4c;
+  color: #ff8f00;
 }
 html body.customized .form-control:focus {
-  border-bottom-color: #233c4c;
+  border-bottom-color: #ff8f00;
 }
 html body.customized .form-control:focus + .input-group-addon {
-  border-bottom-color: #233c4c;
+  border-bottom-color: #ff8f00;
 }
 html body.customized .form-control:focus + .input-group-addon a i {
-  color: #233c4c;
+  color: #ff8f00;
 }
 html body.customized .navbar-brand .title {
-  color: #233c4c;
+  color: #ff8f00;
 }
 html body.customized .navbar-brand.navigation-toggle {
-  color: #233c4c;
+  color: #ff8f00;
 }
 html body.customized .btn-primary {
-  background: #233c4c;
+  background: #ff8f00;
   border: #AA1A00;
 }
 html body.customized .btn-flat {
-  color: #233c4c;
+  color: #ff8f00;
 }
 html body.customized *[checkbox].active i.on {
-  color: #233c4c;
+  color: #ff8f00;
 }
 html body.customized smart-progress .progress .progress-bar {
-  background: #233c4c;
+  background: #ff8f00;
 }
 html body.customized progress-spinner .one {
-  border-left-color: #233c4c;
-  border-top-color: #233c4c;
+  border-left-color: #ff8f00;
+  border-top-color: #ff8f00;
 }
 html body.customized .nav-tabs > li.active > a,
 html body.customized .nav-tabs > li.active > a:hover {
-  border-bottom: 1px solid #233c4c;
-  color: #233c4c;
+  border-bottom: 1px solid #ff8f00;
+  color: #ff8f00;
 }
 

@@ -233,16 +233,17 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
     $scope.findUsers = (q) ->
                 return $http.get("/api/lmn/session/user-search?q=#{q}").then (resp) ->
                             $scope.users = resp.data
-                            # console.log resp.data
+                            console.log resp.data
                             return resp.data
 
     $scope.findSchoolClasses = (q) ->
                 return $http.get("/api/lmn/session/schoolClass-search?q=#{q}").then (resp) ->
                             $scope.class = resp.data
-                            console.log resp.data
+                            #console.log resp.data
                             return resp.data
 
     $scope.$watch '_.addParticipant', () ->
+                console.log $scope._.addParticipant
                 if $scope._.addParticipant
                     if $scope.participants[0]?
                                 delete $scope.participants['0']
@@ -264,13 +265,37 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                     "user_existing":true,"group_wifiaccess":$scope._.addParticipant.MANAGEMENTGROUPS.wifi})
                     $scope._.addParticipant = null
 
-    $scope.$watch '_.addSchoolClass', ()->
-                if $scope._.addSchoolClass
-                    #if $scope.participants[0]?
-                    #            delete $scope.participants['0']
+    # TODO Figure out how to call the existing watch addParticipant function
+    $scope.addParticipant = (participant) ->
+                console.log participant
+                if participant
+                    if $scope.participants[0]?
+                                delete $scope.participants['0']
                     $scope.info.message = ''
                     $scope.visible.table = 'show'
-                    console.log $scope._.addSchoolClass
+                    console.log participant
+                    # Add Managementgroups list if missing. This happens when all managementgroup attributes are false, causing the json tree to skip this key
+                    if not participant.MANAGEMENTGROUPS?
+                                participant.MANAGEMENTGROUPS = []
+                    console.log ($scope.participants)
+                    $scope.participants[participant.sAMAccountName] = angular.copy({"givenName":participant.givenName,"sn":participant.sn,
+                    "sophomorixExamMode":participant.sophomorixExamMode,
+                    "group_webfilter":participant.MANAGEMENTGROUPS.webfilter,
+                    "group_intranetaccess":participant.MANAGEMENTGROUPS.intranet,
+                    "group_printing":participant.MANAGEMENTGROUPS.printing,
+                    "sophomorixStatus":"U","sophomorixRole":participant.sophomorixRole,
+                    "group_internetaccess":participant.MANAGEMENTGROUPS.internet,
+                    "sophomorixAdminClass":participant.sophomorixAdminClass,
+                    "user_existing":true,"group_wifiaccess":participant.MANAGEMENTGROUPS.wifi})
+                    participant = null
+
+    $scope.$watch '_.addSchoolClass', () ->
+                if $scope._.addSchoolClass
+                    console.log ('huhu')
+                    console.log $scope._.addSchoolClass.members
+                    members = $scope._.addSchoolClass.members
+                    for schoolClass,member of $scope._.addSchoolClass.members
+                        $scope.addParticipant(member)
                     $scope._.addSchoolClass = null
 
     $scope.removeParticipant = (participant) ->

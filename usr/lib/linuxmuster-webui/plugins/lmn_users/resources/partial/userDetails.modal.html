@@ -5,10 +5,27 @@
 <div ng:show="students != null">
     <h3>{{students[0]['givenName']}} {{students[0]['sn']}}</h3>
 
-<div translate> Group Membership:</div>
-<li ng:repeat="group in students[0]['memberOf']"><a ng:click="createConfig(example)">{{group}}</a></li>
+    <div translate> Group Membership:</div>
+    <li ng:repeat="group in students[0]['memberOf']"><a ng:click="createConfig(example)">{{group}}</a></li>
+    <br>
+    <br>Klasse:  {{students[0]['sophomorixAdminClass']}}
+    <br>Geburtstag: {{students[0]['sophomorixBirthdate']}}
+    <br>Creationdate: {{students[0]['sophomorixCreationDate']}}
+    <br>Deaktivierungsdate: {{students[0]['sophomorixCreationDate']}}
+    <br>Tolerationdate: {{students[0]['sophomorixTolerationDate']}}
 
-</div>
-<div class="modal-footer">
-    <a class="btn btn-default btn-flat" ng:click="close()" translate>Close</a>
+
+    <br>Rolle: {{students[0]['sophomorixRole']}}
+    <br>Schulname:  {{students[0]['sophomorixSchoolname']}}
+    <br>Sophomorix Status: {{students[0]['sophomorixStatus']}}
+
+    <div translate> Group Membership:</div>
+    <li ng:repeat="sophomorixQuota in students[0]['sophomorixQuota']"><a ng:click="createConfig(example)">{{sophomorixQuota}}</a></li>
+
+    <br>Cloudquota Calculated: {{students[0]['sophomorixCloudQuotaCalculated']}}
+    <br>Mailquota Calculated: {{students[0]['sophomorixMailQuotaCalculated']}}
+
+    <div class="modal-footer">
+        <a class="btn btn-default btn-flat" ng:click="close()" translate>Close</a>
+    </div>
 </div>

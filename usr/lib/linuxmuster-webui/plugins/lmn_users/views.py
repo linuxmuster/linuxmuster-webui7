@@ -126,11 +126,16 @@ class Handler(HttpPlugin):
     @url(r'/api/lm/sophomorixUsers/students')
     @endpoint(api=True)
     def handle_api_sophomorix_students(self, http_context):
-        if http_context.method == 'GET':
+        action = http_context.json_body()['action']
+        if http_context.method == 'POST':
             schoolname = 'default-school'
             studentsList = []
             with authorize('lm:users:students:read'):
-                sophomorixCommand = ['sophomorix-query', '--student', '--schoolbase', schoolname, '--user-full', '-jj']
+                if action == 'get-all':
+                    sophomorixCommand = ['sophomorix-query', '--student', '--schoolbase', schoolname, '--user-full', '-jj']
+                else:
+                    user  = http_context.json_body()['user']
+                    sophomorixCommand = ['sophomorix-query', '--student', '--schoolbase', schoolname, '--user-full', '-jj', '--sam', user ]
                 studentsCheck = lmn_getSophomorixValue(sophomorixCommand, 'LISTS/USER')
                 if len(studentsCheck) != 0:
                     students = lmn_getSophomorixValue(sophomorixCommand, 'USER')
@@ -140,9 +145,9 @@ class Handler(HttpPlugin):
                 else:
                     return ["none"]
 
-        if http_context.method == 'POST':
-            with authorize('lm:users:students:write'):
-                return 0
+        #if http_context.method == 'POST':
+        #    with authorize('lm:users:students:write'):
+        #        return 0
 
     @url(r'/api/lm/sophomorixUsers/schooladmins')
     @endpoint(api=True)

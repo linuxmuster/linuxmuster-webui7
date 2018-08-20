@@ -1,6 +1,6 @@
 name: lm_users
 author: Linux Muster
-email: e@ajenti.org
+email: andreas.till@netzint.de
 url: http://linuxmuster.net
 version: '1.0'
 title: 'Users'
@@ -23,6 +23,7 @@ resources:
     - 'resources/js/controllers/checkModal.controller.coffee'
     - 'resources/js/controllers/customPassword.controller.coffee'
     - 'resources/js/controllers/addAdmin.controller.coffee'
+    - 'resources/js/controllers/userDetails.controller.coffee'
     - 'resources/partial/students-list.html'
     - 'resources/partial/teachers-list.html'
     - 'resources/partial/extra-students.html'
@@ -38,4 +39,5 @@ resources:
     - 'resources/partial/globaladmins.html'
     - 'resources/partial/customPassword.modal.html'
     - 'resources/partial/addAdmin.modal.html'
+    - 'resources/partial/userDetails.modal.html'
     - 'ng:lm.users'

@@ -63,19 +63,18 @@
                 <td>
                     <b>{{student.givenName}}</b> <br> {{student.sn}}
                 </td>
-
-                <td width="1">
-                    <button class="btn btn-default" ng:click="showInitialPassword([student])">
-                        <i class="fa fa-key"></i> <span translate>Show password</span>
-                    </button>
-                </td>
                 <td width="1">
                     <span uib-dropdown>
                         <button class="btn btn-default" uib-dropdown-toggle>
-                            <i class="fa fa-arrow-right"></i> <span translate>Change password</span>
+                            <i class="fa fa-key"></i> <span translate>Password</span>
                             <span class="caret"></span>
                         </button>
                         <ul uib-dropdown-menu class="dropdown-menu-right">
+                            <li>
+                                <a ng:click="showInitialPassword([student])" translate>
+                                    Show password
+                                </a>
+                            </li>
                             <li>
                                 <a ng:click="setInitialPassword([student])" translate>
                                     Initial password
@@ -89,6 +88,20 @@
                             <li>
                                 <a ng:click="setCustomPassword([student])" translate>
                                     Custom password
+                                </a>
+                            </li>
+                        </ul>
+                    </span>
+                </td>
+                <td width="1">
+                    <span uib-dropdown>
+                        <button class="btn btn-default" uib-dropdown-toggle>
+                            <i class="fa fa-cog"></i> <span translate> User Settings</span>
+                        </button>
+                        <ul uib-dropdown-menu class="dropdown-menu-right" style="width:200px">
+                            <li>
+                                <a ng:click="userInfo([student])" translate>
+                                    User information
                                 </a>
                             </li>
                         </ul>

@@ -8,6 +8,27 @@
   background-color: #233c4c;
   opacity: 1;
 }
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus {
+  border-color: #233c4c;
+  background-color: #233c4c;
+}
+.pagination > li > a,
+.pagination > li > span {
+  border-color: #233c4c;
+  color: #666;
+}
+.pagination > li > a:hover,
+.pagination > li > span:hover,
+.pagination > li > a:focus,
+.pagination > li > span:focus {
+  border-color: #233c4c;
+  color: #233c4c;
+}
 .lm-table {
   width: 100%;
 }
@@ -25,53 +46,74 @@
   overflow-y: auto;
 }
 html body.customized #loading-bar .bar {
-  background: #ff8f00;
+  background: #ffab40;
 }
 html body.customized .container > .row > .sidebar .sidebar-item.active > div > .expander,
 html body.customized .container > .row > .sidebar .sidebar-item.active > div > .link,
 html body.customized .container > .sidebar .sidebar-item.active > div > .expander,
 html body.customized .container > .sidebar .sidebar-item.active > div > .link {
-  background: #ff8f00;
+  background: #233c4c;
 }
 html body.customized .container > .row > .sidebar .sidebar-item h5,
 html body.customized .container > .sidebar .sidebar-item h5 {
-  color: #ff8f00;
+  color: #233c4c;
 }
 html body.customized .form-control:focus {
-  border-bottom-color: #ff8f00;
+  border-bottom-color: #233c4c;
 }
 html body.customized .form-control:focus + .input-group-addon {
-  border-bottom-color: #ff8f00;
+  border-bottom-color: #233c4c;
 }
 html body.customized .form-control:focus + .input-group-addon a i {
-  color: #ff8f00;
+  color: #233c4c;
 }
 html body.customized .navbar-brand .title {
-  color: #ff8f00;
+  color: #ffab40;
 }
 html body.customized .navbar-brand.navigation-toggle {
-  color: #ff8f00;
+  color: #ffab40;
 }
 html body.customized .btn-primary {
-  background: #ff8f00;
+  background: #233c4c;
   border: #AA1A00;
 }
 html body.customized .btn-flat {
-  color: #ff8f00;
+  color: #233c4c;
 }
 html body.customized *[checkbox].active i.on {
-  color: #ff8f00;
+  color: #233c4c;
 }
 html body.customized smart-progress .progress .progress-bar {
-  background: #ff8f00;
+  background: #ffab40;
 }
 html body.customized progress-spinner .one {
-  border-left-color: #ff8f00;
-  border-top-color: #ff8f00;
+  border-left-color: #ffab40;
+  border-top-color: #ffab40;
 }
 html body.customized .nav-tabs > li.active > a,
 html body.customized .nav-tabs > li.active > a:hover {
-  border-bottom: 1px solid #ff8f00;
+  border-bottom: 1px solid #233c4c;
+  color: #233c4c;
+}
+.navbar-default .navbar-brand {
+  color: white;
+}
+.navbar-default .navbar-brand:hover {
+  color: white;
+}
+.navbar-default .navbar-text {
+  color: white;
+}
+.navbar .navbar-brand .subtitle {
+  opacity: 1;
+}
+a {
+  color: #233c4c;
+}
+a:hover {
   color: #ff8f00;
+}
+html body.customized .form-control:focus {
+  border-bottom-color: #ffab40;
 }
 

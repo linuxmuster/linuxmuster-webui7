@@ -197,11 +197,14 @@ class Handler(HttpPlugin):
         school = 'default-school'
         with authorize('lm:users:students:read'):
             try:
-                sophomorixCommand = ['sophomorix-query', '-jj', '--schoolbase', school, '--class', '--group-members', '--sam', '*'+http_context.query['q']+'*']
+                sophomorixCommand = ['sophomorix-query', '-jj', '--schoolbase', school, '--class', '--group-members', '--user-full', '--sam', '*'+http_context.query['q']+'*']
                 schoolClasses = lmn_getSophomorixValue(sophomorixCommand, 'MEMBERS', True)
             except Exception:
                 return 0
         schoolClassList = []
         for schoolClass in schoolClasses:
-            schoolClassList.append(schoolClasses[schoolClass])
-        return schoolClasses
+            schoolClassJson = {}
+            schoolClassJson['sophomorixAdminClass'] = schoolClass
+            schoolClassJson['members'] = schoolClasses[schoolClass]
+            schoolClassList.append(schoolClassJson)
+        return schoolClassList

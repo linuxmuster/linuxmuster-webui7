@@ -150,7 +150,13 @@
         </tr>
     </table>
 
-    <div><center><h3>{{info.message}}<h3></center></div>
+    <div ng:show="info.message != ''" class="alert alert-info">
+            <i class="fa fa-info-circle"></i> <span translate>{{info.message}}</span>
+        </div>
+
+    <div ng:show="identity.user == 'root'" class="alert alert-info">
+            <i class="fa fa-info-circle"></i> <span translate>This module does not work as root. Login as a teacher instead!</span>
+        </div>
 
     <floating-toolbar>
         <div uib-dropdown class="dropup">
@@ -168,7 +174,6 @@
     </floating-toolbar>
 
 
-    <div ng:show="identity.user == 'root'"><center><h3 translate>This module does not work as root. Login as a teacher instead!<h3></center></div>
 
     <div ng:show="identity.user != 'root'">
         <progress-spinner ng:show="sessions == null"></progress-spinner>
@@ -178,68 +183,3 @@
             </a>
         </div>
     </div>
-
-    <!--
-
-        user
-        {{identity}}
-        {{identity.user}}
-
-    -->
-
-    <!--
-        <div class="list-group">
-        <a class="list-group-item" ng:repeat="participant in participants">
-        <i class="fa fa-asterisk"></i> <span translate>{{participant.givenName}}</span>
-        <span translate>{{participant.sn}}</span>
-        <span translate>{{participant.group_wifiaccess}}</span>
-        <input type="checkbox" ng-model="checkboxModel.value1">
-        <br>
-        </a>
-        </div>
-    -->
-
-    <!--
-        <span checkbox ng:model="checkboxModel.value1" ng-class="{classRed:'true'}"  ng-click="changeColor(value1)" ></span>
-    -->
-
-    <!--
-
-        <span id=supervalue1 checkbox ng:model="checkboxModel.value1"  ng-click="changeClass('supervalue1')" ></span>
-        <span id=supervalue2 checkbox ng:model="checkboxModel.value2"  ng-click="changeClass('supervalue2')" ></span>
-
-        <br>
-        {{className}}
-        {{className[item]}}
-
-
-        <tt>value1 = {{checkboxModel.value1}}</tt><br/>
-        <tt>value2 = {{checkboxModel.value2}}</tt><br/>
-        <div>Current sessionname: {{currentSession.name}}</div>
-        <div>sessions: {{sessions}}</div>
-        <div>Mitglieder: {{participants}}</div>
-
-        <br>
-        <br>
-        Current sessioncomment: {{currentSession.comment}}
-        Current sessioncomment: {{currentSession.name}}
-        <br/>
-        <br>
-        <div>Test2: {{participants}}</div>
-
-        <div>All Sessions Current User{{sessions}}</div>
-        <br>
-
-
-
-        {{identity.user}}
-        <br>
-    -->
-    <!--
-        {{identity}}
-        <br>
-        <br>
-        Current sessionID: {{currentSession.name}}
-        Current sessioncomment: {{currentSession.comment}}
-        <br/>
-    -->

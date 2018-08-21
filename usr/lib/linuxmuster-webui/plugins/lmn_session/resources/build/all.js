@@ -254,9 +254,9 @@
         $scope.participants = resp.data;
         console.log($scope.participants);
         if ($scope.participants[0] != null) {
-          return $scope.visible.table = 'none';
+          $scope.visible.table = 'none';
+          return $scope.info.message = gettext('This session appears to be empty. Start adding users by using the top search bar!');
         } else {
-          //$scope.info.message = 'This session appears to be empty. Start adding users by using the top search bar!'
           $scope.info.message = '';
           return $scope.visible.table = 'show';
         }

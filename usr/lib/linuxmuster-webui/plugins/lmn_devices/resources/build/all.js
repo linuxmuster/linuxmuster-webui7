@@ -148,28 +148,6 @@
     $http.get('/api/lm/devices').then(function(resp) {
       return $scope.devices = resp.data;
     });
-    $http.get('/api/lm/leases').then(function(resp) {
-      $scope.leases = resp.data;
-      return $log.debug($scope.leases);
-    });
-    $scope.lease_fields = {
-      mac: {
-        visible: true,
-        name: 'Mac-Adresse'
-      },
-      ip: {
-        visible: true,
-        name: 'IP-Adresse'
-      },
-      registered: {
-        visible: true,
-        name: 'Registered in devices.csv'
-      },
-      active: {
-        visible: true,
-        name: 'Lease active'
-      }
-    };
     $scope.remove = function(device) {
       return $scope.devices.remove(device);
     };

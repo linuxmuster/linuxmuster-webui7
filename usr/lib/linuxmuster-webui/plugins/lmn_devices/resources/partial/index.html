@@ -135,19 +135,6 @@
 
     <br/>
 
-    <h3>Active Dhcp Leases</h3>
-    <table class="lm-table lm-table-inputs table">
-        <tr>
-            <th ng:repeat="lease_field in lease_fields">{{lease_field.name}}</th>
-        </tr>
-        <tr ng:repeat="lease in leases" >
-            <td ng-style="{ color: {{lease.active}} ? 'red' : '#666' }">{{lease.MAC}}</td>
-            <td>{{lease.IP}}</td>
-            <td>{{lease.registered}}</td>
-            <td ng-style="{ color: {{lease.active}} ? 'red' : '#666' }">{{lease.active}}</td>
-        </tr>
-    </table>
-
     <uib-pagination ng:show="devices.length > paging.pageSize" ng:model="paging.page" total-items="devices.length" items-per-page="paging.pageSize" max-size="10" rotate="true" boundary-links="true"></uib-pagination>
     <div class="floating-toolbar-padder"></div>
 

@@ -35,9 +35,4 @@ class Permissions (PermissionProvider):
                 'name': _('Import device'),
                 'default': False,
             },
-            {
-                'id': 'lm:leases',
-                'name': _('Request DHCP leases'),
-                'default': False,
-            },
         ]

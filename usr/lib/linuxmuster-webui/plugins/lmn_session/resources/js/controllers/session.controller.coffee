@@ -191,7 +191,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                     console.log($scope.participants)
                     if $scope.participants[0]?
                        $scope.visible.table = 'none'
-                       #$scope.info.message = 'This session appears to be empty. Start adding users by using the top search bar!'
+                       $scope.info.message = gettext('This session appears to be empty. Start adding users by using the top search bar!')
                     else
                         $scope.info.message = ''
                         $scope.visible.table = 'show'

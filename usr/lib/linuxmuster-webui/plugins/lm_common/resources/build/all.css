@@ -116,4 +116,11 @@ a:hover {
 html body.customized .form-control:focus {
   border-bottom-color: #ffab40;
 }
+.col-md-3 {
+  width: 230px;
+}
+.col-md-9 {
+  width: calc(100% - 230px);
+  float: right;
+}
 

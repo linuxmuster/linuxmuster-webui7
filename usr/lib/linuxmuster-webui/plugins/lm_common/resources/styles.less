@@ -5,6 +5,12 @@
 @theme-color-orange:#ff8f00 ;
 @theme-color-orange-weak: #ffab40;
 
+//// maincontainer wider
+//@media (min-width: 1200px)
+//.container {
+//        width: 1050px;
+// }
+
 [uib\:typeahead].scrollable > .dropdown-menu,
 [uib\:typeahead].scrollable + .dropdown-menu {
     max-height: 300px;
@@ -142,4 +148,15 @@ a:hover {
 html body.customized .form-control:focus {
     border-bottom-color: @theme-color-orange-weak;
     }
+
+//sidebar
+.col-md-3 {
+        width: 230px;
+}
+
+//footer
+.col-md-9 {
+        width: calc(100% - 230px);
+        float: right;
+}
 

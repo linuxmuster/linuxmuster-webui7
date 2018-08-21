@@ -443,9 +443,12 @@
         }
       });
     };
-    $scope.identity.user = null;
+    //$scope.identity.user = null
     return $scope.$watch('identity.user', function() {
       console.log($scope.identity.user);
+      if ($scope.identity.user === void 0) {
+        return;
+      }
       if ($scope.identity.user === null) {
         return;
       }

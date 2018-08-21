@@ -317,9 +317,10 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                         id: () -> user
                 )
 
-    $scope.identity.user = null
     $scope.$watch 'identity.user', ->
           console.log ($scope.identity.user)
+          if $scope.identity.user is undefined
+              return
           if $scope.identity.user is null
               return
           if $scope.identity.user is 'root'

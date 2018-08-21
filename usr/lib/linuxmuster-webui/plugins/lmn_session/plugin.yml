@@ -12,7 +12,6 @@ resources:
     - 'resources/js/module.coffee'
     - 'resources/js/controllers/session.controller.coffee' # angular module
     - 'resources/partial/session.html' # view
-    - 'resources/partial/session.modal.html' # view
     - 'resources/styles.less'
     - 'ng:lmn.session'
 

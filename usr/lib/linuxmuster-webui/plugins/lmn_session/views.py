@@ -19,12 +19,19 @@ class Handler(HttpPlugin):
             supervisor = http_context.json_body()['username']
             with authorize('lm:users:students:read'):
                 try:
-                    sophomorixCommand = ['sophomorix-session', '-i', '-jj']
+                    sophomorixCommand = ['sophomorix-session', '-i', '-jj', '--supervisor', supervisor]
                     sessions = lmn_getSophomorixValue(sophomorixCommand, 'SUPERVISOR/'+supervisor+'/sophomorixSessions', True)
                 # Most likeley key error 'cause no sessions for this user exist
-                except Exception:
+                except Exception as e:
+                    raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(e))
                     return 0
-            return sessions
+            sessionsList = []
+            for session in sessions:
+                sessionJson = {}
+                sessionJson['ID'] = session
+                sessionJson['COMMENT'] = sessions[session]['COMMENT']
+                sessionsList.append(sessionJson)
+            return sessionsList
         if action == 'get-participants':
             supervisor = http_context.json_body()['username']
             session = http_context.json_body()['session']
@@ -46,7 +53,6 @@ class Handler(HttpPlugin):
         if action == 'kill-sessions':
             session = http_context.json_body()['session']
             with authorize('lm:users:students:read'):
-                # raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(session))
                 sophomorixCommand = ['sophomorix-session', '-j', '--session', session, '--kill']
                 result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
                 return result
@@ -54,7 +60,6 @@ class Handler(HttpPlugin):
             session = http_context.json_body()['session']
             comment = http_context.json_body()['comment']
             with authorize('lm:users:students:read'):
-                # raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(comment)+ str(session))
                 sophomorixCommand = ['sophomorix-session', '-j', '--session', session, '--comment', comment]
                 result = lmn_getSophomorixValue(sophomorixCommand , 'OUTPUT/0/LOG')
                 return result

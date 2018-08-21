@@ -13,45 +13,6 @@
     });
   });
 
-  //angular.module('lmn.session').controller 'LMNSESSIONModalController', ($scope, $uibModalInstance, $http, gettext, notify, messagebox, username, session, comment) ->
-  //    $scope.username = username
-  //    $scope.session = session
-  //    $scope.comment = comment
-
-  //    $scope.save = () ->
-  //       $uibModalInstance.close(session)
-
-  //    $scope.close = () ->
-  //       $uibModalInstance.dismiss()
-  angular.module('lmn.session').controller('LMSESSIONUserInfoModalController', function($scope, $uibModal, $uibModalInstance, $http, gettext, messagebox, pageTitle, id) {
-    //console.log "test"
-    //console.log id
-    //messagebox.show(title: gettext('Initial password'), text: 'test', positive: 'OK')
-    //$scope.image = image
-    //$scope.imagesWithReg = (x for x in images when x.reg)
-    //$scope.imagesWithPostsync = (x for x in images when x.postsync)
-
-    //$http.get('/api/lm/linbo/examples-regs').then (resp) ->
-    //   $scope.exampleRegs = resp.data
-
-    //$scope.setExampleReg = (name) ->
-    //   filesystem.read("/var/linbo/examples/#{name}").then (content) ->
-    //      $scope.image.reg = content
-
-    //$http.get('/api/lm/linbo/examples-postsyncs').then (resp) ->
-    //   $scope.examplePostsyncs = resp.data
-
-    //$scope.setExamplePostsync = (name) ->
-    //   filesystem.read("/var/linbo/examples/#{name}").then (content) ->
-    //      $scope.image.postsync = content
-    $scope.save = function() {
-      return $uibModalInstance.close();
-    };
-    return $scope.close = function() {
-      return $uibModalInstance.dismiss();
-    };
-  });
-
   angular.module('lmn.session').controller('LMNSessionController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) {
     pageTitle.set(gettext('Session'));
     $scope.currentSession = {
@@ -198,9 +159,9 @@
         });
       }
     };
-    $scope.killSession = function(username, session) {
+    $scope.killSession = function(username, session, comment) {
       return messagebox.show({
-        text: `Delete '${session}'?`,
+        text: `Delete '${comment}'?`,
         positive: 'Delete',
         negative: 'Cancel'
       }).then(function() {
@@ -213,6 +174,8 @@
           $scope.visible.table = 'none';
           $scope.visible.mainpage = 'show';
           $scope.info.message = '';
+          $scope.getSessions($scope.identity.user);
+          $scope.currentSession.name = '';
           return notify.success(gettext(resp.data));
         });
       });
@@ -229,6 +192,7 @@
         }).then(function(resp) {
           var sessions;
           $scope.new - (sessions = resp.data);
+          $scope.getSessions($scope.identity.user);
           return notify.success(gettext('Session Created'));
         });
       });
@@ -247,6 +211,8 @@
       });
     };
     $scope.getSessions = function(username) {
+      //console.log $scope.identity
+      //console.log $scope.identity.user
       return $http.post('/api/lmn/session/sessions', {
         action: 'get-sessions',
         username: username
@@ -267,6 +233,7 @@
           session: session,
           comment: msg.value
         }).then(function(resp) {
+          $scope.getSessions($scope.identity.user);
           return notify.success(gettext('Session Renamed'));
         });
       });
@@ -287,9 +254,9 @@
         $scope.participants = resp.data;
         console.log($scope.participants);
         if ($scope.participants[0] != null) {
-          $scope.visible.table = 'none';
-          return $scope.info.message = 'This session appears to be empty. Start adding users by using the top search bar!';
+          return $scope.visible.table = 'none';
         } else {
+          //$scope.info.message = 'This session appears to be empty. Start adding users by using the top search bar!'
           $scope.info.message = '';
           return $scope.visible.table = 'show';
         }
@@ -464,7 +431,7 @@
         positive: 'OK'
       });
     };
-    return $scope.userInfo = function(user) {
+    $scope.userInfo = function(user) {
       return $uibModal.open({
         templateUrl: '/lm_users:resources/partial/userDetails.modal.html',
         controller: 'LMNUserDetailsController',
@@ -476,9 +443,30 @@
         }
       });
     };
+    $scope.identity.user = null;
+    return $scope.$watch('identity.user', function() {
+      console.log($scope.identity.user);
+      if ($scope.identity.user === null) {
+        return;
+      }
+      if ($scope.identity.user === 'root') {
+        return;
+      }
+      $scope.getSessions($scope.identity.user);
+    });
   });
 
-  // TODO Find a solution for this
+  // ---
+
+//$scope.$on
+
+//$scope.$watch '$scope.identity.machine', () ->
+//    console.log 'test1'
+//    console.log $scope.identity
+//    console.log 'test2'
+//    console.log $scope['identity']['machine']
+
+// TODO Find a solution for this
 //    sleep = (ms) ->
 //        start = new Date().getTime()
 //        continue while new Date().getTime() - start < ms

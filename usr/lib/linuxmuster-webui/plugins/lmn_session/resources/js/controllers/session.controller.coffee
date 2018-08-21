@@ -3,50 +3,10 @@ angular.module('lmn.session').config ($routeProvider) ->
         controller: 'LMNSessionController'
         templateUrl: '/lmn_session:resources/partial/session.html'
 
-#angular.module('lmn.session').controller 'LMNSESSIONModalController', ($scope, $uibModalInstance, $http, gettext, notify, messagebox, username, session, comment) ->
-#    $scope.username = username
-#    $scope.session = session
-#    $scope.comment = comment
-#
-#    $scope.save = () ->
-#       $uibModalInstance.close(session)
-#
-#    $scope.close = () ->
-#       $uibModalInstance.dismiss()
-
-angular.module('lmn.session').controller 'LMSESSIONUserInfoModalController', ($scope, $uibModal, $uibModalInstance, $http, gettext, messagebox, pageTitle, id ) ->
-    #console.log "test"
-    #console.log id
-    #messagebox.show(title: gettext('Initial password'), text: 'test', positive: 'OK')
-    #$scope.image = image
-    #$scope.imagesWithReg = (x for x in images when x.reg)
-    #$scope.imagesWithPostsync = (x for x in images when x.postsync)
-
-    #$http.get('/api/lm/linbo/examples-regs').then (resp) ->
-    #   $scope.exampleRegs = resp.data
-
-    #$scope.setExampleReg = (name) ->
-    #   filesystem.read("/var/linbo/examples/#{name}").then (content) ->
-    #      $scope.image.reg = content
-
-    #$http.get('/api/lm/linbo/examples-postsyncs').then (resp) ->
-    #   $scope.examplePostsyncs = resp.data
-
-    #$scope.setExamplePostsync = (name) ->
-    #   filesystem.read("/var/linbo/examples/#{name}").then (content) ->
-    #      $scope.image.postsync = content
-
-    $scope.save = () ->
-       $uibModalInstance.close()
-
-    $scope.close = () ->
-       $uibModalInstance.dismiss()
-
-
-
 
 angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) ->
     pageTitle.set(gettext('Session'))
+
 
     $scope.currentSession = {
         name: ""
@@ -175,14 +135,16 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                     $scope.changeClass(id+'.'+item)
         return
 
-    $scope.killSession = (username,session) ->
-                messagebox.show(text: "Delete '#{session}'?", positive: 'Delete', negative: 'Cancel').then () ->
+    $scope.killSession = (username,session,comment) ->
+                messagebox.show(text: "Delete '#{comment}'?", positive: 'Delete', negative: 'Cancel').then () ->
                     $http.post('/api/lmn/session/sessions', {action: 'kill-sessions', session: session}).then (resp) ->
                         #notify.success gettext('Session Deleted')
                         $scope.visible.sessionname = 'none'
                         $scope.visible.table = 'none'
                         $scope.visible.mainpage = 'show'
                         $scope.info.message = ''
+                        $scope.getSessions($scope.identity.user)
+                        $scope.currentSession.name = ''
                         notify.success gettext(resp.data)
 
     $scope.newSession = (username) ->
@@ -191,6 +153,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                         return
                     $http.post('/api/lmn/session/sessions', {action: 'new-session', username: username, comment: msg.value}).then (resp) ->
                         $scope.new-sessions = resp.data
+                        $scope.getSessions($scope.identity.user)
                         notify.success gettext('Session Created')
 
     $scope.showSessions = (username) ->
@@ -199,6 +162,8 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                     messagebox.show(title: gettext('Current Sessions'), text: $scope.sessions, positive: 'OK')
 
     $scope.getSessions = (username) ->
+        #console.log $scope.identity
+        #console.log $scope.identity.user
                 $http.post('/api/lmn/session/sessions', {action: 'get-sessions', username: username}).then (resp) ->
                     #if resp.data is 0
                         #messagebox.show(title: gettext('No Sessions'), text: 'No session found! Please create a session first.', positive: 'OK')
@@ -211,6 +176,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                     if not msg.value
                         return
                     $http.post('/api/lmn/session/sessions', {action: 'rename-session', session: session, comment: msg.value}).then (resp) ->
+                        $scope.getSessions($scope.identity.user)
                         notify.success gettext('Session Renamed')
 
     $scope.getParticipants = (username,session) ->
@@ -225,7 +191,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                     console.log($scope.participants)
                     if $scope.participants[0]?
                        $scope.visible.table = 'none'
-                       $scope.info.message = 'This session appears to be empty. Start adding users by using the top search bar!'
+                       #$scope.info.message = 'This session appears to be empty. Start adding users by using the top search bar!'
                     else
                         $scope.info.message = ''
                         $scope.visible.table = 'show'
@@ -351,8 +317,25 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                         id: () -> user
                 )
 
+    $scope.identity.user = null
+    $scope.$watch 'identity.user', ->
+          console.log ($scope.identity.user)
+          if $scope.identity.user is null
+              return
+          if $scope.identity.user is 'root'
+              return
+          $scope.getSessions($scope.identity.user)
+          return
 
+    # ---
 
+    #$scope.$on
+    #
+    #$scope.$watch '$scope.identity.machine', () ->
+    #    console.log 'test1'
+    #    console.log $scope.identity
+    #    console.log 'test2'
+    #    console.log $scope['identity']['machine']
 
 # TODO Find a solution for this
 #    sleep = (ms) ->

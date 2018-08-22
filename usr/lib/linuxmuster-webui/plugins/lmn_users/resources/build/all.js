@@ -1407,8 +1407,6 @@
       $scope.options.user = 'global-admin';
     }
     $scope.title = schoolclass !== null ? gettext("Class") + `: ${classes[class {}]}` : gettext('All users');
-    console.log($scope.options.user);
-    console.log($scope.options.schoolclass);
     $scope.print = function() {
       var msg;
       msg = messagebox.show({

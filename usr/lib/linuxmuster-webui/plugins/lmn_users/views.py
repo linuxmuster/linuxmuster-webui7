@@ -134,8 +134,8 @@ class Handler(HttpPlugin):
                 if action == 'get-all':
                     sophomorixCommand = ['sophomorix-query', '--student', '--schoolbase', schoolname, '--user-full', '-jj']
                 else:
-                    user  = http_context.json_body()['user']
-                    sophomorixCommand = ['sophomorix-query', '--student', '--schoolbase', schoolname, '--user-full', '-jj', '--sam', user ]
+                    user = http_context.json_body()['user']
+                    sophomorixCommand = ['sophomorix-query', '--student', '--schoolbase', schoolname, '--user-full', '-jj', '--sam', user]
                 studentsCheck = lmn_getSophomorixValue(sophomorixCommand, 'LISTS/USER')
                 if len(studentsCheck) != 0:
                     students = lmn_getSophomorixValue(sophomorixCommand, 'USER')
@@ -144,10 +144,6 @@ class Handler(HttpPlugin):
                     return studentsList
                 else:
                     return ["none"]
-
-        #if http_context.method == 'POST':
-        #    with authorize('lm:users:students:write'):
-        #        return 0
 
     @url(r'/api/lm/sophomorixUsers/schooladmins')
     @endpoint(api=True)
@@ -375,7 +371,7 @@ class Handler(HttpPlugin):
                 sophomorixCommand.extend(['--class', schoolclass])
             # sophomorix-print needs the json parameter at the very end
             sophomorixCommand.extend(['-jj'])
-            return lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/LOG')
+            return lmn_getSophomorixValue(sophomorixCommand, 'JSONINFO')
 
     @url(r'/api/lm/users/print-download/(?P<name>.+)')
     @authorize('lm:users:passwords')

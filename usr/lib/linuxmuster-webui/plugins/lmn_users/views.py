@@ -362,21 +362,20 @@ class Handler(HttpPlugin):
     def handle_api_users_print(self, http_context):
         school = 'default-school'
         if http_context.method == 'GET':
-            return [
-                l.split('-->')[-1].strip()
-                for l in subprocess.check_output('sophomorix-print --info', shell=True).splitlines()
-                if '-->' in l
-            ]
+            sophomorixCommand = ['sophomorix-print', '--school', school, '--info', '-jj']
+            return lmn_getSophomorixValue(sophomorixCommand, 'LIST_BY_sophomorixSchoolname_sophomorixAdminClass/'+school)
         if http_context.method == 'POST':
-            data = http_context.json_body()
-            cmd = 'sophomorix-print'
-            if data['recent'] is None:
-                cmd += ' --school ' + school
-            else:
-                cmd += ' --back-in-time %s' % data['recent']
-            if data['one_per_page']:
-                cmd += ' --one-per-page'
-            subprocess.check_call(cmd, shell=True)
+            user = http_context.json_body()['user']
+            one_per_page = http_context.json_body()['one_per_page']
+            schoolclass = http_context.json_body()['schoolclass']
+            sophomorixCommand = ['sophomorix-print', '--school', school, '--caller', str(user)]
+            if one_per_page:
+                sophomorixCommand.extend(['--one-per-page'])
+            if schoolclass:
+                sophomorixCommand.extend(['--class', schoolclass])
+            # sophomorix-print needs the json parameter at the very end
+            sophomorixCommand.extend(['-jj'])
+            return lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/LOG')
 
     @url(r'/api/lm/users/print-download/(?P<name>.+)')
     @authorize('lm:users:passwords')

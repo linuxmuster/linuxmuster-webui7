@@ -2,7 +2,7 @@ name: lmn_session
 author: Linux Muster
 email: andreas.till@netzint.de
 url: http://linuxmuster.net
-version: '0.1'
+version: '0.7'
 title: 'Session'
 icon: users
 dependencies:

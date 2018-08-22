@@ -56,15 +56,14 @@
         </ul>
     </div>
     <!-- Sessions dropdown -->
-    <!-- <div uib-dropdown class="input-group-btn" auto-close="outsideClick" ng:click="getSessions(identity.user)">-->
     <div uib-dropdown class="input-group-btn" auto-close="outsideClick">
         <button class="btn btn-default" uib-dropdown-toggle>
             <i class="fa fa-users"></i> {{'Sessions'|translate}}
             <span class="caret"></span>
         </button>
-        <ul uib-dropdown-menu class="dropdown-menu-right" style="width:350px">
+        <ul uib-dropdown-menu class="dropdown-menu-right">
             <li ng:repeat="session  in sessions | orderBy: '-COMMENT':true">
-                <a ng:click="getParticipants(identity.user,session.ID); currentSession.name=session.ID; currentSession.comment=session.COMMENT"><i class="fa fa-indent"></i> {{session.COMMENT}} {{session.ID}}</a>
+                <a ng:click="getParticipants(identity.user,session.ID); currentSession.name=session.ID; currentSession.comment=session.COMMENT"><i class="fa fa-indent"></i> {{session.COMMENT}}</a>
             </li>
 
 
@@ -88,7 +87,24 @@
                 <div ng-show="showDetails"><img src="https://openclipart.org/image/2400px/svg_to_png/211821/matt-icons_preferences-desktop-personal.png" style="height:75px;"</img></div> </td>
             <td>
                 <div class="button-group">
-                    <button type="button" class="btn btn-default" ng:click="notImplemented()" translate >Share</button><button type="button" class="btn btn-default" ng:click="notImplemented()" translate>Collect</button>
+                    <button type="button" class="btn btn-default" ng:click="shareTrans('copy', [identity.user], [id])"translate > <a>Share</a></button>
+                <span uib-dropdown>
+                    <button class="btn btn-default" uib-dropdown-toggle>
+                        <a class=""translate>Collect</a>
+                    </button>
+                    <ul uib-dropdown-menu class="dropdown-menu-right">
+                        <li>
+                            <a ng:click="collectTrans('copy', [id], [identity.user])" translate>
+                                Copy files
+                            </a>
+                        </li>
+                        <li>
+                            <a ng:click="collectTrans('move', [id], [identity.user])" translate>
+                                Collect files
+                            </a>
+                        </li>
+                    </ul>
+                </span>
                 </div>
                 <div ng-show="showDetails"> <br> <button type="button" class="btn btn-default" ng:click="notImplemented()" translate >Available Files</button> </div> </td>
             </td>
@@ -159,27 +175,38 @@
         </div>
 
     <floating-toolbar>
-        <div uib-dropdown class="dropup">
+        <div uib-dropdown ng:show="currentSession.name != ''" class="dropup">
             <button class="btn btn-default btn-flat" uib-dropdown-toggle>
                 <i class="fa fa-file"></i> Share & Collect <i class="fa fa-caret-up"></i>
             </button>
             <ul uib-dropdown-menu class="scrollable">
                 <li><a flow-btn class="btn btn-default btn-flat" test-bind="uploadButton" translate>Upload file to share</a></li>
+                <li><a ng:click="shareTrans('copy', [identity.user], [id])" translate>Share transfer with whole session</a></li>
+                <li><a ng:click="collectTrans('copy', [identity.user], [id])" translate>Copy transfer from whole session</a></li>
+                <li><a ng:click="collectTrans('move', [identity.user], [id])" translate>Collect transfer from whole session</a></li>
                 <li ng:repeat="example in examples"><a ng:click="createConfig(example)">{{example}}</a></li>
             </ul>
         </div>
-
         <button ng:click="saveApply(identity.user,participants,currentSession.name)" ng:show="currentSession.name != ''" class="btn btn-default btn-flat pull-right" translate>Save & apply</button>
         <button ng:click="cancel(identity.user,currentSession.name)" ng:show="currentSession.name != ''" class="btn btn-default btn-flat pull-right" translate>Cancel</button>
     </floating-toolbar>
 
-
+    {{participants}}
+    <div ng-repeat="(key, data) in participants">
+          {{key}}
+    </div>
 
     <div ng:show="identity.user != 'root'">
         <progress-spinner ng:show="sessions == null"></progress-spinner>
         <div ng:show="currentSession.name == ''"  class="list-group">
             <a class="list-group-item" ng:repeat="session in sessions | orderBy: '-COMMENT' :true" ng:click="getParticipants(identity.user,session.ID); currentSession.name=session.ID; currentSession.comment=session.COMMENT">
                 <i class="fa fa-users"></i> {{session.COMMENT}}
+                <br />
+                <br />
+                <p style="text-align:left;" translate>
+                Participants: {{session.PARTICIPANT_COUNT}}
+                <h6 style="margin-bottom:15px;"><span style="float:right;" translate> Creation Date: {{session.ID}}</span></h6>
+                </p>
             </a>
         </div>
     </div>

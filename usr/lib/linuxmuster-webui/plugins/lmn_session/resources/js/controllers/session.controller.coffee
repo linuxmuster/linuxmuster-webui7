@@ -269,9 +269,6 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
 
     $scope.changeExamSupervisor = (participant, supervisor) ->
                 $http.post('/api/lmn/session/sessions', {action: 'change-exam-supervisor', supervisor: supervisor, participant: participant}).then (resp) ->
-                console.log ('test')
-                console.log (participant)
-                console.log (supervisor)
 
     $scope.saveApply = (username,participants, session) ->
                 $http.post('/api/lmn/session/sessions', {action: 'save-session',username: username, participants: participants, session: session}).then (resp) ->
@@ -304,6 +301,19 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                     resolve:
                         user: () -> username
             )
+
+    $scope.shareTrans = (command, senders, receivers) ->
+        messagebox.prompt(gettext('Enter a name for transfer'), 'exam1').then (transTitle) ->
+            if not transTitle.value
+                notify.error gettext("You have to enter a transfer name!")
+                return
+            $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers, transTitle: transTitle.value}).then (resp) ->
+                notify.success gettext('success')
+
+    $scope.collectTrans = (command, senders, receivers) ->
+        transTitle = 'transfer'
+        $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers, transTitle: transTitle}).then (resp) ->
+            notify.success gettext('success')
 
     $scope.notImplemented = (user) ->
                 messagebox.show(title: gettext('Not implemented'), positive: 'OK')

@@ -222,11 +222,9 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_session_file_trans(self, http_context):
         senders = http_context.json_body()['senders']
-        #sender  = ','.join([x.strip() for x in senders])
-        #transTitle = http_context.json_body()['transTitle']
         command = http_context.json_body()['command']
         receivers = http_context.json_body()['receivers']
-        receiver  = ','.join([x.strip() for x in receivers])
+        receiver = ','.join([x.strip() for x in receivers])
         with authorize('lmn:session:trans'):
             if command == 'copy':
                 try:

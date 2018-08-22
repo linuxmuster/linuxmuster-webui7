@@ -4,18 +4,22 @@ angular.module('lm.users').config ($routeProvider) ->
         templateUrl: '/lm_users:resources/partial/print-passwords.html'
 
 
-angular.module('lm.users').controller 'LMUsersPrintPasswordsOptionsModalController', ($scope, $uibModalInstance, $http, messagebox, gettext, recentIndex, recents) ->
+angular.module('lm.users').controller 'LMUsersPrintPasswordsOptionsModalController', ($scope, $uibModalInstance, $http, messagebox, gettext, schoolclass, classes, user) ->
     $scope.options = {
         format: 'pdf'
         one_per_page: false
-        recent: recentIndex
+        schoolclass: schoolclass
+        user: user
     }
-    $scope.title = if recentIndex != null then gettext("Recently added") + ": #{recents[recentIndex]}" else gettext('All users')
+    if $scope.options.user is 'root'
+        $scope.options.user = 'global-admin'
+
+    $scope.title = if schoolclass != null then gettext("Class") + ": #{classes[class]}" else gettext('All users')
 
     $scope.print = () ->
         msg = messagebox.show(progress: true)
         $http.post('/api/lm/users/print', $scope.options).then (resp) ->
-            location.href = "/api/lm/users/print-download/#{if recentIndex != null then 'add' else 'all'}.#{if $scope.options.format == 'pdf' then 'pdf' else 'csv'}"
+            location.href = "/api/lm/users/print-download/#{if schoolclass != null then schoolclass else 'add'}-#{$scope.options.user}.#{if $scope.options.format == 'pdf' then 'pdf' else 'csv'}"
             $uibModalInstance.close()
         .finally () ->
             msg.close()
@@ -28,13 +32,15 @@ angular.module('lm.users').controller 'LMUsersPrintPasswordsController', ($scope
     pageTitle.set(gettext('Print Passwords'))
 
     $http.get('/api/lm/users/print').then (resp) ->
-        $scope.recents = resp.data
+        $scope.classes = resp.data
+        console.log ($scope.classes)
 
-    $scope.select = (recentIndex) ->
+    $scope.select = (schoolclass,user) ->
         $uibModal.open(
             templateUrl: '/lm_users:resources/partial/print-passwords.options.modal.html'
             controller: 'LMUsersPrintPasswordsOptionsModalController'
             resolve:
-                recentIndex: () -> recentIndex
-                recents: () -> $scope.recents
+                schoolclass: () -> schoolclass
+                classes: () -> $scope.classes
+                user: () -> user
         )

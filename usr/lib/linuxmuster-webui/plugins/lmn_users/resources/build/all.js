@@ -1396,20 +1396,26 @@
     });
   });
 
-  angular.module('lm.users').controller('LMUsersPrintPasswordsOptionsModalController', function($scope, $uibModalInstance, $http, messagebox, gettext, recentIndex, recents) {
+  angular.module('lm.users').controller('LMUsersPrintPasswordsOptionsModalController', function($scope, $uibModalInstance, $http, messagebox, gettext, schoolclass, classes, user) {
     $scope.options = {
       format: 'pdf',
       one_per_page: false,
-      recent: recentIndex
+      schoolclass: schoolclass,
+      user: user
     };
-    $scope.title = recentIndex !== null ? gettext("Recently added") + `: ${recents[recentIndex]}` : gettext('All users');
+    if ($scope.options.user === 'root') {
+      $scope.options.user = 'global-admin';
+    }
+    $scope.title = schoolclass !== null ? gettext("Class") + `: ${classes[class {}]}` : gettext('All users');
+    console.log($scope.options.user);
+    console.log($scope.options.schoolclass);
     $scope.print = function() {
       var msg;
       msg = messagebox.show({
         progress: true
       });
       return $http.post('/api/lm/users/print', $scope.options).then(function(resp) {
-        location.href = `/api/lm/users/print-download/${(recentIndex !== null ? 'add' : 'all')}.${($scope.options.format === 'pdf' ? 'pdf' : 'csv')}`;
+        location.href = `/api/lm/users/print-download/${(schoolclass !== null ? schoolclass : 'add')}-${$scope.options.user}.${($scope.options.format === 'pdf' ? 'pdf' : 'csv')}`;
         return $uibModalInstance.close();
       }).finally(function() {
         return msg.close();
@@ -1423,18 +1429,22 @@
   angular.module('lm.users').controller('LMUsersPrintPasswordsController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor) {
     pageTitle.set(gettext('Print Passwords'));
     $http.get('/api/lm/users/print').then(function(resp) {
-      return $scope.recents = resp.data;
+      $scope.classes = resp.data;
+      return console.log($scope.classes);
     });
-    return $scope.select = function(recentIndex) {
+    return $scope.select = function(schoolclass, user) {
       return $uibModal.open({
         templateUrl: '/lm_users:resources/partial/print-passwords.options.modal.html',
         controller: 'LMUsersPrintPasswordsOptionsModalController',
         resolve: {
-          recentIndex: function() {
-            return recentIndex;
+          schoolclass: function() {
+            return schoolclass;
           },
-          recents: function() {
-            return $scope.recents;
+          classes: function() {
+            return $scope.classes;
+          },
+          user: function() {
+            return user;
           }
         }
       });

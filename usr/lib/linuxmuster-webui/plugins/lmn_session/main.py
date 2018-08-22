@@ -36,4 +36,9 @@ class Permissions (PermissionProvider):
                 'name': _('Write students'),
                 'default': False,
             },
+            {
+                'id': 'lmn:session:trans',
+                'name': _('Transfer Files in Session'),
+                'default': False,
+            },
         ]

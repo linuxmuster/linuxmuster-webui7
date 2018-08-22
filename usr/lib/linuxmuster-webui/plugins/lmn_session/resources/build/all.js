@@ -356,14 +356,11 @@
       return delete $scope.participants[participant];
     };
     $scope.changeExamSupervisor = function(participant, supervisor) {
-      $http.post('/api/lmn/session/sessions', {
+      return $http.post('/api/lmn/session/sessions', {
         action: 'change-exam-supervisor',
         supervisor: supervisor,
         participant: participant
       }).then(function(resp) {});
-      console.log('test');
-      console.log(participant);
-      return console.log(supervisor);
     };
     $scope.saveApply = function(username, participants, session) {
       return $http.post('/api/lmn/session/sessions', {
@@ -425,6 +422,34 @@
         }
       });
     };
+    $scope.shareTrans = function(command, senders, receivers) {
+      return messagebox.prompt(gettext('Enter a name for transfer'), 'exam1').then(function(transTitle) {
+        if (!transTitle.value) {
+          notify.error(gettext("You have to enter a transfer name!"));
+          return;
+        }
+        return $http.post('/api/lmn/session/trans', {
+          command: command,
+          senders: senders,
+          receivers: receivers,
+          transTitle: transTitle.value
+        }).then(function(resp) {
+          return notify.success(gettext('success'));
+        });
+      });
+    };
+    $scope.collectTrans = function(command, senders, receivers) {
+      var transTitle;
+      transTitle = 'transfer';
+      return $http.post('/api/lmn/session/trans', {
+        command: command,
+        senders: senders,
+        receivers: receivers,
+        transTitle: transTitle
+      }).then(function(resp) {
+        return notify.success(gettext('success'));
+      });
+    };
     $scope.notImplemented = function(user) {
       return messagebox.show({
         title: gettext('Not implemented'),
@@ -443,7 +468,6 @@
         }
       });
     };
-    //$scope.identity.user = null
     return $scope.$watch('identity.user', function() {
       console.log($scope.identity.user);
       if ($scope.identity.user === void 0) {

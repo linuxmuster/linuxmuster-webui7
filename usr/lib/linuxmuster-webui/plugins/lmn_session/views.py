@@ -222,22 +222,24 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_session_file_trans(self, http_context):
         senders = http_context.json_body()['senders']
-        sender  = ','.join([x.strip() for x in senders])
-        transTitle = http_context.json_body()['transTitle']
+        #sender  = ','.join([x.strip() for x in senders])
+        #transTitle = http_context.json_body()['transTitle']
         command = http_context.json_body()['command']
         receivers = http_context.json_body()['receivers']
         receiver  = ','.join([x.strip() for x in receivers])
         with authorize('lmn:session:trans'):
             if command == 'copy':
                 try:
-                    sophomorixCommand = ['sophomorix-transfer', '-jj', '--collect-copy', '--from-user', sender, '--to-user', receiver, '--file', 'transfer']
-                    returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'JSONINFO')
+                    for sender in senders:
+                        sophomorixCommand = ['sophomorix-transfer', '-jj', '--collect-copy', '--from-user', sender, '--to-user', receiver, '--file', 'transfer']
+                        returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'JSONINFO')
                 except Exception as e:
                     raise Exception('Something went wrong. Error:\n' + str(e))
             if command == 'move':
                 try:
-                    sophomorixCommand = ['sophomorix-transfer', '-jj', '--collect-move', '--from-user', sender, '--to-user', receiver, '--file', receiver]
-                    returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'JSONINFO')
+                    for sender in senders:
+                        sophomorixCommand = ['sophomorix-transfer', '-jj', '--collect-move', '--from-user', sender, '--to-user', receiver, '--file', 'transfer/']
+                        returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'JSONINFO')
                 except Exception as e:
                     raise Exception('Something went wrong. Error:\n' + str(e))
         return returnMessage

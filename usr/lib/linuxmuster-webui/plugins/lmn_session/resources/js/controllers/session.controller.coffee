@@ -65,12 +65,12 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
           checkboxAll: true
           checkboxStatus: false
        intranetaccess:
-          visible: true
+          visible: false
           icon:"fa fa-server"
           title: gettext('Intranet Access')
           checkboxAll: true
        webfilter:
-          visible: true
+          visible: false
           icon:"fa fa-filter"
           title: gettext('Webfilter')
           checkboxAll: true
@@ -302,18 +302,36 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                         user: () -> username
             )
 
+    typeIsArray = Array.isArray || ( value ) -> return {}.toString.call( value ) is '[object Array]'
+
     $scope.shareTrans = (command, senders, receivers) ->
-        messagebox.prompt(gettext('Enter a name for transfer'), 'exam1').then (transTitle) ->
-            if not transTitle.value
-                notify.error gettext("You have to enter a transfer name!")
-                return
-            $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers, transTitle: transTitle.value}).then (resp) ->
+        # if share with session we get the whole session as a json object.
+        # The function on the other hand waits for an array so we extract
+        # the username into an array
+        if not typeIsArray receivers
+            participantsArray = []
+            for key, value of receivers
+                participantsArray.push key
+            receivers = participantsArray
+        messagebox.show(title: gettext('Share Data'),text: gettext("Share EVERYTHING in transfer folder to user(s) '#{receivers}'?"), positive: gettext('Proceed'), negative: gettext('Cancel')).then () ->
+            $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers}).then (resp) ->
                 notify.success gettext('success')
 
     $scope.collectTrans = (command, senders, receivers) ->
+        if not typeIsArray senders
+            participantsArray = []
+            for key, value of senders
+                participantsArray.push key
+            senders = participantsArray
         transTitle = 'transfer'
-        $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers, transTitle: transTitle}).then (resp) ->
-            notify.success gettext('success')
+        if command is 'copy'
+            messagebox.show(title: gettext('Copy Data'),text: gettext("Copy EVERYTHING from transfer folder of these user(s) '#{senders}'? All files are still available in users transfer directory!"), positive: gettext('Proceed'), negative: gettext('Cancel')).then () ->
+                $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers}).then (resp) ->
+                    notify.success gettext('success')
+        if command is 'move'
+            messagebox.show(title: gettext('Collect Data'),text: gettext("Collevt EVERYTHING from transfer folder of these user(s) '#{senders}'? No files will be available by the users!"), positive: gettext('Proceed'), negative: gettext('Cancel')).then () ->
+                $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers}).then (resp) ->
+                    notify.success gettext('success')
 
     $scope.notImplemented = (user) ->
                 messagebox.show(title: gettext('Not implemented'), positive: 'OK')

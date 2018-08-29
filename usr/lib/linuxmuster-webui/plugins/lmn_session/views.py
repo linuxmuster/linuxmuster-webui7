@@ -13,27 +13,34 @@ class Handler(HttpPlugin):
     @url(r'/api/lmn/session/sessions')
     @endpoint(api=True)
     def handle_api_session_sessions(self, http_context):
-        # sessionsList = []
         action = http_context.json_body()['action']
         if action == 'get-sessions':
             supervisor = http_context.json_body()['username']
             with authorize('lm:users:students:read'):
                 try:
                     sophomorixCommand = ['sophomorix-session', '-i', '-jj', '--supervisor', supervisor]
-                    sessions = lmn_getSophomorixValue(sophomorixCommand, 'SUPERVISOR/'+supervisor+'/sophomorixSessions', True)
+                    #sessions = lmn_getSophomorixValue(sophomorixCommand, 'SUPERVISOR/'+supervisor+'/sophomorixSessions', True)
+                    sessions = lmn_getSophomorixValue(sophomorixCommand, '')
                 # Most likeley key error 'cause no sessions for this user exist
                 except Exception as e:
                     raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(e))
                     return 0
+            #raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(sessions))
             sessionsList = []
-            for session in sessions:
+            if sessions['SESSIONCOUNT'] == 0:
+                sessionJson = {}
+                sessionJson['SESSIONCOUNT'] = 0
+                sessionsList.append(sessionJson)
+                return sessionsList
+
+            for session in sessions['SUPERVISOR'][supervisor]['sophomorixSessions']:
                 sessionJson = {}
                 sessionJson['ID'] = session
-                sessionJson['COMMENT'] = sessions[session]['COMMENT']
-                if 'PARTICIPANT_COUNT' not in sessions[session]:
+                sessionJson['COMMENT'] = sessions['SUPERVISOR'][supervisor]['sophomorixSessions'][session]['COMMENT']
+                if 'PARTICIPANT_COUNT' not in sessions['SUPERVISOR'][supervisor]['sophomorixSessions'][session]:
                     sessionJson['PARTICIPANT_COUNT'] = 0
                 else:
-                    sessionJson['PARTICIPANT_COUNT'] = sessions[session]['PARTICIPANT_COUNT']
+                    sessionJson['PARTICIPANT_COUNT'] = sessions['SUPERVISOR'][supervisor]['sophomorixSessions'][session]['PARTICIPANT_COUNT']
                 sessionsList.append(sessionJson)
             return sessionsList
         if action == 'get-participants':

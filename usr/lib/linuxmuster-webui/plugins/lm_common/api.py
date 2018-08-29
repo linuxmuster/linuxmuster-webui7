@@ -122,7 +122,7 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
             resultString = dpath.util.get(jsonDict, jsonpath)
         except Exception as e:
             pass
-            raise Exception('Field error. Either sophomorix field does not exist or ajenti binduser does not have sufficient permissions:\n' 'Searched field was: ' + str(e) + ' received information for filter:  ' + str(jsonDict))
+            #raise Exception('Field error. Either sophomorix field does not exist or ajenti binduser does not have sufficient permissions:\n' 'Searched field was: ' + str(e) + ' received information for filter:  ' + str(jsonDict))
     else:
         resultString = dpath.util.get(jsonDict, jsonpath)
     return resultString

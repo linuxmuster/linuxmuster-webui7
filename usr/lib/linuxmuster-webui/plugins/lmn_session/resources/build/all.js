@@ -111,7 +111,8 @@
       value2: true
     };
     $scope.visible = {
-      table: 'none',
+      participanttable: 'none',
+      sessiontable: 'none',
       sessionname: 'none',
       mainpage: 'show'
     };
@@ -161,6 +162,14 @@
       }
     };
     $scope.killSession = function(username, session, comment) {
+      if (session === '') {
+        messagebox.show({
+          title: gettext('No Session selected'),
+          text: gettext('You have to select a session first.'),
+          positive: 'OK'
+        });
+        return;
+      }
       return messagebox.show({
         text: `Delete '${comment}'?`,
         positive: 'Delete',
@@ -172,7 +181,7 @@
         }).then(function(resp) {
           //notify.success gettext('Session Deleted')
           $scope.visible.sessionname = 'none';
-          $scope.visible.table = 'none';
+          $scope.visible.participanttable = 'none';
           $scope.visible.mainpage = 'show';
           $scope.info.message = '';
           $scope.getSessions($scope.identity.user);
@@ -194,20 +203,8 @@
           var sessions;
           $scope.new - (sessions = resp.data);
           $scope.getSessions($scope.identity.user);
-          return notify.success(gettext('Session Created'));
-        });
-      });
-    };
-    $scope.showSessions = function(username) {
-      return $http.post('/api/lmn/session/sessions', {
-        action: 'get-sessions',
-        username: username
-      }).then(function(resp) {
-        $scope.sessions = resp.data;
-        return messagebox.show({
-          title: gettext('Current Sessions'),
-          text: $scope.sessions,
-          positive: 'OK'
+          notify.success(gettext('Session Created'));
+          return $scope.info.message = '';
         });
       });
     };
@@ -218,10 +215,16 @@
         action: 'get-sessions',
         username: username
       }).then(function(resp) {
-        //if resp.data is 0
-        //messagebox.show(title: gettext('No Sessions'), text: 'No session found! Please create a session first.', positive: 'OK')
-        //console.log $scope.sessions
-        return $scope.sessions = resp.data;
+        if (resp.data === 0) {
+          //$scope.sessioncount = 0
+          $scope.sessions = resp.data;
+          $scope.info.message = gettext('There are no sessions yet. Create a session using the "Edit Sessions" button at the top!');
+          return console.log('no sessions');
+        } else {
+          console.log('sessions found');
+          $scope.visible.sessiontable = 'show';
+          return $scope.sessions = resp.data;
+        }
       });
     };
     $scope.renameSession = function(username, session, comment) {
@@ -240,6 +243,7 @@
       });
     };
     $scope.getParticipants = function(username, session) {
+      $scope.visible.sessiontable = 'none';
       $scope.resetClass();
       // Reset select all checkboxes when loading participants
       angular.forEach($scope.fields, function(field) {
@@ -255,11 +259,11 @@
         $scope.participants = resp.data;
         console.log($scope.participants);
         if ($scope.participants[0] != null) {
-          $scope.visible.table = 'none';
+          $scope.visible.participanttable = 'none';
           return $scope.info.message = gettext('This session appears to be empty. Start adding users by using the top search bar!');
         } else {
           $scope.info.message = '';
-          return $scope.visible.table = 'show';
+          return $scope.visible.participanttable = 'show';
         }
       });
     };
@@ -284,7 +288,7 @@
           delete $scope.participants['0'];
         }
         $scope.info.message = '';
-        $scope.visible.table = 'show';
+        $scope.visible.participanttable = 'show';
         console.log($scope._.addParticipant);
         // Add Managementgroups list if missing. This happens when all managementgroup attributes are false, causing the json tree to skip this key
         if ($scope._.addParticipant.MANAGEMENTGROUPS == null) {
@@ -315,7 +319,7 @@
           delete $scope.participants['0'];
         }
         $scope.info.message = '';
-        $scope.visible.table = 'show';
+        $scope.visible.participanttable = 'show';
         console.log(participant);
         // Add Managementgroups list if missing. This happens when all managementgroup attributes are false, causing the json tree to skip this key
         if (participant.MANAGEMENTGROUPS == null) {

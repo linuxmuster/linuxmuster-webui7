@@ -25,11 +25,8 @@ sed -i s/%%LANGUAGE%%/$language/ $ajcfg
 sed -i s/%%SERVERNAME%%/$servername/ $ajcfg
 sed -i s/%%DOMAINNAME%%/$domainname/ $ajcfg
 
+echo "Bundle certificate for webui"
+cat /etc/linuxmuster/ssl/server.key.pem /etc/linuxmuster/ssl/server.cert.pem >  /etc/linuxmuster/ssl/server.cert.bundle.pem
+
 echo "Run Sophomorix-UI to add permissions"
 sophomorix-ui >/dev/null 2>&1
-
-# Create empty files if needed
-#touch /etc/linuxmuster/sophomorix/default-school/students.csv
-#touch /etc/linuxmuster/sophomorix/default-school/teachers.csv
-#touch /etc/linuxmuster/sophomorix/default-school/devices.csv
-#touch /etc/linuxmuster/sophomorix/default-school/extrastudents.csv

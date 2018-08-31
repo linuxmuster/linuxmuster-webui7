@@ -1,11 +1,12 @@
-angular.module('lm.users').controller 'LMNUserDetailsController', ($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, id) ->
+angular.module('lm.users').controller 'LMNUserDetailsController', ($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, id, role) ->
 
     #notify.error gettext("You have to enter a username")
     $scope.id = id
+    console.log ($scope.id)
 
-    $http.post('/api/lm/sophomorixUsers/students', {action: 'get-specified', user: id}).then (resp) ->
-        $scope.students = resp.data
-        console.log $scope.students
+    $http.post('/api/lm/sophomorixUsers/'+role, {action: 'get-specified', user: id}).then (resp) ->
+        $scope.userDetails = resp.data
+        console.log $scope.userDetails
 
     #$scope.save = (username) ->
     #    if not $scope.username

@@ -105,11 +105,16 @@ class Handler(HttpPlugin):
     @url(r'/api/lm/sophomorixUsers/teachers')
     @endpoint(api=True)
     def handle_api_sophomorix_teachers(self, http_context):
-        if http_context.method == 'GET':
+        action = http_context.json_body()['action']
+        if http_context.method == 'POST':
             schoolname = 'default-school'
             teachersList = []
             with authorize('lm:users:teachers:read'):
-                sophomorixCommand = ['sophomorix-query', '--teacher', '--schoolbase', schoolname, '--user-full', '-jj']
+                if action == 'get-all':
+                    sophomorixCommand = ['sophomorix-query', '--teacher', '--schoolbase', schoolname, '--user-full', '-jj']
+                else:
+                    user = http_context.json_body()['user']
+                    sophomorixCommand = ['sophomorix-query', '--teacher', '--schoolbase', schoolname, '--user-full', '-jj', '--sam', user]
                 teachersCheck = lmn_getSophomorixValue(sophomorixCommand, 'LISTS/USER')
                 if len(teachersCheck) != 0:
                     teachers = lmn_getSophomorixValue(sophomorixCommand, 'USER')
@@ -148,10 +153,15 @@ class Handler(HttpPlugin):
     @url(r'/api/lm/sophomorixUsers/schooladmins')
     @endpoint(api=True)
     def handle_api_sophomorix_schooladmins(self, http_context):
-        if http_context.method == 'GET':
+        action = http_context.json_body()['action']
+        if http_context.method == 'POST':
             schooladminsList = []
             with authorize('lm:users:schooladmins:read'):
-                sophomorixCommand = ['sophomorix-query', '--schooladministrator', '--user-full', '-jj']
+                if action == 'get-all':
+                    sophomorixCommand = ['sophomorix-query', '--schooladministrator', '--user-full', '-jj']
+                else:
+                    user = http_context.json_body()['user']
+                    sophomorixCommand = ['sophomorix-query', '--schooladministrator', '--user-full', '-jj', '--sam', user]
                 schooladminsCheck = lmn_getSophomorixValue(sophomorixCommand, 'LISTS/USER')
                 if len(schooladminsCheck) != 0:
                     schooladmins = lmn_getSophomorixValue(sophomorixCommand, 'USER')
@@ -167,10 +177,15 @@ class Handler(HttpPlugin):
     @url(r'/api/lm/sophomorixUsers/globaladmins')
     @endpoint(api=True)
     def handle_api_sophomorix_globaladmins(self, http_context):
-        if http_context.method == 'GET':
+        action = http_context.json_body()['action']
+        if http_context.method == 'POST':
             globaladminsList = []
             with authorize('lm:users:globaladmins:read'):
-                sophomorixCommand = ['sophomorix-query', '--globaladministrator', '--user-full', '-jj']
+                if action == 'get-all':
+                    sophomorixCommand = ['sophomorix-query', '--globaladministrator', '--user-full', '-jj']
+                else:
+                    user = http_context.json_body()['user']
+                    sophomorixCommand = ['sophomorix-query', '--globaladministrator', '--user-full', '-jj', '--sam', user]
                 globaladminsCheck = lmn_getSophomorixValue(sophomorixCommand, 'LISTS/USER')
                 if len(globaladminsCheck) != 0:
                     globaladmins = lmn_getSophomorixValue(sophomorixCommand, 'USER')

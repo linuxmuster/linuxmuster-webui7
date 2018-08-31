@@ -215,8 +215,7 @@
         action: 'get-sessions',
         username: username
       }).then(function(resp) {
-        if (resp.data === 0) {
-          //$scope.sessioncount = 0
+        if (resp.data[0]['SESSIONCOUNT'] === 0) {
           $scope.sessions = resp.data;
           $scope.info.message = gettext('There are no sessions yet. Create a session using the "Edit Sessions" button at the top!');
           return console.log('no sessions');

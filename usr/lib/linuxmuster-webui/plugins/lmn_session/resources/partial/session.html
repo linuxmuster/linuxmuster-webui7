@@ -204,15 +204,11 @@
                 <button ng:click="cancel(identity.user,currentSession.name)" ng:show="currentSession.name != ''" class="btn btn-default btn-flat pull-right" translate>Cancel</button>
             </div>
         </floating-toolbar>
-        <!--
-            <tr style="display:{{visible.participanttable}};">
-        -->
-        {{}}
-        {{sessions.SESSIONCOUNT}}
-        <div>
-            <progress-spinner ng:show="sessions.SESSIONCOUNT != 0"></progress-spinner>
+        <div ng:show="sessions[0]['SESSIONCOUNT'] != 0">
+            <progress-spinner ng:show="sessions == null"></progress-spinner>
             <div ng:show="visible.sessiontable == 'show'"  class="list-group">
                 <!--
+            <progress-spinner ng:show="sessions == null"></progress-spinner>
                     <div ng:show="currentSession.name == ''"  class="list-group">
                 -->
                 <a class="list-group-item" ng:repeat="session in sessions | orderBy: '-COMMENT' :true" ng:click="getParticipants(identity.user,session.ID); currentSession.name=session.ID; currentSession.comment=session.COMMENT">
@@ -227,4 +223,3 @@
                     </div>
             </div>
         </div>
-        {{sessions}}

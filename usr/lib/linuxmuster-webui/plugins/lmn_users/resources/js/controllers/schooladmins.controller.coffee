@@ -18,7 +18,7 @@ angular.module('lm.users').controller 'LMUsersSchooladminsController', ($scope, 
      pageSize: 50
 
 
-    $http.get("/api/lm/sophomorixUsers/schooladmins").then (resp) ->
+    $http.post('/api/lm/sophomorixUsers/schooladmins',{action: 'get-all'}).then (resp) ->
         $scope.schooladmins = resp.data
 
     $scope.showInitialPassword = (user) ->
@@ -58,6 +58,18 @@ angular.module('lm.users').controller 'LMUsersSchooladminsController', ($scope, 
                 resolve:
                     role: () -> 'school-admin'
             )
+
+    $scope.userInfo = (user) ->
+      console.log (user)
+      $uibModal.open(
+        templateUrl: '/lm_users:resources/partial/userDetails.modal.html'
+        controller: 'LMNUserDetailsController'
+        size: 'lg'
+        resolve:
+          id: () -> user[0]['sAMAccountName']
+          role: () -> 'schooladmins'
+          )
+
 
     $scope.haveSelection = () ->
         if $scope.schooladmins

@@ -1,29 +1,29 @@
 <div class="modal-header">
     <h4 translate >User Details {{id}}</h4>
 </div>
-<progress-spinner ng:show="students == null"></progress-spinner>
-<div ng:show="students != null">
-    <h3>{{students[0]['givenName']}} {{students[0]['sn']}}</h3>
+<progress-spinner ng:show="userDetails == null"></progress-spinner>
+<div ng:show="userDetails != null">
+    <h3>{{userDetails[0]['givenName']}} {{userDetails[0]['sn']}}</h3>
 
     <div translate> Group Membership:</div>
-    <li ng:repeat="group in students[0]['memberOf']"><a ng:click="createConfig(example)">{{group}}</a></li>
+    <li ng:repeat="group in userDetails[0]['memberOf']"><a ng:click="createConfig(example)">{{group}}</a></li>
     <br>
-    <br>Klasse:  {{students[0]['sophomorixAdminClass']}}
-    <br>Geburtstag: {{students[0]['sophomorixBirthdate']}}
-    <br>Creationdate: {{students[0]['sophomorixCreationDate']}}
-    <br>Deaktivierungsdate: {{students[0]['sophomorixCreationDate']}}
-    <br>Tolerationdate: {{students[0]['sophomorixTolerationDate']}}
+    <br>Klasse:  {{userDetails[0]['sophomorixAdminClass']}}
+    <br>Geburtstag: {{userDetails[0]['sophomorixBirthdate']}}
+    <br>Creationdate: {{userDetails[0]['sophomorixCreationDate']}}
+    <br>Deaktivierungsdate: {{userDetails[0]['sophomorixCreationDate']}}
+    <br>Tolerationdate: {{userDetails[0]['sophomorixTolerationDate']}}
 
 
-    <br>Rolle: {{students[0]['sophomorixRole']}}
-    <br>Schulname:  {{students[0]['sophomorixSchoolname']}}
-    <br>Sophomorix Status: {{students[0]['sophomorixStatus']}}
+    <br>Rolle: {{userDetails[0]['sophomorixRole']}}
+    <br>Schulname:  {{userDetails[0]['sophomorixSchoolname']}}
+    <br>Sophomorix Status: {{userDetails[0]['sophomorixStatus']}}
 
     <div translate> Group Membership:</div>
-    <li ng:repeat="sophomorixQuota in students[0]['sophomorixQuota']"><a ng:click="createConfig(example)">{{sophomorixQuota}}</a></li>
+    <li ng:repeat="sophomorixQuota in userDetails[0]['sophomorixQuota']"><a ng:click="createConfig(example)">{{sophomorixQuota}}</a></li>
 
-    <br>Cloudquota Calculated: {{students[0]['sophomorixCloudQuotaCalculated']}}
-    <br>Mailquota Calculated: {{students[0]['sophomorixMailQuotaCalculated']}}
+    <br>Cloudquota Calculated: {{userDetails[0]['sophomorixCloudQuotaCalculated']}}
+    <br>Mailquota Calculated: {{userDetails[0]['sophomorixMailQuotaCalculated']}}
 
     <div class="modal-footer">
         <a class="btn btn-default btn-flat" ng:click="close()" translate>Close</a>

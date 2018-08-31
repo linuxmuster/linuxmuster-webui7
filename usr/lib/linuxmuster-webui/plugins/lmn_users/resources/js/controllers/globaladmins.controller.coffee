@@ -18,7 +18,7 @@ angular.module('lm.users').controller 'LMUsersGloballadminsController', ($scope,
      pageSize: 50
 
 
-    $http.get("/api/lm/sophomorixUsers/globaladmins").then (resp) ->
+    $http.post('/api/lm/sophomorixUsers/globaladmins',{action: 'get-all'}).then (resp) ->
         $scope.globaladmins = resp.data
 
     $scope.showInitialPassword = (user) ->
@@ -58,6 +58,17 @@ angular.module('lm.users').controller 'LMUsersGloballadminsController', ($scope,
         resolve:
           role: () -> angular.copy('global-admin')
       )
+    $scope.userInfo = (user) ->
+      console.log (user)
+      $uibModal.open(
+        templateUrl: '/lm_users:resources/partial/userDetails.modal.html'
+        controller: 'LMNUserDetailsController'
+        size: 'lg'
+        resolve:
+          id: () -> user[0]['sAMAccountName']
+          role: () -> 'globaladmins'
+          )
+
 
     $scope.haveSelection = () ->
         if $scope.globaladmins

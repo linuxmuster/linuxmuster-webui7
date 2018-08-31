@@ -61,6 +61,7 @@ angular.module('lm.users').controller 'LMUsersStudentsController', ($scope, $htt
             size: 'lg'
             resolve:
                 id: () -> user[0]['sAMAccountName']
+                role: () -> 'students'
                 )
 
 

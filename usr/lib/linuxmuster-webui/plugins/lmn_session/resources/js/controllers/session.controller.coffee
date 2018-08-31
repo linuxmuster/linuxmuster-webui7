@@ -166,8 +166,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
         #console.log $scope.identity
         #console.log $scope.identity.user
                 $http.post('/api/lmn/session/sessions', {action: 'get-sessions', username: username}).then (resp) ->
-                    if resp.data is 0
-                        #$scope.sessioncount = 0
+                    if resp.data[0]['SESSIONCOUNT'] is 0
                         $scope.sessions = resp.data
                         $scope.info.message = gettext('There are no sessions yet. Create a session using the "Edit Sessions" button at the top!')
                         console.log ('no sessions')

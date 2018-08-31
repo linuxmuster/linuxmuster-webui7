@@ -134,8 +134,7 @@
     </button>
 
     <br/>
-
-    <uib-pagination ng:show="devices.length > paging.pageSize" ng:model="paging.page" total-items="devices.length" items-per-page="paging.pageSize" max-size="10" rotate="true" boundary-links="true"></uib-pagination>
+    <ul uib-pagination ng:show="devices.length > paging.pageSize"  ng-model="paging.page" total-items="devices.length" items-per-page="paging.pageSize" max-size="10" rotate="true" boundary-links="true"></ul>
     <div class="floating-toolbar-padder"></div>
 
     <floating-toolbar>

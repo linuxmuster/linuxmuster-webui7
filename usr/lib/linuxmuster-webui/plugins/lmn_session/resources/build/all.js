@@ -204,7 +204,11 @@
           $scope.new - (sessions = resp.data);
           $scope.getSessions($scope.identity.user);
           notify.success(gettext('Session Created'));
-          return $scope.info.message = '';
+          $scope.info.message = '';
+          $scope.currentSession.name = '';
+          $scope.currentSession.comment = '';
+          console.log($scope.currentSession);
+          return $scope.visible.participanttable = 'none';
         });
       });
     };
@@ -227,6 +231,14 @@
       });
     };
     $scope.renameSession = function(username, session, comment) {
+      if (session === '') {
+        messagebox.show({
+          title: gettext('No Session selected'),
+          text: gettext('You have to select a session first.'),
+          positive: 'OK'
+        });
+        return;
+      }
       return messagebox.prompt(gettext('Session Name'), comment).then(function(msg) {
         if (!msg.value) {
           return;

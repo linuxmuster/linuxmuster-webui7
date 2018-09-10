@@ -159,12 +159,14 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                         $scope.new-sessions = resp.data
                         $scope.getSessions($scope.identity.user)
                         notify.success gettext('Session Created')
+                        # Reset alle messages and information to show session table
                         $scope.info.message = ''
+                        $scope.currentSession.name = ''
+                        $scope.currentSession.comment = ''
+                        $scope.visible.participanttable = 'none'
 
 
     $scope.getSessions = (username) ->
-        #console.log $scope.identity
-        #console.log $scope.identity.user
                 $http.post('/api/lmn/session/sessions', {action: 'get-sessions', username: username}).then (resp) ->
                     if resp.data[0]['SESSIONCOUNT'] is 0
                         $scope.sessions = resp.data
@@ -177,6 +179,9 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
 
 
     $scope.renameSession = (username, session, comment) ->
+                if session is ''
+                    messagebox.show(title: gettext('No Session selected'), text: gettext('You have to select a session first.'), positive: 'OK')
+                    return
                 messagebox.prompt(gettext('Session Name'), comment).then (msg) ->
                     if not msg.value
                         return

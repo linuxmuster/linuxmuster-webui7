@@ -26,7 +26,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
         # get ajenti yaml parameters
         params = aj.config.data['linuxmuster']['ldap']
-        searchFilter = "(&(cn=%s)(objectClass=user))" % username
+        searchFilter = "(&(cn=%s)(objectClass=user)(|(sophomorixRole=teacher)(sophomorixRole=globaladmin)(sophomorixRole=schooladministrator)))" % username
 
         l = ldap.initialize('ldap://' + params['host'])
         # Binduser bind to the  server

@@ -1,3 +1,9 @@
+linuxmuster-webui7 (1.0.18-27) UNRELEASED; urgency=medium
+
+  * Current snapshot build  5d034340e0719d4fc2ac5ec836c0f11385414a55
+
+ -- Andreas Till <andreas.till@netzint.de> Tue Sep 11 16:17:19 2018 +0000
+
 linuxmuster-webui7 (1.0.18-26) UNRELEASED; urgency=medium
 
   * Current snapshot build  9b68a72d8b106f453cb2e51464da55d5747ad2ed

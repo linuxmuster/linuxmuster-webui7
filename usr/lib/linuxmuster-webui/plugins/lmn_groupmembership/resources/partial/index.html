@@ -1,0 +1,21 @@
+<br/>
+
+<progress-spinner ng:show="groups == null"></progress-spinner>
+
+<div ng:show="groups != null">
+    <a class="list-group-item" ng:repeat="(group, value) in groups">
+
+
+        <span checkbox ng:model="group.subscribed"> </span>
+
+
+        <i class="fa fa-users"></i> {{value.cn}}
+    </a>
+
+    <div class="floating-toolbar-padder"></div>
+
+    <floating-toolbar>
+        <button ng:click="backups()" class="btn btn-default btn-flat pull-right"><i class="fa fa-history"></i></button>
+        <button ng:click="enroll()" class="btn btn-default btn-flat" translate>Enroll</button>
+    </floating-toolbar>
+</div>

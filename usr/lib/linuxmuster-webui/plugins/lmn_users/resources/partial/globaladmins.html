@@ -124,7 +124,7 @@
 <div class="floating-toolbar-padder"></div>
 <floating-toolbar>
     <button ng:click="addGlobalAdmin()" ng:show="globaladmins != null" class="btn btn-default btn-flat pull-left" translate><i class="fa fa-user-plus"></i> <span translate>  Add global administrator</span></button>
-    <button ng:click="selectAll()" class="btn btn-default btn-flat pull-left"> <i class="fa fa-asterisk"></i> <span translate>Select all</span></button>
+    <button ng:click="selectAll(filter)" class="btn btn-default btn-flat pull-left"> <i class="fa fa-asterisk"></i> <span translate>Select all</span></button>
     <button ng:click="batchSetInitialPassword()" ng:show="haveSelection()" class="btn btn-default btn-flat pull-right" translate>Set initial password for selected</button>
     <button ng:click="batchSetRandomPassword()" ng:show="haveSelection()" class="btn btn-default btn-flat pull-right" translate>Set random password for selected</button>
     <button ng:click="batchSetCustomPassword()" ng:show="haveSelection()" class="btn btn-default btn-flat pull-right" translate>Set custom password for selected</button>

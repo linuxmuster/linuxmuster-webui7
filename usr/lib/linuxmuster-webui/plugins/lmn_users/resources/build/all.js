@@ -286,13 +286,30 @@
         return results;
       })());
     };
-    return $scope.selectAll = function() {
+    return $scope.selectAll = function(filter) {
       var i, len, ref, results, teacher;
       ref = $scope.teachers;
       results = [];
       for (i = 0, len = ref.length; i < len; i++) {
         teacher = ref[i];
-        results.push(teacher.selected = true);
+        if (filter === void 0) {
+          teacher.selected = true;
+        }
+        if (teacher.sn.toLowerCase().includes(filter.toLowerCase())) {
+          console.log(teacher);
+          teacher.selected = true;
+        }
+        if (teacher.givenName.toLowerCase().includes(filter.toLowerCase())) {
+          teacher.selected = true;
+        }
+        if (teacher.sophomorixAdminClass.toLowerCase().includes(filter.toLowerCase())) {
+          teacher.selected = true;
+        }
+        if (teacher.sAMAccountName.toLowerCase().includes(filter.toLowerCase())) {
+          results.push(teacher.selected = true);
+        } else {
+          results.push(void 0);
+        }
       }
       return results;
     };
@@ -487,13 +504,30 @@
         return results;
       })());
     };
-    return $scope.selectAll = function() {
+    return $scope.selectAll = function(filter) {
       var i, len, ref, results, student;
       ref = $scope.students;
       results = [];
       for (i = 0, len = ref.length; i < len; i++) {
         student = ref[i];
-        results.push(student.selected = true);
+        if (filter === void 0) {
+          student.selected = true;
+        }
+        if (student.sn.toLowerCase().includes(filter.toLowerCase())) {
+          console.log(student);
+          student.selected = true;
+        }
+        if (student.givenName.toLowerCase().includes(filter.toLowerCase())) {
+          student.selected = true;
+        }
+        if (student.sophomorixAdminClass.toLowerCase().includes(filter.toLowerCase())) {
+          student.selected = true;
+        }
+        if (student.sAMAccountName.toLowerCase().includes(filter.toLowerCase())) {
+          results.push(student.selected = true);
+        } else {
+          results.push(void 0);
+        }
       }
       return results;
     };
@@ -716,13 +750,30 @@
         return results;
       })());
     };
-    return $scope.selectAll = function() {
+    return $scope.selectAll = function(filter) {
       var i, len, ref, results, schooladmin;
       ref = $scope.schooladmins;
       results = [];
       for (i = 0, len = ref.length; i < len; i++) {
         schooladmin = ref[i];
-        results.push(schooladmin.selected = true);
+        if (filter === void 0) {
+          schooladmin.selected = true;
+        }
+        if (schooladmin.sn.toLowerCase().includes(filter.toLowerCase())) {
+          console.log(schooladmin);
+          schooladmin.selected = true;
+        }
+        if (schooladmin.givenName.toLowerCase().includes(filter.toLowerCase())) {
+          schooladmin.selected = true;
+        }
+        if (schooladmin.sophomorixAdminClass.toLowerCase().includes(filter.toLowerCase())) {
+          schooladmin.selected = true;
+        }
+        if (schooladmin.sAMAccountName.toLowerCase().includes(filter.toLowerCase())) {
+          results.push(schooladmin.selected = true);
+        } else {
+          results.push(void 0);
+        }
       }
       return results;
     };
@@ -945,13 +996,30 @@
         return results;
       })());
     };
-    return $scope.selectAll = function() {
+    return $scope.selectAll = function(filter) {
       var globaladmin, i, len, ref, results;
       ref = $scope.globaladmins;
       results = [];
       for (i = 0, len = ref.length; i < len; i++) {
         globaladmin = ref[i];
-        results.push(globaladmin.selected = true);
+        if (filter === void 0) {
+          globaladmin.selected = true;
+        }
+        if (globaladmin.sn.toLowerCase().includes(filter.toLowerCase())) {
+          console.log(globaladmin);
+          globaladmin.selected = true;
+        }
+        if (globaladmin.givenName.toLowerCase().includes(filter.toLowerCase())) {
+          globaladmin.selected = true;
+        }
+        if (globaladmin.sophomorixAdminClass.toLowerCase().includes(filter.toLowerCase())) {
+          globaladmin.selected = true;
+        }
+        if (globaladmin.sAMAccountName.toLowerCase().includes(filter.toLowerCase())) {
+          results.push(globaladmin.selected = true);
+        } else {
+          results.push(void 0);
+        }
       }
       return results;
     };
@@ -1448,13 +1516,30 @@
         return results;
       })());
     };
-    return $scope.selectAll = function() {
+    return $scope.selectAll = function(filter) {
       var i, len, ref, results, teacher;
       ref = $scope.teachers;
       results = [];
       for (i = 0, len = ref.length; i < len; i++) {
         teacher = ref[i];
-        results.push(teacher.selected = true);
+        if (filter === void 0) {
+          teacher.selected = true;
+        }
+        if (teacher.sn.toLowerCase().includes(filter.toLowerCase())) {
+          console.log(teacher);
+          teacher.selected = true;
+        }
+        if (teacher.givenName.toLowerCase().includes(filter.toLowerCase())) {
+          teacher.selected = true;
+        }
+        if (teacher.sophomorixAdminClass.toLowerCase().includes(filter.toLowerCase())) {
+          teacher.selected = true;
+        }
+        if (teacher.sAMAccountName.toLowerCase().includes(filter.toLowerCase())) {
+          results.push(teacher.selected = true);
+        } else {
+          results.push(void 0);
+        }
       }
       return results;
     };

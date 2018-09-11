@@ -204,17 +204,15 @@
           $scope.new - (sessions = resp.data);
           $scope.getSessions($scope.identity.user);
           notify.success(gettext('Session Created'));
+          // Reset alle messages and information to show session table
           $scope.info.message = '';
           $scope.currentSession.name = '';
           $scope.currentSession.comment = '';
-          console.log($scope.currentSession);
           return $scope.visible.participanttable = 'none';
         });
       });
     };
     $scope.getSessions = function(username) {
-      //console.log $scope.identity
-      //console.log $scope.identity.user
       return $http.post('/api/lmn/session/sessions', {
         action: 'get-sessions',
         username: username

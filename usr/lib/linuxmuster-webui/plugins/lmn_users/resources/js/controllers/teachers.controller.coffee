@@ -83,7 +83,16 @@ angular.module('lm.users').controller 'LMUsersTeachersController', ($scope, $htt
     $scope.batchSetCustomPassword = () ->
         $scope.setCustomPassword((x for x in $scope.teachers when x.selected))
 
-    $scope.selectAll = () ->
+    $scope.selectAll = (filter) ->
         for teacher in $scope.teachers
-            teacher.selected = true
-
+           if filter is undefined
+              teacher.selected = true
+           if teacher.sn.toLowerCase().includes filter.toLowerCase()
+              console.log (teacher)
+              teacher.selected = true
+           if teacher.givenName.toLowerCase().includes filter.toLowerCase()
+              teacher.selected = true
+           if teacher.sophomorixAdminClass.toLowerCase().includes filter.toLowerCase()
+              teacher.selected = true
+           if teacher.sAMAccountName.toLowerCase().includes filter.toLowerCase()
+              teacher.selected = true

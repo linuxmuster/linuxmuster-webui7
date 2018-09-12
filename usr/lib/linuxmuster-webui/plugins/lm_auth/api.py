@@ -88,7 +88,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
     def change_password(self, username, password, new_password):
         if not self.authenticate(username, password):
             raise Exception('Wrong password')
-        systemString = ['sophomorix-passwd', '--user', username, '--pass', new_password, '--hide']
+        systemString = ['sophomorix-passwd', '--user', username, '--pass', new_password, '--hide', '--nofirstpassupdate']
         subprocess.check_call(systemString, shell=False)
 
     def get_isolation_uid(self, username):

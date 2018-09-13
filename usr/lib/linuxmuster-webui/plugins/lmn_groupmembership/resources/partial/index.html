@@ -2,13 +2,54 @@
 
 <progress-spinner ng:show="groups == null"></progress-spinner>
 <div ng:show="groups != null">
-    <a class="list-group-item" ng:repeat="(group, value) in groups">
+    <div class="input-group">
+
+        <input ng:model="filter" type="search" autofocus class="form-control" placeholder="Filter" typeahead-min-length="1" />
+        <div uib-dropdown class="input-group-btn">
+            <button class="btn btn-default" uib-dropdown-toggle>
+                <i class="fa fa-sort-amount-asc"></i> {{sort.name}}
+                <span class="caret"></span>
+            </button>
+            <ul uib-dropdown-menu class="dropdown-menu-right" style="width:150px">
+                <li ng:repeat="sort in sorts">
+                    <a ng:click="$parent.sort = sort">
+                        <i class="fa fa-sort-amount-asc"></i> {{sort.name}}
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div uib-dropdown class="input-group-btn" auto-close="outsideClick">
+            <button class="btn btn-default" uib-dropdown-toggle>
+                <i class="fa fa-list-ol"></i> {{'Rows'|translate}}
+                <span class="caret"></span>
+            </button>
+            <ul uib-dropdown-menu class="dropdown-menu-right" style="width:200px">
+                <li ng:repeat="size in [10, 25, 50, 100]">
+                    <a ng:click="paging.pageSize = size"><i class="fa fa-list-ol"></i> {{size}} classes</a>
+                </li>
+                <li>
+                    <div class="input-group" style="display: table">
+                        <div class="input-group-addon">
+                            Other:
+                        </div>
+                        <input ng:model="paging.pageSize" type="number" autofocus class="form-control" />
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <a class="list-group-item" ng:repeat="group in groups|filter:filter|orderBy:['-_isNew', sort.fx]|page:paging.page:paging.pageSize">
 
 
-        <span checkbox ng:model="value.member"> </span>
+        <span checkbox ng:model="group.membership"> </span>
 
-        <i class="fa fa-users"></i> {{group}}
+        <i class="fa fa-users"></i> {{group.classname}}
     </a>
+
+    <br/>
+        <ul uib-pagination ng:show="groups.length > paging.pageSize"  ng-model="paging.page" total-items="groups.length" items-per-page="paging.pageSize" max-size="10" rotate="true" boundary-links="true"></ul>
+
 
     <div class="floating-toolbar-padder"></div>
 

@@ -15,6 +15,25 @@
 
   angular.module('lmn.groupmembership').controller('LMNGroupMembershipController', function($scope, $http, $uibModal, gettext, notify, pageTitle) {
     pageTitle.set(gettext('Settings'));
+    $scope.sorts = [
+      {
+        name: gettext('Class'),
+        fx: function(x) {
+          return x.classname;
+        }
+      },
+      {
+        name: gettext('Membership'),
+        fx: function(x) {
+          return x.membership;
+        }
+      }
+    ];
+    $scope.sort = $scope.sorts[0];
+    $scope.paging = {
+      page: 1,
+      pageSize: 50
+    };
     $scope.getGroups = function(username) {
       return $http.post('/api/lmn/groupmembership', {
         action: 'list-groups',

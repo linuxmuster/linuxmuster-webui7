@@ -5,7 +5,7 @@ angular.module('lmn.groupmembership').config ($routeProvider) ->
 
 
 angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController', ($scope, $http, $uibModal, gettext, notify, pageTitle) ->
-    pageTitle.set(gettext('Settings'))
+    pageTitle.set(gettext('Group Membership'))
 
     $scope.sorts = [
         {

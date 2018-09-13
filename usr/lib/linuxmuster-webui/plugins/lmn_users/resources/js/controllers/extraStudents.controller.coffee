@@ -40,7 +40,8 @@ angular.module('lm.users').controller 'LMUsersExtraStudentsController', ($scope,
             $scope.students = resp.data
 
     $scope.add = () ->
-        $scope.paging.page = Math.floor(($scope.students.length - 1) / $scope.paging.pageSize) + 1
+        if $scope.students.length > 0
+            $scope.paging.page = Math.floor(($scope.students.length - 1) / $scope.paging.pageSize) + 1
         $scope.students.push {_isNew: true}
 
     $scope.remove = (student) ->

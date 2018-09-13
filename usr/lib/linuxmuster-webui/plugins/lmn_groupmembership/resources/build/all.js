@@ -14,7 +14,7 @@
   });
 
   angular.module('lmn.groupmembership').controller('LMNGroupMembershipController', function($scope, $http, $uibModal, gettext, notify, pageTitle) {
-    pageTitle.set(gettext('Settings'));
+    pageTitle.set(gettext('Group Membership'));
     $scope.sorts = [
       {
         name: gettext('Class'),

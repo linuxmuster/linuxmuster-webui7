@@ -59,7 +59,9 @@ angular.module('lm.users').controller 'LMUsersTeachersListController', ($scope, 
             $scope.teachers = resp.data
 
     $scope.add = () ->
-        $scope.paging.page = Math.floor(($scope.teachers.length - 1) / $scope.paging.pageSize) + 1
+        if $scope.teachers.length > 0
+            $scope.paging.page = Math.floor(($scope.teachers.length - 1) / $scope.paging.pageSize) + 1
+        $scope.filter = ''
         $scope.teachers.push {class: 'Lehrer', _isNew: true}
 
     $scope.remove = (teacher) ->

@@ -47,7 +47,9 @@
       pageSize: 100
     };
     $scope.add = function() {
-      $scope.paging.page = Math.floor(($scope.students.length - 1) / $scope.paging.pageSize) + 1;
+      if ($scope.students.length > 0) {
+        $scope.paging.page = Math.floor(($scope.students.length - 1) / $scope.paging.pageSize) + 1;
+      }
       $scope.filter = '';
       return $scope.students.push({
         first_name: 'New',
@@ -1107,7 +1109,10 @@
       });
     });
     $scope.add = function() {
-      $scope.paging.page = Math.floor(($scope.teachers.length - 1) / $scope.paging.pageSize) + 1;
+      if ($scope.teachers.length > 0) {
+        $scope.paging.page = Math.floor(($scope.teachers.length - 1) / $scope.paging.pageSize) + 1;
+      }
+      $scope.filter = '';
       return $scope.teachers.push({
         class: 'Lehrer',
         _isNew: true
@@ -1205,7 +1210,9 @@
       });
     });
     $scope.add = function() {
-      $scope.paging.page = Math.floor(($scope.students.length - 1) / $scope.paging.pageSize) + 1;
+      if ($scope.students.length > 0) {
+        $scope.paging.page = Math.floor(($scope.students.length - 1) / $scope.paging.pageSize) + 1;
+      }
       return $scope.students.push({
         _isNew: true
       });
@@ -1294,7 +1301,9 @@
       });
     });
     $scope.add = function() {
-      $scope.paging.page = Math.floor(($scope.courses.length - 1) / $scope.paging.pageSize) + 1;
+      if ($scope.courses.length > 0) {
+        $scope.paging.page = Math.floor(($scope.courses.length - 1) / $scope.paging.pageSize) + 1;
+      }
       return $scope.courses.push({
         _isNew: true
       });

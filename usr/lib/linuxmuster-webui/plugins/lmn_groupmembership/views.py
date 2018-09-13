@@ -6,6 +6,7 @@ from aj.auth import authorize
 from aj.plugins.lm_common.api import lmn_getSophomorixValue
 import subprocess
 
+
 @component(HttpPlugin)
 class Handler(HttpPlugin):
     def __init__(self, context):
@@ -21,7 +22,7 @@ class Handler(HttpPlugin):
 
         if http_context.method == 'POST':
             if action == 'list-groups':
-                memberships = {}
+                membershipList = []
 
                 # get all available groups
                 sophomorixCommand = ['sophomorix-query',  '--schoolbase', schoolname, '--user-full', '-j', '--sam', username]
@@ -33,14 +34,13 @@ class Handler(HttpPlugin):
                 # get groups specified user is member of
                 sophomorixCommand = ['sophomorix-query', '--class', '--schoolbase', schoolname, '--group-full', '-jj']
                 schoolclasses = lmn_getSophomorixValue(sophomorixCommand, 'LISTS/GROUP')
-                #return g
+                # build membershipList with membership status
                 for schoolclass in schoolclasses:
-                    memberships.setdefault(schoolclass, {})
                     if schoolclass in usergroups:
-                        memberships[schoolclass]['member'] = True
+                        membershipList.append({'classname': schoolclass, 'membership': True})
                     else:
-                        memberships[schoolclass]['member'] = False
-                return memberships
+                        membershipList.append({'classname': schoolclass, 'membership': False})
+                return membershipList
 
             if action == 'set-groups':
                 groups = http_context.json_body()['groups']
@@ -48,12 +48,12 @@ class Handler(HttpPlugin):
                 # groupsToRemove = []
                 # TODO Batch adding needed
                 for group in groups:
-                    if groups[group]['member'] == True:
+                    if group['membership'] is True:
                         # groupsToAdd.append(group)
-                        sophomorixCommand = ['sophomorix-group',  '--addmembers', username, '--group', group]
+                        sophomorixCommand = ['sophomorix-group',  '--addmembers', username, '--group', group['classname']]
                         subprocess.check_call(sophomorixCommand, shell=False)
-                    if groups[group]['member'] == False:
+                    if group['membership'] is False:
                         # groupsToRemove.append(group)
-                        sophomorixCommand = ['sophomorix-group',  '--removemembers', username, '--group', group]
+                        sophomorixCommand = ['sophomorix-group',  '--removemembers', username, '--group', group['classname']]
                         subprocess.check_call(sophomorixCommand, shell=False)
                 return 0

@@ -7,6 +7,21 @@ angular.module('lmn.groupmembership').config ($routeProvider) ->
 angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController', ($scope, $http, $uibModal, gettext, notify, pageTitle) ->
     pageTitle.set(gettext('Settings'))
 
+    $scope.sorts = [
+        {
+            name: gettext('Class')
+            fx: (x) -> x.classname
+        }
+        {
+            name: gettext('Membership')
+            fx: (x) -> x.membership
+        }
+    ]
+    $scope.sort = $scope.sorts[0]
+    $scope.paging =
+       page: 1
+       pageSize: 50
+
 
     $scope.getGroups = (username) ->
         $http.post('/api/lmn/groupmembership', {action: 'list-groups', username: username}).then (resp) ->

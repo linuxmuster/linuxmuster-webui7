@@ -27,17 +27,15 @@ angular.module('lm.settings').controller 'LMSettingsController', ($scope, $http,
         console.log(resp.data)
         encoding = {}
         #TODO: Remove comments
-        #for file in ['userfile.students.csv', 'userfile.teachers.csv', 'userfile.extrastudents.csv', 'classfile.extraclasses']
-        for file in ['userfile.students.csv']
-        # for file in ['userfile.students.csv', 'userfile.teachers.csv']
-            #console.log (file)
+        #for file in ['userfile.students.csv', 'userfile.teachers.csv', 'userfile.extrastudents.csv', 'classfile.extraclasses.csv', ]
+        for file in ['userfile.students.csv', 'userfile.extrastudents.csv', 'userfile.teachers.csv',  'userfile.extrastudents.csv']
             userfile = file.substring(file.indexOf('.')+1)
-            #console.log (userfile)
             if resp.data[file]['encoding'] is 'auto'
-                #console.log('is auto')
+                #console.log(userfile)
+                console.log('is auto')
                 $http.post('/api/lmn/schoolsettings/determine-encoding', {path: '/etc/linuxmuster/sophomorix/'+school+'/'+userfile, file:file}).then (response) ->
                     encoding[response['config']['data']['file']] = response.data
-                    #console.log(encoding)
+                    console.log(encoding)
         #console.log(encoding)
         $scope.encoding = encoding
         $scope.settings = resp.data

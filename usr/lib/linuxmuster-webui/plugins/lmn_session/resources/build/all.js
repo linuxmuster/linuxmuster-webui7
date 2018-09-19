@@ -299,30 +299,31 @@
         $scope.info.message = '';
         $scope.visible.participanttable = 'show';
         console.log($scope._.addParticipant);
-        // Add Managementgroups list if missing. This happens when all managementgroup attributes are false, causing the json tree to skip this key
-        if ($scope._.addParticipant.MANAGEMENTGROUPS == null) {
-          $scope._.addParticipant.MANAGEMENTGROUPS = [];
+        if (participant.sophomorixRole === 'student') {
+          // Add Managementgroups list if missing. This happens when all managementgroup attributes are false, causing the json tree to skip this key
+          if ($scope._.addParticipant.MANAGEMENTGROUPS == null) {
+            $scope._.addParticipant.MANAGEMENTGROUPS = [];
+          }
+          $scope.participants[$scope._.addParticipant.sAMAccountName] = angular.copy({
+            "givenName": $scope._.addParticipant.givenName,
+            "sn": $scope._.addParticipant.sn,
+            "sophomorixExamMode": $scope._.addParticipant.sophomorixExamMode,
+            "group_webfilter": $scope._.addParticipant.MANAGEMENTGROUPS.webfilter,
+            "group_intranetaccess": $scope._.addParticipant.MANAGEMENTGROUPS.intranet,
+            "group_printing": $scope._.addParticipant.MANAGEMENTGROUPS.printing,
+            "sophomorixStatus": "U",
+            "sophomorixRole": $scope._.addParticipant.sophomorixRole,
+            "group_internetaccess": $scope._.addParticipant.MANAGEMENTGROUPS.internet,
+            "sophomorixAdminClass": $scope._.addParticipant.sophomorixAdminClass,
+            "user_existing": true,
+            "group_wifiaccess": $scope._.addParticipant.MANAGEMENTGROUPS.wifi
+          });
         }
-        $scope.participants[$scope._.addParticipant.sAMAccountName] = angular.copy({
-          "givenName": $scope._.addParticipant.givenName,
-          "sn": $scope._.addParticipant.sn,
-          "sophomorixExamMode": $scope._.addParticipant.sophomorixExamMode,
-          "group_webfilter": $scope._.addParticipant.MANAGEMENTGROUPS.webfilter,
-          "group_intranetaccess": $scope._.addParticipant.MANAGEMENTGROUPS.intranet,
-          "group_printing": $scope._.addParticipant.MANAGEMENTGROUPS.printing,
-          "sophomorixStatus": "U",
-          "sophomorixRole": $scope._.addParticipant.sophomorixRole,
-          "group_internetaccess": $scope._.addParticipant.MANAGEMENTGROUPS.internet,
-          "sophomorixAdminClass": $scope._.addParticipant.sophomorixAdminClass,
-          "user_existing": true,
-          "group_wifiaccess": $scope._.addParticipant.MANAGEMENTGROUPS.wifi
-        });
         return $scope._.addParticipant = null;
       }
     });
     // TODO Figure out how to call the existing watch addParticipant function
     $scope.addParticipant = function(participant) {
-      console.log(participant);
       if (participant) {
         if ($scope.participants[0] != null) {
           delete $scope.participants['0'];
@@ -330,33 +331,34 @@
         $scope.info.message = '';
         $scope.visible.participanttable = 'show';
         console.log(participant);
-        // Add Managementgroups list if missing. This happens when all managementgroup attributes are false, causing the json tree to skip this key
-        if (participant.MANAGEMENTGROUPS == null) {
-          participant.MANAGEMENTGROUPS = [];
+        // Only add Students
+        if (participant.sophomorixRole === 'student') {
+          // Add Managementgroups list if missing. This happens when all managementgroup attributes are false, causing the json tree to skip this key
+          if (participant.MANAGEMENTGROUPS == null) {
+            participant.MANAGEMENTGROUPS = [];
+          }
+          console.log($scope.participants);
+          $scope.participants[participant.sAMAccountName] = angular.copy({
+            "givenName": participant.givenName,
+            "sn": participant.sn,
+            "sophomorixExamMode": participant.sophomorixExamMode,
+            "group_webfilter": participant.MANAGEMENTGROUPS.webfilter,
+            "group_intranetaccess": participant.MANAGEMENTGROUPS.intranet,
+            "group_printing": participant.MANAGEMENTGROUPS.printing,
+            "sophomorixStatus": "U",
+            "sophomorixRole": participant.sophomorixRole,
+            "group_internetaccess": participant.MANAGEMENTGROUPS.internet,
+            "sophomorixAdminClass": participant.sophomorixAdminClass,
+            "user_existing": true,
+            "group_wifiaccess": participant.MANAGEMENTGROUPS.wifi
+          });
         }
-        console.log($scope.participants);
-        $scope.participants[participant.sAMAccountName] = angular.copy({
-          "givenName": participant.givenName,
-          "sn": participant.sn,
-          "sophomorixExamMode": participant.sophomorixExamMode,
-          "group_webfilter": participant.MANAGEMENTGROUPS.webfilter,
-          "group_intranetaccess": participant.MANAGEMENTGROUPS.intranet,
-          "group_printing": participant.MANAGEMENTGROUPS.printing,
-          "sophomorixStatus": "U",
-          "sophomorixRole": participant.sophomorixRole,
-          "group_internetaccess": participant.MANAGEMENTGROUPS.internet,
-          "sophomorixAdminClass": participant.sophomorixAdminClass,
-          "user_existing": true,
-          "group_wifiaccess": participant.MANAGEMENTGROUPS.wifi
-        });
         return participant = null;
       }
     };
     $scope.$watch('_.addSchoolClass', function() {
       var member, members, ref, schoolClass;
       if ($scope._.addSchoolClass) {
-        console.log('huhu');
-        console.log($scope._.addSchoolClass.members);
         members = $scope._.addSchoolClass.members;
         ref = $scope._.addSchoolClass.members;
         for (schoolClass in ref) {

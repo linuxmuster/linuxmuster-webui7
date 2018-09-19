@@ -111,9 +111,17 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
         jsonS = jsonS.split("# JSON-begin", 1)[1]
         jsonS = jsonS.split("# JSON-end", 1)[0]
     file = open("/tmp/getSophomorixValueDebugoutput.txt","a")
+    file.write('######NEUE SECTION BEGINNT#####')
     file.write(jsonS)
-    file.close()
+    #file = open("/tmp/getSophomorixValueDebugoutput.txt","a")
+    #file.write(jsonS)
+    #file.close()
     jsonDict = json.loads(jsonS, encoding='UTF-8')
+    time.sleep(1)
+    file.write('####jsonDict####')
+
+    file.write(str(jsonDict))
+    file.close()
     # if empty jsonpath is returned dont use dpath
     if jsonpath is '':
         return jsonDict

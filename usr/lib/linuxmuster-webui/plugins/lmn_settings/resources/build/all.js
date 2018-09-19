@@ -35,26 +35,24 @@
       school = 'default-school';
       console.log(resp.data);
       encoding = {};
-      ref = ['userfile.students.csv'];
+      ref = ['userfile.students.csv', 'userfile.extrastudents.csv', 'userfile.teachers.csv', 'userfile.extrastudents.csv'];
       //TODO: Remove comments
-      //for file in ['userfile.students.csv', 'userfile.teachers.csv', 'userfile.extrastudents.csv', 'classfile.extraclasses']
+      //for file in ['userfile.students.csv', 'userfile.teachers.csv', 'userfile.extrastudents.csv', 'classfile.extraclasses.csv', ]
       for (i = 0, len = ref.length; i < len; i++) {
         file = ref[i];
-        // for file in ['userfile.students.csv', 'userfile.teachers.csv']
-        //console.log (file)
         userfile = file.substring(file.indexOf('.') + 1);
-        //console.log (userfile)
         if (resp.data[file]['encoding'] === 'auto') {
-          //console.log('is auto')
+          //console.log(userfile)
+          console.log('is auto');
           $http.post('/api/lmn/schoolsettings/determine-encoding', {
             path: '/etc/linuxmuster/sophomorix/' + school + '/' + userfile,
             file: file
           }).then(function(response) {
-            return encoding[response['config']['data']['file']] = response.data;
+            encoding[response['config']['data']['file']] = response.data;
+            return console.log(encoding);
           });
         }
       }
-      //console.log(encoding)
       //console.log(encoding)
       $scope.encoding = encoding;
       return $scope.settings = resp.data;

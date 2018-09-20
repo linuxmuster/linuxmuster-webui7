@@ -77,13 +77,13 @@
                             <label translate>Icon</label>
                             <div uib-dropdown>
                                 <button class="btn btn-default btn-block" uib-dropdown-toggle>
-                                    <img src="/api/filesystem/read//srv/linbo/icons/{{os.IconName}}" style="max-width: 32px;" />
+                                    <img src="/api/lm/linbo/icons/read/{{os.IconName}}" style="max-width: 32px;" />
                                     <i class="fa fa-caret-down"></i>
                                 </button>
                                 <ul uib-dropdown-menu class="dropdown-menu-right" style="width: 150px !important; min-width: 0;">
-                                    <li ng:repeat="icon in icons" ng:show="icon.substring(0, 6) != 'linbo_'">
+                                    <li ng:repeat="icon in icons" ng:show="icon.substring(0, 6) != 'linbo_' && icon.includes('png')">
                                         <a ng:click="os.IconName = icon">
-                                            <img src="/api/filesystem/read//srv/linbo/icons/{{icon}}" style="max-width: 32px;" />&emsp; {{icon}}
+                                            <img src="/api/lm/linbo/icons/read/{{icon}}" style="max-width: 32px;" />&emsp; {{icon}}
                                         </a>
                                     </li>
                                 </ul>

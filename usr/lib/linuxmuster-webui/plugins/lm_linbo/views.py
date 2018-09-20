@@ -86,6 +86,16 @@ class Handler(HttpPlugin):
                 })
         return r
 
+    @url(r'/api/lm/linbo/icons/read/(?P<name>.+)')
+    @endpoint(api=False, page=True)
+    def handle_api_icons_read(self, http_context, name):
+        root = '/srv/linbo/icons/'
+        path = os.path.abspath(os.path.join(root, name))
+
+        if not path.startswith(root):
+            return http_context.respond_forbidden()
+        return http_context.file(path, inline=False, name=name)
+
     @url(r'/api/lm/linbo/image/(?P<name>.+)')
     @authorize('lm:linbo:images')
     @endpoint(api=True)

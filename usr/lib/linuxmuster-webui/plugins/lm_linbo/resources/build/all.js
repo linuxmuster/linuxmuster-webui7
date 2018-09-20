@@ -13,6 +13,19 @@
     });
   });
 
+  angular.module('lm.linbo').controller('LMLINBOAcceptModalController', function($scope, $uibModalInstance, $http, partition, disk) {
+    $scope.partition = partition;
+    $scope.disk = disk;
+    $scope.save = function() {
+      return $uibModalInstance.close({
+        response: 'accept'
+      });
+    };
+    return $scope.close = function() {
+      return $uibModalInstance.dismiss();
+    };
+  });
+
   angular.module('lm.linbo').controller('LMLINBOPartitionModalController', function($scope, $uibModalInstance, $http, partition, os) {
     $scope.partition = partition;
     $scope.os = os;
@@ -351,26 +364,22 @@
       });
     };
     $scope.removePartition = function(partition, disk) {
-      return messagebox.show({
-        text: `Remove partition ${partition.Dev}?`,
-        positive: 'Remove',
-        negative: 'Cancel'
-      }).then(function() {
-        var x;
-        $scope.config.os = (function() {
-          var k, len2, ref2, results;
-          ref2 = $scope.config.os;
-          results = [];
-          for (k = 0, len2 = ref2.length; k < len2; k++) {
-            x = ref2[k];
-            if (x.Root !== partition.Dev && x.Boot !== partition.Dev) {
-              results.push(x);
-            }
+      return $uibModal.open({
+        templateUrl: '/lm_linbo:resources/partial/accept.modal.html',
+        controller: 'LMLINBOAcceptModalController',
+        resolve: {
+          partition: function() {
+            return angular.copy(partition.Dev);
+          },
+          disk: function() {
+            return angular.copy(disk);
           }
-          return results;
-        })();
-        disk.partitions.remove(partition);
-        return $scope.rebuildDisks();
+        }
+      }).result.then(function(result) {
+        if (result.response === 'accept') {
+          disk.partitions.remove(partition);
+          return $scope.rebuildDisks();
+        }
       });
     };
     $scope.rebuildDisks = function() {

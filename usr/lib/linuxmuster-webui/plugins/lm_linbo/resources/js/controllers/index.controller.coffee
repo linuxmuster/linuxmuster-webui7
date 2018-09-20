@@ -4,6 +4,16 @@ angular.module('lm.linbo').config ($routeProvider) ->
         templateUrl: '/lm_linbo:resources/partial/index.html'
 
 
+angular.module('lm.linbo').controller 'LMLINBOAcceptModalController', ($scope, $uibModalInstance, $http, partition, disk) ->
+    $scope.partition = partition
+    $scope.disk = disk
+
+    $scope.save = () ->
+        $uibModalInstance.close(response: 'accept')
+
+    $scope.close = () ->
+        $uibModalInstance.dismiss()
+
 angular.module('lm.linbo').controller 'LMLINBOPartitionModalController', ($scope, $uibModalInstance, $http, partition, os) ->
     $scope.partition = partition
     $scope.os = os
@@ -310,11 +320,19 @@ angular.module('lm.linbo').controller 'LMLINBOConfigModalController', ($scope, $
             DefaultAction: 'sync'
         }
 
+
     $scope.removePartition = (partition, disk) ->
-        messagebox.show(text: "Remove partition #{partition.Dev}?", positive: 'Remove', negative: 'Cancel').then () ->
-            $scope.config.os = (x for x in $scope.config.os when x.Root != partition.Dev and x.Boot != partition.Dev)
-            disk.partitions.remove(partition)
-            $scope.rebuildDisks()
+        $uibModal.open(
+            templateUrl: '/lm_linbo:resources/partial/accept.modal.html'
+            controller: 'LMLINBOAcceptModalController'
+            resolve:
+                partition: () -> angular.copy(partition.Dev)
+                disk: () -> angular.copy(disk)
+        ).result.then (result) ->
+            if result.response is 'accept'
+                disk.partitions.remove(partition)
+                $scope.rebuildDisks()
+
 
     $scope.rebuildDisks = () ->
         remap = {}

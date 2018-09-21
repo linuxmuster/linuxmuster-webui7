@@ -1,3 +1,8 @@
+isValidName = (name) ->
+        regExp =  /^[a-z0-9]*$/i
+        validName = regExp.test(name)
+        return validName
+
 angular.module('lm.linbo').config ($routeProvider) ->
     $routeProvider.when '/view/lm/linbo',
         controller: 'LMLINBOController'
@@ -401,6 +406,7 @@ angular.module('lm.linbo').controller 'LMLINBOConfigModalController', ($scope, $
         $uibModalInstance.dismiss()
 
 
+
 angular.module('lm.linbo').controller 'LMLINBOController', ($scope, $http, $uibModal, $log, $route, gettext, notify, pageTitle, tasks, messagebox) ->
     pageTitle.set(gettext('LINBO'))
 
@@ -416,6 +422,10 @@ angular.module('lm.linbo').controller 'LMLINBOController', ($scope, $http, $uibM
     $scope.createConfig = (example) ->
         messagebox.prompt('New name', '').then (msg) ->
             newName = msg.value
+            if not isValidName(newName)
+                notify.error gettext('Not a valid name! Only ASCII characters and numbers are allowed!')
+                return
+            return
             if newName
                 if example
                     $http.get("/api/lm/linbo/config/examples/#{example}").then (resp) ->

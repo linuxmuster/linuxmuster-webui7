@@ -5,6 +5,7 @@ from aj.auth import authorize
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint
 from aj.plugins.lm_common.api import lm_backup_file
+import magic
 
 
 @component(HttpPlugin)
@@ -73,16 +74,22 @@ class Handler(HttpPlugin):
                 macct_file = os.path.join(self.LINBO_PATH, file + '.macct')
                 reg_file = os.path.join(self.LINBO_PATH, file + '.reg')
                 postsync_file = os.path.join(self.LINBO_PATH, file + '.postsync')
+
+                # blob = open(desc_file).read()
+                mime = magic.Magic(mime_encoding=True)
+                # desc_encoding = mime.from_buffer(blob)
+                # 'macct': open(macct_file).read().decode('utf-8') if os.path.exists(macct_file) else None,
+
                 r.append({
                     'name': file,
                     'cloop': file.endswith('.cloop'),
                     'rsync': file.endswith('.rsync'),
                     'size': os.stat(os.path.join(self.LINBO_PATH, file)).st_size,
-                    'description': open(desc_file).read().decode('utf-8') if os.path.exists(desc_file) else None,
+                    'description': open(desc_file).read().decode(mime.from_buffer(open(desc_file).read())) if os.path.exists(desc_file) else None,
                     'info': open(info_file).read().decode('utf-8') if os.path.exists(info_file) else None,
                     'macct': open(macct_file).read().decode('utf-8') if os.path.exists(macct_file) else None,
-                    'reg': open(reg_file).read().decode('utf-8') if os.path.exists(reg_file) else None,
-                    'postsync': open(postsync_file).read().decode('utf-8') if os.path.exists(postsync_file) else None,
+                    'reg': open(reg_file).read().decode(mime.from_buffer(open(desc_file).read())) if os.path.exists(reg_file) else None,
+                    'postsync': open(postsync_file).read().decode(mime.from_buffer(open(desc_file).read())) if os.path.exists(postsync_file) else None,
                 })
         return r
 

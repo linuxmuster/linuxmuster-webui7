@@ -7,47 +7,49 @@ case "$1" in
         webuietc="/usr/lib/linuxmuster-webui/etc"
      if [ ! -f $webuietc/.installed ];
       then
-	# do first install
-	pip install -U pip wheel setuptools distribute
-	hash -r
-	pip install -r $webuietc/requirements.txt
-	#echo "link ajcfg to linuxmuster-webui folder"
-	#ln -s $ajcfg $webuietc
-	# Set default permissions from true to false
-	echo "set reverse permissions"
-	sed -i "s/: True,/: False,/g" /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/main.py
-	# systemctl einrichten und starten
-	echo "configure systemctl.."
-	systemctl daemon-reload
-	systemctl enable linuxmuster-webui
-	systemctl start linuxmuster-webui
-	touch $webuietc/.installed
+    # do first install
+    pip install -U pip wheel setuptools distribute
+    hash -r
+    pip install -r $webuietc/requirements.txt
+    #echo "link ajcfg to linuxmuster-webui folder"
+    #ln -s $ajcfg $webuietc
+    # Set default permissions from true to false
+    echo "set reverse permissions"
+    sed -i "s/: True,/: False,/g" /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/main.py
+    # systemctl einrichten und starten
+    echo "configure systemctl.."
+    systemctl daemon-reload
+    systemctl enable linuxmuster-webui
+    systemctl start linuxmuster-webui
+    touch $webuietc/.installed
     touch /etc/linuxmuster/sophomorix/default-school/students.csv
     touch /etc/linuxmuster/sophomorix/default-school/teachers.csv
     touch /etc/linuxmuster/sophomorix/default-school/extrastudents.csv
     touch /etc/linuxmuster/sophomorix/default-school/extraclasses.csv
-	hostname=$(hostname --fqdn)
-	ipaddress=$(hostname --ip-address)
-	echo "---------------------------------------------------------------"
-	echo "linuxmuster-webui is now installed but not initialised!  http://$ipaddress:8000"
-	echo "---------------------------------------------------------------"
+    hostname=$(hostname --fqdn)
+    ipaddress=$(hostname --ip-address)
+    echo "---------------------------------------------------------------"
+    echo "linuxmuster-webui is now installed but not initialised!  http://$ipaddress:8000"
+    echo "---------------------------------------------------------------"
      else
-	# do update
-	echo "---------------------------------------------------------------"
+    # do update
+    echo "---------------------------------------------------------------"
         echo "updating linuxmuster-webui"
         echo "---------------------------------------------------------------"
-	echo "Stop linuxmuster-webui"
+    echo "Stop linuxmuster-webui"
 #    sed -i -e  's/dialog ng:show="message.visible" ng:repeat="message in messagebox.messages"/dialog ng:show="message.visible" style="z-index: 1050" ng:repeat="message in messagebox.messages"/' /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/resources/js/core/directives/messageboxContainer.es
 #    rm -rf /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/resources/build/
 #    cp -R /usr/lib/linuxmuster-webui/etc/core-build/* /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/resources/build/
-	systemctl stop linuxmuster-webui
-	pip install -r $webuietc/requirements.txt -q
-	# Set default permissions from true to false
-	echo "set reverse permissions"
-	sed -i "s/: True,/: False,/g" /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/main.py
-	# start webui
-	echo "Start linuxmuster-webui"
-	systemctl start linuxmuster-webui
+    systemctl stop linuxmuster-webui
+    pip install -r $webuietc/requirements.txt -q
+    # Set default permissions from true to false
+    echo "set reverse permissions"
+    sed -i "s/: True,/: False,/g" /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/main.py
+    echo "set default sophomorix webui rights"
+    /usr/sbin/sophomorix-ui
+    # start webui
+    echo "Start linuxmuster-webui"
+    systemctl start linuxmuster-webui
         echo "---------------------------------------------------------------"
         echo "updating linuxmuster-webui ..done"
         echo "---------------------------------------------------------------"

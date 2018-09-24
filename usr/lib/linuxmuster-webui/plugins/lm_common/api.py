@@ -105,35 +105,43 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
     # only error log is going to be processed. standard output is thrown away
     sophomorixCommand.append('1>/dev/null')
     file = open("/tmp/getSophomorixValueDebugoutput.txt","a")
-    file.write('######NEUE SECTION BEGINNT#####')
-    file.write(str(sophomorixCommand))
+    #file.write('######NEUE SECTION BEGINNT#####')
+    file.write('\n\n\n')
+    file.write(str(sophomorixCommand)+'\n\n')
     jsonS = subprocess.Popen(sophomorixCommand, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=False).stdout.read()
     # jsonS is everything between sophomorix json headers
     # Use only if JSON-begin existst
     if '# JSON-begin' in jsonS:
         jsonS = jsonS.split("# JSON-begin", 1)[1]
         jsonS = jsonS.split("# JSON-end", 1)[0]
-    file.write(jsonS)
     #file = open("/tmp/getSophomorixValueDebugoutput.txt","a")
-    #file.write(jsonS)
+    #file.write(jsonS+'\n')
     #file.close()
     jsonDict = json.loads(jsonS, encoding='UTF-8')
-    time.sleep(1)
-    file.write('####jsonDict####')
+    #time.sleep(1)
+    #file.write('####jsonDict####')
 
-    file.write(str(jsonDict))
-    file.close()
+    file.write(str(jsonDict)+'\n\n\n')
     # if empty jsonpath is returned dont use dpath
     if jsonpath is '':
         return jsonDict
-    if ignoreErrors == False:
+    if ignoreErrors is False:
         try:
+            file.write(str('jsonpath')+'\n\n')
+            file.write(str(jsonpath)+'\n\n')
+            # Debug empty key string - > get json from file to test
+            #dpath.options.ALLOW_EMPTY_STRING_KEYS=True
+            #with open('/usr/lib/linuxmuster-webui/plugins/emptyStringKey.json') as json_data:
+            #        jsonDict = json.load(json_data)
+            #        #print(d)
             resultString = dpath.util.get(jsonDict, jsonpath)
+            #file.write(str(resultString)+'\n')
         except Exception as e:
             pass
-            #raise Exception('Field error. Either sophomorix field does not exist or ajenti binduser does not have sufficient permissions:\n' 'Searched field was: ' + str(e) + ' received information for filter:  ' + str(jsonDict))
+            raise Exception('getSophomorix Value error. Either sophomorix field does not exist or ajenti binduser does not have sufficient permissions:\n' 'Error Message: ' + str(e) + '\n Dictionary we looked for information:\n  ' + str(jsonDict))
     else:
         resultString = dpath.util.get(jsonDict, jsonpath)
+    file.close()
     return resultString
 
 def lmn_genRandomPW():

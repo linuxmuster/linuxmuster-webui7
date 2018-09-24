@@ -289,17 +289,17 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
 
     $scope.showInitialPassword = (user) ->
                 username = (user[0])
-                $http.post('/api/lm/users/password', {user: username, action: 'get'}).then (resp) ->
+                $http.post('/api/lm/users/password', {users: username, action: 'get'}).then (resp) ->
                     messagebox.show(title: gettext('Initial password'), text: resp.data, positive: 'OK')
 
     $scope.setInitialPassword = (user) ->
                 username = (user[0])
-                $http.post('/api/lm/users/password', {user: username, action: 'set-initial'}).then (resp) ->
+                $http.post('/api/lm/users/password', {users: username, action: 'set-initial'}).then (resp) ->
                     notify.success gettext('Initial password set')
 
     $scope.setRandomPassword = (user) ->
             username = (user[0])
-            $http.post('/api/lm/users/password', {user: username, action: 'set-random'}).then (resp) ->
+            $http.post('/api/lm/users/password', {users: username, action: 'set-random'}).then (resp) ->
                 notify.success gettext('Random password set')
 
 

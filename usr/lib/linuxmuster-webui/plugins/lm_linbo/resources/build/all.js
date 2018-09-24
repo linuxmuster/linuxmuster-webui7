@@ -511,7 +511,7 @@
         var newName;
         newName = msg.value;
         if (!isValidName(newName)) {
-          notify.error(gettext('Not a valid name! Only ASCII characters and numbers are allowd!'));
+          notify.error(gettext('Not a valid name! Only ASCII characters and numbers are allowed!'));
           return;
         }
         return;

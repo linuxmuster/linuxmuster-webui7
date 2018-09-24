@@ -394,7 +394,7 @@
       var username;
       username = user[0];
       return $http.post('/api/lm/users/password', {
-        user: username,
+        users: username,
         action: 'get'
       }).then(function(resp) {
         return messagebox.show({
@@ -408,7 +408,7 @@
       var username;
       username = user[0];
       return $http.post('/api/lm/users/password', {
-        user: username,
+        users: username,
         action: 'set-initial'
       }).then(function(resp) {
         return notify.success(gettext('Initial password set'));
@@ -418,7 +418,7 @@
       var username;
       username = user[0];
       return $http.post('/api/lm/users/password', {
-        user: username,
+        users: username,
         action: 'set-random'
       }).then(function(resp) {
         return notify.success(gettext('Random password set'));

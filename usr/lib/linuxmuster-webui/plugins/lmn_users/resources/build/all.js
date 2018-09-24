@@ -793,7 +793,7 @@
   });
 
   angular.module('lm.users').controller('LMUsersGloballadminsController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) {
-    pageTitle.set(gettext('Globalladmins'));
+    pageTitle.set(gettext('Globaladmins'));
     $scope.sorts = [
       {
         name: gettext('Login'),

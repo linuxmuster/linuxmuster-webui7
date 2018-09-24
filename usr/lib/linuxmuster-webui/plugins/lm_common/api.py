@@ -86,7 +86,7 @@ def lmn_getUserLdapValue(user, field):
         res = l.search_s(params['searchdn'], ldap.SCOPE_SUBTREE, searchFilter)
         userDN = res[0][0]
     except Exception as e:
-    #except ldap.LDAPError, e:
+    # except ldap.LDAPError, e:
         print(e)
     soph = l.search_s(
     userDN,
@@ -104,8 +104,8 @@ def lmn_getUserLdapValue(user, field):
 def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
     # only error log is going to be processed. standard output is thrown away
     sophomorixCommand.append('1>/dev/null')
-    file = open("/tmp/getSophomorixValueDebugoutput.txt","a")
-    #file.write('######NEUE SECTION BEGINNT#####')
+    file = open("/var/log/getSophomorixValueDebugoutput.log", "a")
+    file.write('\n\n######New COMMAND #####')
     file.write('\n\n\n')
     file.write(str(sophomorixCommand)+'\n\n')
     jsonS = subprocess.Popen(sophomorixCommand, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=False).stdout.read()
@@ -114,40 +114,42 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
     if '# JSON-begin' in jsonS:
         jsonS = jsonS.split("# JSON-begin", 1)[1]
         jsonS = jsonS.split("# JSON-end", 1)[0]
-    #file = open("/tmp/getSophomorixValueDebugoutput.txt","a")
-    #file.write(jsonS+'\n')
-    #file.close()
+    # file.write(jsonS+'\n')
     jsonDict = json.loads(jsonS, encoding='UTF-8')
-    #time.sleep(1)
-    #file.write('####jsonDict####')
 
     file.write(str(jsonDict)+'\n\n\n')
     # if empty jsonpath is returned dont use dpath
     if jsonpath is '':
+
+        file.write(str('no jsonpath return like it is:')+'\n\n')
+        file.write(str(jsonDict)+'\n\n')
+        #file.close()
         return jsonDict
     if ignoreErrors is False:
         try:
             file.write(str('jsonpath')+'\n\n')
             file.write(str(jsonpath)+'\n\n')
             # Debug empty key string - > get json from file to test
-            #dpath.options.ALLOW_EMPTY_STRING_KEYS=True
-            #with open('/usr/lib/linuxmuster-webui/plugins/emptyStringKey.json') as json_data:
+            # dpath.options.ALLOW_EMPTY_STRING_KEYS=True
+            # with open('/usr/lib/linuxmuster-webui/plugins/emptyStringKey.json') as json_data:
             #        jsonDict = json.load(json_data)
             #        #print(d)
             resultString = dpath.util.get(jsonDict, jsonpath)
             #file.write(str(resultString)+'\n')
         except Exception as e:
             pass
-            raise Exception('getSophomorix Value error. Either sophomorix field does not exist or ajenti binduser does not have sufficient permissions:\n' 'Error Message: ' + str(e) + '\n Dictionary we looked for information:\n  ' + str(jsonDict))
+            raise Exception('getSophomorix Value error. Either sophomorix field does not exist or ajenti binduser does not have sufficient permissions:\n'+
+                            'Error Message: ' + str(e) + '\n Dictionary we looked for information:\n  ' + str(jsonDict))
     else:
         resultString = dpath.util.get(jsonDict, jsonpath)
     file.close()
     return resultString
 
+
 def lmn_genRandomPW():
     regex = r"(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*()]|(?=.*\d)).{7,}"
     s = "@#$%^&*()?+-_"
-    password = ''.join(random.SystemRandom().choice(string.ascii_letters+ string.digits + str(s)) for _ in range(10))
+    password = ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits + str(s)) for _ in range(10))
     matches = re.search(regex, password)
     if matches:
         return password

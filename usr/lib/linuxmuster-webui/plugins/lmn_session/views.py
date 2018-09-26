@@ -27,7 +27,8 @@ class Handler(HttpPlugin):
                     return 0
             #raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(sessions))
             sessionsList = []
-            if sessions['SESSIONCOUNT'] == 0:
+            #raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str())
+            if supervisor not in sessions['SUPERVISOR_LIST']:
                 sessionJson = {}
                 sessionJson['SESSIONCOUNT'] = 0
                 sessionsList.append(sessionJson)

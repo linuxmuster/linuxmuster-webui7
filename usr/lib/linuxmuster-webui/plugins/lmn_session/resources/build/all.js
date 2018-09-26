@@ -526,14 +526,6 @@
         positive: 'OK'
       });
     };
-    //    $scope.userInfo = (user) ->
-    //                $uibModal.open(
-    //                    templateUrl: '/lm_users:resources/partial/userDetails.modal.html'
-    //                    controller: 'LMNUserDetailsController'
-    //                    size: 'lg'
-    //                    resolve:
-    //                        id: () -> user
-    //                )
     return $scope.$watch('identity.user', function() {
       console.log($scope.identity.user);
       if ($scope.identity.user === void 0) {
@@ -548,50 +540,6 @@
       $scope.getSessions($scope.identity.user);
     });
   });
-
-  // ---
-
-//$scope.$on
-
-//$scope.$watch '$scope.identity.machine', () ->
-//    console.log 'test1'
-//    console.log $scope.identity
-//    console.log 'test2'
-//    console.log $scope['identity']['machine']
-
-// TODO Find a solution for this
-//    sleep = (ms) ->
-//        start = new Date().getTime()
-//        continue while new Date().getTime() - start < ms
-
-//    $scope.cancel = (username,session) ->
-//        delete $scope.participants
-//        $scope.getParticipants(username,session)
-
-//    console.log $scope.identity
-//#    sleep 2000
-//    console.log $scope.identity.user
-//    #console.log $scope[1]
-//    #console.log $scope.user
-//    #console.log $scope.promise
-
-// #   $http.get('/api/lmn/session/sessions', {action: 'get-sessions', username: username}).then (resp) ->
-//    #$http.get("/api/lmn/session").then (resp) ->
-//    #            return resp.data
-//    #            #$http.post('/api/lmn/session/sessions', {action: 'get-sessions', username: username}).then (resp) ->
-//    #            #    $scope.sessions = resp.data
-//    #            console.log "username"
-//    #            #$scope.getSessions(username)
-//    ##$http.get("/api/lmn/session/sessions").then (username,session) ->
-//    #            #$http.post('/api/lmn/session/sessions', {action: 'get-participants', username: username, session: session}).then (resp) ->
-//    #                #$scope.sessions = resp.data
-//    #            #$scope.sessions = resp.data
-
-//    $scope.$watch 'locationChangeSuccess', ->
-//        # do something
-//        console.log 'huhu'
-//        console.log identity.user
-//        return
 
 }).call(this);
 

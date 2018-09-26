@@ -102,12 +102,22 @@ def lmn_getUserLdapValue(user, field):
 
 
 def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
+    # Attention! Also passwords and sensbile information get logged!!!
+    debug = False
     # only error log is going to be processed. standard output is thrown away
     sophomorixCommand.append('1>/dev/null')
     file = open("/var/log/getSophomorixValueDebugoutput.log", "a")
-    file.write('\n\n######New COMMAND #####')
-    file.write('\n\n\n')
-    file.write(str(sophomorixCommand)+'\n\n')
+    if debug:
+        file.write('\n\n######New COMMAND #####\n\n')
+        file.write(time.strftime("%c"))
+        file.write('\n\n')
+        file.write(str(sophomorixCommand)+'\n\n')
+    else:
+        file.write('\n\n######New COMMAND #####\n\n')
+        file.write(time.strftime("%c"))
+        file.write('\n\n')
+        file.write('Debugging is disabled\n\n')
+
     jsonS = subprocess.Popen(sophomorixCommand, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=False).stdout.read()
     # jsonS is everything between sophomorix json headers
     # Use only if JSON-begin existst
@@ -117,28 +127,31 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
     # file.write(jsonS+'\n')
     jsonDict = json.loads(jsonS, encoding='UTF-8')
 
-    file.write(str(jsonDict)+'\n\n\n')
+    if debug:
+        file.write(str(jsonDict)+'\n\n\n')
     # if empty jsonpath is returned dont use dpath
     if jsonpath is '':
 
-        file.write(str('no jsonpath return like it is:')+'\n\n')
-        file.write(str(jsonDict)+'\n\n')
-        #file.close()
+        if debug:
+            file.write(str('no jsonpath return like it is:')+'\n\n')
+            file.write(str(jsonDict)+'\n\n')
+        file.close()
         return jsonDict
     if ignoreErrors is False:
         try:
-            file.write(str('jsonpath')+'\n\n')
-            file.write(str(jsonpath)+'\n\n')
+            if debug:
+                file.write(str('jsonpath')+'\n\n')
+                file.write(str(jsonpath)+'\n\n')
             # Debug empty key string - > get json from file to test
             # dpath.options.ALLOW_EMPTY_STRING_KEYS=True
             # with open('/usr/lib/linuxmuster-webui/plugins/emptyStringKey.json') as json_data:
             #        jsonDict = json.load(json_data)
             #        #print(d)
             resultString = dpath.util.get(jsonDict, jsonpath)
-            #file.write(str(resultString)+'\n')
+            # file.write(str(resultString)+'\n')
         except Exception as e:
             pass
-            raise Exception('getSophomorix Value error. Either sophomorix field does not exist or ajenti binduser does not have sufficient permissions:\n'+
+            raise Exception('getSophomorix Value error. Either sophomorix field does not exist or ajenti binduser does not have sufficient permissions:\n' +
                             'Error Message: ' + str(e) + '\n Dictionary we looked for information:\n  ' + str(jsonDict))
     else:
         resultString = dpath.util.get(jsonDict, jsonpath)

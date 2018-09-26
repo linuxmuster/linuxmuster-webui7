@@ -122,8 +122,8 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
         managementgroup = 'group_'+item
         if item is 'exammode'
             managementgroup = 'exammode_boolean'
-        console.log item
-        console.log $scope.participants
+        #console.log item
+        #console.log $scope.participants
         if $scope.fields[item].checkboxStatus is true
             angular.forEach $scope.participants, (participant, id) ->
                 if participant[managementgroup] is true
@@ -199,7 +199,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                     $scope.visible.sessionname = 'show'
                     $scope.visible.mainpage = 'none'
                     $scope.participants = resp.data
-                    console.log($scope.participants)
+                    # console.log($scope.participants)
                     if $scope.participants[0]?
                        $scope.visible.participanttable = 'none'
                        $scope.info.message = gettext('This session appears to be empty. Start adding users by using the top search bar!')
@@ -210,7 +210,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
     $scope.findUsers = (q) ->
                 return $http.get("/api/lmn/session/user-search?q=#{q}").then (resp) ->
                             $scope.users = resp.data
-                            console.log resp.data
+                            #console.log resp.data
                             return resp.data
 
     $scope.findSchoolClasses = (q) ->
@@ -220,13 +220,13 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                             return resp.data
 
     $scope.$watch '_.addParticipant', () ->
-                console.log $scope._.addParticipant
+                # console.log $scope._.addParticipant
                 if $scope._.addParticipant
                     if $scope.participants[0]?
                                 delete $scope.participants['0']
                     $scope.info.message = ''
                     $scope.visible.participanttable = 'show'
-                    console.log $scope._.addParticipant
+                    # console.log $scope._.addParticipant
                     if participant.sophomorixRole is 'student'
                         # Add Managementgroups list if missing. This happens when all managementgroup attributes are false, causing the json tree to skip this key
                         if not $scope._.addParticipant.MANAGEMENTGROUPS?
@@ -250,13 +250,13 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                                 delete $scope.participants['0']
                     $scope.info.message = ''
                     $scope.visible.participanttable = 'show'
-                    console.log participant
+                    # console.log participant
                     # Only add Students
                     if participant.sophomorixRole is 'student'
                         # Add Managementgroups list if missing. This happens when all managementgroup attributes are false, causing the json tree to skip this key
                         if not participant.MANAGEMENTGROUPS?
                                     participant.MANAGEMENTGROUPS = []
-                        console.log ($scope.participants)
+                        # console.log ($scope.participants)
                         $scope.participants[participant.sAMAccountName] = angular.copy({"givenName":participant.givenName,"sn":participant.sn,
                         "sophomorixExamMode":participant.sophomorixExamMode,
                         "group_webfilter":participant.MANAGEMENTGROUPS.webfilter,
@@ -288,30 +288,36 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                     notify.success gettext($scope.output)
 
     $scope.showInitialPassword = (user) ->
-                username = (user[0])
-                $http.post('/api/lm/users/password', {users: username, action: 'get'}).then (resp) ->
+                $http.post('/api/lm/users/password', {users: user, action: 'get'}).then (resp) ->
                     messagebox.show(title: gettext('Initial password'), text: resp.data, positive: 'OK')
 
     $scope.setInitialPassword = (user) ->
-                username = (user[0])
-                $http.post('/api/lm/users/password', {users: username, action: 'set-initial'}).then (resp) ->
+                $http.post('/api/lm/users/password', {users: user, action: 'set-initial'}).then (resp) ->
                     notify.success gettext('Initial password set')
 
     $scope.setRandomPassword = (user) ->
-            username = (user[0])
-            $http.post('/api/lm/users/password', {users: username, action: 'set-random'}).then (resp) ->
+            $http.post('/api/lm/users/password', {users: user, action: 'set-random'}).then (resp) ->
                 notify.success gettext('Random password set')
 
-
     $scope.setCustomPassword = (user) ->
-            username = (user[0])
-            $uibModal.open(
-                    templateUrl: '/lm_users:resources/partial/customPassword.modal.html'
-                    controller: 'LMNUsersCustomPasswordController'
-                    size: 'mg'
-                    resolve:
-                        user: () -> username
-            )
+        $uibModal.open(
+            templateUrl: '/lm_users:resources/partial/customPassword.modal.html'
+            controller: 'LMNUsersCustomPasswordController'
+            size: 'mg'
+            resolve:
+                users: () -> user
+        )
+
+    $scope.userInfo = (user) ->
+        $uibModal.open(
+            templateUrl: '/lm_users:resources/partial/userDetails.modal.html'
+            controller: 'LMNUserDetailsController'
+            size: 'lg'
+            resolve:
+                id: () -> user
+                role: () -> 'students'
+        )
+
 
     typeIsArray = Array.isArray || ( value ) -> return {}.toString.call( value ) is '[object Array]'
 
@@ -347,15 +353,6 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
     $scope.notImplemented = (user) ->
                 messagebox.show(title: gettext('Not implemented'), positive: 'OK')
 
-    $scope.userInfo = (user) ->
-                $uibModal.open(
-                    templateUrl: '/lm_users:resources/partial/userDetails.modal.html'
-                    controller: 'LMNUserDetailsController'
-                    size: 'lg'
-                    resolve:
-                        id: () -> user
-                )
-
     $scope.$watch 'identity.user', ->
           console.log ($scope.identity.user)
           if $scope.identity.user is undefined
@@ -367,47 +364,3 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
           $scope.getSessions($scope.identity.user)
           return
 
-    # ---
-
-    #$scope.$on
-    #
-    #$scope.$watch '$scope.identity.machine', () ->
-    #    console.log 'test1'
-    #    console.log $scope.identity
-    #    console.log 'test2'
-    #    console.log $scope['identity']['machine']
-
-# TODO Find a solution for this
-#    sleep = (ms) ->
-#        start = new Date().getTime()
-#        continue while new Date().getTime() - start < ms
-#
-#    $scope.cancel = (username,session) ->
-#        delete $scope.participants
-#        $scope.getParticipants(username,session)
-#
-#    console.log $scope.identity
-##    sleep 2000
-#    console.log $scope.identity.user
-#    #console.log $scope[1]
-#    #console.log $scope.user
-#    #console.log $scope.promise
-#
-# #   $http.get('/api/lmn/session/sessions', {action: 'get-sessions', username: username}).then (resp) ->
-#    #$http.get("/api/lmn/session").then (resp) ->
-#    #            return resp.data
-#    #            #$http.post('/api/lmn/session/sessions', {action: 'get-sessions', username: username}).then (resp) ->
-#    #            #    $scope.sessions = resp.data
-#    #            console.log "username"
-#    #            #$scope.getSessions(username)
-#    ##$http.get("/api/lmn/session/sessions").then (username,session) ->
-#    #            #$http.post('/api/lmn/session/sessions', {action: 'get-participants', username: username, session: session}).then (resp) ->
-#    #                #$scope.sessions = resp.data
-#    #            #$scope.sessions = resp.data
-#
-#
-#    $scope.$watch 'locationChangeSuccess', ->
-#        # do something
-#        console.log 'huhu'
-#        console.log identity.user
-#        return

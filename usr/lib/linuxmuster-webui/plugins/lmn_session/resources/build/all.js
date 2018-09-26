@@ -143,8 +143,8 @@
       if (item === 'exammode') {
         managementgroup = 'exammode_boolean';
       }
-      console.log(item);
-      console.log($scope.participants);
+      //console.log item
+      //console.log $scope.participants
       if ($scope.fields[item].checkboxStatus === true) {
         angular.forEach($scope.participants, function(participant, id) {
           if (participant[managementgroup] === true) {
@@ -266,7 +266,7 @@
         $scope.visible.sessionname = 'show';
         $scope.visible.mainpage = 'none';
         $scope.participants = resp.data;
-        console.log($scope.participants);
+        // console.log($scope.participants)
         if ($scope.participants[0] != null) {
           $scope.visible.participanttable = 'none';
           return $scope.info.message = gettext('This session appears to be empty. Start adding users by using the top search bar!');
@@ -279,7 +279,7 @@
     $scope.findUsers = function(q) {
       return $http.get(`/api/lmn/session/user-search?q=${q}`).then(function(resp) {
         $scope.users = resp.data;
-        console.log(resp.data);
+        //console.log resp.data
         return resp.data;
       });
     };
@@ -291,14 +291,14 @@
       });
     };
     $scope.$watch('_.addParticipant', function() {
-      console.log($scope._.addParticipant);
+      // console.log $scope._.addParticipant
       if ($scope._.addParticipant) {
         if ($scope.participants[0] != null) {
           delete $scope.participants['0'];
         }
         $scope.info.message = '';
         $scope.visible.participanttable = 'show';
-        console.log($scope._.addParticipant);
+        // console.log $scope._.addParticipant
         if (participant.sophomorixRole === 'student') {
           // Add Managementgroups list if missing. This happens when all managementgroup attributes are false, causing the json tree to skip this key
           if ($scope._.addParticipant.MANAGEMENTGROUPS == null) {
@@ -330,14 +330,14 @@
         }
         $scope.info.message = '';
         $scope.visible.participanttable = 'show';
-        console.log(participant);
+        // console.log participant
         // Only add Students
         if (participant.sophomorixRole === 'student') {
           // Add Managementgroups list if missing. This happens when all managementgroup attributes are false, causing the json tree to skip this key
           if (participant.MANAGEMENTGROUPS == null) {
             participant.MANAGEMENTGROUPS = [];
           }
-          console.log($scope.participants);
+          // console.log ($scope.participants)
           $scope.participants[participant.sAMAccountName] = angular.copy({
             "givenName": participant.givenName,
             "sn": participant.sn,
@@ -391,10 +391,8 @@
       });
     };
     $scope.showInitialPassword = function(user) {
-      var username;
-      username = user[0];
       return $http.post('/api/lm/users/password', {
-        users: username,
+        users: user,
         action: 'get'
       }).then(function(resp) {
         return messagebox.show({
@@ -405,35 +403,44 @@
       });
     };
     $scope.setInitialPassword = function(user) {
-      var username;
-      username = user[0];
       return $http.post('/api/lm/users/password', {
-        users: username,
+        users: user,
         action: 'set-initial'
       }).then(function(resp) {
         return notify.success(gettext('Initial password set'));
       });
     };
     $scope.setRandomPassword = function(user) {
-      var username;
-      username = user[0];
       return $http.post('/api/lm/users/password', {
-        users: username,
+        users: user,
         action: 'set-random'
       }).then(function(resp) {
         return notify.success(gettext('Random password set'));
       });
     };
     $scope.setCustomPassword = function(user) {
-      var username;
-      username = user[0];
       return $uibModal.open({
         templateUrl: '/lm_users:resources/partial/customPassword.modal.html',
         controller: 'LMNUsersCustomPasswordController',
         size: 'mg',
         resolve: {
-          user: function() {
-            return username;
+          users: function() {
+            return user;
+          }
+        }
+      });
+    };
+    $scope.userInfo = function(user) {
+      return $uibModal.open({
+        templateUrl: '/lm_users:resources/partial/userDetails.modal.html',
+        controller: 'LMNUserDetailsController',
+        size: 'lg',
+        resolve: {
+          id: function() {
+            return user;
+          },
+          role: function() {
+            return 'students';
           }
         }
       });
@@ -519,18 +526,14 @@
         positive: 'OK'
       });
     };
-    $scope.userInfo = function(user) {
-      return $uibModal.open({
-        templateUrl: '/lm_users:resources/partial/userDetails.modal.html',
-        controller: 'LMNUserDetailsController',
-        size: 'lg',
-        resolve: {
-          id: function() {
-            return user;
-          }
-        }
-      });
-    };
+    //    $scope.userInfo = (user) ->
+    //                $uibModal.open(
+    //                    templateUrl: '/lm_users:resources/partial/userDetails.modal.html'
+    //                    controller: 'LMNUserDetailsController'
+    //                    size: 'lg'
+    //                    resolve:
+    //                        id: () -> user
+    //                )
     return $scope.$watch('identity.user', function() {
       console.log($scope.identity.user);
       if ($scope.identity.user === void 0) {

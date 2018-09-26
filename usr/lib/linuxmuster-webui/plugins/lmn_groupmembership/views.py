@@ -50,10 +50,10 @@ class Handler(HttpPlugin):
                 for group in groups:
                     if group['membership'] is True:
                         # groupsToAdd.append(group)
-                        sophomorixCommand = ['sophomorix-group',  '--addmembers', username, '--group', group['classname']]
+                        sophomorixCommand = ['sophomorix-class',  '--addadmins', username, '--class', group['classname']]
                         subprocess.check_call(sophomorixCommand, shell=False)
                     if group['membership'] is False:
                         # groupsToRemove.append(group)
-                        sophomorixCommand = ['sophomorix-group',  '--removemembers', username, '--group', group['classname']]
+                        sophomorixCommand = ['sophomorix-class',  '--removeadmins', username, '--class', group['classname']]
                         subprocess.check_call(sophomorixCommand, shell=False)
                 return 0

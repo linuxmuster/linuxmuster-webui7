@@ -1780,16 +1780,6 @@
     }).then(function(resp) {
       return $scope.userDetails = resp.data;
     });
-    //$scope.save = (username) ->
-    //    if not $scope.username
-    //        notify.error gettext("You have to enter a username")
-    //        return
-    //    else
-    //        notify.success gettext('Adding administrator...')
-    //        $http.post('/api/lm/users/change-'+role, {action: 'create' ,users: username}).then (resp) ->
-    //            notify.success gettext('Administrator added')
-    //            $route.reload()
-    //        $uibModalInstance.dismiss()
     return $scope.close = function() {
       return $uibModalInstance.dismiss();
     };

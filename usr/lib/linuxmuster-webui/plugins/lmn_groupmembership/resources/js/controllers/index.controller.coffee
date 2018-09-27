@@ -7,6 +7,18 @@ angular.module('lmn.groupmembership').config ($routeProvider) ->
 angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController', ($scope, $http, $uibModal, gettext, notify, pageTitle) ->
     pageTitle.set(gettext('Group Membership'))
 
+    $scope.types = {
+        schoolclass:
+            typename: gettext('Schoolclass')
+            checkbox: true
+            type: 'schoolclass'
+
+        printergroup:
+            typename: gettext('Printer')
+            checkbox: true
+            type: 'printergroup'
+    }
+
     $scope.sorts = [
         {
             name: gettext('Groupname')
@@ -25,6 +37,15 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
     $scope.paging =
        page: 1
        pageSize: 50
+
+    $scope.isActive = (group) ->
+        if  group.type is 'printergroup'
+            if $scope.types.printergroup.checkbox is true
+                return true
+        if  group.type is 'schoolclass'
+            if $scope.types.schoolclass.checkbox is true
+                return true
+        return false
 
     $scope.resetClass = () ->
        result = document.getElementsByClassName("changed")
@@ -55,8 +76,8 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
            return
         if $scope.identity.user is null
            return
-        if $scope.identity.user is 'root'
-           return
-        # $scope.identity.user = 'hulk'
+        #if $scope.identity.user is 'root'
+        #   return
+        $scope.identity.user = 'hulk'
         $scope.getGroups($scope.identity.user)
         return

@@ -15,6 +15,18 @@
 
   angular.module('lmn.groupmembership').controller('LMNGroupMembershipController', function($scope, $http, $uibModal, gettext, notify, pageTitle) {
     pageTitle.set(gettext('Group Membership'));
+    $scope.types = {
+      schoolclass: {
+        typename: gettext('Schoolclass'),
+        checkbox: true,
+        type: 'schoolclass'
+      },
+      printergroup: {
+        typename: gettext('Printer'),
+        checkbox: true,
+        type: 'printergroup'
+      }
+    };
     $scope.sorts = [
       {
         name: gettext('Groupname'),
@@ -39,6 +51,19 @@
     $scope.paging = {
       page: 1,
       pageSize: 50
+    };
+    $scope.isActive = function(group) {
+      if (group.type === 'printergroup') {
+        if ($scope.types.printergroup.checkbox === true) {
+          return true;
+        }
+      }
+      if (group.type === 'schoolclass') {
+        if ($scope.types.schoolclass.checkbox === true) {
+          return true;
+        }
+      }
+      return false;
     };
     $scope.resetClass = function() {
       var result;
@@ -82,7 +107,7 @@
         return;
       }
       //if $scope.identity.user is 'root'
-      //    return
+      //   return
       $scope.identity.user = 'hulk';
       $scope.getGroups($scope.identity.user);
     });

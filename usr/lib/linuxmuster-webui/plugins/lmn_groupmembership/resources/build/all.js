@@ -17,9 +17,9 @@
     pageTitle.set(gettext('Group Membership'));
     $scope.sorts = [
       {
-        name: gettext('Class'),
+        name: gettext('Groupname'),
         fx: function(x) {
-          return x.classname;
+          return x.groupname;
         }
       },
       {
@@ -27,12 +27,34 @@
         fx: function(x) {
           return x.membership;
         }
+      },
+      {
+        name: gettext('Type'),
+        fx: function(x) {
+          return x.type;
+        }
       }
     ];
     $scope.sort = $scope.sorts[0];
     $scope.paging = {
       page: 1,
       pageSize: 50
+    };
+    $scope.resetClass = function() {
+      var result;
+      result = document.getElementsByClassName("changed");
+      while (result.length) {
+        result[0].className = result[0].className.replace(/(?:^|\s)changed(?!\S)/g, '');
+      }
+    };
+    $scope.groupChanged = function(groupIndex, item) {
+      console.log($scope.groups[groupIndex]);
+      $scope.groups[groupIndex]['changed'] = true;
+      if (document.getElementById(item).className.match(/(?:^|\s)changed(?!\S)/)) {
+        return document.getElementById(item).className = document.getElementById(item).className.replace(/(?:^|\s)changed(?!\S)/g, '');
+      } else {
+        return document.getElementById(item).className += " changed";
+      }
     };
     $scope.getGroups = function(username) {
       return $http.post('/api/lmn/groupmembership', {
@@ -48,7 +70,8 @@
         username: $scope.identity.user,
         groups: groups
       }).then(function(resp) {
-        return notify.success(gettext('Classes enrolled'));
+        notify.success(gettext('Classes enrolled'));
+        return $scope.resetClass();
       });
     };
     return $scope.$watch('identity.user', function() {
@@ -58,9 +81,9 @@
       if ($scope.identity.user === null) {
         return;
       }
-      if ($scope.identity.user === 'root') {
-        return;
-      }
+      //if $scope.identity.user is 'root'
+      //    return
+      $scope.identity.user = 'hulk';
       $scope.getGroups($scope.identity.user);
     });
   });

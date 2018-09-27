@@ -1,5 +1,4 @@
 <br/>
-
 <progress-spinner ng:show="groups == null"></progress-spinner>
 <div ng:show="groups != null">
     <div class="input-group">
@@ -41,10 +40,10 @@
 
     <a class="list-group-item" ng:repeat="group in groups|filter:filter|orderBy:['-_isNew', sort.fx]|page:paging.page:paging.pageSize">
 
+        <span id={{group.groupname}} checkbox ng:model="group.membership" ng-click='groupChanged($index, group.groupname)'> </span>
 
-        <span checkbox ng:model="group.membership"> </span>
-
-        <i class="fa fa-users"></i> {{group.classname}}
+        <span ng-if="group.type == 'printergroup'"> <i class="fa fa-fw fa-print"></i><span translate>Printer</span> <b>{{group.groupname}}</b> </span>
+        <span ng-if="group.type == 'schoolclass'"><i class="fa fa-users"></i> <span translate>Class</span> <b>{{group.groupname}}</b> </span>
     </a>
 
     <br/>

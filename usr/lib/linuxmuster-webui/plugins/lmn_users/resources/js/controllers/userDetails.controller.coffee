@@ -6,16 +6,5 @@ angular.module('lm.users').controller 'LMNUserDetailsController', ($scope, $rout
     $http.post('/api/lm/sophomorixUsers/'+role, {action: 'get-specified', user: id}).then (resp) ->
         $scope.userDetails = resp.data
 
-    #$scope.save = (username) ->
-    #    if not $scope.username
-    #        notify.error gettext("You have to enter a username")
-    #        return
-    #    else
-    #        notify.success gettext('Adding administrator...')
-    #        $http.post('/api/lm/users/change-'+role, {action: 'create' ,users: username}).then (resp) ->
-    #            notify.success gettext('Administrator added')
-    #            $route.reload()
-    #        $uibModalInstance.dismiss()
-
     $scope.close = () ->
         $uibModalInstance.dismiss()

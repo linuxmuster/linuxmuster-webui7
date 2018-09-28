@@ -31,7 +31,7 @@ class Handler(HttpPlugin):
                 for group in groups:
                     usergroups.append(group.split(',')[0].split('=')[1])
 
-                # get all available groups
+                # get all available classes
                 # get classes
                 sophomorixCommand = ['sophomorix-query', '--class', '--schoolbase', schoolname, '--group-full', '-jj']
                 schoolclasses = lmn_getSophomorixValue(sophomorixCommand, 'LISTS/GROUP')

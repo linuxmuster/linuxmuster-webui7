@@ -298,8 +298,8 @@
         }
         $scope.info.message = '';
         $scope.visible.participanttable = 'show';
-        // console.log $scope._.addParticipant
-        if (participant.sophomorixRole === 'student') {
+        //console.log $scope._.addParticipant
+        if ($scope._.addParticipant.sophomorixRole === 'student') {
           // Add Managementgroups list if missing. This happens when all managementgroup attributes are false, causing the json tree to skip this key
           if ($scope._.addParticipant.MANAGEMENTGROUPS == null) {
             $scope._.addParticipant.MANAGEMENTGROUPS = [];

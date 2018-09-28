@@ -106,9 +106,10 @@
       if ($scope.identity.user === null) {
         return;
       }
-      //if $scope.identity.user is 'root'
-      //   return
-      $scope.identity.user = 'hulk';
+      if ($scope.identity.user === 'root') {
+        return;
+      }
+      // $scope.identity.user = 'hulk'
       $scope.getGroups($scope.identity.user);
     });
   });

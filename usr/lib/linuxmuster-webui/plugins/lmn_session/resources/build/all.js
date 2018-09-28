@@ -123,11 +123,21 @@
       addParticipant: null,
       addClass: null
     };
-    $scope.changeClass = function(item) {
-      if (document.getElementById(item).className.match(/(?:^|\s)changed(?!\S)/)) {
-        return document.getElementById(item).className = document.getElementById(item).className.replace(/(?:^|\s)changed(?!\S)/g, '');
+    $scope.changeClass = function(item, id) {
+      console.log(id);
+      console.log(item);
+      if (document.getElementById(id + '.' + item).className.match(/(?:^|\s)changed(?!\S)/)) {
+        //$scope.participants[id]['changed'] = false
+        return document.getElementById(id + '.' + item).className = document.getElementById(id + '.' + item).className.replace(/(?:^|\s)changed(?!\S)/g, '');
       } else {
-        return document.getElementById(item).className += " changed";
+        if (item === 'exammode') {
+          $scope.participants[id]['exammode-changed'] = true;
+          document.getElementById(id + '.' + item).className += " changed";
+        } else {
+
+        }
+        $scope.participants[id]['changed'] = true;
+        return document.getElementById(id + '.' + item).className += " changed";
       }
     };
     $scope.resetClass = function() {
@@ -149,14 +159,16 @@
         angular.forEach($scope.participants, function(participant, id) {
           if (participant[managementgroup] === true) {
             participant[managementgroup] = false;
-            return $scope.changeClass(id + '.' + item);
+            //$scope.changeClass(id+'.'+item, id)
+            return $scope.changeClass(item, id);
           }
         });
       } else {
         angular.forEach($scope.participants, function(participant, id) {
           if (participant[managementgroup] === false) {
             participant[managementgroup] = true;
-            return $scope.changeClass(id + '.' + item);
+            //$scope.changeClass(id+'.'+item, id)
+            return $scope.changeClass(item, id);
           }
         });
       }
@@ -304,6 +316,10 @@
           if ($scope._.addParticipant.MANAGEMENTGROUPS == null) {
             $scope._.addParticipant.MANAGEMENTGROUPS = [];
           }
+          //if not $scope._.addParticipant.changed?
+          //            $scope._.addParticipant.changed = 'False'
+          //if not $scope._.addParticipant.exammode-changed?
+          //            $scope._.addParticipant.exammode-changed = 'False'
           $scope.participants[$scope._.addParticipant.sAMAccountName] = angular.copy({
             "givenName": $scope._.addParticipant.givenName,
             "sn": $scope._.addParticipant.sn,
@@ -316,7 +332,9 @@
             "group_internetaccess": $scope._.addParticipant.MANAGEMENTGROUPS.internet,
             "sophomorixAdminClass": $scope._.addParticipant.sophomorixAdminClass,
             "user_existing": true,
-            "group_wifiaccess": $scope._.addParticipant.MANAGEMENTGROUPS.wifi
+            "group_wifiaccess": $scope._.addParticipant.MANAGEMENTGROUPS.wifi,
+            "changed": false,
+            "exammode-changed": false
           });
         }
         return $scope._.addParticipant = null;
@@ -337,6 +355,10 @@
           if (participant.MANAGEMENTGROUPS == null) {
             participant.MANAGEMENTGROUPS = [];
           }
+          //if not participant.changed?
+          //            participant.changed = 'False'
+          //if not participant.exammode-changed?
+          //            participant.exammode-changed = 'False'
           // console.log ($scope.participants)
           $scope.participants[participant.sAMAccountName] = angular.copy({
             "givenName": participant.givenName,
@@ -350,7 +372,9 @@
             "group_internetaccess": participant.MANAGEMENTGROUPS.internet,
             "sophomorixAdminClass": participant.sophomorixAdminClass,
             "user_existing": true,
-            "group_wifiaccess": participant.MANAGEMENTGROUPS.wifi
+            "group_wifiaccess": participant.MANAGEMENTGROUPS.wifi,
+            "changed": false,
+            "exammode-changed": false
           });
         }
         return participant = null;
@@ -389,6 +413,13 @@
         $scope.getParticipants(username, session);
         return notify.success(gettext($scope.output));
       });
+    };
+    $scope.cancel = function(username, participants, session) {
+      $scope.getSessions($scope.identity.user);
+      $scope.info.message = '';
+      $scope.currentSession.name = '';
+      $scope.currentSession.comment = '';
+      return $scope.visible.participanttable = 'none';
     };
     $scope.showInitialPassword = function(user) {
       return $http.post('/api/lm/users/password', {
@@ -535,8 +566,9 @@
         return;
       }
       if ($scope.identity.user === 'root') {
-        return;
+        $scope.identity.user = 'hulk';
       }
+      // return
       $scope.getSessions($scope.identity.user);
     });
   });

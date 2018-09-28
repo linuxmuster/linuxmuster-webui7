@@ -19,15 +19,12 @@ class Handler(HttpPlugin):
             with authorize('lm:users:students:read'):
                 try:
                     sophomorixCommand = ['sophomorix-session', '-i', '-jj', '--supervisor', supervisor]
-                    #sessions = lmn_getSophomorixValue(sophomorixCommand, 'SUPERVISOR/'+supervisor+'/sophomorixSessions', True)
                     sessions = lmn_getSophomorixValue(sophomorixCommand, '')
                 # Most likeley key error 'cause no sessions for this user exist
                 except Exception as e:
                     raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(e))
                     return 0
-            #raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(sessions))
             sessionsList = []
-            #raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str())
             if supervisor not in sessions['SUPERVISOR_LIST']:
                 sessionJson = {}
                 sessionJson['SESSIONCOUNT'] = 0
@@ -53,14 +50,18 @@ class Handler(HttpPlugin):
                         participants = lmn_getSophomorixValue(sophomorixCommand, 'ID/'+session+'/PARTICIPANTS', True)
                     except Exception:
                         participants = {'0': {"givenName": "null", "sophomorixExamMode": "---", "group_wifiaccess": False, "group_intranetaccess": False, "group_printing": False, "sophomorixStatus": "U", "sophomorixRole": "", "group_internetaccess": False, "sophomorixAdminClass": "", "group_webfilter": False, "user_existing": False, "sn": ""}}
-                        #return ["frayka"["test":"null"]]
-                    # Convert PERL bool to python bool
+                    # Iterate all participants
                     for key, value in participants.iteritems():
+                        # add a changed variable to determine if user was changed
+                        participants[key]['changed'] = 'FALSE'
+                        participants[key]['exammode-changed'] = 'FALSE'
+                        # Convert PERL bool to python bool
                         for key in value:
                             if value[key] == 'TRUE':
                                 value[key] = True
                             if value[key] == 'FALSE':
                                 value[key] = False
+
             return participants
         if action == 'kill-sessions':
             session = http_context.json_body()['session']
@@ -73,7 +74,7 @@ class Handler(HttpPlugin):
             comment = http_context.json_body()['comment']
             with authorize('lm:users:students:read'):
                 sophomorixCommand = ['sophomorix-session', '-j', '--session', session, '--comment', comment]
-                result = lmn_getSophomorixValue(sophomorixCommand , 'OUTPUT/0/LOG')
+                result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
                 return result
         if action == 'new-session':
             supervisor = http_context.json_body()['username']
@@ -119,17 +120,19 @@ class Handler(HttpPlugin):
             # Remove -exam in username to keep username as it is insead of saving -exam usernames in session
             for participant in participants:
                 if participant.endswith('-exam'):
-                    participant = participant.replace('-exam','')
+                    participant = participant.replace('-exam', '')
                 # Fill lists from WebUI Output
                 participantsList.append(participant)
-                checkIfUserInManagementGroup(participant, 'exammode_boolean', examModeList, noExamModeList)
+                if participants[participant]['changed'] is False:
+                    continue
                 checkIfUserInManagementGroup(participant, 'group_wifiaccess', wifiList, noWifiList)
                 checkIfUserInManagementGroup(participant, 'group_internetaccess', internetList, noInternetList)
                 checkIfUserInManagementGroup(participant, 'group_intranetaccess', intranetList, noIntranetList)
                 checkIfUserInManagementGroup(participant, 'group_webfilter', webfilterList, noWebfilterList)
                 checkIfUserInManagementGroup(participant, 'group_printing', printingList, noPrintingList)
-
-
+                if participants[participant]['exammode-changed'] is False:
+                    continue
+                checkIfUserInManagementGroup(participant, 'exammode_boolean', examModeList, noExamModeList)
 
             # Create CSV lists we need for sophomorix
             participantsCSV = ",".join(participantsList)
@@ -146,16 +149,16 @@ class Handler(HttpPlugin):
             printingListCSV = ",".join(printingList)
             noPrintingListCSV = ",".join(noPrintingList)
 
-            #raise Exception('Error:\n' + str(noExamModeListCSV))
+            # raise Exception('Error:\n' + str(noExamModeListCSV))
 
             # Set managementgroups
             try:
-                sophomorixCommand = ['sophomorix-managementgroup', \
-                                                '--wifi', wifiListCSV, '--nowifi', noWifiListCSV,\
-                                                '--internet', internetListCSV, '--nointernet', noInternetListCSV,\
-                                                '--intranet', intranetListCSV, '--nointranet',  noIntranetListCSV,\
-                                                '--webfilter', webfilterListCSV, '--nowebfilter',  noWebfilterListCSV,\
-                                                '--printing', printingListCSV, '--noprinting', noPrintingListCSV, \
+                sophomorixCommand = ['sophomorix-managementgroup',
+                                                '--wifi', wifiListCSV, '--nowifi', noWifiListCSV,
+                                                '--internet', internetListCSV, '--nointernet', noInternetListCSV,
+                                                '--intranet', intranetListCSV, '--nointranet',  noIntranetListCSV,
+                                                '--webfilter', webfilterListCSV, '--nowebfilter',  noWebfilterListCSV,
+                                                '--printing', printingListCSV, '--noprinting', noPrintingListCSV,
                                                 '-jj']
                 result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
             except Exception as e:
@@ -167,6 +170,7 @@ class Handler(HttpPlugin):
                                                  '" --printing "' + printingListCSV + '" --noprinting "' + noPrintingListCSV +
                                                  '" -jj ') + "\n Error was: " + str(e))
             # Save session members
+
             try:
                 sophomorixCommand = ['sophomorix-session', '--session', session,  '-j', '--participants', participantsCSV]
                 result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
@@ -186,7 +190,6 @@ class Handler(HttpPlugin):
                     result = lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
             except Exception:
                 raise Exception('Error:\n' + str('sophomorix-exam-mode --unset --subdir ' + session + ' -j --participants ' + noExamModeListCSV))
-
             return result
 
         if http_context.method == 'POST':

@@ -83,7 +83,7 @@
                 <th></th>
             </tr>
             <tr style="display:{{visible.participanttable}};"  ng:repeat="(id, participant) in participants">
-                <td class="ng-binding"> <a href="#"  ng-click="showDetails = ! showDetails"> <b> {{participant.givenName}}, {{participant.sn}} </b> </a>{{participant.sophomorixAdminClass}}, <br><i> {{id}}</i>
+                <td class="ng-binding"> <a href="#"  ng-click="showDetails = ! showDetails"> <b> {{participant.sn}}, {{participant.givenName}} </b> </a>{{participant.sophomorixAdminClass}}, <br><i> {{id}}</i>
                     <div ng-show="showDetails"><img src="https://openclipart.org/image/2400px/svg_to_png/211821/matt-icons_preferences-desktop-personal.png" style="height:75px;"</img></div> </td>
                 <td>
                     <div class="button-group">
@@ -111,7 +111,7 @@
                 <td class="ng-binding">
                     <span style="display:inline-block; width:100px; font-size:100%"  class="label label-danger" ng:show="participant.sophomorixRole == 'examuser'"><i class="fa fa-graduation-cap"></i> {{participant.sophomorixExamMode}}</span></td>
                 <td width="1" style="text-align:center;"> 
-                    <span title="Exam by another supervisor" checkbox id="{{id}}.exammode" ng-click="changeClass(id+'.exammode')" ng:model="participant.exammode_boolean" ng:show="participant.sophomorixExamMode == identity.user || participant.sophomorixExamMode == '---'"></span>
+                    <span title="Exam by another supervisor" checkbox id="{{id}}.exammode" ng-click="changeClass('exammode', id)" ng:model="participant.exammode_boolean" ng:show="participant.sophomorixExamMode == identity.user || participant.sophomorixExamMode == '---'"></span>
                     <span uib-dropdown>
                         <button class="btn btn-primary btn-xs" style="color:orange; background:white; font-size:20px" ng:show="participant.sophomorixExamMode != identity.user && participant.sophomorixExamMode != '---'" uib-dropdown-toggle>
                             <i class="fa fa-exclamation-triangle"></i>
@@ -126,19 +126,19 @@
                 </td>
 
                 <td width="1" style="text-align:center;" ng:show=fields.wifiaccess.visible>
-                    <span checkbox id="{{id}}.wifiaccess" ng-click="changeClass(id+'.wifiaccess')" ng:model="participant.group_wifiaccess">"</span>
+                    <span checkbox id="{{id}}.wifiaccess" ng-click="changeClass('wifiaccess', id)" ng:model="participant.group_wifiaccess">"</span>
                 </td>
                 <td width="1" style="text-align:center;" ng:show=fields.internetaccess.visible>
-                    <span checkbox id="{{id}}.internetaccess" ng-click="changeClass(id+'.internetaccess')" ng:model="participant.group_internetaccess"></span>
+                    <span checkbox id="{{id}}.internetaccess" ng-click="changeClass('internetaccess', id)" ng:model="participant.group_internetaccess"></span>
                 </td>
                 <td width="1" style="text-align:center;" ng:show=fields.intranetaccess.visible>
-                    <span checkbox id="{{id}}.intranetaccess" ng-click="changeClass(id+'.intranetaccess')" ng:model="participant.group_intranetaccess"></span>
+                    <span checkbox id="{{id}}.intranetaccess" ng-click="changeClass('intranetaccess', id)" ng:model="participant.group_intranetaccess"></span>
                 </td>
                 <td width="1" style="text-align:center;" ng:show=fields.webfilter.visible>
-                    <span checkbox id="{{id}}.webfilter" ng-click="changeClass(id+'.webfilter')" ng:model="participant.group_webfilter"></span>
+                    <span checkbox id="{{id}}.webfilter" ng-click="changeClass('webfilter', id)" ng:model="participant.group_webfilter"></span>
                 </td>
                 <td width="1" style="text-align:center;" ng:show=fields.printing.visible>
-                    <span checkbox id="{{id}}.printing" ng-click="changeClass(id+'.printing')" ng:model="participant.group_printing" ></span>
+                    <span checkbox id="{{id}}.printing" ng-click="changeClass('printing', id)" ng:model="participant.group_printing" ></span>
                 </td>
                 <td width="1">
                     <span uib-dropdown>

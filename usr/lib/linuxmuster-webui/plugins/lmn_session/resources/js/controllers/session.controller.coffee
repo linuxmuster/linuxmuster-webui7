@@ -226,8 +226,8 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                                 delete $scope.participants['0']
                     $scope.info.message = ''
                     $scope.visible.participanttable = 'show'
-                    # console.log $scope._.addParticipant
-                    if participant.sophomorixRole is 'student'
+                    #console.log $scope._.addParticipant
+                    if $scope._.addParticipant.sophomorixRole is 'student'
                         # Add Managementgroups list if missing. This happens when all managementgroup attributes are false, causing the json tree to skip this key
                         if not $scope._.addParticipant.MANAGEMENTGROUPS?
                                     $scope._.addParticipant.MANAGEMENTGROUPS = []

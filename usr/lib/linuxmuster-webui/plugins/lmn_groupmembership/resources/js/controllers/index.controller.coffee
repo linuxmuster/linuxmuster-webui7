@@ -76,8 +76,8 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
            return
         if $scope.identity.user is null
            return
-        #if $scope.identity.user is 'root'
-        #   return
-        $scope.identity.user = 'hulk'
+        if $scope.identity.user is 'root'
+           return
+        # $scope.identity.user = 'hulk'
         $scope.getGroups($scope.identity.user)
         return

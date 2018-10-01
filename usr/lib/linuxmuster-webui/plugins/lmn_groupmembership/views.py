@@ -54,30 +54,42 @@ class Handler(HttpPlugin):
 
             if action == 'set-groups':
                 groups = http_context.json_body()['groups']
-                # groupsToAdd = []
-                # groupsToRemove = []
-                # TODO Batch adding needed
+                schoolclassToAdd = ''
+                schoolclassToRemove = ''
+                printergroupToAdd = ''
+                printergroupToRemove = ''
                 for group in groups:
                     if group['changed'] is False:
                         continue
                     # schoolclasses
                     if group['type'] == 'schoolclass':
                         if group['membership'] is True:
-                            # groupsToAdd.append(group)
-                            sophomorixCommand = ['sophomorix-class',  '--addadmins', username, '--class', group['groupname']]
-                            subprocess.check_call(sophomorixCommand, shell=False)
+                            schoolclassToAdd += group['groupname']+','
                         if group['membership'] is False:
-                            # groupsToRemove.append(group)
-                            sophomorixCommand = ['sophomorix-class',  '--removeadmins', username, '--class', group['groupname']]
-                            subprocess.check_call(sophomorixCommand, shell=False)
+                            schoolclassToRemove += group['groupname']+','
                     # printergroups
+                # TODO Batch adding needed
                     if group['type'] == 'printergroup':
                         if group['membership'] is True:
-                            # groupsToAdd.append(group)
+                            #printergroupToAdd += group['groupname']+','
                             sophomorixCommand = ['sophomorix-group',  '--addmembers', username, '--group', group['groupname']]
                             subprocess.check_call(sophomorixCommand, shell=False)
                         if group['membership'] is False:
-                            # groupsToRemove.append(group)
+                            #printergroupToRemove += group['groupname']+','
                             sophomorixCommand = ['sophomorix-group',  '--removemembers', username, '--group', group['groupname']]
                             subprocess.check_call(sophomorixCommand, shell=False)
+                if schoolclassToAdd:
+                        sophomorixCommand = ['sophomorix-class',  '--addadmins', username, '--class', schoolclassToAdd]
+                        subprocess.check_call(sophomorixCommand, shell=False)
+                if schoolclassToRemove:
+                        sophomorixCommand = ['sophomorix-class',  '--removeadmins', username, '--class', schoolclassToRemove]
+                        subprocess.check_call(sophomorixCommand, shell=False)
+                # TODO Batch adding needed
+                #if printergroupToAdd:
+                #        sophomorixCommand = ['sophomorix-group',  '--addmembers', username, '--group', printergroupToAdd]
+                #        subprocess.check_call(sophomorixCommand, shell=False)
+                #if printergroupToRemove:
+                #        sophomorixCommand = ['sophomorix-group',  '--removemembers', username, '--group', printergroupToRemove]
+                #        subprocess.check_call(sophomorixCommand, shell=False)
+
                 return 0

@@ -66,14 +66,21 @@
       return false;
     };
     $scope.resetClass = function() {
-      var result;
+      var group, i, len, ref, result;
+      // reset html class back (remove changed) so its not highlighted anymore
       result = document.getElementsByClassName("changed");
       while (result.length) {
         result[0].className = result[0].className.replace(/(?:^|\s)changed(?!\S)/g, '');
       }
+      ref = $scope.groups;
+      // reset group attribut back not not changed so an additional enroll will not set these groups again
+      for (i = 0, len = ref.length; i < len; i++) {
+        group = ref[i];
+        group['changed'] = false;
+      }
     };
     $scope.groupChanged = function(groupIndex, item) {
-      console.log($scope.groups[groupIndex]);
+      //console.log ($scope.groups[groupIndex])
       $scope.groups[groupIndex]['changed'] = true;
       if (document.getElementById(item).className.match(/(?:^|\s)changed(?!\S)/)) {
         return document.getElementById(item).className = document.getElementById(item).className.replace(/(?:^|\s)changed(?!\S)/g, '');
@@ -107,9 +114,9 @@
         return;
       }
       if ($scope.identity.user === 'root') {
-        return;
+        $scope.identity.user = 'hulk';
       }
-      // $scope.identity.user = 'hulk'
+      //return
       $scope.getGroups($scope.identity.user);
     });
   });

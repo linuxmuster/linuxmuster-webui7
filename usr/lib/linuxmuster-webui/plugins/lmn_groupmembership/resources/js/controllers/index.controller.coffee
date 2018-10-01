@@ -48,15 +48,20 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
         return false
 
     $scope.resetClass = () ->
+       # reset html class back (remove changed) so its not highlighted anymore
        result = document.getElementsByClassName("changed")
        while result.length
           result[0].className = result[0].className.replace( /(?:^|\s)changed(?!\S)/g , '' )
+       # reset $scope.group attribute back not not changed so an additional enroll will not set these groups again
+       for group in $scope.groups
+           group['changed']= false
        return
 
 
     $scope.groupChanged = (groupIndex, item) ->
-        console.log ($scope.groups[groupIndex])
+        # set $scope.group attribute
         $scope.groups[groupIndex]['changed'] = true
+        # set html class
         if document.getElementById(item).className.match (/(?:^|\s)changed(?!\S)/)
            document.getElementById(item).className = document.getElementById(item).className.replace( /(?:^|\s)changed(?!\S)/g , '' )
         else
@@ -77,7 +82,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
         if $scope.identity.user is null
            return
         if $scope.identity.user is 'root'
+            # $scope.identity.user = 'hulk'
            return
-        # $scope.identity.user = 'hulk'
         $scope.getGroups($scope.identity.user)
         return

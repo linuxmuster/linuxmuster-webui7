@@ -68,28 +68,27 @@ class Handler(HttpPlugin):
                         if group['membership'] is False:
                             schoolclassToRemove += group['groupname']+','
                     # printergroups
-                # TODO Batch adding needed
+                # TODO Clean comments
                     if group['type'] == 'printergroup':
                         if group['membership'] is True:
-                            #printergroupToAdd += group['groupname']+','
-                            sophomorixCommand = ['sophomorix-group',  '--addmembers', username, '--group', group['groupname']]
-                            subprocess.check_call(sophomorixCommand, shell=False)
+                            printergroupToAdd += group['groupname']+','
+                            # sophomorixCommand = ['sophomorix-group',  '--addmembers', username, '--group', group['groupname']]
+                            # subprocess.check_call(sophomorixCommand, shell=False)
                         if group['membership'] is False:
-                            #printergroupToRemove += group['groupname']+','
-                            sophomorixCommand = ['sophomorix-group',  '--removemembers', username, '--group', group['groupname']]
-                            subprocess.check_call(sophomorixCommand, shell=False)
+                            printergroupToRemove += group['groupname']+','
+                            # sophomorixCommand = ['sophomorix-group',  '--removemembers', username, '--group', group['groupname']]
+                            # subprocess.check_call(sophomorixCommand, shell=False)
                 if schoolclassToAdd:
                         sophomorixCommand = ['sophomorix-class',  '--addadmins', username, '--class', schoolclassToAdd]
                         subprocess.check_call(sophomorixCommand, shell=False)
                 if schoolclassToRemove:
                         sophomorixCommand = ['sophomorix-class',  '--removeadmins', username, '--class', schoolclassToRemove]
                         subprocess.check_call(sophomorixCommand, shell=False)
-                # TODO Batch adding needed
-                #if printergroupToAdd:
-                #        sophomorixCommand = ['sophomorix-group',  '--addmembers', username, '--group', printergroupToAdd]
-                #        subprocess.check_call(sophomorixCommand, shell=False)
-                #if printergroupToRemove:
-                #        sophomorixCommand = ['sophomorix-group',  '--removemembers', username, '--group', printergroupToRemove]
-                #        subprocess.check_call(sophomorixCommand, shell=False)
+                if printergroupToAdd:
+                        sophomorixCommand = ['sophomorix-group',  '--addmembers', username, '--group', printergroupToAdd]
+                        subprocess.check_call(sophomorixCommand, shell=False)
+                if printergroupToRemove:
+                        sophomorixCommand = ['sophomorix-group',  '--removemembers', username, '--group', printergroupToRemove]
+                        subprocess.check_call(sophomorixCommand, shell=False)
 
                 return 0

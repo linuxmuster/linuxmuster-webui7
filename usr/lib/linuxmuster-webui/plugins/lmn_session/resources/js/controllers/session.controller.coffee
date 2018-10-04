@@ -1,12 +1,43 @@
+angular.module('lmn.session').controller 'LMNSessionFileSelectModalController', ($scope, $uibModalInstance, gettext, notify, $http, bulkMode, senders, receivers, action, command) ->
+    $scope.bulkMode = bulkMode
+    $scope.senders = senders
+    $scope.receivers = receivers
+    $scope.action = action
+    $scope.command = command
+
+
+    if bulkMode is 'false'
+        $http.post('/api/lmn/session/trans-list-files', {user: senders[0]}).then (resp) ->
+            $scope.files = resp['data'][0]
+            $scope.filesList = resp['data'][1]
+    else
+        if action is 'share'
+            $http.post('/api/lmn/session/trans-list-files', {user: senders[0]}).then (resp) ->
+                $scope.files = resp['data'][0]
+                $scope.filesList = resp['data'][1]
+
+    $scope.save = () ->
+        filesToTrans =  []
+        angular.forEach $scope.files['TREE'], (file, id) ->
+            if file['checked'] is true
+                filesToTrans.push(id)
+        console.log (filesToTrans)
+        $uibModalInstance.close(response: 'accept', files: filesToTrans)
+
+    $scope.close = () ->
+        $uibModalInstance.dismiss()
+
+
+
+
 angular.module('lmn.session').config ($routeProvider) ->
     $routeProvider.when '/view/lmn/session',
         controller: 'LMNSessionController'
         templateUrl: '/lmn_session:resources/partial/session.html'
 
 
-angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) ->
+angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem) ->
     pageTitle.set(gettext('Session'))
-
 
     $scope.currentSession = {
         name: ""
@@ -106,8 +137,8 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
     }
 
     $scope.changeClass = (item, id) ->
-        console.log (id)
-        console.log (item)
+        #console.log (id)
+        #console.log (item)
 
         if document.getElementById(id+'.'+item).className.match (/(?:^|\s)changed(?!\S)/)
             #$scope.participants[id]['changed'] = false
@@ -117,8 +148,8 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                 $scope.participants[id]['exammode-changed'] = true
                 document.getElementById(id+'.'+item).className += " changed"
             else
-            $scope.participants[id]['changed'] = true
-            document.getElementById(id+'.'+item).className += " changed"
+                $scope.participants[id]['changed'] = true
+                document.getElementById(id+'.'+item).className += " changed"
 
     $scope.resetClass = () ->
         result = document.getElementsByClassName("changed")
@@ -210,7 +241,6 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                     $scope.visible.sessionname = 'show'
                     $scope.visible.mainpage = 'none'
                     $scope.participants = resp.data
-                    # console.log($scope.participants)
                     if $scope.participants[0]?
                        $scope.visible.participanttable = 'none'
                        $scope.info.message = gettext('This session appears to be empty. Start adding users by using the top search bar!')
@@ -303,6 +333,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                 $http.post('/api/lmn/session/sessions', {action: 'change-exam-supervisor', supervisor: supervisor, participant: participant}).then (resp) ->
 
     $scope.saveApply = (username,participants, session) ->
+                console.log (participants)
                 $http.post('/api/lmn/session/sessions', {action: 'save-session',username: username, participants: participants, session: session}).then (resp) ->
                     $scope.output = resp.data
                     $scope.getParticipants(username,session)
@@ -353,31 +384,71 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
         # if share with session we get the whole session as a json object.
         # The function on the other hand waits for an array so we extract
         # the username into an array
+        bulkMode = 'false'
         if not typeIsArray receivers
+            bulkMode = 'true'
             participantsArray = []
             for key, value of receivers
                 participantsArray.push key
             receivers = participantsArray
-        messagebox.show(title: gettext('Share Data'),text: gettext("Share EVERYTHING in transfer folder to user(s) '#{receivers}'?"), positive: gettext('Proceed'), negative: gettext('Cancel')).then () ->
-            $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers}).then (resp) ->
-                notify.success gettext('success')
+        $uibModal.open(
+           templateUrl: '/lmn_session:resources/partial/selectFile.modal.html'
+           controller: 'LMNSessionFileSelectModalController'
+           resolve:
+              action: () -> 'share'
+              bulkMode: () -> bulkMode
+              senders: () -> senders
+              receivers: () -> receivers
+              command: () -> command
+        ).result.then (result) ->
+           if result.response is 'accept'
+               $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers, files: result.files}).then (resp) ->
+
+        ##messagebox.show(title: gettext('Share Data'),text: gettext("Share EVERYTHING in transfer folder to user(s) '#{receivers}'?"), positive: gettext('Proceed'), negative: gettext('Cancel')).then () ->
+        ##    $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers}).then (resp) ->
+        ##        notify.success gettext('success')
 
     $scope.collectTrans = (command, senders, receivers) ->
+        bulkMode = 'false'
         if not typeIsArray senders
+            bulkMode = 'true'
             participantsArray = []
             for key, value of senders
                 participantsArray.push key
             senders = participantsArray
         transTitle = 'transfer'
-        if command is 'copy'
-            messagebox.show(title: gettext('Copy Data'),text: gettext("Copy EVERYTHING from transfer folder of these user(s) '#{senders}'? All files are still available in users transfer directory!"), positive: gettext('Proceed'), negative: gettext('Cancel')).then () ->
-                $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers}).then (resp) ->
-                    notify.success gettext('success')
-        if command is 'move'
-            messagebox.show(title: gettext('Collect Data'),text: gettext("Collevt EVERYTHING from transfer folder of these user(s) '#{senders}'? No files will be available by the users!"), positive: gettext('Proceed'), negative: gettext('Cancel')).then () ->
-                $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers}).then (resp) ->
-                    notify.success gettext('success')
+        $uibModal.open(
+           templateUrl: '/lmn_session:resources/partial/selectFile.modal.html'
+           controller: 'LMNSessionFileSelectModalController'
+           resolve:
+              action: () -> 'collect'
+              bulkMode: () -> bulkMode
+              senders: () -> senders
+              receivers: () -> receivers
+              command: () -> command
+        ).result.then (result) ->
+            if result.response is 'accept'
+                return
+                if command is 'copy'
+                    #messagebox.show(title: gettext('Copy Data'),text: gettext("Copy '#{{result.files}}' from transfer folder of these user(s) '#{senders}'? All files are still available in users transfer directory!"), positive: gettext('Proceed'), negative: gettext('Cancel')).then () ->
+                    $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers}).then (resp) ->
+                        notify.success gettext('success')
+                if command is 'move'
+                    #messagebox.show(title: gettext('Collect Data'),text: gettext("Collect '#{{result.files}}' from transfer folder of these user(s) '#{senders}'? No files will be available by the users!"), positive: gettext('Proceed'), negative: gettext('Cancel')).then () ->
+                    $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers}).then (resp) ->
+                        notify.success gettext('success')
 
+
+
+            #if command is 'copy'
+            #            messagebox.show(title: gettext('Copy Data'),text: gettext("Copy EVERYTHING from transfer folder of these user(s) '#{senders}'? All files are still available in users transfer directory!"), positive: gettext('Proceed'), negative: gettext('Cancel')).then () ->
+            #                $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers}).then (resp) ->
+            #                    notify.success gettext('success')
+            #        if command is 'move'
+            #            messagebox.show(title: gettext('Collect Data'),text: gettext("Collevt EVERYTHING from transfer folder of these user(s) '#{senders}'? No files will be available by the users!"), positive: gettext('Proceed'), negative: gettext('Cancel')).then () ->
+            #                $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers}).then (resp) ->
+            #                    notify.success gettext('success')
+            #
     $scope.notImplemented = (user) ->
                 messagebox.show(title: gettext('Not implemented'), positive: 'OK')
 
@@ -388,8 +459,8 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
           if $scope.identity.user is null
               return
           if $scope.identity.user is 'root'
-              $scope.identity.user = 'hulk'
-              # return
+              # $scope.identity.user = 'hulk'
+              return
           $scope.getSessions($scope.identity.user)
           return
 

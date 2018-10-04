@@ -1,0 +1,77 @@
+<div class="modal-header">
+    <div ng-if="bulkMode == 'false'">
+        <h4 translate>Select file(s) to share</h4>
+    </div>
+    <div ng-if="bulkMode == 'true'">
+        <h4 translate>Collect and Share with Session</h4>
+    </div>
+</div>
+<div class="modal-body">
+
+    <div ng-if="bulkMode == 'false'">
+        <span ng-if="action == 'share'">
+            <div translate>Select files yo want to share with </div>
+            <ul ng:repeat="receiver in receivers">
+                <li> {{receiver}} </li>
+            </ul>
+        </span>
+        <span ng-if="action == 'collect'">
+            <span ng-if="command == 'copy'">
+                <div translate>Select files yo want to copy from {{senders[0]}}</div>
+            </span>
+            <span ng-if="command == 'move'">
+                <div translate>Select files yo want to move from {{senders[0]}}</div>
+            </span>
+        </span>
+        <!-- TODO: Mach das mal schoen
+        -->
+    </div>
+        <div ng-if="bulkMode == 'true'">
+            <span ng-if="action == 'share'">
+                <div translate>Select files yo want to share with Session</div>
+            </span>
+        </div>
+
+        <br>
+        <progress-spinner ng:show="files == null"></progress-spinner>
+        <!-- This is showed twice to show directorys first -->
+        <a  ng:repeat="file in filesList|orderBy: -file">
+            <span ng-if="files != null">
+                <span ng:show="files['TREE'][file]['TYPE'] == 'directory'">
+                    <span id={{file}} checkbox ng:model="files['TREE'][file]['checked']"> </span>
+                    <span ng-if="files['TREE'][file]['TYPE'] == 'directory'">
+                        <i class="fa fa-folder"></i>
+                    </span>
+                    <span>{{file}}</span>
+                    <br>
+                </span>
+            </span>
+        </a>
+        <a  ng:repeat="file in filesList|orderBy: -file">
+            <span ng-if="files != null">
+                <span ng:show="files['TREE'][file]['TYPE'] == 'file'">
+                    <span id={{file}} checkbox ng:model="files['TREE'][file]['checked']"> </span>
+                    <span ng-if="files['TREE'][file]['TYPE'] == 'file'">
+                        <i class="fa fa-fw fa-file-o"></i>
+                    </span>
+                    <span>{{file}}</span>
+                    <br>
+                </span>
+            </span>
+        </a>
+
+
+    <div ng-if="bulkMode == 'true'">
+        <span ng-if="action == 'collect'">
+            <span ng-if="command == 'copy'">
+                <span translate>All data are copied from the whole session</span>
+            </span>
+            <span ng-if="command == 'move'">
+                <span translate>All data are moved from the whole session</span>
+            </span>
+        </span>
+    </div>
+    <div class="modal-footer">
+        <a class="btn btn-default btn-flat" ng:click="save()" translate>Share</a>
+        <a class="btn btn-default btn-flat" ng:click="close()" translate>Cancel</a>
+    </div>

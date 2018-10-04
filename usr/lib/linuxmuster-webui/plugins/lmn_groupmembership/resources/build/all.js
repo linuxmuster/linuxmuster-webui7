@@ -73,15 +73,16 @@
         result[0].className = result[0].className.replace(/(?:^|\s)changed(?!\S)/g, '');
       }
       ref = $scope.groups;
-      // reset group attribut back not not changed so an additional enroll will not set these groups again
+      // reset $scope.group attribute back not not changed so an additional enroll will not set these groups again
       for (i = 0, len = ref.length; i < len; i++) {
         group = ref[i];
         group['changed'] = false;
       }
     };
     $scope.groupChanged = function(groupIndex, item) {
-      //console.log ($scope.groups[groupIndex])
+      // set $scope.group attribute
       $scope.groups[groupIndex]['changed'] = true;
+      // set html class
       if (document.getElementById(item).className.match(/(?:^|\s)changed(?!\S)/)) {
         return document.getElementById(item).className = document.getElementById(item).className.replace(/(?:^|\s)changed(?!\S)/g, '');
       } else {
@@ -114,9 +115,9 @@
         return;
       }
       if ($scope.identity.user === 'root') {
-        $scope.identity.user = 'hulk';
+        return;
       }
-      //return
+      // $scope.identity.user = 'hulk'
       $scope.getGroups($scope.identity.user);
     });
   });

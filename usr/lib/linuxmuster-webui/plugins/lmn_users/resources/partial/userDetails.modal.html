@@ -2,28 +2,30 @@
     <h4 translate >User Details {{id}}</h4>
 </div>
 <progress-spinner ng:show="userDetails == null"></progress-spinner>
-<div ng:show="userDetails != null">
+<div style="padding-left: 40px;" ng:show="userDetails != null">
     <h3>{{userDetails[0]['givenName']}} {{userDetails[0]['sn']}}</h3>
-
-    <div translate> Group Membership:</div>
-    <li ng:repeat="group in userDetails[0]['memberOf']"><a ng:click="createConfig(example)">{{group}}</a></li>
     <br>
-    <br>Klasse:  {{userDetails[0]['sophomorixAdminClass']}}
-    <br>Geburtstag: {{userDetails[0]['sophomorixBirthdate']}}
-    <br>Creationdate: {{userDetails[0]['sophomorixCreationDate']}}
-    <br>Deaktivierungsdate: {{userDetails[0]['sophomorixCreationDate']}}
-    <br>Tolerationdate: {{userDetails[0]['sophomorixTolerationDate']}}
-
-
-    <br>Rolle: {{userDetails[0]['sophomorixRole']}}
-    <br>Schulname:  {{userDetails[0]['sophomorixSchoolname']}}
-    <br>Sophomorix Status: {{userDetails[0]['sophomorixStatus']}}
-
     <div translate> Group Membership:</div>
-    <li ng:repeat="sophomorixQuota in userDetails[0]['sophomorixQuota']"><a ng:click="createConfig(example)">{{sophomorixQuota}}</a></li>
+    <li style="padding-left: 20px;" ng:repeat="group in userDetails[0]['memberOf']"><a ng:click="createConfig(example)">{{group}}</a></li>
+    <br>
+    <br><b>Klasse:</b>  {{userDetails[0]['sophomorixAdminClass']}}
+    <br><b>Geburtstag:</b> {{userDetails[0]['sophomorixBirthdate']}}
+    <br><b>Creationdate:</b> {{userDetails[0]['sophomorixCreationDate']}}
+    <br><b>Deaktivierungsdate:</b> {{userDetails[0]['sophomorixCreationDate']}}
+    <br><b>Tolerationdate:</b> {{userDetails[0]['sophomorixTolerationDate']}}
 
-    <br>Cloudquota Calculated: {{userDetails[0]['sophomorixCloudQuotaCalculated']}}
-    <br>Mailquota Calculated: {{userDetails[0]['sophomorixMailQuotaCalculated']}}
+
+    <br><b>Rolle:</b> {{userDetails[0]['sophomorixRole']}}
+    <br><b>Schulname:</b>  {{userDetails[0]['sophomorixSchoolname']}}
+    <br><b>Sophomorix Status:</b> {{userDetails[0]['sophomorixStatus']}}
+
+    <br>
+    <br>
+    <div translate> Quota:</div>
+    <li style="padding-left: 20px;" ng:repeat="sophomorixQuota in userDetails[0]['sophomorixQuota']"><a ng:click="createConfig(example)">{{sophomorixQuota}}</a></li>
+
+    <br><b>Cloudquota Calculated:</b> {{userDetails[0]['sophomorixCloudQuotaCalculated']}}
+    <br><b>Mailquota Calculated:</b> {{userDetails[0]['sophomorixMailQuotaCalculated']}}
 
     <div class="modal-footer">
         <a class="btn btn-default btn-flat" ng:click="close()" translate>Close</a>

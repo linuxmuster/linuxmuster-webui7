@@ -1705,8 +1705,6 @@
   };
 
   angular.module('lm.users').controller('LMNUsersCustomPasswordController', function($scope, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, users) {
-    console.log(users);
-    //$scope.username = users: (x['sAMAccountName'] for x in users)
     $scope.username = users;
     $scope.save = function(userpw) {
       var x;

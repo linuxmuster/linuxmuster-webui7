@@ -490,7 +490,10 @@
         return notify.success(gettext('Random password set'));
       });
     };
-    $scope.setCustomPassword = function(user) {
+    $scope.setCustomPassword = function(user, id) {
+      // Set sAMAccountName to establish compability to userInfo Module
+      // This information is provided only as key (id) in sophomorix session
+      user[0]['sAMAccountName'] = id;
       return $uibModal.open({
         templateUrl: '/lm_users:resources/partial/customPassword.modal.html',
         controller: 'LMNUsersCustomPasswordController',

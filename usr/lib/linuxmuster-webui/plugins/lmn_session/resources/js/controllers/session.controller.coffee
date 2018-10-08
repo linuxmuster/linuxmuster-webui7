@@ -358,7 +358,10 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
             $http.post('/api/lm/users/password', {users: user, action: 'set-random'}).then (resp) ->
                 notify.success gettext('Random password set')
 
-    $scope.setCustomPassword = (user) ->
+    $scope.setCustomPassword = (user, id) ->
+        # Set sAMAccountName to establish compability to userInfo Module
+        # This information is provided only as key (id) in sophomorix session
+        user[0]['sAMAccountName'] = id
         $uibModal.open(
             templateUrl: '/lm_users:resources/partial/customPassword.modal.html'
             controller: 'LMNUsersCustomPasswordController'

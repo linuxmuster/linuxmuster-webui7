@@ -46,10 +46,10 @@
             <label translate>Password Length</label>
         </td>
         <td>
-            <input type="text" class="form-control" ng:model="settings['userfile.students.csv']['pwd_length']" />
+            <input type="number" class="form-control" ng:model="settings['userfile.students.csv']['pwd_length']" />
         </td>
         <td>
-            <input type="text" class="form-control" ng:model="settings['userfile.teachers.csv']['pwd_length']" />
+            <input type="number" class="form-control" ng:model="settings['userfile.teachers.csv']['pwd_length']" />
         </td>
     </tr>
     <tr ng:show="settings.lehrer_zufall_passwort || settings.schueler_zufall_passwort" >
@@ -103,13 +103,13 @@
                 <label translate>Quota Default Global</label>
             </td>
             <td>
-                <input type="text" class="form-control" ng:model="settings['role.student']['quota_default_global']" />
+                <input type="number" class="form-control" ng:model="settings['role.student']['quota_default_global']" />
             </td>
             <td>
-                <input type="text" class="form-control" ng:model="settings['role.teacher']['quota_default_global']" />
+                <input type="number" class="form-control" ng:model="settings['role.teacher']['quota_default_global']" />
             </td>
             <td>
-                <input type="text" class="form-control" ng:model="settings['role.schooladministrator']['quota_default_global']" />
+                <input type="number" class="form-control" ng:model="settings['role.schooladministrator']['quota_default_global']" />
             </td>
         </tr>
         <tr>
@@ -117,13 +117,13 @@
                 <label translate>Quota Default School</label>
             </td>
             <td>
-                <input type="text" class="form-control" ng:model="settings['role.student']['quota_default_school']" />
+                <input type="number" class="form-control" ng:model="settings['role.student']['quota_default_school']" />
             </td>
             <td>
-                <input type="text" class="form-control" ng:model="settings['role.teacher']['quota_default_school']" />
+                <input type="number" class="form-control" ng:model="settings['role.teacher']['quota_default_school']" />
             </td>
             <td>
-                <input type="text" class="form-control" ng:model="settings['role.schooladministrator']['quota_default_school']" />
+                <input type="number" class="form-control" ng:model="settings['role.schooladministrator']['quota_default_school']" />
             </td>
         </tr>
         <tr>
@@ -131,13 +131,13 @@
                 <label translate>Cloudquota Percentage</label>
             </td>
             <td>
-                <input type="text" class="form-control" ng:model="settings['role.student']['cloudquota_percentage']" />
+                <input type="number" class="form-control" ng:model="settings['role.student']['cloudquota_percentage']" />
             </td>
             <td>
-                <input type="text" class="form-control" ng:model="settings['role.teacher']['cloudquota_percentage']" />
+                <input type="number" class="form-control" ng:model="settings['role.teacher']['cloudquota_percentage']" />
             </td>
             <td>
-                <input type="text" class="form-control" ng:model="settings['role.schooladministrator']['cloudquota_percentage']" />
+                <input type="number" class="form-control" ng:model="settings['role.schooladministrator']['cloudquota_percentage']" />
             </td>
         </tr>
         <tr>
@@ -145,13 +145,13 @@
                 <label translate>Mailquota Default</label>
             </td>
             <td>
-                <input type="text" class="form-control" ng:model="settings['role.student']['mailquota_default']" />
+                <input type="number" class="form-control" ng:model="settings['role.student']['mailquota_default']" />
             </td>
             <td>
-                <input type="text" class="form-control" ng:model="settings['role.teacher']['mailquota_default']" />
+                <input type="number" class="form-control" ng:model="settings['role.teacher']['mailquota_default']" />
             </td>
             <td>
-                <input type="text" class="form-control" ng:model="settings['role.schooladministrator']['mailquota_default']" />
+                <input type="number" class="form-control" ng:model="settings['role.schooladministrator']['mailquota_default']" />
             </td>
         </tr>
     </table>

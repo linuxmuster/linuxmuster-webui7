@@ -34,7 +34,7 @@ angular.module('lm.users').controller 'LMUsersStudentsListController', ($scope, 
         if $scope.students.length > 0
             $scope.paging.page = Math.floor(($scope.students.length - 1) / $scope.paging.pageSize) + 1
         $scope.filter = ''
-        $scope.students.push {first_name: 'New', _isNew: true}
+        $scope.students.push { _isNew: true}
 
     $http.get('/api/lm/schoolsettings').then (resp) ->
         school = 'default-school'
@@ -53,6 +53,21 @@ angular.module('lm.users').controller 'LMUsersStudentsListController', ($scope, 
             $route.reload()
 
     $scope.save = () ->
+        informationMissing = false
+        for student in $scope.students
+            if student['_isNew'] is true
+                console.log (student)
+                fields = ["class","last_name","first_name","birthday"]
+                i = 0
+                while i < fields.length
+                  field = fields[i]
+                  if not student.hasOwnProperty(field)
+                    informationMissing = true
+                  i++
+        if informationMissing is true
+            # TODO: Color line with missing info
+            notify.error gettext('Empty field(s) in a row')
+            return
         return $http.post("/api/lm/users/students-list?encoding=#{$scope.encoding}", $scope.students).then () ->
             notify.success gettext('Saved')
 

@@ -2,7 +2,6 @@
 <progress-spinner ng:show="schooladmins == null"></progress-spinner>
 
 <div ng:show="schooladmins != null">
-
     <div ng:show="schooladmins[0] == 'none'">
         <br>
         <div class="alert alert-info">
@@ -48,7 +47,7 @@
         </div>
     </div>
 
-    <table class="table" style="width:100%">
+    <table ng:show="schooladmins[0] != 'none'" class="table" style="width:100%">
         <tr><th> </th>
             <th width="120"> Loginname / Class </th>
             <th> Name </th></tr>

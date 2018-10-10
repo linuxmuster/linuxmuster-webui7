@@ -18,7 +18,7 @@
             <input id="state-input" type="text" oninput="resetColor(id)" class="form-control" placeholder="{{'e.g.: Baden-Wuerttemberg'|translate}}" ng:model="$ctrl.ini.state" />
         </div></td>
         <td width="20%"><div class="form-group">
-            <label translate>Country Code</label>
+            <label translate>Language</label>
             <select  id="country-input" class="form-control" oninput="resetColor(id)" ng:model="$ctrl.ini.country" ng:options="x as x for x in $ctrl.languages"></select>
         </div></td>
         </tr>

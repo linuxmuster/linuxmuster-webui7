@@ -300,6 +300,10 @@
           comment: msg.value
         }).then(function(resp) {
           $scope.getSessions($scope.identity.user);
+          $scope.currentSession.name = '';
+          $scope.currentSession.comment = '';
+          $scope.visible.sessiontable = 'none';
+          $scope.visible.participanttable = 'none';
           return notify.success(gettext('Session Renamed'));
         });
       });
@@ -655,9 +659,9 @@
         return;
       }
       if ($scope.identity.user === 'root') {
-        return;
+        $scope.identity.user = 'hulk';
       }
-      // $scope.identity.user = 'hulk'
+      //return
       $scope.getSessions($scope.identity.user);
     });
   });

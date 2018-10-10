@@ -75,7 +75,7 @@ angular.module('lm.setup_wizard').controller('InitSchoolController', function ($
   this.apply = async function () {
     $dataMissing = false;
 
-    var fields = ["schoolname", "location", "state", "country", "servername", "domainname"];
+    var fields = ["schoolname", "servername", "domainname"];
 
     for (var i = 0; i < fields.length; i++) {
       var field = fields[i];

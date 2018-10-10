@@ -68,14 +68,14 @@
             <span style="float: right;"> <h6 style="display:{{visible.sessionname}}">{{currentSession.name}}</h6></span>
         </div>
 
-        <table class="table">
-            <tr style="display:{{visible.participanttable}};">
+        <table class="table" style="display:{{visible.participanttable}};">
+            <tr>
                 <th ng:repeat="(id, field) in fields" ng:if="field.visible"><div title="{{field.title}}" class="{{field.icon}}" style="font-size:20px;"></div> <br>{{field.name}}
                     <span checkbox style="float:right;" id="{{id}}.all" ng:if="field.examBox" ng-click="selectAll('exammode')" ng:model=field.checkboxStatus>"</span>
                     <span checkbox style="float:right;" id="{{id}}.all" ng:if="field.checkboxAll" ng-click="selectAll(id)" ng:model=field.checkboxStatus>"</span></th>
                 <th></th>
             </tr>
-            <tr style="display:{{visible.participanttable}};"  ng:repeat="(id, participant) in participants">
+            <tr style="display:;"  ng:repeat="(id, participant) in participants">
                 <td class="ng-binding"> <a href="#"  ng-click="showDetails = ! showDetails"> <b> {{participant.sn}}, {{participant.givenName}} </b> </a>{{participant.sophomorixAdminClass}}, <br><i> {{id}}</i>
                     <div ng-show="showDetails"><img src="https://openclipart.org/image/2400px/svg_to_png/211821/matt-icons_preferences-desktop-personal.png" style="height:75px;"</img></div> </td>
                 <td>

@@ -52,7 +52,6 @@
       }
       $scope.filter = '';
       return $scope.students.push({
-        first_name: 'New',
         _isNew: true
       });
     };
@@ -80,6 +79,29 @@
       });
     };
     $scope.save = function() {
+      var field, fields, i, informationMissing, j, len, ref, student;
+      informationMissing = false;
+      ref = $scope.students;
+      for (j = 0, len = ref.length; j < len; j++) {
+        student = ref[j];
+        if (student['_isNew'] === true) {
+          console.log(student);
+          fields = ["class", "last_name", "first_name", "birthday"];
+          i = 0;
+          while (i < fields.length) {
+            field = fields[i];
+            if (!student.hasOwnProperty(field)) {
+              informationMissing = true;
+            }
+            i++;
+          }
+        }
+      }
+      if (informationMissing === true) {
+        // TODO: Color line with missing info
+        notify.error(gettext('Empty field(s) in a row'));
+        return;
+      }
       return $http.post(`/api/lm/users/students-list?encoding=${$scope.encoding}`, $scope.students).then(function() {
         return notify.success(gettext('Saved'));
       });

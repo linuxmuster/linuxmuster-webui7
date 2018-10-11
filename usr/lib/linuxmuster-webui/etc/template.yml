@@ -22,7 +22,7 @@ max_sessions: 9
 name: %%SERVERNAME%%.%%DOMAINNAME%%
 restricted_user: nobody
 ssl:
-  certificate: /etc/linuxmuster/ssl/server.cert.bundle.pem
+  certificate: /etc/linuxmuster/ssl/%%SERVERNAME%%.cert.bundle.pem
   client_auth:
     certificates: []
     enable: false

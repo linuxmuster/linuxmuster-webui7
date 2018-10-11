@@ -50,7 +50,7 @@
     $scope.sort = $scope.sorts[0];
     $scope.paging = {
       page: 1,
-      pageSize: 50
+      pageSize: 20
     };
     $scope.isActive = function(group) {
       if (group.type === 'printergroup') {
@@ -80,7 +80,12 @@
       }
     };
     $scope.groupChanged = function(groupIndex, item) {
+      var offSet;
       // set $scope.group attribute
+      if ($scope.paging.page > 1) {
+        offSet = ($scope.paging.page - 1) * $scope.paging.pageSize;
+        groupIndex += offSet;
+      }
       $scope.groups[groupIndex]['changed'] = true;
       // set html class
       if (document.getElementById(item).className.match(/(?:^|\s)changed(?!\S)/)) {
@@ -98,6 +103,7 @@
       });
     };
     $scope.setGroups = function(groups) {
+      console.log(groups);
       return $http.post('/api/lmn/groupmembership', {
         action: 'set-groups',
         username: $scope.identity.user,
@@ -115,9 +121,9 @@
         return;
       }
       if ($scope.identity.user === 'root') {
-        return;
+        $scope.identity.user = 'hulk';
       }
-      // $scope.identity.user = 'hulk'
+      // return
       $scope.getGroups($scope.identity.user);
     });
   });

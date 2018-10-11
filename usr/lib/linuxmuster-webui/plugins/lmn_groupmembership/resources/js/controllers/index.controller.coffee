@@ -36,7 +36,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
     $scope.sort = $scope.sorts[0]
     $scope.paging =
        page: 1
-       pageSize: 50
+       pageSize: 20
 
     $scope.isActive = (group) ->
         if  group.type is 'printergroup'
@@ -60,6 +60,10 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
 
     $scope.groupChanged = (groupIndex, item) ->
         # set $scope.group attribute
+        # if changes made on page > 1 add this offsed to the index to change the right element in group list
+        if $scope.paging.page > 1
+            offSet = ($scope.paging.page - 1 ) * $scope.paging.pageSize
+            groupIndex += offSet
         $scope.groups[groupIndex]['changed'] = true
         # set html class
         if document.getElementById(item).className.match (/(?:^|\s)changed(?!\S)/)
@@ -72,6 +76,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
             $scope.groups = resp.data
 
     $scope.setGroups = (groups) ->
+        console.log (groups)
         $http.post('/api/lmn/groupmembership', {action: 'set-groups', username:$scope.identity.user, groups: groups}).then (resp) ->
             notify.success gettext('Classes enrolled')
             $scope.resetClass()
@@ -82,7 +87,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
         if $scope.identity.user is null
            return
         if $scope.identity.user is 'root'
-            # $scope.identity.user = 'hulk'
+           # $scope.identity.user = 'hulk'
            return
         $scope.getGroups($scope.identity.user)
         return

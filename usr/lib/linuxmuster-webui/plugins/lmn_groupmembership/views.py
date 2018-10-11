@@ -4,7 +4,6 @@ from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint
 from aj.auth import authorize
 from aj.plugins.lm_common.api import lmn_getSophomorixValue
-import subprocess
 
 
 @component(HttpPlugin)
@@ -68,27 +67,34 @@ class Handler(HttpPlugin):
                         if group['membership'] is False:
                             schoolclassToRemove += group['groupname']+','
                     # printergroups
-                # TODO Clean comments
                     if group['type'] == 'printergroup':
                         if group['membership'] is True:
                             printergroupToAdd += group['groupname']+','
-                            # sophomorixCommand = ['sophomorix-group',  '--addmembers', username, '--group', group['groupname']]
-                            # subprocess.check_call(sophomorixCommand, shell=False)
                         if group['membership'] is False:
                             printergroupToRemove += group['groupname']+','
-                            # sophomorixCommand = ['sophomorix-group',  '--removemembers', username, '--group', group['groupname']]
-                            # subprocess.check_call(sophomorixCommand, shell=False)
                 if schoolclassToAdd:
-                        sophomorixCommand = ['sophomorix-class',  '--addadmins', username, '--class', schoolclassToAdd]
-                        subprocess.check_call(sophomorixCommand, shell=False)
+                        sophomorixCommand = ['sophomorix-class',  '--addadmins', username, '--class', schoolclassToAdd, '-jj']
+                        result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
+                        if result['TYPE'] == "ERROR":
+                            return result['TYPE']['LOG']
                 if schoolclassToRemove:
-                        sophomorixCommand = ['sophomorix-class',  '--removeadmins', username, '--class', schoolclassToRemove]
-                        subprocess.check_call(sophomorixCommand, shell=False)
+                        sophomorixCommand = ['sophomorix-class',  '--removeadmins', username, '--class', schoolclassToRemove, '-jj']
+                        result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
+                        if result['TYPE'] == "ERROR":
+                            return result['TYPE']['LOG']
                 if printergroupToAdd:
-                        sophomorixCommand = ['sophomorix-group',  '--addmembers', username, '--group', printergroupToAdd]
-                        subprocess.check_call(sophomorixCommand, shell=False)
+                        sophomorixCommand = ['sophomorix-group',  '--addmembers', username, '--group', printergroupToAdd, '-jj']
+                        result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
+                        if result['TYPE'] == "ERROR":
+                            return result['TYPE'], result['MESSAGE_EN']
                 if printergroupToRemove:
-                        sophomorixCommand = ['sophomorix-group',  '--removemembers', username, '--group', printergroupToRemove]
-                        subprocess.check_call(sophomorixCommand, shell=False)
-
-                return 0
+                        sophomorixCommand = ['sophomorix-group',  '--removemembers', username, '--group', printergroupToRemove, '-jj']
+                        result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
+                        if result['TYPE'] == "ERROR":
+                            return result['TYPE']['LOG']
+                # Try to return last result to frontend
+                try:
+                    return result['TYPE'], result['LOG']
+                # If nothing changed result is empty so return 0
+                except NameError:
+                    return 0

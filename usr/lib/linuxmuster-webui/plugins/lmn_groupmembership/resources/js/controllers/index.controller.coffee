@@ -76,10 +76,14 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
             $scope.groups = resp.data
 
     $scope.setGroups = (groups) ->
-        console.log (groups)
         $http.post('/api/lmn/groupmembership', {action: 'set-groups', username:$scope.identity.user, groups: groups}).then (resp) ->
-            notify.success gettext('Classes enrolled')
-            $scope.resetClass()
+            if resp['data'][0] == 'ERROR'
+                notify.error (resp['data'][1])
+            if resp['data'][0] == 'LOG'
+                notify.success gettext(resp['data'][1])
+                $scope.resetClass()
+            if resp.data == 0
+                notify.success gettext("Nothing changed")
 
     $scope.$watch 'identity.user', ->
         if $scope.identity.user is undefined

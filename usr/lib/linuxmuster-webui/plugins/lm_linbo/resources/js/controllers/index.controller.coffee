@@ -425,7 +425,6 @@ angular.module('lm.linbo').controller 'LMLINBOController', ($scope, $http, $uibM
             if not isValidName(newName)
                 notify.error gettext('Not a valid name! Only ASCII characters and numbers are allowed!')
                 return
-            return
             if newName
                 if example
                     $http.get("/api/lm/linbo/config/examples/#{example}").then (resp) ->

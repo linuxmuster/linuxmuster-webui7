@@ -512,9 +512,9 @@
         newName = msg.value;
         if (!isValidName(newName)) {
           notify.error(gettext('Not a valid name! Only ASCII characters and numbers are allowed!'));
+          console.log('Not a valid name! Only ASCII characters and numbers are allowed!');
           return;
         }
-        return;
         if (newName) {
           if (example) {
             return $http.get(`/api/lm/linbo/config/examples/${example}`).then(function(resp) {

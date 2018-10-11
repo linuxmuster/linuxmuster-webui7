@@ -82,6 +82,7 @@
     $scope.groupChanged = function(groupIndex, item) {
       var offSet;
       // set $scope.group attribute
+      // if changes made on page > 1 add this offsed to the index to change the right element in group list
       if ($scope.paging.page > 1) {
         offSet = ($scope.paging.page - 1) * $scope.paging.pageSize;
         groupIndex += offSet;
@@ -103,14 +104,21 @@
       });
     };
     $scope.setGroups = function(groups) {
-      console.log(groups);
       return $http.post('/api/lmn/groupmembership', {
         action: 'set-groups',
         username: $scope.identity.user,
         groups: groups
       }).then(function(resp) {
-        notify.success(gettext('Classes enrolled'));
-        return $scope.resetClass();
+        if (resp['data'][0] === 'ERROR') {
+          notify.error(resp['data'][1]);
+        }
+        if (resp['data'][0] === 'LOG') {
+          notify.success(gettext(resp['data'][1]));
+          $scope.resetClass();
+        }
+        if (resp.data === 0) {
+          return notify.success(gettext("Nothing changed"));
+        }
       });
     };
     return $scope.$watch('identity.user', function() {
@@ -121,9 +129,9 @@
         return;
       }
       if ($scope.identity.user === 'root') {
-        $scope.identity.user = 'hulk';
+        return;
       }
-      // return
+      // $scope.identity.user = 'hulk'
       $scope.getGroups($scope.identity.user);
     });
   });

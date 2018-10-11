@@ -82,11 +82,12 @@ angular.module('lm.users').controller 'LMUsersStudentsController', ($scope, $htt
         $scope.setCustomPassword((x for x in $scope.students when x.selected))
 
     $scope.selectAll = (filter) ->
+        if !filter?
+            filter = ''
         for student in $scope.students
             if filter is undefined
                 student.selected = true
             if student.sn.toLowerCase().includes filter.toLowerCase()
-                console.log (student)
                 student.selected = true
             if student.givenName.toLowerCase().includes filter.toLowerCase()
                 student.selected = true

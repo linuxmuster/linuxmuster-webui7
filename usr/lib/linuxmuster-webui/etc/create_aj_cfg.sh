@@ -26,7 +26,7 @@ sed -i s/%%SERVERNAME%%/$servername/ $ajcfg
 sed -i s/%%DOMAINNAME%%/$domainname/ $ajcfg
 
 echo "Bundle certificate for webui"
-cat /etc/linuxmuster/ssl/server.key.pem /etc/linuxmuster/ssl/server.cert.pem >  /etc/linuxmuster/ssl/server.cert.bundle.pem
+cat /etc/linuxmuster/ssl/$servername.key.pem /etc/linuxmuster/ssl/$servername.cert.pem >  /etc/linuxmuster/ssl/$servername.cert.bundle.pem
 
 echo "Run Sophomorix-UI to add permissions"
 sophomorix-ui >/dev/null 2>&1

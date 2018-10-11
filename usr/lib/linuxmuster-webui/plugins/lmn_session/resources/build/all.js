@@ -236,6 +236,7 @@
           $scope.visible.sessionname = 'none';
           $scope.visible.participanttable = 'none';
           $scope.visible.mainpage = 'show';
+          $scope.sessionLoaded = false;
           $scope.info.message = '';
           $scope.getSessions($scope.identity.user);
           $scope.currentSession.name = '';
@@ -261,6 +262,7 @@
           $scope.info.message = '';
           $scope.currentSession.name = '';
           $scope.currentSession.comment = '';
+          $scope.sessionLoaded = false;
           return $scope.visible.participanttable = 'none';
         });
       });
@@ -301,6 +303,7 @@
         }).then(function(resp) {
           $scope.getSessions($scope.identity.user);
           $scope.currentSession.name = '';
+          $scope.sessionLoaded = false;
           $scope.currentSession.comment = '';
           $scope.visible.sessiontable = 'none';
           $scope.visible.participanttable = 'none';
@@ -321,6 +324,7 @@
         session: session
       }).then(function(resp) {
         $scope.visible.sessionname = 'show';
+        $scope.sessionLoaded = 'true';
         $scope.visible.mainpage = 'none';
         $scope.participants = resp.data;
         if ($scope.participants[0] != null) {
@@ -461,6 +465,8 @@
     };
     $scope.cancel = function(username, participants, session) {
       $scope.getSessions($scope.identity.user);
+      $scope.sessionLoaded = false;
+      console.log($scope.sessionLoaded);
       $scope.info.message = '';
       $scope.currentSession.name = '';
       $scope.currentSession.comment = '';
@@ -659,9 +665,9 @@
         return;
       }
       if ($scope.identity.user === 'root') {
-        $scope.identity.user = 'hulk';
+        return;
       }
-      //return
+      // $scope.identity.user = 'hulk'
       $scope.getSessions($scope.identity.user);
     });
   });

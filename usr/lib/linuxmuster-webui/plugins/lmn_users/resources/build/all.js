@@ -323,7 +323,6 @@
           teacher.selected = true;
         }
         if (teacher.sn.toLowerCase().includes(filter.toLowerCase())) {
-          console.log(teacher);
           teacher.selected = true;
         }
         if (teacher.givenName.toLowerCase().includes(filter.toLowerCase())) {
@@ -1569,7 +1568,6 @@
           teacher.selected = true;
         }
         if (teacher.sn.toLowerCase().includes(filter.toLowerCase())) {
-          console.log(teacher);
           teacher.selected = true;
         }
         if (teacher.givenName.toLowerCase().includes(filter.toLowerCase())) {

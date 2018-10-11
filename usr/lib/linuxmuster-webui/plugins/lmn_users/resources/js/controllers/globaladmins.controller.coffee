@@ -87,18 +87,19 @@ angular.module('lm.users').controller 'LMUsersGloballadminsController', ($scope,
         $scope.setCustomPassword((x for x in $scope.globaladmins when x.selected))
 
     $scope.selectAll = (filter) ->
-       for globaladmin in $scope.globaladmins
-          if filter is undefined
-             globaladmin.selected = true
-          if globaladmin.sn.toLowerCase().includes filter.toLowerCase()
-             console.log (globaladmin)
-             globaladmin.selected = true
-          if globaladmin.givenName.toLowerCase().includes filter.toLowerCase()
-             globaladmin.selected = true
-          if globaladmin.sophomorixAdminClass.toLowerCase().includes filter.toLowerCase()
-             globaladmin.selected = true
-          if globaladmin.sAMAccountName.toLowerCase().includes filter.toLowerCase()
-             globaladmin.selected = true
+        if !filter?
+            filter = ''
+        for globaladmin in $scope.globaladmins
+            if filter is undefined
+                globaladmin.selected = true
+            if globaladmin.sn.toLowerCase().includes filter.toLowerCase()
+                globaladmin.selected = true
+            if globaladmin.givenName.toLowerCase().includes filter.toLowerCase()
+                globaladmin.selected = true
+            if globaladmin.sophomorixAdminClass.toLowerCase().includes filter.toLowerCase()
+                globaladmin.selected = true
+            if globaladmin.sAMAccountName.toLowerCase().includes filter.toLowerCase()
+                globaladmin.selected = true
 
 
 

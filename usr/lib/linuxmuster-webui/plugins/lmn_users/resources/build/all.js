@@ -312,6 +312,9 @@
     };
     return $scope.selectAll = function(filter) {
       var i, len, ref, results, teacher;
+      if (filter == null) {
+        filter = '';
+      }
       ref = $scope.teachers;
       results = [];
       for (i = 0, len = ref.length; i < len; i++) {
@@ -530,6 +533,9 @@
     };
     return $scope.selectAll = function(filter) {
       var i, len, ref, results, student;
+      if (filter == null) {
+        filter = '';
+      }
       ref = $scope.students;
       results = [];
       for (i = 0, len = ref.length; i < len; i++) {
@@ -538,7 +544,6 @@
           student.selected = true;
         }
         if (student.sn.toLowerCase().includes(filter.toLowerCase())) {
-          console.log(student);
           student.selected = true;
         }
         if (student.givenName.toLowerCase().includes(filter.toLowerCase())) {
@@ -776,6 +781,9 @@
     };
     return $scope.selectAll = function(filter) {
       var i, len, ref, results, schooladmin;
+      if (filter == null) {
+        filter = '';
+      }
       ref = $scope.schooladmins;
       results = [];
       for (i = 0, len = ref.length; i < len; i++) {
@@ -784,7 +792,6 @@
           schooladmin.selected = true;
         }
         if (schooladmin.sn.toLowerCase().includes(filter.toLowerCase())) {
-          console.log(schooladmin);
           schooladmin.selected = true;
         }
         if (schooladmin.givenName.toLowerCase().includes(filter.toLowerCase())) {
@@ -1022,6 +1029,9 @@
     };
     return $scope.selectAll = function(filter) {
       var globaladmin, i, len, ref, results;
+      if (filter == null) {
+        filter = '';
+      }
       ref = $scope.globaladmins;
       results = [];
       for (i = 0, len = ref.length; i < len; i++) {
@@ -1030,7 +1040,6 @@
           globaladmin.selected = true;
         }
         if (globaladmin.sn.toLowerCase().includes(filter.toLowerCase())) {
-          console.log(globaladmin);
           globaladmin.selected = true;
         }
         if (globaladmin.givenName.toLowerCase().includes(filter.toLowerCase())) {
@@ -1549,6 +1558,9 @@
     };
     return $scope.selectAll = function(filter) {
       var i, len, ref, results, teacher;
+      if (filter == null) {
+        filter = '';
+      }
       ref = $scope.teachers;
       results = [];
       for (i = 0, len = ref.length; i < len; i++) {

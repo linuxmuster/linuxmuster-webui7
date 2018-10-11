@@ -512,7 +512,6 @@
         newName = msg.value;
         if (!isValidName(newName)) {
           notify.error(gettext('Not a valid name! Only ASCII characters and numbers are allowed!'));
-          console.log('Not a valid name! Only ASCII characters and numbers are allowed!');
           return;
         }
         if (newName) {

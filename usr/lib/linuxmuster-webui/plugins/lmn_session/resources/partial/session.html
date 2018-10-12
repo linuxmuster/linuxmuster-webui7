@@ -198,7 +198,7 @@
             </div>
         </floating-toolbar>
         <div ng:show="sessions[0]['SESSIONCOUNT'] != 0">
-            <progress-spinner ng:show="sessions == null"></progress-spinner>
+            <progress-spinner ng:show="sessions == null && identity.user != 'root'"></progress-spinner>
             <div ng:show="visible.sessiontable == 'show'"  class="list-group">
                 <!--
                     <progress-spinner ng:show="sessions == null"></progress-spinner>

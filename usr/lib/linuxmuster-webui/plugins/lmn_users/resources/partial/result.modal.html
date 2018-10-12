@@ -66,10 +66,13 @@
     </uib:tab>
     <uib:tab heading="{{'Errors'|translate}}" ng:show="data['SUMMARY'][5]['ERROR']['RESULT'] > 0">
     <br/>
+    <table>
+        <tr ng-repeat="(id,item) in data['CHECK_RESULT']['ERROR']">
             <td >
-            <!-- TODO add real fields-->
-                <pre>{{item.sophomorixAdminClass}};  {{item.sn}}, {{item.givenName}}; {{item.sophomorixRole}}; {{item.sophomorixSchoolname}}</pre>
+                <pre>{{id}} {{item.REASON}}</pre>
             </td>
+        </tr>
+    </table>
     </uib:tab>
     </uib:tabset>
 </div>

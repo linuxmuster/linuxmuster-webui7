@@ -36,6 +36,7 @@ angular.module('lm.users').controller 'LMUsersApplyModalController', ($scope, $u
         notify.error gettext('Failed'), resp.data.message
 
 
+
 angular.module('lm.users').controller 'LMUsersCheckModalController', ($scope, $http, notify, $uibModalInstance, $uibModal, gettext) ->
     $scope.isWorking = true
 

@@ -295,7 +295,7 @@ class Handler(HttpPlugin):
     def handle_api_users_apply(self, http_context):
         path = '/tmp/sophomorix.log'
         # TODO: Update this function for output
-        # replace sophomorix-mode by sophomorix-update
+        # replace sophomorix-move by sophomorix-update
         open(path, 'w').close()
 
         script = ''

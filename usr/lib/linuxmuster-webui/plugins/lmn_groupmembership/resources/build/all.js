@@ -83,6 +83,7 @@
       var offSet;
       // set $scope.group attribute
       // if changes made on page > 1 add this offsed to the index to change the right element in group list
+      // TODO: BUG this is not working correctly if groups and printers are mixed up
       if ($scope.paging.page > 1) {
         offSet = ($scope.paging.page - 1) * $scope.paging.pageSize;
         groupIndex += offSet;

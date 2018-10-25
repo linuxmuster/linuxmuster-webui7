@@ -58,8 +58,9 @@ class Handler(HttpPlugin):
                 printergroupToAdd = ''
                 printergroupToRemove = ''
                 for group in groups:
-                    if group['changed'] is False:
-                        continue
+                    # Temporary removed because changed attribute is set wrong
+                    #if group['changed'] is False:
+                    #    continue
                     # schoolclasses
                     if group['type'] == 'schoolclass':
                         if group['membership'] is True:

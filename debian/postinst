@@ -16,6 +16,10 @@ case "$1" in
     # Set default permissions from true to false
     echo "set reverse permissions"
     sed -i "s/: True,/: False,/g" /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/main.py
+    # Delete sensitive config items in default template
+    echo "Delete linumuster special config items"
+    sed -i 's/json\.dumps(aj\.config\.data)/json\.dumps(config_angular)/' /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/views/main.py
+    sed -i '/from aj\.api\.endpoint/a# Del sensitive config items\nconfig_angular = aj.config.data\ndel config_angular["linuxmuster"]' /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/views/main.py
     # systemctl einrichten und starten
     echo "configure systemctl.."
     systemctl daemon-reload

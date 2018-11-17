@@ -56,7 +56,7 @@
   });
 
   angular.module('lmn.session').controller('LMNSessionController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem) {
-    var typeIsArray;
+    var typeIsArray, validateResult;
     pageTitle.set(gettext('Session'));
     $scope.currentSession = {
       name: "",
@@ -533,6 +533,14 @@
     typeIsArray = Array.isArray || function(value) {
       return {}.toString.call(value) === '[object Array]';
     };
+    validateResult = function(resp) {
+      if (resp['data'][0] === 'ERROR') {
+        notify.error(resp['data'][1]);
+      }
+      if (resp['data'][0] === 'LOG') {
+        return notify.success(gettext(resp['data'][1]));
+      }
+    };
     $scope.shareTrans = function(command, senders, receivers) {
       var bulkMode, key, participantsArray, value;
       // if share with session we get the whole session as a json object.
@@ -546,8 +554,8 @@
           value = receivers[key];
           participantsArray.push(key);
         }
-        receivers = participantsArray;
       }
+      console.log(receivers);
       return $uibModal.open({
         templateUrl: '/lmn_session:resources/partial/selectFile.modal.html',
         controller: 'LMNSessionFileSelectModalController',
@@ -575,7 +583,9 @@
             senders: senders,
             receivers: receivers,
             files: result.files
-          }).then(function(resp) {});
+          }).then(function(resp) {
+            return validateResult(resp);
+          });
         }
       });
     };
@@ -584,6 +594,7 @@
     //#        notify.success gettext('success')
     $scope.collectTrans = function(command, senders, receivers) {
       var bulkMode, key, participantsArray, transTitle, value;
+      console.log(command);
       bulkMode = 'false';
       if (!typeIsArray(senders)) {
         bulkMode = 'true';
@@ -617,30 +628,35 @@
         }
       }).result.then(function(result) {
         if (result.response === 'accept') {
-          return;
+          //return
           if (command === 'copy') {
             //messagebox.show(title: gettext('Copy Data'),text: gettext("Copy '#{{result.files}}' from transfer folder of these user(s) '#{senders}'? All files are still available in users transfer directory!"), positive: gettext('Proceed'), negative: gettext('Cancel')).then () ->
             $http.post('/api/lmn/session/trans', {
               command: command,
               senders: senders,
-              receivers: receivers
+              receivers: receivers,
+              files: result.files
             }).then(function(resp) {
-              return notify.success(gettext('success'));
+              return validateResult(resp);
             });
           }
+          //notify.success gettext('success')
           if (command === 'move') {
             //messagebox.show(title: gettext('Collect Data'),text: gettext("Collect '#{{result.files}}' from transfer folder of these user(s) '#{senders}'? No files will be available by the users!"), positive: gettext('Proceed'), negative: gettext('Cancel')).then () ->
             return $http.post('/api/lmn/session/trans', {
               command: command,
               senders: senders,
-              receivers: receivers
+              receivers: receivers,
+              files: result.files
             }).then(function(resp) {
-              return notify.success(gettext('success'));
+              return validateResult(resp);
             });
           }
         }
       });
     };
+    //notify.success gettext('success')
+
     //if command is 'copy'
     //            messagebox.show(title: gettext('Copy Data'),text: gettext("Copy EVERYTHING from transfer folder of these user(s) '#{senders}'? All files are still available in users transfer directory!"), positive: gettext('Proceed'), negative: gettext('Cancel')).then () ->
     //                $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers}).then (resp) ->

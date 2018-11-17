@@ -256,24 +256,40 @@ class Handler(HttpPlugin):
         command = http_context.json_body()['command']
         receivers = http_context.json_body()['receivers']
         files = http_context.json_body()['files']
-        fileListCSV = ''
-        for f in files:
-            fileListCSV += 'transfer/'+f+','
 
-        receiver = ','.join([x.strip() for x in receivers])
         with authorize('lmn:session:trans'):
+            if command == 'share':
+                try:
+                    for sender in senders:
+                        for receiver in receivers:
+                            for File in files:
+                                sophomorixCommand = ['sophomorix-transfer', '-jj', '--scopy', '--from-user', sender, '--to-user', receiver, '--from-path', 'transfer/'+File, '--to-path', 'transfer']
+                                returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
+                except Exception as e:
+                    raise Exception('Something went wrong. Error:\n' + str(e))
+
             if command == 'copy':
                 try:
                     for sender in senders:
-                        sophomorixCommand = ['sophomorix-transfer', '-jj', '--collect-copy', '--from-user', sender, '--to-user', receiver, '--file', fileListCSV]
-                        returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'JSONINFO')
+                        for receiver in receivers:
+                            for File in files:
+                                sophomorixCommand = ['sophomorix-transfer', '-jj', '--collect-copy', '--from-user', sender, '--to-user', receiver, '--file', File]
+                        returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
                 except Exception as e:
                     raise Exception('Something went wrong. Error:\n' + str(e))
-            if command == 'move':
-                try:
-                    for sender in senders:
-                        sophomorixCommand = ['sophomorix-transfer', '-jj', '--collect-move', '--from-user', sender, '--to-user', receiver, '--file', fileListCSV]
-                        returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'JSONINFO')
-                except Exception as e:
-                    raise Exception('Something went wrong. Error:\n' + str(e))
-        return returnMessage
+            #if command == 'move':
+                #fileListCSV = ''
+                #for f in files:
+                #    fileListCSV += 'transfer/'+f+','
+                #receiver = ','.join([x.strip() for x in receivers])
+            #    try:
+            #        for sender in senders:
+            #            sophomorixCommand = ['sophomorix-transfer', '-jj', '--collect-move', '--from-user', sender, '--to-user', receiver, '--file', fileListCSV]
+            #            returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'JSONINFO')
+            #    except Exception as e:
+            #        raise Exception('Something went wrong. Error:\n' + str(e))
+        if returnMessage['TYPE'] == "ERROR":
+            return returnMessage['TYPE']['LOG']
+        return returnMessage['TYPE'], returnMessage['LOG']
+        return returnMessage['TYPE']['LOG']
+        #return returnMessage

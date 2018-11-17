@@ -132,7 +132,7 @@
       if ($scope.identity.user === 'root') {
         return;
       }
-      // $scope.identity.user = 'hulk'
+      //$scope.identity.user = 'hulk'
       $scope.getGroups($scope.identity.user);
     });
   });

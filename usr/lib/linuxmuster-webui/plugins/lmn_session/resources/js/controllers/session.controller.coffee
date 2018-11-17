@@ -393,6 +393,13 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
 
     typeIsArray = Array.isArray || ( value ) -> return {}.toString.call( value ) is '[object Array]'
 
+    validateResult = (resp) ->
+        if resp['data'][0] == 'ERROR'
+            notify.error (resp['data'][1])
+        if resp['data'][0] == 'LOG'
+            notify.success gettext(resp['data'][1])
+
+
     $scope.shareTrans = (command, senders, receivers) ->
         # if share with session we get the whole session as a json object.
         # The function on the other hand waits for an array so we extract
@@ -403,7 +410,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
             participantsArray = []
             for key, value of receivers
                 participantsArray.push key
-            receivers = participantsArray
+        console.log (receivers)
         $uibModal.open(
            templateUrl: '/lmn_session:resources/partial/selectFile.modal.html'
            controller: 'LMNSessionFileSelectModalController'
@@ -416,12 +423,14 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
         ).result.then (result) ->
            if result.response is 'accept'
                $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers, files: result.files}).then (resp) ->
+                   validateResult(resp)
 
         ##messagebox.show(title: gettext('Share Data'),text: gettext("Share EVERYTHING in transfer folder to user(s) '#{receivers}'?"), positive: gettext('Proceed'), negative: gettext('Cancel')).then () ->
         ##    $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers}).then (resp) ->
         ##        notify.success gettext('success')
 
     $scope.collectTrans = (command, senders, receivers) ->
+        console.log (command)
         bulkMode = 'false'
         if not typeIsArray senders
             bulkMode = 'true'
@@ -441,15 +450,17 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
               command: () -> command
         ).result.then (result) ->
             if result.response is 'accept'
-                return
+                #return
                 if command is 'copy'
                     #messagebox.show(title: gettext('Copy Data'),text: gettext("Copy '#{{result.files}}' from transfer folder of these user(s) '#{senders}'? All files are still available in users transfer directory!"), positive: gettext('Proceed'), negative: gettext('Cancel')).then () ->
-                    $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers}).then (resp) ->
-                        notify.success gettext('success')
+                    $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers, files: result.files}).then (resp) ->
+                        validateResult(resp)
+                        #notify.success gettext('success')
                 if command is 'move'
                     #messagebox.show(title: gettext('Collect Data'),text: gettext("Collect '#{{result.files}}' from transfer folder of these user(s) '#{senders}'? No files will be available by the users!"), positive: gettext('Proceed'), negative: gettext('Cancel')).then () ->
-                    $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers}).then (resp) ->
-                        notify.success gettext('success')
+                    $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers, files: result.files}).then (resp) ->
+                        validateResult(resp)
+                        #notify.success gettext('success')
 
 
 

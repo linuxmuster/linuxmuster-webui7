@@ -80,7 +80,7 @@
                     <div ng-show="showDetails"><img src="https://openclipart.org/image/2400px/svg_to_png/211821/matt-icons_preferences-desktop-personal.png" style="height:75px;"</img></div> </td>
                 <td>
                     <div class="button-group">
-                        <button type="button" class="btn btn-default" ng:click="shareTrans('copy', [identity.user], [id])"translate > <a>Share</a></button>
+                        <button type="button" class="btn btn-default" ng:click="shareTrans('share', [identity.user], [id])"translate > <a>Share</a></button>
                         <span uib-dropdown>
                             <button class="btn btn-default" uib-dropdown-toggle>
                                 <a class=""translate>Collect</a>
@@ -187,10 +187,10 @@
                     </button>
                     <ul uib-dropdown-menu class="scrollable">
 <!--                        <li><a flow-btn class="btn btn-default btn-flat" test-bind="uploadButton" translate>Upload file to share</a></li>-->
-                        <li><a ng:click="shareTrans('copy', [identity.user], participants)" translate>Share file(s) from transfer with whole session</a></li>
+                        <li><a ng:click="shareTrans('share', [identity.user], participants)" translate>Share file(s) from transfer with whole session</a></li>
                         <li><a ng:click="collectTrans('copy', participants, [identity.user])" translate>Copy transfer from whole session</a></li>
                         <li><a ng:click="collectTrans('move', participants, [identity.user])" translate>Collect transfer from whole session</a></li>
-                        <li ng:repeat="example in examples"><a ng:click="createConfig(example)">{{example}}</a></li>
+                        <!--   <li ng:repeat="example in examples"><a ng:click="createConfig(example)">{{example}}</a></li>-->
                     </ul>
                 </div>
                 <button ng:click="saveApply(identity.user,participants,currentSession.name)" ng:show="currentSession.name != ''" class="btn btn-default btn-flat pull-right" translate>Save & apply</button>

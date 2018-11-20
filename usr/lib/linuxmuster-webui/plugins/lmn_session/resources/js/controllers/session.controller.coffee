@@ -5,7 +5,6 @@ angular.module('lmn.session').controller 'LMNSessionFileSelectModalController', 
     $scope.action = action
     $scope.command = command
 
-
     if bulkMode is 'false'
         $http.post('/api/lmn/session/trans-list-files', {user: senders[0]}).then (resp) ->
             $scope.files = resp['data'][0]
@@ -21,8 +20,13 @@ angular.module('lmn.session').controller 'LMNSessionFileSelectModalController', 
         angular.forEach $scope.files['TREE'], (file, id) ->
             if file['checked'] is true
                 filesToTrans.push(id)
-        console.log (filesToTrans)
-        $uibModalInstance.close(response: 'accept', files: filesToTrans)
+        $uibModalInstance.close(response: 'accept', files: filesToTrans, bulkMode: bulkMode)
+
+    $scope.saveBulk = () ->
+        $uibModalInstance.close(response: 'accept', files: 'All', bulkMode: bulkMode)
+
+
+
 
     $scope.close = () ->
         $uibModalInstance.dismiss()
@@ -400,7 +404,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
             notify.success gettext(resp['data'][1])
 
 
-    $scope.shareTrans = (command, senders, receivers) ->
+    $scope.shareTrans = (command, senders, receivers, sessioncomment) ->
         # if share with session we get the whole session as a json object.
         # The function on the other hand waits for an array so we extract
         # the username into an array
@@ -422,14 +426,14 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
               command: () -> command
         ).result.then (result) ->
            if result.response is 'accept'
-               $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers, files: result.files}).then (resp) ->
+               $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers, files: result.files, session: sessioncomment}).then (resp) ->
                    validateResult(resp)
 
         ##messagebox.show(title: gettext('Share Data'),text: gettext("Share EVERYTHING in transfer folder to user(s) '#{receivers}'?"), positive: gettext('Proceed'), negative: gettext('Cancel')).then () ->
         ##    $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers}).then (resp) ->
         ##        notify.success gettext('success')
 
-    $scope.collectTrans = (command, senders, receivers) ->
+    $scope.collectTrans = (command, senders, receivers, sessioncomment) ->
         console.log (command)
         bulkMode = 'false'
         if not typeIsArray senders
@@ -453,12 +457,12 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                 #return
                 if command is 'copy'
                     #messagebox.show(title: gettext('Copy Data'),text: gettext("Copy '#{{result.files}}' from transfer folder of these user(s) '#{senders}'? All files are still available in users transfer directory!"), positive: gettext('Proceed'), negative: gettext('Cancel')).then () ->
-                    $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers, files: result.files}).then (resp) ->
+                    $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers, files: result.files, session: sessioncomment}).then (resp) ->
                         validateResult(resp)
                         #notify.success gettext('success')
                 if command is 'move'
                     #messagebox.show(title: gettext('Collect Data'),text: gettext("Collect '#{{result.files}}' from transfer folder of these user(s) '#{senders}'? No files will be available by the users!"), positive: gettext('Proceed'), negative: gettext('Cancel')).then () ->
-                    $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers, files: result.files}).then (resp) ->
+                    $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers, files: result.files, session: sessioncomment}).then (resp) ->
                         validateResult(resp)
                         #notify.success gettext('success')
 

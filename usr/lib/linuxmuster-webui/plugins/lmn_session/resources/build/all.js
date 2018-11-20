@@ -37,10 +37,17 @@
           return filesToTrans.push(id);
         }
       });
-      console.log(filesToTrans);
       return $uibModalInstance.close({
         response: 'accept',
-        files: filesToTrans
+        files: filesToTrans,
+        bulkMode: bulkMode
+      });
+    };
+    $scope.saveBulk = function() {
+      return $uibModalInstance.close({
+        response: 'accept',
+        files: 'All',
+        bulkMode: bulkMode
       });
     };
     return $scope.close = function() {
@@ -541,7 +548,7 @@
         return notify.success(gettext(resp['data'][1]));
       }
     };
-    $scope.shareTrans = function(command, senders, receivers) {
+    $scope.shareTrans = function(command, senders, receivers, sessioncomment) {
       var bulkMode, key, participantsArray, value;
       // if share with session we get the whole session as a json object.
       // The function on the other hand waits for an array so we extract
@@ -582,7 +589,8 @@
             command: command,
             senders: senders,
             receivers: receivers,
-            files: result.files
+            files: result.files,
+            session: sessioncomment
           }).then(function(resp) {
             return validateResult(resp);
           });
@@ -592,7 +600,7 @@
     //#messagebox.show(title: gettext('Share Data'),text: gettext("Share EVERYTHING in transfer folder to user(s) '#{receivers}'?"), positive: gettext('Proceed'), negative: gettext('Cancel')).then () ->
     //#    $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers}).then (resp) ->
     //#        notify.success gettext('success')
-    $scope.collectTrans = function(command, senders, receivers) {
+    $scope.collectTrans = function(command, senders, receivers, sessioncomment) {
       var bulkMode, key, participantsArray, transTitle, value;
       console.log(command);
       bulkMode = 'false';
@@ -635,7 +643,8 @@
               command: command,
               senders: senders,
               receivers: receivers,
-              files: result.files
+              files: result.files,
+              session: sessioncomment
             }).then(function(resp) {
               return validateResult(resp);
             });
@@ -647,7 +656,8 @@
               command: command,
               senders: senders,
               receivers: receivers,
-              files: result.files
+              files: result.files,
+              session: sessioncomment
             }).then(function(resp) {
               return validateResult(resp);
             });

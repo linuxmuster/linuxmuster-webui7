@@ -1,5 +1,6 @@
 from jadi import component
 from aj.api.http import url, HttpPlugin
+from time import gmtime, strftime # needed for timestamp in collect transfer
 from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize
 from aj.plugins.lm_common.api import lmn_getSophomorixValue
@@ -256,6 +257,8 @@ class Handler(HttpPlugin):
         command = http_context.json_body()['command']
         receivers = http_context.json_body()['receivers']
         files = http_context.json_body()['files']
+        session = http_context.json_body()['session']
+        now = strftime("%Y%m%d_%H-%M-%S", gmtime())
 
         with authorize('lmn:session:trans'):
             if command == 'share':
@@ -267,13 +270,16 @@ class Handler(HttpPlugin):
                                 returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
                 except Exception as e:
                     raise Exception('Something went wrong. Error:\n' + str(e))
-
             if command == 'copy':
                 try:
                     for sender in senders:
                         for receiver in receivers:
-                            for File in files:
-                                sophomorixCommand = ['sophomorix-transfer', '-jj', '--collect-copy', '--from-user', sender, '--to-user', receiver, '--file', File]
+                            # if files is All we're automatically in bulk mode
+                            if files == "All":
+                                sophomorixCommand = ['sophomorix-transfer', '-jj', '--scopy', '--from-user', sender, '--to-user', receiver, '--from-path', 'transfer', '--to-path', 'transfer/collected/'+now+'-'+session+'/'+sender+'/', '--no-target-directory']
+                            else:
+                                for File in files:
+                                    sophomorixCommand = ['sophomorix-transfer', '-jj', '--scopy', '--from-user', sender, '--to-user', receiver, '--from-path', 'transfer/'+File, '--to-path', 'transfer/collected/'+now+'-'+sender+'/', '--no-target-directory']
                         returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
                 except Exception as e:
                     raise Exception('Something went wrong. Error:\n' + str(e))

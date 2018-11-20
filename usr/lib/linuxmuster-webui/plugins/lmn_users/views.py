@@ -9,7 +9,6 @@ from aj.plugins.lm_common.api import CSVSpaceStripper
 from aj.auth import authorize
 from aj.plugins.lm_common.api import lm_backup_file
 from aj.plugins.lm_common.api import lmn_getSophomorixValue
-from aj.plugins.lm_common.api import lmn_genRandomPW
 
 
 @component(HttpPlugin)
@@ -326,9 +325,7 @@ class Handler(HttpPlugin):
             sophomorixCommand = ['sophomorix-passwd', '--set-firstpassword', '-jj', '-u', user]
             return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
         if action == 'set-random':
-            # TODO: Random for every user. Now every user in batch mode gets the same password
-            password = lmn_genRandomPW()
-            sophomorixCommand = ['sophomorix-passwd', '-u', user, '--pass', password, '-jj']
+            sophomorixCommand = ['sophomorix-passwd', '-u', user, '--random', '8', '-jj']
             return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
         if action == 'set':
             password = http_context.json_body()['password']

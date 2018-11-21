@@ -12,7 +12,7 @@
     $scope.receivers = receivers;
     $scope.action = action;
     $scope.command = command;
-    if (bulkMode === 'false') {
+    if (action === 'share') {
       $http.post('/api/lmn/session/trans-list-files', {
         user: senders[0]
       }).then(function(resp) {
@@ -20,15 +20,29 @@
         return $scope.filesList = resp['data'][1];
       });
     } else {
-      if (action === 'share') {
+      if (bulkMode === 'false') {
         $http.post('/api/lmn/session/trans-list-files', {
-          user: senders[0]
+          user: senders
         }).then(function(resp) {
           $scope.files = resp['data'][0];
           return $scope.filesList = resp['data'][1];
         });
       }
     }
+    //    if bulkMode is 'false'
+    //        if action is 'share'
+    //            $http.post('/api/lmn/session/trans-list-files', {user: senders[0]}).then (resp) ->
+    //                $scope.files = resp['data'][0]
+    //                $scope.filesList = resp['data'][1]
+    //        else
+    //            $http.post('/api/lmn/session/trans-list-files', {user: senders}).then (resp) ->
+    //                $scope.files = resp['data'][0]
+    //                $scope.filesList = resp['data'][1]
+    //    else
+    //        if action is 'share'
+    //            $http.post('/api/lmn/session/trans-list-files', {user: senders[0]}).then (resp) ->
+    //                $scope.files = resp['data'][0]
+    //                $scope.filesList = resp['data'][1]
     $scope.save = function() {
       var filesToTrans;
       filesToTrans = [];
@@ -71,15 +85,15 @@
     };
     $scope.sorts = [
       {
-        name: gettext('Login name'),
-        fx: function(x) {
-          return x.sAMAccountName;
-        }
-      },
-      {
         name: gettext('Lastname'),
         fx: function(x) {
           return x.sn;
+        }
+      },
+      {
+        name: gettext('Login name'),
+        fx: function(x) {
+          return x.sAMAccountName;
         }
       },
       {
@@ -95,6 +109,7 @@
         }
       }
     ];
+    $scope.sort = $scope.sorts[0];
     $scope.fields = {
       sAMAccountName: {
         visible: true,
@@ -172,18 +187,23 @@
       addParticipant: null,
       addClass: null
     };
-    $scope.changeClass = function(item, id) {
+    $scope.changeClass = function(item, participant) {
+      var id, index;
+      id = participant['sAMAccountName'];
       //console.log (id)
       //console.log (item)
+      //console.log (id+'.'+item)
       if (document.getElementById(id + '.' + item).className.match(/(?:^|\s)changed(?!\S)/)) {
         //$scope.participants[id]['changed'] = false
         return document.getElementById(id + '.' + item).className = document.getElementById(id + '.' + item).className.replace(/(?:^|\s)changed(?!\S)/g, '');
       } else {
+        // get index of current participant in participantslist
+        index = $scope.participants.indexOf(participant);
         if (item === 'exammode') {
-          $scope.participants[id]['exammode-changed'] = true;
+          $scope.participants[index]['exammode-changed'] = true;
           return document.getElementById(id + '.' + item).className += " changed";
         } else {
-          $scope.participants[id]['changed'] = true;
+          $scope.participants[index]['changed'] = true;
           return document.getElementById(id + '.' + item).className += " changed";
         }
       }
@@ -332,9 +352,10 @@
       }).then(function(resp) {
         $scope.visible.sessionname = 'show';
         $scope.sessionLoaded = 'true';
+        $scope.filter = '';
         $scope.visible.mainpage = 'none';
         $scope.participants = resp.data;
-        if ($scope.participants[0] != null) {
+        if ($scope.participants === 'empty') {
           $scope.visible.participanttable = 'none';
           return $scope.info.message = gettext('This session appears to be empty. Start adding users by using the top search bar!');
         } else {
@@ -360,8 +381,8 @@
     $scope.$watch('_.addParticipant', function() {
       // console.log $scope._.addParticipant
       if ($scope._.addParticipant) {
-        if ($scope.participants[0] != null) {
-          delete $scope.participants['0'];
+        if ($scope.participants === 'empty') {
+          $scope.participants = [];
         }
         $scope.info.message = '';
         $scope.visible.participanttable = 'show';
@@ -375,7 +396,8 @@
           //            $scope._.addParticipant.changed = 'False'
           //if not $scope._.addParticipant.exammode-changed?
           //            $scope._.addParticipant.exammode-changed = 'False'
-          $scope.participants[$scope._.addParticipant.sAMAccountName] = angular.copy({
+          $scope.participants.push({
+            "sAMAccountName": $scope._.addParticipant.sAMAccountName,
             "givenName": $scope._.addParticipant.givenName,
             "sn": $scope._.addParticipant.sn,
             "sophomorixExamMode": $scope._.addParticipant.sophomorixExamMode,
@@ -392,14 +414,15 @@
             "exammode-changed": false
           });
         }
+        console.log($scope.participants);
         return $scope._.addParticipant = null;
       }
     });
     // TODO Figure out how to call the existing watch addParticipant function
     $scope.addParticipant = function(participant) {
       if (participant) {
-        if ($scope.participants[0] != null) {
-          delete $scope.participants['0'];
+        if ($scope.participants === 'empty') {
+          $scope.participants = [];
         }
         $scope.info.message = '';
         $scope.visible.participanttable = 'show';
@@ -415,7 +438,8 @@
           //if not participant.exammode-changed?
           //            participant.exammode-changed = 'False'
           // console.log ($scope.participants)
-          $scope.participants[participant.sAMAccountName] = angular.copy({
+          $scope.participants.push({
+            "sAMAccountName": participant.sAMAccountName,
             "givenName": participant.givenName,
             "sn": participant.sn,
             "sophomorixExamMode": participant.sophomorixExamMode,
@@ -448,7 +472,11 @@
       }
     });
     $scope.removeParticipant = function(participant) {
-      return delete $scope.participants[participant];
+      var deleteIndex;
+      deleteIndex = $scope.participants.indexOf(participant);
+      if (deleteIndex !== -1) {
+        return $scope.participants.splice(deleteIndex, 1);
+      }
     };
     $scope.changeExamSupervisor = function(participant, supervisor) {
       return $http.post('/api/lmn/session/sessions', {
@@ -473,8 +501,8 @@
     $scope.cancel = function(username, participants, session) {
       $scope.getSessions($scope.identity.user);
       $scope.sessionLoaded = false;
-      console.log($scope.sessionLoaded);
       $scope.info.message = '';
+      $scope.participants = '';
       $scope.currentSession.name = '';
       $scope.currentSession.comment = '';
       return $scope.visible.participanttable = 'none';
@@ -549,20 +577,24 @@
       }
     };
     $scope.shareTrans = function(command, senders, receivers, sessioncomment) {
-      var bulkMode, key, participantsArray, value;
-      // if share with session we get the whole session as a json object.
-      // The function on the other hand waits for an array so we extract
-      // the username into an array
+      var bulkMode, i, len, participantsArray, receiver;
+      // When share with session we get the whole session as an array.
+      // The function on the other hand waits for an array containing just the  usernames so we extract
+      // these into an array
+      // If share option is triggered with just one user we get this user  as a string. If so we also have
+      // to put it in an array
       bulkMode = 'false';
-      if (!typeIsArray(receivers)) {
+      participantsArray = [];
+      if (typeIsArray(receivers)) {
         bulkMode = 'true';
-        participantsArray = [];
-        for (key in receivers) {
-          value = receivers[key];
-          participantsArray.push(key);
+        for (i = 0, len = receivers.length; i < len; i++) {
+          receiver = receivers[i];
+          participantsArray.push(receiver['sAMAccountName']);
         }
+      } else {
+        participantsArray.push(receivers);
       }
-      console.log(receivers);
+      receivers = participantsArray;
       return $uibModal.open({
         templateUrl: '/lmn_session:resources/partial/selectFile.modal.html',
         controller: 'LMNSessionFileSelectModalController',
@@ -597,23 +629,23 @@
         }
       });
     };
-    //#messagebox.show(title: gettext('Share Data'),text: gettext("Share EVERYTHING in transfer folder to user(s) '#{receivers}'?"), positive: gettext('Proceed'), negative: gettext('Cancel')).then () ->
-    //#    $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers}).then (resp) ->
-    //#        notify.success gettext('success')
     $scope.collectTrans = function(command, senders, receivers, sessioncomment) {
-      var bulkMode, key, participantsArray, transTitle, value;
-      console.log(command);
+      var bulkMode, participantsArray, transTitle;
+      // When collect from session we already get the users in an array containing the user objects.
+      // If collect option is triggered with just on use we get this user as an object. If so we also
+      // have to put it in an array.
+      //console.log (command)
+      //console.log (senders)
       bulkMode = 'false';
-      if (!typeIsArray(senders)) {
+      participantsArray = [];
+      if (typeIsArray(senders)) {
         bulkMode = 'true';
-        participantsArray = [];
-        for (key in senders) {
-          value = senders[key];
-          participantsArray.push(key);
-        }
+      } else {
+        participantsArray.push(senders);
         senders = participantsArray;
       }
       transTitle = 'transfer';
+      //console.log (bulkMode)
       return $uibModal.open({
         templateUrl: '/lmn_session:resources/partial/selectFile.modal.html',
         controller: 'LMNSessionFileSelectModalController',
@@ -691,9 +723,9 @@
         return;
       }
       if ($scope.identity.user === 'root') {
-        return;
+        $scope.identity.user = 'hulk';
       }
-      // $scope.identity.user = 'hulk'
+      // return
       $scope.getSessions($scope.identity.user);
     });
   });

@@ -5,15 +5,31 @@ angular.module('lmn.session').controller 'LMNSessionFileSelectModalController', 
     $scope.action = action
     $scope.command = command
 
-    if bulkMode is 'false'
+    if action is 'share'
         $http.post('/api/lmn/session/trans-list-files', {user: senders[0]}).then (resp) ->
             $scope.files = resp['data'][0]
             $scope.filesList = resp['data'][1]
     else
-        if action is 'share'
-            $http.post('/api/lmn/session/trans-list-files', {user: senders[0]}).then (resp) ->
+        if bulkMode is 'false'
+            $http.post('/api/lmn/session/trans-list-files', {user: senders}).then (resp) ->
                 $scope.files = resp['data'][0]
                 $scope.filesList = resp['data'][1]
+
+
+#    if bulkMode is 'false'
+#        if action is 'share'
+#            $http.post('/api/lmn/session/trans-list-files', {user: senders[0]}).then (resp) ->
+#                $scope.files = resp['data'][0]
+#                $scope.filesList = resp['data'][1]
+#        else
+#            $http.post('/api/lmn/session/trans-list-files', {user: senders}).then (resp) ->
+#                $scope.files = resp['data'][0]
+#                $scope.filesList = resp['data'][1]
+#    else
+#        if action is 'share'
+#            $http.post('/api/lmn/session/trans-list-files', {user: senders[0]}).then (resp) ->
+#                $scope.files = resp['data'][0]
+#                $scope.filesList = resp['data'][1]
 
     $scope.save = () ->
         filesToTrans =  []
@@ -25,13 +41,8 @@ angular.module('lmn.session').controller 'LMNSessionFileSelectModalController', 
     $scope.saveBulk = () ->
         $uibModalInstance.close(response: 'accept', files: 'All', bulkMode: bulkMode)
 
-
-
-
     $scope.close = () ->
         $uibModalInstance.dismiss()
-
-
 
 
 angular.module('lmn.session').config ($routeProvider) ->
@@ -50,12 +61,12 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
 
     $scope.sorts = [
        {
-          name: gettext('Login name')
-          fx: (x) -> x.sAMAccountName
-       }
-       {
           name: gettext('Lastname')
           fx: (x) -> x.sn
+       }
+       {
+          name: gettext('Login name')
+          fx: (x) -> x.sAMAccountName
        }
        {
           name: gettext('Firstname')
@@ -66,6 +77,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
           fx: (x) -> x.mail
        }
     ]
+    $scope.sort = $scope.sorts[0]
 
     $scope.fields = {
        sAMAccountName:
@@ -140,19 +152,23 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
             addClass: null
     }
 
-    $scope.changeClass = (item, id) ->
+    $scope.changeClass = (item, participant) ->
+        id = participant['sAMAccountName']
         #console.log (id)
         #console.log (item)
+        #console.log (id+'.'+item)
 
         if document.getElementById(id+'.'+item).className.match (/(?:^|\s)changed(?!\S)/)
             #$scope.participants[id]['changed'] = false
             document.getElementById(id+'.'+item).className = document.getElementById(id+'.'+item).className.replace( /(?:^|\s)changed(?!\S)/g , '' )
         else
+            # get index of current participant in participantslist
+            index = $scope.participants.indexOf(participant)
             if item == 'exammode'
-                $scope.participants[id]['exammode-changed'] = true
+                $scope.participants[index]['exammode-changed'] = true
                 document.getElementById(id+'.'+item).className += " changed"
             else
-                $scope.participants[id]['changed'] = true
+                $scope.participants[index]['changed'] = true
                 document.getElementById(id+'.'+item).className += " changed"
 
     $scope.resetClass = () ->
@@ -251,9 +267,10 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                 $http.post('/api/lmn/session/sessions', {action: 'get-participants', username: username, session: session}).then (resp) ->
                     $scope.visible.sessionname = 'show'
                     $scope.sessionLoaded = 'true'
+                    $scope.filter = ''
                     $scope.visible.mainpage = 'none'
                     $scope.participants = resp.data
-                    if $scope.participants[0]?
+                    if $scope.participants == 'empty'
                        $scope.visible.participanttable = 'none'
                        $scope.info.message = gettext('This session appears to be empty. Start adding users by using the top search bar!')
                     else
@@ -275,8 +292,8 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
     $scope.$watch '_.addParticipant', () ->
                 # console.log $scope._.addParticipant
                 if $scope._.addParticipant
-                    if $scope.participants[0]?
-                                delete $scope.participants['0']
+                    if $scope.participants == 'empty'
+                                $scope.participants = []
                     $scope.info.message = ''
                     $scope.visible.participanttable = 'show'
                     #console.log $scope._.addParticipant
@@ -288,8 +305,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                         #            $scope._.addParticipant.changed = 'False'
                         #if not $scope._.addParticipant.exammode-changed?
                         #            $scope._.addParticipant.exammode-changed = 'False'
-
-                        $scope.participants[$scope._.addParticipant.sAMAccountName] = angular.copy({"givenName":$scope._.addParticipant.givenName,"sn":$scope._.addParticipant.sn,
+                        $scope.participants.push {"sAMAccountName":$scope._.addParticipant.sAMAccountName,"givenName":$scope._.addParticipant.givenName,"sn":$scope._.addParticipant.sn,
                         "sophomorixExamMode":$scope._.addParticipant.sophomorixExamMode,
                         "group_webfilter":$scope._.addParticipant.MANAGEMENTGROUPS.webfilter,
                         "group_intranetaccess":$scope._.addParticipant.MANAGEMENTGROUPS.intranet,
@@ -298,14 +314,15 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                         "group_internetaccess":$scope._.addParticipant.MANAGEMENTGROUPS.internet,
                         "sophomorixAdminClass":$scope._.addParticipant.sophomorixAdminClass,
                         "user_existing":true,"group_wifiaccess":$scope._.addParticipant.MANAGEMENTGROUPS.wifi,
-                        "changed": false, "exammode-changed": false})
+                        "changed": false, "exammode-changed": false}
+                    console.log ($scope.participants)
                     $scope._.addParticipant = null
 
     # TODO Figure out how to call the existing watch addParticipant function
     $scope.addParticipant = (participant) ->
                 if participant
-                    if $scope.participants[0]?
-                                delete $scope.participants['0']
+                    if $scope.participants == 'empty'
+                                $scope.participants = []
                     $scope.info.message = ''
                     $scope.visible.participanttable = 'show'
                     # console.log participant
@@ -319,7 +336,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                         #if not participant.exammode-changed?
                         #            participant.exammode-changed = 'False'
                         # console.log ($scope.participants)
-                        $scope.participants[participant.sAMAccountName] = angular.copy({"givenName":participant.givenName,"sn":participant.sn,
+                        $scope.participants.push {"sAMAccountName":participant.sAMAccountName,"givenName":participant.givenName,"sn":participant.sn,
                         "sophomorixExamMode":participant.sophomorixExamMode,
                         "group_webfilter":participant.MANAGEMENTGROUPS.webfilter,
                         "group_intranetaccess":participant.MANAGEMENTGROUPS.intranet,
@@ -328,7 +345,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                         "group_internetaccess":participant.MANAGEMENTGROUPS.internet,
                         "sophomorixAdminClass":participant.sophomorixAdminClass,
                         "user_existing":true,"group_wifiaccess":participant.MANAGEMENTGROUPS.wifi,
-                        "changed": false, "exammode-changed": false})
+                        "changed": false, "exammode-changed": false}
                     participant = null
 
     $scope.$watch '_.addSchoolClass', () ->
@@ -339,7 +356,9 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                     $scope._.addSchoolClass = null
 
     $scope.removeParticipant = (participant) ->
-                delete $scope.participants[participant]
+                deleteIndex = $scope.participants.indexOf(participant)
+                if deleteIndex != -1
+                    $scope.participants.splice(deleteIndex, 1)
 
     $scope.changeExamSupervisor = (participant, supervisor) ->
                 $http.post('/api/lmn/session/sessions', {action: 'change-exam-supervisor', supervisor: supervisor, participant: participant}).then (resp) ->
@@ -354,8 +373,8 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
     $scope.cancel = (username,participants, session) ->
         $scope.getSessions($scope.identity.user)
         $scope.sessionLoaded = false
-        console.log ($scope.sessionLoaded)
         $scope.info.message = ''
+        $scope.participants = ''
         $scope.currentSession.name = ''
         $scope.currentSession.comment = ''
         $scope.visible.participanttable = 'none'
@@ -405,16 +424,21 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
 
 
     $scope.shareTrans = (command, senders, receivers, sessioncomment) ->
-        # if share with session we get the whole session as a json object.
-        # The function on the other hand waits for an array so we extract
-        # the username into an array
+        # When share with session we get the whole session as an array.
+        # The function on the other hand waits for an array containing just the  usernames so we extract
+        # these into an array
+        # If share option is triggered with just one user we get this user  as a string. If so we also have
+        # to put it in an array
         bulkMode = 'false'
-        if not typeIsArray receivers
+        participantsArray = []
+        if typeIsArray receivers
             bulkMode = 'true'
-            participantsArray = []
-            for key, value of receivers
-                participantsArray.push key
-        console.log (receivers)
+            for receiver in receivers
+                participantsArray.push receiver['sAMAccountName']
+        else
+            participantsArray.push receivers
+        receivers = participantsArray
+
         $uibModal.open(
            templateUrl: '/lmn_session:resources/partial/selectFile.modal.html'
            controller: 'LMNSessionFileSelectModalController'
@@ -429,20 +453,22 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers, files: result.files, session: sessioncomment}).then (resp) ->
                    validateResult(resp)
 
-        ##messagebox.show(title: gettext('Share Data'),text: gettext("Share EVERYTHING in transfer folder to user(s) '#{receivers}'?"), positive: gettext('Proceed'), negative: gettext('Cancel')).then () ->
-        ##    $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers}).then (resp) ->
-        ##        notify.success gettext('success')
 
     $scope.collectTrans = (command, senders, receivers, sessioncomment) ->
-        console.log (command)
+        # When collect from session we already get the users in an array containing the user objects.
+        # If collect option is triggered with just on use we get this user as an object. If so we also
+        # have to put it in an array.
+        #console.log (command)
+        #console.log (senders)
         bulkMode = 'false'
-        if not typeIsArray senders
+        participantsArray = []
+        if typeIsArray senders
             bulkMode = 'true'
-            participantsArray = []
-            for key, value of senders
-                participantsArray.push key
+        else
+            participantsArray.push senders
             senders = participantsArray
         transTitle = 'transfer'
+        #console.log (bulkMode)
         $uibModal.open(
            templateUrl: '/lmn_session:resources/partial/selectFile.modal.html'
            controller: 'LMNSessionFileSelectModalController'

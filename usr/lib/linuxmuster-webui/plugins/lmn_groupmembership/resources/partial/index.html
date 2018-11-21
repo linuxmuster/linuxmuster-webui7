@@ -52,7 +52,6 @@
             </ul>
         </div>
     </div>
-
     <a class="list-group-item" ng:repeat="group in groups|filter:filter|filter:isActive|orderBy:['-_isNew', sort.fx]|page:paging.page:paging.pageSize">
 
         <span ng-if="group.type == 'printergroup'">

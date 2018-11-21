@@ -1,7 +1,7 @@
 from jadi import component
 from aj.api.http import url, HttpPlugin
-from time import gmtime, strftime # needed for timestamp in collect transfer
-import six # used to determine if given variable is string
+from time import gmtime, strftime  # needed for timestamp in collect transfer
+import six  # used to determine if given variable is string
 from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize
 from aj.plugins.lm_common.api import lmn_getSophomorixValue
@@ -69,8 +69,6 @@ class Handler(HttpPlugin):
                                     participantList[i][key] = False
                             i = i + 1
                     except Exception:
-                        # TODO: anpassen an neues format
-                        #participants = {'0': {"givenName": "null", "sophomorixExamMode": "---", "group_wifiaccess": False, "group_intranetaccess": False, "group_printing": False, "sophomorixStatus": "U", "sophomorixRole": "", "group_internetaccess": False, "sophomorixAdminClass": "", "group_webfilter": False, "user_existing": False, "sn": ""}}
                         participantList = 'empty'
 
             return participantList

@@ -1808,7 +1808,8 @@
       action: 'get-specified',
       user: id
     }).then(function(resp) {
-      return $scope.userDetails = resp.data;
+      $scope.userDetails = resp.data;
+      return console.log($scope.userDetails);
     });
     return $scope.close = function() {
       return $uibModalInstance.dismiss();

@@ -221,22 +221,22 @@
       if (item === 'exammode') {
         managementgroup = 'exammode_boolean';
       }
-      //console.log item
-      //console.log $scope.participants
+      // console.log item
+      // console.log $scope.participants
       if ($scope.fields[item].checkboxStatus === true) {
-        angular.forEach($scope.participants, function(participant, id) {
+        angular.forEach($scope.participants, function(participant) {
           if (participant[managementgroup] === true) {
             participant[managementgroup] = false;
             //$scope.changeClass(id+'.'+item, id)
-            return $scope.changeClass(item, id);
+            return $scope.changeClass(item, participant);
           }
         });
       } else {
-        angular.forEach($scope.participants, function(participant, id) {
+        angular.forEach($scope.participants, function(participant) {
           if (participant[managementgroup] === false) {
             participant[managementgroup] = true;
             //$scope.changeClass(id+'.'+item, id)
-            return $scope.changeClass(item, id);
+            return $scope.changeClass(item, participant);
           }
         });
       }
@@ -486,7 +486,7 @@
       }).then(function(resp) {});
     };
     $scope.saveApply = function(username, participants, session) {
-      console.log(participants);
+      // console.log (participants)
       return $http.post('/api/lmn/session/sessions', {
         action: 'save-session',
         username: username,

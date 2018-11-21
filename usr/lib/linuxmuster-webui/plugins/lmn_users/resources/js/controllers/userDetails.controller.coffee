@@ -5,6 +5,7 @@ angular.module('lm.users').controller 'LMNUserDetailsController', ($scope, $rout
 
     $http.post('/api/lm/sophomorixUsers/'+role, {action: 'get-specified', user: id}).then (resp) ->
         $scope.userDetails = resp.data
+        console.log ($scope.userDetails)
 
     $scope.close = () ->
         $uibModalInstance.dismiss()

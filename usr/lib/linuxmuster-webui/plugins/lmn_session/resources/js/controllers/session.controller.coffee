@@ -513,8 +513,8 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
           if $scope.identity.user is null
               return
           if $scope.identity.user is 'root'
-              $scope.identity.user = 'hulk'
-              # return
+              # $scope.identity.user = 'hulk'
+              return
           $scope.getSessions($scope.identity.user)
           return
 

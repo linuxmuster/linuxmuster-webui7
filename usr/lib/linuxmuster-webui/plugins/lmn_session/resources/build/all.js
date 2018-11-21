@@ -723,9 +723,9 @@
         return;
       }
       if ($scope.identity.user === 'root') {
-        $scope.identity.user = 'hulk';
+        return;
       }
-      // return
+      // $scope.identity.user = 'hulk'
       $scope.getSessions($scope.identity.user);
     });
   });

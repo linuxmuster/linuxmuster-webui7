@@ -182,20 +182,20 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
         managementgroup = 'group_'+item
         if item is 'exammode'
             managementgroup = 'exammode_boolean'
-        #console.log item
-        #console.log $scope.participants
+        # console.log item
+        # console.log $scope.participants
         if $scope.fields[item].checkboxStatus is true
-            angular.forEach $scope.participants, (participant, id) ->
+            angular.forEach $scope.participants, (participant) ->
                 if participant[managementgroup] is true
                     participant[managementgroup] = false
                     #$scope.changeClass(id+'.'+item, id)
-                    $scope.changeClass(item, id)
+                    $scope.changeClass(item, participant)
         else
-            angular.forEach $scope.participants, (participant,id) ->
+            angular.forEach $scope.participants, (participant) ->
                 if participant[managementgroup] is false
                     participant[managementgroup] = true
                     #$scope.changeClass(id+'.'+item, id)
-                    $scope.changeClass(item, id)
+                    $scope.changeClass(item, participant)
         return
 
     $scope.killSession = (username,session,comment) ->
@@ -364,7 +364,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                 $http.post('/api/lmn/session/sessions', {action: 'change-exam-supervisor', supervisor: supervisor, participant: participant}).then (resp) ->
 
     $scope.saveApply = (username,participants, session) ->
-                console.log (participants)
+                # console.log (participants)
                 $http.post('/api/lmn/session/sessions', {action: 'save-session',username: username, participants: participants, session: session}).then (resp) ->
                     $scope.output = resp.data
                     $scope.getParticipants(username,session)
@@ -513,8 +513,8 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
           if $scope.identity.user is null
               return
           if $scope.identity.user is 'root'
-              # $scope.identity.user = 'hulk'
-              return
+              $scope.identity.user = 'hulk'
+              # return
           $scope.getSessions($scope.identity.user)
           return
 

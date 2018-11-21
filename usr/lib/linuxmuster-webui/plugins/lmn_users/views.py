@@ -144,6 +144,8 @@ class Handler(HttpPlugin):
                 if len(studentsCheck) != 0:
                     students = lmn_getSophomorixValue(sophomorixCommand, 'USER')
                     for student in students:
+                        # TODO: get a better way to remove Birthay from user detail page
+                        students[student]['sophomorixBirthdate'] = 'hidden'
                         studentsList.append(students[student])
                     return studentsList
                 else:

@@ -1,6 +1,7 @@
 from jadi import component
 from aj.api.http import url, HttpPlugin
 from time import gmtime, strftime # needed for timestamp in collect transfer
+import six # used to determine if given variable is string
 from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize
 from aj.plugins.lm_common.api import lmn_getSophomorixValue
@@ -43,29 +44,36 @@ class Handler(HttpPlugin):
                 sessionsList.append(sessionJson)
             return sessionsList
         if action == 'get-participants':
+            participantList = []
             supervisor = http_context.json_body()['username']
             session = http_context.json_body()['session']
+
             with authorize('lm:users:students:read'):
                     try:
                         sophomorixCommand = ['sophomorix-session', '-i', '-jj']
                         participants = lmn_getSophomorixValue(sophomorixCommand, 'ID/'+session+'/PARTICIPANTS', True)
+                        i = 0
+                        for participant in participants:
+                            participantList.append(participants[participant])
+                            participantList[i]['sAMAccountName'] = participant
+                            #if participant.endswith('-exam'):
+                            #    participantList[i]['sAMAccountname-basename'] = participant.replace('-exam', '')
+                            #else:
+                            #    participantList[i]['sAMAccountname-basename'] = participant
+                            participantList[i]['changed'] = 'FALSE'
+                            participantList[i]['exammode-changed'] = 'FALSE'
+                            for key in participantList[i]:
+                                if participantList[i][key] == 'TRUE':
+                                    participantList[i][key] = True
+                                if participantList[i][key] == 'FALSE':
+                                    participantList[i][key] = False
+                            i = i + 1
                     except Exception:
-                        participants = {'0': {"givenName": "null", "sophomorixExamMode": "---", "group_wifiaccess": False, "group_intranetaccess": False, "group_printing": False, "sophomorixStatus": "U", "sophomorixRole": "", "group_internetaccess": False, "sophomorixAdminClass": "", "group_webfilter": False, "user_existing": False, "sn": ""}}
-                    # Iterate all participants
-                    for key, value in participants.iteritems():
-                        #if key.endswith('-exam'):
-                        #    key = key.replace('-exam', '')
-                        # add a changed variable to determine if user was changed
-                        participants[key]['changed'] = 'FALSE'
-                        participants[key]['exammode-changed'] = 'FALSE'
-                        # Convert PERL bool to python bool
-                        for key in value:
-                            if value[key] == 'TRUE':
-                                value[key] = True
-                            if value[key] == 'FALSE':
-                                value[key] = False
+                        # TODO: anpassen an neues format
+                        #participants = {'0': {"givenName": "null", "sophomorixExamMode": "---", "group_wifiaccess": False, "group_intranetaccess": False, "group_printing": False, "sophomorixStatus": "U", "sophomorixRole": "", "group_internetaccess": False, "sophomorixAdminClass": "", "group_webfilter": False, "user_existing": False, "sn": ""}}
+                        participantList = 'empty'
 
-            return participants
+            return participantList
         if action == 'kill-sessions':
             session = http_context.json_body()['session']
             with authorize('lm:users:students:read'):
@@ -102,15 +110,15 @@ class Handler(HttpPlugin):
                 except Exception:
                     raise Exception('Error:\n' + str('sophomorix-exam-mode --unset --subdir ' + session + ' -j --participants ' + participant))
         if action == 'save-session':
-            def checkIfUserInManagementGroup(participant, managementgroup, managementList, noManagementList):
+            def checkIfUserInManagementGroup(participant, participantBasename, managementgroup, managementList, noManagementList):
                 try:
-                    boolean = participants[participant][managementgroup]
+                    boolean = participant[managementgroup]
                     if (boolean is True) or (boolean == 'TRUE'):
-                        managementList.append(participant)
+                        managementList.append(participantBasename)
                     else:
-                        noManagementList.append(participant)
+                        noManagementList.append(participantBasename)
                 except KeyError:
-                    noManagementList.append(participant)
+                    noManagementList.append(participantBasename)
                     pass
                 return 0
 
@@ -121,25 +129,31 @@ class Handler(HttpPlugin):
 
             examModeList, noExamModeList, wifiList, noWifiList, internetList, noInternetList, intranetList, noIntranetList, webfilterList, noWebfilterList, printingList, noPrintingList = [], [], [], [], [], [], [], [], [], [], [], []
             # Remove -exam in username to keep username as it is insead of saving -exam usernames in session
+            #i = 0
             for participant in participants:
                 # basename is used to communicate with sophomorix. Sophomorix needs the real username without the exam postfix
-                participantBasename = participant
-                if participant.endswith('-exam'):
-                    participantBasename = participant.replace('-exam', '')
+                #raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(participant))
+                #raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(participant['sAMAccountname']))
+                if participant['sAMAccountName'].endswith('-exam'):
+                    participantBasename = participant['sAMAccountName'].replace('-exam', '')
+                else:
+                    participantBasename = str(participant['sAMAccountName'])
+                    #participant['sAMAccountName']
 
                 # Fill lists from WebUI Output -> Create csv of session members
                 # This will executed on every save
                 participantsList.append(participantBasename)
                 # Only check for exammode if this value was changed in WEBUI
-                if participants[participant]['exammode-changed'] is True:
-                    checkIfUserInManagementGroup(participantBasename, 'exammode_boolean', examModeList, noExamModeList)
+                if participant['exammode-changed'] is True:
+                    checkIfUserInManagementGroup(participant, participantBasename, 'exammode_boolean', examModeList, noExamModeList)
                 # Only check for managementgroups if this value was changed in WEBUI
-                if participants[participant]['changed'] is True:
-                    checkIfUserInManagementGroup(participantBasename, 'group_wifiaccess', wifiList, noWifiList)
-                    checkIfUserInManagementGroup(participantBasename, 'group_internetaccess', internetList, noInternetList)
-                    checkIfUserInManagementGroup(participantBasename, 'group_intranetaccess', intranetList, noIntranetList)
-                    checkIfUserInManagementGroup(participantBasename, 'group_webfilter', webfilterList, noWebfilterList)
-                    checkIfUserInManagementGroup(participantBasename, 'group_printing', printingList, noPrintingList)
+                if participant['changed'] is True:
+                    checkIfUserInManagementGroup(participant, participantBasename, 'group_wifiaccess', wifiList, noWifiList)
+                    checkIfUserInManagementGroup(participant, participantBasename, 'group_internetaccess', internetList, noInternetList)
+                    checkIfUserInManagementGroup(participant, participantBasename, 'group_intranetaccess', intranetList, noIntranetList)
+                    checkIfUserInManagementGroup(participant, participantBasename, 'group_webfilter', webfilterList, noWebfilterList)
+                    checkIfUserInManagementGroup(participant, participantBasename, 'group_printing', printingList, noPrintingList)
+                #i = i + 1
 
 
             # Create CSV lists we need for sophomorix
@@ -240,6 +254,10 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_session_file_trans_list(self, http_context):
         user = http_context.json_body()['user']
+        # check if user is a string(given by share option) or an object in an array (given by collect option)
+        if not isinstance(user, six.string_types):
+            user = user[0]['sAMAccountName']
+
         subfolderPath = ''
         if 'subfolderPath' in http_context.json_body():
             subfolderPath = http_context.json_body()['subfolderPath']
@@ -265,8 +283,13 @@ class Handler(HttpPlugin):
                 try:
                     for sender in senders:
                         for receiver in receivers:
+                            # check if bulkmode (array of usernames) or single user (object containing username)
+                            if not isinstance(receiver, six.string_types):
+                                receiverSAMAccountName = receiver['sAMAccountName']
+                            else:
+                                receiverSAMAccountName = receiver
                             for File in files:
-                                sophomorixCommand = ['sophomorix-transfer', '-jj', '--scopy', '--from-user', sender, '--to-user', receiver, '--from-path', 'transfer/'+File, '--to-path', 'transfer']
+                                sophomorixCommand = ['sophomorix-transfer', '-jj', '--scopy', '--from-user', sender, '--to-user', receiverSAMAccountName, '--from-path', 'transfer/'+File, '--to-path', 'transfer']
                                 returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
                 except Exception as e:
                     raise Exception('Something went wrong. Error:\n' + str(e))
@@ -276,24 +299,27 @@ class Handler(HttpPlugin):
                         for receiver in receivers:
                             # if files is All we're automatically in bulk mode
                             if files == "All":
-                                sophomorixCommand = ['sophomorix-transfer', '-jj', '--scopy', '--from-user', sender, '--to-user', receiver, '--from-path', 'transfer', '--to-path', 'transfer/collected/'+now+'-'+session+'/'+sender+'/', '--no-target-directory']
+                                sophomorixCommand = ['sophomorix-transfer', '-jj', '--scopy', '--from-user', sender['sAMAccountName'], '--to-user', receiver, '--from-path', 'transfer', '--to-path', 'transfer/collected/'+now+'-'+session+'/'+sender['sophomorixAdminClass']+'/'+sender['sn'].replace(' ','_')+'_'+sender['givenName'].replace(' ','_')+'/', '--no-target-directory']
                             else:
                                 for File in files:
-                                    sophomorixCommand = ['sophomorix-transfer', '-jj', '--scopy', '--from-user', sender, '--to-user', receiver, '--from-path', 'transfer/'+File, '--to-path', 'transfer/collected/'+now+'-'+sender+'/', '--no-target-directory']
+                                    sophomorixCommand = ['sophomorix-transfer', '-jj', '--scopy', '--from-user', sender['sAMAccountName'], '--to-user', receiver, '--from-path', 'transfer/'+File, '--to-path', 'transfer/collected/'+now+'-'+sender['sn'].replace(' ','_')+'_'+sender['givenName'].replace(' ','_')+'/', '--no-target-directory']
                         returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
                 except Exception as e:
                     raise Exception('Something went wrong. Error:\n' + str(e))
-            #if command == 'move':
-                #fileListCSV = ''
-                #for f in files:
-                #    fileListCSV += 'transfer/'+f+','
-                #receiver = ','.join([x.strip() for x in receivers])
-            #    try:
-            #        for sender in senders:
-            #            sophomorixCommand = ['sophomorix-transfer', '-jj', '--collect-move', '--from-user', sender, '--to-user', receiver, '--file', fileListCSV]
-            #            returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'JSONINFO')
-            #    except Exception as e:
-            #        raise Exception('Something went wrong. Error:\n' + str(e))
+            if command == 'move':
+                try:
+                    for sender in senders:
+                        for receiver in receivers:
+                            # if files is All we're automatically in bulk mode
+                            if files == "All":
+                                # TODO: Issue - when moving whole transfer path we lose the transfer directory in userhome
+                                sophomorixCommand = ['sophomorix-transfer', '-jj', '--move', '--from-user', sender['sAMAccountName'], '--to-user', receiver, '--from-path', 'transfer', '--to-path', 'transfer/collected/'+now+'-'+session+'/'+sender['sophomorixAdminClass']+'/'+sender['sn'].replace(' ','_')+'_'+sender['givenname'].replace(' ','_')+'/', '--no-target-directory']
+                            else:
+                                for File in files:
+                                    sophomorixCommand = ['sophomorix-transfer', '-jj', '--move', '--from-user', sender['sAMAccountName'], '--to-user', receiver, '--from-path', 'transfer/'+File, '--to-path', 'transfer/collected/'+now+'-'+sender['sn'].replace(' ','_')+'_'+sender['givenName'].replace(' ','_')+'/', '--no-target-directory']
+                        returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
+                except Exception as e:
+                    raise Exception('Something went wrong. Error:\n' + str(e))
         if returnMessage['TYPE'] == "ERROR":
             return returnMessage['TYPE']['LOG']
         return returnMessage['TYPE'], returnMessage['LOG']

@@ -20,17 +20,17 @@
 
     <div ng-if="bulkMode == 'false'">
         <span ng-if="action == 'share'">
-            <div translate>Select files yo want to share with </div>
-            <ul ng:repeat="receiver in receivers">
+            <div translate>Select files yo want to share with {{receivers[0]['givenName']}} {{receivers[0]['sn']}}</div>
+          <!--  <ul ng:repeat="receiver in receivers">
                 <li> {{receiver}} </li>
-            </ul>
+          </ul>-->
         </span>
         <span ng-if="action == 'collect'">
             <span ng-if="command == 'copy'">
-                <div translate>Select files yo want to copy from {{senders[0]}}</div>
+                <div translate>Select files yo want to copy from {{senders[0]['givenName']}} {{senders[0]['sn']}}</div>
             </span>
             <span ng-if="command == 'move'">
-                <div translate>Select files yo want to move from {{senders[0]}}</div>
+                <div translate>Select files yo want to move from {{senders[0]['givenName']}} {{senders[0]['sn']}}</div>
             </span>
         </span>
         <!-- TODO: Mach das mal schoen

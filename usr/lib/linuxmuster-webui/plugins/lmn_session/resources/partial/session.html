@@ -27,8 +27,8 @@
         </div>
 
         <div ng-show="!sessionLoaded" class="input-group-btn">
-            <button class="btn btn-default"  uib-dropdown-toggle>
-                <div ng:click="newSession(identity.user)">
+            <button class="btn btn-default" ng:click="newSession(identity.user)">
+                <div>
                     {{'New Session'|translate}}
                 </div>
             </button>

@@ -15,22 +15,6 @@ angular.module('lmn.session').controller 'LMNSessionFileSelectModalController', 
                 $scope.files = resp['data'][0]
                 $scope.filesList = resp['data'][1]
 
-
-#    if bulkMode is 'false'
-#        if action is 'share'
-#            $http.post('/api/lmn/session/trans-list-files', {user: senders[0]}).then (resp) ->
-#                $scope.files = resp['data'][0]
-#                $scope.filesList = resp['data'][1]
-#        else
-#            $http.post('/api/lmn/session/trans-list-files', {user: senders}).then (resp) ->
-#                $scope.files = resp['data'][0]
-#                $scope.filesList = resp['data'][1]
-#    else
-#        if action is 'share'
-#            $http.post('/api/lmn/session/trans-list-files', {user: senders[0]}).then (resp) ->
-#                $scope.files = resp['data'][0]
-#                $scope.filesList = resp['data'][1]
-
     $scope.save = () ->
         filesToTrans =  []
         angular.forEach $scope.files['TREE'], (file, id) ->
@@ -482,27 +466,13 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
             if result.response is 'accept'
                 #return
                 if command is 'copy'
-                    #messagebox.show(title: gettext('Copy Data'),text: gettext("Copy '#{{result.files}}' from transfer folder of these user(s) '#{senders}'? All files are still available in users transfer directory!"), positive: gettext('Proceed'), negative: gettext('Cancel')).then () ->
                     $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers, files: result.files, session: sessioncomment}).then (resp) ->
                         validateResult(resp)
-                        #notify.success gettext('success')
                 if command is 'move'
-                    #messagebox.show(title: gettext('Collect Data'),text: gettext("Collect '#{{result.files}}' from transfer folder of these user(s) '#{senders}'? No files will be available by the users!"), positive: gettext('Proceed'), negative: gettext('Cancel')).then () ->
                     $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers, files: result.files, session: sessioncomment}).then (resp) ->
                         validateResult(resp)
-                        #notify.success gettext('success')
 
 
-
-            #if command is 'copy'
-            #            messagebox.show(title: gettext('Copy Data'),text: gettext("Copy EVERYTHING from transfer folder of these user(s) '#{senders}'? All files are still available in users transfer directory!"), positive: gettext('Proceed'), negative: gettext('Cancel')).then () ->
-            #                $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers}).then (resp) ->
-            #                    notify.success gettext('success')
-            #        if command is 'move'
-            #            messagebox.show(title: gettext('Collect Data'),text: gettext("Collevt EVERYTHING from transfer folder of these user(s) '#{senders}'? No files will be available by the users!"), positive: gettext('Proceed'), negative: gettext('Cancel')).then () ->
-            #                $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers}).then (resp) ->
-            #                    notify.success gettext('success')
-            #
     $scope.notImplemented = (user) ->
                 messagebox.show(title: gettext('Not implemented'), positive: 'OK')
 

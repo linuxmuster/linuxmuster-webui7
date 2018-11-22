@@ -29,20 +29,6 @@
         });
       }
     }
-    //    if bulkMode is 'false'
-    //        if action is 'share'
-    //            $http.post('/api/lmn/session/trans-list-files', {user: senders[0]}).then (resp) ->
-    //                $scope.files = resp['data'][0]
-    //                $scope.filesList = resp['data'][1]
-    //        else
-    //            $http.post('/api/lmn/session/trans-list-files', {user: senders}).then (resp) ->
-    //                $scope.files = resp['data'][0]
-    //                $scope.filesList = resp['data'][1]
-    //    else
-    //        if action is 'share'
-    //            $http.post('/api/lmn/session/trans-list-files', {user: senders[0]}).then (resp) ->
-    //                $scope.files = resp['data'][0]
-    //                $scope.filesList = resp['data'][1]
     $scope.save = function() {
       var filesToTrans;
       filesToTrans = [];
@@ -670,7 +656,6 @@
         if (result.response === 'accept') {
           //return
           if (command === 'copy') {
-            //messagebox.show(title: gettext('Copy Data'),text: gettext("Copy '#{{result.files}}' from transfer folder of these user(s) '#{senders}'? All files are still available in users transfer directory!"), positive: gettext('Proceed'), negative: gettext('Cancel')).then () ->
             $http.post('/api/lmn/session/trans', {
               command: command,
               senders: senders,
@@ -681,9 +666,7 @@
               return validateResult(resp);
             });
           }
-          //notify.success gettext('success')
           if (command === 'move') {
-            //messagebox.show(title: gettext('Collect Data'),text: gettext("Collect '#{{result.files}}' from transfer folder of these user(s) '#{senders}'? No files will be available by the users!"), positive: gettext('Proceed'), negative: gettext('Cancel')).then () ->
             return $http.post('/api/lmn/session/trans', {
               command: command,
               senders: senders,
@@ -697,17 +680,6 @@
         }
       });
     };
-    //notify.success gettext('success')
-
-    //if command is 'copy'
-    //            messagebox.show(title: gettext('Copy Data'),text: gettext("Copy EVERYTHING from transfer folder of these user(s) '#{senders}'? All files are still available in users transfer directory!"), positive: gettext('Proceed'), negative: gettext('Cancel')).then () ->
-    //                $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers}).then (resp) ->
-    //                    notify.success gettext('success')
-    //        if command is 'move'
-    //            messagebox.show(title: gettext('Collect Data'),text: gettext("Collevt EVERYTHING from transfer folder of these user(s) '#{senders}'? No files will be available by the users!"), positive: gettext('Proceed'), negative: gettext('Cancel')).then () ->
-    //                $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers}).then (resp) ->
-    //                    notify.success gettext('success')
-
     $scope.notImplemented = function(user) {
       return messagebox.show({
         title: gettext('Not implemented'),

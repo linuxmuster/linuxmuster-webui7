@@ -6,7 +6,6 @@ from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize
 from aj.plugins.lm_common.api import lmn_getSophomorixValue
 
-import threading
 
 @component(HttpPlugin)
 class Handler(HttpPlugin):
@@ -128,11 +127,7 @@ class Handler(HttpPlugin):
 
             examModeList, noExamModeList, wifiList, noWifiList, internetList, noInternetList, intranetList, noIntranetList, webfilterList, noWebfilterList, printingList, noPrintingList = [], [], [], [], [], [], [], [], [], [], [], []
             # Remove -exam in username to keep username as it is insead of saving -exam usernames in session
-            #i = 0
             for participant in participants:
-                # basename is used to communicate with sophomorix. Sophomorix needs the real username without the exam postfix
-                #raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(participant))
-                #raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(participant['sAMAccountname']))
                 if participant['sAMAccountName'].endswith('-exam'):
                     participantBasename = participant['sAMAccountName'].replace('-exam', '')
                 else:
@@ -262,7 +257,10 @@ class Handler(HttpPlugin):
             subfolderPath = http_context.json_body()['subfolderPath']
         sophomorixCommand = ['sophomorix-transfer', '-j', '--list-home-dir', user, '--subdir', '/transfer'+subfolderPath]
         availableFiles = lmn_getSophomorixValue(sophomorixCommand, 'sAMAccountName/'+user)
+        #raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(availableFiles))
         availableFilesList = []
+        if availableFiles['COUNT']['files'] == 0 and availableFiles['COUNT']['directories'] == 0:
+            return availableFiles, ['null']
         for availableFile in availableFiles['TREE']:
             availableFilesList.append(availableFile)
         return availableFiles, availableFilesList
@@ -302,7 +300,7 @@ class Handler(HttpPlugin):
                                 returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
                             else:
                                 for File in files:
-                                    sophomorixCommand = ['sophomorix-transfer', '-jj', '--scopy', '--from-user', sender['sAMAccountName'], '--to-user', receiver, '--from-path', 'transfer/'+File, '--to-path', 'transfer/collected/'+now+'-'+sender['sn'].replace(' ','_')+'_'+sender['givenName'].replace(' ','_')+'/', '--no-target-directory']
+                                    sophomorixCommand = ['sophomorix-transfer', '-jj', '--scopy', '--from-user', sender['sAMAccountName'], '--to-user', receiver, '--from-path', 'transfer/'+File, '--to-path', 'transfer/collected/'+now+'-'+session+'/'+sender['sophomorixAdminClass']+'/'+sender['sn'].replace(' ','_')+'_'+sender['givenName'].replace(' ','_')+'/', '--no-target-directory']
                                     returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
                 except Exception as e:
                     raise Exception('Something went wrong. Error:\n' + str(e))
@@ -312,12 +310,11 @@ class Handler(HttpPlugin):
                         for receiver in receivers:
                             # if files is All we're automatically in bulk mode
                             if files == "All":
-                                # TODO: Issue - when moving whole transfer path we lose the transfer directory in userhome
-                                sophomorixCommand = ['sophomorix-transfer', '-jj', '--move', '--from-user', sender['sAMAccountName'], '--to-user', receiver, '--from-path', 'transfer', '--to-path', 'transfer/collected/'+now+'-'+session+'/'+sender['sophomorixAdminClass']+'/'+sender['sn'].replace(' ','_')+'_'+sender['givenname'].replace(' ','_')+'/', '--no-target-directory']
+                                sophomorixCommand = ['sophomorix-transfer', '-jj', '--move', '--keep-source-directory', '--from-user', sender['sAMAccountName'], '--to-user', receiver, '--from-path', 'transfer', '--to-path', 'transfer/collected/'+now+'-'+session+'/'+sender['sophomorixAdminClass']+'/'+sender['sn'].replace(' ','_')+'_'+sender['givenName'].replace(' ','_')+'/', '--no-target-directory']
                                 returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
                             else:
                                 for File in files:
-                                    sophomorixCommand = ['sophomorix-transfer', '-jj', '--move', '--from-user', sender['sAMAccountName'], '--to-user', receiver, '--from-path', 'transfer/'+File, '--to-path', 'transfer/collected/'+now+'-'+sender['sn'].replace(' ','_')+'_'+sender['givenName'].replace(' ','_')+'/', '--no-target-directory']
+                                    sophomorixCommand = ['sophomorix-transfer', '-jj', '--move', '--keep-source-directory', '--from-user', sender['sAMAccountName'], '--to-user', receiver, '--from-path', 'transfer/'+File, '--to-path', 'transfer/collected/'+now+'-'+session+'/'+sender['sophomorixAdminClass']+'/'+sender['sn'].replace(' ','_')+'_'+sender['givenName'].replace(' ','_')+'/', '--no-target-directory']
                                     returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
                 except Exception as e:
                     raise Exception('Something went wrong. Error:\n' + str(e))

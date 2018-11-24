@@ -112,15 +112,15 @@
             <td class="ng-binding">
                 <span style="display:inline-block; width:100px; font-size:100%"  class="label label-danger" ng:show="participant.sophomorixRole == 'examuser'"><i class="fa fa-graduation-cap"></i> {{participant.sophomorixExamMode}}</span></td>
             <td width="1" style="text-align:center;"> 
-                <span title="Exam by another supervisor" checkbox id="{{participant.sAMAccountName}}.exammode" ng-click="changeClass('exammode', participant)" ng:model="participant.exammode_boolean" ng:show="participant.sophomorixExamMode == identity.user || participant.sophomorixExamMode == '---'"></span>
+                <span title="Exam-Mode" checkbox id="{{participant.sAMAccountName}}.exammode" ng-click="changeClass('exammode', participant)" ng:model="participant.exammode_boolean" ng:show="participant.sophomorixExamMode == identity.user || participant.sophomorixExamMode == '---'"></span>
                 <span uib-dropdown>
                     <button class="btn btn-primary btn-xs" style="color:orange; background:white; font-size:20px" ng:show="participant.sophomorixExamMode != identity.user && participant.sophomorixExamMode != '---'" uib-dropdown-toggle>
                         <i class="fa fa-exclamation-triangle"></i>
                     </button>
                     <ul uib-dropdown-menu class="dropdown-menu-right" >
                         <li>
-                            <a ng:click="changeExamSupervisor([participant.sAMAccountName, identity.user])" translate>
-                                End running exam and start own exam
+                            <a ng:click="endExam(participant.sAMAccountName, identity.user, currentSession.name)"translate>
+                                <span translate> End running exam</span>
                             </a>
                         </li>
                     </ul>

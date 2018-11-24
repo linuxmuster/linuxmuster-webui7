@@ -4,7 +4,7 @@ angular.module('lmn.groupmembership').config ($routeProvider) ->
         templateUrl: '/lmn_groupmembership:resources/partial/index.html'
 
 
-angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController', ($scope, $http, $uibModal, gettext, notify, pageTitle) ->
+angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController', ($scope, $http, $uibModal, gettext, notify, pageTitle, messagebox) ->
     pageTitle.set(gettext('Group Membership'))
 
     $scope.types = {
@@ -17,6 +17,11 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
             typename: gettext('Printer')
             checkbox: true
             type: 'printergroup'
+
+        project:
+            typename: gettext('Projects')
+            checkbox: true
+            type: 'project'
     }
 
     $scope.sorts = [
@@ -43,6 +48,9 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
             if $scope.types.printergroup.checkbox is true
                 return true
         if  group.type is 'schoolclass'
+            if $scope.types.schoolclass.checkbox is true
+                return true
+        if  group.type is 'project'
             if $scope.types.schoolclass.checkbox is true
                 return true
         return false
@@ -86,13 +94,21 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
             if resp.data == 0
                 notify.success gettext("Nothing changed")
 
+    $scope.createProject = () ->
+        messagebox.prompt(gettext('Project Name'), '').then (msg) ->
+            if not msg.value
+                return
+            $http.post('/api/lmn/groupmembership', {action: 'create-project', username:$scope.identity.user, project: msg.value}).then (resp) ->
+                notify.success gettext('Project Created')
+
+
     $scope.$watch 'identity.user', ->
         if $scope.identity.user is undefined
            return
         if $scope.identity.user is null
            return
         if $scope.identity.user is 'root'
-           # $scope.identity.user = 'hulk'
-           return
+           $scope.identity.user = 'hulk'
+           # return
         $scope.getGroups($scope.identity.user)
         return

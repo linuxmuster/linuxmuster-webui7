@@ -4,7 +4,14 @@
     <div class="input-group">
 
         <input ng:model="filter" type="search" autofocus class="form-control" placeholder="Filter" typeahead-min-length="1" />
+
         <div uib-dropdown class="input-group-btn">
+        <button class="btn btn-default" ng:click='createProject()'>
+            <div>
+                <span><i class="fa fa-fw fa-flask"></i><span>
+                {{'New Project'|translate}}
+            </div>
+        </button>
             <button class="btn btn-default" uib-dropdown-toggle>
                 <i class="fa fa-filter"></i> <span translate> Objectsfilter </span>
                 <span class="caret"></span>
@@ -15,10 +22,14 @@
                         <span  checkbox ng:model="type.checkbox"> </span>
                         <span ng-if="type.type == 'schoolclass'"> <i class="fa fa-users"></i> <span translate>Classes</span></span>
                         <span ng-if="type.type == 'printergroup'"><i class="fa fa-fw fa-print"></i><span translate>Printers</span> </span>
+                        <span ng-if="type.type == 'project'"><i class="fa fa-fw fa-flask"></i><span translate>Projects</span> </span>
                     </div>
                 </li>
             </ul>
         </div>
+
+
+
         <div uib-dropdown class="input-group-btn">
             <button class="btn btn-default" uib-dropdown-toggle>
                 <i class="fa fa-sort-amount-asc"></i> {{sort.name}}
@@ -65,6 +76,13 @@
             <span id={{group.groupname}} checkbox ng:model="group.membership" ng-click='groupChanged($index, group.groupname)'> </span>
             <i class="fa fa-users"></i>
             <span translate>Class</span>
+            <b>{{group.groupname}}</b>
+        </span>
+
+        <span ng-if="group.type == 'project'">
+            <span id={{group.groupname}} checkbox ng:model="group.membership" ng-click='groupChanged($index, group.groupname)'> </span>
+            <i class="fa fa-flask"></i>
+            <span translate>Project</span>
             <b>{{group.groupname}}</b>
         </span>
     </a>

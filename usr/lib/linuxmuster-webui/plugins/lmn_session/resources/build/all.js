@@ -258,7 +258,7 @@
       });
     };
     $scope.newSession = function(username) {
-      return messagebox.prompt(gettext('Session Name'), '---').then(function(msg) {
+      return messagebox.prompt(gettext('Session Name'), '').then(function(msg) {
         if (!msg.value) {
           return;
         }

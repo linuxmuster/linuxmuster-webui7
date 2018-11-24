@@ -199,7 +199,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                         notify.success gettext(resp.data)
 
     $scope.newSession = (username) ->
-                messagebox.prompt(gettext('Session Name'), '---').then (msg) ->
+                messagebox.prompt(gettext('Session Name'), '').then (msg) ->
                     if not msg.value
                         return
                     $http.post('/api/lmn/session/sessions', {action: 'new-session', username: username, comment: msg.value}).then (resp) ->

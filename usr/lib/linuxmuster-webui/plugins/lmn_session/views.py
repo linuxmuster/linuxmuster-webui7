@@ -155,11 +155,11 @@ class Handler(HttpPlugin):
                     checkIfUserInManagementGroup(participant, participantBasename, 'exammode_boolean', examModeList, noExamModeList)
                 # Only check for managementgroups if this value was changed in WEBUI
                 if participant['changed'] is True:
-                    checkIfUserInManagementGroup(participant, participantBasename, 'group_wifiaccess', wifiList, noWifiList)
-                    checkIfUserInManagementGroup(participant, participantBasename, 'group_internetaccess', internetList, noInternetList)
-                    checkIfUserInManagementGroup(participant, participantBasename, 'group_intranetaccess', intranetList, noIntranetList)
-                    checkIfUserInManagementGroup(participant, participantBasename, 'group_webfilter', webfilterList, noWebfilterList)
-                    checkIfUserInManagementGroup(participant, participantBasename, 'group_printing', printingList, noPrintingList)
+                    checkIfUserInManagementGroup(participant, participant['sAMAccountName'], 'group_wifiaccess', wifiList, noWifiList)
+                    checkIfUserInManagementGroup(participant, participant['sAMAccountName'], 'group_internetaccess', internetList, noInternetList)
+                    checkIfUserInManagementGroup(participant, participant['sAMAccountName'], 'group_intranetaccess', intranetList, noIntranetList)
+                    checkIfUserInManagementGroup(participant, participant['sAMAccountName'], 'group_webfilter', webfilterList, noWebfilterList)
+                    checkIfUserInManagementGroup(participant, participant['sAMAccountName'], 'group_printing', printingList, noPrintingList)
                 #i = i + 1
 
 

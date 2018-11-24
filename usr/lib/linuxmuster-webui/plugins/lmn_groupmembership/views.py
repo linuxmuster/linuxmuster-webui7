@@ -38,7 +38,15 @@ class Handler(HttpPlugin):
                 # get printers
                 sophomorixCommand = ['sophomorix-query', '--printergroup', '--schoolbase', schoolname, '-jj']
                 printergroups = lmn_getSophomorixValue(sophomorixCommand, 'LISTS/GROUP')
+                # get printers
+                sophomorixCommand = ['sophomorix-query', '--project', '--schoolbase', schoolname, '-jj']
+                projects = lmn_getSophomorixValue(sophomorixCommand, 'LISTS/GROUP')
                 # build membershipList with membership status
+                for project in projects:
+                    if project in usergroups:
+                        membershipList.append({'type': 'project', 'groupname': project, 'icon': 'fa fa-flask', 'changed': False, 'membership': True})
+                    else:
+                        membershipList.append({'type': 'project', 'groupname': project, 'icon': 'fa fa-flask', 'changed': False, 'membership': False})
                 for schoolclass in schoolclasses:
                     if schoolclass in usergroups:
                         membershipList.append({'type': 'schoolclass', 'groupname': schoolclass, 'icon': 'fa fa-users', 'changed': False, 'membership': True})
@@ -50,6 +58,16 @@ class Handler(HttpPlugin):
                     else:
                         membershipList.append({'type': 'printergroup', 'groupname': printergroup, 'icon': 'fa fa-fw fa-print', 'changed': False, 'membership': False})
                 return membershipList
+
+            if action == 'create-project':
+                project = http_context.json_body()['project']
+                sophomorixCommand = ['sophomorix-project',  '--admins', username, '--create', '-p', project , '-jj']
+                result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
+                if result['TYPE'] == "ERROR":
+                    return result['TYPE']['LOG']
+                else:
+                    return result['TYPE'], result['LOG']
+
 
             if action == 'set-groups':
                 groups = http_context.json_body()['groups']

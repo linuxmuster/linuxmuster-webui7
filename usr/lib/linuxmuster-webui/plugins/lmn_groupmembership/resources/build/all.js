@@ -13,7 +13,7 @@
     });
   });
 
-  angular.module('lmn.groupmembership').controller('LMNGroupMembershipController', function($scope, $http, $uibModal, gettext, notify, pageTitle) {
+  angular.module('lmn.groupmembership').controller('LMNGroupMembershipController', function($scope, $http, $uibModal, gettext, notify, pageTitle, messagebox) {
     pageTitle.set(gettext('Group Membership'));
     $scope.types = {
       schoolclass: {
@@ -25,6 +25,11 @@
         typename: gettext('Printer'),
         checkbox: true,
         type: 'printergroup'
+      },
+      project: {
+        typename: gettext('Projects'),
+        checkbox: true,
+        type: 'project'
       }
     };
     $scope.sorts = [
@@ -59,6 +64,11 @@
         }
       }
       if (group.type === 'schoolclass') {
+        if ($scope.types.schoolclass.checkbox === true) {
+          return true;
+        }
+      }
+      if (group.type === 'project') {
         if ($scope.types.schoolclass.checkbox === true) {
           return true;
         }
@@ -122,6 +132,20 @@
         }
       });
     };
+    $scope.createProject = function() {
+      return messagebox.prompt(gettext('Project Name'), '').then(function(msg) {
+        if (!msg.value) {
+          return;
+        }
+        return $http.post('/api/lmn/groupmembership', {
+          action: 'create-project',
+          username: $scope.identity.user,
+          project: msg.value
+        }).then(function(resp) {
+          return notify.success(gettext('Project Created'));
+        });
+      });
+    };
     return $scope.$watch('identity.user', function() {
       if ($scope.identity.user === void 0) {
         return;
@@ -130,9 +154,9 @@
         return;
       }
       if ($scope.identity.user === 'root') {
-        return;
+        $scope.identity.user = 'hulk';
       }
-      // $scope.identity.user = 'hulk'
+      // return
       $scope.getGroups($scope.identity.user);
     });
   });

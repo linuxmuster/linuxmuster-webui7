@@ -299,7 +299,7 @@ class Handler(HttpPlugin):
                             else:
                                 receiverSAMAccountName = receiver
                             for File in files:
-                                sophomorixCommand = ['sophomorix-transfer', '-jj', '--scopy', '--from-user', sender, '--to-user', receiverSAMAccountName, '--from-path', '"transfer/'+File+'"', '--to-path', '"transfer"']
+                                sophomorixCommand = ['sophomorix-transfer', '-jj', '--scopy', '--from-user', sender, '--to-user', receiverSAMAccountName, '--from-path', 'transfer/'+File+'', '--to-path', 'transfer']
                                 returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
                 except Exception as e:
                     raise Exception('Something went wrong. Error:\n' + str(e))
@@ -309,11 +309,11 @@ class Handler(HttpPlugin):
                         for receiver in receivers:
                             # if files is All we're automatically in bulk mode
                             if files == "All":
-                                sophomorixCommand = ['sophomorix-transfer', '-jj', '--scopy', '--from-user', sender['sAMAccountName'], '--to-user', receiver, '--from-path', 'transfer', '--to-path', '"transfer/collected/'+now+'-'+session+'/'+sender['sophomorixAdminClass']+'/'+sender['sn'].replace(' ','_')+'_'+sender['givenName'].replace(' ','_')+'/"', '--no-target-directory']
+                                sophomorixCommand = ['sophomorix-transfer', '-jj', '--scopy', '--from-user', sender['sAMAccountName'], '--to-user', receiver, '--from-path', 'transfer', '--to-path', 'transfer/collected/'+now+'-'+session+'/'+sender['sophomorixAdminClass']+'/'+sender['sn'].replace(' ','_')+'_'+sender['givenName'].replace(' ','_')+'/', '--no-target-directory']
                                 returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
                             else:
                                 for File in files:
-                                    sophomorixCommand = ['sophomorix-transfer', '-jj', '--scopy', '--from-user', sender['sAMAccountName'], '--to-user', receiver, '--from-path', '"transfer/'+File, '--to-path', 'transfer/collected/'+now+'-'+session+'/'+sender['sophomorixAdminClass']+'/'+sender['sn'].replace(' ','_')+'_'+sender['givenName'].replace(' ','_')+'/"', '--no-target-directory']
+                                    sophomorixCommand = ['sophomorix-transfer', '-jj', '--scopy', '--from-user', sender['sAMAccountName'], '--to-user', receiver, '--from-path', 'transfer/'+File, '--to-path', 'transfer/collected/'+now+'-'+session+'/'+sender['sophomorixAdminClass']+'/'+sender['sn'].replace(' ','_')+'_'+sender['givenName'].replace(' ','_')+'/', '--no-target-directory']
                                     returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
                 except Exception as e:
                     raise Exception('Something went wrong. Error:\n' + str(e))
@@ -323,11 +323,11 @@ class Handler(HttpPlugin):
                         for receiver in receivers:
                             # if files is All we're automatically in bulk mode
                             if files == "All":
-                                sophomorixCommand = ['sophomorix-transfer', '-jj', '--move', '--keep-source-directory', '--from-user', sender['sAMAccountName'], '--to-user', receiver, '--from-path', 'transfer', '--to-path', '"transfer/collected/'+now+'-'+session+'/'+sender['sophomorixAdminClass']+'/'+sender['sn'].replace(' ','_')+'_'+sender['givenName'].replace(' ','_')+'/"', '--no-target-directory']
+                                sophomorixCommand = ['sophomorix-transfer', '-jj', '--move', '--keep-source-directory', '--from-user', sender['sAMAccountName'], '--to-user', receiver, '--from-path', 'transfer', '--to-path', 'transfer/collected/'+now+'-'+session+'/'+sender['sophomorixAdminClass']+'/'+sender['sn'].replace(' ','_')+'_'+sender['givenName'].replace(' ','_')+'/', '--no-target-directory']
                                 returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
                             else:
                                 for File in files:
-                                    sophomorixCommand = ['sophomorix-transfer', '-jj', '--move', '--keep-source-directory', '--from-user', sender['sAMAccountName'], '--to-user', receiver, '--from-path', '"transfer/'+File, '--to-path', 'transfer/collected/'+now+'-'+session+'/'+sender['sophomorixAdminClass']+'/'+sender['sn'].replace(' ','_')+'_'+sender['givenName'].replace(' ','_')+'/"', '--no-target-directory']
+                                    sophomorixCommand = ['sophomorix-transfer', '-jj', '--move', '--keep-source-directory', '--from-user', sender['sAMAccountName'], '--to-user', receiver, '--from-path', 'transfer/'+File, '--to-path', 'transfer/collected/'+now+'-'+session+'/'+sender['sophomorixAdminClass']+'/'+sender['sn'].replace(' ','_')+'_'+sender['givenName'].replace(' ','_')+'/', '--no-target-directory']
                                     returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
                 except Exception as e:
                     raise Exception('Something went wrong. Error:\n' + str(e))

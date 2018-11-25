@@ -103,7 +103,7 @@ def lmn_getUserLdapValue(user, field):
 
 def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
     # Attention! Also passwords and sensbile information get logged!!!
-    debug = False
+    debug = True
     # only error log is going to be processed. standard output is thrown away
     sophomorixCommand.append('1>/dev/null')
     file = open("/var/log/getSophomorixValueDebugoutput.log", "a")

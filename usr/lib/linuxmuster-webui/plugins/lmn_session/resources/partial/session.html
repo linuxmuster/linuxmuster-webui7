@@ -119,7 +119,7 @@
                     </button>
                     <ul uib-dropdown-menu class="dropdown-menu-right" >
                         <li>
-                            <a ng:click="endExam(participant.sAMAccountName, identity.user, currentSession.name)"translate>
+                            <a ng:click="endExam(participant.sAMAccountName, identity.user,currentSession.name, currentSession.comment)"translate>
                                 <span translate> End running exam</span>
                             </a>
                         </li>
@@ -200,7 +200,7 @@
                     <!--   <li ng:repeat="example in examples"><a ng:click="createConfig(example)">{{example}}</a></li>-->
                 </ul>
             </div>
-            <button ng:click="saveApply(identity.user,participants,currentSession.name)" ng:show="currentSession.name != ''" class="btn btn-default btn-flat pull-right" translate>Save & apply</button>
+            <button ng:click="saveApply(identity.user,participants,currentSession.name,currentSession.comment)" ng:show="currentSession.name != ''" class="btn btn-default btn-flat pull-right" translate>Save & apply</button>
             <button ng:click="cancel(identity.user,currentSession.name)" ng:show="currentSession.name != ''" class="btn btn-default btn-flat pull-right" translate>Close</button>
         </div>
     </floating-toolbar>

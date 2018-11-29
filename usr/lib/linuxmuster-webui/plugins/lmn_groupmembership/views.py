@@ -44,30 +44,29 @@ class Handler(HttpPlugin):
                 # build membershipList with membership status
                 for project in projects:
                     if project in usergroups:
-                        membershipList.append({'type': 'project', 'groupname': project, 'icon': 'fa fa-flask', 'changed': False, 'membership': True})
+                        membershipList.append({'type': 'project', 'typename': 'Project', 'groupname': project, 'icon': 'fa fa-flask', 'changed': False, 'membership': True})
                     else:
-                        membershipList.append({'type': 'project', 'groupname': project, 'icon': 'fa fa-flask', 'changed': False, 'membership': False})
+                        membershipList.append({'type': 'project', 'typename': 'Project', 'groupname': project, 'icon': 'fa fa-flask', 'changed': False, 'membership': False})
                 for schoolclass in schoolclasses:
                     if schoolclass in usergroups:
-                        membershipList.append({'type': 'schoolclass', 'groupname': schoolclass, 'icon': 'fa fa-users', 'changed': False, 'membership': True})
+                        membershipList.append({'type': 'schoolclass', 'typename': 'Class', 'groupname': schoolclass, 'icon': 'fa fa-users', 'changed': False, 'membership': True})
                     else:
-                        membershipList.append({'type': 'schoolclass', 'groupname': schoolclass, 'icon': 'fa fa-users', 'changed': False, 'membership': False})
+                        membershipList.append({'type': 'schoolclass', 'typename': 'Class', 'groupname': schoolclass, 'icon': 'fa fa-users', 'changed': False, 'membership': False})
                 for printergroup in printergroups:
                     if printergroup in usergroups:
-                        membershipList.append({'type': 'printergroup', 'groupname': printergroup, 'icon': 'fa fa-fw fa-print', 'changed': False, 'membership': True})
+                        membershipList.append({'type': 'printergroup', 'typename': 'Printer', 'groupname': printergroup, 'icon': 'fa fa-fw fa-print', 'changed': False, 'membership': True})
                     else:
-                        membershipList.append({'type': 'printergroup', 'groupname': printergroup, 'icon': 'fa fa-fw fa-print', 'changed': False, 'membership': False})
+                        membershipList.append({'type': 'printergroup', 'typename': 'Printer', 'groupname': printergroup, 'icon': 'fa fa-fw fa-print', 'changed': False, 'membership': False})
                 return membershipList
 
             if action == 'create-project':
                 project = http_context.json_body()['project']
-                sophomorixCommand = ['sophomorix-project',  '--admins', username, '--create', '-p', project , '-jj']
+                sophomorixCommand = ['sophomorix-project',  '--admins', username, '--create', '-p', project, '-jj']
                 result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
                 if result['TYPE'] == "ERROR":
                     return result['TYPE']['LOG']
                 else:
                     return result['TYPE'], result['LOG']
-
 
             if action == 'set-groups':
                 groups = http_context.json_body()['groups']
@@ -76,6 +75,7 @@ class Handler(HttpPlugin):
                 printergroupToAdd = ''
                 printergroupToRemove = ''
                 for group in groups:
+                    # TODO
                     # Temporary removed because changed attribute is set wrong
                     #if group['changed'] is False:
                     #    continue

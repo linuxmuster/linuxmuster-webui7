@@ -1,3 +1,12 @@
+
+linuxmuster-webui7 (1.0.21-0) UNRELEASED; urgency=medium
+
+  * Current snapshot build  9acaf292a63284c5c6d7ae9badbb7a6235dd02d9
+  * Fixed sharing several files in transfer directory from session
+  * Updated groupmembership module
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Nov 24 17:11:48 2018 +0000
+
 linuxmuster-webui7 (1.0.20-0) UNRELEASED; urgency=medium
 
   * Current snapshot build  4008acfe64d94849004e5a73bbc159965dd80848

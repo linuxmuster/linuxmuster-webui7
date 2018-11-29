@@ -92,30 +92,32 @@ class Handler(HttpPlugin):
                 sophomorixCommand = ['sophomorix-session', '--create', '--supervisor', supervisor,  '-j', '--comment', comment]
                 result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
                 return result
-        if action == 'change-exam-supervisor':
-            supervisor = http_context.json_body()['supervisor']
-            participant = http_context.json_body()['participant']
-            comment = http_context.json_body()['comment']
-            with authorize('lm:users:students:read'):
-                try:
-                    sophomorixCommand = ['sophomorix-exam-mode', '--unset', '--subdir', session, '-j', '--participants', participant]
-                    result = lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
-                except Exception as e:
-                    raise Exception('Error:\n' + str(e))
-                try:
-                    sophomorixCommand = ['sophomorix-exam-mode', '--set', '--supervisor', supervisor, '-j', '--participants', participant]
-                    result = lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
-                except Exception as e:
-                    raise Exception('Error:\n' + str(e))
+        # TODO: Removed remove block in future release
+        #if action == 'change-exam-supervisor':
+        #    supervisor = http_context.json_body()['supervisor']
+        #    participant = http_context.json_body()['participant']
+        #    comment = http_context.json_body()['comment']
+        #    with authorize('lm:users:students:read'):
+        #        try:
+        #            sophomorixCommand = ['sophomorix-exam-mode', '--unset', '--subdir', session, '-j', '--participants', participant]
+        #            result = lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
+        #        except Exception as e:
+        #            raise Exception('Error:\n' + str(e))
+        #        try:
+        #            sophomorixCommand = ['sophomorix-exam-mode', '--set', '--supervisor', supervisor, '-j', '--participants', participant]
+        #            result = lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
+        #        except Exception as e:
+        #            raise Exception('Error:\n' + str(e))
         if action == 'end-exam':
-            session = http_context.json_body()['session']
             supervisor = http_context.json_body()['supervisor']
             participant = http_context.json_body()['participant']
+            sessionName = http_context.json_body()['sessionName']
+            now = strftime("%Y%m%d_%H-%M-%S", gmtime())
             #raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(http_context.json_body()))
 
             with authorize('lm:users:students:read'):
                 try:
-                    sophomorixCommand = ['sophomorix-exam-mode', '--unset', '--subdir', session, '-j', '--participants', participant]
+                    sophomorixCommand = ['sophomorix-exam-mode', '--unset', '--subdir', 'transfer/collected/'+now+'-'+sessionName+'-ended-by-'+supervisor+'/exam', '-j', '--participants', participant]
                     result = lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
                 except Exception  as e:
                     raise Exception('Error:\n' + str(e))
@@ -134,9 +136,11 @@ class Handler(HttpPlugin):
                 return 0
 
             session = http_context.json_body()['session']
+            sessionName = http_context.json_body()['sessionName']
             supervisor = http_context.json_body()['username']
             participants = http_context.json_body()['participants']
             participantsList = []
+            now = strftime("%Y%m%d_%H-%M-%S", gmtime())
 
             examModeList, noExamModeList, wifiList, noWifiList, internetList, noInternetList, intranetList, noIntranetList, webfilterList, noWebfilterList, printingList, noPrintingList = [], [], [], [], [], [], [], [], [], [], [], []
             # Remove -exam in username to keep username as it is insead of saving -exam usernames in session
@@ -214,7 +218,7 @@ class Handler(HttpPlugin):
             # Remove chosen members from exam mode
             try:
                 if noExamModeListCSV != "":
-                    sophomorixCommand = ['sophomorix-exam-mode', '--unset', '--subdir', session, '-j', '--participants', noExamModeListCSV]
+                    sophomorixCommand = ['sophomorix-exam-mode', '--unset', '--subdir', 'transfer/collected/'+now+'-'+sessionName+'/exam', '-j', '--participants', noExamModeListCSV]
                     result = lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
             except Exception:
                 raise Exception('Error:\n' + str('sophomorix-exam-mode --unset --subdir ' + session + ' -j --participants ' + noExamModeListCSV))
@@ -299,7 +303,7 @@ class Handler(HttpPlugin):
                             else:
                                 receiverSAMAccountName = receiver
                             for File in files:
-                                sophomorixCommand = ['sophomorix-transfer', '-jj', '--scopy', '--from-user', sender, '--to-user', receiverSAMAccountName, '--from-path', 'transfer/'+File+'', '--to-path', 'transfer']
+                                sophomorixCommand = ['sophomorix-transfer', '-jj', '--scopy', '--from-user', sender, '--to-user', receiverSAMAccountName, '--from-path', 'transfer/'+File, '--to-path', 'transfer/'+File]
                                 returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
                 except Exception as e:
                     raise Exception('Something went wrong. Error:\n' + str(e))
@@ -313,7 +317,7 @@ class Handler(HttpPlugin):
                                 returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
                             else:
                                 for File in files:
-                                    sophomorixCommand = ['sophomorix-transfer', '-jj', '--scopy', '--from-user', sender['sAMAccountName'], '--to-user', receiver, '--from-path', 'transfer/'+File, '--to-path', 'transfer/collected/'+now+'-'+session+'/'+sender['sophomorixAdminClass']+'/'+sender['sn'].replace(' ','_')+'_'+sender['givenName'].replace(' ','_')+'/', '--no-target-directory']
+                                    sophomorixCommand = ['sophomorix-transfer', '-jj', '--scopy', '--from-user', sender['sAMAccountName'], '--to-user', receiver, '--from-path', 'transfer/'+File, '--to-path', 'transfer/collected/'+now+'-'+session+'/'+sender['sophomorixAdminClass']+'/'+sender['sn'].replace(' ','_')+'_'+sender['givenName'].replace(' ','_')+'/'+File]
                                     returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
                 except Exception as e:
                     raise Exception('Something went wrong. Error:\n' + str(e))
@@ -327,7 +331,7 @@ class Handler(HttpPlugin):
                                 returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
                             else:
                                 for File in files:
-                                    sophomorixCommand = ['sophomorix-transfer', '-jj', '--move', '--keep-source-directory', '--from-user', sender['sAMAccountName'], '--to-user', receiver, '--from-path', 'transfer/'+File, '--to-path', 'transfer/collected/'+now+'-'+session+'/'+sender['sophomorixAdminClass']+'/'+sender['sn'].replace(' ','_')+'_'+sender['givenName'].replace(' ','_')+'/', '--no-target-directory']
+                                    sophomorixCommand = ['sophomorix-transfer', '-jj', '--move', '--from-user', sender['sAMAccountName'], '--to-user', receiver, '--from-path', 'transfer/'+File, '--to-path', 'transfer/collected/'+now+'-'+session+'/'+sender['sophomorixAdminClass']+'/'+sender['sn'].replace(' ','_')+'_'+sender['givenName'].replace(' ','_')+'/'+File]
                                     returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
                 except Exception as e:
                     raise Exception('Something went wrong. Error:\n' + str(e))

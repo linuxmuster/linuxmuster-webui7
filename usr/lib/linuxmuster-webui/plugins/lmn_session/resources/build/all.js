@@ -471,23 +471,24 @@
         participant: participant
       }).then(function(resp) {});
     };
-    $scope.endExam = function(participant, supervisor, session) {
+    $scope.endExam = function(participant, supervisor, session, sessionName) {
       return $http.post('/api/lmn/session/sessions', {
         action: 'end-exam',
         supervisor: supervisor,
-        session: session,
-        participant: participant
+        participant: participant,
+        sessionName: sessionName
       }).then(function(resp) {
         return $scope.getParticipants(supervisor, session);
       });
     };
-    $scope.saveApply = function(username, participants, session) {
+    $scope.saveApply = function(username, participants, session, sessionName) {
       // console.log (participants)
       return $http.post('/api/lmn/session/sessions', {
         action: 'save-session',
         username: username,
         participants: participants,
-        session: session
+        session: session,
+        sessionName: sessionName
       }).then(function(resp) {
         $scope.output = resp.data;
         $scope.getParticipants(username, session);

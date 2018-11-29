@@ -69,7 +69,7 @@
         }
       }
       if (group.type === 'project') {
-        if ($scope.types.schoolclass.checkbox === true) {
+        if ($scope.types.project.checkbox === true) {
           return true;
         }
       }
@@ -145,6 +145,9 @@
           return notify.success(gettext('Project Created'));
         });
       });
+    };
+    $scope.showGroupDetails = function(index, groupname) {
+      return console.log(groupname);
     };
     return $scope.$watch('identity.user', function() {
       if ($scope.identity.user === void 0) {

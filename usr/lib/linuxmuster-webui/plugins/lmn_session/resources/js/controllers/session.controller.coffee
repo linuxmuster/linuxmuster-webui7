@@ -347,13 +347,13 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
     $scope.changeExamSupervisor = (participant, supervisor) ->
                 $http.post('/api/lmn/session/sessions', {action: 'change-exam-supervisor', supervisor: supervisor, participant: participant}).then (resp) ->
 
-    $scope.endExam = (participant, supervisor, session) ->
-                $http.post('/api/lmn/session/sessions', {action: 'end-exam', supervisor: supervisor,session: session, participant: participant}).then (resp) ->
+    $scope.endExam = (participant, supervisor,session, sessionName) ->
+                $http.post('/api/lmn/session/sessions', {action: 'end-exam', supervisor: supervisor, participant: participant, sessionName: sessionName}).then (resp) ->
                     $scope.getParticipants(supervisor,session)
 
-    $scope.saveApply = (username,participants, session) ->
+    $scope.saveApply = (username,participants, session, sessionName) ->
                 # console.log (participants)
-                $http.post('/api/lmn/session/sessions', {action: 'save-session',username: username, participants: participants, session: session}).then (resp) ->
+                $http.post('/api/lmn/session/sessions', {action: 'save-session',username: username, participants: participants, session: session, sessionName: sessionName}).then (resp) ->
                     $scope.output = resp.data
                     $scope.getParticipants(username,session)
                     notify.success gettext($scope.output)

@@ -51,7 +51,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
             if $scope.types.schoolclass.checkbox is true
                 return true
         if  group.type is 'project'
-            if $scope.types.schoolclass.checkbox is true
+            if $scope.types.project.checkbox is true
                 return true
         return false
 
@@ -101,6 +101,8 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
             $http.post('/api/lmn/groupmembership', {action: 'create-project', username:$scope.identity.user, project: msg.value}).then (resp) ->
                 notify.success gettext('Project Created')
 
+    $scope.showGroupDetails = (index, groupname) ->
+        console.log (groupname)
 
     $scope.$watch 'identity.user', ->
         if $scope.identity.user is undefined
@@ -108,7 +110,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
         if $scope.identity.user is null
            return
         if $scope.identity.user is 'root'
-           # $scope.identity.user = 'hulk'
-           return
+           $scope.identity.user = 'hulk'
+           # return
         $scope.getGroups($scope.identity.user)
         return

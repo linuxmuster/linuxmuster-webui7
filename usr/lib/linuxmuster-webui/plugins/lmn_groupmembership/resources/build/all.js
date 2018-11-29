@@ -18,6 +18,7 @@
     $scope.types = {
       schoolclass: {
         typename: gettext('Schoolclass'),
+        name: gettext('Groupname'),
         checkbox: true,
         type: 'schoolclass'
       },
@@ -69,7 +70,7 @@
         }
       }
       if (group.type === 'project') {
-        if ($scope.types.project.checkbox === true) {
+        if ($scope.types.schoolclass.checkbox === true) {
           return true;
         }
       }
@@ -146,8 +147,8 @@
         });
       });
     };
-    $scope.showGroupDetails = function(index, groupname) {
-      return console.log(groupname);
+    $scope.showGroupDetails = function(index, groupName) {
+      return console.log(groupName);
     };
     return $scope.$watch('identity.user', function() {
       if ($scope.identity.user === void 0) {
@@ -157,9 +158,9 @@
         return;
       }
       if ($scope.identity.user === 'root') {
-        $scope.identity.user = 'hulk';
+        return;
       }
-      // return
+      // $scope.identity.user = 'hulk'
       $scope.getGroups($scope.identity.user);
     });
   });

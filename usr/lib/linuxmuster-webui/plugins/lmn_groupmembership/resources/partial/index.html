@@ -65,89 +65,89 @@
     </div>
     <br>
 
-
-    <div class="grid">
-        <div class "row" ng:repeat="group in groups|filter:filter|filter:isActive|orderBy:['-_isNew', sort.fx]|page:paging.page:paging.pageSize">
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12" ng-if="group.type == 'printergroup'" >
-                <span id={{group.groupname}} checkbox ng:model="group.membership" ng-click='groupChanged($index, group.groupname)'> </span> 
-                <i class="fa fa-fw fa-print"></i>
+    <h3 translate> Schoolclasses</h3>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-3" ng:repeat="group in groups|filter: {type: 'schoolclass'}|filter:filter|filter:isActive|orderBy:['-_isNew', sort.fx]">
+                <div>
+                <span id={{group.groupname}} checkbox ng:model="group.membership" ng-click='groupChanged($index, group.groupname)'></span>
+                <i class="{{group.icon}}"></i>
                 <a href="#" ng-click='showGroupDetails($index, group.groupname)'>
-                    <span translate>Printer</span>
+                    <span translate>{{group.typename}}</span>
                     <b>{{group.groupname}}</b>
                 </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h3 translate> Printer</h3>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-3" ng:repeat="group in groups|filter: {type: 'printer'}|filter:filter|filter:isActive|orderBy:['-_isNew', sort.fx]">
+                <div>
+                <span id={{group.groupname}} checkbox ng:model="group.membership" ng-click='groupChanged($index, group.groupname)'></span>
+                <i class="{{group.icon}}"></i>
+                <a href="#" ng-click='showGroupDetails($index, group.groupname)'>
+                    <span translate>{{group.typename}}</span>
+                    <b>{{group.groupname}}</b>
+                </a>
+                </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h3 translate> Projects</h3>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-3" ng:repeat="group in groups|filter: {type: 'project'}|filter:filter|filter:isActive|orderBy:['-_isNew', sort.fx]">
+                <div>
+                <span id={{group.groupname}} checkbox ng:model="group.membership" ng-click='groupChanged($index, group.groupname)'></span>
+                <i class="{{group.icon}}"></i>
+                <a href="#" ng-click='showGroupDetails($index, group.groupname)'>
+                    <span translate>{{group.typename}}</span>
+                    <b>{{group.groupname}}</b>
+                </a>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class=container>
-        <div class "row" ng:repeat="group in groups|filter:filter|filter:isActive|orderBy:['-_isNew', sort.fx]|page:paging.page:paging.pageSize">
-            <span>
-                <div class "col-sm" ng-if="group.type == 'printergroup'">
-                    <span id={{group.groupname}} checkbox ng:model="group.membership" ng-click='groupChanged($index, group.groupname)'> </span> 
-                    <i class="fa fa-fw fa-print"></i>
-                    <a href="#" ng-click='showGroupDetails($index, group.groupname)'>
-                        <span translate>Printer</span>
-                        <b>{{group.groupname}}</b>
-                    </a>
-                    </td>
-            </span>
-            <span>
-                <div class "col-sm" ng-if="group.type == 'schoolclass'">
-                    <span id={{group.groupname}} checkbox ng:model="group.membership" ng-click='groupChanged($index, group.groupname)'> </span>
-                    <i class="fa fa-users"></i>
-                    <a href="#" ng-click='showGroupDetails($index, group.groupname)'>
-                        <span translate>Class</span>
-                        <b>{{group.groupname}}</b>
-                    </a>
-                    </td>
-            </span>
+    <!-- TODO: Cleanup -->
+    <!--
+        <a class="list-group-item" ng:repeat="group in groups|filter:filter|filter:isActive|orderBy:['-_isNew', sort.fx]|page:paging.page:paging.pageSize">
 
-            <span>
-                <div class "col-sm" ng-if="group.type == 'project'">
-                    <span id={{group.groupname}} checkbox ng:model="group.membership" ng-click='groupChanged($index, group.groupname)'> </span>
-                    <i class="fa fa-flask"></i>
-                    <a href="#" ng-click='showGroupDetails($index, group.groupname)'>
-                        <span translate>Project</span>
-                        <b>{{group.groupname}}</b>
-                    </a>
-                    </td>
+        <span ng-if="group.type == 'printergroup'">
+        <span id={{group.groupname}} checkbox ng:model="group.membership" ng-click='groupChanged($index, group.groupname)'> </span> 
+        <i class="fa fa-fw fa-print"></i>
+        <span translate>Printer</span>
+        <b>{{group.groupname}}</b>
+        </span>
 
-            </span>
-                </div>
-                </div>
-                <!--
-                    <a class="list-group-item" ng:repeat="group in groups|filter:filter|filter:isActive|orderBy:['-_isNew', sort.fx]|page:paging.page:paging.pageSize">
+        <span ng-if="group.type == 'schoolclass'">
+        <span id={{group.groupname}} checkbox ng:model="group.membership" ng-click='groupChanged($index, group.groupname)'> </span>
+        <i class="fa fa-users"></i>
+        <span translate>Class</span>
+        <b>{{group.groupname}}</b>
+        </span>
 
-                    <span ng-if="group.type == 'printergroup'">
-                    <span id={{group.groupname}} checkbox ng:model="group.membership" ng-click='groupChanged($index, group.groupname)'> </span> 
-                    <i class="fa fa-fw fa-print"></i>
-                    <span translate>Printer</span>
-                    <b>{{group.groupname}}</b>
-                    </span>
+        <span ng-if="group.type == 'project'">
+        <span id={{group.groupname}} checkbox ng:model="group.membership" ng-click='groupChanged($index, group.groupname)'> </span>
+        <i class="fa fa-flask"></i>
+        <span translate>Project</span>
+        <b>{{group.groupname}}</b>
 
-                    <span ng-if="group.type == 'schoolclass'">
-                    <span id={{group.groupname}} checkbox ng:model="group.membership" ng-click='groupChanged($index, group.groupname)'> </span>
-                    <i class="fa fa-users"></i>
-                    <span translate>Class</span>
-                    <b>{{group.groupname}}</b>
-                    </span>
+        </span>
+        </a>
 
-                    <span ng-if="group.type == 'project'">
-                    <span id={{group.groupname}} checkbox ng:model="group.membership" ng-click='groupChanged($index, group.groupname)'> </span>
-                    <i class="fa fa-flask"></i>
-                    <span translate>Project</span>
-                    <b>{{group.groupname}}</b>
+    -->
+    <br/>
+    <!-- TODO: Cleanup -->
+    <!--
+    <ul uib-pagination ng:show="groups.length > paging.pageSize"  ng-model="paging.page" total-items="groups.length" items-per-page="paging.pageSize" max-size="10" rotate="true" boundary-links="true"></ul>
+    -->
+    <div class="floating-toolbar-padder"></div>
 
-                    </span>
-                    </a>
-
-                -->
-                <br/>
-                <ul uib-pagination ng:show="groups.length > paging.pageSize"  ng-model="paging.page" total-items="groups.length" items-per-page="paging.pageSize" max-size="10" rotate="true" boundary-links="true"></ul>
-
-                <div class="floating-toolbar-padder"></div>
-
-                <floating-toolbar>
-                    <button ng:click="setGroups(groups)" class="btn btn-default btn-flat" translate>Enroll</button>
-                </floating-toolbar>
-                </div>
+    <floating-toolbar>
+        <button ng:click="setGroups(groups)" class="btn btn-default btn-flat" translate>Enroll</button>
+    </floating-toolbar>
+        </div>

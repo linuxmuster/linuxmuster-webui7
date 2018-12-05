@@ -29,4 +29,9 @@ class Permissions (PermissionProvider):
                 'name': _('Edit Groupmemberships'),
                 'default': False,
             },
+            {
+                'id': 'lmn:groupmemberships:write',
+                'name': _('Edit Groups'),
+                'default': False,
+            },
         ]

@@ -234,7 +234,7 @@ class Handler(HttpPlugin):
         school = 'default-school'
         with authorize('lm:users:students:read'):
             try:
-                sophomorixCommand = ['sophomorix-query', '-jj', '--schoolbase', school, '--student', '--user-full', '--anyname', '*'+http_context.query['q']+'*']
+                sophomorixCommand = ['sophomorix-query', '-jj', '--schoolbase', school, '--student', '--user-basic', '--anyname', '*'+http_context.query['q']+'*']
                 users = lmn_getSophomorixValue(sophomorixCommand, 'USER', True)
             except Exception:
                 return 0

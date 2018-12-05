@@ -110,10 +110,11 @@ class Handler(HttpPlugin):
             teachersList = []
             with authorize('lm:users:teachers:read'):
                 if action == 'get-all':
-                    sophomorixCommand = ['sophomorix-query', '--teacher', '--schoolbase', schoolname, '--user-full', '-jj']
+                    # TODO: This could run with --user-basic but not all memberOf are filled. Needs verification
+                    sophomorixCommand = ['sophomorix-query', '--teacher', '--schoolbase', schoolname, '--user-basic', '-jj']
                 else:
                     user = http_context.json_body()['user']
-                    sophomorixCommand = ['sophomorix-query', '--teacher', '--schoolbase', schoolname, '--user-full', '-jj', '--sam', user]
+                    sophomorixCommand = ['sophomorix-query', '--teacher', '--schoolbase', schoolname, '--user-basic', '-jj', '--sam', user]
                 teachersCheck = lmn_getSophomorixValue(sophomorixCommand, 'LISTS/USER')
                 if len(teachersCheck) != 0:
                     teachers = lmn_getSophomorixValue(sophomorixCommand, 'USER')

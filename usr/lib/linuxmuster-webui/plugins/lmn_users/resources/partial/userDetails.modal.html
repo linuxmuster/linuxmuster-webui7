@@ -8,24 +8,24 @@
     <div translate> Group Membership:</div>
     <li style="padding-left: 20px;" ng:repeat="group in userDetails[0]['memberOf']"><a ng:click="createConfig(example)">{{group}}</a></li>
     <br>
-    <br><b>Klasse:</b>  {{userDetails[0]['sophomorixAdminClass']}}
-    <br><b>Geburtstag:</b> {{userDetails[0]['sophomorixBirthdate']}}
-    <br><b>Creationdate:</b> {{userDetails[0]['sophomorixCreationDate']}}
-    <br><b>Deaktivierungsdate:</b> {{userDetails[0]['sophomorixCreationDate']}}
-    <br><b>Tolerationdate:</b> {{userDetails[0]['sophomorixTolerationDate']}}
+    <br><b translate>Class:</b>  {{userDetails[0]['sophomorixAdminClass']}}
+    <br><b translate>Birthday:</b> {{userDetails[0]['sophomorixBirthdate']}}
+    <br><b translate>Creationdate:</b> {{userDetails[0]['sophomorixCreationDate']}}
+    <br><b translate>Deactivationsdate:</b> {{userDetails[0]['sophomorixCreationDate']}}
+    <br><b translate>Tolerationdate:</b> {{userDetails[0]['sophomorixTolerationDate']}}
 
 
-    <br><b>Rolle:</b> {{userDetails[0]['sophomorixRole']}}
-    <br><b>Schulname:</b>  {{userDetails[0]['sophomorixSchoolname']}}
-    <br><b>Sophomorix Status:</b> {{userDetails[0]['sophomorixStatus']}}
+    <br><b translate>Role:</b> {{userDetails[0]['sophomorixRole']}}
+    <br><b translate>Schoolname:</b>  {{userDetails[0]['sophomorixSchoolname']}}
+    <br><b translate>Sophomorix Status:</b> {{userDetails[0]['sophomorixStatus']}}
 
     <br>
     <br>
     <div translate> Quota:</div>
     <li style="padding-left: 20px;" ng:repeat="sophomorixQuota in userDetails[0]['sophomorixQuota']"><a ng:click="createConfig(example)">{{sophomorixQuota}}</a></li>
 
-    <br><b>Cloudquota Calculated:</b> {{userDetails[0]['sophomorixCloudQuotaCalculated']}}
-    <br><b>Mailquota Calculated:</b> {{userDetails[0]['sophomorixMailQuotaCalculated']}}
+    <br><b translate>Cloudquota Calculated:</b> {{userDetails[0]['sophomorixCloudQuotaCalculated']}}
+    <br><b translate>Mailquota Calculated:</b> {{userDetails[0]['sophomorixMailQuotaCalculated']}}
 
     <div class="modal-footer">
         <a class="btn btn-default btn-flat" ng:click="close()" translate>Close</a>

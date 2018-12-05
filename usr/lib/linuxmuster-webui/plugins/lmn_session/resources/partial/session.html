@@ -2,7 +2,7 @@
 <div>
     <div class="input-group">
         <input ng-show="!sessionLoaded" ng:model="filter" type="search" autofocus class="form-control" placeholder="Filter"/>
-        <input ng-show="sessionLoaded" type="text" style="width:70%" placeholder="Add Student" ng:model="_.addParticipant" ng-readonly=!sessionLoaded typeahead-editable=false typeahead-min-length="2" uib-typeahead="user as user.sophomorixAdminClass+' '+user.displayName+ ' '+user.sAMAccountName  for user in findUsers($viewValue) | limitTo:10" class="form-control" />
+        <input ng-show="sessionLoaded" type="text" style="width:70%" placeholder="Add Student" ng:model="_.addParticipant" ng-readonly=!sessionLoaded typeahead-editable=false typeahead-min-length="2" uib-typeahead="user as user.sophomorixAdminClass+' '+user.givenName+ ' '+user.sn+ ' '+user.sAMAccountName  for user in findUsers($viewValue) | limitTo:10" class="form-control" />
         <input ng-show="sessionLoaded" type="text" style="width:30%" placeholder="Add Class" ng:model="_.addSchoolClass" ng-readonly=!sessionLoaded typeahead-editable=false typeahead-min-length="1" uib-typeahead="schoolClass as schoolClass.sophomorixAdminClass for schoolClass in findSchoolClasses($viewValue) | limitTo:10" class="form-control" />
 
         <oi-select

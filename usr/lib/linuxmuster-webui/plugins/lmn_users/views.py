@@ -379,10 +379,14 @@ class Handler(HttpPlugin):
         if http_context.method == 'POST':
             user = http_context.json_body()['user']
             one_per_page = http_context.json_body()['one_per_page']
+            pdflatex = http_context.json_body()['pdflatex']
             schoolclass = http_context.json_body()['schoolclass']
             sophomorixCommand = ['sophomorix-print', '--school', school, '--caller', str(user)]
             if one_per_page:
                 sophomorixCommand.extend(['--one-per-page'])
+            if pdflatex:
+                sophomorixCommand.extend(['--command'])
+                sophomorixCommand.extend(['pdflatex'])
             if schoolclass:
                 sophomorixCommand.extend(['--class', schoolclass])
             # sophomorix-print needs the json parameter at the very end

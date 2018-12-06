@@ -8,6 +8,7 @@ angular.module('lm.users').controller 'LMUsersPrintPasswordsOptionsModalControll
     $scope.options = {
         format: 'pdf'
         one_per_page: false
+        pdflatex: false
         schoolclass: schoolclass
         user: user
     }

@@ -24,13 +24,16 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
 
         $scope.killProject = (project) ->
              messagebox.show(text: "Do you really want to delete '#{project}'? This can't be undone!", positive: 'Delete', negative: 'Cancel').then () ->
+                msg = messagebox.show(progress: true)
                 $http.post('/api/lmn/groupmembership', {action: 'kill-project', username:$scope.identity.user, project: project}).then (resp) ->
-                    console.log (resp.data)
+                    #console.log (resp.data)
                     if resp['data'][0] == 'ERROR'
                         notify.error (resp['data'][1])
                     if resp['data'][0] == 'LOG'
                         notify.success gettext(resp['data'][1])
                         $uibModalInstance.close(response: 'refresh')
+                .finally () ->
+                    msg.close()
 
         $scope.getGroupDetails = (group) ->
             groupType = group[0]
@@ -76,6 +79,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($sco
 
 
         $scope.setMembers = (members) ->
+            msg = messagebox.show(progress: true)
             $http.post('/api/lmn/groupmembership/details', {action: 'set-members', username:$scope.identity.user, members: members, groupName: groupName}).then (resp) ->
                 if resp['data'][0] == 'ERROR'
                     notify.error (resp['data'][1])
@@ -83,6 +87,8 @@ angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($sco
                     notify.success gettext(resp['data'][1])
                     $uibModalInstance.close(response: 'refresh')
                     #$scope.resetClass()
+            .finally () ->
+                msg.close()
 
         groupDN = groupDetails[groupName]['dn']
         $http.post('/api/lm/sophomorixUsers/students', {action: 'get-all'}).then (resp) ->
@@ -221,7 +227,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
         if $scope.identity.user is null
            return
         if $scope.identity.user is 'root'
-           # $scope.identity.user = 'hulk'
-           return
+           $scope.identity.user = 'hulk'
+           # return
         $scope.getGroups($scope.identity.user)
         return

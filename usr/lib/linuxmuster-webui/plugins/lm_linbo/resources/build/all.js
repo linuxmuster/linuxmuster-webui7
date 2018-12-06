@@ -517,6 +517,7 @@
         if (newName) {
           if (example) {
             return $http.get(`/api/lm/linbo/config/examples/${example}`).then(function(resp) {
+              resp.data['config']['LINBO']['Group'] = newName;
               return $http.post(`/api/lm/linbo/config/start.conf.${newName}`, resp.data).then(function() {
                 return $route.reload();
               });

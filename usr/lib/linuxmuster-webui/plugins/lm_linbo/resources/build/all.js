@@ -121,17 +121,14 @@
   });
 
   angular.module('lm.linbo').controller('LMLINBOConfigModalController', function($scope, $uibModal, $uibModalInstance, $timeout, $http, $log, gettext, messagebox, config, lmFileBackups) {
-    var _device, _partition, disk, diskMap, i, j, len, len1, ref, ref1;
+    var DiskType, _device, _partition, disk, diskMap, i, j, len, len1, ref, ref1;
     $scope.config = config;
     $scope.kernelOptions = ['quiet', 'splash', 'acpi=noirq', 'acpi=off', 'irqpoll', 'dhcpretry=9'];
     $scope.colors = ['white', 'black', 'lightCyan', 'cyan', 'darkCyan', 'orange', 'red', 'darkRed', 'pink', 'magenta', 'darkMagenta', 'lightGreen', 'green', 'darkGreen', 'lightYellow', 'yellow', 'gold', 'lightBlue', 'blue', 'darkBlue', 'lightGray', 'gray', 'darkGray'];
     $scope.disks = [];
     diskMap = {};
-    console.log($scope.disks);
     $http.get('/api/lm/linbo/images').then(function(resp) {
-      $scope.oses = resp.data;
-      console.log($scope.disks);
-      return console.log(diskMap);
+      return $scope.oses = resp.data;
     });
     ref = config.partitions;
     for (i = 0, len = ref.length; i < len; i++) {
@@ -139,7 +136,7 @@
       // Determine the position of the partition integer.
       // Different devices have it on a different position
       if (_partition['Dev'].indexOf("nvme") !== -1) {
-        _device = _partition.Dev.substring(0, '/dev/nvme0p'.length);
+        _device = _partition.Dev.substring(0, '/dev/nvme0n1p'.length);
       }
       if (_partition['Dev'].indexOf("mmcblk") !== -1) {
         _device = _partition.Dev.substring(0, '/dev/mmcblk0p'.length);
@@ -148,9 +145,19 @@
         _device = _partition.Dev.substring(0, '/dev/sdX'.length);
       }
       if (!diskMap[_device]) {
+        if (_device.indexOf("sd") !== -1) {
+          DiskType = 'sata';
+        }
+        if (_device.indexOf("mmcblk") !== -1) {
+          DiskType = 'mmc';
+        }
+        if (_device.indexOf("nvme") !== -1) {
+          DiskType = 'nvme';
+        }
         diskMap[_device] = {
           name: _device,
-          partitions: []
+          partitions: [],
+          DiskType: DiskType
         };
         $scope.disks.push(diskMap[_device]);
       }
@@ -168,6 +175,54 @@
         }
       });
     }
+    $scope.getAllInfo = function() {
+      console.log($scope.disks);
+      console.log($scope.config);
+      return console.log($scope.diskMap);
+    };
+    $scope.updateDiskType = function(disk, newDiskType) {
+      var oldDiskName;
+      oldDiskName = disk.name;
+      if (newDiskType === 'sata') {
+        disk.name = 'a';
+        while (true) {
+          if (diskMap[`/dev/sd${disk.name}`]) {
+            disk.name = String.fromCharCode(disk.name.charCodeAt(0) + 1);
+            continue;
+          }
+          break;
+        }
+        disk.name = `/dev/sd${disk.name}`;
+      }
+      if (newDiskType === 'mmc') {
+        disk.name = '0';
+        while (true) {
+          if (diskMap[`/dev/mmcblk${disk.name}p`]) {
+            disk.name = String.fromCharCode(disk.name.charCodeAt(0) + 1);
+            continue;
+          }
+          break;
+        }
+        disk.name = `/dev/mmcblk${disk.name}p`;
+      }
+      if (newDiskType === 'nvme') {
+        disk.name = '0';
+        while (true) {
+          if (diskMap[`/dev/nvme${disk.name}n1p`]) {
+            disk.name = String.fromCharCode(disk.name.charCodeAt(0) + 1);
+            continue;
+          }
+          break;
+        }
+        disk.name = `/dev/nvme${disk.name}n1p`;
+      }
+      //diskMap
+      $scope.rebuildDisks();
+      // create new object with the actual diskname
+      diskMap[disk.name] = disk;
+      // remove the old diskname
+      return delete diskMap[oldDiskName];
+    };
     $scope.addDisk = function() {
       disk = 'a';
       while (true) {
@@ -180,7 +235,8 @@
       disk = `/dev/sd${disk}`;
       diskMap[disk] = {
         name: disk,
-        partitions: []
+        partitions: [],
+        DiskType: 'sata'
       };
       return $scope.disks.push(diskMap[disk]);
     };

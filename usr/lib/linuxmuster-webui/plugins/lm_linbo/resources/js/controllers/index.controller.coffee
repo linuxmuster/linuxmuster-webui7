@@ -110,28 +110,31 @@ angular.module('lm.linbo').controller 'LMLINBOConfigModalController', ($scope, $
     $scope.disks = []
 
     diskMap = {}
-    console.log($scope.disks)
 
     $http.get('/api/lm/linbo/images').then (resp) ->
         $scope.oses = resp.data
-        console.log($scope.disks)
-        console.log(diskMap)
 
     for _partition in config.partitions
         # Determine the position of the partition integer.
         # Different devices have it on a different position
         if _partition['Dev'].indexOf("nvme") != -1
-            _device = _partition.Dev.substring(0, '/dev/nvme0p'.length)
+            _device = _partition.Dev.substring(0, '/dev/nvme0n1p'.length)
         if _partition['Dev'].indexOf("mmcblk") != -1
             _device = _partition.Dev.substring(0, '/dev/mmcblk0p'.length)
         if _partition['Dev'].indexOf("sd") != -1
             _device = _partition.Dev.substring(0, '/dev/sdX'.length)
 
-
         if not diskMap[_device]
+            if _device.indexOf("sd") != -1
+                DiskType = 'sata'
+            if _device.indexOf("mmcblk") != -1
+                DiskType = 'mmc'
+            if _device.indexOf("nvme") != -1
+                DiskType = 'nvme'
             diskMap[_device] = {
                 name: _device
                 partitions: []
+                DiskType: DiskType
             }
             $scope.disks.push diskMap[_device]
         diskMap[_device].partitions.push _partition
@@ -139,6 +142,49 @@ angular.module('lm.linbo').controller 'LMLINBOConfigModalController', ($scope, $
 
     for disk in $scope.disks
         disk.partitions.sort (a, b) -> if a.Dev > b.Dev then 1 else -1
+
+    $scope.getAllInfo = () ->
+        console.log ($scope.disks)
+        console.log ($scope.config)
+        console.log ($scope.diskMap)
+
+    $scope.updateDiskType = (disk, newDiskType) ->
+        oldDiskName = disk.name
+
+        if newDiskType  == 'sata'
+            disk.name = 'a'
+            while true
+                if diskMap["/dev/sd#{disk.name}"]
+                    disk.name = String.fromCharCode(disk.name.charCodeAt(0) + 1)
+                    continue
+                break
+            disk.name = "/dev/sd#{disk.name}"
+
+        if newDiskType == 'mmc'
+            disk.name = '0'
+            while true
+                if diskMap["/dev/mmcblk#{disk.name}p"]
+                    disk.name = String.fromCharCode(disk.name.charCodeAt(0) + 1)
+                    continue
+                break
+            disk.name = "/dev/mmcblk#{disk.name}p"
+
+        if newDiskType == 'nvme'
+            disk.name = '0'
+            while true
+                if diskMap["/dev/nvme#{disk.name}n1p"]
+                    disk.name = String.fromCharCode(disk.name.charCodeAt(0) + 1)
+                    continue
+                break
+            disk.name = "/dev/nvme#{disk.name}n1p"
+
+        #diskMap
+        $scope.rebuildDisks()
+        # create new object with the actual diskname
+        diskMap[disk.name] = disk
+
+        # remove the old diskname
+        delete diskMap[oldDiskName]
 
 
     $scope.addDisk = () ->
@@ -153,6 +199,7 @@ angular.module('lm.linbo').controller 'LMLINBOConfigModalController', ($scope, $
         diskMap[disk] = {
             name: disk
             partitions: []
+            DiskType: 'sata'
         }
         $scope.disks.push diskMap[disk]
 

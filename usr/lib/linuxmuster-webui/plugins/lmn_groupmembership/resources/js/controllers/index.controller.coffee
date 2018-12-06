@@ -1,3 +1,8 @@
+isValidName = (name) ->
+    regExp =  /^[a-z0-9]*$/i
+    validName = regExp.test(name)
+    return validName
+
 angular.module('lmn.groupmembership').config ($routeProvider) ->
     $routeProvider.when '/view/lmn/groupmembership',
         controller: 'LMNGroupMembershipController'
@@ -69,12 +74,6 @@ angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($sco
                 $scope.sortReverse = false
 
 
-            messagebox.prompt(gettext('Project Name'), '').then (msg) ->
-                if not msg.value
-                    return
-                $http.post('/api/lmn/groupmembership', {action: 'create-project', username:$scope.identity.user, project: msg.value}).then (resp) ->
-                    notify.success gettext('Project Created')
-                    $scope.getGroups ($scope.identity.user)
 
         $scope.setMembers = (members) ->
             $http.post('/api/lmn/groupmembership/details', {action: 'set-members', username:$scope.identity.user, members: members, groupName: groupName}).then (resp) ->
@@ -195,6 +194,9 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
         messagebox.prompt(gettext('Project Name'), '').then (msg) ->
             if not msg.value
                 return
+            if not isValidName(msg.value)
+                notify.error gettext('Not a valid name! Only alphanumeric characters are allowed!')
+                return
             $http.post('/api/lmn/groupmembership', {action: 'create-project', username:$scope.identity.user, project: msg.value}).then (resp) ->
                 notify.success gettext('Project Created')
                 $scope.getGroups ($scope.identity.user)
@@ -219,7 +221,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
         if $scope.identity.user is null
            return
         if $scope.identity.user is 'root'
-           $scope.identity.user = 'hulk'
-           # return
+           # $scope.identity.user = 'hulk'
+           return
         $scope.getGroups($scope.identity.user)
         return

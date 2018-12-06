@@ -428,6 +428,7 @@ angular.module('lm.linbo').controller 'LMLINBOController', ($scope, $http, $uibM
             if newName
                 if example
                     $http.get("/api/lm/linbo/config/examples/#{example}").then (resp) ->
+                        resp.data['config']['LINBO']['Group'] = newName
                         $http.post("/api/lm/linbo/config/start.conf.#{newName}", resp.data).then () ->
                             $route.reload()
                 else

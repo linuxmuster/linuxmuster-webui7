@@ -23,7 +23,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
             return OSAuthenticationProvider.get(self.context).authenticate(username, password)
 
-
+        username = username.lower().encode('utf8')
         # get ajenti yaml parameters
         params = aj.config.data['linuxmuster']['ldap']
         searchFilter = "(&(cn=%s)(objectClass=user)(|(sophomorixRole=globaladministrator)(sophomorixRole=teacher)(sophomorixRole=schooladministrator) ))" % username

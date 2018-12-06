@@ -49,12 +49,16 @@
         positive: 'Delete',
         negative: 'Cancel'
       }).then(function() {
+        var msg;
+        msg = messagebox.show({
+          progress: true
+        });
         return $http.post('/api/lmn/groupmembership', {
           action: 'kill-project',
           username: $scope.identity.user,
           project: project
         }).then(function(resp) {
-          console.log(resp.data);
+          //console.log (resp.data)
           if (resp['data'][0] === 'ERROR') {
             notify.error(resp['data'][1]);
           }
@@ -64,6 +68,8 @@
               response: 'refresh'
             });
           }
+        }).finally(function() {
+          return msg.close();
         });
       });
     };
@@ -125,6 +131,10 @@
       }
     };
     $scope.setMembers = function(members) {
+      var msg;
+      msg = messagebox.show({
+        progress: true
+      });
       return $http.post('/api/lmn/groupmembership/details', {
         action: 'set-members',
         username: $scope.identity.user,
@@ -140,9 +150,11 @@
             response: 'refresh'
           });
         }
+      //$scope.resetClass()
+      }).finally(function() {
+        return msg.close();
       });
     };
-    //$scope.resetClass()
     groupDN = groupDetails[groupName]['dn'];
     return $http.post('/api/lm/sophomorixUsers/students', {
       action: 'get-all'
@@ -335,9 +347,9 @@
         return;
       }
       if ($scope.identity.user === 'root') {
-        return;
+        $scope.identity.user = 'hulk';
       }
-      // $scope.identity.user = 'hulk'
+      // return
       $scope.getGroups($scope.identity.user);
     });
   });

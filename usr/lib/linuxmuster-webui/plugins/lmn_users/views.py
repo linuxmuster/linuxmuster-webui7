@@ -137,7 +137,7 @@ class Handler(HttpPlugin):
             studentsList = []
             with authorize('lm:users:students:read'):
                 if action == 'get-all':
-                    sophomorixCommand = ['sophomorix-query', '--student', '--schoolbase', schoolname, '--user-full', '-jj']
+                    sophomorixCommand = ['sophomorix-query', '--student', '--schoolbase', schoolname, '--user-basic', '-jj']
                 else:
                     user = http_context.json_body()['user']
                     sophomorixCommand = ['sophomorix-query', '--student', '--schoolbase', schoolname, '--user-full', '-jj', '--sam', user]

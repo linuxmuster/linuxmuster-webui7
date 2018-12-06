@@ -423,7 +423,7 @@ angular.module('lm.linbo').controller 'LMLINBOController', ($scope, $http, $uibM
         messagebox.prompt('New name', '').then (msg) ->
             newName = msg.value
             if not isValidName(newName)
-                notify.error gettext('Not a valid name! Only ASCII characters and numbers are allowed!')
+                notify.error gettext('Not a valid name! Only alphanumeric characters are allowed!')
                 return
             if newName
                 if example

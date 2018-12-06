@@ -347,9 +347,9 @@
         return;
       }
       if ($scope.identity.user === 'root') {
-        $scope.identity.user = 'hulk';
+        return;
       }
-      // return
+      // $scope.identity.user = 'hulk'
       $scope.getGroups($scope.identity.user);
     });
   });

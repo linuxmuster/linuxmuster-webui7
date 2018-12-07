@@ -1669,6 +1669,7 @@
         templateUrl: '/lm_users:resources/partial/apply.modal.html',
         controller: 'LMUsersApplyModalController',
         backdrop: 'static',
+        size: 'lg',
         resolve: {
           params: function() {
             return $scope._;
@@ -1683,6 +1684,9 @@
   });
 
   angular.module('lm.users').controller('LMUsersApplyModalController', function($scope, $uibModalInstance, $http, $route, gettext, notify, params) {
+    $scope.options = {
+      autoscroll: true
+    };
     $scope.close = function() {
       return $uibModalInstance.close();
     };

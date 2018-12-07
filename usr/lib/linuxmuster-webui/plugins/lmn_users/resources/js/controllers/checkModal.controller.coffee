@@ -12,6 +12,7 @@ angular.module('lm.users').controller 'LMUsersCheckResultsModalController', ($sc
             templateUrl: '/lm_users:resources/partial/apply.modal.html'
             controller: 'LMUsersApplyModalController'
             backdrop: 'static'
+            size: 'lg'
             resolve:
                 params: () -> $scope._
         )
@@ -23,6 +24,10 @@ angular.module('lm.users').controller 'LMUsersCheckResultsModalController', ($sc
 
 
 angular.module('lm.users').controller 'LMUsersApplyModalController', ($scope, $uibModalInstance, $http, $route, gettext, notify, params) ->
+    $scope.options = {
+       autoscroll: true
+    }
+
     $scope.close = () ->
         $uibModalInstance.close()
 
@@ -31,6 +36,7 @@ angular.module('lm.users').controller 'LMUsersApplyModalController', ($scope, $u
         $scope.isWorking = false
         notify.success gettext('Changes applied')
         $route.reload()
+
     .catch (resp) ->
         $scope.isWorking = false
         notify.error gettext('Failed'), resp.data.message

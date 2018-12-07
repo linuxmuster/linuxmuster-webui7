@@ -6,12 +6,20 @@ angular.module('lm.common').directive 'lmLog', ($http, $interval, $timeout) ->
             lines: '=?'
         }
         template: '''
-            <pre style="max-height: 200px; overflow-y: scroll" ng:bind="visibleContent"></pre>
+            <pre style="max-height: 300px; overflow-y: scroll" ng:bind="visibleContent"></pre>
+        <!--    <div class="form-group">
+               <label translate>Options</label>
+                  <br>
+                     <span checkbox ng:model="options.autoscroll" text="{{'Autoscroll'|translate}}"></span>
+                     </div>
+                     {{options}}
+                     -->
         '''
         link: ($scope, element) ->
             $scope.content = ''
             i = $interval () ->
                 $http.get("/api/lm/log#{$scope.path}?offset=#{$scope.content.length}").then (resp) ->
+                    console.log ($scope)
                     $scope.content += resp.data
 
                     $scope.visibleContent = $scope.content

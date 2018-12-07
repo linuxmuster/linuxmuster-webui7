@@ -36,13 +36,14 @@
         path: '=',
         lines: '=?'
       },
-      template: '<pre style="max-height: 200px; overflow-y: scroll" ng:bind="visibleContent"></pre>',
+      template: '    <pre style="max-height: 300px; overflow-y: scroll" ng:bind="visibleContent"></pre>\n<!--    <div class="form-group">\n       <label translate>Options</label>\n          <br>\n             <span checkbox ng:model="options.autoscroll" text="{{\'Autoscroll\'|translate}}"></span>\n             </div>\n             {{options}}\n             -->',
       link: function($scope, element) {
         var i;
         $scope.content = '';
         i = $interval(function() {
           return $http.get(`/api/lm/log${$scope.path}?offset=${$scope.content.length}`).then(function(resp) {
             var lines;
+            console.log($scope);
             $scope.content += resp.data;
             $scope.visibleContent = $scope.content;
             if ($scope.lines) {

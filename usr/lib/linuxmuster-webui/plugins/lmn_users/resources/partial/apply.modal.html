@@ -3,8 +3,10 @@
 </div>
 <div class="modal-body">
     <progress-spinner ng:show="isWorking"></progress-spinner>
-    <lm-log path="'/tmp/sophomorix.log'"></lm-log>
+    <lm-log path="'/tmp/sophomorix.log'" ></lm-log>
 </div>
+
+
 <div class="modal-footer" ng:show="!isWorking">
     <button class="btn btn-default btn-flat" ng:click="close()" translate>Close</button>
 </div>

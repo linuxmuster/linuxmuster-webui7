@@ -4,7 +4,7 @@ angular.module('lm.users').config ($routeProvider) ->
         templateUrl: '/lm_users:resources/partial/students-list.html'
 
 
-angular.module('lm.users').controller 'LMUsersStudentsListController', ($scope, $http, $location, $route, $uibModal, gettext, notify, lmEncodingMap, messagebox, pageTitle, lmFileEditor, lmFileBackups) ->
+angular.module('lm.users').controller 'LMUsersStudentsListController', ($scope, $http, $location, $route, $uibModal, gettext, notify, lmEncodingMap, messagebox, pageTitle, lmFileEditor, lmFileBackups, filesystem) ->
     pageTitle.set(gettext('Students'))
 
     $scope.sorts = [
@@ -81,3 +81,15 @@ angular.module('lm.users').controller 'LMUsersStudentsListController', ($scope, 
 
     $scope.backups = () ->
         lmFileBackups.show('/etc/linuxmuster/sophomorix/default-school/students.csv', $scope.encoding)
+
+    $scope.path = "/srv"; #adapt upload path here
+
+    $scope.onUploadBegin = ($flow) ->
+        msg = messagebox.show({progress: true})
+        filesystem.startFlowUpload($flow, $scope.path).then(() -> 
+            notify.success(gettext('Uploaded'))
+            msg.close()
+        , null, (progress) -> 
+          console.log(progress)
+          msg.messagebox.title = "Uploading: #{Math.floor(100 * progress)}%"
+        )

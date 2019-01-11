@@ -107,7 +107,7 @@ angular.module('lm.setup_wizard').controller('InitExternalServicesController', f
     if (!this.enableOPSI) {
       delete this.ini['opsiip']
     }
-    if (!this.enableDocker) {
+    if (!this.enableDOCKER) {
       delete this.ini['dockerip']
     }
     if (!this.enableMail) {

@@ -132,7 +132,7 @@ angular.module('lm.setup_wizard').controller('InitExternalServicesController', f
     if (!_this4.enableOPSI) {
       delete _this4.ini['opsiip'];
     }
-    if (!_this4.enableDocker) {
+    if (!_this4.enableDOCKER) {
       delete _this4.ini['dockerip'];
     }
     if (!_this4.enableMail) {

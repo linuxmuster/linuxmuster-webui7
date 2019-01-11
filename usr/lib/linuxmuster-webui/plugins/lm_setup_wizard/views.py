@@ -45,3 +45,16 @@ class Handler(HttpPlugin):
             )
         except Exception as e:
             raise EndpointError(None, message=str(e))
+
+    @url(r'/api/lm/setup-wizard/restart')
+    @endpoint(api=True, auth=True)
+    def handle_api_restart(self, http_context):
+        if http_context.method != 'POST':
+            return
+        try:
+            subprocess.check_call(
+                'systemctl restart linuxmuster-webui.service',
+                shell=True
+            )
+        except Exception as e:
+            raise EndpointError(None, message=str(e))

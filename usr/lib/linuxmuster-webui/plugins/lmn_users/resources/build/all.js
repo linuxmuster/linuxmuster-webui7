@@ -13,7 +13,7 @@
     });
   });
 
-  angular.module('lm.users').controller('LMUsersStudentsListController', function($scope, $http, $location, $route, $uibModal, gettext, notify, lmEncodingMap, messagebox, pageTitle, lmFileEditor, lmFileBackups) {
+  angular.module('lm.users').controller('LMUsersStudentsListController', function($scope, $http, $location, $route, $uibModal, gettext, notify, lmEncodingMap, messagebox, pageTitle, lmFileEditor, lmFileBackups, filesystem) {
     pageTitle.set(gettext('Students'));
     $scope.sorts = [
       {
@@ -115,8 +115,22 @@
         });
       });
     };
-    return $scope.backups = function() {
+    $scope.backups = function() {
       return lmFileBackups.show('/etc/linuxmuster/sophomorix/default-school/students.csv', $scope.encoding);
+    };
+    $scope.path = "/srv";
+    return $scope.onUploadBegin = function($flow) {
+      var msg;
+      msg = messagebox.show({
+        progress: true
+      });
+      return filesystem.startFlowUpload($flow, $scope.path).then(function() {
+        notify.success(gettext('Uploaded'));
+        return msg.close();
+      }, null, function(progress) {
+        console.log(progress);
+        return msg.messagebox.title = `Uploading: ${Math.floor(100 * progress)}%`;
+      });
     };
   });
 

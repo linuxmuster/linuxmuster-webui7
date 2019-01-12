@@ -1805,7 +1805,13 @@
           action: 'create',
           users: username
         }).then(function(resp) {
-          notify.success(gettext('Administrator added'));
+          console.log(resp.data);
+          if (resp['data'][0] === 'ERROR') {
+            notify.error(resp['data'][1]);
+          }
+          if (resp['data'][0] === 'LOG') {
+            notify.success(gettext(resp['data'][1]));
+          }
           return $route.reload();
         });
         return $uibModalInstance.dismiss();

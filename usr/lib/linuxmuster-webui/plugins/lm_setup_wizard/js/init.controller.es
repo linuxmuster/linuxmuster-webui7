@@ -138,9 +138,9 @@ angular.module('lm.setup_wizard').controller('InitSetupController', function ($l
   })
   this.close = () => {
     $http.post('/api/lm/setup-wizard/restart').then(() => {
-    notify.success(gettext('Restart Webui'))
-    //$location.path('/')
-    }
+        notify.success(gettext('Restart Webui'))
+        $location.path('/')
+    })
   }
 })
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-18 21:02+0200\n"
+"POT-Creation-Date: 2019-01-12 12:03+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,38 +17,48 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: plugins/lm_auth/resources/partial/index.html:21
+#: usr/lib/linuxmuster-webui/plugins/lm_auth/resources/partial/index.html:25
 msgid "Change password"
 msgstr ""
 
-#: plugins/lm_auth/resources/partial/index.html:8
+#: usr/lib/linuxmuster-webui/plugins/lm_auth/resources/partial/index.html:12
 msgid "Current password"
 msgstr ""
 
-#: plugins/lm_auth/resources/partial/index.html:12
+#: usr/lib/linuxmuster-webui/plugins/lm_auth/resources/partial/index.html:3
+msgid ""
+"Minimal length is 7 characters. Use upper, lower and special characters or "
+"numbers. (e.g. Muster!)"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lm_auth/resources/partial/index.html:16
 msgid "New password"
 msgstr ""
 
-#: plugins/lm_auth/resources/partial/index.html:16
+#: usr/lib/linuxmuster-webui/plugins/lm_auth/resources/partial/index.html:20
 msgid "Repeat password"
 msgstr ""
 
-#: plugins/lm_auth/api.py:13
+#: usr/lib/linuxmuster-webui/plugins/lm_auth/api.py:14
 msgid "Linux Muster LDAP"
 msgstr ""
 
-#: plugins/lm_auth/resources/js/controllers/index.controller.coffee:8
+#: usr/lib/linuxmuster-webui/plugins/lm_auth/resources/js/controllers/index.controller.coffee:12
 msgid "Change Password"
 msgstr ""
 
-#: plugins/lm_auth/resources/js/controllers/index.controller.coffee:14
+#: usr/lib/linuxmuster-webui/plugins/lm_auth/resources/js/controllers/index.controller.coffee:18
 msgid "Passwords do not match"
 msgstr ""
 
-#: plugins/lm_auth/resources/js/controllers/index.controller.coffee:18
+#: usr/lib/linuxmuster-webui/plugins/lm_auth/resources/js/controllers/index.controller.coffee:21
+msgid "Password too weak"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lm_auth/resources/js/controllers/index.controller.coffee:26
 msgid "Password changed"
 msgstr ""
 
-#: plugins/lm_auth/resources/js/controllers/index.controller.coffee:20
+#: usr/lib/linuxmuster-webui/plugins/lm_auth/resources/js/controllers/index.controller.coffee:28
 msgid "Password change failed"
 msgstr ""

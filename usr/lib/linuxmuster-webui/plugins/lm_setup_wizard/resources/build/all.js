@@ -21,30 +21,35 @@ angular.module('lm.setup_wizard').config(function ($routeProvider) {
   $routeProvider.when('/view/lm/init/welcome', {
     templateUrl: '/lm_setup_wizard:partial/init-welcome.html',
     controller: 'InitWelcomeController',
+    size: 'lg',
     controllerAs: '$ctrl'
   });
 
   $routeProvider.when('/view/lm/init/school', {
     templateUrl: '/lm_setup_wizard:partial/init-school.html',
     controller: 'InitSchoolController',
+    size: 'lg',
     controllerAs: '$ctrl'
   });
 
   $routeProvider.when('/view/lm/init/account', {
     templateUrl: '/lm_setup_wizard:partial/init-account.html',
     controller: 'InitAccountController',
+    size: 'lg',
     controllerAs: '$ctrl'
   });
 
   $routeProvider.when('/view/lm/init/externalservices', {
     templateUrl: '/lm_setup_wizard:partial/init-externalServices.html',
     controller: 'InitExternalServicesController',
+    size: 'lg',
     controllerAs: '$ctrl'
   });
 
   $routeProvider.when('/view/lm/init/setup', {
     templateUrl: '/lm_setup_wizard:partial/init-setup.html',
     controller: 'InitSetupController',
+    size: 'lg',
     controllerAs: '$ctrl'
   });
 });
@@ -159,7 +164,10 @@ angular.module('lm.setup_wizard').controller('InitSetupController', function ($l
     _this5.isWorking = true;
   });
   this.close = function () {
-    $location.path('/');
+    $http.post('/api/lm/setup-wizard/restart').then(function () {
+      notify.success(gettext('Restart Webui'));
+      $location.path('/');
+    });
   };
 });
 

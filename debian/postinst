@@ -14,7 +14,7 @@ case "$1" in
     #echo "link ajcfg to linuxmuster-webui folder"
     #ln -s $ajcfg $webuietc
     #rm /etc/ajenti/config.yml
-    cp /usr/lib/linuxmuster-webui/etc/ajenti_default.yml /etc/ajenti/
+    cp /usr/lib/linuxmuster-webui/etc/ajenti_default.yml /etc/ajenti/config.yml
     # Set default permissions from true to false
     echo "set reverse permissions"
     sed -i "s/: True,/: False,/g" /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/main.py

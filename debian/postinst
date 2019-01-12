@@ -7,36 +7,37 @@ case "$1" in
         webuietc="/usr/lib/linuxmuster-webui/etc"
      if [ ! -f $webuietc/.installed ];
       then
-    # do first install
-    pip install -U pip wheel setuptools distribute
-    hash -r
-    pip install -r $webuietc/requirements.txt
-    #echo "link ajcfg to linuxmuster-webui folder"
-    #ln -s $ajcfg $webuietc
-    #rm /etc/ajenti/config.yml
-    cp /usr/lib/linuxmuster-webui/etc/ajenti_default.yml /etc/ajenti/config.yml
-    # Set default permissions from true to false
-    echo "set reverse permissions"
-    sed -i "s/: True,/: False,/g" /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/main.py
-    # Delete sensitive config items in default template
-    echo "Delete linumuster special config items"
-    sed -i 's/json\.dumps(aj\.config\.data)/json\.dumps(config_angular)/' /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/views/main.py
-    sed -i '/from aj\.api\.endpoint/a# Del sensitive config items\nconfig_angular = aj.config.data\ndel config_angular["linuxmuster"]' /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/views/main.py
-    # systemctl einrichten und starten
-    echo "configure systemctl.."
-    systemctl daemon-reload
-    systemctl enable linuxmuster-webui
-    systemctl start linuxmuster-webui
-    touch $webuietc/.installed
-    touch /etc/linuxmuster/sophomorix/default-school/students.csv
-    touch /etc/linuxmuster/sophomorix/default-school/teachers.csv
-    touch /etc/linuxmuster/sophomorix/default-school/extrastudents.csv
-    touch /etc/linuxmuster/sophomorix/default-school/extraclasses.csv
-    hostname=$(hostname --fqdn)
-    ipaddress=$(hostname --ip-address)
-    echo "---------------------------------------------------------------"
-    echo "linuxmuster-webui is now installed but not initialised!  http://$ipaddress:8000"
-    echo "---------------------------------------------------------------"
+        # do first install
+        pip install -U pip wheel setuptools distribute
+        hash -r
+        pip install -r $webuietc/requirements.txt
+        #echo "link ajcfg to linuxmuster-webui folder"
+        #ln -s $ajcfg $webuietc
+        #rm /etc/ajenti/config.yml
+        cp /usr/lib/linuxmuster-webui/etc/ajenti_default.yml /etc/ajenti/config.yml
+        # Set default permissions from true to false
+        echo "set reverse permissions"
+        sed -i "s/: True,/: False,/g" /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/main.py
+        # Delete sensitive config items in default template
+        # TODO: Fix this
+        #echo "Delete linumuster special config items"
+        #sed -i 's/json\.dumps(aj\.config\.data)/json\.dumps(config_angular)/' /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/views/main.py
+        #sed -i '/from aj\.api\.endpoint/a# Del sensitive config items\nconfig_angular = aj.config.data\ndel config_angular["linuxmuster"]' /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/views/main.py
+        # systemctl einrichten und starten
+        echo "configure systemctl.."
+        systemctl daemon-reload
+        systemctl enable linuxmuster-webui
+        systemctl start linuxmuster-webui
+        touch $webuietc/.installed
+        touch /etc/linuxmuster/sophomorix/default-school/students.csv
+        touch /etc/linuxmuster/sophomorix/default-school/teachers.csv
+        touch /etc/linuxmuster/sophomorix/default-school/extrastudents.csv
+        touch /etc/linuxmuster/sophomorix/default-school/extraclasses.csv
+        hostname=$(hostname --fqdn)
+        ipaddress=$(hostname --ip-address)
+        echo "---------------------------------------------------------------"
+        echo "linuxmuster-webui is now installed but not initialised!  http://$ipaddress:8000"
+        echo "---------------------------------------------------------------"
      else
     # do update
     echo "---------------------------------------------------------------"

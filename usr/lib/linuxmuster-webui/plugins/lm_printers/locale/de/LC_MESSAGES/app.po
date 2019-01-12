@@ -1,10 +1,10 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: ajenti\n"
+"Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-18 21:02+0200\n"
-"PO-Revision-Date: 2016-05-21 17:18-0400\n"
-"Last-Translator: eugenepankov <john.pankov@gmail.com>\n"
+"POT-Creation-Date: 2019-01-12 12:03+0100\n"
+"PO-Revision-Date: 2019-01-12 11:36\n"
+"Last-Translator: kiarn <lml@kientz.me>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
@@ -12,36 +12,45 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: crowdin.com\n"
-"X-Crowdin-Project: ajenti\n"
+"X-Crowdin-Project: linuxmusternet\n"
 "X-Crowdin-Language: de\n"
 "X-Crowdin-File: /2.0/lm_printers.po\n"
 
-#: plugins/lm_printers/resources/partial/printer.modal.html:2
-msgid "{{printer.name}}"
+#: usr/lib/linuxmuster-webui/plugins/lm_printers/resources/partial/printer.modal.html:25
+msgid "Add"
 msgstr ""
 
-#: plugins/lm_printers/resources/partial/printer.modal.html:29
+#: usr/lib/linuxmuster-webui/plugins/lm_printers/resources/partial/printer.modal.html:33
 msgid "Close"
 msgstr "Schließen"
 
-#: plugins/lm_printers/resources/partial/index.html:15
-#: plugins/lm_printers/resources/partial/printer.modal.html:28
+#: usr/lib/linuxmuster-webui/plugins/lm_printers/resources/partial/printer.modal.html:16
+msgid "No filter is set. All devices can use this printer."
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lm_printers/resources/partial/index.html:16
+#: usr/lib/linuxmuster-webui/plugins/lm_printers/resources/partial/printer.modal.html:32
 msgid "Save"
 msgstr "Speichern"
 
-#: plugins/lm_printers/resources/partial/printer.modal.html:19
+#: usr/lib/linuxmuster-webui/plugins/lm_printers/resources/partial/printer.modal.html:23
 msgid "Type to search..."
-msgstr ""
+msgstr "Tippen um zu suchen..."
 
-#: plugins/lm_printers/main.py:15
-#: plugins/lm_printers/resources/js/controllers/index.controller.coffee:26
+#: usr/lib/linuxmuster-webui/plugins/lm_printers/resources/partial/printer.modal.html:2
+msgid "{{printer.name}}"
+msgstr "{{printer.name}}"
+
+#: usr/lib/linuxmuster-webui/plugins/lm_printers/main.py:15
+#: usr/lib/linuxmuster-webui/plugins/lm_printers/resources/js/controllers/index.controller.coffee:26
 msgid "Printers"
 msgstr "Drucker"
 
-#: plugins/lm_printers/main.py:30
+#: usr/lib/linuxmuster-webui/plugins/lm_printers/main.py:30
 msgid "Configure printers"
-msgstr ""
+msgstr "Drucker konfigurieren"
 
-#: plugins/lm_printers/resources/js/controllers/index.controller.coffee:90
+#: usr/lib/linuxmuster-webui/plugins/lm_printers/resources/js/controllers/index.controller.coffee:90
 msgid "Saved"
 msgstr "Gespeichert"
+

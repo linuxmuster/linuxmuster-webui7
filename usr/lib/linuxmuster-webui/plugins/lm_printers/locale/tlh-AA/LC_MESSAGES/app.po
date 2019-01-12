@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ajenti\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-18 21:02+0200\n"
+"POT-Creation-Date: 2019-01-12 12:03+0100\n"
 "PO-Revision-Date: 2016-05-21 17:19-0400\n"
 "Last-Translator: eugenepankov <john.pankov@gmail.com>\n"
 "Language-Team: Klingon\n"
@@ -16,32 +16,40 @@ msgstr ""
 "X-Crowdin-Language: tlh-AA\n"
 "X-Crowdin-File: /2.0/lm_printers.po\n"
 
-#: plugins/lm_printers/resources/partial/printer.modal.html:2
-msgid "{{printer.name}}"
+#: usr/lib/linuxmuster-webui/plugins/lm_printers/resources/partial/printer.modal.html:25
+msgid "Add"
 msgstr ""
 
-#: plugins/lm_printers/resources/partial/printer.modal.html:29
+#: usr/lib/linuxmuster-webui/plugins/lm_printers/resources/partial/printer.modal.html:33
 msgid "Close"
 msgstr ""
 
-#: plugins/lm_printers/resources/partial/index.html:15
-#: plugins/lm_printers/resources/partial/printer.modal.html:28
+#: usr/lib/linuxmuster-webui/plugins/lm_printers/resources/partial/printer.modal.html:16
+msgid "No filter is set. All devices can use this printer."
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lm_printers/resources/partial/index.html:16
+#: usr/lib/linuxmuster-webui/plugins/lm_printers/resources/partial/printer.modal.html:32
 msgid "Save"
 msgstr ""
 
-#: plugins/lm_printers/resources/partial/printer.modal.html:19
+#: usr/lib/linuxmuster-webui/plugins/lm_printers/resources/partial/printer.modal.html:23
 msgid "Type to search..."
 msgstr ""
 
-#: plugins/lm_printers/main.py:15
-#: plugins/lm_printers/resources/js/controllers/index.controller.coffee:26
+#: usr/lib/linuxmuster-webui/plugins/lm_printers/resources/partial/printer.modal.html:2
+msgid "{{printer.name}}"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lm_printers/main.py:15
+#: usr/lib/linuxmuster-webui/plugins/lm_printers/resources/js/controllers/index.controller.coffee:26
 msgid "Printers"
 msgstr ""
 
-#: plugins/lm_printers/main.py:30
+#: usr/lib/linuxmuster-webui/plugins/lm_printers/main.py:30
 msgid "Configure printers"
 msgstr ""
 
-#: plugins/lm_printers/resources/js/controllers/index.controller.coffee:90
+#: usr/lib/linuxmuster-webui/plugins/lm_printers/resources/js/controllers/index.controller.coffee:90
 msgid "Saved"
 msgstr ""

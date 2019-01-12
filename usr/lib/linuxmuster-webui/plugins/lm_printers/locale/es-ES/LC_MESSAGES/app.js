@@ -1,1 +1,1 @@
-{"": "", "Save": "Guardar", "Saved": "Guardado", "Printers": "Impresoras", "Close": "Cerrar", "{{printer.name}}": "{{imprimir.nombre}}", "Type to search...": "Escriba para buscar..."}
+{"": "", "{{printer.name}}": "{{imprimir.nombre}}", "Saved": "Guardado", "No filter is set. All devices can use this printer.": "", "Add": "", "Configure printers": "", "Printers": "Impresoras", "Close": "Cerrar", "Save": "Guardar", "Type to search...": "Escriba para buscar..."}

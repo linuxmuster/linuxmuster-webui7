@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('lm.setup_wizard', ['core', 'ajenti.network']);
+angular.module('lm.setup_wizard', ['core']);
 
 angular.module('lm.setup_wizard').run(function ($http, $location, identity) {
   identity.promise.then(function () {

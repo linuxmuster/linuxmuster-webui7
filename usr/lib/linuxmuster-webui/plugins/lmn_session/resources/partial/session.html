@@ -190,7 +190,7 @@
         <div class="button-group">
             <div uib-dropdown ng:show="currentSession.name != ''" class="dropup">
                 <button class="btn btn-default btn-flat pull-left" uib-dropdown-toggle>
-                    <i class="fa fa-file"></i> Share & Collect <i class="fa fa-caret-up"></i>
+                    <i class="fa fa-file"></i> Share &amp; Collect <i class="fa fa-caret-up"></i>
                 </button>
                 <ul uib-dropdown-menu class="scrollable">
                     <!--                        <li><a flow-btn class="btn btn-default btn-flat" test-bind="uploadButton" translate>Upload file to share</a></li>-->
@@ -200,7 +200,7 @@
                     <!--   <li ng:repeat="example in examples"><a ng:click="createConfig(example)">{{example}}</a></li>-->
                 </ul>
             </div>
-            <button ng:click="saveApply(identity.user,participants,currentSession.name,currentSession.comment)" ng:show="currentSession.name != ''" class="btn btn-default btn-flat pull-right" translate>Save & apply</button>
+            <button ng:click="saveApply(identity.user,participants,currentSession.name,currentSession.comment)" ng:show="currentSession.name != ''" class="btn btn-default btn-flat pull-right" translate>Save &amp; apply</button>
             <button ng:click="cancel(identity.user,currentSession.name)" ng:show="currentSession.name != ''" class="btn btn-default btn-flat pull-right" translate>Close</button>
         </div>
     </floating-toolbar>

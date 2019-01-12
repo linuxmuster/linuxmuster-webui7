@@ -76,7 +76,7 @@ angular.module('lm.setup_wizard').controller('InitSchoolController', function ($
       return
     }
     await $http.post('/api/lm/setup-wizard/update-ini', this.ini)
-    $location.path('/view/lm/init/account')
+      $location.path('/view/lm/init/account')
   }
 })
 
@@ -139,8 +139,8 @@ angular.module('lm.setup_wizard').controller('InitSetupController', function ($l
   this.close = () => {
     $http.post('/api/lm/setup-wizard/restart').then(() => {
     notify.success(gettext('Restart Webui'))
+    //$location.path('/')
     }
-    $location.path('/')
   }
 })
 

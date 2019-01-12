@@ -8,7 +8,11 @@ angular.module('lm.users').controller 'LMNUsersAddAdminController', ($scope, $ro
         else
             notify.success gettext('Adding administrator...')
             $http.post('/api/lm/users/change-'+role, {action: 'create' ,users: username}).then (resp) ->
-                notify.success gettext('Administrator added')
+                console.log (resp.data)
+                if resp['data'][0] == 'ERROR'
+                    notify.error (resp['data'][1])
+                if resp['data'][0] == 'LOG'
+                    notify.success gettext(resp['data'][1])
                 $route.reload()
             $uibModalInstance.dismiss()
 

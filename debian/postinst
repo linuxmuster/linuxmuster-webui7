@@ -13,7 +13,7 @@ case "$1" in
     pip install -r $webuietc/requirements.txt
     #echo "link ajcfg to linuxmuster-webui folder"
     #ln -s $ajcfg $webuietc
-    rm /etc/ajenti/config.yml
+    #rm /etc/ajenti/config.yml
     cp /usr/lib/linuxmuster-webui/etc/ajenti_default.yml /etc/ajenti/
     # Set default permissions from true to false
     echo "set reverse permissions"

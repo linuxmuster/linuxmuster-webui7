@@ -1,10 +1,10 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: ajenti\n"
+"Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-18 21:02+0200\n"
-"PO-Revision-Date: 2016-05-21 17:18-0400\n"
-"Last-Translator: eugenepankov <john.pankov@gmail.com>\n"
+"POT-Creation-Date: 2019-01-12 12:04+0100\n"
+"PO-Revision-Date: 2019-01-12 11:36\n"
+"Last-Translator: kiarn <lml@kientz.me>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
@@ -12,206 +12,184 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: crowdin.com\n"
-"X-Crowdin-Project: ajenti\n"
+"X-Crowdin-Project: linuxmusternet\n"
 "X-Crowdin-Language: de\n"
-"X-Crowdin-File: /2.0/lm_settings.po\n"
+"X-Crowdin-File: /2.0/lmn_groupmembership.po\n"
 
-#: plugins/lm_settings/resources/partial/index.html:210
-msgid "Admin e-mail"
-msgstr "Admin E-Mail"
-
-#: plugins/lm_settings/resources/partial/index.html:28
-msgid "Age of students"
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:10
+msgid "(edit members)"
 msgstr ""
 
-#: plugins/lm_settings/resources/partial/index.html:156
-msgid "Change Samba password on first login"
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:16
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:8
+msgid "(show)"
 msgstr ""
 
-#: plugins/lm_settings/resources/partial/index.html:91
-msgid "Email"
-msgstr "E-Mail"
-
-#: plugins/lm_settings/resources/partial/index.html:72
-msgid "Encoding"
-msgstr "Zeichenkodierung"
-
-#: plugins/lm_settings/resources/partial/index.html:198
-msgid "External FQDN for printing"
-msgstr "Externer FQDN für den Druck"
-
-#: plugins/lm_settings/resources/partial/index.html:83
-msgid "Extra courses encoding"
-msgstr "Extra-Kurse Zeichensatz"
-
-#: plugins/lm_settings/resources/partial/index.html:87
-msgid "Extra students encoding"
-msgstr "Extra-Schüler Zeichensatz"
-
-#: plugins/lm_settings/resources/partial/index.html:45
-msgid "Filter star classes"
-msgstr "Sternchenklassen filtern"
-
-#: plugins/lm_settings/resources/partial/index.html:97
-msgid "firstname_lastname"
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:23
+msgid "Classes"
 msgstr ""
 
-#: plugins/lm_settings/resources/partial/index.html:96
-msgid "firstname.lastname"
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/editMembers.modal.html:54
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:36
+msgid "Close"
 msgstr ""
 
-#: plugins/lm_settings/resources/partial/index.html:7
-msgid "General"
-msgstr "Allgemein"
-
-#: plugins/lm_settings/resources/partial/index.html:53
-msgid "Global share folder"
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:23
+msgid "Creationdate:"
 msgstr ""
 
-#: plugins/lm_settings/resources/partial/index.html:194
-msgid "Internal FQDN for printing"
-msgstr "Interner FQDN für den Druck"
-
-#: plugins/lm_settings/resources/partial/index.html:39
-msgid "Log level"
-msgstr "Log-Level"
-
-#: plugins/lm_settings/resources/partial/index.html:113
-msgid "Login and removal"
-msgstr "Benutzereinstellungen"
-
-#: plugins/lm_settings/resources/partial/index.html:94
-msgid "Mail aliases"
-msgstr "E-Mail-Aliase"
-
-#: plugins/lm_settings/resources/partial/index.html:105
-msgid "Mail quota warning at % left"
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:35
+msgid "Delete Project"
 msgstr ""
 
-#: plugins/lm_settings/resources/partial/index.html:109
-msgid "Mail quota warning at KB left"
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:106
+msgid "Enroll"
 msgstr ""
 
-#: plugins/lm_settings/resources/partial/index.html:101
-msgid "Mail quota warnings"
-msgstr "E-Mail Quota Warnungen"
-
-#: plugins/lm_settings/resources/partial/index.html:13
-msgid "Max"
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:16
+msgid "Group Admins: {{groupDetails[groupName]['sophomorixAdmins_count']}}"
 msgstr ""
 
-#: plugins/lm_settings/resources/partial/index.html:12
-msgid "Min"
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:2
+msgid "Group Details {{id}}"
 msgstr ""
 
-#: plugins/lm_settings/resources/partial/index.html:206
-msgid "MOODLE URL"
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:8
+msgid "Group Members: {{groupDetails[groupName]['sophomorixMembers_count']}}"
 msgstr ""
 
-#: plugins/lm_settings/resources/partial/index.html:134
-msgid "Password length"
-msgstr "Passwortlänge"
-
-#: plugins/lm_settings/resources/partial/index.html:187
-msgid "Printing data"
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:12
+msgid "New Project"
 msgstr ""
 
-#: plugins/lm_settings/resources/partial/index.html:123
-msgid "Random password"
-msgstr "Zufallspasswort"
-
-#: plugins/lm_settings/resources/partial/index.html:176
-msgid "Removal after departure (days)"
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:16
+msgid "Objectsfilter"
 msgstr ""
 
-#: plugins/lm_settings/resources/partial/index.html:202
-msgid "Samba domain for printing"
-msgstr "Dömenen-Name"
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:66
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:117
+msgid "Printer"
+msgstr ""
 
-#: plugins/lm_settings/resources/partial/index.html:220
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:24
+msgid "Printers"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:25
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:84
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:122
+msgid "Projects"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/editMembers.modal.html:53
 msgid "Save"
 msgstr ""
 
-#: plugins/lm_settings/resources/partial/index.html:190
-msgid "School name"
-msgstr "Schulname"
-
-#: plugins/lm_settings/resources/partial/index.html:102
-msgid "Send warnings to root"
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:49
+msgid "Schoolclasses"
 msgstr ""
 
-#: plugins/lm_settings/resources/partial/index.html:145
-msgid "SSH access"
-msgstr "SSH-Zugang"
-
-#: plugins/lm_settings/resources/partial/index.html:119
-msgid "Students"
-msgstr "Schüler"
-
-#: plugins/lm_settings/resources/partial/index.html:75
-msgid "Students encoding"
-msgstr "Schülerliste Zeichensatz"
-
-#: plugins/lm_settings/resources/partial/index.html:17
-msgid "Students per class"
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:27
+msgid "Schoolname:"
 msgstr ""
 
-#: plugins/lm_settings/resources/partial/index.html:118
-msgid "Teachers"
-msgstr "Lehrer"
-
-#: plugins/lm_settings/resources/partial/index.html:79
-msgid "Teachers encoding"
-msgstr "Lehrerliste Zeichensatz"
-
-#: plugins/lm_settings/resources/partial/index.html:166
-msgid "Tolerance after departure (days)"
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:28
+msgid "Sophomorix Status:"
 msgstr ""
 
-#: plugins/lm_settings/resources/partial/index.html:64
-#, fuzzy
-msgid "Use quotas"
-msgstr "Benutzer Quota"
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:26
+msgid "Type:"
+msgstr ""
 
-#: plugins/lm_settings/main.py:15
-#: plugins/lm_settings/resources/js/controllers/index.controller.coffee:9
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:57
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:74
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:92
+msgid "{{group.typename}}"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/editMembers.modal.html:2
+msgid "{{groupName}} Members"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/editMembers.modal.html:44
+msgid "{{student.sophomorixRole}}"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/main.py:15
+msgid "Groupmembership"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/main.py:29
+msgid "Edit Groupmemberships"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/main.py:34
+msgid "Edit Groups"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/all.js:17
 msgid "Settings"
-msgstr "Einstellungen"
-
-#: plugins/lm_settings/main.py:29
-msgid "Configure settings"
 msgstr ""
 
-#: plugins/lm_settings/resources/js/controllers/index.controller.coffee:12
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/all.js:20
 msgid "Minimal"
-msgstr "Minimal"
+msgstr ""
 
-#: plugins/lm_settings/resources/js/controllers/index.controller.coffee:13
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/all.js:24
 msgid "Average"
-msgstr "Durchschnittlich"
+msgstr ""
 
-#: plugins/lm_settings/resources/js/controllers/index.controller.coffee:14
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/all.js:28
 msgid "Maximal"
-msgstr "Maximal"
+msgstr ""
 
-#: plugins/lm_settings/resources/js/controllers/index.controller.coffee:37
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/all.js:62
 msgid "Saved"
-msgstr "Gespeichert"
+msgstr ""
 
-#~ msgid "Applying changes"
-#~ msgstr "Änderungen werden Übernommen"
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:52
+msgid "Given name"
+msgstr ""
 
-#~ msgid "Close"
-#~ msgstr "Schließen"
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:56
+msgid "Name"
+msgstr ""
 
-#~ msgid "Details"
-#~ msgstr "Details"
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:60
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:133
+msgid "Membership"
+msgstr ""
 
-#~ msgid "Save & apply for existing users"
-#~ msgstr "Speichern & übernehmen für bestehende Benutzer"
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:64
+msgid "Class"
+msgstr ""
 
-#~ msgid "Update complete"
-#~ msgstr "Update abgeschlossen"
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:107
+msgid "Group Membership"
+msgstr ""
 
-#~ msgid "Update failed"
-#~ msgstr "Update fehlgeschlagen"
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:111
+msgid "Schoolclass"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:112
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:129
+msgid "Groupname"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:197
+msgid "Nothing changed"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:200
+msgid "Project Name"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:204
+msgid "Not a valid name! Only alphanumeric characters are allowed!"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:207
+msgid "Project Created"
+msgstr ""
+

@@ -1,10 +1,10 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: ajenti\n"
+"Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-18 21:02+0200\n"
-"PO-Revision-Date: 2016-05-21 17:18-0400\n"
-"Last-Translator: eugenepankov <john.pankov@gmail.com>\n"
+"POT-Creation-Date: 2019-01-12 12:03+0100\n"
+"PO-Revision-Date: 2019-01-12 11:36\n"
+"Last-Translator: kiarn <lml@kientz.me>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
@@ -12,46 +12,59 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: crowdin.com\n"
-"X-Crowdin-Project: ajenti\n"
+"X-Crowdin-Project: linuxmusternet\n"
 "X-Crowdin-Language: de\n"
 "X-Crowdin-File: /2.0/lm_common.po\n"
 
-#: plugins/lm_common/resources/js/lmFileBackups.modal.html:2
+#: usr/lib/linuxmuster-webui/plugins/lm_common/resources/js/lmFileBackups.modal.html:2
 msgid "Backups"
-msgstr ""
+msgstr "Sicherungen"
 
-#: plugins/lm_common/resources/js/lmFileEditor.modal.html:18
+#: usr/lib/linuxmuster-webui/plugins/lm_common/resources/js/lmFileEditor.modal.html:18
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: plugins/lm_common/resources/js/lmFileBackups.modal.html:20
+#: usr/lib/linuxmuster-webui/plugins/lm_common/resources/js/lmFileBackups.modal.html:20
 msgid "Close"
-msgstr ""
+msgstr "Schließen"
 
-#: plugins/lm_common/resources/js/lmFileEditor.modal.html:17
+#: usr/lib/linuxmuster-webui/plugins/lm_common/resources/js/lmFileEditor.modal.html:17
 msgid "Download CSV"
 msgstr "CSV Herunterladen"
 
-#: plugins/lm_common/resources/js/lmFileEditor.modal.html:5
+#: usr/lib/linuxmuster-webui/plugins/lm_common/resources/js/lmFileEditor.modal.html:5
 msgid "Drop a CSV file here to import"
 msgstr "Datei hier hin schieben um sie zu importieren"
 
-#: plugins/lm_common/resources/js/lmFileEditor.modal.html:16
+#: usr/lib/linuxmuster-webui/plugins/lm_common/resources/js/lmFileEditor.modal.html:16
 msgid "Save"
 msgstr "Speichern"
 
-#: plugins/lm_common/main.py:15
+#: usr/lib/linuxmuster-webui/plugins/lm_common/main.py:15
 msgid "User Management"
+msgstr "Benutzerverwaltung"
+
+#: usr/lib/linuxmuster-webui/plugins/lm_common/main.py:22
+msgid "List Management"
 msgstr ""
 
-#: plugins/lm_common/main.py:22
+#: usr/lib/linuxmuster-webui/plugins/lm_common/main.py:29
 msgid "Quota"
-msgstr ""
+msgstr "Limit"
 
-#: plugins/lm_common/main.py:29
+#: usr/lib/linuxmuster-webui/plugins/lm_common/main.py:36
 msgid "Device Management"
+msgstr "Geräteverwaltung"
+
+#: usr/lib/linuxmuster-webui/plugins/lm_common/main.py:43
+msgid "Class Management"
 msgstr ""
 
-#: plugins/lm_common/main.py:36
-msgid "Settings & Defaults"
+#: usr/lib/linuxmuster-webui/plugins/lm_common/main.py:50
+msgid "School Settings"
 msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lm_common/main.py:57
+msgid "Global Settings"
+msgstr ""
+

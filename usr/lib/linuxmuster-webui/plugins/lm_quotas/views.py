@@ -6,7 +6,7 @@ import aj
 from aj.api.http import url, HttpPlugin
 from aj.auth import authorize
 from aj.api.endpoint import endpoint, EndpointError
-from aj.plugins.lm_common.api import lm_backup_file
+from aj.plugins.lm_common.api import lm_backup_file, lmconfig
 
 
 @component(HttpPlugin)
@@ -111,7 +111,7 @@ class Handler(HttpPlugin):
     @authorize('lm:quotas:ldap-search')
     @endpoint(api=True)
     def handle_api_ldap_search(self, http_context):
-        params = aj.config.data['linuxmuster']['ldap']
+        params = lmconfig.data['linuxmuster']['ldap']
         l = ldap.initialize('ldap://' + params['host'])
         l.bind_s(params['binddn'], params['bindpw'])
         l.set_option(ldap.OPT_REFERRALS, 0)

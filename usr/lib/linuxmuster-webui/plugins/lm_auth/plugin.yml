@@ -7,6 +7,7 @@ title: 'Authentication'
 icon: key
 dependencies:
     - !!python/object:aj.plugins.PluginDependency { plugin_name: core }
+    - !!python/object:aj.plugins.PluginDependency { plugin_name: lm_common }
 resources:
   - resources/js/module.coffee
   - resources/js/controllers/index.controller.coffee

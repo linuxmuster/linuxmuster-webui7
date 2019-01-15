@@ -28,7 +28,7 @@ angular.module('lm.setup_wizard').config(function ($routeProvider) {
   $routeProvider.when('/view/lm/init/school', {
     templateUrl: '/lm_setup_wizard:partial/init-school.html',
     controller: 'InitSchoolController',
-    size: 'lg',
+    windowClass: 'lg',
     controllerAs: '$ctrl'
   });
 
@@ -49,7 +49,7 @@ angular.module('lm.setup_wizard').config(function ($routeProvider) {
   $routeProvider.when('/view/lm/init/setup', {
     templateUrl: '/lm_setup_wizard:partial/init-setup.html',
     controller: 'InitSetupController',
-    size: 'lg',
+    windowClass: 'lg',
     controllerAs: '$ctrl'
   });
 });
@@ -59,6 +59,8 @@ angular.module('lm.setup_wizard').controller('InitWelcomeController', function (
 
   pageTitle.set(gettext('Setup Wizard'));
   this.config = config;
+  console.log("test");
+  console.log(config);
   $http.get('/api/core/languages').then(function (response) {
     return _this.languages = response.data;
   });

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-12 12:04+0100\n"
-"PO-Revision-Date: 2019-01-12 11:36\n"
+"POT-Creation-Date: 2019-01-12 22:34+0100\n"
+"PO-Revision-Date: 2019-01-12 21:38\n"
 "Last-Translator: kiarn <lml@kientz.me>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -16,297 +16,294 @@ msgstr ""
 "X-Crowdin-Language: fr\n"
 "X-Crowdin-File: /2.0/lmn_session.po\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:91
+#: resources/partial/session.html:91
 msgid "<a>Share</a>"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:122
+#: resources/partial/session.html:122
 msgid "<span translate=\"\"> End running exam</span>"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/selectFile.modal.html:82
+#: resources/partial/selectFile.modal.html:82
 msgid "All data are copied from the whole session"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/selectFile.modal.html:85
+#: resources/partial/selectFile.modal.html:85
 msgid "All data are moved from the whole session"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:110
+#: resources/partial/session.html:110
 msgid "Available Files"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/selectFile.modal.html:101
+#: resources/partial/selectFile.modal.html:101
 msgid "Cancel"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:204
+#: resources/partial/session.html:204
 msgid "Close"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:94
+#: resources/partial/session.html:94
 msgid "Collect"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/selectFile.modal.html:7
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:103
+#: resources/partial/selectFile.modal.html:7 resources/partial/session.html:103
 msgid "Collect files"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/selectFile.modal.html:15
+#: resources/partial/selectFile.modal.html:15
 msgid "Collect files from session"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/selectFile.modal.html:98
+#: resources/partial/selectFile.modal.html:98
 msgid "Collect from Session"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/selectFile.modal.html:95
+#: resources/partial/selectFile.modal.html:95
 msgid "Collect from User"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:199
+#: resources/partial/session.html:199
 msgid "Collect transfer from whole session"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:98
+#: resources/partial/session.html:98
 msgid "Copy files"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:198
+#: resources/partial/session.html:198
 msgid "Copy transfer from whole session"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:220
+#: resources/partial/session.html:220
 msgid "Creation Date: {{session.ID}}"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:57
+#: resources/partial/session.html:57
 msgid "Delete Session"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:39
+#: resources/partial/session.html:39
 msgid "Edit Sessions"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:123
+#: resources/partial/session.html:123
 msgid "End running exam"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:32
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:46
+#: resources/partial/session.html:32 resources/partial/session.html:46
 msgid "New Session"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/selectFile.modal.html:53
+#: resources/partial/selectFile.modal.html:53
 msgid "No files or directories found in transfer"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:218
+#: resources/partial/session.html:218
 msgid "Participants: {{session.PARTICIPANT_COUNT}}"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:52
+#: resources/partial/session.html:52
 msgid "Rename Session"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:203
-msgid "Save & apply"
+#: resources/partial/session.html:203
+msgid "Save &amp; apply"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/selectFile.modal.html:30
+#: resources/partial/selectFile.modal.html:30
 msgid "Select files yo want to copy from <b>{{senders[0]['givenName']}} {{senders[0]['sn']}}</b>"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/selectFile.modal.html:33
+#: resources/partial/selectFile.modal.html:33
 msgid "Select files yo want to move from <b>{{senders[0]['givenName']}} {{senders[0]['sn']}}</b>"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/selectFile.modal.html:23
+#: resources/partial/selectFile.modal.html:23
 msgid "Select files yo want to share with <b>{{receivers[0]['givenName']}} {{receivers[0]['sn']}}</b>"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/selectFile.modal.html:41
+#: resources/partial/selectFile.modal.html:41
 msgid "Select files yo want to share with Session"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:64
+#: resources/partial/session.html:64
 msgid "Sessions"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:165
+#: resources/partial/session.html:165
 msgid "Set Custom password"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:155
+#: resources/partial/session.html:155
 msgid "Set Initial password"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:160
+#: resources/partial/session.html:160
 msgid "Set Random password"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/selectFile.modal.html:91
+#: resources/partial/selectFile.modal.html:91
 msgid "Share"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:197
+#: resources/partial/session.html:197
 msgid "Share file(s) from transfer with whole session"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/selectFile.modal.html:4
+#: resources/partial/selectFile.modal.html:4
 msgid "Share files"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/selectFile.modal.html:12
+#: resources/partial/selectFile.modal.html:12
 msgid "Share files with session"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:150
+#: resources/partial/session.html:150
 msgid "Show initial password"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:186
+#: resources/partial/session.html:186
 msgid "This module does not work as root. Login as a teacher instead!"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:170
+#: resources/partial/session.html:170
 msgid "User information"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:56
+#: resources/partial/session.html:56
 msgid "{{'Delete Session'| translate}}"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:51
+#: resources/partial/session.html:51
 msgid "{{'Rename Session'| translate}}"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:182
+#: resources/partial/session.html:182
 msgid "{{info.message}}"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/main.py:15
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:39
+#: main.py:15 resources/js/controllers/session.controller.coffee:39
 msgid "Session"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/main.py:22
+#: main.py:22
 msgid "Print Passwords"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/main.py:36
+#: main.py:36
 msgid "Write students"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/main.py:41
+#: main.py:41
 msgid "Transfer Files in Session"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:48
+#: resources/js/controllers/session.controller.coffee:48
 msgid "Lastname"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:52
+#: resources/js/controllers/session.controller.coffee:52
 msgid "Login name"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:56
+#: resources/js/controllers/session.controller.coffee:56
 msgid "Firstname"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:60
+#: resources/js/controllers/session.controller.coffee:60
 msgid "Email"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:69
+#: resources/js/controllers/session.controller.coffee:69
 msgid "Userdata"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:72
+#: resources/js/controllers/session.controller.coffee:72
 msgid "Transfer"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:75
+#: resources/js/controllers/session.controller.coffee:75
 msgid "Exam-Supervisor"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:78
+#: resources/js/controllers/session.controller.coffee:78
 msgid "sophomorixRole"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:82
+#: resources/js/controllers/session.controller.coffee:82
 msgid "Exam-Mode"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:89
+#: resources/js/controllers/session.controller.coffee:89
 msgid "Wifi-Access"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:95
+#: resources/js/controllers/session.controller.coffee:95
 msgid "Internet-Access"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:101
+#: resources/js/controllers/session.controller.coffee:101
 msgid "Intranet Access"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:106
+#: resources/js/controllers/session.controller.coffee:106
 msgid "Webfilter"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:112
+#: resources/js/controllers/session.controller.coffee:112
 msgid "Printing"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:187
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:231
+#: resources/js/controllers/session.controller.coffee:187
+#: resources/js/controllers/session.controller.coffee:231
 msgid "No Session selected"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:187
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:231
+#: resources/js/controllers/session.controller.coffee:187
+#: resources/js/controllers/session.controller.coffee:231
 msgid "You have to select a session first."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:191
+#: resources/js/controllers/session.controller.coffee:191
 msgid "Session Deleted"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:202
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:233
+#: resources/js/controllers/session.controller.coffee:202
+#: resources/js/controllers/session.controller.coffee:233
 msgid "Session Name"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:208
+#: resources/js/controllers/session.controller.coffee:208
 msgid "Session Created"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:221
+#: resources/js/controllers/session.controller.coffee:221
 msgid "There are no sessions yet. Create a session using the \"Edit Sessions\" button at the top!"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:243
+#: resources/js/controllers/session.controller.coffee:243
 msgid "Session Renamed"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:259
+#: resources/js/controllers/session.controller.coffee:259
 msgid "This session appears to be empty. Start adding users by using the top search bar!"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:372
+#: resources/js/controllers/session.controller.coffee:372
 msgid "Initial password"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:376
+#: resources/js/controllers/session.controller.coffee:376
 msgid "Initial password set"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:380
+#: resources/js/controllers/session.controller.coffee:380
 msgid "Random password set"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:481
+#: resources/js/controllers/session.controller.coffee:481
 msgid "Not implemented"
 msgstr ""
 

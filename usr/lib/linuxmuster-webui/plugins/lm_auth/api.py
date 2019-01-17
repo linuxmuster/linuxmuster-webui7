@@ -5,8 +5,7 @@ from jadi import component
 
 import aj
 from aj.auth import AuthenticationProvider, OSAuthenticationProvider
-
-
+from aj.plugins.lm_common.api import lmconfig
 
 @component(AuthenticationProvider)
 class LMAuthenticationProvider(AuthenticationProvider):
@@ -19,13 +18,13 @@ class LMAuthenticationProvider(AuthenticationProvider):
         self.context = context
 
     def authenticate(self, username, password):
-        #if username == 'root':
+        if username == 'root':
 
-            #return OSAuthenticationProvider.get(self.context).authenticate(username, password)
+            return OSAuthenticationProvider.get(self.context).authenticate(username, password)
 
         username = username.lower().encode('utf8')
         # get ajenti yaml parameters
-        params = aj.config.data['linuxmuster']['ldap']
+        params = lmconfig.data['linuxmuster']['ldap']
         searchFilter = "(&(cn=%s)(objectClass=user)(|(sophomorixRole=globaladministrator)(sophomorixRole=teacher)(sophomorixRole=schooladministrator) ))" % username
 
         l = ldap.initialize('ldap://' + params['host'])

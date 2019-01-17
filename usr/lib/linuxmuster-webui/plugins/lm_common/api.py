@@ -10,7 +10,7 @@ import string
 import random
 import re
 import six
-import yaml 
+import yaml
 
 @six.python_2_unicode_compatible
 class LinuxmusterConfig():
@@ -30,7 +30,7 @@ class LinuxmusterConfig():
         with open(self.path, 'w') as f:
             f.write(yaml.safe_dump(self.data, default_flow_style=False, encoding='utf-8', allow_unicode=True))
 
-lmconfig = LinuxmusterConfig('/etc/linuxmuster/webui.yml')
+lmconfig = LinuxmusterConfig('/etc/linuxmuster/webui/config.yml')
 lmconfig.load()
 
 class CSVSpaceStripper:

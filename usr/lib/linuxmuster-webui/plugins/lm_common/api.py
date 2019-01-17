@@ -9,7 +9,29 @@ import dpath
 import string
 import random
 import re
+import six
+import yaml
 
+@six.python_2_unicode_compatible
+class LinuxmusterConfig():
+    def __init__(self, path):
+        self.data = None
+        self.path = os.path.abspath(path)
+
+    def __str__(self):
+        return self.path
+
+    def load(self):
+        if os.geteuid() == 0:
+            os.chmod(self.path, 384)  # 0o600
+        self.data = yaml.load(open(self.path))
+
+    def save(self):
+        with open(self.path, 'w') as f:
+            f.write(yaml.safe_dump(self.data, default_flow_style=False, encoding='utf-8', allow_unicode=True))
+
+lmconfig = LinuxmusterConfig('/etc/linuxmuster/webui/config.yml')
+lmconfig.load()
 
 class CSVSpaceStripper:
     def __init__(self, file, encoding='utf-8'):
@@ -42,7 +64,7 @@ def lm_backup_file(path):
 
 
 def lmn_getLDAPGroupmembers(group, field):
-    params = aj.config.data['linuxmuster']['ldap']
+    params = lmconfig.data['linuxmuster']['ldap']
     searchFilter = "(&(cn=%s)(objectClass=group))" % group
     l = ldap.initialize('ldap://' + params['host'])
     try:
@@ -72,7 +94,7 @@ def lmn_getLDAPGroupmembers(group, field):
 
 
 def lmn_getUserLdapValue(user, field):
-    params = aj.config.data['linuxmuster']['ldap']
+    params = lmconfig.data['linuxmuster']['ldap']
     searchFilter = "(&(cn=%s)(objectClass=user))" % user
     l = ldap.initialize('ldap://' + params['host'])
     try:

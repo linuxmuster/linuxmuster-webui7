@@ -1,3 +1,21 @@
+linuxmuster-webui7 (1.0.38-1) UNRELEASED; urgency=medium 
+
+  * Current snapshot build 7104d16af81408fd84c63a6a9877c5a31c13844c
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Jan 17 12:50:58 UTC 2019
+
+linuxmuster-webui7 (1.0.37-1) UNRELEASED; urgency=medium 
+
+  * Current snapshot build e7f016179975662e36fd1d099a332eaaaf57f26a
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Jan 17 11:50:49 UTC 2019
+
+linuxmuster-webui7 (1.0.36-1) UNRELEASED; urgency=medium
+
+  * Current snapshot build for config-test
+
+ -- Andreas Till <andreas.till@netzint.de> Sat Jan 17 10:56:03 2018 +0000
+
 linuxmuster-webui7 (1.0.35-1) UNRELEASED; urgency=medium
 
   * Current snapshot build  
@@ -8,68 +26,68 @@ linuxmuster-webui7 (1.0.34-1) UNRELEASED; urgency=medium
 
   * Current snapshot build  f290b2621780dc6a0f7de3696a61407b5e711722
 
- -- Andreas Till <andreas.till@netzint.de> Sat Dec 12 14:00:03 2018 +0000
+ -- Andreas Till <andreas.till@netzint.de> Sat Jan 12 14:00:03 2018 +0000
 
 linuxmuster-webui7 (1.0.33-1) UNRELEASED; urgency=medium
 
   * Current snapshot build 
 
- -- Andreas Till <andreas.till@netzint.de> Fri Dec 12 12:10:03 2018 +0000
+ -- Andreas Till <andreas.till@netzint.de> Fri Jan 12 12:10:03 2018 +0000
 
 linuxmuster-webui7 (1.0.32-1) UNRELEASED; urgency=medium
 
   * Current snapshot build 
 
- -- Andreas Till <andreas.till@netzint.de> Fri Dec 12 12:10:03 2018 +0000
+ -- Andreas Till <andreas.till@netzint.de> Fri Jan 12 12:10:03 2018 +0000
 
 linuxmuster-webui7 (1.0.31-1) UNRELEASED; urgency=medium
 
   * Current snapshot build 
 
- -- Andreas Till <andreas.till@netzint.de> Fri Dec 12 10:41:03 2018 +0000
+ -- Andreas Till <andreas.till@netzint.de> Fri Jan 12 10:41:03 2018 +0000
 
 
 linuxmuster-webui7 (1.0.30-1) UNRELEASED; urgency=medium
 
   * Current snapshot build 68bbed11647c099c90275ba8c00740273b6c2fb3
 
- -- Andreas Till <andreas.till@netzint.de> Fri Dec 12 10:29:03 2018 +0000
+ -- Andreas Till <andreas.till@netzint.de> Fri Jan 12 10:29:03 2018 +0000
 
 linuxmuster-webui7 (1.0.29-1) UNRELEASED; urgency=medium
 
   * Current snapshot build temp build 
 
- -- Andreas Till <andreas.till@netzint.de> Fri Dec 12 09:58:03 2018 +0000
+ -- Andreas Till <andreas.till@netzint.de> Fri Jan 12 09:58:03 2018 +0000
 
 linuxmuster-webui7 (1.0.28-1) UNRELEASED; urgency=medium
 
   * Current snapshot build  e3e6ee897c6b7cd40a03f76962551bab66b0ee1a
 
- -- Andreas Till <andreas.till@netzint.de> Fri Dec 11 12:01:03 2018 +0000
+ -- Andreas Till <andreas.till@netzint.de> Fri Jan 11 12:01:03 2018 +0000
 
 linuxmuster-webui7 (1.0.27-1) UNRELEASED; urgency=medium
 
   * Current snapshot build  71e0e08ece8175b8965fb2d23066769268932acd
 
- -- Andreas Till <andreas.till@netzint.de> Fri Dec 11 22:29:03 2018 +0000
+ -- Andreas Till <andreas.till@netzint.de> Fri Jan 11 22:29:03 2018 +0000
 
 linuxmuster-webui7 (1.0.26-1) UNRELEASED; urgency=medium
 
   * Current snapshot build  e32df6f33f9b63214a4e3ba81d2a0aaa808a392f
 
- -- Andreas Till <andreas.till@netzint.de> Fri Dec 11 17:23:03 2018 +0000
+ -- Andreas Till <andreas.till@netzint.de> Fri Jan 11 17:23:03 2018 +0000
 
 linuxmuster-webui7 (1.0.25-1) UNRELEASED; urgency=medium
 
   * Current snapshot build  4a942b45e35351d465003b5d7cb52e568ce15ee5
 
- -- Andreas Till <andreas.till@netzint.de> Fri Dec 11 16:04:03 2018 +0000
+ -- Andreas Till <andreas.till@netzint.de> Fri Jan 11 16:04:03 2018 +0000
 
 linuxmuster-webui7 (1.0.24-1) UNRELEASED; urgency=medium
 
   * Current snapshot build  58d62bf8d3ad784af31cec3ce57a6449ddd4f0b1
 
- -- Andreas Till <andreas.till@netzint.de> Fri Dec 11 15:59:03 2018 +0000
+ -- Andreas Till <andreas.till@netzint.de> Fri Jan 11 15:59:03 2018 +0000
 
 linuxmuster-webui7 (1.0.23-1) UNRELEASED; urgency=medium
 

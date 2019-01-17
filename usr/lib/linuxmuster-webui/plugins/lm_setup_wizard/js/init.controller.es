@@ -8,10 +8,6 @@ angular.module('lm.setup_wizard').config(function($routeProvider) {
   $routeProvider.when('/view/lm/init/school', {
     templateUrl: '/lm_setup_wizard:partial/init-school.html',
     controller: 'InitSchoolController',
-<<<<<<< HEAD
-    windowClass: 'lg',
-=======
->>>>>>> 319f6de2721dabb52afa6036231e23bf0928ee4d
     controllerAs: '$ctrl',
   })
 
@@ -30,10 +26,6 @@ angular.module('lm.setup_wizard').config(function($routeProvider) {
   $routeProvider.when('/view/lm/init/setup', {
     templateUrl: '/lm_setup_wizard:partial/init-setup.html',
     controller: 'InitSetupController',
-<<<<<<< HEAD
-    windowClass: 'lg',
-=======
->>>>>>> 319f6de2721dabb52afa6036231e23bf0928ee4d
     controllerAs: '$ctrl',
   })
 })

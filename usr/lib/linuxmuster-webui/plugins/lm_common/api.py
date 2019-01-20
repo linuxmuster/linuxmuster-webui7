@@ -127,7 +127,7 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
 			jsonDict = dict(jsonDict)
 		data = ''	
 
-    ## Debug
+    ## Debug
     #with open('/var/log/getSophomorixValueDebugoutput.log', 'w') as f: 
     	#f.write(str(jsonDict))
 

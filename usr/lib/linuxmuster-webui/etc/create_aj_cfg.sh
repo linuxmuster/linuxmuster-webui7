@@ -12,6 +12,10 @@ language=$(cat $setupini |  grep country | awk '{print $3}')
 servername=$(cat $setupini |  grep servername | awk '{print $3}')
 domainname=$(cat $setupini |  grep domainname | awk '{print $3}')
 
+if [ -d /etc/linuxmuster/webui ]; then
+    mkdir /etc/linuxmuster/webui
+fi
+
 if [ -f $wucfg ]; then
    rm  $wucfg
 else

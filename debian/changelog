@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.41-1) UNRELEASED; urgency=medium 
+
+  * Current snapshot build fdf420e21254552b98cef682f1d68487cef57e27
+   *     setup wizard minor fix
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Jan 18 08:46:37 UTC 2019
+
 linuxmuster-webui7 (1.0.40-1) UNRELEASED; urgency=medium 
 
   * Current snapshot build 31d8bdd1e2fff3e441c2430b3f79a06fb8e90334

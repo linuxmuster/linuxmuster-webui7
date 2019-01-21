@@ -26,6 +26,10 @@ angular.module('lm.setup_wizard').config(function($routeProvider) {
   $routeProvider.when('/view/lm/init/setup', {
     templateUrl: '/lm_setup_wizard:partial/init-setup.html',
     controller: 'InitSetupController',
+<<<<<<< HEAD
+=======
+    windowClass: 'lg',
+>>>>>>> 8ed3aa11d92b99c788d92a987c057cca152a42d2
     controllerAs: '$ctrl',
   })
 })

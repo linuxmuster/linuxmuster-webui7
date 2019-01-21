@@ -18,9 +18,9 @@ class LMAuthenticationProvider(AuthenticationProvider):
         self.context = context
 
     def authenticate(self, username, password):
-        #if username == 'root':
+        if username == 'root':
 
-            #return OSAuthenticationProvider.get(self.context).authenticate(username, password)
+            return OSAuthenticationProvider.get(self.context).authenticate(username, password)
 
         username = username.lower().encode('utf8')
         # get ajenti yaml parameters

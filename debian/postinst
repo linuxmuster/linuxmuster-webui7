@@ -5,7 +5,7 @@ case "$1" in
     install|configure)
         ajcfg="/etc/ajenti/config.yml"
         wucfg="/etc/linuxmuster/webui/config.yml"
-        webuietc="/usr/lib/linuxmuster-webui/etc/"
+        webuietc="/usr/lib/linuxmuster-webui/etc"
      if [ ! -f $webuietc/.installed ];
       then
         # do first install
@@ -48,6 +48,8 @@ case "$1" in
 #    cp -R /usr/lib/linuxmuster-webui/etc/core-build/* /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/resources/build/
     systemctl stop linuxmuster-webui
     pip install -r $webuietc/requirements.txt -q
+    # split ajenti config.yml from webui config.yml if necessary
+    $webuietc/split_config_aj.py
     # Set default permissions from true to false
     echo "set reverse permissions"
     sed -i "s/: True,/: False,/g" /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/main.py

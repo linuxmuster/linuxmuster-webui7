@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.43-1) UNRELEASED; urgency=medium 
+
+  * Current snapshot build b3b40f4930fc6d814805d260b2f74eda8cc6c850
+   *     added landingpage plugin. removed dashboard permission for everyon
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Jan 23 12:20:37 UTC 2019
+
 linuxmuster-webui7 (1.0.42-1) UNRELEASED; urgency=medium 
 
   * Current snapshot build 146a964f7ca85727a867d13037b0f3931c6fc3d7

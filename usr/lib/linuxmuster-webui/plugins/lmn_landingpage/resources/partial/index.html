@@ -1,0 +1,20 @@
+<br/>
+<h2 translate>Welcome to Linuxmuster.net version 7! </h2>
+
+    <br>
+<div ng:show="identity.user == 'root'" class="alert alert-danger">
+    <i class="fa fa-info-circle"></i> <span translate>You should not use WebUI as root user! If this is your first time
+    running WebUI, proceed thorugh the setup wizard. Afterwards login using the global-admin account.</span>
+</div>
+
+<div ng:show="identity.user != 'root'">
+<progress-spinner ng:show="user == null"></progress-spinner>
+<div ng:show="user != null">
+
+<h4 translate>Hello {{user.givenName}} {{user.sn}},</h4>
+
+<h4>use the sidebar to navigate through the options. You
+can start by using the Groupmembership module to subscribe to your classes.</h4>
+
+</div>
+</div>

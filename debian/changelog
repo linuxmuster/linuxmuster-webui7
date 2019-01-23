@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.42-1) UNRELEASED; urgency=medium 
+
+  * Current snapshot build 146a964f7ca85727a867d13037b0f3931c6fc3d7
+   *     Merge branch 'config-linuxmuster' into alpha
+
+ -- Andreas Till <andreas.till@netzint.de> Mon Jan 21 15:26:18 UTC 2019
+
 linuxmuster-webui7 (1.0.41-1) UNRELEASED; urgency=medium 
 
   * Current snapshot build fdf420e21254552b98cef682f1d68487cef57e27

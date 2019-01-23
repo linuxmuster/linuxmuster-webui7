@@ -5,7 +5,7 @@ angular.module 'lm.common', [
 ]
 
 angular.module('lm.common').run (customization) ->
-    customization.plugins.core.startupURL = '/view/lm/users/students'
+    customization.plugins.core.startupURL = '/view/lmn/landingpage'
     # customization.plugins.core.bodyClass = 'customized'
     customization.plugins.core.title = ' '
     customization.plugins.core.faviconURL = '/resources/lm_common/resources/img/favicon.png'

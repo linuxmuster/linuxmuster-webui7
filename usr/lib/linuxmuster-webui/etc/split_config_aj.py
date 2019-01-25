@@ -27,14 +27,17 @@ if not os.path.isfile(path_webui + config_file):
 
     ## Copy linuxmuster config
     print("Copy linuxmuster config in /etc/linuxmuster/webui/config.yml ...")
-    config_webui['linuxmuster'] = config_ajenti['linuxmuster']
+    try:
+    	config_webui['linuxmuster'] = config_ajenti['linuxmuster']
+        ## Update ajenti config
+        print("Update ajenti config ...")
+        del config_ajenti['linuxmuster']
+    except:
+	print("Linuxmuster key not found ! Please check the file /etc/linuxmuster/webui/config.yml !")
 
     with open(path_webui + config_file, 'w') as f:
         yaml.dump(config_webui, f, default_flow_style=False)
 
-    ## Update ajenti config
-    print("Update ajenti config ...")
-    del config_ajenti['linuxmuster']
 
     with open(path_ajenti + config_file, 'w') as f:
         yaml.dump(config_ajenti, f, default_flow_style=False)

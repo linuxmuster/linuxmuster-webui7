@@ -3,7 +3,7 @@
   angular.module('lm.common', ['core', 'ajenti.ace', 'ajenti.filesystem']);
 
   angular.module('lm.common').run(function(customization) {
-    customization.plugins.core.startupURL = '/view/lm/users/students';
+    customization.plugins.core.startupURL = '/view/lmn/landingpage';
     // customization.plugins.core.bodyClass = 'customized'
     customization.plugins.core.title = ' ';
     customization.plugins.core.faviconURL = '/resources/lm_common/resources/img/favicon.png';

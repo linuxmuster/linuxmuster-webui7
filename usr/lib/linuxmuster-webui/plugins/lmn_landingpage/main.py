@@ -13,10 +13,11 @@ class ItemProvider(SidebarItemProvider):
             {
                 # category:tools, category:sofware, category:system, category:other
                 'attach': 'category:general',
-                'name': 'Lmn_landing',
+                'name': 'Home',
                 # http://fontawesome.io/icons/
-                'icon': 'question',
-                'url': '/view/lmn_landing',
+                'icon': 'home',
+                'url': '/view/lmn/landingpage',
+                'weight': '10',
                 'children': []
             }
         ]

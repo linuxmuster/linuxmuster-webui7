@@ -18,8 +18,8 @@ class Handler(HttpPlugin):
     @authorize('lm:quotas:configure')
     @endpoint(api=True)
     def handle_api_quotas(self, http_context):
-        path = '/etc/sophomorix/user/quota.txt'
-        mpath = '/etc/sophomorix/user/mailquota.txt'
+        path = '/etc/linuxmuster/sophomorix/user/quota.txt'
+        mpath = '/etc/linuxmuster/sophomorix/user/mailquota.txt'
         if http_context.method == 'GET':
             r = {}
 

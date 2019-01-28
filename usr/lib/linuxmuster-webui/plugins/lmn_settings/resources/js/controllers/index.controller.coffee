@@ -52,4 +52,4 @@ angular.module('lm.settings').controller 'LMSettingsController', ($scope, $http,
             notify.success gettext('Saved')
 
     $scope.backups = () ->
-        lmFileBackups.show('/etc/sophomorix/user/sophomorix.conf')
+        lmFileBackups.show('/etc/linuxmuster/sophomorix/user/sophomorix.conf')

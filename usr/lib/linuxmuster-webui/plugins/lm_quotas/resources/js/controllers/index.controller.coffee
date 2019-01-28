@@ -147,4 +147,4 @@ angular.module('lm.quotas').controller 'LMQuotasController', ($scope, $http, $ui
             )
 
     $scope.backups = () ->
-        lmFileBackups.show('/etc/sophomorix/user/quota.txt')
+        lmFileBackups.show('/etc/linuxmuster/sophomorix/user/quota.txt')

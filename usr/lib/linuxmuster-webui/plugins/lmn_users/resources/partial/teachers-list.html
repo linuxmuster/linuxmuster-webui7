@@ -2,7 +2,10 @@
 
 <progress-spinner ng:show="teachers == null"></progress-spinner>
 
-<div ng:if="teachers != null">
+<div ng:if="teachers != null"
+    flow-init='{target: "/api/filesystem/upload", chunkSize: 1024 * 1024}'
+        flow-files-submitted="onUploadBegin($flow)"
+    ng-style="style">
     <div class="input-group">
         <input ng:model="filter" type="search" autofocus class="form-control" placeholder="Filter" />
         <div uib-dropdown class="input-group-btn">
@@ -90,5 +93,7 @@
         <button ng:click="save()" class="btn btn-default btn-flat" translate>Save</button>
         <button ng:click="saveAndCheck()" class="btn btn-default btn-flat" translate>Save &amp; check</button>
         <button ng:click="editCSV()" class="btn btn-default btn-flat" translate>Edit CSV</button>
+        <button ng:click="confirmUpload()" class="btn btn-default btn-flat" translate>Upload CSV</button>
+
     </floating-toolbar>
 </div>

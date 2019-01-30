@@ -3,9 +3,9 @@
 <progress-spinner ng:show="students == null"></progress-spinner>
 
 <div ng:show="students != null" 
-	flow-init='{target: "/api/filesystem/upload", chunkSize: 1024 * 1024}'
-    	flow-files-submitted="onUploadBegin($flow)"
-	ng-style="style">
+    flow-init='{target: "/api/filesystem/upload", chunkSize: 1024 * 1024}'
+        flow-files-submitted="onUploadBegin($flow)"
+    ng-style="style">
     <div class="input-group">
         <input ng:model="filter" type="search" autofocus class="form-control" placeholder="Filter" />
         <div uib-dropdown class="input-group-btn">

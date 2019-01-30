@@ -84,26 +84,10 @@ angular.module('lm.users').controller 'LMUsersStudentsListController', ($scope, 
                 templateUrl: '/lm_users:resources/partial/upload.modal.html'
                 controller: 'LMUsersUploadModalController'
                 backdrop: 'static'
+                resolve:
+                    userlist: () -> 'students.csv'
             )
 
     $scope.backups = () ->
         lmFileBackups.show('/etc/linuxmuster/sophomorix/default-school/students.csv', $scope.encoding)
 
-## TODO : handle uploaded file, evtl cancel upload.
-angular.module('lm.users').controller 'LMUsersUploadModalController', ($scope, $http, $uibModalInstance, messagebox, notify, $uibModal, gettext, filesystem) ->
-
-    $scope.path = "/srv"; #adapt upload path here
-
-    $scope.onUploadBegin = ($flow) ->
-        $uibModalInstance.close()
-        msg = messagebox.show({progress: true})
-        
-        filesystem.startFlowUpload($flow, $scope.path).then(() -> 
-            notify.success(gettext('Uploaded'))
-            msg.close()
-        , null, (progress) -> 
-          msg.messagebox.title = "Uploading: #{Math.floor(100 * progress)}%"
-        )
-        
-    $scope.close = () ->
-        $uibModalInstance.close()

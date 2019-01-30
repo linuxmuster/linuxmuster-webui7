@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.44-1) UNRELEASED; urgency=medium 
+
+  * Current snapshot build cb17d0008ed0235a8e4b54f13b337bf544ef9869
+   *     fixed type in landingpage, added administrator message to landing page
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Jan 23 12:42:10 UTC 2019
+
 linuxmuster-webui7 (1.0.43-1) UNRELEASED; urgency=medium 
 
   * Current snapshot build b3b40f4930fc6d814805d260b2f74eda8cc6c850

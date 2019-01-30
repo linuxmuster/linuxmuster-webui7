@@ -388,6 +388,34 @@ class Handler(HttpPlugin):
                     return result['LOG']
                 #return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
 
+    @url(r'/api/lmn/sophomorixUsers/new-file')
+    @endpoint(api=True)
+    def handle_api_sophomorix_newfile(self, http_context):
+        #TODO needs update for multischool
+
+        path = http_context.json_body()['path']
+        userlist = http_context.json_body()['userlist']
+        if http_context.method == 'POST':
+
+            if userlist == 'teachers.csv':
+                with authorize('lm:users:teachers:write'):
+                    sophomorixCommand = ['sophomorix-newfile', path , '--name', userlist, '-jj']
+                    result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
+                    if result['TYPE'] == "ERROR":
+                        return ["ERROR", result['MESSAGE_EN']]
+                    if result['TYPE'] == "LOG":
+                        return ["LOG", result['LOG']]
+
+            if userlist == 'students.csv':
+                with authorize('lm:users:students:write'):
+                    sophomorixCommand = ['sophomorix-newfile', path , '--name', userlist, '-jj']
+                    result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
+                    if result['TYPE'] == "ERROR":
+                        return ["ERROR", result['MESSAGE_EN']]
+                    if result['TYPE'] == "LOG":
+                        return ["LOG", result['LOG']]
+
+
     @url(r'/api/lm/users/print')
     @authorize('lm:users:passwords')
     @endpoint(api=True)

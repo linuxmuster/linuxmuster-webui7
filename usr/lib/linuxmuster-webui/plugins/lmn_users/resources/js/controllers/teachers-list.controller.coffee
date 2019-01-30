@@ -88,3 +88,12 @@ angular.module('lm.users').controller 'LMUsersTeachersListController', ($scope, 
 
     $scope.backups = () ->
         lmFileBackups.show('/etc/linuxmuster/sophomorix/default-school/teachers.csv', $scope.encoding)
+
+    $scope.confirmUpload = () ->
+            $uibModal.open(
+                templateUrl: '/lm_users:resources/partial/upload.modal.html'
+                controller: 'LMUsersUploadModalController'
+                backdrop: 'static'
+                resolve:
+                    userlist: () -> 'teachers.csv'
+            )

@@ -55,13 +55,36 @@ angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $
 
     $scope.stripComments = (value) -> !value.room or value.room[0] != '#'
 
+
+
     $scope.add = () ->
-        $scope.paging.page = Math.floor(($scope.devices.length - 1) / $scope.paging.pageSize) + 1
+        if $scope.devices.length > 0
+            $scope.paging.page = Math.floor(($scope.devices.length - 1) / $scope.paging.pageSize) + 1
         $scope.filter = ''
         $scope.devices.push {
             _isNew: true
             sophomorixRole: 'classroom-studentcomputer',
             pxeFlag: '1',
+        }
+
+    $scope.duplicate = (device) ->
+        $scope.devices.push {
+            _isNew: true
+            room: device.room,
+            hostname: device.hostname,
+            group: device.group,
+            mac: device.mac,
+            ip: device.ip,
+            officeKey: device.officeKey,
+            windowsKey: device.windowsKey,
+            dhcpOptions: device.dhcpOptions,
+            sophomorixRole: device.sophomorixRole,
+            lmnReserved10: device.lmnReserved10,
+            pxeFlag: device.pxeFlag,
+            lmnReserved12: device.lmnReserved12,
+            lmnReserved13: device.lmnReserved13,
+            lmnReserved14: device.lmnReserved14,
+            sophomorixComment: device.sophomorixComment,
         }
 
     $scope.fields = {

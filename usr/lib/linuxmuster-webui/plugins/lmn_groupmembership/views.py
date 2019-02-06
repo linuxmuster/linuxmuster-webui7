@@ -91,7 +91,12 @@ class Handler(HttpPlugin):
                 printergroups = lmn_getSophomorixValue(sophomorixCommand, 'LISTS/GROUP')
                 # get projects
                 sophomorixCommand = ['sophomorix-query', '--project', '--group-full', '--schoolbase', schoolname, '-jj']
-                projects = lmn_getSophomorixValue(sophomorixCommand, 'GROUP')
+                # Check if there are any project if not return empty list
+                projects_raw = lmn_getSophomorixValue(sophomorixCommand, '')
+                if 'GROUP' not in projects_raw:
+                    projects = []
+                else:
+                    projects = projects_raw['GROUP']
                 # build membershipList with membership status
                 for project in projects:
                     if project in usergroups:

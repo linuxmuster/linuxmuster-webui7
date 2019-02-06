@@ -47,6 +47,10 @@
     <br>
     <div ng:show="types.schoolclass.checkbox">
         <h3 translate> Schoolclasses</h3>
+        <div ng-if="schoolclassCount== 0" class="alert alert-info">
+            <i class="fa fa-info-circle"></i>
+            <span translate> There are no schoolclasses available. Ask the administrator to import students</span>
+        </div>
         <div class="container">
             <div class="row">
                 <div class="col-xs-12 col-sm-6 col-md-3" ng:repeat="group in groups|filter: {type: 'schoolclass'}|filter:filter|orderBy:[sort.fx]:sortReverse">
@@ -64,6 +68,10 @@
     </div>
     <div ng:show="types.printergroup.checkbox">
         <h3 translate> Printer</h3>
+        <div ng-if="printergroupCount == 0" class="alert alert-info">
+            <i class="fa fa-info-circle"></i>
+            <span translate> There are no printers configured yet. Ask your administrator to configure one.</span>
+        </div>
         <div class="container">
             <div class="row">
                 <div class="col-xs-12 col-sm-6 col-md-3" ng:repeat="group in groups|filter: {type: 'printer'}|filter:filter|orderBy:[sort.fx]:sortReverse">
@@ -82,6 +90,11 @@
     </div>
     <div ng:show="types.project.checkbox">
         <h3 translate> Projects</h3>
+        <div ng-if="projectCount == 0" class="alert alert-info">
+            <i class="fa fa-info-circle"></i>
+            <span translate> There are no projects yet. You can create a new procet using the menu bar.</span>
+        </div>
+
         <div class="container">
             <div class="row">
                 <div class="col-xs-12 col-sm-6 col-md-3" ng:repeat="group in groups|filter: {type: 'project'}|filter:filter|orderBy:[sort.fx]:sortReverse">

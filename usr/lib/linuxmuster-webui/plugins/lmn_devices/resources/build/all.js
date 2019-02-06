@@ -161,6 +161,7 @@
         return $uibModal.open({
           templateUrl: '/lm_devices:resources/partial/apply.modal.html',
           controller: 'LMDevicesApplyModalController',
+          size: 'lg',
           backdrop: 'static'
         });
       });

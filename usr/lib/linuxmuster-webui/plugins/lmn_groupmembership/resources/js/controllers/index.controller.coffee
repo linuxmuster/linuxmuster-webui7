@@ -185,6 +185,22 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
     $scope.getGroups = (username) ->
         $http.post('/api/lmn/groupmembership', {action: 'list-groups', username: username}).then (resp) ->
             $scope.groups = resp.data
+            schoolclassCount = 0
+            printergroupCount = 0
+            projectCount = 0
+            for group in $scope.groups
+                if group.type == 'schoolclass'
+                    schoolclassCount = schoolclassCount + 1
+            for group in $scope.groups
+                if group.type == 'printergroup'
+                    printergroupCount = printergroupCount + 1
+            for group in $scope.groups
+                if group.type == 'project'
+                    projectCount = projectCount + 1
+            $scope.schoolclassCount= schoolclassCount
+            $scope.printergroupCount = printergroupCount
+            $scope.projectCount = projectCount
+
 
     $scope.setGroups = (groups) ->
         $http.post('/api/lmn/groupmembership', {action: 'set-groups', username:$scope.identity.user, groups: groups}).then (resp) ->

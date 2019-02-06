@@ -110,7 +110,11 @@ angular.module('lm.setup_wizard').controller('InitAccountController', function (
       notify.error('Administrator password missmatch');
       return;
     }
-    if (!isStrongPwd1(_this3.ini.adminpw)) {
+    if (!validCharPwd(_this3.ini.adminpw)) {
+      notify.error('Password contains invalid characters');
+      return;
+    }
+    if (!isStrongPwd(_this3.ini.adminpw)) {
       notify.error('Password too weak');
       return;
     }
@@ -173,8 +177,16 @@ function resetColor(id) {
   document.getElementById(id).style.borderColor = '';
 }
 
-function isStrongPwd1(password) {
-  var regExp = /(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*()]|(?=.*\d)).{7,}/;
+function validCharPwd(password) {
+  console.log("check valids");
+  var regExp = /^[a-zA-Z 0-9 !@#§+\-$%&*{}()\]\[]+$/;
+  var validPassword = regExp.test(password);
+  return validPassword;
+}
+
+function isStrongPwd(password) {
+  console.log("check strength");
+  var regExp = /(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#§+\-$%&*{}()\]\[]|(?=.*\d)).{7,}/;
   var validPassword = regExp.test(password);
   return validPassword;
 }

@@ -280,7 +280,35 @@
         action: 'list-groups',
         username: username
       }).then(function(resp) {
-        return $scope.groups = resp.data;
+        var group, i, j, k, len, len1, len2, printergroupCount, projectCount, ref, ref1, ref2, schoolclassCount;
+        $scope.groups = resp.data;
+        schoolclassCount = 0;
+        printergroupCount = 0;
+        projectCount = 0;
+        ref = $scope.groups;
+        for (i = 0, len = ref.length; i < len; i++) {
+          group = ref[i];
+          if (group.type === 'schoolclass') {
+            schoolclassCount = schoolclassCount + 1;
+          }
+        }
+        ref1 = $scope.groups;
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          group = ref1[j];
+          if (group.type === 'printergroup') {
+            printergroupCount = printergroupCount + 1;
+          }
+        }
+        ref2 = $scope.groups;
+        for (k = 0, len2 = ref2.length; k < len2; k++) {
+          group = ref2[k];
+          if (group.type === 'project') {
+            projectCount = projectCount + 1;
+          }
+        }
+        $scope.schoolclassCount = schoolclassCount;
+        $scope.printergroupCount = printergroupCount;
+        return $scope.projectCount = projectCount;
       });
     };
     $scope.setGroups = function(groups) {

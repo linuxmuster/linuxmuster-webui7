@@ -111,13 +111,18 @@
                 <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.lmnReserved12" placeholder="LMN-Reserved12" class="form-control" />
             </td>
             <td ng:if="fields.lmnReserved13.visible">
-                <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.lmnReserved3" placeholder="LMN-Reserved13" class="form-control" />
+                <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.lmnReserved13" placeholder="LMN-Reserved13" class="form-control" />
             </td>
             <td ng:if="fields.lmnReserved14.visible">
-                <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.lmnReserved4" placeholder="LMN-Reserved14" class="form-control" />
+                <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.lmnReserved14" placeholder="LMN-Reserved14" class="form-control" />
             </td>
             <td ng:if="fields.sophomorixComment.visible">
                 <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.sophomorixComment" placeholder="Sophomorix-Comment" class="form-control" />
+            </td>
+            <td width="1">
+                <button class="btn btn-default" ng:click="duplicate(device)" title="Duplicate">
+                    <i class="fa fa-copy"></i>
+                </button>
             </td>
             <td width="1">
                 <button class="btn btn-default" ng:click="remove(device)" title="Remove">

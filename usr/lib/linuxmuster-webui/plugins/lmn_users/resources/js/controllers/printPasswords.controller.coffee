@@ -15,12 +15,12 @@ angular.module('lm.users').controller 'LMUsersPrintPasswordsOptionsModalControll
     if $scope.options.user is 'root'
         $scope.options.user = 'global-admin'
 
-    $scope.title = if schoolclass != null then gettext("Class") + ": #{classes[class]}" else gettext('All users')
+    $scope.title = if schoolclass != '' then gettext("Class") + ": #{schoolclass}" else gettext('All users')
 
     $scope.print = () ->
         msg = messagebox.show(progress: true)
         $http.post('/api/lm/users/print', $scope.options).then (resp) ->
-            location.href = "/api/lm/users/print-download/#{if schoolclass != null then schoolclass else 'add'}-#{$scope.options.user}.#{if $scope.options.format == 'pdf' then 'pdf' else 'csv'}"
+            location.href = "/api/lm/users/print-download/#{if schoolclass != '' then schoolclass else 'add'}-#{$scope.options.user}.#{if $scope.options.format == 'pdf' then 'pdf' else 'csv'}"
             $uibModalInstance.close()
         .finally () ->
             msg.close()

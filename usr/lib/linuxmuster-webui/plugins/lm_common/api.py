@@ -12,6 +12,8 @@ import re
 import six
 import yaml
 
+from aj.auth import AuthenticationService
+
 @six.python_2_unicode_compatible
 class LinuxmusterConfig():
     def __init__(self, path):
@@ -186,6 +188,14 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
     file.close()
     return resultString
 
+# check if the current user has a specific permissions
+def lmn_checkPermission(permission):
+    username = aj.worker.context.identity
+    try:
+        AuthenticationService.get(aj.worker.context).get_provider().authorize(username, permission)
+        return True
+    except:
+        return False
 
 def lmn_genRandomPW():
     regex = r"(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*()]|(?=.*\d)).{7,}"
@@ -196,3 +206,5 @@ def lmn_genRandomPW():
         return password
     else:
         lmn_genRandomPW()
+
+

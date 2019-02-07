@@ -1632,14 +1632,14 @@
     if ($scope.options.user === 'root') {
       $scope.options.user = 'global-admin';
     }
-    $scope.title = schoolclass !== null ? gettext("Class") + `: ${classes[class {}]}` : gettext('All users');
+    $scope.title = schoolclass !== '' ? gettext("Class") + `: ${schoolclass}` : gettext('All users');
     $scope.print = function() {
       var msg;
       msg = messagebox.show({
         progress: true
       });
       return $http.post('/api/lm/users/print', $scope.options).then(function(resp) {
-        location.href = `/api/lm/users/print-download/${(schoolclass !== null ? schoolclass : 'add')}-${$scope.options.user}.${($scope.options.format === 'pdf' ? 'pdf' : 'csv')}`;
+        location.href = `/api/lm/users/print-download/${(schoolclass !== '' ? schoolclass : 'add')}-${$scope.options.user}.${($scope.options.format === 'pdf' ? 'pdf' : 'csv')}`;
         return $uibModalInstance.close();
       }).finally(function() {
         return msg.close();

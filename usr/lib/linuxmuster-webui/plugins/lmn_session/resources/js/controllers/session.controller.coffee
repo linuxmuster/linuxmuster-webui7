@@ -264,7 +264,6 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
     $scope.findUsers = (q) ->
                 return $http.get("/api/lmn/session/user-search?q=#{q}").then (resp) ->
                             $scope.users = resp.data
-                            #console.log resp.data
                             return resp.data
 
     $scope.findSchoolClasses = (q) ->

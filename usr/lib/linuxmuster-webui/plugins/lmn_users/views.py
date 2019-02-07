@@ -6,7 +6,13 @@ from jadi import component
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
 from aj.plugins.lm_common.api import CSVSpaceStripper
+
 from aj.auth import authorize
+from aj.plugins.lm_common.api import lmn_checkPermission
+
+from aj.auth import AuthenticationService
+import aj
+
 from aj.plugins.lm_common.api import lm_backup_file
 from aj.plugins.lm_common.api import lmn_getSophomorixValue
 
@@ -423,7 +429,20 @@ class Handler(HttpPlugin):
         school = 'default-school'
         if http_context.method == 'GET':
             sophomorixCommand = ['sophomorix-print', '--school', school, '--info', '-jj']
-            return lmn_getSophomorixValue(sophomorixCommand, 'LIST_BY_sophomorixSchoolname_sophomorixAdminClass/'+school)
+
+            #username = aj.worker.context.identity
+            permission = 'lm:users:teachers:read'
+            #AuthenticationService.get(aj.worker.context).get_provider().authorize(username, permission)
+
+            with authorize('lm:users:students:read'):
+                classes = lmn_getSophomorixValue(sophomorixCommand, 'LIST_BY_sophomorixSchoolname_sophomorixAdminClass/'+school)
+                if lmn_checkPermission(permission):
+                    # append empty element. This references to all users
+                    classes.append('')
+                else:
+                    classes.remove('teachers')
+                return classes
+
         if http_context.method == 'POST':
             user = http_context.json_body()['user']
             one_per_page = http_context.json_body()['one_per_page']
@@ -439,6 +458,15 @@ class Handler(HttpPlugin):
                 sophomorixCommand.extend(['--class', schoolclass])
             # sophomorix-print needs the json parameter at the very end
             sophomorixCommand.extend(['-jj'])
+            if not schoolclass:
+                # double check if user is allowed to print all passwords
+                with authorize('lm:users:teachers:read'):
+                    pass
+            # double check if user is allowed to print teacher passwords
+            if schoolclass == 'teachers':
+                with authorize('lm:users:teachers:read'):
+                    pass
+
             return lmn_getSophomorixValue(sophomorixCommand, 'JSONINFO')
 
     @url(r'/api/lm/users/print-download/(?P<name>.+)')

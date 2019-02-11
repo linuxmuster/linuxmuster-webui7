@@ -118,8 +118,6 @@ angular.module('lm.setup_wizard').controller('InitSchoolController', function ($
                 }
             }
         }
-        console.log($dataMissing);
-        console.log($badCharacters);
 
         if ($dataMissing == true) {
             notify.error('Required data missing');
@@ -164,12 +162,13 @@ angular.module('lm.setup_wizard').controller('InitExternalServicesController', f
 
     pageTitle.set(gettext('Setup Wizard'));
     this.ini = {};
+    $http.get('/api/lm/setup-wizard/read-ini').then(function (response) {
+        return _this4.ini = response.data;
+    });
 
     this.apply = function () {
-        if (_this4.ini.smtppw != _this4.smtppwConfirmation) {
-            notify.error('SMTP password missmatch');
-            return;
-        }
+        console.log(_this4.enableOPSI);
+
         if (!_this4.enableOPSI) {
             delete _this4.ini['opsiip'];
         }
@@ -181,6 +180,10 @@ angular.module('lm.setup_wizard').controller('InitExternalServicesController', f
             delete _this4.ini['smtprelay'];
             delete _this4.ini['smtpuser'];
             delete _this4.ini['smtppw'];
+        }
+        if (_this4.ini.smtppw != _this4.smtppwConfirmation) {
+            notify.error('SMTP password missmatch');
+            return;
         }
         $http.post('/api/lm/setup-wizard/update-ini', _this4.ini).then(function () {
             return $location.path('/view/lm/init/summary');
@@ -198,22 +201,6 @@ angular.module('lm.setup_wizard').controller('InitSummaryController', function (
     });
 
     this.finish = function () {
-        //if (this.ini.smtppw != this.smtppwConfirmation) {
-        //    notify.error('SMTP password missmatch')
-        //    return
-        //}
-        //if (!this.enableOPSI) {
-        //    delete this.ini['opsiip']
-        //}
-        //if (!this.enableDOCKER) {
-        //    delete this.ini['dockerip']
-        //}
-        //if (!this.enableMail) {
-        //    delete this.ini['mailip']
-        //    delete this.ini['smtprelay']
-        //    delete this.ini['smtpuser']
-        //    delete this.ini['smtppw']
-        //}
         $http.post('/api/lm/setup-wizard/update-ini', _this5.ini).then(function () {
             return $location.path('/view/lm/init/setup');
         });

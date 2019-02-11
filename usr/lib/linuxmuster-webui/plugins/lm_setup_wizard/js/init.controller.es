@@ -95,8 +95,6 @@ angular.module('lm.setup_wizard').controller('InitSchoolController', function ($
             }
 
         }
-        console.log ($dataMissing)
-        console.log ($badCharacters)
 
         if ($dataMissing == true){
             notify.error('Required data missing')
@@ -140,12 +138,12 @@ angular.module('lm.setup_wizard').controller('InitAccountController', function (
 angular.module('lm.setup_wizard').controller('InitExternalServicesController', function ($location, $http, gettext, pageTitle, notify) {
     pageTitle.set(gettext('Setup Wizard'))
     this.ini = {}
+    $http.get('/api/lm/setup-wizard/read-ini').then(response => this.ini = response.data)
+
 
     this.apply= () => {
-        if (this.ini.smtppw != this.smtppwConfirmation) {
-            notify.error('SMTP password missmatch')
-            return
-        }
+        console.log(this.enableOPSI)
+
         if (!this.enableOPSI) {
             delete this.ini['opsiip']
         }
@@ -158,9 +156,14 @@ angular.module('lm.setup_wizard').controller('InitExternalServicesController', f
             delete this.ini['smtpuser']
             delete this.ini['smtppw']
         }
+        if (this.ini.smtppw != this.smtppwConfirmation) {
+            notify.error('SMTP password missmatch')
+            return
+        }
         $http.post('/api/lm/setup-wizard/update-ini', this.ini).then(() => {
             return $location.path('/view/lm/init/summary')
         })
+
     }
 })
 
@@ -170,22 +173,6 @@ angular.module('lm.setup_wizard').controller('InitSummaryController', function (
     $http.get('/api/lm/setup-wizard/read-ini').then(response => this.ini = response.data)
 
     this.finish= () => {
-        //if (this.ini.smtppw != this.smtppwConfirmation) {
-        //    notify.error('SMTP password missmatch')
-        //    return
-        //}
-        //if (!this.enableOPSI) {
-        //    delete this.ini['opsiip']
-        //}
-        //if (!this.enableDOCKER) {
-        //    delete this.ini['dockerip']
-        //}
-        //if (!this.enableMail) {
-        //    delete this.ini['mailip']
-        //    delete this.ini['smtprelay']
-        //    delete this.ini['smtpuser']
-        //    delete this.ini['smtppw']
-        //}
         $http.post('/api/lm/setup-wizard/update-ini', this.ini).then(() => {
             return $location.path('/view/lm/init/setup')
         })

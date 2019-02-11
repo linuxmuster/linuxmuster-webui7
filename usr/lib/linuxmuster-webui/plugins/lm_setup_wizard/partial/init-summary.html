@@ -33,7 +33,7 @@
             <br>
             <ul class=leaders>
                 <li><span translate >Firewall</span> <span ng-if="$ctrl.ini.skipfw == 'True'" translate> Configuration will be <b>skipped </b></span><span ng-if="$ctrl.ini.skipfw != 'True'" translate> Firewall will be <b>configured!</b></span>
-                <li><span >OPSI</span> <span></span><b ng-if="$ctrl.ini.opsiip">{{$ctrl.ini.opsiip}}</b></span> <span ng-if="!$ctrl.ini.opsiip" translate> No opsi will be configured </span>
+                <li><span >OPSI</span> <span><b ng-if="$ctrl.ini.opsiip">{{$ctrl.ini.opsiip}}</b></span> <span ng-if="!$ctrl.ini.opsiip" translate> No opsi will be configured </span>
                 <li><span>Docker</span> <span><b ng-if="$ctrl.ini.dockerip">{{$ctrl.ini.dockerip}}</b></span><span ng-if="!$ctrl.ini.dockerip" translate> No docker host will be configured </span>
                 <li><span >Mail</span> <span><b ng-if="$ctrl.ini.mailip">{{$ctrl.ini.mailip}}</b></span><span ng-if="!$ctrl.ini.mailip" translate> No mailservice will be configured </span>
                 <li ng-if="$ctrl.ini.mailip"><div > <span translate >SMTP User</span> <span><b">{{$ctrl.ini.smtpuser}}</b></span></div>

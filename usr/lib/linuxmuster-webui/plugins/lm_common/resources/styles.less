@@ -160,3 +160,35 @@ html body.customized .form-control:focus {
         float: right;
 }
 
+p.dotlist:before {
+  content: '';
+  position: absolute;
+  bottom: .4rem;
+  width: 100%;
+  height: 0;
+  line-height: 0;
+  border-bottom: 2px dotted #ddd;
+}
+
+// list with dots
+ul.leaders {
+    max-width: 30em;
+    padding: 0;
+    overflow-x: hidden;
+    list-style: none}
+ul.leaders li:before {
+    float: left;
+    width: 0;
+    white-space: nowrap;
+    content:
+ ". . . . . . . . . . . . . . . . . . . . "
+ ". . . . . . . . . . . . . . . . . . . . "
+ ". . . . . . . . . . . . . . . . . . . . "
+ ". . . . . . . . . . . . . . . . . . . . "}
+ul.leaders span:first-child {
+    padding-right: 0.33em;
+    background: white}
+ul.leaders span + span {
+    float: right;
+    padding-left: 0.33em;
+    background: white}

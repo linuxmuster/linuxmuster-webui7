@@ -12,6 +12,27 @@ class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
 
+    @url(r'/api/lm/setup-wizard/read-ini')
+    @endpoint(api=True, auth=True)
+    def handle_api_read_log(self, http_context, path=None):
+        config = ConfigParser.RawConfigParser()
+        if http_context.method == 'GET':
+            if os.path.exists('/tmp/setup.ini'):
+                config.read('/tmp/setup.ini')
+                settings = {}
+                # iterate all sections
+                for section in config.sections():
+                    for (key, val) in config.items(section):
+                        if val.isdigit():
+                            val = int(val)
+                        # settings[section][key] = val
+                        if val == 'no':
+                            val = False
+                        if val == 'yes':
+                            val = True
+                        settings[key] = val
+                return settings
+
     @url(r'/api/lm/setup-wizard/update-ini')
     @endpoint(api=True, auth=True)
     def handle_api_log(self, http_context, path=None):

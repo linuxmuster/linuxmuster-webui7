@@ -18,177 +18,246 @@ angular.module('lm.setup_wizard').run(function ($http, $location, identity) {
 'use strict';
 
 angular.module('lm.setup_wizard').config(function ($routeProvider) {
-  $routeProvider.when('/view/lm/init/welcome', {
-    templateUrl: '/lm_setup_wizard:partial/init-welcome.html',
-    controller: 'InitWelcomeController',
-    controllerAs: '$ctrl'
-  });
+    $routeProvider.when('/view/lm/init/welcome', {
+        templateUrl: '/lm_setup_wizard:partial/init-welcome.html',
+        controller: 'InitWelcomeController',
+        controllerAs: '$ctrl'
+    });
 
-  $routeProvider.when('/view/lm/init/school', {
-    templateUrl: '/lm_setup_wizard:partial/init-school.html',
-    controller: 'InitSchoolController',
-    controllerAs: '$ctrl'
-  });
+    $routeProvider.when('/view/lm/init/school', {
+        templateUrl: '/lm_setup_wizard:partial/init-school.html',
+        controller: 'InitSchoolController',
+        controllerAs: '$ctrl'
+    });
 
-  $routeProvider.when('/view/lm/init/account', {
-    templateUrl: '/lm_setup_wizard:partial/init-account.html',
-    controller: 'InitAccountController',
-    controllerAs: '$ctrl'
-  });
+    $routeProvider.when('/view/lm/init/account', {
+        templateUrl: '/lm_setup_wizard:partial/init-account.html',
+        controller: 'InitAccountController',
+        controllerAs: '$ctrl'
+    });
 
-  $routeProvider.when('/view/lm/init/externalservices', {
-    templateUrl: '/lm_setup_wizard:partial/init-externalServices.html',
-    controller: 'InitExternalServicesController',
-    controllerAs: '$ctrl'
-  });
+    $routeProvider.when('/view/lm/init/externalservices', {
+        templateUrl: '/lm_setup_wizard:partial/init-externalServices.html',
+        controller: 'InitExternalServicesController',
+        controllerAs: '$ctrl'
+    });
 
-  $routeProvider.when('/view/lm/init/setup', {
-    templateUrl: '/lm_setup_wizard:partial/init-setup.html',
-    controller: 'InitSetupController',
-    controllerAs: '$ctrl'
-  });
+    $routeProvider.when('/view/lm/init/summary', {
+        templateUrl: '/lm_setup_wizard:partial/init-summary.html',
+        controller: 'InitSummaryController',
+        controllerAs: '$ctrl'
+    });
+
+    $routeProvider.when('/view/lm/init/setup', {
+        templateUrl: '/lm_setup_wizard:partial/init-setup.html',
+        controller: 'InitSetupController',
+        controllerAs: '$ctrl'
+    });
 });
 
 angular.module('lm.setup_wizard').controller('InitWelcomeController', function (gettext, pageTitle, $http, config) {
-  var _this = this;
+    var _this = this;
 
-  pageTitle.set(gettext('Setup Wizard'));
-  this.config = config;
-  console.log("test");
-  console.log(config);
-  $http.get('/api/core/languages').then(function (response) {
-    return _this.languages = response.data;
-  });
+    pageTitle.set(gettext('Setup Wizard'));
+    this.config = config;
+    console.log("test");
+    console.log(config);
+    $http.get('/api/core/languages').then(function (response) {
+        return _this.languages = response.data;
+    });
 
-  this.apply = async function () {
-    await _this.config.save();
-    $location.path('/view/lm/init/account');
-  };
+    this.apply = async function () {
+        await _this.config.save();
+        $location.path('/view/lm/init/account');
+    };
 });
 
 angular.module('lm.setup_wizard').controller('InitSchoolController', function ($location, $http, gettext, pageTitle, notify) {
-  var _this2 = this;
+    var _this2 = this;
 
-  pageTitle.set(gettext('Setup Wizard'));
-  $http.get('/api/core/languages').then(function (response) {
-    return _this2.languages = response.data;
-  });
-  this.ini = {};
-  this.apply = async function () {
-    $dataMissing = false;
+    pageTitle.set(gettext('Setup Wizard'));
+    $http.get('/api/core/languages').then(function (response) {
+        return _this2.languages = response.data;
+    });
 
-    var fields = ["schoolname", "servername", "domainname"];
+    $http.get('/api/lm/setup-wizard/read-ini').then(function (response) {
+        return _this2.ini = response.data;
+    });
 
-    for (var i = 0; i < fields.length; i++) {
-      var field = fields[i];
-      if (_this2.ini[field] == null || _this2.ini[field] == '') {
-        document.getElementById(field + '-input').style.background = 'rgba(255, 178, 178, 0.29)';
-        document.getElementById(field + '-input').style.borderColor = 'red';
-        $dataMissing = true;
-      } else {
-        document.getElementById(field + '-input').style.background = '';
-        document.getElementById(field + '-input').style.borderColor = '';
-      }
-    }
+    // fields to validate
+    // define property values so they are not null
+    this.ini = { schoolname: "", domainname: "", servername: ""
+        // list of fields which need validation
+    };var fields = ["schoolname", "domainname", "servername"];
 
-    if ($dataMissing == true) {
-      notify.error('Required data missing');
-      return;
-    }
-    await $http.post('/api/lm/setup-wizard/update-ini', _this2.ini);
-    $location.path('/view/lm/init/account');
-  };
+    this.apply = async function () {
+        $dataMissing = false;
+        $badCharacters = false;
+
+        // var fields=["schoolname", "servername", "domainname"]
+
+        for (var i = 0; i < fields.length; i++) {
+            var field = fields[i];
+            console.log($dataMissing);
+            console.log($badCharacters);
+            console.log(_this2.ini[field]);
+            console.log(_this2);
+            if (_this2.ini[field] == '') {
+                document.getElementById(field + '-input').style.background = 'rgba(255, 178, 178, 0.29)';
+                document.getElementById(field + '-input').style.borderColor = 'red';
+                $dataMissing = true;
+            } else {
+                // in this case null means it does not fit the pattenr defined in html
+                if (_this2.ini[field] == null) {
+                    document.getElementById(field + '-input').style.background = 'rgba(255, 178, 178, 0.29)';
+                    document.getElementById(field + '-input').style.borderColor = 'red';
+                    $badCharacters = true;
+                } else {
+                    document.getElementById(field + '-input').style.background = '';
+                    document.getElementById(field + '-input').style.borderColor = '';
+                }
+            }
+        }
+        console.log($dataMissing);
+        console.log($badCharacters);
+
+        if ($dataMissing == true) {
+            notify.error('Required data missing');
+            return;
+        }
+        if ($badCharacters == true) {
+            notify.error('Maleformed input');
+            return;
+        }
+
+        await $http.post('/api/lm/setup-wizard/update-ini', _this2.ini);
+        $location.path('/view/lm/init/account');
+    };
 });
 
 angular.module('lm.setup_wizard').controller('InitAccountController', function ($scope, $location, $http, gettext, pageTitle, notify) {
-  var _this3 = this;
+    var _this3 = this;
 
-  pageTitle.set(gettext('Setup Wizard'));
-  this.ini = {};
-  this.apply = function () {
-    if (_this3.ini.adminpw != _this3.adminpwConfirmation) {
-      notify.error('Administrator password missmatch');
-      return;
-    }
-    if (!validCharPwd(_this3.ini.adminpw)) {
-      notify.error('Password contains invalid characters');
-      return;
-    }
-    if (!isStrongPwd(_this3.ini.adminpw)) {
-      notify.error('Password too weak');
-      return;
-    }
-    $http.post('/api/lm/setup-wizard/update-ini', _this3.ini).then(function () {
-      return $location.path('/view/lm/init/externalservices');
-    });
-  };
+    pageTitle.set(gettext('Setup Wizard'));
+    this.ini = {};
+    this.apply = function () {
+        if (_this3.ini.adminpw != _this3.adminpwConfirmation) {
+            notify.error('Administrator password missmatch');
+            return;
+        }
+        if (!validCharPwd(_this3.ini.adminpw)) {
+            notify.error('Password contains invalid characters');
+            return;
+        }
+        if (!isStrongPwd(_this3.ini.adminpw)) {
+            notify.error('Password too weak');
+            return;
+        }
+        $http.post('/api/lm/setup-wizard/update-ini', _this3.ini).then(function () {
+            return $location.path('/view/lm/init/externalservices');
+        });
+    };
 });
 
 angular.module('lm.setup_wizard').controller('InitExternalServicesController', function ($location, $http, gettext, pageTitle, notify) {
-  var _this4 = this;
+    var _this4 = this;
 
-  pageTitle.set(gettext('Setup Wizard'));
-  this.ini = {};
+    pageTitle.set(gettext('Setup Wizard'));
+    this.ini = {};
 
-  this.finish = function () {
-    if (_this4.ini.smtppw != _this4.smtppwConfirmation) {
-      notify.error('SMTP password missmatch');
-      return;
-    }
-    if (!_this4.enableOPSI) {
-      delete _this4.ini['opsiip'];
-    }
-    if (!_this4.enableDOCKER) {
-      delete _this4.ini['dockerip'];
-    }
-    if (!_this4.enableMail) {
-      delete _this4.ini['mailip'];
-      delete _this4.ini['smtprelay'];
-      delete _this4.ini['smtpuser'];
-      delete _this4.ini['smtppw'];
-    }
-    $http.post('/api/lm/setup-wizard/update-ini', _this4.ini).then(function () {
-      return $location.path('/view/lm/init/setup');
+    this.apply = function () {
+        if (_this4.ini.smtppw != _this4.smtppwConfirmation) {
+            notify.error('SMTP password missmatch');
+            return;
+        }
+        if (!_this4.enableOPSI) {
+            delete _this4.ini['opsiip'];
+        }
+        if (!_this4.enableDOCKER) {
+            delete _this4.ini['dockerip'];
+        }
+        if (!_this4.enableMail) {
+            delete _this4.ini['mailip'];
+            delete _this4.ini['smtprelay'];
+            delete _this4.ini['smtpuser'];
+            delete _this4.ini['smtppw'];
+        }
+        $http.post('/api/lm/setup-wizard/update-ini', _this4.ini).then(function () {
+            return $location.path('/view/lm/init/summary');
+        });
+    };
+});
+
+angular.module('lm.setup_wizard').controller('InitSummaryController', function ($location, $http, gettext, pageTitle, notify) {
+    var _this5 = this;
+
+    pageTitle.set(gettext('Setup Wizard'));
+    this.ini = {};
+    $http.get('/api/lm/setup-wizard/read-ini').then(function (response) {
+        return _this5.ini = response.data;
     });
-  };
+
+    this.finish = function () {
+        //if (this.ini.smtppw != this.smtppwConfirmation) {
+        //    notify.error('SMTP password missmatch')
+        //    return
+        //}
+        //if (!this.enableOPSI) {
+        //    delete this.ini['opsiip']
+        //}
+        //if (!this.enableDOCKER) {
+        //    delete this.ini['dockerip']
+        //}
+        //if (!this.enableMail) {
+        //    delete this.ini['mailip']
+        //    delete this.ini['smtprelay']
+        //    delete this.ini['smtpuser']
+        //    delete this.ini['smtppw']
+        //}
+        $http.post('/api/lm/setup-wizard/update-ini', _this5.ini).then(function () {
+            return $location.path('/view/lm/init/setup');
+        });
+    };
 });
 
 angular.module('lm.setup_wizard').controller('InitSetupController', function ($location, $http, gettext, pageTitle, notify) {
-  var _this5 = this;
+    var _this6 = this;
 
-  pageTitle.set(gettext('Setup Wizard'));
-  this.isWorking = true;
-  $http.post('/api/lm/setup-wizard/provision').then(function () {
-    _this5.isWorking = false;
-    notify.success(gettext('Setup complete'));
-  }).catch(function () {
-    _this5.isWorking = true;
-  });
-  this.close = function () {
-    notify.success(gettext('Restart Webui'));
-    $http.post('/api/lm/setup-wizard/restart').then(function () {
-      $location.path('/');
+    pageTitle.set(gettext('Setup Wizard'));
+    this.isWorking = true;
+    $http.post('/api/lm/setup-wizard/provision').then(function () {
+        _this6.isWorking = false;
+        notify.success(gettext('Setup complete'));
+    }).catch(function () {
+        _this6.isWorking = true;
     });
-  };
+    this.close = function () {
+        notify.success(gettext('Restart Webui'));
+        $http.post('/api/lm/setup-wizard/restart').then(function () {
+            // TODO Validate if this works
+            location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+            //$location.path('/')
+        });
+    };
 });
 
 function resetColor(id) {
-  document.getElementById(id).style.background = '';
-  document.getElementById(id).style.borderColor = '';
+    document.getElementById(id).style.background = '';
+    document.getElementById(id).style.borderColor = '';
 }
 
 function validCharPwd(password) {
-  console.log("check valids");
-  var regExp = /^[a-zA-Z 0-9 !@#§+\-$%&*{}()\]\[]+$/;
-  var validPassword = regExp.test(password);
-  return validPassword;
+    console.log("check valids");
+    var regExp = /^[a-zA-Z0-9!@#§+\-$%&*{}()\]\[]+$/;
+    var validPassword = regExp.test(password);
+    return validPassword;
 }
 
 function isStrongPwd(password) {
-  console.log("check strength");
-  var regExp = /(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#§+\-$%&*{}()\]\[]|(?=.*\d)).{7,}/;
-  var validPassword = regExp.test(password);
-  return validPassword;
+    console.log("check strength");
+    var regExp = /(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#§+\-$%&*{}()\]\[]|(?=.*\d)).{7,}/;
+    var validPassword = regExp.test(password);
+    return validPassword;
 }
 
 

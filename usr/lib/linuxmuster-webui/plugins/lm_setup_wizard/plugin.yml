@@ -15,4 +15,5 @@ resources:
     - 'partial/init-account.html'
     - 'partial/init-externalServices.html'
     - 'partial/init-setup.html'
+    - 'partial/init-summary.html'
     - 'ng:lm.setup_wizard'

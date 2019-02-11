@@ -6,13 +6,8 @@ from jadi import component
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
 from aj.plugins.lm_common.api import CSVSpaceStripper
-
 from aj.auth import authorize
 from aj.plugins.lm_common.api import lmn_checkPermission
-
-from aj.auth import AuthenticationService
-import aj
-
 from aj.plugins.lm_common.api import lm_backup_file
 from aj.plugins.lm_common.api import lmn_getSophomorixValue
 
@@ -397,7 +392,7 @@ class Handler(HttpPlugin):
     @url(r'/api/lmn/sophomorixUsers/new-file')
     @endpoint(api=True)
     def handle_api_sophomorix_newfile(self, http_context):
-        #TODO needs update for multischool
+        # TODO needs update for multischool
 
         path = http_context.json_body()['path']
         userlist = http_context.json_body()['userlist']
@@ -405,7 +400,7 @@ class Handler(HttpPlugin):
 
             if userlist == 'teachers.csv':
                 with authorize('lm:users:teachers:write'):
-                    sophomorixCommand = ['sophomorix-newfile', path , '--name', userlist, '-jj']
+                    sophomorixCommand = ['sophomorix-newfile', path, '--name', userlist, '-jj']
                     result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
                     if result['TYPE'] == "ERROR":
                         return ["ERROR", result['MESSAGE_EN']]
@@ -414,13 +409,12 @@ class Handler(HttpPlugin):
 
             if userlist == 'students.csv':
                 with authorize('lm:users:students:write'):
-                    sophomorixCommand = ['sophomorix-newfile', path , '--name', userlist, '-jj']
+                    sophomorixCommand = ['sophomorix-newfile', path, '--name', userlist, '-jj']
                     result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
                     if result['TYPE'] == "ERROR":
                         return ["ERROR", result['MESSAGE_EN']]
                     if result['TYPE'] == "LOG":
                         return ["LOG", result['LOG']]
-
 
     @url(r'/api/lm/users/print')
     @authorize('lm:users:passwords')
@@ -430,13 +424,9 @@ class Handler(HttpPlugin):
         if http_context.method == 'GET':
             sophomorixCommand = ['sophomorix-print', '--school', school, '--info', '-jj']
 
-            #username = aj.worker.context.identity
-            permission = 'lm:users:teachers:read'
-            #AuthenticationService.get(aj.worker.context).get_provider().authorize(username, permission)
-
             with authorize('lm:users:students:read'):
                 classes = lmn_getSophomorixValue(sophomorixCommand, 'LIST_BY_sophomorixSchoolname_sophomorixAdminClass/'+school)
-                if lmn_checkPermission(permission):
+                if lmn_checkPermission('lm:users:teachers:read'):
                     # append empty element. This references to all users
                     classes.append('')
                 else:
@@ -458,6 +448,7 @@ class Handler(HttpPlugin):
                 sophomorixCommand.extend(['--class', schoolclass])
             # sophomorix-print needs the json parameter at the very end
             sophomorixCommand.extend(['-jj'])
+            # check permissions
             if not schoolclass:
                 # double check if user is allowed to print all passwords
                 with authorize('lm:users:teachers:read'):

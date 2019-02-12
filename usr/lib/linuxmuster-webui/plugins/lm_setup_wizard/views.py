@@ -30,6 +30,10 @@ class Handler(HttpPlugin):
                             val = False
                         if val == 'yes':
                             val = True
+                        if val == 'True':
+                            val = True
+                        if val == 'False':
+                            val = False
                         settings[key] = val
                 return settings
 
@@ -43,8 +47,15 @@ class Handler(HttpPlugin):
         if not cfg.has_section('setup'):
             cfg.add_section('setup')
 
+        #cfg.remove_option('setup', 'opsiip')
         for key, value in http_context.json_body().items():
-            cfg.set('setup', key, str(value))
+            if value == 'null':
+                #raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(key))
+                cfg.remove_option('setup', key)
+            else:
+                cfg.set('setup', key, str(value))
+        
+        #raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(cfg.items))
 
         with open('/tmp/setup.ini', 'w') as f:
             cfg.write(f)

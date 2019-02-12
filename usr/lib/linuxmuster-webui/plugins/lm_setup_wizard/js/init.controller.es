@@ -145,20 +145,24 @@ angular.module('lm.setup_wizard').controller('InitExternalServicesController', f
         console.log(this.enableOPSI)
 
         if (!this.enableOPSI) {
-            delete this.ini['opsiip']
+            this.ini['opsiip'] = 'null'
         }
         if (!this.enableDOCKER) {
-            delete this.ini['dockerip']
+            this.ini['dockerip'] = 'null'
         }
         if (!this.enableMail) {
-            delete this.ini['mailip']
-            delete this.ini['smtprelay']
-            delete this.ini['smtpuser']
-            delete this.ini['smtppw']
+            this.ini['mailip'] = 'null'
+            this.ini['smtprelay'] = 'null'
+            this.ini['smtpuser'] = 'null'
+            this.ini['smtppw'] = 'null'
         }
+
+        if (this.enableMail){
+
         if (this.ini.smtppw != this.smtppwConfirmation) {
             notify.error('SMTP password missmatch')
             return
+        }
         }
         $http.post('/api/lm/setup-wizard/update-ini', this.ini).then(() => {
             return $location.path('/view/lm/init/summary')

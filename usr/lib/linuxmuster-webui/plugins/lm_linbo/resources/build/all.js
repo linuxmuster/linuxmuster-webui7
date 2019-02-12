@@ -595,7 +595,7 @@
       });
     };
     $scope.deleteConfig = function(configName) {
-      return messagebox.prompt({
+      return messagebox.show({
         text: `Delete '${configName}'?`,
         positive: 'Delete',
         negative: 'Cancel'

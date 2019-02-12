@@ -489,7 +489,7 @@ angular.module('lm.linbo').controller 'LMLINBOController', ($scope, $http, $uibM
                         $route.reload()
 
     $scope.deleteConfig = (configName) ->
-        messagebox.prompt(text: "Delete '#{configName}'?", positive: 'Delete', negative: 'Cancel').then () ->
+        messagebox.show(text: "Delete '#{configName}'?", positive: 'Delete', negative: 'Cancel').then () ->
             $http.delete("/api/lm/linbo/config/#{configName}").then () ->
                 $route.reload()
 

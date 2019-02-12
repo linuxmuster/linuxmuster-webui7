@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.45-1) UNRELEASED; urgency=medium 
+
+  * Current snapshot build 1b8bf44d8454762e443d656ba1eb32fb7e6613b4
+   *     added navigation support (tab) in setup wizard
+
+ -- Andreas Till <andreas.till@netzint.de> Tue Feb 12 15:21:51 UTC 2019
+
 linuxmuster-webui7 (1.0.44-1) UNRELEASED; urgency=medium 
 
   * Current snapshot build cb17d0008ed0235a8e4b54f13b337bf544ef9869

@@ -170,20 +170,24 @@ angular.module('lm.setup_wizard').controller('InitExternalServicesController', f
         console.log(_this4.enableOPSI);
 
         if (!_this4.enableOPSI) {
-            delete _this4.ini['opsiip'];
+            _this4.ini['opsiip'] = 'null';
         }
         if (!_this4.enableDOCKER) {
-            delete _this4.ini['dockerip'];
+            _this4.ini['dockerip'] = 'null';
         }
         if (!_this4.enableMail) {
-            delete _this4.ini['mailip'];
-            delete _this4.ini['smtprelay'];
-            delete _this4.ini['smtpuser'];
-            delete _this4.ini['smtppw'];
+            _this4.ini['mailip'] = 'null';
+            _this4.ini['smtprelay'] = 'null';
+            _this4.ini['smtpuser'] = 'null';
+            _this4.ini['smtppw'] = 'null';
         }
-        if (_this4.ini.smtppw != _this4.smtppwConfirmation) {
-            notify.error('SMTP password missmatch');
-            return;
+
+        if (_this4.enableMail) {
+
+            if (_this4.ini.smtppw != _this4.smtppwConfirmation) {
+                notify.error('SMTP password missmatch');
+                return;
+            }
         }
         $http.post('/api/lm/setup-wizard/update-ini', _this4.ini).then(function () {
             return $location.path('/view/lm/init/summary');

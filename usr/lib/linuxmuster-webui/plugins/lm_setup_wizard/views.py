@@ -23,9 +23,9 @@ class Handler(HttpPlugin):
                 # iterate all sections
                 for section in config.sections():
                     for (key, val) in config.items(section):
+                        # Translate types
                         if val.isdigit():
                             val = int(val)
-                        # settings[section][key] = val
                         if val == 'no':
                             val = False
                         if val == 'yes':

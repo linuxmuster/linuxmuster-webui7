@@ -238,7 +238,6 @@ function resetColor(id) {
 }
 
 function validCharPwd(password) {
-    console.log("check valids");
     var regExp = /^[a-zA-Z0-9!@#§+\-$%&*{}()\]\[]+$/;
     var validPassword = regExp.test(password);
     return validPassword;

@@ -9,7 +9,7 @@ class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
 
-    @url(r'/api/lm/change-password')
+    @url(r'/api/lmn/change-password')
     @endpoint(api=True)
     def handle_api_change_password(self, http_context):
         provider = AuthenticationService.get(self.context).get_provider()

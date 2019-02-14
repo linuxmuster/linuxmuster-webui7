@@ -5,7 +5,7 @@ angular.module 'lm.auth', [
 angular.module('lm.auth').run (customization, identity) ->
     customization.plugins.core.extraProfileMenuItems = [
         {
-            url: '/view/lm/change-password',
+            url: '/view/lmn/change-password',
             name: 'Change password',
             icon: 'key'
         }

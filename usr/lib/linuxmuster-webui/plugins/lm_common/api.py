@@ -108,24 +108,22 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
     jsonDict = {}
     while jsonS.poll() is None:
         output = jsonS.stdout.readline()
-	output = output.replace("null", "\"null\"")
+        output = output.replace("null", "\"null\"")
         if record == 1 :
-		data += output.strip('\n')
-	if '# JSON-begin' in output and '# JSON-end' in output:
-		record = 1
-		tmp = re.sub('# JSON-begin', '', output.strip('\n'))
-		data += re.sub('# JSON.*', '', output.strip('\n'))
-	elif '# JSON-begin' in output:
-		record = 1
-                data += re.sub('# JSON-begin', '', output.strip('\n'))
-	elif '# JSON-end' in output:
-		record = 0
-		data += re.sub('# JSON.*', '', output.strip('\n'))
-		if data:
-			jsonDict = dict(jsonDict, **eval(data))
-		else:
-			jsonDict = dict(jsonDict)
-		data = ''	
+            data += output.strip('\n')
+        if '# JSON-begin' in output and '# JSON-end' in output:
+            record = 1
+            tmp = re.sub('# JSON-begin', '', output.strip('\n'))
+            data += re.sub('# JSON.*', '', output.strip('\n'))
+        elif '# JSON-begin' in output:
+            record = 1
+            data += re.sub('# JSON-begin', '', output.strip('\n'))
+        elif '# JSON-end' in output:
+            record = 0
+            data += re.sub('# JSON.*', '', output.strip('\n'))
+    if data:
+        jsonDict = dict(jsonDict, **eval(data))
+    data = ''	
 
     ## Debug
     #with open('/var/log/getSophomorixValueDebugoutput.log', 'w') as f: 

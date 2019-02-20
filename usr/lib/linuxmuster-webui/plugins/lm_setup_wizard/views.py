@@ -54,7 +54,7 @@ class Handler(HttpPlugin):
                 cfg.remove_option('setup', key)
             else:
                 cfg.set('setup', key, str(value))
-        
+
         #raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(cfg.items))
 
         with open('/tmp/setup.ini', 'w') as f:

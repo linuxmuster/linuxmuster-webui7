@@ -102,12 +102,12 @@ def lmn_getUserLdapValue(user, field):
 
 
 def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
-    jsonS = subprocess.Popen(sophomorixCommand, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=False)
+    jsonS = subprocess.Popen(sophomorixCommand, stderr=subprocess.PIPE, shell=False)
     data = ''
     record = 0
     jsonDict = {}
     while jsonS.poll() is None:
-        output = jsonS.stdout.readline()
+        output = jsonS.stderr.readline()
         output = output.replace("null", "\"null\"")
         if record == 1 :
             data += output.strip('\n')
@@ -123,7 +123,7 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
             data += re.sub('# JSON.*', '', output.strip('\n'))
     if data:
         jsonDict = dict(jsonDict, **eval(data))
-    data = ''	
+    data = ''
 
     ## Debug
     #with open('/var/log/getSophomorixValueDebugoutput.log', 'w') as f: 

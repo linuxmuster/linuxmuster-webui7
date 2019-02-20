@@ -22,11 +22,6 @@ case "$1" in
         # Set default permissions from true to false
         echo "set reverse permissions"
         sed -i "s/: True,/: False,/g" /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/main.py
-        # Deactivate tracking through mixpanel
-	echo "Deactivate Mixpanel"
-	cd /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core
-	sed -i 's/true/false/g' resources/js/core/services/feedback.service.es
-	/usr/local/bin/ajenti-dev-multitool --build
 	# systemctl einrichten und starten
         echo "configure systemctl.."
         systemctl daemon-reload
@@ -55,11 +50,6 @@ case "$1" in
     pip install -r $webuietc/requirements.txt -q
     # split ajenti config.yml from webui config.yml if necessary
     $webuietc/split_config_aj.py
-    # Deactivate tracking through mixpanel
-    echo "Deactivate Mixpanel"
-    cd /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core
-    sed -i 's/true/false/g' resources/js/core/services/feedback.service.es
-    /usr/local/bin/ajenti-dev-multitool --build
     # Set default permissions from true to false
     echo "set reverse permissions"
     sed -i "s/: True,/: False,/g" /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/main.py

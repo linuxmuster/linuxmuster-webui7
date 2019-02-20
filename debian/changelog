@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.47-1) UNRELEASED; urgency=medium 
+
+  * Current snapshot build 31708c017c105e2e5f542473039a741470832eff
+   *     fixed summary page in wizard firewall entry
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Feb 20 12:17:31 UTC 2019
+
 linuxmuster-webui7 (1.0.46-1) UNRELEASED; urgency=medium 
 
   * Current snapshot build 2e229ec619106f94b987fdc1b2e683fc06c3f960

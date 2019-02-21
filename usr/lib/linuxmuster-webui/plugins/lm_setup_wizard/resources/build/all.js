@@ -48,6 +48,12 @@ angular.module('lm.setup_wizard').config(function ($routeProvider) {
         controllerAs: '$ctrl'
     });
 
+    $routeProvider.when('/view/lm/init/done', {
+        templateUrl: '/lm_setup_wizard:partial/init-done.html',
+        controller: 'InitDoneController',
+        controllerAs: '$ctrl'
+    });
+
     $routeProvider.when('/view/lm/init/setup', {
         templateUrl: '/lm_setup_wizard:partial/init-setup.html',
         controller: 'InitSetupController',
@@ -222,7 +228,18 @@ angular.module('lm.setup_wizard').controller('InitSetupController', function ($l
     }).catch(function () {
         _this6.isWorking = true;
     });
+    this.finish = function () {
+        return $location.path('/view/lm/init/done');
+    };
+});
+
+angular.module('lm.setup_wizard').controller('InitDoneController', function ($location, $http, gettext, pageTitle, notify) {
+    pageTitle.set(gettext('Setup Done'));
+
     this.close = function () {
+        location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+
+        //$location.href('https://www.google.de');
         notify.success(gettext('Restart Webui'));
         location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
         $http.post('/api/lm/setup-wizard/restart').then(function () {

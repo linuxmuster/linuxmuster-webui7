@@ -1,0 +1,22 @@
+<dialog dialog-class='modal-lv' >
+    <div class="modal-header">
+        <h3 translate>Setup complete</h3>
+    </div>
+    <div  style="height: 300px;" class="modal-body scrollable">
+        <div class="form-group">
+            <h4 translate>Information</h4>
+            <div translate>The setup was completed.</div> <br>
+            <div translate>If you hit the close button you will be forwarded to a ssl encrypted version of LinuxMuster Webui. Unless you install
+                a trusted certificate you will be asked to confirm the untrusted, just created, certificate. Confirm this certificate to proceed</div>
+                <br>
+            <div>Keep in mind <b>not</b> to login as root user. Login using the  <b>global-admin</b> credentials you specified during the setup.</div>
+            <br>
+
+    
+        <div class="modal-footer">
+            <a ng:click="$ctrl.close()" class="btn btn-default btn-flat" translate>Close</a>
+        </div>
+    </div>
+    
+    </dialog>
+    

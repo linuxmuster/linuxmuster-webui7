@@ -224,6 +224,7 @@ angular.module('lm.setup_wizard').controller('InitSetupController', function ($l
     });
     this.close = function () {
         notify.success(gettext('Restart Webui'));
+        location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
         $http.post('/api/lm/setup-wizard/restart').then(function () {
             // TODO Validate if this works
             location.href = 'https:' + window.location.href.substring(window.location.protocol.length);

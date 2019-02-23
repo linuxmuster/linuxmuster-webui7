@@ -306,7 +306,7 @@ class Handler(HttpPlugin):
         if http_context.json_body()['doAdd']:
             script += 'sophomorix-add >> %s;' % path
         if http_context.json_body()['doMove']:
-            script += 'sophomorix-move >> %s;' % path
+            script += 'sophomorix-update >> %s;' % path
         if http_context.json_body()['doKill']:
             script += 'sophomorix-kill >> %s;' % path
 

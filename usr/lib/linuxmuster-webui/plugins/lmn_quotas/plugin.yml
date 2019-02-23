@@ -1,0 +1,18 @@
+name: lmn_quotas
+author: linuxmuster
+email: e@ajenti.org
+url: http://linuxmuster.net
+version: '1.0'
+title: 'Quotas'
+icon: tasks
+dependencies:
+    - !!python/object:aj.plugins.PluginDependency { plugin_name: core }
+    - !!python/object:aj.plugins.PluginDependency { plugin_name: lmn_common }
+    - !!python/object:aj.plugins.PluginDependency { plugin_name: lmn_users }
+resources:
+    - 'resources/js/module.coffee'
+    - 'resources/js/controllers/index.controller.coffee'
+    - 'resources/partial/index.html'
+    - 'resources/partial/disabled.html'
+    - 'resources/partial/apply.modal.html'
+    - 'ng:lm.quotas'

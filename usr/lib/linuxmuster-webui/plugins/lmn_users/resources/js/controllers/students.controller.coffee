@@ -1,7 +1,7 @@
 angular.module('lm.users').config ($routeProvider) ->
     $routeProvider.when '/view/lm/users/students',
         controller: 'LMUsersStudentsController'
-        templateUrl: '/lm_users:resources/partial/students.html'
+        templateUrl: '/lmn_users:resources/partial/students.html'
 
 angular.module('lm.users').controller 'LMUsersStudentsController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) ->
     pageTitle.set(gettext('Students'))
@@ -48,7 +48,7 @@ angular.module('lm.users').controller 'LMUsersStudentsController', ($scope, $htt
 
     $scope.setCustomPassword = (user) ->
         $uibModal.open(
-            templateUrl: '/lm_users:resources/partial/customPassword.modal.html'
+            templateUrl: '/lmn_users:resources/partial/customPassword.modal.html'
             controller: 'LMNUsersCustomPasswordController'
             size: 'mg'
             resolve:
@@ -56,7 +56,7 @@ angular.module('lm.users').controller 'LMUsersStudentsController', ($scope, $htt
         )
     $scope.userInfo = (user) ->
         $uibModal.open(
-            templateUrl: '/lm_users:resources/partial/userDetails.modal.html'
+            templateUrl: '/lmn_users:resources/partial/userDetails.modal.html'
             controller: 'LMNUserDetailsController'
             size: 'lg'
             resolve:

@@ -1,18 +1,18 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: ajenti\n"
+"Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-21 21:23+0100\n"
-"PO-Revision-Date: 2016-05-21 17:18-0400\n"
-"Last-Translator: eugenepankov <john.pankov@gmail.com>\n"
+"PO-Revision-Date: 2019-02-23 13:47\n"
+"Last-Translator: kiarn <lml@kientz.me>\n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"Plural-Forms: nplurals=4; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 3;\n"
 "X-Generator: crowdin.com\n"
-"X-Crowdin-Project: ajenti\n"
+"X-Crowdin-Project: linuxmusternet\n"
 "X-Crowdin-Language: cs\n"
 "X-Crowdin-File: /2.0/lmn_devices.po\n"
 
@@ -176,15 +176,15 @@ msgstr ""
 #: lmn_devices/resources/js/controllers/index.controller.coffee:47
 #: lmn_devices/resources/js/controllers/index.controller.coffee:105
 msgid "IP"
-msgstr "IP"
+msgstr ""
 
 #: lmn_devices/resources/js/controllers/index.controller.coffee:108
 msgid "Office Key"
-msgstr "Office klávesa"
+msgstr ""
 
 #: lmn_devices/resources/js/controllers/index.controller.coffee:111
 msgid "Windows Key"
-msgstr "Windows klávesa"
+msgstr ""
 
 #: lmn_devices/resources/js/controllers/index.controller.coffee:114
 msgid "DHCP-Options"
@@ -220,10 +220,5 @@ msgstr ""
 
 #: lmn_devices/resources/js/controllers/index.controller.coffee:146
 msgid "Saved"
-msgstr "Uloženo"
+msgstr ""
 
-#~ msgid "User-defined"
-#~ msgstr "Definované uživatelem"
-
-#~ msgid "Account type"
-#~ msgstr "Typ účtu"

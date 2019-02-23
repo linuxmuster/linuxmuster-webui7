@@ -1,10 +1,10 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: ajenti\n"
+"Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-21 21:23+0100\n"
-"PO-Revision-Date: 2016-05-21 17:19-0400\n"
-"Last-Translator: eugenepankov <john.pankov@gmail.com>\n"
+"PO-Revision-Date: 2019-02-23 13:47\n"
+"Last-Translator: kiarn <lml@kientz.me>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
 "MIME-Version: 1.0\n"
@@ -12,13 +12,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: crowdin.com\n"
-"X-Crowdin-Project: ajenti\n"
+"X-Crowdin-Project: linuxmusternet\n"
 "X-Crowdin-Language: es-ES\n"
 "X-Crowdin-File: /2.0/lmn_settings.po\n"
 
 #: lmn_settings/resources/partial/index.html:220
 msgid "Admin e-mail"
-msgstr "Correo del administrador"
+msgstr ""
 
 #: lmn_settings/resources/partial/index.html:131
 msgid "Cloudquota Percentage"
@@ -33,11 +33,11 @@ msgstr ""
 
 #: lmn_settings/resources/partial/index.html:162
 msgid "Encoding"
-msgstr "Codificación"
+msgstr ""
 
 #: lmn_settings/resources/partial/index.html:208
 msgid "External FQDN for printing"
-msgstr "FQDN externo para impresión"
+msgstr ""
 
 #: lmn_settings/resources/partial/index.html:181
 msgid "Extra courses encoding"
@@ -165,20 +165,3 @@ msgstr ""
 msgid "Saved"
 msgstr ""
 
-#~ msgid "Age of students"
-#~ msgstr "Edad de los estudiantes"
-
-#~ msgid "Change Samba password on first login"
-#~ msgstr "Cambiar contraseña de Samba en el primer inicio de sesión"
-
-#~ msgid "Email"
-#~ msgstr "Correo electrónico"
-
-#~ msgid "Applying changes"
-#~ msgstr "Aplicando cambios"
-
-#~ msgid "Close"
-#~ msgstr "Cerrar"
-
-#~ msgid "Details"
-#~ msgstr "Detalles"

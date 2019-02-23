@@ -1,10 +1,10 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: ajenti\n"
+"Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-21 21:23+0100\n"
-"PO-Revision-Date: 2016-05-21 17:19-0400\n"
-"Last-Translator: eugenepankov <john.pankov@gmail.com>\n"
+"PO-Revision-Date: 2019-02-23 13:48\n"
+"Last-Translator: kiarn <lml@kientz.me>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -12,13 +12,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: crowdin.com\n"
-"X-Crowdin-Project: ajenti\n"
+"X-Crowdin-Project: linuxmusternet\n"
 "X-Crowdin-Language: pt-BR\n"
 "X-Crowdin-File: /2.0/lmn_settings.po\n"
 
 #: lmn_settings/resources/partial/index.html:220
 msgid "Admin e-mail"
-msgstr "E-mail do Administrador"
+msgstr ""
 
 #: lmn_settings/resources/partial/index.html:131
 msgid "Cloudquota Percentage"
@@ -49,7 +49,7 @@ msgstr ""
 
 #: lmn_settings/resources/partial/index.html:8
 msgid "General"
-msgstr "Geral"
+msgstr ""
 
 #: lmn_settings/resources/partial/index.html:204
 msgid "Internal FQDN for printing"
@@ -60,9 +60,8 @@ msgid "MOODLE URL"
 msgstr ""
 
 #: lmn_settings/resources/partial/index.html:145
-#, fuzzy
 msgid "Mailquota Default"
-msgstr "Avisos de cota de e-mail"
+msgstr ""
 
 #: lmn_settings/resources/partial/index.html:46
 msgid "Password Length"
@@ -94,7 +93,7 @@ msgstr ""
 
 #: lmn_settings/resources/partial/index.html:79
 msgid "Removal after departure (days)"
-msgstr "Romover após saída (dias)"
+msgstr ""
 
 #: lmn_settings/resources/partial/index.html:212
 msgid "Samba domain for printing"
@@ -102,20 +101,19 @@ msgstr ""
 
 #: lmn_settings/resources/partial/index.html:231
 msgid "Save"
-msgstr "Salvar"
+msgstr ""
 
 #: lmn_settings/resources/partial/index.html:200
 msgid "School name"
-msgstr "Nome da escola"
+msgstr ""
 
 #: lmn_settings/resources/partial/index.html:99
 msgid "Schooladministrator"
 msgstr ""
 
 #: lmn_settings/resources/partial/index.html:20
-#, fuzzy
 msgid "Schoolname"
-msgstr "Nome da escola"
+msgstr ""
 
 #: lmn_settings/resources/partial/index.html:30
 #: lmn_settings/resources/partial/index.html:97
@@ -140,9 +138,8 @@ msgid "Tolerance after departure (days)"
 msgstr ""
 
 #: lmn_settings/main.py:15
-#, fuzzy
 msgid "School Settings"
-msgstr "Configurações"
+msgstr ""
 
 #: lmn_settings/main.py:29
 msgid "Configure settings"
@@ -150,7 +147,7 @@ msgstr ""
 
 #: lmn_settings/resources/js/controllers/index.controller.coffee:8
 msgid "Settings"
-msgstr "Configurações"
+msgstr ""
 
 #: lmn_settings/resources/js/controllers/index.controller.coffee:11
 msgid "Minimal"
@@ -166,37 +163,5 @@ msgstr ""
 
 #: lmn_settings/resources/js/controllers/index.controller.coffee:52
 msgid "Saved"
-msgstr "Salvo"
+msgstr ""
 
-#~ msgid "Age of students"
-#~ msgstr "Idade dos alunos"
-
-#~ msgid "Email"
-#~ msgstr "Email"
-
-#~ msgid "Filter star classes"
-#~ msgstr "Filtro de classes especiais"
-
-#~ msgid "firstname.lastname"
-#~ msgstr "firstname.lastname"
-
-#~ msgid "Mail aliases"
-#~ msgstr "Aliases de e-mail"
-
-#~ msgid "Mail quota warning at KB left"
-#~ msgstr "Aviso de cota de e-mail KB restante"
-
-#~ msgid "Max"
-#~ msgstr "Máximo"
-
-#~ msgid "Send warnings to root"
-#~ msgstr "Enviar avisos ao root"
-
-#~ msgid "SSH access"
-#~ msgstr "Acesso SSH"
-
-#~ msgid "Details"
-#~ msgstr "Detalhes"
-
-#~ msgid "Update failed"
-#~ msgstr "Falha ao atualizar"

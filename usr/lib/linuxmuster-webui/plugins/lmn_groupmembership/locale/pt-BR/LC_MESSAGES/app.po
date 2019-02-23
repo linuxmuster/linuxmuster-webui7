@@ -1,10 +1,10 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: ajenti\n"
+"Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-21 21:23+0100\n"
-"PO-Revision-Date: 2016-05-21 17:19-0400\n"
-"Last-Translator: eugenepankov <john.pankov@gmail.com>\n"
+"PO-Revision-Date: 2019-02-23 13:48\n"
+"Last-Translator: kiarn <lml@kientz.me>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -12,9 +12,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: crowdin.com\n"
-"X-Crowdin-Project: ajenti\n"
+"X-Crowdin-Project: linuxmusternet\n"
 "X-Crowdin-Language: pt-BR\n"
-"X-Crowdin-File: /2.0/lmn_settings.po\n"
+"X-Crowdin-File: /2.0/lmn_groupmembership.po\n"
 
 #: lmn_groupmembership/resources/partial/groupDetails.modal.html:10
 msgid "(edit members)"
@@ -83,37 +83,30 @@ msgstr ""
 
 #: lmn_groupmembership/resources/partial/editMembers.modal.html:53
 msgid "Save"
-msgstr "Salvar"
+msgstr ""
 
 #: lmn_groupmembership/resources/partial/index.html:49
-#, fuzzy
 msgid "Schoolclasses"
-msgstr "Nome da escola"
+msgstr ""
 
 #: lmn_groupmembership/resources/partial/groupDetails.modal.html:27
-#, fuzzy
 msgid "Schoolname:"
-msgstr "Nome da escola"
+msgstr ""
 
 #: lmn_groupmembership/resources/partial/groupDetails.modal.html:28
 msgid "Sophomorix Status:"
 msgstr ""
 
 #: lmn_groupmembership/resources/partial/index.html:73
-msgid ""
-"There are no printers configured yet. Ask your administrator to configure "
-"one."
+msgid "There are no printers configured yet. Ask your administrator to configure one."
 msgstr ""
 
 #: lmn_groupmembership/resources/partial/index.html:95
-msgid ""
-"There are no projects yet. You can create a new procet using the menu bar."
+msgid "There are no projects yet. You can create a new procet using the menu bar."
 msgstr ""
 
 #: lmn_groupmembership/resources/partial/index.html:52
-msgid ""
-"There are no schoolclasses available. Ask the administrator to import "
-"students"
+msgid "There are no schoolclasses available. Ask the administrator to import students"
 msgstr ""
 
 #: lmn_groupmembership/resources/partial/groupDetails.modal.html:26
@@ -168,9 +161,8 @@ msgid "Group Membership"
 msgstr ""
 
 #: lmn_groupmembership/resources/js/controllers/index.controller.coffee:111
-#, fuzzy
 msgid "Schoolclass"
-msgstr "Nome da escola"
+msgstr ""
 
 #: lmn_groupmembership/resources/js/controllers/index.controller.coffee:112
 #: lmn_groupmembership/resources/js/controllers/index.controller.coffee:129
@@ -193,53 +185,3 @@ msgstr ""
 msgid "Project Created"
 msgstr ""
 
-#~ msgid "Settings"
-#~ msgstr "Configurações"
-
-#~ msgid "Saved"
-#~ msgstr "Salvo"
-
-#~ msgid "Admin e-mail"
-#~ msgstr "E-mail do Administrador"
-
-#~ msgid "Age of students"
-#~ msgstr "Idade dos alunos"
-
-#~ msgid "Email"
-#~ msgstr "Email"
-
-#~ msgid "Filter star classes"
-#~ msgstr "Filtro de classes especiais"
-
-#~ msgid "firstname.lastname"
-#~ msgstr "firstname.lastname"
-
-#~ msgid "General"
-#~ msgstr "Geral"
-
-#~ msgid "Mail aliases"
-#~ msgstr "Aliases de e-mail"
-
-#~ msgid "Mail quota warning at KB left"
-#~ msgstr "Aviso de cota de e-mail KB restante"
-
-#~ msgid "Mail quota warnings"
-#~ msgstr "Avisos de cota de e-mail"
-
-#~ msgid "Max"
-#~ msgstr "Máximo"
-
-#~ msgid "Removal after departure (days)"
-#~ msgstr "Romover após saída (dias)"
-
-#~ msgid "Send warnings to root"
-#~ msgstr "Enviar avisos ao root"
-
-#~ msgid "SSH access"
-#~ msgstr "Acesso SSH"
-
-#~ msgid "Details"
-#~ msgstr "Detalhes"
-
-#~ msgid "Update failed"
-#~ msgstr "Falha ao atualizar"

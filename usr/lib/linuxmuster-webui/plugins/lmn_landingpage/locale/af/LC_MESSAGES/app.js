@@ -1,0 +1,1 @@
+{"": "", "Hello {{user.givenName}} {{user.sn}},": "", "Change password": "", "Welcome to Linuxmuster.net version 7!": "", "Quotas": "", "You should not use WebUI as root user! If this is your first time\\n": "", "use the sidebar to navigate through the options.\\n": "", "use the sidebar to navigate through the options. You\\n": "", "Home": "", "Total": ""}

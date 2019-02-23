@@ -1,10 +1,10 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: ajenti\n"
+"Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-21 21:22+0100\n"
-"PO-Revision-Date: 2016-05-21 17:19-0400\n"
-"Last-Translator: eugenepankov <john.pankov@gmail.com>\n"
+"POT-Creation-Date: 2019-02-23 12:13+0100\n"
+"PO-Revision-Date: 2019-02-23 13:47\n"
+"Last-Translator: kiarn <lml@kientz.me>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
 "MIME-Version: 1.0\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: crowdin.com\n"
-"X-Crowdin-Project: ajenti\n"
+"X-Crowdin-Project: linuxmusternet\n"
 "X-Crowdin-Language: es-ES\n"
 "X-Crowdin-File: /2.0/lmn_printers.po\n"
 
@@ -22,7 +22,7 @@ msgstr ""
 
 #: lmn_printers/resources/partial/printer.modal.html:33
 msgid "Close"
-msgstr "Cerrar"
+msgstr ""
 
 #: lmn_printers/resources/partial/printer.modal.html:16
 msgid "No filter is set. All devices can use this printer."
@@ -31,20 +31,20 @@ msgstr ""
 #: lmn_printers/resources/partial/index.html:16
 #: lmn_printers/resources/partial/printer.modal.html:32
 msgid "Save"
-msgstr "Guardar"
+msgstr ""
 
 #: lmn_printers/resources/partial/printer.modal.html:23
 msgid "Type to search..."
-msgstr "Escriba para buscar..."
+msgstr ""
 
 #: lmn_printers/resources/partial/printer.modal.html:2
 msgid "{{printer.name}}"
-msgstr "{{imprimir.nombre}}"
+msgstr ""
 
 #: lmn_printers/main.py:15
 #: lmn_printers/resources/js/controllers/index.controller.coffee:26
 msgid "Printers"
-msgstr "Impresoras"
+msgstr ""
 
 #: lmn_printers/main.py:30
 msgid "Configure printers"
@@ -52,4 +52,5 @@ msgstr ""
 
 #: lmn_printers/resources/js/controllers/index.controller.coffee:90
 msgid "Saved"
-msgstr "Guardado"
+msgstr ""
+

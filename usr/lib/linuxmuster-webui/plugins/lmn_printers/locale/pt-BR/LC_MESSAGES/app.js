@@ -1,1 +1,1 @@
-{"": "", "{{printer.name}}": "{{printer.name}}", "Saved": "Salvo", "No filter is set. All devices can use this printer.": "", "Add": "", "Configure printers": "", "Printers": "", "Close": "Fechar", "Save": "", "Type to search...": ""}
+{"": "", "{{printer.name}}": "", "Saved": "", "No filter is set. All devices can use this printer.": "", "Add": "", "Configure printers": "", "Printers": "", "Close": "", "Save": "", "Type to search...": ""}

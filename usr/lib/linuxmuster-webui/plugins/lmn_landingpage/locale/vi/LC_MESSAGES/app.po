@@ -1,0 +1,59 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: linuxmusternet\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-02-23 10:06+0100\n"
+"PO-Revision-Date: 2019-02-23 13:48\n"
+"Last-Translator: kiarn <lml@kientz.me>\n"
+"Language-Team: Vietnamese\n"
+"Language: vi_VN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: crowdin.com\n"
+"X-Crowdin-Project: linuxmusternet\n"
+"X-Crowdin-Language: vi\n"
+"X-Crowdin-File: /2.0/lmn_landingpage.po\n"
+
+#: lmn_landingpage/resources/partial/index.html:15
+msgid "Change password"
+msgstr ""
+
+#: lmn_landingpage/resources/partial/index.html:20
+msgid "Hello {{user.givenName}} {{user.sn}},"
+msgstr ""
+
+#: lmn_landingpage/resources/partial/index.html:34
+msgid "Quotas"
+msgstr ""
+
+#: lmn_landingpage/resources/partial/index.html:39
+msgid "Total"
+msgstr ""
+
+#: lmn_landingpage/resources/partial/index.html:2
+msgid "Welcome to Linuxmuster.net version 7!"
+msgstr ""
+
+#: lmn_landingpage/resources/partial/index.html:6
+msgid "You should not use WebUI as root user! If this is your first time\n"
+"        running WebUI, proceed through the setup wizard. Afterwards login using the global-admin account."
+msgstr ""
+
+#: lmn_landingpage/resources/partial/index.html:27
+msgid "use the sidebar to navigate through the options.\n"
+"                <br translate=\"\">\n"
+"                But keep in mind:\n"
+"                With great power comes great responsibility!"
+msgstr ""
+
+#: lmn_landingpage/resources/partial/index.html:23
+msgid "use the sidebar to navigate through the options. You\n"
+"                can start by using the Groupmembership module to subscribe to your classes."
+msgstr ""
+
+#: lmn_landingpage/resources/js/controllers/index.controller.coffee:7
+msgid "Home"
+msgstr ""
+

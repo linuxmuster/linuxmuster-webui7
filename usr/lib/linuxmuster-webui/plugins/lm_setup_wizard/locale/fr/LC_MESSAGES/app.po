@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-21 21:22+0100\n"
-"PO-Revision-Date: 2019-02-21 20:35\n"
+"POT-Creation-Date: 2019-02-23 10:06+0100\n"
+"PO-Revision-Date: 2019-02-23 09:08\n"
 "Last-Translator: kiarn <lml@kientz.me>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -31,7 +31,7 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
-#: lm_setup_wizard/partial/init-setup.html:10
+#: lm_setup_wizard/partial/init-done.html:17
 msgid "Close"
 msgstr ""
 
@@ -60,6 +60,15 @@ msgstr ""
 
 #: lm_setup_wizard/partial/init-summary.html:35
 msgid "Firewall will be <b>configured!</b>"
+msgstr ""
+
+#: lm_setup_wizard/partial/init-done.html:9
+msgid "If you hit the close button you will be forwarded to a ssl encrypted version of LinuxMuster Webui. Unless you install\n"
+"                a trusted certificate you will be asked to confirm the untrusted, just created, certificate. Confirm this certificate to proceed"
+msgstr ""
+
+#: lm_setup_wizard/partial/init-done.html:7
+msgid "Information"
 msgstr ""
 
 #: lm_setup_wizard/partial/init-school.html:13
@@ -130,6 +139,11 @@ msgstr ""
 msgid "Setup"
 msgstr ""
 
+#: lm_setup_wizard/partial/init-done.html:3
+msgid "Setup complete"
+msgstr ""
+
+#: lm_setup_wizard/partial/init-setup.html:10
 #: lm_setup_wizard/partial/init-summary.html:55
 msgid "Start provisioning"
 msgstr ""
@@ -147,8 +161,16 @@ msgstr ""
 msgid "System language"
 msgstr ""
 
+#: lm_setup_wizard/partial/init-done.html:8
+msgid "The setup was completed."
+msgstr ""
+
 #: lm_setup_wizard/partial/init-account.html:15
 msgid "Valid characters are: a-z A-Z 0-9 !§+-@#$%&*( )[ ]{ }"
+msgstr ""
+
+#: lm_setup_wizard/partial/init-summary.html:8
+msgid "We got all information needed for the provisioning proccess.<br>Before proceeding please check your data <b>carefully</b>!"
 msgstr ""
 
 #: lm_setup_wizard/partial/init-welcome.html:3

@@ -1,7 +1,7 @@
 angular.module('lm.settings').config ($routeProvider) ->
     $routeProvider.when '/view/lm/schoolsettings',
         controller: 'LMSettingsController'
-        templateUrl: '/lm_settings:resources/partial/index.html'
+        templateUrl: '/lmn_settings:resources/partial/index.html'
 
 
 angular.module('lm.settings').controller 'LMSettingsController', ($scope, $http, $uibModal, gettext, notify, pageTitle, lmFileBackups) ->

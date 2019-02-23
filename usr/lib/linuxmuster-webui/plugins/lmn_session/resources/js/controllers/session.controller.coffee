@@ -383,7 +383,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
         # This information is provided only as key (id) in sophomorix session
         user[0]['sAMAccountName'] = id
         $uibModal.open(
-            templateUrl: '/lm_users:resources/partial/customPassword.modal.html'
+            templateUrl: '/lmn_users:resources/partial/customPassword.modal.html'
             controller: 'LMNUsersCustomPasswordController'
             size: 'mg'
             resolve:
@@ -392,7 +392,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
 
     $scope.userInfo = (user) ->
         $uibModal.open(
-            templateUrl: '/lm_users:resources/partial/userDetails.modal.html'
+            templateUrl: '/lmn_users:resources/partial/userDetails.modal.html'
             controller: 'LMNUserDetailsController'
             size: 'lg'
             resolve:

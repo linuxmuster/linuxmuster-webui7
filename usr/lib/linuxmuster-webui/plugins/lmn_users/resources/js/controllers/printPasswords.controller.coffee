@@ -1,7 +1,7 @@
 angular.module('lm.users').config ($routeProvider) ->
     $routeProvider.when '/view/lm/users/print-passwords',
         controller: 'LMUsersPrintPasswordsController'
-        templateUrl: '/lm_users:resources/partial/print-passwords.html'
+        templateUrl: '/lmn_users:resources/partial/print-passwords.html'
 
 
 angular.module('lm.users').controller 'LMUsersPrintPasswordsOptionsModalController', ($scope, $uibModalInstance, $http, messagebox, gettext, schoolclass, classes, user) ->
@@ -38,7 +38,7 @@ angular.module('lm.users').controller 'LMUsersPrintPasswordsController', ($scope
 
     $scope.select = (schoolclass,user) ->
         $uibModal.open(
-            templateUrl: '/lm_users:resources/partial/print-passwords.options.modal.html'
+            templateUrl: '/lmn_users:resources/partial/print-passwords.options.modal.html'
             controller: 'LMUsersPrintPasswordsOptionsModalController'
             resolve:
                 schoolclass: () -> schoolclass

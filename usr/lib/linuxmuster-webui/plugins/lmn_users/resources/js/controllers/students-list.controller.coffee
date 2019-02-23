@@ -1,7 +1,7 @@
 angular.module('lm.users').config ($routeProvider) ->
     $routeProvider.when '/view/lm/users/students-list',
         controller: 'LMUsersStudentsListController'
-        templateUrl: '/lm_users:resources/partial/students-list.html'
+        templateUrl: '/lmn_users:resources/partial/students-list.html'
 
 
 angular.module('lm.users').controller 'LMUsersStudentsListController', ($scope, $http, $location, $route, $uibModal, gettext, notify, lmEncodingMap, messagebox, pageTitle, lmFileEditor, lmFileBackups, filesystem) ->
@@ -74,14 +74,14 @@ angular.module('lm.users').controller 'LMUsersStudentsListController', ($scope, 
     $scope.saveAndCheck = () ->
         $scope.save().then () ->
             $uibModal.open(
-                templateUrl: '/lm_users:resources/partial/check.modal.html'
+                templateUrl: '/lmn_users:resources/partial/check.modal.html'
                 controller: 'LMUsersCheckModalController'
                 backdrop: 'static'
             )
 
     $scope.confirmUpload = () ->
             $uibModal.open(
-                templateUrl: '/lm_users:resources/partial/upload.modal.html'
+                templateUrl: '/lmn_users:resources/partial/upload.modal.html'
                 controller: 'LMUsersUploadModalController'
                 backdrop: 'static'
                 resolve:

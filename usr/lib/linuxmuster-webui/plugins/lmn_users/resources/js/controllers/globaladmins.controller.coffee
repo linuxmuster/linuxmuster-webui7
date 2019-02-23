@@ -1,7 +1,7 @@
 angular.module('lm.users').config ($routeProvider) ->
     $routeProvider.when '/view/lm/users/globaladmins',
         controller: 'LMUsersGloballadminsController'
-        templateUrl: '/lm_users:resources/partial/globaladmins.html'
+        templateUrl: '/lmn_users:resources/partial/globaladmins.html'
 
 angular.module('lm.users').controller 'LMUsersGloballadminsController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) ->
     pageTitle.set(gettext('Globaladmins'))
@@ -36,7 +36,7 @@ angular.module('lm.users').controller 'LMUsersGloballadminsController', ($scope,
 
     $scope.setCustomPassword = (user) ->
       $uibModal.open(
-        templateUrl: '/lm_users:resources/partial/customPassword.modal.html'
+        templateUrl: '/lmn_users:resources/partial/customPassword.modal.html'
         controller: 'LMNUsersCustomPasswordController'
         size: 'mg'
         resolve:
@@ -52,7 +52,7 @@ angular.module('lm.users').controller 'LMUsersGloballadminsController', ($scope,
 
     $scope.addGlobalAdmin = () ->
       $uibModal.open(
-        templateUrl: '/lm_users:resources/partial/addAdmin.modal.html'
+        templateUrl: '/lmn_users:resources/partial/addAdmin.modal.html'
         controller: 'LMNUsersAddAdminController'
         size: 'mg'
         resolve:
@@ -61,7 +61,7 @@ angular.module('lm.users').controller 'LMUsersGloballadminsController', ($scope,
     $scope.userInfo = (user) ->
       console.log (user)
       $uibModal.open(
-        templateUrl: '/lm_users:resources/partial/userDetails.modal.html'
+        templateUrl: '/lmn_users:resources/partial/userDetails.modal.html'
         controller: 'LMNUserDetailsController'
         size: 'lg'
         resolve:

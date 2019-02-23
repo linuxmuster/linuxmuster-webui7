@@ -4,8 +4,8 @@ import subprocess
 from jadi import component
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
-from aj.plugins.lm_common.api import CSVSpaceStripper
-from aj.plugins.lm_common.api import lm_backup_file
+from aj.plugins.lmn_common.api import CSVSpaceStripper
+from aj.plugins.lmn_common.api import lmn_backup_file
 from aj.auth import authorize
 
 
@@ -46,7 +46,7 @@ class Handler(HttpPlugin):
             for item in data:
                 item.pop('_isNew', None)
                 item.pop('null', None)
-            lm_backup_file(path)
+            lmn_backup_file(path)
             with open(path, 'w') as f:
                 csv.DictWriter(f, delimiter=';', fieldnames=fieldnames).writerows(data)
 

@@ -1,7 +1,7 @@
 angular.module('lm.devices').config ($routeProvider) ->
     $routeProvider.when '/view/lm/devices',
         controller: 'LMDevicesController'
-        templateUrl: '/lm_devices:resources/partial/index.html'
+        templateUrl: '/lmn_devices:resources/partial/index.html'
 
 
 angular.module('lm.devices').controller 'LMDevicesApplyModalController', ($scope, $http, $uibModalInstance, gettext, notify) ->
@@ -148,7 +148,7 @@ angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $
     $scope.saveAndImport = () ->
         $scope.save().then () ->
             $uibModal.open(
-                templateUrl: '/lm_devices:resources/partial/apply.modal.html'
+                templateUrl: '/lmn_devices:resources/partial/apply.modal.html'
                 controller: 'LMDevicesApplyModalController'
                 size: 'lg'
 

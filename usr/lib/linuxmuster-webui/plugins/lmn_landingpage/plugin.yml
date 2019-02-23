@@ -7,7 +7,7 @@ title: 'lmn_landingpage'
 icon: home
 dependencies:
     - !!python/object:aj.plugins.PluginDependency { plugin_name: core }
-    - !!python/object:aj.plugins.PluginDependency { plugin_name: lm_common }
+    - !!python/object:aj.plugins.PluginDependency { plugin_name: lmn_common }
 resources:
     - 'resources/js/module.coffee'
     - 'resources/js/controllers/index.controller.coffee'

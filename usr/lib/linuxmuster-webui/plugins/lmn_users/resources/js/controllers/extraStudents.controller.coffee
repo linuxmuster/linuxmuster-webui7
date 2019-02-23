@@ -1,7 +1,7 @@
 angular.module('lm.users').config ($routeProvider) ->
     $routeProvider.when '/view/lm/users/extra-students',
         controller: 'LMUsersExtraStudentsController'
-        templateUrl: '/lm_users:resources/partial/extra-students.html'
+        templateUrl: '/lmn_users:resources/partial/extra-students.html'
 
 
 angular.module('lm.users').controller 'LMUsersExtraStudentsController', ($scope, $http, $uibModal, $route, gettext, notify, pageTitle, lmEncodingMap, lmFileEditor, lmFileBackups) ->
@@ -58,7 +58,7 @@ angular.module('lm.users').controller 'LMUsersExtraStudentsController', ($scope,
     $scope.saveAndCheck = () ->
         $scope.save().then () ->
             $uibModal.open(
-                templateUrl: '/lm_users:resources/partial/check.modal.html'
+                templateUrl: '/lmn_users:resources/partial/check.modal.html'
                 controller: 'LMUsersCheckModalController'
                 backdrop: 'static'
             )

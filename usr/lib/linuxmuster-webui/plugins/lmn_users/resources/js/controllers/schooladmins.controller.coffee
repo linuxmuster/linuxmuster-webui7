@@ -1,7 +1,7 @@
 angular.module('lm.users').config ($routeProvider) ->
     $routeProvider.when '/view/lm/users/schooladmins',
         controller: 'LMUsersSchooladminsController'
-        templateUrl: '/lm_users:resources/partial/schooladmins.html'
+        templateUrl: '/lmn_users:resources/partial/schooladmins.html'
 
 angular.module('lm.users').controller 'LMUsersSchooladminsController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) ->
     pageTitle.set(gettext('Schooladmins'))
@@ -36,7 +36,7 @@ angular.module('lm.users').controller 'LMUsersSchooladminsController', ($scope, 
 
     $scope.setCustomPassword = (user) ->
        $uibModal.open(
-          templateUrl: '/lm_users:resources/partial/customPassword.modal.html'
+          templateUrl: '/lmn_users:resources/partial/customPassword.modal.html'
           controller: 'LMNUsersCustomPasswordController'
           size: 'mg'
           resolve:
@@ -52,7 +52,7 @@ angular.module('lm.users').controller 'LMUsersSchooladminsController', ($scope, 
 
     $scope.addSchoolAdmin = () ->
             $uibModal.open(
-                templateUrl: '/lm_users:resources/partial/addAdmin.modal.html'
+                templateUrl: '/lmn_users:resources/partial/addAdmin.modal.html'
                 controller: 'LMNUsersAddAdminController'
                 size: 'mg'
                 resolve:
@@ -62,7 +62,7 @@ angular.module('lm.users').controller 'LMUsersSchooladminsController', ($scope, 
     $scope.userInfo = (user) ->
       console.log (user)
       $uibModal.open(
-        templateUrl: '/lm_users:resources/partial/userDetails.modal.html'
+        templateUrl: '/lmn_users:resources/partial/userDetails.modal.html'
         controller: 'LMNUserDetailsController'
         size: 'lg'
         resolve:

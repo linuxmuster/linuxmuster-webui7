@@ -5,11 +5,11 @@ import subprocess
 from jadi import component
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
-from aj.plugins.lm_common.api import CSVSpaceStripper
+from aj.plugins.lmn_common.api import CSVSpaceStripper
 from aj.auth import authorize
-from aj.plugins.lm_common.api import lmn_checkPermission
-from aj.plugins.lm_common.api import lm_backup_file
-from aj.plugins.lm_common.api import lmn_getSophomorixValue
+from aj.plugins.lmn_common.api import lmn_checkPermission
+from aj.plugins.lmn_common.api import lmn_backup_file
+from aj.plugins.lmn_common.api import lmn_getSophomorixValue
 
 
 @component(HttpPlugin)
@@ -48,7 +48,7 @@ class Handler(HttpPlugin):
                 for item in data:
                     item.pop('_isNew', None)
                     item.pop('null', None)
-                lm_backup_file(path)
+                lmn_backup_file(path)
                 with open(path, 'w') as f:
                     csv.DictWriter(
                         f,
@@ -93,7 +93,7 @@ class Handler(HttpPlugin):
                 data = http_context.json_body()
                 for item in data:
                     item.pop('_isNew', None)
-                lm_backup_file(path)
+                lmn_backup_file(path)
                 with open(path, 'w') as f:
                     csv.DictWriter(
                         f,
@@ -234,7 +234,7 @@ class Handler(HttpPlugin):
                 data = http_context.json_body()
                 for item in data:
                     item.pop('_isNew', None)
-                lm_backup_file(path)
+                lmn_backup_file(path)
                 with open(path, 'w') as f:
                     csv.DictWriter(
                         f,
@@ -276,7 +276,7 @@ class Handler(HttpPlugin):
                 data = http_context.json_body()
                 for item in data:
                     item.pop('_isNew', None)
-                lm_backup_file(path)
+                lmn_backup_file(path)
                 with open(path, 'w') as f:
                     csv.DictWriter(
                         f,

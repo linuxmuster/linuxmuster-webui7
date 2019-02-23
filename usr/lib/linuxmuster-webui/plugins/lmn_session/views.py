@@ -4,7 +4,7 @@ from time import gmtime, strftime  # needed for timestamp in collect transfer
 import six  # used to determine if given variable is string
 from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize
-from aj.plugins.lm_common.api import lmn_getSophomorixValue
+from aj.plugins.lmn_common.api import lmn_getSophomorixValue
 
 
 @component(HttpPlugin)

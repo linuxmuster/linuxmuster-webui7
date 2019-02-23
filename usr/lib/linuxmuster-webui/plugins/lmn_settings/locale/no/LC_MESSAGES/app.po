@@ -14,7 +14,7 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: ajenti\n"
 "X-Crowdin-Language: no\n"
-"X-Crowdin-File: /2.0/lm_settings.po\n"
+"X-Crowdin-File: /2.0/lmn_settings.po\n"
 
 #: lmn_settings/resources/partial/index.html:220
 msgid "Admin e-mail"

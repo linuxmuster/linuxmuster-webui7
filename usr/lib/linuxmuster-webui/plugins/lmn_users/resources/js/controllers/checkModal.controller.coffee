@@ -9,7 +9,7 @@ angular.module('lm.users').controller 'LMUsersCheckResultsModalController', ($sc
     $scope.apply = () ->
         $uibModalInstance.close()
         msg = $uibModal.open(
-            templateUrl: '/lm_users:resources/partial/apply.modal.html'
+            templateUrl: '/lmn_users:resources/partial/apply.modal.html'
             controller: 'LMUsersApplyModalController'
             backdrop: 'static'
             size: 'lg'
@@ -56,7 +56,7 @@ angular.module('lm.users').controller 'LMUsersCheckModalController', ($scope, $h
 
     $scope.showCheckResults = (data) ->
         $uibModal.open(
-            templateUrl: '/lm_users:resources/partial/result.modal.html'
+            templateUrl: '/lmn_users:resources/partial/result.modal.html'
             controller: 'LMUsersCheckResultsModalController'
             resolve:
                 data: () -> data

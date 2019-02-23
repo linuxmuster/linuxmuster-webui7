@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-21 21:23+0100\n"
-"PO-Revision-Date: 2019-02-23 09:08\n"
+"POT-Creation-Date: 2019-02-23 12:13+0100\n"
+"PO-Revision-Date: 2019-02-23 11:16\n"
 "Last-Translator: kiarn <lml@kientz.me>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -160,13 +160,6 @@ msgstr "Cours"
 msgid "Creationdate:"
 msgstr ""
 
-#: lmn_users/resources/partial/globaladmins.html:88
-#: lmn_users/resources/partial/schooladmins.html:88
-#: lmn_users/resources/partial/students.html:87
-#: lmn_users/resources/partial/teachers.html:91
-msgid "Custom password"
-msgstr "Mot de passe personnalisé"
-
 #: lmn_users/resources/partial/userDetails.modal.html:14
 msgid "Deactivationsdate:"
 msgstr ""
@@ -223,17 +216,6 @@ msgstr "Indication"
 #: lmn_users/resources/partial/userDetails.modal.html:8
 msgid "Group Membership:"
 msgstr ""
-
-#: lmn_users/resources/partial/globaladmins.html:78
-#: lmn_users/resources/partial/schooladmins.html:78
-#: lmn_users/resources/partial/students.html:77
-#: lmn_users/resources/partial/teachers.html:81
-#: lmn_users/resources/js/controllers/schooladmins.controller.coffee:26
-#: lmn_users/resources/js/controllers/students.controller.coffee:38
-#: lmn_users/resources/js/controllers/globaladmins.controller.coffee:26
-#: lmn_users/resources/js/controllers/teachers.controller.coffee:38
-msgid "Initial password"
-msgstr "Mot de passe initial"
 
 #: lmn_users/resources/partial/result.modal.html:29
 msgid "Kill users"
@@ -307,13 +289,6 @@ msgstr "Imprimer"
 msgid "Quota:"
 msgstr ""
 
-#: lmn_users/resources/partial/globaladmins.html:83
-#: lmn_users/resources/partial/schooladmins.html:83
-#: lmn_users/resources/partial/students.html:82
-#: lmn_users/resources/partial/teachers.html:86
-msgid "Random password"
-msgstr "Mot de passe aléatoire"
-
 #: lmn_users/resources/partial/extra-courses.html:33
 msgid "Removal date"
 msgstr "Date de suppression"
@@ -365,6 +340,11 @@ msgstr ""
 msgid "Select all"
 msgstr "Tout sélectionner"
 
+#: lmn_users/resources/partial/globaladmins.html:88
+#: lmn_users/resources/partial/schooladmins.html:88
+msgid "Set custom password"
+msgstr ""
+
 #: lmn_users/resources/partial/globaladmins.html:130
 #: lmn_users/resources/partial/schooladmins.html:127
 #: lmn_users/resources/partial/students.html:119
@@ -372,12 +352,25 @@ msgstr "Tout sélectionner"
 msgid "Set custom password for selected"
 msgstr "Définir un mot de passe personnalisé pour les utilisateurs sélectionnés"
 
+#: lmn_users/resources/partial/globaladmins.html:78
+#: lmn_users/resources/partial/schooladmins.html:78
+#: lmn_users/resources/partial/students.html:77
+#: lmn_users/resources/partial/teachers.html:81
+msgid "Set initial password"
+msgstr ""
+
 #: lmn_users/resources/partial/globaladmins.html:128
 #: lmn_users/resources/partial/schooladmins.html:125
 #: lmn_users/resources/partial/students.html:117
 #: lmn_users/resources/partial/teachers.html:154
 msgid "Set initial password for selected"
 msgstr "Définir un mot de passe initial pour les utilisateurs sélectionnés"
+
+#: lmn_users/resources/partial/globaladmins.html:83
+#: lmn_users/resources/partial/schooladmins.html:83
+#: lmn_users/resources/partial/students.html:82
+msgid "Set random password"
+msgstr ""
 
 #: lmn_users/resources/partial/globaladmins.html:129
 #: lmn_users/resources/partial/schooladmins.html:126
@@ -460,6 +453,15 @@ msgstr ""
 
 #: lmn_users/resources/partial/upload.modal.html:7
 msgid "Would you like to upload a list csv? This will replace your current CSV! Please respect the format columns..."
+msgstr ""
+
+#: lmn_users/resources/partial/students.html:87
+#: lmn_users/resources/partial/teachers.html:91
+msgid "set custom password"
+msgstr ""
+
+#: lmn_users/resources/partial/teachers.html:86
+msgid "set random password"
 msgstr ""
 
 #: lmn_users/main.py:15
@@ -589,6 +591,13 @@ msgstr "Enregistré"
 #: lmn_users/resources/js/controllers/schooladmins.controller.coffee:7
 msgid "Schooladmins"
 msgstr ""
+
+#: lmn_users/resources/js/controllers/schooladmins.controller.coffee:26
+#: lmn_users/resources/js/controllers/students.controller.coffee:38
+#: lmn_users/resources/js/controllers/globaladmins.controller.coffee:26
+#: lmn_users/resources/js/controllers/teachers.controller.coffee:38
+msgid "Initial password"
+msgstr "Mot de passe initial"
 
 #: lmn_users/resources/js/controllers/schooladmins.controller.coffee:31
 #: lmn_users/resources/js/controllers/students.controller.coffee:43

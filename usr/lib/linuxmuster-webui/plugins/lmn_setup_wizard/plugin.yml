@@ -1,0 +1,20 @@
+name: lmn_setup_wizard
+author: Linux Muster
+email: e@ajenti.org
+url: http://linuxmuster.net
+version: '1.0'
+title: 'LM Setup Wizard'
+icon: wand
+dependencies:
+    - !!python/object:aj.plugins.PluginDependency { plugin_name: core }
+resources:
+    - 'js/index.es'
+    - 'js/init.controller.es'
+    - 'partial/init-welcome.html'
+    - 'partial/init-school.html'
+    - 'partial/init-account.html'
+    - 'partial/init-externalServices.html'
+    - 'partial/init-setup.html'
+    - 'partial/init-summary.html'
+    - 'partial/init-done.html'
+    - 'ng:lm.setup_wizard'

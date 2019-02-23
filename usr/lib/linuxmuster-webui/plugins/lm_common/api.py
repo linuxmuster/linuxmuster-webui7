@@ -126,52 +126,39 @@ def lmn_getUserLdapValue(user, field):
 
 
 def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
-    # Attention! Also passwords and sensbile information get logged!!!
-    debug = False
-    # only error log is going to be processed. standard output is thrown away
-    sophomorixCommand.append('1>/dev/null')
-    file = open("/var/log/getSophomorixValueDebugoutput.log", "a")
-    if debug:
-        file.write('\n\n######New COMMAND #####\n\n')
-        file.write(time.strftime("%c"))
-        file.write('\n\n')
-        file.write(str(sophomorixCommand)+'\n\n')
-    else:
-        file.write('\n\n######New COMMAND #####\n\n')
-        file.write(time.strftime("%c"))
-        file.write('\n\n')
-        file.write('Debugging is disabled\n\n')
+    jsonS = subprocess.Popen(sophomorixCommand, stderr=subprocess.PIPE, shell=False)
+    data = ''
+    record = 0
+    jsonDict = {}
+    while jsonS.poll() is None:
+        output = jsonS.stderr.readline()
+        output = output.replace("null", "\"null\"")
+        if record == 1 :
+            data += output.strip('\n')
+        if '# JSON-begin' in output and '# JSON-end' in output:
+            record = 1
+            tmp = re.sub('# JSON-begin', '', output.strip('\n'))
+            data += re.sub('# JSON.*', '', output.strip('\n'))
+        elif '# JSON-begin' in output:
+            record = 1
+            data += re.sub('# JSON-begin', '', output.strip('\n'))
+        elif '# JSON-end' in output:
+            record = 0
+            data += re.sub('# JSON.*', '', output.strip('\n'))
+    if data:
+        jsonDict = dict(jsonDict, **eval(data))
+    data = ''
 
-    jsonS = subprocess.Popen(sophomorixCommand, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=False).stdout.read()
-    if debug:
-        file.write('\n\n')
-        file.write(jsonS)
-    # jsonS is everything between sophomorix json headers
-    # Use only if JSON-begin existst
-    if '# JSON-begin' in jsonS:
-        # TODO: this is bad. It throws away every json output except the last one. find a solution to provide all information to frontend
-        test = jsonS.split("# JSON-begin")
-        #raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str((len(test))))
-        jsonS = jsonS.split("# JSON-begin", len(test)-1)[len(test)-1]
-        jsonS = jsonS.split("# JSON-end", 1)[0]
-    # file.write(jsonS+'\n')
-    jsonDict = json.loads(jsonS, encoding='UTF-8')
+    ## Debug
+    #with open('/var/log/getSophomorixValueDebugoutput.log', 'w') as f: 
+    	#f.write(str(jsonDict))
 
-    if debug:
-        file.write(str(jsonDict)+'\n\n\n')
     # if empty jsonpath is returned dont use dpath
     if jsonpath is '':
 
-        if debug:
-            file.write(str('no jsonpath return like it is:')+'\n\n')
-            file.write(str(jsonDict)+'\n\n')
-        file.close()
         return jsonDict
     if ignoreErrors is False:
         try:
-            if debug:
-                file.write(str('jsonpath')+'\n\n')
-                file.write(str(jsonpath)+'\n\n')
             # Debug empty key string - > get json from file to test
             # dpath.options.ALLOW_EMPTY_STRING_KEYS=True
             # with open('/usr/lib/linuxmuster-webui/plugins/emptyStringKey.json') as json_data:
@@ -185,7 +172,6 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
                             'Error Message: ' + str(e) + '\n Dictionary we looked for information:\n  ' + str(jsonDict))
     else:
         resultString = dpath.util.get(jsonDict, jsonpath)
-    file.close()
     return resultString
 
 # check if the current user has a specific permissions

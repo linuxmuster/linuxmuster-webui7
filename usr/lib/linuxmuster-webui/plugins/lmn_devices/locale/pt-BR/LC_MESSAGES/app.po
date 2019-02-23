@@ -1,10 +1,10 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: ajenti\n"
+"Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-21 21:23+0100\n"
-"PO-Revision-Date: 2016-05-21 17:19-0400\n"
-"Last-Translator: eugenepankov <john.pankov@gmail.com>\n"
+"PO-Revision-Date: 2019-02-23 13:48\n"
+"Last-Translator: kiarn <lml@kientz.me>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -12,13 +12,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: crowdin.com\n"
-"X-Crowdin-Project: ajenti\n"
+"X-Crowdin-Project: linuxmusternet\n"
 "X-Crowdin-Language: pt-BR\n"
 "X-Crowdin-File: /2.0/lmn_devices.po\n"
 
 #: lmn_devices/resources/partial/index.html:138
 msgid "Add a device"
-msgstr "Adicionar uma estação de trabalho"
+msgstr ""
 
 #: lmn_devices/resources/partial/index.html:91
 msgid "BYOD"
@@ -26,7 +26,7 @@ msgstr ""
 
 #: lmn_devices/resources/partial/apply.modal.html:10
 msgid "Close"
-msgstr "Fechar"
+msgstr ""
 
 #: lmn_devices/resources/partial/index.html:86
 msgid "Computer"
@@ -50,7 +50,7 @@ msgstr ""
 
 #: lmn_devices/resources/partial/index.html:23
 msgid "Fields"
-msgstr "Campos"
+msgstr ""
 
 #: lmn_devices/resources/partial/index.html:94
 msgid "IP-Only"
@@ -65,9 +65,8 @@ msgid "Linbo-PXE"
 msgstr ""
 
 #: lmn_devices/resources/partial/index.html:106
-#, fuzzy
 msgid "Linbo-PXE + OPSI-MGMT"
-msgstr "PXE + OPSI"
+msgstr ""
 
 #: lmn_devices/resources/partial/index.html:95
 msgid "Mobile"
@@ -95,7 +94,7 @@ msgstr ""
 
 #: lmn_devices/resources/partial/index.html:148
 msgid "Save &amp; import"
-msgstr "Salvar &amp; importar"
+msgstr ""
 
 #: lmn_devices/resources/partial/index.html:85
 msgid "Server"
@@ -136,17 +135,15 @@ msgstr ""
 #: lmn_devices/main.py:15
 #: lmn_devices/resources/js/controllers/index.controller.coffee:27
 msgid "Devices"
-msgstr "Estações de trabalho"
+msgstr ""
 
 #: lmn_devices/main.py:30
-#, fuzzy
 msgid "Read/write devices"
-msgstr "Adicionar uma estação de trabalho"
+msgstr ""
 
 #: lmn_devices/main.py:35
-#, fuzzy
 msgid "Import device"
-msgstr "Adicionar uma estação de trabalho"
+msgstr ""
 
 #: lmn_devices/resources/js/controllers/index.controller.coffee:15
 msgid "Import complete"
@@ -169,25 +166,25 @@ msgstr ""
 #: lmn_devices/resources/js/controllers/index.controller.coffee:39
 #: lmn_devices/resources/js/controllers/index.controller.coffee:96
 msgid "Hostname"
-msgstr "Hostname"
+msgstr ""
 
 #: lmn_devices/resources/js/controllers/index.controller.coffee:43
 #: lmn_devices/resources/js/controllers/index.controller.coffee:102
 msgid "MAC"
-msgstr "MAC"
+msgstr ""
 
 #: lmn_devices/resources/js/controllers/index.controller.coffee:47
 #: lmn_devices/resources/js/controllers/index.controller.coffee:105
 msgid "IP"
-msgstr "IP"
+msgstr ""
 
 #: lmn_devices/resources/js/controllers/index.controller.coffee:108
 msgid "Office Key"
-msgstr "Chave do Office"
+msgstr ""
 
 #: lmn_devices/resources/js/controllers/index.controller.coffee:111
 msgid "Windows Key"
-msgstr "Chave do Windows"
+msgstr ""
 
 #: lmn_devices/resources/js/controllers/index.controller.coffee:114
 msgid "DHCP-Options"
@@ -224,3 +221,4 @@ msgstr ""
 #: lmn_devices/resources/js/controllers/index.controller.coffee:146
 msgid "Saved"
 msgstr ""
+

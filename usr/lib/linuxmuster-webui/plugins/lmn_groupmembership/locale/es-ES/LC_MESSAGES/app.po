@@ -1,10 +1,10 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: ajenti\n"
+"Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-21 21:23+0100\n"
-"PO-Revision-Date: 2016-05-21 17:19-0400\n"
-"Last-Translator: eugenepankov <john.pankov@gmail.com>\n"
+"PO-Revision-Date: 2019-02-23 13:47\n"
+"Last-Translator: kiarn <lml@kientz.me>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
 "MIME-Version: 1.0\n"
@@ -12,9 +12,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: crowdin.com\n"
-"X-Crowdin-Project: ajenti\n"
+"X-Crowdin-Project: linuxmusternet\n"
 "X-Crowdin-Language: es-ES\n"
-"X-Crowdin-File: /2.0/lmn_settings.po\n"
+"X-Crowdin-File: /2.0/lmn_groupmembership.po\n"
 
 #: lmn_groupmembership/resources/partial/groupDetails.modal.html:10
 msgid "(edit members)"
@@ -32,7 +32,7 @@ msgstr ""
 #: lmn_groupmembership/resources/partial/editMembers.modal.html:54
 #: lmn_groupmembership/resources/partial/groupDetails.modal.html:36
 msgid "Close"
-msgstr "Cerrar"
+msgstr ""
 
 #: lmn_groupmembership/resources/partial/groupDetails.modal.html:23
 msgid "Creationdate:"
@@ -98,20 +98,15 @@ msgid "Sophomorix Status:"
 msgstr ""
 
 #: lmn_groupmembership/resources/partial/index.html:73
-msgid ""
-"There are no printers configured yet. Ask your administrator to configure "
-"one."
+msgid "There are no printers configured yet. Ask your administrator to configure one."
 msgstr ""
 
 #: lmn_groupmembership/resources/partial/index.html:95
-msgid ""
-"There are no projects yet. You can create a new procet using the menu bar."
+msgid "There are no projects yet. You can create a new procet using the menu bar."
 msgstr ""
 
 #: lmn_groupmembership/resources/partial/index.html:52
-msgid ""
-"There are no schoolclasses available. Ask the administrator to import "
-"students"
+msgid "There are no schoolclasses available. Ask the administrator to import students"
 msgstr ""
 
 #: lmn_groupmembership/resources/partial/groupDetails.modal.html:26
@@ -175,9 +170,8 @@ msgid "Groupname"
 msgstr ""
 
 #: lmn_groupmembership/resources/js/controllers/index.controller.coffee:213
-#, fuzzy
 msgid "Nothing changed"
-msgstr "Aplicando cambios"
+msgstr ""
 
 #: lmn_groupmembership/resources/js/controllers/index.controller.coffee:216
 msgid "Project Name"
@@ -191,23 +185,3 @@ msgstr ""
 msgid "Project Created"
 msgstr ""
 
-#~ msgid "Admin e-mail"
-#~ msgstr "Correo del administrador"
-
-#~ msgid "Age of students"
-#~ msgstr "Edad de los estudiantes"
-
-#~ msgid "Change Samba password on first login"
-#~ msgstr "Cambiar contraseña de Samba en el primer inicio de sesión"
-
-#~ msgid "Email"
-#~ msgstr "Correo electrónico"
-
-#~ msgid "Encoding"
-#~ msgstr "Codificación"
-
-#~ msgid "External FQDN for printing"
-#~ msgstr "FQDN externo para impresión"
-
-#~ msgid "Details"
-#~ msgstr "Detalles"

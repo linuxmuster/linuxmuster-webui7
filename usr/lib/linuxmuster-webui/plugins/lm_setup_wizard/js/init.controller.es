@@ -208,7 +208,6 @@ angular.module('lm.setup_wizard').controller('InitDoneController', function ($lo
  
     this.close = () => {
         location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
-
         //$location.href('https://www.google.de');
         notify.success(gettext('Restart Webui'))
          $http.post('/api/lm/setup-wizard/restart').then(() => {

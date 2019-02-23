@@ -328,14 +328,14 @@ class Handler(HttpPlugin):
             return lmn_getSophomorixValue(sophomorixCommand, '/USERS/'+user+'/sophomorixFirstPassword')
         if action == 'set-initial':
             sophomorixCommand = ['sophomorix-passwd', '--set-firstpassword', '-jj', '-u', user]
-            return lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
+            return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
         if action == 'set-random':
             sophomorixCommand = ['sophomorix-passwd', '-u', user, '--random', '8', '-jj']
-            return lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
+            return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
         if action == 'set':
             password = http_context.json_body()['password']
             sophomorixCommand = ['sophomorix-passwd', '-u', user, '--pass', password, '-jj']
-            return lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
+            return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
 
     @url(r'/api/lm/users/change-school-admin')
     @authorize('lm:users:schooladmins:create')

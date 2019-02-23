@@ -422,15 +422,22 @@ class Handler(HttpPlugin):
     def handle_api_users_print(self, http_context):
         school = 'default-school'
         if http_context.method == 'GET':
-            sophomorixCommand = ['sophomorix-print', '--school', school, '--info', '-jj']
+
+            sophomorixCommand = ['sophomorix-print', '--school', school, '--info', '-jj']            
 
             with authorize('lm:users:students:read'):
-                classes = lmn_getSophomorixValue(sophomorixCommand, 'LIST_BY_sophomorixSchoolname_sophomorixAdminClass/'+school)
-                if lmn_checkPermission('lm:users:teachers:read'):
-                    # append empty element. This references to all users
-                    classes.append('')
+                # classes = lmn_getSophomorixValue(sophomorixCommand, 'LIST_BY_sophomorixSchoolname_sophomorixAdminClass/'+school)
+                # Check if there are any classes if not return empty list
+                classes_raw = lmn_getSophomorixValue(sophomorixCommand, '')
+                if 'LIST_BY_sophomorixSchoolname_sophomorixAdminClass' not in classes_raw:
+                    classes = []
                 else:
-                    classes.remove('teachers')
+                    classes = classes_raw['LIST_BY_sophomorixSchoolname_sophomorixAdminClass'][school]
+                    if lmn_checkPermission('lm:users:teachers:read'):
+                    # append empty element. This references to all users
+                        classes.append('')
+                    else:
+                        classes.remove('teachers')
                 return classes
 
         if http_context.method == 'POST':

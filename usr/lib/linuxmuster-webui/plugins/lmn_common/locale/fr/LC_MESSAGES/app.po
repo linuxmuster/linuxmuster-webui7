@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-23 12:13+0100\n"
-"PO-Revision-Date: 2019-02-23 11:16\n"
+"PO-Revision-Date: 2019-02-24 13:54\n"
 "Last-Translator: kiarn <lml@kientz.me>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -46,7 +46,7 @@ msgstr "Gestion des utilisateurs"
 
 #: lmn_common/main.py:22
 msgid "List Management"
-msgstr ""
+msgstr "Gestion des utilisateurs"
 
 #: lmn_common/main.py:29
 msgid "Quota"
@@ -58,13 +58,13 @@ msgstr "Gestionnaire d'appareils"
 
 #: lmn_common/main.py:43
 msgid "Class Management"
-msgstr ""
+msgstr "Gestion des classes"
 
 #: lmn_common/main.py:50
 msgid "School Settings"
-msgstr ""
+msgstr "Configuration de l'école"
 
 #: lmn_common/main.py:57
 msgid "Global Settings"
-msgstr ""
+msgstr "Configuration globale"
 

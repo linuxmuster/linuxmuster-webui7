@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-23 12:13+0100\n"
-"PO-Revision-Date: 2019-02-23 11:16\n"
+"PO-Revision-Date: 2019-02-24 13:54\n"
 "Last-Translator: kiarn <lml@kientz.me>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -26,7 +26,7 @@ msgstr "Mot de passe actuel"
 
 #: lmn_auth/resources/partial/index.html:3
 msgid "Minimal length is 7 characters. Use upper, lower and special characters or numbers. (e.g. Muster!)"
-msgstr ""
+msgstr "Minimum 7 caractères. Utiliser des majuscules, minuscules, caractères spéciaux et chiffres (par exemple Muster!)"
 
 #: lmn_auth/resources/partial/index.html:18
 msgid "New password"
@@ -38,7 +38,7 @@ msgstr "Retaper le mot de passe"
 
 #: lmn_auth/resources/partial/index.html:5
 msgid "Valid characters are: a-z A-Z 0-9 !§+-@#$%&*( )[ ]{ }"
-msgstr ""
+msgstr "Les caractères valables sont: a-z A-Z 0-9 !§+-@#$%&*( )[ ]{ }"
 
 #: lmn_auth/api.py:13
 msgid "Linux Muster LDAP"
@@ -54,11 +54,11 @@ msgstr "Les mots de passe ne correspondent pas"
 
 #: lmn_auth/resources/js/controllers/index.controller.coffee:27
 msgid "Password contains invalid characters"
-msgstr ""
+msgstr "Le mot de passe contient des caractères non supportés"
 
 #: lmn_auth/resources/js/controllers/index.controller.coffee:30
 msgid "Password too weak"
-msgstr ""
+msgstr "Mot de passe trop faible"
 
 #: lmn_auth/resources/js/controllers/index.controller.coffee:35
 msgid "Password changed"

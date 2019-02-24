@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-23 12:13+0100\n"
-"PO-Revision-Date: 2019-02-23 11:16\n"
+"PO-Revision-Date: 2019-02-24 13:54\n"
 "Last-Translator: kiarn <lml@kientz.me>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -58,7 +58,7 @@ msgstr "Cache"
 
 #: lmn_linbo/resources/partial/accept.modal.html:9
 msgid "Cancel"
-msgstr ""
+msgstr "Annuler"
 
 #: lmn_linbo/resources/partial/config.modal.html:224
 #: lmn_linbo/resources/partial/image.modal.html:61
@@ -183,7 +183,7 @@ msgstr "Partitions"
 
 #: lmn_linbo/resources/partial/image.modal.html:39
 msgid "Postsync Script"
-msgstr ""
+msgstr "Script Postsync"
 
 #: lmn_linbo/resources/partial/image.modal.html:21
 msgid "Registry patch"
@@ -191,15 +191,15 @@ msgstr "Patch du registre"
 
 #: lmn_linbo/resources/partial/accept.modal.html:8
 msgid "Remove"
-msgstr ""
+msgstr "Supprimer"
 
 #: lmn_linbo/resources/partial/accept.modal.html:5
 msgid "Remove Partition {{partition}}"
-msgstr ""
+msgstr "Supprimer la partition {{partition}}"
 
 #: lmn_linbo/resources/partial/accept.modal.html:2
 msgid "Remove Partition?"
-msgstr ""
+msgstr "Supprimer la partition?"
 
 #: lmn_linbo/resources/partial/config.modal.html:179
 msgid "Remove this disk"
@@ -278,7 +278,7 @@ msgstr "Cache LINBO"
 
 #: lmn_linbo/resources/js/controllers/index.controller.coffee:473
 msgid "Not a valid name! Only alphanumeric characters are allowed!"
-msgstr ""
+msgstr "Nom invalide ! Seuls les caractères alphanumériques sont autorisés !"
 
 #: lmn_linbo/resources/js/controllers/index.controller.coffee:518
 #: lmn_linbo/resources/js/controllers/index.controller.coffee:559

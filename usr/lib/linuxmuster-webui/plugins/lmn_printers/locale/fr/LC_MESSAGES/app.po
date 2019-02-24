@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-23 12:13+0100\n"
-"PO-Revision-Date: 2019-02-23 11:16\n"
+"PO-Revision-Date: 2019-02-24 13:54\n"
 "Last-Translator: kiarn <lml@kientz.me>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -18,7 +18,7 @@ msgstr ""
 
 #: lmn_printers/resources/partial/printer.modal.html:25
 msgid "Add"
-msgstr ""
+msgstr "Ajouter"
 
 #: lmn_printers/resources/partial/printer.modal.html:33
 msgid "Close"
@@ -26,7 +26,7 @@ msgstr "Fermer"
 
 #: lmn_printers/resources/partial/printer.modal.html:16
 msgid "No filter is set. All devices can use this printer."
-msgstr ""
+msgstr "Aucun filtre n’est défini. Tous les périphériques peuvent utiliser cette imprimante."
 
 #: lmn_printers/resources/partial/index.html:16
 #: lmn_printers/resources/partial/printer.modal.html:32

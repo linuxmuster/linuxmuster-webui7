@@ -21,7 +21,8 @@ class Handler(HttpPlugin):
     @url(r'/api/lmn/quota/(?P<user>\w+)') ## TODO authorize
     @endpoint(api=True)
     def handle_api_quota(self, http_context, user):
-        
+        ## COMMAND : sophomorix-query --sam USER --user-full --quota-usage -j --> TODO in sophomorix
+	## Works with sophomorix-query --teacher --user-full --quota-usage -j --> Key QUOTA_USAGE_BY_SHARE        
         v = {'total': 2147483648, 'used':62914560} ## TODO how to get values from sophomorix-quota
         return {
             'used': v['used'],

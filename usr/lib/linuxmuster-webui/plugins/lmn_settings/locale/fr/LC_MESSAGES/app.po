@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-21 21:23+0100\n"
-"PO-Revision-Date: 2019-02-23 11:16\n"
+"PO-Revision-Date: 2019-02-24 13:54\n"
 "Last-Translator: kiarn <lml@kientz.me>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -22,14 +22,14 @@ msgstr "E-mail de l'administrateur"
 
 #: lmn_settings/resources/partial/index.html:131
 msgid "Cloudquota Percentage"
-msgstr ""
+msgstr "Pourcentage de quota cloud"
 
 #: lmn_settings/resources/partial/index.html:168
 #: lmn_settings/resources/partial/index.html:176
 #: lmn_settings/resources/partial/index.html:184
 #: lmn_settings/resources/partial/index.html:192
 msgid "Detected encoding"
-msgstr ""
+msgstr "Encodage détecté"
 
 #: lmn_settings/resources/partial/index.html:162
 msgid "Encoding"
@@ -61,11 +61,11 @@ msgstr "MOODLE URL"
 
 #: lmn_settings/resources/partial/index.html:145
 msgid "Mailquota Default"
-msgstr ""
+msgstr "Quota mail par défaut"
 
 #: lmn_settings/resources/partial/index.html:46
 msgid "Password Length"
-msgstr ""
+msgstr "Longueur du mot de passe"
 
 #: lmn_settings/resources/partial/index.html:57
 msgid "Password length"
@@ -77,15 +77,15 @@ msgstr "Impression des données"
 
 #: lmn_settings/resources/partial/index.html:92
 msgid "Quota"
-msgstr ""
+msgstr "Quota"
 
 #: lmn_settings/resources/partial/index.html:103
 msgid "Quota Default Global"
-msgstr ""
+msgstr "Quota Global par défaut"
 
 #: lmn_settings/resources/partial/index.html:117
 msgid "Quota Default School"
-msgstr ""
+msgstr "Quota école par défaut"
 
 #: lmn_settings/resources/partial/index.html:35
 msgid "Random password"
@@ -109,11 +109,11 @@ msgstr "Nom d'école"
 
 #: lmn_settings/resources/partial/index.html:99
 msgid "Schooladministrator"
-msgstr ""
+msgstr "Administrateur de l'école"
 
 #: lmn_settings/resources/partial/index.html:20
 msgid "Schoolname"
-msgstr ""
+msgstr "Nom de l'école"
 
 #: lmn_settings/resources/partial/index.html:30
 #: lmn_settings/resources/partial/index.html:97
@@ -139,7 +139,7 @@ msgstr "Tolérance après départ (jours)"
 
 #: lmn_settings/main.py:15
 msgid "School Settings"
-msgstr ""
+msgstr "Configuration de l'école"
 
 #: lmn_settings/main.py:29
 msgid "Configure settings"

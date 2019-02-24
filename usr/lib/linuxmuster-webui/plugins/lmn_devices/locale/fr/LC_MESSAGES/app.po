@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-21 21:23+0100\n"
-"PO-Revision-Date: 2019-02-23 11:16\n"
+"PO-Revision-Date: 2019-02-24 13:54\n"
 "Last-Translator: kiarn <lml@kientz.me>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -18,11 +18,11 @@ msgstr ""
 
 #: lmn_devices/resources/partial/index.html:138
 msgid "Add a device"
-msgstr ""
+msgstr "Ajouter un appareil"
 
 #: lmn_devices/resources/partial/index.html:91
 msgid "BYOD"
-msgstr ""
+msgstr "BYOD"
 
 #: lmn_devices/resources/partial/apply.modal.html:10
 msgid "Close"
@@ -30,7 +30,7 @@ msgstr "Fermer"
 
 #: lmn_devices/resources/partial/index.html:86
 msgid "Computer"
-msgstr ""
+msgstr "Ordinateur"
 
 #: lmn_devices/resources/partial/apply.modal.html:9
 msgid "Details"
@@ -38,7 +38,7 @@ msgstr "Détails"
 
 #: lmn_devices/resources/partial/index.html:96
 msgid "Domain-Controller"
-msgstr ""
+msgstr "Contrôleur de domaine"
 
 #: lmn_devices/resources/partial/index.html:149
 msgid "Edit CSV"
@@ -46,7 +46,7 @@ msgstr "Modifier le CSV"
 
 #: lmn_devices/resources/partial/index.html:84
 msgid "Faculty-Teachercomputer"
-msgstr ""
+msgstr "Faculté-OrdinateurProfesseur"
 
 #: lmn_devices/resources/partial/index.html:23
 msgid "Fields"
@@ -54,23 +54,23 @@ msgstr "Champs"
 
 #: lmn_devices/resources/partial/index.html:94
 msgid "IP-Only"
-msgstr ""
+msgstr "IP-uniquement"
 
 #: lmn_devices/resources/partial/apply.modal.html:2
 msgid "Importing device"
-msgstr ""
+msgstr "Importation des appareils"
 
 #: lmn_devices/resources/partial/index.html:105
 msgid "Linbo-PXE"
-msgstr ""
+msgstr "Linbo-PXE"
 
 #: lmn_devices/resources/partial/index.html:106
 msgid "Linbo-PXE + OPSI-MGMT"
-msgstr ""
+msgstr "Linbo-PXE + OPSI-MGMT"
 
 #: lmn_devices/resources/partial/index.html:95
 msgid "Mobile"
-msgstr ""
+msgstr "Portable"
 
 #: lmn_devices/resources/partial/index.html:104
 msgid "No PXE"
@@ -82,7 +82,7 @@ msgstr "OPSI-PXE"
 
 #: lmn_devices/resources/partial/index.html:89
 msgid "Printer"
-msgstr ""
+msgstr "Imprimante"
 
 #: lmn_devices/resources/partial/index.html:33
 msgid "Rows"
@@ -98,52 +98,52 @@ msgstr "Enregistrer &amp; Importer"
 
 #: lmn_devices/resources/partial/index.html:85
 msgid "Server"
-msgstr ""
+msgstr "Serveur"
 
 #: lmn_devices/resources/partial/index.html:83
 msgid "Staffcomputer"
-msgstr ""
+msgstr "OrdinateurEquipe"
 
 #: lmn_devices/resources/partial/index.html:88
 msgid "Switch"
-msgstr ""
+msgstr "Switch"
 
 #: lmn_devices/resources/partial/index.html:90
 msgid "Thinclient"
-msgstr ""
+msgstr "ClientLéger"
 
 #: lmn_devices/resources/partial/index.html:92
 msgid "VOIP"
-msgstr ""
+msgstr "VOIP"
 
 #: lmn_devices/resources/partial/index.html:93
 msgid "WLan"
-msgstr ""
+msgstr "Wifi"
 
 #: lmn_devices/resources/partial/index.html:81
 msgid "classroom-studentcomputer"
-msgstr ""
+msgstr "classe-ordinateurélève"
 
 #: lmn_devices/resources/partial/index.html:82
 msgid "classroom-teachercomputer"
-msgstr ""
+msgstr "classe-ordinateurprofesseur"
 
 #: lmn_devices/resources/partial/index.html:87
 msgid "router"
-msgstr ""
+msgstr "routeur"
 
 #: lmn_devices/main.py:15
 #: lmn_devices/resources/js/controllers/index.controller.coffee:27
 msgid "Devices"
-msgstr ""
+msgstr "Appareils"
 
 #: lmn_devices/main.py:30
 msgid "Read/write devices"
-msgstr ""
+msgstr "Appareils Lecture/Ecriture"
 
 #: lmn_devices/main.py:35
 msgid "Import device"
-msgstr ""
+msgstr "Importation des appareils"
 
 #: lmn_devices/resources/js/controllers/index.controller.coffee:15
 msgid "Import complete"
@@ -188,15 +188,15 @@ msgstr "Clé Windows"
 
 #: lmn_devices/resources/js/controllers/index.controller.coffee:114
 msgid "DHCP-Options"
-msgstr ""
+msgstr "Options DHCP"
 
 #: lmn_devices/resources/js/controllers/index.controller.coffee:117
 msgid "Sophomorix-Role"
-msgstr ""
+msgstr "Sophomorix-Role"
 
 #: lmn_devices/resources/js/controllers/index.controller.coffee:120
 msgid "LMN-Reserved 10"
-msgstr ""
+msgstr "LMN-Réservé 10"
 
 #: lmn_devices/resources/js/controllers/index.controller.coffee:123
 msgid "PXE"
@@ -204,19 +204,19 @@ msgstr "PXE"
 
 #: lmn_devices/resources/js/controllers/index.controller.coffee:126
 msgid "LMN-Reserved 12"
-msgstr ""
+msgstr "LMN-Réservé 12"
 
 #: lmn_devices/resources/js/controllers/index.controller.coffee:129
 msgid "LMN-Reserved 13"
-msgstr ""
+msgstr "LMN-Réservé 13"
 
 #: lmn_devices/resources/js/controllers/index.controller.coffee:132
 msgid "LMN-Reserved 14"
-msgstr ""
+msgstr "LMN-Réservé 14"
 
 #: lmn_devices/resources/js/controllers/index.controller.coffee:135
 msgid "Sophomorix-Comment"
-msgstr ""
+msgstr "Commentaire-Sophomorix"
 
 #: lmn_devices/resources/js/controllers/index.controller.coffee:146
 msgid "Saved"

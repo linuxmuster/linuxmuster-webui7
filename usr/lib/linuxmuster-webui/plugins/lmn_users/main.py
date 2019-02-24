@@ -160,7 +160,7 @@ class Permissions (PermissionProvider):
             },
             {
                 'id': 'lm:users:schooladmins:delete',
-                'name': _('Delte school admins'),
+                'name': _('Delete school admins'),
                 'default': False,
             },
             {

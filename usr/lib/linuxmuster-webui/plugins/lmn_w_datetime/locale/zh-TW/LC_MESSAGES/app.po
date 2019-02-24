@@ -11,5 +11,5 @@ msgstr ""
 "Last-Translator: kiarn <lml@kientz.me>\n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
-"PO-Revision-Date: 2019-02-23 13:48\n"
+"PO-Revision-Date: 2019-02-24 17:58\n"
 

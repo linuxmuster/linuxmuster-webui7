@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-24 18:55+0100\n"
-"PO-Revision-Date: 2019-02-24 17:58\n"
+"PO-Revision-Date: 2019-02-25 07:46\n"
 "Last-Translator: kiarn <lml@kientz.me>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -58,7 +58,7 @@ msgstr "Cache"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/accept.modal.html:9
 msgid "Cancel"
-msgstr ""
+msgstr "Abbrechen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:224
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/image.modal.html:61
@@ -183,7 +183,7 @@ msgstr "Partitionen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/image.modal.html:39
 msgid "Postsync Script"
-msgstr ""
+msgstr "Postsync-Skript"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/image.modal.html:21
 msgid "Registry patch"
@@ -191,15 +191,15 @@ msgstr "Registry Patch"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/accept.modal.html:8
 msgid "Remove"
-msgstr ""
+msgstr "Entfernen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/accept.modal.html:5
 msgid "Remove Partition {{partition}}"
-msgstr ""
+msgstr "Partition {{partition}} entfernen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/accept.modal.html:2
 msgid "Remove Partition?"
-msgstr ""
+msgstr "Partition entfernen?"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:179
 msgid "Remove this disk"
@@ -278,7 +278,7 @@ msgstr "LINBO Cache"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:473
 msgid "Not a valid name! Only alphanumeric characters are allowed!"
-msgstr ""
+msgstr "Kein gültiger Name! Es sind nur Buchstaben erlaubt!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:518
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:559

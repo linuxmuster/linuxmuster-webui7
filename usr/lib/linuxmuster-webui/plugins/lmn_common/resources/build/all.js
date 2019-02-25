@@ -9,7 +9,8 @@
     customization.plugins.core.faviconURL = '/resources/lmn_common/resources/img/favicon.png';
     customization.plugins.core.logoURL = '/resources/lmn_common/resources/img/logo-text-white.png';
     customization.plugins.core.bigLogoURL = '/resources/lmn_common/resources/img/logo-full.png';
-    return customization.plugins.core.hidePersonaLogin = true;
+    customization.plugins.core.hidePersonaLogin = true;
+    return customization.plugins.core.enableMixpanel = false;
   });
 
   angular.module('lm.common').constant('lmEncodingMap', {

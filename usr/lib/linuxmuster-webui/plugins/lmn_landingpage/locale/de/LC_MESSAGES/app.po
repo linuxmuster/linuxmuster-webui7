@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-24 18:55+0100\n"
-"PO-Revision-Date: 2019-02-24 17:58\n"
+"PO-Revision-Date: 2019-02-25 07:46\n"
 "Last-Translator: kiarn <lml@kientz.me>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -18,33 +18,34 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:15
 msgid "Change password"
-msgstr ""
+msgstr "Passwort ändern"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:20
 msgid "Hello {{user.givenName}} {{user.sn}},"
-msgstr ""
+msgstr "Hallo {{user.givenName}} {{user.sn}},"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:27
 msgid "Use the sidebar to navigate through the options.<br>\n"
 "                But keep in mind:<br>\n"
 "                With great power comes great responsibility!"
-msgstr ""
+msgstr "Verwenden Sie die Seitenleiste, um in den Einstellungen zu navigieren.<br>\n"
+"                Seien Sie bei manchen Einstellungen vorsichtig !"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:2
 msgid "Welcome to Linuxmuster.net version 7!"
-msgstr ""
+msgstr "Willkommen zu Lunuxmuster.net 7!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:6
 msgid "You should not use WebUI as root user! If this is your first time\n"
 "        running WebUI, proceed through the setup wizard. Afterwards login using the global-admin account."
-msgstr ""
+msgstr "Sie sollten das Webinterface nicht vom Root-Account aus nutzen! Beim ersten Mal sollten Sie den Setup-Wizard durchlaufen und sich danach nur noch mit dem Global-Admin Account einloggen."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:23
 msgid "use the sidebar to navigate through the options. You\n"
 "                can start by using the Groupmembership module to subscribe to your classes."
-msgstr ""
+msgstr "Verwenden Sie die Seitenleiste, um in den Einstellungen zu navigieren. Sie könnten damit beginnen, sich mit Hilfe des Groupmembership-Moduls für Ihre Klassen einzutragen."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:7
 msgid "Home"
-msgstr ""
+msgstr "Hauptseite"
 

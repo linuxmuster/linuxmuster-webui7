@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-24 18:55+0100\n"
-"PO-Revision-Date: 2019-02-24 17:58\n"
+"PO-Revision-Date: 2019-02-25 07:46\n"
 "Last-Translator: kiarn <lml@kientz.me>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -18,170 +18,170 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:10
 msgid "(edit members)"
-msgstr ""
+msgstr "(Mitglieder ändern)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:16
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:8
 msgid "(show)"
-msgstr ""
+msgstr "(anzeigen)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:23
 msgid "Classes"
-msgstr ""
+msgstr "Klassen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/editMembers.modal.html:54
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:36
 msgid "Close"
-msgstr ""
+msgstr "Schließen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:23
 msgid "Creationdate:"
-msgstr ""
+msgstr "Erstellungsdatum:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:35
 msgid "Delete Project"
-msgstr ""
+msgstr "Projekt löschen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:119
 msgid "Enroll"
-msgstr ""
+msgstr "Anmelden"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:16
 msgid "Group Admins: {{groupDetails[groupName]['sophomorixAdmins_count']}}"
-msgstr ""
+msgstr "Gruppenadministratoren: {{groupDetails[groupName]['sophomorixAdmins_count']}}"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:2
 msgid "Group Details {{id}}"
-msgstr ""
+msgstr "Gruppendetails {{id}}"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:8
 msgid "Group Members: {{groupDetails[groupName]['sophomorixMembers_count']}}"
-msgstr ""
+msgstr "Gruppenmitglieder: {{groupDetails[groupName]['sophomorixMembers_count']}}"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:12
 msgid "New Project"
-msgstr ""
+msgstr "Neues Projekt"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:16
 msgid "Objectsfilter"
-msgstr ""
+msgstr "Objektfilter"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:70
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:117
 msgid "Printer"
-msgstr ""
+msgstr "Drucker"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:24
 msgid "Printers"
-msgstr ""
+msgstr "Drucker"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:25
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:92
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:122
 msgid "Projects"
-msgstr ""
+msgstr "Projekte"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/editMembers.modal.html:53
 msgid "Save"
-msgstr ""
+msgstr "Speichern"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:49
 msgid "Schoolclasses"
-msgstr ""
+msgstr "Schulklassen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:27
 msgid "Schoolname:"
-msgstr ""
+msgstr "Schulname:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:28
 msgid "Sophomorix Status:"
-msgstr ""
+msgstr "Sophomorix-Status:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:73
 msgid "There are no printers configured yet. Ask your administrator to configure one."
-msgstr ""
+msgstr "Es sind noch keine Drucker konfiguriert. Bitten Sie Ihren Administrator, einen zu konfigurieren."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:95
 msgid "There are no projects yet. You can create a new procet using the menu bar."
-msgstr ""
+msgstr "Es gibt noch keine Projekte. Sie können über die Menüleiste ein neues erstellen."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:52
 msgid "There are no schoolclasses available. Ask the administrator to import students"
-msgstr ""
+msgstr "Es gibt keine Schulklassen. Bitten Sie den Administrator, Schüler zu importieren"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:26
 msgid "Type:"
-msgstr ""
+msgstr "Typ:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:105
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:61
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:82
 msgid "{{group.typename}}"
-msgstr ""
+msgstr "{{group.typename}}"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/editMembers.modal.html:2
 msgid "{{groupName}} Members"
-msgstr ""
+msgstr "{{groupName}} Mitglieder"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/editMembers.modal.html:44
 msgid "{{student.sophomorixRole}}"
-msgstr ""
+msgstr "{{student.sophomorixRole}}"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/main.py:15
 msgid "Groupmembership"
-msgstr ""
+msgstr "Gruppenmitgliedschaft"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/main.py:29
 msgid "Edit Groupmemberships"
-msgstr ""
+msgstr "Gruppenmitgliedschaft bearbeiten"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/main.py:34
 msgid "Edit Groups"
-msgstr ""
+msgstr "Gruppen bearbeiten"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:52
 msgid "Given name"
-msgstr ""
+msgstr "Vorname"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:56
 msgid "Name"
-msgstr ""
+msgstr "Name"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:60
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:133
 msgid "Membership"
-msgstr ""
+msgstr "Mitgliedschaft"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:64
 msgid "Class"
-msgstr ""
+msgstr "Klasse"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:107
 msgid "Group Membership"
-msgstr ""
+msgstr "Gruppenmitgliedschaft"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:111
 msgid "Schoolclass"
-msgstr ""
+msgstr "Schulklasse"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:112
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:129
 msgid "Groupname"
-msgstr ""
+msgstr "Gruppenname"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:213
 msgid "Nothing changed"
-msgstr ""
+msgstr "Es wurden keine Änderungen vorgenommen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:216
 msgid "Project Name"
-msgstr ""
+msgstr "Projektname"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:220
 msgid "Not a valid name! Only alphanumeric characters are allowed!"
-msgstr ""
+msgstr "Kein gültiger Name! Es sind nur Buchstaben erlaubt!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:223
 msgid "Project Created"
-msgstr ""
+msgstr "Projekt erstellt"
 

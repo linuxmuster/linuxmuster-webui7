@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-24 18:55+0100\n"
-"PO-Revision-Date: 2019-02-24 17:59\n"
+"POT-Creation-Date: 2019-02-25 08:42+0100\n"
+"PO-Revision-Date: 2019-02-25 07:46\n"
 "Last-Translator: kiarn <lml@kientz.me>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -111,19 +111,19 @@ msgid "Save &amp; apply"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/selectFile.modal.html:30
-msgid "Select files yo want to copy from <b>{{senders[0]['givenName']}} {{senders[0]['sn']}}</b>"
+msgid "Select files you want to copy from <b>{{senders[0]['givenName']}} {{senders[0]['sn']}}</b>"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/selectFile.modal.html:33
-msgid "Select files yo want to move from <b>{{senders[0]['givenName']}} {{senders[0]['sn']}}</b>"
+msgid "Select files you want to move from <b>{{senders[0]['givenName']}} {{senders[0]['sn']}}</b>"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/selectFile.modal.html:23
-msgid "Select files yo want to share with <b>{{receivers[0]['givenName']}} {{receivers[0]['sn']}}</b>"
+msgid "Select files you want to share with <b>{{receivers[0]['givenName']}} {{receivers[0]['sn']}}</b>"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/selectFile.modal.html:41
-msgid "Select files yo want to share with Session"
+msgid "Select files you want to share with Session"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:64

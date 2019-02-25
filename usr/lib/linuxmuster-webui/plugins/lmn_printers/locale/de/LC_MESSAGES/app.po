@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-24 18:55+0100\n"
-"PO-Revision-Date: 2019-02-24 17:58\n"
+"PO-Revision-Date: 2019-02-25 07:46\n"
 "Last-Translator: kiarn <lml@kientz.me>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -18,7 +18,7 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_printers/resources/partial/printer.modal.html:25
 msgid "Add"
-msgstr ""
+msgstr "Hinzufügen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_printers/resources/partial/printer.modal.html:33
 msgid "Close"
@@ -26,7 +26,7 @@ msgstr "Schließen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_printers/resources/partial/printer.modal.html:16
 msgid "No filter is set. All devices can use this printer."
-msgstr ""
+msgstr "Kein Filter gesetzt. Alle Geräte können diesen Drucker verwenden."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_printers/resources/partial/index.html:16
 #: usr/lib/linuxmuster-webui/plugins/lmn_printers/resources/partial/printer.modal.html:32

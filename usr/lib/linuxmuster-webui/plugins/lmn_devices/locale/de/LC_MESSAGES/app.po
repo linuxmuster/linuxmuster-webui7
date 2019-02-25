@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-24 18:55+0100\n"
-"PO-Revision-Date: 2019-02-24 17:58\n"
+"PO-Revision-Date: 2019-02-25 07:46\n"
 "Last-Translator: kiarn <lml@kientz.me>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -18,11 +18,11 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:138
 msgid "Add a device"
-msgstr ""
+msgstr "Gerät hinzufügen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:91
 msgid "BYOD"
-msgstr ""
+msgstr "BYOD"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/apply.modal.html:10
 msgid "Close"
@@ -30,7 +30,7 @@ msgstr "Schließen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:86
 msgid "Computer"
-msgstr ""
+msgstr "Computer"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/apply.modal.html:9
 msgid "Details"
@@ -38,7 +38,7 @@ msgstr "Details"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:96
 msgid "Domain-Controller"
-msgstr ""
+msgstr "Domaincontroller"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:149
 msgid "Edit CSV"
@@ -46,7 +46,7 @@ msgstr "Im Editor öffnen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:84
 msgid "Faculty-Teachercomputer"
-msgstr ""
+msgstr "Fachbereich-Lehrer-PC"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:23
 msgid "Fields"
@@ -54,23 +54,23 @@ msgstr "Felder"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:94
 msgid "IP-Only"
-msgstr ""
+msgstr "IP-Only"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/apply.modal.html:2
 msgid "Importing device"
-msgstr ""
+msgstr "Gerät wird importiert"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:105
 msgid "Linbo-PXE"
-msgstr ""
+msgstr "Linbo-PXE"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:106
 msgid "Linbo-PXE + OPSI-MGMT"
-msgstr ""
+msgstr "Linbo-PXE + OPSI-MGMT"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:95
 msgid "Mobile"
-msgstr ""
+msgstr "Handy"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:104
 msgid "No PXE"
@@ -82,7 +82,7 @@ msgstr "OPSI-PXE"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:89
 msgid "Printer"
-msgstr ""
+msgstr "Drucker"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:33
 msgid "Rows"
@@ -98,52 +98,52 @@ msgstr "Speichern &amp; importieren"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:85
 msgid "Server"
-msgstr ""
+msgstr "Server"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:83
 msgid "Staffcomputer"
-msgstr ""
+msgstr "Lehrer-PC"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:88
 msgid "Switch"
-msgstr ""
+msgstr "Switch"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:90
 msgid "Thinclient"
-msgstr ""
+msgstr "Thinclient"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:92
 msgid "VOIP"
-msgstr ""
+msgstr "VOIP"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:93
 msgid "WLan"
-msgstr ""
+msgstr "WLan"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:81
 msgid "classroom-studentcomputer"
-msgstr ""
+msgstr "Schüler-PC im Klassenzimmer"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:82
 msgid "classroom-teachercomputer"
-msgstr ""
+msgstr "Lehrer-PC im Klassenzimmer"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:87
 msgid "router"
-msgstr ""
+msgstr "Router"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/main.py:15
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:27
 msgid "Devices"
-msgstr ""
+msgstr "Geräte"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/main.py:30
 msgid "Read/write devices"
-msgstr ""
+msgstr "Von Geräten lesen / auf Geräte schreiben"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/main.py:35
 msgid "Import device"
-msgstr ""
+msgstr "Gerät importieren"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:15
 msgid "Import complete"
@@ -188,15 +188,15 @@ msgstr "Windows Key"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:114
 msgid "DHCP-Options"
-msgstr ""
+msgstr "DHCP-Optionen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:117
 msgid "Sophomorix-Role"
-msgstr ""
+msgstr "Sophomorix-Rolle"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:120
 msgid "LMN-Reserved 10"
-msgstr ""
+msgstr "LMN reserviert 10"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:123
 msgid "PXE"
@@ -204,19 +204,19 @@ msgstr "PXE"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:126
 msgid "LMN-Reserved 12"
-msgstr ""
+msgstr "LMN reserviert 12"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:129
 msgid "LMN-Reserved 13"
-msgstr ""
+msgstr "LMN reserviert 13"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:132
 msgid "LMN-Reserved 14"
-msgstr ""
+msgstr "LMN reserviert 14"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:135
 msgid "Sophomorix-Comment"
-msgstr ""
+msgstr "Sophomorix-Kommentar"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:146
 msgid "Saved"

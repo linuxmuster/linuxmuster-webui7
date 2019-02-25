@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-24 18:55+0100\n"
-"PO-Revision-Date: 2019-02-24 17:58\n"
+"PO-Revision-Date: 2019-02-25 07:46\n"
 "Last-Translator: kiarn <lml@kientz.me>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -22,14 +22,14 @@ msgstr "Admin E-Mail"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:131
 msgid "Cloudquota Percentage"
-msgstr ""
+msgstr "Cloudquota in Prozent"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:168
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:176
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:184
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:192
 msgid "Detected encoding"
-msgstr ""
+msgstr "Erkannter Zeichensatz"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:162
 msgid "Encoding"
@@ -61,11 +61,11 @@ msgstr "MOODLE URL"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:145
 msgid "Mailquota Default"
-msgstr ""
+msgstr "Mailquota Standard"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:46
 msgid "Password Length"
-msgstr ""
+msgstr "Passwortlänge"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:57
 msgid "Password length"
@@ -77,15 +77,15 @@ msgstr "Druck-Daten"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:92
 msgid "Quota"
-msgstr ""
+msgstr "Limit"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:103
 msgid "Quota Default Global"
-msgstr ""
+msgstr "Standardlimit (global)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:117
 msgid "Quota Default School"
-msgstr ""
+msgstr "Standardlimit (Schule)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:35
 msgid "Random password"
@@ -109,11 +109,11 @@ msgstr "Schulname"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:99
 msgid "Schooladministrator"
-msgstr ""
+msgstr "Schuladministrator"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:20
 msgid "Schoolname"
-msgstr ""
+msgstr "Schulname"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:30
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:97
@@ -139,7 +139,7 @@ msgstr "Tage bis zum Deaktivieren nach Austreten"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/main.py:15
 msgid "School Settings"
-msgstr ""
+msgstr "Schuleinstellungen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/main.py:29
 msgid "Configure settings"

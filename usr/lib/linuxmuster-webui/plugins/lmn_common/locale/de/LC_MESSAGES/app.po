@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-24 18:55+0100\n"
-"PO-Revision-Date: 2019-02-25 07:46\n"
+"PO-Revision-Date: 2019-03-04 17:35\n"
 "Last-Translator: kiarn <lml@kientz.me>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -50,7 +50,7 @@ msgstr "Listenverwaltung"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:29
 msgid "Quota"
-msgstr "Limit"
+msgstr "Quota"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:36
 msgid "Device Management"

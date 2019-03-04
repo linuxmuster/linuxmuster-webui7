@@ -21,11 +21,11 @@
 
     <br>
     <br>
-    <div translate> Quota:</div>
+    <div translate> Quota in  MiB:</div>
     <li style="padding-left: 20px;" ng:repeat="sophomorixQuota in userDetails[0]['sophomorixQuota']"><a ng:click="createConfig(example)">{{sophomorixQuota}}</a></li>
 
-    <br><b translate>Cloudquota Calculated:</b> {{userDetails[0]['sophomorixCloudQuotaCalculated']}}
-    <br><b translate>Mailquota Calculated:</b> {{userDetails[0]['sophomorixMailQuotaCalculated']}}
+    <br><b translate>Cloudquota Calculated in MiB:</b> {{userDetails[0]['sophomorixCloudQuotaCalculated']}}
+    <br><b translate>Mailquota Calculated in MiB:</b> {{userDetails[0]['sophomorixMailQuotaCalculated']}}
 
     <div class="modal-footer">
         <a class="btn btn-default btn-flat" ng:click="close()" translate>Close</a>

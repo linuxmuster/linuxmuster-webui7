@@ -38,9 +38,12 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_session_sessions(self, http_context):
         fileToCheck = http_context.json_body()['path']
-        sophomorixCommand = ['sophomorix-check', '--analyze-encoding', fileToCheck, '-jj']
-        encoding = lmn_getSophomorixValue(sophomorixCommand, 'SUMMARY/0/ANALYZE-ENCODING/ENCODING')
-        return encoding
+        if os.path.isfile(fileToCheck):
+            sophomorixCommand = ['sophomorix-check', '--analyze-encoding', fileToCheck, '-jj']
+            encoding = lmn_getSophomorixValue(sophomorixCommand, 'SUMMARY/0/ANALYZE-ENCODING/ENCODING')
+            return encoding
+        else:
+            return None
 
 
     @url(r'/api/lm/schoolsettings')

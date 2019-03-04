@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-24 18:55+0100\n"
-"PO-Revision-Date: 2019-02-25 07:46\n"
+"PO-Revision-Date: 2019-03-04 17:35\n"
 "Last-Translator: kiarn <lml@kientz.me>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -33,7 +33,7 @@ msgstr "Verwenden Sie die Seitenleiste, um in den Einstellungen zu navigieren.<b
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:2
 msgid "Welcome to Linuxmuster.net version 7!"
-msgstr "Willkommen zu Lunuxmuster.net 7!"
+msgstr "Willkommen zu Linuxmuster.net 7!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:6
 msgid "You should not use WebUI as root user! If this is your first time\n"

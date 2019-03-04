@@ -29,6 +29,7 @@
         value: 2
       }
     ];
+    $scope.unit = 'MiB';
     $scope.encodings = ['auto', 'ASCII', 'ISO_8859-1', 'ISO_8859-15', 'WIN-1252', 'UTF-8'];
     $http.get('/api/lm/schoolsettings').then(function(resp) {
       var encoding, file, i, len, ref, school, userfile;

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-24 18:55+0100\n"
-"PO-Revision-Date: 2019-02-25 07:46\n"
+"POT-Creation-Date: 2019-03-04 19:06+0100\n"
+"PO-Revision-Date: 2019-03-04 18:12\n"
 "Last-Translator: kiarn <lml@kientz.me>\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -60,7 +60,7 @@ msgid "MOODLE URL"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:145
-msgid "Mailquota Default"
+msgid "Mailquota Default in MiB"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:46
@@ -80,11 +80,11 @@ msgid "Quota"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:103
-msgid "Quota Default Global"
+msgid "Quota Default Global in MiB"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:117
-msgid "Quota Default School"
+msgid "Quota Default School in MiB"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:35
@@ -161,7 +161,7 @@ msgstr ""
 msgid "Maximal"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:52
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:54
 msgid "Saved"
 msgstr ""
 

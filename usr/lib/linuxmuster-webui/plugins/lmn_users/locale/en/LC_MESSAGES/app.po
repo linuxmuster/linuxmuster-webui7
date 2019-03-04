@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-24 18:56+0100\n"
+"POT-Creation-Date: 2019-03-04 19:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -137,7 +137,7 @@ msgid "Close"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:27
-msgid "Cloudquota Calculated:"
+msgid "Cloudquota Calculated in MiB:"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-courses.html:29
@@ -240,7 +240,7 @@ msgid "Login"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:28
-msgid "Mailquota Calculated:"
+msgid "Mailquota Calculated in MiB:"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/result.modal.html:27
@@ -278,7 +278,7 @@ msgid "Print"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:24
-msgid "Quota:"
+msgid "Quota in  MiB:"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-courses.html:33

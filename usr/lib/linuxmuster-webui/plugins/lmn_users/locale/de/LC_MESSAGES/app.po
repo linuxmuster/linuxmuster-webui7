@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-24 18:56+0100\n"
-"PO-Revision-Date: 2019-03-04 17:35\n"
+"POT-Creation-Date: 2019-03-04 19:06+0100\n"
+"PO-Revision-Date: 2019-03-04 18:12\n"
 "Last-Translator: kiarn <lml@kientz.me>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -136,8 +136,8 @@ msgid "Close"
 msgstr "Schließen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:27
-msgid "Cloudquota Calculated:"
-msgstr "Cloudquota berechnet:"
+msgid "Cloudquota Calculated in MiB:"
+msgstr "Cloudquota berechnet in MiB:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-courses.html:29
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/extraCourses.controller.coffee:24
@@ -239,8 +239,8 @@ msgid "Login"
 msgstr "Benutzername"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:28
-msgid "Mailquota Calculated:"
-msgstr "Mailquota berechnet:"
+msgid "Mailquota Calculated in MiB:"
+msgstr "Mailquota berechnet in MiB:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/result.modal.html:27
 msgid "Move users"
@@ -275,8 +275,8 @@ msgid "Print"
 msgstr "Ausdrucken"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:24
-msgid "Quota:"
-msgstr "Limit:"
+msgid "Quota in  MiB:"
+msgstr "Quota in MiB:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-courses.html:33
 msgid "Removal date"

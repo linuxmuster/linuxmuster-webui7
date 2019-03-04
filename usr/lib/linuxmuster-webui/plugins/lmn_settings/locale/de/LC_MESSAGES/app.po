@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-24 18:55+0100\n"
-"PO-Revision-Date: 2019-03-04 17:35\n"
+"POT-Creation-Date: 2019-03-04 19:06+0100\n"
+"PO-Revision-Date: 2019-03-04 18:12\n"
 "Last-Translator: kiarn <lml@kientz.me>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -60,8 +60,8 @@ msgid "MOODLE URL"
 msgstr "MOODLE URL"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:145
-msgid "Mailquota Default"
-msgstr "Mailquota Standard"
+msgid "Mailquota Default in MiB"
+msgstr "Mailquota Standard in MiB"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:46
 msgid "Password Length"
@@ -80,12 +80,12 @@ msgid "Quota"
 msgstr "Limit"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:103
-msgid "Quota Default Global"
-msgstr "Standardlimit (global)"
+msgid "Quota Default Global in MiB"
+msgstr "Standardlimit (global) in MiB"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:117
-msgid "Quota Default School"
-msgstr "Standardlimit (Schule)"
+msgid "Quota Default School in MiB"
+msgstr "Standardlimit (Schule) in MiB"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:35
 msgid "Random password"
@@ -161,7 +161,7 @@ msgstr "Durchschnittlich"
 msgid "Maximal"
 msgstr "Maximal"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:52
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:54
 msgid "Saved"
 msgstr "Gespeichert"
 

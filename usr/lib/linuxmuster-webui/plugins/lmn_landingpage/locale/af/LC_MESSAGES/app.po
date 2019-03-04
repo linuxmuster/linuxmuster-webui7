@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-24 18:55+0100\n"
-"PO-Revision-Date: 2019-02-25 07:45\n"
+"POT-Creation-Date: 2019-03-04 19:06+0100\n"
+"PO-Revision-Date: 2019-03-04 18:12\n"
 "Last-Translator: kiarn <lml@kientz.me>\n"
 "Language-Team: Afrikaans\n"
 "Language: af_ZA\n"
@@ -22,6 +22,14 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:20
 msgid "Hello {{user.givenName}} {{user.sn}},"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:33
+msgid "Quotas"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:38
+msgid "Total"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:27

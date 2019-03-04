@@ -38,14 +38,11 @@
       // $scope.getUser($scope.identity.user)
       $scope.getUser($scope.identity.user);
     });
-    $scope.getQuota = function(username) {
-      return $http.post('/api/lmn/quota/' + username).then(function(resp) {
-        $scope.used = resp.data.used;
-        $scope.total = resp.data.total;
-        return $scope.usage = Math.floor((100 * $scope.used) / $scope.total);
-      });
-    };
-    $scope.getQuota($scope.identity.user);
+    $scope.getQuota = $http.post('/api/lmn/quota/').then(function(resp) {
+      $scope.used = resp.data.used;
+      $scope.total = resp.data.total;
+      return $scope.usage = Math.floor((100 * $scope.used) / $scope.total);
+    });
     return $scope.changePassword = function() {
       return $location.path('/view/lmn/change-password');
     };

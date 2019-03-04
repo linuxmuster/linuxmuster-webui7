@@ -18,14 +18,27 @@ class Handler(HttpPlugin):
         username = http_context.json_body()['username']
         action = http_context.json_body()['action']
 
-    @url(r'/api/lmn/quota/(?P<user>\w+)') ## TODO authorize
+    @url(r'/api/lmn/quota/') ## TODO authorize
     @endpoint(api=True)
-    def handle_api_quota(self, http_context, user):
-        ## COMMAND : sophomorix-query --sam USER --user-full --quota-usage -j --> TODO in sophomorix
-	## Works with sophomorix-query --teacher --user-full --quota-usage -j --> Key QUOTA_USAGE_BY_SHARE        
-        v = {'total': 2147483648, 'used':62914560} ## TODO how to get values from sophomorix-quota
-        return {
-            'used': v['used'],
-            'free': v['total']-v['used'],
-            'total': v['total']
-        }
+    def handle_api_quota(self, http_context):
+       if http_context.method == 'POST':
+            #with authorize('lm:users:students:write'): ## TODO
+                
+                user = self.context.identity
+                
+                if user != 'root':
+                    sophomorixCommand = ['sophomorix-query', '--sam', user, '--user-full', '--quota-usage', '-jj']
+                    jsonpath          = 'USER/' + user + '/QUOTA_USAGE_BY_SHARE/linuxmuster-global'
+                    result            = lmn_getSophomorixValue(sophomorixCommand, jsonpath)
+                    print("#"*50, user, result, self.context.identity)
+                    return {
+                        'used': result['USED_MiB'],
+                        'free': result['HARD_LIMIT_MiB']-result['USED_MiB'],
+                        'total': result['HARD_LIMIT_MiB']
+                    }
+                else:
+                    return {
+                        'used': 0,
+                        'free': 0,
+                        'total': 1
+                    }

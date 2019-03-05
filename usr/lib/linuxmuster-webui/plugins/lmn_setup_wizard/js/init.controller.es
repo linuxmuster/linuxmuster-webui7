@@ -208,12 +208,13 @@ angular.module('lm.setup_wizard').controller('InitDoneController', function ($lo
  
     this.close = () => {
 	url = new URL(window.location.href);
-        location.href = 'https://' + url.hostname + ':' + url.port;
+        //location.href = 'https://' + url.hostname + ':' + url.port;
         //$location.href('https://www.google.de');
         notify.success(gettext('Restart Webui'))
          $http.post('/api/lm/setup-wizard/restart').then(() => {
             // TODO Validate if this works
-            location.href = 'https://' + url.hostname + ':' + url.port;
+            location.href('https://www.google.de');
+            //location.href = 'https://' + url.hostname + ':' + url.port;
             //$location.path('/')
         })
     }

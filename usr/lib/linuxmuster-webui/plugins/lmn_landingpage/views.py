@@ -22,7 +22,6 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_quota(self, http_context):
        if http_context.method == 'POST':
-            #with authorize('lm:users:students:write'): ## TODO
                 
                 user = self.context.identity
                 
@@ -30,7 +29,6 @@ class Handler(HttpPlugin):
                     sophomorixCommand = ['sophomorix-query', '--sam', user, '--user-full', '--quota-usage', '-jj']
                     jsonpath          = 'USER/' + user + '/QUOTA_USAGE_BY_SHARE/linuxmuster-global'
                     result            = lmn_getSophomorixValue(sophomorixCommand, jsonpath)
-                    print("#"*50, user, result, self.context.identity)
                     return {
                         'used': result['USED_MiB'],
                         'free': result['HARD_LIMIT_MiB']-result['USED_MiB'],

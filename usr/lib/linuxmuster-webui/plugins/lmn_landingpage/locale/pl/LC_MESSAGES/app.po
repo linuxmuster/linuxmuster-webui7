@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-04 19:06+0100\n"
-"PO-Revision-Date: 2019-03-04 18:12\n"
+"POT-Creation-Date: 2019-03-07 15:32+0100\n"
+"PO-Revision-Date: 2019-03-07 14:39\n"
 "Last-Translator: kiarn <lml@kientz.me>\n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -16,43 +16,43 @@ msgstr ""
 "X-Crowdin-Language: pl\n"
 "X-Crowdin-File: /2.0/lmn_landingpage.po\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:15
+#: lmn_landingpage/resources/partial/index.html:15
 msgid "Change password"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:20
+#: lmn_landingpage/resources/partial/index.html:20
 msgid "Hello {{user.givenName}} {{user.sn}},"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:33
+#: lmn_landingpage/resources/partial/index.html:33
 msgid "Quotas"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:38
+#: lmn_landingpage/resources/partial/index.html:38
 msgid "Total"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:27
+#: lmn_landingpage/resources/partial/index.html:27
 msgid "Use the sidebar to navigate through the options.<br>\n"
 "                But keep in mind:<br>\n"
 "                With great power comes great responsibility!"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:2
+#: lmn_landingpage/resources/partial/index.html:2
 msgid "Welcome to Linuxmuster.net version 7!"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:6
+#: lmn_landingpage/resources/partial/index.html:6
 msgid "You should not use WebUI as root user! If this is your first time\n"
 "        running WebUI, proceed through the setup wizard. Afterwards login using the global-admin account."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:23
+#: lmn_landingpage/resources/partial/index.html:23
 msgid "use the sidebar to navigate through the options. You\n"
 "                can start by using the Groupmembership module to subscribe to your classes."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:7
+#: lmn_landingpage/resources/js/controllers/index.controller.coffee:7
 msgid "Home"
 msgstr ""
 

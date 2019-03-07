@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-24 18:55+0100\n"
-"PO-Revision-Date: 2019-03-04 18:12\n"
+"POT-Creation-Date: 2019-03-07 15:32+0100\n"
+"PO-Revision-Date: 2019-03-07 14:39\n"
 "Last-Translator: kiarn <lml@kientz.me>\n"
 "Language-Team: Norwegian\n"
 "Language: no_NO\n"
@@ -16,55 +16,55 @@ msgstr ""
 "X-Crowdin-Language: no\n"
 "X-Crowdin-File: /2.0/lmn_auth.po\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:27
+#: lmn_auth/resources/partial/index.html:27
 msgid "Change password"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:14
+#: lmn_auth/resources/partial/index.html:14
 msgid "Current password"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:3
+#: lmn_auth/resources/partial/index.html:3
 msgid "Minimal length is 7 characters. Use upper, lower and special characters or numbers. (e.g. Muster!)"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:18
+#: lmn_auth/resources/partial/index.html:18
 msgid "New password"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:22
+#: lmn_auth/resources/partial/index.html:22
 msgid "Repeat password"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:5
+#: lmn_auth/resources/partial/index.html:5
 msgid "Valid characters are: a-z A-Z 0-9 !§+-@#$%&*( )[ ]{ }"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:13
+#: lmn_auth/api.py:13
 msgid "Linux Muster LDAP"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:18
+#: lmn_auth/resources/js/controllers/index.controller.coffee:18
 msgid "Change Password"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:24
+#: lmn_auth/resources/js/controllers/index.controller.coffee:24
 msgid "Passwords do not match"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:27
+#: lmn_auth/resources/js/controllers/index.controller.coffee:27
 msgid "Password contains invalid characters"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:30
+#: lmn_auth/resources/js/controllers/index.controller.coffee:30
 msgid "Password too weak"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:35
+#: lmn_auth/resources/js/controllers/index.controller.coffee:35
 msgid "Password changed"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:38
+#: lmn_auth/resources/js/controllers/index.controller.coffee:38
 msgid "Password change failed"
 msgstr ""
 

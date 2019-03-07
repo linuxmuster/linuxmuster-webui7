@@ -8,6 +8,11 @@ from aj.auth import authorize
 from aj.api.endpoint import endpoint, EndpointError
 from aj.plugins.lmn_common.api import lmn_backup_file, lmconfig
 
+# Fix user quota : 
+    # sophomorix-user --quota linuxmuster-global:500:bla -u de
+    # sophomorix-quota -u de
+# Call all quotas :
+    # sophomorix-quota -n ( no -jj ? )
 
 @component(HttpPlugin)
 class Handler(HttpPlugin):
@@ -18,8 +23,8 @@ class Handler(HttpPlugin):
     @authorize('lm:quotas:configure')
     @endpoint(api=True)
     def handle_api_quotas(self, http_context):
-        path = '/etc/linuxmuster/sophomorix/user/quota.txt'
-        mpath = '/etc/linuxmuster/sophomorix/user/mailquota.txt'
+        path = '/etc/linuxmuster/sophomorix/quota.txt' ## TODO DELETE
+        mpath = '/etc/linuxmuster/sophomorix/mailquota.txt'
         if http_context.method == 'GET':
             r = {}
 

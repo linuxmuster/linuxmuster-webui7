@@ -24,9 +24,8 @@
                 can start by using the Groupmembership module to subscribe to your classes.</h4>
         </div>
         <div ng:show="user.sophomorixRole == 'globaladministrator' || user.sophomorixRole == 'schooladministrator'">
-            <h4 translate>use the sidebar to navigate through the options.
-                <br translate>
-                But keep in mind:
+            <h4 translate>Use the sidebar to navigate through the options.<br />
+                But keep in mind:<br />
                 With great power comes great responsibility!</h4>
         </div>
     </div>
@@ -45,8 +44,8 @@
         <div class="row">
             <div class="col-xs-12">
                 <div class="widget-value">
-                     {{used|bytes}} / {{total|bytes}}
-                    <sup ng:show="usage > 90">
+                     {{used}} MiB / {{total}} MiB
+                    <sup ng:show="usage > 80">
                         <span class="label label-danger">
                             <i class="fa fa-warning"></i>
                         </span>

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-21 21:22+0100\n"
+"POT-Creation-Date: 2019-02-24 18:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,124 +17,124 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: lmn_quotas/resources/partial/apply.modal.html:2
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/apply.modal.html:2
 msgid "Applying changes"
 msgstr ""
 
-#: lmn_quotas/resources/partial/index.html:94
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:94
 msgid "Classes"
 msgstr ""
 
-#: lmn_quotas/resources/partial/apply.modal.html:10
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/apply.modal.html:10
 msgid "Close"
 msgstr ""
 
-#: lmn_quotas/resources/partial/index.html:7
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:7
 msgid "Defaults"
 msgstr ""
 
-#: lmn_quotas/resources/partial/apply.modal.html:9
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/apply.modal.html:9
 msgid "Details"
 msgstr ""
 
-#: lmn_quotas/resources/partial/index.html:62
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:62
 msgid "Login"
 msgstr ""
 
-#: lmn_quotas/resources/partial/index.html:101
-#: lmn_quotas/resources/partial/index.html:14
-#: lmn_quotas/resources/partial/index.html:147
-#: lmn_quotas/resources/partial/index.html:40
-#: lmn_quotas/resources/partial/index.html:66
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:101
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:14
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:147
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:40
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:66
 msgid "Mail"
 msgstr ""
 
-#: lmn_quotas/resources/partial/index.html:11
-#: lmn_quotas/resources/partial/index.html:123
-#: lmn_quotas/resources/partial/index.html:144
-#: lmn_quotas/resources/partial/index.html:37
-#: lmn_quotas/resources/partial/index.html:63
-#: lmn_quotas/resources/partial/index.html:98
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:11
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:123
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:144
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:37
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:63
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:98
 msgid "Name"
 msgstr ""
 
-#: lmn_quotas/resources/partial/index.html:119
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:119
 msgid "Projects"
 msgstr ""
 
-#: lmn_quotas/resources/partial/index.html:172
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:172
 msgid "Save"
 msgstr ""
 
-#: lmn_quotas/resources/partial/index.html:173
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:173
 msgid "Save & apply"
 msgstr ""
 
-#: lmn_quotas/resources/partial/index.html:140
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:140
 msgid "Special"
 msgstr ""
 
-#: lmn_quotas/resources/partial/index.html:58
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:58
 msgid "Students"
 msgstr ""
 
-#: lmn_quotas/resources/partial/index.html:33
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:33
 msgid "Teachers"
 msgstr ""
 
-#: lmn_quotas/main.py:15
-#: lmn_quotas/resources/js/controllers/index.controller.coffee:28
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/main.py:15
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:28
 msgid "Quotas"
 msgstr ""
 
-#: lmn_quotas/main.py:29
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/main.py:29
 msgid "Read LDAP"
 msgstr ""
 
-#: lmn_quotas/main.py:34
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/main.py:34
 msgid "Configure quotas"
 msgstr ""
 
-#: lmn_quotas/main.py:39
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/main.py:39
 msgid "Set quotas"
 msgstr ""
 
-#: lmn_quotas/resources/js/controllers/index.controller.coffee:17
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:17
 msgid "Update complete"
 msgstr ""
 
-#: lmn_quotas/resources/js/controllers/index.controller.coffee:19
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:19
 msgid "Update failed"
 msgstr ""
 
-#: lmn_quotas/resources/js/controllers/index.controller.coffee:61
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:61
 msgid "Webspace"
 msgstr ""
 
-#: lmn_quotas/resources/js/controllers/index.controller.coffee:62
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:62
 msgid "Main admin"
 msgstr ""
 
-#: lmn_quotas/resources/js/controllers/index.controller.coffee:63
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:63
 msgid "Program admin"
 msgstr ""
 
-#: lmn_quotas/resources/js/controllers/index.controller.coffee:64
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:64
 msgid "Web admin"
 msgstr ""
 
-#: lmn_quotas/resources/js/controllers/index.controller.coffee:68
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:68
 msgid "Workstation default"
 msgstr ""
 
-#: lmn_quotas/resources/js/controllers/index.controller.coffee:69
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:69
 msgid "Student default"
 msgstr ""
 
-#: lmn_quotas/resources/js/controllers/index.controller.coffee:70
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:70
 msgid "Teacher default"
 msgstr ""
 
-#: lmn_quotas/resources/js/controllers/index.controller.coffee:139
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:139
 msgid "Saved"
 msgstr ""

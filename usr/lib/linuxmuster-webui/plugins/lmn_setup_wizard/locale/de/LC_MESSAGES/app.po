@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-23 12:13+0100\n"
-"PO-Revision-Date: 2019-02-23 11:16\n"
+"POT-Creation-Date: 2019-02-24 18:55+0100\n"
+"PO-Revision-Date: 2019-03-04 18:12\n"
 "Last-Translator: kiarn <lml@kientz.me>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -16,184 +16,185 @@ msgstr ""
 "X-Crowdin-Language: de\n"
 "X-Crowdin-File: /2.0/lmn_setup_wizard.po\n"
 
-#: lmn_setup_wizard/partial/init-account.html:3
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-account.html:3
 msgid "Account Information"
-msgstr ""
+msgstr "Konto-Informationen"
 
-#: lmn_setup_wizard/partial/init-summary.html:7
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:7
 msgid "Almost done..."
-msgstr ""
+msgstr "Fast geschafft..."
 
-#: lmn_setup_wizard/partial/init-account.html:21
-#: lmn_setup_wizard/partial/init-externalServices.html:36
-#: lmn_setup_wizard/partial/init-school.html:45
-#: lmn_setup_wizard/partial/init-summary.html:54
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-account.html:21
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-externalServices.html:36
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:45
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:54
 msgid "Back"
-msgstr ""
+msgstr "Zurück"
 
-#: lmn_setup_wizard/partial/init-done.html:17
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-done.html:17
 msgid "Close"
-msgstr ""
+msgstr "Schließen"
 
-#: lmn_setup_wizard/partial/init-summary.html:35
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:35
 msgid "Configuration will be <b>skipped </b>"
-msgstr ""
+msgstr "Konfiguration wird <b>übersprungen.</b>"
 
-#: lmn_setup_wizard/partial/init-school.html:21
-#: lmn_setup_wizard/partial/init-summary.html:19
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:21
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:19
 msgid "Country"
-msgstr ""
+msgstr "Land"
 
-#: lmn_setup_wizard/partial/init-school.html:34
-#: lmn_setup_wizard/partial/init-summary.html:27
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:34
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:27
 msgid "Domain name"
-msgstr ""
+msgstr "Domänen-Name"
 
-#: lmn_setup_wizard/partial/init-externalServices.html:3
-#: lmn_setup_wizard/partial/init-summary.html:32
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-externalServices.html:3
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:32
 msgid "External Services"
-msgstr ""
+msgstr "Externe Dienste"
 
-#: lmn_setup_wizard/partial/init-summary.html:35
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:35
 msgid "Firewall"
-msgstr ""
+msgstr "Firewall"
 
-#: lmn_setup_wizard/partial/init-summary.html:35
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:35
 msgid "Firewall will be <b>configured!</b>"
-msgstr ""
+msgstr "Firewall wird <b>konfiguriert!</b>"
 
-#: lmn_setup_wizard/partial/init-done.html:9
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-done.html:9
 msgid "If you hit the close button you will be forwarded to a ssl encrypted version of LinuxMuster Webui. Unless you install\n"
 "                a trusted certificate you will be asked to confirm the untrusted, just created, certificate. Confirm this certificate to proceed"
-msgstr ""
+msgstr "Wenn Sie den Schließen-Button drücken, werden Sie zu einer ssl verschlüsselten Version von LinuxMuster Webui weitergeleitet. Wenn Sie nicht\n"
+"                ein vertrauenswürdiges Zertifikat installieren, werden Sie aufgefordert, das nicht vertrauenswürdige, gerade erstellte Zertifikat zu bestätigen. Bestätigen Sie dieses Zertifikat um fortzufahren"
 
-#: lmn_setup_wizard/partial/init-done.html:7
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-done.html:7
 msgid "Information"
-msgstr ""
+msgstr "Informationen"
 
-#: lmn_setup_wizard/partial/init-school.html:13
-#: lmn_setup_wizard/partial/init-summary.html:17
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:13
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:17
 msgid "Location"
-msgstr ""
+msgstr "Standort"
 
-#: lmn_setup_wizard/partial/init-account.html:22
-#: lmn_setup_wizard/partial/init-externalServices.html:37
-#: lmn_setup_wizard/partial/init-school.html:46
-#: lmn_setup_wizard/partial/init-welcome.html:30
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-account.html:22
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-externalServices.html:37
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:46
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-welcome.html:30
 msgid "Next"
-msgstr ""
+msgstr "Weiter"
 
-#: lmn_setup_wizard/partial/init-summary.html:37
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:37
 msgid "No docker host will be configured"
-msgstr ""
+msgstr "Kein Docker-Host wird konfiguriert"
 
-#: lmn_setup_wizard/partial/init-summary.html:38
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:38
 msgid "No mailservice will be configured"
-msgstr ""
+msgstr "Kein Mailservice wird konfiguriert"
 
-#: lmn_setup_wizard/partial/init-summary.html:36
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:36
 msgid "No opsi will be configured"
-msgstr ""
+msgstr "Es wird kein Opsi eingerichtet."
 
-#: lmn_setup_wizard/partial/init-account.html:13
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-account.html:13
 msgid "Note: Minimal length is 7 characters. Use upper, lower and special characters or numbers. (e.g. mUster!)"
-msgstr ""
+msgstr "Hinweis: Die minimale Passwortlänge ist 7 Zeichen. Verwenden Sie Klein- und Großbuchstaben, Sonderzeichen oder Ziffen. (z.B. mUster!)"
 
-#: lmn_setup_wizard/partial/init-summary.html:40
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:40
 msgid "SMTP Relay"
-msgstr ""
+msgstr "SMTP-Relay"
 
-#: lmn_setup_wizard/partial/init-summary.html:39
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:39
 msgid "SMTP User"
-msgstr ""
+msgstr "SMTP-Benutzername"
 
-#: lmn_setup_wizard/partial/init-school.html:3
-#: lmn_setup_wizard/partial/init-summary.html:13
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:3
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:13
 msgid "School Information"
-msgstr ""
+msgstr "Informationen zur Schule"
 
-#: lmn_setup_wizard/partial/init-summary.html:16
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:16
 msgid "School Name:"
-msgstr ""
+msgstr "Schulname:"
 
-#: lmn_setup_wizard/partial/init-school.html:7
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:7
 msgid "School name"
-msgstr ""
+msgstr "Schulname"
 
-#: lmn_setup_wizard/partial/init-school.html:26
-#: lmn_setup_wizard/partial/init-summary.html:23
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:26
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:23
 msgid "Server &amp; Domain Information"
-msgstr ""
+msgstr "Server &amp; Domain-Informationen"
 
-#: lmn_setup_wizard/partial/init-school.html:40
-#: lmn_setup_wizard/partial/init-summary.html:28
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:40
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:28
 msgid "Server FQDN"
-msgstr ""
+msgstr "Server FQDN (Fully-Qualified Host Name)"
 
-#: lmn_setup_wizard/partial/init-school.html:30
-#: lmn_setup_wizard/partial/init-summary.html:26
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:30
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:26
 msgid "Server name"
-msgstr ""
+msgstr "Servername"
 
-#: lmn_setup_wizard/partial/init-setup.html:3
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-setup.html:3
 msgid "Setup"
-msgstr ""
+msgstr "Einrichtung"
 
-#: lmn_setup_wizard/partial/init-done.html:3
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-done.html:3
 msgid "Setup complete"
-msgstr ""
+msgstr "Einrichtung abgeschlossen"
 
-#: lmn_setup_wizard/partial/init-setup.html:10
-#: lmn_setup_wizard/partial/init-summary.html:55
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-setup.html:10
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:55
 msgid "Start provisioning"
-msgstr ""
+msgstr "Bereitstellung starten"
 
-#: lmn_setup_wizard/partial/init-school.html:17
-#: lmn_setup_wizard/partial/init-summary.html:18
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:17
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:18
 msgid "State"
-msgstr ""
+msgstr "Zustand"
 
-#: lmn_setup_wizard/partial/init-summary.html:3
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:3
 msgid "Summary"
-msgstr ""
+msgstr "Übersicht"
 
-#: lmn_setup_wizard/partial/init-welcome.html:11
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-welcome.html:11
 msgid "System language"
-msgstr ""
+msgstr "Systemsprache"
 
-#: lmn_setup_wizard/partial/init-done.html:8
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-done.html:8
 msgid "The setup was completed."
-msgstr ""
+msgstr "Das Setup wurde abgeschlossen."
 
-#: lmn_setup_wizard/partial/init-account.html:15
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-account.html:15
 msgid "Valid characters are: a-z A-Z 0-9 !§+-@#$%&*( )[ ]{ }"
-msgstr ""
+msgstr "Zulässige Zeichen sind: a-z A-Z 0-9 !§+-@#$%&*( )[ ]{ }"
 
-#: lmn_setup_wizard/partial/init-summary.html:8
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:8
 msgid "We got all information needed for the provisioning proccess.<br>Before proceeding please check your data <b>carefully</b>!"
-msgstr ""
+msgstr "Wir haben alle notwendigen Informationen für den Bereitstellungsprozesses.<br>Bevor Sie fortfahren, überprüfen Sie bitte Ihre Daten <b>sorgfältig</b>!"
 
-#: lmn_setup_wizard/partial/init-welcome.html:3
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-welcome.html:3
 msgid "Welcome to linuxmuster.net V7 (beta)"
-msgstr ""
+msgstr "Willkommen bei linuxmuster.net V7 (beta)"
 
-#: lmn_setup_wizard/partial/init-school.html:18
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:18
 msgid "e.g.: Baden-Wuerttemberg"
-msgstr ""
+msgstr "z.B.: Baden-Württemberg"
 
-#: lmn_setup_wizard/partial/init-school.html:14
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:14
 msgid "e.g.: Guetenbach"
-msgstr ""
+msgstr "z.B.: Guetenbach"
 
-#: lmn_setup_wizard/partial/init-school.html:8
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:8
 msgid "e.g.: Linuxmuster-Example School"
-msgstr ""
+msgstr "z.B.: Linuxmuster-Beispiel-Schule"
 
-#: lmn_setup_wizard/partial/init-school.html:35
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:35
 msgid "e.g.: linuxmuster.lan"
-msgstr ""
+msgstr "z.B.: linuxmuster.lan"
 
-#: lmn_setup_wizard/partial/init-school.html:31
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:31
 msgid "e.g.: server"
-msgstr ""
+msgstr "z.B.: server"
 

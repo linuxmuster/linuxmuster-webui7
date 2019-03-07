@@ -423,7 +423,7 @@ class Handler(HttpPlugin):
         school = 'default-school'
         if http_context.method == 'GET':
 
-            sophomorixCommand = ['sophomorix-print', '--school', school, '--info', '-jj']            
+            sophomorixCommand = ['sophomorix-print', '--school', school, '--info', '-jj']
 
             with authorize('lm:users:students:read'):
                 # classes = lmn_getSophomorixValue(sophomorixCommand, 'LIST_BY_sophomorixSchoolname_sophomorixAdminClass/'+school)

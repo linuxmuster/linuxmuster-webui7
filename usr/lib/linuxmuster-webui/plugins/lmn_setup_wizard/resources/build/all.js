@@ -238,15 +238,13 @@ angular.module('lm.setup_wizard').controller('InitDoneController', function ($lo
 
     this.close = function () {
         url = new URL(window.location.href);
-        // location.href = 'https://' + url.hostname + ':' + url.port;
-        location.href = 'https://' + url.hostname + ':' + url.port;
-        // $location.href('https://www.google.de');
+        //location.href = 'https://' + url.hostname + ':' + url.port;
+        //$location.href('https://www.google.de');
         notify.success(gettext('Restart Webui'));
         $http.post('/api/lm/setup-wizard/restart').then(function () {
             // TODO Validate if this works
-            //location.href('https://www.google.de');
+            location.href('https://www.google.de');
             //location.href = 'https://' + url.hostname + ':' + url.port;
-            location.href = 'https://' + url.hostname + ':' + url.port;
             //$location.path('/')
         });
     };

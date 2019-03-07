@@ -11,5 +11,5 @@ msgstr ""
 "Last-Translator: kiarn <lml@kientz.me>\n"
 "Language-Team: Norwegian\n"
 "Language: no_NO\n"
-"PO-Revision-Date: 2019-03-04 18:12\n"
+"PO-Revision-Date: 2019-03-07 14:39\n"
 

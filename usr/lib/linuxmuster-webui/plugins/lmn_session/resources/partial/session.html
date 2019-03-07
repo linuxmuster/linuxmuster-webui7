@@ -27,41 +27,41 @@
         </div>
 
         <div ng-show="!sessionLoaded" class="input-group-btn">
-            <button class="btn btn-default" ng:click="newSession(identity.user)" translate>
-                <div>
-                    {{'New Session'}}
+            <button class="btn btn-default" ng:click="newSession(identity.user)">
+                <div translate>
+                    New Session
                 </div>
             </button>
         </div>
 
-        <div ng-show="sessionLoaded" uib-dropdown class="input-group-btn" auto-close="outsideClick" translate>
-            <button class="btn btn-default" uib-dropdown-toggle>
-                {{'Edit Sessions'}}
+        <div ng-show="sessionLoaded" uib-dropdown class="input-group-btn" auto-close="outsideClick">
+            <button class="btn btn-default" uib-dropdown-toggle translate>
+                Edit Sessions
                 <span class="caret"></span>
             </button>
             <ul uib-dropdown-menu class="dropdown-menu-right" >
                 <li>
 
                     <a ng:click="newSession(identity.user)" translate>
-                        {{'New Session'}}
+                        New Session
                     </a>
                 </li>
                 <li>
 
                     <a ng:click="renameSession(identity.user, currentSession.name, currentSession.comment)" translate>
-                        {{'Rename Session'}}
+                        Rename Session
                     </a>
                 </li>
                 <li>
                     <a ng:click="killSession(identity.user, currentSession.name, currentSession.comment)" translate>
-                        {{'Delete Session'}}
+                        Delete Session
                     </a>
             </ul>
         </div>
         <!-- Sessions dropdown -->
         <div uib-dropdown class="input-group-btn" auto-close="outsideClick">
             <button class="btn btn-default" uib-dropdown-toggle translate>
-                <i class="fa fa-users"></i> {{'Sessions'}}
+                <i class="fa fa-users"></i> Sessions
                 <span class="caret"></span>
             </button>
             <ul uib-dropdown-menu class="dropdown-menu-right">

@@ -13,6 +13,8 @@ angular.module('lm.settings').controller 'LMSettingsController', ($scope, $http,
         {name: gettext('Maximal'), value: 2}
     ]
 
+    $scope.unit = 'MiB'
+
     $scope.encodings = [
         'auto',
         'ASCII',

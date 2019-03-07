@@ -12,6 +12,7 @@ angular.module('lm.common').run (customization) ->
     customization.plugins.core.logoURL = '/resources/lmn_common/resources/img/logo-text-white.png'
     customization.plugins.core.bigLogoURL = '/resources/lmn_common/resources/img/logo-full.png'
     customization.plugins.core.hidePersonaLogin = true
+    customization.plugins.core.enableMixpanel = false
 
 angular.module('lm.common').constant 'lmEncodingMap', {
     '': 'utf-8'

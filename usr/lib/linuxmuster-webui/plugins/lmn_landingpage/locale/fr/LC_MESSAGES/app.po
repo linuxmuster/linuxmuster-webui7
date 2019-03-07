@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-23 10:06+0100\n"
-"PO-Revision-Date: 2019-02-23 11:16\n"
+"POT-Creation-Date: 2019-03-04 19:06+0100\n"
+"PO-Revision-Date: 2019-03-04 18:11\n"
 "Last-Translator: kiarn <lml@kientz.me>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -16,44 +16,47 @@ msgstr ""
 "X-Crowdin-Language: fr\n"
 "X-Crowdin-File: /2.0/lmn_landingpage.po\n"
 
-#: lmn_landingpage/resources/partial/index.html:15
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:15
 msgid "Change password"
-msgstr ""
+msgstr "Changer le mot de passe"
 
-#: lmn_landingpage/resources/partial/index.html:20
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:20
 msgid "Hello {{user.givenName}} {{user.sn}},"
-msgstr ""
+msgstr "Bonjour {{user.givenName}} {{user.sn}},"
 
-#: lmn_landingpage/resources/partial/index.html:34
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:33
 msgid "Quotas"
-msgstr ""
+msgstr "Quota"
 
-#: lmn_landingpage/resources/partial/index.html:39
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:38
 msgid "Total"
-msgstr ""
+msgstr "Total"
 
-#: lmn_landingpage/resources/partial/index.html:2
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:27
+msgid "Use the sidebar to navigate through the options.<br>\n"
+"                But keep in mind:<br>\n"
+"                With great power comes great responsibility!"
+msgstr "Utilisez la barre latérale pour naviguer dans les options.<br>\n"
+"                Mais gardez à l’esprit :<br>\n"
+"                avec de grands pouvoirs viennent de grandes responsabilités !"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:2
 msgid "Welcome to Linuxmuster.net version 7!"
-msgstr ""
+msgstr "Bienvenue sur Linuxmuster.net version 7 !"
 
-#: lmn_landingpage/resources/partial/index.html:6
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:6
 msgid "You should not use WebUI as root user! If this is your first time\n"
 "        running WebUI, proceed through the setup wizard. Afterwards login using the global-admin account."
-msgstr ""
+msgstr "Vous ne devriez pas utiliser WebUI en tant qu'utilisateur root! Si c'est la première fois\n"
+"        que vous exécutez WebUI, passez par l'assistant de configuration. Ensuite, connectez-vous à l'aide du compte global-admin."
 
-#: lmn_landingpage/resources/partial/index.html:27
-msgid "use the sidebar to navigate through the options.\n"
-"                <br translate=\"\">\n"
-"                But keep in mind:\n"
-"                With great power comes great responsibility!"
-msgstr ""
-
-#: lmn_landingpage/resources/partial/index.html:23
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:23
 msgid "use the sidebar to navigate through the options. You\n"
 "                can start by using the Groupmembership module to subscribe to your classes."
-msgstr ""
+msgstr "utilisez la barre latérale pour naviguer dans les options. Vous\n"
+"                pouvez commencer en utilisant le module Adhésion pour vous abonner à vos classes."
 
-#: lmn_landingpage/resources/js/controllers/index.controller.coffee:7
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:7
 msgid "Home"
-msgstr ""
+msgstr "Accueil"
 

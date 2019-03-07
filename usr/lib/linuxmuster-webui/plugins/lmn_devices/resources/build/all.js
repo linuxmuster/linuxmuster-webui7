@@ -34,6 +34,30 @@
 
   angular.module('lm.devices').controller('LMDevicesController', function($scope, $http, $uibModal, $route, gettext, notify, pageTitle, lmFileEditor, lmFileBackups) {
     pageTitle.set(gettext('Devices'));
+    $scope.isValidMac = function(mac) {
+      var regExp, validMac;
+      regExp = /^([0-9A-Fa-f]{2}[:]){5}([0-9A-Fa-f]{2})$/;
+      validMac = regExp.test(mac);
+      return validMac;
+    };
+    $scope.isValidIP = function(ip) {
+      var regExp, validIP;
+      regExp = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/; //# TODO all IPs allowed, and 010.1.1.1
+      validIP = regExp.test(ip);
+      return validIP;
+    };
+    $scope.isValidHost = function(hostname) {
+      var regExp, validHostname;
+      regExp = /^[a-zA-Z0-9#+\-*]+$/; //# TODO : list of valid chars for sophomorix ? Also for group ?
+      validHostname = regExp.test(hostname);
+      return validHostname;
+    };
+    $scope.isValidRoom = function(room) {
+      return $scope.isValidHost(room);
+    };
+    $scope.isValidRole = function(role) { //# Test sophmorixrole ?
+      return True;
+    };
     $scope.sorts = [
       {
         name: gettext('Room'),
@@ -81,6 +105,11 @@
       $scope.filter = '';
       return $scope.devices.push({
         _isNew: true,
+        room: '',
+        hostname: '',
+        group: '',
+        mac: '',
+        ip: '',
         sophomorixRole: 'classroom-studentcomputer',
         pxeFlag: '1'
       });

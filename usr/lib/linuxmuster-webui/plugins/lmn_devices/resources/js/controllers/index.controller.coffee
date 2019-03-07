@@ -26,6 +26,44 @@ angular.module('lm.devices').controller 'LMDevicesApplyModalController', ($scope
 angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $uibModal, $route, gettext, notify, pageTitle, lmFileEditor, lmFileBackups) ->
     pageTitle.set(gettext('Devices'))
 
+    $scope.isValidMac = (mac) ->
+          regExp = /^([0-9A-Fa-f]{2}[:]){5}([0-9A-Fa-f]{2})$/
+          validMac = regExp.test(mac)
+          return validMac
+
+    $scope.isValidIP = (ip) ->
+          regExp = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/ ## TODO all IPs allowed, and 010.1.1.1
+          validIP = regExp.test(ip)
+          return validIP
+
+    $scope.isValidHost =(hostname) ->
+        regExp = /^[a-zA-Z0-9#+\-*]+$/ ## TODO : list of valid chars for sophomorix ? Also for group ?
+        validHostname = regExp.test(hostname)
+        return validHostname;
+
+    $scope.isValidRoom =(room) ->
+        return $scope.isValidHost(room);
+
+    $scope.isValidRole =(role) -> ## Test sophmorixrole ?
+        return True
+     # How to always get the actual list from sophomorix-device ?
+     #Valid sophomorixRole for devices are: 
+        #switch
+        #byod
+        #printer
+        #staffcomputer
+        #iponly
+        #classroom-teachercomputer
+        #server
+        #router
+        #mobile
+        #addc
+        #voip
+        #faculty-teachercomputer
+        #classroom-studentcomputer
+        #thinclient
+        #wlan
+
     $scope.sorts = [
         {
             name: gettext('Room')
@@ -62,7 +100,12 @@ angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $
             $scope.paging.page = Math.floor(($scope.devices.length - 1) / $scope.paging.pageSize) + 1
         $scope.filter = ''
         $scope.devices.push {
-            _isNew: true
+            _isNew: true,
+            room: '',
+            hostname: '',
+            group: '',
+            mac: '',
+            ip: '',
             sophomorixRole: 'classroom-studentcomputer',
             pxeFlag: '1',
         }

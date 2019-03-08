@@ -37,31 +37,37 @@
         path: '=',
         lines: '=?'
       },
-      template: '    <pre style="max-height: 300px; overflow-y: scroll" ng:bind="visibleContent"></pre>\n<!--    <div class="form-group">\n       <label translate>Options</label>\n          <br>\n             <span checkbox ng:model="options.autoscroll" text="{{\'Autoscroll\'|translate}}"></span>\n             </div>\n             {{options}}\n             -->',
+      template: '<pre style="max-height: 300px; overflow-y: scroll" ng:bind="visibleContent"></pre>\n<div class="form-group">\n   <label translate>Options</label>\n      <br>\n         <span checkbox ng:model="autoscroll" text="{{\'Autoscroll\'|translate}}"></span>\n         </div>\n         {{options}}\n         ',
       link: function($scope, element) {
         var i;
         $scope.content = '';
+        $scope.autoscroll = true;
         i = $interval(function() {
           return $http.get(`/api/lm/log${$scope.path}?offset=${$scope.content.length}`).then(function(resp) {
             var lines;
-            console.log($scope);
+            // console.log ($scope)
             $scope.content += resp.data;
             $scope.visibleContent = $scope.content;
             if ($scope.lines) {
               lines = $scope.content.split('\n');
-              console.log(lines, lines[lines.length - 1]);
+              // console.log lines, lines[lines.length - 1]
               if (lines[lines.length - 1] === '') {
                 lines = lines.slice(0, -1);
               }
               lines = lines.slice(-$scope.lines);
-              console.log(lines);
+              // console.log lines
               $scope.visibleContent = lines.join('\n');
             }
-            return $timeout(function() {
-              var e;
-              e = $(element).find('pre')[0];
-              return e.scrollTop = e.scrollHeight;
-            });
+            if ($scope.autoscroll) {
+              $timeout(function() {
+                var e;
+                e = $(element).find('pre')[0];
+                return e.scrollTop = e.scrollHeight;
+              });
+            }
+            if (/linuxmuster.+finished/.test($scope.content)) {
+              return $interval.cancel(i);
+            }
           });
         }, 1000);
         return $scope.$on('$destroy', function() {

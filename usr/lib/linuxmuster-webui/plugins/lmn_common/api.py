@@ -150,7 +150,7 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
     data = ''
 
     ## Debug
-    #with open('/var/log/getSophomorixValueDebugoutput.log', 'w') as f: 
+    #with open('/var/log/getSophomorixValueDebugoutput.log', 'w') as f:
     	#f.write(str(jsonDict))
 
     # if empty jsonpath is returned dont use dpath

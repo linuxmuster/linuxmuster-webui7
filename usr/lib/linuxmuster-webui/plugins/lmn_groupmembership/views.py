@@ -75,7 +75,7 @@ class Handler(HttpPlugin):
                 membershipList = []
 
                 # get groups specified user is member of
-                sophomorixCommand = ['sophomorix-query',  '--schoolbase', schoolname, '--user-full', '-j', '--sam', username]
+                sophomorixCommand = ['sophomorix-query',  '--schoolbase', schoolname, '--user-full', '-jj', '--sam', username]
                 groups = lmn_getSophomorixValue(sophomorixCommand, 'USER/'+username+'/memberOf')
                 usergroups = []
                 for group in groups:

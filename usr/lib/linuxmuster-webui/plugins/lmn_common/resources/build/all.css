@@ -29,6 +29,10 @@
   border-color: #233c4c;
   color: #233c4c;
 }
+.has-error .form-control {
+  background-color: rgba(255, 178, 178, 0.29);
+  border-color: red;
+}
 .lm-table {
   width: 100%;
 }

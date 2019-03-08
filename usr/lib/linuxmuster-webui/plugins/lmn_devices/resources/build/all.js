@@ -204,12 +204,23 @@
     $scope.remove = function(device) {
       return $scope.devices.remove(device);
     };
+    $scope.numErrors = function() {
+      return document.getElementsByClassName("has-error").length > 0;
+    };
     $scope.save = function() {
+      if ($scope.numErrors()) {
+        notify.error('Required data missing');
+        return;
+      }
       return $http.post('/api/lm/devices', $scope.devices).then(function() {
         return notify.success(gettext('Saved'));
       });
     };
     $scope.saveAndImport = function() {
+      if ($scope.numErrors()) {
+        notify.error('Required data missing');
+        return;
+      }
       return $scope.save().then(function() {
         return $uibModal.open({
           templateUrl: '/lmn_devices:resources/partial/apply.modal.html',

@@ -168,11 +168,20 @@ angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $
     $scope.remove = (device) ->
         $scope.devices.remove(device)
 
+    $scope.numErrors = () ->
+        return document.getElementsByClassName("has-error").length > 0
+
     $scope.save = () ->
+        if $scope.numErrors()
+            notify.error('Required data missing')
+            return
         return $http.post('/api/lm/devices', $scope.devices).then () ->
             notify.success gettext('Saved')
 
     $scope.saveAndImport = () ->
+        if $scope.numErrors()
+            notify.error('Required data missing')
+            return
         $scope.save().then () ->
             $uibModal.open(
                 templateUrl: '/lmn_devices:resources/partial/apply.modal.html'

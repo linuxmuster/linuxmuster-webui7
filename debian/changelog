@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.57-1) UNRELEASED; urgency=medium 
+
+  * Current snapshot build d8892290be9a7d0c715d81321989114548acff69
+  * fixed print password empty pdf problem
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Mar  8 10:16:42 UTC 2019
+
 linuxmuster-webui7 (1.0.56-1) UNRELEASED; urgency=medium 
 
   * Current snapshot build 

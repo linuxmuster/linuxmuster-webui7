@@ -44,26 +44,10 @@ angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $
     $scope.isValidRoom =(room) ->
         return $scope.isValidHost(room);
 
-    $scope.isValidRole =(role) -> ## Test sophmorixrole ?
-        return True
-     # How to always get the actual list from sophomorix-device ?
-     #Valid sophomorixRole for devices are: 
-        #switch
-        #byod
-        #printer
-        #staffcomputer
-        #iponly
-        #classroom-teachercomputer
-        #server
-        #router
-        #mobile
-        #addc
-        #voip
-        #faculty-teachercomputer
-        #classroom-studentcomputer
-        #thinclient
-        #wlan
-
+    $scope.isValidRole =(role) -> 
+        validRole = ['switch','addc','wlan','staffcomputer','mobile','printer','classroom-teachercomputer','server','iponly','faculty-teachercomputer','voip','byod','classroom-studentcomputer','thinclient','router']
+        return validRole.indexOf(role) != -1
+        
     $scope.sorts = [
         {
             name: gettext('Room')

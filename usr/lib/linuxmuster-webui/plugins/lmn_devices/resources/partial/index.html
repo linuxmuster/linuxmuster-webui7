@@ -76,14 +76,13 @@
             <td ng:if="fields.dhcpOptions.visible" class="form-group">
                 <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.dhcpOptions" placeholder="DHCP-Options" class="form-control" />
             </td>
-            <td ng:if="fields.sophomorixRole.visible" class="form-group">
+            <td ng:if="fields.sophomorixRole.visible" ng:class="{'has-error': !isValidRole(device.sophomorixRole)}"  class="form-group">
                 <select ng:model="device.sophomorixRole" class="form-control">
                     <option value="classroom-studentcomputer" translate>classroom-studentcomputer</option>
                     <option value="classroom-teachercomputer" translate>classroom-teachercomputer</option>
                     <option value="staffcomputer" translate>Staffcomputer</option>
                     <option value="faculty-teachercomputer" translate>Faculty-Teachercomputer</option>
                     <option value="server" translate>Server</option>
-                    <option value="computer" translate>Computer</option>
                     <option value="router" translate>router</option>
                     <option value="switch" translate>Switch</option>
                     <option value="printer" translate>Printer</option>

@@ -445,16 +445,21 @@ class Handler(HttpPlugin):
             one_per_page = http_context.json_body()['one_per_page']
             pdflatex = http_context.json_body()['pdflatex']
             schoolclass = http_context.json_body()['schoolclass']
-            sophomorixCommand = ['sophomorix-print', '--school', school, '--caller', str(user)]
+            sophomorixCommand = "sophomorix-print --school "+ school +" --caller "+ str(user)
+            #sophomorixCommand = ['sophomorix-print', '--school', school, '--caller', str(user)]
             if one_per_page:
-                sophomorixCommand.extend(['--one-per-page'])
+                sophomorixCommand = sophomorixCommand+ " --one-per-page"
+                #sophomorixCommand.extend(['--one-per-page'])
             if pdflatex:
-                sophomorixCommand.extend(['--command'])
-                sophomorixCommand.extend(['pdflatex'])
+                sophomorixCommand = sophomorixCommand+ " --command pdflatex"
+                #sophomorixCommand.extend(['--command'])
+                #sophomorixCommand.extend(['pdflatex'])
             if schoolclass:
-                sophomorixCommand.extend(['--class', schoolclass])
+                sophomorixCommand = sophomorixCommand+ " --class " + schoolclass
+                #sophomorixCommand.extend(['--class', schoolclass])
             # sophomorix-print needs the json parameter at the very end
-            sophomorixCommand.extend(['-jj'])
+            sophomorixCommand = sophomorixCommand+ " -jj"
+            #sophomorixCommand.extend(['-jj'])
             # check permissions
             if not schoolclass:
                 # double check if user is allowed to print all passwords
@@ -464,8 +469,10 @@ class Handler(HttpPlugin):
             if schoolclass == 'teachers':
                 with authorize('lm:users:teachers:read'):
                     pass
-
-            return lmn_getSophomorixValue(sophomorixCommand, 'JSONINFO')
+            this_env = os.environ.copy()
+            subprocess.check_call(sophomorixCommand, shell=True, env=this_env)
+            return
+            #return lmn_getSophomorixValue(sophomorixCommand, 'JSONINFO')
 
     @url(r'/api/lm/users/print-download/(?P<name>.+)')
     @authorize('lm:users:passwords')

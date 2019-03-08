@@ -107,7 +107,7 @@ angular.module('lm.setup_wizard').controller('InitSchoolController', function ($
             return
         }
         if ($badCharacters == true){
-            notify.error('Maleformed input')
+            notify.error('Malformed input')
             return
         }
 

@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.59-1) UNRELEASED; urgency=medium 
+
+  * Current snapshot build 500bda52f024f22c6399eb215c91015c8d665bf4
+   *     quick fix: landingpage if no quota limitation is set
+
+ -- Andreas Till <andreas.till@netzint.de> Tue Mar 12 07:54:03 UTC 2019
+
 linuxmuster-webui7 (1.0.58-1) UNRELEASED; urgency=medium 
 
   * Current snapshot build 5ae8f7c8dbedd9874be8fb4a90ed8b42cb23ec05

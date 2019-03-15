@@ -141,7 +141,7 @@ class Handler(HttpPlugin):
                     sophomorixCommand = ['sophomorix-query', '--student', '--schoolbase', schoolname, '--user-basic', '-jj']
                 else:
                     user = http_context.json_body()['user']
-                    #sophomorixCommand = ['sophomorix-query', '--student', '--schoolbase', schoolname, '--user-full', '-jj', '--sam', user]
+                    # sophomorixCommand = ['sophomorix-query', '--student', '--schoolbase', schoolname, '--user-full', '-jj', '--sam', user]
                     sophomorixCommand = ['sophomorix-query', '--user-full', '-jj', '--sam', user]
                 studentsCheck = lmn_getSophomorixValue(sophomorixCommand, 'LISTS/USER')
                 if len(studentsCheck) != 0:
@@ -353,7 +353,7 @@ class Handler(HttpPlugin):
                     return ["ERROR", result['MESSAGE_EN']]
                 if result['TYPE'] == "LOG":
                     return ["LOG", result['LOG']]
-                #return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
+                # return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
         if action == 'delete':
             with authorize('lm:users:schooladmins:delete'):
                 sophomorixCommand = ['sophomorix-admin', '--kill', user, '-jj']
@@ -378,7 +378,7 @@ class Handler(HttpPlugin):
                     return ["ERROR", result['MESSAGE_EN']]
                 if result['TYPE'] == "LOG":
                     return ["LOG", result['LOG']]
-                #return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
+                # return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
         if action == 'delete':
             with authorize('lm:users:globaladmins:delete'):
                 sophomorixCommand = ['sophomorix-admin', '--kill', user, '-jj']
@@ -387,7 +387,7 @@ class Handler(HttpPlugin):
                     return result['MESSAGE_EN']
                 if result['TYPE'] == "LOG":
                     return result['LOG']
-                #return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
+                # return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
 
     @url(r'/api/lmn/sophomorixUsers/new-file')
     @endpoint(api=True)
@@ -434,7 +434,7 @@ class Handler(HttpPlugin):
                 else:
                     classes = classes_raw['LIST_BY_sophomorixSchoolname_sophomorixAdminClass'][school]
                     if lmn_checkPermission('lm:users:teachers:read'):
-                    # append empty element. This references to all users
+                        # append empty element. This references to all users
                         classes.append('')
                     else:
                         classes.remove('teachers')
@@ -445,21 +445,16 @@ class Handler(HttpPlugin):
             one_per_page = http_context.json_body()['one_per_page']
             pdflatex = http_context.json_body()['pdflatex']
             schoolclass = http_context.json_body()['schoolclass']
-            sophomorixCommand = "sophomorix-print --school "+ school +" --caller "+ str(user)
-            #sophomorixCommand = ['sophomorix-print', '--school', school, '--caller', str(user)]
+            sophomorixCommand = ['sophomorix-print', '--school', school, '--caller', str(user)]
             if one_per_page:
-                sophomorixCommand = sophomorixCommand+ " --one-per-page"
-                #sophomorixCommand.extend(['--one-per-page'])
+                sophomorixCommand.extend(['--one-per-page'])
             if pdflatex:
-                sophomorixCommand = sophomorixCommand+ " --command pdflatex"
-                #sophomorixCommand.extend(['--command'])
-                #sophomorixCommand.extend(['pdflatex'])
+                sophomorixCommand.extend(['--command'])
+                sophomorixCommand.extend(['pdflatex'])
             if schoolclass:
-                sophomorixCommand = sophomorixCommand+ " --class " + schoolclass
-                #sophomorixCommand.extend(['--class', schoolclass])
+                sophomorixCommand.extend(['--class', schoolclass])
             # sophomorix-print needs the json parameter at the very end
-            sophomorixCommand = sophomorixCommand+ " -jj"
-            #sophomorixCommand.extend(['-jj'])
+            sophomorixCommand.extend(['-jj'])
             # check permissions
             if not schoolclass:
                 # double check if user is allowed to print all passwords
@@ -469,10 +464,12 @@ class Handler(HttpPlugin):
             if schoolclass == 'teachers':
                 with authorize('lm:users:teachers:read'):
                     pass
-            this_env = os.environ.copy()
-            subprocess.check_call(sophomorixCommand, shell=True, env=this_env)
+            # generate real shell environment for sophomorix print
+            shell_env = {'TERM': 'xterm', 'SHELL': '/bin/bash',  'PATH': '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',  'HOME': '/root', '_': '/usr/bin/python2'}
+
+            subprocess.check_call(sophomorixCommand, shell=False, env=shell_env)
             return
-            #return lmn_getSophomorixValue(sophomorixCommand, 'JSONINFO')
+            # return lmn_getSophomorixValue(sophomorixCommand, 'JSONINFO')
 
     @url(r'/api/lm/users/print-download/(?P<name>.+)')
     @authorize('lm:users:passwords')

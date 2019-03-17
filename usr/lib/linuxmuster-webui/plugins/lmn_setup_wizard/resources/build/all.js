@@ -61,20 +61,23 @@ angular.module('lm.setup_wizard').config(function ($routeProvider) {
     });
 });
 
-angular.module('lm.setup_wizard').controller('InitWelcomeController', function (gettext, pageTitle, $http, config) {
+angular.module('lm.setup_wizard').controller('InitWelcomeController', function (gettext, pageTitle, $http, config, $location, notify) {
     var _this = this;
 
     pageTitle.set(gettext('Setup Wizard'));
     this.config = config;
-    console.log("test");
     console.log(config);
     $http.get('/api/core/languages').then(function (response) {
         return _this.languages = response.data;
     });
 
     this.apply = async function () {
+        if (!_this.licenseAccepted) {
+            notify.error('Please accept the license !');
+            return;
+        }
         await _this.config.save();
-        $location.path('/view/lm/init/account');
+        $location.path('/view/lm/init/school');
     };
 });
 
@@ -89,7 +92,7 @@ angular.module('lm.setup_wizard').controller('InitSchoolController', function ($
     $http.get('/api/lm/setup-wizard/read-ini').then(function (response) {
         return _this2.ini = response.data;
     });
-
+    console.log(this.config);
     // fields to validate
     // define property values so they are not null
     this.ini = { schoolname: "", domainname: "", servername: ""

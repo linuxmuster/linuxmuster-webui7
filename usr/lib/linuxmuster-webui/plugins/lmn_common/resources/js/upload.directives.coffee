@@ -4,19 +4,25 @@ angular.module('lm.common').directive 'lmDragUpload', ($http, notify, messagebox
         scope: {
             uploadpath: '='
         }
-        template: '''
-            <div    flow-init='{target: "/api/filesystem/upload", chunkSize: 1024 * 1024, singleFile: true}'
-                    flow-files-submitted="onUploadBegin($flow)"
-                    flow-drag-enter="class='dragdroparea-enter'"
-                    flow-drag-leave="class='dragdroparea'"
-                    ng-style="style">
-                <div class="dragdroparea" flow-drop  ng-class="class" translate>
-                    Drag And Drop your file here
-                </div>
-            </div>
-        '''
-        link: ($scope) ->
+        repalce: true
+        template: (attrs) ->
+            if (!attrs.target)
+                target = "'/api/filesystem/upload'"
+            else
+                target = attrs.target
+            return "<div>
+                        <div    flow-init=\"{target: #{target}, chunkSize: 1024 * 1024, singleFile: true}\"
+                                flow-files-submitted=\"onUploadBegin($flow)\"
+                                flow-drag-enter=\"class='dragdroparea-enter'\"
+                                flow-drag-leave=\"class='dragdroparea'\"
+                                ng-style=\"style\">
+                            <div class=\"dragdroparea\" flow-drop  ng-class=\"class\" translate>
+                                Drag And Drop your file here
+                            </div>
+                        </div>
+                    </div>"
             
+        link: ($scope, attrs) ->
             $scope.onUploadBegin = ($flow) -> 
                 msg = messagebox.show({progress: true})
                 filesystem.startFlowUpload($flow, $scope.uploadpath)
@@ -33,15 +39,20 @@ angular.module('lm.common').directive 'lmSelectUpload', ($http, notify, messageb
         scope: {
             uploadpath: '='
         }
-        template: '''
-            <div    flow-init='{target: "/api/filesystem/upload", chunkSize: 1024 * 1024, singleFile: true}'
-                    flow-files-submitted="onUploadBegin($flow)"
-                    ng-style="style">
-                <input type="file" flow-btn/>
-            </div>
-        '''
-        link: ($scope) ->
+        template: (attrs) -> 
+            if (!attrs.target)
+                target = "'/api/filesystem/upload'"
+            else
+                target = attrs.target
+            return "<div>
+                        <div    flow-init=\"{target: #{target}, chunkSize: 1024 * 1024, singleFile: true}\"
+                                flow-files-submitted=\"onUploadBegin($flow)\"
+                                ng-style=\"style\">
+                            <input type=\"file\" flow-btn/>
+                        </div>
+                    </div>"
             
+        link: ($scope) ->
             $scope.onUploadBegin = ($flow) -> 
                 msg = messagebox.show({progress: true})
                 filesystem.startFlowUpload($flow, $scope.uploadpath)
@@ -59,14 +70,19 @@ angular.module('lm.common').directive 'lmButtonUpload', ($http, notify, messageb
             uploadpath: '='
             btnlabel: '='
         }
-        template: '''
-            <div    flow-init='{target: "/api/filesystem/upload", chunkSize: 1024 * 1024, singleFile: true}'
-                    flow-files-submitted="onUploadBegin($flow)"
-                    ng-style="style">
-                <span type="file" flow-btn translate>{{btnlabel}}</span>
-            </div>
-                     
-        '''
+        template: (attrs) -> 
+            if (!attrs.target)
+                target = "'/api/filesystem/upload'"
+            else
+                target = attrs.target
+            return "<div>
+                        <div    flow-init=\"{target: #{target}, chunkSize: 1024 * 1024, singleFile: true}\"
+                                flow-files-submitted=\"onUploadBegin($flow)\"
+                                ng-style=\"style\">
+                            <span type=\"file\" flow-btn translate>{{btnlabel}}</span>
+                        </div>
+                    </div>"
+
         link: ($scope) ->
             
             $scope.onUploadBegin = ($flow) -> 
@@ -85,6 +101,5 @@ angular.module('lm.common').directive 'lmButtonUpload', ($http, notify, messageb
     <lm-button-upload uploadpath="'/root/'" btnlabel="'Upload SSH KEYS'"></lm-button-upload>
     <lm-select-upload uploadpath="'/home/toto'"></lm-select-upload>
 ###
-# TODO custom target for upload ( ex: /api/lmn/sophomorixUsers/new-file )
 # TODO handle multiple files
 # TODO test translations

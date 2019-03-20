@@ -44,7 +44,7 @@
     <br>
 
     <div ng-if="bulkMode == 'false' || action == 'share'">
-    <progress-spinner ng:show="files == null"></progress-spinner>
+        <progress-spinner ng:show="files == null"></progress-spinner>
     </div>
     <!-- This is showed twice to show directorys first -->
     <a  ng:repeat="file in filesList|orderBy: -file">
@@ -75,6 +75,14 @@
         </span>
     </a>
 
+    <div ng-if="bulkMode == 'false'">
+        <span ng-if="action == 'share'">
+            <h4 translate>Upload file</h4>
+        </span>
+    </div>
+
+
+    <lm-drag-upload upload-path="{{ transferPath }}"></lm-drag-upload>
 
     <div ng-if="bulkMode == 'true'">
         <span ng-if="action == 'collect'">
@@ -100,3 +108,4 @@
         </span>
         <a class="btn btn-default btn-flat" ng:click="close()" translate>Cancel</a>
     </div>
+</div>

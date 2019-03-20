@@ -92,7 +92,7 @@ angular.module('lm.setup_wizard').controller('InitSchoolController', function ($
     $http.get('/api/lm/setup-wizard/read-ini').then(function (response) {
         return _this2.ini = response.data;
     });
-    console.log(this.config);
+
     // fields to validate
     // define property values so they are not null
     this.ini = { schoolname: "", domainname: "", servername: ""

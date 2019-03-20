@@ -12,6 +12,7 @@
     $scope.receivers = receivers;
     $scope.action = action;
     $scope.command = command;
+    $scope.transferPath = "'/srv/samba/schools/default-school/teachers/de/transfer/'"; //# TODO : Fix path here or handle this with sophomorix-transfer ?
     if (action === 'share') {
       $http.post('/api/lmn/session/trans-list-files', {
         user: senders[0]

@@ -12,7 +12,13 @@
     $scope.receivers = receivers;
     $scope.action = action;
     $scope.command = command;
-    $scope.transferPath = "'/srv/samba/schools/default-school/teachers/de/transfer/'"; //# TODO : Fix path here or handle this with sophomorix-transfer ?
+    
+    //# Test path for upload with drag and drop
+    //# TODO : Fix path here or handle this with sophomorix-transfer ?
+    //# TODO : chown with custom api or with sophomorix-transfer ?
+    //# TODO : reload modal after upload
+    //# TODO : possibility to remove file from transfer directory ?
+    $scope.transferPath = "'/srv/samba/schools/default-school/teachers/de/transfer/'";
     if (action === 'share') {
       $http.post('/api/lmn/session/trans-list-files', {
         user: senders[0]

@@ -64,6 +64,27 @@ def lmn_backup_file(path):
     with open(dir + '/.' + name + '.bak.' + str(int(time.time())), 'w') as f:
         f.write(open(path).read())
 
+def lmn_list_backup_file(path):
+    if not os.path.exists(path):
+        return
+
+    backups = []
+    dir, name = os.path.split(path)
+    for x in os.listdir(dir):
+        if x.startswith('.%s.bak.' % name):
+            epoch = time.gmtime(int(x.split(".")[-1]))
+            date  = time.strftime("%d/%m/%Y %H:%M:%S", epoch)
+            backups.append({'path': x, 'date': date})
+    return backups
+    
+def lmn_restore_backup_file(path, backup)
+    if not os.path.exists(path) or not os.path.exists(backup):
+        return
+
+    dir, name = os.path.split(path)
+    os.unlink(path)
+    os.rename(backup, path)
+    os.unlink(backup)
 
 def lmn_getLDAPGroupmembers(group, field):
     params = lmconfig.data['linuxmuster']['ldap']
@@ -192,5 +213,3 @@ def lmn_genRandomPW():
         return password
     else:
         lmn_genRandomPW()
-
-

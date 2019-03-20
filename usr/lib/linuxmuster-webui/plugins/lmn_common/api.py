@@ -77,7 +77,7 @@ def lmn_list_backup_file(path):
             backups.append({'path': x, 'date': date})
     return backups
     
-def lmn_restore_backup_file(path, backup)
+def lmn_restore_backup_file(path, backup):
     if not os.path.exists(path) or not os.path.exists(backup):
         return
 

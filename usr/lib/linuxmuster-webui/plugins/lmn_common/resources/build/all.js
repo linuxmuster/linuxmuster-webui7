@@ -87,8 +87,17 @@
       scope: {
         uploadpath: '='
       },
-      template: '<div    flow-init=\'{target: "/api/filesystem/upload", chunkSize: 1024 * 1024}\'\n        flow-files-submitted="onUploadBegin($flow)"\n        flow-drag-enter="class=\'dragdroparea-enter\'"\n        flow-drag-leave="class=\'dragdroparea\'"\n        ng-style="style">\n    <div class="dragdroparea" flow-drop flow-btn ng-class="class" translate>\n        Drag And Drop your file here\n    </div>\n</div>',
-      link: function($scope) {
+      repalce: true,
+      template: function(attrs) {
+        var target;
+        if (!attrs.target) {
+          target = "'/api/filesystem/upload'";
+        } else {
+          target = attrs.target;
+        }
+        return `<div> <div    flow-init="{target: ${target}, chunkSize: 1024 * 1024, singleFile: true}" flow-files-submitted="onUploadBegin($flow)" flow-drag-enter="class='dragdroparea-enter'" flow-drag-leave="class='dragdroparea'" ng-style="style"> <div class="dragdroparea" flow-drop  ng-class="class" translate> Drag And Drop your file here </div> </div> </div>`;
+      },
+      link: function($scope, attrs) {
         return $scope.onUploadBegin = function($flow) {
           var msg;
           msg = messagebox.show({
@@ -111,7 +120,15 @@
       scope: {
         uploadpath: '='
       },
-      template: '<div    flow-init=\'{target: "/api/filesystem/upload", chunkSize: 1024 * 1024, singleFile: true}\'\n        flow-files-submitted="onUploadBegin($flow)"\n        ng-style="style">\n    <input type="file" flow-btn/>\n</div>',
+      template: function(attrs) {
+        var target;
+        if (!attrs.target) {
+          target = "'/api/filesystem/upload'";
+        } else {
+          target = attrs.target;
+        }
+        return `<div> <div    flow-init="{target: ${target}, chunkSize: 1024 * 1024, singleFile: true}" flow-files-submitted="onUploadBegin($flow)" ng-style="style"> <input type="file" flow-btn/> </div> </div>`;
+      },
       link: function($scope) {
         return $scope.onUploadBegin = function($flow) {
           var msg;
@@ -136,7 +153,15 @@
         uploadpath: '=',
         btnlabel: '='
       },
-      template: '<div    flow-init=\'{target: "/api/filesystem/upload", chunkSize: 1024 * 1024, singleFile: true}\'\n        flow-files-submitted="onUploadBegin($flow)"\n        ng-style="style">\n    <span type="file" flow-btn translate>{{btnlabel}}</span>\n</div>\n         ',
+      template: function(attrs) {
+        var target;
+        if (!attrs.target) {
+          target = "'/api/filesystem/upload'";
+        } else {
+          target = attrs.target;
+        }
+        return `<div> <div    flow-init="{target: ${target}, chunkSize: 1024 * 1024, singleFile: true}" flow-files-submitted="onUploadBegin($flow)" ng-style="style"> <span type="file" flow-btn translate>{{btnlabel}}</span> </div> </div>`;
+      },
       link: function($scope) {
         return $scope.onUploadBegin = function($flow) {
           var msg;
@@ -160,7 +185,8 @@
 <lm-button-upload uploadpath="'/root/'" btnlabel="'Upload SSH KEYS'"></lm-button-upload>
 <lm-select-upload uploadpath="'/home/toto'"></lm-select-upload>
 */
-// TODO custom target for upload ( ex: /api/lmn/sophomorixUsers/new-file )
+// TODO handle multiple files
+// TODO test translations
 
 }).call(this);
 

@@ -1,0 +1,111 @@
+<div class="modal-header">
+    <div ng-if="bulkMode == 'false'">
+        <span ng-if="action == 'share'">
+            <h4 translate>Share files</h4>
+        </span>
+        <span ng-if="action == 'collect'">
+            <h4 translate>Collect files</h4>
+        </span>
+    </div>
+    <div ng-if="bulkMode == 'true'">
+        <span ng-if="action == 'share'">
+            <h4 translate>Share files with session</h4>
+        </span>
+        <span ng-if="action == 'collect'">
+            <h4 translate>Collect files from session</h4>
+        </span>
+    </div>
+</div>
+<div class="modal-body">
+
+    <div ng-if="bulkMode == 'false'">
+        <span ng-if="action == 'share'">
+            <div translate>Select files you want to share with <b>{{receivers[0]['givenName']}} {{receivers[0]['sn']}}</b></div>
+          <!--  <ul ng:repeat="receiver in receivers">
+                <li> {{receiver}} </li>
+          </ul>-->
+        </span>
+        <span ng-if="action == 'collect'">
+            <span ng-if="command == 'copy'">
+                <div translate>Select files you want to copy from <b>{{senders[0]['givenName']}} {{senders[0]['sn']}}</b></div>
+            </span>
+            <span ng-if="command == 'move'">
+                <div translate>Select files you want to move from <b>{{senders[0]['givenName']}} {{senders[0]['sn']}}</b></div>
+            </span>
+        </span>
+        <!-- TODO: Mach das mal schoen
+        -->
+    </div>
+
+    <div ng-if="bulkMode == 'true' && action == 'share'">
+            <div translate>Select files you want to share with Session</div>
+    </div>
+
+    <br>
+
+    <div ng-if="bulkMode == 'false' || action == 'share'">
+        <progress-spinner ng:show="files == null"></progress-spinner>
+    </div>
+    <!-- This is showed twice to show directorys first -->
+    <a  ng:repeat="file in filesList|orderBy: -file">
+        <span ng-if="files != null">
+            <span ng-if="filesList[0] == 'null'">
+                <span translate>No files or directories found in transfer</span>
+            </span>
+            <span ng:show="files['TREE'][file]['TYPE'] == 'directory'">
+                <span id={{file}} checkbox ng:model="files['TREE'][file]['checked']"> </span>
+                <span ng-if="files['TREE'][file]['TYPE'] == 'directory'">
+                    <i class="fa fa-folder"></i>
+                </span>
+                <span>{{file}}</span>
+                <br>
+            </span>
+        </span>
+    </a>
+    <a  ng:repeat="file in filesList|orderBy: -file">
+        <span ng-if="files != null">
+            <span ng:show="files['TREE'][file]['TYPE'] == 'file'">
+                <span id={{file}} checkbox ng:model="files['TREE'][file]['checked']"> </span>
+                <span ng-if="files['TREE'][file]['TYPE'] == 'file'">
+                    <i class="fa fa-fw fa-file-o"></i>
+                </span>
+                <span>{{file}}</span>
+                <br>
+            </span>
+        </span>
+    </a>
+
+    <div ng-if="bulkMode == 'false'">
+        <span ng-if="action == 'share'">
+            <h4 translate>Upload file</h4>
+        </span>
+    </div>
+
+
+    <lm-drag-upload upload-path="{{ transferPath }}"></lm-drag-upload>
+
+    <div ng-if="bulkMode == 'true'">
+        <span ng-if="action == 'collect'">
+            <span ng-if="command == 'copy'">
+                <span translate>All data are copied from the whole session</span>
+            </span>
+            <span ng-if="command == 'move'">
+                <span translate>All data are moved from the whole session</span>
+            </span>
+        </span>
+    </div>
+    <div class="modal-footer">
+        <span ng-if="action == 'share'">
+            <a class="btn btn-default btn-flat" ng:click="save()" translate>Share</a>
+        </span>
+        <span ng-if="action == 'collect'">
+            <span ng-if="bulkMode == 'false'">
+            <a class="btn btn-default btn-flat" ng:click="save()" translate>Collect from User</a>
+            </span>
+            <span ng-if="bulkMode == 'true'">
+            <a class="btn btn-default btn-flat" ng:click="saveBulk()" translate>Collect from Session</a>
+            </span>
+        </span>
+        <a class="btn btn-default btn-flat" ng:click="close()" translate>Cancel</a>
+    </div>
+</div>

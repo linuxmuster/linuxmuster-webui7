@@ -1,0 +1,225 @@
+<br/>
+<div>
+    <div class="input-group">
+        <input ng-show="!sessionLoaded" ng:model="filter" type="search" autofocus class="form-control" placeholder="Filter"/>
+        <input ng-show="sessionLoaded" type="text" style="width:70%" placeholder="Add Student" ng:model="_.addParticipant" ng-readonly=!sessionLoaded typeahead-editable=false typeahead-min-length="2" uib-typeahead="user as user.sophomorixAdminClass+' '+user.givenName+ ' '+user.sn+ ' '+user.sAMAccountName  for user in findUsers($viewValue) | limitTo:10" class="form-control" />
+        <input ng-show="sessionLoaded" type="text" style="width:30%" placeholder="Add Class" ng:model="_.addSchoolClass" ng-readonly=!sessionLoaded typeahead-editable=false typeahead-min-length="1" uib-typeahead="schoolClass as schoolClass.sophomorixAdminClass for schoolClass in findSchoolClasses($viewValue) | limitTo:10" class="form-control" />
+
+        <oi-select
+               oi-options="list.id as list.description for list in lists"
+               ng-model="tags"
+               multiple
+               placeholder="Select">
+        </oi-select>
+
+        <div ng-show="sessionLoaded"  uib-dropdown class="input-group-btn" >
+            <button class="btn btn-default"  uib-dropdown-toggle>
+                <i class="fa fa-sort-amount-asc"></i> {{sort.name}}
+                <span class="caret"></span>
+            </button>
+            <ul uib-dropdown-menu class="dropdown-menu-right" style="width:150px">
+                <li ng:repeat="sort in sorts">
+                    <a ng:click="$parent.sort = sort">
+                        <i class="fa fa-sort-amount-asc"></i> {{sort.name}}
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div ng-show="!sessionLoaded" class="input-group-btn">
+            <button class="btn btn-default" ng:click="newSession(identity.user)">
+                <div translate>
+                    New Session
+                </div>
+            </button>
+        </div>
+
+        <div ng-show="sessionLoaded" uib-dropdown class="input-group-btn" auto-close="outsideClick">
+            <button class="btn btn-default" uib-dropdown-toggle translate>
+                Edit Sessions
+                <span class="caret"></span>
+            </button>
+            <ul uib-dropdown-menu class="dropdown-menu-right" >
+                <li>
+
+                    <a ng:click="newSession(identity.user)" translate>
+                        New Session
+                    </a>
+                </li>
+                <li>
+
+                    <a ng:click="renameSession(identity.user, currentSession.name, currentSession.comment)" translate>
+                        Rename Session
+                    </a>
+                </li>
+                <li>
+                    <a ng:click="killSession(identity.user, currentSession.name, currentSession.comment)" translate>
+                        Delete Session
+                    </a>
+            </ul>
+        </div>
+        <!-- Sessions dropdown -->
+        <div uib-dropdown class="input-group-btn" auto-close="outsideClick">
+            <button class="btn btn-default" uib-dropdown-toggle translate>
+                <i class="fa fa-users"></i> Sessions
+                <span class="caret"></span>
+            </button>
+            <ul uib-dropdown-menu class="dropdown-menu-right">
+                <li ng:repeat="session  in sessions | orderBy: '-COMMENT':true">
+                    <a ng:click="getParticipants(identity.user,session.ID); currentSession.name=session.ID; currentSession.comment=session.COMMENT"><i class="fa fa-indent"></i> {{session.COMMENT}}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <br ng-show="!sessionLoaded">
+    <div id="expand-box-header" class="clearfix">
+        <span style="float: left;"> <h4 style="display:{{visible.sessionname}}">{{currentSession.comment}}</h4></span>
+        <span style="float: right;"> <h6 style="display:{{visible.sessionname}}">{{currentSession.name}}</h6></span>
+    </div>
+    <table class="table" style="display:{{visible.participanttable}};">
+        <tr>
+            <th ng:repeat="(id, field) in fields" ng:if="field.visible"><div title="{{field.title}}" class="{{field.icon}}" style="font-size:20px;"></div> <br>{{field.name}}
+                <span checkbox style="float:right;" id="{{id}}.all" ng:if="field.examBox" ng-click="selectAll('exammode')" ng:model=field.checkboxStatus>"</span>
+                <span checkbox style="float:right;" id="{{id}}.all" ng:if="field.checkboxAll" ng-click="selectAll(id)" ng:model=field.checkboxStatus>"</span></th>
+            <th></th>
+        </tr>
+        <tr style="display:;"  ng:repeat="participant in participants|orderBy:[sort.fx]">
+            <td class="ng-binding"> <a href="#"  ng-click="showDetails = ! showDetails"> <b> {{participant.sn}}, {{participant.givenName}} </b> </a>{{participant.sophomorixAdminClass}}, <br><i> {{participant.sAMAccountName}}</i>
+                <div ng-show="showDetails"><img src="https://openclipart.org/image/2400px/svg_to_png/211821/matt-icons_preferences-desktop-personal.png" style="height:75px;"</img></div> </td>
+            <td>
+                <div class="button-group">
+                    <button type="button" class="btn btn-default" ng:click="shareTrans('share', [identity.user], participant, currentSession.comment)"translate > <a>Share</a></button>
+                    <span uib-dropdown>
+                        <button class="btn btn-default" uib-dropdown-toggle>
+                            <a class=""translate>Collect</a>
+                        </button>
+                        <ul uib-dropdown-menu class="dropdown-menu-right">
+                            <li>
+                                <a ng:click="collectTrans('copy', participant, [identity.user], currentSession.comment)" translate>
+                                    Copy files
+                                </a>
+                            </li>
+                            <li>
+                                <a ng:click="collectTrans('move', participant, [identity.user], currentSession.comment)" translate>
+                                    Collect files
+                                </a>
+                            </li>
+                        </ul>
+                    </span>
+                </div>
+                <div ng-show="showDetails"> <br> <button type="button" class="btn btn-default" ng:click="notImplemented()" translate >Available Files</button> </div> </td>
+            </td>
+            <td class="ng-binding">
+                <span style="display:inline-block; width:100px; font-size:100%"  class="label label-danger" ng:show="participant.sophomorixRole == 'examuser'"><i class="fa fa-graduation-cap"></i> {{participant.sophomorixExamMode}}</span></td>
+            <td width="1" style="text-align:center;"> 
+                <span title="Exam-Mode" checkbox id="{{participant.sAMAccountName}}.exammode" ng-click="changeClass('exammode', participant)" ng:model="participant.exammode_boolean" ng:show="participant.sophomorixExamMode == identity.user || participant.sophomorixExamMode == '---'"></span>
+                <span uib-dropdown>
+                    <button class="btn btn-primary btn-xs" style="color:orange; background:white; font-size:20px" ng:show="participant.sophomorixExamMode != identity.user && participant.sophomorixExamMode != '---'" uib-dropdown-toggle>
+                        <i class="fa fa-exclamation-triangle"></i>
+                    </button>
+                    <ul uib-dropdown-menu class="dropdown-menu-right" >
+                        <li>
+                            <a ng:click="endExam(participant.sAMAccountName, identity.user,currentSession.name, currentSession.comment)">
+                                <span translate> End running exam</span>
+                            </a>
+                        </li>
+                    </ul>
+            </td>
+            <td width="1" style="text-align:center;" ng:show=fields.wifiaccess.visible>
+                <span checkbox id="{{participant.sAMAccountName}}.wifiaccess" ng-click="changeClass('wifiaccess', participant)" ng:model="participant.group_wifiaccess">"</span>
+            </td>
+            <td width="1" style="text-align:center;" ng:show=fields.internetaccess.visible>
+                <span checkbox id="{{participant.sAMAccountName}}.internetaccess" ng-click="changeClass('internetaccess', participant)" ng:model="participant.group_internetaccess"></span>
+            </td>
+            <td width="1" style="text-align:center;" ng:show=fields.intranetaccess.visible>
+                <span checkbox id="{{participant.sAMAccountName}}.intranetaccess" ng-click="changeClass('intranetaccess', participant)" ng:model="participant.group_intranetaccess"></span>
+            </td>
+            <td width="1" style="text-align:center;" ng:show=fields.webfilter.visible>
+                <span checkbox id="{{participant.sAMAccountName}}.webfilter" ng-click="changeClass('webfilter', participant)" ng:model="participant.group_webfilter"></span>
+            </td>
+            <td width="1" style="text-align:center;" ng:show=fields.printing.visible>
+                <span checkbox id="{{participant.sAMAccountName}}.printing" ng-click="changeClass('printing', participant)" ng:model="participant.group_printing" ></span>
+            </td>
+            <td width="1">
+                <span uib-dropdown>
+                    <button class="btn btn-default" uib-dropdown-toggle>
+                        <i class="fa fa-cog"></i>
+                    </button>
+                    <ul uib-dropdown-menu class="dropdown-menu-right" style="width:200px">
+                        <li>
+                            <a ng:click="showInitialPassword([participant.sAMAccountName])" translate>
+                                Show initial password
+                            </a>
+                        </li>
+                        <li>
+                            <a ng:click="setInitialPassword([participant.sAMAccountName])" translate>
+                                Set Initial password
+                            </a>
+                        </li>
+                        <li>
+                            <a ng:click="setRandomPassword([participant.sAMAccountName])" translate>
+                                Set Random password
+                            </a>
+                        </li>
+                        <li>
+                            <a ng:click="setCustomPassword([participant], participant.sAMAccountName)" translate>
+                                Set Custom password
+                            </a>
+                        </li>
+                        <li>
+                            <a ng:click="userInfo(participant.sAMAccountName)" translate>
+                                User information
+                            </a>
+                        </li>
+                    </ul>
+                </span>
+            </td>
+            <td><button class="btn btn-default" ng:click="removeParticipant(participant)"> <i class="fa fa-trash"></i></td>
+        </tr>
+    </table>
+
+    <div ng:show="info.message != ''" class="alert alert-info">
+        <i class="fa fa-info-circle"></i> <span translate>{{info.message}}</span>
+    </div>
+
+    <div ng:show="identity.user == 'root'" class="alert alert-info">
+        <i class="fa fa-info-circle"></i> <span translate>This module does not work as root. Login as a teacher instead!</span>
+    </div>
+
+    <floating-toolbar style="display:{{visible.participanttable}};">
+        <div class="button-group">
+            <div uib-dropdown ng:show="currentSession.name != ''" class="dropup">
+                <button class="btn btn-default btn-flat pull-left" uib-dropdown-toggle>
+                    <i class="fa fa-file"></i> Share &amp; Collect <i class="fa fa-caret-up"></i>
+                </button>
+                <ul uib-dropdown-menu class="scrollable">
+                    <!--                        <li><a flow-btn class="btn btn-default btn-flat" test-bind="uploadButton" translate>Upload file to share</a></li>-->
+                    <li><a ng:click="shareTrans('share', [identity.user], participants, currentSession.comment)" translate>Share file(s) from transfer with whole session</a></li>
+                    <li><a ng:click="collectTrans('copy', participants, [identity.user], currentSession.comment)" translate>Copy transfer from whole session</a></li>
+                    <li><a ng:click="collectTrans('move', participants, [identity.user], currentSession.comment)" translate>Collect transfer from whole session</a></li>
+                    <!--   <li ng:repeat="example in examples"><a ng:click="createConfig(example)">{{example}}</a></li>-->
+                </ul>
+            </div>
+            <button ng:click="saveApply(identity.user,participants,currentSession.name,currentSession.comment)" ng:show="currentSession.name != ''" class="btn btn-default btn-flat pull-right" translate>Save &amp; apply</button>
+            <button ng:click="cancel(identity.user,currentSession.name)" ng:show="currentSession.name != ''" class="btn btn-default btn-flat pull-right" translate>Close</button>
+        </div>
+    </floating-toolbar>
+    <div ng:show="sessions[0]['SESSIONCOUNT'] != 0">
+        <progress-spinner ng:show="sessions == null && identity.user != 'root'"></progress-spinner>
+        <div ng:show="visible.sessiontable == 'show'"  class="list-group">
+            <!--
+                <progress-spinner ng:show="sessions == null"></progress-spinner>
+                <div ng:show="currentSession.name == ''"  class="list-group">
+            -->
+            <a class="list-group-item" ng:repeat="session in sessions|filter:filter | orderBy: '-COMMENT' :true" ng:click="getParticipants(identity.user,session.ID); currentSession.name=session.ID; currentSession.comment=session.COMMENT">
+                <i class="fa fa-users"></i> {{session.COMMENT}}
+                <br />
+                <br />
+                <p style="text-align:left;" translate>
+                Participants: {{session.PARTICIPANT_COUNT}}
+                <h6 style="margin-bottom:15px;"><span style="float:right;" translate> Creation Date: {{session.ID}}</span></h6>
+                </p>
+            </a>
+                </div>
+        </div>
+    </div>

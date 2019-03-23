@@ -1,0 +1,233 @@
+<br/>
+
+<progress-spinner ng:show="settings == null"></progress-spinner>
+
+<div ng:show="settings != null">
+    <uib:tabset>
+
+    <uib:tab heading="{{'General'|translate}}">
+    <br/>
+
+
+    <table class="lm-table lm-table-padded">
+        <tr>
+            <td width="30%"></td>
+            <td width="70%"></td>
+        </tr>
+        </td>
+
+        <td>
+            <label translate>Schoolname</label>
+        </td>
+        <td>
+            <input type="text" class="form-control" ng:model="settings.school.school_longname" />
+        </td>
+</div>
+
+<table class="lm-table lm-table-padded">
+    <tr>
+        <th width="40%"></th>
+        <th translate>Students</th>
+        <th translate>Teachers</th>
+    </tr>
+    <tr>
+        <td>
+            <label translate>Random password</label>
+        </td>
+        <td>
+            <span checkbox ng:model="settings['userfile.students.csv']['random_pwd']" />
+        </td>
+        <td>
+            <span checkbox ng:model="settings['userfile.teachers.csv']['random_pwd']" />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label translate>Password Length</label>
+        </td>
+        <td>
+            <input type="number" class="form-control" ng:model="settings['userfile.students.csv']['pwd_length']" />
+        </td>
+        <td>
+            <input type="number" class="form-control" ng:model="settings['userfile.teachers.csv']['pwd_length']" />
+        </td>
+    </tr>
+    <tr ng:show="settings.lehrer_zufall_passwort || settings.schueler_zufall_passwort" >
+        <td>
+            <label translate>Password length</label>
+        </td>
+        <td>
+            <input type="number" class="form-control" ng:model="settings['userfile.students.csv']['pwd_length']"  />
+        </td>
+        <td>
+            <input type="number" class="form-control" ng:model="settings['userfile.teachers.csv']['pwd_length']" ng:show="settings.schueler_zufall_passwort" />
+        </td>
+    </tr>
+    <tr>
+    </tr>
+    <td>
+        <label translate>Tolerance after departure (days)</label>
+    </td>
+    <td>
+        <input type="number" class="form-control" ng:model="settings['userfile.students.csv']['toleration_time']" />
+    </td>
+    <td>
+        <input type="number" class="form-control" ng:model="settings['userfile.teachers.csv']['toleration_time']">
+    </td>
+    </tr>
+    <td>
+        <label translate>Removal after departure (days)</label>
+    </td>
+    <td>
+        <input type="number" class="form-control" ng:model="settings['userfile.students.csv']['deactivation_time']" />
+    </td>
+    <td>
+        <input type="number" class="form-control" ng:model="settings['userfile.teachers.csv']['deactivation_time']" />
+    </td>
+    </tr>
+</table>
+
+
+    </uib:tab>
+    <uib:tab heading="{{'Quota'|translate}}">
+    <br/>
+    <table class="lm-table lm-table-padded">
+        <tr>
+            <th width="40%"></th>
+            <th translate>Students</th>
+            <th translate>Teachers</th>
+            <th translate>Schooladministrator</th>
+        </tr>
+        <tr>
+            <td>
+                <label translate>Quota Default Global in MiB</label>
+            </td>
+            <td>
+                <input type="number" class="form-control" ng:model="settings['role.student']['quota_default_global']" />
+            </td>
+            <td>
+                <input type="number" class="form-control" ng:model="settings['role.teacher']['quota_default_global']" />
+            </td>
+            <td>
+                <input type="number" class="form-control" ng:model="settings['role.schooladministrator']['quota_default_global']" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label translate>Quota Default School in MiB</label>
+            </td>
+            <td>
+                <input type="number" class="form-control" ng:model="settings['role.student']['quota_default_school']" />
+            </td>
+            <td>
+                <input type="number" class="form-control" ng:model="settings['role.teacher']['quota_default_school']" />
+            </td>
+            <td>
+                <input type="number" class="form-control" ng:model="settings['role.schooladministrator']['quota_default_school']" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label translate>Cloudquota Percentage</label>
+            </td>
+            <td>
+                <input type="number" class="form-control" ng:model="settings['role.student']['cloudquota_percentage']" />
+            </td>
+            <td>
+                <input type="number" class="form-control" ng:model="settings['role.teacher']['cloudquota_percentage']" />
+            </td>
+            <td>
+                <input type="number" class="form-control" ng:model="settings['role.schooladministrator']['cloudquota_percentage']" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label translate>Mailquota Default in MiB</label>
+            </td>
+            <td>
+                <input type="number" class="form-control" ng:model="settings['role.student']['mailquota_default']" />
+            </td>
+            <td>
+                <input type="number" class="form-control" ng:model="settings['role.teacher']['mailquota_default']" />
+            </td>
+            <td>
+                <input type="number" class="form-control" ng:model="settings['role.schooladministrator']['mailquota_default']" />
+            </td>
+        </tr>
+    </table>
+
+
+
+    </uib:tab>
+    <uib:tab heading="{{'Encoding'|translate}}">
+    <br/>
+    <div class="form-group">
+        <label translate>Students encoding</label>
+        <select class="form-control" ng:model="settings['userfile.students.csv']['encoding']" ng:options="x for x in encodings" />
+            <div ng:show="settings['userfile.students.csv']['encoding'] == 'auto'" >
+                <label translate>Detected encoding</label><br>
+                {{encoding['userfile.students.csv']}}
+            </div>
+    </div>
+    <div class="form-group">
+        <label translate>Teachers encoding</label>
+        <select class="form-control" ng:model="settings['userfile.teachers.csv']['encoding']" ng:options="x for x in encodings" />
+            <div ng:show="settings['userfile.teachers.csv']['encoding'] == 'auto'" >
+                <label translate>Detected encoding</label><br>
+                {{encoding['userfile.teachers.csv']}}
+            </div>
+    </div>
+    <div class="form-group">
+        <label translate>Extra courses encoding</label>
+        <select class="form-control" ng:model="settings['classfile.extraclasses.csv']['encoding']" ng:options="x for x in encodings" />
+            <div ng:show="settings['classfile.extraclasses.csv']['encoding'] == 'auto'" >
+                <label translate>Detected encoding</label><br>
+                {{encoding['classfile.extraclasses.csv']}}
+            </div>
+    </div>
+    <div class="form-group">
+        <label translate>Extra students encoding</label>
+        <select class="form-control" ng:model="settings['userfile.extrastudents.csv']['encoding']" ng:options="x for x in encodings" />
+            <div ng:show="settings['userfile.extrastudents.csv']['encoding'] == 'auto'" >
+                <label translate>Detected encoding</label><br>
+                {{encoding['userfile.extrastudents.csv']}}
+            </div>
+    </div>
+    </uib:tab>
+    <uib:tab heading="{{'Printing data'|translate}}">
+    <br/>
+    <div class="form-group">
+        <label translate>School name</label>
+        <input type="text" class="form-control" ng:model="settings.school.school_longname" />
+    </div>
+    <div class="form-group">
+        <label translate>Internal FQDN for printing</label>
+        <input type="text" class="form-control" ng:model="settings.server_fqdn_internal_print" />
+    </div>
+    <div class="form-group">
+        <label translate>External FQDN for printing</label>
+        <input type="text" class="form-control" ng:model="settings.server_fqdn_external_print" />
+    </div>
+    <div class="form-group">
+        <label translate>Samba domain for printing</label>
+        <input type="text" class="form-control" ng:model="settings.smb_domain_print" />
+    </div>
+    <div class="form-group">
+        <label translate>MOODLE URL</label>
+        <input type="text" class="form-control" ng:model="settings.moodle_url" />
+    </div>
+    <div class="form-group">
+        <label translate>Admin e-mail</label>
+        <input type="text" class="form-control" ng:model="settings.admins_print" />
+    </div>
+    </uib:tab>
+    </uib:tabset>
+
+
+    <div class="floating-toolbar-padder"></div>
+
+    <floating-toolbar>
+        <button ng:click="backups()" class="btn btn-default btn-flat pull-right"><i class="fa fa-history"></i></button>
+        <button ng:click="save()" class="btn btn-default btn-flat" translate>Save</button>
+    </floating-toolbar>
+    </div>

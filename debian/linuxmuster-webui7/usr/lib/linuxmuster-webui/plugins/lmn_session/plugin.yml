@@ -1,0 +1,18 @@
+name: lmn_session
+author: Linux Muster
+email: andreas.till@netzint.de
+url: http://linuxmuster.net
+version: '0.7'
+title: 'Session'
+icon: users
+dependencies:
+    - !!python/object:aj.plugins.PluginDependency { plugin_name: core}
+    - !!python/object:aj.plugins.PluginDependency { plugin_name: lmn_common }
+resources:
+    - 'resources/js/module.coffee'
+    - 'resources/js/controllers/session.controller.coffee' # angular module
+    - 'resources/partial/session.html' # view
+    - 'resources/partial/selectFile.modal.html' # view
+    - 'resources/styles.less'
+    - 'ng:lmn.session'
+

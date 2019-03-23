@@ -1,0 +1,11 @@
+<div class="modal-header">
+    <h4 translate>Importing device</h4>
+</div>
+<div class="modal-body">
+    <progress-spinner ng:show="isWorking"></progress-spinner>
+    <lm-log path="'/tmp/import_devices.log'" ng:show="logVisible"></lm-log>
+</div>
+<div class="modal-footer">
+    <a class="btn btn-default btn-flat" ng:click="showLog()" translate ng:show="!logVisible">Details</a>
+    <a class="btn btn-default btn-flat" ng:click="close()" translate ng:show="!isWorking">Close</a>
+</div>

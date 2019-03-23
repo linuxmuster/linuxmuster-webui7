@@ -32,7 +32,7 @@
     };
   });
 
-  angular.module('lm.devices').controller('LMDevicesController', function($scope, $http, $uibModal, $route, gettext, notify, pageTitle, lmFileEditor, lmFileBackups) {
+  angular.module('lm.devices').controller('LMDevicesController', function($scope, $http, $uibModal, $route, $window, gettext, notify, pageTitle, lmFileEditor, lmFileBackups) {
     pageTitle.set(gettext('Devices'));
     $scope.isValidMac = function(mac) {
       var regExp, validMac;
@@ -230,13 +230,36 @@
         });
       });
     };
+    $scope.path = '/etc/linuxmuster/sophomorix/default-school/devices.csv';
     $scope.editCSV = function() {
-      return lmFileEditor.show('/etc/linuxmuster/sophomorix/default-school/devices.csv').then(function() {
+      return lmFileEditor.show($scope.path).then(function() {
         return $route.reload();
       });
     };
-    return $scope.backups = function() {
-      return lmFileBackups.show('/etc/linuxmuster/sophomorix/default-school/devices.csv');
+    $scope.backups = function() {
+      return lmFileBackups.show($scope.path);
+    };
+    $scope.activeTab = 0;
+    $scope.loadBackupFiles = function() {
+      return $http.get('/api/lm/devices-backup').then(function(resp) {
+        return $scope.backupfiles = resp.data;
+      });
+    };
+    $scope.restorebackup = function(backupfile) {
+      return $http.post('/api/lm/devices-restore', {
+        backupfile: backupfile.path
+      }).then(function(resp) {
+        notify.success('Backup file restored');
+        return $window.location.reload();
+      });
+    };
+    return $scope.removebackup = function(backupfile) {
+      return $http.post('/api/lm/remove-backup', {
+        backupfile: backupfile.path
+      }).then(function(resp) {
+        $scope.loadBackupFiles();
+        return notify.success('Backup file removed');
+      });
     };
   });
 

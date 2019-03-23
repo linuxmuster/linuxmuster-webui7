@@ -23,7 +23,7 @@ angular.module('lm.devices').controller 'LMDevicesApplyModalController', ($scope
 
 
 
-angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $uibModal, $route, gettext, notify, pageTitle, lmFileEditor, lmFileBackups) ->
+angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $uibModal, $route, $window, gettext, notify, pageTitle, lmFileEditor, lmFileBackups) ->
     pageTitle.set(gettext('Devices'))
 
     $scope.isValidMac = (mac) ->
@@ -191,9 +191,29 @@ angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $
                 backdrop: 'static'
             )
 
+    $scope.path = '/etc/linuxmuster/sophomorix/default-school/devices.csv'
+
     $scope.editCSV = () ->
-        lmFileEditor.show('/etc/linuxmuster/sophomorix/default-school/devices.csv').then () ->
+        lmFileEditor.show($scope.path).then () ->
             $route.reload()
 
     $scope.backups = () ->
-        lmFileBackups.show('/etc/linuxmuster/sophomorix/default-school/devices.csv')
+        lmFileBackups.show($scope.path)
+        
+    $scope.activeTab = 0  
+    
+    $scope.loadBackupFiles = () ->
+        $http.get('/api/lm/devices-backup').then (resp) ->
+                $scope.backupfiles = resp.data
+
+    $scope.restorebackup = (backupfile) ->
+        $http.post('/api/lm/devices-restore', {backupfile: backupfile.path}).then (resp) -> 
+            notify.success('Backup file restored')
+            $window.location.reload()
+            
+    $scope.removebackup = (backupfile) ->
+        $http.post('/api/lm/remove-backup', {backupfile: backupfile.path}).then (resp) -> 
+            $scope.loadBackupFiles()
+            notify.success('Backup file removed')         
+            
+        

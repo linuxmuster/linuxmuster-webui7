@@ -37,7 +37,7 @@ angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $
           return validIP
 
     $scope.isValidHost =(hostname) ->
-        regExp = /^[a-zA-Z0-9#+\-*]+$/ ## TODO : list of valid chars for sophomorix ? Also for group ?
+        regExp = /^[a-zA-Z0-9\-]+$/
         validHostname = regExp.test(hostname)
         return validHostname;
 

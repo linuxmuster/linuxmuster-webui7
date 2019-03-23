@@ -84,7 +84,6 @@ def lmn_restore_backup_file(path, backup):
     dir, name = os.path.split(path)
     os.unlink(path)
     os.rename(backup, path)
-    os.unlink(backup)
 
 def lmn_getLDAPGroupmembers(group, field):
     params = lmconfig.data['linuxmuster']['ldap']

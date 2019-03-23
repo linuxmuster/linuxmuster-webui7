@@ -1,0 +1,59 @@
+<dialog dialog-class='modal-lv' >
+<div class="modal-header">
+    <h3 translate>Summary</h3>
+</div>
+<div  style="height: 550px;" class="modal-body scrollable">
+    <div class="form-group">
+        <h4 translate>Almost done...</h4>
+        <div translate>We got all information needed for the provisioning proccess.<br>Before proceeding please check your data <b>carefully</b>!</div>
+        <br>
+        <progress-spinner ng:show="$ctrl.ini.servername == null"></progress-spinner>
+        <div ng:show="$ctrl.ini.servername != null">
+        <div class="form-group">
+            <label translate>School Information</label>
+            <br>
+            <ul class=leaders>
+                    <li><div><span translate >School Name:</span> <span><b>{{$ctrl.ini.schoolname}} </b></span></div>
+                    <li><div><span translate >Location</span> <span><b>{{$ctrl.ini.location}} </b></span></div>
+                    <li><div><span translate >State</span> <span><b>{{$ctrl.ini.state}} </b></span></div>
+                    <li><div><span translate >Country</span> <span><b>{{$ctrl.ini.country}} </b></span></div>
+        </ul>
+        </div>
+        <div class="form-group">
+            <label translate>Server &amp; Domain Information</label>
+            <br>
+            <ul class=leaders>
+                    <li><div><span translate >Server name</span> <span><b>{{$ctrl.ini.servername}} </b></span></div>
+                    <li><div><span translate >Domain name</span> <span><b>{{$ctrl.ini.domainname}} </b></span></div>
+                    <li><div><span translate >Server FQDN</span> <span><b>{{$ctrl.ini.servername}}.{{$ctrl.ini.domainname}} </b></span></div>
+        </ul>
+        </div>
+        <div class="form-group">
+            <label translate>External Services</label>
+            <br>
+            <ul class=leaders>
+                <li><span translate >Firewall</span> <span ng-if="$ctrl.ini.skipfw == true" translate> Configuration will be <b>skipped </b></span><span ng-if="$ctrl.ini.skipfw != true" translate> Firewall will be <b>configured!</b></span>
+                <li><span >OPSI</span> <span><b ng-if="$ctrl.ini.opsiip">{{$ctrl.ini.opsiip}}</b></span> <span ng-if="!$ctrl.ini.opsiip" translate> No opsi will be configured </span>
+                <li><span>Docker</span> <span><b ng-if="$ctrl.ini.dockerip">{{$ctrl.ini.dockerip}}</b></span><span ng-if="!$ctrl.ini.dockerip" translate> No docker host will be configured </span>
+                <li><span >Mail</span> <span><b ng-if="$ctrl.ini.mailip">{{$ctrl.ini.mailip}}</b></span><span ng-if="!$ctrl.ini.mailip" translate> No mailservice will be configured </span>
+                <li ng-if="$ctrl.ini.mailip"><div > <span translate >SMTP User</span> <span><b">{{$ctrl.ini.smtpuser}}</b></span></div>
+                <li ng-if="$ctrl.ini.mailip"><div > <span translate >SMTP Relay</span> <span><b">{{$ctrl.ini.smtprelay}}</b></span></div>
+            </ul>
+        </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="modal-body">
+    </div>
+    <div ng:show="$ctrl.ini.servername != null">
+
+    <div class="modal-footer">
+        <a href="/view/lm/init/externalservices" class="btn btn-default btn-flat pull-left" translate>Back</a>
+        <a href='#' ng:click="$ctrl.finish()" class="btn btn-default btn-flat" translate>Start provisioning</a>
+    </div>
+</div>
+
+</dialog>

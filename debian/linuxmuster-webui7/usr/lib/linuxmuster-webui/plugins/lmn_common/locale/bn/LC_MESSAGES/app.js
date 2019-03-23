@@ -1,0 +1,1 @@
+{"": "", "User Management": "", "Download CSV": "", "Device Management": "", "Class Management": "", "Global Settings": "", "School Settings": "", "Quota": "", "Drop a CSV file here to import": "", "List Management": "", "Cancel": "", "Close": "", "Backups": "", "Save": ""}

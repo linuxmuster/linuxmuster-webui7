@@ -1,0 +1,391 @@
+{
+   "COUNTERS" : {
+      "GROUPCOUNT" : 5,
+      "GROUP" : 5,
+      "MEMBERCOUNT" : {
+         "5a" : 3,
+         "10b" : 8,
+         "2b" : 1,
+         "13a" : 3,
+         "10a" : 5
+      }
+   },
+   "GROUP" : {
+      "2b" : {
+         "sAMAccountName" : "2b",
+         "sophomorixRole" : null,
+         "sophomorixQuota" : [
+            "linuxmuster-global:---:---:",
+            "default-school:---:---:"
+         ]
+      },
+      "13a" : {
+         "sAMAccountName" : "13a",
+         "sophomorixRole" : null,
+         "sophomorixQuota" : [
+            "linuxmuster-global:---:---:",
+            "default-school:---:---:"
+         ]
+      },
+      "10a" : {
+         "sophomorixType" : "adminclass",
+         "sophomorixQuota" : [
+            "linuxmuster-global:---:---:",
+            "default-school:---:---:"
+         ],
+         "sAMAccountName" : "10a"
+      },
+      "5a" : {
+         "sophomorixQuota" : [
+            "linuxmuster-global:---:---:",
+            "default-school:---:---:"
+         ],
+         "sAMAccountName" : "5a",
+         "sophomorixRole" : null
+      },
+      "10b" : {
+         "sophomorixRole" : null,
+         "sAMAccountName" : "10b",
+         "sophomorixQuota" : [
+            "linuxmuster-global:---:---:",
+            "default-school:---:---:"
+         ]
+      }
+   },
+   "MEMBERS" : {
+      "5a" : {
+         "hartmape" : {
+            "objectClass" : [
+               "top",
+               "person",
+               "organizationalPerson",
+               "user"
+            ],
+            "sAMAccountName" : "hartmape",
+            "sophomorixRole" : "student",
+            "sophomorixQuota" : [
+               "default-school:1506:1506:1579155456:---:",
+               "linuxmuster-global:1006:1006:1054867456:---:"
+            ]
+         },
+         "schirrmo" : {
+            "objectClass" : [
+               "top",
+               "person",
+               "organizationalPerson",
+               "user"
+            ],
+            "sophomorixRole" : "student",
+            "sAMAccountName" : "schirrmo",
+            "sophomorixQuota" : [
+               "default-school:1506:1506:1579155456:---:",
+               "linuxmuster-global:1006:1006:1054867456:---:"
+            ]
+         },
+         "serdarje" : {
+            "objectClass" : [
+               "top",
+               "person",
+               "organizationalPerson",
+               "user"
+            ],
+            "sophomorixQuota" : [
+               "default-school:1506:1506:1579155456:---:",
+               "linuxmuster-global:1006:1006:1054867456:---:"
+            ],
+            "sAMAccountName" : "serdarje",
+            "sophomorixRole" : "student"
+         }
+      },
+      "10b" : {
+         "tillan2" : {
+            "objectClass" : [
+               "top",
+               "person",
+               "organizationalPerson",
+               "user"
+            ],
+            "sophomorixQuota" : [
+               "linuxmuster-global:---:---:new:---:",
+               "default-school:---:---:new:---:"
+            ],
+            "sAMAccountName" : "tillan2",
+            "sophomorixRole" : "student"
+         },
+         "tillan5" : {
+            "objectClass" : [
+               "top",
+               "person",
+               "organizationalPerson",
+               "user"
+            ],
+            "sophomorixQuota" : [
+               "linuxmuster-global:---:---:new:---:",
+               "default-school:---:---:new:---:"
+            ],
+            "sophomorixRole" : "student",
+            "sAMAccountName" : "tillan5"
+         },
+         "tillan7" : {
+            "sophomorixQuota" : [
+               "linuxmuster-global:---:---:new:---:",
+               "default-school:---:---:new:---:"
+            ],
+            "sophomorixRole" : "student",
+            "sAMAccountName" : "tillan7",
+            "objectClass" : [
+               "top",
+               "person",
+               "organizationalPerson",
+               "user"
+            ]
+         },
+         "tillan3" : {
+            "sAMAccountName" : "tillan3",
+            "sophomorixRole" : "student",
+            "sophomorixQuota" : [
+               "linuxmuster-global:---:---:new:---:",
+               "default-school:---:---:new:---:"
+            ],
+            "objectClass" : [
+               "top",
+               "person",
+               "organizationalPerson",
+               "user"
+            ]
+         },
+         "tillan4" : {
+            "objectClass" : [
+               "top",
+               "person",
+               "organizationalPerson",
+               "user"
+            ],
+            "sAMAccountName" : "tillan4",
+            "sophomorixRole" : "student",
+            "sophomorixQuota" : [
+               "linuxmuster-global:---:---:new:---:",
+               "default-school:---:---:new:---:"
+            ]
+         },
+         "tillan1" : {
+            "sophomorixQuota" : [
+               "linuxmuster-global:---:---:new:---:",
+               "default-school:---:---:new:---:"
+            ],
+            "sAMAccountName" : "tillan1",
+            "sophomorixRole" : "student",
+            "objectClass" : [
+               "top",
+               "person",
+               "organizationalPerson",
+               "user"
+            ]
+         },
+         "tillan6" : {
+            "sAMAccountName" : "tillan6",
+            "sophomorixRole" : "student",
+            "sophomorixQuota" : [
+               "linuxmuster-global:---:---:new:---:",
+               "default-school:---:---:new:---:"
+            ],
+            "objectClass" : [
+               "top",
+               "person",
+               "organizationalPerson",
+               "user"
+            ]
+         },
+         "tillan" : {
+            "sophomorixQuota" : [
+               "linuxmuster-global:---:---:new:---:",
+               "default-school:---:---:new:---:"
+            ],
+            "sophomorixRole" : "student",
+            "sAMAccountName" : "tillan",
+            "objectClass" : [
+               "top",
+               "person",
+               "organizationalPerson",
+               "user"
+            ]
+         }
+      },
+      "2b" : {
+         "huhuha" : {
+            "sAMAccountName" : "huhuha",
+            "sophomorixRole" : "student",
+            "sophomorixQuota" : [
+               "linuxmuster-global:---:---:new:---:",
+               "default-school:---:---:new:---:"
+            ],
+            "objectClass" : [
+               "top",
+               "person",
+               "organizationalPerson",
+               "user"
+            ]
+         }
+      },
+      "13a" : {
+         "gengleac" : {
+            "objectClass" : [
+               "top",
+               "person",
+               "organizationalPerson",
+               "user"
+            ],
+            "sophomorixQuota" : [
+               "default-school:1506:1506:1579155456:---:",
+               "linuxmuster-global:1006:1006:1054867456:---:"
+            ],
+            "sophomorixRole" : "student",
+            "sAMAccountName" : "gengleac"
+         },
+         "gelhaata" : {
+            "objectClass" : [
+               "top",
+               "person",
+               "organizationalPerson",
+               "user"
+            ],
+            "sAMAccountName" : "gelhaata",
+            "sophomorixRole" : "student",
+            "sophomorixQuota" : [
+               "default-school:1506:1506:1579155456:---:",
+               "linuxmuster-global:1006:1006:1054867456:---:"
+            ]
+         },
+         "gaissijo" : {
+            "sophomorixRole" : "student",
+            "sAMAccountName" : "gaissijo",
+            "sophomorixQuota" : [
+               "default-school:1506:1506:1579155456:---:",
+               "linuxmuster-global:1006:1006:1054867456:---:"
+            ],
+            "objectClass" : [
+               "top",
+               "person",
+               "organizationalPerson",
+               "user"
+            ]
+         }
+      },
+      "10a" : {
+         "frayka" : {
+            "objectClass" : [
+               "top",
+               "person",
+               "organizationalPerson",
+               "user"
+            ],
+            "sAMAccountName" : "frayka",
+            "sophomorixRole" : "student",
+            "sophomorixQuota" : [
+               "default-school:1506:1506:1579155456:---:",
+               "linuxmuster-global:1006:1006:1054867456:---:"
+            ]
+         },
+         "genglefe" : {
+            "sophomorixQuota" : [
+               "default-school:1506:1506:1579155456:---:",
+               "linuxmuster-global:1006:1006:1054867456:---:"
+            ],
+            "sAMAccountName" : "genglefe",
+            "sophomorixRole" : "student",
+            "objectClass" : [
+               "top",
+               "person",
+               "organizationalPerson",
+               "user"
+            ]
+         },
+         "ilkesju" : {
+            "sophomorixQuota" : [
+               "default-school:1506:1506:1579155456:---:",
+               "linuxmuster-global:1006:1006:1054867456:---:"
+            ],
+            "sAMAccountName" : "ilkesju",
+            "sophomorixRole" : "student",
+            "objectClass" : [
+               "top",
+               "person",
+               "organizationalPerson",
+               "user"
+            ]
+         },
+         "imbroghe" : {
+            "objectClass" : [
+               "top",
+               "person",
+               "organizationalPerson",
+               "user"
+            ],
+            "sophomorixQuota" : [
+               "default-school:1506:1506:1579155456:---:",
+               "linuxmuster-global:1006:1006:1054867456:---:"
+            ],
+            "sAMAccountName" : "imbroghe",
+            "sophomorixRole" : "student"
+         },
+         "kruegeri" : {
+            "sophomorixRole" : "student",
+            "sAMAccountName" : "kruegeri",
+            "sophomorixQuota" : [
+               "default-school:1506:1506:1579155456:---:",
+               "linuxmuster-global:1006:1006:1054867456:---:"
+            ],
+            "objectClass" : [
+               "top",
+               "person",
+               "organizationalPerson",
+               "user"
+            ]
+         }
+      }
+   },
+   "LISTS" : {
+      "GROUP" : [
+         "10a",
+         "10b",
+         "13a",
+         "2b",
+         "5a"
+      ],
+      "ROOM" : [],
+      "MEMBERLIST" : {
+         "2b" : [
+            "huhuha"
+         ],
+         "13a" : [
+            "gaissijo",
+            "gelhaata",
+            "gengleac"
+         ],
+         "10a" : [
+            "frayka",
+            "genglefe",
+            "ilkesju",
+            "imbroghe",
+            "kruegeri"
+         ],
+         "5a" : [
+            "hartmape",
+            "schirrmo",
+            "serdarje"
+         ],
+         "10b" : [
+            "tillan",
+            "tillan1",
+            "tillan2",
+            "tillan3",
+            "tillan4",
+            "tillan5",
+            "tillan6",
+            "tillan7"
+         ]
+      },
+      "COMPUTER" : [],
+      "USER" : []
+   }
+}

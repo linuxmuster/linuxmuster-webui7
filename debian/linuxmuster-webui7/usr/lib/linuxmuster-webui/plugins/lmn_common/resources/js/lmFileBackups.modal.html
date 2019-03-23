@@ -1,0 +1,21 @@
+<div class="modal-header">
+    <h4 translate>Backups</h4>
+</div>
+<div class="modal-body">
+    <div class="alert alert-info" ng:show="backups.length == 0">
+        No backups available
+    </div>
+    <div class="list-group">
+        <div class="list-group-item list-group-item-small" ng:repeat="backup in backups|orderBy:'-date'">
+            <a class="list-group-btn" ng:click="restore(backup)">
+                <i class="fa fa-history"></i>
+            </a>
+            <div class="list-group-main">
+                {{backup.date|date:'medium'}}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default btn-flat" translate ng:click="cancel()">Close</button>
+</div>

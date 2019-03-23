@@ -1,0 +1,42 @@
+name: lmn_users
+author: Linux Muster
+email: andreas.till@netzint.de
+url: http://linuxmuster.net
+version: '1.0'
+title: 'Users'
+icon: users
+dependencies:
+    - !!python/object:aj.plugins.PluginDependency { plugin_name: core }
+    - !!python/object:aj.plugins.PluginDependency { plugin_name: lmn_common }
+resources:
+    - 'resources/js/module.coffee'
+    - 'resources/js/controllers/students-list.controller.coffee'
+    - 'resources/js/controllers/teachers.controller.coffee'
+    - 'resources/js/controllers/students.controller.coffee'
+    - 'resources/js/controllers/schooladmins.controller.coffee'
+    - 'resources/js/controllers/globaladmins.controller.coffee'
+    - 'resources/js/controllers/teachers-list.controller.coffee'
+    - 'resources/js/controllers/extraStudents.controller.coffee'
+    - 'resources/js/controllers/extraCourses.controller.coffee'
+    - 'resources/js/controllers/teachers.controller.coffee'
+    - 'resources/js/controllers/printPasswords.controller.coffee'
+    - 'resources/js/controllers/checkModal.controller.coffee'
+    - 'resources/js/controllers/usersCommon.controller.coffee'
+    - 'resources/partial/students-list.html'
+    - 'resources/partial/teachers-list.html'
+    - 'resources/partial/extra-students.html'
+    - 'resources/partial/extra-courses.html'
+    - 'resources/partial/print-passwords.html'
+    - 'resources/partial/print-passwords.options.modal.html'
+    - 'resources/partial/apply.modal.html'
+    - 'resources/partial/upload.modal.html'
+    - 'resources/partial/check.modal.html'
+    - 'resources/partial/result.modal.html'
+    - 'resources/partial/teachers.html'
+    - 'resources/partial/students.html'
+    - 'resources/partial/schooladmins.html'
+    - 'resources/partial/globaladmins.html'
+    - 'resources/partial/customPassword.modal.html'
+    - 'resources/partial/userDetails.modal.html'
+    - 'resources/partial/addAdmin.modal.html'
+    - 'ng:lm.users'

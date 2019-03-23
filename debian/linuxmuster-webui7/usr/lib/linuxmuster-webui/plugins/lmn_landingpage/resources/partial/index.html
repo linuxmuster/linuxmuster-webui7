@@ -1,0 +1,57 @@
+<br/>
+<h2 translate>Welcome to Linuxmuster.net version 7! </h2>
+
+<br>
+<div ng:show="identity.user == 'root'" class="alert alert-danger">
+    <i class="fa fa-info-circle"></i> <span translate>You should not use WebUI as root user! If this is your first time
+        running WebUI, proceed through the setup wizard. Afterwards login using the global-admin account.</span>
+</div>
+
+<div ng:show="identity.user != 'root'">
+
+    <progress-spinner ng:show="user == null"></progress-spinner>
+    
+    <button class="btn btn-primary pull-right" ng:click="changePassword()">
+        <span translate>Change password</span>
+    </button>
+    
+    <div ng:show="user != null">
+
+        <h4 translate>Hello {{user.givenName}} {{user.sn}},</h4>
+
+        <div ng:show="user.sophomorixRole == 'teacher'">
+            <h4 translate>use the sidebar to navigate through the options. You
+                can start by using the Groupmembership module to subscribe to your classes.</h4>
+        </div>
+        <div ng:show="user.sophomorixRole == 'globaladministrator' || user.sophomorixRole == 'schooladministrator'">
+            <h4 translate>Use the sidebar to navigate through the options.<br />
+                But keep in mind:<br />
+                With great power comes great responsibility!</h4>
+        </div>
+    </div>
+    
+    <h3 translate>Quotas</h3>
+
+    <div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="widget-header" translate>
+                    Total
+                </div>
+                <smart-progress value="usage" max="100"></smart-progress>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="widget-value">
+                     {{used}} MiB / {{total}} MiB
+                    <sup ng:show="usage > 80">
+                        <span class="label label-danger">
+                            <i class="fa fa-warning"></i>
+                        </span>
+                    </sup>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

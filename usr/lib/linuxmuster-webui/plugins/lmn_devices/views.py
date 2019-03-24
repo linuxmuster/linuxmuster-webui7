@@ -1,13 +1,11 @@
 import csv
 import subprocess
-import os
 
 from jadi import component
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
 from aj.plugins.lmn_common.api import CSVSpaceStripper
 from aj.plugins.lmn_common.api import lmn_backup_file
-from aj.plugins.lmn_common.api import lmn_list_backup_file, lmn_restore_backup_file
 from aj.auth import authorize
 
 
@@ -60,31 +58,3 @@ class Handler(HttpPlugin):
             subprocess.check_call('linuxmuster-import-devices > /tmp/import_devices.log', shell=True)
         except Exception as e:
             raise EndpointError(None, message=str(e))
-            
-    @url(r'/api/lm/devices-backup')
-    @authorize('lm:devices')
-    @endpoint(api=True)
-    def handle_api_devices_backup(self, http_context):
-        path = '/etc/linuxmuster/sophomorix/default-school/devices.csv'
-        return lmn_list_backup_file(path)
-        
-    @url(r'/api/lm/devices-restore')
-    @authorize('lm:devices')
-    @endpoint(api=True)
-    def handle_api_devices_restore(self, http_context):
-        if http_context.method == 'POST':
-            backupfile = '/etc/linuxmuster/sophomorix/default-school/' + http_context.json_body()['backupfile']
-            path = '/etc/linuxmuster/sophomorix/default-school/devices.csv'
-            return lmn_restore_backup_file(path, backupfile)
-
-    @url(r'/api/lm/remove-backup')
-    @authorize('lm:devices')
-    @endpoint(api=True)
-    def handle_api_remove_backup(self, http_context):
-        if http_context.method == 'POST':
-            backupfile = '/etc/linuxmuster/sophomorix/default-school/' + http_context.json_body()['backupfile']
-            if not os.path.exists(backupfile):
-                return
-            else:
-                os.unlink(backupfile)
-                return True

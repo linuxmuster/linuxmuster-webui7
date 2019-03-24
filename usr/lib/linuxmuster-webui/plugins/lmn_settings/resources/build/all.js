@@ -58,13 +58,12 @@
       $scope.encoding = encoding;
       return $scope.settings = resp.data;
     });
-    $http.get('/api/lm/schoolsettings/school-share').then(function(resp) {
-      return $scope.schoolShareEnabled = resp.data;
-    });
-    $scope.setSchoolShare = function(enabled) {
-      $scope.schoolShareEnabled = enabled;
-      return $http.post('/api/lm/schoolsettings/school-share', enabled);
-    };
+    // $http.get('/api/lm/schoolsettings/school-share').then (resp) ->
+    //     $scope.schoolShareEnabled = resp.data
+
+    // $scope.setSchoolShare = (enabled) ->
+    //     $scope.schoolShareEnabled = enabled
+    //     $http.post('/api/lm/schoolsettings/school-share', enabled)
     $scope.save = function() {
       return $http.post('/api/lm/schoolsettings', $scope.settings).then(function() {
         return notify.success(gettext('Saved'));

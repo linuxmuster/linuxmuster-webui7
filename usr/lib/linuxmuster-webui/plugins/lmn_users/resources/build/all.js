@@ -39,6 +39,12 @@
         fx: function(x) {
           return x.birthday;
         }
+      },
+      {
+        name: gettext('Student ID'),
+        fx: function(x) {
+          return x.id;
+        }
       }
     ];
     $scope.sort = $scope.sorts[0];
@@ -86,7 +92,7 @@
         student = ref[j];
         if (student['_isNew'] === true) {
           console.log(student);
-          fields = ["class", "last_name", "first_name", "birthday"];
+          fields = ["class", "last_name", "first_name", "birthday", "id"];
           i = 0;
           while (i < fields.length) {
             field = fields[i];

@@ -24,6 +24,10 @@ angular.module('lm.users').controller 'LMUsersStudentsListController', ($scope, 
             name: gettext('Birthday')
             fx: (x) -> x.birthday
         }
+        {
+            name: gettext('Student ID')
+            fx: (x) -> x.id
+        }
     ]
     $scope.sort = $scope.sorts[0]
     $scope.paging =
@@ -57,7 +61,7 @@ angular.module('lm.users').controller 'LMUsersStudentsListController', ($scope, 
         for student in $scope.students
             if student['_isNew'] is true
                 console.log (student)
-                fields = ["class","last_name","first_name","birthday"]
+                fields = ["class","last_name","first_name","birthday","id"]
                 i = 0
                 while i < fields.length
                   field = fields[i]

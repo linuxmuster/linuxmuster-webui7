@@ -5,10 +5,10 @@ angular.module('lm.devices').config ($routeProvider) ->
 
 
 angular.module('lm.devices').controller 'LMDevicesApplyModalController', ($scope, $http, $uibModalInstance, gettext, notify) ->
-    $scope.logVisible = false
+    $scope.logVisible = true
     $scope.isWorking = true
     $scope.showLog = () ->
-        $scope.logVisible = true
+        $scope.logVisible = !$scope.logVisible
 
     $http.get('/api/lm/devices/import').then (resp) ->
         $scope.isWorking = false

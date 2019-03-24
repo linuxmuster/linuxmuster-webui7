@@ -14,10 +14,10 @@
   });
 
   angular.module('lm.devices').controller('LMDevicesApplyModalController', function($scope, $http, $uibModalInstance, gettext, notify) {
-    $scope.logVisible = false;
+    $scope.logVisible = true;
     $scope.isWorking = true;
     $scope.showLog = function() {
-      return $scope.logVisible = true;
+      return $scope.logVisible = !$scope.logVisible;
     };
     $http.get('/api/lm/devices/import').then(function(resp) {
       $scope.isWorking = false;
@@ -48,7 +48,7 @@
     };
     $scope.isValidHost = function(hostname) {
       var regExp, validHostname;
-      regExp = /^[a-zA-Z0-9#+\-*]+$/; //# TODO : list of valid chars for sophomorix ? Also for group ?
+      regExp = /^[a-zA-Z0-9\-]+$/;
       validHostname = regExp.test(hostname);
       return validHostname;
     };

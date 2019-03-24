@@ -23,7 +23,7 @@ angular.module('lm.devices').controller 'LMDevicesApplyModalController', ($scope
 
 
 
-angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $uibModal, $route, $window, gettext, notify, pageTitle, lmFileEditor, lmFileBackups) ->
+angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $uibModal, $route, gettext, notify, pageTitle, lmFileEditor, lmFileBackups) ->
     pageTitle.set(gettext('Devices'))
 
     $scope.isValidMac = (mac) ->
@@ -76,8 +76,6 @@ angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $
         pageSize: 100
 
     $scope.stripComments = (value) -> !value.room or value.room[0] != '#'
-
-
 
     $scope.add = () ->
         if $scope.devices.length > 0
@@ -198,22 +196,4 @@ angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $
             $route.reload()
 
     $scope.backups = () ->
-        lmFileBackups.show($scope.path)
-        
-    $scope.activeTab = 0  
-    
-    $scope.loadBackupFiles = () ->
-        $http.get('/api/lm/devices-backup').then (resp) ->
-                $scope.backupfiles = resp.data
-
-    $scope.restorebackup = (backupfile) ->
-        $http.post('/api/lm/devices-restore', {backupfile: backupfile.path}).then (resp) -> 
-            notify.success('Backup file restored')
-            $window.location.reload()
-            
-    $scope.removebackup = (backupfile) ->
-        $http.post('/api/lm/remove-backup', {backupfile: backupfile.path}).then (resp) -> 
-            $scope.loadBackupFiles()
-            notify.success('Backup file removed')         
-            
-        
+        lmFileBackups.show($scope.path)        

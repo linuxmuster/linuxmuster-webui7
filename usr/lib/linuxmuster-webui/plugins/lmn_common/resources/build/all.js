@@ -59,14 +59,11 @@
               $scope.visibleContent = lines.join('\n');
             }
             if ($scope.autoscroll) {
-              $timeout(function() {
+              return $timeout(function() {
                 var e;
                 e = $(element).find('pre')[0];
                 return e.scrollTop = e.scrollHeight;
               });
-            }
-            if (/linuxmuster.+finished/.test($scope.content)) {
-              return $interval.cancel(i);
             }
           });
         }, 1000);

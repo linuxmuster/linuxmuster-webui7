@@ -143,9 +143,18 @@
                 <label translate>Initrd</label>
                 <input type="text" ng:model="os.Initrd" class="form-control" />
             </div>
-            <div class="form-group" ng:show="showAdvanced" ng:show="showAdvanced">
+            <div class="form-group" ng:show="showAdvanced">
                 <label translate>Additional kernel parameters</label>
                 <input type="text" ng:model="os.Append" class="form-control" />
+            </div>
+            <div class="form-group" ng:show="showAdvanced">
+                <label translate>Restore Opsi state</label>
+                <br/>
+                <span checkbox ng:model="os.RestoreOpsiState" text="Restore Opsi state"></span>
+            </div>
+            <div class="form-group" ng:show="showAdvanced">
+                <label translate>Force Opsi setup</label>
+                <input type="text" ng:model="os.ForceOpsiSetup" class="form-control" />
             </div>
             <div class="form-group" ng:show="showAdvanced">
                 <label translate>Options</label>

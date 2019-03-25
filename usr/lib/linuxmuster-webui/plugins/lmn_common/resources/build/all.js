@@ -320,13 +320,21 @@
         });
       });
     };
+    $scope.findbackup = function(name) {
+      return function(dict) {
+        return dict.name === name;
+      };
+    };
     $scope.onlyremove = function(backup) {
       return $http.post('/api/lm/remove-file', {
         filepath: backup.name
       }).then(function(resp) {
-        return $scope.loadBackupFiles(); //# TODO : not really good, better only delete backup from the array $scope.backups
+        var pos;
+        pos = $scope.findIndex($scope.findbackup(backupname));
+        return delete $scope.backups[pos];
       });
     };
+    //$scope.loadBackupFiles() ## TODO : not really good, better only delete backup from the array $scope.backups
     $scope.removeUI = function(backup) {
       var content;
       $uibModalInstance.close();

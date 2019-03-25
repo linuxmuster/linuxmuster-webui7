@@ -334,7 +334,6 @@
         return delete $scope.backups[pos];
       });
     };
-    //$scope.loadBackupFiles() ## TODO : not really good, better only delete backup from the array $scope.backups
     $scope.removeUI = function(backup) {
       var content;
       $uibModalInstance.close();

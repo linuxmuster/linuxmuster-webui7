@@ -37,10 +37,15 @@ angular.module('lm.common').controller 'lmFileBackupsModalController', ($scope, 
                 notify.success('Backup file restored')
                 $uibModalInstance.close()
                 $route.reload()
-                
+    
+    $scope.findbackup = (name) ->
+        return (dict) ->
+            dict.name == name
+    
     $scope.onlyremove = (backup) ->
         $http.post('/api/lm/remove-file', {filepath: backup.name}).then (resp) -> 
-            $scope.loadBackupFiles() ## TODO : not really good, better only delete backup from the array $scope.backups
+            pos = $scope.findIndex($scope.findbackup(backupname))
+            delete $scope.backups[pos]
 
     $scope.removeUI = (backup) ->
         $uibModalInstance.close()

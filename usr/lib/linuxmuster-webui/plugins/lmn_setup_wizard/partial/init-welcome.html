@@ -9,7 +9,7 @@
         </p>
         <div class="form-group">
             <label translate>System language</label>
-            <select class="form-control" ng:model="$ctrl.config.data.language" ng:options="x as x for x in $ctrl.languages"></select>
+            <select class="form-control" ng:change="$ctrl.updateLanguage()" ng:model="$ctrl.config.data.language" ng:options="x as x for x in $ctrl.languages"></select>
         </div>
         <div style="height: 200px; overflow: auto;">
             <h3 style="text-align: center;">GNU GENERAL PUBLIC LICENSE</h3>

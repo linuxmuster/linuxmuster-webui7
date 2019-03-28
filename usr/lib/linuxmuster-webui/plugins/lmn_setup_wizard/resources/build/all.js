@@ -61,7 +61,7 @@ angular.module('lm.setup_wizard').config(function ($routeProvider) {
     });
 });
 
-angular.module('lm.setup_wizard').controller('InitWelcomeController', function (gettext, pageTitle, $http, config, $location, notify) {
+angular.module('lm.setup_wizard').controller('InitWelcomeController', function (gettext, pageTitle, $http, $route, locale, config, $location, notify) {
     var _this = this;
 
     pageTitle.set(gettext('Setup Wizard'));
@@ -70,6 +70,11 @@ angular.module('lm.setup_wizard').controller('InitWelcomeController', function (
     $http.get('/api/core/languages').then(function (response) {
         return _this.languages = response.data;
     });
+
+    this.updateLanguage = function () {
+        locale.setLanguage(_this.config.data.language);
+        $route.reload();
+    };
 
     this.apply = async function () {
         if (!_this.licenseAccepted) {

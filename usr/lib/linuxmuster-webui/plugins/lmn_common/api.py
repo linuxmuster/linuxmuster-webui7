@@ -47,7 +47,11 @@ class CSVSpaceStripper:
         return self
 
     def next(self):
-        return self.f.next().decode(encoding='utf-8', errors='ignore').strip()
+        ## Ignore comments
+        nextline = self.f.next()
+        while nextline.startswith('#'):
+            nextline = self.f.next()
+        return nextline.decode(encoding='utf-8', errors='ignore').strip()
         # return self.f.next().decode(self.encoding, errors='ignore').strip()
 
 

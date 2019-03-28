@@ -7,6 +7,9 @@
     </div>
     <div class="list-group">
         <div class="list-group-item list-group-item-small" ng:repeat="backup in backups|orderBy:'-date'">
+            <a class="list-group-btn" ng:click="removeUI(backup)">
+                <i class="fa fa-trash-o"></i>
+            </a>
             <a class="list-group-btn" ng:click="restore(backup)">
                 <i class="fa fa-history"></i>
             </a>

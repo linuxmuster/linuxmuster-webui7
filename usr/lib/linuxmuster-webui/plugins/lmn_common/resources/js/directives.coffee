@@ -37,9 +37,7 @@ angular.module('lm.common').directive 'lmLog', ($http, $interval, $timeout) ->
                         $timeout () ->
                             e = $(element).find('pre')[0]
                             e.scrollTop = e.scrollHeight
-                    
-                    if /linuxmuster.+finished/.test($scope.content)
-                        $interval.cancel(i)
+
             , 1000
 
             $scope.$on '$destroy', () ->

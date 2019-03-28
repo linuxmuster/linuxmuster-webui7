@@ -14,10 +14,10 @@
   });
 
   angular.module('lm.devices').controller('LMDevicesApplyModalController', function($scope, $http, $uibModalInstance, gettext, notify) {
-    $scope.logVisible = false;
+    $scope.logVisible = true;
     $scope.isWorking = true;
     $scope.showLog = function() {
-      return $scope.logVisible = true;
+      return $scope.logVisible = !$scope.logVisible;
     };
     $http.get('/api/lm/devices/import').then(function(resp) {
       $scope.isWorking = false;
@@ -32,24 +32,29 @@
     };
   });
 
-  angular.module('lm.devices').controller('LMDevicesController', function($scope, $http, $uibModal, $route, $window, gettext, notify, pageTitle, lmFileEditor, lmFileBackups) {
+  angular.module('lm.devices').controller('LMDevicesController', function($scope, $http, $uibModal, $route, gettext, notify, pageTitle, lmFileEditor, lmFileBackups) {
     pageTitle.set(gettext('Devices'));
+    $scope.findval = function(attr, val) {
+      return function(dict) {
+        return dict[attr] === val;
+      };
+    };
     $scope.isValidMac = function(mac) {
       var regExp, validMac;
       regExp = /^([0-9A-Fa-f]{2}[:]){5}([0-9A-Fa-f]{2})$/;
-      validMac = regExp.test(mac);
+      validMac = regExp.test(mac) && ($scope.devices.filter($scope.findval('mac', mac)).length < 2);
       return validMac;
     };
     $scope.isValidIP = function(ip) {
       var regExp, validIP;
       regExp = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/; //# TODO all IPs allowed, and 010.1.1.1
-      validIP = regExp.test(ip);
+      validIP = regExp.test(ip) && ($scope.devices.filter($scope.findval('ip', ip)).length < 2);
       return validIP;
     };
     $scope.isValidHost = function(hostname) {
       var regExp, validHostname;
-      regExp = /^[a-zA-Z0-9#+\-*]+$/; //# TODO : list of valid chars for sophomorix ? Also for group ?
-      validHostname = regExp.test(hostname);
+      regExp = /^[a-zA-Z0-9\-]+$/;
+      validHostname = regExp.test(hostname) && ($scope.devices.filter($scope.findval('hostname', hostname)).length < 2);
       return validHostname;
     };
     $scope.isValidRoom = function(room) {
@@ -236,30 +241,8 @@
         return $route.reload();
       });
     };
-    $scope.backups = function() {
+    return $scope.backups = function() {
       return lmFileBackups.show($scope.path);
-    };
-    $scope.activeTab = 0;
-    $scope.loadBackupFiles = function() {
-      return $http.get('/api/lm/devices-backup').then(function(resp) {
-        return $scope.backupfiles = resp.data;
-      });
-    };
-    $scope.restorebackup = function(backupfile) {
-      return $http.post('/api/lm/devices-restore', {
-        backupfile: backupfile.path
-      }).then(function(resp) {
-        notify.success('Backup file restored');
-        return $window.location.reload();
-      });
-    };
-    return $scope.removebackup = function(backupfile) {
-      return $http.post('/api/lm/remove-backup', {
-        backupfile: backupfile.path
-      }).then(function(resp) {
-        $scope.loadBackupFiles();
-        return notify.success('Backup file removed');
-      });
     };
   });
 

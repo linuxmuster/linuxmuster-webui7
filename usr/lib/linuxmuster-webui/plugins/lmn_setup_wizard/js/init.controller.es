@@ -43,12 +43,17 @@ angular.module('lm.setup_wizard').config(function($routeProvider) {
 })
 
 
-angular.module('lm.setup_wizard').controller('InitWelcomeController', function (gettext, pageTitle, $http, config, $location, notify) {
+angular.module('lm.setup_wizard').controller('InitWelcomeController', function (gettext, pageTitle, $http, $route, locale, config, $location, notify) {
     pageTitle.set(gettext('Setup Wizard'))
     this.config = config
     console.log (config)
     $http.get('/api/core/languages').then(response => this.languages = response.data)
-
+    
+    this.updateLanguage = () => {
+        locale.setLanguage(this.config.data.language);
+        $route.reload();
+    }
+    
     this.apply = async () => {
         if (!this.licenseAccepted) {
             notify.error('Please accept the license !')

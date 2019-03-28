@@ -59,14 +59,11 @@
               $scope.visibleContent = lines.join('\n');
             }
             if ($scope.autoscroll) {
-              $timeout(function() {
+              return $timeout(function() {
                 var e;
                 e = $(element).find('pre')[0];
                 return e.scrollTop = e.scrollHeight;
               });
-            }
-            if (/linuxmuster.+finished/.test($scope.content)) {
-              return $interval.cancel(i);
             }
           });
         }, 1000);
@@ -283,36 +280,70 @@
     return this;
   });
 
-  angular.module('lm.common').controller('lmFileBackupsModalController', function($scope, $uibModalInstance, $route, filesystem, path, encoding) {
+  angular.module('lm.common').controller('lmFileBackupsModalController', function($scope, $uibModalInstance, $route, $http, gettext, notify, filesystem, path, encoding, messagebox, lmFileBackups) {
     var dir, name;
     $scope.path = path;
     dir = path.substring(0, path.lastIndexOf('/'));
     name = path.substring(path.lastIndexOf('/') + 1);
-    filesystem.list(dir).then(function(data) {
-      var i, item, len, ref, results, tokens;
-      $scope.backups = [];
-      ref = data.items;
-      results = [];
-      for (i = 0, len = ref.length; i < len; i++) {
-        item = ref[i];
-        if (item.name.startsWith('.' + name + '.bak.')) {
-          tokens = item.name.split('.');
-          results.push($scope.backups.push({
-            name: item.name,
-            date: new Date(1000 * parseInt(tokens[tokens.length - 1]))
-          }));
-        } else {
-          results.push(void 0);
+    $scope.loadBackupFiles = function() {
+      return filesystem.list(dir).then(function(data) {
+        var i, item, len, ref, results, tokens;
+        $scope.backups = [];
+        ref = data.items;
+        results = [];
+        for (i = 0, len = ref.length; i < len; i++) {
+          item = ref[i];
+          if (item.name.startsWith('.' + name + '.bak.')) {
+            tokens = item.name.split('.');
+            results.push($scope.backups.push({
+              name: item.name,
+              date: new Date(1000 * parseInt(tokens[tokens.length - 1]))
+            }));
+          } else {
+            results.push(void 0);
+          }
         }
-      }
-      return results;
-    });
+        return results;
+      });
+    };
+    $scope.loadBackupFiles();
     $scope.restore = function(backup) {
       return filesystem.read(dir + '/' + backup.name, encoding).then(function(content) {
         return filesystem.write(path, content, encoding).then(function() {
+          $scope.onlyremove(backup);
+          notify.success('Backup file restored');
           $uibModalInstance.close();
           return $route.reload();
         });
+      });
+    };
+    $scope.findbackup = function(name) {
+      return function(dict) {
+        return dict.name === name;
+      };
+    };
+    $scope.onlyremove = function(backup) {
+      return $http.post('/api/lm/remove-file', {
+        filepath: backup.name
+      }).then(function(resp) {
+        var pos;
+        pos = $scope.findIndex($scope.findbackup(backupname));
+        return delete $scope.backups[pos];
+      });
+    };
+    $scope.removeUI = function(backup) {
+      var content;
+      $uibModalInstance.close();
+      content = gettext('Do you really want to delete') + backup.name + ' ?';
+      return messagebox.show({
+        title: gettext('Confirmation'),
+        text: content,
+        positive: 'OK',
+        negative: gettext('Cancel')
+      }).then(function() {
+        $scope.onlyremove(backup);
+        notify.success('Backup file removed');
+        return lmFileBackups.show($scope.path);
       });
     };
     return $scope.cancel = function() {

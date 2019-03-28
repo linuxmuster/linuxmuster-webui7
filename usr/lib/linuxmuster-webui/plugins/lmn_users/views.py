@@ -29,6 +29,7 @@ class Handler(HttpPlugin):
             'last_name',
             'first_name',
             'birthday',
+            'id'
         ]
         if http_context.method == 'GET':
             with authorize('lm:users:students:read'):

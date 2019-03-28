@@ -1,9 +1,0 @@
-linuxmuster:
-  initialized: false
-  is-configured: false
-  ldap:
-    binddn: %%BINDUSER%%
-    bindpw: %%BINDPW%%
-    host: %%SERVERNAME%%
-    searchdn: %%BASEDN%%
-  provision: false

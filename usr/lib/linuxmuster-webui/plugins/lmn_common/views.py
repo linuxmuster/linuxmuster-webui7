@@ -29,3 +29,24 @@ class Handler(HttpPlugin):
             else:
                 os.unlink(filepath)
                 return True
+                
+    @url(r'/api/lm/read-config-setup') ## TODO authorize
+    @endpoint(api=True)
+    def handle_api_read_setup_ini(self, http_context):
+        path = '/var/lib/linuxmuster/setup.ini'
+        if http_context.method == 'GET':
+            config = {}
+            for line in open(path):
+                line = line.decode('utf-8', errors='ignore')
+                line = line.split('#')[0].strip()
+
+                if line.startswith('['):
+                    section = {}
+                    section_name = line.strip('[]')
+                    if section_name == 'setup':
+                        config['setup'] = section
+                elif '=' in line:
+                    k, v = line.split('=', 1)
+                    v = v.strip()
+                    section[k.strip()] = v
+            return config

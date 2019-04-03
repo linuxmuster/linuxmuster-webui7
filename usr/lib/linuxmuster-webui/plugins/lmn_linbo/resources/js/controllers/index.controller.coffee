@@ -476,8 +476,10 @@ angular.module('lm.linbo').controller 'LMLINBOController', ($scope, $http, $uibM
                 if example
                     $http.get("/api/lm/linbo/config/examples/#{example}").then (resp) ->
                         resp.data['config']['LINBO']['Group'] = newName
-                        $http.post("/api/lm/linbo/config/start.conf.#{newName}", resp.data).then () ->
-                            $route.reload()
+                        $http.get("/api/lm/read-config-setup").then (setup) ->
+                            resp.data['config']['LINBO']['Server'] = setup.data['setup']['serverip']
+                            $http.post("/api/lm/linbo/config/start.conf.#{newName}", resp.data).then () ->
+                                $route.reload()
                 else
                     $http.post("/api/lm/linbo/config/start.conf.#{newName}", {
                         config:

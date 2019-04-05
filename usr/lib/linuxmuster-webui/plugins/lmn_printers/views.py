@@ -16,29 +16,30 @@ class Handler(HttpPlugin):
     @authorize('lm:printers')
     @endpoint(api=True)
     def handle_api_printers(self, http_context):
-        access_path = '/etc/cups/access.conf'
         printers_path = '/etc/cups/printers.conf'
         if http_context.method == 'GET':
             result = []
             found_names = []
-            for line in open(access_path):
-                if line.startswith('<Location'):
-                    printer = {
-                        'name': line.split()[-1].rstrip(' >').split('/')[-1],
-                        'items': []
-                    }
-                    found_names.append(printer['name'])
-                    result.append(printer)
-                if line.strip().startswith('Allow From'):
-                    printer['items'].append(line.strip().split()[-1])
+            # for line in open(access_path):
+                # if line.startswith('<Location'):
+                    # printer = {
+                        # 'name': line.split()[-1].rstrip(' >').split('/')[-1],
+                        # 'items': []
+                    # }
+                    # found_names.append(printer['name'])
+                    # result.append(printer)
+                # if line.strip().startswith('Allow From'):
+                    # printer['items'].append(line.strip().split()[-1])
             for line in open(printers_path):
-                if line.startswith('<Printer'):
+                if line.startswith('<Printer') or line.startswith('<DefaultPrinter'):
                     printer = {
                         'name': line.split()[-1].rstrip(' >').split('/')[-1],
                         'items': []
                     }
                     if printer['name'] not in found_names:
                         result.append(printer)
+                if line.strip().startswith('Allow From'):
+                    printer['items'].append(line.strip().split()[-1])
             return result
         if http_context.method == 'POST':
             content = ''
@@ -58,6 +59,6 @@ class Handler(HttpPlugin):
 
                 content += '</Location>\n'
 
-            lmn_backup_file(access_path)
-            with open(access_path, 'w') as f:
-                f.write(content)
+            # lmn_backup_file(access_path)
+            # with open(access_path, 'w') as f:
+                # f.write(content)

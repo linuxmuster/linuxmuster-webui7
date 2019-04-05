@@ -25,7 +25,7 @@ angular.module('lm.printers').controller 'LMPrintersModalController', ($scope, $
 angular.module('lm.printers').controller 'LMPrintersController', ($scope, $http, $uibModal, $log, gettext, notify, pageTitle, lmFileBackups) ->
     pageTitle.set(gettext('Printers'))
 
-    $http.get('/api/lm/workstations').then (resp) ->
+    $http.get('/api/lm/devices').then (resp) ->
         $scope.workstationIPs = {}
         $scope.roomSubnets = {}
 

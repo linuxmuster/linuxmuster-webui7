@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-08 10:36+0200\n"
-"PO-Revision-Date: 2019-04-08 09:07\n"
+"PO-Revision-Date: 2019-04-08 10:09\n"
 "Last-Translator: kiarn <lml@kientz.me>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -81,11 +81,11 @@ msgstr "Limit"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:103
 msgid "Quota Default Global in MiB"
-msgstr "Standardlimit (global) in MiB"
+msgstr "Standardquota (global) in MiB"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:117
 msgid "Quota Default School in MiB"
-msgstr "Standardlimit (Schule) in MiB"
+msgstr "Standardquota (Schule) in MiB"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:35
 msgid "Random password"

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-08 10:36+0200\n"
-"PO-Revision-Date: 2019-04-08 09:07\n"
+"PO-Revision-Date: 2019-04-08 10:09\n"
 "Last-Translator: kiarn <lml@kientz.me>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -160,7 +160,7 @@ msgstr "Dateien freigeben"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/selectFile.modal.html:12
 msgid "Share files with session"
-msgstr "Dateien mit Sitzung freigeben"
+msgstr "Dateien mit Kurs freigeben"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:150
 msgid "Show initial password"
@@ -185,7 +185,7 @@ msgstr "{{info.message}}"
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/main.py:15
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:47
 msgid "Session"
-msgstr "Sitzung"
+msgstr "Kurs"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/main.py:22
 msgid "Print Passwords"
@@ -197,7 +197,7 @@ msgstr "Schreibe Schüler"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/main.py:41
 msgid "Transfer Files in Session"
-msgstr "Dateien in der Sitzung übertragen"
+msgstr "Dateien in dem Kurs übertragen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:56
 msgid "Lastname"
@@ -258,16 +258,16 @@ msgstr "Drucken"
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:195
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:239
 msgid "No Session selected"
-msgstr "Keine Sitzung ausgewählt"
+msgstr "Kein Kurs ausgewählt"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:195
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:239
 msgid "You have to select a session first."
-msgstr "Sie müssen zuerst eine Sitzung auswählen."
+msgstr "Sie müssen zuerst einen Kurs auswählen."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:199
 msgid "Session Deleted"
-msgstr "Sitzung gelöscht"
+msgstr "Kurs gelöscht"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:210
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:241
@@ -276,7 +276,7 @@ msgstr "Kursname"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:216
 msgid "Session Created"
-msgstr "Sitzung erstellt"
+msgstr "Kurs erstellt"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:229
 msgid "There are no sessions yet. Create a session using the \"Edit Sessions\" button at the top!"
@@ -284,11 +284,11 @@ msgstr "Es gibt noch keinen Kurs. Erstellen Sie einen Kurs mit dem Button \"Neue
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:251
 msgid "Session Renamed"
-msgstr "Sitzung umbenannt"
+msgstr "Kurs umbenannt"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:267
 msgid "This session appears to be empty. Start adding users by using the top search bar!"
-msgstr "Diese Sitzung scheint leer zu sein. Starten Sie das Hinzufügen von Benutzern durch die Suchleiste oben!"
+msgstr "Dieser Kurs scheint leer zu sein. Starten Sie das Hinzufügen von Benutzern durch die Suchleiste oben!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:379
 msgid "Initial password"

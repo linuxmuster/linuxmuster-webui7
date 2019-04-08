@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-08 10:36+0200\n"
-"PO-Revision-Date: 2019-04-08 09:07\n"
+"PO-Revision-Date: 2019-04-08 10:09\n"
 "Last-Translator: kiarn <lml@kientz.me>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -69,7 +69,7 @@ msgstr "Projekte"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:18
 msgid "Quota Default Global in MiB"
-msgstr "Standardlimit (global) in MiB"
+msgstr "Standardquota (global) in MiB"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:32
 msgid "Quota Default School in MiB"

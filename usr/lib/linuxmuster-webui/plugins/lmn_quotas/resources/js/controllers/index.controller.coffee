@@ -30,23 +30,23 @@ angular.module('lm.quotas').controller 'LMQuotasController', ($scope, $http, $ui
     $scope._ =
         addNewSpecial: null
 
-    $http.get('/api/lm/settings').then (resp) ->
-        $scope.teachersEncoding = lmEncodingMap[resp.data.encoding_teachers] or 'ISO8859-1'
-        $http.get("/api/lm/users/teachers?encoding=#{$scope.teachersEncoding}").then (resp) ->
-            $scope.teachers = resp.data
-            for teacher in $scope.teachers
-                q = teacher.quota.split('+')
-                teacher.quota =
-                    home: parseInt(q[0])
-                    var: parseInt(q[1])
-                teacher.mailquota = parseInt(teacher.mailquota)
+    #$http.get("/api/lm/users/teachers-list").then (resp) ->
+        #$scope.teachers = resp.data
+        #for teacher in $scope.teachers
+            #teacher.quota = parseInt(teacher.quota)
+            #teacher.mailquota = parseInt(teacher.mailquota)
 
-    $http.get('/api/lm/settings').then (resp) ->
-        if not resp.data.use_quota
-            $location.path('/view/lm/quotas-disabled')
+    #$http.get('/api/lm/settings').then (resp) ->
+        #if not resp.data.use_quota
+            #$location.path('/view/lm/quotas-disabled')
+            
+    $http.get('/api/lm/schoolsettings').then (resp) ->
+        school = 'default-school'
+        $scope.settings = resp.data
 
     $http.get('/api/lm/quotas').then (resp) ->
-        $scope.quotas = resp.data
+        $scope.quotas = resp.data[0]
+        $scope.teachers = resp.data[1]
         $scope.standardQuota = $scope.quotas['standard-lehrer']
 
     $http.get('/api/lm/class-quotas').then (resp) ->
@@ -85,17 +85,17 @@ angular.module('lm.quotas').controller 'LMQuotasController', ($scope, $http, $ui
     $scope.isDefaultQuota = (login) ->
         return login in (x.login for x in $scope.defaultQuotas)
 
-    $scope.studentNameCache = {}
+    $scope.NameCache = {}
 
-    $scope.getStudentName = (login) ->
-        if not angular.isDefined($scope.studentNameCache[login])
-            $scope.studentNameCache[login] = '...'
+    $scope.getName = (login) ->
+        if not angular.isDefined($scope.NameCache[login])
+            $scope.NameCache[login] = '...'
             $http.get("/api/lm/ldap-search?q=#{login}").then (resp) ->
                 if resp.data.length > 0
-                    $scope.studentNameCache[login] = resp.data[0][1].cn[0]
+                    $scope.NameCache[login] = resp.data[0][1].sn[0] + " " + resp.data[0][1].givenName[0]
                 else
-                    $scope.studentNameCache[login] = login
-        return $scope.studentNameCache[login]
+                    $scope.NameCache[login] = login
+        return $scope.NameCache[login]
 
     $scope.remove = (login) ->
         delete $scope.quotas[login]

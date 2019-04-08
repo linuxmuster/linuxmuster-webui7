@@ -8,24 +8,65 @@
             <br/>
             <table class="lm-table lm-table-padded">
                 <tr>
-                    <th translate>Name</th>
-                    <th>/home</th>
-                    <th>/var</th>
-                    <th translate>Mail</th>
-                    <th></th>
+                    <th width="40%"></th>
+                    <th translate>Students</th>
+                    <th translate>Teachers</th>
+                    <th translate>Schooladministrator</th>
                 </tr>
-                <tr ng:repeat="quota in defaultQuotas">
+                <tr>
                     <td>
-                        {{quota.name}}
+                        <label translate>Quota Default Global in MiB</label>
                     </td>
                     <td>
-                        <input type="number" ng:model="quotas[quota.login].home" class="form-control" />
+                        <input type="number" class="form-control" ng:model="settings['role.student']['quota_default_global']" />
                     </td>
                     <td>
-                        <input type="number" ng:model="quotas[quota.login].var" class="form-control" />
+                        <input type="number" class="form-control" ng:model="settings['role.teacher']['quota_default_global']" />
                     </td>
                     <td>
-                        <input type="number" ng:model="quotas[quota.login].mail" class="form-control" />
+                        <input type="number" class="form-control" ng:model="settings['role.schooladministrator']['quota_default_global']" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label translate>Quota Default School in MiB</label>
+                    </td>
+                    <td>
+                        <input type="number" class="form-control" ng:model="settings['role.student']['quota_default_school']" />
+                    </td>
+                    <td>
+                        <input type="number" class="form-control" ng:model="settings['role.teacher']['quota_default_school']" />
+                    </td>
+                    <td>
+                        <input type="number" class="form-control" ng:model="settings['role.schooladministrator']['quota_default_school']" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label translate>Cloudquota Percentage</label>
+                    </td>
+                    <td>
+                        <input type="number" class="form-control" ng:model="settings['role.student']['cloudquota_percentage']" />
+                    </td>
+                    <td>
+                        <input type="number" class="form-control" ng:model="settings['role.teacher']['cloudquota_percentage']" />
+                    </td>
+                    <td>
+                        <input type="number" class="form-control" ng:model="settings['role.schooladministrator']['cloudquota_percentage']" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label translate>Mailquota Default in MiB</label>
+                    </td>
+                    <td>
+                        <input type="number" class="form-control" ng:model="settings['role.student']['mailquota_default']" />
+                    </td>
+                    <td>
+                        <input type="number" class="form-control" ng:model="settings['role.teacher']['mailquota_default']" />
+                    </td>
+                    <td>
+                        <input type="number" class="form-control" ng:model="settings['role.schooladministrator']['mailquota_default']" />
                     </td>
                 </tr>
             </table>
@@ -35,22 +76,26 @@
             <table class="lm-table lm-table-padded">
                 <tr>
                     <th translate>Name</th>
-                    <th>/home</th>
-                    <th>/var</th>
+                    <th>Default</th>
+                    <th>Global</th>
+                    <th>Cloud</th>
                     <th translate>Mail</th>
                 </tr>
-                <tr ng:repeat="teacher in teachers">
+                <tr ng:repeat="(login,teacher) in teachers">
                     <td>
-                        {{teacher.first_name}} {{teacher.last_name}}
+                        {{getName(login)}}
                     </td>
                     <td>
-                        <input type="number" ng:model="teacher.quota.home" class="form-control" />
+                        <input type="number" ng:model="teacher.DEFLT" class="form-control" />
                     </td>
                     <td>
-                        <input type="number" ng:model="teacher.quota.var" class="form-control" />
+                        <input type="number" ng:model="teacher.GLOBAL" class="form-control" />
                     </td>
                     <td>
-                        <input type="number" ng:model="teacher.mailquota" class="form-control" />
+                        <input type="number" ng:model="teacher.CQ" class="form-control" />
+                    </td>
+                    <td>
+                        <input type="number" ng:model="teacher.MQ" class="form-control" />
                     </td>
                 </tr>
             </table>
@@ -61,26 +106,29 @@
                 <tr>
                     <th translate>Login</th>
                     <th translate>Name</th>
-                    <th>/home</th>
-                    <th>/var</th>
+                    <th>Default</th>
+                    <th>Global</th>
+                    <th>Cloud</th>
                     <th translate>Mail</th>
-                    <th></th>
                 </tr>
                 <tr ng:repeat="(login, quota) in quotas" ng:if="!isSpecialQuota(login) && !isDefaultQuota(login)">
                     <td>
                         {{login}}
                     </td>
                     <td>
-                        {{getStudentName(login)}}
+                        {{getName(login)}}
                     </td>
                     <td>
-                        <input type="number" ng:model="quota.home" class="form-control" />
+                        <input type="number" ng:model="quota.DEFLT" class="form-control" />
                     </td>
                     <td>
-                        <input type="number" ng:model="quota.var" class="form-control" />
+                        <input type="number" ng:model="quota.GLOBAL" class="form-control" />
                     </td>
                     <td>
-                        <input type="number" ng:model="quota.mail" class="form-control" />
+                        <input type="number" ng:model="quota.CQ" class="form-control" />
+                    </td>
+                    <td>
+                        <input type="number" ng:model="quota.MQ" class="form-control" />
                     </td>
                     <td>
                         <button class="btn btn-default" ng:click="remove(login)">
@@ -96,8 +144,7 @@
             <table class="lm-table lm-table-padded">
                 <tr>
                     <th translate>Name</th>
-                    <th>/home</th>
-                    <th>/var</th>
+                    <th>Default</th>
                     <th translate>Mail</th>
                 </tr>
                 <tr ng:repeat="class in classes">
@@ -105,10 +152,7 @@
                         {{class.name}}
                     </td>
                     <td>
-                        <input type="number" ng:model="class.quota.home" class="form-control" />
-                    </td>
-                    <td>
-                        <input type="number" ng:model="class.quota.var" class="form-control" />
+                        <input type="number" ng:model="class.quota" class="form-control" />
                     </td>
                     <td>
                         <input type="number" ng:model="class.mailquota" class="form-control" />
@@ -121,18 +165,18 @@
             <table class="lm-table lm-table-padded">
                 <tr>
                     <th translate>Name</th>
-                    <th>/home</th>
-                    <th>/var</th>
+                    <th>Default</th>
+                    <th>Mail</th>
                 </tr>
                 <tr ng:repeat="project in projects">
                     <td>
                         {{project.name}}
                     </td>
                     <td>
-                        <input type="number" ng:model="project.quota.home" class="form-control" />
+                        <input type="number" ng:model="project.quota" class="form-control" />
                     </td>
                     <td>
-                        <input type="number" ng:model="project.quota.var" class="form-control" />
+                        <input type="number" ng:model="project.mailquota" class="form-control" />
                     </td>
                 </tr>
             </table>
@@ -168,8 +212,10 @@
     <div class="floating-toolbar-padder"></div>
 
     <floating-toolbar>
+<!--
         <button ng:click="backups()" class="btn btn-default btn-flat pull-right"><i class="fa fa-history"></i></button>
+
         <button ng:click="save()" class="btn btn-default btn-flat" translate>Save</button>
-        <button ng:click="saveApply()" class="btn btn-default btn-flat" translate>Save & apply</button>
+        <button ng:click="saveApply()" class="btn btn-default btn-flat" translate>Save & apply</button>-->
     </floating-toolbar>
 </div>

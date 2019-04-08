@@ -6,7 +6,7 @@ import aj
 from aj.api.http import url, HttpPlugin
 from aj.auth import authorize
 from aj.api.endpoint import endpoint, EndpointError
-from aj.plugins.lmn_common.api import lmn_backup_file, lmconfig
+from aj.plugins.lmn_common.api import lmn_backup_file, lmconfig, lmn_getSophomorixValue
 
 # Fix user quota : 
     # sophomorix-user --quota linuxmuster-global:500:bla -u de
@@ -23,27 +23,26 @@ class Handler(HttpPlugin):
     @authorize('lm:quotas:configure')
     @endpoint(api=True)
     def handle_api_quotas(self, http_context):
-        path = '/etc/linuxmuster/sophomorix/quota.txt' ## TODO DELETE
-        mpath = '/etc/linuxmuster/sophomorix/mailquota.txt'
         if http_context.method == 'GET':
-            r = {}
-
-            for line in open(path):
-                if ':' in line and not line.startswith('#'):
-                    k, v = line.split(':', 1)
-                    r[k.strip()] = {
-                        'home': int(v.split('+')[0].strip()),
-                        'var': int(v.split('+')[1].strip()),
-                    }
-
-            for line in open(mpath):
-                if ':' in line and not line.startswith('#'):
-                    k, v = line.split(':', 1)
-                    k = k.strip()
-                    if k in r:
-                        r[k]['mail'] = int(v.strip())
-
-            return r
+            lines = subprocess.check_output(['sophomorix-quota', '-i']).splitlines()
+            lines = [l for l in lines if l.startswith("|")]
+            lines = lines[1:]
+            quotas = [{}, {}] # Students, teachers
+            for line in lines:
+                name       = line.split('|')[1].strip().split('(')[0]
+                quota_type = line.split('|')[2].strip().strip("*")
+                value      = int(line.split('|')[3].strip()) ## TEST INT
+                if 'teacher' in line:
+                    if name not in quotas[1]:
+                        quotas[1][name] = {}
+                    
+                    quotas[1][name][quota_type] = value
+                else:
+                    if name not in quotas[0]:
+                        quotas[0][name] = {}
+                    
+                    quotas[0][name][quota_type] = value
+            return quotas
         if http_context.method == 'POST':
             lmn_backup_file(path)
             with open(path, 'w') as f:
@@ -69,16 +68,13 @@ class Handler(HttpPlugin):
     def handle_api_class_quotas(self, http_context):
         if http_context.method == 'GET':
             lines = subprocess.check_output(['sophomorix-class', '-i']).splitlines()
-            lines = filter(None, lines)
-            lines = lines[3:-2]
+            lines = [l for l in lines if l.startswith("|")]
+            lines = lines[1:-1]
             return [
                 {
-                    'name': line.split('|')[0].strip(),
-                    'quota': {
-                        'home': int(line.split('|')[2].strip().split('+')[0]),
-                        'var': int(line.split('|')[2].strip().split('+')[1]),
-                    } if line.split('|')[2].strip() else {},
-                    'mailquota': int(line.split('|')[3].strip()) if line.split('|')[3].strip() else None,
+                    'name': line.split('|')[1].strip(),
+                    'quota': 0 if '-' in line else int(line.split('|')[4].strip()), 
+                    'mailquota': 0 if '-' in line else int(line.split('|')[5].strip()), 
                 }
                 for line in lines
             ]
@@ -95,15 +91,13 @@ class Handler(HttpPlugin):
     def handle_api_project_quotas(self, http_context):
         if http_context.method == 'GET':
             lines = subprocess.check_output(['sophomorix-project', '-i']).splitlines()
-            lines = filter(None, lines)
-            lines = lines[3:-3]
+            lines = [l for l in lines if l.startswith("|")]
+            lines = lines[1:-1]
             return [
                 {
-                    'name': line.split('|')[0].strip(),
-                    'quota': {
-                        'home': int(line.split('|')[1].strip().split('+')[0]),
-                        'var': int(line.split('|')[1].strip().split('+')[1]),
-                    } if '+' in line and len(line.split('|')[1].strip()) > 1 else {},
+                    'name': line.split('|')[1].strip(),
+                    'quota': 0 if '-' in line else int(line.split('|')[2].strip()),
+                    'mailquota': 0 if '-' in line else int(line.split('|')[3].strip()),
                 }
                 for line in lines
             ]
@@ -123,13 +117,13 @@ class Handler(HttpPlugin):
         users = l.search_s(
             params['searchdn'],
             ldap.SCOPE_SUBTREE,
-            '(&(objectClass=posixAccount)(|(cn=*%s*)(uid=*%s*)))' % (
+            '(&(objectClass=person)(|(cn=*%s*)(uid=*%s*)))' % (
                 http_context.query['q'],
                 http_context.query['q'],
             ),
-            attrlist=['uid', 'cn'],
+            attrlist=['sn', 'givenName'],
         )
-        return list(users)
+        return [u for u in users if isinstance(u[0], str)]
 
     @url(r'/api/lm/quotas/apply')
     @authorize('lm:quotas:apply')

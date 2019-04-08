@@ -42,18 +42,12 @@
     $scope._ = {
       addNewSpecial: null
     };
-    $http.get("/api/lm/users/teachers-list").then(function(resp) {
-      var i, len, ref, results, teacher;
-      $scope.teachers = resp.data;
-      ref = $scope.teachers;
-      results = [];
-      for (i = 0, len = ref.length; i < len; i++) {
-        teacher = ref[i];
-        teacher.quota = parseInt(teacher.quota);
-        results.push(teacher.mailquota = parseInt(teacher.mailquota));
-      }
-      return results;
-    });
+    //$http.get("/api/lm/users/teachers-list").then (resp) ->
+    //$scope.teachers = resp.data
+    //for teacher in $scope.teachers
+    //teacher.quota = parseInt(teacher.quota)
+    //teacher.mailquota = parseInt(teacher.mailquota)
+
     //$http.get('/api/lm/settings').then (resp) ->
     //if not resp.data.use_quota
     //$location.path('/view/lm/quotas-disabled')
@@ -63,7 +57,8 @@
       return $scope.settings = resp.data;
     });
     $http.get('/api/lm/quotas').then(function(resp) {
-      $scope.quotas = resp.data;
+      $scope.quotas = resp.data[0];
+      $scope.teachers = resp.data[1];
       return $scope.standardQuota = $scope.quotas['standard-lehrer'];
     });
     $http.get('/api/lm/class-quotas').then(function(resp) {
@@ -143,19 +138,19 @@
         return results;
       })(), login) >= 0;
     };
-    $scope.studentNameCache = {};
-    $scope.getStudentName = function(login) {
-      if (!angular.isDefined($scope.studentNameCache[login])) {
-        $scope.studentNameCache[login] = '...';
+    $scope.NameCache = {};
+    $scope.getName = function(login) {
+      if (!angular.isDefined($scope.NameCache[login])) {
+        $scope.NameCache[login] = '...';
         $http.get(`/api/lm/ldap-search?q=${login}`).then(function(resp) {
           if (resp.data.length > 0) {
-            return $scope.studentNameCache[login] = resp.data[0][1].cn[0];
+            return $scope.NameCache[login] = resp.data[0][1].sn[0] + " " + resp.data[0][1].givenName[0];
           } else {
-            return $scope.studentNameCache[login] = login;
+            return $scope.NameCache[login] = login;
           }
         });
       }
-      return $scope.studentNameCache[login];
+      return $scope.NameCache[login];
     };
     $scope.remove = function(login) {
       return delete $scope.quotas[login];

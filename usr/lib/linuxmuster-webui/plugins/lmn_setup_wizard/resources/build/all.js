@@ -241,20 +241,20 @@ angular.module('lm.setup_wizard').controller('InitSetupController', function ($l
     };
 });
 
-angular.module('lm.setup_wizard').controller('InitDoneController', function ($location, $http, gettext, pageTitle, notify) {
+angular.module('lm.setup_wizard').controller('InitDoneController', function ($window, $http, gettext, pageTitle, notify, $timeout) {
+    var _this7 = this;
+
     pageTitle.set(gettext('Setup Done'));
+
+    this.redirect = function () {
+        $window.location.href = 'https://' + url.hostname + ':' + url.port;
+    };
 
     this.close = function () {
         url = new URL(window.location.href);
-        //location.href = 'https://' + url.hostname + ':' + url.port;
-        //$location.href('https://www.google.de');
         notify.success(gettext('Restart Webui'));
-        $http.post('/api/lm/setup-wizard/restart').then(function () {
-            // TODO Validate if this works
-            location.href('https://www.google.de');
-            //location.href = 'https://' + url.hostname + ':' + url.port;
-            //$location.path('/')
-        });
+        $timeout(_this7.redirect(), 2000);
+        $http.post('/api/lm/setup-wizard/restart');
     };
 });
 

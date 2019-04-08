@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ajenti\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-07 15:32+0100\n"
+"POT-Creation-Date: 2019-04-08 10:36+0200\n"
 "PO-Revision-Date: 2016-05-21 17:18-0400\n"
 "Last-Translator: eugenepankov <john.pankov@gmail.com>\n"
 "Language-Team: Belarusian\n"
@@ -17,54 +17,68 @@ msgstr ""
 "X-Crowdin-Language: be\n"
 "X-Crowdin-File: /2.0/lmn_common.po\n"
 
-#: lmn_common/resources/js/lmFileBackups.modal.html:2
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileBackups.modal.html:2
 msgid "Backups"
 msgstr ""
 
-#: lmn_common/resources/js/lmFileEditor.modal.html:18
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileEditor.modal.html:18
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileBackups.service.coffee:53
 msgid "Cancel"
 msgstr ""
 
-#: lmn_common/resources/js/lmFileBackups.modal.html:20
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileBackups.modal.html:23
 msgid "Close"
 msgstr ""
 
-#: lmn_common/resources/js/lmFileEditor.modal.html:17
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileEditor.modal.html:17
 msgid "Download CSV"
 msgstr ""
 
-#: lmn_common/resources/js/lmFileEditor.modal.html:5
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileEditor.modal.html:5
 msgid "Drop a CSV file here to import"
 msgstr ""
 
-#: lmn_common/resources/js/lmFileEditor.modal.html:16
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileEditor.modal.html:16
 msgid "Save"
 msgstr ""
 
-#: lmn_common/main.py:15
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:15
 msgid "User Management"
 msgstr ""
 
-#: lmn_common/main.py:22
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:22
 msgid "List Management"
 msgstr ""
 
-#: lmn_common/main.py:29
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:29
 msgid "Quota"
 msgstr ""
 
-#: lmn_common/main.py:36
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:36
 msgid "Device Management"
 msgstr ""
 
-#: lmn_common/main.py:43
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:43
 msgid "Class Management"
 msgstr ""
 
-#: lmn_common/main.py:50
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:50
 msgid "School Settings"
 msgstr ""
 
-#: lmn_common/main.py:57
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:57
 msgid "Global Settings"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileBackups.service.coffee:52
+msgid "Do you really want to delete"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileBackups.service.coffee:53
+msgid "Confirmation"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:60
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:92
+msgid "Uploaded"
 msgstr ""

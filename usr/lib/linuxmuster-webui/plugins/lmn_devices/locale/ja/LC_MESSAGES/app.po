@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-07 15:32+0100\n"
-"PO-Revision-Date: 2019-03-07 14:39\n"
+"POT-Creation-Date: 2019-04-08 10:36+0200\n"
+"PO-Revision-Date: 2019-04-08 09:07\n"
 "Last-Translator: kiarn <lml@kientz.me>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -16,209 +16,209 @@ msgstr ""
 "X-Crowdin-Language: ja\n"
 "X-Crowdin-File: /2.0/lmn_devices.po\n"
 
-#: lmn_devices/resources/partial/index.html:138
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:137
 msgid "Add a device"
 msgstr ""
 
-#: lmn_devices/resources/partial/index.html:91
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:90
 msgid "BYOD"
 msgstr ""
 
-#: lmn_devices/resources/partial/apply.modal.html:10
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/apply.modal.html:11
 msgid "Close"
 msgstr ""
 
-#: lmn_devices/resources/partial/index.html:86
-msgid "Computer"
-msgstr ""
-
-#: lmn_devices/resources/partial/apply.modal.html:9
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/apply.modal.html:10
 msgid "Details"
 msgstr ""
 
-#: lmn_devices/resources/partial/index.html:96
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:95
 msgid "Domain-Controller"
 msgstr ""
 
-#: lmn_devices/resources/partial/index.html:149
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:148
 msgid "Edit CSV"
 msgstr ""
 
-#: lmn_devices/resources/partial/index.html:84
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:84
 msgid "Faculty-Teachercomputer"
 msgstr ""
 
-#: lmn_devices/resources/partial/index.html:23
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:23
 msgid "Fields"
 msgstr ""
 
-#: lmn_devices/resources/partial/index.html:94
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/apply.modal.html:9
+msgid "Hide details"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:93
 msgid "IP-Only"
 msgstr ""
 
-#: lmn_devices/resources/partial/apply.modal.html:2
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/apply.modal.html:2
 msgid "Importing device"
 msgstr ""
 
-#: lmn_devices/resources/partial/index.html:105
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:104
 msgid "Linbo-PXE"
 msgstr ""
 
-#: lmn_devices/resources/partial/index.html:106
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:105
 msgid "Linbo-PXE + OPSI-MGMT"
 msgstr ""
 
-#: lmn_devices/resources/partial/index.html:95
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:94
 msgid "Mobile"
 msgstr ""
 
-#: lmn_devices/resources/partial/index.html:104
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:103
 msgid "No PXE"
 msgstr ""
 
-#: lmn_devices/resources/partial/index.html:107
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:106
 msgid "OPSI-PXE"
 msgstr ""
 
-#: lmn_devices/resources/partial/index.html:89
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:88
 msgid "Printer"
 msgstr ""
 
-#: lmn_devices/resources/partial/index.html:33
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:33
 msgid "Rows"
 msgstr ""
 
-#: lmn_devices/resources/partial/index.html:147
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:146
 msgid "Save"
 msgstr ""
 
-#: lmn_devices/resources/partial/index.html:148
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:147
 msgid "Save &amp; import"
 msgstr ""
 
-#: lmn_devices/resources/partial/index.html:85
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:85
 msgid "Server"
 msgstr ""
 
-#: lmn_devices/resources/partial/index.html:83
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:83
 msgid "Staffcomputer"
 msgstr ""
 
-#: lmn_devices/resources/partial/index.html:88
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:87
 msgid "Switch"
 msgstr ""
 
-#: lmn_devices/resources/partial/index.html:90
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:89
 msgid "Thinclient"
 msgstr ""
 
-#: lmn_devices/resources/partial/index.html:92
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:91
 msgid "VOIP"
 msgstr ""
 
-#: lmn_devices/resources/partial/index.html:93
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:92
 msgid "WLan"
 msgstr ""
 
-#: lmn_devices/resources/partial/index.html:81
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:81
 msgid "classroom-studentcomputer"
 msgstr ""
 
-#: lmn_devices/resources/partial/index.html:82
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:82
 msgid "classroom-teachercomputer"
 msgstr ""
 
-#: lmn_devices/resources/partial/index.html:87
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:86
 msgid "router"
 msgstr ""
 
-#: lmn_devices/main.py:15
-#: lmn_devices/resources/js/controllers/index.controller.coffee:27
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/main.py:15
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:27
 msgid "Devices"
 msgstr ""
 
-#: lmn_devices/main.py:30
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/main.py:30
 msgid "Read/write devices"
 msgstr ""
 
-#: lmn_devices/main.py:35
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/main.py:35
 msgid "Import device"
 msgstr ""
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:15
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:15
 msgid "Import complete"
 msgstr ""
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:17
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:17
 msgid "Import failed"
 msgstr ""
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:31
-#: lmn_devices/resources/js/controllers/index.controller.coffee:93
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:57
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:122
 msgid "Room"
 msgstr ""
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:35
-#: lmn_devices/resources/js/controllers/index.controller.coffee:99
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:61
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:128
 msgid "Group"
 msgstr ""
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:39
-#: lmn_devices/resources/js/controllers/index.controller.coffee:96
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:65
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:125
 msgid "Hostname"
 msgstr ""
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:43
-#: lmn_devices/resources/js/controllers/index.controller.coffee:102
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:69
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:131
 msgid "MAC"
 msgstr ""
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:47
-#: lmn_devices/resources/js/controllers/index.controller.coffee:105
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:73
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:134
 msgid "IP"
 msgstr ""
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:108
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:137
 msgid "Office Key"
 msgstr ""
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:111
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:140
 msgid "Windows Key"
 msgstr ""
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:114
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:143
 msgid "DHCP-Options"
 msgstr ""
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:117
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:146
 msgid "Sophomorix-Role"
 msgstr ""
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:120
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:149
 msgid "LMN-Reserved 10"
 msgstr ""
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:123
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:152
 msgid "PXE"
 msgstr ""
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:126
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:155
 msgid "LMN-Reserved 12"
 msgstr ""
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:129
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:158
 msgid "LMN-Reserved 13"
 msgstr ""
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:132
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:161
 msgid "LMN-Reserved 14"
 msgstr ""
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:135
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:164
 msgid "Sophomorix-Comment"
 msgstr ""
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:146
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:181
 msgid "Saved"
 msgstr ""
 

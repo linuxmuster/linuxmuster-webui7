@@ -78,7 +78,7 @@ class Handler(HttpPlugin):
         except Exception as e:
             raise EndpointError(None, message=str(e))
 
-    @url(r'/api/lm/setup-wizard/restart')
+    @url(r'/api/lm/setup-wizard/restart') ## TODO : Handle maybe obsolet
     @endpoint(api=True, auth=True)
     def handle_api_restart(self, http_context):
         if http_context.method != 'POST':

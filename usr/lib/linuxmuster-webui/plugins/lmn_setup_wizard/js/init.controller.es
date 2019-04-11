@@ -48,12 +48,12 @@ angular.module('lm.setup_wizard').controller('InitWelcomeController', function (
     this.config = config
     console.log (config)
     $http.get('/api/core/languages').then(response => this.languages = response.data)
-    
+
     this.updateLanguage = () => {
         locale.setLanguage(this.config.data.language);
         $route.reload();
     }
-    
+
     this.apply = async () => {
         if (!this.licenseAccepted) {
             notify.error('Please accept the license !')
@@ -211,20 +211,42 @@ angular.module('lm.setup_wizard').controller('InitSetupController', function ($l
     }
 })
 
-angular.module('lm.setup_wizard').controller('InitDoneController', function ($location, $http, gettext, pageTitle, notify) {
+angular.module('lm.setup_wizard').controller('InitDoneController', function ($window, $http, gettext, pageTitle, core, notify, $timeout, messagebox) {
     pageTitle.set(gettext('Setup Done'))
- 
+
+    $http.get('/api/lm/read-config-setup').then( (resp) => {
+        oldUrl = new URL(window.location.href) // TODO Fix port with ajenti new config
+        servername = (resp.data['setup']['servername']) ? resp.data['setup']['servername'] : resp.data['setup']['hostname']
+        url = 'https://' + servername + '.' + resp.data['setup']['domainname'] + ':' + oldUrl.port // TODO Fix port with ajenti new config
+        }
+    )
+
+    this.redirect = () => {
+        $window.location.href = url
+    }
+
+    this.restartUI = () => {
+        let msg = messagebox.show({progress: true, title: gettext('Restarting')});
+        return $http.get('/api/core/restart-master').then(() => {
+            return $timeout(() => {
+                msg.close();
+                messagebox.show({title: gettext('Restarted'), text: gettext('Please wait')});
+                $timeout(() => {
+                    this.redirect();
+                    return setTimeout(() => {
+                        return this.redirect();
+                    }, 5000);
+                });
+            }, 5000);
+        }).catch((err) => {
+            msg.close();
+            notify.error(gettext('Could not restart'), err.message);
+            return $q.reject(err);
+        });
+    };
+
     this.close = () => {
-	url = new URL(window.location.href);
-        //location.href = 'https://' + url.hostname + ':' + url.port;
-        //$location.href('https://www.google.de');
-        notify.success(gettext('Restart Webui'))
-         $http.post('/api/lm/setup-wizard/restart').then(() => {
-            // TODO Validate if this works
-            location.href('https://www.google.de');
-            //location.href = 'https://' + url.hostname + ':' + url.port;
-            //$location.path('/')
-        })
+        this.restartUI()
     }
 })
 

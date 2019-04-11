@@ -241,20 +241,43 @@ angular.module('lm.setup_wizard').controller('InitSetupController', function ($l
     };
 });
 
-angular.module('lm.setup_wizard').controller('InitDoneController', function ($window, $http, gettext, pageTitle, notify, $timeout) {
+angular.module('lm.setup_wizard').controller('InitDoneController', function ($window, $http, gettext, pageTitle, core, notify, $timeout, messagebox) {
     var _this7 = this;
 
     pageTitle.set(gettext('Setup Done'));
 
+    $http.get('/api/lm/read-config-setup').then(function (resp) {
+        oldUrl = new URL(window.location.href); // TODO Fix port with ajenti new config
+        servername = resp.data['setup']['servername'] ? resp.data['setup']['servername'] : resp.data['setup']['hostname'];
+        url = 'https://' + servername + '.' + resp.data['setup']['domainname'] + ':' + oldUrl.port; // TODO Fix port with ajenti new config
+    });
+
     this.redirect = function () {
-        $window.location.href = 'https://' + url.hostname + ':' + url.port;
+        $window.location.href = url;
+    };
+
+    this.restartUI = function () {
+        var msg = messagebox.show({ progress: true, title: gettext('Restarting') });
+        return $http.get('/api/core/restart-master').then(function () {
+            return $timeout(function () {
+                msg.close();
+                messagebox.show({ title: gettext('Restarted'), text: gettext('Please wait') });
+                $timeout(function () {
+                    _this7.redirect();
+                    return setTimeout(function () {
+                        return _this7.redirect();
+                    }, 5000);
+                });
+            }, 5000);
+        }).catch(function (err) {
+            msg.close();
+            notify.error(gettext('Could not restart'), err.message);
+            return $q.reject(err);
+        });
     };
 
     this.close = function () {
-        url = new URL(window.location.href);
-        notify.success(gettext('Restart Webui'));
-        $timeout(_this7.redirect(), 2000);
-        $http.post('/api/lm/setup-wizard/restart');
+        _this7.restartUI();
     };
 });
 

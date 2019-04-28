@@ -294,7 +294,7 @@
       }).then(function(resp) {
         if (resp.data[0]['SESSIONCOUNT'] === 0) {
           $scope.sessions = resp.data;
-          $scope.info.message = gettext('There are no sessions yet. Create a session using the "New Sessions" button at the top!');
+          $scope.info.message = gettext("There are no sessions yet. Create a session using the 'New Session' button at the top!");
           return console.log('no sessions');
         } else {
           console.log('sessions found');

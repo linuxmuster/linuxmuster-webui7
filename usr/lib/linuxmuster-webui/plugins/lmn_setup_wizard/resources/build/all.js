@@ -249,7 +249,10 @@ angular.module('lm.setup_wizard').controller('InitDoneController', function ($wi
     $http.get('/api/lm/read-config-setup').then(function (resp) {
         oldUrl = new URL(window.location.href); // TODO Fix port with ajenti new config
         servername = resp.data['setup']['servername'] ? resp.data['setup']['servername'] : resp.data['setup']['hostname'];
-        url = 'https://' + servername + '.' + resp.data['setup']['domainname'] + ':' + oldUrl.port; // TODO Fix port with ajenti new config
+        //url = 'https://' + servername + '.' + resp.data['setup']['domainname'] + ':' + oldUrl.port // TODO Fix port with ajenti new config
+        // Use host ip instead of domain name 
+        hostip = resp.data['setup']['hostip'] ? resp.data['setup']['hostip'] : '10.0.0.1';
+        url = 'https://' + hostip + ':' + oldUrl.port; // TODO Fix port with ajenti new config
     });
 
     this.redirect = function () {

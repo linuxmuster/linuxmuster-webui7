@@ -3,7 +3,7 @@ import os
 from jadi import component
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint
-
+from aj.plugins.lmn_common.api import lmn_getSophomorixValue
 
 @component(HttpPlugin)
 class Handler(HttpPlugin):
@@ -50,3 +50,11 @@ class Handler(HttpPlugin):
                     v = v.strip()
                     section[k.strip()] = v
             return config
+                
+    @url(r'/api/lm/all-users') ## TODO authorize
+    @endpoint(api=True)
+    def handle_api_get_userdetails(self, http_context):
+        if http_context.method == 'POST':
+            sophomorixCommand = ['sophomorix-query', '--student', '--teacher', '--schooladministrator', '--globaladministrator', '-jj']
+            all_users = lmn_getSophomorixValue(sophomorixCommand, 'USER')
+            return all_users

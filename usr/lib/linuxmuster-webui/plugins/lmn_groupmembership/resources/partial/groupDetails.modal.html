@@ -1,34 +1,56 @@
 <div class="modal-header">
-    <h4 translate >Group Details {{id}}</h4>
+    <h3 translate >Group Details {{id}} - {{groupDetails[groupName]['description']}}</h3>
 </div>
 <progress-spinner ng:show="groupDetails == null"></progress-spinner>
 <div style="padding-left: 40px;" ng:show="groupDetails != null">
-    <h3>{{groupDetails[groupName]['description']}}</h3>
-    <br>
-    <div translate> Group Members: {{groupDetails[groupName]['sophomorixMembers_count']}}</div> <a href="#" ng-click="showMemberDetails = ! showMemberDetails" translate>(show)</a>
+    <br />
+    <h4 class="pull-left" translate> Group Members: {{groupDetails[groupName]['sophomorixMembers_count']}}</h4>
+    <a href="#" class="btn btn-default btn-flat pull-right" ng-click="showMemberDetails = ! showMemberDetails" translate>{{showMemberDetails ? "Hide" : "Show"}}</a>
+    <a class="btn btn-default btn-flat pull-right" ng:show="groupDetails[groupName]['sophomorixType'] == 'project'" href="#" ng-click="editGroupMembers(groupName, groupDetails)" translate >Edit members</a>
     <div ng-show="showMemberDetails">
-            <a ng:show="groupDetails[groupName]['sophomorixType'] == 'project'" href="#" ng-click="editGroupMembers(groupName, groupDetails)" translate >(edit members)</a>
-        <li style="padding-left: 20px;" ng:repeat="member in groupDetails[groupName]['member']">
-            <a ng:click="createConfig(example)">{{member}}</a></li>
+        <table class="table">
+            <tr ng:repeat="member in members[0]">
+                <td><a ng:click="createConfig(example)">{{allUsers[member]['sn']}}</a></td>
+                <td><a ng:click="createConfig(example)">{{allUsers[member]['givenName']}}</a></td>
+                <td><a ng:click="createConfig(example)">{{allUsers[member]['sophomorixAdminClass']}}</a></td>
+            </tr>
+        </table>
     </div>
-    <br>
-    <br>
-    <span translate> Group Admins: {{groupDetails[groupName]['sophomorixAdmins_count']}}</span> <a href="#" ng-click="showAdminDetails = ! showAdminDetails" translate >(show)</a>
+    <br style="clear:left;" />
+    <br />
+    <h4 class="pull-left" translate> Group Admins: {{groupDetails[groupName]['sophomorixAdmins_count']}}</h4> 
+    <a href="#" class="btn btn-default btn-flat pull-right" ng-click="showAdminDetails = ! showAdminDetails" translate>{{showAdminDetails ? "Hide" : "Show"}}</a>
+    <!--<a class="btn btn-default btn-flat pull-right" ng:show="groupDetails[groupName]['sophomorixType'] == 'project'" href="#" ng-click="editGroupAdmins()" translate >Edit admins</a>-->
     <div ng-show="showAdminDetails">
-        <!--<a ng:show="groupDetails[groupName]['sophomorixType'] == 'project'" href="#" ng-click="editGroupAdmins()" translate >(edit admins)</a>-->
-        <li style="padding-left: 20px;" ng:repeat="admin in groupDetails[groupName]['sophomorixAdmins']">
-            <a ng:click="createConfig(example)">{{admin}}</a></li>
+        <table class="table">
+            <tr ng:repeat="admin in admins[0]">
+                <td><a ng:click="createConfig(example)">{{allUsers[admin]['sn']}}</a></td>
+                <td><a ng:click="createConfig(example)">{{allUsers[admin]['givenName']}}</a></td>
+                <td><a ng:click="createConfig(example)">{{allUsers[admin]['sophomorixAdminClass']}}</a></td>
+            </tr>
+        </table>
     </div>
-    <br>
-    <br><b translate>Creationdate:</b> {{groupDetails[groupName]['sophomorixCreationDate']}}
-
-
-    <br><b translate>Type:</b> {{groupDetails[groupName]['sophomorixType']}}
-    <br><b translate>Schoolname:</b>  {{groupDetails[groupName]['sophomorixSchoolname']}}
-    <br><b translate>Sophomorix Status:</b> {{groupDetails[groupName]['sophomorixStatus']}}
-
-    <br>
-    <br>
+    <br />
+    <br />
+    <h4 translate> Properties</h4>
+    <table class="table">
+        <tr>
+            <td><b translate>Creationdate:</b></td>
+            <td>{{formatDate(groupDetails[groupName]['sophomorixCreationDate'])}}</td>
+        </tr>
+        <tr>
+            <td><b translate>Type:</b></td>
+            <td>{{groupDetails[groupName]['sophomorixType']}}</td>
+        </tr>
+        <tr>
+            <td><b translate>Schoolname:</b></td>
+            <td>{{groupDetails[groupName]['sophomorixSchoolname']}}</td>
+        </tr>
+        <tr>
+            <td><b translate>Sophomorix Status:</b></td>
+            <td>{{groupDetails[groupName]['sophomorixStatus']}}</td>
+        </tr>
+    </table>
 
 
     <div class="modal-footer">

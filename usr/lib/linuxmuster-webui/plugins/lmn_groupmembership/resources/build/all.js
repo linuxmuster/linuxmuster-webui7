@@ -43,6 +43,8 @@
         }
       });
     };
+    $scope.showAdminDetails = true;
+    $scope.showMemberDetails = true;
     $scope.killProject = function(project) {
       return messagebox.show({
         text: `Do you really want to delete '${project}'? This can't be undone!`,
@@ -73,6 +75,19 @@
         });
       });
     };
+    $scope.formatDate = function(date) {
+      return Date(date);
+    };
+    $http.post('/api/lm/all-users').then(function(resp) {
+      return $scope.allUsers = resp.data;
+    });
+    $scope.filterDNLogin = function(dn) {
+      if (dn.indexOf('=') !== -1) {
+        return dn.split(',')[0].split('=')[1];
+      } else {
+        return dn;
+      }
+    };
     $scope.getGroupDetails = function(group) {
       groupType = group[0];
       groupName = group[1];
@@ -81,8 +96,39 @@
         groupType: groupType,
         groupName: groupName
       }).then(function(resp) {
+        var member;
         $scope.groupName = groupName;
-        return $scope.groupDetails = resp.data;
+        $scope.groupDetails = resp.data;
+        $scope.members = [
+          (function() {
+            var i,
+          len,
+          ref,
+          results;
+            ref = resp.data[groupName]['member'];
+            results = [];
+            for (i = 0, len = ref.length; i < len; i++) {
+              member = ref[i];
+              results.push($scope.filterDNLogin(member));
+            }
+            return results;
+          })()
+        ];
+        return $scope.admins = [
+          (function() {
+            var i,
+          len,
+          ref,
+          results;
+            ref = resp.data[groupName]['sophomorixAdmins'];
+            results = [];
+            for (i = 0, len = ref.length; i < len; i++) {
+              member = ref[i];
+              results.push($scope.filterDNLogin(member));
+            }
+            return results;
+          })()
+        ];
       });
     };
     $scope.groupType = groupType;

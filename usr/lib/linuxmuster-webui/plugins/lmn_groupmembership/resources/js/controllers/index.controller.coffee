@@ -22,6 +22,9 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
                 if result.response is 'refresh'
                     $scope.getGroupDetails ([groupType, groupName])
 
+        $scope.showAdminDetails = true
+        $scope.showMemberDetails = true
+
         $scope.killProject = (project) ->
              messagebox.show(text: "Do you really want to delete '#{project}'? This can't be undone!", positive: 'Delete', negative: 'Cancel').then () ->
                 msg = messagebox.show(progress: true)
@@ -35,12 +38,27 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
                 .finally () ->
                     msg.close()
 
+        $scope.formatDate = (date) ->
+           return Date(date)
+        
+        $http.post('/api/lm/all-users').then (resp) ->
+            $scope.allUsers = resp.data
+        
+        $scope.filterDNLogin = (dn) ->
+            if dn.indexOf('=') != -1
+                return dn.split(',')[0].split('=')[1]
+            else
+                return dn
+                
         $scope.getGroupDetails = (group) ->
             groupType = group[0]
             groupName = group[1]
             $http.post('/api/lmn/groupmembership/details', {action: 'get-specified', groupType: groupType, groupName: groupName}).then (resp) ->
-                $scope.groupName = groupName
+                $scope.groupName    = groupName
                 $scope.groupDetails = resp.data
+                $scope.members = [$scope.filterDNLogin(member) for member in resp.data[groupName]['member']]
+                $scope.admins = [$scope.filterDNLogin(member) for member in resp.data[groupName]['sophomorixAdmins']]
+        
         $scope.groupType = groupType
         $scope.getGroupDetails ([groupType, groupName])
         $scope.close = () ->

@@ -27,7 +27,7 @@ class Handler(HttpPlugin):
                     groupAdmins = lmn_getSophomorixValue(sophomorixCommand, 'GROUPS/'+groupName+'/sophomorixAdmins')
                     membersToAdd = []
                     membersToRemove = []
-                    if username in groupAdmins:
+                    if username in groupAdmins or username == 'global-admin':
                         i = 0
                         for member in members:
                             if members[i]['membership'] is True:
@@ -73,13 +73,14 @@ class Handler(HttpPlugin):
         if http_context.method == 'POST':
             if action == 'list-groups':
                 membershipList = []
-
-                # get groups specified user is member of
-                sophomorixCommand = ['sophomorix-query',  '--schoolbase', schoolname, '--user-full', '-jj', '--sam', username]
-                groups = lmn_getSophomorixValue(sophomorixCommand, 'USER/'+username+'/memberOf')
                 usergroups = []
-                for group in groups:
-                    usergroups.append(group.split(',')[0].split('=')[1])
+                if username != 'global-admin':
+                    # get groups specified user is member of
+                    sophomorixCommand = ['sophomorix-query',  '--schoolbase', schoolname, '--user-full', '-jj', '--sam', username]
+                    groups = lmn_getSophomorixValue(sophomorixCommand, 'USER/'+username+'/memberOf')
+                    
+                    for group in groups:
+                        usergroups.append(group.split(',')[0].split('=')[1])
 
                 # get all available classes
                 # get classes
@@ -99,20 +100,20 @@ class Handler(HttpPlugin):
                     projects = projects_raw['GROUP']
                 # build membershipList with membership status
                 for project in projects:
-                    if project in usergroups:
-                        if username in projects[project]['sophomorixAdmins']:
+                    if project in usergroups or username == 'global-admin':
+                        if username in projects[project]['sophomorixAdmins'] or username == 'global-admin':
                             membershipList.append({'type': 'project', 'typename': 'Project', 'groupname': project, 'icon': 'fa fa-flask', 'changed': False, 'membership': True, 'admin': True})
                         else:
                             membershipList.append({'type': 'project', 'typename': 'Project', 'groupname': project, 'icon': 'fa fa-flask', 'changed': False, 'membership': True, 'admin': False})
                     else:
                         membershipList.append({'type': 'project', 'typename': 'Project', 'groupname': project, 'icon': 'fa fa-flask', 'changed': False, 'membership': False, 'admin': False})
                 for schoolclass in schoolclasses:
-                    if schoolclass in usergroups:
+                    if schoolclass in usergroups or username == 'global-admin':
                         membershipList.append({'type': 'schoolclass', 'typename': 'Class', 'groupname': schoolclass, 'icon': 'fa fa-users', 'changed': False, 'membership': True})
                     else:
                         membershipList.append({'type': 'schoolclass', 'typename': 'Class', 'groupname': schoolclass, 'icon': 'fa fa-users', 'changed': False, 'membership': False})
                 for printergroup in printergroups:
-                    if printergroup in usergroups:
+                    if printergroup in usergroups or username == 'global-admin':
                         membershipList.append({'type': 'printergroup', 'typename': 'Printer', 'groupname': printergroup, 'icon': 'fa fa-fw fa-print', 'changed': False, 'membership': True})
                     else:
                         membershipList.append({'type': 'printergroup', 'typename': 'Printer', 'groupname': printergroup, 'icon': 'fa fa-fw fa-print', 'changed': False, 'membership': False})
@@ -122,7 +123,7 @@ class Handler(HttpPlugin):
                 project = http_context.json_body()['project']
                 sophomorixCommand = ['sophomorix-project', '-i', '-p', project, '-jj']
                 groupAdmins = lmn_getSophomorixValue(sophomorixCommand, 'GROUPS/'+project+'/sophomorixAdmins')
-                if username in groupAdmins:
+                if username in groupAdmins or username == 'global-admin':
                     sophomorixCommand = ['sophomorix-project', '--kill', '-p', project, '-jj']
                     result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
                     if result['TYPE'] == "ERROR":

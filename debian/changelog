@@ -1,4 +1,10 @@
-linuxmuster-webui7 (1.0.63-1) UNRELEASED; urgency=medium 
+linuxmuster-webui7 (1.0.64-1) lmn7; urgency=medium 
+
+  * Current snapshot build d57ed5da0633680a1519689216e44122673dbadd
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Mai 8 12:29:33 UTC 2019
+
+linuxmuster-webui7 (1.0.63-1) lmn7; urgency=medium 
 
   * Current snapshot build f0f8e984322d6c50018c40d4b8c8501f3680ff23
    *     build javascript

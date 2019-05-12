@@ -176,11 +176,13 @@
         return $scope.sortReverse = false;
       }
     };
-    $scope.setMembers = function(members) {
-      var msg;
+    $scope.setMembers = function(students, teachers) {
+      var members, msg;
       msg = messagebox.show({
         progress: true
       });
+      members = students.concat(teachers);
+      console.log('test', members);
       return $http.post('/api/lmn/groupmembership/details', {
         action: 'set-members',
         username: $scope.identity.user,
@@ -202,7 +204,7 @@
       });
     };
     groupDN = groupDetails[groupName]['dn'];
-    return $http.post('/api/lm/sophomorixUsers/students', {
+    $http.post('/api/lm/sophomorixUsers/students', {
       action: 'get-all'
     }).then(function(resp) {
       var i, len, student, students;
@@ -216,10 +218,32 @@
           student['membership'] = false;
         }
       }
-      return $scope.close = function() {
-        return $uibModalInstance.dismiss();
-      };
+      //# TODO : To allow teachers to add other teachers in their project, they need lm:users:teachers:read
+      //# TODO : add class ?
+      //# TODO : add other project members ?
+      //# TODO : add projectadmin
+      if ($scope.identity.user === 'global-admin') {
+        return $http.post('/api/lm/sophomorixUsers/teachers', {
+          action: 'get-all'
+        }).then(function(rp) {
+          var j, len1, teacher, teachers;
+          teachers = rp.data;
+          $scope.teachers = teachers;
+          for (j = 0, len1 = teachers.length; j < len1; j++) {
+            teacher = teachers[j];
+            if (indexOf.call(teacher['memberOf'], groupDN) >= 0) {
+              teacher['membership'] = true;
+            } else {
+              teacher['membership'] = false;
+            }
+          }
+          return console.log("paf", students);
+        });
+      }
     });
+    return $scope.close = function() {
+      return $uibModalInstance.dismiss();
+    };
   });
 
   angular.module('lmn.groupmembership').controller('LMNGroupMembershipController', function($scope, $http, $uibModal, gettext, notify, pageTitle, messagebox) {

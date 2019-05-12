@@ -96,8 +96,9 @@ angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($sco
 
 
 
-        $scope.setMembers = (members) ->
+        $scope.setMembers = (students, teachers) ->
             msg = messagebox.show(progress: true)
+            members = students.concat(teachers)
             $http.post('/api/lmn/groupmembership/details', {action: 'set-members', username:$scope.identity.user, members: members, groupName: groupName}).then (resp) ->
                 if resp['data'][0] == 'ERROR'
                     notify.error (resp['data'][1])
@@ -117,9 +118,23 @@ angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($sco
                     student['membership'] = true
                 else
                     student['membership'] = false
-            $scope.close = () ->
-                $uibModalInstance.dismiss()
+            ## TODO : To allow teachers to add other teachers in their project, they need lm:users:teachers:read
+            ## TODO : add class ?
+            ## TODO : add other project members ?
+            ## TODO : add projectadmin
+            if $scope.identity.user == 'global-admin'
+                $http.post('/api/lm/sophomorixUsers/teachers', {action: 'get-all'}).then (rp) ->
+                    teachers = rp.data
+                    $scope.teachers = teachers
+                    for teacher in teachers
+                        if groupDN in teacher['memberOf']
+                            teacher['membership'] = true
+                        else
+                            teacher['membership'] = false
+                    console.log("paf", students)
 
+        $scope.close = () ->
+            $uibModalInstance.dismiss()
 
 angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController', ($scope, $http, $uibModal, gettext, notify, pageTitle, messagebox) ->
     pageTitle.set(gettext('Group Membership'))

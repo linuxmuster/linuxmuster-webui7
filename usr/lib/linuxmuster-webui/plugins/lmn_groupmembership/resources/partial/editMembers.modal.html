@@ -34,7 +34,7 @@
         </div>
     </div>
     <br>
-    <div style="padding-lef: -40px; height: 400px; width: 90%; overflow-y: scroll;" class="container">
+    <div style="padding-left: -40px; height: 400px; width: 90%; overflow-y: scroll;" class="container">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-6 mb-3" ng:repeat="student in students|filter:filter|filter:isActive|orderBy:[sort.fx]:sortReverse">
                 <div>
@@ -48,9 +48,23 @@
             </div>
         </div>
     </div>
+    <div style="padding-left: -40px; height: 400px; width: 90%; overflow-y: scroll;" class="container" ng:show="teachers != null">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 mb-3" ng:repeat="teacher in teachers|filter:filter|filter:isActive|orderBy:[sort.fx]:sortReverse">
+                <div>
+                    <span id={{teacher.sAMAccountName}} checkbox ng:model="teacher.membership" ng-click='membershipChanged($index, teacher.sAMAccountName)'></span>
+                    <i class="fa fa-user"></i>
+                    <a href="#" ng-click='showGroupDetails($index, teacher.sAMAccountName)'>
+                        <span translate>{{teacher.sophomorixRole}}</span>
+                        <b>{{teacher.givenName}} {{teacher.sn}}</b> {{teacher.sophomorixAdminClass}}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="modal-footer">
-        <a class="btn btn-default btn-flat" ng:click="setMembers(students)" translate>Save</a>
+        <a class="btn btn-default btn-flat" ng:click="setMembers(students, teachers)" translate>Save</a>
         <a class="btn btn-default btn-flat" ng:click="close()" translate>Close</a>
     </div>
 

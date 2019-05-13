@@ -76,7 +76,7 @@
         <span style="float: left;"> <h4 style="display:{{visible.sessionname}}">{{currentSession.comment}}</h4></span>
         <span style="float: right;"> <h6 style="display:{{visible.sessionname}}">{{currentSession.name}}</h6></span>
     </div>
-    <table class="table" style="display:{{visible.participanttable}};">
+    <table class="table" style="display:{{visible.participanttable}};margin-bottom:60px;">
         <tr>
             <th ng:repeat="(id, field) in fields" ng:if="field.visible"><div title="{{field.title}}" class="{{field.icon}}" style="font-size:20px;"></div> <br>{{field.name}}
                 <span checkbox style="float:right;" id="{{id}}.all" ng:if="field.examBox" ng-click="selectAll('exammode')" ng:model=field.checkboxStatus>"</span>

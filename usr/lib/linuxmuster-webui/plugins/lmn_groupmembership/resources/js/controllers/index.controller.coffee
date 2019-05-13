@@ -122,16 +122,15 @@ angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($sco
             ## TODO : add class ?
             ## TODO : add other project members ?
             ## TODO : add projectadmin
-            if $scope.identity.user == 'global-admin'
-                $http.post('/api/lm/sophomorixUsers/teachers', {action: 'get-all'}).then (rp) ->
-                    teachers = rp.data
-                    $scope.teachers = teachers
-                    for teacher in teachers
-                        if groupDN in teacher['memberOf']
-                            teacher['membership'] = true
-                        else
-                            teacher['membership'] = false
-                    console.log("paf", students)
+        if $scope.identity.user == 'global-admin'
+            $http.post('/api/lm/sophomorixUsers/teachers', {action: 'get-all'}).then (rp) ->
+                teachers = rp.data
+                $scope.teachers = teachers
+                for teacher in teachers
+                    if groupDN in teacher['memberOf']
+                        teacher['membership'] = true
+                    else
+                        teacher['membership'] = false
 
         $scope.close = () ->
             $uibModalInstance.dismiss()

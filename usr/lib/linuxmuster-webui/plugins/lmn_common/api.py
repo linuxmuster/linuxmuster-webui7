@@ -11,6 +11,8 @@ import random
 import re
 import six
 import yaml
+import threading
+import ast
 
 from aj.auth import AuthenticationService
 
@@ -148,52 +150,51 @@ def lmn_getUserLdapValue(user, field):
     l.unbind_s()
     return resultString
 
+class SophomorixProcess(threading.Thread):
+    """Worker for processing sophomorix commands"""
+
+    def __init__(self, command):
+        self.stdout = None
+        self.stderr = None
+        self.command = command
+        threading.Thread.__init__(self)
+
+    def run(self):
+        p = subprocess.Popen(self.command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=False)
+        self.stdout, self.stderr = p.communicate()
+
 
 def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
-    jsonS = subprocess.Popen(sophomorixCommand, stderr=subprocess.PIPE, shell=False)
-    data = ''
-    record = 0
+    """Get the response dict or value for a key after running a sophomorix command"""
+
+    ## New Thread for one process to avoid conflicts
+    t = SophomorixProcess(sophomorixCommand)
+    t.daemon = True
+    t.start()
+    t.join()
+
+    ## Cleanup stderr output
+    output = t.stderr.replace("null", "\"null\"")
+
+    ## Some comands get many dicts, we just want the first
+    output = output.replace('\n', '').split('# JSON-end')[0]
+    output = re.sub('# JSON-begin', '', output)
+
+    ## Convert str to dict
     jsonDict = {}
-    while jsonS.poll() is None:
-        output = jsonS.stderr.readline()
-        output = output.replace("null", "\"null\"")
-        if record == 1 :
-            data += output.strip('\n')
-        if '# JSON-begin' in output and '# JSON-end' in output:
-            record = 1
-            tmp = re.sub('# JSON-begin', '', output.strip('\n'))
-            data += re.sub('# JSON.*', '', output.strip('\n'))
-        elif '# JSON-begin' in output:
-            record = 1
-            data += re.sub('# JSON-begin', '', output.strip('\n'))
-        elif '# JSON-end' in output:
-            record = 0
-            data += re.sub('# JSON.*', '', output.strip('\n'))
-    if data:
-        jsonDict = dict(jsonDict, **eval(data))
-    data = ''
+    if output:
+        jsonDict = ast.literal_eval(output)
 
-    ## Debug
-    #with open('/var/log/getSophomorixValueDebugoutput.log', 'w') as f:
-    	#f.write(str(jsonDict))
-
-    # if empty jsonpath is returned dont use dpath
+    ## Without key, simply return the dict
     if jsonpath is '':
-
         return jsonDict
+
     if ignoreErrors is False:
         try:
-            # Debug empty key string - > get json from file to test
-            # dpath.options.ALLOW_EMPTY_STRING_KEYS=True
-            # with open('/usr/lib/linuxmuster-webui/plugins/emptyStringKey.json') as json_data:
-            #        jsonDict = json.load(json_data)
-            #        #print(d)
             resultString = dpath.util.get(jsonDict, jsonpath)
-            # file.write(str(resultString)+'\n')
         except Exception as e:
-            pass
             raise Exception('getSophomorix Value error. Either sophomorix field does not exist or ajenti binduser does not have sufficient permissions:\n' +
-                            'Error Message: ' + str(e) + '\n Dictionary we looked for information:\n  ' + str(jsonDict))
+                            'Error Message: ' + str(e) + '\n Dictionary we looked for information:\n' + str(jsonDict))
     else:
         resultString = dpath.util.get(jsonDict, jsonpath)
     return resultString

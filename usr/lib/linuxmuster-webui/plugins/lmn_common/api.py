@@ -176,7 +176,7 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
     ## Cleanup stderr output
     output = t.stderr.replace("null", "\"null\"")
 
-    ## Some comands get many dicts, we just want the first
+    ## Some comands get many dicts, we just want the first
     output = output.replace('\n', '').split('# JSON-end')[0]
     output = re.sub('# JSON-begin', '', output)
 

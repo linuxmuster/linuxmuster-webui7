@@ -43,23 +43,9 @@
       $scope.total = resp.data.total;
       return $scope.usage = Math.floor((100 * $scope.used) / $scope.total);
     });
-    $scope.changePassword = function() {
+    return $scope.changePassword = function() {
       return $location.path('/view/lmn/change-password');
     };
-    $http.post('/api/lm/sophomorixUsers/teachers', {
-      action: 'get-all'
-    }).then(function(resp) {
-      var students;
-      students = resp.data;
-      return $scope.students = students;
-    });
-    return $http.post('/api/lm/sophomorixUsers/globaladmins', {
-      action: 'get-all'
-    }).then(function(rp) {
-      var teachers;
-      teachers = rp.data;
-      return $scope.teachers = teachers;
-    });
   });
 
 }).call(this);

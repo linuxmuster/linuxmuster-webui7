@@ -89,6 +89,11 @@ class Permissions (PermissionProvider):
                 'default': False,
             },
             {
+                'id': 'lm:users:teachers:list',
+                'name': _('List teachers'),
+                'default': False,
+            },
+            {
                 'id': 'lm:users:teachers:write',
                 'name': _('Write teachers'),
                 'default': False,

@@ -118,19 +118,17 @@ angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($sco
                     student['membership'] = true
                 else
                     student['membership'] = false
-            ## TODO : To allow teachers to add other teachers in their project, they need lm:users:teachers:read
             ## TODO : add class ?
             ## TODO : add other project members ?
             ## TODO : add projectadmin
-        if $scope.identity.user == 'global-admin'
-            $http.post('/api/lm/sophomorixUsers/teachers', {action: 'get-all'}).then (rp) ->
-                teachers = rp.data
-                $scope.teachers = teachers
-                for teacher in teachers
-                    if groupDN in teacher['memberOf']
-                        teacher['membership'] = true
-                    else
-                        teacher['membership'] = false
+        $http.post('/api/lm/sophomorixUsers/teachers', {action: 'get-all'}).then (rp) ->
+            teachers = rp.data
+            $scope.teachers = teachers
+            for teacher in teachers
+                if groupDN in teacher['memberOf']
+                    teacher['membership'] = true
+                else
+                    teacher['membership'] = false
 
         $scope.close = () ->
             $uibModalInstance.dismiss()

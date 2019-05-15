@@ -224,25 +224,23 @@
     //# TODO : add class ?
     //# TODO : add other project members ?
     //# TODO : add projectadmin
-    if ($scope.identity.user === 'global-admin') {
-      $http.post('/api/lm/sophomorixUsers/teachers', {
-        action: 'get-all'
-      }).then(function(rp) {
-        var i, len, results, teacher, teachers;
-        teachers = rp.data;
-        $scope.teachers = teachers;
-        results = [];
-        for (i = 0, len = teachers.length; i < len; i++) {
-          teacher = teachers[i];
-          if (indexOf.call(teacher['memberOf'], groupDN) >= 0) {
-            results.push(teacher['membership'] = true);
-          } else {
-            results.push(teacher['membership'] = false);
-          }
+    $http.post('/api/lm/sophomorixUsers/teachers', {
+      action: 'get-all'
+    }).then(function(rp) {
+      var i, len, results, teacher, teachers;
+      teachers = rp.data;
+      $scope.teachers = teachers;
+      results = [];
+      for (i = 0, len = teachers.length; i < len; i++) {
+        teacher = teachers[i];
+        if (indexOf.call(teacher['memberOf'], groupDN) >= 0) {
+          results.push(teacher['membership'] = true);
+        } else {
+          results.push(teacher['membership'] = false);
         }
-        return results;
-      });
-    }
+      }
+      return results;
+    });
     return $scope.close = function() {
       return $uibModalInstance.dismiss();
     };

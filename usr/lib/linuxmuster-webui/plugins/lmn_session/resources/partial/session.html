@@ -141,11 +141,11 @@
                 <span checkbox id="{{participant.sAMAccountName}}.printing" ng-click="changeClass('printing', participant)" ng:model="participant.group_printing" ></span>
             </td>
             <td width="1">
-                <span uib-dropdown>
-                    <button class="btn btn-default" uib-dropdown-toggle>
+                <span  uib-dropdown class="dropup" >
+                    <button class="btn btn-default"  uib-dropdown-toggle>
                         <i class="fa fa-cog"></i>
                     </button>
-                    <ul uib-dropdown-menu class="dropdown-menu-right" style="width:200px">
+                    <ul uib-dropdown-menu class="dropdown-menu-right" style="width:200px; margin-bottom: -30px; margin-right: 40px">
                         <li>
                             <a ng:click="showInitialPassword([participant.sAMAccountName])" translate>
                                 Show initial password

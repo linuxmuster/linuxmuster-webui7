@@ -4,16 +4,29 @@ angular.module('lmn.session').controller 'LMNSessionFileSelectModalController', 
     $scope.receivers = receivers
     $scope.action = action
     $scope.command = command
-    
+
     ## Test path for upload with drag and drop
     ## TODO : Fix path here or handle this with sophomorix-transfer ?
     ## TODO : chown with custom api or with sophomorix-transfer ?
     ## TODO : reload modal after upload
     ## TODO : possibility to remove file from transfer directory ?
 
-    $scope.transferPath = "'/srv/samba/schools/default-school/teachers/de/transfer/'" 
-    
+
+    $scope.setTransferPath = (username) ->
+        # TODO: Way more generic
+        role = 'teachers'
+        school = 'default-school'
+        console.log ('transferPath')
+        $scope.transferPath = '/srv/samba/schools/'+school+'/'+role+'/'+username+'/transfer/'
+        console.log ($scope.transferPath)
+        #$scope.path = '/srv/samba/schools/'+school+'/'+role+'/'+username+'/transfer/'
+        #console.log ($scope.identity)
+        #$http.post('/api/lm/sophomorixUsers/'+role, {action: 'get-specified', user: username}).then (resp) ->
+        #        $scope.userDetails = resp.data
+        #        console.log ($scope.userDetails)
+
     if action is 'share'
+        $scope.setTransferPath($scope.identity.user)
         $http.post('/api/lmn/session/trans-list-files', {user: senders[0]}).then (resp) ->
             $scope.files = resp['data'][0]
             $scope.filesList = resp['data'][1]
@@ -35,6 +48,7 @@ angular.module('lmn.session').controller 'LMNSessionFileSelectModalController', 
 
     $scope.close = () ->
         $uibModalInstance.dismiss()
+
 
 
 angular.module('lmn.session').config ($routeProvider) ->
@@ -220,6 +234,8 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                         $scope.currentSession.comment = ''
                         $scope.sessionLoaded = false
                         $scope.visible.participanttable = 'none'
+
+
 
 
     $scope.getSessions = (username) ->

@@ -4,7 +4,7 @@ angular.module('lm.common').directive 'lmDragUpload', ($http, notify, messagebox
         scope: {
             uploadpath: '='
         }
-        repalce: true
+        replace: true
         template: (attrs) ->
             if (!attrs.target)
                 target = "'/api/filesystem/upload'"
@@ -21,16 +21,16 @@ angular.module('lm.common').directive 'lmDragUpload', ($http, notify, messagebox
                             </div>
                         </div>
                     </div>"
-            
+
         link: ($scope, attrs) ->
-            $scope.onUploadBegin = ($flow) -> 
+            $scope.onUploadBegin = ($flow) ->
                 msg = messagebox.show({progress: true})
                 filesystem.startFlowUpload($flow, $scope.uploadpath)
                 .then () ->
                     notify.success(gettext('Uploaded'))
                     msg.close()
                 , null, (progress) -> 
-                    msg.messagebox.title = 'Uploading: ' + Math.floor(100 * progress) + ' %'
+                    msg.messagebox.title = ':) Uploading: ' + Math.floor(100 * progress) + ' %'
     }
 
 angular.module('lm.common').directive 'lmSelectUpload', ($http, notify, messagebox, filesystem, gettext) ->
@@ -51,7 +51,7 @@ angular.module('lm.common').directive 'lmSelectUpload', ($http, notify, messageb
                             <input type=\"file\" flow-btn/>
                         </div>
                     </div>"
-            
+
         link: ($scope) ->
             $scope.onUploadBegin = ($flow) -> 
                 msg = messagebox.show({progress: true})
@@ -62,7 +62,7 @@ angular.module('lm.common').directive 'lmSelectUpload', ($http, notify, messageb
                 , null, (progress) -> 
                     msg.messagebox.title = 'Uploading: ' + Math.floor(100 * progress) + ' %'
     }
-    
+
 angular.module('lm.common').directive 'lmButtonUpload', ($http, notify, messagebox, filesystem, gettext) ->
     return {
         restrict: 'E'
@@ -84,7 +84,7 @@ angular.module('lm.common').directive 'lmButtonUpload', ($http, notify, messageb
                     </div>"
 
         link: ($scope) ->
-            
+
             $scope.onUploadBegin = ($flow) -> 
                 msg = messagebox.show({progress: true})
                 filesystem.startFlowUpload($flow, $scope.uploadpath)
@@ -94,7 +94,7 @@ angular.module('lm.common').directive 'lmButtonUpload', ($http, notify, messageb
                 , null, (progress) -> 
                     msg.messagebox.title = 'Uploading: ' + Math.floor(100 * progress) + ' %'
     }
-    
+
 ### Examples in templates :
 
     <lm-drag-upload uploadpath="'/srv/'"></lm-drag-upload>

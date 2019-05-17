@@ -12,14 +12,27 @@
     $scope.receivers = receivers;
     $scope.action = action;
     $scope.command = command;
-    
     //# Test path for upload with drag and drop
     //# TODO : Fix path here or handle this with sophomorix-transfer ?
     //# TODO : chown with custom api or with sophomorix-transfer ?
     //# TODO : reload modal after upload
     //# TODO : possibility to remove file from transfer directory ?
-    $scope.transferPath = "'/srv/samba/schools/default-school/teachers/de/transfer/'";
+    $scope.setTransferPath = function(username) {
+      var role, school;
+      // TODO: Way more generic
+      role = 'teachers';
+      school = 'default-school';
+      console.log('transferPath');
+      $scope.transferPath = '/srv/samba/schools/' + school + '/' + role + '/' + username + '/transfer/';
+      return console.log($scope.transferPath);
+    };
+    //$scope.path = '/srv/samba/schools/'+school+'/'+role+'/'+username+'/transfer/'
+    //console.log ($scope.identity)
+    //$http.post('/api/lm/sophomorixUsers/'+role, {action: 'get-specified', user: username}).then (resp) ->
+    //        $scope.userDetails = resp.data
+    //        console.log ($scope.userDetails)
     if (action === 'share') {
+      $scope.setTransferPath($scope.identity.user);
       $http.post('/api/lmn/session/trans-list-files', {
         user: senders[0]
       }).then(function(resp) {

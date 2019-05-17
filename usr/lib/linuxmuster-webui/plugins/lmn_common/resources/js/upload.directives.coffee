@@ -3,6 +3,7 @@ angular.module('lm.common').directive 'lmDragUpload', ($http, notify, messagebox
         restrict: 'E'
         scope: {
             uploadpath: '='
+            refresh: '='
         }
         replace: true
         template: (attrs) ->
@@ -28,9 +29,11 @@ angular.module('lm.common').directive 'lmDragUpload', ($http, notify, messagebox
                 filesystem.startFlowUpload($flow, $scope.uploadpath)
                 .then () ->
                     notify.success(gettext('Uploaded'))
+                    console.log ('successfull upload refresh')
+                    $scope.refresh()
                     msg.close()
-                , null, (progress) -> 
-                    msg.messagebox.title = ':) Uploading: ' + Math.floor(100 * progress) + ' %'
+                , null, (progress) ->
+                    msg.messagebox.title = 'Uploading: ' + Math.floor(100 * progress) + ' %'
     }
 
 angular.module('lm.common').directive 'lmSelectUpload', ($http, notify, messagebox, filesystem, gettext) ->
@@ -39,7 +42,7 @@ angular.module('lm.common').directive 'lmSelectUpload', ($http, notify, messageb
         scope: {
             uploadpath: '='
         }
-        template: (attrs) -> 
+        template: (attrs) ->
             if (!attrs.target)
                 target = "'/api/filesystem/upload'"
             else

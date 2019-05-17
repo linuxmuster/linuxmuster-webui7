@@ -75,12 +75,10 @@
         </span>
     </a>
 
-    <div ng-if="bulkMode == 'false'">
-        <span ng-if="action == 'share'">
-            <h4 translate>Upload file</h4>
-            <lm-drag-upload uploadpath="transferPath"></lm-drag-upload>
-        </span>
-    </div>
+    <span ng-if="action == 'share'">
+        <h4 translate>Upload file</h4>
+        <lm-drag-upload uploadpath="transferPath" refresh="share"></lm-drag-upload>
+    </span>
 
 
 

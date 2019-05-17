@@ -303,7 +303,7 @@ class Handler(HttpPlugin):
                         receiversCSV = ",".join(receivers)
                         for File in files:
                             sophomorixCommand = ['sophomorix-transfer', '-jj', '--scopy', '--from-user', sender, '--to-user', receiversCSV, '--from-path', 'transfer/'+File, '--to-path', 'transfer/']
-                            returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
+                            returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
                 except Exception as e:
                     raise Exception('Something went wrong. Error:\n' + str(e))
             if command == 'copy':
@@ -316,11 +316,11 @@ class Handler(HttpPlugin):
                         # if files is All we're automatically in bulk mode
                         if files == "All":
                             sophomorixCommand = ['sophomorix-transfer', '-jj', '--scopy', '--from-user', sendersCSV, '--to-user', receiver, '--from-path', 'transfer', '--to-path', 'transfer/collected/'+now+'-'+session+'/', '--to-path-addon', 'fullinfo',  '--no-target-directory']
-                            returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
+                            returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
                         else:
                             for File in files:
                                 sophomorixCommand = ['sophomorix-transfer', '-jj', '--scopy', '--from-user', sendersCSV, '--to-user', receiver, '--from-path', 'transfer/'+File, '--to-path', 'transfer/collected/'+now+'-'+session+'/', '--to-path-addon', 'fullinfo' ]
-                                returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
+                                returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
                 except Exception as e:
                     raise Exception('Something went wrong. Error:\n' + str(e))
             if command == 'move':
@@ -332,15 +332,16 @@ class Handler(HttpPlugin):
                         # if files is All we're automatically in bulk mode
                         if files == "All":
                             sophomorixCommand = ['sophomorix-transfer', '-jj', '--move', '--keep-source-directory', '--from-user', sendersCSV, '--to-user', receiver, '--from-path', 'transfer', '--to-path', 'transfer/collected/'+now+'-'+session+'/', '--to-path-addon', 'fullinfo',  '--no-target-directory']
-                            returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
+                            returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
                         else:
                             for File in files:
                                 sophomorixCommand = ['sophomorix-transfer', '-jj', '--move', '--from-user', sendersCSV, '--to-user', receiver, '--from-path', 'transfer/'+File, '--to-path', 'transfer/collected/'+now+'-'+session+'/', '--to-path-addon', 'fullinfo' ]
-                                returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
+                                returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
                 except Exception as e:
                     raise Exception('Something went wrong. Error:\n' + str(e))
-        if returnMessage['TYPE'] == "ERROR":
-            return returnMessage['TYPE']['LOG']
-        return returnMessage['TYPE'], returnMessage['LOG']
-        return returnMessage['TYPE']['LOG']
-        #return returnMessage
+        # TODO: Fifure out why return message changed
+        #if returnMessage['TYPE'] == "ERROR":
+        ##    return returnMessage['TYPE']['LOG']
+        #return returnMessage['TYPE'], returnMessage['LOG']
+        #return returnMessage['TYPE']['LOG']
+        return returnMessage

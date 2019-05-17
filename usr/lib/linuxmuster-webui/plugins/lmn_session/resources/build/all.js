@@ -13,42 +13,25 @@
     $scope.action = action;
     $scope.command = command;
     //# Test path for upload with drag and drop
-    //# TODO : Fix path here or handle this with sophomorix-transfer ?
-    //# TODO : chown with custom api or with sophomorix-transfer ?
-    //# TODO : reload modal after upload
+    //# TODO : Fix path here or handle this with sophomorix-transfer ? --> Generic path (eg. /srv/upload, then use sophomorix-transfer)
+    //# TODO : chown with custom api or with sophomorix-transfer ? --> should be handled by sophomorix-transfer
+    //# TODO : reload modal after upload -- Done
+
     //# TODO : possibility to remove file from transfer directory ?
     $scope.setTransferPath = function(username) {
       var role, school;
       // TODO: Way more generic
       role = 'teachers';
       school = 'default-school';
-      console.log('transferPath');
-      $scope.transferPath = '/srv/samba/schools/' + school + '/' + role + '/' + username + '/transfer/';
-      return console.log($scope.transferPath);
+      //console.log ('transferPath')
+      return $scope.transferPath = '/srv/samba/schools/' + school + '/' + role + '/' + username + '/transfer/';
     };
+    //console.log ($scope.transferPath)
     //$scope.path = '/srv/samba/schools/'+school+'/'+role+'/'+username+'/transfer/'
     //console.log ($scope.identity)
     //$http.post('/api/lm/sophomorixUsers/'+role, {action: 'get-specified', user: username}).then (resp) ->
     //        $scope.userDetails = resp.data
     //        console.log ($scope.userDetails)
-    if (action === 'share') {
-      $scope.setTransferPath($scope.identity.user);
-      $http.post('/api/lmn/session/trans-list-files', {
-        user: senders[0]
-      }).then(function(resp) {
-        $scope.files = resp['data'][0];
-        return $scope.filesList = resp['data'][1];
-      });
-    } else {
-      if (bulkMode === 'false') {
-        $http.post('/api/lmn/session/trans-list-files', {
-          user: senders
-        }).then(function(resp) {
-          $scope.files = resp['data'][0];
-          return $scope.filesList = resp['data'][1];
-        });
-      }
-    }
     $scope.save = function() {
       var filesToTrans;
       filesToTrans = [];
@@ -70,11 +53,44 @@
         bulkMode: bulkMode
       });
     };
-    return $scope.close = function() {
+    $scope.close = function() {
       return $uibModalInstance.dismiss();
     };
+    $scope.share = function() {
+      //console.log ($scope.transferPath)
+      return $http.post('/api/lmn/session/trans-list-files', {
+        user: senders[0]
+      }).then(function(resp) {
+        $scope.files = resp['data'][0];
+        return $scope.filesList = resp['data'][1];
+      });
+    };
+    $scope.collect = function() {
+      if (bulkMode === 'false') {
+        return $http.post('/api/lmn/session/trans-list-files', {
+          user: senders
+        }).then(function(resp) {
+          $scope.files = resp['data'][0];
+          return $scope.filesList = resp['data'][1];
+        });
+      }
+    };
+    $scope.setTransferPath($scope.identity.user);
+    if (action === 'share') {
+      return $scope.share();
+    } else {
+      //$scope.setTransferPath($scope.identity.user)
+      //$http.post('/api/lmn/session/trans-list-files', {user: senders[0]}).then (resp) ->
+      //    $scope.files = resp['data'][0]
+      //    $scope.filesList = resp['data'][1]
+      return $scope.collect();
+    }
   });
 
+  //if bulkMode is 'false'
+  //    $http.post('/api/lmn/session/trans-list-files', {user: senders}).then (resp) ->
+  //        $scope.files = resp['data'][0]
+  //        $scope.filesList = resp['data'][1]
   angular.module('lmn.session').config(function($routeProvider) {
     return $routeProvider.when('/view/lmn/session', {
       controller: 'LMNSessionController',

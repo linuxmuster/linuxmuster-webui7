@@ -82,7 +82,8 @@
     return {
       restrict: 'E',
       scope: {
-        uploadpath: '='
+        uploadpath: '=',
+        refresh: '='
       },
       replace: true,
       template: function(attrs) {
@@ -95,8 +96,6 @@
         return `<div> <div    flow-init="{target: ${target}, chunkSize: 1024 * 1024, singleFile: true}" flow-files-submitted="onUploadBegin($flow)" flow-drag-enter="class='dragdroparea-enter'" flow-drag-leave="class='dragdroparea'" ng-style="style"> <div class="dragdroparea" flow-drop  ng-class="class" translate> Drag And Drop your file here </div> </div> </div>`;
       },
       link: function($scope, attrs) {
-        console.log($scope.uploadpath);
-        console.log('test123');
         return $scope.onUploadBegin = function($flow) {
           var msg;
           msg = messagebox.show({
@@ -104,9 +103,11 @@
           });
           return filesystem.startFlowUpload($flow, $scope.uploadpath).then(function() {
             notify.success(gettext('Uploaded'));
+            console.log('successfull upload refresh');
+            $scope.refresh();
             return msg.close();
           }, null, function(progress) {
-            return msg.messagebox.title = ':) Uploading: ' + Math.floor(100 * progress) + ' %';
+            return msg.messagebox.title = 'Uploading: ' + Math.floor(100 * progress) + ' %';
           });
         };
       }

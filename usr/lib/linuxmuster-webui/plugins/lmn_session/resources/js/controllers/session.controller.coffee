@@ -6,9 +6,10 @@ angular.module('lmn.session').controller 'LMNSessionFileSelectModalController', 
     $scope.command = command
 
     ## Test path for upload with drag and drop
-    ## TODO : Fix path here or handle this with sophomorix-transfer ?
-    ## TODO : chown with custom api or with sophomorix-transfer ?
-    ## TODO : reload modal after upload
+    ## TODO : Fix path here or handle this with sophomorix-transfer ? --> Generic path (eg. /srv/upload, then use sophomorix-transfer)
+    ## TODO : chown with custom api or with sophomorix-transfer ? --> should be handled by sophomorix-transfer
+    ## TODO : reload modal after upload -- Done
+
     ## TODO : possibility to remove file from transfer directory ?
 
 
@@ -16,25 +17,15 @@ angular.module('lmn.session').controller 'LMNSessionFileSelectModalController', 
         # TODO: Way more generic
         role = 'teachers'
         school = 'default-school'
-        console.log ('transferPath')
+        #console.log ('transferPath')
         $scope.transferPath = '/srv/samba/schools/'+school+'/'+role+'/'+username+'/transfer/'
-        console.log ($scope.transferPath)
+        #console.log ($scope.transferPath)
         #$scope.path = '/srv/samba/schools/'+school+'/'+role+'/'+username+'/transfer/'
         #console.log ($scope.identity)
         #$http.post('/api/lm/sophomorixUsers/'+role, {action: 'get-specified', user: username}).then (resp) ->
         #        $scope.userDetails = resp.data
         #        console.log ($scope.userDetails)
 
-    if action is 'share'
-        $scope.setTransferPath($scope.identity.user)
-        $http.post('/api/lmn/session/trans-list-files', {user: senders[0]}).then (resp) ->
-            $scope.files = resp['data'][0]
-            $scope.filesList = resp['data'][1]
-    else
-        if bulkMode is 'false'
-            $http.post('/api/lmn/session/trans-list-files', {user: senders}).then (resp) ->
-                $scope.files = resp['data'][0]
-                $scope.filesList = resp['data'][1]
 
     $scope.save = () ->
         filesToTrans =  []
@@ -48,6 +39,32 @@ angular.module('lmn.session').controller 'LMNSessionFileSelectModalController', 
 
     $scope.close = () ->
         $uibModalInstance.dismiss()
+
+    $scope.share = () ->
+        #console.log ($scope.transferPath)
+        $http.post('/api/lmn/session/trans-list-files', {user: senders[0]}).then (resp) ->
+            $scope.files = resp['data'][0]
+            $scope.filesList = resp['data'][1]
+
+    $scope.collect = () ->
+        if bulkMode is 'false'
+            $http.post('/api/lmn/session/trans-list-files', {user: senders}).then (resp) ->
+                $scope.files = resp['data'][0]
+                $scope.filesList = resp['data'][1]
+
+    $scope.setTransferPath($scope.identity.user)
+    if action is 'share'
+        $scope.share()
+        #$scope.setTransferPath($scope.identity.user)
+        #$http.post('/api/lmn/session/trans-list-files', {user: senders[0]}).then (resp) ->
+        #    $scope.files = resp['data'][0]
+        #    $scope.filesList = resp['data'][1]
+    else
+        $scope.collect()
+        #if bulkMode is 'false'
+        #    $http.post('/api/lmn/session/trans-list-files', {user: senders}).then (resp) ->
+        #        $scope.files = resp['data'][0]
+        #        $scope.filesList = resp['data'][1]
 
 
 

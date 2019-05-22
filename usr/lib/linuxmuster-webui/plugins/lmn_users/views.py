@@ -350,20 +350,22 @@ class Handler(HttpPlugin):
         if action == 'create':
             with authorize('lm:users:schooladmins:create'):
                 sophomorixCommand = ['sophomorix-admin', '--create-school-admin', user, '--school', school, '--random-passwd-save', '-jj']
-                result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
-                if result['TYPE'] == "ERROR":
-                    return ["ERROR", result['MESSAGE_EN']]
-                if result['TYPE'] == "LOG":
-                    return ["LOG", result['LOG']]
-                # return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
+                result = lmn_getSophomorixValue(sophomorixCommand, '')
+                #if result['TYPE'] == "ERROR":
+                #    return ["ERROR", result['MESSAGE_EN']]
+                #if result['TYPE'] == "LOG":
+                #    return ["LOG", result['LOG']]
+                return result['COMMENT_EN']
+                ### return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
         if action == 'delete':
             with authorize('lm:users:schooladmins:delete'):
                 sophomorixCommand = ['sophomorix-admin', '--kill', user, '-jj']
-                result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
-                if result['TYPE'] == "ERROR":
-                    return ["ERROR", result['MESSAGE_EN']]
-                if result['TYPE'] == "LOG":
-                    return ["LOG", result['LOG']]
+                result = lmn_getSophomorixValue(sophomorixCommand, '')
+                #if result['TYPE'] == "ERROR":
+                #    return ["ERROR", result['MESSAGE_EN']]
+                #if result['TYPE'] == "LOG":
+                #    return ["LOG", result['LOG']]
+                return result['COMMENT_EN']
 
     @url(r'/api/lm/users/change-global-admin')
     @authorize('lm:users:globaladmins:create')
@@ -375,20 +377,22 @@ class Handler(HttpPlugin):
         if action == 'create':
             with authorize('lm:users:globaladmins:create'):
                 sophomorixCommand = ['sophomorix-admin', '--create-global-admin', user, '--random-passwd-save', '-jj']
-                result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
-                if result['TYPE'] == "ERROR":
-                    return ["ERROR", result['MESSAGE_EN']]
-                if result['TYPE'] == "LOG":
-                    return ["LOG", result['LOG']]
+                result = lmn_getSophomorixValue(sophomorixCommand, '')
+                #if result['TYPE'] == "ERROR":
+                #    return ["ERROR", result['MESSAGE_EN']]
+                #if result['TYPE'] == "LOG":
+                #    return ["LOG", result['LOG']]
+                return result['COMMENT_EN']
                 # return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
         if action == 'delete':
             with authorize('lm:users:globaladmins:delete'):
                 sophomorixCommand = ['sophomorix-admin', '--kill', user, '-jj']
-                result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
-                if result['TYPE'] == "ERROR":
-                    return result['MESSAGE_EN']
-                if result['TYPE'] == "LOG":
-                    return result['LOG']
+                result = lmn_getSophomorixValue(sophomorixCommand, '')
+                #if result['TYPE'] == "ERROR":
+                #    return result['MESSAGE_EN']
+                #if result['TYPE'] == "LOG":
+                #    return result['LOG']
+                return result['COMMENT_EN']
                 # return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
 
     @url(r'/api/lmn/sophomorixUsers/new-file')

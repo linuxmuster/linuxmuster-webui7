@@ -52,7 +52,7 @@
             <span translate> There are no schoolclasses available. Ask the administrator to import students</span>
         </div>
         <div class="container">
-            <div class="row">
+            <div class="row" style="width: 90%">
                 <div class="col-xs-12 col-sm-6 col-md-3" ng:repeat="group in groups|filter: {type: 'schoolclass'}|filter:filter|orderBy:[sort.fx]:sortReverse">
                     <div>
                         <span id={{group.groupname}} checkbox ng:model="group.membership" ng-click='groupChanged(group.groupname)'></span>
@@ -73,7 +73,7 @@
             <span translate> There are no printers configured yet. Ask your administrator to configure one.</span>
         </div>
         <div class="container">
-            <div class="row">
+            <div class="row" style="width: 90%">
                 <div class="col-xs-12 col-sm-6 col-md-3" ng:repeat="group in groups|filter: {type: 'printer'}|filter:filter|orderBy:[sort.fx]:sortReverse">
                     <div>
                         <span id={{group.groupname}} checkbox ng:model="group.membership" ng-click='groupChanged(group.groupname)'></span>
@@ -96,7 +96,7 @@
         </div>
 
         <div class="container">
-            <div class="row">
+            <div class="row" style="width: 90%">
                 <div class="col-xs-12 col-sm-6 col-md-3" ng:repeat="group in groups|filter: {type: 'project'}|filter:filter|orderBy:[sort.fx]:sortReverse">
                     <div>
                         <span id={{group.groupname}} checkbox ng:model="group.membership" ng-click='groupChanged(group.groupname)'></span>

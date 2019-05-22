@@ -46,12 +46,12 @@
     <div ng-if="bulkMode == 'false' || action == 'share'">
         <progress-spinner ng:show="files == null"></progress-spinner>
     </div>
+    <span ng:show="filesList.length == 0">
+        <span translate>No files or directories found in transfer</span>
+    </span>
     <!-- This is showed twice to show directorys first -->
     <a  ng:repeat="file in filesList|orderBy: -file">
         <span ng-if="files != null">
-            <span ng-if="filesList[0] == 'null'">
-                <span translate>No files or directories found in transfer</span>
-            </span>
             <span ng:show="files['TREE'][file]['TYPE'] == 'directory'">
                 <span id={{file}} checkbox ng:model="files['TREE'][file]['checked']"> </span>
                 <span ng-if="files['TREE'][file]['TYPE'] == 'directory'">
@@ -62,7 +62,7 @@
             </span>
         </span>
     </a>
-    <a  ng:repeat="file in filesList|orderBy: -file">
+    <span  ng:repeat="file in filesList|orderBy: -file">
         <span ng-if="files != null">
             <span ng:show="files['TREE'][file]['TYPE'] == 'file'">
                 <span id={{file}} checkbox ng:model="files['TREE'][file]['checked']"> </span>
@@ -70,10 +70,11 @@
                     <i class="fa fa-fw fa-file-o"></i>
                 </span>
                 <span>{{file}}</span>
+                <span class="pull-right" ng:click="removeFile(file)"><a href="#"> <i class="fa fa-trash"></i></a></span>
                 <br>
             </span>
         </span>
-    </a>
+    </span>
 
     <span ng-if="action == 'share'">
         <h4 translate>Upload file</h4>

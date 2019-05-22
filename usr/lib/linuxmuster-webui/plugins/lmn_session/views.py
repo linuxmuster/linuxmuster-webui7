@@ -277,7 +277,7 @@ class Handler(HttpPlugin):
         #raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(availableFiles))
         availableFilesList = []
         if availableFiles['COUNT']['files'] == 0 and availableFiles['COUNT']['directories'] == 0:
-            return availableFiles, ['null']
+            return availableFiles, []
         for availableFile in availableFiles['TREE']:
             availableFilesList.append(availableFile)
         return availableFiles, availableFilesList

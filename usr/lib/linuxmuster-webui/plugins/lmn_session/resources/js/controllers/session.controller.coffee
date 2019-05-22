@@ -9,8 +9,7 @@ angular.module('lmn.session').controller 'LMNSessionFileSelectModalController', 
     ## TODO : Fix path here or handle this with sophomorix-transfer ? --> Generic path (eg. /srv/upload, then use sophomorix-transfer)
     ## TODO : chown with custom api or with sophomorix-transfer ? --> should be handled by sophomorix-transfer
     ## TODO : reload modal after upload -- Done
-
-    ## TODO : possibility to remove file from transfer directory ?
+    ## TODO : possibility to remove file from transfer directory -- Done
 
 
     $scope.setTransferPath = (username) ->
@@ -51,6 +50,17 @@ angular.module('lmn.session').controller 'LMNSessionFileSelectModalController', 
             $http.post('/api/lmn/session/trans-list-files', {user: senders}).then (resp) ->
                 $scope.files = resp['data'][0]
                 $scope.filesList = resp['data'][1]
+
+    $scope.removeFile = (file) ->
+        role = 'teachers'
+        school = 'default-school'
+        path = '/srv/samba/schools/'+school+'/'+role+'/'+$scope.identity.user+'/transfer/'+file
+        $http.post('/api/lm/remove-file', {filepath: path}).then (resp) ->
+            notify.success(gettext("File " + file + " removed"))
+            delete $scope.files['TREE'][file]
+            $scope.files['COUNT']['files'] = $scope.files['COUNT']['files'] - 1
+            pos = $scope.filesList.indexOf(file)
+            $scope.filesList.splice(pos, 1)
 
     $scope.setTransferPath($scope.identity.user)
     if action is 'share'

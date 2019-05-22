@@ -18,12 +18,26 @@ class Handler(HttpPlugin):
         with open(path) as f:
             f.seek(int(http_context.query.get('offset', '0')))
             return f.read()
-            
+        
     @url(r'/api/lm/remove-file') ## TODO authorize
     @endpoint(api=True)
     def handle_api_remove_file(self, http_context):
+        """Remove file with given path"""
         if http_context.method == 'POST':
-            filepath = '/etc/linuxmuster/sophomorix/default-school/' + http_context.json_body()['filepath']
+            filepath = http_context.json_body()['filepath']
+            if not os.path.exists(filepath):
+                return
+            else:
+                os.unlink(filepath)
+                return True
+        
+    @url(r'/api/lm/remove-backup') ## TODO authorize
+    @endpoint(api=True)
+    def handle_api_remove_backup(self, http_context):
+        """Remove backup file in directory /etc/linuxmuster/sophomorix/SCHOOL"""
+        if http_context.method == 'POST':
+            school = 'default-school'
+            filepath = '/etc/linuxmuster/sophomorix/' + school + '/' + http_context.json_body()['filepath']
             if not os.path.exists(filepath):
                 return
             else:

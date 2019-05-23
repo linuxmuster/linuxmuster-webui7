@@ -45,7 +45,10 @@ angular.module('lm.users').controller 'LMUsersStudentsListController', ($scope, 
         $scope.encoding = resp.data["userfile.students.csv"].encoding
         if $scope.encoding is 'auto'
             $http.post('/api/lmn/schoolsettings/determine-encoding', {path: '/etc/linuxmuster/sophomorix/'+school+'/students.csv'}).then (response) ->
-                $scope.encoding = response.data
+                if response.data is 'unknown'
+                    $scope.encoding = 'utf-8'
+                else
+                    $scope.encoding = response.data
         $http.get("/api/lm/users/students-list?encoding=#{$scope.encoding}").then (resp) ->
             $scope.students = resp.data
 
@@ -61,7 +64,7 @@ angular.module('lm.users').controller 'LMUsersStudentsListController', ($scope, 
         for student in $scope.students
             if student['_isNew'] is true
                 console.log (student)
-                fields = ["class","last_name","first_name","birthday","id"]
+                fields = ["class","last_name","first_name","birthday"]
                 i = 0
                 while i < fields.length
                   field = fields[i]

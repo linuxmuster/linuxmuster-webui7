@@ -1148,12 +1148,16 @@
     $http.get('/api/lm/schoolsettings').then(function(resp) {
       var school;
       school = 'default-school';
-      $scope.encoding = resp.data["userfile.teachers.csv"].encoding || 'ISO8859-1';
+      $scope.encoding = resp.data["userfile.teachers.csv"].encoding;
       if ($scope.encoding === 'auto') {
         $http.post('/api/lmn/schoolsettings/determine-encoding', {
           path: '/etc/linuxmuster/sophomorix/' + school + '/teachers.csv'
         }).then(function(response) {
-          return $scope.encoding = response.data;
+          if (response.data === 'unknown') {
+            return $scope.encoding = 'utf-8';
+          } else {
+            return $scope.encoding = response.data;
+          }
         });
       }
       return $http.get(`/api/lm/users/teachers-list?encoding=${$scope.encoding}`).then(function(resp) {
@@ -1738,8 +1742,15 @@
   angular.module('lm.users').controller('LMUsersCheckModalController', function($scope, $http, notify, $uibModalInstance, $uibModal, gettext) {
     $scope.isWorking = true;
     $http.get('/api/lm/users/check').then(function(resp) {
-      $scope.showCheckResults(resp.data);
-      return $uibModalInstance.close();
+      if (resp.data['OUTPUT'][0]['TYPE'] === 'ERROR') {
+        notify.error(gettext('Check failed'), resp.data.message);
+        $scope.isWorking = false;
+        $scope.error = true;
+        return $scope.errorMessage = resp.data['OUTPUT'][0]['MESSAGE_EN'];
+      } else {
+        $scope.showCheckResults(resp.data);
+        return $uibModalInstance.close();
+      }
     }).catch(function(resp) {
       $scope.isWorking = false;
       $scope.error = true;

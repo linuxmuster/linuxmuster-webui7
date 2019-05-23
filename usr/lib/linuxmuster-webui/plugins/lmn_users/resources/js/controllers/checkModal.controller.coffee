@@ -47,8 +47,14 @@ angular.module('lm.users').controller 'LMUsersCheckModalController', ($scope, $h
     $scope.isWorking = true
 
     $http.get('/api/lm/users/check').then (resp) ->
-        $scope.showCheckResults(resp.data)
-        $uibModalInstance.close()
+        if resp.data['OUTPUT'][0]['TYPE']  is 'ERROR'
+            notify.error gettext('Check failed'), resp.data.message
+            $scope.isWorking = false
+            $scope.error = true
+            $scope.errorMessage = resp.data['OUTPUT'][0]['MESSAGE_EN']
+        else
+            $scope.showCheckResults(resp.data)
+            $uibModalInstance.close()
     .catch (resp) ->
         $scope.isWorking = false
         $scope.error = true

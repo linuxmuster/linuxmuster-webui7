@@ -103,6 +103,9 @@
             if (!student.hasOwnProperty(field)) {
               informationMissing = true;
             }
+            if (student[field] === '') {
+              informationMissing = true;
+            }
             i++;
           }
         }
@@ -1183,18 +1186,51 @@
       });
     };
     $scope.save = function() {
-      var i, len, ref, teacher;
+      var field, fields, i, informationMissing, j, k, len, len1, ref, ref1, teacher;
+      informationMissing = false;
       ref = $scope.teachers;
-      for (i = 0, len = ref.length; i < len; i++) {
-        teacher = ref[i];
-        if (teacher.isNew) {
-          delete teacher['isNew'];
+      for (j = 0, len = ref.length; j < len; j++) {
+        teacher = ref[j];
+        console.log(teacher);
+        if (teacher['_isNew'] === true) {
+          fields = ["last_name", "first_name", "birthday", "login"];
+          i = 0;
+          while (i < fields.length) {
+            field = fields[i];
+            if (!teacher.hasOwnProperty(field)) {
+              informationMissing = true;
+            }
+            if (teacher[field] === '') {
+              informationMissing = true;
+            }
+            i++;
+          }
+        }
+      }
+      console.log(informationMissing);
+      if (informationMissing === true) {
+        // TODO: Color line with missing info
+        notify.error(gettext('Empty field(s) in a row'));
+        return;
+      } else {
+        ref1 = $scope.teachers;
+        for (k = 0, len1 = ref1.length; k < len1; k++) {
+          teacher = ref1[k];
+          if (teacher.isNew) {
+            delete teacher['isNew'];
+          }
         }
       }
       return $http.post(`/api/lm/users/teachers-list?encoding=${$scope.encoding}`, $scope.teachers).then(function() {
         return notify.success(gettext('Saved'));
       });
     };
+    //    $scope.save = () ->
+    //        for teacher in $scope.teachers
+    //            if teacher.isNew
+    //                delete teacher['isNew']
+    //        return $http.post("/api/lm/users/teachers-list?encoding=#{$scope.encoding}", $scope.teachers).then () ->
+    //            notify.success gettext('Saved')
     $scope.saveAndCheck = function() {
       return $scope.save().then(function() {
         return $uibModal.open({

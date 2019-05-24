@@ -70,6 +70,8 @@ angular.module('lm.users').controller 'LMUsersStudentsListController', ($scope, 
                   field = fields[i]
                   if not student.hasOwnProperty(field)
                     informationMissing = true
+                  if student[field] is ''
+                      informationMissing = true
                   i++
         if informationMissing is true
             # TODO: Color line with missing info

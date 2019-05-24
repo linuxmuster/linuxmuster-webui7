@@ -75,11 +75,38 @@ angular.module('lm.users').controller 'LMUsersTeachersListController', ($scope, 
             $route.reload()
 
     $scope.save = () ->
+        informationMissing = false
         for teacher in $scope.teachers
-            if teacher.isNew
-                delete teacher['isNew']
+            console.log (teacher)
+            if teacher['_isNew'] is true
+                fields = ["last_name","first_name","birthday","login"]
+                i = 0
+                while i < fields.length
+                    field = fields[i]
+                    if not teacher.hasOwnProperty(field)
+                        informationMissing = true
+                    if teacher[field] is ''
+                        informationMissing = true
+                    i++
+        console.log (informationMissing)
+        if informationMissing is true
+          # TODO: Color line with missing info
+            notify.error gettext('Empty field(s) in a row')
+            return
+        else
+            for teacher in $scope.teachers
+                if teacher.isNew
+                    delete teacher['isNew']
         return $http.post("/api/lm/users/teachers-list?encoding=#{$scope.encoding}", $scope.teachers).then () ->
             notify.success gettext('Saved')
+
+
+#    $scope.save = () ->
+#        for teacher in $scope.teachers
+#            if teacher.isNew
+#                delete teacher['isNew']
+#        return $http.post("/api/lm/users/teachers-list?encoding=#{$scope.encoding}", $scope.teachers).then () ->
+#            notify.success gettext('Saved')
 
     $scope.saveAndCheck = () ->
         $scope.save().then () ->

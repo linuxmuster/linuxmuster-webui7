@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.69-1) lmn7; urgency=medium 
+
+  * Current snapshot build 318cea2e21ff71233e71b2e362263dde5c5ddaa0
+   *     Added no students in printer module
+
+ -- Andreas Till <andreas.till@netzint.de> Fri May 24 11:47:57 UTC 2019
+
 linuxmuster-webui7 (1.0.68-1) lmn7; urgency=medium 
 
   * Current snapshot build 77da5f0b63537560f3fa68a23009e463862adbf7

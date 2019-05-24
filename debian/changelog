@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.68-1) lmn7; urgency=medium 
+
+  * Current snapshot build 77da5f0b63537560f3fa68a23009e463862adbf7
+   *     removed comments
+
+ -- Andreas Till <andreas.till@netzint.de> Fri May 24 10:05:12 UTC 2019
+
 linuxmuster-webui7 (1.0.67-1) lmn7; urgency=medium 
 
   * Current snapshot build 701d8e957a069bff7d22ef067ddbddf7919b394b

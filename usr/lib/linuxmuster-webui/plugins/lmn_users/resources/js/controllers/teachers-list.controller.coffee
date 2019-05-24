@@ -100,14 +100,6 @@ angular.module('lm.users').controller 'LMUsersTeachersListController', ($scope, 
         return $http.post("/api/lm/users/teachers-list?encoding=#{$scope.encoding}", $scope.teachers).then () ->
             notify.success gettext('Saved')
 
-
-#    $scope.save = () ->
-#        for teacher in $scope.teachers
-#            if teacher.isNew
-#                delete teacher['isNew']
-#        return $http.post("/api/lm/users/teachers-list?encoding=#{$scope.encoding}", $scope.teachers).then () ->
-#            notify.success gettext('Saved')
-
     $scope.saveAndCheck = () ->
         $scope.save().then () ->
             $uibModal.open(

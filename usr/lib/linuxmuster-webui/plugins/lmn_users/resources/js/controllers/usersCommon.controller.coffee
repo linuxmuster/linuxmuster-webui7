@@ -41,15 +41,16 @@ angular.module('lm.users').controller 'LMUsersUploadModalController', ($scope, $
         filesystem.startFlowUpload($flow, $scope.path).then(() ->
             notify.success(gettext('Uploaded'))
             filename = $flow["files"][0]["name"]
-            $http.post('/api/lmn/sophomorixUsers/new-file', {path: '/tmp/'+filename, userlist: userlist}).then (resp) ->
-                console.log (resp['data'])
-                if resp['data'][0] == 'ERROR'
-                    notify.error (resp['data'][1])
-                if resp['data'][0] == 'LOG'
-                    notify.success gettext(resp['data'][1])
-                # TODO: it would be better to reload just the content frame. Currently I dont know how to set the route to reload it
-                $window.location.reload()
-                msg.close()
+
+            #$http.post('/api/lmn/sophomorixUsers/new-file', {path: '/tmp/'+filename, userlist: userlist}).then (resp) ->
+            #    console.log (resp['data'])
+            #    if resp['data'][0] == 'ERROR'
+            #        notify.error (resp['data'][1])
+            #    if resp['data'][0] == 'LOG'
+            #        notify.success gettext(resp['data'][1])
+            #    # TODO: it would be better to reload just the content frame. Currently I dont know how to set the route to reload it
+            #    $window.location.reload()
+            #    msg.close()
         , null, (progress) ->
           msg.messagebox.title = "Uploading: #{Math.floor(100 * progress)}%"
         )

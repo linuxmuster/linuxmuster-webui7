@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-28 18:14+0200\n"
-"PO-Revision-Date: 2019-04-28 16:23\n"
+"PO-Revision-Date: 2019-05-25 19:11\n"
 "Last-Translator: kiarn\n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -22,7 +22,7 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_printers/resources/partial/printer.modal.html:33
 msgid "Close"
-msgstr ""
+msgstr "Κλείσιμο"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_printers/resources/partial/printer.modal.html:16
 msgid "No filter is set. All devices can use this printer."
@@ -31,7 +31,7 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_printers/resources/partial/index.html:16
 #: usr/lib/linuxmuster-webui/plugins/lmn_printers/resources/partial/printer.modal.html:32
 msgid "Save"
-msgstr ""
+msgstr "Aποθήκευση"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_printers/resources/partial/printer.modal.html:23
 msgid "Type to search..."
@@ -52,5 +52,5 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_printers/resources/js/controllers/index.controller.coffee:90
 msgid "Saved"
-msgstr ""
+msgstr "Αποθηκεύτηκε"
 

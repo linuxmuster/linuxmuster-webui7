@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-28 18:14+0200\n"
-"PO-Revision-Date: 2019-04-28 16:23\n"
+"POT-Creation-Date: 2019-05-25 17:57+0200\n"
+"PO-Revision-Date: 2019-05-25 19:11\n"
 "Last-Translator: kiarn\n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -26,11 +26,11 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/apply.modal.html:11
 msgid "Close"
-msgstr ""
+msgstr "Κλείσιμο"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/apply.modal.html:10
 msgid "Details"
-msgstr ""
+msgstr "Λεπτομέρειες"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:95
 msgid "Domain-Controller"
@@ -90,7 +90,7 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:146
 msgid "Save"
-msgstr ""
+msgstr "Aποθήκευση"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:147
 msgid "Save &amp; import"
@@ -135,7 +135,7 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/main.py:15
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:27
 msgid "Devices"
-msgstr ""
+msgstr "Συσκευές"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/main.py:30
 msgid "Read/write devices"
@@ -156,7 +156,7 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:57
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:122
 msgid "Room"
-msgstr ""
+msgstr "Αίθουσα"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:61
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:128
@@ -218,7 +218,7 @@ msgstr ""
 msgid "Sophomorix-Comment"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:181
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:182
 msgid "Saved"
-msgstr ""
+msgstr "Αποθηκεύτηκε"
 

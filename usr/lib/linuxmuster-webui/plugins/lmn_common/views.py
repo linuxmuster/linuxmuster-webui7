@@ -29,7 +29,7 @@ class Handler(HttpPlugin):
             if not os.path.exists(filepath):
                 return
             else:
-                shutil.rmtree(filepath, ignore-errors=True)
+                shutil.rmtree(filepath, ignore_errors=True)
                 return True
     
     @url(r'/api/lm/remove-file') ## TODO authorize

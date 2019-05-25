@@ -61,8 +61,7 @@
         user: senders[0]
       }).then(function(resp) {
         $scope.files = resp['data'][0];
-        $scope.filesList = resp['data'][1];
-        return console.log($scope.files);
+        return $scope.filesList = resp['data'][1];
       });
     };
     $scope.collect = function() {

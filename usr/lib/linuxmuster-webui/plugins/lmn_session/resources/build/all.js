@@ -61,7 +61,8 @@
         user: senders[0]
       }).then(function(resp) {
         $scope.files = resp['data'][0];
-        return $scope.filesList = resp['data'][1];
+        $scope.filesList = resp['data'][1];
+        return console.log($scope.files);
       });
     };
     $scope.collect = function() {
@@ -80,7 +81,7 @@
       school = 'default-school';
       path = '/srv/samba/schools/' + school + '/' + role + '/' + $scope.identity.user + '/transfer/' + file;
       return messagebox.show({
-        text: gettext('Delete file ?'),
+        text: gettext('Are you sure you want to delete the file ' + file + ' permanently?'),
         positive: gettext('Delete'),
         negative: gettext('Cancel')
       }).then(function() {
@@ -89,6 +90,28 @@
         }).then(function(resp) {
           var pos;
           notify.success(gettext("File " + file + " removed"));
+          delete $scope.files['TREE'][file];
+          $scope.files['COUNT']['files'] = $scope.files['COUNT']['files'] - 1;
+          pos = $scope.filesList.indexOf(file);
+          return $scope.filesList.splice(pos, 1);
+        });
+      });
+    };
+    $scope.removeDir = function(file) {
+      var path, role, school;
+      role = 'teachers';
+      school = 'default-school';
+      path = '/srv/samba/schools/' + school + '/' + role + '/' + $scope.identity.user + '/transfer/' + file;
+      return messagebox.show({
+        text: gettext('Are you sure you want to delete the directory ' + file + ' and its content permanently?'),
+        positive: gettext('Delete'),
+        negative: gettext('Cancel')
+      }).then(function() {
+        return $http.post('/api/lm/remove-dir', {
+          filepath: path
+        }).then(function(resp) {
+          var pos;
+          notify.success(gettext("Directory " + file + " removed"));
           delete $scope.files['TREE'][file];
           $scope.files['COUNT']['files'] = $scope.files['COUNT']['files'] - 1;
           pos = $scope.filesList.indexOf(file);

@@ -56,12 +56,28 @@ angular.module('lmn.session').controller 'LMNSessionFileSelectModalController', 
         school = 'default-school'
         path = '/srv/samba/schools/'+school+'/'+role+'/'+$scope.identity.user+'/transfer/'+file
         messagebox.show({
-            text: gettext('Delete file ?'),
+            text: gettext('Are you sure you want to delete the file ' + file + ' permanently?'),
             positive: gettext('Delete'),
             negative: gettext('Cancel')
         }).then () ->
             $http.post('/api/lm/remove-file', {filepath: path}).then (resp) ->
                 notify.success(gettext("File " + file + " removed"))
+                delete $scope.files['TREE'][file]
+                $scope.files['COUNT']['files'] = $scope.files['COUNT']['files'] - 1
+                pos = $scope.filesList.indexOf(file)
+                $scope.filesList.splice(pos, 1)
+
+    $scope.removeDir = (file) ->
+        role = 'teachers'
+        school = 'default-school'
+        path = '/srv/samba/schools/'+school+'/'+role+'/'+$scope.identity.user+'/transfer/'+file
+        messagebox.show({
+            text: gettext('Are you sure you want to delete the directory ' + file + ' and its content permanently?'),
+            positive: gettext('Delete'),
+            negative: gettext('Cancel')
+        }).then () ->
+            $http.post('/api/lm/remove-dir', {filepath: path}).then (resp) ->
+                notify.success(gettext("Directory " + file + " removed"))
                 delete $scope.files['TREE'][file]
                 $scope.files['COUNT']['files'] = $scope.files['COUNT']['files'] - 1
                 pos = $scope.filesList.indexOf(file)

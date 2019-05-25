@@ -50,7 +50,7 @@
         <span translate>No files or directories found in transfer</span>
     </span>
     <!-- This is showed twice to show directorys first -->
-    <a  ng:repeat="file in filesList|orderBy: -file">
+    <span  ng:repeat="file in filesList|orderBy: -file">
         <span ng-if="files != null">
             <span ng:show="files['TREE'][file]['TYPE'] == 'directory'">
                 <span id={{file}} checkbox ng:model="files['TREE'][file]['checked']"> </span>
@@ -58,10 +58,11 @@
                     <i class="fa fa-folder"></i>
                 </span>
                 <span>{{file}}</span>
+                <span class="pull-right" ng:click="removeDir(file)"><a href="#"> <i class="fa fa-trash"></i></a></span>
                 <br>
             </span>
         </span>
-    </a>
+    </span>
     <span  ng:repeat="file in filesList|orderBy: -file">
         <span ng-if="files != null">
             <span ng:show="files['TREE'][file]['TYPE'] == 'file'">

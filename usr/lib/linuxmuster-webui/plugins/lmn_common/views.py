@@ -1,4 +1,5 @@
 import os
+import shutil
 
 from jadi import component
 from aj.api.http import url, HttpPlugin
@@ -18,7 +19,19 @@ class Handler(HttpPlugin):
         with open(path) as f:
             f.seek(int(http_context.query.get('offset', '0')))
             return f.read()
-        
+    
+    @url(r'/api/lm/remove-dir') ## TODO authorize
+    @endpoint(api=True)
+    def handle_api_remove_dir(self, http_context):
+        """Remove directory and its content with given path, ignoring errors"""
+        if http_context.method == 'POST':
+            filepath = http_context.json_body()['filepath']
+            if not os.path.exists(filepath):
+                return
+            else:
+                shutil.rmtree(filepath, ignore-errors=True)
+                return True
+    
     @url(r'/api/lm/remove-file') ## TODO authorize
     @endpoint(api=True)
     def handle_api_remove_file(self, http_context):

@@ -5,4 +5,7 @@
 .messagebox {
   z-index: 1050;
 }
+.dialog {
+  z-index: 1100;
+}
 

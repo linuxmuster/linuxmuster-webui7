@@ -23,7 +23,8 @@
       role = 'teachers';
       school = 'default-school';
       //console.log ('transferPath')
-      return $scope.transferPath = '/srv/samba/schools/' + school + '/' + role + '/' + username + '/transfer/';
+      $scope.transferPath = '/srv/samba/schools/' + school + '/' + role + '/' + username + '/transfer/';
+      return $scope.owner = username;
     };
     //console.log ($scope.transferPath)
     //$scope.path = '/srv/samba/schools/'+school+'/'+role+'/'+username+'/transfer/'

@@ -18,6 +18,7 @@ angular.module('lmn.session').controller 'LMNSessionFileSelectModalController', 
         school = 'default-school'
         #console.log ('transferPath')
         $scope.transferPath = '/srv/samba/schools/'+school+'/'+role+'/'+username+'/transfer/'
+        $scope.owner = username
         #console.log ($scope.transferPath)
         #$scope.path = '/srv/samba/schools/'+school+'/'+role+'/'+username+'/transfer/'
         #console.log ($scope.identity)

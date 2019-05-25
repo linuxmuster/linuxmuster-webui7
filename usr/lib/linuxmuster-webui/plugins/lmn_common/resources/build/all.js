@@ -83,7 +83,9 @@
       restrict: 'E',
       scope: {
         uploadpath: '=',
-        refresh: '='
+        refresh: '=',
+        owner: '=?',
+        group: '=?'
       },
       replace: true,
       template: function(attrs) {
@@ -102,8 +104,17 @@
             progress: true
           });
           return filesystem.startFlowUpload($flow, $scope.uploadpath).then(function() {
-            notify.success(gettext('Uploaded'));
-            console.log('successfull upload refresh');
+            if ($scope.owner && $scope.group) {
+              $http.post('/api/lm/chown', {
+                filepath: $scope.uploadpath + $flow.files[0].name,
+                owner: $scope.owner,
+                group: $scope.group
+              }).then(function() {
+                return notify.success(gettext('Uploaded'));
+              });
+            } else {
+              notify.success(gettext('Uploaded'));
+            }
             $scope.refresh();
             return msg.close();
           }, null, function(progress) {

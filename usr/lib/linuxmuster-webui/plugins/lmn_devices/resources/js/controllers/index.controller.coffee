@@ -171,10 +171,11 @@ angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $
         $scope.devices.remove(device)
 
     $scope.numErrors = () ->
-        return document.getElementsByClassName("has-error").length > 0
+        return document.getElementsByClassName("has-error").length + document.getElementsByClassName("has-error-new").length > 0
 
     $scope.save = () ->
         if $scope.numErrors()
+            angular.element(document.getElementsByClassName("has-error-new")).addClass('has-error')
             notify.error('Required data missing')
             return
         return $http.post('/api/lm/devices', $scope.devices).then () ->
@@ -182,6 +183,7 @@ angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $
 
     $scope.saveAndImport = () ->
         if $scope.numErrors()
+            angular.element(document.getElementsByClassName("has-error-new")).addClass('has-error')
             notify.error('Required data missing')
             return
         $scope.save().then () ->

@@ -4,6 +4,7 @@
 
   angular.module('lm.common').run(function(customization) {
     customization.plugins.core.startupURL = '/view/lmn/landingpage';
+    customization.plugins.core.loginredir = '/';
     // customization.plugins.core.bodyClass = 'customized'
     customization.plugins.core.title = ' ';
     customization.plugins.core.faviconURL = '/resources/lmn_common/resources/img/favicon.png';
@@ -129,7 +130,10 @@
     return {
       restrict: 'E',
       scope: {
-        uploadpath: '='
+        uploadpath: '=',
+        refresh: '=',
+        owner: '=?',
+        group: '=?'
       },
       template: function(attrs) {
         var target;
@@ -147,7 +151,18 @@
             progress: true
           });
           return filesystem.startFlowUpload($flow, $scope.uploadpath).then(function() {
-            notify.success(gettext('Uploaded'));
+            if ($scope.owner && $scope.group) {
+              $http.post('/api/lm/chown', {
+                filepath: $scope.uploadpath + $flow.files[0].name,
+                owner: $scope.owner,
+                group: $scope.group
+              }).then(function() {
+                return notify.success(gettext('Uploaded'));
+              });
+            } else {
+              notify.success(gettext('Uploaded'));
+            }
+            $scope.refresh();
             return msg.close();
           }, null, function(progress) {
             return msg.messagebox.title = 'Uploading: ' + Math.floor(100 * progress) + ' %';
@@ -162,7 +177,10 @@
       restrict: 'E',
       scope: {
         uploadpath: '=',
-        btnlabel: '='
+        btnlabel: '=',
+        refresh: '=',
+        owner: '=?',
+        group: '=?'
       },
       template: function(attrs) {
         var target;
@@ -180,7 +198,18 @@
             progress: true
           });
           return filesystem.startFlowUpload($flow, $scope.uploadpath).then(function() {
-            notify.success(gettext('Uploaded'));
+            if ($scope.owner && $scope.group) {
+              $http.post('/api/lm/chown', {
+                filepath: $scope.uploadpath + $flow.files[0].name,
+                owner: $scope.owner,
+                group: $scope.group
+              }).then(function() {
+                return notify.success(gettext('Uploaded'));
+              });
+            } else {
+              notify.success(gettext('Uploaded'));
+            }
+            $scope.refresh();
             return msg.close();
           }, null, function(progress) {
             return msg.messagebox.title = 'Uploading: ' + Math.floor(100 * progress) + ' %';

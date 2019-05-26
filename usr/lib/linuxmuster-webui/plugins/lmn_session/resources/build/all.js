@@ -81,7 +81,7 @@
       school = 'default-school';
       path = '/srv/samba/schools/' + school + '/' + role + '/' + $scope.identity.user + '/transfer/' + file;
       return messagebox.show({
-        text: gettext('Are you sure you want to delete the file ' + file + ' permanently?'),
+        text: gettext('Are you sure you want to delete permanently the file ' + file + '?'),
         positive: gettext('Delete'),
         negative: gettext('Cancel')
       }).then(function() {
@@ -103,7 +103,7 @@
       school = 'default-school';
       path = '/srv/samba/schools/' + school + '/' + role + '/' + $scope.identity.user + '/transfer/' + file;
       return messagebox.show({
-        text: gettext('Are you sure you want to delete the directory ' + file + ' and its content permanently?'),
+        text: gettext('Are you sure you want to delete permanently this directory and its content: ' + file + '?'),
         positive: gettext('Delete'),
         negative: gettext('Cancel')
       }).then(function() {

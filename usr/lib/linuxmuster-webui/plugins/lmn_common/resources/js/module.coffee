@@ -6,6 +6,7 @@ angular.module 'lm.common', [
 
 angular.module('lm.common').run (customization) ->
     customization.plugins.core.startupURL = '/view/lmn/landingpage'
+    customization.plugins.core.loginredir = '/'
     # customization.plugins.core.bodyClass = 'customized'
     customization.plugins.core.title = ' '
     customization.plugins.core.faviconURL = '/resources/lmn_common/resources/img/favicon.png'

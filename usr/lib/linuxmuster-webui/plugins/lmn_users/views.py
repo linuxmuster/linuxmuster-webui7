@@ -17,6 +17,107 @@ class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
 
+    @url(r'/api/lmn/sophomorixUsers/import-list')
+    @endpoint(api=True)
+    def handle_api_filelistImport(self, http_context):
+        def findIndex(lst, key, value):
+            for i, dic in enumerate(lst):
+                if dic[key] == value:
+                    return i
+            return -1
+
+        action = http_context.json_body()['action']
+        userlist = http_context.json_body()['userlist']
+
+        if action == 'save':
+            csvDict = http_context.json_body()['data']
+            nElements = (len(csvDict[0]['data']))
+
+            sortedCSV = '/tmp/sortedCSV.csv'
+            if os.path.exists(sortedCSV):
+                os.remove(sortedCSV)
+            # write CSV
+            with open(sortedCSV, 'a') as fileToWrite:
+                i = 0
+                if userlist == 'teachers.csv':
+                    while i < nElements:
+                        fileToWrite.write('Lehrer;')
+                        fileToWrite.write(csvDict[findIndex(csvDict, 'coloumn', 'lastname')]['data'][i]+';')
+                        fileToWrite.write(csvDict[findIndex(csvDict, 'coloumn', 'firstname')]['data'][i]+';')
+                        fileToWrite.write(csvDict[findIndex(csvDict, 'coloumn', 'birthday')]['data'][i]+';')
+                        fileToWrite.write(csvDict[findIndex(csvDict, 'coloumn', 'login')]['data'][i]+';')
+                        if findIndex(csvDict, 'coloumn', 'password') != -1:
+                            fileToWrite.write(csvDict[findIndex(csvDict, 'coloumn', 'password')]['data'][i]+';')
+                        fileToWrite.write('\n')
+                        i += 1
+                if userlist == 'students.csv':
+                    while i < nElements:
+                        fileToWrite.write(csvDict[findIndex(csvDict, 'coloumn', 'class')]['data'][i]+';')
+                        fileToWrite.write(csvDict[findIndex(csvDict, 'coloumn', 'lastname')]['data'][i]+';')
+                        fileToWrite.write(csvDict[findIndex(csvDict, 'coloumn', 'firstname')]['data'][i]+';')
+                        fileToWrite.write(csvDict[findIndex(csvDict, 'coloumn', 'birthday')]['data'][i]+';')
+                        if findIndex(csvDict, 'coloumn', 'id') != -1:
+                            fileToWrite.write(csvDict[findIndex(csvDict, 'coloumn', 'id')]['data'][i]+';')
+                        fileToWrite.write('\n')
+                        i += 1
+
+            if userlist == 'teachers.csv':
+                with authorize('lm:users:teachers:write'):
+                    sophomorixCommand = ['sophomorix-newfile', sortedCSV, '--name', userlist, '-jj']
+                    result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
+                    if result['TYPE'] == "ERROR":
+                        return ["ERROR", result['MESSAGE_EN']]
+                    if result['TYPE'] == "LOG":
+                        return ["LOG", result['LOG']]
+
+            if userlist == 'students.csv':
+                with authorize('lm:users:students:write'):
+                    sophomorixCommand = ['sophomorix-newfile', sortedCSV, '--name', userlist, '-jj']
+                    result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
+                    if result['TYPE'] == "ERROR":
+                        return ["ERROR", result['MESSAGE_EN']]
+                    if result['TYPE'] == "LOG":
+                        return ["LOG", result['LOG']]
+
+            return 0
+
+
+        if action == 'get':
+            importList = http_context.json_body()['path']
+            #userlist = http_context.json_body()['userlist']
+            #school = 'default-school'
+            #path = '/etc/linuxmuster/sophomorix/'+school+'/students.csv'
+
+            if os.path.isfile(importList) is False:
+                os.mknod(importList)
+
+            coloumns = []
+            f=open (importList,'r')
+            reader=csv.reader(f,delimiter=';',encoding=http_context.query.get('encoding', 'utf-8'))
+            # determine number of coloumns in csv
+            ncol=len(next(reader))
+            f.seek(0)
+            i = 0
+            # create dict entry for every coloumn
+            while i < ncol:
+                coloumns.append ({'coloumn': i})
+                i += 1
+
+            # fill coloumn objects with data
+            for row in reader:
+                i = 0
+                while i < ncol:
+                    if 'data' in coloumns[i]:
+                        coloumns[i]['data'].append (row[i])
+                    else:
+                        coloumns[i].update ({'data': [row[i]]})
+                    i += 1
+
+            if http_context.method == 'POST':
+                with authorize('lm:users:students:read'):
+                    return (coloumns)
+
+
     @url(r'/api/lm/users/students-list')
     @endpoint(api=True)
     def handle_api_students(self, http_context):
@@ -395,32 +496,32 @@ class Handler(HttpPlugin):
                 return result['COMMENT_EN']
                 # return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
 
-    @url(r'/api/lmn/sophomorixUsers/new-file')
-    @endpoint(api=True)
-    def handle_api_sophomorix_newfile(self, http_context):
-        # TODO needs update for multischool
+    #@url(r'/api/lmn/sophomorixUsers/new-file')
+    #@endpoint(api=True)
+    #def handle_api_sophomorix_newfile(self, http_context):
+    #    # TODO needs update for multischool
 
-        path = http_context.json_body()['path']
-        userlist = http_context.json_body()['userlist']
-        if http_context.method == 'POST':
+    #    path = http_context.json_body()['path']
+    #    userlist = http_context.json_body()['userlist']
+    #    if http_context.method == 'POST':
 
-            if userlist == 'teachers.csv':
-                with authorize('lm:users:teachers:write'):
-                    sophomorixCommand = ['sophomorix-newfile', path, '--name', userlist, '-jj']
-                    result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
-                    if result['TYPE'] == "ERROR":
-                        return ["ERROR", result['MESSAGE_EN']]
-                    if result['TYPE'] == "LOG":
-                        return ["LOG", result['LOG']]
+    #        if userlist == 'teachers.csv':
+    #            with authorize('lm:users:teachers:write'):
+    #                sophomorixCommand = ['sophomorix-newfile', path, '--name', userlist, '-jj']
+    #                result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
+    #                if result['TYPE'] == "ERROR":
+    #                    return ["ERROR", result['MESSAGE_EN']]
+    #                if result['TYPE'] == "LOG":
+    #                    return ["LOG", result['LOG']]
 
-            if userlist == 'students.csv':
-                with authorize('lm:users:students:write'):
-                    sophomorixCommand = ['sophomorix-newfile', path, '--name', userlist, '-jj']
-                    result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
-                    if result['TYPE'] == "ERROR":
-                        return ["ERROR", result['MESSAGE_EN']]
-                    if result['TYPE'] == "LOG":
-                        return ["LOG", result['LOG']]
+    #        if userlist == 'students.csv':
+    #            with authorize('lm:users:students:write'):
+    #                sophomorixCommand = ['sophomorix-newfile', path, '--name', userlist, '-jj']
+    #                result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
+    #                if result['TYPE'] == "ERROR":
+    #                    return ["ERROR", result['MESSAGE_EN']]
+    #                if result['TYPE'] == "LOG":
+    #                    return ["LOG", result['LOG']]
 
     @url(r'/api/lm/users/print')
     @authorize('lm:users:passwords')

@@ -28,10 +28,69 @@ angular.module('lm.users').controller 'LMNUserDetailsController', ($scope, $rout
 
     $http.post('/api/lm/sophomorixUsers/'+role, {action: 'get-specified', user: id}).then (resp) ->
         $scope.userDetails = resp.data
-        console.log ($scope.userDetails)
+        #console.log ($scope.userDetails)
 
     $scope.close = () ->
         $uibModalInstance.dismiss()
+
+
+
+angular.module('lm.users').controller 'LMUsersSortListModalController', ($scope, $window, $http, $uibModalInstance, messagebox, notify, $uibModal, gettext, filesystem, userlist, userListCSV) ->
+
+
+    $scope.userListCSV = userListCSV
+    $scope.userlist = userlist
+
+    $scope.rebuildCSV = () ->
+        # add empty 'not used' fields if CSV contains more coloumns than fields
+        while $scope['userListCSV'].length > $scope['coloumnTitles'].length
+            $scope['coloumnTitles'].push({name: gettext('not used')})
+
+        i = 0
+        for element in $scope.userListCSV
+            element.coloumn = $scope.coloumnTitles[i]['name']
+            i = i + 1
+        #console.log ($scope['userListCSV'])
+
+
+    $scope.togglecustomField = (field) ->
+        # get index of field in coloumnTitles (-1 if not presend)
+        pos = $scope.coloumnTitles.map((e) ->
+              e.name
+        ).indexOf(field)
+
+        # add field if not presend
+        if pos  == -1
+            $scope.coloumnTitles.splice(4, 0, {name: field})
+        # splice this field 
+        else
+            $scope.coloumnTitles.splice(pos, 1)
+        $scope.rebuildCSV()
+
+
+    $scope.accept = () ->
+        $uibModalInstance.close($scope.userListCSV)
+
+    $scope.close = () ->
+        $uibModalInstance.dismiss()
+
+    if userlist == 'students.csv'
+        $scope.coloumnTitles = [
+            {name: gettext('class')}
+            {name: gettext('lastname')}
+            {name: gettext('firstname')}
+            {name: gettext('birthday')}
+        ]
+
+    if userlist == 'teachers.csv'
+        $scope.coloumnTitles = [
+            {name: gettext('lastname')}
+            {name: gettext('firstname')}
+            {name: gettext('birthday')}
+            {name: gettext('login')}
+        ]
+
+    $scope.rebuildCSV()
 
 angular.module('lm.users').controller 'LMUsersUploadModalController', ($scope, $window, $http, $uibModalInstance, messagebox, notify, $uibModal, gettext, filesystem, userlist) ->
     $scope.path = "/tmp/"
@@ -41,19 +100,34 @@ angular.module('lm.users').controller 'LMUsersUploadModalController', ($scope, $
         filesystem.startFlowUpload($flow, $scope.path).then(() ->
             notify.success(gettext('Uploaded'))
             filename = $flow["files"][0]["name"]
+            $http.post('/api/lmn/sophomorixUsers/import-list', {action: 'get', path: $scope.path+filename, userlist: userlist}).then (resp) ->
+                userListCSV = resp.data
+                #console.log (userListCSV)
+                # console.log (resp['data'])
+                $uibModal.open(
+                             templateUrl: '/lmn_users:resources/partial/sortList.modal.html'
+                             controller: 'LMUsersSortListModalController'
+                             resolve:
+                                userListCSV: () -> userListCSV
+                                userlist: () -> userlist
+                          ).result.then (result) ->
+                             #console.log (result)
+                             $http.post("/api/lmn/sophomorixUsers/import-list", {action: 'save', data: result, userlist: userlist}).then (resp) ->
+                                #console.log (resp['data'])
+                                if resp['data'][0] == 'ERROR'
+                                    notify.error (resp['data'][1])
+                                if resp['data'][0] == 'LOG'
+                                    notify.success gettext(resp['data'][1])
+                                # TODO: it would be better to reload just the content frame. Currently I dont know how to set the route to reload it
+                                $window.location.reload()
+                                msg.close()
+                                notify.success gettext('Saved')
 
-            #$http.post('/api/lmn/sophomorixUsers/new-file', {path: '/tmp/'+filename, userlist: userlist}).then (resp) ->
-            #    console.log (resp['data'])
-            #    if resp['data'][0] == 'ERROR'
-            #        notify.error (resp['data'][1])
-            #    if resp['data'][0] == 'LOG'
-            #        notify.success gettext(resp['data'][1])
-            #    # TODO: it would be better to reload just the content frame. Currently I dont know how to set the route to reload it
-            #    $window.location.reload()
-            #    msg.close()
+                msg.close()
         , null, (progress) ->
           msg.messagebox.title = "Uploading: #{Math.floor(100 * progress)}%"
         )
+
 
     $scope.close = () ->
         $uibModalInstance.close()

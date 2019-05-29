@@ -52,6 +52,28 @@
       page: 1,
       pageSize: 100
     };
+    $scope.fields = {
+      class: {
+        visible: true,
+        name: gettext('Class')
+      },
+      last_name: {
+        visible: true,
+        name: gettext('Last Name')
+      },
+      first_name: {
+        visible: true,
+        name: gettext('First Name')
+      },
+      birthday: {
+        visible: true,
+        name: gettext('Birthday')
+      },
+      id: {
+        visible: false,
+        name: gettext('Student ID')
+      }
+    };
     $scope.add = function() {
       if ($scope.students.length > 0) {
         $scope.paging.page = Math.floor(($scope.students.length - 1) / $scope.paging.pageSize) + 1;
@@ -1830,10 +1852,10 @@
       } else {
         $http.post('/api/lm/users/password', {
           users: (function() {
-            var i, len, results;
+            var j, len, results;
             results = [];
-            for (i = 0, len = users.length; i < len; i++) {
-              x = users[i];
+            for (j = 0, len = users.length; j < len; j++) {
+              x = users[j];
               results.push(x['sAMAccountName']);
             }
             return results;
@@ -1858,12 +1880,92 @@
       action: 'get-specified',
       user: id
     }).then(function(resp) {
-      $scope.userDetails = resp.data;
-      return console.log($scope.userDetails);
+      return $scope.userDetails = resp.data;
     });
+    //console.log ($scope.userDetails)
     return $scope.close = function() {
       return $uibModalInstance.dismiss();
     };
+  });
+
+  angular.module('lm.users').controller('LMUsersSortListModalController', function($scope, $window, $http, $uibModalInstance, messagebox, notify, $uibModal, gettext, filesystem, userlist, userListCSV) {
+    $scope.userListCSV = userListCSV;
+    $scope.userlist = userlist;
+    $scope.rebuildCSV = function() {
+      var element, i, j, len, ref, results;
+      // add empty 'not used' fields if CSV contains more coloumns than fields
+      while ($scope['userListCSV'].length > $scope['coloumnTitles'].length) {
+        $scope['coloumnTitles'].push({
+          name: gettext('not used')
+        });
+      }
+      i = 0;
+      ref = $scope.userListCSV;
+      results = [];
+      for (j = 0, len = ref.length; j < len; j++) {
+        element = ref[j];
+        element.coloumn = $scope.coloumnTitles[i]['name'];
+        results.push(i = i + 1);
+      }
+      return results;
+    };
+    //console.log ($scope['userListCSV'])
+    $scope.togglecustomField = function(field) {
+      var pos;
+      // get index of field in coloumnTitles (-1 if not presend)
+      pos = $scope.coloumnTitles.map(function(e) {
+        return e.name;
+      }).indexOf(field);
+      // add field if not presend
+      if (pos === -1) {
+        $scope.coloumnTitles.splice(4, 0, {
+          name: field
+        });
+      } else {
+        // splice this field 
+        $scope.coloumnTitles.splice(pos, 1);
+      }
+      return $scope.rebuildCSV();
+    };
+    $scope.accept = function() {
+      return $uibModalInstance.close($scope.userListCSV);
+    };
+    $scope.close = function() {
+      return $uibModalInstance.dismiss();
+    };
+    if (userlist === 'students.csv') {
+      $scope.coloumnTitles = [
+        {
+          name: gettext('class')
+        },
+        {
+          name: gettext('lastname')
+        },
+        {
+          name: gettext('firstname')
+        },
+        {
+          name: gettext('birthday')
+        }
+      ];
+    }
+    if (userlist === 'teachers.csv') {
+      $scope.coloumnTitles = [
+        {
+          name: gettext('lastname')
+        },
+        {
+          name: gettext('firstname')
+        },
+        {
+          name: gettext('birthday')
+        },
+        {
+          name: gettext('login')
+        }
+      ];
+    }
+    return $scope.rebuildCSV();
   });
 
   angular.module('lm.users').controller('LMUsersUploadModalController', function($scope, $window, $http, $uibModalInstance, messagebox, notify, $uibModal, gettext, filesystem, userlist) {
@@ -1878,19 +1980,46 @@
         var filename;
         notify.success(gettext('Uploaded'));
         filename = $flow["files"][0]["name"];
-        return $http.post('/api/lmn/sophomorixUsers/new-file', {
-          path: '/tmp/' + filename,
+        return $http.post('/api/lmn/sophomorixUsers/import-list', {
+          action: 'get',
+          path: $scope.path + filename,
           userlist: userlist
         }).then(function(resp) {
-          console.log(resp['data']);
-          if (resp['data'][0] === 'ERROR') {
-            notify.error(resp['data'][1]);
-          }
-          if (resp['data'][0] === 'LOG') {
-            notify.success(gettext(resp['data'][1]));
-          }
-          // TODO: it would be better to reload just the content frame. Currently I dont know how to set the route to reload it
-          $window.location.reload();
+          var userListCSV;
+          userListCSV = resp.data;
+          //console.log (userListCSV)
+          // console.log (resp['data'])
+          $uibModal.open({
+            templateUrl: '/lmn_users:resources/partial/sortList.modal.html',
+            controller: 'LMUsersSortListModalController',
+            resolve: {
+              userListCSV: function() {
+                return userListCSV;
+              },
+              userlist: function() {
+                return userlist;
+              }
+            }
+          }).result.then(function(result) {
+            //console.log (result)
+            return $http.post("/api/lmn/sophomorixUsers/import-list", {
+              action: 'save',
+              data: result,
+              userlist: userlist
+            }).then(function(resp) {
+              //console.log (resp['data'])
+              if (resp['data'][0] === 'ERROR') {
+                notify.error(resp['data'][1]);
+              }
+              if (resp['data'][0] === 'LOG') {
+                notify.success(gettext(resp['data'][1]));
+              }
+              // TODO: it would be better to reload just the content frame. Currently I dont know how to set the route to reload it
+              $window.location.reload();
+              msg.close();
+              return notify.success(gettext('Saved'));
+            });
+          });
           return msg.close();
         });
       }, null, function(progress) {

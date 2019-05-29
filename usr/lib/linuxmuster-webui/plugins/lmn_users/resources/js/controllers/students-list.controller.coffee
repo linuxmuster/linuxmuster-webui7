@@ -34,6 +34,25 @@ angular.module('lm.users').controller 'LMUsersStudentsListController', ($scope, 
         page: 1
         pageSize: 100
 
+    $scope.fields = {
+       class:
+          visible: true
+          name: gettext('Class')
+       last_name:
+          visible: true
+          name: gettext('Last Name')
+       first_name:
+          visible: true
+          name: gettext('First Name')
+       birthday:
+          visible: true
+          name: gettext('Birthday')
+       id:
+          visible: false
+          name: gettext('Student ID')
+    }
+
+
     $scope.add = () ->
         if $scope.students.length > 0
             $scope.paging.page = Math.floor(($scope.students.length - 1) / $scope.paging.pageSize) + 1

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-28 18:14+0200\n"
-"PO-Revision-Date: 2019-04-28 16:23\n"
+"PO-Revision-Date: 2019-05-25 19:11\n"
 "Last-Translator: kiarn\n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -18,7 +18,7 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/apply.modal.html:2
 msgid "Applying changes"
-msgstr ""
+msgstr "Eφαρμογή αλλαγών"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:142
 msgid "Classes"
@@ -26,7 +26,7 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/apply.modal.html:10
 msgid "Close"
-msgstr ""
+msgstr "Κλείσιμο"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:46
 msgid "Cloudquota Percentage"
@@ -34,11 +34,11 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:7
 msgid "Defaults"
-msgstr ""
+msgstr "Προεπιλογές"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/apply.modal.html:9
 msgid "Details"
-msgstr ""
+msgstr "Λεπτομέρειες"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:107
 msgid "Login"
@@ -61,7 +61,7 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:188
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:78
 msgid "Name"
-msgstr ""
+msgstr "Όνομα"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:163
 msgid "Projects"
@@ -86,12 +86,12 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:103
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:12
 msgid "Students"
-msgstr ""
+msgstr "Μαθητές"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:13
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:74
 msgid "Teachers"
-msgstr ""
+msgstr "Δάσκαλοι"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/main.py:15
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:28
@@ -148,5 +148,5 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:139
 msgid "Saved"
-msgstr ""
+msgstr "Αποθηκεύτηκε"
 

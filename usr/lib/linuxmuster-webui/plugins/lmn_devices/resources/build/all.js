@@ -210,10 +210,11 @@
       return $scope.devices.remove(device);
     };
     $scope.numErrors = function() {
-      return document.getElementsByClassName("has-error").length > 0;
+      return document.getElementsByClassName("has-error").length + document.getElementsByClassName("has-error-new").length > 0;
     };
     $scope.save = function() {
       if ($scope.numErrors()) {
+        angular.element(document.getElementsByClassName("has-error-new")).addClass('has-error');
         notify.error('Required data missing');
         return;
       }
@@ -223,6 +224,7 @@
     };
     $scope.saveAndImport = function() {
       if ($scope.numErrors()) {
+        angular.element(document.getElementsByClassName("has-error-new")).addClass('has-error');
         notify.error('Required data missing');
         return;
       }

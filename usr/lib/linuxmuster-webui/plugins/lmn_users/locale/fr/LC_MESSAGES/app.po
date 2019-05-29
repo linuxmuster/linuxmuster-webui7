@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-28 18:14+0200\n"
-"PO-Revision-Date: 2019-04-28 16:23\n"
+"POT-Creation-Date: 2019-05-25 17:58+0200\n"
+"PO-Revision-Date: 2019-05-25 19:10\n"
 "Last-Translator: kiarn\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -54,7 +54,7 @@ msgstr "Ajouter administrateur pour cette école"
 msgid "Added users"
 msgstr "Utilisateurs ajoutés"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:7
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:11
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/printPasswords.controller.coffee:18
 msgid "All users"
 msgstr "Tous les utilisateurs"
@@ -102,7 +102,8 @@ msgstr "Changer le mot de passe"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/check.modal.html:6
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/result.modal.html:9
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/checkModal.controller.coffee:55
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/checkModal.controller.coffee:51
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/checkModal.controller.coffee:61
 msgid "Check failed"
 msgstr "La vérification a échoué"
 
@@ -115,7 +116,7 @@ msgid "Checking users"
 msgstr "Vérification des utilisateurs"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-students.html:27
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:8
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:12
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students-list.html:49
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students-list.controller.coffee:12
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students.controller.coffee:11
@@ -129,7 +130,7 @@ msgid "Class:"
 msgstr "Classe:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/apply.modal.html:11
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/check.modal.html:12
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/check.modal.html:14
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/upload.modal.html:14
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:31
 msgid "Close"
@@ -249,6 +250,10 @@ msgstr "Déplacer des utilisateurs"
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/result.modal.html:46
 msgid "Moved users"
 msgstr "Utilisateurs déplacés"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:5
+msgid "No Classes found. You have to create a class by importing userlist before you can print user passwords."
+msgstr "Aucune classe trouvée. Vous devez créer une classe en important une liste d'utilisateurs avant d'imprimer les mots de passe."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/customPassword.modal.html:14
 msgid "Note: Minimal length is 7 characters. Use upper, lower and special characters or numbers. (e.g. Muster!)"
@@ -501,66 +506,70 @@ msgid "Read teachers"
 msgstr "Lire des enseignants"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:93
+msgid "List teachers"
+msgstr "Liste des enseignants"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:98
 msgid "Write teachers"
 msgstr "Écrire des enseignants"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:98
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:103
 msgid "Read schooladmins"
 msgstr "Lire les administrateurs école"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:103
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:108
 msgid "Write schooladmins"
 msgstr "Ecrire les administrateurs école"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:108
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:113
 msgid "Read globaladmins"
 msgstr "Lire les administrateurs globaux"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:113
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:118
 msgid "Write globaladmins"
 msgstr "Ecrire les administrateurs globaux"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:118
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:123
 msgid "Read extra students"
 msgstr "Lire les élèves supplémentaires"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:123
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:128
 msgid "Write extra students"
 msgstr "Écrire des élèves supplémentaires"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:128
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:133
 msgid "Read extra courses"
 msgstr "Lire cours supplémentaires"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:133
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:138
 msgid "Write extra courses"
 msgstr "Écrire des cours supplémentaires"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:138
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:143
 msgid "Check user changes"
 msgstr "Vérifier les modifications de l’utilisateur"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:143
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:148
 msgid "Apply user changes"
 msgstr "Appliquer les modifications des utilisateurs"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:148
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:153
 msgid "Read/write passwords"
 msgstr "Lire/écrire les mots de passe"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:153
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:158
 msgid "Add school admins"
 msgstr "Ajouter administrateur école"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:158
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:163
 msgid "Add global admins"
 msgstr "Ajouter administrateur global"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:163
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:168
 msgid "Delete school admins"
 msgstr "Supprimer administrateur école"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:168
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:173
 msgid "Delete global admins"
 msgstr "Supprimer les administrateurs globaux"
 
@@ -568,12 +577,13 @@ msgstr "Supprimer les administrateurs globaux"
 msgid "Student ID"
 msgstr "ID de l'élève"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students-list.controller.coffee:73
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students-list.controller.coffee:78
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers-list.controller.coffee:94
 msgid "Empty field(s) in a row"
 msgstr "Champ(s) vide(s) dans une ligne"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students-list.controller.coffee:76
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers-list.controller.coffee:79
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students-list.controller.coffee:81
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers-list.controller.coffee:101
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/extraCourses.controller.coffee:56
 msgid "Saved"
 msgstr "Enregistré"
@@ -657,7 +667,7 @@ msgid "New password set"
 msgstr "Nouveau mot de passe enregistré"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:26
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:65
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:66
 msgid "You have to enter a username"
 msgstr "Vous devez entrer un nom d'utilisateur"
 
@@ -665,7 +675,7 @@ msgstr "Vous devez entrer un nom d'utilisateur"
 msgid "Uploaded"
 msgstr "Transfert réussi"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:68
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:69
 msgid "Adding administrator..."
 msgstr "Ajout de l'administrateur..."
 

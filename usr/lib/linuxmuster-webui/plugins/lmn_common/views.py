@@ -1,4 +1,6 @@
 import os
+import shutil
+import pwd, grp
 
 from jadi import component
 from aj.api.http import url, HttpPlugin
@@ -18,7 +20,19 @@ class Handler(HttpPlugin):
         with open(path) as f:
             f.seek(int(http_context.query.get('offset', '0')))
             return f.read()
-        
+    
+    @url(r'/api/lm/remove-dir') ## TODO authorize
+    @endpoint(api=True)
+    def handle_api_remove_dir(self, http_context):
+        """Remove directory and its content with given path, ignoring errors"""
+        if http_context.method == 'POST':
+            filepath = http_context.json_body()['filepath']
+            if not os.path.exists(filepath):
+                return
+            else:
+                shutil.rmtree(filepath, ignore_errors=True)
+                return True
+    
     @url(r'/api/lm/remove-file') ## TODO authorize
     @endpoint(api=True)
     def handle_api_remove_file(self, http_context):
@@ -43,7 +57,27 @@ class Handler(HttpPlugin):
             else:
                 os.unlink(filepath)
                 return True
-                
+
+    @url(r'/api/lm/chown') ## TODO authorize
+    @endpoint(api=True)
+    def handle_api_chown(self, http_context):
+        """Chown file with given path, owner and group."""
+        if http_context.method == 'POST':
+            school = 'default-school'
+            filepath = http_context.json_body()['filepath']
+            owner = http_context.json_body()['owner']
+            group = http_context.json_body()['group']
+            if not os.path.exists(filepath):
+                return
+            else:
+                try:
+                    user_id  = pwd.getpwnam(owner).pw_uid
+                    group_id = grp.getgrnam(group).gr_gid
+                    os.chown(filepath, user_id, group_id)
+                    return True
+                except:
+                    return
+
     @url(r'/api/lm/read-config-setup') ## TODO authorize
     @endpoint(api=True)
     def handle_api_read_setup_ini(self, http_context):

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-28 18:14+0200\n"
-"PO-Revision-Date: 2019-04-28 16:23\n"
+"POT-Creation-Date: 2019-05-25 17:58+0200\n"
+"PO-Revision-Date: 2019-05-25 19:11\n"
 "Last-Translator: kiarn\n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -19,58 +19,58 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/addAdmin.modal.html:12
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/customPassword.modal.html:20
 msgid "Accept"
-msgstr ""
+msgstr "Αποδοχή"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/addAdmin.modal.html:2
 msgid "Add Administrator"
-msgstr ""
+msgstr "Πρόσθεση διαχεριστή"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-courses.html:69
 msgid "Add a course"
-msgstr ""
+msgstr "Πρόσθεση μαθήματος"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-students.html:61
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students-list.html:82
 msgid "Add a student"
-msgstr ""
+msgstr "Πρόσθεση μαθητή"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers-list.html:83
 msgid "Add a teacher"
-msgstr ""
+msgstr "Πρόσθεση δασκάλου"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/globaladmins.html:126
 msgid "Add global administrator"
-msgstr ""
+msgstr "Πρόσθεση παγκóσμιου διαχεριστή"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/result.modal.html:25
 msgid "Add new users"
-msgstr ""
+msgstr "Πρόσθεση νέον χρηστών"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/schooladmins.html:123
 msgid "Add school administrator"
-msgstr ""
+msgstr "Πρόσθεση σχολικού διαχεριστή"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/result.modal.html:36
 msgid "Added users"
-msgstr ""
+msgstr "Πρόσθεση χρηστών"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:7
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:11
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/printPasswords.controller.coffee:18
 msgid "All users"
-msgstr ""
+msgstr "Όλοι οι χρήστες"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/result.modal.html:80
 msgid "Apply"
-msgstr ""
+msgstr "Εφαρμογή"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/apply.modal.html:2
 msgid "Applying changes"
-msgstr ""
+msgstr "Eφαρμογή αλλαγών"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-courses.html:28
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/extraCourses.controller.coffee:16
 msgid "Base name"
-msgstr ""
+msgstr "Όνομα βάσης"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-courses.html:30
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-students.html:30
@@ -83,39 +83,40 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/extraCourses.controller.coffee:20
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers.controller.coffee:23
 msgid "Birthday"
-msgstr ""
+msgstr "Ημερομηνία γέννησης"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:12
 msgid "Birthday:"
-msgstr ""
+msgstr "Ημερομηνία γέννησης:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/addAdmin.modal.html:11
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/customPassword.modal.html:19
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.options.modal.html:27
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/result.modal.html:81
 msgid "Cancel"
-msgstr ""
+msgstr "Ακύρωση"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/customPassword.modal.html:2
 msgid "Change Password"
-msgstr ""
+msgstr "Αλλαγή κωδικού"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/check.modal.html:6
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/result.modal.html:9
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/checkModal.controller.coffee:55
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/checkModal.controller.coffee:51
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/checkModal.controller.coffee:61
 msgid "Check failed"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/result.modal.html:2
 msgid "Check result"
-msgstr ""
+msgstr "Έλεγχος αποτελέσματος"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/check.modal.html:2
 msgid "Checking users"
-msgstr ""
+msgstr "Έλεγχος χρηστών"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-students.html:27
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:8
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:12
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students-list.html:49
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students-list.controller.coffee:12
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students.controller.coffee:11
@@ -129,11 +130,11 @@ msgid "Class:"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/apply.modal.html:11
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/check.modal.html:12
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/check.modal.html:14
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/upload.modal.html:14
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:31
 msgid "Close"
-msgstr ""
+msgstr "Κλείσιμο"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:27
 msgid "Cloudquota Calculated in MiB:"
@@ -147,7 +148,7 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-courses.html:27
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/extraCourses.controller.coffee:12
 msgid "Course"
-msgstr ""
+msgstr "Μάθημα"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:13
 msgid "Creationdate:"
@@ -162,7 +163,7 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/schooladmins.controller.coffee:47
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/globaladmins.controller.coffee:47
 msgid "Delete User"
-msgstr ""
+msgstr "Διαγραφή χρήστη"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-courses.html:80
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-students.html:73
@@ -173,7 +174,7 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/customPassword.modal.html:6
 msgid "Enter new Password for user:"
-msgstr ""
+msgstr "Εισαγωγή νέου κωδικού χρήστη:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/result.modal.html:67
 msgid "Errors"
@@ -195,11 +196,11 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers-list.controller.coffee:16
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers.controller.coffee:11
 msgid "First name"
-msgstr ""
+msgstr "Όνομα"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.options.modal.html:6
 msgid "Format"
-msgstr ""
+msgstr "Μορφή"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-courses.html:31
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/extraCourses.controller.coffee:28
@@ -226,7 +227,7 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers-list.controller.coffee:20
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers.controller.coffee:15
 msgid "Last name"
-msgstr ""
+msgstr "Επίθετο"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-students.html:31
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/schooladmins.controller.coffee:11
@@ -236,7 +237,7 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/globaladmins.controller.coffee:11
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers.controller.coffee:19
 msgid "Login"
-msgstr ""
+msgstr "Είσοδος"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:28
 msgid "Mailquota Calculated in MiB:"
@@ -250,6 +251,10 @@ msgstr ""
 msgid "Moved users"
 msgstr ""
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:5
+msgid "No Classes found. You have to create a class by importing userlist before you can print user passwords."
+msgstr ""
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/customPassword.modal.html:14
 msgid "Note: Minimal length is 7 characters. Use upper, lower and special characters or numbers. (e.g. Muster!)"
 msgstr ""
@@ -260,7 +265,7 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.options.modal.html:18
 msgid "Options"
-msgstr ""
+msgstr "Επιλογές"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-courses.html:32
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/globaladmins.html:68
@@ -268,11 +273,11 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students.html:67
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:71
 msgid "Password"
-msgstr ""
+msgstr "Κωδικός"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.options.modal.html:26
 msgid "Print"
-msgstr ""
+msgstr "Εκτύπωση"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:24
 msgid "Quota in  MiB:"
@@ -309,7 +314,7 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students-list.html:91
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers-list.html:93
 msgid "Save"
-msgstr ""
+msgstr "Aποθήκευση"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-courses.html:79
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-students.html:72
@@ -462,13 +467,13 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers-list.controller.coffee:8
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers.controller.coffee:7
 msgid "Teachers"
-msgstr ""
+msgstr "Δάσκαλοι"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:36
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students-list.controller.coffee:8
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students.controller.coffee:7
 msgid "Students"
-msgstr ""
+msgstr "Μαθητές"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:43
 msgid "School-Admins"
@@ -501,66 +506,70 @@ msgid "Read teachers"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:93
-msgid "Write teachers"
+msgid "List teachers"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:98
-msgid "Read schooladmins"
+msgid "Write teachers"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:103
-msgid "Write schooladmins"
+msgid "Read schooladmins"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:108
-msgid "Read globaladmins"
+msgid "Write schooladmins"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:113
-msgid "Write globaladmins"
+msgid "Read globaladmins"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:118
-msgid "Read extra students"
+msgid "Write globaladmins"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:123
-msgid "Write extra students"
+msgid "Read extra students"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:128
-msgid "Read extra courses"
+msgid "Write extra students"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:133
-msgid "Write extra courses"
+msgid "Read extra courses"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:138
-msgid "Check user changes"
+msgid "Write extra courses"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:143
-msgid "Apply user changes"
+msgid "Check user changes"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:148
-msgid "Read/write passwords"
+msgid "Apply user changes"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:153
-msgid "Add school admins"
+msgid "Read/write passwords"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:158
-msgid "Add global admins"
+msgid "Add school admins"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:163
-msgid "Delete school admins"
+msgid "Add global admins"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:168
+msgid "Delete school admins"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:173
 msgid "Delete global admins"
 msgstr ""
 
@@ -568,12 +577,13 @@ msgstr ""
 msgid "Student ID"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students-list.controller.coffee:73
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students-list.controller.coffee:78
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers-list.controller.coffee:94
 msgid "Empty field(s) in a row"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students-list.controller.coffee:76
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers-list.controller.coffee:79
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students-list.controller.coffee:81
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers-list.controller.coffee:101
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/extraCourses.controller.coffee:56
 msgid "Saved"
 msgstr ""
@@ -657,7 +667,7 @@ msgid "New password set"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:26
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:65
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:66
 msgid "You have to enter a username"
 msgstr ""
 
@@ -665,7 +675,7 @@ msgstr ""
 msgid "Uploaded"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:68
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:69
 msgid "Adding administrator..."
 msgstr ""
 

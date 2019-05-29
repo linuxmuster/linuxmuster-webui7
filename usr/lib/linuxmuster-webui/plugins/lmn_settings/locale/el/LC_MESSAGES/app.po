@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-28 18:14+0200\n"
-"PO-Revision-Date: 2019-04-28 16:23\n"
+"PO-Revision-Date: 2019-05-25 19:11\n"
 "Last-Translator: kiarn\n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -49,7 +49,7 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:8
 msgid "General"
-msgstr ""
+msgstr "Γενικά"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:204
 msgid "Internal FQDN for printing"
@@ -101,7 +101,7 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:231
 msgid "Save"
-msgstr ""
+msgstr "Aποθήκευση"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:200
 msgid "School name"
@@ -118,7 +118,7 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:30
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:97
 msgid "Students"
-msgstr ""
+msgstr "Μαθητές"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:165
 msgid "Students encoding"
@@ -147,7 +147,7 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:8
 msgid "Settings"
-msgstr ""
+msgstr "Ρυθμίσεις"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:11
 msgid "Minimal"
@@ -163,5 +163,5 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:54
 msgid "Saved"
-msgstr ""
+msgstr "Αποθηκεύτηκε"
 

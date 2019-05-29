@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-28 18:14+0200\n"
-"PO-Revision-Date: 2019-04-28 16:24\n"
+"POT-Creation-Date: 2019-05-25 17:57+0200\n"
+"PO-Revision-Date: 2019-05-25 19:12\n"
 "Last-Translator: kiarn\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -77,8 +77,12 @@ msgstr ""
 msgid "Confirmation"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:60
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:92
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:35
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:37
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:73
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:75
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:113
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:115
 msgid "Uploaded"
 msgstr ""
 

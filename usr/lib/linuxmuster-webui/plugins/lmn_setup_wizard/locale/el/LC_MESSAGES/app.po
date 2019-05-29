@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-28 18:14+0200\n"
-"PO-Revision-Date: 2019-04-28 16:23\n"
+"PO-Revision-Date: 2019-05-25 19:11\n"
 "Last-Translator: kiarn\n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -29,11 +29,11 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:51
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:54
 msgid "Back"
-msgstr ""
+msgstr "Πίσω"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-done.html:17
 msgid "Close"
-msgstr ""
+msgstr "Κλείσιμο"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:35
 msgid "Configuration will be <b>skipped </b>"
@@ -73,7 +73,7 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-done.html:7
 msgid "Information"
-msgstr ""
+msgstr "Πληροφορίες"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:13
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:17

@@ -5,4 +5,7 @@
 .messagebox {
   z-index: 1050;
 }
+.animate-modal {
+  z-index: 1100;
+}
 

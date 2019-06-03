@@ -34,6 +34,23 @@
 
   angular.module('lm.devices').controller('LMDevicesController', function($scope, $http, $uibModal, $route, gettext, notify, pageTitle, lmFileEditor, lmFileBackups) {
     pageTitle.set(gettext('Devices'));
+    $scope.first_save = false;
+    $scope.validateField = function(name, val, isnew) {
+      var valid;
+      if (name) {
+        valid = $scope["isValid" + name](val) && val;
+      } else {
+        valid = val;
+      }
+      if (valid) {
+        return "";
+      }
+      if (isnew && !$scope.first_save) {
+        return "has-error-new";
+      } else {
+        return "has-error";
+      }
+    };
     $scope.findval = function(attr, val) {
       return function(dict) {
         return dict[attr] === val;
@@ -214,6 +231,7 @@
     };
     $scope.save = function() {
       if ($scope.numErrors()) {
+        $scope.first_save = true;
         angular.element(document.getElementsByClassName("has-error-new")).addClass('has-error');
         notify.error('Required data missing');
         return;

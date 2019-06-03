@@ -54,19 +54,19 @@
             <th></th>
         </tr>
         <tr ng:repeat="teacher in teachers|filter:filter|orderBy:['-_isNew', sort.fx]|page:paging.page:paging.pageSize" ng:show="teacher.class[0] != '#'">
-            <td ng:if="fields.last_name.visible">
+            <td ng:if="fields.last_name.visible" class="form-group" ng:class="validateField('Name', teacher.last_name, teacher._isNew)">
                 <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="teacher.last_name" placeholder="Last name" class="form-control" />
             </td>
-            <td ng:if="fields.first_name.visible">
+            <td ng:if="fields.first_name.visible" class="form-group" ng:class="validateField('Name', teacher.first_name, teacher._isNew)">
                 <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="teacher.first_name" placeholder="First name" class="form-control" />
             </td>
-            <td ng:if="fields.birthday.visible" width="150">
+            <td ng:if="fields.birthday.visible" width="150" class="form-group" ng:class="validateField('Birthday', teacher.birthday, teacher._isNew)">
                 <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="teacher.birthday" placeholder="Birthday" class="form-control" />
             </td>
-            <td ng:if="fields.password.visible">
+            <td ng:if="fields.password.visible" class="form-group" ng:class="validateField('Password', teacher.password, teacher._isNew)">
                 <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="teacher.password" placeholder="Desired Password" class="form-control" />
             </td>
-            <td ng:if="fields.login.visible">
+            <td ng:if="fields.login.visible" class="form-group" ng:class="validateField('Login', teacher.login, teacher._isNew)">
                 <input type="text" ng:model="teacher.login" ng:disabled="!teacher._isNew" placeholder="Login" class="form-control" />
             </td>
             <td width="1">

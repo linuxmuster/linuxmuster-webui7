@@ -55,25 +55,25 @@
 
     <br/>
 
-    <table class="lm-table">
+    <table class="lm-table lm-table-inputs">
         <tr>
            <th ng:repeat="(id, field) in fields" ng:if="field.visible">{{field.name}}</th>
            <th></th>
         </tr>
         <tr  ng:repeat="student in students|filter:filter|orderBy:['-_isNew', sort.fx]|page:paging.page:paging.pageSize" ng:show="student.class[0] != '#'">
-            <td ng:if="fields.class.visible">
-                <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="student.class" placeholder="Class" class="form-control" />
+            <td ng:if="fields.class.visible" class="form-group" ng:class="validateField('Class', student.class, student._isNew)">
+                <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="student.class" placeholder="Class" class="form-control"/>
             </td>
-            <td ng:if="fields.last_name.visible">
+            <td ng:if="fields.last_name.visible" class="form-group" ng:class="validateField('Name', student.last_name, student._isNew)">
                 <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="student.last_name" placeholder="Last name" class="form-control" />
             </td>
-            <td ng:if="fields.first_name.visible">
+            <td ng:if="fields.first_name.visible" class="form-group" ng:class="validateField('Name', student.first_name, student._isNew)">
                 <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="student.first_name" placeholder="First name" class="form-control" />
             </td>
-            <td width="150" ng:if="fields.birthday.visible">
-                <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="student.birthday" placeholder="Birthday" class="form-control" />
+            <td width="150" ng:if="fields.birthday.visible" class="form-group" ng:class="validateField('Birthday', student.birthday, student._isNew)">
+                <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="student.birthday" placeholder="Birthday" class="form-control"/>
             </td>
-            <td width="150" ng:if="fields.id.visible">
+            <td width="150" ng:if="fields.id.visible" class="form-group" >
                 <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="student.id" placeholder="Student ID (optional)" class="form-control" />
             </td>
             <td width="1">

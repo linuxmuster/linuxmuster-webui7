@@ -22,7 +22,7 @@
 
     <br/>
 
-    <table class="lm-table">
+    <table class="lm-table lm-table-inputs">
         <tr>
             <th translate>Class</th>
             <th translate>Last name</th>
@@ -32,19 +32,19 @@
             <th></th>
         </tr>
         <tr ng:repeat="student in students|filter:filter|orderBy:['-_isNew', sort.fx]" ng:show="student.class[0] != '#'">
-            <td>
+            <td class="form-group" ng:class="validateField('Class', student.class, student._isNew)">
                 <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="student.class" placeholder="Class" class="form-control" />
             </td>
-            <td>
+            <td class="form-group" ng:class="validateField('Name', student.last_name, student._isNew)">
                 <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="student.last_name" placeholder="Last name" class="form-control" />
             </td>
-            <td>
+            <td class="form-group" ng:class="validateField('Name', student.first_name, student._isNew)">
                 <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="student.first_name" placeholder="First name" class="form-control" />
             </td>
-            <td width="150">
+            <td width="150" class="form-group" ng:class="validateField('Birthday', student.birthday, student._isNew)">
                 <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="student.birthday" placeholder="Birthday" class="form-control" />
             </td>
-            <td>
+            <td class="form-group" ng:class="validateField('Login', student.login, student._isNew)">
                 <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="student.login" placeholder="Login" class="form-control" />
             </td>
             <td width="1">

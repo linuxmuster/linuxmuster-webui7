@@ -52,19 +52,19 @@
             <th></th>
         </tr>
         <tr ng:repeat="device in devices|filter:filter|filter:stripComments|orderBy:['-_isNew', sort.fx]|page:paging.page:paging.pageSize">
-            <td width="80" ng:if="fields.room.visible" class="form-group" ng:class="(device._isNew == true && (device.room.length === 0 || !isValidRoom(device.room))) ? 'has-error-new' : (device._isNew != true && (device.room.length === 0 || !isValidRoom(device.room))) ? 'has-error' : ''">
+            <td width="80" ng:if="fields.room.visible" class="form-group" ng:class="validateField('Room', device.room, device._isNew)">
                 <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.room" placeholder="Room" class="form-control" />
             </td>
-            <td ng:if="fields.hostname.visible" class="form-group" ng:class="(device._isNew == true && (device.hostname.length === 0 || !isValidHost(device.hostname))) ? 'has-error-new' : (device._isNew != true && (device.hostname.length === 0 || !isValidHost(device.hostname))) ? 'has-error' : ''">
+            <td ng:if="fields.hostname.visible" class="form-group" ng:class="validateField('Host', device.hostname, device._isNew)">
                 <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.hostname" placeholder="Hostname" class="form-control" />
             </td>
-            <td ng:if="fields.group.visible" class="form-group" ng:class="(device._isNew == true && device.group.length === 0) ? 'has-error-new' : (device._isNew != true && device.group.length === 0) ? 'has-error' : ''">
+            <td ng:if="fields.group.visible" class="form-group" ng:class="validateField('', device.group, device._isNew)">
                 <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.group" placeholder="Group" class="form-control" />
             </td>
-            <td ng:if="fields.mac.visible" class="form-group" ng:class="(device._isNew == true && (device.mac.length === 0 || !isValidMac(device.mac))) ? 'has-error-new' : (device._isNew != true && (device.mac.length === 0 || !isValidMac(device.mac))) ? 'has-error' : ''">
+            <td ng:if="fields.mac.visible" class="form-group" ng:class="validateField('Mac', device.mac, device._isNew)">
                 <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.mac" placeholder="MAC" class="form-control" />
             </td>
-            <td ng:if="fields.ip.visible" class="form-group" ng:class="(device._isNew == true && (device.ip.length === 0 || !isValidIP(device.ip))) ? 'has-error-new' : (device._isNew != true && (device.ip.length === 0 || !isValidIP(device.ip))) ? 'has-error' : ''">
+            <td ng:if="fields.ip.visible" class="form-group" ng:class="validateField('IP', device.ip, device._isNew)">
                 <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.ip" placeholder="IP" class="form-control" />
             </td>
             <td ng:if="fields.officeKey.visible" class="form-group">

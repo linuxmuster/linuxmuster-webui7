@@ -52,12 +52,41 @@ angular.module('lm.users').controller 'LMUsersStudentsListController', ($scope, 
           name: gettext('Student ID')
     }
 
+    $scope.first_save = false
+
+    $scope.validateField = (name, val, isnew) ->
+        valid = $scope["isValid"+name](val) && val
+        if valid
+            return ""
+        if isnew and !$scope.first_save
+            return "has-error-new"
+        else
+            return "has-error"
+
+    $scope.findval = (attr, val) ->
+        return (dict) ->
+            dict[attr] == val
+    
+    $scope.isValidClass = (cl) ->
+        regExp = /^([0-9a-zA-Z]*)$/ 
+        validClass = regExp.test(cl)
+        return true ## TODO : valid chars for a classname ?
+        
+    $scope.isValidName = (name) ->
+        regExp = /^([0-9a-zA-Z]*)$/ 
+        validName = regExp.test(name)
+        return true ## TODO : valid chars for a name ?
+    
+    $scope.isValidBirthday = (birthday) ->
+        regExp = /^(0[1-9]|[12][0-9]|3[01])[.](0[1-9]|1[012])[.](19|20)\d\d$/ ## Not perfect : allows 31.02.1920, but not so important
+        validBirthday = regExp.test(birthday)
+        return validBirthday
 
     $scope.add = () ->
         if $scope.students.length > 0
             $scope.paging.page = Math.floor(($scope.students.length - 1) / $scope.paging.pageSize) + 1
         $scope.filter = ''
-        $scope.students.push { _isNew: true}
+        $scope.students.push { '_isNew': true, 'first_name': '', 'last_name': '', 'class': ''}
 
     $http.get('/api/lm/schoolsettings').then (resp) ->
         school = 'default-school'
@@ -78,23 +107,14 @@ angular.module('lm.users').controller 'LMUsersStudentsListController', ($scope, 
         lmFileEditor.show('/etc/linuxmuster/sophomorix/default-school/students.csv', $scope.encoding).then () ->
             $route.reload()
 
+    $scope.numErrors = () ->
+        return document.getElementsByClassName("has-error").length + document.getElementsByClassName("has-error-new").length > 0
+
     $scope.save = () ->
-        informationMissing = false
-        for student in $scope.students
-            if student['_isNew'] is true
-                console.log (student)
-                fields = ["class","last_name","first_name","birthday"]
-                i = 0
-                while i < fields.length
-                  field = fields[i]
-                  if not student.hasOwnProperty(field)
-                    informationMissing = true
-                  if student[field] is ''
-                      informationMissing = true
-                  i++
-        if informationMissing is true
-            # TODO: Color line with missing info
-            notify.error gettext('Empty field(s) in a row')
+        if $scope.numErrors()
+            $scope.first_save = true
+            angular.element(document.getElementsByClassName("has-error-new")).addClass('has-error')
+            notify.error('Required data missing')
             return
         return $http.post("/api/lm/users/students-list?encoding=#{$scope.encoding}", $scope.students).then () ->
             notify.success gettext('Saved')

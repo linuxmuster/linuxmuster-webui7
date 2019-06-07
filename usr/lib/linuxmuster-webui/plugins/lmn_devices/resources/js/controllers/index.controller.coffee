@@ -26,6 +26,20 @@ angular.module('lm.devices').controller 'LMDevicesApplyModalController', ($scope
 angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $uibModal, $route, gettext, notify, pageTitle, lmFileEditor, lmFileBackups) ->
     pageTitle.set(gettext('Devices'))
 
+    $scope.first_save = false
+
+    $scope.validateField = (name, val, isnew) ->
+        if name
+            valid = $scope["isValid"+name](val) && val
+        else
+            valid = val
+        if valid
+            return ""
+        if isnew and !$scope.first_save
+            return "has-error-new"
+        else
+            return "has-error"
+
     $scope.findval = (attr, val) ->
         return (dict) ->
             dict[attr] == val
@@ -175,6 +189,7 @@ angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $
 
     $scope.save = () ->
         if $scope.numErrors()
+            $scope.first_save = true
             angular.element(document.getElementsByClassName("has-error-new")).addClass('has-error')
             notify.error('Required data missing')
             return

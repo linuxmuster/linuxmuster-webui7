@@ -1,4 +1,3 @@
-<br/>
 <h2 translate>Welcome to Linuxmuster.net version 7! </h2>
 
 <br>
@@ -10,11 +9,8 @@
 <div ng:show="identity.user != 'root'">
 
     <progress-spinner ng:show="user == null"></progress-spinner>
-    
-    <button class="btn btn-primary pull-right" ng:click="changePassword()">
-        <span translate>Change password</span>
-    </button>
-    
+
+
     <div ng:show="user != null">
 
         <h4 translate>Hello {{user.givenName}} {{user.sn}},</h4>
@@ -29,7 +25,16 @@
                 With great power comes great responsibility!</h4>
         </div>
     </div>
-    
+
+    <div style="margin-top: 40px;">
+    <h3 translate>Quick Access</h3>
+    <button class="btn btn-primary pull-left" ng:click="changePassword()">
+        <span translate>Change password</span>
+    </button>
+    <br>
+    </div>
+
+    <div style="width: 50%;margin-top: 40px;">
     <h3 translate>Quotas</h3>
 
     <div>
@@ -53,5 +58,6 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </div>

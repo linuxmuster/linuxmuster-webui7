@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.70-1) lmn7; urgency=medium 
+
+  * Current snapshot build 028bd1d1385528927e5efbab46495d978b9ec1d2
+   *     Added custom csv list support
+
+ -- Andreas Till <andreas.till@netzint.de> Wed May 29 16:05:57 UTC 2019
+
 linuxmuster-webui7 (1.0.69-1) lmn7; urgency=medium 
 
   * Current snapshot build 318cea2e21ff71233e71b2e362263dde5c5ddaa0

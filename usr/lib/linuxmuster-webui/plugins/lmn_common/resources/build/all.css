@@ -137,8 +137,27 @@ a:hover {
 html body.customized .form-control:focus {
   border-bottom-color: #ffab40;
 }
-.col-md-3 {
-  width: 230px;
+html body.customized .container > .row > .sidebar .sidebar-item h5,
+html body.customized .container > .sidebar .sidebar-item h5 {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  width: 220px;
+}
+body > .container > .row > .sidebar .sidebar-item.isRoot,
+body > .container > .sidebar .sidebar-item.isRoot {
+  padding: 15px 0px 0;
+}
+body > .container > .row > .sidebar,
+body > .container > .sidebar {
+  width: 205px;
+}
+body > .container > .row > .sidebar .sidebar-item > div > .link,
+body > .container > .sidebar .sidebar-item > div > .link {
+  padding-left: 10px;
+}
+html body.customized .container > .row > .sidebar .sidebar-item h5,
+html body.customized .container > .sidebar .sidebar-item h5 {
+  padding-left: 10px;
 }
 .col-md-9 {
   width: calc(100% - 230px);

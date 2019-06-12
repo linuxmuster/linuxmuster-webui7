@@ -13,7 +13,7 @@ class ItemProvider(SidebarItemProvider):
             {
             'attach': 'category:class',
             'name': _('Session'),
-            'icon': 'users',
+            'icon': 'chalkboard-teacher',
             'url': '/view/lmn/session',
             'weight': 20,
             },

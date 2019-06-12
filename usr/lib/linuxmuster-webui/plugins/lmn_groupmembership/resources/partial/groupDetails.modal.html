@@ -4,6 +4,25 @@
 <progress-spinner ng:show="groupDetails == null"></progress-spinner>
 <div style="padding-left: 40px;" ng:show="groupDetails != null">
     <br />
+    <h4 translate> Properties</h4>
+    <table class="table">
+        <tr>
+            <td><b translate>Creationdate:</b></td>
+            <td>{{formatDate(groupDetails[groupName]['sophomorixCreationDate'])}}</td>
+        </tr>
+        <tr>
+            <td><b translate>Type:</b></td>
+            <td>{{groupDetails[groupName]['sophomorixType']}}</td>
+        </tr>
+        <tr>
+            <td><b translate>Schoolname:</b></td>
+            <td>{{groupDetails[groupName]['sophomorixSchoolname']}}</td>
+        </tr>
+        <tr>
+            <td><b translate>Sophomorix Status:</b></td>
+            <td>{{groupDetails[groupName]['sophomorixStatus']}}</td>
+        </tr>
+    </table>
     <h4 class="pull-left" translate> Group Members: {{groupDetails[groupName]['sophomorixMembers_count']}}</h4>
     <a href="#" class="btn btn-default btn-flat pull-right" ng-click="showMemberDetails = ! showMemberDetails" translate>{{showMemberDetails ? "Hide" : "Show"}}</a>
     <a class="btn btn-default btn-flat pull-right" ng:show="groupDetails[groupName]['sophomorixType'] == 'project'" href="#" ng-click="editGroupMembers(groupName, groupDetails)" translate >Edit members</a>
@@ -32,25 +51,6 @@
     </div>
     <br />
     <br />
-    <h4 translate> Properties</h4>
-    <table class="table">
-        <tr>
-            <td><b translate>Creationdate:</b></td>
-            <td>{{formatDate(groupDetails[groupName]['sophomorixCreationDate'])}}</td>
-        </tr>
-        <tr>
-            <td><b translate>Type:</b></td>
-            <td>{{groupDetails[groupName]['sophomorixType']}}</td>
-        </tr>
-        <tr>
-            <td><b translate>Schoolname:</b></td>
-            <td>{{groupDetails[groupName]['sophomorixSchoolname']}}</td>
-        </tr>
-        <tr>
-            <td><b translate>Sophomorix Status:</b></td>
-            <td>{{groupDetails[groupName]['sophomorixStatus']}}</td>
-        </tr>
-    </table>
 
 
     <div class="modal-footer">

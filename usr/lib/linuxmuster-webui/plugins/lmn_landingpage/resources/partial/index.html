@@ -10,14 +10,13 @@
 
     <progress-spinner ng:show="user == null"></progress-spinner>
 
+    <div style="margin-left: 10px;"  ng:show="user != null">
 
-    <div ng:show="user != null">
-
-        <h4 translate>Hello {{user.givenName}} {{user.sn}},</h4>
+        <h4  translate>Hello {{user.givenName}} {{user.sn}},</h4>
 
         <div ng:show="user.sophomorixRole == 'teacher'">
-            <h4 translate>use the sidebar to navigate through the options. You
-                can start by using the Groupmembership module to subscribe to your classes.</h4>
+            <span translate>use the sidebar to navigate through the options. You
+                can start by using the Groupmembership module to subscribe to your classes.</span>
         </div>
         <div ng:show="user.sophomorixRole == 'globaladministrator' || user.sophomorixRole == 'schooladministrator'">
             <h4 translate>Use the sidebar to navigate through the options.<br />
@@ -26,38 +25,52 @@
         </div>
     </div>
 
-    <div style="margin-top: 40px;">
-    <h3 translate>Quick Access</h3>
-    <button class="btn btn-primary pull-left" ng:click="changePassword()">
-        <span translate>Change password</span>
-    </button>
-    <br>
-    </div>
+    <div class="flex-container info-cards" style="margin-top: 10px; display: flex;flex-wrap: wrap;">
 
-    <div style="width: 50%;margin-top: 40px;">
-    <h3 translate>Quotas</h3>
+        <div>
+            <h3 style="margin-bottom: 15px;" translate>Account Information</h3>
+            <progress-spinner ng:show="user == null"></progress-spinner>
 
-    <div>
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="widget-header" translate>
-                    Total
-                </div>
-                <smart-progress value="usage" max="100"></smart-progress>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="widget-value">
-                     {{used}} MiB / {{total}} MiB
-                    <sup ng:show="usage > 80">
-                        <span class="label label-danger">
-                            <i class="fa fa-warning"></i>
-                        </span>
-                    </sup>
+            <div ng:show="user != null">
+                <div translate>Name:  <b>{{user.givenName}}, {{user.sn}}</b></div>
+                <div translate>Mail:  <b>{{user.mail}}</b></div>
+                <div translate>School: <b>{{user.sophomorixSchoolname}}</b></div>
+                <div translate>Role: <b>{{user.sophomorixAdminClass}}</b></div>
+                <div style="margin-top: 30px; margin-bottom: 10px;">
+                    <button class="btn btn-primary" ng:click="changePassword()">
+                        <span translate>Change password</span>
+                    </button>
                 </div>
             </div>
         </div>
+
+        <div>
+            <h3 style="margin-bottom: 15px;" translate>Quotas</h3>
+            <div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="widget-header" translate>
+                            Total
+                        </div>
+                        <smart-progress value="usage" max="100"></smart-progress>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="widget-value">
+                            {{used}} MiB / {{total}} MiB
+                            <sup ng:show="usage > 80">
+                                <span class="label label-danger">
+                                    <i class="fa fa-warning"></i>
+                                </span>
+                            </sup>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    </div>
+
+
+
 </div>

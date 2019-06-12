@@ -193,4 +193,13 @@ ul.leaders span + span {
   padding-left: 0.33em;
   background: white;
 }
+.info-cards > div {
+  background-color: #f1f1f1;
+  width: 250px;
+  margin: 10px;
+  padding: 10px 15px;
+  border: 1px solid #eee;
+  margin-bottom: 30px;
+  text-align: left;
+}
 

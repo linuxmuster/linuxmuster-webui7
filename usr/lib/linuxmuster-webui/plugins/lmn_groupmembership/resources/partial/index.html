@@ -1,117 +1,131 @@
+
 <br/>
-<progress-spinner ng:show="groups == null"></progress-spinner>
-<div ng:show="groups != null">
-    <div class="input-group">
 
-        <input ng:model="filter" type="search" autofocus class="form-control" placeholder="Filter" typeahead-min-length="1" />
-
-        <div uib-dropdown class="input-group-btn">
-            <button class="btn btn-default" ng:click='createProject()'>
-                <div>
-                    <span><i class="fa fa-fw fa-flask"></i><span>
-                            {{'New Project'|translate}}
-                </div>
-            </button>
-            <button class="btn btn-default" uib-dropdown-toggle>
-                <i class="fa fa-filter"></i> <span translate> Objectsfilter </span>
-                <span class="caret"></span>
-            </button>
-            <ul uib-dropdown-menu class="dropdown-menu" style="width:150px" ng-click="$event.stopPropagation()">
-                <li ng:repeat="type in types">
-                    <div>
-                        <span  checkbox ng:model="type.checkbox"> </span>
-                        <span ng-if="type.type == 'schoolclass'"> <i class="fa fa-users"></i> <span translate>Classes</span></span>
-                        <span ng-if="type.type == 'printergroup'"><i class="fa fa-fw fa-print"></i><span translate>Printers</span> </span>
-                        <span ng-if="type.type == 'project'"> <i class="fa fa-fw fa-flask"></i><span translate>Projects</span> </span>
-                    </div>
-                </li>
-            </ul>
-        </div>
-
-
-
-        <div uib-dropdown class="input-group-btn">
-            <button class="btn btn-default" uib-dropdown-toggle>
-                <i class="fa fa-sort-amount-asc"></i> {{sort.name}}
-                <span class="caret"></span>
-            </button>
-            <ul uib-dropdown-menu class="dropdown-menu-right" style="width:150px">
-                <li ng:repeat="sort in sorts">
-                    <a ng:click="checkInverse($parent.sort, sort); $parent.sort = sort">
-                        <i class="fa fa-sort-amount-asc"></i> {{sort.name}}
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <br>
-
-    <div ng:show="types.schoolclass.checkbox">
-        <h3 translate>Schoolclasses</h3>
-        <div ng-if="schoolclassCount== 0" class="alert alert-info">
-            <i class="fa fa-info-circle"></i>
-            <span translate> There are no schoolclasses available. Ask the administrator to import students</span>
-        </div>
-        <div class="flex-container lmn-container-list">
-        <div ng:repeat="group in groups|filter: {type: 'schoolclass'}|filter:filter|orderBy:[sort.fx]:sortReverse">
-            <div>
-                <span id={{group.groupname}} checkbox ng:model="group.membership" ng-click='groupChanged(group.groupname)'></span>
-                <i class="{{group.icon}}"></i>
-                <a href="#" ng-click='showGroupDetails($index, group.type, group.groupname)'>
-                    <span translate>{{group.typename}}</span>
-                    <b style="word-wrap: break-word; -ms-word-break: break-all">{{group.groupname}}</b>
-                </a>
-            </div>
-        </div>
-        </div>
-    </div>
-
-
-    <div ng:show="types.printergroup.checkbox">
-        <h3 translate>Printer</h3>
-        <div ng-if="printergroupCount == 0" class="alert alert-info">
-            <i class="fa fa-info-circle"></i>
-            <span translate> There are no printers configured yet. Ask your administrator to configure one.</span>
-        </div>
-        <div class="flex-container lmn-container-list" >
-        <div ng:repeat="group in groups|filter: {type: 'printer'}|filter:filter|orderBy:[sort.fx]:sortReverse">
-            <div>
-                <span id={{group.groupname}} checkbox ng:model="group.membership" ng-click='groupChanged(group.groupname)'></span>
-                <i class="{{group.icon}}"></i>
-                <a href="#" ng-click='showGroupDetails($index, group.type, group.groupname)'>
-                    <span translate>{{group.typename}}</span>
-                    <b style="word-wrap: break-word; -ms-word-break: break-all">{{group.groupname}}</b>
-                </a>
-                </a>
-            </div>
-        </div>
-        </div>
-    </div>
-
-    <div ng:show="types.project.checkbox">
-        <h3 translate>Projects</h3>
-        <div ng-if="projectCount == 0" class="alert alert-info">
-            <i class="fa fa-info-circle"></i>
-            <span translate> There are no projects yet. You can create a new procet using the menu bar.</span>
-        </div>
-        <div class="flex-container lmn-container-list" >
-        <div ng:repeat="group in groups|filter: {type: 'project'}|filter:filter|orderBy:[sort.fx]:sortReverse">
-            <div>
-                <span id={{group.groupname}} checkbox ng:model="group.membership" ng-click='groupChanged(group.groupname)'></span>
-                <i class="{{group.icon}}"></i>
-                <a href="#" ng-click='showGroupDetails($index, group.type, group.groupname)'>
-                    <span translate>{{group.typename}}</span>
-                    <b style="word-wrap: break-word; -ms-word-break: break-all">{{group.groupname}}</b>
-                </a>
-            </div>
-        </div>
-        </div>
-    </div>
-
+<div ng:show="identity.user == 'root'">
     <br/>
-    <div class="floating-toolbar-padder"></div>
+    <div class="alert alert-danger">
+        <i class="fa fa-info-circle"></i> <span translate>You should not use WebUI as root user! This module does not work for the root user.
+            You can either use a administrative or teacher account.</span>
+    </div>
+</div>
 
-    <floating-toolbar>
-        <button ng:click="setGroups(groups)" class="btn btn-default btn-flat" translate>Enroll</button>
-    </floating-toolbar>
+<div ng:show="identity.user != 'root'">
+
+    <progress-spinner ng:show="groups == null"></progress-spinner>
+
+    <div ng:show="groups != null">
+        <div class="input-group">
+
+            <input ng:model="filter" type="search" autofocus class="form-control" placeholder="Filter" typeahead-min-length="1" />
+
+            <div uib-dropdown class="input-group-btn">
+                <button class="btn btn-default" ng:click='createProject()'>
+                    <div>
+                        <span><i class="fa fa-fw fa-flask"></i><span>
+                                {{'New Project'|translate}}
+                    </div>
+                </button>
+                <button class="btn btn-default" uib-dropdown-toggle>
+                    <i class="fa fa-filter"></i> <span translate> Objectsfilter </span>
+                    <span class="caret"></span>
+                </button>
+                <ul uib-dropdown-menu class="dropdown-menu" style="width:150px" ng-click="$event.stopPropagation()">
+                    <li ng:repeat="type in types">
+                        <div>
+                            <span  checkbox ng:model="type.checkbox"> </span>
+                            <span ng-if="type.type == 'schoolclass'"> <i class="fa fa-users"></i> <span translate>Classes</span></span>
+                            <span ng-if="type.type == 'printergroup'"><i class="fa fa-fw fa-print"></i><span translate>Printers</span> </span>
+                            <span ng-if="type.type == 'project'"> <i class="fa fa-fw fa-flask"></i><span translate>Projects</span> </span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+
+
+            <div uib-dropdown class="input-group-btn">
+                <button class="btn btn-default" uib-dropdown-toggle>
+                    <i class="fa fa-sort-amount-asc"></i> {{sort.name}}
+                    <span class="caret"></span>
+                </button>
+                <ul uib-dropdown-menu class="dropdown-menu-right" style="width:150px">
+                    <li ng:repeat="sort in sorts">
+                        <a ng:click="checkInverse($parent.sort, sort); $parent.sort = sort">
+                            <i class="fa fa-sort-amount-asc"></i> {{sort.name}}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <br>
+
+        <div ng:show="types.schoolclass.checkbox">
+            <h3 translate>Schoolclasses</h3>
+            <div ng-if="schoolclassCount== 0" class="alert alert-info">
+                <i class="fa fa-info-circle"></i>
+                <span translate> There are no schoolclasses available. Ask the administrator to import students</span>
+            </div>
+            <div class="flex-container lmn-container-list">
+                <div ng:repeat="group in groups|filter: {type: 'schoolclass'}|filter:filter|orderBy:[sort.fx]:sortReverse">
+                    <div>
+                        <span id={{group.groupname}} checkbox ng:model="group.membership" ng-click='groupChanged(group.groupname)'></span>
+                        <i class="{{group.icon}}"></i>
+                        <a href="#" ng-click='showGroupDetails($index, group.type, group.groupname)'>
+                            <span translate>{{group.typename}}</span>
+                            <b style="word-wrap: break-word; -ms-word-break: break-all">{{group.groupname}}</b>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div ng:show="types.printergroup.checkbox">
+            <h3 translate>Printer</h3>
+            <div ng-if="printergroupCount == 0" class="alert alert-info">
+                <i class="fa fa-info-circle"></i>
+                <span translate> There are no printers configured yet. Ask your administrator to configure one.</span>
+            </div>
+            <div class="flex-container lmn-container-list" >
+                <div ng:repeat="group in groups|filter: {type: 'printer'}|filter:filter|orderBy:[sort.fx]:sortReverse">
+                    <div>
+                        <span id={{group.groupname}} checkbox ng:model="group.membership" ng-click='groupChanged(group.groupname)'></span>
+                        <i class="{{group.icon}}"></i>
+                        <a href="#" ng-click='showGroupDetails($index, group.type, group.groupname)'>
+                            <span translate>{{group.typename}}</span>
+                            <b style="word-wrap: break-word; -ms-word-break: break-all">{{group.groupname}}</b>
+                        </a>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div ng:show="types.project.checkbox">
+            <h3 translate>Projects</h3>
+            <div ng-if="projectCount == 0" class="alert alert-info">
+                <i class="fa fa-info-circle"></i>
+                <span translate> There are no projects yet. You can create a new procet using the menu bar.</span>
+            </div>
+            <div class="flex-container lmn-container-list" >
+                <div ng:repeat="group in groups|filter: {type: 'project'}|filter:filter|orderBy:[sort.fx]:sortReverse">
+                    <div>
+                        <span id={{group.groupname}} checkbox ng:model="group.membership" ng-click='groupChanged(group.groupname)'></span>
+                        <i class="{{group.icon}}"></i>
+                        <a href="#" ng-click='showGroupDetails($index, group.type, group.groupname)'>
+                            <span translate>{{group.typename}}</span>
+                            <b style="word-wrap: break-word; -ms-word-break: break-all">{{group.groupname}}</b>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br/>
+        <div class="floating-toolbar-padder"></div>
+
+        <floating-toolbar>
+            <button ng:click="setGroups(groups)" class="btn btn-default btn-flat" translate>Enroll</button>
+        </floating-toolbar>
+    </div>
 </div>

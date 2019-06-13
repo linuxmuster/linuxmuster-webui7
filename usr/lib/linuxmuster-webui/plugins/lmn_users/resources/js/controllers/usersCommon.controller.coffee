@@ -26,9 +26,13 @@ angular.module('lm.users').controller 'LMNUserDetailsController', ($scope, $rout
     #notify.error gettext("You have to enter a username")
     $scope.id = id
 
+    $scope.formatDate = (date) ->
+        return Date(date)
+
+
     $http.post('/api/lm/sophomorixUsers/'+role, {action: 'get-specified', user: id}).then (resp) ->
         $scope.userDetails = resp.data
-        #console.log ($scope.userDetails)
+        console.log ($scope.userDetails)
 
     $scope.close = () ->
         $uibModalInstance.dismiss()

@@ -1,29 +1,77 @@
 <div class="modal-header">
-    <h4 translate >User Details {{id}}</h4>
+    <h3 translate>User Details
+    <span ng:show="userDetails == null" translate> ...</span>
+    <span ng:show="userDetails != null" translate > - {{userDetails[0]['givenName']}} {{userDetails[0]['sn']}}</span></h3>
 </div>
+
 <progress-spinner ng:show="userDetails == null"></progress-spinner>
+
 <div style="padding-left: 40px;" ng:show="userDetails != null">
-    <h3>{{userDetails[0]['givenName']}} {{userDetails[0]['sn']}}</h3>
-    <br>
+    <br />
+    <h4 translate> Properties</h4>
+    <table class="table">
+        <tr>
+            <td><b translate>Loginname:</b></td>
+            <td>{{userDetails[0]['sAMAccountName']}}</td>
+        </tr>
+        <tr>
+            <td><b translate>Class:</b></td>
+            <td>{{userDetails[0]['sophomorixAdminClass']}}</td>
+        </tr>
+        <tr>
+            <td><b translate>Birthday:</b></td>
+            <td>{{userDetails[0]['sophomorixBirthdate']}}</td>
+        </tr>
+        <tr>
+            <td><b translate>Sophomorix Status:</b></td>
+            <td>{{userDetails[0]['sophomorixStatus']}}</td>
+        </tr>
+        <tr>
+            <td><b translate>Role:</b></td>
+            <td>{{userDetails[0]['sophomorixRole']}}</td>
+        </tr>
+        <tr>
+            <td><b translate>Schoolname:</b></td>
+            <td>{{userDetails[0]['sophomorixSchoolname']}}</td>
+        </tr>
+        <tr>
+            <td><b translate>DeactivationDate:</b></td>
+            <td>{{formatDate(userDetails[0]['sophomorixCreationDate'])}}</td>
+        </tr>
+        <tr>
+            <td><b translate>TolerationDate:</b></td>
+            <td>{{formatDate(userDetails[0]['sophomorixTolerationDate'])}}</td>
+        </tr>
+        <tr>
+            <td><b translate>CreationDate:</b></td>
+            <td>{{formatDate(userDetails[0]['sophomorixCreationDate'])}}</td>
+        </tr>
+    </table>
+
+    <h4 class="pull-left" translate> Group Membership: </h4>
+    <a href="#" class="btn btn-default btn-flat pull-right" ng-click="showGroupDetails = ! showGroupDetails" translate>{{showGroupDetails ? "Hide" : "Show"}}</a>
+    <div ng-show="showGroupDetails">
+       <table class="table">
+          <tr ng:repeat="group in userDetails[0]['memberOf']">
+             <td><a ng:click="createConfig(example)">{{group}}</a></td>
+             <td><a ng:click="createConfig(example)">{{allUsers[member]['givenName']}}</a></td>
+             <td><a ng:click="createConfig(example)">{{allUsers[member]['sophomorixAdminClass']}}</a></td>
+          </tr>
+       </table>
+    </div>
+<!--
     <div translate> Group Membership:</div>
     <li style="padding-left: 20px;" ng:repeat="group in userDetails[0]['memberOf']"><a ng:click="createConfig(example)">{{group}}</a></li>
     <br>
-    <br><b translate>Class:</b>  {{userDetails[0]['sophomorixAdminClass']}}
-    <br><b translate>Birthday:</b> {{userDetails[0]['sophomorixBirthdate']}}
-    <br><b translate>Creationdate:</b> {{userDetails[0]['sophomorixCreationDate']}}
-    <br><b translate>Deactivationsdate:</b> {{userDetails[0]['sophomorixCreationDate']}}
-    <br><b translate>Tolerationdate:</b> {{userDetails[0]['sophomorixTolerationDate']}}
-
-
-    <br><b translate>Role:</b> {{userDetails[0]['sophomorixRole']}}
-    <br><b translate>Schoolname:</b>  {{userDetails[0]['sophomorixSchoolname']}}
-    <br><b translate>Sophomorix Status:</b> {{userDetails[0]['sophomorixStatus']}}
 
     <br>
     <br>
     <div translate> Quota in  MiB:</div>
     <li style="padding-left: 20px;" ng:repeat="sophomorixQuota in userDetails[0]['sophomorixQuota']"><a ng:click="createConfig(example)">{{sophomorixQuota}}</a></li>
-
+-->
+    <br>
+    <br>
+    <br>
     <br><b translate>Cloudquota Calculated in MiB:</b> {{userDetails[0]['sophomorixCloudQuotaCalculated']}}
     <br><b translate>Mailquota Calculated in MiB:</b> {{userDetails[0]['sophomorixMailQuotaCalculated']}}
 

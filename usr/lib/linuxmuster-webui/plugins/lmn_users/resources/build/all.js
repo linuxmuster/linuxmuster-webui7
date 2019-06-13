@@ -2046,13 +2046,16 @@
   angular.module('lm.users').controller('LMNUserDetailsController', function($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, id, role) {
     //notify.error gettext("You have to enter a username")
     $scope.id = id;
+    $scope.formatDate = function(date) {
+      return Date(date);
+    };
     $http.post('/api/lm/sophomorixUsers/' + role, {
       action: 'get-specified',
       user: id
     }).then(function(resp) {
-      return $scope.userDetails = resp.data;
+      $scope.userDetails = resp.data;
+      return console.log($scope.userDetails);
     });
-    //console.log ($scope.userDetails)
     return $scope.close = function() {
       return $uibModalInstance.dismiss();
     };

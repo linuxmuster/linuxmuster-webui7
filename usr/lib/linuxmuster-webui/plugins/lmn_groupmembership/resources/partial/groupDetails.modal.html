@@ -1,5 +1,7 @@
 <div class="modal-header">
-    <h3 translate >Group Details {{id}} - {{groupDetails[groupName]['description']}}</h3>
+    <h3 translate>Group Details
+    <span ng:show="groupDetails == null" translate> ...</span>
+    <span ng:show="groupDetails != null" translate > - {{groupDetails[groupName]['description']}}</span></h3>
 </div>
 <progress-spinner ng:show="groupDetails == null"></progress-spinner>
 <div style="padding-left: 40px;" ng:show="groupDetails != null">
@@ -27,6 +29,7 @@
     <a href="#" class="btn btn-default btn-flat pull-right" ng-click="showMemberDetails = ! showMemberDetails" translate>{{showMemberDetails ? "Hide" : "Show"}}</a>
     <a class="btn btn-default btn-flat pull-right" ng:show="groupDetails[groupName]['sophomorixType'] == 'project'" href="#" ng-click="editGroupMembers(groupName, groupDetails)" translate >Edit members</a>
     <div ng-show="showMemberDetails">
+        <!-- TODO: Sort this by class or sn-->
         <table class="table">
             <tr ng:repeat="member in members[0]">
                 <td><a ng:click="createConfig(example)">{{allUsers[member]['sn']}}</a></td>

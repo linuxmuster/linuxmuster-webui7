@@ -40,16 +40,16 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
 
         $scope.formatDate = (date) ->
            return Date(date)
-        
+
         $http.post('/api/lm/all-users').then (resp) ->
             $scope.allUsers = resp.data
-        
+
         $scope.filterDNLogin = (dn) ->
             if dn.indexOf('=') != -1
                 return dn.split(',')[0].split('=')[1]
             else
                 return dn
-                
+
         $scope.getGroupDetails = (group) ->
             groupType = group[0]
             groupName = group[1]
@@ -58,7 +58,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
                 $scope.groupDetails = resp.data
                 $scope.members = [$scope.filterDNLogin(member) for member in resp.data[groupName]['member']]
                 $scope.admins = [$scope.filterDNLogin(member) for member in resp.data[groupName]['sophomorixAdmins']]
-        
+
         $scope.groupType = groupType
         $scope.getGroupDetails ([groupType, groupName])
         $scope.close = () ->
@@ -78,14 +78,15 @@ angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($sco
                 name: gettext('Membership')
                 fx: (x) -> x.membership
             }
-            {
-                name: gettext('Class')
-                fx: (x) -> x.sophomorixAdminClass
-            }
+            #{
+            #    name: gettext('Class')
+            #    fx: (x) -> x.sophomorixAdminClass
+            #}
         ]
-        $scope.sort = $scope.sorts[2]
+        $scope.sort = $scope.sorts[1]
+        console.log ($scope.sort)
         $scope.groupName = groupName
-        $scope.sortReverse = true
+        $scope.sortReverse = false
 
 
         $scope.checkInverse = (sort ,currentSort) ->
@@ -113,17 +114,24 @@ angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($sco
         $http.post('/api/lm/sophomorixUsers/students', {action: 'get-all'}).then (resp) ->
             students = resp.data
             $scope.students = students
+            console.log (students)
+            classes = []
             for student in students
+                if student['sophomorixAdminClass'] not in classes
+                    classes.push student['sophomorixAdminClass']
                 if groupDN in student['memberOf']
                     student['membership'] = true
                 else
                     student['membership'] = false
+            $scope.classes = classes
+            console.log ($scope.classes)
             ## TODO : add class ?
             ## TODO : add other project members ?
             ## TODO : add projectadmin
-        $http.post('/api/lm/sophomorixUsers/teachers', {action: 'get-all'}).then (rp) ->
-            teachers = rp.data
+        $http.post('/api/lm/sophomorixUsers/teachers', {action: 'get-all'}).then (resp) ->
+            teachers = resp.data
             $scope.teachers = teachers
+            console.log (teachers)
             for teacher in teachers
                 if groupDN in teacher['memberOf']
                     teacher['membership'] = true

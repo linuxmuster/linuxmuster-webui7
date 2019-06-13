@@ -35,30 +35,100 @@
     </div>
     <br>
 
-    <div style="padding-left: -40px; height: 400px; width: 90%; overflow-y: scroll;" class="container">
-        <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-6 mb-3" ng:repeat="student in students|filter:filter|filter:isActive|orderBy:[sort.fx]:sortReverse">
-                <div>
+    <!-- Class view Students-->
+    <div ng-if="sort.name != 'Membership'" class="flex-container lmn-container-list-separated">
+        <div ng:repeat="class in classes | orderBy:class">
+            <h4 style="padding-left: 10px;">{{class}}</h4>
+            <div ng:repeat="student in students|filter:filter|filter:isActive|orderBy:[sort.fx]:sortReverse">
+                <div ng-if="student.sophomorixAdminClass == class">
                     <span id={{student.sAMAccountName}} checkbox ng:model="student.membership" ng-click='membershipChanged($index, student.sAMAccountName)'></span>
                     <i class="fa fa-user"></i>
                     <a href="#" ng-click='showGroupDetails($index, student.sAMAccountName)'>
                         <!--  <span translate>{{student.sophomorixRole}}</span> -->
-                        <b>{{student.givenName}} {{student.sn}}</b> {{student.sophomorixAdminClass}}
+                        {{student.givenName}} <b>{{student.sn}}</b>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Class view Teachers-->
+    <div ng-if="sort.name != 'Membership'" class="flex-container lmn-container-list-separated">
+        <div>
+            <h4 style="padding-left: 10px;"translate >Teachers</h4>
+            <div ng:repeat="teacher in teachers|filter:filter|filter:isActive|orderBy:'Lastname':sortReverse">
+                <div>
+                    <span id={{teacher.sAMAccountName}} checkbox ng:model="teacher.membership" ng-click='membershipChanged($index, teacher.sAMAccountName)'></span>
+                    <i class="fa fa-user"></i>
+                    <a href="#" ng-click='showGroupDetails($index, teacher.sAMAccountName)'>
+                        {{teacher.givenName}} <b>{{teacher.sn}}</b>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Membership view Students-->
+    <div ng-if="sort.name == 'Membership'">
+        <h4 translate>Member</h4>
+        <span style="padding-left: 10px;" translate>Students</span>
+        <div class="flex-container lmn-container-list">
+            <div ng:repeat="student in students|filter:filter|filter:isActive|orderBy:[sort.fx]:sortReverse">
+                <div ng-if="student.membership == true">
+                    <span id={{student.sAMAccountName}} checkbox ng:model="student.membership" ng-click='membershipChanged($index, student.sAMAccountName)'></span>
+                    <i class="fa fa-user"></i>
+                    <a href="#" ng-click='showGroupDetails($index, student.sAMAccountName)'>
+                        {{student.givenName}} <b>{{student.sn}}</b> {{student.sophomorixAdminClass}}
                     </a>
                 </div>
             </div>
         </div>
     </div>
     <br>
-
-    <div style="padding-left: -40px; height: 400px; width: 90%; overflow-y: scroll;" class="container" ng:show="teachers != null">
-        <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-6 mb-3" ng:repeat="teacher in teachers|filter:filter|filter:isActive|orderBy:[sort.fx]:sortReverse">
-                <div>
+    <!-- Membership view Teachers-->
+    <div ng-if="sort.name == 'Membership'">
+        <span style="padding-left: 10px;" translate>Teachers </span>
+        <div class="flex-container lmn-container-list">
+            <div ng:repeat="teacher in teachers|filter:filter|filter:isActive|orderBy:'Lastname':sortReverse">
+                <div ng-if="teacher.membership == true">
                     <span id={{teacher.sAMAccountName}} checkbox ng:model="teacher.membership" ng-click='membershipChanged($index, teacher.sAMAccountName)'></span>
                     <i class="fa fa-user"></i>
                     <a href="#" ng-click='showGroupDetails($index, teacher.sAMAccountName)'>
-                        <!-- <span translate>{{teacher.sophomorixRole}}</span>-->
+                        {{teacher.givenName}} <b>{{teacher.sn}}</b> {{teacher.sophomorixAdminClass}}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Membership view not member -->
+    <!-- Students -->
+    <div ng-if="sort.name == 'Membership'">
+        <h4 translate>Not Member</h4>
+        <span style="padding-left: 10px;" translate>Students</span>
+        <div class="flex-container lmn-container-list">
+            <div ng:repeat="student in students|filter:filter|filter:isActive|orderBy:'Lastname':sortReverse">
+                <div ng-if="student.membership == false">
+                    <span id={{student.sAMAccountName}} checkbox ng:model="student.membership" ng-click='membershipChanged($index, student.sAMAccountName)'></span>
+                    <i class="fa fa-user"></i>
+                    <a href="#" ng-click='showGroupDetails($index, student.sAMAccountName)'>
+                        <b>{{student.givenName}} {{student.sn}}</b> {{student.sophomorixAdminClass}}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <!-- Membership view not member Teacher -->
+    <div ng-if="sort.name == 'Membership'">
+        <span style="padding-left: 10px;" translate>Teachers </span>
+        <div class="flex-container lmn-container-list">
+            <div ng:repeat="teacher in teachers|filter:filter|filter:isActive|orderBy:'Lastname':sortReverse">
+                <div ng-if="teacher.membership == false">
+                    <span id={{teacher.sAMAccountName}} checkbox ng:model="teacher.membership" ng-click='membershipChanged($index, teacher.sAMAccountName)'></span>
+                    <i class="fa fa-user"></i>
+                    <a href="#" ng-click='showGroupDetails($index, teacher.sAMAccountName)'>
                         <b>{{teacher.givenName}} {{teacher.sn}}</b> {{teacher.sophomorixAdminClass}}
                     </a>
                 </div>
@@ -66,6 +136,24 @@
         </div>
     </div>
 
+
+
+
+    <br>
+<!--
+    <div class="flex-container lmn-container-list-separated">
+        <div ng:repeat="teacher in teachers|filter:filter|filter:isActive|orderBy:'Lastname':sortReverse">
+            <div>
+                <span id={{teacher.sAMAccountName}} checkbox ng:model="teacher.membership" ng-click='membershipChanged($index, teacher.sAMAccountName)'></span>
+                <i class="fa fa-user"></i>
+                <a href="#" ng-click='showGroupDetails($index, teacher.sAMAccountName)'>
+                    <span translate>{{teacher.sophomorixRole}}</span>
+                    <b>{{teacher.givenName}} {{teacher.sn}}</b> {{teacher.sophomorixAdminClass}}
+                </a>
+            </div>
+        </div>
+    </div>
+-->
     <div class="modal-footer">
         <a class="btn btn-default btn-flat" ng:click="setMembers(students, teachers)" translate>Save</a>
         <a class="btn btn-default btn-flat" ng:click="close()" translate>Close</a>

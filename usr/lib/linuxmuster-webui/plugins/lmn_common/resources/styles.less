@@ -246,13 +246,51 @@ ul.leaders span + span {
 
 // flexbox
 //
+// used in landingpage
+
+.info-cards {
+    display: flex;
+    flex-wrap: wrap;
+}
 
 .info-cards > div {
     background-color: #f1f1f1;
     width: 250px;
     margin: 10px;
     padding: 10px 15px;
-    border: 1px solid #eee;
+    border: 1px solid #f1f1f1;
     margin-bottom: 30px;
     text-align: left;
 }
+
+// used in groupmembership
+
+.lmn-container-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.lmn-container-list > div {
+    text-align: left;
+    margin-left: 10px;
+    width: 220px;
+}
+
+.lmn-container-list-separated {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.lmn-container-list-separated > div {
+    text-align: left;
+    margin-left: 10px;
+    width: 220px;
+    background-color: #f1f1f1;
+    margin: 10px;
+    border: 1px solid #f1f1f1;
+}
+
+.lmn-container-list-separated > div > div {
+    margin-left: 10px;
+}
+

@@ -158,17 +158,16 @@
         fx: function(x) {
           return x.membership;
         }
-      },
-      {
-        name: gettext('Class'),
-        fx: function(x) {
-          return x.sophomorixAdminClass;
-        }
       }
     ];
-    $scope.sort = $scope.sorts[2];
+    //{
+    //    name: gettext('Class')
+    //    fx: (x) -> x.sophomorixAdminClass
+    //}
+    $scope.sort = $scope.sorts[1];
+    console.log($scope.sort);
     $scope.groupName = groupName;
-    $scope.sortReverse = true;
+    $scope.sortReverse = false;
     $scope.checkInverse = function(sort, currentSort) {
       if (sort === currentSort) {
         return $scope.sortReverse = !$scope.sortReverse;
@@ -206,29 +205,35 @@
     $http.post('/api/lm/sophomorixUsers/students', {
       action: 'get-all'
     }).then(function(resp) {
-      var i, len, results, student, students;
+      var classes, i, len, ref, student, students;
       students = resp.data;
       $scope.students = students;
-      results = [];
+      console.log(students);
+      classes = [];
       for (i = 0, len = students.length; i < len; i++) {
         student = students[i];
+        if (ref = student['sophomorixAdminClass'], indexOf.call(classes, ref) < 0) {
+          classes.push(student['sophomorixAdminClass']);
+        }
         if (indexOf.call(student['memberOf'], groupDN) >= 0) {
-          results.push(student['membership'] = true);
+          student['membership'] = true;
         } else {
-          results.push(student['membership'] = false);
+          student['membership'] = false;
         }
       }
-      return results;
+      $scope.classes = classes;
+      return console.log($scope.classes);
     });
     //# TODO : add class ?
     //# TODO : add other project members ?
     //# TODO : add projectadmin
     $http.post('/api/lm/sophomorixUsers/teachers', {
       action: 'get-all'
-    }).then(function(rp) {
+    }).then(function(resp) {
       var i, len, results, teacher, teachers;
-      teachers = rp.data;
+      teachers = resp.data;
       $scope.teachers = teachers;
+      console.log(teachers);
       results = [];
       for (i = 0, len = teachers.length; i < len; i++) {
         teacher = teachers[i];

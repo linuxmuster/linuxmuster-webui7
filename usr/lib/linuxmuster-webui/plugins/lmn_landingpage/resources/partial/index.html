@@ -10,28 +10,27 @@
 
     <progress-spinner ng:show="user == null"></progress-spinner>
 
-    <div style="margin-left: 10px;"  ng:show="user != null">
+    <div   ng:show="user != null">
+        <div style="margin-left: 10px;">
+            <h4  translate>Hello {{user.givenName}} {{user.sn}},</h4>
 
-        <h4  translate>Hello {{user.givenName}} {{user.sn}},</h4>
-
-        <div ng:show="user.sophomorixRole == 'teacher'">
-            <span translate>use the sidebar to navigate through the options. You
-                can start by using the Groupmembership module to subscribe to your classes.</span>
+            <div ng:show="user.sophomorixRole == 'teacher'">
+                <span translate>use the sidebar to navigate through the options. You
+                    can start by using the Groupmembership module to subscribe to your classes.</span>
+            </div>
+            <div ng:show="user.sophomorixRole == 'globaladministrator' || user.sophomorixRole == 'schooladministrator'">
+                <span translate>Use the sidebar to navigate through the options.<br />
+                    But keep in mind: 
+                    <b>With great power comes great responsibility!</b></span>
+            </div>
         </div>
-        <div ng:show="user.sophomorixRole == 'globaladministrator' || user.sophomorixRole == 'schooladministrator'">
-            <h4 translate>Use the sidebar to navigate through the options.<br />
-                But keep in mind:<br />
-                With great power comes great responsibility!</h4>
-        </div>
-    </div>
 
-    <div class="flex-container info-cards" style="margin-top: 10px; display: flex;flex-wrap: wrap;">
+        <div class="flex-container info-cards">
 
-        <div>
-            <h3 style="margin-bottom: 15px;" translate>Account Information</h3>
-            <progress-spinner ng:show="user == null"></progress-spinner>
+            <div>
+                <h3 style="margin-bottom: 15px;" translate>Account Information</h3>
+                <progress-spinner ng:show="user == null"></progress-spinner>
 
-            <div ng:show="user != null">
                 <div translate>Name:  <b>{{user.givenName}}, {{user.sn}}</b></div>
                 <div translate>Mail:  <b>{{user.mail}}</b></div>
                 <div translate>School: <b>{{user.sophomorixSchoolname}}</b></div>
@@ -42,28 +41,28 @@
                     </button>
                 </div>
             </div>
-        </div>
 
-        <div>
-            <h3 style="margin-bottom: 15px;" translate>Quotas</h3>
             <div>
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div class="widget-header" translate>
-                            Total
+                <h3 style="margin-bottom: 15px;" translate>Quotas</h3>
+                <div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="widget-header" translate>
+                                Total
+                            </div>
+                            <smart-progress value="usage" max="100"></smart-progress>
                         </div>
-                        <smart-progress value="usage" max="100"></smart-progress>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div class="widget-value">
-                            {{used}} MiB / {{total}} MiB
-                            <sup ng:show="usage > 80">
-                                <span class="label label-danger">
-                                    <i class="fa fa-warning"></i>
-                                </span>
-                            </sup>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="widget-value">
+                                {{used}} MiB / {{total}} MiB
+                                <sup ng:show="usage > 80">
+                                    <span class="label label-danger">
+                                        <i class="fa fa-warning"></i>
+                                    </span>
+                                </sup>
+                            </div>
                         </div>
                     </div>
                 </div>

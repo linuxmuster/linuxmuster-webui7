@@ -143,18 +143,21 @@
     $scope.sorts = [
       {
         name: gettext('Given name'),
+        id: 'givenName',
         fx: function(x) {
           return x.givenName;
         }
       },
       {
         name: gettext('Name'),
+        id: 'sn',
         fx: function(x) {
           return x.sn;
         }
       },
       {
         name: gettext('Membership'),
+        id: 'membership',
         fx: function(x) {
           return x.membership;
         }

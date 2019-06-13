@@ -14,7 +14,6 @@
 -->
 <br>
 <progress-spinner ng:show="students == null"></progress-spinner>
-
 <div style="padding-left: 40px;" ng:show="students != null">
     <div class="input-group">
         <input ng:model="filter" type="search" autofocus class="form-control" placeholder="Filter" typeahead-min-length="1" />
@@ -34,9 +33,11 @@
         </div>
     </div>
     <br>
+{{$parent.sorts}}
+{{$parent}}
 
     <!-- Class view Students-->
-    <div ng-if="sort.name != 'Membership'" class="flex-container lmn-container-list-separated">
+    <div ng-if="sort.id != 'membership'" class="flex-container lmn-container-list-separated">
         <div ng:repeat="class in classes | orderBy:class">
             <h4 style="padding-left: 10px;">{{class}}</h4>
             <div ng:repeat="student in students|filter:filter|filter:isActive|orderBy:[sort.fx]:sortReverse">
@@ -53,7 +54,7 @@
     </div>
 
     <!-- Class view Teachers-->
-    <div ng-if="sort.name != 'Membership'" class="flex-container lmn-container-list-separated">
+    <div ng-if="sort.id != 'membership'" class="flex-container lmn-container-list-separated">
         <div>
             <h4 style="padding-left: 10px;"translate >Teachers</h4>
             <div ng:repeat="teacher in teachers|filter:filter|filter:isActive|orderBy:'Lastname':sortReverse">
@@ -69,7 +70,7 @@
     </div>
 
     <!-- Membership view Students-->
-    <div ng-if="sort.name == 'Membership'">
+    <div ng-if="sort.id == 'membership'">
         <h4 translate>Member</h4>
         <span style="padding-left: 10px;" translate>Students</span>
         <div class="flex-container lmn-container-list">
@@ -86,7 +87,7 @@
     </div>
     <br>
     <!-- Membership view Teachers-->
-    <div ng-if="sort.name == 'Membership'">
+    <div ng-if="sort.id == 'membership'">
         <span style="padding-left: 10px;" translate>Teachers </span>
         <div class="flex-container lmn-container-list">
             <div ng:repeat="teacher in teachers|filter:filter|filter:isActive|orderBy:'Lastname':sortReverse">
@@ -103,7 +104,7 @@
 
     <!-- Membership view not member -->
     <!-- Students -->
-    <div ng-if="sort.name == 'Membership'">
+    <div ng-if="sort.id == 'membership'">
         <h4 translate>Not Member</h4>
         <span style="padding-left: 10px;" translate>Students</span>
         <div class="flex-container lmn-container-list">
@@ -121,7 +122,7 @@
 
     <br>
     <!-- Membership view not member Teacher -->
-    <div ng-if="sort.name == 'Membership'">
+    <div ng-if="sort.id == 'membership'">
         <span style="padding-left: 10px;" translate>Teachers </span>
         <div class="flex-container lmn-container-list">
             <div ng:repeat="teacher in teachers|filter:filter|filter:isActive|orderBy:'Lastname':sortReverse">
@@ -136,24 +137,7 @@
         </div>
     </div>
 
-
-
-
     <br>
-<!--
-    <div class="flex-container lmn-container-list-separated">
-        <div ng:repeat="teacher in teachers|filter:filter|filter:isActive|orderBy:'Lastname':sortReverse">
-            <div>
-                <span id={{teacher.sAMAccountName}} checkbox ng:model="teacher.membership" ng-click='membershipChanged($index, teacher.sAMAccountName)'></span>
-                <i class="fa fa-user"></i>
-                <a href="#" ng-click='showGroupDetails($index, teacher.sAMAccountName)'>
-                    <span translate>{{teacher.sophomorixRole}}</span>
-                    <b>{{teacher.givenName}} {{teacher.sn}}</b> {{teacher.sophomorixAdminClass}}
-                </a>
-            </div>
-        </div>
-    </div>
--->
     <div class="modal-footer">
         <a class="btn btn-default btn-flat" ng:click="setMembers(students, teachers)" translate>Save</a>
         <a class="btn btn-default btn-flat" ng:click="close()" translate>Close</a>

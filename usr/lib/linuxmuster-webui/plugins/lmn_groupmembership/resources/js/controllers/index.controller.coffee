@@ -68,14 +68,17 @@ angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($sco
         $scope.sorts = [
             {
                 name: gettext('Given name')
+                id: 'givenName'
                 fx: (x) -> x.givenName
             }
             {
                 name: gettext('Name')
+                id: 'sn'
                 fx: (x) -> x.sn
             }
             {
                 name: gettext('Membership')
+                id: 'membership'
                 fx: (x) -> x.membership
             }
             #{

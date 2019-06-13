@@ -33,9 +33,6 @@
         </div>
     </div>
     <br>
-{{$parent.sorts}}
-{{$parent}}
-
     <!-- Class view Students-->
     <div ng-if="sort.id != 'membership'" class="flex-container lmn-container-list-separated">
         <div ng:repeat="class in classes | orderBy:class">
@@ -74,7 +71,7 @@
         <h4 translate>Member</h4>
         <span style="padding-left: 10px;" translate>Students</span>
         <div class="flex-container lmn-container-list">
-            <div ng:repeat="student in students|filter:filter|filter:isActive|orderBy:[sort.fx]:sortReverse">
+            <div ng:repeat="student in students|filter:filter|filter:isActive|orderBy:['-membership','sn']">
                 <div ng-if="student.membership == true">
                     <span id={{student.sAMAccountName}} checkbox ng:model="student.membership" ng-click='membershipChanged($index, student.sAMAccountName)'></span>
                     <i class="fa fa-user"></i>
@@ -90,7 +87,7 @@
     <div ng-if="sort.id == 'membership'">
         <span style="padding-left: 10px;" translate>Teachers </span>
         <div class="flex-container lmn-container-list">
-            <div ng:repeat="teacher in teachers|filter:filter|filter:isActive|orderBy:'Lastname':sortReverse">
+            <div ng:repeat="teacher in teachers|filter:filter|filter:isActive|orderBy:['-membership','sn']">
                 <div ng-if="teacher.membership == true">
                     <span id={{teacher.sAMAccountName}} checkbox ng:model="teacher.membership" ng-click='membershipChanged($index, teacher.sAMAccountName)'></span>
                     <i class="fa fa-user"></i>
@@ -108,12 +105,12 @@
         <h4 translate>Not Member</h4>
         <span style="padding-left: 10px;" translate>Students</span>
         <div class="flex-container lmn-container-list">
-            <div ng:repeat="student in students|filter:filter|filter:isActive|orderBy:'Lastname':sortReverse">
+            <div ng:repeat="student in students|filter:filter|filter:isActive|orderBy:['membership','sn']">
                 <div ng-if="student.membership == false">
                     <span id={{student.sAMAccountName}} checkbox ng:model="student.membership" ng-click='membershipChanged($index, student.sAMAccountName)'></span>
                     <i class="fa fa-user"></i>
                     <a href="#" ng-click='showGroupDetails($index, student.sAMAccountName)'>
-                        <b>{{student.givenName}} {{student.sn}}</b> {{student.sophomorixAdminClass}}
+                        {{student.givenName}} <b>{{student.sn}}</b> {{student.sophomorixAdminClass}}
                     </a>
                 </div>
             </div>
@@ -125,12 +122,12 @@
     <div ng-if="sort.id == 'membership'">
         <span style="padding-left: 10px;" translate>Teachers </span>
         <div class="flex-container lmn-container-list">
-            <div ng:repeat="teacher in teachers|filter:filter|filter:isActive|orderBy:'Lastname':sortReverse">
+            <div ng:repeat="teacher in teachers|filter:filter|filter:isActive|orderBy:['membership','sn']">
                 <div ng-if="teacher.membership == false">
                     <span id={{teacher.sAMAccountName}} checkbox ng:model="teacher.membership" ng-click='membershipChanged($index, teacher.sAMAccountName)'></span>
                     <i class="fa fa-user"></i>
                     <a href="#" ng-click='showGroupDetails($index, teacher.sAMAccountName)'>
-                        <b>{{teacher.givenName}} {{teacher.sn}}</b> {{teacher.sophomorixAdminClass}}
+                        {{teacher.givenName}} <b>{{teacher.sn}}</b> {{teacher.sophomorixAdminClass}}
                     </a>
                 </div>
             </div>

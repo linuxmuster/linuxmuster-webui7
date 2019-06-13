@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.72-1) lmn7; urgency=medium 
+
+  * Current snapshot build 040dfbb9eb6974345d22b81210bd00612c070abb
+   *     added minor fixes to layout
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Jun 13 18:41:05 UTC 2019
+
 linuxmuster-webui7 (1.0.71-1) lmn7; urgency=medium 
 
   * Current snapshot build 60c4d4d6c700134cb6791c286b2ac21c787dac3d

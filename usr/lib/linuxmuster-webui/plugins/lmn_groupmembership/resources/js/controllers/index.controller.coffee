@@ -131,7 +131,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($sco
             ## TODO : add class ?
             ## TODO : add other project members ?
             ## TODO : add projectadmin
-        $http.post('/api/lm/sophomorixUsers/teachers', {action: 'get-all'}).then (resp) ->
+        $http.post('/api/lm/sophomorixUsers/teachers', {action: 'get-list'}).then (resp) ->
             teachers = resp.data
             $scope.teachers = teachers
             console.log (teachers)

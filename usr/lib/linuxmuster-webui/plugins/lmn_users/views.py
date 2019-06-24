@@ -211,26 +211,28 @@ class Handler(HttpPlugin):
         if http_context.method == 'POST':
             schoolname = 'default-school'
             teachersList = []
-            with authorize('lm:users:teachers:list'):
-                if action == 'get-all':
+            
+            if action == 'get-all':
+                with authorize('lm:users:teachers:read'):
                     # TODO: This could run with --user-basic but not all memberOf are filled. Needs verification
                     sophomorixCommand = ['sophomorix-query', '--teacher', '--schoolbase', schoolname, '--user-basic', '-jj']
-                else:
-                    with authorize('lm:users:teachers:read'):
-                        user = http_context.json_body()['user']
-                        sophomorixCommand = ['sophomorix-query', '--teacher', '--schoolbase', schoolname, '--user-basic', '-jj', '--sam', user]
-                teachersCheck = lmn_getSophomorixValue(sophomorixCommand, 'LISTS/USER')
-                if len(teachersCheck) != 0:
-                    teachers = lmn_getSophomorixValue(sophomorixCommand, 'USER')
-                    for teacher in teachers:
-                        teachersList.append(teachers[teacher])
-                    return teachersList
-                else:
-                    return ["none"]
-
-        if http_context.method == 'POST':
-            with authorize('lm:users:teachers:write'):
-                return 0
+            elif action == 'get-list':
+                with authorize('lm:users:teachers:list'):
+                    # TODO: This could run with --user-basic but not all memberOf are filled. Needs verification
+                    # Not so pretty to list teachers, --user-minimal with JSON output would be better
+                    sophomorixCommand = ['sophomorix-query', '--teacher', '--schoolbase', schoolname, '--user-basic', '-jj']
+            else:
+                with authorize('lm:users:teachers:read'):
+                    user = http_context.json_body()['user']
+                    sophomorixCommand = ['sophomorix-query', '--teacher', '--schoolbase', schoolname, '--user-basic', '-jj', '--sam', user]
+            teachersCheck = lmn_getSophomorixValue(sophomorixCommand, 'LISTS/USER')
+            if len(teachersCheck) != 0:
+                teachers = lmn_getSophomorixValue(sophomorixCommand, 'USER')
+                for teacher in teachers:
+                    teachersList.append(teachers[teacher])
+                return teachersList
+            else:
+                return ["none"]
 
     @url(r'/api/lm/sophomorixUsers/students')
     @endpoint(api=True)

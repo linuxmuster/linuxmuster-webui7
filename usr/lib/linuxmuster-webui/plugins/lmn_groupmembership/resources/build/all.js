@@ -231,7 +231,7 @@
     //# TODO : add other project members ?
     //# TODO : add projectadmin
     $http.post('/api/lm/sophomorixUsers/teachers', {
-      action: 'get-all'
+      action: 'get-list'
     }).then(function(resp) {
       var i, len, results, teacher, teachers;
       teachers = resp.data;

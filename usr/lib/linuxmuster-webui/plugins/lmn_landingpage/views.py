@@ -34,19 +34,19 @@ class Handler(HttpPlugin):
                     if result['HARD_LIMIT_MiB'] == 'NO LIMIT':
                         return {
                             'used': result['USED_MiB'],
-                            'free':  'Unlimited',
+                            #'free':  'Unlimited', ## free not used yet
                             'total': 'Unlimited'
                         }
                     else:
 
                         return {
                             'used': result['USED_MiB'],
-                            'free': result['HARD_LIMIT_MiB']-result['USED_MiB'],
+                            #'free': result['HARD_LIMIT_MiB']-result['USED_MiB'],
                             'total': result['HARD_LIMIT_MiB']
                         }
                 else:
                     return {
                         'used': 0,
-                        'free': 0,
+                        #'free': 0,
                         'total': 1
                     }

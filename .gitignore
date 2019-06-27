@@ -1,3 +1,4 @@
 *.pyc
 .*.swp
 .crowdin.key
+usr/lib/linuxmuster-webui/plugins/extra_*

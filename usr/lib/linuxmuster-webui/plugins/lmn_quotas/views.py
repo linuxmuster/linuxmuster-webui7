@@ -31,7 +31,7 @@ class Handler(HttpPlugin):
             for line in lines:
                 name       = line.split('|')[1].strip().split('(')[0]
                 quota_type = line.split('|')[2].strip().strip("*")
-                value      = int(line.split('|')[3].strip()) ## TEST INT
+                value      = int(line.split('|')[3].strip().strip("*")) ## TEST INT
                 if 'teacher' in line:
                     if name not in quotas[1]:
                         quotas[1][name] = {}

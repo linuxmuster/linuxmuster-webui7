@@ -21,6 +21,12 @@ angular.module('lm.users').controller 'LMUsersCheckResultsModalController', ($sc
         'K' : 'Killable (K)',
     }
 
+    $scope.status_filter = (status) ->
+        if $scope.user_status[status] == undefined
+            return status
+        else
+            return $scope.user_status[status]
+
     $scope.apply = () ->
         $uibModalInstance.close()
         msg = $uibModal.open(

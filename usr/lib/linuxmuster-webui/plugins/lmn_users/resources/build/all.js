@@ -1936,6 +1936,13 @@
       'R': 'Removable (R)',
       'K': 'Killable (K)'
     };
+    $scope.status_filter = function(status) {
+      if ($scope.user_status[status] === void 0) {
+        return status;
+      } else {
+        return $scope.user_status[status];
+      }
+    };
     $scope.apply = function() {
       var msg;
       $uibModalInstance.close();

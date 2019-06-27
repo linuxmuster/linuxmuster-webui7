@@ -9,14 +9,41 @@
         <i class="fa fa-warning"></i> <span translate>Check failed</span>: {{data.error}}
     </div>
     <div ng:show="!data.error">
-        <div class="alert alert-info">
-            <i class="fa fa-info-circle"></i> <span translate>Users to be added</span>: {{data['SUMMARY'][1]['ADD']['RESULT']}}
+        <div class="panel panel-info">
+            <div class="panel-heading"><i class="fa fa-info-circle"></i> <span translate>Users to be added</span>: {{data['SUMMARY'][1]['ADD']['RESULT']}}</div>
+            <div class="panel-body">
+                <table class="table table-bordered">
+                    <tr ng-repeat="(id,item) in data['CHECK_RESULT']['ADD']">
+                        <td>{{item.sophomorixAdminClass}}</td>
+                        <td>{{id}}</td>
+                        <td>{{item.sn}} {{item.givenName}}</td>
+                        <td>{{item.sophomorixRole}}</td>
+                        <td>{{item.sophomorixSchoolname}}</td>
+                    </tr>
+                </table>
+            </div>
         </div>
-        <div class="alert alert-info">
-            <i class="fa fa-info-circle"></i> <span translate>Users to be updated</span>: {{data['SUMMARY'][2]['UPDATE']['RESULT']}}
+        <div class="panel panel-warning">
+            <div class="panel-heading"><i class="fa fa-info-circle"></i> <span translate>Users to be updated</span>: {{data['SUMMARY'][2]['UPDATE']['RESULT']}}</div>
+            <div class="panel-body">
+                <table class="table table-bordered">
+                    <tr ng-repeat="(id,item) in data['CHECK_RESULT']['UPDATE']">
+                        <td>{{id}}</td>
+                        <td>{{user_status[item.sophomorixStatus.OLD]}} -->  {{user_status[item.sophomorixStatus.NEW]}}</td>
+                    </tr>
+                </table>
+            </div>
         </div>
-        <div class="alert alert-info">
-            <i class="fa fa-info-circle"></i> <span translate>Users to be killed</span>: {{data['SUMMARY'][3]['KILL']['RESULT']}}
+        <div class="panel panel-danger">
+            <div class="panel-heading"><i class="fa fa-info-circle"></i> <span translate>Users to be killed</span>: {{data['SUMMARY'][3]['KILL']['RESULT']}}</div>
+            <div class="panel-body">
+                <table class="table table-bordered">
+                    <tr ng-repeat="item in data['CHECK_RESULT']['KILL']">
+                        <td>{{id}}</td>
+                        <td>{{user_status[item.sophomorixStatus.OLD]}} -->  {{user_status[item.sophomorixStatus.NEW]}}</td>
+                    </tr>
+                </table>
+            </div>
         </div>
         <div class="alert alert-danger" ng:show="data['SUMMARY'][5]['ERROR']['RESULT'] > 0">
             <i class="fa fa-warning"></i> <span translate>Errors found</span>: {{data['SUMMARY'][5]['ERROR']['RESULT']}}
@@ -35,40 +62,54 @@
     </uib:tab>
     <uib:tab heading="{{'Added users'|translate}}" ng:show="data['SUMMARY'][1]['ADD']['RESULT'] > 0">
     <br/>
-    <table>
-        <tr ng-repeat="(id,item) in data['CHECK_RESULT']['ADD']">
-            <td >
-                <pre>{{item.sophomorixAdminClass}}; {{id}} ; {{item.sn}}, {{item.givenName}}; {{item.sophomorixRole}}; {{item.sophomorixSchoolname}}</pre>
-            </td>
-        </tr>
-    </table>
+    <div class="panel panel-info">
+        <div class="panel-heading"><i class="fa fa-info-circle"></i> <span translate>Users to be added</span>: {{data['SUMMARY'][1]['ADD']['RESULT']}}</div>
+        <div class="panel-body">
+            <table class="table table-bordered">
+                <tr ng-repeat="(id,item) in data['CHECK_RESULT']['ADD']">
+                    <td>{{item.sophomorixAdminClass}}</td>
+                    <td>{{id}}</td>
+                    <td>{{item.sn}} {{item.givenName}}</td>
+                    <td>{{item.sophomorixRole}}</td>
+                    <td>{{item.sophomorixSchoolname}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
     </uib:tab>
     <uib:tab heading="{{'Moved users'|translate}}" ng:show="data['SUMMARY'][2]['UPDATE']['RESULT'] > 0">
     <br/>
-    <table>
-        <tr ng-repeat="(id,item) in data['CHECK_RESULT']['UPDATE']">
-            <td >
-                <pre>{{id}}; {{item.sophomorixStatus.OLD}} -->  {{item.sophomorixStatus.NEW}}</pre>
-            </td>
-        </tr>
-    </table>
+    <div class="panel panel-warning">
+        <div class="panel-heading"><i class="fa fa-info-circle"></i> <span translate>Users to be updated</span>: {{data['SUMMARY'][2]['UPDATE']['RESULT']}}</div>
+        <div class="panel-body">
+            <table class="table table-bordered">
+                <tr ng-repeat="(id,item) in data['CHECK_RESULT']['UPDATE']">
+                    <td>{{id}}</td>
+                    <td>{{user_status[item.sophomorixStatus.OLD]}} -->  {{user_status[item.sophomorixStatus.NEW]}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
     </uib:tab>
     <uib:tab heading="{{'Killed users'|translate}}" ng:show="data['SUMMARY'][3]['KILL']['RESULT'] > 0">
-    <br/>
-    <table>
-        <tr ng-repeat="item in data['CHECK_RESULT']['KILL']">
-            <td >
-            <!-- TODO add real fields-->
-                <pre>{{item.sophomorixAdminClass}};  {{item.sn}}, {{item.givenName}}; {{item.sophomorixRole}}; {{item.sophomorixSchoolname}}</pre>
-            </td>
-        </tr>
-    </table>
+    <br/><!-- TODO add real fields ?? -->
+    <div class="panel panel-danger">
+        <div class="panel-heading"><i class="fa fa-info-circle"></i> <span translate>Users to be killed</span>: {{data['SUMMARY'][3]['KILL']['RESULT']}}</div>
+        <div class="panel-body">
+            <table class="table table-bordered">
+                <tr ng-repeat="item in data['CHECK_RESULT']['KILL']">
+                    <td>{{id}}</td>
+                    <td>{{item.sophomorixStatus.OLD}} -->  {{item.sophomorixStatus.NEW}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
     </uib:tab>
     <uib:tab heading="{{'Errors'|translate}}" ng:show="data['SUMMARY'][5]['ERROR']['RESULT'] > 0">
     <br/>
     <table>
         <tr ng-repeat="(id,item) in data['CHECK_RESULT']['ERROR']">
-            <td >
+            <td>
                 <pre>{{id}} {{item.REASON}}</pre>
             </td>
         </tr>

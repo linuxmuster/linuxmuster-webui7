@@ -6,6 +6,21 @@ angular.module('lm.users').controller 'LMUsersCheckResultsModalController', ($sc
         doKill: data['SUMMARY'][3]['KILL']['RESULT'] > 0
     }
 
+    ## Use same string status for, e.g., Removable and Killable ?
+    $scope.user_status = {
+        'U' : 'Usable (U)',
+        'A' : 'Activated (A)',
+        'E' : 'Enabled (E)',
+        'S' : 'Self-activated (S)',
+        'P' : 'Permanent (P)',
+        'T' : 'Tolerated (T)',
+        'L' : 'Locked (L)',
+        'D' : 'Deactivated (D)',
+        'F' : 'Frozen (F)',
+        'R' : 'Removable (R)',
+        'K' : 'Killable (K)',
+    }
+
     $scope.apply = () ->
         $uibModalInstance.close()
         msg = $uibModal.open(

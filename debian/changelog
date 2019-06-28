@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.73-1) lmn7; urgency=medium 
+
+  * Current snapshot build fbccf99f69d486229b0c47ca11a0a2d3b2160834
+   *     Handles userdata changes and not only user status.
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Jun 28 07:25:27 UTC 2019
+
 linuxmuster-webui7 (1.0.72-1) lmn7; urgency=medium 
 
   * Current snapshot build 040dfbb9eb6974345d22b81210bd00612c070abb

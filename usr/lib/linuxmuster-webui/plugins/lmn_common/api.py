@@ -201,10 +201,10 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
 
 # check if the current user has a specific permissions
 def lmn_checkPermission(permission):
+    ## Permission needs to be a dict like {'id': 'lm:users:teachers:read', 'default': False}
     username = aj.worker.context.identity
     try:
-        AuthenticationService.get(aj.worker.context).get_provider().authorize(username, permission)
-        return True
+        return AuthenticationService.get(aj.worker.context).get_provider().authorize(username, permission)
     except:
         return False
 

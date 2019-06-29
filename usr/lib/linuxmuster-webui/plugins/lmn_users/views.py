@@ -542,7 +542,7 @@ class Handler(HttpPlugin):
                     classes = []
                 else:
                     classes = classes_raw['LIST_BY_sophomorixSchoolname_sophomorixAdminClass'][school]
-                    if lmn_checkPermission('lm:users:teachers:read'):
+                    if lmn_checkPermission({'id': 'lm:users:teachers:read', 'default': False}):
                         # append empty element. This references to all users
                         classes.append('')
                     else:

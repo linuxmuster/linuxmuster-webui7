@@ -190,11 +190,18 @@
         <div class="button-group">
             <div uib-dropdown ng:show="currentSession.name != ''" class="dropup">
                 <button class="btn btn-default btn-flat pull-left" uib-dropdown-toggle>
-                    <i class="fa fa-file"></i> Share &amp; Collect <i class="fa fa-caret-up"></i>
+                    <i class="fa fa-file"></i> Share<i class="fa fa-caret-up"></i>
+                </button>
+                <ul uib-dropdown-menu class="scrollable">
+                    <li><a ng:click="shareTrans('share', [identity.user], participants, currentSession.comment)" translate>Share file(s) from transfer with whole session</a></li>
+                </ul>
+            </div>
+            <div uib-dropdown ng:show="currentSession.name != ''" class="dropup">
+                <button class="btn btn-default btn-flat pull-left" uib-dropdown-toggle>
+                    <i class="fa fa-file"></i>Collect <i class="fa fa-caret-down"></i>
                 </button>
                 <ul uib-dropdown-menu class="scrollable">
                     <!--                        <li><a flow-btn class="btn btn-default btn-flat" test-bind="uploadButton" translate>Upload file to share</a></li>-->
-                    <li><a ng:click="shareTrans('share', [identity.user], participants, currentSession.comment)" translate>Share file(s) from transfer with whole session</a></li>
                     <li><a ng:click="collectTrans('copy', participants, [identity.user], currentSession.comment)" translate>Copy transfer from whole session</a></li>
                     <li><a ng:click="collectTrans('move', participants, [identity.user], currentSession.comment)" translate>Collect transfer from whole session</a></li>
                     <!--   <li ng:repeat="example in examples"><a ng:click="createConfig(example)">{{example}}</a></li>-->

@@ -102,7 +102,12 @@
         $scope.groupName = groupName;
         $scope.groupDetails = resp.data;
         $scope.members = resp.data[groupName]['sophomorixMembers'];
-        return $scope.admins = resp.data[groupName]['sophomorixAdmins'];
+        $scope.admins = resp.data[groupName]['sophomorixAdmins'];
+        if ($scope.admins.indexOf($scope.identity.user) !== -1 || ['schooladministrator', 'globaladministrator'].indexOf($scope.allUsers[$scope.identity.user]['sophomorixRole']) !== -1) {
+          return $scope.editMembersButton = true;
+        } else {
+          return $scope.editMembersButton = false;
+        }
       });
     };
     $scope.groupType = groupType;

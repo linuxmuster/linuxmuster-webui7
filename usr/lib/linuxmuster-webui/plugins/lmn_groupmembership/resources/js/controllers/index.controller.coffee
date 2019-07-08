@@ -60,6 +60,11 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
                 $scope.members = resp.data[groupName]['sophomorixMembers']
                 $scope.admins = resp.data[groupName]['sophomorixAdmins']
 
+                if $scope.admins.indexOf($scope.identity.user) != -1 or ['schooladministrator', 'globaladministrator'].indexOf($scope.allUsers[$scope.identity.user]['sophomorixRole']) != -1
+                    $scope.editMembersButton = true
+                else
+                    $scope.editMembersButton = false
+
         $scope.groupType = groupType
         $scope.getGroupDetails ([groupType, groupName])
         $scope.close = () ->

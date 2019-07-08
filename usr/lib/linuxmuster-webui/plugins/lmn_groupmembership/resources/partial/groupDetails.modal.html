@@ -4,7 +4,7 @@
     <span ng:show="groupDetails != null" translate > - {{groupDetails[groupName]['description']}}</span></h3>
 </div>
 <progress-spinner ng:show="groupDetails == null"></progress-spinner>
-<div style="padding-left: 40px;" ng:show="groupDetails != null">
+<div style="padding: 0 20px;" ng:show="groupDetails != null">
     <br />
     <h4 translate> Properties</h4>
     <table class="table">
@@ -25,32 +25,30 @@
             <td>{{groupDetails[groupName]['sophomorixStatus']}}</td>
         </tr>
     </table>
-    <h4 class="pull-left" translate> Group Members: {{groupDetails[groupName]['sophomorixMembers_count']}}</h4>
-    <a href="#" class="btn btn-default btn-flat pull-right" ng-click="showMemberDetails = ! showMemberDetails" translate>{{showMemberDetails ? "Hide" : "Show"}}</a>
-    <a class="btn btn-default btn-flat pull-right" ng:show="groupDetails[groupName]['sophomorixType'] == 'project'" href="#" ng-click="editGroupMembers(groupName, groupDetails, admins)" translate >Edit members</a>
-    <div ng-show="showMemberDetails">
-        <!-- TODO: Sort this by class or sn-->
-        <table class="table">
-            <tr ng:repeat="member in members">
-                <td><a ng:click="createConfig(example)">{{allUsers[member]['sn']}}</a></td>
-                <td><a ng:click="createConfig(example)">{{allUsers[member]['givenName']}}</a></td>
-                <td><a ng:click="createConfig(example)">{{allUsers[member]['sophomorixAdminClass']}}</a></td>
-            </tr>
-        </table>
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <a href="#" class="btn btn-default btn-flat pull-right" ng-click="showMemberDetails = ! showMemberDetails" translate>{{showMemberDetails ? "Hide" : "Show"}}</a>
+            <a class="btn btn-default btn-flat pull-right" ng:show="groupDetails[groupName]['sophomorixType'] == 'project'" href="#" ng-click="editGroupMembers(groupName, groupDetails, admins)" translate >Edit members</a>
+            <h4 translate> Group Members: {{groupDetails[groupName]['sophomorixMembers_count']}}</h4>
+        </div>
+        <div ng-show="showMemberDetails" class="panel-body">
+            <!-- TODO: Sort this by class or sn-->
+            <ul class="list-unstyled" style="display:flex;flex-wrap:wrap;">
+                <li ng:repeat="member in members" style="padding-left:10px;margin:5px 0 0 20px;background:#F7F7F7;width:180px;">{{allUsers[member]['sn']}} {{allUsers[member]['givenName']}} <span class="pull-right">{{allUsers[member]['sophomorixAdminClass']}}</span></li>
+            </ul>
+        </div>
     </div>
-    <br style="clear:left;" />
-    <br />
-    <h4 class="pull-left" translate> Group Admins: {{groupDetails[groupName]['sophomorixAdmins_count']}}</h4> 
-    <a href="#" class="btn btn-default btn-flat pull-right" ng-click="showAdminDetails = ! showAdminDetails" translate>{{showAdminDetails ? "Hide" : "Show"}}</a>
-    <!--<a class="btn btn-default btn-flat pull-right" ng:show="groupDetails[groupName]['sophomorixType'] == 'project'" href="#" ng-click="editGroupAdmins()" translate >Edit admins</a>-->
-    <div ng-show="showAdminDetails">
-        <table class="table">
-            <tr ng:repeat="admin in admins">
-                <td><a ng:click="createConfig(example)">{{allUsers[admin]['sn']}}</a></td>
-                <td><a ng:click="createConfig(example)">{{allUsers[admin]['givenName']}}</a></td>
-                <td><a ng:click="createConfig(example)">{{allUsers[admin]['sophomorixAdminClass']}}</a></td>
-            </tr>
-        </table>
+    <div class="panel panel-danger">
+        <div class="panel-heading">
+            <a href="#" class="btn btn-default btn-flat pull-right" ng-click="showAdminDetails = ! showAdminDetails" translate>{{showAdminDetails ? "Hide" : "Show"}}</a>
+            <!--<a class="btn btn-default btn-flat pull-right" ng:show="groupDetails[groupName]['sophomorixType'] == 'project'" href="#" ng-click="editGroupAdmins()" translate >Edit admins</a>-->
+            <h4 translate> Group Admins: {{groupDetails[groupName]['sophomorixAdmins_count']}}</h4> 
+        </div>
+        <div ng-show="showAdminDetails" class="panel-body">
+            <ul class="list-unstyled" style="display:flex;flex-wrap:wrap;">
+                <li ng:repeat="admin in admins" style="padding-left:10px;margin:5px 0 0 20px;background:#f5f5f5;width:180px;">{{allUsers[admin]['sn']}} {{allUsers[admin]['givenName']}} <span class="pull-right">{{allUsers[admin]['sophomorixAdminClass']}}</span></li>
+            </ul>
+        </div>
     </div>
     <br />
     <br />

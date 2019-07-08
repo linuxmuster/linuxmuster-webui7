@@ -39,12 +39,9 @@
             <h4 style="padding-left: 10px;">{{class}}</h4>
             <div ng:repeat="student in students|filter:filter|filter:isActive|orderBy:[sort.fx]:sortReverse">
                 <div ng-if="student.sophomorixAdminClass == class">
-                    <span id={{student.sAMAccountName}} checkbox ng:model="student.membership" ng-click='membershipChanged($index, student.sAMAccountName)'></span>
+                    <span id={{student.sAMAccountName}} checkbox ng:model="student.membership"></span>
                     <i class="fa fa-user"></i>
-                    <a href="#" ng-click='showGroupDetails($index, student.sAMAccountName)'>
-                        <!--  <span translate>{{student.sophomorixRole}}</span> -->
-                        {{student.givenName}} <b>{{student.sn}}</b>
-                    </a>
+                    <a href="#">{{student.givenName}} <b>{{student.sn}}</b></a>
                 </div>
             </div>
         </div>
@@ -56,12 +53,10 @@
             <h4 style="padding-left: 10px;"translate >Teachers</h4>
             <div ng:repeat="teacher in teachers|filter:filter|filter:isActive|orderBy:'Lastname':sortReverse">
                 <div>
-                    <span id={{teacher.sAMAccountName}} checkbox ng:model="teacher.membership" ng-click='membershipChanged($index, teacher.sAMAccountName)'></span>
+                    <span id={{teacher.sAMAccountName}} checkbox ng:model="teacher.membership"></span>
+                    <i class="fa fa-key" ng-style="(admins.indexOf(teacher.sn) >= 0) && {'color': 'red'}"></i>
                     <i class="fa fa-user"></i>
-                    <a href="#" ng-click='showGroupDetails($index, teacher.sAMAccountName)'>
-                        {{teacher.givenName}} <b>{{teacher.sn}}</b>
-                    </a>
-                    <i class="fa fa-key pull-right" ng-style="(admins.indexOf(teacher.sn) >= 0) && {'color': 'red'}" ng-model='admins'></i>
+                    <a href="#">{{teacher.givenName}} <b>{{teacher.sn}}</b></a>
                 </div>
             </div>
         </div>
@@ -74,11 +69,9 @@
         <div class="flex-container lmn-container-list">
             <div ng:repeat="student in students|filter:filter|filter:isActive|orderBy:['-membership','sn']">
                 <div ng-if="student.membership == true">
-                    <span id={{student.sAMAccountName}} checkbox ng:model="student.membership" ng-click='membershipChanged($index, student.sAMAccountName)'></span>
+                    <span id={{student.sAMAccountName}} checkbox ng:model="student.membership"></span>
                     <i class="fa fa-user"></i>
-                    <a href="#" ng-click='showGroupDetails($index, student.sAMAccountName)'>
-                        {{student.givenName}} <b>{{student.sn}}</b> {{student.sophomorixAdminClass}}
-                    </a>
+                    <a href="#">{{student.givenName}} <b>{{student.sn}}</b> {{student.sophomorixAdminClass}}</a>
                 </div>
             </div>
         </div>
@@ -90,11 +83,10 @@
         <div class="flex-container lmn-container-list">
             <div ng:repeat="teacher in teachers|filter:filter|filter:isActive|orderBy:['-membership','sn']">
                 <div ng-if="teacher.membership == true">
-                    <span id={{teacher.sAMAccountName}} checkbox ng:model="teacher.membership" ng-click='membershipChanged($index, teacher.sAMAccountName)'></span>
+                    <span id={{teacher.sAMAccountName}} checkbox ng:model="teacher.membership"></span>
+                    <i class="fa fa-key" ng-style="(admins.indexOf(teacher.sn) >= 0) && {'color': 'red'}"></i>
                     <i class="fa fa-user"></i>
-                    <a href="#" ng-click='showGroupDetails($index, teacher.sAMAccountName)'>
-                        {{teacher.givenName}} <b>{{teacher.sn}}</b> {{teacher.sophomorixAdminClass}}
-                    </a>
+                    <a href="#">{{teacher.givenName}} <b>{{teacher.sn}}</b> {{teacher.sophomorixAdminClass}}</a>
                 </div>
             </div>
         </div>
@@ -108,11 +100,9 @@
         <div class="flex-container lmn-container-list">
             <div ng:repeat="student in students|filter:filter|filter:isActive|orderBy:['membership','sn']">
                 <div ng-if="student.membership == false">
-                    <span id={{student.sAMAccountName}} checkbox ng:model="student.membership" ng-click='membershipChanged($index, student.sAMAccountName)'></span>
+                    <span id={{student.sAMAccountName}} checkbox ng:model="student.membership"></span>
                     <i class="fa fa-user"></i>
-                    <a href="#" ng-click='showGroupDetails($index, student.sAMAccountName)'>
-                        {{student.givenName}} <b>{{student.sn}}</b> {{student.sophomorixAdminClass}}
-                    </a>
+                    <a href="#">{{student.givenName}} <b>{{student.sn}}</b> {{student.sophomorixAdminClass}}</a>
                 </div>
             </div>
         </div>
@@ -125,11 +115,10 @@
         <div class="flex-container lmn-container-list">
             <div ng:repeat="teacher in teachers|filter:filter|filter:isActive|orderBy:['membership','sn']">
                 <div ng-if="teacher.membership == false">
-                    <span id={{teacher.sAMAccountName}} checkbox ng:model="teacher.membership" ng-click='membershipChanged($index, teacher.sAMAccountName)'></span>
+                    <span id={{teacher.sAMAccountName}} checkbox ng:model="teacher.membership"></span>
+                    <i class="fa fa-key" ng-style="(admins.indexOf(teacher.sn) >= 0) && {'color': 'red'}"></i>
                     <i class="fa fa-user"></i>
-                    <a href="#" ng-click='showGroupDetails($index, teacher.sAMAccountName)'>
-                        {{teacher.givenName}} <b>{{teacher.sn}}</b> {{teacher.sophomorixAdminClass}}
-                    </a>
+                    <a href="#">{{teacher.givenName}} <b>{{teacher.sn}}</b> {{teacher.sophomorixAdminClass}}</a>
                 </div>
             </div>
         </div>

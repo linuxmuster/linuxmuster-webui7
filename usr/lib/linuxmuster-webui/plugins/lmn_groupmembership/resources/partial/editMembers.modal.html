@@ -61,6 +61,7 @@
                     <a href="#" ng-click='showGroupDetails($index, teacher.sAMAccountName)'>
                         {{teacher.givenName}} <b>{{teacher.sn}}</b>
                     </a>
+                    <i class="fa fa-key pull-right" ng-style="(admins.indexOf(teacher.sn) >= 0) && {'color': 'red'}" ng-model='admins'></i>
                 </div>
             </div>
         </div>

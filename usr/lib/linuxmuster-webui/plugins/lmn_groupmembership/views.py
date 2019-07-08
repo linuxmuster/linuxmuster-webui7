@@ -51,13 +51,10 @@ class Handler(HttpPlugin):
                 if action == 'get-specified':
                     groupName = http_context.json_body()['groupName']
                     groupType = http_context.json_body()['groupType']
-                    if groupType == 'schoolclass':
+                    if groupType in ['schoolclass', 'printergroup']:
                         sophomorixCommand = ['sophomorix-group', '-i', '-g', groupName, '-jj']
                         groupDetails = lmn_getSophomorixValue(sophomorixCommand, 'GROUPS')
-                    if groupType == 'printergroup':
-                        sophomorixCommand = ['sophomorix-group', '-i', '-g', groupName, '-jj']
-                        groupDetails = lmn_getSophomorixValue(sophomorixCommand, 'GROUPS')
-                    if groupType == 'project':
+                    elif groupType == 'project':
                         sophomorixCommand = ['sophomorix-project', '-i', '-p', groupName, '-jj']
                         groupDetails = lmn_getSophomorixValue(sophomorixCommand, 'GROUPS')
             return groupDetails

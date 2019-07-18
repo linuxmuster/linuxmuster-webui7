@@ -23,6 +23,7 @@ class Handler(HttpPlugin):
                     members = http_context.json_body()['members']
                     groupName = http_context.json_body()['groupName']
                     username = http_context.json_body()['username']
+                    admins = ",".join(http_context.json_body()['admins'])
                     sophomorixCommand = ['sophomorix-project', '-i', '-p', groupName, '-jj']
                     groupAdmins = lmn_getSophomorixValue(sophomorixCommand, 'GROUPS/'+groupName+'/sophomorixAdmins')
                     membersToAdd = []
@@ -37,7 +38,7 @@ class Handler(HttpPlugin):
                             i = i + 1
                         membersToAddCSV = ",".join(membersToAdd)
                         membersToRemoveCSV = ",".join(membersToRemove)
-                        sophomorixCommand = ['sophomorix-project', '-p', groupName, '--addmembers', membersToAddCSV, '--removemembers', membersToRemoveCSV, '-jj']
+                        sophomorixCommand = ['sophomorix-project', '-p', groupName, '--addmembers', membersToAddCSV, '--removemembers', membersToRemoveCSV, '--admins', admins,'-jj']
                         result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
                         if result['TYPE'] == "ERROR":
                             return result['TYPE']['LOG']

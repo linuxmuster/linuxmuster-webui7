@@ -95,9 +95,8 @@ angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($sco
         $scope.sort = $scope.sorts[1]
         console.log ($scope.sort)
         $scope.groupName = groupName
-        $scope.admins = admins[0]
+        $scope.admins = admins
         $scope.sortReverse = false
-
 
         $scope.checkInverse = (sort ,currentSort) ->
             if sort == currentSort
@@ -105,12 +104,17 @@ angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($sco
             else
                 $scope.sortReverse = false
 
-
+        $scope.updateAdminList = (teacher) ->
+            idx = $scope.admins.indexOf(teacher.sAMAccountName)
+            if idx >= 0
+                $scope.admins.splice(idx, 1)
+            else
+                $scope.admins.push(teacher.sAMAccountName)
 
         $scope.setMembers = (students, teachers) ->
             msg = messagebox.show(progress: true)
             members = students.concat(teachers)
-            $http.post('/api/lmn/groupmembership/details', {action: 'set-members', username:$scope.identity.user, members: members, groupName: groupName}).then (resp) ->
+            $http.post('/api/lmn/groupmembership/details', {action: 'set-members', username:$scope.identity.user, members: members, groupName: groupName, admins: $scope.admins}).then (resp) ->
                 if resp['data'][0] == 'ERROR'
                     notify.error (resp['data'][1])
                 if resp['data'][0] == 'LOG'
@@ -153,7 +157,6 @@ angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($sco
 
 angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController', ($scope, $http, $uibModal, gettext, notify, pageTitle, messagebox) ->
     pageTitle.set(gettext('Group Membership'))
-
     $scope.types = {
         schoolclass:
             typename: gettext('Schoolclass')

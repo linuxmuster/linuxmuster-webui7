@@ -149,13 +149,22 @@
     $scope.sort = $scope.sorts[1];
     console.log($scope.sort);
     $scope.groupName = groupName;
-    $scope.admins = admins[0];
+    $scope.admins = admins;
     $scope.sortReverse = false;
     $scope.checkInverse = function(sort, currentSort) {
       if (sort === currentSort) {
         return $scope.sortReverse = !$scope.sortReverse;
       } else {
         return $scope.sortReverse = false;
+      }
+    };
+    $scope.updateAdminList = function(teacher) {
+      var idx;
+      idx = $scope.admins.indexOf(teacher.sAMAccountName);
+      if (idx >= 0) {
+        return $scope.admins.splice(idx, 1);
+      } else {
+        return $scope.admins.push(teacher.sAMAccountName);
       }
     };
     $scope.setMembers = function(students, teachers) {
@@ -168,7 +177,8 @@
         action: 'set-members',
         username: $scope.identity.user,
         members: members,
-        groupName: groupName
+        groupName: groupName,
+        admins: $scope.admins
       }).then(function(resp) {
         if (resp['data'][0] === 'ERROR') {
           notify.error(resp['data'][1]);

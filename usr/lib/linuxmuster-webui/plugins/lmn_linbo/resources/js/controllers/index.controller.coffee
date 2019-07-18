@@ -159,6 +159,7 @@ angular.module('lm.linbo').controller 'LMLINBOConfigModalController', ($scope, $
                     continue
                 break
             disk.name = "/dev/sd#{disk.name}"
+            console.log (disk.name)
 
         if newDiskType == 'mmc'
             disk.name = '0'
@@ -168,6 +169,7 @@ angular.module('lm.linbo').controller 'LMLINBOConfigModalController', ($scope, $
                     continue
                 break
             disk.name = "/dev/mmcblk#{disk.name}p"
+            console.log (disk.name)
 
         if newDiskType == 'nvme'
             disk.name = '0'
@@ -177,6 +179,7 @@ angular.module('lm.linbo').controller 'LMLINBOConfigModalController', ($scope, $
                     continue
                 break
             disk.name = "/dev/nvme#{disk.name}n1p"
+            console.log (disk.name)
 
         #diskMap
         $scope.rebuildDisks()

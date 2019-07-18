@@ -10,7 +10,7 @@ angular.module('lmn.groupmembership').config ($routeProvider) ->
 
 angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, groupType, groupName) ->
 
-        $scope.editGroupMembers = (groupName, groupDetails) ->
+        $scope.editGroupMembers = (groupName, groupDetails, admins) ->
             $uibModal.open(
                 templateUrl: '/lmn_groupmembership:resources/partial/editMembers.modal.html'
                 controller:  'LMNGroupEditController'
@@ -18,6 +18,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
                 resolve:
                    groupName: () -> groupName
                    groupDetails: () -> groupDetails
+                   admins: () -> admins
             ).result.then (result)->
                 if result.response is 'refresh'
                     $scope.getGroupDetails ([groupType, groupName])
@@ -56,15 +57,20 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
             $http.post('/api/lmn/groupmembership/details', {action: 'get-specified', groupType: groupType, groupName: groupName}).then (resp) ->
                 $scope.groupName    = groupName
                 $scope.groupDetails = resp.data
-                $scope.members = [$scope.filterDNLogin(member) for member in resp.data[groupName]['member']]
-                $scope.admins = [$scope.filterDNLogin(member) for member in resp.data[groupName]['sophomorixAdmins']]
+                $scope.members = resp.data[groupName]['sophomorixMembers']
+                $scope.admins = resp.data[groupName]['sophomorixAdmins']
+
+                if $scope.admins.indexOf($scope.identity.user) != -1 or ['schooladministrator', 'globaladministrator'].indexOf($scope.allUsers[$scope.identity.user]['sophomorixRole']) != -1
+                    $scope.editMembersButton = true
+                else
+                    $scope.editMembersButton = false
 
         $scope.groupType = groupType
         $scope.getGroupDetails ([groupType, groupName])
         $scope.close = () ->
             $uibModalInstance.dismiss()
 
-angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, groupName, groupDetails) ->
+angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, groupName, groupDetails, admins) ->
         $scope.sorts = [
             {
                 name: gettext('Given name')
@@ -89,6 +95,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($sco
         $scope.sort = $scope.sorts[1]
         console.log ($scope.sort)
         $scope.groupName = groupName
+        $scope.admins = admins[0]
         $scope.sortReverse = false
 
 

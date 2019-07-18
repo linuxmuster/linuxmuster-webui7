@@ -24,7 +24,7 @@
   });
 
   angular.module('lmn.groupmembership').controller('LMNGroupDetailsController', function($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, groupType, groupName) {
-    $scope.editGroupMembers = function(groupName, groupDetails) {
+    $scope.editGroupMembers = function(groupName, groupDetails, admins) {
       return $uibModal.open({
         templateUrl: '/lmn_groupmembership:resources/partial/editMembers.modal.html',
         controller: 'LMNGroupEditController',
@@ -35,6 +35,9 @@
           },
           groupDetails: function() {
             return groupDetails;
+          },
+          admins: function() {
+            return admins;
           }
         }
       }).result.then(function(result) {
@@ -96,39 +99,15 @@
         groupType: groupType,
         groupName: groupName
       }).then(function(resp) {
-        var member;
         $scope.groupName = groupName;
         $scope.groupDetails = resp.data;
-        $scope.members = [
-          (function() {
-            var i,
-          len,
-          ref,
-          results;
-            ref = resp.data[groupName]['member'];
-            results = [];
-            for (i = 0, len = ref.length; i < len; i++) {
-              member = ref[i];
-              results.push($scope.filterDNLogin(member));
-            }
-            return results;
-          })()
-        ];
-        return $scope.admins = [
-          (function() {
-            var i,
-          len,
-          ref,
-          results;
-            ref = resp.data[groupName]['sophomorixAdmins'];
-            results = [];
-            for (i = 0, len = ref.length; i < len; i++) {
-              member = ref[i];
-              results.push($scope.filterDNLogin(member));
-            }
-            return results;
-          })()
-        ];
+        $scope.members = resp.data[groupName]['sophomorixMembers'];
+        $scope.admins = resp.data[groupName]['sophomorixAdmins'];
+        if ($scope.admins.indexOf($scope.identity.user) !== -1 || ['schooladministrator', 'globaladministrator'].indexOf($scope.allUsers[$scope.identity.user]['sophomorixRole']) !== -1) {
+          return $scope.editMembersButton = true;
+        } else {
+          return $scope.editMembersButton = false;
+        }
       });
     };
     $scope.groupType = groupType;
@@ -138,7 +117,7 @@
     };
   });
 
-  angular.module('lmn.groupmembership').controller('LMNGroupEditController', function($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, groupName, groupDetails) {
+  angular.module('lmn.groupmembership').controller('LMNGroupEditController', function($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, groupName, groupDetails, admins) {
     var groupDN;
     $scope.sorts = [
       {
@@ -170,6 +149,7 @@
     $scope.sort = $scope.sorts[1];
     console.log($scope.sort);
     $scope.groupName = groupName;
+    $scope.admins = admins[0];
     $scope.sortReverse = false;
     $scope.checkInverse = function(sort, currentSort) {
       if (sort === currentSort) {

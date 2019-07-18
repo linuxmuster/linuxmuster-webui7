@@ -61,6 +61,7 @@
       return $http.post('/api/lmn/session/trans-list-files', {
         user: senders[0]
       }).then(function(resp) {
+        console.log(resp.data);
         $scope.files = resp['data'][0];
         return $scope.filesList = resp['data'][1];
       });

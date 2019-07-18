@@ -52,9 +52,9 @@
     <!-- This is showed twice to show directorys first -->
     <span  ng:repeat="file in filesList|orderBy: -file">
         <span ng-if="files != null">
-            <span ng:show="files['TREE'][file]['TYPE'] == 'directory'">
+            <span ng:show="files['TREE'][file]['TYPE'] == 'd'">
                 <span id={{file}} checkbox ng:model="files['TREE'][file]['checked']"> </span>
-                <span ng-if="files['TREE'][file]['TYPE'] == 'directory'">
+                <span ng-if="files['TREE'][file]['TYPE'] == 'd'">
                     <i class="fa fa-folder"></i>
                 </span>
                 <span>{{file}}</span>
@@ -65,9 +65,9 @@
     </span>
     <span  ng:repeat="file in filesList|orderBy: -file">
         <span ng-if="files != null">
-            <span ng:show="files['TREE'][file]['TYPE'] == 'file'">
+            <span ng:show="files['TREE'][file]['TYPE'] == 'f'">
                 <span id={{file}} checkbox ng:model="files['TREE'][file]['checked']"> </span>
-                <span ng-if="files['TREE'][file]['TYPE'] == 'file'">
+                <span ng-if="files['TREE'][file]['TYPE'] == 'f'">
                     <i class="fa fa-fw fa-file-o"></i>
                 </span>
                 <span>{{file}}</span>

@@ -180,9 +180,10 @@
       console.log($scope.config);
       return console.log($scope.diskMap);
     };
-    $scope.updateDiskType = function(disk, newDiskType) {
-      var oldDiskName;
+    $scope.updateDiskType = function(disk) {
+      var newDiskType, oldDiskName;
       oldDiskName = disk.name;
+      newDiskType = disk.DiskType;
       if (newDiskType === 'sata') {
         disk.name = 'a';
         while (true) {
@@ -540,6 +541,7 @@
         for (l = 0, len3 = ref3.length; l < len3; l++) {
           partition = ref3[l];
           config.partitions.push(partition);
+          console.log(partition);
         }
       }
       return $uibModalInstance.close(config);

@@ -133,10 +133,10 @@
             <br/>
             <label>Disk Type</label>
             <div class="input-group">
-                <select ng:model="disk.DiskType" class="form-control"  style="width: 150px;">
-                    <option value="sata" ng:click="updateDiskType(disk, 'sata')" >SATA</option>
-                    <option value="mmc" ng:click="updateDiskType(disk, 'mmc')">MMCBLK</option>
-                    <option value="nvme" ng:click="updateDiskType(disk, 'nvme')">NVME</option>
+                <select ng:model="disk.DiskType" ng:change="updateDiskType(disk)" class="form-control"  style="width: 150px;">
+                    <option value="sata">SATA</option>
+                    <option value="mmc">MMCBLK</option>
+                    <option value="nvme">NVME</option>
                 </select>
 
                 <br>

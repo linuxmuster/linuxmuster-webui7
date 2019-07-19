@@ -148,8 +148,9 @@ angular.module('lm.linbo').controller 'LMLINBOConfigModalController', ($scope, $
         console.log ($scope.config)
         console.log ($scope.diskMap)
 
-    $scope.updateDiskType = (disk, newDiskType) ->
+    $scope.updateDiskType = (disk) ->
         oldDiskName = disk.name
+        newDiskType = disk.DiskType
 
         if newDiskType  == 'sata'
             disk.name = 'a'

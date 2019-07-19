@@ -84,7 +84,7 @@
             <div ng:repeat="teacher in teachers|filter:filter|filter:isActive|orderBy:['-membership','sn']">
                 <div ng-if="teacher.membership == true">
                     <span id={{teacher.sAMAccountName}} checkbox ng:model="teacher.membership"></span>
-                    <i class="fa fa-key" ng-style="(admins.indexOf(teacher.sAMAccountName) >= 0) && {'color': 'red'}"></i>
+                    <i class="fa fa-key" ng-style="(admins.indexOf(teacher.sAMAccountName) >= 0) && {'color': 'red'}" ng-click="updateAdminList(teacher)"></i>
                     <i class="fa fa-user"></i>
                     <a href="#">{{teacher.givenName}} <b>{{teacher.sn}}</b> {{teacher.sophomorixAdminClass}}</a>
                 </div>
@@ -116,7 +116,7 @@
             <div ng:repeat="teacher in teachers|filter:filter|filter:isActive|orderBy:['membership','sn']">
                 <div ng-if="teacher.membership == false">
                     <span id={{teacher.sAMAccountName}} checkbox ng:model="teacher.membership"></span>
-                    <i class="fa fa-key" ng-style="(admins.indexOf(teacher.sAMAccountName) >= 0) && {'color': 'red'}"></i>
+                    <i class="fa fa-key" ng-style="(admins.indexOf(teacher.sAMAccountName) >= 0) && {'color': 'red'}" ng-click="updateAdminList(teacher)"></i>
                     <i class="fa fa-user"></i>
                     <a href="#">{{teacher.givenName}} <b>{{teacher.sn}}</b> {{teacher.sophomorixAdminClass}}</a>
                 </div>

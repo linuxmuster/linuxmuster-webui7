@@ -217,3 +217,10 @@ def lmn_genRandomPW():
         return password
     else:
         lmn_genRandomPW()
+
+def lmn_user_details(username):
+    """Get user details from sophomorix."""
+    if username == "root":
+        return "root"
+    sophomorixCommand = ['sophomorix-query', '--sam',  username,'-jj']
+    return lmn_getSophomorixValue(sophomorixCommand, 'USER/'+username)

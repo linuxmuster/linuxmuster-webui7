@@ -3,7 +3,7 @@ from jadi import component
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint
 from aj.auth import authorize
-from aj.plugins.lmn_common.api import lmn_getSophomorixValue
+from aj.plugins.lmn_common.api import lmn_getSophomorixValue, lmn_user_details
 
 
 @component(HttpPlugin)
@@ -14,7 +14,7 @@ class Handler(HttpPlugin):
     @url(r'/api/lmn/groupmembership/details')
     @authorize('lmn:groupmemberships:write')
     @endpoint(api=True)
-    def handle_api_sophomorix_teachers(self, http_context):
+    def handle_api_groupmembership_details(self, http_context):
         action = http_context.json_body()['action']
         if http_context.method == 'POST':
             schoolname = 'default-school'
@@ -24,11 +24,15 @@ class Handler(HttpPlugin):
                     groupName = http_context.json_body()['groupName']
                     username = http_context.json_body()['username']
                     admins = ",".join(http_context.json_body()['admins'])
+
+                    user_details = lmn_user_details(username)
+                    isAdmin = "administrator" in user_details['sophomorixRole']
+
                     sophomorixCommand = ['sophomorix-project', '-i', '-p', groupName, '-jj']
                     groupAdmins = lmn_getSophomorixValue(sophomorixCommand, 'GROUPS/'+groupName+'/sophomorixAdmins')
                     membersToAdd = []
                     membersToRemove = []
-                    if username in groupAdmins or username == 'global-admin':
+                    if username in groupAdmins or isAdmin:
                         i = 0
                         for member in members:
                             if members[i]['membership'] is True:
@@ -51,28 +55,25 @@ class Handler(HttpPlugin):
 
                 if action == 'get-specified':
                     groupName = http_context.json_body()['groupName']
-                    groupType = http_context.json_body()['groupType']
-                    if groupType in ['schoolclass', 'printergroup']:
-                        sophomorixCommand = ['sophomorix-group', '-i', '-g', groupName, '-jj']
-                        groupDetails = lmn_getSophomorixValue(sophomorixCommand, 'GROUPS')
-                    elif groupType == 'project':
-                        sophomorixCommand = ['sophomorix-project', '-i', '-p', groupName, '-jj']
-                        groupDetails = lmn_getSophomorixValue(sophomorixCommand, 'GROUPS')
+                    sophomorixCommand = ['sophomorix-query', '--group-members', '--group-full', '--sam', groupName, '-jj']
+                    groupDetails = lmn_getSophomorixValue(sophomorixCommand, '')
             return groupDetails
 
     @url(r'/api/lmn/groupmembership')
     @authorize('lmn:groupmembership')
     @endpoint(api=True)
-    def handle_api_settings(self, http_context):
+    def handle_api_groups(self, http_context):
         schoolname = 'default-school'
         username = http_context.json_body()['username']
         action = http_context.json_body()['action']
+        user_details = lmn_user_details(username)
+        isAdmin = "administrator" in user_details['sophomorixRole']
 
         if http_context.method == 'POST':
             if action == 'list-groups':
                 membershipList = []
                 usergroups = []
-                if username != 'global-admin':
+                if not isAdmin:
                     # get groups specified user is member of
                     sophomorixCommand = ['sophomorix-query',  '--schoolbase', schoolname, '--user-full', '-jj', '--sam', username]
                     groups = lmn_getSophomorixValue(sophomorixCommand, 'USER/'+username+'/memberOf')
@@ -98,24 +99,24 @@ class Handler(HttpPlugin):
                     projects = projects_raw['GROUP']
                 # build membershipList with membership status
                 for project in projects:
-                    if project in usergroups or username == 'global-admin':
-                        if username in projects[project]['sophomorixAdmins'] or username == 'global-admin':
-                            membershipList.append({'type': 'project', 'typename': 'Project', 'groupname': project, 'icon': 'fa fa-flask', 'changed': False, 'membership': True, 'admin': True})
+                    if project in usergroups or isAdmin:
+                        if username in projects[project]['sophomorixAdmins'] or isAdmin:
+                            membershipList.append({'type': 'project', 'typename': 'Project', 'groupname': project, 'changed': False, 'membership': True, 'admin': True, 'joinable': projects[project]['sophomorixJoinable']})
                         else:
-                            membershipList.append({'type': 'project', 'typename': 'Project', 'groupname': project, 'icon': 'fa fa-flask', 'changed': False, 'membership': True, 'admin': False})
-                    else:
-                        membershipList.append({'type': 'project', 'typename': 'Project', 'groupname': project, 'icon': 'fa fa-flask', 'changed': False, 'membership': False, 'admin': False})
+                            membershipList.append({'type': 'project', 'typename': 'Project', 'groupname': project, 'changed': False, 'membership': True, 'admin': False, 'joinable': projects[project]['sophomorixJoinable']})
+                    elif projects[project]['sophomorixHidden'] == "FALSE":
+                        membershipList.append({'type': 'project', 'typename': 'Project', 'groupname': project, 'changed': False, 'membership': False, 'admin': False, 'joinable': projects[project]['sophomorixJoinable']})
                 for schoolclass in schoolclasses:
-                    if schoolclass in usergroups or username == 'global-admin':
-                        membershipList.append({'type': 'schoolclass', 'typename': 'Class', 'groupname': schoolclass, 'icon': 'fa fa-users', 'changed': False, 'membership': True})
+                    if schoolclass in usergroups or isAdmin:
+                        membershipList.append({'type': 'schoolclass', 'typename': 'Class', 'groupname': schoolclass, 'changed': False, 'membership': True})
                     else:
-                        membershipList.append({'type': 'schoolclass', 'typename': 'Class', 'groupname': schoolclass, 'icon': 'fa fa-users', 'changed': False, 'membership': False})
+                        membershipList.append({'type': 'schoolclass', 'typename': 'Class', 'groupname': schoolclass, 'changed': False, 'membership': False})
                 for printergroup in printergroups:
-                    if printergroup in usergroups or username == 'global-admin':
-                        membershipList.append({'type': 'printergroup', 'typename': 'Printer', 'groupname': printergroup, 'icon': 'fa fa-fw fa-print', 'changed': False, 'membership': True})
+                    if printergroup in usergroups or isAdmin:
+                        membershipList.append({'type': 'printergroup', 'typename': 'Printer', 'groupname': printergroup, 'changed': False, 'membership': True})
                     else:
-                        membershipList.append({'type': 'printergroup', 'typename': 'Printer', 'groupname': printergroup, 'icon': 'fa fa-fw fa-print', 'changed': False, 'membership': False})
-                return membershipList
+                        membershipList.append({'type': 'printergroup', 'typename': 'Printer', 'groupname': printergroup, 'changed': False, 'membership': False})
+                return membershipList, isAdmin, user_details
 
             if action == 'kill-project':
                 project = http_context.json_body()['project']
@@ -219,3 +220,28 @@ class Handler(HttpPlugin):
                 # If nothing changed result is empty so return 0
                 except NameError:
                     return 0
+
+    @url(r'/api/lmn/changeProject')
+    @authorize('lmn:groupmembership')
+    @endpoint(api=True)
+    def handle_api_set_project(self, http_context):
+        """Handles join and hide options for a project."""
+        if http_context.method == 'POST':
+            option  = http_context.json_body()['option']
+            project = http_context.json_body()['project']
+            sophomorixCommand = ['sophomorix-project',  option, '--project', project, '-jj']
+            result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
+            if result['TYPE'] == "ERROR":
+                return result['TYPE'], result['MESSAGE_EN']
+            else:
+                return result['TYPE'], result['LOG']
+
+    @url(r'/api/lmn/get_project_dn')
+    @authorize('lmn:groupmembership')
+    @endpoint(api=True)
+    def handle_api_get_projectdn(self, http_context):
+        """Get the dn of a project ( fix until it comes in sophomorix-query, then we can erase this function."""
+        if http_context.method == 'POST':
+            project = http_context.json_body()['project']
+            sophomorixCommand = ['sophomorix-project',  '-i', '--project', project, '-jj']
+            return lmn_getSophomorixValue(sophomorixCommand, 'GROUPS/'+project+'/dn')

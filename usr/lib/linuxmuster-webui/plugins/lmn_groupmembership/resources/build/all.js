@@ -48,6 +48,41 @@
     };
     $scope.showAdminDetails = true;
     $scope.showMemberDetails = true;
+    $scope.changeState = false;
+    $scope.changeJoin = function(project) {
+      var option;
+      $scope.changeState = true;
+      option = $scope.joinable ? '--join' : '--nojoin';
+      return $http.post('/api/lmn/changeProject', {
+        option: option,
+        project: project
+      }).then(function(resp) {
+        if (resp['data'][0] === 'ERROR') {
+          notify.error(resp['data'][1]);
+        }
+        if (resp['data'][0] === 'LOG') {
+          notify.success(gettext(resp['data'][1]));
+        }
+        return $scope.changeState = false;
+      });
+    };
+    $scope.changeHide = function(project) {
+      var option;
+      $scope.changeState = true;
+      option = $scope.hidden ? '--hide' : '--nohide';
+      return $http.post('/api/lmn/changeProject', {
+        option: option,
+        project: project
+      }).then(function(resp) {
+        if (resp['data'][0] === 'ERROR') {
+          notify.error(resp['data'][1]);
+        }
+        if (resp['data'][0] === 'LOG') {
+          notify.success(gettext(resp['data'][1]));
+        }
+        return $scope.changeState = false;
+      });
+    };
     $scope.killProject = function(project) {
       return messagebox.show({
         text: `Do you really want to delete '${project}'? This can't be undone!`,
@@ -63,7 +98,6 @@
           username: $scope.identity.user,
           project: project
         }).then(function(resp) {
-          //console.log (resp.data)
           if (resp['data'][0] === 'ERROR') {
             notify.error(resp['data'][1]);
           }
@@ -81,9 +115,6 @@
     $scope.formatDate = function(date) {
       return Date(date);
     };
-    $http.post('/api/lm/all-users').then(function(resp) {
-      return $scope.allUsers = resp.data;
-    });
     $scope.filterDNLogin = function(dn) {
       if (dn.indexOf('=') !== -1) {
         return dn.split(',')[0].split('=')[1];
@@ -99,11 +130,33 @@
         groupType: groupType,
         groupName: groupName
       }).then(function(resp) {
+        var admin, i, len, member, name, ref, ref1;
         $scope.groupName = groupName;
-        $scope.groupDetails = resp.data;
-        $scope.members = resp.data[groupName]['sophomorixMembers'];
-        $scope.admins = resp.data[groupName]['sophomorixAdmins'];
-        if ($scope.admins.indexOf($scope.identity.user) !== -1 || ['schooladministrator', 'globaladministrator'].indexOf($scope.allUsers[$scope.identity.user]['sophomorixRole']) !== -1) {
+        $scope.groupDetails = resp.data['GROUP'][groupName];
+        $scope.members = [];
+        ref = resp.data['MEMBERS'][groupName];
+        for (name in ref) {
+          member = ref[name];
+          $scope.members.push({
+            'sn': member.sn,
+            'givenName': member.givenName,
+            'sophomorixAdminClass': member.sophomorixAdminClass
+          });
+        }
+        $scope.admins = [];
+        ref1 = resp.data['GROUP'][groupName]['sophomorixAdmins'];
+        for (i = 0, len = ref1.length; i < len; i++) {
+          admin = ref1[i];
+          member = resp.data['MEMBERS'][groupName][admin];
+          $scope.admins.push({
+            'sn': member.sn,
+            'givenName': member.givenName,
+            'sophomorixAdminClass': member.sophomorixAdminClass
+          });
+        }
+        $scope.joinable = resp.data['GROUP'][groupName]['sophomorixJoinable'] === 'TRUE';
+        $scope.hidden = resp.data['GROUP'][groupName]['sophomorixHidden'] === 'TRUE';
+        if ($scope.admins.indexOf($scope.identity.user) !== -1 || $scope.identity.isAdmin) {
           return $scope.editMembersButton = true;
         } else {
           return $scope.editMembersButton = false;
@@ -118,7 +171,6 @@
   });
 
   angular.module('lmn.groupmembership').controller('LMNGroupEditController', function($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, groupName, groupDetails, admins) {
-    var groupDN;
     $scope.sorts = [
       {
         name: gettext('Given name'),
@@ -147,7 +199,6 @@
     //    fx: (x) -> x.sophomorixAdminClass
     //}
     $scope.sort = $scope.sorts[1];
-    console.log($scope.sort);
     $scope.groupName = groupName;
     $scope.admins = admins;
     $scope.sortReverse = false;
@@ -194,49 +245,51 @@
         return msg.close();
       });
     };
-    groupDN = groupDetails[groupName]['dn'];
-    $http.post('/api/lm/sophomorixUsers/students', {
-      action: 'get-all'
+    //# This dn requests should as soon as possible disappear, it slows down the whole process ( when dn is include in sophomorix-query )
+    $http.post('/api/lmn/get_project_dn', {
+      project: $scope.groupName
     }).then(function(resp) {
-      var classes, i, len, ref, student, students;
-      students = resp.data;
-      $scope.students = students;
-      console.log(students);
-      classes = [];
-      for (i = 0, len = students.length; i < len; i++) {
-        student = students[i];
-        if (ref = student['sophomorixAdminClass'], indexOf.call(classes, ref) < 0) {
-          classes.push(student['sophomorixAdminClass']);
+      var groupDN;
+      groupDN = resp.data;
+      $http.post('/api/lm/sophomorixUsers/students', {
+        action: 'get-all'
+      }).then(function(resp) {
+        var classes, i, len, ref, student, students;
+        students = resp.data;
+        $scope.students = students;
+        classes = [];
+        for (i = 0, len = students.length; i < len; i++) {
+          student = students[i];
+          if (ref = student['sophomorixAdminClass'], indexOf.call(classes, ref) < 0) {
+            classes.push(student['sophomorixAdminClass']);
+          }
+          if (indexOf.call(student['memberOf'], groupDN) >= 0) {
+            student['membership'] = true;
+          } else {
+            student['membership'] = false;
+          }
         }
-        if (indexOf.call(student['memberOf'], groupDN) >= 0) {
-          student['membership'] = true;
-        } else {
-          student['membership'] = false;
+        return $scope.classes = classes;
+      });
+      //# TODO : add class ?
+      //# TODO : add other project members ?
+      return $http.post('/api/lm/sophomorixUsers/teachers', {
+        action: 'get-list'
+      }).then(function(resp) {
+        var i, len, results, teacher, teachers;
+        teachers = resp.data;
+        $scope.teachers = teachers;
+        results = [];
+        for (i = 0, len = teachers.length; i < len; i++) {
+          teacher = teachers[i];
+          if (indexOf.call(teacher['memberOf'], groupDN) >= 0) {
+            results.push(teacher['membership'] = true);
+          } else {
+            results.push(teacher['membership'] = false);
+          }
         }
-      }
-      $scope.classes = classes;
-      return console.log($scope.classes);
-    });
-    //# TODO : add class ?
-    //# TODO : add other project members ?
-    //# TODO : add projectadmin
-    $http.post('/api/lm/sophomorixUsers/teachers', {
-      action: 'get-list'
-    }).then(function(resp) {
-      var i, len, results, teacher, teachers;
-      teachers = resp.data;
-      $scope.teachers = teachers;
-      console.log(teachers);
-      results = [];
-      for (i = 0, len = teachers.length; i < len; i++) {
-        teacher = teachers[i];
-        if (indexOf.call(teacher['memberOf'], groupDN) >= 0) {
-          results.push(teacher['membership'] = true);
-        } else {
-          results.push(teacher['membership'] = false);
-        }
-      }
-      return results;
+        return results;
+      });
     });
     return $scope.close = function() {
       return $uibModalInstance.dismiss();
@@ -348,7 +401,10 @@
         username: username
       }).then(function(resp) {
         var group, i, j, k, len, len1, len2, printergroupCount, projectCount, ref, ref1, ref2, schoolclassCount;
-        $scope.groups = resp.data;
+        $scope.groups = resp.data[0];
+        //# TODO : try to factorize userDetails and isAdmin in the service identity to limit requests
+        $scope.identity.isAdmin = resp.data[1];
+        $scope.identity.userDetails = resp.data[2];
         schoolclassCount = 0;
         printergroupCount = 0;
         projectCount = 0;
@@ -433,6 +489,9 @@
           return $scope.getGroups($scope.identity.user);
         }
       });
+    };
+    $scope.projectIsJoinable = function(project) {
+      return project['joinable'] === 'TRUE' || project.admin || $scope.identity.isAdmin;
     };
     return $scope.$watch('identity.user', function() {
       if ($scope.identity.user === void 0) {

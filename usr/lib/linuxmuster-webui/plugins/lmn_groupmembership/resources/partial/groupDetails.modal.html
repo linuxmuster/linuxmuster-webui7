@@ -1,52 +1,62 @@
 <div class="modal-header">
     <h3 translate>Group Details
     <span ng:show="groupDetails == null" translate> ...</span>
-    <span ng:show="groupDetails != null" translate > - {{groupDetails[groupName]['description']}}</span></h3>
+    <span ng:show="groupDetails != null" translate > - {{groupDetails['description']}}</span></h3>
 </div>
-<progress-spinner ng:show="groupDetails == null"></progress-spinner>
+<progress-spinner ng:show="groupDetails == null || changeState == true"></progress-spinner>
 <div style="padding: 0 20px;" ng:show="groupDetails != null">
     <br />
     <h4 translate> Properties</h4>
     <table class="table">
         <tr>
             <td><b translate>Creationdate:</b></td>
-            <td>{{formatDate(groupDetails[groupName]['sophomorixCreationDate'])}}</td>
+            <td>{{formatDate(groupDetails['sophomorixCreationDate'])}}</td>
         </tr>
         <tr>
             <td><b translate>Type:</b></td>
-            <td>{{groupDetails[groupName]['sophomorixType']}}</td>
+            <td>{{groupDetails['sophomorixType']}}</td>
         </tr>
         <tr>
             <td><b translate>Schoolname:</b></td>
-            <td>{{groupDetails[groupName]['sophomorixSchoolname']}}</td>
+            <td>{{groupDetails['sophomorixSchoolname']}}</td>
         </tr>
         <tr>
             <td><b translate>Sophomorix Status:</b></td>
-            <td>{{groupDetails[groupName]['sophomorixStatus']}}</td>
+            <td>{{groupDetails['sophomorixStatus']}}</td>
+        </tr>
+        <tr>
+            <td><b translate>Joinable:</b></td>
+            <td>
+                <input type="checkbox" ng:model="joinable" ng:disabled="!editMembersButton" ng:change="changeJoin(groupName)"> </input>
+            </td>
+        </tr>
+        <tr>
+            <td><b translate>Hidden:</b></td>
+            <td>
+                <input type="checkbox" ng:model="hidden" ng:disabled="!editMembersButton" ng:change="changeHide(groupName)"> </input>
+            </td>
         </tr>
     </table>
     <div class="panel panel-info">
         <div class="panel-heading">
             <a href="#" class="btn btn-default btn-flat pull-right" ng-click="showMemberDetails = ! showMemberDetails" translate>{{showMemberDetails ? "Hide" : "Show"}}</a>
-            <a class="btn btn-default btn-flat pull-right" ng:show="groupDetails[groupName]['sophomorixType'] == 'project' && editMembersButton" href="#" ng-click="editGroupMembers(groupName, groupDetails, admins)" translate >Edit members</a>
-            <h4 translate> Group Members: {{groupDetails[groupName]['sophomorixMembers_count']}}</h4>
+            <a class="btn btn-default btn-flat pull-right" ng:show="groupDetails['sophomorixType'] == 'project' && editMembersButton" href="#" ng-click="editGroupMembers(groupName, groupDetails, admins)" translate >Edit members</a>
+            <h4 translate> Group Members: {{groupDetails['sophomorixMembers'].length}}</h4>
         </div>
         <div ng-show="showMemberDetails" class="panel-body">
-            <!-- TODO: Sort this by class or sn-->
-            <ul class="list-unstyled" style="display:flex;flex-wrap:wrap;">
-                <li ng:repeat="member in members" style="padding-left:10px;margin:5px 0 0 20px;background:#F7F7F7;width:180px;">{{allUsers[member]['sn']}} {{allUsers[member]['givenName']}} <span class="pull-right">{{allUsers[member]['sophomorixAdminClass']}}</span></li>
+            <ul class="list-unstyled" style="column-width:180px;padding:0;">
+                <li ng:repeat="member in members|orderBy :['sophomorixAdminClass','sn']" style="padding-left:10px;margin:0 0 5px 20px;background:#EEEEEE;font-weight:bold;">{{member.sn}} {{member.givenName}} <span class="pull-right">{{member.sophomorixAdminClass}}</span></li>
             </ul>
         </div>
     </div>
     <div class="panel panel-danger">
         <div class="panel-heading">
             <a href="#" class="btn btn-default btn-flat pull-right" ng-click="showAdminDetails = ! showAdminDetails" translate>{{showAdminDetails ? "Hide" : "Show"}}</a>
-            <!--<a class="btn btn-default btn-flat pull-right" ng:show="groupDetails[groupName]['sophomorixType'] == 'project'" href="#" ng-click="editGroupAdmins()" translate >Edit admins</a>-->
-            <h4 translate> Group Admins: {{groupDetails[groupName]['sophomorixAdmins_count']}}</h4> 
+            <h4 translate> Group Admins: {{groupDetails['sophomorixAdmins'].length}}</h4> 
         </div>
         <div ng-show="showAdminDetails" class="panel-body">
-            <ul class="list-unstyled" style="display:flex;flex-wrap:wrap;">
-                <li ng:repeat="admin in admins" style="padding-left:10px;margin:5px 0 0 20px;background:#f5f5f5;width:180px;">{{allUsers[admin]['sn']}} {{allUsers[admin]['givenName']}} <span class="pull-right">{{allUsers[admin]['sophomorixAdminClass']}}</span></li>
+            <ul class="list-unstyled" style="column-width:180px;padding:0;">
+                <li ng:repeat="admin in admins|orderBy :['sophomorixAdminClass','sn']" style="padding-left:10px;margin:0 0 5px 20px;background:#EEEEEE;font-weight:bold;">{{admin.sn}} {{admin.givenName}} <span class="pull-right">{{admin.sophomorixAdminClass}}</span></li>
             </ul>
         </div>
     </div>
@@ -55,7 +65,7 @@
 
 
     <div class="modal-footer">
-        <a class="btn btn-default btn-flat pull-left" ng:show="groupDetails[groupName]['sophomorixType'] == 'project'" ng-click="killProject(groupName)" translate >Delete Project</a>
+        <a class="btn btn-default btn-flat pull-left" ng:show="groupDetails['sophomorixType'] == 'project' && editMembersButton" ng-click="killProject(groupName)" translate >Delete Project</a>
         <a class="btn btn-default btn-flat pull-right" ng:click="close()" translate>Close</a>
     </div>
 </div>

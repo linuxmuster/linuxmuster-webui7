@@ -69,7 +69,7 @@
                 <div ng:repeat="group in groups|filter: {type: 'schoolclass'}|filter:filter|orderBy:[sort.fx]:sortReverse">
                     <div>
                         <span id={{group.groupname}} checkbox ng:model="group.membership" ng-click='groupChanged(group.groupname)'></span>
-                        <i class="{{group.icon}}"></i>
+                        <i class="fa fa-users"></i>
                         <a href="#" ng-click='showGroupDetails($index, group.type, group.groupname)'>
                             <span translate>{{group.typename}}</span>
                             <b style="word-wrap: break-word; -ms-word-break: break-all">{{group.groupname}}</b>
@@ -90,7 +90,7 @@
                 <div ng:repeat="group in groups|filter: {type: 'printer'}|filter:filter|orderBy:[sort.fx]:sortReverse">
                     <div>
                         <span id={{group.groupname}} checkbox ng:model="group.membership" ng-click='groupChanged(group.groupname)'></span>
-                        <i class="{{group.icon}}"></i>
+                        <i class="fa fa-fw fa-print"></i>
                         <a href="#" ng-click='showGroupDetails($index, group.type, group.groupname)'>
                             <span translate>{{group.typename}}</span>
                             <b style="word-wrap: break-word; -ms-word-break: break-all">{{group.groupname}}</b>
@@ -105,13 +105,13 @@
             <h3 translate>Projects</h3>
             <div ng-if="projectCount == 0" class="alert alert-info">
                 <i class="fa fa-info-circle"></i>
-                <span translate> There are no projects yet. You can create a new procet using the menu bar.</span>
+                <span translate> There are no projects yet. You can create a new project using the menu bar.</span>
             </div>
             <div class="flex-container lmn-container-list" >
                 <div ng:repeat="group in groups|filter: {type: 'project'}|filter:filter|orderBy:[sort.fx]:sortReverse">
-                    <div>
-                        <span id={{group.groupname}} checkbox ng:model="group.membership" ng-click='groupChanged(group.groupname)'></span>
-                        <i class="{{group.icon}}"></i>
+                    <div ng:show="!projectIsHidden(group)">
+                        <span id={{group.groupname}} checkbox ng:show="projectIsJoinable(group)" ng:model="group.membership" ng-click='groupChanged(group.groupname)'></span>
+                        <i class="fa fa-flask"></i>
                         <a href="#" ng-click='showGroupDetails($index, group.type, group.groupname)'>
                             <span translate>{{group.typename}}</span>
                             <b style="word-wrap: break-word; -ms-word-break: break-all">{{group.groupname}}</b>

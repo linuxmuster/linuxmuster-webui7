@@ -25,12 +25,32 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
 
         $scope.showAdminDetails = true
         $scope.showMemberDetails = true
+        $scope.changeState = false
+
+        $scope.changeJoin = (project) ->
+            $scope.changeState = true
+            option = if $scope.joinable then '--join' else '--nojoin'
+            $http.post('/api/lmn/changeProject', {option: option, project: project}).then (resp) ->
+                if resp['data'][0] == 'ERROR'
+                    notify.error (resp['data'][1])
+                if resp['data'][0] == 'LOG'
+                    notify.success gettext(resp['data'][1])
+                $scope.changeState = false
+
+        $scope.changeHide = (project) ->
+            $scope.changeState = true
+            option = if $scope.hidden then '--hide' else '--nohide'
+            $http.post('/api/lmn/changeProject', {option: option, project: project}).then (resp) ->
+                if resp['data'][0] == 'ERROR'
+                    notify.error (resp['data'][1])
+                if resp['data'][0] == 'LOG'
+                    notify.success gettext(resp['data'][1])
+                $scope.changeState = false
 
         $scope.killProject = (project) ->
              messagebox.show(text: "Do you really want to delete '#{project}'? This can't be undone!", positive: 'Delete', negative: 'Cancel').then () ->
                 msg = messagebox.show(progress: true)
                 $http.post('/api/lmn/groupmembership', {action: 'kill-project', username:$scope.identity.user, project: project}).then (resp) ->
-                    #console.log (resp.data)
                     if resp['data'][0] == 'ERROR'
                         notify.error (resp['data'][1])
                     if resp['data'][0] == 'LOG'
@@ -41,9 +61,6 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
 
         $scope.formatDate = (date) ->
            return Date(date)
-
-        $http.post('/api/lm/all-users').then (resp) ->
-            $scope.allUsers = resp.data
 
         $scope.filterDNLogin = (dn) ->
             if dn.indexOf('=') != -1
@@ -56,11 +73,21 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
             groupName = group[1]
             $http.post('/api/lmn/groupmembership/details', {action: 'get-specified', groupType: groupType, groupName: groupName}).then (resp) ->
                 $scope.groupName    = groupName
-                $scope.groupDetails = resp.data
-                $scope.members = resp.data[groupName]['sophomorixMembers']
-                $scope.admins = resp.data[groupName]['sophomorixAdmins']
+                $scope.groupDetails = resp.data['GROUP'][groupName]
 
-                if $scope.admins.indexOf($scope.identity.user) != -1 or ['schooladministrator', 'globaladministrator'].indexOf($scope.allUsers[$scope.identity.user]['sophomorixRole']) != -1
+                $scope.members = []
+                for name,member of resp.data['MEMBERS'][groupName]
+                    $scope.members.push({'sn':member.sn, 'givenName':member.givenName, 'sophomorixAdminClass':member.sophomorixAdminClass})
+
+                $scope.admins = []
+                for admin in resp.data['GROUP'][groupName]['sophomorixAdmins']
+                    member = resp.data['MEMBERS'][groupName][admin]
+                    $scope.admins.push({'sn':member.sn, 'givenName':member.givenName, 'sophomorixAdminClass':member.sophomorixAdminClass})
+
+                $scope.joinable = resp.data['GROUP'][groupName]['sophomorixJoinable'] == 'TRUE'
+                $scope.hidden = resp.data['GROUP'][groupName]['sophomorixHidden'] == 'TRUE'
+
+                if $scope.admins.indexOf($scope.identity.user) != -1 or $scope.identity.isAdmin
                     $scope.editMembersButton = true
                 else
                     $scope.editMembersButton = false
@@ -93,7 +120,6 @@ angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($sco
             #}
         ]
         $scope.sort = $scope.sorts[1]
-        console.log ($scope.sort)
         $scope.groupName = groupName
         $scope.admins = admins
         $scope.sortReverse = false
@@ -124,33 +150,31 @@ angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($sco
             .finally () ->
                 msg.close()
 
-        groupDN = groupDetails[groupName]['dn']
-        $http.post('/api/lm/sophomorixUsers/students', {action: 'get-all'}).then (resp) ->
-            students = resp.data
-            $scope.students = students
-            console.log (students)
-            classes = []
-            for student in students
-                if student['sophomorixAdminClass'] not in classes
-                    classes.push student['sophomorixAdminClass']
-                if groupDN in student['memberOf']
-                    student['membership'] = true
-                else
-                    student['membership'] = false
-            $scope.classes = classes
-            console.log ($scope.classes)
-            ## TODO : add class ?
-            ## TODO : add other project members ?
-            ## TODO : add projectadmin
-        $http.post('/api/lm/sophomorixUsers/teachers', {action: 'get-list'}).then (resp) ->
-            teachers = resp.data
-            $scope.teachers = teachers
-            console.log (teachers)
-            for teacher in teachers
-                if groupDN in teacher['memberOf']
-                    teacher['membership'] = true
-                else
-                    teacher['membership'] = false
+        ## This dn requests should as soon as possible disappear, it slows down the whole process ( when dn is include in sophomorix-query )
+        $http.post('/api/lmn/get_project_dn', {project: $scope.groupName}).then (resp) ->
+            groupDN = resp.data
+            $http.post('/api/lm/sophomorixUsers/students', {action: 'get-all'}).then (resp) ->
+                students = resp.data
+                $scope.students = students
+                classes = []
+                for student in students
+                    if student['sophomorixAdminClass'] not in classes
+                        classes.push student['sophomorixAdminClass']
+                    if groupDN in student['memberOf']
+                        student['membership'] = true
+                    else
+                        student['membership'] = false
+                $scope.classes = classes
+                ## TODO : add class ?
+                ## TODO : add other project members ?
+            $http.post('/api/lm/sophomorixUsers/teachers', {action: 'get-list'}).then (resp) ->
+                teachers = resp.data
+                $scope.teachers = teachers
+                for teacher in teachers
+                    if groupDN in teacher['memberOf']
+                        teacher['membership'] = true
+                    else
+                        teacher['membership'] = false
 
         $scope.close = () ->
             $uibModalInstance.dismiss()
@@ -235,7 +259,10 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
 
     $scope.getGroups = (username) ->
         $http.post('/api/lmn/groupmembership', {action: 'list-groups', username: username}).then (resp) ->
-            $scope.groups = resp.data
+            $scope.groups = resp.data[0]
+            ## TODO : try to factorize userDetails and isAdmin in the service identity to limit requests
+            $scope.identity.isAdmin = resp.data[1]
+            $scope.identity.userDetails =  resp.data[2]
             schoolclassCount = 0
             printergroupCount = 0
             projectCount = 0
@@ -286,7 +313,8 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
             if result.response is 'refresh'
                 $scope.getGroups ($scope.identity.user)
 
-
+    $scope.projectIsJoinable = (project) ->
+        return project['joinable'] == 'TRUE' or project.admin or $scope.identity.isAdmin
 
     $scope.$watch 'identity.user', ->
         if $scope.identity.user is undefined

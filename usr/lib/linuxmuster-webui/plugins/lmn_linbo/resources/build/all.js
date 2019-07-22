@@ -541,7 +541,6 @@
         for (l = 0, len3 = ref3.length; l < len3; l++) {
           partition = ref3[l];
           config.partitions.push(partition);
-          console.log(partition);
         }
       }
       return $uibModalInstance.close(config);

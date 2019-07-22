@@ -11,7 +11,7 @@
 
   isValidName = function(name) {
     var regExp, validName;
-    regExp = /^[a-z0-9]*$/i;
+    regExp = /^[a-z0-9]*$/;
     validName = regExp.test(name);
     return validName;
   };
@@ -458,7 +458,7 @@
           return;
         }
         if (!isValidName(msg.value)) {
-          notify.error(gettext('Not a valid name! Only alphanumeric characters are allowed!'));
+          notify.error(gettext('Not a valid name! Only lowercase alphanumeric characters are allowed!'));
           return;
         }
         return $http.post('/api/lmn/groupmembership', {

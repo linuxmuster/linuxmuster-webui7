@@ -1,5 +1,5 @@
 isValidName = (name) ->
-    regExp =  /^[a-z0-9]*$/i
+    regExp =  /^[a-z0-9]*$/
     validName = regExp.test(name)
     return validName
 
@@ -295,7 +295,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
             if not msg.value
                 return
             if not isValidName(msg.value)
-                notify.error gettext('Not a valid name! Only alphanumeric characters are allowed!')
+                notify.error gettext('Not a valid name! Only lowercase alphanumeric characters are allowed!')
                 return
             $http.post('/api/lmn/groupmembership', {action: 'create-project', username:$scope.identity.user, project: msg.value}).then (resp) ->
                 notify.success gettext('Project Created')

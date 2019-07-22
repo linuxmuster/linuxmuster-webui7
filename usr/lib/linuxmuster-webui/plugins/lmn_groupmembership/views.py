@@ -142,7 +142,8 @@ class Handler(HttpPlugin):
                     return result['TYPE'], result['LOG']
 
             if action == 'create-project':
-                project = http_context.json_body()['project']
+                ## Projectname must be in lowercase to avoid conflicts
+                project = http_context.json_body()['project'].lower()
                 sophomorixCommand = ['sophomorix-project',  '--admins', username, '--create', '-p', project, '-jj']
                 result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
                 if result['TYPE'] == "ERROR":

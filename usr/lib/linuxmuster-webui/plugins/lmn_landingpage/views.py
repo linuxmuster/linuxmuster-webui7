@@ -11,15 +11,7 @@ class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
 
-    @url(r'/api/lmn/landing')
-    @authorize('lmn:landing')
-    @endpoint(api=True)
-    def handle_api_settings(self, http_context):
-        schoolname = 'default-school'
-        username = http_context.json_body()['username']
-        action = http_context.json_body()['action']
-
-    @url(r'/api/lmn/quota/')  ## TODO authorize
+    @url(r'/api/lmn/quota/')
     @endpoint(api=True)
     def handle_api_quota(self, http_context):
 

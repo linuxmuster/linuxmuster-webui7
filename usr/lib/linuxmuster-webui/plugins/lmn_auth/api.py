@@ -5,7 +5,7 @@ from jadi import component
 
 import aj
 from aj.auth import AuthenticationProvider, OSAuthenticationProvider
-from aj.plugins.lmn_common.api import lmconfig
+from aj.plugins.lmn_common.api import lmconfig, lmn_user_details
 
 @component(AuthenticationProvider)
 class LMAuthenticationProvider(AuthenticationProvider):
@@ -94,5 +94,9 @@ class LMAuthenticationProvider(AuthenticationProvider):
         return 0
 
     def get_profile(self, username):
-        return {}
+        if username == "root":
+            return {}
+        profil = lmn_user_details(username)
+        profil['isAdmin'] = "administrator" in profil['sophomorixRole']
+        return profil
 

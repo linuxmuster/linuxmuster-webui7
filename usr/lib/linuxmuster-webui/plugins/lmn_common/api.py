@@ -178,6 +178,7 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
 
     ## Some comands get many dicts, we just want the first
     output = output.replace('\n', '').split('# JSON-end')[0]
+    output = output.split('# JSON-begin')[1]
     output = re.sub('# JSON-begin', '', output)
 
     ## Convert str to dict

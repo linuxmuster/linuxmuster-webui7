@@ -87,7 +87,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
                 $scope.joinable = resp.data['GROUP'][groupName]['sophomorixJoinable'] == 'TRUE'
                 $scope.hidden = resp.data['GROUP'][groupName]['sophomorixHidden'] == 'TRUE'
 
-                if $scope.admins.indexOf($scope.identity.user) != -1 or $scope.identity.isAdmin
+                if resp.data['GROUP'][groupName]['sophomorixAdmins'].indexOf($scope.identity.user) != -1 or $scope.identity.isAdmin
                     $scope.editMembersButton = true
                 else
                     $scope.editMembersButton = false

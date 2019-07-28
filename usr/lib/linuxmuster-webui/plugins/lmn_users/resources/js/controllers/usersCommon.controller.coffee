@@ -25,6 +25,7 @@ angular.module('lm.users').controller 'LMNUserDetailsController', ($scope, $rout
 
     #notify.error gettext("You have to enter a username")
     $scope.id = id
+    $scope.showGroupDetails = true
 
     $scope.formatDate = (date) ->
         return Date(date)
@@ -34,6 +35,12 @@ angular.module('lm.users').controller 'LMNUserDetailsController', ($scope, $rout
 
     $http.post('/api/lm/sophomorixUsers/'+role, {action: 'get-specified', user: id}).then (resp) ->
         $scope.userDetails = resp.data
+        $scope.groups = []
+        for dn in $scope.userDetails[0]['memberOf']
+            cn       = dn.split(',')[0].split('=')[1]
+            category = dn.split(',')[1].split('=')[1]
+            $scope.groups.push({'cn':cn, 'category':category})
+
         console.log ($scope.userDetails)
 
     $scope.close = () ->

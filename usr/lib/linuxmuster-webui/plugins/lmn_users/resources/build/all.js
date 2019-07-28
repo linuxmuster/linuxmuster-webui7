@@ -2067,6 +2067,7 @@
   angular.module('lm.users').controller('LMNUserDetailsController', function($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, id, role) {
     //notify.error gettext("You have to enter a username")
     $scope.id = id;
+    $scope.showGroupDetails = true;
     $scope.formatDate = function(date) {
       return Date(date);
     };
@@ -2076,7 +2077,19 @@
       action: 'get-specified',
       user: id
     }).then(function(resp) {
+      var category, cn, dn, j, len, ref;
       $scope.userDetails = resp.data;
+      $scope.groups = [];
+      ref = $scope.userDetails[0]['memberOf'];
+      for (j = 0, len = ref.length; j < len; j++) {
+        dn = ref[j];
+        cn = dn.split(',')[0].split('=')[1];
+        category = dn.split(',')[1].split('=')[1];
+        $scope.groups.push({
+          'cn': cn,
+          'category': category
+        });
+      }
       return console.log($scope.userDetails);
     });
     return $scope.close = function() {

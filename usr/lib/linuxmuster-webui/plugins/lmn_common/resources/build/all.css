@@ -33,6 +33,12 @@
   background-color: rgba(255, 178, 178, 0.29);
   border-color: red;
 }
+li.cardlist {
+  padding-left: 10px;
+  margin: 0 0 5px 20px;
+  background: #EEEEEE;
+  font-weight: bold;
+}
 .dragdroparea {
   color: gray;
   background-color: lightgray;

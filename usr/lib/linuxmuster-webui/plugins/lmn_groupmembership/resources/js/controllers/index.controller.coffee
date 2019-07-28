@@ -124,6 +124,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($sco
         $scope.groupName = groupName
         $scope.admins = admins
         $scope.sortReverse = false
+        groupDN = groupDetails['DN']
 
         $scope.checkInverse = (sort ,currentSort) ->
             if sort == currentSort
@@ -151,31 +152,28 @@ angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($sco
             .finally () ->
                 msg.close()
 
-        ## This dn requests should as soon as possible disappear, it slows down the whole process ( when dn is include in sophomorix-query )
-        $http.post('/api/lmn/get_project_dn', {project: $scope.groupName}).then (resp) ->
-            groupDN = resp.data
-            $http.post('/api/lm/sophomorixUsers/students', {action: 'get-all'}).then (resp) ->
-                students = resp.data
-                $scope.students = students
-                classes = []
-                for student in students
-                    if student['sophomorixAdminClass'] not in classes
-                        classes.push student['sophomorixAdminClass']
-                    if groupDN in student['memberOf']
-                        student['membership'] = true
-                    else
-                        student['membership'] = false
-                $scope.classes = classes
-                ## TODO : add class ?
-                ## TODO : add other project members ?
-            $http.post('/api/lm/sophomorixUsers/teachers', {action: 'get-list'}).then (resp) ->
-                teachers = resp.data
-                $scope.teachers = teachers
-                for teacher in teachers
-                    if groupDN in teacher['memberOf']
-                        teacher['membership'] = true
-                    else
-                        teacher['membership'] = false
+        $http.post('/api/lm/sophomorixUsers/students', {action: 'get-all'}).then (resp) ->
+            students = resp.data
+            $scope.students = students
+            classes = []
+            for student in students
+                if student['sophomorixAdminClass'] not in classes
+                    classes.push student['sophomorixAdminClass']
+                if groupDN in student['memberOf']
+                    student['membership'] = true
+                else
+                    student['membership'] = false
+            $scope.classes = classes
+            ## TODO : add class ?
+            ## TODO : add other project members ?
+        $http.post('/api/lm/sophomorixUsers/teachers', {action: 'get-list'}).then (resp) ->
+            teachers = resp.data
+            $scope.teachers = teachers
+            for teacher in teachers
+                if groupDN in teacher['memberOf']
+                    teacher['membership'] = true
+                else
+                    teacher['membership'] = false
 
         $scope.close = () ->
             $uibModalInstance.dismiss()

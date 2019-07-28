@@ -172,6 +172,7 @@
   });
 
   angular.module('lmn.groupmembership').controller('LMNGroupEditController', function($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, groupName, groupDetails, admins) {
+    var groupDN;
     $scope.sorts = [
       {
         name: gettext('Given name'),
@@ -203,6 +204,7 @@
     $scope.groupName = groupName;
     $scope.admins = admins;
     $scope.sortReverse = false;
+    groupDN = groupDetails['DN'];
     $scope.checkInverse = function(sort, currentSort) {
       if (sort === currentSort) {
         return $scope.sortReverse = !$scope.sortReverse;
@@ -246,51 +248,44 @@
         return msg.close();
       });
     };
-    //# This dn requests should as soon as possible disappear, it slows down the whole process ( when dn is include in sophomorix-query )
-    $http.post('/api/lmn/get_project_dn', {
-      project: $scope.groupName
+    $http.post('/api/lm/sophomorixUsers/students', {
+      action: 'get-all'
     }).then(function(resp) {
-      var groupDN;
-      groupDN = resp.data;
-      $http.post('/api/lm/sophomorixUsers/students', {
-        action: 'get-all'
-      }).then(function(resp) {
-        var classes, i, len, ref, student, students;
-        students = resp.data;
-        $scope.students = students;
-        classes = [];
-        for (i = 0, len = students.length; i < len; i++) {
-          student = students[i];
-          if (ref = student['sophomorixAdminClass'], indexOf.call(classes, ref) < 0) {
-            classes.push(student['sophomorixAdminClass']);
-          }
-          if (indexOf.call(student['memberOf'], groupDN) >= 0) {
-            student['membership'] = true;
-          } else {
-            student['membership'] = false;
-          }
+      var classes, i, len, ref, student, students;
+      students = resp.data;
+      $scope.students = students;
+      classes = [];
+      for (i = 0, len = students.length; i < len; i++) {
+        student = students[i];
+        if (ref = student['sophomorixAdminClass'], indexOf.call(classes, ref) < 0) {
+          classes.push(student['sophomorixAdminClass']);
         }
-        return $scope.classes = classes;
-      });
-      //# TODO : add class ?
-      //# TODO : add other project members ?
-      return $http.post('/api/lm/sophomorixUsers/teachers', {
-        action: 'get-list'
-      }).then(function(resp) {
-        var i, len, results, teacher, teachers;
-        teachers = resp.data;
-        $scope.teachers = teachers;
-        results = [];
-        for (i = 0, len = teachers.length; i < len; i++) {
-          teacher = teachers[i];
-          if (indexOf.call(teacher['memberOf'], groupDN) >= 0) {
-            results.push(teacher['membership'] = true);
-          } else {
-            results.push(teacher['membership'] = false);
-          }
+        if (indexOf.call(student['memberOf'], groupDN) >= 0) {
+          student['membership'] = true;
+        } else {
+          student['membership'] = false;
         }
-        return results;
-      });
+      }
+      return $scope.classes = classes;
+    });
+    //# TODO : add class ?
+    //# TODO : add other project members ?
+    $http.post('/api/lm/sophomorixUsers/teachers', {
+      action: 'get-list'
+    }).then(function(resp) {
+      var i, len, results, teacher, teachers;
+      teachers = resp.data;
+      $scope.teachers = teachers;
+      results = [];
+      for (i = 0, len = teachers.length; i < len; i++) {
+        teacher = teachers[i];
+        if (indexOf.call(teacher['memberOf'], groupDN) >= 0) {
+          results.push(teacher['membership'] = true);
+        } else {
+          results.push(teacher['membership'] = false);
+        }
+      }
+      return results;
     });
     return $scope.close = function() {
       return $uibModalInstance.dismiss();

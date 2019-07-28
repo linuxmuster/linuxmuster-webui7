@@ -236,13 +236,3 @@ class Handler(HttpPlugin):
                 return result['TYPE'], result['MESSAGE_EN']
             else:
                 return result['TYPE'], result['LOG']
-
-    @url(r'/api/lmn/get_project_dn')
-    @authorize('lmn:groupmembership')
-    @endpoint(api=True)
-    def handle_api_get_projectdn(self, http_context):
-        """Get the dn of a project ( fix until it comes in sophomorix-query, then we can erase this function."""
-        if http_context.method == 'POST':
-            project = http_context.json_body()['project']
-            sophomorixCommand = ['sophomorix-project',  '-i', '--project', project, '-jj']
-            return lmn_getSophomorixValue(sophomorixCommand, 'GROUPS/'+project+'/dn')

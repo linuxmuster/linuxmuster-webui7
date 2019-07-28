@@ -74,20 +74,21 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
             $http.post('/api/lmn/groupmembership/details', {action: 'get-specified', groupType: groupType, groupName: groupName}).then (resp) ->
                 $scope.groupName    = groupName
                 $scope.groupDetails = resp.data['GROUP'][groupName]
+                $scope.adminList = resp.data['GROUP'][groupName]['sophomorixAdmins']
 
                 $scope.members = []
                 for name,member of resp.data['MEMBERS'][groupName]
                     $scope.members.push({'sn':member.sn, 'givenName':member.givenName, 'sophomorixAdminClass':member.sophomorixAdminClass})
 
                 $scope.admins = []
-                for admin in resp.data['GROUP'][groupName]['sophomorixAdmins']
+                for admin in $scope.adminList
                     member = resp.data['MEMBERS'][groupName][admin]
                     $scope.admins.push({'sn':member.sn, 'givenName':member.givenName, 'sophomorixAdminClass':member.sophomorixAdminClass})
 
                 $scope.joinable = resp.data['GROUP'][groupName]['sophomorixJoinable'] == 'TRUE'
                 $scope.hidden = resp.data['GROUP'][groupName]['sophomorixHidden'] == 'TRUE'
 
-                if resp.data['GROUP'][groupName]['sophomorixAdmins'].indexOf($scope.identity.user) != -1 or $scope.identity.isAdmin
+                if $scope.adminList.indexOf($scope.identity.user) != -1 or $scope.identity.isAdmin
                     $scope.editMembersButton = true
                 else
                     $scope.editMembersButton = false

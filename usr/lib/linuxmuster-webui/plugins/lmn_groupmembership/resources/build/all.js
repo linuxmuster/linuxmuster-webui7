@@ -133,6 +133,7 @@
         var admin, i, len, member, name, ref, ref1;
         $scope.groupName = groupName;
         $scope.groupDetails = resp.data['GROUP'][groupName];
+        $scope.adminList = resp.data['GROUP'][groupName]['sophomorixAdmins'];
         $scope.members = [];
         ref = resp.data['MEMBERS'][groupName];
         for (name in ref) {
@@ -144,7 +145,7 @@
           });
         }
         $scope.admins = [];
-        ref1 = resp.data['GROUP'][groupName]['sophomorixAdmins'];
+        ref1 = $scope.adminList;
         for (i = 0, len = ref1.length; i < len; i++) {
           admin = ref1[i];
           member = resp.data['MEMBERS'][groupName][admin];
@@ -156,7 +157,7 @@
         }
         $scope.joinable = resp.data['GROUP'][groupName]['sophomorixJoinable'] === 'TRUE';
         $scope.hidden = resp.data['GROUP'][groupName]['sophomorixHidden'] === 'TRUE';
-        if (resp.data['GROUP'][groupName]['sophomorixAdmins'].indexOf($scope.identity.user) !== -1 || $scope.identity.isAdmin) {
+        if ($scope.adminList.indexOf($scope.identity.user) !== -1 || $scope.identity.isAdmin) {
           return $scope.editMembersButton = true;
         } else {
           return $scope.editMembersButton = false;

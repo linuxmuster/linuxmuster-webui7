@@ -2070,6 +2070,8 @@
     $scope.formatDate = function(date) {
       return Date(date);
     };
+    $scope.hidetext = gettext("Hide");
+    $scope.showtext = gettext("Show");
     $http.post('/api/lm/sophomorixUsers/' + role, {
       action: 'get-specified',
       user: id

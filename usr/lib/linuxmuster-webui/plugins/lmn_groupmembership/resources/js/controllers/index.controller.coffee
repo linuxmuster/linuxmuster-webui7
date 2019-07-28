@@ -26,6 +26,9 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
         $scope.showAdminDetails = true
         $scope.showMemberDetails = true
         $scope.changeState = false
+        
+        $scope.hidetext = gettext("Hide")
+        $scope.showtext = gettext("Show")
 
         $scope.changeJoin = (project) ->
             $scope.changeState = true

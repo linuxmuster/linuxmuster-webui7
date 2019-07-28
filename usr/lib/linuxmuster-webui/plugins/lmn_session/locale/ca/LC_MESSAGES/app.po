@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-25 21:08+0200\n"
-"PO-Revision-Date: 2019-05-25 19:11\n"
+"POT-Creation-Date: 2019-07-28 19:23+0200\n"
+"PO-Revision-Date: 2019-07-28 18:01\n"
 "Last-Translator: kiarn\n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -38,7 +38,7 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:204
+#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:211
 msgid "Close"
 msgstr ""
 
@@ -63,7 +63,7 @@ msgstr ""
 msgid "Collect from User"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:199
+#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:206
 msgid "Collect transfer from whole session"
 msgstr ""
 
@@ -71,11 +71,11 @@ msgstr ""
 msgid "Copy files"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:198
+#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:205
 msgid "Copy transfer from whole session"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:220
+#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:227
 msgid "Creation Date: {{session.ID}}"
 msgstr ""
 
@@ -101,7 +101,7 @@ msgstr ""
 msgid "No files or directories found in transfer"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:218
+#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:225
 msgid "Participants: {{session.PARTICIPANT_COUNT}}"
 msgstr ""
 
@@ -109,7 +109,7 @@ msgstr ""
 msgid "Rename Session"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:203
+#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:210
 msgid "Save &amp; apply"
 msgstr ""
 
@@ -149,7 +149,7 @@ msgstr ""
 msgid "Share"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:197
+#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:196
 msgid "Share file(s) from transfer with whole session"
 msgstr ""
 

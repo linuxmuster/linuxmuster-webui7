@@ -1,7 +1,8 @@
 <div class="modal-header">
-    <h3 translate>Group Details
-    <span ng:show="groupDetails == null" translate> ...</span>
-    <span ng:show="groupDetails != null" translate > - {{groupDetails['description']}}</span></h3>
+    <h3>
+    <span translate>Group Details</span>
+    <span ng:show="groupDetails == null"> ...</span>
+    <span ng:show="groupDetails != null"> - {{groupDetails['description']}}</span></h3>
 </div>
 <progress-spinner ng:show="groupDetails == null || changeState == true"></progress-spinner>
 <div style="padding: 0 20px;" ng:show="groupDetails != null">
@@ -39,7 +40,7 @@
     </table>
     <div class="panel panel-info">
         <div class="panel-heading">
-            <a href="#" class="btn btn-default btn-flat pull-right" ng-click="showMemberDetails = ! showMemberDetails" translate>{{showMemberDetails ? "Hide" : "Show"}}</a>
+            <a href="#" class="btn btn-default btn-flat pull-right" ng-click="showMemberDetails = ! showMemberDetails">{{showMemberDetails ? hidetext : showtext}}</a>
             <a class="btn btn-default btn-flat pull-right" ng:show="groupDetails['sophomorixType'] == 'project' && editMembersButton" href="#" ng-click="editGroupMembers(groupName, groupDetails, adminList)" translate >Edit members</a>
             <h4 translate> Group Members: {{groupDetails['sophomorixMembers'].length}}</h4>
         </div>
@@ -51,7 +52,7 @@
     </div>
     <div class="panel panel-danger">
         <div class="panel-heading">
-            <a href="#" class="btn btn-default btn-flat pull-right" ng-click="showAdminDetails = ! showAdminDetails" translate>{{showAdminDetails ? "Hide" : "Show"}}</a>
+            <a href="#" class="btn btn-default btn-flat pull-right" ng-click="showAdminDetails = ! showAdminDetails">{{showMemberDetails ? hidetext : showtext}}</a>
             <h4 translate> Group Admins: {{groupDetails['sophomorixAdmins'].length}}</h4> 
         </div>
         <div ng-show="showAdminDetails" class="panel-body">

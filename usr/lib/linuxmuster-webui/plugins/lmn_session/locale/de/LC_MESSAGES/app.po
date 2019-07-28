@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-25 21:08+0200\n"
-"PO-Revision-Date: 2019-05-25 19:11\n"
+"POT-Creation-Date: 2019-07-28 19:23+0200\n"
+"PO-Revision-Date: 2019-07-28 18:01\n"
 "Last-Translator: kiarn\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -38,7 +38,7 @@ msgstr "Verfügbare Dateien"
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:204
+#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:211
 msgid "Close"
 msgstr "Schließen"
 
@@ -63,7 +63,7 @@ msgstr "Aus dem Kurs einsammeln"
 msgid "Collect from User"
 msgstr "Vom Benutzer einsammeln"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:199
+#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:206
 msgid "Collect transfer from whole session"
 msgstr "Sammle Übertragung des ganzen Kurses ein"
 
@@ -71,11 +71,11 @@ msgstr "Sammle Übertragung des ganzen Kurses ein"
 msgid "Copy files"
 msgstr "Dateien kopieren"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:198
+#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:205
 msgid "Copy transfer from whole session"
 msgstr "Kopiere Übertragung des ganzen Kurses"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:220
+#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:227
 msgid "Creation Date: {{session.ID}}"
 msgstr "Erstellungsdatum: {{session.ID}}"
 
@@ -102,7 +102,7 @@ msgstr "Neuer Kurs"
 msgid "No files or directories found in transfer"
 msgstr "Keine Dateien oder Verzeichnisse in Übertragung gefunden"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:218
+#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:225
 msgid "Participants: {{session.PARTICIPANT_COUNT}}"
 msgstr "Teilnehmer: {{session.PARTICIPANT_COUNT}}"
 
@@ -110,7 +110,7 @@ msgstr "Teilnehmer: {{session.PARTICIPANT_COUNT}}"
 msgid "Rename Session"
 msgstr "Kurs umbenennen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:203
+#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:210
 msgid "Save &amp; apply"
 msgstr "Speichern &amp; übernehmen"
 
@@ -150,7 +150,7 @@ msgstr "Zufallspasswort setzen"
 msgid "Share"
 msgstr "Teilen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:197
+#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:196
 msgid "Share file(s) from transfer with whole session"
 msgstr "Datei(en) aus Tausch dem ganzen Kurs freigeben"
 
@@ -181,7 +181,7 @@ msgstr "Benutzerinformationen"
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/main.py:15
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:110
 msgid "Session"
-msgstr "Kurs"
+msgstr "Unterricht"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/main.py:22
 msgid "Print Passwords"
@@ -197,24 +197,24 @@ msgstr "Dateien in dem Kurs übertragen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:60
 msgid "Are you sure you want to delete permanently the file "
-msgstr ""
+msgstr "Sind Sie sicher, dass Sie die ausgewählte Datei unwiderruflich löschen wollen? "
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:61
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:77
 msgid "Delete"
-msgstr ""
+msgstr "Löschen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:65
 msgid "File "
-msgstr ""
+msgstr "Datei "
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:76
 msgid "Are you sure you want to delete permanently this directory and its content: "
-msgstr ""
+msgstr "Sind Sie sicher, dass Sie dieses Verzeichnis und dessen Inhalt unwiderruflich löschen möchten? "
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:81
 msgid "Directory "
-msgstr ""
+msgstr "Verzeichnis "
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:119
 msgid "Lastname"

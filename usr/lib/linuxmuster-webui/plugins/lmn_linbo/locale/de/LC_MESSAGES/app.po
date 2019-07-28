@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-28 18:14+0200\n"
-"PO-Revision-Date: 2019-05-25 19:11\n"
+"POT-Creation-Date: 2019-07-28 19:23+0200\n"
+"PO-Revision-Date: 2019-07-28 18:01\n"
 "Last-Translator: kiarn\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -52,7 +52,7 @@ msgstr "Basisimage"
 msgid "Boot buttons"
 msgstr "Start Optionen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:204
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:205
 msgid "Cache"
 msgstr "Cache"
 
@@ -60,13 +60,13 @@ msgstr "Cache"
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:224
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:225
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/image.modal.html:61
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/partition.modal.html:173
 msgid "Close"
 msgstr "Schließen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:198
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:199
 msgid "Data"
 msgstr "Daten"
 
@@ -86,7 +86,7 @@ msgstr "Differntieles Image"
 msgid "Download type"
 msgstr "Download Typ"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:183
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:184
 msgid "EFI"
 msgstr "EFI"
 
@@ -94,7 +94,7 @@ msgstr "EFI"
 msgid "Error color"
 msgstr "Fehlerfarbe"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:201
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:202
 msgid "Extended"
 msgstr "Erweitert"
 
@@ -127,7 +127,7 @@ msgstr "Symbol"
 msgid "Images"
 msgstr "Abbilder"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:221
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:222
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/image.modal.html:13
 msgid "Info"
 msgstr "Info"
@@ -149,7 +149,7 @@ msgstr "Kernel-Optionen"
 msgid "Label"
 msgstr "Label"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:186
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:187
 msgid "MSR"
 msgstr "MSR"
 
@@ -157,7 +157,7 @@ msgstr "MSR"
 msgid "Name"
 msgstr "Name"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:214
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:215
 msgid "New disk"
 msgstr "Neue Festplatte"
 
@@ -205,7 +205,7 @@ msgstr "Partition {{partition}} entfernen"
 msgid "Remove Partition?"
 msgstr "Partition entfernen?"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:179
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:180
 msgid "Remove this disk"
 msgstr "Festplatte entfernen"
 
@@ -217,7 +217,7 @@ msgstr "Opsi-Status wiederherstellen"
 msgid "Root logout timeout"
 msgstr "Administrator wegen Zeitlimit ausgeloggt"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:222
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:223
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/image.modal.html:60
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/partition.modal.html:171
 msgid "Save"
@@ -238,8 +238,8 @@ msgstr "Größe"
 msgid "Start options"
 msgstr "Startoptionen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:195
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:241
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:196
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:245
 msgid "Swap"
 msgstr "Swap"
 
@@ -260,7 +260,7 @@ msgid "Version"
 msgstr "Version"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/main.py:15
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:458
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:462
 msgid "LINBO"
 msgstr "LINBO"
 
@@ -280,16 +280,16 @@ msgstr "Lese die Beispiele"
 msgid "Read/write icons"
 msgstr "Lese/Schreib-Symbole"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:243
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:247
 msgid "LINBO Cache"
 msgstr "LINBO Cache"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:473
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:477
 msgid "Not a valid name! Only alphanumeric characters are allowed!"
 msgstr "Kein gültiger Name! Es sind nur Buchstaben erlaubt!"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:520
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:561
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:524
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:565
 msgid "Saved"
 msgstr "Gespeichert"
 

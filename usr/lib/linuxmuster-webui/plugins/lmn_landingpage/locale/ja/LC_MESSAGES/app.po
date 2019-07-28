@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-28 18:14+0200\n"
-"PO-Revision-Date: 2019-05-25 19:11\n"
+"POT-Creation-Date: 2019-07-28 19:23+0200\n"
+"PO-Revision-Date: 2019-07-28 18:02\n"
 "Last-Translator: kiarn\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -16,40 +16,60 @@ msgstr ""
 "X-Crowdin-Language: ja\n"
 "X-Crowdin-File: /2.0/lmn_landingpage.po\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:15
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:31
+msgid "Account Information"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:40
 msgid "Change password"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:20
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:15
 msgid "Hello {{user.givenName}} {{user.sn}},"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:33
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:35
+msgid "Mail:  <b>{{user.mail}}</b>"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:34
+msgid "Name:  <b>{{user.givenName}}, {{user.sn}}</b>"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:46
 msgid "Quotas"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:38
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:37
+msgid "Role: <b>{{user.sophomorixAdminClass}}</b>"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:36
+msgid "School: <b>{{user.sophomorixSchoolname}}</b>"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:50
 msgid "Total"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:27
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:22
 msgid "Use the sidebar to navigate through the options.<br>\n"
-"                But keep in mind:<br>\n"
-"                With great power comes great responsibility!"
+"                    But keep in mind: \n"
+"                    <b>With great power comes great responsibility!</b>"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:2
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:1
 msgid "Welcome to Linuxmuster.net version 7!"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:6
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:5
 msgid "You should not use WebUI as root user! If this is your first time\n"
 "        running WebUI, proceed through the setup wizard. Afterwards login using the global-admin account."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:23
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:18
 msgid "use the sidebar to navigate through the options. You\n"
-"                can start by using the Groupmembership module to subscribe to your classes."
+"                    can start by using the Groupmembership module to subscribe to your classes."
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:7

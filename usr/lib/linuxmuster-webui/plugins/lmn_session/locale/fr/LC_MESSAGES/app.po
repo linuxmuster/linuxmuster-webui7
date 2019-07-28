@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-25 21:08+0200\n"
-"PO-Revision-Date: 2019-05-25 19:10\n"
+"POT-Creation-Date: 2019-07-28 19:23+0200\n"
+"PO-Revision-Date: 2019-07-28 18:01\n"
 "Last-Translator: kiarn\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -38,7 +38,7 @@ msgstr "Fichiers disponibles"
 msgid "Cancel"
 msgstr "Annuler"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:204
+#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:211
 msgid "Close"
 msgstr "Fermer"
 
@@ -63,7 +63,7 @@ msgstr "Récupérer du cours"
 msgid "Collect from User"
 msgstr "Récupérer de l'utilisateur"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:199
+#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:206
 msgid "Collect transfer from whole session"
 msgstr "Récupérer le transfert de l'ensemble du cours"
 
@@ -71,11 +71,11 @@ msgstr "Récupérer le transfert de l'ensemble du cours"
 msgid "Copy files"
 msgstr "Copier les fichiers"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:198
+#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:205
 msgid "Copy transfer from whole session"
 msgstr "Copier le transfert de l'ensemble du cours"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:220
+#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:227
 msgid "Creation Date: {{session.ID}}"
 msgstr "Date de création : {{session.ID}}"
 
@@ -102,7 +102,7 @@ msgstr "Nouveau cours"
 msgid "No files or directories found in transfer"
 msgstr "Aucun fichier ou répertoire trouvé dans le transfert"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:218
+#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:225
 msgid "Participants: {{session.PARTICIPANT_COUNT}}"
 msgstr "Participants : {{session.PARTICIPANT_COUNT}}"
 
@@ -110,7 +110,7 @@ msgstr "Participants : {{session.PARTICIPANT_COUNT}}"
 msgid "Rename Session"
 msgstr "Renommer le cours"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:203
+#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:210
 msgid "Save &amp; apply"
 msgstr "Enregistrer &amp; appliquer"
 
@@ -150,7 +150,7 @@ msgstr "Mettre un mot de passe aléatoire"
 msgid "Share"
 msgstr "Partager"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:197
+#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:196
 msgid "Share file(s) from transfer with whole session"
 msgstr "Partager le(s) fichier(s) du transfert avec tout le cours"
 

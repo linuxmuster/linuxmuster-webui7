@@ -1,7 +1,8 @@
 <div class="modal-header">
-    <h3 translate>User Details
-    <span ng:show="userDetails == null" translate> ...</span>
-    <span ng:show="userDetails != null" translate > - {{userDetails[0]['givenName']}} {{userDetails[0]['sn']}}</span></h3>
+    <h3>
+    <span translate>User Details</span>
+    <span ng:show="userDetails == null"> ...</span>
+    <span ng:show="userDetails != null"> - {{userDetails[0]['givenName']}} {{userDetails[0]['sn']}}</span></h3>
 </div>
 
 <progress-spinner ng:show="userDetails == null"></progress-spinner>
@@ -49,7 +50,7 @@
     </table>
 
     <h4 class="pull-left" translate> Group Membership: </h4>
-    <a href="#" class="btn btn-default btn-flat pull-right" ng-click="showGroupDetails = ! showGroupDetails" translate>{{showGroupDetails ? "Hide" : "Show"}}</a>
+    <a href="#" class="btn btn-default btn-flat pull-right" ng-click="showGroupDetails = ! showGroupDetails">{{showGroupDetails ? hidetext : showtext}}</a>
     <div ng-show="showGroupDetails">
        <table class="table">
           <tr ng:repeat="group in userDetails[0]['memberOf']">

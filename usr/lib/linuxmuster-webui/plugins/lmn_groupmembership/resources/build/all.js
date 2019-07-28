@@ -49,6 +49,8 @@
     $scope.showAdminDetails = true;
     $scope.showMemberDetails = true;
     $scope.changeState = false;
+    $scope.hidetext = gettext("Hide");
+    $scope.showtext = gettext("Show");
     $scope.changeJoin = function(project) {
       var option;
       $scope.changeState = true;

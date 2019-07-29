@@ -37,15 +37,15 @@
         </tr>
         <tr>
             <td><b translate>DeactivationDate:</b></td>
-            <td>{{formatDate(userDetails[0]['sophomorixDeactivationDate'])}}</td>
+            <td>{{formatDate(userDetails[0]['sophomorixDeactivationDate']) | date:'dd MMM yyyy - HH:mm:ss' }}</td>
         </tr>
         <tr>
             <td><b translate>TolerationDate:</b></td>
-            <td>{{formatDate(userDetails[0]['sophomorixTolerationDate'])}}</td>
+            <td>{{formatDate(userDetails[0]['sophomorixTolerationDate']) | date:'dd MMM yyyy - HH:mm:ss' }}</td>
         </tr>
         <tr>
             <td><b translate>CreationDate:</b></td>
-            <td>{{formatDate(userDetails[0]['sophomorixCreationDate'])}}</td>
+            <td>{{formatDate(userDetails[0]['sophomorixCreationDate']) | date:'dd MMM yyyy - HH:mm:ss' }}</td>
         </tr>
     </table>
 

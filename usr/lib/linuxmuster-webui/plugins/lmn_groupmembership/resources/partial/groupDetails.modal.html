@@ -11,7 +11,7 @@
     <table class="table">
         <tr>
             <td><b translate>Creationdate:</b></td>
-            <td>{{formatDate(groupDetails['sophomorixCreationDate'])}}</td>
+            <td>{{formatDate(groupDetails['sophomorixCreationDate']) | date:'dd MMM yyyy - HH:mm:ss' }}</td>
         </tr>
         <tr>
             <td><b translate>Type:</b></td>

@@ -2068,8 +2068,23 @@
     //notify.error gettext("You have to enter a username")
     $scope.id = id;
     $scope.showGroupDetails = true;
+    $scope.nevertext = gettext('Never');
     $scope.formatDate = function(date) {
-      return Date(date);
+      var day, hour, min, month, sec, year;
+      if (date === "19700101000000.0Z") {
+        return $scope.nevertext;
+      } else if (date === void 0) {
+        return "undefined";
+      } else {
+        // Sophomorix date format is yyyyMMddhhmmss.0Z
+        year = date.slice(0, 4);
+        month = +date.slice(4, 6) - 1; // Month start at 0
+        day = date.slice(6, 8);
+        hour = date.slice(8, 10);
+        min = date.slice(10, 12);
+        sec = date.slice(12, 14);
+        return new Date(year, month, day, hour, min, sec);
+      }
     };
     $scope.hidetext = gettext("Hide");
     $scope.showtext = gettext("Show");

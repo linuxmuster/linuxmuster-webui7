@@ -46,7 +46,7 @@
         </div>
         <div ng-show="showMemberDetails" class="panel-body">
             <ul class="list-unstyled" style="column-width:300px;padding:0;">
-                <li ng:repeat="member in members|orderBy :['sophomorixAdminClass','sn']" class="cardlist">{{member.sn}} {{member.givenName}} <span class="pull-right">{{member.sophomorixAdminClass}}</span></li>
+                <li ng:repeat="member in members|orderBy :['sophomorixAdminClass','sn']" class="cardlist">{{member.sn}} {{member.givenName}} <span style="position:absolute;right:0;">{{member.sophomorixAdminClass}}</span></li>
             </ul>
         </div>
     </div>
@@ -57,7 +57,7 @@
         </div>
         <div ng-show="showAdminDetails" class="panel-body">
             <ul class="list-unstyled" style="column-width:300px;padding:0;">
-                <li ng:repeat="admin in admins|orderBy :['sophomorixAdminClass','sn']" class="cardlist">{{admin.sn}} {{admin.givenName}} <span class="pull-right">{{admin.sophomorixAdminClass}}</span></li>
+                <li ng:repeat="admin in admins|orderBy :['sophomorixAdminClass','sn']" class="cardlist">{{admin.sn}} {{admin.givenName}} <span style="position:absolute;right:0;">{{admin.sophomorixAdminClass}}</span></li>
             </ul>
         </div>
     </div>

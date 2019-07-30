@@ -16,15 +16,10 @@ angular.module('lmn.session').controller 'LMNSessionFileSelectModalController', 
         # TODO: Way more generic
         role = 'teachers'
         school = 'default-school'
-        #console.log ('transferPath')
-        $scope.transferPath = '/srv/samba/schools/'+school+'/'+role+'/'+username+'/transfer/'
+        $scope.transferPath = '/srv/webuiUpload/'+school+'/'+role+'/'+username+'/'
+        # create tmp dir for upload
+        $scope.createDir($scope.transferPath)
         $scope.owner = username
-        #console.log ($scope.transferPath)
-        #$scope.path = '/srv/samba/schools/'+school+'/'+role+'/'+username+'/transfer/'
-        #console.log ($scope.identity)
-        #$http.post('/api/lm/sophomorixUsers/'+role, {action: 'get-specified', user: username}).then (resp) ->
-        #        $scope.userDetails = resp.data
-        #        console.log ($scope.userDetails)
 
 
     $scope.save = () ->
@@ -41,7 +36,6 @@ angular.module('lmn.session').controller 'LMNSessionFileSelectModalController', 
         $uibModalInstance.dismiss()
 
     $scope.share = () ->
-        #console.log ($scope.transferPath)
         $http.post('/api/lmn/session/trans-list-files', {user: senders[0]}).then (resp) ->
             console.log (resp.data)
             $scope.files = resp['data'][0]
@@ -52,6 +46,9 @@ angular.module('lmn.session').controller 'LMNSessionFileSelectModalController', 
             $http.post('/api/lmn/session/trans-list-files', {user: senders}).then (resp) ->
                 $scope.files = resp['data'][0]
                 $scope.filesList = resp['data'][1]
+
+    $scope.createDir = (path) ->
+        $http.post('/api/lm/create-dir', {filepath: path})
 
     $scope.removeFile = (file) ->
         role = 'teachers'

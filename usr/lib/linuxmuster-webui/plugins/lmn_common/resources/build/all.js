@@ -85,6 +85,8 @@
       scope: {
         uploadpath: '=',
         refresh: '=',
+        subdir: '=?',
+        movetohome: '=?',
         owner: '=?',
         group: '=?'
       },
@@ -105,13 +107,31 @@
             progress: true
           });
           return filesystem.startFlowUpload($flow, $scope.uploadpath).then(function() {
+            var filename, filepath;
             if ($scope.owner && $scope.group) {
+              filename = $flow.files[0].name;
+              filepath = $scope.uploadpath + filename;
               $http.post('/api/lm/chown', {
                 filepath: $scope.uploadpath + $flow.files[0].name,
                 owner: $scope.owner,
                 group: $scope.group
               }).then(function() {
-                return notify.success(gettext('Uploaded'));
+                if ($scope.movetohome) {
+                  return $http.post('/api/lmn/session/moveFileToHome', {
+                    user: $scope.owner,
+                    filepath: $scope.uploadpath,
+                    subdir: $scope.subdir
+                  }).then(function(resp) {
+                    console.log('return');
+                    console.log(resp.data);
+                    return $http.post('/api/lm/remove-file', {
+                      filepath: filepath
+                    }).then(function() {
+                      notify.success(gettext('Uploaded'));
+                      return $scope.refresh();
+                    });
+                  });
+                }
               });
             } else {
               notify.success(gettext('Uploaded'));
@@ -132,6 +152,8 @@
       scope: {
         uploadpath: '=',
         refresh: '=',
+        subdir: '=?',
+        movetohome: '=?',
         owner: '=?',
         group: '=?'
       },
@@ -151,13 +173,29 @@
             progress: true
           });
           return filesystem.startFlowUpload($flow, $scope.uploadpath).then(function() {
+            var filename, filepath;
             if ($scope.owner && $scope.group) {
+              filename = $flow.files[0].name;
+              filepath = $scope.uploadpath + filename;
               $http.post('/api/lm/chown', {
                 filepath: $scope.uploadpath + $flow.files[0].name,
                 owner: $scope.owner,
                 group: $scope.group
               }).then(function() {
-                return notify.success(gettext('Uploaded'));
+                if ($scope.movetohome) {
+                  return $http.post('/api/lmn/session/moveFileToHome', {
+                    user: $scope.owner,
+                    filepath: $scope.uploadpath,
+                    subdir: $scope.subdir
+                  }).then(function(resp) {
+                    return $http.post('/api/lm/remove-file', {
+                      filepath: filepath
+                    }).then(function() {
+                      notify.success(gettext('Uploaded'));
+                      return $scope.refresh();
+                    });
+                  });
+                }
               });
             } else {
               notify.success(gettext('Uploaded'));
@@ -179,6 +217,8 @@
         uploadpath: '=',
         btnlabel: '=',
         refresh: '=',
+        subdir: '=?',
+        movetohome: '=?',
         owner: '=?',
         group: '=?'
       },
@@ -198,13 +238,29 @@
             progress: true
           });
           return filesystem.startFlowUpload($flow, $scope.uploadpath).then(function() {
+            var filename, filepath;
             if ($scope.owner && $scope.group) {
+              filename = $flow.files[0].name;
+              filepath = $scope.uploadpath + filename;
               $http.post('/api/lm/chown', {
                 filepath: $scope.uploadpath + $flow.files[0].name,
                 owner: $scope.owner,
                 group: $scope.group
               }).then(function() {
-                return notify.success(gettext('Uploaded'));
+                if ($scope.movetohome) {
+                  return $http.post('/api/lmn/session/moveFileToHome', {
+                    user: $scope.owner,
+                    filepath: $scope.uploadpath,
+                    subdir: $scope.subdir
+                  }).then(function(resp) {
+                    return $http.post('/api/lm/remove-file', {
+                      filepath: filepath
+                    }).then(function() {
+                      notify.success(gettext('Uploaded'));
+                      return $scope.refresh();
+                    });
+                  });
+                }
               });
             } else {
               notify.success(gettext('Uploaded'));

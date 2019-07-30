@@ -149,7 +149,7 @@ class Handler(HttpPlugin):
                     participantBasename = participant['sAMAccountName'].replace('-exam', '')
                 else:
                     participantBasename = str(participant['sAMAccountName'])
-                    #participant['sAMAccountName']
+                    # participant['sAMAccountName']
 
                 # Fill lists from WebUI Output -> Create csv of session members
                 # This will executed on every save
@@ -260,6 +260,20 @@ class Handler(HttpPlugin):
             schoolClassJson['members'] = schoolClasses[schoolClass]
             schoolClassList.append(schoolClassJson)
         return schoolClassList
+
+    @url(r'/api/lmn/session/moveFileToHome') ## TODO authorize
+    @endpoint(api=True)
+    def handle_api_create_dir(self, http_context):
+        """Create directory with given path, ignoring errors"""
+        if http_context.method == 'POST':
+            user = http_context.json_body()['user']
+            filepath = http_context.json_body()['filepath']
+            subdir = http_context.json_body()['subdir']
+            try:
+                sophomorixCommand = ['sophomorix-transfer', '--from-unix-path', filepath, '--to-user', user, '--subdir', subdir, '-jj']
+                return  lmn_getSophomorixValue(sophomorixCommand, '', True)
+            except Exception:
+                return 0
 
     @url(r'/api/lmn/session/trans-list-files')
     @endpoint(api=True)

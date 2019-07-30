@@ -4,6 +4,8 @@ angular.module('lm.common').directive 'lmDragUpload', ($http, notify, messagebox
         scope: {
             uploadpath: '='
             refresh: '='
+            subdir: '=?'
+            movetohome: '=?'
             owner: '=?'
             group: '=?'
         }
@@ -31,8 +33,16 @@ angular.module('lm.common').directive 'lmDragUpload', ($http, notify, messagebox
                 filesystem.startFlowUpload($flow, $scope.uploadpath)
                 .then () ->
                     if ($scope.owner and $scope.group)
+                        filename=$flow.files[0].name
+                        filepath=$scope.uploadpath+filename
                         $http.post('/api/lm/chown', {filepath: $scope.uploadpath + $flow.files[0].name, owner: $scope.owner, group: $scope.group}).then () ->
-                            notify.success(gettext('Uploaded'))
+                            if ($scope.movetohome)
+                                $http.post('/api/lmn/session/moveFileToHome', {user: $scope.owner, filepath: $scope.uploadpath, subdir: $scope.subdir}).then (resp) ->
+                                    console.log ('return')
+                                    console.log (resp.data)
+                                    $http.post('/api/lm/remove-file', {filepath: filepath}).then () ->
+                                        notify.success(gettext('Uploaded'))
+                                        $scope.refresh()
                     else
                         notify.success(gettext('Uploaded'))
                     $scope.refresh()
@@ -47,6 +57,8 @@ angular.module('lm.common').directive 'lmSelectUpload', ($http, notify, messageb
         scope: {
             uploadpath: '='
             refresh: '='
+            subdir: '=?'
+            movetohome: '=?'
             owner: '=?'
             group: '=?'
         }
@@ -69,8 +81,14 @@ angular.module('lm.common').directive 'lmSelectUpload', ($http, notify, messageb
                 filesystem.startFlowUpload($flow, $scope.uploadpath)
                 .then () ->
                     if ($scope.owner and $scope.group)
+                        filename=$flow.files[0].name
+                        filepath=$scope.uploadpath+filename
                         $http.post('/api/lm/chown', {filepath: $scope.uploadpath + $flow.files[0].name, owner: $scope.owner, group: $scope.group}).then () ->
-                            notify.success(gettext('Uploaded'))
+                            if ($scope.movetohome)
+                                $http.post('/api/lmn/session/moveFileToHome', {user: $scope.owner, filepath: $scope.uploadpath, subdir: $scope.subdir}).then (resp) ->
+                                    $http.post('/api/lm/remove-file', {filepath: filepath}).then () ->
+                                        notify.success(gettext('Uploaded'))
+                                        $scope.refresh()
                     else
                         notify.success(gettext('Uploaded'))
                     $scope.refresh()
@@ -86,6 +104,8 @@ angular.module('lm.common').directive 'lmButtonUpload', ($http, notify, messageb
             uploadpath: '='
             btnlabel: '='
             refresh: '='
+            subdir: '=?'
+            movetohome: '=?'
             owner: '=?'
             group: '=?'
         }
@@ -109,8 +129,14 @@ angular.module('lm.common').directive 'lmButtonUpload', ($http, notify, messageb
                 filesystem.startFlowUpload($flow, $scope.uploadpath)
                 .then () ->
                     if ($scope.owner and $scope.group)
+                        filename=$flow.files[0].name
+                        filepath=$scope.uploadpath+filename
                         $http.post('/api/lm/chown', {filepath: $scope.uploadpath + $flow.files[0].name, owner: $scope.owner, group: $scope.group}).then () ->
-                            notify.success(gettext('Uploaded'))
+                            if ($scope.movetohome)
+                                $http.post('/api/lmn/session/moveFileToHome', {user: $scope.owner, filepath: $scope.uploadpath, subdir: $scope.subdir}).then (resp) ->
+                                    $http.post('/api/lm/remove-file', {filepath: filepath}).then () ->
+                                        notify.success(gettext('Uploaded'))
+                                        $scope.refresh()
                     else
                         notify.success(gettext('Uploaded'))
                     $scope.refresh()

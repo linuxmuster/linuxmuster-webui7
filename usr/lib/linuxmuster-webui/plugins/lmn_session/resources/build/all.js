@@ -23,15 +23,12 @@
       role = 'teachers';
       school = 'default-school';
       //console.log ('transferPath')
-      $scope.transferPath = '/srv/samba/schools/' + school + '/' + role + '/' + username + '/transfer/';
+      //$scope.transferPath = '/srv/samba/schools/'+school+'/'+role+'/'+username+'/transfer/'
+      $scope.transferPath = '/srv/webuiUpload/' + school + '/' + role + '/' + username + '/';
+      // create tmp dir for upload
+      $scope.createDir($scope.transferPath);
       return $scope.owner = username;
     };
-    //console.log ($scope.transferPath)
-    //$scope.path = '/srv/samba/schools/'+school+'/'+role+'/'+username+'/transfer/'
-    //console.log ($scope.identity)
-    //$http.post('/api/lm/sophomorixUsers/'+role, {action: 'get-specified', user: username}).then (resp) ->
-    //        $scope.userDetails = resp.data
-    //        console.log ($scope.userDetails)
     $scope.save = function() {
       var filesToTrans;
       filesToTrans = [];
@@ -57,7 +54,6 @@
       return $uibModalInstance.dismiss();
     };
     $scope.share = function() {
-      //console.log ($scope.transferPath)
       return $http.post('/api/lmn/session/trans-list-files', {
         user: senders[0]
       }).then(function(resp) {
@@ -75,6 +71,15 @@
           return $scope.filesList = resp['data'][1];
         });
       }
+    };
+    $scope.createDir = function(path) {
+      console.log('createDir');
+      //role = 'teachers'
+      //school = 'default-school'
+      //path = '/srv/samba/schools/'+school+'/'+role+'/'+$scope.identity.user+'/transfer/'+file
+      return $http.post('/api/lm/create-dir', {
+        filepath: path
+      });
     };
     $scope.removeFile = function(file) {
       var path, role, school;

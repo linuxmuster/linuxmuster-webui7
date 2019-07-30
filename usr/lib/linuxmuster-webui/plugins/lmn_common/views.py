@@ -20,7 +20,19 @@ class Handler(HttpPlugin):
         with open(path) as f:
             f.seek(int(http_context.query.get('offset', '0')))
             return f.read()
-    
+
+    @url(r'/api/lm/create-dir') ## TODO authorize
+    @endpoint(api=True)
+    def handle_api_create_dir(self, http_context):
+        """Create directory with given path, ignoring errors"""
+        if http_context.method == 'POST':
+            filepath = http_context.json_body()['filepath']
+            if not os.path.exists(filepath):
+                os.makedirs(filepath)
+                return True
+            else:
+                return
+
     @url(r'/api/lm/remove-dir') ## TODO authorize
     @endpoint(api=True)
     def handle_api_remove_dir(self, http_context):
@@ -32,7 +44,7 @@ class Handler(HttpPlugin):
             else:
                 shutil.rmtree(filepath, ignore_errors=True)
                 return True
-    
+
     @url(r'/api/lm/remove-file') ## TODO authorize
     @endpoint(api=True)
     def handle_api_remove_file(self, http_context):
@@ -44,7 +56,7 @@ class Handler(HttpPlugin):
             else:
                 os.unlink(filepath)
                 return True
-        
+
     @url(r'/api/lm/remove-backup') ## TODO authorize
     @endpoint(api=True)
     def handle_api_remove_backup(self, http_context):
@@ -98,7 +110,7 @@ class Handler(HttpPlugin):
                     v = v.strip()
                     section[k.strip()] = v
             return config
-                
+
     @url(r'/api/lm/all-users') ## TODO authorize
     @endpoint(api=True)
     def handle_api_get_userdetails(self, http_context):

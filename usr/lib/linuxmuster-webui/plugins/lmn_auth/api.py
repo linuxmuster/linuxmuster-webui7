@@ -94,7 +94,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
         return 0
 
     def get_profile(self, username):
-        if username == "root":
+        if username in ["root",None]:
             return {}
         try:
             profil = lmn_user_details(username)

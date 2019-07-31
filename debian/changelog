@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.78-1) lmn7; urgency=medium 
+
+  * Current snapshot build 1eb73f4f597303d327b92834b4525757129705c1
+   *     possible fix for login issue
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Jul 31 10:18:20 UTC 2019
+
 linuxmuster-webui7 (1.0.77-1) lmn7; urgency=medium 
 
   * Current snapshot build 98d346070bce2a03f5f1a94d612d686c08ff5713

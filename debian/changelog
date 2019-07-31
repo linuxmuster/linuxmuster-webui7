@@ -1,3 +1,16 @@
+linuxmuster-webui7 (1.0.77-1) lmn7; urgency=medium 
+
+  * Current snapshot build 98d346070bce2a03f5f1a94d612d686c08ff5713
+  * modified file upload for dfs
+
+ -- Andreas Till <andreas.till@netzint.de> Tue Jul 30 15:45:00 UTC 2019
+
+linuxmuster-webui7 (1.0.76-1) lmn7; urgency=medium 
+
+  * Current snapshot build ef82bde3d100e4a6fc7dc562bf7864d97b30b1c9
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Jul  5 10:22:38 UTC 2019
+
 linuxmuster-webui7 (1.0.75-1) lmn7; urgency=medium 
 
   * Current snapshot build 5e0f5f883416d14b440478f1b94825f79f43324a

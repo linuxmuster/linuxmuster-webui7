@@ -22,8 +22,6 @@
       // TODO: Way more generic
       role = 'teachers';
       school = 'default-school';
-      //console.log ('transferPath')
-      //$scope.transferPath = '/srv/samba/schools/'+school+'/'+role+'/'+username+'/transfer/'
       $scope.transferPath = '/srv/webuiUpload/' + school + '/' + role + '/' + username + '/';
       // create tmp dir for upload
       $scope.createDir($scope.transferPath);
@@ -73,10 +71,6 @@
       }
     };
     $scope.createDir = function(path) {
-      console.log('createDir');
-      //role = 'teachers'
-      //school = 'default-school'
-      //path = '/srv/samba/schools/'+school+'/'+role+'/'+$scope.identity.user+'/transfer/'+file
       return $http.post('/api/lm/create-dir', {
         filepath: path
       });

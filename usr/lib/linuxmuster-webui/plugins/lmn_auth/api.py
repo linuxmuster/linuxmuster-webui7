@@ -96,7 +96,11 @@ class LMAuthenticationProvider(AuthenticationProvider):
     def get_profile(self, username):
         if username == "root":
             return {}
-        profil = lmn_user_details(username)
-        profil['isAdmin'] = "administrator" in profil['sophomorixRole']
-        return profil
+        try:
+            profil = lmn_user_details(username)
+            profil['isAdmin'] = "administrator" in profil['sophomorixRole']
+            return profil
+        # TODO: Check if this is suitable. This appears to break when not using ajenti-dev mode
+        except:
+            return {}
 

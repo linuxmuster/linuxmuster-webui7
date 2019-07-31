@@ -57,6 +57,8 @@ class Handler(HttpPlugin):
                     groupName = http_context.json_body()['groupName']
                     sophomorixCommand = ['sophomorix-query', '--group-members', '--group-full', '--sam', groupName, '-jj']
                     groupDetails = lmn_getSophomorixValue(sophomorixCommand, '')
+                    if not 'MEMBERS' in groupDetails.keys():
+                        groupDetails['MEMBERS'] = {}
             return groupDetails
 
     @url(r'/api/lmn/groupmembership')

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-28 19:23+0200\n"
-"PO-Revision-Date: 2019-07-28 18:01\n"
+"POT-Creation-Date: 2019-08-01 13:44+0000\n"
+"PO-Revision-Date: 2019-08-01 14:43\n"
 "Last-Translator: kiarn\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -16,63 +16,67 @@ msgstr ""
 "X-Crowdin-Language: es-ES\n"
 "X-Crowdin-File: /2.0/lmn_landingpage.po\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:31
+#: lmn_landingpage/resources/partial/index.html:29
 msgid "Account Information"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:40
+#: lmn_landingpage/resources/partial/index.html:21
+msgid "But keep in mind:"
+msgstr ""
+
+#: lmn_landingpage/resources/partial/index.html:38
 msgid "Change password"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:15
+#: lmn_landingpage/resources/partial/index.html:14
 msgid "Hello {{user.givenName}} {{user.sn}},"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:35
+#: lmn_landingpage/resources/partial/index.html:33
 msgid "Mail:  <b>{{user.mail}}</b>"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:34
+#: lmn_landingpage/resources/partial/index.html:32
 msgid "Name:  <b>{{user.givenName}}, {{user.sn}}</b>"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:46
+#: lmn_landingpage/resources/partial/index.html:44
 msgid "Quotas"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:37
+#: lmn_landingpage/resources/partial/index.html:35
 msgid "Role: <b>{{user.sophomorixAdminClass}}</b>"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:36
+#: lmn_landingpage/resources/partial/index.html:34
 msgid "School: <b>{{user.sophomorixSchoolname}}</b>"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:50
+#: lmn_landingpage/resources/partial/index.html:48
 msgid "Total"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:22
-msgid "Use the sidebar to navigate through the options.<br>\n"
-"                    But keep in mind: \n"
-"                    <b>With great power comes great responsibility!</b>"
+#: lmn_landingpage/resources/partial/index.html:20
+msgid "Use the sidebar to navigate through the options."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:1
+#: lmn_landingpage/resources/partial/index.html:1
 msgid "Welcome to Linuxmuster.net version 7!"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:5
-msgid "You should not use WebUI as root user! If this is your first time\n"
-"        running WebUI, proceed through the setup wizard. Afterwards login using the global-admin account."
+#: lmn_landingpage/resources/partial/index.html:22
+msgid "With great power comes great responsibility!"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:18
-msgid "use the sidebar to navigate through the options. You\n"
-"                    can start by using the Groupmembership module to subscribe to your classes."
+#: lmn_landingpage/resources/partial/index.html:5
+msgid "You should not use WebUI as root user! If this is your first time running WebUI, proceed through the setup wizard. Afterwards login using the global-admin account."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:7
+#: lmn_landingpage/resources/partial/index.html:17
+msgid "use the sidebar to navigate through the options. You can start by using the Groupmembership module to subscribe to your classes."
+msgstr ""
+
+#: lmn_landingpage/resources/js/controllers/index.controller.coffee:7
 msgid "Home"
 msgstr ""
 

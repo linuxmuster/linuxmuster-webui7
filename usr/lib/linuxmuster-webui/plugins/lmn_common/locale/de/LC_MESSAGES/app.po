@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-28 19:23+0200\n"
-"PO-Revision-Date: 2019-07-28 18:01\n"
+"POT-Creation-Date: 2019-08-01 12:44+0000\n"
+"PO-Revision-Date: 2019-08-01 14:43\n"
 "Last-Translator: kiarn\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -16,73 +16,73 @@ msgstr ""
 "X-Crowdin-Language: de\n"
 "X-Crowdin-File: /2.0/lmn_common.po\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileBackups.modal.html:2
+#: lmn_common/resources/js/lmFileBackups.modal.html:2
 msgid "Backups"
 msgstr "Sicherungen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileEditor.modal.html:18
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileBackups.service.coffee:53
+#: lmn_common/resources/js/lmFileEditor.modal.html:18
+#: lmn_common/resources/js/lmFileBackups.service.coffee:53
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileBackups.modal.html:23
+#: lmn_common/resources/js/lmFileBackups.modal.html:23
 msgid "Close"
 msgstr "Schließen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileEditor.modal.html:17
+#: lmn_common/resources/js/lmFileEditor.modal.html:17
 msgid "Download CSV"
 msgstr "CSV Herunterladen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileEditor.modal.html:5
+#: lmn_common/resources/js/lmFileEditor.modal.html:5
 msgid "Drop a CSV file here to import"
 msgstr "Datei hier hin schieben um sie zu importieren"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileEditor.modal.html:16
+#: lmn_common/resources/js/lmFileEditor.modal.html:16
 msgid "Save"
 msgstr "Speichern"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:15
+#: lmn_common/main.py:15
 msgid "User Management"
 msgstr "Benutzerverwaltung"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:22
+#: lmn_common/main.py:22
 msgid "List Management"
 msgstr "Listenverwaltung"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:29
+#: lmn_common/main.py:29
 msgid "Quota"
 msgstr "Quota"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:36
+#: lmn_common/main.py:36
 msgid "Device Management"
 msgstr "Geräteverwaltung"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:43
+#: lmn_common/main.py:43
 msgid "Class Management"
 msgstr "Klassenverwaltung"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:50
+#: lmn_common/main.py:50
 msgid "School Settings"
 msgstr "Schuleinstellungen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:57
+#: lmn_common/main.py:57
 msgid "Global Settings"
 msgstr "Globale Einstellungen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileBackups.service.coffee:52
+#: lmn_common/resources/js/lmFileBackups.service.coffee:52
 msgid "Do you really want to delete"
 msgstr "Möchten Sie wirklich löschen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileBackups.service.coffee:53
+#: lmn_common/resources/js/lmFileBackups.service.coffee:53
 msgid "Confirmation"
 msgstr "Bestätigung"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:35
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:37
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:73
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:75
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:113
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:115
+#: lmn_common/resources/js/upload.directives.coffee:44
+#: lmn_common/resources/js/upload.directives.coffee:47
+#: lmn_common/resources/js/upload.directives.coffee:90
+#: lmn_common/resources/js/upload.directives.coffee:93
+#: lmn_common/resources/js/upload.directives.coffee:138
+#: lmn_common/resources/js/upload.directives.coffee:141
 msgid "Uploaded"
 msgstr "Hochgeladen"
 

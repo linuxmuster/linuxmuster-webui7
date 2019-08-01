@@ -611,7 +611,7 @@
         return notify.success(gettext('Random password set'));
       });
     };
-    $scope.setCustomPassword = function(user, id) {
+    $scope.setCustomPassword = function(user, id, type) {
       // Set sAMAccountName to establish compability to userInfo Module
       // This information is provided only as key (id) in sophomorix session
       user[0]['sAMAccountName'] = id;
@@ -622,6 +622,9 @@
         resolve: {
           users: function() {
             return user;
+          },
+          type: function() {
+            return type;
           }
         }
       });
@@ -787,7 +790,7 @@
       if ($scope.identity.user === 'root') {
         return;
       }
-      // $scope.identity.user = 'hulk'
+      // $scope.identity.user = 'bruce'
       $scope.getSessions($scope.identity.user);
     });
   });

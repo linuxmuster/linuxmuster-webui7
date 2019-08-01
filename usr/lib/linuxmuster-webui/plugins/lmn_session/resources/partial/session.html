@@ -145,7 +145,7 @@
                     <button class="btn btn-default"  uib-dropdown-toggle>
                         <i class="fa fa-cog"></i>
                     </button>
-                    <ul uib-dropdown-menu class="dropdown-menu-right" style="width:200px; margin-bottom: -30px; margin-right: 40px">
+                    <ul uib-dropdown-menu class="dropdown-menu-right" style="width:200px; margin-bottom: -30px; margin-right: 40px; z-index: 4000;">
                         <li>
                             <a ng:click="showInitialPassword([participant.sAMAccountName])" translate>
                                 Show initial password
@@ -153,17 +153,22 @@
                         </li>
                         <li>
                             <a ng:click="setInitialPassword([participant.sAMAccountName])" translate>
-                                Set Initial password
+                                Restore initial password 
                             </a>
                         </li>
                         <li>
                             <a ng:click="setRandomPassword([participant.sAMAccountName])" translate>
-                                Set Random password
+                                Set random initial password
                             </a>
                         </li>
                         <li>
-                            <a ng:click="setCustomPassword([participant], participant.sAMAccountName)" translate>
-                                Set Custom password
+                            <a ng:click="setCustomPassword([participant], participant.sAMAccountName, 'initial')" translate>
+                                Set custom initial password
+                            </a>
+                        </li>
+                        <li>
+                            <a ng:click="setCustomPassword([participant], participant.sAMAccountName, 'actual')" translate>
+                                Set actual user password
                             </a>
                         </li>
                         <li>

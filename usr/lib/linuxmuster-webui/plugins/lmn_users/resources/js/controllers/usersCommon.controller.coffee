@@ -4,9 +4,17 @@ isStrongPwd1 = (password) ->
       return validPassword
 
 
-angular.module('lm.users').controller 'LMNUsersCustomPasswordController', ($scope, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, users) ->
+angular.module('lm.users').controller 'LMNUsersCustomPasswordController', ($scope, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, users, type) ->
     $scope.username = users
     $scope.save = (userpw) ->
+        if not type?
+            action = 'set'
+        else
+            if type == 'set-actual'
+                action = 'set-actual'
+            else
+                action = 'set'
+
         if not $scope.userpw
             notify.error gettext("You have to enter a password")
             return
@@ -14,7 +22,7 @@ angular.module('lm.users').controller 'LMNUsersCustomPasswordController', ($scop
            notify.error gettext("Password too weak")
            return
         else
-            $http.post('/api/lm/users/password', {users: (x['sAMAccountName'] for x in users), action: 'set', password: $scope.userpw}).then (resp) ->
+            $http.post('/api/lm/users/password', {users: (x['sAMAccountName'] for x in users), action: action, password: $scope.userpw, type: type}).then (resp) ->
                 notify.success gettext('New password set')
         $uibModalInstance.dismiss()
 

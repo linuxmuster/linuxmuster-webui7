@@ -211,7 +211,7 @@ class Handler(HttpPlugin):
         if http_context.method == 'POST':
             schoolname = 'default-school'
             teachersList = []
-            
+
             if action == 'get-all':
                 with authorize('lm:users:teachers:read'):
                     # TODO: This could run with --user-basic but not all memberOf are filled. Needs verification
@@ -440,6 +440,10 @@ class Handler(HttpPlugin):
         if action == 'set':
             password = http_context.json_body()['password']
             sophomorixCommand = ['sophomorix-passwd', '-u', user, '--pass', password, '-jj']
+            return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
+        if action == 'set-actual':
+            password = http_context.json_body()['password']
+            sophomorixCommand = ['sophomorix-passwd', '-u', user, '--pass', password, '--nofirstpassupdate', '--hide', '-jj']
             return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
 
     @url(r'/api/lm/users/change-school-admin')

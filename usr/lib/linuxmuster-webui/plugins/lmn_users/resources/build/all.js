@@ -2029,10 +2029,19 @@
     return validPassword;
   };
 
-  angular.module('lm.users').controller('LMNUsersCustomPasswordController', function($scope, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, users) {
+  angular.module('lm.users').controller('LMNUsersCustomPasswordController', function($scope, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, users, type) {
     $scope.username = users;
     $scope.save = function(userpw) {
-      var x;
+      var action, x;
+      if (type == null) {
+        action = 'set';
+      } else {
+        if (type === 'set-actual') {
+          action = 'set-actual';
+        } else {
+          action = 'set';
+        }
+      }
       if (!$scope.userpw) {
         notify.error(gettext("You have to enter a password"));
         return;
@@ -2051,8 +2060,9 @@
             }
             return results;
           })(),
-          action: 'set',
-          password: $scope.userpw
+          action: action,
+          password: $scope.userpw,
+          type: type
         }).then(function(resp) {
           return notify.success(gettext('New password set'));
         });

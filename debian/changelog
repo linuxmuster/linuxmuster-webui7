@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.79-1) lmn7; urgency=medium 
+
+  * Current snapshot build b95143eba5b4dc133ff76c2a0dee80fa6ef9c122
+   *     Changed default WebUI Port to 443
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Aug  2 15:14:54 UTC 2019
+
 linuxmuster-webui7 (1.0.78-1) lmn7; urgency=medium 
 
   * Current snapshot build 1eb73f4f597303d327b92834b4525757129705c1

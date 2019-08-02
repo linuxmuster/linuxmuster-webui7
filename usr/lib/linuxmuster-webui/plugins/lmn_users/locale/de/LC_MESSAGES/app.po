@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-01 12:44+0000\n"
+"POT-Creation-Date: 2019-08-02 15:07+0000\n"
 "PO-Revision-Date: 2019-08-01 14:43\n"
 "Last-Translator: kiarn\n"
 "Language-Team: German\n"
@@ -36,14 +36,18 @@ msgid "Add Administrator"
 msgstr "Admin hinzufügen"
 
 #: lmn_users/resources/partial/extra-courses.html:69
+#: lmn_users/resources/partial/listmanagement.html:392
 msgid "Add a course"
 msgstr "Kurs hinzufügen"
 
 #: lmn_users/resources/partial/extra-students.html:61
+#: lmn_users/resources/partial/listmanagement.html:304
+#: lmn_users/resources/partial/listmanagement.html:92
 #: lmn_users/resources/partial/students-list.html:90
 msgid "Add a student"
 msgstr "Schüler hinzufügen"
 
+#: lmn_users/resources/partial/listmanagement.html:195
 #: lmn_users/resources/partial/teachers-list.html:83
 msgid "Add a teacher"
 msgstr "Lehrer hinzufügen"
@@ -78,12 +82,15 @@ msgid "Applying changes"
 msgstr "Änderungen übernehmen"
 
 #: lmn_users/resources/partial/extra-courses.html:28
+#: lmn_users/resources/partial/listmanagement.html:348
 #: lmn_users/resources/js/controllers/extraCourses.controller.coffee:16
+#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:80
 msgid "Base name"
 msgstr "Basisname"
 
 #: lmn_users/resources/partial/extra-courses.html:30
 #: lmn_users/resources/partial/extra-students.html:30
+#: lmn_users/resources/partial/listmanagement.html:350
 #: lmn_users/resources/js/controllers/students-list.controller.coffee:24
 #: lmn_users/resources/js/controllers/students-list.controller.coffee:49
 #: lmn_users/resources/js/controllers/students.controller.coffee:23
@@ -92,6 +99,12 @@ msgstr "Basisname"
 #: lmn_users/resources/js/controllers/teachers-list.controller.coffee:42
 #: lmn_users/resources/js/controllers/extraCourses.controller.coffee:20
 #: lmn_users/resources/js/controllers/teachers.controller.coffee:23
+#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:24
+#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:66
+#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:84
+#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:120
+#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:135
+#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:156
 msgid "Birthday"
 msgstr "Geburtsdatum"
 
@@ -132,6 +145,10 @@ msgstr "Überprüfe Benutzer"
 #: lmn_users/resources/js/controllers/students.controller.coffee:11
 #: lmn_users/resources/js/controllers/extraStudents.controller.coffee:12
 #: lmn_users/resources/js/controllers/printPasswords.controller.coffee:18
+#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:12
+#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:54
+#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:111
+#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:147
 msgid "Class"
 msgstr "Klasse"
 
@@ -151,12 +168,16 @@ msgid "Cloudquota Calculated in MiB:"
 msgstr "Cloudquota berechnet in MiB:"
 
 #: lmn_users/resources/partial/extra-courses.html:29
+#: lmn_users/resources/partial/listmanagement.html:349
 #: lmn_users/resources/js/controllers/extraCourses.controller.coffee:24
+#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:88
 msgid "Count"
 msgstr "Anzahl"
 
 #: lmn_users/resources/partial/extra-courses.html:27
+#: lmn_users/resources/partial/listmanagement.html:347
 #: lmn_users/resources/js/controllers/extraCourses.controller.coffee:12
+#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:76
 msgid "Course"
 msgstr "Kurs"
 
@@ -177,6 +198,10 @@ msgstr "Benutzer löschen"
 
 #: lmn_users/resources/partial/extra-courses.html:80
 #: lmn_users/resources/partial/extra-students.html:73
+#: lmn_users/resources/partial/listmanagement.html:103
+#: lmn_users/resources/partial/listmanagement.html:207
+#: lmn_users/resources/partial/listmanagement.html:315
+#: lmn_users/resources/partial/listmanagement.html:403
 #: lmn_users/resources/partial/students-list.html:101
 #: lmn_users/resources/partial/teachers-list.html:95
 msgid "Edit CSV"
@@ -194,6 +219,19 @@ msgstr "Fehler"
 msgid "Errors found"
 msgstr "Fehler gefunden"
 
+#: lmn_users/resources/partial/listmanagement.html:321
+#, fuzzy
+msgid "Extra-Courses"
+msgstr "Extra-Kurse"
+
+#: lmn_users/resources/partial/listmanagement.html:215
+#, fuzzy
+msgid "Extra-Students"
+msgstr "Extra-Schüler"
+
+#: lmn_users/resources/partial/listmanagement.html:138
+#: lmn_users/resources/partial/listmanagement.html:237
+#: lmn_users/resources/partial/listmanagement.html:29
 #: lmn_users/resources/partial/students-list.html:26
 #: lmn_users/resources/partial/teachers-list.html:26
 msgid "Fields"
@@ -205,6 +243,9 @@ msgstr "Felder"
 #: lmn_users/resources/js/controllers/extraStudents.controller.coffee:16
 #: lmn_users/resources/js/controllers/teachers-list.controller.coffee:16
 #: lmn_users/resources/js/controllers/teachers.controller.coffee:11
+#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:16
+#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:39
+#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:58
 msgid "First name"
 msgstr "Vorname"
 
@@ -213,7 +254,9 @@ msgid "Format"
 msgstr "Format"
 
 #: lmn_users/resources/partial/extra-courses.html:31
+#: lmn_users/resources/partial/listmanagement.html:351
 #: lmn_users/resources/js/controllers/extraCourses.controller.coffee:28
+#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:92
 msgid "GECOS"
 msgstr "Hinweis"
 
@@ -235,12 +278,21 @@ msgstr "Zu löschen"
 #: lmn_users/resources/js/controllers/extraStudents.controller.coffee:20
 #: lmn_users/resources/js/controllers/teachers-list.controller.coffee:20
 #: lmn_users/resources/js/controllers/teachers.controller.coffee:15
+#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:20
+#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:43
+#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:62
 msgid "Last name"
 msgstr "Nachname"
 
 #: lmn_users/resources/partial/sortList.modal.html:8
-msgid "Linuxmuster needs to know which column contains which userdata. This is mandatory for importing the CSV list.<br>Please set the column into the right order."
-msgstr "Linuxmuster muss wissen, welche Spalte welche Benutzerdaten enthält. Dies ist obligatorisch für den Import der CSV-Liste.<br>Bitte setzen Sie die Spalte in die richtige Reihenfolge."
+msgid ""
+"Linuxmuster needs to know which column contains which userdata. This is "
+"mandatory for importing the CSV list.<br>Please set the column into the "
+"right order."
+msgstr ""
+"Linuxmuster muss wissen, welche Spalte welche Benutzerdaten enthält. Dies "
+"ist obligatorisch für den Import der CSV-Liste.<br>Bitte setzen Sie die "
+"Spalte in die richtige Reihenfolge."
 
 #: lmn_users/resources/partial/extra-students.html:31
 #: lmn_users/resources/js/controllers/schooladmins.controller.coffee:11
@@ -249,6 +301,11 @@ msgstr "Linuxmuster muss wissen, welche Spalte welche Benutzerdaten enthält. Di
 #: lmn_users/resources/js/controllers/teachers-list.controller.coffee:48
 #: lmn_users/resources/js/controllers/globaladmins.controller.coffee:11
 #: lmn_users/resources/js/controllers/teachers.controller.coffee:19
+#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:35
+#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:47
+#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:70
+#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:141
+#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:159
 msgid "Login"
 msgstr "Benutzername"
 
@@ -269,12 +326,20 @@ msgid "Moved users"
 msgstr "Zu versetzen"
 
 #: lmn_users/resources/partial/print-passwords.html:5
-msgid "No Classes found. You have to create a class by importing userlist before you can print user passwords."
-msgstr "Keine Klasse gefunden. Sie müssen eine Klasse erstellen, indem Sie eine Benutzerliste importieren, bevor Sie Kennwörter drucken können."
+msgid ""
+"No Classes found. You have to create a class by importing userlist before "
+"you can print user passwords."
+msgstr ""
+"Keine Klasse gefunden. Sie müssen eine Klasse erstellen, indem Sie eine "
+"Benutzerliste importieren, bevor Sie Kennwörter drucken können."
 
 #: lmn_users/resources/partial/customPassword.modal.html:14
-msgid "Note: Minimal length is 7 characters. Use upper, lower and special characters or numbers. (e.g. Muster!)"
-msgstr "Hinweis: Minimale Passwortlänge ist 7 Zeichen. Verwenden Sie Großbuchstaben, Kleinbuchstaben und Sonderzeichen oder Zahlen. (z.B. Muster!)"
+msgid ""
+"Note: Minimal length is 7 characters. Use upper, lower and special "
+"characters or numbers. (e.g. Muster!)"
+msgstr ""
+"Hinweis: Minimale Passwortlänge ist 7 Zeichen. Verwenden Sie Großbuchstaben, "
+"Kleinbuchstaben und Sonderzeichen oder Zahlen. (z.B. Muster!)"
 
 #: lmn_users/resources/partial/print-passwords.options.modal.html:20
 msgid "One per page"
@@ -286,6 +351,7 @@ msgstr "Einstellungen"
 
 #: lmn_users/resources/partial/extra-courses.html:32
 #: lmn_users/resources/partial/globaladmins.html:68
+#: lmn_users/resources/partial/listmanagement.html:352
 #: lmn_users/resources/partial/schooladmins.html:68
 #: lmn_users/resources/partial/students.html:67
 #: lmn_users/resources/partial/teachers.html:71
@@ -301,11 +367,14 @@ msgid "Properties"
 msgstr "Eigenschaften"
 
 #: lmn_users/resources/partial/extra-courses.html:33
+#: lmn_users/resources/partial/listmanagement.html:353
 msgid "Removal date"
 msgstr "Entferndatum"
 
 #: lmn_users/resources/partial/extra-courses.html:59
 #: lmn_users/resources/partial/extra-students.html:51
+#: lmn_users/resources/partial/listmanagement.html:294
+#: lmn_users/resources/partial/listmanagement.html:382
 msgid "Remove"
 msgstr "Entfernen"
 
@@ -318,6 +387,9 @@ msgid "Role:"
 msgstr "Rolle:"
 
 #: lmn_users/resources/partial/globaladmins.html:31
+#: lmn_users/resources/partial/listmanagement.html:148
+#: lmn_users/resources/partial/listmanagement.html:248
+#: lmn_users/resources/partial/listmanagement.html:40
 #: lmn_users/resources/partial/schooladmins.html:30
 #: lmn_users/resources/partial/students-list.html:37
 #: lmn_users/resources/partial/students.html:32
@@ -328,6 +400,10 @@ msgstr "Zeilen"
 
 #: lmn_users/resources/partial/extra-courses.html:78
 #: lmn_users/resources/partial/extra-students.html:71
+#: lmn_users/resources/partial/listmanagement.html:101
+#: lmn_users/resources/partial/listmanagement.html:205
+#: lmn_users/resources/partial/listmanagement.html:313
+#: lmn_users/resources/partial/listmanagement.html:401
 #: lmn_users/resources/partial/students-list.html:99
 #: lmn_users/resources/partial/teachers-list.html:93
 msgid "Save"
@@ -335,6 +411,10 @@ msgstr "Speichern"
 
 #: lmn_users/resources/partial/extra-courses.html:79
 #: lmn_users/resources/partial/extra-students.html:72
+#: lmn_users/resources/partial/listmanagement.html:102
+#: lmn_users/resources/partial/listmanagement.html:206
+#: lmn_users/resources/partial/listmanagement.html:314
+#: lmn_users/resources/partial/listmanagement.html:402
 #: lmn_users/resources/partial/students-list.html:100
 #: lmn_users/resources/partial/teachers-list.html:94
 msgid "Save &amp; check"
@@ -407,27 +487,53 @@ msgstr "Sophomorix-Status:"
 msgid "Sort List"
 msgstr "Liste sortieren"
 
+#: lmn_users/resources/partial/listmanagement.html:4 lmn_users/main.py:22
+#: lmn_users/resources/js/controllers/students-list.controller.coffee:8
+#: lmn_users/resources/js/controllers/students.controller.coffee:7
+msgid "Students"
+msgstr "Schüler"
+
 #: lmn_users/resources/partial/result.modal.html:6
 msgid "Summary"
 msgstr "Übersicht"
 
+#: lmn_users/resources/partial/listmanagement.html:112 lmn_users/main.py:15
+#: lmn_users/resources/js/controllers/teachers-list.controller.coffee:8
+#: lmn_users/resources/js/controllers/teachers.controller.coffee:7
+msgid "Teachers"
+msgstr "Lehrer"
+
 #: lmn_users/resources/partial/globaladmins.html:9
 #: lmn_users/resources/partial/schooladmins.html:8
-msgid "There are no School-Administrator to manage yet. You can add a School-Administrator using the buttons below"
-msgstr "Es gibt noch keinen Schuladministrator. Sie können einen Schuladministrator mit den unten stehenden Tasten hinzufügen"
+msgid ""
+"There are no School-Administrator to manage yet. You can add a School-"
+"Administrator using the buttons below"
+msgstr ""
+"Es gibt noch keinen Schuladministrator. Sie können einen Schuladministrator "
+"mit den unten stehenden Tasten hinzufügen"
 
 #: lmn_users/resources/partial/students.html:9
-msgid "There are no students to manage yet. You can add students using the list management module"
-msgstr "Es gibt noch keine Schüler zu verwalten. Sie können Schüler mit der Listenverwaltung hinzufügen"
+msgid ""
+"There are no students to manage yet. You can add students using the list "
+"management module"
+msgstr ""
+"Es gibt noch keine Schüler zu verwalten. Sie können Schüler mit der "
+"Listenverwaltung hinzufügen"
 
 #: lmn_users/resources/partial/teachers.html:9
-msgid "There are no teachers to manage yet. You can add teachers using the list management module"
-msgstr "Es gibt noch keine Lehrer zu verwalten. Sie können Lehrer mit der Listenverwaltung hinzufügen"
+msgid ""
+"There are no teachers to manage yet. You can add teachers using the list "
+"management module"
+msgstr ""
+"Es gibt noch keine Lehrer zu verwalten. Sie können Lehrer mit der "
+"Listenverwaltung hinzufügen"
 
 #: lmn_users/resources/partial/userDetails.modal.html:43
 msgid "TolerationDate:"
 msgstr "Duldungsdatum:"
 
+#: lmn_users/resources/partial/listmanagement.html:104
+#: lmn_users/resources/partial/listmanagement.html:208
 #: lmn_users/resources/partial/students-list.html:102
 #: lmn_users/resources/partial/teachers-list.html:96
 #: lmn_users/resources/partial/upload.modal.html:3
@@ -472,149 +578,138 @@ msgid "Users to be updated"
 msgstr "Benutzer werden aktualisiert"
 
 #: lmn_users/resources/partial/upload.modal.html:7
-msgid "Would you like to upload a list csv? This will replace your current CSV! Please respect the format columns..."
-msgstr "Möchten Sie eine csv-Datei hochladen? Dies wird Ihre aktuelle csv-Datei ersetzen! Bitte beachten Sie die Format-Spalten..."
+msgid ""
+"Would you like to upload a list csv? This will replace your current CSV! "
+"Please respect the format columns..."
+msgstr ""
+"Möchten Sie eine csv-Datei hochladen? Dies wird Ihre aktuelle csv-Datei "
+"ersetzen! Bitte beachten Sie die Format-Spalten..."
 
 #: lmn_users/resources/partial/students.html:87
 msgid "set custom password"
 msgstr "eigenes Passwort festlegen"
 
-#: lmn_users/main.py:15
-msgid "Students List"
-msgstr "Schülerliste"
-
-#: lmn_users/main.py:22
-msgid "Teachers List"
-msgstr "Lehrer-Liste"
-
 #: lmn_users/main.py:29
-#: lmn_users/resources/js/controllers/teachers-list.controller.coffee:8
-#: lmn_users/resources/js/controllers/teachers.controller.coffee:7
-msgid "Teachers"
-msgstr "Lehrer"
-
-#: lmn_users/main.py:36
-#: lmn_users/resources/js/controllers/students-list.controller.coffee:8
-#: lmn_users/resources/js/controllers/students.controller.coffee:7
-msgid "Students"
-msgstr "Schüler"
-
-#: lmn_users/main.py:43
 msgid "School-Admins"
 msgstr "Schul-Administratoren"
 
-#: lmn_users/main.py:50
+#: lmn_users/main.py:36
 msgid "Global-Admins"
 msgstr "Globale Administratoren"
 
+#: lmn_users/main.py:43
+msgid "Listmanagement"
+msgstr ""
+
 #: lmn_users/main.py:57
-#: lmn_users/resources/js/controllers/extraStudents.controller.coffee:8
-msgid "Extra Students"
-msgstr "Extra-Schüler"
-
-#: lmn_users/main.py:64
-#: lmn_users/resources/js/controllers/extraCourses.controller.coffee:8
-msgid "Extra Courses"
-msgstr "Extra-Kurse"
-
-#: lmn_users/main.py:78
 msgid "Read students"
 msgstr "Studenten lesen"
 
-#: lmn_users/main.py:83
+#: lmn_users/main.py:62
 msgid "Write students"
 msgstr "Studenten schreiben"
 
-#: lmn_users/main.py:88
+#: lmn_users/main.py:67
 msgid "Read teachers"
 msgstr "Lehrer lesen"
 
-#: lmn_users/main.py:93
+#: lmn_users/main.py:72
 msgid "List teachers"
 msgstr "Lehrer auflisten"
 
-#: lmn_users/main.py:98
+#: lmn_users/main.py:77
 msgid "Write teachers"
 msgstr "Lehrer schreiben"
 
-#: lmn_users/main.py:103
+#: lmn_users/main.py:82
 msgid "Read schooladmins"
 msgstr "Schul-Administratoren einlesen"
 
-#: lmn_users/main.py:108
+#: lmn_users/main.py:87
 msgid "Write schooladmins"
 msgstr "Schul-Administratoren schreiben"
 
-#: lmn_users/main.py:113
+#: lmn_users/main.py:92
 msgid "Read globaladmins"
 msgstr "Globale Administratoren einlesen"
 
-#: lmn_users/main.py:118
+#: lmn_users/main.py:97
 msgid "Write globaladmins"
 msgstr "Globale Administratoren schreiben"
 
-#: lmn_users/main.py:123
+#: lmn_users/main.py:102
 msgid "Read extra students"
 msgstr "Lese zusätzliche Studenten"
 
-#: lmn_users/main.py:128
+#: lmn_users/main.py:107
 msgid "Write extra students"
 msgstr "Schreibe zusätzliche Studenten"
 
-#: lmn_users/main.py:133
+#: lmn_users/main.py:112
 msgid "Read extra courses"
 msgstr "Lese zusätzliche Kurse"
 
-#: lmn_users/main.py:138
+#: lmn_users/main.py:117
 msgid "Write extra courses"
 msgstr "Schreibe zusätzliche Kurse"
 
-#: lmn_users/main.py:143
+#: lmn_users/main.py:122
 msgid "Check user changes"
 msgstr "Überprüfen Sie die Änderungen durch Benutzer"
 
-#: lmn_users/main.py:148
+#: lmn_users/main.py:127
 msgid "Apply user changes"
 msgstr "Benutzeränderungen anwenden"
 
-#: lmn_users/main.py:153
+#: lmn_users/main.py:132
 msgid "Read/write passwords"
 msgstr "Schreibe/Lese Passwörter"
 
-#: lmn_users/main.py:158
+#: lmn_users/main.py:137
 msgid "Add school admins"
 msgstr "Schul-Administrator hinzufügen"
 
-#: lmn_users/main.py:163
+#: lmn_users/main.py:142
 msgid "Add global admins"
 msgstr "Globale Administratoren hinzufügen"
 
-#: lmn_users/main.py:168
+#: lmn_users/main.py:147
 msgid "Delete school admins"
 msgstr "Schul-Administratoren löschen"
 
-#: lmn_users/main.py:173
+#: lmn_users/main.py:152
 msgid "Delete global admins"
 msgstr "Globale Administratoren löschen"
 
 #: lmn_users/resources/js/controllers/students-list.controller.coffee:28
 #: lmn_users/resources/js/controllers/students-list.controller.coffee:52
+#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:28
+#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:123
 msgid "Student ID"
 msgstr "Schüler ID"
 
 #: lmn_users/resources/js/controllers/students-list.controller.coffee:43
 #: lmn_users/resources/js/controllers/teachers-list.controller.coffee:36
+#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:114
+#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:129
+#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:150
 msgid "Last Name"
 msgstr "Nachname"
 
 #: lmn_users/resources/js/controllers/students-list.controller.coffee:46
 #: lmn_users/resources/js/controllers/teachers-list.controller.coffee:39
+#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:117
+#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:132
+#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:153
 msgid "First Name"
 msgstr "Vorname"
 
 #: lmn_users/resources/js/controllers/students-list.controller.coffee:120
 #: lmn_users/resources/js/controllers/teachers-list.controller.coffee:130
 #: lmn_users/resources/js/controllers/extraCourses.controller.coffee:117
+#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:280
+#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:289
+#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:307
 #: lmn_users/resources/js/controllers/usersCommon.controller.coffee:158
 msgid "Saved"
 msgstr "Gespeichert"
@@ -653,11 +748,16 @@ msgstr "Schul-Administrator löschen "
 msgid "User deleted"
 msgstr "Benutzer gelöscht"
 
+#: lmn_users/resources/js/controllers/extraStudents.controller.coffee:8
+msgid "Extra Students"
+msgstr "Extra-Schüler"
+
 #: lmn_users/resources/js/controllers/printPasswords.controller.coffee:33
 msgid "Print Passwords"
 msgstr "Passwörter drucken"
 
 #: lmn_users/resources/js/controllers/teachers-list.controller.coffee:45
+#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:138
 msgid "Desired Password"
 msgstr "Wunschpasswort"
 
@@ -669,6 +769,10 @@ msgstr "Änderungen übernommen"
 msgid "Failed"
 msgstr "Fehlgeschlagen"
 
+#: lmn_users/resources/js/controllers/extraCourses.controller.coffee:8
+msgid "Extra Courses"
+msgstr "Extra-Kurse"
+
 #: lmn_users/resources/js/controllers/globaladmins.controller.coffee:7
 msgid "Globaladmins"
 msgstr "Globale Administratoren"
@@ -676,6 +780,10 @@ msgstr "Globale Administratoren"
 #: lmn_users/resources/js/controllers/globaladmins.controller.coffee:47
 msgid "Delete global-administrator "
 msgstr "Globalen Administrator löschen "
+
+#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:8
+msgid "Listenverwaltung"
+msgstr ""
 
 #: lmn_users/resources/js/controllers/usersCommon.controller.coffee:19
 msgid "You have to enter a password"
@@ -741,3 +849,8 @@ msgstr "Upload erfolgreich"
 msgid "Adding administrator..."
 msgstr "Administrator hinzufügen..."
 
+#~ msgid "Students List"
+#~ msgstr "Schülerliste"
+
+#~ msgid "Teachers List"
+#~ msgstr "Lehrer-Liste"

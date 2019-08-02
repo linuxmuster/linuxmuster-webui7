@@ -75,12 +75,12 @@ angular.module('lm.users').controller 'LMUsersTeachersListController', ($scope, 
     $scope.findval = (attr, val) ->
         return (dict) ->
             dict[attr] == val
-    
+
     $scope.isValidLogin = (login) ->
         regExp = /^([0-9a-zA-Z]*)$/ 
         validLogin = regExp.test(login) && ($scope.teachers.filter($scope.findval('login', login)).length < 2)
         return true ## TODO : valid chars for a login ?
-        
+
     $scope.isStrongPwd = (password) ->
         regExp = /(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*()]|(?=.*\d)).{7,}/
         validPassword = regExp.test(password)
@@ -90,15 +90,15 @@ angular.module('lm.users').controller 'LMUsersTeachersListController', ($scope, 
         regExp = /^[a-zA-Z0-9!@#§+\-$%&*{}()\]\[]+$/
         validPassword = regExp.test(password)
         return validPassword
-    
+
     $scope.isValidPassword = (password) ->
         return $scope.validCharPwd(password) && $scope.isStrongPwd(password)
-    
+
     $scope.isValidName = (name) ->
         regExp = /^([0-9a-zA-Z]*)$/ 
         validName = regExp.test(name)
         return true ## TODO : valid chars for a name ?
-    
+
     $scope.isValidBirthday = (birthday) ->
         regExp = /^(0[1-9]|[12][0-9]|3[01])[.](0[1-9]|1[012])[.](19|20)\d\d$/ ## Not perfect : allows 31.02.1920, but not so important
         validBirthday = regExp.test(birthday)

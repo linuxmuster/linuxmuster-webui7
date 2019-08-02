@@ -11,30 +11,16 @@ class ItemProvider(SidebarItemProvider):
     def provide(self):
         return [
             {
-                'attach': 'category:listmanagement',
-                'name': _('Students List'),
-                'icon': 'users',
-                'url': '/view/lm/users/students-list',
-                'weight': 10,
-            },
-            {
-                'attach': 'category:listmanagement',
-                'name': _('Teachers List'),
-                'icon': 'briefcase',
-                'url': '/view/lm/users/teachers-list',
-                'weight': 10,
-            },
-            {
                 'attach': 'category:usermanagement',
                 'name': _('Teachers'),
-                'icon': 'key',
+                'icon': 'briefcase',
                 'url': '/view/lm/users/teachers',
                 'weight': 15,
             },
             {
                 'attach': 'category:usermanagement',
                 'name': _('Students'),
-                'icon': 'key',
+                'icon': 'users',
                 'url': '/view/lm/users/students',
                 'weight': 15,
             },
@@ -53,19 +39,12 @@ class ItemProvider(SidebarItemProvider):
                 'weight': 21,
             },
             {
-                'attach': 'category:listmanagement',
-                'name': _('Extra Students'),
-                'icon': 'users',
-                'url': '/view/lm/users/extra-students',
-                'weight': 25,
-            },
-            {
-                'attach': 'category:listmanagement',
-                'name': _('Extra Courses'),
-                'icon': 'users',
-                'url': '/view/lm/users/extra-courses',
-                'weight': 30,
-            },
+                'attach': 'category:usermanagement',
+                'name': _('Listmanagement'),
+                'icon': 'list',
+                'url': '/view/lm/users/listmanagement',
+                'weight': 21,
+            }
         ]
 
 

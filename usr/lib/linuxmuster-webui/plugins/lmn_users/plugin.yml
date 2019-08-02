@@ -22,6 +22,8 @@ resources:
     - 'resources/js/controllers/printPasswords.controller.coffee'
     - 'resources/js/controllers/checkModal.controller.coffee'
     - 'resources/js/controllers/usersCommon.controller.coffee'
+    - 'resources/js/controllers/listmanagement.controller.coffee'
+    - 'resources/partial/listmanagement.html'
     - 'resources/partial/students-list.html'
     - 'resources/partial/teachers-list.html'
     - 'resources/partial/extra-students.html'

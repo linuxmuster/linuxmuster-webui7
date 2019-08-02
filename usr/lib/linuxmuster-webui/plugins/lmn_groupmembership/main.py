@@ -13,7 +13,7 @@ class ItemProvider(SidebarItemProvider):
             {
                 'attach': 'category:usermanagement',
                 'name': _('Groupmembership'),
-                'icon': 'wrench',
+                'icon': 'user-check',
                 'url': '/view/lmn/groupmembership',
                 'children': [],
             },

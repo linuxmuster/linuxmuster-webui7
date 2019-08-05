@@ -5,7 +5,7 @@ angular.module('lm.users').config ($routeProvider) ->
 
 
 angular.module('lm.users').controller 'LMUsersListManagementController', ($scope, $http, $location, $route, $uibModal, gettext, notify, lmEncodingMap, messagebox, pageTitle, lmFileEditor, lmFileBackups, filesystem) ->
-    pageTitle.set(gettext('Listenverwaltung'))
+    pageTitle.set(gettext('Listmanagement'))
 
     $scope.students_sorts = [
         {

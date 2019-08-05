@@ -2305,7 +2305,7 @@
   });
 
   angular.module('lm.users').controller('LMUsersListManagementController', function($scope, $http, $location, $route, $uibModal, gettext, notify, lmEncodingMap, messagebox, pageTitle, lmFileEditor, lmFileBackups, filesystem) {
-    pageTitle.set(gettext('Listenverwaltung'));
+    pageTitle.set(gettext('Listmanagement'));
     $scope.students_sorts = [
       {
         name: gettext('Class'),

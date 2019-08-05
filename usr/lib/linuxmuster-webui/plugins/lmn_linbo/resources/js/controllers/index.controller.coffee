@@ -477,6 +477,9 @@ angular.module('lm.linbo').controller 'LMLINBOController', ($scope, $http, $uibM
                 notify.error gettext('Not a valid name! Only alphanumeric characters are allowed!')
                 return
             if newName
+                if "start.conf."+newName in $scope.configs
+                    notify.error gettext('A config file with this name already exists!')
+                    return
                 if example
                     $http.get("/api/lm/linbo/config/examples/#{example}").then (resp) ->
                         resp.data['config']['LINBO']['Group'] = newName

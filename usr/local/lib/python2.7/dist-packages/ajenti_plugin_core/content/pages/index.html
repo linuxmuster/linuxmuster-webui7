@@ -43,9 +43,9 @@
 
 
                 <a class="navbar-brand ellipsis" ng:href="{{urlPrefix}}/view/">
-                    <span class="title">
-                        {{customization.plugins.core.title || 'Ajenti'}}
-                    </span> <span class="subtitle hide-phone hide-tablet">{{pageTitle|translate}}</span>
+                    <span class="title" translate>
+                        School Console
+                    </span> <span class="subtitle hide-phone hide-tablet" ng:if="pageTitle"> > {{pageTitle|translate}}</span>
                 </a>
 
                 <a ng:click="toggleWidescreen()" class="navbar-brand navigation-toggle hide-phone hide-tablet  pull-right" style="padding-left: 35px;">

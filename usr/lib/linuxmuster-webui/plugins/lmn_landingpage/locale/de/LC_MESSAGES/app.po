@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-05 15:02+0000\n"
-"PO-Revision-Date: 2019-08-05 15:22\n"
+"POT-Creation-Date: 2019-08-06 17:52+0200\n"
+"PO-Revision-Date: 2019-08-06 15:59\n"
 "Last-Translator: kiarn\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -16,67 +16,67 @@ msgstr ""
 "X-Crowdin-Language: de\n"
 "X-Crowdin-File: /2.0/lmn_landingpage.po\n"
 
-#: lmn_landingpage/resources/partial/index.html:29
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:29
 msgid "Account Information"
 msgstr "Konto Informationen"
 
-#: lmn_landingpage/resources/partial/index.html:21
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:21
 msgid "But keep in mind:"
 msgstr "Aber denken Sie daran:"
 
-#: lmn_landingpage/resources/partial/index.html:38
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:38
 msgid "Change password"
 msgstr "Passwort ändern"
 
-#: lmn_landingpage/resources/partial/index.html:14
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:14
 msgid "Hello {{user.givenName}} {{user.sn}},"
 msgstr "Hallo {{user.givenName}} {{user.sn}},"
 
-#: lmn_landingpage/resources/partial/index.html:33
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:33
 msgid "Mail:  <b>{{user.mail}}</b>"
 msgstr "E-Mail:  <b>{{user.mail}}</b>"
 
-#: lmn_landingpage/resources/partial/index.html:32
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:32
 msgid "Name:  <b>{{user.givenName}}, {{user.sn}}</b>"
 msgstr "Name:  <b>{{user.givenName}}, {{user.sn}}</b>"
 
-#: lmn_landingpage/resources/partial/index.html:44
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:44
 msgid "Quotas"
 msgstr "Quotas"
 
-#: lmn_landingpage/resources/partial/index.html:35
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:35
 msgid "Role: <b>{{user.sophomorixAdminClass}}</b>"
 msgstr "Rolle: <b>{{user.sophomorixAdminClass}}</b>"
 
-#: lmn_landingpage/resources/partial/index.html:34
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:34
 msgid "School: <b>{{user.sophomorixSchoolname}}</b>"
 msgstr "Schule: <b>{{user.sophomorixSchoolname}}</b>"
 
-#: lmn_landingpage/resources/partial/index.html:48
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:48
 msgid "Total"
 msgstr "Gesamt"
 
-#: lmn_landingpage/resources/partial/index.html:20
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:20
 msgid "Use the sidebar to navigate through the options."
 msgstr "Benutzen Sie die Seitenleiste, um durch die Optionen zu navigieren."
 
-#: lmn_landingpage/resources/partial/index.html:1
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:1
 msgid "Welcome to Linuxmuster.net version 7!"
 msgstr "Willkommen zu Linuxmuster.net 7!"
 
-#: lmn_landingpage/resources/partial/index.html:22
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:22
 msgid "With great power comes great responsibility!"
 msgstr "Aus großer Macht folgt große Verantwortung!"
 
-#: lmn_landingpage/resources/partial/index.html:5
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:5
 msgid "You should not use WebUI as root user! If this is your first time running WebUI, proceed through the setup wizard. Afterwards login using the global-admin account."
 msgstr "Sie sollten das Webinterface nicht als root verwenden Beim ersten Mal sollten Sie den Setup-Wizard durchlaufen und anschließend den Global-Admin Account verwenden."
 
-#: lmn_landingpage/resources/partial/index.html:17
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:17
 msgid "use the sidebar to navigate through the options. You can start by using the Groupmembership module to subscribe to your classes."
 msgstr "verwenden Sie die Seitenleiste, um in den Einstellungen zu navigieren. Sie könnten damit beginnen, sich mit Hilfe des Gruppenmitgliedschaft-Moduls in Ihre Klassen einzutragen."
 
-#: lmn_landingpage/resources/js/controllers/index.controller.coffee:7
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:7
 msgid "Home"
 msgstr "Hauptseite"
 

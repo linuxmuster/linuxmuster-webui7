@@ -4,7 +4,7 @@
     </div>
     <div class="modal-body">
         <img src="/resources/lmn_common/resources/img/logo-full.png" / />
-        <p>
+        <p translate>
             Please follow the next few steps to quickly configure your system
         </p>
         <div class="form-group">
@@ -91,7 +91,7 @@
 
             <p>&ldquo;Copyright&rdquo; also means copyright-like laws that apply to other kinds of
             works, such as semiconductor masks.</p>
-             
+
             <p>&ldquo;The Program&rdquo; refers to any copyrightable work licensed under this
             License.  Each licensee is addressed as &ldquo;you&rdquo;.  &ldquo;Licensees&rdquo; and
             &ldquo;recipients&rdquo; may be individuals or organizations.</p>
@@ -641,8 +641,8 @@
 
             <p>END OF TERMS AND CONDITIONS</p>
         </div>
-	<br>
-        <span checkbox ng:model="$ctrl.licenseAccepted" text="I accept the license terms" />
+    <br>
+    <label translate><input type="checkbox" ng:model="$ctrl.licenseAccepted" /> I accept the license terms </label>
     </div>
     <div class="modal-footer">
         <a href='#' ng:click="$ctrl.apply()" class="btn btn-default btn-flat" translate>Next</a>

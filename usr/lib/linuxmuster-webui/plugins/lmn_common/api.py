@@ -65,7 +65,7 @@ def lmn_backup_file(path):
 
     dir, name = os.path.split(path)
     backups = sorted([x for x in os.listdir(dir) if x.startswith('.%s.bak.' % name)])
-    while len(backups) > 4:
+    while len(backups) > 10:
         os.unlink(os.path.join(dir, backups[0]))
         backups.pop(0)
 

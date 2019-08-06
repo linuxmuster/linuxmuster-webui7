@@ -4,8 +4,7 @@ from jadi import component
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint
 from aj.auth import authorize
-from aj.plugins.lmn_common.api import lmn_backup_file
-from aj.plugins.lmn_common.api import lmn_getSophomorixValue
+from aj.plugins.lmn_common.api import lmn_write_configfile, lmn_getSophomorixValue
 from configparser import ConfigParser
 
 class IniParser(ConfigParser):
@@ -124,9 +123,7 @@ class Handler(HttpPlugin):
                 content += originalLine
 
 
-            lmn_backup_file(path)
-            with open(path, 'w') as f:
-                f.write(content)
+            lmn_write_configfile(path, content)
 
     @url(r'/api/lm/schoolsettings/school-share')
     @authorize('lm:schoolsettings')

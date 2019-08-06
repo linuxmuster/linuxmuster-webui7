@@ -13,6 +13,8 @@ import six
 import yaml
 import threading
 import ast
+import unicodecsv as csv
+import filecmp
 
 from aj.auth import AuthenticationService
 
@@ -69,6 +71,33 @@ def lmn_backup_file(path):
 
     with open(dir + '/.' + name + '.bak.' + str(int(time.time())), 'w') as f:
         f.write(open(path).read())
+
+def lmn_write_csv(path, fieldnames, data, encoding='utf-8'):
+    """Write CSV and backup csv file only if there's no difference with the original. Delimiter is always ;"""
+    tmp = path + '_tmp'
+    with open(tmp, 'w') as f:
+        csv.DictWriter(
+            f,
+            delimiter=';',
+            fieldnames=fieldnames,
+            encoding=encoding
+        ).writerows(data)
+    if not filecmp.cmp(tmp, path):
+        lmn_backup_file(path)
+        os.rename(tmp, path)
+    else:
+        os.unlink(tmp)
+
+def lmn_write_configfile(path, data):
+    """Write config file and backup it only if there's no difference with the original."""
+    tmp = path + '_tmp'
+    with open(tmp, 'w') as f:
+        f.write(data)
+    if not filecmp.cmp(tmp, path):
+        lmn_backup_file(path)
+        os.rename(tmp, path)
+    else:
+        os.unlink(tmp)
 
 def lmn_list_backup_file(path):
     if not os.path.exists(path):

@@ -7,10 +7,7 @@ from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
 from aj.plugins.lmn_common.api import CSVSpaceStripper
 from aj.auth import authorize
-from aj.plugins.lmn_common.api import lmn_checkPermission
-from aj.plugins.lmn_common.api import lmn_backup_file
-from aj.plugins.lmn_common.api import lmn_getSophomorixValue
-
+from aj.plugins.lmn_common.api import lmn_checkPermission, lmn_write_csv, lmn_getSophomorixValue
 
 @component(HttpPlugin)
 class Handler(HttpPlugin):
@@ -150,14 +147,7 @@ class Handler(HttpPlugin):
                 for item in data:
                     item.pop('_isNew', None)
                     item.pop('null', None)
-                lmn_backup_file(path)
-                with open(path, 'w') as f:
-                    csv.DictWriter(
-                        f,
-                        delimiter=';',
-                        fieldnames=fieldnames,
-                        encoding=http_context.query.get('encoding', 'utf-8')
-                    ).writerows(data)
+                lmn_write_csv(path, fieldnames, data, http_context.query.get('encoding', 'utf-8'))
 
     @url(r'/api/lm/users/teachers-list')
     @endpoint(api=True)
@@ -195,14 +185,7 @@ class Handler(HttpPlugin):
                 data = http_context.json_body()
                 for item in data:
                     item.pop('_isNew', None)
-                lmn_backup_file(path)
-                with open(path, 'w') as f:
-                    csv.DictWriter(
-                        f,
-                        delimiter=';',
-                        fieldnames=fieldnames,
-                        encoding=http_context.query.get('encoding', 'utf-8')
-                    ).writerows(data)
+                lmn_write_csv(path, fieldnames, data, http_context.query.get('encoding', 'utf-8'))
 
     @url(r'/api/lm/sophomorixUsers/teachers')
     @endpoint(api=True)
@@ -339,14 +322,7 @@ class Handler(HttpPlugin):
                 data = http_context.json_body()
                 for item in data:
                     item.pop('_isNew', None)
-                lmn_backup_file(path)
-                with open(path, 'w') as f:
-                    csv.DictWriter(
-                        f,
-                        delimiter=';',
-                        fieldnames=fieldnames,
-                        encoding=http_context.query.get('encoding', 'utf-8')
-                    ).writerows(data)
+                lmn_write_csv(path, fieldnames, data, http_context.query.get('encoding', 'utf-8'))
 
     @url(r'/api/lm/users/extra-courses')
     @endpoint(api=True)
@@ -381,14 +357,7 @@ class Handler(HttpPlugin):
                 data = http_context.json_body()
                 for item in data:
                     item.pop('_isNew', None)
-                lmn_backup_file(path)
-                with open(path, 'w') as f:
-                    csv.DictWriter(
-                        f,
-                        delimiter=';',
-                        fieldnames=fieldnames,
-                        encoding=http_context.query.get('encoding', 'utf-8')
-                    ).writerows(data)
+                lmn_write_csv(path, fieldnames, data, http_context.query.get('encoding', 'utf-8'))
 
     @url(r'/api/lm/users/check')
     @authorize('lm:users:check')

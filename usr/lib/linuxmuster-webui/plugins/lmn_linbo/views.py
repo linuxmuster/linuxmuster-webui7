@@ -4,7 +4,7 @@ from jadi import component
 from aj.auth import authorize
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint
-from aj.plugins.lmn_common.api import lmn_backup_file
+from aj.plugins.lmn_common.api import lmn_backup_file, lmn_write_configfile
 import magic
 
 
@@ -222,7 +222,5 @@ class Handler(HttpPlugin):
                     content += '%s = %s\n' % (k, convert(v))
                 content += '\n'
 
-            lmn_backup_file(path)
-            with open(path, 'w') as f:
-                f.write(content.encode('utf-8'))
+            lmn_write_configfile(path, content.encode('utf-8'))
             os.chmod(path, 0o755)

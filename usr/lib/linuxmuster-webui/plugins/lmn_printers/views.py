@@ -4,7 +4,7 @@ from jadi import component
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint
 from aj.auth import authorize
-from aj.plugins.lmn_common.api import lmn_backup_file
+from aj.plugins.lmn_common.api import lmn_write_configfile
 
 
 @component(HttpPlugin)
@@ -59,6 +59,4 @@ class Handler(HttpPlugin):
 
                 content += '</Location>\n'
 
-            # lmn_backup_file(access_path)
-            # with open(access_path, 'w') as f:
-                # f.write(content)
+            ## lmn_write_configfile(access_path, content)

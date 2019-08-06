@@ -1,0 +1,124 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: linuxmusternet\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-08-06 17:51+0200\n"
+"PO-Revision-Date: 2019-08-06 15:59\n"
+"Last-Translator: kiarn\n"
+"Language-Team: Japanese\n"
+"Language: ja_JP\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: crowdin.com\n"
+"X-Crowdin-Project: linuxmusternet\n"
+"X-Crowdin-Language: ja\n"
+"X-Crowdin-File: /2.0/lmn_common.po\n"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:146
+msgid "A bootstrap error has occured"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileBackups.modal.html:2
+msgid "Backups"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileEditor.modal.html:18
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileBackups.service.coffee:53
+msgid "Cancel"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileBackups.modal.html:23
+msgid "Close"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileEditor.modal.html:17
+msgid "Download CSV"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileEditor.modal.html:5
+msgid "Drop a CSV file here to import"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:84
+msgid "Elevate"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:129
+msgid "Enter"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:89
+msgid "Log out"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileBackups.modal.html:5
+msgid "No backups available"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:170
+msgid "OK"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:149
+msgid "Please see browser console"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:125
+msgid "Quick search"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileEditor.modal.html:16
+msgid "Save"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:46
+msgid "School Console"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:15
+msgid "User Management"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:22
+msgid "List Management"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:29
+msgid "Quota"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:36
+msgid "Device Management"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:43
+msgid "Class Management"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:50
+msgid "School Settings"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:57
+msgid "Global Settings"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileBackups.service.coffee:52
+msgid "Do you really want to delete"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileBackups.service.coffee:53
+msgid "Confirmation"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:44
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:47
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:90
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:93
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:138
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:141
+msgid "Uploaded"
+msgstr ""
+

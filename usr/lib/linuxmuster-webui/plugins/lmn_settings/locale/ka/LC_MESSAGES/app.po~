@@ -1,0 +1,187 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ajenti\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-08-06 17:52+0200\n"
+"PO-Revision-Date: 2016-05-21 17:18-0400\n"
+"Last-Translator: eugenepankov <john.pankov@gmail.com>\n"
+"Language-Team: Georgian\n"
+"Language: ka_GE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: crowdin.com\n"
+"X-Crowdin-Project: ajenti\n"
+"X-Crowdin-Language: ka\n"
+"X-Crowdin-File: /2.0/lmn_settings.po\n"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:220
+msgid "Admin e-mail"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:131
+msgid "Cloudquota Percentage"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:168
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:176
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:184
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:192
+msgid "Detected encoding"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:162
+msgid "Encoding"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:208
+msgid "External FQDN for printing"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:181
+msgid "Extra courses encoding"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:189
+msgid "Extra students encoding"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:8
+msgid "General"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/webuiSettings.html:27
+msgid "Generate a self-signed certificate"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:204
+msgid "Internal FQDN for printing"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/webuiSettings.html:11
+msgid "Language"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:216
+msgid "MOODLE URL"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:145
+msgid "Mailquota Default in MiB"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:46
+msgid "Password Length"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:57
+msgid "Password length"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:197
+msgid "Printing data"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:92
+msgid "Quota"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:103
+msgid "Quota Default Global in MiB"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:117
+msgid "Quota Default School in MiB"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:35
+msgid "Random password"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:79
+msgid "Removal after departure (days)"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/webuiSettings.html:46
+msgid "Restart panel"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/webuiSettings.html:20
+msgid "SSL certificate file"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:212
+msgid "Samba domain for printing"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:231
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/webuiSettings.html:45
+msgid "Save"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:200
+msgid "School name"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:99
+msgid "Schooladministrator"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:20
+msgid "Schoolname"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:30
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:97
+msgid "Students"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:165
+msgid "Students encoding"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:31
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:98
+msgid "Teachers"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:173
+msgid "Teachers encoding"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:69
+msgid "Tolerance after departure (days)"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/main.py:15
+msgid "WebUI Settings"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/main.py:22
+msgid "School Settings"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/main.py:36
+msgid "Configure settings"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:8
+msgid "Settings"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:11
+msgid "Minimal"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:12
+msgid "Average"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:13
+msgid "Maximal"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:54
+msgid "Saved"
+msgstr ""

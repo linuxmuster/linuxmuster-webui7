@@ -54,4 +54,5 @@ angular.module('lm.settings').controller 'LMSettingsController', ($scope, $http,
             notify.success gettext('Saved')
 
     $scope.backups = () ->
-        lmFileBackups.show('/etc/linuxmuster/sophomorix/user/sophomorix.conf')
+        school = "default-school"
+        lmFileBackups.show('/etc/linuxmuster/sophomorix/' + school + '/school.conf')

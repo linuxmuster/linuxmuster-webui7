@@ -70,7 +70,9 @@
       });
     };
     return $scope.backups = function() {
-      return lmFileBackups.show('/etc/linuxmuster/sophomorix/user/sophomorix.conf');
+      var school;
+      school = "default-school";
+      return lmFileBackups.show('/etc/linuxmuster/sophomorix/' + school + '/school.conf');
     };
   });
 

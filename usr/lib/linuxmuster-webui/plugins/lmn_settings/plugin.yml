@@ -11,5 +11,8 @@ dependencies:
 resources:
     - 'resources/js/module.coffee'
     - 'resources/js/controllers/index.controller.coffee'
+    - 'resources/js/controllers/webuiSettings.controller.es'
+    - 'resources/js/routing.es'
     - 'resources/partial/index.html'
+    - 'resources/partial/webuiSettings.html'
     - 'ng:lm.settings'

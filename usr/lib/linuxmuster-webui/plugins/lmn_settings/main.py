@@ -12,6 +12,13 @@ class ItemProvider(SidebarItemProvider):
         return [
             {
                 'attach': 'category:schoolsettingsdefaults',
+                'name': _('WebUI Settings'),
+                'icon': 'cog',
+                'url': '/view/lm/webuisettings',
+                'children': [],
+            },
+            {
+                'attach': 'category:schoolsettingsdefaults',
                 'name': _('School Settings'),
                 'icon': 'wrench',
                 'url': '/view/lm/schoolsettings',

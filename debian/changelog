@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.81-1) lmn7; urgency=medium 
+
+  * Current snapshot build aa7a87a1b69f53cc54530032701b61bf621764e6
+   *     added webuisettings module
+
+ -- Andreas Till <andreas.till@netzint.de> Tue Aug  6 14:43:52 UTC 2019
+
 linuxmuster-webui7 (1.0.80-1) lmn7; urgency=medium 
 
   * Current snapshot build f1c04ef6efcd90895e6dea4e28a7759988697bbc

@@ -119,12 +119,12 @@
                 <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.sophomorixComment" placeholder="Sophomorix-Comment" class="form-control" />
             </td>
             <td width="1">
-                <button class="btn btn-default" ng:click="duplicate(device)" title="Duplicate">
+                <button class="btn btn-default" ng:click="duplicate(device)" title={{duplicatetext}}>
                     <i class="fa fa-copy"></i>
                 </button>
             </td>
             <td width="1">
-                <button class="btn btn-default" ng:click="remove(device)" title="Remove">
+                <button class="btn btn-default" ng:click="remove(device)" title={{removetext}}>
                     <i class="fa fa-trash-o"></i>
                 </button>
             </td>

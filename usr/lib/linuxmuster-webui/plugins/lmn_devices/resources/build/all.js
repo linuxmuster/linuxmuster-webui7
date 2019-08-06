@@ -35,6 +35,8 @@
   angular.module('lm.devices').controller('LMDevicesController', function($scope, $http, $uibModal, $route, gettext, notify, pageTitle, lmFileEditor, lmFileBackups) {
     pageTitle.set(gettext('Devices'));
     $scope.first_save = false;
+    $scope.duplicatetext = gettext('Duplicate');
+    $scope.removetext = gettext('Remove');
     $scope.validateField = function(name, val, isnew) {
       var valid;
       if (name) {

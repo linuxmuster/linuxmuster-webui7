@@ -34,8 +34,6 @@
       if ($scope.identity.user === 'root') {
         return;
       }
-      // $scope.identity.user = 'hulk'
-      // $scope.getUser($scope.identity.user)
       $scope.getUser($scope.identity.user);
     });
     $scope.getQuota = $http.post('/api/lmn/quota/').then(function(resp) {

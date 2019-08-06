@@ -34,7 +34,7 @@
                 </button>
                 <ul uib-dropdown-menu class="dropdown-menu-right" style="width:200px">
                     <li ng:repeat="size in [10, 50, 100, 500, 1000]">
-                        <a ng:click="paging.pageSize = size"><i class="fa fa-list-ol"></i> {{size}} students</a>
+                        <a ng:click="paging.pageSize = size"><i class="fa fa-list-ol"></i> {{size}} <span translate >students</span></a>
                     </li>
                     <li>
                         <div class="input-group" style="display: table">
@@ -49,7 +49,7 @@
         </div>
         <table class="table" style="width:100%">
             <tr><th> </th>
-                <th width="120"> Loginname / Class </th>
+                <th width="120"> <span translate> Loginname / Class </span> </th>
                 <th> Name </th></tr>
             <tr ng:repeat="student in students|filter:filter|orderBy:['-_isNew', sort.fx]|page:paging.page:paging.pageSize" ng:show="student.class[0] != '#'">
                 <td width="30" style="text-align:center;">
@@ -62,30 +62,35 @@
                     <b>{{student.givenName}}</b> <br> {{student.sn}}
                 </td>
                 <td width="1">
-                    <span uib-dropdown>
+                    <span  uib-dropdown class="dropup" >
                         <button class="btn btn-default" uib-dropdown-toggle>
                             <i class="fa fa-key"></i> <span translate>Password</span>
                             <span class="caret"></span>
                         </button>
-                        <ul uib-dropdown-menu class="dropdown-menu-right">
+                        <ul uib-dropdown-menu class="dropdown-menu-right" style=" margin-bottom: -30px; margin-right: 40px; z-index: 4000;">
                             <li>
                                 <a ng:click="showInitialPassword([student])" translate>
-                                    Show first password
+                                    Show initial password
                                 </a>
                             </li>
                             <li>
                                 <a ng:click="setInitialPassword([student])" translate>
-                                    Set initial password
+                                    Restore initial password
                                 </a>
                             </li>
                             <li>
                                 <a ng:click="setRandomPassword([student])" translate>
-                                    Set random password
+                                    Set random initial password
                                 </a>
                             </li>
                             <li>
-                                <a ng:click="setCustomPassword([student])" translate>
-                                    set custom password
+                                <a ng:click="setCustomPassword([student], 'initial')" translate>
+                                    Set custom initial password
+                                </a>
+                            </li>
+                            <li>
+                                <a ng:click="setCustomPassword([student], 'actual')" translate>
+                                    Set actual user password
                                 </a>
                             </li>
                         </ul>

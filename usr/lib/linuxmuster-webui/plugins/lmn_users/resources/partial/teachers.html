@@ -33,7 +33,7 @@
                 </button>
                 <ul uib-dropdown-menu class="dropdown-menu-right" style="width:200px">
                     <li ng:repeat="size in [10, 50, 100, 500, 1000]">
-                        <a ng:click="paging.pageSize = size"><i class="fa fa-list-ol"></i> {{size}} teachers</a>
+                        <a ng:click="paging.pageSize = size"><i class="fa fa-list-ol"></i> {{size}} <span translate>teachers</span></a>
                     </li>
                     <li>
                         <div class="input-group" style="display: table">
@@ -66,30 +66,35 @@
                     <b>{{teacher.givenName}}</b> <br> {{teacher.sn}}
                 </td>
                 <td width="1">
-                    <span uib-dropdown>
+                    <span  uib-dropdown class="dropup" >
                         <button class="btn btn-default" uib-dropdown-toggle>
                             <i class="fa fa-key"></i> <span translate>Password</span>
                             <span class="caret"></span>
                         </button>
-                        <ul uib-dropdown-menu class="dropdown-menu-right">
+                        <ul uib-dropdown-menu class="dropdown-menu-right" style=" margin-bottom: -30px; margin-right: 40px; z-index: 4000;">
                             <li>
                                 <a ng:click="showInitialPassword([teacher])" translate>
-                                    Show first password
+                                    Show initial password
                                 </a>
                             </li>
                             <li>
                                 <a ng:click="setInitialPassword([teacher])" translate>
-                                    Set initial password
+                                    Restore initial password
                                 </a>
                             </li>
                             <li>
                                 <a ng:click="setRandomPassword([teacher])" translate>
-                                    Set random password
+                                    Set random initial password
                                 </a>
                             </li>
                             <li>
-                                <a ng:click="setCustomPassword([teacher])" translate>
-                                    Set custom password
+                                <a ng:click="setCustomPassword([teacher], 'initial')" translate>
+                                    Set custom initial password
+                                </a>
+                            </li>
+                            <li>
+                                <a ng:click="setCustomPassword([teacher], 'actual')" translate>
+                                    Set actual user password
                                 </a>
                             </li>
                         </ul>
@@ -109,39 +114,6 @@
                         </ul>
                     </span>
                 </td>
-                <!--
-
-                    <td width="1">
-                    <button class="btn btn-default" ng:click="showInitialPassword([teacher])">
-                    <i class="fa fa-key"></i> <span translate>Show first password</span>
-                    </button>
-                    </td>
-                    <td width="1">
-                    <span uib-dropdown>
-                    <button class="btn btn-default" uib-dropdown-toggle>
-                    <i class="fa fa-arrow-right"></i> <span translate>Change password</span>
-                    <span class="caret"></span>
-                    </button>
-                    <ul uib-dropdown-menu class="dropdown-menu-right">
-                    <li>
-                    <a ng:click="setInitialPassword([teacher])" translate>
-                    Initial password
-                    </a>
-                    </li>
-                    <li>
-                    <a ng:click="setRandomPassword([teacher])" translate>
-                    Random password
-                    </a>
-                    </li>
-                    <li>
-                    <a ng:click="setCustomPassword([teacher])" translate>
-                    Custom password
-                    </a>
-                    </li>
-                    </ul>
-                    </span>
-                    </td>
-                -->
             </tr>
         </table>
 

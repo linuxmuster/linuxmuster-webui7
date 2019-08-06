@@ -17,8 +17,6 @@ angular.module('lmn.landingpage').controller 'LMNLandingController', ($scope, $h
         if $scope.identity.user is null
            return
         if $scope.identity.user is 'root'
-           # $scope.identity.user = 'hulk'
-           # $scope.getUser($scope.identity.user)
            return
         $scope.getUser($scope.identity.user)
         return

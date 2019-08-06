@@ -34,13 +34,14 @@ angular.module('lm.users').controller 'LMUsersSchooladminsController', ($scope, 
        $http.post('/api/lm/users/password', {users: ( x['sAMAccountName'] for x in user ), action: 'set-random'}).then (resp) ->
           notify.success gettext('Random password set')
 
-    $scope.setCustomPassword = (user) ->
+    $scope.setCustomPassword = (user,type) ->
        $uibModal.open(
           templateUrl: '/lmn_users:resources/partial/customPassword.modal.html'
           controller: 'LMNUsersCustomPasswordController'
           size: 'mg'
           resolve:
              users: () -> user
+             type: () -> type
        )
 
     $scope.deleteSchoolAdmin = (user) ->

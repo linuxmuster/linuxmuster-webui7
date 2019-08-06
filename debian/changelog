@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.80-1) lmn7; urgency=medium 
+
+  * Current snapshot build f1c04ef6efcd90895e6dea4e28a7759988697bbc
+   *     Some fixs for the backups.
+
+ -- Andreas Till <andreas.till@netzint.de> Tue Aug  6 11:50:39 UTC 2019
+
 linuxmuster-webui7 (1.0.79-1) lmn7; urgency=medium 
 
   * Current snapshot build b95143eba5b4dc133ff76c2a0dee80fa6ef9c122

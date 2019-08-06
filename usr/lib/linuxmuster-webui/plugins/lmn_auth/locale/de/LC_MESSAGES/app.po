@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-05 12:31+0200\n"
-"PO-Revision-Date: 2019-08-05 10:35\n"
+"POT-Creation-Date: 2019-08-05 15:02+0000\n"
+"PO-Revision-Date: 2019-08-05 15:22\n"
 "Last-Translator: kiarn\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -16,55 +16,55 @@ msgstr ""
 "X-Crowdin-Language: de\n"
 "X-Crowdin-File: /2.0/lmn_auth.po\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:27
+#: lmn_auth/resources/partial/index.html:27
 msgid "Change password"
 msgstr "Passwort ändern"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:14
+#: lmn_auth/resources/partial/index.html:14
 msgid "Current password"
 msgstr "Aktuelles Passwort"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:3
+#: lmn_auth/resources/partial/index.html:3
 msgid "Minimal length is 7 characters. Use upper, lower and special characters or numbers. (e.g. Muster!)"
 msgstr "Minimale Passwortlänge ist 7 Zeichen. Verwenden Sie Großbuchstaben, Kleinbuchstaben und Sonderzeichen oder Zahlen. (z.B. Muster!)"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:18
+#: lmn_auth/resources/partial/index.html:18
 msgid "New password"
 msgstr "Neues Passwort"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:22
+#: lmn_auth/resources/partial/index.html:22
 msgid "Repeat password"
 msgstr "Passwort wiederholen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:5
+#: lmn_auth/resources/partial/index.html:5
 msgid "Valid characters are: a-z A-Z 0-9 !§+-@#$%&*( )[ ]{ }"
 msgstr "Gültige Zeichen sind: a-z A-Z 0-9 !§+-@#$%&*( )[ ]{ }"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:13
+#: lmn_auth/api.py:13
 msgid "Linux Muster LDAP"
 msgstr "linuxmuster LDAP"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:18
+#: lmn_auth/resources/js/controllers/index.controller.coffee:18
 msgid "Change Password"
 msgstr "Passwort ändern"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:24
+#: lmn_auth/resources/js/controllers/index.controller.coffee:24
 msgid "Passwords do not match"
 msgstr "Passwörter stimmen nicht überrein"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:27
+#: lmn_auth/resources/js/controllers/index.controller.coffee:27
 msgid "Password contains invalid characters"
 msgstr "Passwort enthält unerlaubte Zeichen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:30
+#: lmn_auth/resources/js/controllers/index.controller.coffee:30
 msgid "Password too weak"
 msgstr "Passwort ist zu schwach"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:35
+#: lmn_auth/resources/js/controllers/index.controller.coffee:35
 msgid "Password changed"
 msgstr "Passwort geändert"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:38
+#: lmn_auth/resources/js/controllers/index.controller.coffee:38
 msgid "Password change failed"
 msgstr "Passwortänderung ist fehlgeschlagen"
 

@@ -293,7 +293,7 @@
         return notify.success(gettext('Random password set'));
       });
     };
-    $scope.setCustomPassword = function(user) {
+    $scope.setCustomPassword = function(user, type) {
       return $uibModal.open({
         templateUrl: '/lmn_users:resources/partial/customPassword.modal.html',
         controller: 'LMNUsersCustomPasswordController',
@@ -301,6 +301,9 @@
         resolve: {
           users: function() {
             return user;
+          },
+          type: function() {
+            return type;
           }
         }
       });
@@ -514,7 +517,7 @@
         return notify.success(gettext('Random password set'));
       });
     };
-    $scope.setCustomPassword = function(user) {
+    $scope.setCustomPassword = function(user, type) {
       return $uibModal.open({
         templateUrl: '/lmn_users:resources/partial/customPassword.modal.html',
         controller: 'LMNUsersCustomPasswordController',
@@ -522,6 +525,9 @@
         resolve: {
           users: function() {
             return user;
+          },
+          type: function() {
+            return type;
           }
         }
       });
@@ -716,7 +722,7 @@
         return notify.success(gettext('Random password set'));
       });
     };
-    $scope.setCustomPassword = function(user) {
+    $scope.setCustomPassword = function(user, type) {
       return $uibModal.open({
         templateUrl: '/lmn_users:resources/partial/customPassword.modal.html',
         controller: 'LMNUsersCustomPasswordController',
@@ -724,6 +730,9 @@
         resolve: {
           users: function() {
             return user;
+          },
+          type: function() {
+            return type;
           }
         }
       });
@@ -964,7 +973,7 @@
         return notify.success(gettext('Random password set'));
       });
     };
-    $scope.setCustomPassword = function(user) {
+    $scope.setCustomPassword = function(user, type) {
       return $uibModal.open({
         templateUrl: '/lmn_users:resources/partial/customPassword.modal.html',
         controller: 'LMNUsersCustomPasswordController',
@@ -972,6 +981,9 @@
         resolve: {
           users: function() {
             return user;
+          },
+          type: function() {
+            return type;
           }
         }
       });
@@ -1729,7 +1741,7 @@
         return notify.success(gettext('Random password set'));
       });
     };
-    $scope.setCustomPassword = function(user) {
+    $scope.setCustomPassword = function(user, type) {
       return $uibModal.open({
         templateUrl: '/lmn_users:resources/partial/customPassword.modal.html',
         controller: 'LMNUsersCustomPasswordController',
@@ -1737,6 +1749,9 @@
         resolve: {
           users: function() {
             return user;
+          },
+          type: function() {
+            return type;
           }
         }
       });

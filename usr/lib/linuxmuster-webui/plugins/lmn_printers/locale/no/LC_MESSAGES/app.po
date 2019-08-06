@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-05 12:32+0200\n"
-"PO-Revision-Date: 2019-08-05 10:36\n"
+"POT-Creation-Date: 2019-08-05 15:02+0000\n"
+"PO-Revision-Date: 2019-08-05 15:23\n"
 "Last-Translator: kiarn\n"
 "Language-Team: Norwegian\n"
 "Language: no_NO\n"
@@ -16,41 +16,41 @@ msgstr ""
 "X-Crowdin-Language: no\n"
 "X-Crowdin-File: /2.0/lmn_printers.po\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_printers/resources/partial/printer.modal.html:25
+#: lmn_printers/resources/partial/printer.modal.html:25
 msgid "Add"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_printers/resources/partial/printer.modal.html:33
+#: lmn_printers/resources/partial/printer.modal.html:33
 msgid "Close"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_printers/resources/partial/printer.modal.html:16
+#: lmn_printers/resources/partial/printer.modal.html:16
 msgid "No filter is set. All devices can use this printer."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_printers/resources/partial/index.html:16
-#: usr/lib/linuxmuster-webui/plugins/lmn_printers/resources/partial/printer.modal.html:32
+#: lmn_printers/resources/partial/index.html:16
+#: lmn_printers/resources/partial/printer.modal.html:32
 msgid "Save"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_printers/resources/partial/printer.modal.html:23
+#: lmn_printers/resources/partial/printer.modal.html:23
 msgid "Type to search..."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_printers/resources/partial/printer.modal.html:2
+#: lmn_printers/resources/partial/printer.modal.html:2
 msgid "{{printer.name}}"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_printers/main.py:15
-#: usr/lib/linuxmuster-webui/plugins/lmn_printers/resources/js/controllers/index.controller.coffee:26
+#: lmn_printers/main.py:15
+#: lmn_printers/resources/js/controllers/index.controller.coffee:26
 msgid "Printers"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_printers/main.py:30
+#: lmn_printers/main.py:30
 msgid "Configure printers"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_printers/resources/js/controllers/index.controller.coffee:90
+#: lmn_printers/resources/js/controllers/index.controller.coffee:90
 msgid "Saved"
 msgstr ""
 

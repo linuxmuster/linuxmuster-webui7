@@ -207,7 +207,7 @@ class Handler(HttpPlugin):
             else:
                 with authorize('lm:users:teachers:read'):
                     user = http_context.json_body()['user']
-                    sophomorixCommand = ['sophomorix-query', '--teacher', '--schoolbase', schoolname, '--user-basic', '-jj', '--sam', user]
+                    sophomorixCommand = ['sophomorix-query', '--teacher', '--schoolbase', schoolname, '--user-full', '-jj', '--sam', user]
             teachersCheck = lmn_getSophomorixValue(sophomorixCommand, 'LISTS/USER')
             if len(teachersCheck) != 0:
                 teachers = lmn_getSophomorixValue(sophomorixCommand, 'USER')

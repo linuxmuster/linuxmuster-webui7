@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-06 16:10+0000\n"
-"PO-Revision-Date: 2019-08-06 16:14\n"
+"PO-Revision-Date: 2019-08-06 16:17\n"
 "Last-Translator: kiarn\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -110,7 +110,7 @@ msgstr "Hinweis: Die minimale Passwortlänge ist 7 Zeichen. Verwenden Sie Klein-
 
 #: lmn_setup_wizard/partial/init-school.html:41
 msgid "Note: The first part (up to the first dot) of the domain name will be used as the SAMBA domain and has a maximal length of 15 characters. We suggest to use &quot;linuxmuster&quot; or &quot;lmn&quot; and prepend it to your domain."
-msgstr "Hinweis: Der erste Teil (bis zum ersten Punkt) des Domain-Namens wird als Name der SAMBA-Domäne verwendet werden und hat eine maximale Länge von 15 Zeichen. Wir empfehlen, &quot;linuxmuster &quot; oder &quot;lmn &quot; zu verwenden und Ihrem Domain-Namen voranzustellen."
+msgstr "Hinweis: Der erste Teil (bis zum ersten Punkt) des Domain-Namens wird als Name der SAMBA-Domäne verwendet werden und hat eine maximale Länge von 15 Zeichen. Wir empfehlen, \"linuxmuster\" oder \"lmn\" zu verwenden und Ihrem Domain-Namen voranzustellen."
 
 #: lmn_setup_wizard/partial/init-welcome.html:7
 msgid "Please follow the next few steps to quickly configure your system"

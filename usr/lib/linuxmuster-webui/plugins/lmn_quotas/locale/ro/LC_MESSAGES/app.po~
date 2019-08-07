@@ -1,0 +1,152 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: linuxmusternet\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-08-06 16:10+0000\n"
+"PO-Revision-Date: 2019-08-06 16:13\n"
+"Last-Translator: kiarn\n"
+"Language-Team: Romanian\n"
+"Language: ro_RO\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100>0 && n%100<20)) ? 1 : 2);\n"
+"X-Generator: crowdin.com\n"
+"X-Crowdin-Project: linuxmusternet\n"
+"X-Crowdin-Language: ro\n"
+"X-Crowdin-File: /2.0/lmn_quotas.po\n"
+
+#: lmn_quotas/resources/partial/apply.modal.html:2
+msgid "Applying changes"
+msgstr ""
+
+#: lmn_quotas/resources/partial/index.html:142
+msgid "Classes"
+msgstr ""
+
+#: lmn_quotas/resources/partial/apply.modal.html:10
+msgid "Close"
+msgstr ""
+
+#: lmn_quotas/resources/partial/index.html:46
+msgid "Cloudquota Percentage"
+msgstr ""
+
+#: lmn_quotas/resources/partial/index.html:7
+msgid "Defaults"
+msgstr ""
+
+#: lmn_quotas/resources/partial/apply.modal.html:9
+msgid "Details"
+msgstr ""
+
+#: lmn_quotas/resources/partial/index.html:107
+msgid "Login"
+msgstr ""
+
+#: lmn_quotas/resources/partial/index.html:112
+#: lmn_quotas/resources/partial/index.html:148
+#: lmn_quotas/resources/partial/index.html:191
+#: lmn_quotas/resources/partial/index.html:82
+msgid "Mail"
+msgstr ""
+
+#: lmn_quotas/resources/partial/index.html:60
+msgid "Mailquota Default in MiB"
+msgstr ""
+
+#: lmn_quotas/resources/partial/index.html:108
+#: lmn_quotas/resources/partial/index.html:146
+#: lmn_quotas/resources/partial/index.html:167
+#: lmn_quotas/resources/partial/index.html:188
+#: lmn_quotas/resources/partial/index.html:78
+msgid "Name"
+msgstr ""
+
+#: lmn_quotas/resources/partial/index.html:163
+msgid "Projects"
+msgstr ""
+
+#: lmn_quotas/resources/partial/index.html:18
+msgid "Quota Default Global in MiB"
+msgstr ""
+
+#: lmn_quotas/resources/partial/index.html:32
+msgid "Quota Default School in MiB"
+msgstr ""
+
+#: lmn_quotas/resources/partial/index.html:14
+msgid "Schooladministrator"
+msgstr ""
+
+#: lmn_quotas/resources/partial/index.html:184
+msgid "Special"
+msgstr ""
+
+#: lmn_quotas/resources/partial/index.html:103
+#: lmn_quotas/resources/partial/index.html:12
+msgid "Students"
+msgstr ""
+
+#: lmn_quotas/resources/partial/index.html:13
+#: lmn_quotas/resources/partial/index.html:74
+msgid "Teachers"
+msgstr ""
+
+#: lmn_quotas/main.py:15
+#: lmn_quotas/resources/js/controllers/index.controller.coffee:28
+msgid "Quotas"
+msgstr ""
+
+#: lmn_quotas/main.py:29
+msgid "Read LDAP"
+msgstr ""
+
+#: lmn_quotas/main.py:34
+msgid "Configure quotas"
+msgstr ""
+
+#: lmn_quotas/main.py:39
+msgid "Set quotas"
+msgstr ""
+
+#: lmn_quotas/resources/js/controllers/index.controller.coffee:17
+msgid "Update complete"
+msgstr ""
+
+#: lmn_quotas/resources/js/controllers/index.controller.coffee:19
+msgid "Update failed"
+msgstr ""
+
+#: lmn_quotas/resources/js/controllers/index.controller.coffee:61
+msgid "Webspace"
+msgstr ""
+
+#: lmn_quotas/resources/js/controllers/index.controller.coffee:62
+msgid "Main admin"
+msgstr ""
+
+#: lmn_quotas/resources/js/controllers/index.controller.coffee:63
+msgid "Program admin"
+msgstr ""
+
+#: lmn_quotas/resources/js/controllers/index.controller.coffee:64
+msgid "Web admin"
+msgstr ""
+
+#: lmn_quotas/resources/js/controllers/index.controller.coffee:68
+msgid "Workstation default"
+msgstr ""
+
+#: lmn_quotas/resources/js/controllers/index.controller.coffee:69
+msgid "Student default"
+msgstr ""
+
+#: lmn_quotas/resources/js/controllers/index.controller.coffee:70
+msgid "Teacher default"
+msgstr ""
+
+#: lmn_quotas/resources/js/controllers/index.controller.coffee:139
+msgid "Saved"
+msgstr ""
+

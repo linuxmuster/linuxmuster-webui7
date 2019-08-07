@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-06 16:10+0000\n"
-"PO-Revision-Date: 2019-08-06 16:17\n"
+"POT-Creation-Date: 2019-08-07 10:13+0000\n"
+"PO-Revision-Date: 2019-08-07 11:32\n"
 "Last-Translator: kiarn\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -94,12 +94,12 @@ msgid "Device Management"
 msgstr "Geräteverwaltung"
 
 #: lmn_common/main.py:43
-msgid "Class Management"
-msgstr "Klassenverwaltung"
+msgid "Classroom"
+msgstr "Klassenzimmer"
 
 #: lmn_common/main.py:50
-msgid "School Settings"
-msgstr "Schuleinstellungen"
+msgid "Settings"
+msgstr "Einstellungen"
 
 #: lmn_common/main.py:57
 msgid "Global Settings"

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-06 16:10+0000\n"
-"PO-Revision-Date: 2019-08-06 16:13\n"
+"POT-Creation-Date: 2019-08-07 10:13+0000\n"
+"PO-Revision-Date: 2019-08-07 11:32\n"
 "Last-Translator: kiarn\n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -98,15 +98,15 @@ msgstr ""
 msgid "Quotas"
 msgstr ""
 
-#: lmn_quotas/main.py:29
+#: lmn_quotas/main.py:30
 msgid "Read LDAP"
 msgstr ""
 
-#: lmn_quotas/main.py:34
+#: lmn_quotas/main.py:35
 msgid "Configure quotas"
 msgstr ""
 
-#: lmn_quotas/main.py:39
+#: lmn_quotas/main.py:40
 msgid "Set quotas"
 msgstr ""
 

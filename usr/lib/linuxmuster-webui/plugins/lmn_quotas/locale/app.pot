@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-06 16:10+0000\n"
+"POT-Creation-Date: 2019-08-07 10:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -99,15 +99,15 @@ msgstr ""
 msgid "Quotas"
 msgstr ""
 
-#: lmn_quotas/main.py:29
+#: lmn_quotas/main.py:30
 msgid "Read LDAP"
 msgstr ""
 
-#: lmn_quotas/main.py:34
+#: lmn_quotas/main.py:35
 msgid "Configure quotas"
 msgstr ""
 
-#: lmn_quotas/main.py:39
+#: lmn_quotas/main.py:40
 msgid "Set quotas"
 msgstr ""
 

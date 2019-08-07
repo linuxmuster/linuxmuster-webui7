@@ -10,7 +10,7 @@ angular.module('lmn.landingpage').controller 'LMNLandingController', ($scope, $h
         console.log resp.data
         $scope.user = resp.data
         $scope.quotas = []
-        
+
         for share, values of $scope.user['QUOTA_USAGE_BY_SHARE']
             # default-school and linuxmuster-global both needed ?
             # cloudquota and mailquota not in QUOTA_USAGE_BY_SHARE ?
@@ -20,7 +20,7 @@ angular.module('lmn.landingpage').controller 'LMNLandingController', ($scope, $h
                 $scope.quotas.push({'share':share, 'total':total, 'used':used, 'usage':0})
             else
                 $scope.quotas.push({'share':share, 'total':total + " MiB", 'used':used, 'usage':Math.floor((100 * used) / total)})
-                
+
             $scope.groups = []
             for dn in $scope.user['memberOf']
                 cn       = dn.split(',')[0].split('=')[1]

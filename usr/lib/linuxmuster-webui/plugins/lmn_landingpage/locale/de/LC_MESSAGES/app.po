@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-06 16:10+0000\n"
-"PO-Revision-Date: 2019-08-06 16:17\n"
+"POT-Creation-Date: 2019-08-07 10:13+0000\n"
+"PO-Revision-Date: 2019-08-07 11:32\n"
 "Last-Translator: kiarn\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -16,7 +16,7 @@ msgstr ""
 "X-Crowdin-Language: de\n"
 "X-Crowdin-File: /2.0/lmn_landingpage.po\n"
 
-#: lmn_landingpage/resources/partial/index.html:29
+#: lmn_landingpage/resources/partial/index.html:30
 msgid "Account Information"
 msgstr "Konto Informationen"
 
@@ -28,33 +28,41 @@ msgstr "Aber denken Sie daran:"
 msgid "Change password"
 msgstr "Passwort ändern"
 
+#: lmn_landingpage/resources/partial/index.html:63
+msgid "Cloudquota Calculated in MiB:"
+msgstr "Cloudquota berechnet in MiB:"
+
+#: lmn_landingpage/resources/partial/index.html:70
+msgid "Groups"
+msgstr "Gruppen"
+
 #: lmn_landingpage/resources/partial/index.html:14
 msgid "Hello {{user.givenName}} {{user.sn}},"
 msgstr "Hallo {{user.givenName}} {{user.sn}},"
 
+#: lmn_landingpage/resources/partial/index.html:34
+msgid "Mail:"
+msgstr "E-Mail:"
+
+#: lmn_landingpage/resources/partial/index.html:64
+msgid "Mailquota Calculated in MiB:"
+msgstr "Mailqutoa berechnet in MiB:"
+
 #: lmn_landingpage/resources/partial/index.html:33
-msgid "Mail:  <b>{{user.mail}}</b>"
-msgstr "E-Mail:  <b>{{user.mail}}</b>"
+msgid "Name:"
+msgstr "Name:"
 
-#: lmn_landingpage/resources/partial/index.html:32
-msgid "Name:  <b>{{user.givenName}}, {{user.sn}}</b>"
-msgstr "Name:  <b>{{user.givenName}}, {{user.sn}}</b>"
-
-#: lmn_landingpage/resources/partial/index.html:44
+#: lmn_landingpage/resources/partial/index.html:46
 msgid "Quotas"
 msgstr "Quotas"
 
+#: lmn_landingpage/resources/partial/index.html:36
+msgid "Role:"
+msgstr "Rolle:"
+
 #: lmn_landingpage/resources/partial/index.html:35
-msgid "Role: <b>{{user.sophomorixAdminClass}}</b>"
-msgstr "Rolle: <b>{{user.sophomorixAdminClass}}</b>"
-
-#: lmn_landingpage/resources/partial/index.html:34
-msgid "School: <b>{{user.sophomorixSchoolname}}</b>"
-msgstr "Schule: <b>{{user.sophomorixSchoolname}}</b>"
-
-#: lmn_landingpage/resources/partial/index.html:48
-msgid "Total"
-msgstr "Gesamt"
+msgid "School:"
+msgstr "Schule:"
 
 #: lmn_landingpage/resources/partial/index.html:20
 msgid "Use the sidebar to navigate through the options."

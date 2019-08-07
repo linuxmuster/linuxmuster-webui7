@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-06 16:10+0000\n"
-"PO-Revision-Date: 2019-08-06 16:17\n"
+"POT-Creation-Date: 2019-08-07 10:13+0000\n"
+"PO-Revision-Date: 2019-08-07 11:32\n"
 "Last-Translator: kiarn\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -51,15 +51,11 @@ msgstr "Extra-Schüler Zeichensatz"
 msgid "General"
 msgstr "Allgemein"
 
-#: lmn_settings/resources/partial/webuiSettings.html:27
-msgid "Generate a self-signed certificate"
-msgstr "Generieren eines selbstsignierten Zertifikates"
-
 #: lmn_settings/resources/partial/index.html:204
 msgid "Internal FQDN for printing"
 msgstr "Interner FQDN für den Druck"
 
-#: lmn_settings/resources/partial/webuiSettings.html:11
+#: lmn_settings/resources/partial/globalSettings.html:11
 msgid "Language"
 msgstr "Sprache"
 
@@ -103,11 +99,11 @@ msgstr "Zufallspasswort"
 msgid "Removal after departure (days)"
 msgstr "Tage bis zum endgültigen Löschen"
 
-#: lmn_settings/resources/partial/webuiSettings.html:46
-msgid "Restart panel"
-msgstr "Panel neu starten"
+#: lmn_settings/resources/partial/globalSettings.html:41
+msgid "Restart WebUI"
+msgstr "Schulkonsole neu starten"
 
-#: lmn_settings/resources/partial/webuiSettings.html:20
+#: lmn_settings/resources/partial/globalSettings.html:20
 msgid "SSL certificate file"
 msgstr "SSL-Zertifikats-Datei"
 
@@ -115,8 +111,8 @@ msgstr "SSL-Zertifikats-Datei"
 msgid "Samba domain for printing"
 msgstr "Domänen-Name"
 
+#: lmn_settings/resources/partial/globalSettings.html:40
 #: lmn_settings/resources/partial/index.html:231
-#: lmn_settings/resources/partial/webuiSettings.html:45
 msgid "Save"
 msgstr "Speichern"
 
@@ -155,16 +151,20 @@ msgid "Tolerance after departure (days)"
 msgstr "Tage bis zum Deaktivieren nach Austreten"
 
 #: lmn_settings/main.py:15
-msgid "WebUI Settings"
-msgstr "WebUI Einstellungen"
-
-#: lmn_settings/main.py:22
 msgid "School Settings"
 msgstr "Schuleinstellungen"
 
-#: lmn_settings/main.py:36
-msgid "Configure settings"
-msgstr "Einstellungen konfigurieren"
+#: lmn_settings/main.py:23
+msgid "Global Settings"
+msgstr "Globale Einstellungen"
+
+#: lmn_settings/main.py:38
+msgid "Configure school settings"
+msgstr "Schuleinstellungen konfigurieren"
+
+#: lmn_settings/main.py:43
+msgid "Configure global settings"
+msgstr "Globale Einstellungen konfigurieren"
 
 #: lmn_settings/resources/js/controllers/index.controller.coffee:8
 msgid "Settings"

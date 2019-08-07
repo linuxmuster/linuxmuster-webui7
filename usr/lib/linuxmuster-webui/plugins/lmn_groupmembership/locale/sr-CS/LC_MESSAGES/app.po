@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ajenti\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-06 16:10+0000\n"
+"POT-Creation-Date: 2019-08-07 10:13+0000\n"
 "PO-Revision-Date: 2016-05-21 17:19-0400\n"
 "Last-Translator: eugenepankov <john.pankov@gmail.com>\n"
 "Language-Team: Serbian (Latin)\n"
@@ -162,14 +162,14 @@ msgid "{{groupName}} Members"
 msgstr ""
 
 #: lmn_groupmembership/main.py:15
-msgid "Groupmembership"
+msgid "Enrol"
 msgstr ""
 
-#: lmn_groupmembership/main.py:29
+#: lmn_groupmembership/main.py:31
 msgid "Edit Groupmemberships"
 msgstr ""
 
-#: lmn_groupmembership/main.py:34
+#: lmn_groupmembership/main.py:36
 msgid "Edit Groups"
 msgstr ""
 

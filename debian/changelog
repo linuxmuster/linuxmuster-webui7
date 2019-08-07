@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.83-1) lmn7; urgency=medium 
+
+  * Current snapshot build 7a1375c089df023c3f8d1d5d8c065143b6f52f5f
+   *     changed default port before setup wizard to 80 http
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Aug  7 08:15:10 UTC 2019
+
 linuxmuster-webui7 (1.0.82-1) lmn7; urgency=medium 
 
   * Current snapshot build c2b4af31cfbef4eae8450f6f0532fd99218ee8bf

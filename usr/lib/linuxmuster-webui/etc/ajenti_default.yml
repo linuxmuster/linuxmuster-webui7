@@ -6,7 +6,7 @@ auth:
 bind:
   host: 0.0.0.0
   mode: tcp
-  port: 8000
+  port: 80
 color: default
 language: en
 max_sessions: 9

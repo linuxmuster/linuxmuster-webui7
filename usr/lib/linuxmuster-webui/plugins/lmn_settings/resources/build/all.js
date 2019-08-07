@@ -80,8 +80,8 @@
 
 'use strict';
 
-angular.module('lm.settings').controller('LMwebuiSettingsController', function ($scope, $http, $sce, notify, pageTitle, identity, messagebox, passwd, config, core, locale, gettext) {
-   pageTitle.set(gettext('WebUI Settings'));
+angular.module('lm.settings').controller('LMglobalSettingsController', function ($scope, $http, $sce, notify, pageTitle, identity, messagebox, passwd, config, core, locale, gettext) {
+   pageTitle.set(gettext('Global Settings'));
 
    $scope.config = config;
 
@@ -150,9 +150,9 @@ angular.module('lm.settings').controller('LMwebuiSettingsController', function (
 'use strict';
 
 angular.module('lm.settings').config(function ($routeProvider) {
-           return $routeProvider.when('/view/lm/webuisettings', {
-                      templateUrl: '/lmn_settings:resources/partial/webuiSettings.html',
-                      controller: 'LMwebuiSettingsController'
+           return $routeProvider.when('/view/lm/globalsettings', {
+                      templateUrl: '/lmn_settings:resources/partial/globalSettings.html',
+                      controller: 'LMglobalSettingsController'
            });
 });
 

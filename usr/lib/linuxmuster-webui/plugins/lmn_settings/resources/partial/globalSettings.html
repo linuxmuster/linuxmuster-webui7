@@ -22,11 +22,6 @@
                             <div class="col-md-8">
                                 <path-selector ng:model="config.data.ssl.certificate" type="text"></path-selector>
                             </div>
-                            <div class="col-md-5">
-                                <a ng:click="createNewServerCertificate()" class="btn btn-default btn-block">
-                                    <i class="fa fa-cog"></i> <span translate>Generate a self-signed certificate</span>
-                                </a>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -43,7 +38,7 @@
 
     <floating-toolbar>
         <a ng:click="save()" class="btn btn-default btn-flat" translate>Save</a>
-        <a ng:click="restart()" class="btn btn-default btn-flat" translate>Restart panel</a>
+        <a ng:click="restart()" class="btn btn-default btn-flat" translate>Restart WebUI</a>
     </floating-toolbar>
 </div>
 

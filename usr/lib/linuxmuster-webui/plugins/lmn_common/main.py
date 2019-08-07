@@ -40,14 +40,14 @@ class ItemProvider(SidebarItemProvider):
             {
                 'attach': None,
                 'id': 'category:class',
-                'name': _('Class Management'),
+                'name': _('Classroom'),
                 'children': [
                 ]
             },
             {
                 'attach': None,
                 'id': 'category:schoolsettingsdefaults',
-                'name': _('School Settings'),
+                'name': _('Settings'),
                 'children': [
                 ]
             },

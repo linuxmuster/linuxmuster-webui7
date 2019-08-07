@@ -16,6 +16,7 @@ class ItemProvider(SidebarItemProvider):
                 'icon': 'folder-o',
                 'url': '/view/lm/quotas',
                 'children': [],
+                'weight': 30,
             },
         ]
 

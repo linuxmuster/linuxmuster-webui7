@@ -12,17 +12,19 @@ class ItemProvider(SidebarItemProvider):
         return [
             {
                 'attach': 'category:schoolsettingsdefaults',
-                'name': _('WebUI Settings'),
-                'icon': 'cog',
-                'url': '/view/lm/webuisettings',
-                'children': [],
-            },
-            {
-                'attach': 'category:schoolsettingsdefaults',
                 'name': _('School Settings'),
                 'icon': 'wrench',
                 'url': '/view/lm/schoolsettings',
                 'children': [],
+                'weight': 40,
+            },
+            {
+                'attach': 'category:schoolsettingsdefaults',
+                'name': _('Global Settings'),
+                'icon': 'cog',
+                'url': '/view/lm/globalsettings',
+                'children': [],
+                'weight': 55,
             },
         ]
 
@@ -33,7 +35,12 @@ class Permissions (PermissionProvider):
         return [
             {
                 'id': 'lm:schoolsettings',
-                'name': _('Configure settings'),
+                'name': _('Configure school settings'),
+                'default': False,
+            },
+            {
+                'id': 'lm:globalsettings',
+                'name': _('Configure global settings'),
                 'default': False,
             },
         ]

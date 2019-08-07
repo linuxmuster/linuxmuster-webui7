@@ -1,5 +1,5 @@
-angular.module('lm.settings').controller('LMwebuiSettingsController', ($scope, $http, $sce, notify, pageTitle, identity, messagebox, passwd, config, core, locale, gettext) => {
-    pageTitle.set(gettext('WebUI Settings'));
+angular.module('lm.settings').controller('LMglobalSettingsController', ($scope, $http, $sce, notify, pageTitle, identity, messagebox, passwd, config, core, locale, gettext) => {
+    pageTitle.set(gettext('Global Settings'));
 
     $scope.config = config;
 

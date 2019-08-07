@@ -22,7 +22,7 @@ class ItemProvider(SidebarItemProvider):
             'name': _('Print Passwords'),
             'icon': 'print',
             'url': '/view/lm/users/print-passwords',
-            'weight': 25,
+            'weight': 40,
             }
         ]
 

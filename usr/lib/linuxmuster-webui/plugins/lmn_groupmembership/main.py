@@ -11,11 +11,13 @@ class ItemProvider(SidebarItemProvider):
     def provide(self):
         return [
             {
-                'attach': 'category:usermanagement',
-                'name': _('Groupmembership'),
-                'icon': 'user-check',
+                'attach': 'category:class',
+                'name': _('Enrol'),
+                'icon': 'edit',
                 'url': '/view/lmn/groupmembership',
                 'children': [],
+                'weight': 25,
+
             },
         ]
 

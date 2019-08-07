@@ -4,7 +4,6 @@
 <div ng:show="identity.user == 'root'" class="alert alert-danger">
     <i class="fa fa-info-circle"></i> <span translate>You should not use WebUI as root user! If this is your first time running WebUI, proceed through the setup wizard. Afterwards login using the global-admin account.</span>
 </div>
-{{user}}
 <div ng:show="identity.user != 'root'">
 
     <progress-spinner ng:show="user == null"></progress-spinner>
@@ -23,7 +22,7 @@
             </div>
         </div>
 
-        <div class="flex-container info-cards">
+        <div style="margin-top:10px;" class="flex-container info-cards">
 
             <div class="panel panel-info">
                 <div class="panel-heading">
@@ -34,7 +33,7 @@
                     <span translate>Mail:  </span><b>{{user.mail}}</b><br />
                     <span translate>School: </span><b>{{user.sophomorixSchoolname}}</b><br />
                     <span translate>Role: </span><b>{{user.sophomorixAdminClass}}</b><br />
-                    <button class="btn btn-primary pull-right" ng:click="changePassword()">
+                    <button style="margin-top:20px;" class="btn btn-primary pull-right" ng:click="changePassword()">
                         <span translate>Change password</span>
                     </button>
 

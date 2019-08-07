@@ -21,24 +21,6 @@ class Handler(HttpPlugin):
 
                 if user != 'root':
                     sophomorixCommand = ['sophomorix-query', '--sam', user, '--user-full', '--quota-usage', '-jj']
-                    jsonpath          = 'USER/' + user + '/QUOTA_USAGE_BY_SHARE/linuxmuster-global'
-                    result            = lmn_getSophomorixValue(sophomorixCommand, jsonpath)
-                    if result['HARD_LIMIT_MiB'] == 'NO LIMIT':
-                        return {
-                            'used': result['USED_MiB'],
-                            #'free':  'Unlimited', ## free not used yet
-                            'total': 'Unlimited'
-                        }
-                    else:
+                    jsonpath          = 'USER/' + user
+                    return lmn_getSophomorixValue(sophomorixCommand, jsonpath)
 
-                        return {
-                            'used': result['USED_MiB'],
-                            #'free': result['HARD_LIMIT_MiB']-result['USED_MiB'],
-                            'total': result['HARD_LIMIT_MiB']
-                        }
-                else:
-                    return {
-                        'used': 0,
-                        #'free': 0,
-                        'total': 1
-                    }

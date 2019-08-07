@@ -15,31 +15,57 @@
 
   angular.module('lmn.landingpage').controller('LMNLandingController', function($scope, $http, $uibModal, $location, gettext, notify, pageTitle, messagebox) {
     pageTitle.set(gettext('Home'));
-    $scope.getUser = function(username) {
-      return $http.post('/api/lm/sophomorixUsers/students', {
-        action: 'get-specified',
-        user: username
-      }).then(function(resp) {
-        $scope.user = resp.data[0];
-        return console.log($scope.user);
-      });
-    };
-    $scope.$watch('identity.user', function() {
-      if ($scope.identity.user === void 0) {
-        return;
-      }
-      if ($scope.identity.user === null) {
-        return;
-      }
-      if ($scope.identity.user === 'root') {
-        return;
-      }
-      $scope.getUser($scope.identity.user);
-    });
     $scope.getQuota = $http.post('/api/lmn/quota/').then(function(resp) {
-      $scope.used = resp.data.used;
-      $scope.total = resp.data.total;
-      return $scope.usage = Math.floor((100 * $scope.used) / $scope.total);
+      var category, cn, dn, ref, results, share, total, used, values;
+      console.log(resp.data);
+      $scope.user = resp.data;
+      $scope.quotas = [];
+      ref = $scope.user['QUOTA_USAGE_BY_SHARE'];
+      results = [];
+      for (share in ref) {
+        values = ref[share];
+        // default-school and linuxmuster-global both needed ?
+        // cloudquota and mailquota not in QUOTA_USAGE_BY_SHARE ?
+        used = values['USED_MiB'];
+        total = values['HARD_LIMIT_MiB'];
+        if (typeof total === 'string') {
+          $scope.quotas.push({
+            'share': share,
+            'total': total,
+            'used': used,
+            'usage': 0
+          });
+        } else {
+          $scope.quotas.push({
+            'share': share,
+            'total': total + " MiB",
+            'used': used,
+            'usage': Math.floor((100 * used) / total)
+          });
+        }
+        $scope.groups = [];
+        results.push((function() {
+          var i, len, ref1, results1;
+          ref1 = $scope.user['memberOf'];
+          results1 = [];
+          for (i = 0, len = ref1.length; i < len; i++) {
+            dn = ref1[i];
+            cn = dn.split(',')[0].split('=')[1];
+            category = dn.split(',')[1].split('=')[1];
+            if (category !== "Management") {
+              // User don't need to see management groups
+              results1.push($scope.groups.push({
+                'cn': cn,
+                'category': category
+              }));
+            } else {
+              results1.push(void 0);
+            }
+          }
+          return results1;
+        })());
+      }
+      return results;
     });
     return $scope.changePassword = function() {
       return $location.path('/view/lmn/change-password');

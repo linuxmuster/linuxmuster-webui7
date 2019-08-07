@@ -45,8 +45,8 @@
 
 // Cards for user and group details
 li.cardlist {
-    padding-left:10px;
-    margin:0 0 5px 20px;
+    padding:0 10px;
+    margin:0 15px 5px 15px;
     background:#EEEEEE;
     font-weight:bold;
     position:relative;
@@ -263,16 +263,21 @@ ul.leaders span + span {
 .info-cards {
     display: flex;
     flex-wrap: wrap;
-}
-
-.info-cards > div {
-    background-color: #f1f1f1;
-    width: 250px;
-    margin: 10px;
-    padding: 10px 15px;
-    border: 1px solid #f1f1f1;
-    margin-bottom: 30px;
-    text-align: left;
+    
+    > div {
+        min-width: 400px;
+        margin: 20px;
+        text-align: left;
+    
+    .panel-body, .panel-heading {
+        padding:15px;
+    }
+    
+    .panel-body > span {
+        display:inline-block;
+        width:100px;
+    }
+    }
 }
 
 // used in groupmembership

@@ -34,8 +34,8 @@
   border-color: red;
 }
 li.cardlist {
-  padding-left: 10px;
-  margin: 0 0 5px 20px;
+  padding: 0 10px;
+  margin: 0 15px 5px 15px;
   background: #EEEEEE;
   font-weight: bold;
   position: relative;
@@ -208,13 +208,17 @@ ul.leaders span + span {
   flex-wrap: wrap;
 }
 .info-cards > div {
-  background-color: #f1f1f1;
-  width: 250px;
-  margin: 10px;
-  padding: 10px 15px;
-  border: 1px solid #f1f1f1;
-  margin-bottom: 30px;
+  min-width: 400px;
+  margin: 20px;
   text-align: left;
+}
+.info-cards > div .panel-body,
+.info-cards > div .panel-heading {
+  padding: 15px;
+}
+.info-cards > div .panel-body > span {
+  display: inline-block;
+  width: 100px;
 }
 .lmn-container-list {
   display: flex;

@@ -12,7 +12,7 @@ class ItemProvider(SidebarItemProvider):
         return [
             {
                 'attach': 'category:class',
-                'name': _('Enrol'),
+                'name': _('Enroll'),
                 'icon': 'edit',
                 'url': '/view/lmn/groupmembership',
                 'children': [],

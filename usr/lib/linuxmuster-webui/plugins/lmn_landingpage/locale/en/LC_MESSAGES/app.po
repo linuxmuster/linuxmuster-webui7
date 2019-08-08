@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-07 10:13+0000\n"
+"POT-Creation-Date: 2019-08-08 12:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,55 +17,55 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: lmn_landingpage/resources/partial/index.html:30
+#: lmn_landingpage/resources/partial/index.html:29
 msgid "Account Information"
 msgstr ""
 
-#: lmn_landingpage/resources/partial/index.html:21
+#: lmn_landingpage/resources/partial/index.html:20
 msgid "But keep in mind:"
 msgstr ""
 
-#: lmn_landingpage/resources/partial/index.html:38
+#: lmn_landingpage/resources/partial/index.html:37
 msgid "Change password"
 msgstr ""
 
-#: lmn_landingpage/resources/partial/index.html:63
+#: lmn_landingpage/resources/partial/index.html:62
 msgid "Cloudquota Calculated in MiB:"
 msgstr ""
 
-#: lmn_landingpage/resources/partial/index.html:70
+#: lmn_landingpage/resources/partial/index.html:69
 msgid "Groups"
 msgstr ""
 
-#: lmn_landingpage/resources/partial/index.html:14
+#: lmn_landingpage/resources/partial/index.html:13
 msgid "Hello {{user.givenName}} {{user.sn}},"
 msgstr ""
 
-#: lmn_landingpage/resources/partial/index.html:34
+#: lmn_landingpage/resources/partial/index.html:33
 msgid "Mail:"
 msgstr ""
 
-#: lmn_landingpage/resources/partial/index.html:64
+#: lmn_landingpage/resources/partial/index.html:63
 msgid "Mailquota Calculated in MiB:"
 msgstr ""
 
-#: lmn_landingpage/resources/partial/index.html:33
+#: lmn_landingpage/resources/partial/index.html:32
 msgid "Name:"
 msgstr ""
 
-#: lmn_landingpage/resources/partial/index.html:46
+#: lmn_landingpage/resources/partial/index.html:45
 msgid "Quotas"
 msgstr ""
 
-#: lmn_landingpage/resources/partial/index.html:36
+#: lmn_landingpage/resources/partial/index.html:35
 msgid "Role:"
 msgstr ""
 
-#: lmn_landingpage/resources/partial/index.html:35
+#: lmn_landingpage/resources/partial/index.html:34
 msgid "School:"
 msgstr ""
 
-#: lmn_landingpage/resources/partial/index.html:20
+#: lmn_landingpage/resources/partial/index.html:19
 msgid "Use the sidebar to navigate through the options."
 msgstr ""
 
@@ -73,7 +73,7 @@ msgstr ""
 msgid "Welcome to Linuxmuster.net version 7!"
 msgstr ""
 
-#: lmn_landingpage/resources/partial/index.html:22
+#: lmn_landingpage/resources/partial/index.html:21
 msgid "With great power comes great responsibility!"
 msgstr ""
 
@@ -84,10 +84,10 @@ msgid ""
 "admin account."
 msgstr ""
 
-#: lmn_landingpage/resources/partial/index.html:17
+#: lmn_landingpage/resources/partial/index.html:16
 msgid ""
 "use the sidebar to navigate through the options. You can start by using the "
-"Groupmembership module to subscribe to your classes."
+"Enroll module to subscribe to your classes."
 msgstr ""
 
 #: lmn_landingpage/resources/js/controllers/index.controller.coffee:7

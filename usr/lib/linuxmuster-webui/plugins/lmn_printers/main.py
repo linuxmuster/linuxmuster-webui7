@@ -10,14 +10,6 @@ class ItemProvider(SidebarItemProvider):
 
     def provide(self):
         return [
-            {
-                'attach': 'category:devicemanagement',
-                'name': _('Printers'),
-                'icon': 'print',
-                'url': '/view/lm/printers',
-                'weight': 20,
-                'children': [],
-            },
         ]
 
 

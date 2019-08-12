@@ -310,7 +310,7 @@
   });
 
   angular.module('lmn.groupmembership').controller('LMNGroupMembershipController', function($scope, $http, $uibModal, gettext, notify, pageTitle, messagebox) {
-    pageTitle.set(gettext('Group Membership'));
+    pageTitle.set(gettext('Enrolle'));
     $scope.types = {
       schoolclass: {
         typename: gettext('Schoolclass'),

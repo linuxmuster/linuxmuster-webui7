@@ -26,7 +26,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
         $scope.showAdminDetails = true
         $scope.showMemberDetails = true
         $scope.changeState = false
-        
+
         $scope.hidetext = gettext("Hide")
         $scope.showtext = gettext("Show")
 
@@ -196,7 +196,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($sco
             $uibModalInstance.dismiss()
 
 angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController', ($scope, $http, $uibModal, gettext, notify, pageTitle, messagebox) ->
-    pageTitle.set(gettext('Group Membership'))
+    pageTitle.set(gettext('Enrolle'))
     $scope.types = {
         schoolclass:
             typename: gettext('Schoolclass')

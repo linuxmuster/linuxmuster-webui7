@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ajenti\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-06 16:10+0000\n"
+"POT-Creation-Date: 2019-08-14 14:33+0000\n"
 "PO-Revision-Date: 2016-05-21 17:18-0400\n"
 "Last-Translator: eugenepankov <john.pankov@gmail.com>\n"
 "Language-Team: Bengali\n"
@@ -153,79 +153,79 @@ msgstr ""
 msgid "Import failed"
 msgstr ""
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:30
+#: lmn_devices/resources/js/controllers/index.controller.coffee:31
 msgid "Duplicate"
 msgstr ""
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:31
+#: lmn_devices/resources/js/controllers/index.controller.coffee:32
 msgid "Remove"
 msgstr ""
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:73
-#: lmn_devices/resources/js/controllers/index.controller.coffee:138
+#: lmn_devices/resources/js/controllers/index.controller.coffee:75
+#: lmn_devices/resources/js/controllers/index.controller.coffee:140
 msgid "Room"
 msgstr ""
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:77
-#: lmn_devices/resources/js/controllers/index.controller.coffee:144
+#: lmn_devices/resources/js/controllers/index.controller.coffee:79
+#: lmn_devices/resources/js/controllers/index.controller.coffee:146
 msgid "Group"
 msgstr ""
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:81
-#: lmn_devices/resources/js/controllers/index.controller.coffee:141
+#: lmn_devices/resources/js/controllers/index.controller.coffee:83
+#: lmn_devices/resources/js/controllers/index.controller.coffee:143
 msgid "Hostname"
 msgstr ""
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:85
-#: lmn_devices/resources/js/controllers/index.controller.coffee:147
+#: lmn_devices/resources/js/controllers/index.controller.coffee:87
+#: lmn_devices/resources/js/controllers/index.controller.coffee:149
 msgid "MAC"
 msgstr ""
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:89
-#: lmn_devices/resources/js/controllers/index.controller.coffee:150
+#: lmn_devices/resources/js/controllers/index.controller.coffee:91
+#: lmn_devices/resources/js/controllers/index.controller.coffee:152
 msgid "IP"
 msgstr ""
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:153
+#: lmn_devices/resources/js/controllers/index.controller.coffee:155
 msgid "Office Key"
 msgstr ""
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:156
+#: lmn_devices/resources/js/controllers/index.controller.coffee:158
 msgid "Windows Key"
 msgstr ""
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:159
+#: lmn_devices/resources/js/controllers/index.controller.coffee:161
 msgid "DHCP-Options"
 msgstr ""
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:162
+#: lmn_devices/resources/js/controllers/index.controller.coffee:164
 msgid "Sophomorix-Role"
 msgstr ""
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:165
+#: lmn_devices/resources/js/controllers/index.controller.coffee:167
 msgid "LMN-Reserved 10"
 msgstr ""
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:168
+#: lmn_devices/resources/js/controllers/index.controller.coffee:170
 msgid "PXE"
 msgstr ""
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:171
+#: lmn_devices/resources/js/controllers/index.controller.coffee:173
 msgid "LMN-Reserved 12"
 msgstr ""
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:174
+#: lmn_devices/resources/js/controllers/index.controller.coffee:176
 msgid "LMN-Reserved 13"
 msgstr ""
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:177
+#: lmn_devices/resources/js/controllers/index.controller.coffee:179
 msgid "LMN-Reserved 14"
 msgstr ""
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:180
+#: lmn_devices/resources/js/controllers/index.controller.coffee:182
 msgid "Sophomorix-Comment"
 msgstr ""
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:199
+#: lmn_devices/resources/js/controllers/index.controller.coffee:201
 msgid "Saved"
 msgstr ""

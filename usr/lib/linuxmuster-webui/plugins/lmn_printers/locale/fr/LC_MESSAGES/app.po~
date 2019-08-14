@@ -1,0 +1,56 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: linuxmusternet\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-08-06 16:10+0000\n"
+"PO-Revision-Date: 2019-08-08 13:00\n"
+"Last-Translator: kiarn\n"
+"Language-Team: French\n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: crowdin.com\n"
+"X-Crowdin-Project: linuxmusternet\n"
+"X-Crowdin-Language: fr\n"
+"X-Crowdin-File: /2.0/lmn_printers.po\n"
+
+#: lmn_printers/resources/partial/printer.modal.html:25
+msgid "Add"
+msgstr "Ajouter"
+
+#: lmn_printers/resources/partial/printer.modal.html:33
+msgid "Close"
+msgstr "Fermer"
+
+#: lmn_printers/resources/partial/printer.modal.html:16
+msgid "No filter is set. All devices can use this printer."
+msgstr "Aucun filtre n’est défini. Tous les périphériques peuvent utiliser cette imprimante."
+
+#: lmn_printers/resources/partial/index.html:16
+#: lmn_printers/resources/partial/printer.modal.html:32
+msgid "Save"
+msgstr "Sauvegarder"
+
+#: lmn_printers/resources/partial/printer.modal.html:23
+msgid "Type to search..."
+msgstr "Écris pour chercher ..."
+
+#: lmn_printers/resources/partial/printer.modal.html:2
+msgid "{{printer.name}}"
+msgstr "{{printer.name}}"
+
+#: lmn_printers/main.py:15
+#: lmn_printers/resources/js/controllers/index.controller.coffee:26
+msgid "Printers"
+msgstr "Imprimantes"
+
+#: lmn_printers/main.py:30
+msgid "Configure printers"
+msgstr "Configurer les imprimantes"
+
+#: lmn_printers/resources/js/controllers/index.controller.coffee:90
+msgid "Saved"
+msgstr "Sauvegardé"
+

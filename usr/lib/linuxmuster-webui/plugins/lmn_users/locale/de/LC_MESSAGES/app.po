@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-06 16:10+0000\n"
-"PO-Revision-Date: 2019-08-08 13:00\n"
+"POT-Creation-Date: 2019-08-14 14:33+0000\n"
+"PO-Revision-Date: 2019-08-14 14:42\n"
 "Last-Translator: kiarn\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -22,7 +22,7 @@ msgid "Abort"
 msgstr "Abbrechen"
 
 #: lmn_users/resources/partial/addAdmin.modal.html:12
-#: lmn_users/resources/partial/customPassword.modal.html:20
+#: lmn_users/resources/partial/customPassword.modal.html:22
 msgid "Accept"
 msgstr "Annehmen"
 
@@ -113,7 +113,7 @@ msgid "Birthday:"
 msgstr "Geburtsdatum:"
 
 #: lmn_users/resources/partial/addAdmin.modal.html:11
-#: lmn_users/resources/partial/customPassword.modal.html:19
+#: lmn_users/resources/partial/customPassword.modal.html:21
 #: lmn_users/resources/partial/print-passwords.options.modal.html:27
 #: lmn_users/resources/partial/result.modal.html:126
 msgid "Cancel"
@@ -208,8 +208,8 @@ msgid "Edit CSV"
 msgstr "Im Editor öffnen"
 
 #: lmn_users/resources/partial/customPassword.modal.html:6
-msgid "Enter new Password for user:"
-msgstr "Geben Sie ein neues Passwort für den Benutzer ein:"
+msgid "Enter new <span ng:show=\"action == 'actual'\" translate=\"\">userpassword</span> <span ng:show=\"action == 'initial'\" translate=\"\">initial password</span> for user:"
+msgstr "Neues <span ng:show=\"action == 'actual'\" translate=\"\">Benutzerpassword</span> <span ng:show=\"action == 'initial'\" translate=\"\">Anfangspasswort</span> für Benutzer eingeben:"
 
 #: lmn_users/resources/partial/result.modal.html:112
 msgid "Errors"
@@ -325,7 +325,7 @@ msgstr "Zu versetzen"
 msgid "No Classes found. You have to create a class by importing userlist before you can print user passwords."
 msgstr "Keine Klasse gefunden. Sie müssen eine Klasse erstellen, indem Sie eine Benutzerliste importieren, bevor Sie Kennwörter drucken können."
 
-#: lmn_users/resources/partial/customPassword.modal.html:14
+#: lmn_users/resources/partial/customPassword.modal.html:16
 msgid "Note: Minimal length is 7 characters. Use upper, lower and special characters or numbers. (e.g. Muster!)"
 msgstr "Hinweis: Minimale Passwortlänge ist 7 Zeichen. Verwenden Sie Großbuchstaben, Kleinbuchstaben und Sonderzeichen oder Zahlen. (z.B. Muster!)"
 
@@ -569,6 +569,10 @@ msgstr "Möchten Sie eine csv-Datei hochladen? Dies wird Ihre aktuelle csv-Datei
 msgid "globaladmins"
 msgstr "Globaladministratoren"
 
+#: lmn_users/resources/partial/customPassword.modal.html:6
+msgid "initial password"
+msgstr "Erstpasswort"
+
 #: lmn_users/resources/partial/schooladmins.html:35
 msgid "schooladmins"
 msgstr "Schuladministratoren"
@@ -580,6 +584,10 @@ msgstr "Schüler"
 #: lmn_users/resources/partial/teachers.html:36
 msgid "teachers"
 msgstr "Lehrer"
+
+#: lmn_users/resources/partial/customPassword.modal.html:6
+msgid "userpassword"
+msgstr "Benutzerpassword"
 
 #: lmn_users/main.py:29
 msgid "School-Admins"
@@ -703,7 +711,7 @@ msgstr "Vorname"
 #: lmn_users/resources/js/controllers/listmanagement.controller.coffee:280
 #: lmn_users/resources/js/controllers/listmanagement.controller.coffee:289
 #: lmn_users/resources/js/controllers/listmanagement.controller.coffee:307
-#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:158
+#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:159
 msgid "Saved"
 msgstr "Gespeichert"
 
@@ -774,67 +782,67 @@ msgstr "Globale Administratoren"
 msgid "Delete global-administrator "
 msgstr "Globalen Administrator löschen "
 
-#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:19
+#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:20
 msgid "You have to enter a password"
 msgstr "Sie müssen ein Passwort eingeben"
 
-#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:22
+#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:23
 msgid "Password too weak"
 msgstr "Passwort zu schwach"
 
-#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:26
+#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:27
 msgid "New password set"
 msgstr "Neues Kennwort gesetzt"
 
-#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:34
-#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:174
+#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:35
+#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:175
 msgid "You have to enter a username"
 msgstr "Sie müssen einen Benutzernamen eingeben"
 
-#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:37
+#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:38
 msgid "Never"
 msgstr "Nie"
 
-#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:54
+#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:55
 msgid "Hide"
 msgstr "Ausblenden"
 
-#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:55
+#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:56
 msgid "Show"
 msgstr "Anzeigen"
 
-#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:81
+#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:82
 msgid "not used"
 msgstr "nicht verwendet"
 
-#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:113
+#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:114
 msgid "class"
 msgstr "Klasse"
 
-#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:114
-#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:121
+#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:115
+#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:122
 msgid "lastname"
 msgstr "Nachname"
 
-#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:115
-#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:122
+#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:116
+#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:123
 msgid "firstname"
 msgstr "Vorname"
 
-#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:116
-#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:123
+#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:117
+#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:124
 msgid "birthday"
 msgstr "Geburtsdatum"
 
-#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:124
+#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:125
 msgid "login"
 msgstr "benutzername"
 
-#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:135
+#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:136
 msgid "Uploaded"
 msgstr "Upload erfolgreich"
 
-#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:177
+#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:178
 msgid "Adding administrator..."
 msgstr "Administrator hinzufügen..."
 

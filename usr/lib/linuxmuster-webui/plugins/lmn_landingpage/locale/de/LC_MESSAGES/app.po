@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-08 12:58+0000\n"
-"PO-Revision-Date: 2019-08-08 13:00\n"
+"POT-Creation-Date: 2019-08-14 14:33+0000\n"
+"PO-Revision-Date: 2019-08-14 14:42\n"
 "Last-Translator: kiarn\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -87,4 +87,20 @@ msgstr "verwenden Sie die Seitenleiste, um in den Einstellungen zu navigieren. S
 #: lmn_landingpage/resources/js/controllers/index.controller.coffee:7
 msgid "Home"
 msgstr "Hauptseite"
+
+#: lmn_landingpage/resources/js/controllers/index.controller.coffee:35
+msgid "Class"
+msgstr "Klasse"
+
+#: lmn_landingpage/resources/js/controllers/index.controller.coffee:37
+msgid "Teachers"
+msgstr "Lehrer"
+
+#: lmn_landingpage/resources/js/controllers/index.controller.coffee:39
+msgid "Printer"
+msgstr "Printer"
+
+#: lmn_landingpage/resources/js/controllers/index.controller.coffee:41
+msgid "Project"
+msgstr "Projekt"
 

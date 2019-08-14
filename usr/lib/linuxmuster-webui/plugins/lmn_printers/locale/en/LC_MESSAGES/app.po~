@@ -1,0 +1,56 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-08-06 16:10+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: lmn_printers/resources/partial/printer.modal.html:25
+msgid "Add"
+msgstr ""
+
+#: lmn_printers/resources/partial/printer.modal.html:33
+msgid "Close"
+msgstr ""
+
+#: lmn_printers/resources/partial/printer.modal.html:16
+msgid "No filter is set. All devices can use this printer."
+msgstr ""
+
+#: lmn_printers/resources/partial/index.html:16
+#: lmn_printers/resources/partial/printer.modal.html:32
+msgid "Save"
+msgstr ""
+
+#: lmn_printers/resources/partial/printer.modal.html:23
+msgid "Type to search..."
+msgstr ""
+
+#: lmn_printers/resources/partial/printer.modal.html:2
+msgid "{{printer.name}}"
+msgstr ""
+
+#: lmn_printers/main.py:15
+#: lmn_printers/resources/js/controllers/index.controller.coffee:26
+msgid "Printers"
+msgstr ""
+
+#: lmn_printers/main.py:30
+msgid "Configure printers"
+msgstr ""
+
+#: lmn_printers/resources/js/controllers/index.controller.coffee:90
+msgid "Saved"
+msgstr ""

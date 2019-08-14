@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-08 12:58+0000\n"
-"PO-Revision-Date: 2019-08-08 13:01\n"
+"POT-Creation-Date: 2019-08-14 14:33+0000\n"
+"PO-Revision-Date: 2019-08-14 14:42\n"
 "Last-Translator: kiarn\n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -195,7 +195,7 @@ msgid "Class"
 msgstr ""
 
 #: lmn_groupmembership/resources/js/controllers/index.controller.coffee:199
-msgid "Group Membership"
+msgid "Enrolle"
 msgstr ""
 
 #: lmn_groupmembership/resources/js/controllers/index.controller.coffee:202

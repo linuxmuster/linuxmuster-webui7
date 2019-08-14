@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-06 16:10+0000\n"
-"PO-Revision-Date: 2019-08-08 13:00\n"
+"POT-Creation-Date: 2019-08-14 14:33+0000\n"
+"PO-Revision-Date: 2019-08-14 14:41\n"
 "Last-Translator: kiarn\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -41,14 +41,13 @@ msgstr "Écris pour chercher ..."
 msgid "{{printer.name}}"
 msgstr "{{printer.name}}"
 
-#: lmn_printers/main.py:15
+#: lmn_printers/main.py:22
+msgid "Configure printers"
+msgstr "Configurer les imprimantes"
+
 #: lmn_printers/resources/js/controllers/index.controller.coffee:26
 msgid "Printers"
 msgstr "Imprimantes"
-
-#: lmn_printers/main.py:30
-msgid "Configure printers"
-msgstr "Configurer les imprimantes"
 
 #: lmn_printers/resources/js/controllers/index.controller.coffee:90
 msgid "Saved"

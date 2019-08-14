@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ajenti\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-06 16:10+0000\n"
+"POT-Creation-Date: 2019-08-14 14:33+0000\n"
 "PO-Revision-Date: 2016-05-21 17:18-0400\n"
 "Last-Translator: eugenepankov <john.pankov@gmail.com>\n"
 "Language-Team: Croatian\n"
@@ -42,13 +42,12 @@ msgstr ""
 msgid "{{printer.name}}"
 msgstr ""
 
-#: lmn_printers/main.py:15
-#: lmn_printers/resources/js/controllers/index.controller.coffee:26
-msgid "Printers"
+#: lmn_printers/main.py:22
+msgid "Configure printers"
 msgstr ""
 
-#: lmn_printers/main.py:30
-msgid "Configure printers"
+#: lmn_printers/resources/js/controllers/index.controller.coffee:26
+msgid "Printers"
 msgstr ""
 
 #: lmn_printers/resources/js/controllers/index.controller.coffee:90

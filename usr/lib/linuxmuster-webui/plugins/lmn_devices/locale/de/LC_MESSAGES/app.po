@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-06 16:10+0000\n"
-"PO-Revision-Date: 2019-08-08 13:00\n"
+"POT-Creation-Date: 2019-08-14 14:33+0000\n"
+"PO-Revision-Date: 2019-08-14 14:42\n"
 "Last-Translator: kiarn\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -153,80 +153,80 @@ msgstr "Import abgeschlossen"
 msgid "Import failed"
 msgstr "Import fehlgeschlagen"
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:30
+#: lmn_devices/resources/js/controllers/index.controller.coffee:31
 msgid "Duplicate"
 msgstr "Duplizieren"
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:31
+#: lmn_devices/resources/js/controllers/index.controller.coffee:32
 msgid "Remove"
 msgstr "Entfernen"
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:73
-#: lmn_devices/resources/js/controllers/index.controller.coffee:138
+#: lmn_devices/resources/js/controllers/index.controller.coffee:75
+#: lmn_devices/resources/js/controllers/index.controller.coffee:140
 msgid "Room"
 msgstr "Raum"
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:77
-#: lmn_devices/resources/js/controllers/index.controller.coffee:144
+#: lmn_devices/resources/js/controllers/index.controller.coffee:79
+#: lmn_devices/resources/js/controllers/index.controller.coffee:146
 msgid "Group"
 msgstr "Gruppe"
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:81
-#: lmn_devices/resources/js/controllers/index.controller.coffee:141
+#: lmn_devices/resources/js/controllers/index.controller.coffee:83
+#: lmn_devices/resources/js/controllers/index.controller.coffee:143
 msgid "Hostname"
 msgstr "Hostname"
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:85
-#: lmn_devices/resources/js/controllers/index.controller.coffee:147
+#: lmn_devices/resources/js/controllers/index.controller.coffee:87
+#: lmn_devices/resources/js/controllers/index.controller.coffee:149
 msgid "MAC"
 msgstr "MAC"
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:89
-#: lmn_devices/resources/js/controllers/index.controller.coffee:150
+#: lmn_devices/resources/js/controllers/index.controller.coffee:91
+#: lmn_devices/resources/js/controllers/index.controller.coffee:152
 msgid "IP"
 msgstr "IP"
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:153
+#: lmn_devices/resources/js/controllers/index.controller.coffee:155
 msgid "Office Key"
 msgstr "Office Key"
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:156
+#: lmn_devices/resources/js/controllers/index.controller.coffee:158
 msgid "Windows Key"
 msgstr "Windows Key"
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:159
+#: lmn_devices/resources/js/controllers/index.controller.coffee:161
 msgid "DHCP-Options"
 msgstr "DHCP-Optionen"
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:162
+#: lmn_devices/resources/js/controllers/index.controller.coffee:164
 msgid "Sophomorix-Role"
 msgstr "Sophomorix-Rolle"
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:165
+#: lmn_devices/resources/js/controllers/index.controller.coffee:167
 msgid "LMN-Reserved 10"
 msgstr "LMN reserviert 10"
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:168
+#: lmn_devices/resources/js/controllers/index.controller.coffee:170
 msgid "PXE"
 msgstr "PXE"
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:171
+#: lmn_devices/resources/js/controllers/index.controller.coffee:173
 msgid "LMN-Reserved 12"
 msgstr "LMN reserviert 12"
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:174
+#: lmn_devices/resources/js/controllers/index.controller.coffee:176
 msgid "LMN-Reserved 13"
 msgstr "LMN reserviert 13"
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:177
+#: lmn_devices/resources/js/controllers/index.controller.coffee:179
 msgid "LMN-Reserved 14"
 msgstr "LMN reserviert 14"
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:180
+#: lmn_devices/resources/js/controllers/index.controller.coffee:182
 msgid "Sophomorix-Comment"
 msgstr "Sophomorix-Kommentar"
 
-#: lmn_devices/resources/js/controllers/index.controller.coffee:199
+#: lmn_devices/resources/js/controllers/index.controller.coffee:201
 msgid "Saved"
 msgstr "Gespeichert"
 

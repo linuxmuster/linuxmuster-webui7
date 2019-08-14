@@ -170,7 +170,7 @@ html body.customized .container > .sidebar .sidebar-item h5 {
   padding-left: 10px;
 }
 .col-md-9 {
-  width: calc(100% - 230px);
+  width: calc(100% - 205px);
   float: right;
 }
 p.dotlist:before {

@@ -255,7 +255,8 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                 if session is ''
                     messagebox.show(title: gettext('No Session selected'), text: gettext('You have to select a session first.'), positive: 'OK')
                     return
-                messagebox.show(text: "Delete '#{comment}'?", positive: 'Delete', negative: 'Cancel').then () ->
+        messagebox.show({
+                messagebox.show(text: gettext('Delete ' +{comment}+'?'), positive: gettext('Delete'), negative: gettext('Cancel')).then () ->
                     $http.post('/api/lmn/session/sessions', {action: 'kill-sessions', session: session}).then (resp) ->
                         #notify.success gettext('Session Deleted')
                         $scope.visible.sessionname = 'none'

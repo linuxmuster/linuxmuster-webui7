@@ -255,7 +255,6 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                 if session is ''
                     messagebox.show(title: gettext('No Session selected'), text: gettext('You have to select a session first.'), positive: 'OK')
                     return
-        messagebox.show({
                 messagebox.show(text: gettext('Delete ' +{comment}+'?'), positive: gettext('Delete'), negative: gettext('Cancel')).then () ->
                     $http.post('/api/lmn/session/sessions', {action: 'kill-sessions', session: session}).then (resp) ->
                         #notify.success gettext('Session Deleted')
@@ -293,7 +292,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                         $scope.info.message = gettext("There are no sessions yet. Create a session using the 'New Session' button at the top!")
                         console.log ('no sessions')
                     else
-                        console.log ('sessions found')
+                        #console.log ('sessions found')
                         $scope.visible.sessiontable = 'show'
                         $scope.sessions = resp.data
 
@@ -554,13 +553,13 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                 messagebox.show(title: gettext('Not implemented'), positive: 'OK')
 
     $scope.$watch 'identity.user', ->
-          console.log ($scope.identity.user)
-          if $scope.identity.user is undefined
-              return
-          if $scope.identity.user is null
-              return
-          if $scope.identity.user is 'root'
-              # $scope.identity.user = 'bruce'
-              return
-          $scope.getSessions($scope.identity.user)
-          return
+        console.log ($scope.identity.user)
+        if $scope.identity.user is undefined
+            return
+        if $scope.identity.user is null
+            return
+        if $scope.identity.user is 'root'
+            # $scope.identity.user = 'bruce'
+            return
+        $scope.getSessions($scope.identity.user)
+        return

@@ -2046,12 +2046,13 @@
 
   angular.module('lm.users').controller('LMNUsersCustomPasswordController', function($scope, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, users, type) {
     $scope.username = users;
+    $scope.action = type;
     $scope.save = function(userpw) {
       var action, x;
       if (type == null) {
         action = 'set';
       } else {
-        if (type === 'set-actual') {
+        if (type === 'actual') {
           action = 'set-actual';
         } else {
           action = 'set';

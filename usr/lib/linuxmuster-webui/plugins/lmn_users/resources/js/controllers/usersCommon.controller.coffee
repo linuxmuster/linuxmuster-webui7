@@ -6,15 +6,16 @@ isStrongPwd1 = (password) ->
 
 angular.module('lm.users').controller 'LMNUsersCustomPasswordController', ($scope, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, users, type) ->
     $scope.username = users
+    $scope.action = type
+
     $scope.save = (userpw) ->
         if not type?
             action = 'set'
         else
-            if type == 'set-actual'
+            if type == 'actual'
                 action = 'set-actual'
             else
                 action = 'set'
-
         if not $scope.userpw
             notify.error gettext("You have to enter a password")
             return

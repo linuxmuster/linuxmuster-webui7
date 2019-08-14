@@ -317,9 +317,9 @@
         return;
       }
       return messagebox.show({
-        text: `Delete '${comment}'?`,
-        positive: 'Delete',
-        negative: 'Cancel'
+        text: gettext('Delete ' + {comment} + '?'),
+        positive: gettext('Delete'),
+        negative: gettext('Cancel')
       }).then(function() {
         return $http.post('/api/lmn/session/sessions', {
           action: 'kill-sessions',
@@ -370,7 +370,7 @@
           $scope.info.message = gettext("There are no sessions yet. Create a session using the 'New Session' button at the top!");
           return console.log('no sessions');
         } else {
-          console.log('sessions found');
+          //console.log ('sessions found')
           $scope.visible.sessiontable = 'show';
           return $scope.sessions = resp.data;
         }

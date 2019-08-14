@@ -27,8 +27,10 @@ angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $
     pageTitle.set(gettext('Devices'))
 
     $scope.first_save = false
-    $scope.duplicatetext = gettext('Duplicate')
-    $scope.removetext = gettext('Remove')
+    $scope.trans ={
+        duplicate: gettext('Duplicate')
+        remove:  gettext('Remove')
+    }
 
     $scope.validateField = (name, val, isnew) ->
         if name

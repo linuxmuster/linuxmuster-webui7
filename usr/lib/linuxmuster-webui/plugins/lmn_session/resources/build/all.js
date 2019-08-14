@@ -145,6 +145,12 @@
   angular.module('lmn.session').controller('LMNSessionController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem) {
     var typeIsArray, validateResult;
     pageTitle.set(gettext('Session'));
+    // translationstrings
+    $scope.trans = {
+      addStudent: gettext('Add Student'),
+      addClass: gettext('Add Class')
+    };
+    console.log($scope.trans);
     $scope.currentSession = {
       name: "",
       comment: ""

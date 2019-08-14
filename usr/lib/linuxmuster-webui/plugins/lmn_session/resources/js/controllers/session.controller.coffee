@@ -11,7 +11,6 @@ angular.module('lmn.session').controller 'LMNSessionFileSelectModalController', 
     ## TODO : reload modal after upload -- Done
     ## TODO : possibility to remove file from transfer directory -- Done
 
-
     $scope.setTransferPath = (username) ->
         # TODO: Way more generic
         role = 'teachers'
@@ -106,6 +105,17 @@ angular.module('lmn.session').config ($routeProvider) ->
 
 angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem) ->
     pageTitle.set(gettext('Session'))
+
+    # translationstrings
+    $scope.trans ={
+        addStudent: gettext('Add Student')
+        addClass: gettext('Add Class')
+    }
+
+    console.log ($scope.trans)
+
+
+
 
     $scope.currentSession = {
         name: ""

@@ -70,11 +70,10 @@
                 </div>
                 <div class="panel-body">
                     <ul class="list-unstyled" style="column-width:300px;padding:0;">
-                        <li ng:repeat="group in groups" class="cardlist">{{group.cn}} <span style="position:absolute;right:10px;">{{group.category}}</span></li>
+                        <li style="margin: 0 15px 5px 0px;" ng:repeat="group in groups | orderBy:['category','cn'] " class="cardlist">{{group.cn}} <span style="position:absolute;right:10px;">{{group.category}}</span></li>
                     </ul>
                 </div>
             </div>
-            
         </div>
     </div>
 

@@ -67,7 +67,7 @@ angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $
     $scope.isValidRole =(role) -> 
         validRole = ['switch','addc','wlan','staffcomputer','mobile','printer','classroom-teachercomputer','server','iponly','faculty-teachercomputer','voip','byod','classroom-studentcomputer','thinclient','router']
         return validRole.indexOf(role) != -1
-        
+
     $scope.sorts = [
         {
             name: gettext('Room')

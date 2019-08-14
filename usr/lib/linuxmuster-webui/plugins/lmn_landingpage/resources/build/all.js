@@ -17,7 +17,6 @@
     pageTitle.set(gettext('Home'));
     $scope.getQuota = $http.post('/api/lmn/quota/').then(function(resp) {
       var category, cn, dn, ref, results, share, total, used, values;
-      console.log(resp.data);
       $scope.user = resp.data;
       $scope.quotas = [];
       ref = $scope.user['QUOTA_USAGE_BY_SHARE'];
@@ -31,7 +30,7 @@
         if (typeof total === 'string') {
           $scope.quotas.push({
             'share': share,
-            'total': total,
+            'total': gettext(total),
             'used': used,
             'usage': 0
           });
@@ -44,6 +43,7 @@
           });
         }
         $scope.groups = [];
+        console.log($scope.user);
         results.push((function() {
           var i, len, ref1, results1;
           ref1 = $scope.user['memberOf'];
@@ -54,10 +54,35 @@
             category = dn.split(',')[1].split('=')[1];
             if (category !== "Management") {
               // User don't need to see management groups
-              results1.push($scope.groups.push({
-                'cn': cn,
-                'category': category
-              }));
+              // User only see explicit lmn groups, no custom groups
+
+              // Determine classes by group dn
+              if (category === cn) {
+                $scope.groups.push({
+                  'cn': cn,
+                  'category': gettext('Class')
+                });
+              }
+              if (category === "Teachers") {
+                $scope.groups.push({
+                  'cn': cn,
+                  'category': gettext('Teachers')
+                });
+              }
+              if (category === "printer-groups") {
+                $scope.groups.push({
+                  'cn': cn,
+                  'category': gettext('Printer')
+                });
+              }
+              if (category === "Projects") {
+                results1.push($scope.groups.push({
+                  'cn': cn,
+                  'category': gettext('Project')
+                }));
+              } else {
+                results1.push(void 0);
+              }
             } else {
               results1.push(void 0);
             }

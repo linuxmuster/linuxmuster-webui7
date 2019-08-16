@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.86-1) lmn7; urgency=medium 
+
+  * Current snapshot build 63b86635f16ccc5ad0060989af90d8796328f10b
+   *     update other ajenti comonents
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Aug 16 08:51:29 UTC 2019
+
 linuxmuster-webui7 (1.0.85-1) lmn7; urgency=medium 
 
   * Current snapshot build 4db3b101778733d0830655ff3ba81c0ec7f98afd

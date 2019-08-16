@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.85-1) lmn7; urgency=medium 
+
+  * Current snapshot build 4db3b101778733d0830655ff3ba81c0ec7f98afd
+   *     upgrade ajenti to 2.1.30
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Aug 16 08:33:07 UTC 2019
+
 linuxmuster-webui7 (1.0.84-1) lmn7; urgency=medium 
 
   * Current snapshot build 87831485b33cdb746ee6db0ce52cd349613e8254

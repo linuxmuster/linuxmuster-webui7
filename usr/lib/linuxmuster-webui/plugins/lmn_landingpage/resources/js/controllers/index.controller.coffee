@@ -9,7 +9,6 @@ angular.module('lmn.landingpage').controller 'LMNLandingController', ($scope, $h
     $scope.getQuota = $http.post('/api/lmn/quota/').then (resp) ->
         $scope.user = resp.data
         $scope.quotas = []
-        console.log ($scope.identity)
         # skip if user is root
         if ($scope.identity.user == 'root')
             return
@@ -27,7 +26,7 @@ angular.module('lmn.landingpage').controller 'LMNLandingController', ($scope, $h
                 $scope.quotas.push({'share':share, 'total':total + " MiB", 'used':used, 'usage':Math.floor((100 * used) / total)})
 
             $scope.groups = []
-            console.log ($scope.user)
+            # console.log ($scope.user)
             for dn in $scope.user['memberOf']
                 cn       = dn.split(',')[0].split('=')[1]
                 category = dn.split(',')[1].split('=')[1]

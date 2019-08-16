@@ -145,102 +145,9 @@
   angular.module('lmn.session').controller('LMNSessionController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem) {
     var typeIsArray, validateResult;
     pageTitle.set(gettext('Session'));
-    // translationstrings
-    $scope.translation = {
-      addStudent: gettext('Add Student'),
-      addClass: gettext('Add Class')
-    };
-    console.log($scope.trans);
     $scope.currentSession = {
       name: "",
       comment: ""
-    };
-    $scope.sorts = [
-      {
-        name: gettext('Lastname'),
-        fx: function(x) {
-          return x.sn;
-        }
-      },
-      {
-        name: gettext('Login name'),
-        fx: function(x) {
-          return x.sAMAccountName;
-        }
-      },
-      {
-        name: gettext('Firstname'),
-        fx: function(x) {
-          return x.givenName;
-        }
-      },
-      {
-        name: gettext('Email'),
-        fx: function(x) {
-          return x.mail;
-        }
-      }
-    ];
-    $scope.sort = $scope.sorts[0];
-    $scope.fields = {
-      sAMAccountName: {
-        visible: true,
-        name: gettext('Userdata')
-      },
-      transfer: {
-        visible: true,
-        name: gettext('Transfer')
-      },
-      examModeSupervisor: {
-        visible: true,
-        name: gettext('Exam-Supervisor')
-      },
-      sophomorixRole: {
-        visible: false,
-        name: gettext('sophomorixRole')
-      },
-      exammode: {
-        visible: true,
-        icon: "fa fa-graduation-cap",
-        title: gettext('Exam-Mode'),
-        checkboxAll: false,
-        examBox: true,
-        checkboxStatus: false
-      },
-      wifiaccess: {
-        visible: true,
-        icon: "fa fa-wifi",
-        title: gettext('Wifi-Access'),
-        checkboxAll: true,
-        checkboxStatus: false
-      },
-      internetaccess: {
-        visible: true,
-        icon: "fa fa-globe",
-        title: gettext('Internet-Access'),
-        checkboxAll: true,
-        checkboxStatus: false
-      },
-      intranetaccess: {
-        visible: false,
-        icon: "fa fa-server",
-        title: gettext('Intranet Access'),
-        checkboxAll: true
-      },
-      webfilter: {
-        visible: false,
-        icon: "fa fa-filter",
-        title: gettext('Webfilter'),
-        checkboxAll: true,
-        checkboxStatus: false
-      },
-      printing: {
-        visible: true,
-        icon: "fa fa-print",
-        title: gettext('Printing'),
-        checkboxAll: true,
-        checkboxStatus: false
-      }
     };
     $scope.checkboxModel = {
       value1: false,
@@ -323,7 +230,7 @@
         return;
       }
       return messagebox.show({
-        text: gettext('Delete ' + {comment} + '?'),
+        text: gettext("Delete Session:  " + comment + " ?"),
         positive: gettext('Delete'),
         negative: gettext('Cancel')
       }).then(function() {
@@ -367,16 +274,109 @@
       });
     };
     $scope.getSessions = function(username) {
+      // translationstrings
+      $scope.translation = {
+        addStudent: gettext('Add Student'),
+        addClass: gettext('Add Class')
+      };
+      $scope.sorts = [
+        {
+          name: gettext('Lastname'),
+          fx: function(x) {
+            return x.sn;
+          }
+        },
+        {
+          name: gettext('Login name'),
+          fx: function(x) {
+            return x.sAMAccountName;
+          }
+        },
+        {
+          name: gettext('Firstname'),
+          fx: function(x) {
+            return x.givenName;
+          }
+        },
+        {
+          name: gettext('Email'),
+          fx: function(x) {
+            return x.mail;
+          }
+        }
+      ];
+      $scope.sort = $scope.sorts[0];
+      $scope.fields = {
+        sAMAccountName: {
+          visible: true,
+          name: gettext('Userdata')
+        },
+        transfer: {
+          visible: true,
+          name: gettext('Transfer')
+        },
+        examModeSupervisor: {
+          visible: true,
+          name: gettext('Exam-Supervisor')
+        },
+        sophomorixRole: {
+          visible: false,
+          name: gettext('sophomorixRole')
+        },
+        exammode: {
+          visible: true,
+          icon: "fa fa-graduation-cap",
+          title: gettext('Exam-Mode'),
+          checkboxAll: false,
+          examBox: true,
+          checkboxStatus: false
+        },
+        wifiaccess: {
+          visible: true,
+          icon: "fa fa-wifi",
+          title: gettext('Wifi-Access'),
+          checkboxAll: true,
+          checkboxStatus: false
+        },
+        internetaccess: {
+          visible: true,
+          icon: "fa fa-globe",
+          title: gettext('Internet-Access'),
+          checkboxAll: true,
+          checkboxStatus: false
+        },
+        intranetaccess: {
+          visible: false,
+          icon: "fa fa-server",
+          title: gettext('Intranet Access'),
+          checkboxAll: true
+        },
+        webfilter: {
+          visible: false,
+          icon: "fa fa-filter",
+          title: gettext('Webfilter'),
+          checkboxAll: true,
+          checkboxStatus: false
+        },
+        printing: {
+          visible: true,
+          icon: "fa fa-print",
+          title: gettext('Printing'),
+          checkboxAll: true,
+          checkboxStatus: false
+        }
+      };
+      console.log($scope.translation);
       return $http.post('/api/lmn/session/sessions', {
         action: 'get-sessions',
         username: username
       }).then(function(resp) {
         if (resp.data[0]['SESSIONCOUNT'] === 0) {
           $scope.sessions = resp.data;
-          $scope.info.message = gettext("There are no sessions yet. Create a session using the 'New Session' button at the top!");
-          return console.log('no sessions');
+          return $scope.info.message = gettext("There are no sessions yet. Create a session using the 'New Session' button at the top!");
         } else {
           //console.log ('sessions found')
+          //console.log ('no sessions')
           $scope.visible.sessiontable = 'show';
           return $scope.sessions = resp.data;
         }
@@ -485,7 +485,7 @@
             "exammode-changed": false
           });
         }
-        console.log($scope.participants);
+        // console.log ($scope.participants)
         return $scope._.addParticipant = null;
       }
     });
@@ -786,7 +786,7 @@
       });
     };
     return $scope.$watch('identity.user', function() {
-      console.log($scope.identity.user);
+      //console.log ($scope.identity.user)
       if ($scope.identity.user === void 0) {
         return;
       }
@@ -797,9 +797,11 @@
         return;
       }
       // $scope.identity.user = 'bruce'
-      $scope.getSessions($scope.identity.user);
+      return $scope.getSessions($scope.identity.user);
     });
   });
+
+  //return
 
 }).call(this);
 

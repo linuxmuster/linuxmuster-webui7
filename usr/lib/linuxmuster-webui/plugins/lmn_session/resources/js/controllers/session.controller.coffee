@@ -106,15 +106,6 @@ angular.module('lmn.session').config ($routeProvider) ->
 angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem) ->
     pageTitle.set(gettext('Session'))
 
-    # translationstrings
-    $scope.translation ={
-        addStudent: gettext('Add Student')
-        addClass: gettext('Add Class')
-    }
-
-    console.log ($scope.trans)
-
-
 
 
     $scope.currentSession = {
@@ -122,76 +113,6 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
         comment: ""
     }
 
-    $scope.sorts = [
-       {
-          name: gettext('Lastname')
-          fx: (x) -> x.sn
-       }
-       {
-          name: gettext('Login name')
-          fx: (x) -> x.sAMAccountName
-       }
-       {
-          name: gettext('Firstname')
-          fx: (x) -> x.givenName
-       }
-       {
-          name: gettext('Email')
-          fx: (x) -> x.mail
-       }
-    ]
-    $scope.sort = $scope.sorts[0]
-
-    $scope.fields = {
-       sAMAccountName:
-          visible: true
-          name: gettext('Userdata')
-        transfer:
-          visible: true
-          name: gettext('Transfer')
-       examModeSupervisor:
-          visible: true
-          name: gettext('Exam-Supervisor')
-       sophomorixRole:
-          visible: false
-          name: gettext('sophomorixRole')
-       exammode:
-          visible: true
-          icon:"fa fa-graduation-cap"
-          title: gettext('Exam-Mode')
-          checkboxAll: false
-          examBox: true
-          checkboxStatus: false
-       wifiaccess:
-          visible: true
-          icon:"fa fa-wifi"
-          title: gettext('Wifi-Access')
-          checkboxAll: true
-          checkboxStatus: false
-       internetaccess:
-          visible: true
-          icon:"fa fa-globe"
-          title: gettext('Internet-Access')
-          checkboxAll: true
-          checkboxStatus: false
-       intranetaccess:
-          visible: false
-          icon:"fa fa-server"
-          title: gettext('Intranet Access')
-          checkboxAll: true
-       webfilter:
-          visible: false
-          icon:"fa fa-filter"
-          title: gettext('Webfilter')
-          checkboxAll: true
-          checkboxStatus: false
-       printing:
-          visible: true
-          icon:"fa fa-print"
-          title: gettext('Printing')
-          checkboxAll: true
-          checkboxStatus: false
-    }
 
     $scope.checkboxModel = {
        value1 : false,
@@ -265,7 +186,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                 if session is ''
                     messagebox.show(title: gettext('No Session selected'), text: gettext('You have to select a session first.'), positive: 'OK')
                     return
-                messagebox.show(text: gettext('Delete ' +{comment}+'?'), positive: gettext('Delete'), negative: gettext('Cancel')).then () ->
+                messagebox.show(text: gettext("Delete Session:  "+comment+" ?"), positive: gettext('Delete'), negative: gettext('Cancel')).then () ->
                     $http.post('/api/lmn/session/sessions', {action: 'kill-sessions', session: session}).then (resp) ->
                         #notify.success gettext('Session Deleted')
                         $scope.visible.sessionname = 'none'
@@ -296,11 +217,88 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
 
 
     $scope.getSessions = (username) ->
+                # TODO Figure out why this only works correctly if defined in this function (translation string etc.)
+                # translationstrings
+                $scope.translation ={
+                    addStudent: gettext('Add Student')
+                    addClass: gettext('Add Class')
+                }
+                $scope.sorts = [
+                   {
+                      name: gettext('Lastname')
+                      fx: (x) -> x.sn
+                   }
+                   {
+                      name: gettext('Login name')
+                      fx: (x) -> x.sAMAccountName
+                   }
+                   {
+                      name: gettext('Firstname')
+                      fx: (x) -> x.givenName
+                   }
+                   {
+                      name: gettext('Email')
+                      fx: (x) -> x.mail
+                   }
+                ]
+                $scope.sort = $scope.sorts[0]
+
+                $scope.fields = {
+                   sAMAccountName:
+                      visible: true
+                      name: gettext('Userdata')
+                    transfer:
+                      visible: true
+                      name: gettext('Transfer')
+                   examModeSupervisor:
+                      visible: true
+                      name: gettext('Exam-Supervisor')
+                   sophomorixRole:
+                      visible: false
+                      name: gettext('sophomorixRole')
+                   exammode:
+                      visible: true
+                      icon:"fa fa-graduation-cap"
+                      title: gettext('Exam-Mode')
+                      checkboxAll: false
+                      examBox: true
+                      checkboxStatus: false
+                   wifiaccess:
+                      visible: true
+                      icon:"fa fa-wifi"
+                      title: gettext('Wifi-Access')
+                      checkboxAll: true
+                      checkboxStatus: false
+                   internetaccess:
+                      visible: true
+                      icon:"fa fa-globe"
+                      title: gettext('Internet-Access')
+                      checkboxAll: true
+                      checkboxStatus: false
+                   intranetaccess:
+                      visible: false
+                      icon:"fa fa-server"
+                      title: gettext('Intranet Access')
+                      checkboxAll: true
+                   webfilter:
+                      visible: false
+                      icon:"fa fa-filter"
+                      title: gettext('Webfilter')
+                      checkboxAll: true
+                      checkboxStatus: false
+                   printing:
+                      visible: true
+                      icon:"fa fa-print"
+                      title: gettext('Printing')
+                      checkboxAll: true
+                      checkboxStatus: false
+                }
+                console.log ($scope.translation)
                 $http.post('/api/lmn/session/sessions', {action: 'get-sessions', username: username}).then (resp) ->
                     if resp.data[0]['SESSIONCOUNT'] is 0
                         $scope.sessions = resp.data
                         $scope.info.message = gettext("There are no sessions yet. Create a session using the 'New Session' button at the top!")
-                        console.log ('no sessions')
+                        #console.log ('no sessions')
                     else
                         #console.log ('sessions found')
                         $scope.visible.sessiontable = 'show'
@@ -379,7 +377,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                         "sophomorixAdminClass":$scope._.addParticipant.sophomorixAdminClass,
                         "user_existing":true,"group_wifiaccess":$scope._.addParticipant.MANAGEMENTGROUPS.wifi,
                         "changed": false, "exammode-changed": false}
-                    console.log ($scope.participants)
+                    # console.log ($scope.participants)
                     $scope._.addParticipant = null
 
     # TODO Figure out how to call the existing watch addParticipant function
@@ -563,7 +561,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                 messagebox.show(title: gettext('Not implemented'), positive: 'OK')
 
     $scope.$watch 'identity.user', ->
-        console.log ($scope.identity.user)
+        #console.log ($scope.identity.user)
         if $scope.identity.user is undefined
             return
         if $scope.identity.user is null
@@ -572,4 +570,4 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
             # $scope.identity.user = 'bruce'
             return
         $scope.getSessions($scope.identity.user)
-        return
+        #return

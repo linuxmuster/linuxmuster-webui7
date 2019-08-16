@@ -19,7 +19,7 @@
       var category, cn, dn, ref, results, share, total, used, values;
       $scope.user = resp.data;
       $scope.quotas = [];
-      console.log($scope.identity);
+      // skip if user is root
       if ($scope.identity.user === 'root') {
         return;
       }
@@ -47,10 +47,10 @@
           });
         }
         $scope.groups = [];
-        console.log($scope.user);
         results.push((function() {
           var i, len, ref1, results1;
           ref1 = $scope.user['memberOf'];
+          // console.log ($scope.user)
           results1 = [];
           for (i = 0, len = ref1.length; i < len; i++) {
             dn = ref1[i];

@@ -13,7 +13,7 @@ class ItemProvider(SidebarItemProvider):
             {
                 'attach': 'category:schoolsettingsdefaults',
                 'name': _('School Settings'),
-                'icon': 'wrench',
+                'icon': 'sliders-h',
                 'url': '/view/lm/schoolsettings',
                 'children': [],
                 'weight': 40,
@@ -21,7 +21,7 @@ class ItemProvider(SidebarItemProvider):
             {
                 'attach': 'category:schoolsettingsdefaults',
                 'name': _('Global Settings'),
-                'icon': 'cog',
+                'icon': 'cogs',
                 'url': '/view/lm/globalsettings',
                 'children': [],
                 'weight': 55,

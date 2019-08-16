@@ -13,7 +13,7 @@ class ItemProvider(SidebarItemProvider):
             {
                 'attach': 'category:schoolsettingsdefaults',
                 'name': _('Quotas'),
-                'icon': 'folder-o',
+                'icon': 'chart-pie',
                 'url': '/view/lm/quotas',
                 'children': [],
                 'weight': 30,

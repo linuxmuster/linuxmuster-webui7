@@ -13,7 +13,7 @@ class ItemProvider(SidebarItemProvider):
             {
                 'attach': 'category:devicemanagement',
                 'name': _('LINBO'),
-                'icon': 'th-large',
+                'icon': 'laptop-medical',
                 'url': '/view/lm/linbo',
                 'weight': 15,
                 'children': [],

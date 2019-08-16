@@ -13,14 +13,14 @@ class ItemProvider(SidebarItemProvider):
             {
             'attach': 'category:class',
             'name': _('Session'),
-            'icon': 'users',
+            'icon': 'chalkboard-teacher',
             'url': '/view/lmn/session',
             'weight': 20,
             },
             {
             'attach': 'category:class',
             'name': _('Print Passwords'),
-            'icon': 'print',
+            'icon': 'key',
             'url': '/view/lm/users/print-passwords',
             'weight': 40,
             }

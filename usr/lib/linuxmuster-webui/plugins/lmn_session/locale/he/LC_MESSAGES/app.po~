@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-06 16:10+0000\n"
-"PO-Revision-Date: 2019-08-08 13:00\n"
+"POT-Creation-Date: 2019-08-14 14:33+0000\n"
+"PO-Revision-Date: 2019-08-14 14:42\n"
 "Last-Translator: kiarn\n"
 "Language-Team: Hebrew\n"
 "Language: he_IL\n"
@@ -16,8 +16,13 @@ msgstr ""
 "X-Crowdin-Language: he\n"
 "X-Crowdin-File: /2.0/lmn_session.po\n"
 
-#: lmn_session/resources/partial/session.html:91
+#: lmn_session/resources/partial/session.html:90
 msgid "<a>Share</a>"
+msgstr ""
+
+#: lmn_session/resources/partial/session.html:37
+msgid "<span translate=\"\">Edit Sessions</span>\n"
+"                <span class=\"caret\"></span>"
 msgstr ""
 
 #: lmn_session/resources/partial/selectFile.modal.html:90
@@ -28,26 +33,28 @@ msgstr ""
 msgid "All data are moved from the whole session"
 msgstr ""
 
-#: lmn_session/resources/partial/session.html:110
+#: lmn_session/resources/partial/session.html:109
 msgid "Available Files"
 msgstr ""
 
 #: lmn_session/resources/partial/selectFile.modal.html:109
-#: lmn_session/resources/js/controllers/session.controller.coffee:59
-#: lmn_session/resources/js/controllers/session.controller.coffee:75
+#: lmn_session/resources/js/controllers/session.controller.coffee:58
+#: lmn_session/resources/js/controllers/session.controller.coffee:74
+#: lmn_session/resources/js/controllers/session.controller.coffee:267
 msgid "Cancel"
 msgstr ""
 
-#: lmn_session/resources/partial/session.html:216
+#: lmn_session/resources/partial/session.html:215
 msgid "Close"
 msgstr ""
 
-#: lmn_session/resources/partial/session.html:94
+#: lmn_session/resources/partial/session.html:205
+#: lmn_session/resources/partial/session.html:93
 msgid "Collect"
 msgstr ""
 
 #: lmn_session/resources/partial/selectFile.modal.html:7
-#: lmn_session/resources/partial/session.html:103
+#: lmn_session/resources/partial/session.html:102
 msgid "Collect files"
 msgstr ""
 
@@ -63,37 +70,36 @@ msgstr ""
 msgid "Collect from User"
 msgstr ""
 
-#: lmn_session/resources/partial/session.html:211
+#: lmn_session/resources/partial/session.html:210
 msgid "Collect transfer from whole session"
 msgstr ""
 
-#: lmn_session/resources/partial/session.html:98
+#: lmn_session/resources/partial/session.html:97
 msgid "Copy files"
 msgstr ""
 
-#: lmn_session/resources/partial/session.html:210
+#: lmn_session/resources/partial/session.html:209
 msgid "Copy transfer from whole session"
 msgstr ""
 
-#: lmn_session/resources/partial/session.html:232
+#: lmn_session/resources/partial/session.html:231
 msgid "Creation Date: {{session.ID}}"
 msgstr ""
 
-#: lmn_session/resources/partial/session.html:56
+#: lmn_session/resources/partial/session.html:55
 msgid "Delete Session"
 msgstr ""
 
 #: lmn_session/resources/partial/session.html:38
-msgid "Edit Sessions\n"
-"                <span class=\"caret\"></span>"
+msgid "Edit Sessions"
 msgstr ""
 
-#: lmn_session/resources/partial/session.html:123
+#: lmn_session/resources/partial/session.html:122
 msgid "End running exam"
 msgstr ""
 
-#: lmn_session/resources/partial/session.html:31
-#: lmn_session/resources/partial/session.html:45
+#: lmn_session/resources/partial/session.html:30
+#: lmn_session/resources/partial/session.html:44
 msgid "New Session"
 msgstr ""
 
@@ -101,19 +107,19 @@ msgstr ""
 msgid "No files or directories found in transfer"
 msgstr ""
 
-#: lmn_session/resources/partial/session.html:230
+#: lmn_session/resources/partial/session.html:229
 msgid "Participants: {{session.PARTICIPANT_COUNT}}"
 msgstr ""
 
-#: lmn_session/resources/partial/session.html:51
+#: lmn_session/resources/partial/session.html:50
 msgid "Rename Session"
 msgstr ""
 
-#: lmn_session/resources/partial/session.html:155
+#: lmn_session/resources/partial/session.html:154
 msgid "Restore initial password"
 msgstr ""
 
-#: lmn_session/resources/partial/session.html:215
+#: lmn_session/resources/partial/session.html:214
 msgid "Save &amp; apply"
 msgstr ""
 
@@ -133,27 +139,28 @@ msgstr ""
 msgid "Select files you want to share with Session"
 msgstr ""
 
-#: lmn_session/resources/partial/session.html:64
+#: lmn_session/resources/partial/session.html:63
 msgid "Sessions"
 msgstr ""
 
-#: lmn_session/resources/partial/session.html:170
+#: lmn_session/resources/partial/session.html:169
 msgid "Set actual user password"
 msgstr ""
 
-#: lmn_session/resources/partial/session.html:165
+#: lmn_session/resources/partial/session.html:164
 msgid "Set custom initial password"
 msgstr ""
 
-#: lmn_session/resources/partial/session.html:160
+#: lmn_session/resources/partial/session.html:159
 msgid "Set random initial password"
 msgstr ""
 
 #: lmn_session/resources/partial/selectFile.modal.html:99
+#: lmn_session/resources/partial/session.html:197
 msgid "Share"
 msgstr ""
 
-#: lmn_session/resources/partial/session.html:201
+#: lmn_session/resources/partial/session.html:200
 msgid "Share file(s) from transfer with whole session"
 msgstr ""
 
@@ -165,11 +172,11 @@ msgstr ""
 msgid "Share files with session"
 msgstr ""
 
-#: lmn_session/resources/partial/session.html:150
+#: lmn_session/resources/partial/session.html:149
 msgid "Show initial password"
 msgstr ""
 
-#: lmn_session/resources/partial/session.html:191
+#: lmn_session/resources/partial/session.html:190
 msgid "This module does not work as root. Login as a teacher instead!"
 msgstr ""
 
@@ -177,12 +184,12 @@ msgstr ""
 msgid "Upload file"
 msgstr ""
 
-#: lmn_session/resources/partial/session.html:175
+#: lmn_session/resources/partial/session.html:174
 msgid "User information"
 msgstr ""
 
 #: lmn_session/main.py:15
-#: lmn_session/resources/js/controllers/session.controller.coffee:107
+#: lmn_session/resources/js/controllers/session.controller.coffee:106
 msgid "Session"
 msgstr ""
 
@@ -198,131 +205,144 @@ msgstr ""
 msgid "Transfer Files in Session"
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:57
+#: lmn_session/resources/js/controllers/session.controller.coffee:56
 msgid "Are you sure you want to delete permanently the file "
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:58
-#: lmn_session/resources/js/controllers/session.controller.coffee:74
+#: lmn_session/resources/js/controllers/session.controller.coffee:57
+#: lmn_session/resources/js/controllers/session.controller.coffee:73
+#: lmn_session/resources/js/controllers/session.controller.coffee:267
 msgid "Delete"
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:62
+#: lmn_session/resources/js/controllers/session.controller.coffee:61
 msgid "File "
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:73
+#: lmn_session/resources/js/controllers/session.controller.coffee:72
 msgid "Are you sure you want to delete permanently this directory and its content: "
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:78
+#: lmn_session/resources/js/controllers/session.controller.coffee:77
 msgid "Directory "
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:116
+#: lmn_session/resources/js/controllers/session.controller.coffee:110
+msgid "Add Student"
+msgstr ""
+
+#: lmn_session/resources/js/controllers/session.controller.coffee:111
+msgid "Add Class"
+msgstr ""
+
+#: lmn_session/resources/js/controllers/session.controller.coffee:126
 msgid "Lastname"
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:120
+#: lmn_session/resources/js/controllers/session.controller.coffee:130
 msgid "Login name"
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:124
+#: lmn_session/resources/js/controllers/session.controller.coffee:134
 msgid "Firstname"
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:128
+#: lmn_session/resources/js/controllers/session.controller.coffee:138
 msgid "Email"
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:137
+#: lmn_session/resources/js/controllers/session.controller.coffee:147
 msgid "Userdata"
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:140
+#: lmn_session/resources/js/controllers/session.controller.coffee:150
 msgid "Transfer"
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:143
+#: lmn_session/resources/js/controllers/session.controller.coffee:153
 msgid "Exam-Supervisor"
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:146
+#: lmn_session/resources/js/controllers/session.controller.coffee:156
 msgid "sophomorixRole"
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:150
+#: lmn_session/resources/js/controllers/session.controller.coffee:160
 msgid "Exam-Mode"
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:157
+#: lmn_session/resources/js/controllers/session.controller.coffee:167
 msgid "Wifi-Access"
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:163
+#: lmn_session/resources/js/controllers/session.controller.coffee:173
 msgid "Internet-Access"
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:169
+#: lmn_session/resources/js/controllers/session.controller.coffee:179
 msgid "Intranet Access"
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:174
+#: lmn_session/resources/js/controllers/session.controller.coffee:184
 msgid "Webfilter"
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:180
+#: lmn_session/resources/js/controllers/session.controller.coffee:190
 msgid "Printing"
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:255
-#: lmn_session/resources/js/controllers/session.controller.coffee:301
+#: lmn_session/resources/js/controllers/session.controller.coffee:265
+#: lmn_session/resources/js/controllers/session.controller.coffee:311
 msgid "No Session selected"
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:255
-#: lmn_session/resources/js/controllers/session.controller.coffee:301
+#: lmn_session/resources/js/controllers/session.controller.coffee:265
+#: lmn_session/resources/js/controllers/session.controller.coffee:311
 msgid "You have to select a session first."
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:259
+#: lmn_session/resources/js/controllers/session.controller.coffee:267
+msgid "Delete "
+msgstr ""
+
+#: lmn_session/resources/js/controllers/session.controller.coffee:269
 msgid "Session Deleted"
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:270
-#: lmn_session/resources/js/controllers/session.controller.coffee:303
+#: lmn_session/resources/js/controllers/session.controller.coffee:280
+#: lmn_session/resources/js/controllers/session.controller.coffee:313
 msgid "Session Name"
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:276
+#: lmn_session/resources/js/controllers/session.controller.coffee:286
 msgid "Session Created"
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:291
+#: lmn_session/resources/js/controllers/session.controller.coffee:301
 msgid "There are no sessions yet. Create a session using the 'New Session' button at the top!"
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:313
+#: lmn_session/resources/js/controllers/session.controller.coffee:323
 msgid "Session Renamed"
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:329
+#: lmn_session/resources/js/controllers/session.controller.coffee:339
 msgid "This session appears to be empty. Start adding users by using the top search bar!"
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:441
+#: lmn_session/resources/js/controllers/session.controller.coffee:451
 msgid "Initial password"
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:445
+#: lmn_session/resources/js/controllers/session.controller.coffee:455
 msgid "Initial password set"
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:449
+#: lmn_session/resources/js/controllers/session.controller.coffee:459
 msgid "Random password set"
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:552
+#: lmn_session/resources/js/controllers/session.controller.coffee:562
 msgid "Not implemented"
 msgstr ""
 

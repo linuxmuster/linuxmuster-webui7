@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-14 14:33+0000\n"
-"PO-Revision-Date: 2019-08-14 14:42\n"
+"POT-Creation-Date: 2019-08-16 06:43+0000\n"
+"PO-Revision-Date: 2019-08-16 06:46\n"
 "Last-Translator: kiarn\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -19,12 +19,6 @@ msgstr ""
 #: lmn_session/resources/partial/session.html:90
 msgid "<a>Share</a>"
 msgstr "<a>Teilen</a>"
-
-#: lmn_session/resources/partial/session.html:37
-msgid "<span translate=\"\">Edit Sessions</span>\n"
-"                <span class=\"caret\"></span>"
-msgstr "<span translate=\"\">Kurs bearbeiten</span>\n"
-"                <span class=\"caret\"></span>"
 
 #: lmn_session/resources/partial/selectFile.modal.html:90
 msgid "All data are copied from the whole session"
@@ -92,7 +86,7 @@ msgid "Delete Session"
 msgstr "Kurs löschen"
 
 #: lmn_session/resources/partial/session.html:38
-msgid "Edit Sessions"
+msgid "Edit Session"
 msgstr ""
 
 #: lmn_session/resources/partial/session.html:122

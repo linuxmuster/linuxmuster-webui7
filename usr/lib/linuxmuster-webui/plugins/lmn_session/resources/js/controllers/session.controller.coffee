@@ -107,7 +107,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
     pageTitle.set(gettext('Session'))
 
     # translationstrings
-    $scope.trans ={
+    $scope.translation ={
         addStudent: gettext('Add Student')
         addClass: gettext('Add Class')
     }

@@ -42,14 +42,13 @@
                     <img ng:src="{{customization.plugins.core.logoURL}}" />
                 </a>
 
-
                 <a class="navbar-brand ellipsis" ng:href="{{urlPrefix}}/view/">
-                    <span class="title">
-                        {{customization.plugins.core.title || 'Ajenti'}}
-                    </span> <span class="subtitle hide-phone hide-tablet">{{pageTitle|translate}}</span>
+                    <span class="title" translate>
+                        School Console
+                    </span> <span class="subtitle hide-phone hide-tablet" ng:if="pageTitle"> > {{pageTitle|translate}}</span>
                 </a>
 
-                <a ng:click="toggleWidescreen()" class="hide-phone hide-tablet navbar-btn btn btn-default btn-flat pull-right">
+                <a ng:click="toggleWidescreen()" class="navbar-brand navigation-toggle hide-phone hide-tablet  pull-right" style="padding-left: 35px;">
                     <i class="fa fa-expand" ng:if="!isWidescreen"></i>
                     <i class="fa fa-compress" ng:if="isWidescreen"></i>
                 </a>

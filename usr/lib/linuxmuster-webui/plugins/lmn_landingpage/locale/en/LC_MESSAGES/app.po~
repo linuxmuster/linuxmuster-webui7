@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-08 12:58+0000\n"
+"POT-Creation-Date: 2019-08-16 07:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -92,4 +92,20 @@ msgstr ""
 
 #: lmn_landingpage/resources/js/controllers/index.controller.coffee:7
 msgid "Home"
+msgstr ""
+
+#: lmn_landingpage/resources/js/controllers/index.controller.coffee:39
+msgid "Class"
+msgstr ""
+
+#: lmn_landingpage/resources/js/controllers/index.controller.coffee:41
+msgid "Teachers"
+msgstr ""
+
+#: lmn_landingpage/resources/js/controllers/index.controller.coffee:43
+msgid "Printer"
+msgstr ""
+
+#: lmn_landingpage/resources/js/controllers/index.controller.coffee:45
+msgid "Project"
 msgstr ""

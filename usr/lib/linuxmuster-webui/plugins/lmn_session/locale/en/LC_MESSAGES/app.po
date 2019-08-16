@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-16 06:43+0000\n"
+"POT-Creation-Date: 2019-08-16 07:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -36,7 +36,7 @@ msgstr ""
 #: lmn_session/resources/partial/selectFile.modal.html:109
 #: lmn_session/resources/js/controllers/session.controller.coffee:58
 #: lmn_session/resources/js/controllers/session.controller.coffee:74
-#: lmn_session/resources/js/controllers/session.controller.coffee:267
+#: lmn_session/resources/js/controllers/session.controller.coffee:188
 msgid "Cancel"
 msgstr ""
 
@@ -213,7 +213,7 @@ msgstr ""
 
 #: lmn_session/resources/js/controllers/session.controller.coffee:57
 #: lmn_session/resources/js/controllers/session.controller.coffee:73
-#: lmn_session/resources/js/controllers/session.controller.coffee:267
+#: lmn_session/resources/js/controllers/session.controller.coffee:188
 msgid "Delete"
 msgstr ""
 
@@ -230,125 +230,125 @@ msgstr ""
 msgid "Directory "
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:110
-msgid "Add Student"
-msgstr ""
-
-#: lmn_session/resources/js/controllers/session.controller.coffee:111
-msgid "Add Class"
-msgstr ""
-
-#: lmn_session/resources/js/controllers/session.controller.coffee:126
-msgid "Lastname"
-msgstr ""
-
-#: lmn_session/resources/js/controllers/session.controller.coffee:130
-msgid "Login name"
-msgstr ""
-
-#: lmn_session/resources/js/controllers/session.controller.coffee:134
-msgid "Firstname"
-msgstr ""
-
-#: lmn_session/resources/js/controllers/session.controller.coffee:138
-msgid "Email"
-msgstr ""
-
-#: lmn_session/resources/js/controllers/session.controller.coffee:147
-msgid "Userdata"
-msgstr ""
-
-#: lmn_session/resources/js/controllers/session.controller.coffee:150
-msgid "Transfer"
-msgstr ""
-
-#: lmn_session/resources/js/controllers/session.controller.coffee:153
-msgid "Exam-Supervisor"
-msgstr ""
-
-#: lmn_session/resources/js/controllers/session.controller.coffee:156
-msgid "sophomorixRole"
-msgstr ""
-
-#: lmn_session/resources/js/controllers/session.controller.coffee:160
-msgid "Exam-Mode"
-msgstr ""
-
-#: lmn_session/resources/js/controllers/session.controller.coffee:167
-msgid "Wifi-Access"
-msgstr ""
-
-#: lmn_session/resources/js/controllers/session.controller.coffee:173
-msgid "Internet-Access"
-msgstr ""
-
-#: lmn_session/resources/js/controllers/session.controller.coffee:179
-msgid "Intranet Access"
-msgstr ""
-
-#: lmn_session/resources/js/controllers/session.controller.coffee:184
-msgid "Webfilter"
-msgstr ""
-
-#: lmn_session/resources/js/controllers/session.controller.coffee:190
-msgid "Printing"
-msgstr ""
-
-#: lmn_session/resources/js/controllers/session.controller.coffee:265
-#: lmn_session/resources/js/controllers/session.controller.coffee:311
+#: lmn_session/resources/js/controllers/session.controller.coffee:186
+#: lmn_session/resources/js/controllers/session.controller.coffee:309
 msgid "No Session selected"
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:265
-#: lmn_session/resources/js/controllers/session.controller.coffee:311
+#: lmn_session/resources/js/controllers/session.controller.coffee:186
+#: lmn_session/resources/js/controllers/session.controller.coffee:309
 msgid "You have to select a session first."
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:267
-msgid "Delete "
+#: lmn_session/resources/js/controllers/session.controller.coffee:188
+msgid "Delete Session:  "
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:269
+#: lmn_session/resources/js/controllers/session.controller.coffee:190
 msgid "Session Deleted"
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:280
-#: lmn_session/resources/js/controllers/session.controller.coffee:313
+#: lmn_session/resources/js/controllers/session.controller.coffee:201
+#: lmn_session/resources/js/controllers/session.controller.coffee:311
 msgid "Session Name"
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:286
+#: lmn_session/resources/js/controllers/session.controller.coffee:207
 msgid "Session Created"
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:301
+#: lmn_session/resources/js/controllers/session.controller.coffee:222
+msgid "Add Student"
+msgstr ""
+
+#: lmn_session/resources/js/controllers/session.controller.coffee:223
+msgid "Add Class"
+msgstr ""
+
+#: lmn_session/resources/js/controllers/session.controller.coffee:227
+msgid "Lastname"
+msgstr ""
+
+#: lmn_session/resources/js/controllers/session.controller.coffee:231
+msgid "Login name"
+msgstr ""
+
+#: lmn_session/resources/js/controllers/session.controller.coffee:235
+msgid "Firstname"
+msgstr ""
+
+#: lmn_session/resources/js/controllers/session.controller.coffee:239
+msgid "Email"
+msgstr ""
+
+#: lmn_session/resources/js/controllers/session.controller.coffee:248
+msgid "Userdata"
+msgstr ""
+
+#: lmn_session/resources/js/controllers/session.controller.coffee:251
+msgid "Transfer"
+msgstr ""
+
+#: lmn_session/resources/js/controllers/session.controller.coffee:254
+msgid "Exam-Supervisor"
+msgstr ""
+
+#: lmn_session/resources/js/controllers/session.controller.coffee:257
+msgid "sophomorixRole"
+msgstr ""
+
+#: lmn_session/resources/js/controllers/session.controller.coffee:261
+msgid "Exam-Mode"
+msgstr ""
+
+#: lmn_session/resources/js/controllers/session.controller.coffee:268
+msgid "Wifi-Access"
+msgstr ""
+
+#: lmn_session/resources/js/controllers/session.controller.coffee:274
+msgid "Internet-Access"
+msgstr ""
+
+#: lmn_session/resources/js/controllers/session.controller.coffee:280
+msgid "Intranet Access"
+msgstr ""
+
+#: lmn_session/resources/js/controllers/session.controller.coffee:285
+msgid "Webfilter"
+msgstr ""
+
+#: lmn_session/resources/js/controllers/session.controller.coffee:291
+msgid "Printing"
+msgstr ""
+
+#: lmn_session/resources/js/controllers/session.controller.coffee:299
 msgid ""
 "There are no sessions yet. Create a session using the 'New Session' button "
 "at the top!"
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:323
+#: lmn_session/resources/js/controllers/session.controller.coffee:321
 msgid "Session Renamed"
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:339
+#: lmn_session/resources/js/controllers/session.controller.coffee:337
 msgid ""
 "This session appears to be empty. Start adding users by using the top search "
 "bar!"
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:451
+#: lmn_session/resources/js/controllers/session.controller.coffee:449
 msgid "Initial password"
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:455
+#: lmn_session/resources/js/controllers/session.controller.coffee:453
 msgid "Initial password set"
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:459
+#: lmn_session/resources/js/controllers/session.controller.coffee:457
 msgid "Random password set"
 msgstr ""
 
-#: lmn_session/resources/js/controllers/session.controller.coffee:562
+#: lmn_session/resources/js/controllers/session.controller.coffee:560
 msgid "Not implemented"
 msgstr ""

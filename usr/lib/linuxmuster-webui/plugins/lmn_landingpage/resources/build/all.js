@@ -32,6 +32,9 @@
         used = values['USED_MiB'];
         total = values['HARD_LIMIT_MiB'];
         if (typeof total === 'string') {
+          if (total === 'NO LIMIT') {
+            total = gettext('NO LIMIT');
+          }
           $scope.quotas.push({
             'share': share,
             'total': gettext(total),
@@ -76,7 +79,7 @@
               if (category === "printer-groups") {
                 $scope.groups.push({
                   'cn': cn,
-                  'category': gettext('Printer')
+                  'category': gettext('Printers')
                 });
               }
               if (category === "Projects") {

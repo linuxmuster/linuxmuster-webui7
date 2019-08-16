@@ -274,6 +274,7 @@
       });
     };
     $scope.getSessions = function(username) {
+      // TODO Figure out why this only works correctly if defined in this function (translation string etc.)
       // translationstrings
       $scope.translation = {
         addStudent: gettext('Add Student'),

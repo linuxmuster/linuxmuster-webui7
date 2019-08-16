@@ -21,6 +21,8 @@ angular.module('lmn.landingpage').controller 'LMNLandingController', ($scope, $h
             used = values['USED_MiB']
             total = values['HARD_LIMIT_MiB']
             if (typeof total == 'string')
+                if (total == 'NO LIMIT')
+                    total = gettext('NO LIMIT')
                 $scope.quotas.push({'share':share, 'total':gettext(total), 'used':used, 'usage':0})
             else
                 $scope.quotas.push({'share':share, 'total':total + " MiB", 'used':used, 'usage':Math.floor((100 * used) / total)})
@@ -40,7 +42,7 @@ angular.module('lmn.landingpage').controller 'LMNLandingController', ($scope, $h
                     if (category == "Teachers")
                         $scope.groups.push({'cn':cn, 'category':gettext('Teachers')})
                     if (category == "printer-groups")
-                        $scope.groups.push({'cn':cn, 'category':gettext('Printer')})
+                        $scope.groups.push({'cn':cn, 'category':gettext('Printers')})
                     if (category == "Projects")
                         $scope.groups.push({'cn':cn, 'category':gettext('Project')})
 

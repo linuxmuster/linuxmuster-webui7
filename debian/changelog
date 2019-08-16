@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.90-1) lmn7; urgency=medium 
+
+  * Current snapshot build 868c4da338790c0973b9a5393052ab8ca2b611a1
+   *     recreated custom breadcrumbs
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Aug 16 11:02:05 UTC 2019
+
 linuxmuster-webui7 (1.0.89-1) lmn7; urgency=medium 
 
   * Current snapshot build 

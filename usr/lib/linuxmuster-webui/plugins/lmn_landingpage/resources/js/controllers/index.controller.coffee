@@ -9,6 +9,11 @@ angular.module('lmn.landingpage').controller 'LMNLandingController', ($scope, $h
     $scope.getQuota = $http.post('/api/lmn/quota/').then (resp) ->
         $scope.user = resp.data
         $scope.quotas = []
+        console.log ($scope.identity)
+        # skip if user is root
+        if ($scope.identity.user == 'root')
+            return
+
 
 
         for share, values of $scope.user['QUOTA_USAGE_BY_SHARE']

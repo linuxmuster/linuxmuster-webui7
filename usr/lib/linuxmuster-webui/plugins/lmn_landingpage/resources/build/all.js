@@ -19,6 +19,10 @@
       var category, cn, dn, ref, results, share, total, used, values;
       $scope.user = resp.data;
       $scope.quotas = [];
+      console.log($scope.identity);
+      if ($scope.identity.user === 'root') {
+        return;
+      }
       ref = $scope.user['QUOTA_USAGE_BY_SHARE'];
       results = [];
       for (share in ref) {

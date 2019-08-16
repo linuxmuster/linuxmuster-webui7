@@ -2,3 +2,4 @@
 .*.swp
 .crowdin.key
 usr/lib/linuxmuster-webui/plugins/extra_*
+usr/lib/linuxmuster-webui/plugins/ni_*

@@ -14,7 +14,6 @@ class ItemProvider(SidebarItemProvider):
                 # category:tools, category:sofware, category:system, category:other
                 'attach': 'category:general',
                 'name': 'Home',
-                # http://fontawesome.io/icons/
                 'icon': 'home',
                 'url': '/view/lmn/landingpage',
                 'weight': '10',

@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.92-1) lmn7; urgency=medium 
+
+  * Current snapshot build 3bf386af6744931e6375e4c011b7a4d428fa6ddb
+   *     updated gitignore and permissions
+
+ -- Andreas Till <andreas.till@netzint.de> Sat Aug 17 14:43:15 UTC 2019
+
 linuxmuster-webui7 (1.0.91-1) lmn7; urgency=medium 
 
   * Current snapshot build 0ff1630f0b6c568f97d7e1914f374ec25ad977af

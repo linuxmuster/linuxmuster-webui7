@@ -169,6 +169,16 @@ html body.customized .container > .row > .sidebar .sidebar-item h5,
 html body.customized .container > .sidebar .sidebar-item h5 {
   padding-left: 10px;
 }
+div.legend {
+  float: right !important;
+  margin-top: 50px;
+}
+div.legend-element {
+  border: solid 1px #dddddd;
+  width: 50px;
+  display: inline-block;
+  margin-top: 10px;
+}
 .col-md-9 {
   width: calc(100% - 205px);
   float: right;

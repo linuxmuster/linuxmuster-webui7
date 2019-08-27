@@ -31,17 +31,23 @@ class Handler(HttpPlugin):
             for line in lines:
                 name       = line.split('|')[1].strip().split('(')[0]
                 quota_type = line.split('|')[2].strip().strip("*")
-                value      = int(line.split('|')[3].strip().strip("*")) ## TEST INT
+                value      = line.split('|')[3].strip()
                 if 'teacher' in line:
                     if name not in quotas[1]:
                         quotas[1][name] = {}
-                    
-                    quotas[1][name][quota_type] = value
+                    if "*" in value:
+                        quotas[1][name][quota_type+'_set'] = False
+                    else:
+                        quotas[1][name][quota_type+'_set'] = True
+                    quotas[1][name][quota_type] = int(value.strip("*"))
                 else:
                     if name not in quotas[0]:
                         quotas[0][name] = {}
-                    
-                    quotas[0][name][quota_type] = value
+                    if "*" in value:
+                        quotas[0][name][quota_type+'_set'] = False
+                    else:
+                        quotas[0][name][quota_type+'_set'] = True
+                    quotas[0][name][quota_type] = int(value.strip("*"))
             return quotas
         if http_context.method == 'POST':
             lmn_backup_file(path)

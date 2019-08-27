@@ -86,16 +86,16 @@
                         {{getName(login)}}
                     </td>
                     <td>
-                        <input type="number" ng:model="teacher.DEFLT" class="form-control" />
+                        <input type="number" ng:model="teacher.DEFLT" class="form-control" ng:style="!teacher.DEFLT_set && {'background-color':'#fff3cd'}" />
                     </td>
                     <td>
-                        <input type="number" ng:model="teacher.GLOBAL" class="form-control" />
+                        <input type="number" ng:model="teacher.GLOBAL" class="form-control" ng:style="!teacher.GLOBAL_set && {'background-color':'#fff3cd'}" />
                     </td>
                     <td>
-                        <input type="number" ng:model="teacher.CQ" class="form-control" />
+                        <input type="number" ng:model="teacher.CQ" class="form-control" ng:style="!teacher.CQ_set && {'background-color':'#fff3cd'}" />
                     </td>
                     <td>
-                        <input type="number" ng:model="teacher.MQ" class="form-control" />
+                        <input type="number" ng:model="teacher.MQ" class="form-control" ng:style="!teacher.MQ_set && {'background-color':'#fff3cd'}" />
                     </td>
                 </tr>
             </table>
@@ -119,16 +119,16 @@
                         {{getName(login)}}
                     </td>
                     <td>
-                        <input type="number" ng:model="quota.DEFLT" class="form-control" />
+                        <input type="number" ng:model="quota.DEFLT" class="form-control" ng:style="!quota.DEFLT_set && {'background-color':'#fff3cd'}" />
                     </td>
                     <td>
-                        <input type="number" ng:model="quota.GLOBAL" class="form-control" />
+                        <input type="number" ng:model="quota.GLOBAL" class="form-control" ng:style="!quota.QUOTA_set && {'background-color':'#fff3cd'}" />
                     </td>
                     <td>
-                        <input type="number" ng:model="quota.CQ" class="form-control" />
+                        <input type="number" ng:model="quota.CQ" class="form-control" ng:style="!quota.CQ_set && {'background-color':'#fff3cd'}" />
                     </td>
                     <td>
-                        <input type="number" ng:model="quota.MQ" class="form-control" />
+                        <input type="number" ng:model="quota.MQ" class="form-control" ng:style="!quota.MQ_set && {'background-color':'#fff3cd'}" />
                     </td>
                     <td>
                         <button class="btn btn-default" ng:click="remove(login)">
@@ -209,6 +209,11 @@
         </uib:tab>
     </uib:tabset>
 
+    <div class="legend">
+        <div class="legend-element" style="background-color:#dddddd;">&nbsp;</div><span style="font-weight:bold;padding:10px;"translate>Quota is currently set in ldap</span>
+        <br />
+        <div class="legend-element" style="background-color:#fff3cd;">&nbsp;</div><span style="font-weight:bold;padding:10px;"translate>Quota is currently not set in ldap</span>
+    </div>
     <div class="floating-toolbar-padder"></div>
 
     <floating-toolbar>

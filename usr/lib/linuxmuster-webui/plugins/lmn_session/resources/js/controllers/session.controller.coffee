@@ -36,7 +36,6 @@ angular.module('lmn.session').controller 'LMNSessionFileSelectModalController', 
 
     $scope.share = () ->
         $http.post('/api/lmn/session/trans-list-files', {user: senders[0]}).then (resp) ->
-            console.log (resp.data)
             $scope.files = resp['data'][0]
             $scope.filesList = resp['data'][1]
 

@@ -108,7 +108,7 @@
       }
     });
     $scope.findUsers = function(q) {
-      return $http.get(`/api/lm/ldap-search?q=${q}`).then(function(resp) {
+      return $http.get(`/api/lm/ldap-search?login=${q}`).then(function(resp) {
         return resp.data;
       });
     };
@@ -142,9 +142,9 @@
     $scope.getName = function(login) {
       if (!angular.isDefined($scope.NameCache[login])) {
         $scope.NameCache[login] = '...';
-        $http.get(`/api/lm/ldap-search?q=${login}`).then(function(resp) {
-          if (resp.data.length > 0) {
-            return $scope.NameCache[login] = resp.data[0][1].sn[0] + " " + resp.data[0][1].givenName[0];
+        $http.get(`/api/lm/ldap-search?login=${login}`).then(function(resp) {
+          if (resp.data) {
+            return $scope.NameCache[login] = resp.data.sn + " " + resp.data.givenName;
           } else {
             return $scope.NameCache[login] = login;
           }

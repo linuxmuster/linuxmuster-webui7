@@ -110,20 +110,9 @@ class Handler(HttpPlugin):
     @authorize('lm:quotas:ldap-search')
     @endpoint(api=True)
     def handle_api_ldap_search(self, http_context):
-        params = lmconfig.data['linuxmuster']['ldap']
-        l = ldap.initialize('ldap://' + params['host'])
-        l.bind_s(params['binddn'], params['bindpw'])
-        l.set_option(ldap.OPT_REFERRALS, 0)
-        users = l.search_s(
-            params['searchdn'],
-            ldap.SCOPE_SUBTREE,
-            '(&(objectClass=person)(|(cn=*%s*)(uid=*%s*)))' % (
-                http_context.query['q'],
-                http_context.query['q'],
-            ),
-            attrlist=['sn', 'givenName'],
-        )
-        return [u for u in users if isinstance(u[0], str)]
+        login = http_context.query['login']
+        sophomorixCommand = ['sophomorix-query', '--sam', login, '-jj']
+        return lmn_getSophomorixValue(sophomorixCommand, 'USER/'+login)
 
     @url(r'/api/lm/quotas/apply')
     @authorize('lm:quotas:apply')

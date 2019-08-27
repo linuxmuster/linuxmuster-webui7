@@ -124,8 +124,9 @@ angular.module('lm.quotas').controller 'LMQuotasController', ($scope, $http, $ui
                 projectsToChange.push project
 
         qs = []
-        qs.push $http.post("/api/lm/users/teachers?encoding=#{$scope.teachersEncoding}", teachers)
-        qs.push $http.post('/api/lm/quotas', $scope.quotas)
+        #qs.push $http.post("/api/lm/users/teachers?encoding=#{$scope.teachersEncoding}", teachers)
+        #qs.push $http.post('/api/lm/quotas', $scope.quotas)
+        qs.push $http.post('/api/lm/schoolsettings', $scope.settings)
 
         if classesToChange.length > 0
             qs.push $http.post("/api/lm/class-quotas", classesToChange).then () ->

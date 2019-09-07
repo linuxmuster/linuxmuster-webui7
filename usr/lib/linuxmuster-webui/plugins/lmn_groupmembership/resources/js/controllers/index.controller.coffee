@@ -53,7 +53,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
         $scope.killProject = (project) ->
              messagebox.show(text: "Do you really want to delete '#{project}'? This can't be undone!", positive: 'Delete', negative: 'Cancel').then () ->
                 msg = messagebox.show(progress: true)
-                $http.post('/api/lmn/groupmembership', {action: 'kill-project', username:$scope.identity.user, project: project}).then (resp) ->
+                $http.post('/api/lmn/groupmembership', {action: 'kill-project', username:$scope.identity.user, project: project, profil: $scope.identity.profile}).then (resp) ->
                     if resp['data'][0] == 'ERROR'
                         notify.error (resp['data'][1])
                     if resp['data'][0] == 'LOG'
@@ -349,7 +349,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
 
 
     $scope.setGroups = (groups) ->
-        $http.post('/api/lmn/groupmembership', {action: 'set-groups', username:$scope.identity.user, groups: groups}).then (resp) ->
+        $http.post('/api/lmn/groupmembership', {action: 'set-groups', username:$scope.identity.user, groups: groups, profil: $scope.identity.profile}).then (resp) ->
             if resp['data'][0] == 'ERROR'
                 notify.error (resp['data'][1])
             if resp['data'][0] == 'LOG'
@@ -365,7 +365,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
             if not isValidName(msg.value)
                 notify.error gettext('Not a valid name! Only lowercase alphanumeric characters are allowed!')
                 return
-            $http.post('/api/lmn/groupmembership', {action: 'create-project', username:$scope.identity.user, project: msg.value}).then (resp) ->
+            $http.post('/api/lmn/groupmembership', {action: 'create-project', username:$scope.identity.user, project: msg.value, profil: $scope.identity.profile}).then (resp) ->
                 notify.success gettext('Project Created')
                 $scope.getGroups ($scope.identity.user)
 

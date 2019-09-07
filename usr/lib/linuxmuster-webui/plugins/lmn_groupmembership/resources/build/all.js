@@ -100,7 +100,8 @@
         return $http.post('/api/lmn/groupmembership', {
           action: 'kill-project',
           username: $scope.identity.user,
-          project: project
+          project: project,
+          profil: $scope.identity.profile
         }).then(function(resp) {
           if (resp['data'][0] === 'ERROR') {
             notify.error(resp['data'][1]);
@@ -518,7 +519,8 @@
       return $http.post('/api/lmn/groupmembership', {
         action: 'set-groups',
         username: $scope.identity.user,
-        groups: groups
+        groups: groups,
+        profil: $scope.identity.profile
       }).then(function(resp) {
         if (resp['data'][0] === 'ERROR') {
           notify.error(resp['data'][1]);
@@ -544,7 +546,8 @@
         return $http.post('/api/lmn/groupmembership', {
           action: 'create-project',
           username: $scope.identity.user,
-          project: msg.value
+          project: msg.value,
+          profil: $scope.identity.profile
         }).then(function(resp) {
           notify.success(gettext('Project Created'));
           return $scope.getGroups($scope.identity.user);

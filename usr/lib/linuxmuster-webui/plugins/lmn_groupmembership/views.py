@@ -100,7 +100,6 @@ class Handler(HttpPlugin):
                     groupDetails = groups['GROUP'][group]
 
                     if group in usergroups or isAdmin or groupDetails['sophomorixHidden'] == "FALSE":
-                        print("#"*50, groupDetails, group)
                         membershipDict['groupname'] = group
                         membershipDict['changed'] = False
                         membershipDict['membership'] = group in usergroups or isAdmin
@@ -118,15 +117,16 @@ class Handler(HttpPlugin):
 
                         membershipList.append(membershipDict)
 
+                ## DEPRECATED ???
                 # get printers
-                sophomorixCommand = ['sophomorix-query', '--printergroup', '--schoolbase', schoolname, '-jj']
-                printergroups = lmn_getSophomorixValue(sophomorixCommand, 'LISTS/GROUP')
+                # sophomorixCommand = ['sophomorix-query', '--printergroup', '--schoolbase', schoolname, '-jj']
+                # printergroups = lmn_getSophomorixValue(sophomorixCommand, 'LISTS/GROUP')
 
-                for printergroup in printergroups:
-                    if printergroup in usergroups or isAdmin:
-                        membershipList.append({'type': 'printergroup', 'typename': 'Printer', 'groupname': printergroup, 'changed': False, 'membership': True})
-                    else:
-                        membershipList.append({'type': 'printergroup', 'typename': 'Printer', 'groupname': printergroup, 'changed': False, 'membership': False})
+                # for printergroup in printergroups:
+                    # if printergroup in usergroups or isAdmin:
+                        # membershipList.append({'type': 'printergroup', 'typename': 'Printer', 'groupname': printergroup, 'changed': False, 'membership': True})
+                    # else:
+                        # membershipList.append({'type': 'printergroup', 'typename': 'Printer', 'groupname': printergroup, 'changed': False, 'membership': False})
                 return membershipList, isAdmin, user_details
 
             if action == 'kill-project':

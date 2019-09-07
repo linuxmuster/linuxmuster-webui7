@@ -473,12 +473,12 @@
     $scope.getGroups = function(username) {
       return $http.post('/api/lmn/groupmembership', {
         action: 'list-groups',
-        username: username
+        username: username,
+        profil: $scope.identity.profile
       }).then(function(resp) {
         var group, i, j, k, len, len1, len2, printergroupCount, projectCount, ref, ref1, ref2, schoolclassCount;
         $scope.groups = resp.data[0];
         $scope.identity.isAdmin = resp.data[1];
-        $scope.identity.userDetails = resp.data[2];
         schoolclassCount = 0;
         printergroupCount = 0;
         projectCount = 0;

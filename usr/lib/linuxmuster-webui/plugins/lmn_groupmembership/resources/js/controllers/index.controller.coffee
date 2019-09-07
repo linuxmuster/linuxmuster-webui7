@@ -324,10 +324,9 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
            document.getElementById(item).className += " changed"
 
     $scope.getGroups = (username) ->
-        $http.post('/api/lmn/groupmembership', {action: 'list-groups', username: username}).then (resp) ->
+        $http.post('/api/lmn/groupmembership', {action: 'list-groups', username: username, profil: $scope.identity.profile}).then (resp) ->
             $scope.groups = resp.data[0]
             $scope.identity.isAdmin = resp.data[1]
-            $scope.identity.userDetails =  resp.data[2]
             schoolclassCount = 0
             printergroupCount = 0
             projectCount = 0

@@ -77,7 +77,7 @@ class Handler(HttpPlugin):
         schoolname = 'default-school'
         username = http_context.json_body()['username']
         action = http_context.json_body()['action']
-        user_details = lmn_user_details(username)
+        user_details = http_context.json_body()['profil']
         isAdmin = "administrator" in user_details['sophomorixRole']
 
         if http_context.method == 'POST':
@@ -86,42 +86,42 @@ class Handler(HttpPlugin):
                 usergroups = []
                 if not isAdmin:
                     # get groups specified user is member of
-                    sophomorixCommand = ['sophomorix-query',  '--schoolbase', schoolname, '--user-full', '-jj', '--sam', username]
-                    groups = lmn_getSophomorixValue(sophomorixCommand, 'USER/'+username+'/memberOf')
-
-                    for group in groups:
+                    for group in user_details['memberOf']:
                         usergroups.append(group.split(',')[0].split('=')[1])
 
-                # get all available classes
-                # get classes
-                sophomorixCommand = ['sophomorix-query', '--class', '--schoolbase', schoolname, '--group-full', '-jj']
-                schoolclasses = lmn_getSophomorixValue(sophomorixCommand, 'LISTS/GROUP')
-                # get all available groups
+                # get all available classes and projects
+                sophomorixCommand = ['sophomorix-query', '--class', '--project', '--schoolbase', schoolname, '--group-full', '-jj']
+                groups = lmn_getSophomorixValue(sophomorixCommand, '')
+                # get all available groups TODO
+
+                # build membershipList with membership status
+                for group in groups['LISTS']['GROUP']:
+                    membershipDict = {}
+                    groupDetails = groups['GROUP'][group]
+
+                    if group in usergroups or isAdmin or groupDetails['sophomorixHidden'] == "FALSE":
+                        print("#"*50, groupDetails, group)
+                        membershipDict['groupname'] = group
+                        membershipDict['changed'] = False
+                        membershipDict['membership'] = group in usergroups or isAdmin
+                        membershipDict['admin'] = username in groupDetails['sophomorixAdmins'] or isAdmin
+                        membershipDict['joinable'] = groupDetails['sophomorixJoinable']
+                        membershipDict['DN'] = groupDetails['DN']
+
+                        # Project name always starts with p_, but not classname
+                        if group[:2] == "p_":
+                            membershipDict['type'] = 'project'
+                            membershipDict['typename'] = 'Project'
+                        else:
+                            membershipDict['type'] = 'schoolclass'
+                            membershipDict['typename'] = 'Class'
+
+                        membershipList.append(membershipDict)
+
                 # get printers
                 sophomorixCommand = ['sophomorix-query', '--printergroup', '--schoolbase', schoolname, '-jj']
                 printergroups = lmn_getSophomorixValue(sophomorixCommand, 'LISTS/GROUP')
-                # get projects
-                sophomorixCommand = ['sophomorix-query', '--project', '--group-full', '--schoolbase', schoolname, '-jj']
-                # Check if there are any project if not return empty list
-                projects_raw = lmn_getSophomorixValue(sophomorixCommand, '')
-                if 'GROUP' not in projects_raw:
-                    projects = []
-                else:
-                    projects = projects_raw['GROUP']
-                # build membershipList with membership status
-                for project in projects:
-                    if project in usergroups or isAdmin:
-                        if username in projects[project]['sophomorixAdmins'] or isAdmin:
-                            membershipList.append({'type': 'project', 'typename': 'Project', 'groupname': project, 'changed': False, 'membership': True, 'admin': True, 'joinable': projects[project]['sophomorixJoinable'], 'DN': projects[project]['DN']})
-                        else:
-                            membershipList.append({'type': 'project', 'typename': 'Project', 'groupname': project, 'changed': False, 'membership': True, 'admin': False, 'joinable': projects[project]['sophomorixJoinable'], 'DN': projects[project]['DN']})
-                    elif projects[project]['sophomorixHidden'] == "FALSE":
-                        membershipList.append({'type': 'project', 'typename': 'Project', 'groupname': project, 'changed': False, 'membership': False, 'admin': False, 'joinable': projects[project]['sophomorixJoinable'], 'DN': projects[project]['DN']})
-                for schoolclass in schoolclasses:
-                    if schoolclass in usergroups or isAdmin:
-                        membershipList.append({'type': 'schoolclass', 'typename': 'Class', 'groupname': schoolclass, 'changed': False, 'membership': True})
-                    else:
-                        membershipList.append({'type': 'schoolclass', 'typename': 'Class', 'groupname': schoolclass, 'changed': False, 'membership': False})
+
                 for printergroup in printergroups:
                     if printergroup in usergroups or isAdmin:
                         membershipList.append({'type': 'printergroup', 'typename': 'Printer', 'groupname': printergroup, 'changed': False, 'membership': True})

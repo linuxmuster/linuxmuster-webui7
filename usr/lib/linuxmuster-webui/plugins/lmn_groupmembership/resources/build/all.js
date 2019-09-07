@@ -51,13 +51,14 @@
     $scope.changeState = false;
     $scope.hidetext = gettext("Hide");
     $scope.showtext = gettext("Show");
-    $scope.changeJoin = function(project) {
+    $scope.changeJoin = function(group, type) {
       var option;
       $scope.changeState = true;
       option = $scope.joinable ? '--join' : '--nojoin';
-      return $http.post('/api/lmn/changeProject', {
+      return $http.post('/api/lmn/changeGroup', {
         option: option,
-        project: project
+        group: group,
+        type: type
       }).then(function(resp) {
         if (resp['data'][0] === 'ERROR') {
           notify.error(resp['data'][1]);
@@ -68,13 +69,14 @@
         return $scope.changeState = false;
       });
     };
-    $scope.changeHide = function(project) {
+    $scope.changeHide = function(group, type) {
       var option;
       $scope.changeState = true;
       option = $scope.hidden ? '--hide' : '--nohide';
-      return $http.post('/api/lmn/changeProject', {
+      return $http.post('/api/lmn/changeGroup', {
         option: option,
-        project: project
+        group: group,
+        type: type
       }).then(function(resp) {
         if (resp['data'][0] === 'ERROR') {
           notify.error(resp['data'][1]);
@@ -178,8 +180,12 @@
         }
         $scope.joinable = resp.data['GROUP'][groupName]['sophomorixJoinable'] === 'TRUE';
         $scope.hidden = resp.data['GROUP'][groupName]['sophomorixHidden'] === 'TRUE';
-        console.log($scope.identity.profile);
-        if ($scope.adminList.indexOf($scope.identity.user) !== -1 || $scope.identity.isAdmin || $scope.groupadminlist.indexOf($scope.identity.profile.sophomorixAdminClass) !== -1) {
+        
+        // Admin or admin of the project can edit members of a project
+        // Only admins can change hide and join option for a class
+        if ($scope.identity.isAdmin) {
+          return $scope.editMembersButton = true;
+        } else if ((groupType === "project") && ($scope.adminList.indexOf($scope.identity.user) !== -1 || $scope.groupadminlist.indexOf($scope.identity.profile.sophomorixAdminClass) !== -1)) {
           return $scope.editMembersButton = true;
         } else {
           return $scope.editMembersButton = false;

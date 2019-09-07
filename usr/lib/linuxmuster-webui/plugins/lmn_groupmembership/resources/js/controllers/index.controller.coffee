@@ -30,20 +30,20 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
         $scope.hidetext = gettext("Hide")
         $scope.showtext = gettext("Show")
 
-        $scope.changeJoin = (project) ->
+        $scope.changeJoin = (group, type) ->
             $scope.changeState = true
             option = if $scope.joinable then '--join' else '--nojoin'
-            $http.post('/api/lmn/changeProject', {option: option, project: project}).then (resp) ->
+            $http.post('/api/lmn/changeGroup', {option: option, group: group, type: type}).then (resp) ->
                 if resp['data'][0] == 'ERROR'
                     notify.error (resp['data'][1])
                 if resp['data'][0] == 'LOG'
                     notify.success gettext(resp['data'][1])
                 $scope.changeState = false
 
-        $scope.changeHide = (project) ->
+        $scope.changeHide = (group, type) ->
             $scope.changeState = true
             option = if $scope.hidden then '--hide' else '--nohide'
-            $http.post('/api/lmn/changeProject', {option: option, project: project}).then (resp) ->
+            $http.post('/api/lmn/changeGroup', {option: option, group: group, type: type}).then (resp) ->
                 if resp['data'][0] == 'ERROR'
                     notify.error (resp['data'][1])
                 if resp['data'][0] == 'LOG'
@@ -107,8 +107,12 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
 
                 $scope.joinable = resp.data['GROUP'][groupName]['sophomorixJoinable'] == 'TRUE'
                 $scope.hidden = resp.data['GROUP'][groupName]['sophomorixHidden'] == 'TRUE'
-                console.log $scope.identity.profile
-                if $scope.adminList.indexOf($scope.identity.user) != -1 or $scope.identity.isAdmin or $scope.groupadminlist.indexOf($scope.identity.profile.sophomorixAdminClass) != -1
+                
+                # Admin or admin of the project can edit members of a project
+                # Only admins can change hide and join option for a class
+                if $scope.identity.isAdmin
+                    $scope.editMembersButton = true
+                else if (groupType == "project") and ($scope.adminList.indexOf($scope.identity.user) != -1 or $scope.groupadminlist.indexOf($scope.identity.profile.sophomorixAdminClass) != -1)
                     $scope.editMembersButton = true
                 else
                     $scope.editMembersButton = false

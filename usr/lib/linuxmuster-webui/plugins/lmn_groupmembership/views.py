@@ -233,15 +233,20 @@ class Handler(HttpPlugin):
                 except NameError:
                     return 0
 
-    @url(r'/api/lmn/changeProject')
+    @url(r'/api/lmn/changeGroup')
     @authorize('lmn:groupmembership')
     @endpoint(api=True)
-    def handle_api_set_project(self, http_context):
-        """Handles join and hide options for a project."""
+    def handle_api_set_group(self, http_context):
+        """Handles join and hide options for a group."""
         if http_context.method == 'POST':
             option  = http_context.json_body()['option']
-            project = http_context.json_body()['project']
-            sophomorixCommand = ['sophomorix-project',  option, '--project', project, '-jj']
+            group = http_context.json_body()['group']
+            groupType = http_context.json_body()['type']
+            if groupType == "project":
+                sophomorixCommand = ['sophomorix-project',  option, '--project', group, '-jj']
+            else:
+                # Class
+                sophomorixCommand = ['sophomorix-class',  option, '--class', group, '-jj']
             result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
             if result['TYPE'] == "ERROR":
                 return result['TYPE'], result['MESSAGE_EN']

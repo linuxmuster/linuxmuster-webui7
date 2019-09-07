@@ -145,6 +145,9 @@ angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($sco
         $scope.admins = admins
         $scope.sortReverse = false
         groupDN = groupDetails['DN']
+        
+        $scope.addgroupmembertext = gettext('Add/remove as member group')
+        $scope.addgroupadmintext = gettext('Add/remove as admin group')
 
         $scope.admingroups = groupDetails['sophomorixAdminGroups']
         $scope.membergroups = groupDetails['sophomorixMemberGroups']

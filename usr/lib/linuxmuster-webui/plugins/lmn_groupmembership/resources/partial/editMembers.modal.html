@@ -38,8 +38,8 @@
         <div ng:repeat="class in classes | orderBy:class">
             <h4 style="padding-left: 10px;">{{class}}
                 <span class="pull-right">
-                    <i title="Add/remove as admin group" class="fa fa-key" ng:style="(admingroups.indexOf(class) >= 0) && {'color': 'red'}" ng-click="updateGroupAdminList(class)"></i>
-                    <i title="Add/remove as member group" class="fa fa-users" ng:style="(membergroups.indexOf(class) >= 0) && {'color': 'green'}" ng-click="updateGroupMemberList(class)"></i>
+                    <i title="{{addgroupadmintext}}" class="fa fa-key" ng:style="(admingroups.indexOf(class) >= 0) && {'color': 'red'}" ng-click="updateGroupAdminList(class)"></i>
+                    <i title="{{addgroupmembertext}}" class="fa fa-users" ng:style="(membergroups.indexOf(class) >= 0) && {'color': 'green'}" ng-click="updateGroupMemberList(class)"></i>
                 </span>
             </h4>
             <div ng:repeat="student in students|filter:filter|filter:isActive|orderBy:[sort.fx]:sortReverse">
@@ -56,10 +56,10 @@
     <!-- Class view Teachers-->
     <div ng-if="sort.id != 'membership'" class="flex-container lmn-container-list-separated">
         <div>
-            <h4 style="padding-left: 10px;"translate >Teachers
+            <h4 style="padding-left: 10px;"><span translate>Teachers</span>
                 <span class="pull-right">
-                    <i title="Add/remove as admin group" class="fa fa-key" ng:style="(admingroups.indexOf('teachers') >= 0) && {'color': 'red'}" ng-click="updateGroupAdminList('teachers')"></i>
-                    <i title="Add/remove as member group" class="fa fa-users" ng:style="(membergroups.indexOf('teachers') >= 0) && {'color': 'green'}" ng-click="updateGroupMemberList('teachers')"></i>
+                    <i title="{{addgroupadmintext}}" class="fa fa-key" ng:style="(admingroups.indexOf('teachers') >= 0) && {'color': 'red'}" ng-click="updateGroupAdminList('teachers')"></i>
+                    <i title="{{addgroupmembertext}}" class="fa fa-users" ng:style="(membergroups.indexOf('teachers') >= 0) && {'color': 'green'}" ng-click="updateGroupMemberList('teachers')"></i>
                 </span>
             </h4>
             <div ng:repeat="teacher in teachers|filter:filter|filter:isActive|orderBy:'Lastname':sortReverse">

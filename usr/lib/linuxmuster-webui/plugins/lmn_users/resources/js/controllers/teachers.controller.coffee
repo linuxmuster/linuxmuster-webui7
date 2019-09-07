@@ -35,7 +35,12 @@ angular.module('lm.users').controller 'LMUsersTeachersController', ($scope, $htt
 
     $scope.showInitialPassword = (user) ->
        $http.post('/api/lm/users/password', {users: ( x['sAMAccountName'] for x in user ), action: 'get'}).then (resp) ->
-          messagebox.show(title: gettext('Initial password'), text: resp.data, positive: 'OK')
+          $http.post('/api/lm/users/test-first-password/' + user[0]['sAMAccountName']).then (response) ->
+            if response.data == true
+                msg = gettext('Initial password (still set)')
+            else
+                msg = gettext('Initial password (changed from user)')
+            messagebox.show(title: msg, text: resp.data, positive: 'OK')
 
 
     $scope.setInitialPassword = (user) ->

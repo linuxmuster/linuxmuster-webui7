@@ -564,3 +564,11 @@ class Handler(HttpPlugin):
             return http_context.respond_forbidden()
 
         return http_context.file(path, inline=False, name=name)
+
+    @url(r'/api/lm/users/test-first-password/(?P<name>.+)')
+    @authorize('lm:users:passwords')
+    @endpoint(api=True)
+    def handle_api_users_print_download(self, http_context, name):
+        line = subprocess.check_output(['sophomorix-passwd', '--test-firstpassword', '-u', name]).splitlines()[-4]
+        return '1 OK' in line
+

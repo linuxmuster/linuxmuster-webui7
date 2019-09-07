@@ -252,10 +252,18 @@
         })(),
         action: 'get'
       }).then(function(resp) {
-        return messagebox.show({
-          title: gettext('Initial password'),
-          text: resp.data,
-          positive: 'OK'
+        return $http.post('/api/lm/users/test-first-password/' + user[0]['sAMAccountName']).then(function(response) {
+          var msg;
+          if (response.data === true) {
+            msg = gettext('Initial password (still set)');
+          } else {
+            msg = gettext('Initial password (changed from user)');
+          }
+          return messagebox.show({
+            title: msg,
+            text: resp.data,
+            positive: 'OK'
+          });
         });
       });
     };
@@ -476,10 +484,18 @@
         })(),
         action: 'get'
       }).then(function(resp) {
-        return messagebox.show({
-          title: gettext('Initial password'),
-          text: resp.data,
-          positive: 'OK'
+        return $http.post('/api/lm/users/test-first-password/' + user[0]['sAMAccountName']).then(function(response) {
+          var msg;
+          if (response.data === true) {
+            msg = gettext('Initial password (still set)');
+          } else {
+            msg = gettext('Initial password (changed from user)');
+          }
+          return messagebox.show({
+            title: msg,
+            text: resp.data,
+            positive: 'OK'
+          });
         });
       });
     };
@@ -681,10 +697,18 @@
         })(),
         action: 'get'
       }).then(function(resp) {
-        return messagebox.show({
-          title: gettext('Initial password'),
-          text: resp.data,
-          positive: 'OK'
+        return $http.post('/api/lm/users/test-first-password/' + user[0]['sAMAccountName']).then(function(response) {
+          var msg;
+          if (response.data === true) {
+            msg = gettext('Initial password (still set)');
+          } else {
+            msg = gettext('Initial password (changed from user)');
+          }
+          return messagebox.show({
+            title: msg,
+            text: resp.data,
+            positive: 'OK'
+          });
         });
       });
     };
@@ -932,10 +956,18 @@
         })(),
         action: 'get'
       }).then(function(resp) {
-        return messagebox.show({
-          title: gettext('Initial password'),
-          text: resp.data,
-          positive: 'OK'
+        return $http.post('/api/lm/users/test-first-password/' + user[0]['sAMAccountName']).then(function(response) {
+          var msg;
+          if (response.data === true) {
+            msg = gettext('Initial password (still set)');
+          } else {
+            msg = gettext('Initial password (changed from user)');
+          }
+          return messagebox.show({
+            title: msg,
+            text: resp.data,
+            positive: 'OK'
+          });
         });
       });
     };
@@ -1700,10 +1732,18 @@
         })(),
         action: 'get'
       }).then(function(resp) {
-        return messagebox.show({
-          title: gettext('Initial password'),
-          text: resp.data,
-          positive: 'OK'
+        return $http.post('/api/lm/users/test-first-password/' + user[0]['sAMAccountName']).then(function(response) {
+          var msg;
+          if (response.data === true) {
+            msg = gettext('Initial password (still set)');
+          } else {
+            msg = gettext('Initial password (changed from user)');
+          }
+          return messagebox.show({
+            title: msg,
+            text: resp.data,
+            positive: 'OK'
+          });
         });
       });
     };

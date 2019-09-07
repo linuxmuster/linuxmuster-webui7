@@ -92,10 +92,13 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
                 $scope.groupName    = groupName
                 $scope.groupDetails = resp.data['GROUP'][groupName]
                 $scope.adminList = resp.data['GROUP'][groupName]['sophomorixAdmins']
+                $scope.groupmemberlist = resp.data['GROUP'][groupName]['sophomorixMemberGroups']
+                $scope.groupadminlist = resp.data['GROUP'][groupName]['sophomorixAdminGroups']
 
                 $scope.members = []
                 for name,member of resp.data['MEMBERS'][groupName]
-                    $scope.members.push({'sn':member.sn, 'givenName':member.givenName, 'sophomorixAdminClass':member.sophomorixAdminClass})
+                    if member.sn != "null" # group member 
+                        $scope.members.push({'sn':member.sn, 'givenName':member.givenName, 'sophomorixAdminClass':member.sophomorixAdminClass})
 
                 $scope.admins = []
                 for admin in $scope.adminList
@@ -104,8 +107,8 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
 
                 $scope.joinable = resp.data['GROUP'][groupName]['sophomorixJoinable'] == 'TRUE'
                 $scope.hidden = resp.data['GROUP'][groupName]['sophomorixHidden'] == 'TRUE'
-
-                if $scope.adminList.indexOf($scope.identity.user) != -1 or $scope.identity.isAdmin
+                console.log $scope.identity.profile
+                if $scope.adminList.indexOf($scope.identity.user) != -1 or $scope.identity.isAdmin or $scope.groupadminlist.indexOf($scope.identity.profile.sophomorixAdminClass) != -1
                     $scope.editMembersButton = true
                 else
                     $scope.editMembersButton = false
@@ -143,6 +146,9 @@ angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($sco
         $scope.sortReverse = false
         groupDN = groupDetails['DN']
 
+        $scope.admingroups = groupDetails['sophomorixAdminGroups']
+        $scope.membergroups = groupDetails['sophomorixMemberGroups']
+
         $scope.checkInverse = (sort ,currentSort) ->
             if sort == currentSort
                 $scope.sortReverse = !$scope.sortReverse
@@ -156,10 +162,50 @@ angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($sco
             else
                 $scope.admins.push(teacher.sAMAccountName)
 
+        $scope.updateGroupAdminList = (cl) ->
+            idx = $scope.admingroups.indexOf(cl)
+            if idx >= 0
+                $scope.admingroups.splice(idx, 1)
+            else
+                $scope.admingroups.push(cl)
+                # If group teachers, remove each teacher from adminlist
+                if cl == 'teachers'
+                    newadmins = []
+                    for admin in $scope.admins
+                        idx = $scope.teacherlist.indexOf(admin)
+                        if idx < 0
+                            newadmins.push(admin)
+                    $scope.admins = newadmins
+                    console.log($scope.admins, $scope.teacherlist)
+                            
+        $scope.updateGroupMemberList = (cl) ->
+            idx = $scope.membergroups.indexOf(cl)
+            console.log(cl)
+            if idx >= 0
+                $scope.membergroups.splice(idx, 1)
+            else
+                $scope.membergroups.push(cl)
+                for student in $scope.students
+                    if student['sophomorixAdminClass'] == cl
+                        student['membership'] = false
+                if cl == 'teachers'
+                    for teacher in $scope.teachers
+                        teacher['membership'] = false 
+
         $scope.setMembers = (students, teachers) ->
             msg = messagebox.show(progress: true)
             members = students.concat(teachers)
-            $http.post('/api/lmn/groupmembership/details', {action: 'set-members', username:$scope.identity.user, members: members, groupName: groupName, admins: $scope.admins}).then (resp) ->
+            $http.post('/api/lmn/groupmembership/details', 
+                        {
+                            action: 'set-members', 
+                            username:$scope.identity.user, 
+                            members: members, 
+                            groupName: groupName, 
+                            admins: $scope.admins, 
+                            membergroups: $scope.membergroups, 
+                            admingroups: $scope.admingroups
+                        }
+            ).then (resp) ->
                 if resp['data'][0] == 'ERROR'
                     notify.error (resp['data'][1])
                 if resp['data'][0] == 'LOG'
@@ -184,13 +230,14 @@ angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($sco
             ## TODO : add class ?
             ## TODO : add other project members ?
         $http.post('/api/lm/sophomorixUsers/teachers', {action: 'get-list'}).then (resp) ->
-            teachers = resp.data
-            $scope.teachers = teachers
-            for teacher in teachers
+            $scope.teachers = resp.data
+            $scope.teacherlist = []
+            for teacher in $scope.teachers
                 if groupDN in teacher['memberOf']
                     teacher['membership'] = true
                 else
                     teacher['membership'] = false
+                $scope.teacherlist.push(teacher['sAMAccountName'])
 
         $scope.close = () ->
             $uibModalInstance.dismiss()
@@ -276,7 +323,6 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
     $scope.getGroups = (username) ->
         $http.post('/api/lmn/groupmembership', {action: 'list-groups', username: username}).then (resp) ->
             $scope.groups = resp.data[0]
-            ## TODO : try to factorize userDetails and isAdmin in the service identity to limit requests
             $scope.identity.isAdmin = resp.data[1]
             $scope.identity.userDetails =  resp.data[2]
             schoolclassCount = 0
@@ -330,7 +376,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
                 $scope.getGroups ($scope.identity.user)
 
     $scope.projectIsJoinable = (project) ->
-        return project['joinable'] == 'TRUE' or project.admin or $scope.identity.isAdmin
+        return project['joinable'] == 'TRUE' or project.admin or $scope.identity.isAdmin or $scope.identity.profile.memberOf.indexOf(project['DN']) > -1
 
     $scope.$watch 'identity.user', ->
         if $scope.identity.user is undefined

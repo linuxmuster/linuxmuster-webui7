@@ -151,15 +151,19 @@
         $scope.groupName = groupName;
         $scope.groupDetails = resp.data['GROUP'][groupName];
         $scope.adminList = resp.data['GROUP'][groupName]['sophomorixAdmins'];
+        $scope.groupmemberlist = resp.data['GROUP'][groupName]['sophomorixMemberGroups'];
+        $scope.groupadminlist = resp.data['GROUP'][groupName]['sophomorixAdminGroups'];
         $scope.members = [];
         ref = resp.data['MEMBERS'][groupName];
         for (name in ref) {
           member = ref[name];
-          $scope.members.push({
-            'sn': member.sn,
-            'givenName': member.givenName,
-            'sophomorixAdminClass': member.sophomorixAdminClass
-          });
+          if (member.sn !== "null") { // group member 
+            $scope.members.push({
+              'sn': member.sn,
+              'givenName': member.givenName,
+              'sophomorixAdminClass': member.sophomorixAdminClass
+            });
+          }
         }
         $scope.admins = [];
         ref1 = $scope.adminList;
@@ -174,7 +178,8 @@
         }
         $scope.joinable = resp.data['GROUP'][groupName]['sophomorixJoinable'] === 'TRUE';
         $scope.hidden = resp.data['GROUP'][groupName]['sophomorixHidden'] === 'TRUE';
-        if ($scope.adminList.indexOf($scope.identity.user) !== -1 || $scope.identity.isAdmin) {
+        console.log($scope.identity.profile);
+        if ($scope.adminList.indexOf($scope.identity.user) !== -1 || $scope.identity.isAdmin || $scope.groupadminlist.indexOf($scope.identity.profile.sophomorixAdminClass) !== -1) {
           return $scope.editMembersButton = true;
         } else {
           return $scope.editMembersButton = false;
@@ -222,6 +227,8 @@
     $scope.admins = admins;
     $scope.sortReverse = false;
     groupDN = groupDetails['DN'];
+    $scope.admingroups = groupDetails['sophomorixAdminGroups'];
+    $scope.membergroups = groupDetails['sophomorixMemberGroups'];
     $scope.checkInverse = function(sort, currentSort) {
       if (sort === currentSort) {
         return $scope.sortReverse = !$scope.sortReverse;
@@ -238,6 +245,55 @@
         return $scope.admins.push(teacher.sAMAccountName);
       }
     };
+    $scope.updateGroupAdminList = function(cl) {
+      var admin, i, idx, len, newadmins, ref;
+      idx = $scope.admingroups.indexOf(cl);
+      if (idx >= 0) {
+        return $scope.admingroups.splice(idx, 1);
+      } else {
+        $scope.admingroups.push(cl);
+        // If group teachers, remove each teacher from adminlist
+        if (cl === 'teachers') {
+          newadmins = [];
+          ref = $scope.admins;
+          for (i = 0, len = ref.length; i < len; i++) {
+            admin = ref[i];
+            idx = $scope.teacherlist.indexOf(admin);
+            if (idx < 0) {
+              newadmins.push(admin);
+            }
+          }
+          $scope.admins = newadmins;
+          return console.log($scope.admins, $scope.teacherlist);
+        }
+      }
+    };
+    $scope.updateGroupMemberList = function(cl) {
+      var i, idx, j, len, len1, ref, ref1, results, student, teacher;
+      idx = $scope.membergroups.indexOf(cl);
+      console.log(cl);
+      if (idx >= 0) {
+        return $scope.membergroups.splice(idx, 1);
+      } else {
+        $scope.membergroups.push(cl);
+        ref = $scope.students;
+        for (i = 0, len = ref.length; i < len; i++) {
+          student = ref[i];
+          if (student['sophomorixAdminClass'] === cl) {
+            student['membership'] = false;
+          }
+        }
+        if (cl === 'teachers') {
+          ref1 = $scope.teachers;
+          results = [];
+          for (j = 0, len1 = ref1.length; j < len1; j++) {
+            teacher = ref1[j];
+            results.push(teacher['membership'] = false);
+          }
+          return results;
+        }
+      }
+    };
     $scope.setMembers = function(students, teachers) {
       var members, msg;
       msg = messagebox.show({
@@ -249,7 +305,9 @@
         username: $scope.identity.user,
         members: members,
         groupName: groupName,
-        admins: $scope.admins
+        admins: $scope.admins,
+        membergroups: $scope.membergroups,
+        admingroups: $scope.admingroups
       }).then(function(resp) {
         if (resp['data'][0] === 'ERROR') {
           notify.error(resp['data'][1]);
@@ -290,17 +348,19 @@
     $http.post('/api/lm/sophomorixUsers/teachers', {
       action: 'get-list'
     }).then(function(resp) {
-      var i, len, results, teacher, teachers;
-      teachers = resp.data;
-      $scope.teachers = teachers;
+      var i, len, ref, results, teacher;
+      $scope.teachers = resp.data;
+      $scope.teacherlist = [];
+      ref = $scope.teachers;
       results = [];
-      for (i = 0, len = teachers.length; i < len; i++) {
-        teacher = teachers[i];
+      for (i = 0, len = ref.length; i < len; i++) {
+        teacher = ref[i];
         if (indexOf.call(teacher['memberOf'], groupDN) >= 0) {
-          results.push(teacher['membership'] = true);
+          teacher['membership'] = true;
         } else {
-          results.push(teacher['membership'] = false);
+          teacher['membership'] = false;
         }
+        results.push($scope.teacherlist.push(teacher['sAMAccountName']));
       }
       return results;
     });
@@ -415,7 +475,6 @@
       }).then(function(resp) {
         var group, i, j, k, len, len1, len2, printergroupCount, projectCount, ref, ref1, ref2, schoolclassCount;
         $scope.groups = resp.data[0];
-        //# TODO : try to factorize userDetails and isAdmin in the service identity to limit requests
         $scope.identity.isAdmin = resp.data[1];
         $scope.identity.userDetails = resp.data[2];
         schoolclassCount = 0;
@@ -504,7 +563,7 @@
       });
     };
     $scope.projectIsJoinable = function(project) {
-      return project['joinable'] === 'TRUE' || project.admin || $scope.identity.isAdmin;
+      return project['joinable'] === 'TRUE' || project.admin || $scope.identity.isAdmin || $scope.identity.profile.memberOf.indexOf(project['DN']) > -1;
     };
     return $scope.$watch('identity.user', function() {
       if ($scope.identity.user === void 0) {

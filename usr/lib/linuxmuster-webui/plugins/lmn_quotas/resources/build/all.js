@@ -196,9 +196,8 @@
         }
       }
       qs = [];
-      //qs.push $http.post("/api/lm/users/teachers?encoding=#{$scope.teachersEncoding}", teachers)
-      //qs.push $http.post('/api/lm/quotas', $scope.quotas)
-      qs.push($http.post('/api/lm/schoolsettings', $scope.settings));
+      qs.push($http.post(`/api/lm/users/teachers?encoding=${$scope.teachersEncoding}`, teachers));
+      qs.push($http.post('/api/lm/quotas', $scope.quotas));
       if (classesToChange.length > 0) {
         qs.push($http.post("/api/lm/class-quotas", classesToChange).then(function() {}));
       }

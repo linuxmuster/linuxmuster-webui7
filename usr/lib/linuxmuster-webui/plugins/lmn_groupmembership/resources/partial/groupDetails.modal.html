@@ -42,23 +42,45 @@
         <div class="panel-heading">
             <a href="#" class="btn btn-default btn-flat pull-right" ng-click="showMemberDetails = ! showMemberDetails">{{showMemberDetails ? hidetext : showtext}}</a>
             <a class="btn btn-default btn-flat pull-right" ng:show="groupDetails['sophomorixType'] == 'project' && editMembersButton" href="#" ng-click="editGroupMembers(groupName, groupDetails, adminList)" translate >Edit members</a>
-            <h4 translate> Group Members: {{groupDetails['sophomorixMembers'].length}}</h4>
+            <h4>
+                <span translate> Group Members: </span>
+                {{members.length}} <span translate>user(s) and </span>
+                {{groupmemberlist.length}} <span translate>group(s).</span>
+            </h4>
         </div>
         <div ng-show="showMemberDetails" class="panel-body">
-            <ul class="list-unstyled" style="column-width:300px;padding:0;">
+            <h4 translate>Members</h4>
+            <ul ng:if="members.length > 0" class="list-unstyled" style="column-width:300px;padding:0;">
                 <li ng:repeat="member in members|orderBy :['sophomorixAdminClass','sn']" class="cardlist">{{member.sn}} {{member.givenName}} <span style="position:absolute;right:10px;">{{member.sophomorixAdminClass}}</span></li>
             </ul>
+            <span ng:if="members.length == 0" translate class="cardlist">No member</span>
+            <h4 translate>Groups</h4>
+            <ul ng:if="groupmemberlist.length > 0" class="list-unstyled" style="column-width:300px;padding:0;">
+                <li ng:repeat="group in groupmemberlist" class="cardlist">{{group}}</li>
+            </ul>
+            <span ng:if="groupmemberlist.length == 0" translate class="cardlist">No group</span>
         </div>
     </div>
     <div class="panel panel-danger">
         <div class="panel-heading">
             <a href="#" class="btn btn-default btn-flat pull-right" ng-click="showAdminDetails = ! showAdminDetails">{{showMemberDetails ? hidetext : showtext}}</a>
-            <h4 translate> Group Admins: {{groupDetails['sophomorixAdmins'].length}}</h4> 
+            <h4 translate>
+                <span translate> Group Admins: </span>
+                {{admins.length}} <span translate>user(s) and </span>
+                {{groupadminlist.length}} <span translate>group(s).</span>
+            </h4> 
         </div>
         <div ng-show="showAdminDetails" class="panel-body">
-            <ul class="list-unstyled" style="column-width:300px;padding:0;">
+            <h4 translate>Admins</h4>
+            <ul ng:if="admins.length > 0" class="list-unstyled" style="column-width:300px;padding:0;">
                 <li ng:repeat="admin in admins|orderBy :['sophomorixAdminClass','sn']" class="cardlist">{{admin.sn}} {{admin.givenName}} <span style="position:absolute;right:10px;">{{admin.sophomorixAdminClass}}</span></li>
             </ul>
+            <span ng:if="admins.length == 0" translate class="cardlist">No admin</span>
+            <h4 translate>Groups</h4>
+            <ul ng:if="groupadminlist.length > 0" class="list-unstyled" style="column-width:300px;padding:0;">
+                <li ng:repeat="group in groupadminlist" class="cardlist">{{group}}</li>
+            </ul>
+            <span ng:if="groupadminlist.length == 0" translate class="cardlist">No group</span>
         </div>
     </div>
     <br />

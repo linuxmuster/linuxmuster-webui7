@@ -23,6 +23,9 @@ class Handler(HttpPlugin):
                     members = http_context.json_body()['members']
                     groupName = http_context.json_body()['groupName']
                     username = http_context.json_body()['username']
+                    membergroups = ",".join(http_context.json_body()['membergroups'])
+                    admingroups = ",".join(http_context.json_body()['admingroups'])
+
                     admins = ",".join(http_context.json_body()['admins'])
 
                     user_details = lmn_user_details(username)
@@ -42,7 +45,13 @@ class Handler(HttpPlugin):
                             i = i + 1
                         membersToAddCSV = ",".join(membersToAdd)
                         membersToRemoveCSV = ",".join(membersToRemove)
-                        sophomorixCommand = ['sophomorix-project', '-p', groupName, '--addmembers', membersToAddCSV, '--removemembers', membersToRemoveCSV, '--admins', admins,'-jj']
+                        sophomorixCommand = ['sophomorix-project', '-p', groupName, \
+                                             '--addmembers', membersToAddCSV, \
+                                             '--removemembers', membersToRemoveCSV, \
+                                             '--admins', admins, \
+                                             '--admingroups', admingroups, \
+                                             '--membergroups', membergroups, \
+                                             '-jj']
                         result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
                         if result['TYPE'] == "ERROR":
                             return result['TYPE']['LOG']
@@ -103,11 +112,11 @@ class Handler(HttpPlugin):
                 for project in projects:
                     if project in usergroups or isAdmin:
                         if username in projects[project]['sophomorixAdmins'] or isAdmin:
-                            membershipList.append({'type': 'project', 'typename': 'Project', 'groupname': project, 'changed': False, 'membership': True, 'admin': True, 'joinable': projects[project]['sophomorixJoinable']})
+                            membershipList.append({'type': 'project', 'typename': 'Project', 'groupname': project, 'changed': False, 'membership': True, 'admin': True, 'joinable': projects[project]['sophomorixJoinable'], 'DN': projects[project]['DN']})
                         else:
-                            membershipList.append({'type': 'project', 'typename': 'Project', 'groupname': project, 'changed': False, 'membership': True, 'admin': False, 'joinable': projects[project]['sophomorixJoinable']})
+                            membershipList.append({'type': 'project', 'typename': 'Project', 'groupname': project, 'changed': False, 'membership': True, 'admin': False, 'joinable': projects[project]['sophomorixJoinable'], 'DN': projects[project]['DN']})
                     elif projects[project]['sophomorixHidden'] == "FALSE":
-                        membershipList.append({'type': 'project', 'typename': 'Project', 'groupname': project, 'changed': False, 'membership': False, 'admin': False, 'joinable': projects[project]['sophomorixJoinable']})
+                        membershipList.append({'type': 'project', 'typename': 'Project', 'groupname': project, 'changed': False, 'membership': False, 'admin': False, 'joinable': projects[project]['sophomorixJoinable'], 'DN': projects[project]['DN']})
                 for schoolclass in schoolclasses:
                     if schoolclass in usergroups or isAdmin:
                         membershipList.append({'type': 'schoolclass', 'typename': 'Class', 'groupname': schoolclass, 'changed': False, 'membership': True})

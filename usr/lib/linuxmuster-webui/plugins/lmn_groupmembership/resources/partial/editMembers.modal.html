@@ -36,10 +36,16 @@
     <!-- Class view Students-->
     <div ng-if="sort.id != 'membership'" class="flex-container lmn-container-list-separated">
         <div ng:repeat="class in classes | orderBy:class">
-            <h4 style="padding-left: 10px;">{{class}}</h4>
+            <h4 style="padding-left: 10px;">{{class}}
+                <span class="pull-right">
+                    <i title="Add/remove as admin group" class="fa fa-key" ng:style="(admingroups.indexOf(class) >= 0) && {'color': 'red'}" ng-click="updateGroupAdminList(class)"></i>
+                    <i title="Add/remove as member group" class="fa fa-users" ng:style="(membergroups.indexOf(class) >= 0) && {'color': 'green'}" ng-click="updateGroupMemberList(class)"></i>
+                </span>
+            </h4>
             <div ng:repeat="student in students|filter:filter|filter:isActive|orderBy:[sort.fx]:sortReverse">
-                <div ng-if="student.sophomorixAdminClass == class">
-                    <span id={{student.sAMAccountName}} checkbox ng:model="student.membership"></span>
+                <div ng:if="student.sophomorixAdminClass == class">
+                    <input ng:if="membergroups.indexOf(class) >= 0" type="checkbox" checked disabled>
+                    <span ng:if="membergroups.indexOf(class) < 0" id={{student.sAMAccountName}} checkbox ng:model="student.membership"></span>
                     <i class="fa fa-user"></i>
                     <a href="#">{{student.givenName}} <b>{{student.sn}}</b></a>
                 </div>
@@ -50,11 +56,18 @@
     <!-- Class view Teachers-->
     <div ng-if="sort.id != 'membership'" class="flex-container lmn-container-list-separated">
         <div>
-            <h4 style="padding-left: 10px;"translate >Teachers</h4>
+            <h4 style="padding-left: 10px;"translate >Teachers
+                <span class="pull-right">
+                    <i title="Add/remove as admin group" class="fa fa-key" ng:style="(admingroups.indexOf('teachers') >= 0) && {'color': 'red'}" ng-click="updateGroupAdminList('teachers')"></i>
+                    <i title="Add/remove as member group" class="fa fa-users" ng:style="(membergroups.indexOf('teachers') >= 0) && {'color': 'green'}" ng-click="updateGroupMemberList('teachers')"></i>
+                </span>
+            </h4>
             <div ng:repeat="teacher in teachers|filter:filter|filter:isActive|orderBy:'Lastname':sortReverse">
                 <div>
-                    <span id={{teacher.sAMAccountName}} checkbox ng:model="teacher.membership"></span>
-                    <i class="fa fa-key" ng-style="(admins.indexOf(teacher.sAMAccountName) >= 0) && {'color': 'red'}" ng-click="updateAdminList(teacher)"></i>
+                    <input ng:if="membergroups.indexOf('teachers') >= 0" type="checkbox" checked disabled>
+                    <span ng:if="membergroups.indexOf('teachers') < 0" id={{teacher.sAMAccountName}} checkbox ng:model="teacher.membership"></span>
+                    <i class="fa fa-key" ng:if="admingroups.indexOf('teachers') < 0" ng:style="(admins.indexOf(teacher.sAMAccountName) >= 0) && {'color': 'red'}" ng-click="updateAdminList(teacher)"></i>
+                    <i class="fa fa-key" ng:if="admingroups.indexOf('teachers') >= 0"  ng:style="{'color': 'red'}"></i>
                     <i class="fa fa-user"></i>
                     <a href="#">{{teacher.givenName}} <b>{{teacher.sn}}</b></a>
                 </div>
@@ -125,8 +138,9 @@
     </div>
 
     <br />
-    <span><i class="fa fa-key" style="color: red" translate></i>  Project admin</span><br />
-    <span><i class="fa fa-key" translate></i>  Clic to insert as a project admin</span>
+    <span><i class="fa fa-key" style="color: red" translate></i>  Project user/group admin</span><br />
+    <span><i class="fa fa-key" translate></i>  Clic to insert as a project user/group admin</span><br />
+    <span><i class="fa fa-users" style="color: green" translate></i>  Project group member</span><br />
 
     <div class="modal-footer">
         <a class="btn btn-default btn-flat" ng:click="setMembers(students, teachers)" translate>Save</a>

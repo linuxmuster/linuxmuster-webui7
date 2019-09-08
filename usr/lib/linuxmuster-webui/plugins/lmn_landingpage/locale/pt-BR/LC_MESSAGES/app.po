@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-07 20:36+0200\n"
-"PO-Revision-Date: 2019-09-07 19:17\n"
+"POT-Creation-Date: 2019-09-08 17:14+0200\n"
+"PO-Revision-Date: 2019-09-08 15:29\n"
 "Last-Translator: kiarn\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -29,7 +29,7 @@ msgid "Change password"
 msgstr ""
 
 #: lmn_landingpage/resources/partial/index.html:62
-msgid "Cloudquota Calculated in MiB:"
+msgid "Cloudquota Calculated in MB:"
 msgstr ""
 
 #: lmn_landingpage/resources/partial/index.html:69
@@ -45,7 +45,7 @@ msgid "Mail:"
 msgstr ""
 
 #: lmn_landingpage/resources/partial/index.html:63
-msgid "Mailquota Calculated in MiB:"
+msgid "Mailquota Calculated in MB:"
 msgstr ""
 
 #: lmn_landingpage/resources/partial/index.html:32

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-07 20:36+0200\n"
-"PO-Revision-Date: 2019-09-07 19:17\n"
+"POT-Creation-Date: 2019-09-08 17:14+0200\n"
+"PO-Revision-Date: 2019-09-08 15:29\n"
 "Last-Translator: kiarn\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
@@ -64,6 +64,10 @@ msgstr ""
 #: lmn_linbo/resources/partial/image.modal.html:61
 #: lmn_linbo/resources/partial/partition.modal.html:173
 msgid "Close"
+msgstr ""
+
+#: lmn_linbo/resources/partial/index.html:51
+msgid "Comment: {{image.description}}"
 msgstr ""
 
 #: lmn_linbo/resources/partial/index.html:28

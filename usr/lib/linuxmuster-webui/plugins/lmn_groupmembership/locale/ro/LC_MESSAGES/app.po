@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-07 20:36+0200\n"
-"PO-Revision-Date: 2019-09-07 19:17\n"
+"POT-Creation-Date: 2019-09-08 17:14+0200\n"
+"PO-Revision-Date: 2019-09-08 15:28\n"
 "Last-Translator: kiarn\n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -104,7 +104,7 @@ msgid "Objectsfilter"
 msgstr ""
 
 #: lmn_groupmembership/resources/partial/index.html:83
-#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:258
+#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:262
 msgid "Printer"
 msgstr ""
 
@@ -114,7 +114,7 @@ msgstr ""
 
 #: lmn_groupmembership/resources/partial/index.html:104
 #: lmn_groupmembership/resources/partial/index.html:37
-#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:263
+#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:267
 msgid "Projects"
 msgstr ""
 
@@ -213,57 +213,57 @@ msgstr ""
 msgid "Never"
 msgstr ""
 
-#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:124
+#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:128
 msgid "Given name"
 msgstr ""
 
-#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:129
+#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:133
 msgid "Name"
 msgstr ""
 
-#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:134
-#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:274
+#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:138
+#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:278
 msgid "Membership"
 msgstr ""
 
-#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:139
+#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:143
 msgid "Class"
 msgstr ""
 
-#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:149
+#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:153
 msgid "Add/remove as member group"
 msgstr ""
 
-#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:150
+#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:154
 msgid "Add/remove as admin group"
 msgstr ""
 
-#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:249
+#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:253
 msgid "Enrolle"
 msgstr ""
 
-#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:252
+#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:256
 msgid "Schoolclass"
 msgstr ""
 
-#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:253
-#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:270
+#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:257
+#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:274
 msgid "Groupname"
 msgstr ""
 
-#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:356
+#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:359
 msgid "Nothing changed"
 msgstr ""
 
-#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:359
+#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:362
 msgid "Project Name"
 msgstr ""
 
-#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:363
+#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:366
 msgid "Not a valid name! Only lowercase alphanumeric characters are allowed!"
 msgstr ""
 
-#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:366
+#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:369
 msgid "Project Created"
 msgstr ""
 

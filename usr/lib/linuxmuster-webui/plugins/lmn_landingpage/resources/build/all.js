@@ -16,7 +16,7 @@
   angular.module('lmn.landingpage').controller('LMNLandingController', function($scope, $http, $uibModal, $location, gettext, notify, pageTitle, messagebox) {
     pageTitle.set(gettext('Home'));
     $scope.getQuota = $http.post('/api/lmn/quota/').then(function(resp) {
-      var category, cn, dn, ref, results, share, total, used, values;
+      var category, cn, dn, i, len, ref, ref1, results, share, total, used, values;
       $scope.user = resp.data;
       $scope.quotas = [];
       // skip if user is root
@@ -24,7 +24,6 @@
         return;
       }
       ref = $scope.user['QUOTA_USAGE_BY_SHARE'];
-      results = [];
       for (share in ref) {
         values = ref[share];
         // default-school and linuxmuster-global both needed ?
@@ -49,53 +48,49 @@
             'usage': Math.floor((100 * used) / total)
           });
         }
-        $scope.groups = [];
-        results.push((function() {
-          var i, len, ref1, results1;
-          ref1 = $scope.user['memberOf'];
-          // console.log ($scope.user)
-          results1 = [];
-          for (i = 0, len = ref1.length; i < len; i++) {
-            dn = ref1[i];
-            cn = dn.split(',')[0].split('=')[1];
-            category = dn.split(',')[1].split('=')[1];
-            if (category !== "Management") {
-              // User don't need to see management groups
-              // User only see explicit lmn groups, no custom groups
+      }
+      $scope.groups = [];
+      ref1 = $scope.user['memberOf'];
+      // console.log ($scope.user)
+      results = [];
+      for (i = 0, len = ref1.length; i < len; i++) {
+        dn = ref1[i];
+        cn = dn.split(',')[0].split('=')[1];
+        category = dn.split(',')[1].split('=')[1];
+        if (category !== "Management") {
+          // User don't need to see management groups
+          // User only see explicit lmn groups, no custom groups
 
-              // Determine classes by group dn
-              if (category === cn) {
-                $scope.groups.push({
-                  'cn': cn,
-                  'category': gettext('Class')
-                });
-              }
-              if (category === "Teachers") {
-                $scope.groups.push({
-                  'cn': cn,
-                  'category': gettext('Teachers')
-                });
-              }
-              if (category === "printer-groups") {
-                $scope.groups.push({
-                  'cn': cn,
-                  'category': gettext('Printers')
-                });
-              }
-              if (category === "Projects") {
-                results1.push($scope.groups.push({
-                  'cn': cn,
-                  'category': gettext('Project')
-                }));
-              } else {
-                results1.push(void 0);
-              }
-            } else {
-              results1.push(void 0);
-            }
+          // Determine classes by group dn
+          if (category === cn) {
+            $scope.groups.push({
+              'cn': cn,
+              'category': gettext('Class')
+            });
           }
-          return results1;
-        })());
+          if (category === "Teachers") {
+            $scope.groups.push({
+              'cn': cn,
+              'category': gettext('Teachers')
+            });
+          }
+          if (category === "printer-groups") {
+            $scope.groups.push({
+              'cn': cn,
+              'category': gettext('Printers')
+            });
+          }
+          if (category === "Projects") {
+            results.push($scope.groups.push({
+              'cn': cn,
+              'category': gettext('Project')
+            }));
+          } else {
+            results.push(void 0);
+          }
+        } else {
+          results.push(void 0);
+        }
       }
       return results;
     });

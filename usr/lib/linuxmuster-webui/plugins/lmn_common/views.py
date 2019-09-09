@@ -5,13 +5,15 @@ import pwd, grp
 from jadi import component
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint
-from aj.plugins.lmn_common.api import lmn_getSophomorixValue
+from aj.plugins.lmn_common.api import lmn_getSophomorixValue, check_allowed_path
 
 @component(HttpPlugin)
 class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
 
+    ## TODO authorize
+    ## Used in lmn_common/resources/js/directives.coffee:22
     @url(r'/api/lm/log(?P<path>.+)')
     @endpoint(api=True)
     def handle_api_log(self, http_context, path=None):
@@ -21,7 +23,9 @@ class Handler(HttpPlugin):
             f.seek(int(http_context.query.get('offset', '0')))
             return f.read()
 
-    @url(r'/api/lm/create-dir') ## TODO authorize
+    ## TODO authorize
+    ## Used in lmn_session/resources/js/controllers/session.controller.coffee:76
+    @url(r'/api/lm/create-dir')
     @endpoint(api=True)
     def handle_api_create_dir(self, http_context):
         """Create directory with given path, ignoring errors"""
@@ -33,7 +37,9 @@ class Handler(HttpPlugin):
             else:
                 return
 
-    @url(r'/api/lm/remove-dir') ## TODO authorize
+    ## TODO authorize
+    ## Used in lmn_session/resources/js/controllers/session.controller.coffee:76
+    @url(r'/api/lm/remove-dir')
     @endpoint(api=True)
     def handle_api_remove_dir(self, http_context):
         """Remove directory and its content with given path, ignoring errors"""
@@ -45,6 +51,8 @@ class Handler(HttpPlugin):
                 shutil.rmtree(filepath, ignore_errors=True)
                 return True
 
+    ## TODO authorize
+    ## Used in directive upload, lmFileBackups and lmn_session/resources/js/controllers/session.controller.coffee:60
     @url(r'/api/lm/remove-file') ## TODO authorize
     @endpoint(api=True)
     def handle_api_remove_file(self, http_context):
@@ -57,19 +65,26 @@ class Handler(HttpPlugin):
                 os.unlink(filepath)
                 return True
 
-    @url(r'/api/lm/remove-backup') ## TODO authorize
-    @endpoint(api=True)
-    def handle_api_remove_backup(self, http_context):
-        """Remove backup file in directory /etc/linuxmuster/sophomorix/SCHOOL"""
-        if http_context.method == 'POST':
-            school = 'default-school'
-            filepath = '/etc/linuxmuster/sophomorix/' + school + '/' + http_context.json_body()['filepath']
-            if not os.path.exists(filepath):
-                return
-            else:
-                os.unlink(filepath)
-                return True
+    ## NOT USED YET
+    # @url(r'/api/lm/remove-backup') ## TODO authorize
+    # @endpoint(api=True)
+    # def handle_api_remove_backup(self, http_context):
+        # """Remove backup file in directory /etc/linuxmuster/sophomorix/SCHOOL"""
+        # if http_context.method == 'POST':
+            # backup_path = http_context.json_body()['filepath']
+            # school = 'default-school'
+            # filepath = '/etc/linuxmuster/sophomorix/' + school + '/' + backup_path
+            # if not os.path.exists(filepath):
+                # return
+            # # Do not allow to navigate
+            # elif '..' in backup_path:
+                # return
+            # else:
+                # os.unlink(filepath)
+                # return True
 
+    ## TODO authorize
+    ## Used in directive upload
     @url(r'/api/lm/chown') ## TODO authorize
     @endpoint(api=True)
     def handle_api_chown(self, http_context):
@@ -90,7 +105,8 @@ class Handler(HttpPlugin):
                 except:
                     return
 
-    @url(r'/api/lm/read-config-setup') ## TODO authorize
+    ## TODO authorize : authorize possible with setup_wizard ?
+    @url(r'/api/lm/read-config-setup')
     @endpoint(api=True)
     def handle_api_read_setup_ini(self, http_context):
         path = '/var/lib/linuxmuster/setup.ini'
@@ -111,10 +127,11 @@ class Handler(HttpPlugin):
                     section[k.strip()] = v
             return config
 
-    @url(r'/api/lm/all-users') ## TODO authorize
-    @endpoint(api=True)
-    def handle_api_get_userdetails(self, http_context):
-        if http_context.method == 'POST':
-            sophomorixCommand = ['sophomorix-query', '--student', '--teacher', '--schooladministrator', '--globaladministrator', '-jj']
-            all_users = lmn_getSophomorixValue(sophomorixCommand, 'USER')
-            return all_users
+    ## NOT USED YET
+    # @url(r'/api/lm/all-users') ## TODO authorize
+    # @endpoint(api=True)
+    # def handle_api_get_userdetails(self, http_context):
+        # if http_context.method == 'POST':
+            # sophomorixCommand = ['sophomorix-query', '--student', '--teacher', '--schooladministrator', '--globaladministrator', '-jj']
+            # all_users = lmn_getSophomorixValue(sophomorixCommand, 'USER')
+            # return all_users

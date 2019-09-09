@@ -49,24 +49,26 @@ class Handler(HttpPlugin):
                         quotas[0][name][quota_type+'_set'] = True
                     quotas[0][name][quota_type] = int(value.strip("*"))
             return quotas
-        if http_context.method == 'POST':
-            lmn_backup_file(path)
-            with open(path, 'w') as f:
-                f.write('\n'.join(
-                    '%s: %s+%s' % (
-                        k, v['home'], v['var'],
-                    )
-                    for k, v in http_context.json_body().items()
-                ))
-            lmn_backup_file(mpath)
-            with open(mpath, 'w') as f:
-                f.write('\n'.join(
-                    '%s: %s' % (
-                        k, v['mail'],
-                    )
-                    for k, v in http_context.json_body().items()
-                    if v.get('mail', None)
-                ))
+        
+        ## Not used yet
+        # if http_context.method == 'POST':
+            # lmn_backup_file(path)
+            # with open(path, 'w') as f:
+                # f.write('\n'.join(
+                    # '%s: %s+%s' % (
+                        # k, v['home'], v['var'],
+                    # )
+                    # for k, v in http_context.json_body().items()
+                # ))
+            # lmn_backup_file(mpath)
+            # with open(mpath, 'w') as f:
+                # f.write('\n'.join(
+                    # '%s: %s' % (
+                        # k, v['mail'],
+                    # )
+                    # for k, v in http_context.json_body().items()
+                    # if v.get('mail', None)
+                # ))
 
     @url(r'/api/lm/class-quotas')
     @authorize('lm:quotas:configure')

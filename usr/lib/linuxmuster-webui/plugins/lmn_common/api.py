@@ -18,6 +18,24 @@ import filecmp
 
 from aj.auth import AuthenticationService
 
+ALLOWED_PATHS = [
+                '/etc/linuxmuster/sophomorix/', # used for school.conf or *.csv in lmn_settings, lmn_devices and lmn_users
+                '/srv/linbo',                   # used in lmn_linbo for start.conf
+                ]
+
+def check_allowed_path(path):
+    """Check path before modifying file for security reasons."""
+    allowed_path = False
+    for rootpath in ALLOWED_PATHS:
+        if rootpath in path:
+            allowed_path = True
+            break
+
+    if allowed_path and '..' not in path:
+        return True
+    else:
+        raise IOError(_("Access refused."))
+
 @six.python_2_unicode_compatible
 class LinuxmusterConfig():
     def __init__(self, path):
@@ -63,62 +81,68 @@ def lmn_backup_file(path):
     if not os.path.exists(path):
         return
 
-    dir, name = os.path.split(path)
-    backups = sorted([x for x in os.listdir(dir) if x.startswith('.%s.bak.' % name)])
-    while len(backups) > 10:
-        os.unlink(os.path.join(dir, backups[0]))
-        backups.pop(0)
+    if check_allowed_path(path):
+        dir, name = os.path.split(path)
+        backups = sorted([x for x in os.listdir(dir) if x.startswith('.%s.bak.' % name)])
+        while len(backups) > 10:
+            os.unlink(os.path.join(dir, backups[0]))
+            backups.pop(0)
 
-    with open(dir + '/.' + name + '.bak.' + str(int(time.time())), 'w') as f:
-        f.write(open(path).read())
+        with open(dir + '/.' + name + '.bak.' + str(int(time.time())), 'w') as f:
+            f.write(open(path).read())
 
 def lmn_write_csv(path, fieldnames, data, encoding='utf-8'):
     """Write CSV and backup csv file only if there's no difference with the original. Delimiter is always ;"""
-    tmp = path + '_tmp'
-    with open(tmp, 'w') as f:
-        csv.DictWriter(
-            f,
-            delimiter=';',
-            fieldnames=fieldnames,
-            encoding=encoding
-        ).writerows(data)
-    if not filecmp.cmp(tmp, path):
-        lmn_backup_file(path)
-        os.rename(tmp, path)
-    else:
-        os.unlink(tmp)
+
+    if check_allowed_path(path):
+        tmp = path + '_tmp'
+        with open(tmp, 'w') as f:
+            csv.DictWriter(
+                f,
+                delimiter=';',
+                fieldnames=fieldnames,
+                encoding=encoding
+            ).writerows(data)
+        if not filecmp.cmp(tmp, path):
+            lmn_backup_file(path)
+            os.rename(tmp, path)
+        else:
+            os.unlink(tmp)
 
 def lmn_write_configfile(path, data):
-    """Write config file and backup it only if there's no difference with the original."""
-    tmp = path + '_tmp'
-    with open(tmp, 'w') as f:
-        f.write(data)
-    if not filecmp.cmp(tmp, path):
-        lmn_backup_file(path)
-        os.rename(tmp, path)
-    else:
-        os.unlink(tmp)
+    """Write config file it only if there's no difference with the original."""
 
-def lmn_list_backup_file(path):
-    if not os.path.exists(path):
-        return
+    if check_allowed_path(path):
+        tmp = path + '_tmp'
+        with open(tmp, 'w') as f:
+            f.write(data)
+        if not filecmp.cmp(tmp, path):
+            lmn_backup_file(path)
+            os.rename(tmp, path)
+        else:
+            os.unlink(tmp)
 
-    backups = []
-    dir, name = os.path.split(path)
-    for x in os.listdir(dir):
-        if x.startswith('.%s.bak.' % name):
-            epoch = time.gmtime(int(x.split(".")[-1]))
-            date  = time.strftime("%d/%m/%Y %H:%M:%S", epoch)
-            backups.append({'path': x, 'date': date})
-    return backups
+##### NOT USED YET
+# def lmn_list_backup_file(path):
+    # if not os.path.exists(path):
+        # return
+
+    # backups = []
+    # dir, name = os.path.split(path)
+    # for x in os.listdir(dir):
+        # if x.startswith('.%s.bak.' % name):
+            # epoch = time.gmtime(int(x.split(".")[-1]))
+            # date  = time.strftime("%d/%m/%Y %H:%M:%S", epoch)
+            # backups.append({'path': x, 'date': date})
+    # return backups
     
-def lmn_restore_backup_file(path, backup):
-    if not os.path.exists(path) or not os.path.exists(backup):
-        return
+# def lmn_restore_backup_file(path, backup):
+    # if not os.path.exists(path) or not os.path.exists(backup):
+        # return
 
-    dir, name = os.path.split(path)
-    os.unlink(path)
-    os.rename(backup, path)
+    # dir, name = os.path.split(path)
+    # os.unlink(path)
+    # os.rename(backup, path)
 
 def lmn_getLDAPGroupmembers(group, field):
     params = lmconfig.data['linuxmuster']['ldap']

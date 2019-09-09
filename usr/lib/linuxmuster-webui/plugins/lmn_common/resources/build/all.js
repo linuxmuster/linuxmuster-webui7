@@ -423,10 +423,10 @@
     };
     $scope.onlyremove = function(backup) {
       return $http.post('/api/lm/remove-file', {
-        filepath: backup.name
+        filepath: dir + '/' + backup.name
       }).then(function(resp) {
         var pos;
-        pos = $scope.findIndex($scope.findbackup(backupname));
+        pos = $scope.backups.findIndex($scope.findbackup(backup.name));
         return delete $scope.backups[pos];
       });
     };

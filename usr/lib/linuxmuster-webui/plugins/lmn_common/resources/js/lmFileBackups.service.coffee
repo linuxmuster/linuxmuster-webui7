@@ -43,8 +43,8 @@ angular.module('lm.common').controller 'lmFileBackupsModalController', ($scope, 
             dict.name == name
     
     $scope.onlyremove = (backup) ->
-        $http.post('/api/lm/remove-file', {filepath: backup.name}).then (resp) -> 
-            pos = $scope.findIndex($scope.findbackup(backupname))
+        $http.post('/api/lm/remove-file', {filepath: dir + '/' + backup.name}).then (resp) ->
+            pos = $scope.backups.findIndex($scope.findbackup(backup.name))
             delete $scope.backups[pos]
 
     $scope.removeUI = (backup) ->

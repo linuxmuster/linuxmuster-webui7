@@ -2209,7 +2209,8 @@
       // add field if not presend
       if (pos === -1) {
         $scope.coloumnTitles.splice(4, 0, {
-          name: field
+          name: field,
+          id: field
         });
       } else {
         // splice this field 
@@ -2218,6 +2219,7 @@
       return $scope.rebuildCSV();
     };
     $scope.accept = function() {
+      console.log($scope.userListCSV);
       return $uibModalInstance.close($scope.userListCSV);
     };
     $scope.close = function() {

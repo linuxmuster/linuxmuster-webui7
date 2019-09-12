@@ -1,6 +1,8 @@
 import unicodecsv as csv
 import os
 import subprocess
+import magic
+import io
 
 from jadi import component
 from aj.api.http import url, HttpPlugin
@@ -34,6 +36,7 @@ class Handler(HttpPlugin):
             if os.path.exists(sortedCSV):
                 os.remove(sortedCSV)
             # write CSV
+            #raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(csvDict))
             with open(sortedCSV, 'a') as fileToWrite:
                 i = 0
                 if userlist == 'teachers.csv':
@@ -89,6 +92,16 @@ class Handler(HttpPlugin):
                 os.mknod(importList)
 
             coloumns = []
+            m = magic.Magic(mime_encoding=True)
+            f=open (importList,'r')
+            encoding = m.from_file(importList)
+
+            # Convert this encoding to utf-8
+            with io.open(importList, 'r', encoding=encoding)  as f:
+                text = f.read()
+            with io.open(importList, 'w', encoding='utf-8') as f:
+                f.write(text)
+            f.close
             f=open (importList,'r')
             reader=csv.reader(f,delimiter=';',encoding=http_context.query.get('encoding', 'utf-8'))
             # determine number of coloumns in csv

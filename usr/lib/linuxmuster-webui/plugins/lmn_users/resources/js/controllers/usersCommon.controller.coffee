@@ -96,7 +96,7 @@ angular.module('lm.users').controller 'LMUsersSortListModalController', ($scope,
 
         # add field if not presend
         if pos  == -1
-            $scope.coloumnTitles.splice(4, 0, {name: field})
+            $scope.coloumnTitles.splice(4, 0, {name: field, id: field})
         # splice this field 
         else
             $scope.coloumnTitles.splice(pos, 1)
@@ -104,6 +104,7 @@ angular.module('lm.users').controller 'LMUsersSortListModalController', ($scope,
 
 
     $scope.accept = () ->
+        console.log ($scope.userListCSV)
         $uibModalInstance.close($scope.userListCSV)
 
     $scope.close = () ->

@@ -2194,7 +2194,7 @@
       results = [];
       for (j = 0, len = ref.length; j < len; j++) {
         element = ref[j];
-        element.coloumn = $scope.coloumnTitles[i]['name'];
+        element.coloumn = $scope.coloumnTitles[i]['id'];
         results.push(i = i + 1);
       }
       return results;
@@ -2226,32 +2226,40 @@
     if (userlist === 'students.csv') {
       $scope.coloumnTitles = [
         {
-          name: gettext('class')
+          name: gettext('class'),
+          id: 'class'
         },
         {
-          name: gettext('lastname')
+          name: gettext('lastname'),
+          id: 'lastname'
         },
         {
-          name: gettext('firstname')
+          name: gettext('firstname'),
+          id: 'firtname'
         },
         {
-          name: gettext('birthday')
+          name: gettext('birthday'),
+          id: 'birthday'
         }
       ];
     }
     if (userlist === 'teachers.csv') {
       $scope.coloumnTitles = [
         {
-          name: gettext('lastname')
+          name: gettext('lastname'),
+          id: 'lastname'
         },
         {
-          name: gettext('firstname')
+          name: gettext('firstname'),
+          id: 'firstname'
         },
         {
-          name: gettext('birthday')
+          name: gettext('birthday'),
+          id: 'birthday'
         },
         {
-          name: gettext('login')
+          name: gettext('login'),
+          id: 'login'
         }
       ];
     }

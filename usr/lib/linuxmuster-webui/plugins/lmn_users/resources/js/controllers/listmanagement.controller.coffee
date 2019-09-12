@@ -359,7 +359,7 @@ angular.module('lm.users').controller 'LMUsersListManagementController', ($scope
         regExp = /^([0-9a-zA-Z]*)$/
         validLogin = regExp.test(login) && ($scope.teachers.filter($scope.findval('login', login)).length < 2)
         return true ## TODO : valid chars for a login ?
-    
+
     $scope.isValidLoginExtrastudent = (login) ->
         regExp = /^([0-9a-zA-Z]*)$/
         validLogin = regExp.test(login) && ($scope.extrastudents.filter($scope.findval('login', login)).length < 2)

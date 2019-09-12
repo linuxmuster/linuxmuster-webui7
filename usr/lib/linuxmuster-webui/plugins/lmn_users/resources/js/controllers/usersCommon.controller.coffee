@@ -83,7 +83,7 @@ angular.module('lm.users').controller 'LMUsersSortListModalController', ($scope,
 
         i = 0
         for element in $scope.userListCSV
-            element.coloumn = $scope.coloumnTitles[i]['name']
+            element.coloumn = $scope.coloumnTitles[i]['id']
             i = i + 1
         #console.log ($scope['userListCSV'])
 
@@ -111,18 +111,18 @@ angular.module('lm.users').controller 'LMUsersSortListModalController', ($scope,
 
     if userlist == 'students.csv'
         $scope.coloumnTitles = [
-            {name: gettext('class')}
-            {name: gettext('lastname')}
-            {name: gettext('firstname')}
-            {name: gettext('birthday')}
+            {name: gettext('class'), id: 'class'}
+            {name: gettext('lastname'), id: 'lastname'}
+            {name: gettext('firstname'), id: 'firtname'}
+            {name: gettext('birthday'), id: 'birthday'}
         ]
 
     if userlist == 'teachers.csv'
         $scope.coloumnTitles = [
-            {name: gettext('lastname')}
-            {name: gettext('firstname')}
-            {name: gettext('birthday')}
-            {name: gettext('login')}
+            {name: gettext('lastname'), id: 'lastname'}
+            {name: gettext('firstname'), id: 'firstname'}
+            {name: gettext('birthday'), id: 'birthday'}
+            {name: gettext('login'), id: 'login'}
         ]
 
     $scope.rebuildCSV()

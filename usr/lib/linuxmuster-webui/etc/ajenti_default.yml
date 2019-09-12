@@ -9,7 +9,7 @@ bind:
   port: 80
 color: default
 language: en
-max_sessions: 9
+max_sessions: 9000
 name: server.linuxmuster.lan
 restricted_user: nobody
 ssl:

@@ -85,6 +85,16 @@
         <input type="number" class="form-control" ng:model="settings['userfile.teachers.csv']['deactivation_time']" />
     </td>
     </tr>
+    <td>
+        <label translate>Email Domain</label>
+    </td>
+    <td>
+        <input type="text" class="form-control" ng:model="settings['role.student']['MAILDOMAIN']" />
+    </td>
+    <td>
+        <input type="text" class="form-control" ng:model="settings['role.teacher']['MAILDOMAIN']" />
+    </td>
+    </tr>
 </table>
 
 
@@ -177,6 +187,7 @@
                 {{encoding['userfile.teachers.csv']}}
             </div>
     </div>
+    <!-- not implemented in sophomorix at the moment
     <div class="form-group">
         <label translate>Extra courses encoding</label>
         <select class="form-control" ng:model="settings['classfile.extraclasses.csv']['encoding']" ng:options="x for x in encodings" />
@@ -185,6 +196,7 @@
                 {{encoding['classfile.extraclasses.csv']}}
             </div>
     </div>
+    -->
     <div class="form-group">
         <label translate>Extra students encoding</label>
         <select class="form-control" ng:model="settings['userfile.extrastudents.csv']['encoding']" ng:options="x for x in encodings" />

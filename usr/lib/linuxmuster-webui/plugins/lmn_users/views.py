@@ -11,6 +11,7 @@ from aj.plugins.lmn_common.api import CSVSpaceStripper
 from aj.auth import authorize
 from aj.plugins.lmn_common.api import lmn_checkPermission, lmn_write_csv, lmn_getSophomorixValue
 
+
 @component(HttpPlugin)
 class Handler(HttpPlugin):
     def __init__(self, context):
@@ -21,8 +22,13 @@ class Handler(HttpPlugin):
     def handle_api_filelistImport(self, http_context):
         def findIndex(lst, key, value):
             for i, dic in enumerate(lst):
-                if dic[key] == value:
-                    return i
+                # try catches if dic[key] exists, if it is an unused coloumn this is not the case
+                try:
+                    if dic[key]:
+                        if dic[key] == value:
+                            return i
+                except Exception:
+                    pass
             return -1
 
         action = http_context.json_body()['action']
@@ -36,7 +42,6 @@ class Handler(HttpPlugin):
             if os.path.exists(sortedCSV):
                 os.remove(sortedCSV)
             # write CSV
-            #raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(csvDict))
             with open(sortedCSV, 'a') as fileToWrite:
                 i = 0
                 if userlist == 'teachers.csv':
@@ -81,36 +86,33 @@ class Handler(HttpPlugin):
 
             return 0
 
-
         if action == 'get':
             importList = http_context.json_body()['path']
-            #userlist = http_context.json_body()['userlist']
-            #school = 'default-school'
-            #path = '/etc/linuxmuster/sophomorix/'+school+'/students.csv'
 
             if os.path.isfile(importList) is False:
                 os.mknod(importList)
 
             coloumns = []
+            # determine encoding
             m = magic.Magic(mime_encoding=True)
-            f=open (importList,'r')
+            f = open(importList, 'r')
             encoding = m.from_file(importList)
 
             # Convert this encoding to utf-8
-            with io.open(importList, 'r', encoding=encoding)  as f:
+            with io.open(importList, 'r', encoding=encoding) as f:
                 text = f.read()
             with io.open(importList, 'w', encoding='utf-8') as f:
                 f.write(text)
             f.close
-            f=open (importList,'r')
-            reader=csv.reader(f,delimiter=';',encoding=http_context.query.get('encoding', 'utf-8'))
+            f = open(importList, 'r')
+            reader = csv.reader(f, delimiter=';', encoding=http_context.query.get('encoding', 'utf-8'))
             # determine number of coloumns in csv
-            ncol=len(next(reader))
+            ncol = len(next(reader))
             f.seek(0)
             i = 0
             # create dict entry for every coloumn
             while i < ncol:
-                coloumns.append ({'coloumn': i})
+                coloumns.append({'coloumn': i})
                 i += 1
 
             # fill coloumn objects with data
@@ -118,15 +120,14 @@ class Handler(HttpPlugin):
                 i = 0
                 while i < ncol:
                     if 'data' in coloumns[i]:
-                        coloumns[i]['data'].append (row[i])
+                        coloumns[i]['data'].append(row[i])
                     else:
-                        coloumns[i].update ({'data': [row[i]]})
+                        coloumns[i].update({'data': [row[i]]})
                     i += 1
 
             if http_context.method == 'POST':
                 with authorize('lm:users:students:read'):
                     return (coloumns)
-
 
     @url(r'/api/lm/users/students-list')
     @endpoint(api=True)

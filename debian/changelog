@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.96-1) lmn7; urgency=medium 
+
+  * Current snapshot build 5274ec63a00bcdbf86afca800e13669323571c42
+   *     Fixed Password printing Bug and updated school settings menu
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Sep 13 11:13:20 UTC 2019
+
 linuxmuster-webui7 (1.0.95-1) lmn7; urgency=medium 
 
   * Current snapshot build b339642d04cff06adf4a3e0585c4567bea4cfbab

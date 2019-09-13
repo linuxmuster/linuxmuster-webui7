@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-07 20:36+0200\n"
-"PO-Revision-Date: 2019-09-08 15:28\n"
+"POT-Creation-Date: 2019-09-13 23:14+0200\n"
+"PO-Revision-Date: 2019-09-13 21:25\n"
 "Last-Translator: kiarn\n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -16,173 +16,213 @@ msgstr ""
 "X-Crowdin-Language: el\n"
 "X-Crowdin-File: /2.0/lmn_settings.po\n"
 
-#: lmn_settings/resources/partial/index.html:220
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:353
 msgid "Admin e-mail"
 msgstr ""
 
-#: lmn_settings/resources/partial/index.html:131
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:262
 msgid "Cloudquota Percentage"
 msgstr ""
 
-#: lmn_settings/resources/partial/index.html:168
-#: lmn_settings/resources/partial/index.html:176
-#: lmn_settings/resources/partial/index.html:184
-#: lmn_settings/resources/partial/index.html:192
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:299
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:307
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:325
 msgid "Detected encoding"
 msgstr ""
 
-#: lmn_settings/resources/partial/index.html:162
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:27
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:72
+msgid "Email Domain"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:293
 msgid "Encoding"
 msgstr ""
 
-#: lmn_settings/resources/partial/index.html:208
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:341
 msgid "External FQDN for printing"
 msgstr ""
 
-#: lmn_settings/resources/partial/index.html:181
-msgid "Extra courses encoding"
-msgstr ""
-
-#: lmn_settings/resources/partial/index.html:189
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:322
 msgid "Extra students encoding"
 msgstr ""
 
-#: lmn_settings/resources/partial/index.html:8
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:120
+msgid "Firstname Chars"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:8
 msgid "General"
 msgstr "Γενικά"
 
-#: lmn_settings/resources/partial/index.html:204
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:337
 msgid "Internal FQDN for printing"
 msgstr ""
 
-#: lmn_settings/resources/partial/globalSettings.html:11
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:11
 msgid "Language"
 msgstr ""
 
-#: lmn_settings/resources/partial/index.html:216
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:81
+msgid "Listimport"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:349
 msgid "MOODLE URL"
 msgstr ""
 
-#: lmn_settings/resources/partial/index.html:145
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:276
 msgid "Mailquota Default in MiB"
 msgstr ""
 
-#: lmn_settings/resources/partial/index.html:46
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:134
 msgid "Password Length"
 msgstr ""
 
-#: lmn_settings/resources/partial/index.html:57
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:148
 msgid "Password length"
 msgstr ""
 
-#: lmn_settings/resources/partial/index.html:197
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:50
+msgid "Primary Group Adminclass"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:58
+msgid "Primary Group Teacherclass"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:330
 msgid "Printing data"
 msgstr ""
 
-#: lmn_settings/resources/partial/index.html:92
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:223
 msgid "Quota"
 msgstr ""
 
-#: lmn_settings/resources/partial/index.html:103
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:234
 msgid "Quota Default Global in MiB"
 msgstr ""
 
-#: lmn_settings/resources/partial/index.html:117
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:248
 msgid "Quota Default School in MiB"
 msgstr ""
 
-#: lmn_settings/resources/partial/index.html:35
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:162
 msgid "Random password"
 msgstr ""
 
-#: lmn_settings/resources/partial/index.html:79
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:191
 msgid "Removal after departure (days)"
 msgstr ""
 
-#: lmn_settings/resources/partial/globalSettings.html:41
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:205
+msgid "Replace slash(/) in classname by hypen(-)"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:41
 msgid "Restart WebUI"
 msgstr ""
 
-#: lmn_settings/resources/partial/globalSettings.html:20
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:92
+msgid "Reverse Surname and Firstname in username"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:34
+msgid "Role Students"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:42
+msgid "Role Teachers"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:20
 msgid "SSL certificate file"
 msgstr ""
 
-#: lmn_settings/resources/partial/index.html:212
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:345
 msgid "Samba domain for printing"
 msgstr ""
 
-#: lmn_settings/resources/partial/globalSettings.html:40
-#: lmn_settings/resources/partial/index.html:231
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:40
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:364
 msgid "Save"
 msgstr "Aποθήκευση"
 
-#: lmn_settings/resources/partial/index.html:200
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:333
 msgid "School name"
 msgstr ""
 
-#: lmn_settings/resources/partial/index.html:99
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:230
 msgid "Schooladministrator"
 msgstr ""
 
-#: lmn_settings/resources/partial/index.html:20
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:19
 msgid "Schoolname"
 msgstr ""
 
-#: lmn_settings/resources/partial/index.html:30
-#: lmn_settings/resources/partial/index.html:97
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:228
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:86
 msgid "Students"
 msgstr "Μαθητές"
 
-#: lmn_settings/resources/partial/index.html:165
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:296
 msgid "Students encoding"
 msgstr ""
 
-#: lmn_settings/resources/partial/index.html:31
-#: lmn_settings/resources/partial/index.html:98
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:106
+msgid "Surname Characters"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:229
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:87
 msgid "Teachers"
 msgstr ""
 
-#: lmn_settings/resources/partial/index.html:173
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:304
 msgid "Teachers encoding"
 msgstr ""
 
-#: lmn_settings/resources/partial/index.html:69
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:177
 msgid "Tolerance after departure (days)"
 msgstr ""
 
-#: lmn_settings/main.py:15
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:88
+msgid "extrastudents"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/main.py:15
 msgid "School Settings"
 msgstr ""
 
-#: lmn_settings/main.py:23
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/main.py:23
 msgid "Global Settings"
 msgstr ""
 
-#: lmn_settings/main.py:38
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/main.py:38
 msgid "Configure school settings"
 msgstr ""
 
-#: lmn_settings/main.py:43
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/main.py:43
 msgid "Configure global settings"
 msgstr ""
 
-#: lmn_settings/resources/js/controllers/index.controller.coffee:8
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:8
 msgid "Settings"
 msgstr "Ρυθμίσεις"
 
-#: lmn_settings/resources/js/controllers/index.controller.coffee:11
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:11
 msgid "Minimal"
 msgstr ""
 
-#: lmn_settings/resources/js/controllers/index.controller.coffee:12
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:12
 msgid "Average"
 msgstr ""
 
-#: lmn_settings/resources/js/controllers/index.controller.coffee:13
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:13
 msgid "Maximal"
 msgstr ""
 
-#: lmn_settings/resources/js/controllers/index.controller.coffee:54
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:54
 msgid "Saved"
 msgstr "Αποθηκεύτηκε"
 

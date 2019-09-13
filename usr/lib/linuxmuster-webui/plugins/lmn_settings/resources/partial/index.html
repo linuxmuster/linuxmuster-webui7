@@ -14,76 +14,59 @@
             <td width="30%"></td>
             <td width="70%"></td>
         </tr>
-        </td>
-
+        <tr>
         <td>
             <label translate>Schoolname</label>
         </td>
         <td>
             <input type="text" class="form-control" ng:model="settings.school.school_longname" />
         </td>
+        </tr>
+        <tr>
+        <td>
+            <label translate>Email Domain</label>
+        </td>
+        <td>
+        </td>
+        </tr>
+        <tr>
+        <td>
+            <label translate>Role Students</label>
+        </td>
+        <td>
+        <input type="text" class="form-control" ng:model="settings['role.student']['MAILDOMAIN']" />
+        </td>
+        </tr>
+        <tr>
+        <td>
+            <label translate>Role Teachers</label>
+        </td>
+        <td>
+        <input type="text" class="form-control" ng:model="settings['role.teacher']['MAILDOMAIN']" />
+        </td>
+        </tr>
+        <tr>
+        <td>
+            <label translate>Primary Group Adminclass</label>
+        </td>
+        <td>
+        <input type="text" class="form-control" ng:model="settings['type.adminclass']['MAILDOMAIN']" />
+        </td>
+        </tr>
+        <tr>
+        <td>
+            <label translate>Primary Group Teacherclass</label>
+        </td>
+        <td>
+        <input type="text" class="form-control" ng:model="settings['type.teacherclass']['MAILDOMAIN']" />
+        </td>
+        </tr>
 </div>
 
 <table class="lm-table lm-table-padded">
     <tr>
         <th width="40%"></th>
-        <th translate>Students</th>
-        <th translate>Teachers</th>
-    </tr>
-    <tr>
-        <td>
-            <label translate>Random password</label>
-        </td>
-        <td>
-            <span checkbox ng:model="settings['userfile.students.csv']['random_pwd']" />
-        </td>
-        <td>
-            <span checkbox ng:model="settings['userfile.teachers.csv']['random_pwd']" />
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <label translate>Password Length</label>
-        </td>
-        <td>
-            <input type="number" class="form-control" ng:model="settings['userfile.students.csv']['pwd_length']" />
-        </td>
-        <td>
-            <input type="number" class="form-control" ng:model="settings['userfile.teachers.csv']['pwd_length']" />
-        </td>
-    </tr>
-    <tr ng:show="settings.lehrer_zufall_passwort || settings.schueler_zufall_passwort" >
-        <td>
-            <label translate>Password length</label>
-        </td>
-        <td>
-            <input type="number" class="form-control" ng:model="settings['userfile.students.csv']['pwd_length']"  />
-        </td>
-        <td>
-            <input type="number" class="form-control" ng:model="settings['userfile.teachers.csv']['pwd_length']" ng:show="settings.schueler_zufall_passwort" />
-        </td>
-    </tr>
-    <tr>
-    </tr>
-    <td>
-        <label translate>Tolerance after departure (days)</label>
-    </td>
-    <td>
-        <input type="number" class="form-control" ng:model="settings['userfile.students.csv']['toleration_time']" />
-    </td>
-    <td>
-        <input type="number" class="form-control" ng:model="settings['userfile.teachers.csv']['toleration_time']">
-    </td>
-    </tr>
-    <td>
-        <label translate>Removal after departure (days)</label>
-    </td>
-    <td>
-        <input type="number" class="form-control" ng:model="settings['userfile.students.csv']['deactivation_time']" />
-    </td>
-    <td>
-        <input type="number" class="form-control" ng:model="settings['userfile.teachers.csv']['deactivation_time']" />
-    </td>
+        <th translate></th>
     </tr>
     <td>
         <label translate>Email Domain</label>
@@ -91,11 +74,149 @@
     <td>
         <input type="text" class="form-control" ng:model="settings['role.student']['MAILDOMAIN']" />
     </td>
-    <td>
-        <input type="text" class="form-control" ng:model="settings['role.teacher']['MAILDOMAIN']" />
-    </td>
     </tr>
 </table>
+
+    </uib:tab>
+    <uib:tab heading="{{'Listimport'|translate}}">
+    <br/>
+    <table class="lm-table lm-table-padded">
+        <tr>
+            <th width="40%"></th>
+            <th translate>Students</th>
+            <th translate>Teachers</th>
+            <th translate>extrastudents</th>
+        </tr>
+        <tr>
+            <td>
+                <label translate>Reverse Surname and Firstname in username</label>
+            </td>
+            <td>
+                <span checkbox ng:model="settings['userfile.students.csv']['surname_firstname_reverse=boolean']" />
+            </td>
+            <td>
+                <span checkbox ng:model="settings['userfile.teachers.csv']['surname_firstname_reverse=boolean']" />
+            </td>
+            <td>
+                <span checkbox ng:model="settings['userfile.extrastudents.csv']['surname_firstname_reverse=boolean']" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label translate>Surname Characters</label>
+            </td>
+            <td>
+                <input type="number" class="form-control" ng:model="settings['userfile.students.csv']['surname_chars']" />
+            </td>
+            <td>
+                <input type="number" class="form-control" ng:model="settings['userfile.teachers.csv']['surname_chars']" />
+            </td>
+            <td>
+                <input type="number" class="form-control" ng:model="settings['userfile.extrastudents.csv']['surname_chars']" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label translate>Firstname Chars</label>
+            </td>
+            <td>
+                <input type="number" class="form-control" ng:model="settings['userfile.students.csv']['firstname_chars']" />
+            </td>
+            <td>
+                <input type="number" class="form-control" ng:model="settings['userfile.teachers.csv']['firstname_chars']" />
+            </td>
+            <td>
+                <input type="number" class="form-control" ng:model="settings['userfile.extrastudents.csv']['firstname_chars']" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label translate>Password Length</label>
+            </td>
+            <td>
+                <input type="number" class="form-control" ng:model="settings['userfile.students.csv']['pwd_length']" />
+            </td>
+            <td>
+                <input type="number" class="form-control" ng:model="settings['userfile.teachers.csv']['pwd_length']" />
+            </td>
+            <td>
+                <input type="number" class="form-control" ng:model="settings['userfile.extrastudents.csv']['pwd_length']" />
+            </td>
+        </tr>
+        <tr ng:show="settings.lehrer_zufall_passwort || settings.schueler_zufall_passwort" >
+            <td>
+                <label translate>Password length</label>
+            </td>
+            <td>
+                <input type="number" class="form-control" ng:model="settings['userfile.students.csv']['pwd_length']"  />
+            </td>
+            <td>
+                <input type="number" class="form-control" ng:model="settings['userfile.teachers.csv']['pwd_length']" ng:show="settings.schueler_zufall_passwort" />
+            </td>
+            <td>
+                <input type="number" class="form-control" ng:model="settings['userfile.extrastudents.csv']['pwd_length']" ng:show="settings.schueler_zufall_passwort" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label translate>Random password</label>
+            </td>
+            <td>
+                <span checkbox ng:model="settings['userfile.students.csv']['random_pwd']" />
+            </td>
+            <td>
+                <span checkbox ng:model="settings['userfile.teachers.csv']['random_pwd']" />
+            </td>
+            <td>
+                <span checkbox ng:model="settings['userfile.extrastudents.csv']['random_pwd']" />
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                <label translate>Tolerance after departure (days)</label>
+            </td>
+            <td>
+                <input type="number" class="form-control" ng:model="settings['userfile.students.csv']['toleration_time']" />
+            </td>
+            <td>
+                <input type="number" class="form-control" ng:model="settings['userfile.teachers.csv']['toleration_time']">
+            </td>
+            <td>
+                <input type="number" class="form-control" ng:model="settings['userfile.extrastudents.csv']['toleration_time']">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label translate>Removal after departure (days)</label>
+            </td>
+            <td>
+                <input type="number" class="form-control" ng:model="settings['userfile.students.csv']['deactivation_time']" />
+            </td>
+            <td>
+                <input type="number" class="form-control" ng:model="settings['userfile.teachers.csv']['deactivation_time']" />
+            </td>
+            <td>
+                <input type="number" class="form-control" ng:model="settings['userfile.extrastudents.csv']['deactivation_time']" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label translate>Replace slash(/) in classname by hypen(-)</label>
+            </td>
+            <td>
+                <span checkbox ng:model="settings['userfile.students.csv']['CLASSNAME_SLASH_TO_HYPHEN']" />
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+        </tr>
+    </table>
+
+
+
+    </uib:tab>
 
 
     </uib:tab>
@@ -188,14 +309,14 @@
             </div>
     </div>
     <!-- not implemented in sophomorix at the moment
-    <div class="form-group">
+        <div class="form-group">
         <label translate>Extra courses encoding</label>
         <select class="form-control" ng:model="settings['classfile.extraclasses.csv']['encoding']" ng:options="x for x in encodings" />
-            <div ng:show="settings['classfile.extraclasses.csv']['encoding'] == 'auto'" >
-                <label translate>Detected encoding</label><br>
-                {{encoding['classfile.extraclasses.csv']}}
-            </div>
-    </div>
+        <div ng:show="settings['classfile.extraclasses.csv']['encoding'] == 'auto'" >
+        <label translate>Detected encoding</label><br>
+        {{encoding['classfile.extraclasses.csv']}}
+        </div>
+        </div>
     -->
     <div class="form-group">
         <label translate>Extra students encoding</label>

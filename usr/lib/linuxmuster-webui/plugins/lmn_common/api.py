@@ -135,7 +135,7 @@ def lmn_write_configfile(path, data):
             # date  = time.strftime("%d/%m/%Y %H:%M:%S", epoch)
             # backups.append({'path': x, 'date': date})
     # return backups
-    
+
 # def lmn_restore_backup_file(path, backup):
     # if not os.path.exists(path) or not os.path.exists(backup):
         # return

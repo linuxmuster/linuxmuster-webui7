@@ -32,10 +32,12 @@ class Handler(HttpPlugin):
                     isAdmin = "administrator" in user_details['sophomorixRole']
 
                     sophomorixCommand = ['sophomorix-project', '-i', '-p', groupName, '-jj']
-                    groupAdmins = lmn_getSophomorixValue(sophomorixCommand, 'GROUPS/'+groupName+'/sophomorixAdmins')
+                    result = lmn_getSophomorixValue(sophomorixCommand, 'GROUPS/'+groupName)
+                    groupAdmins = result['sophomorixAdmins']
+                    groupAdmingroups = result['sophomorixAdminGroups']
                     membersToAdd = []
                     membersToRemove = []
-                    if username in groupAdmins or isAdmin:
+                    if username in groupAdmins or isAdmin or user_details['sophomorixAdminClass'] in groupAdmingroups:
                         i = 0
                         for member in members:
                             if members[i]['membership'] is True:

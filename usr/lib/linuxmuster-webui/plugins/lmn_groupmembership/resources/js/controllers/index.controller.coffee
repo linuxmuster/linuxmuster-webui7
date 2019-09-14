@@ -240,10 +240,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($sco
             $scope.teachers = resp.data
             $scope.teacherlist = []
             for teacher in $scope.teachers
-                if groupDN in teacher['memberOf']
-                    teacher['membership'] = true
-                else
-                    teacher['membership'] = false
+                teacher['membership'] = groupDN in teacher['memberOf']
                 $scope.teacherlist.push(teacher['sAMAccountName'])
 
         $scope.close = () ->
@@ -317,36 +314,22 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
     $scope.groupChanged = (item) ->
         for group in $scope.groups
             if group['groupname'] == item
-                if group['changed'] == false
-                    group['changed'] = true
-                else
-                    group['changed'] = false
-        # set html class
-        if document.getElementById(item).className.match (/(?:^|\s)changed(?!\S)/)
-           document.getElementById(item).className = document.getElementById(item).className.replace( /(?:^|\s)changed(?!\S)/g , '' )
-        else
-           document.getElementById(item).className += " changed"
+                group['changed'] = !group['changed']
+
+    $scope.filterGroupType = (val) ->
+        return (dict) ->
+            dict['type'] == val
 
     $scope.getGroups = (username) ->
         $http.post('/api/lmn/groupmembership', {action: 'list-groups', username: username, profil: $scope.identity.profile}).then (resp) ->
             $scope.groups = resp.data[0]
             $scope.identity.isAdmin = resp.data[1]
-            schoolclassCount = 0
-            printergroupCount = 0
-            projectCount = 0
-            for group in $scope.groups
-                if group.type == 'schoolclass'
-                    schoolclassCount = schoolclassCount + 1
-            for group in $scope.groups
-                if group.type == 'printergroup'
-                    printergroupCount = printergroupCount + 1
-            for group in $scope.groups
-                if group.type == 'project'
-                    projectCount = projectCount + 1
-            $scope.schoolclassCount= schoolclassCount
-            $scope.printergroupCount = printergroupCount
-            $scope.projectCount = projectCount
 
+            $scope.classes = $scope.groups.filter($scope.filterGroupType('schoolclass'))
+            $scope.projects = $scope.groups.filter($scope.filterGroupType('project'))
+            ## Printers yet DEPRECATED ?
+            $scope.printers = $scope.groups.filter($scope.filterGroupType('printergroup'))
+            console.log($scope.classes)
 
     $scope.setGroups = (groups) ->
         $http.post('/api/lmn/groupmembership', {action: 'set-groups', username:$scope.identity.user, groups: groups, profil: $scope.identity.profile}).then (resp) ->

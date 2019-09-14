@@ -42,6 +42,7 @@
                     <i title="{{addgroupmembertext}}" class="fa fa-users" ng:style="(membergroups.indexOf(class) >= 0) && {'color': 'green'}" ng-click="updateGroupMemberList(class)"></i>
                 </span>
             </h4>
+<!--
             <div ng:repeat="student in students|filter:filter|filter:isActive|orderBy:[sort.fx]:sortReverse">
                 <div ng:if="student.sophomorixAdminClass == class">
                     <input ng:if="membergroups.indexOf(class) >= 0" type="checkbox" checked disabled>
@@ -50,6 +51,7 @@
                     <a href="#">{{student.givenName}} <b>{{student.sn}}</b></a>
                 </div>
             </div>
+-->
         </div>
     </div>
 

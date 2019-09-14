@@ -60,18 +60,18 @@
 
         <div ng:show="types.schoolclass.checkbox">
             <h3 translate>Schoolclasses</h3>
-            <div ng-if="schoolclassCount== 0" class="alert alert-info">
+            <div ng-if="classes.length== 0" class="alert alert-info">
                 <i class="fa fa-info-circle"></i>
                 <span translate> There are no schoolclasses available. Ask the administrator to import students</span>
             </div>
             <div class="flex-container lmn-container-list">
-                <div ng:repeat="group in groups|filter: {type: 'schoolclass'}|filter:filter|orderBy:[sort.fx]:sortReverse">
+                <div ng:repeat="classe in classes|orderBy:[sort.fx]:sortReverse">
                     <div>
-                        <span id={{group.groupname}} checkbox ng:model="group.membership" ng-click='groupChanged(group.groupname)'></span>
+                        <span id={{classe.groupname}} checkbox ng:model="classe.membership" ng:class="{changed: classe.changed}" ng-click='groupChanged(classe.groupname)'></span>
                         <i class="fa fa-users"></i>
-                        <a href="#" ng-click='showGroupDetails($index, group.type, group.groupname)'>
-                            <span translate>{{group.typename}}</span>
-                            <b style="word-wrap: break-word; -ms-word-break: break-all">{{group.groupname}}</b>
+                        <a href="#" ng-click='showGroupDetails($index, classe.type, classe.groupname)'>
+                            <span translate>{{classe.typename}}</span>
+                            <b style="word-wrap: break-word; -ms-word-break: break-all">{{classe.groupname}}</b>
                         </a>
                     </div>
                 </div>
@@ -81,18 +81,18 @@
 
         <div ng:show="types.printergroup.checkbox">
             <h3 translate>Printer</h3>
-            <div ng-if="printergroupCount == 0" class="alert alert-info">
+            <div ng-if="printers.length == 0" class="alert alert-info">
                 <i class="fa fa-info-circle"></i>
                 <span translate> There are no printers configured yet. Ask your administrator to configure one.</span>
             </div>
             <div class="flex-container lmn-container-list" >
-                <div ng:repeat="group in groups|filter: {type: 'printer'}|filter:filter|orderBy:[sort.fx]:sortReverse">
+                <div ng:repeat="printergroup in printergroups|orderBy:[sort.fx]:sortReverse">
                     <div>
-                        <span id={{group.groupname}} checkbox ng:model="group.membership" ng-click='groupChanged(group.groupname)'></span>
+                        <span id={{printergroup.groupname}} checkbox ng:model="printergroup.membership" ng:class="{changed: printergroup.changed}" ng-click='groupChanged(printergroup.groupname)'></span>
                         <i class="fa fa-fw fa-print"></i>
-                        <a href="#" ng-click='showGroupDetails($index, group.type, group.groupname)'>
-                            <span translate>{{group.typename}}</span>
-                            <b style="word-wrap: break-word; -ms-word-break: break-all">{{group.groupname}}</b>
+                        <a href="#" ng-click='showGroupDetails($index, printergroup.type, printergroup.groupname)'>
+                            <span translate>{{printergroup.typename}}</span>
+                            <b style="word-wrap: break-word; -ms-word-break: break-all">{{printergroup.groupname}}</b>
                         </a>
                         </a>
                     </div>
@@ -102,18 +102,18 @@
 
         <div ng:show="types.project.checkbox">
             <h3 translate>Projects</h3>
-            <div ng-if="projectCount == 0" class="alert alert-info">
+            <div ng-if="projects.length == 0" class="alert alert-info">
                 <i class="fa fa-info-circle"></i>
                 <span translate> There are no projects yet. You can create a new project using the menu bar.</span>
             </div>
             <div class="flex-container lmn-container-list" >
-                <div ng:repeat="group in groups|filter: {type: 'project'}|filter:filter|orderBy:[sort.fx]:sortReverse">
-                    <div ng:show="!projectIsHidden(group)">
-                        <span id={{group.groupname}} checkbox ng:show="projectIsJoinable(group)" ng:model="group.membership" ng-click='groupChanged(group.groupname)'></span>
+                <div ng:repeat="project in projects|orderBy:[sort.fx]:sortReverse">
+                    <div ng:show="!projectIsHidden(project)">
+                        <span id={{project.groupname}} checkbox ng:show="projectIsJoinable(project)" ng:class="{changed: project.changed}" ng:model="project.membership" ng-click='groupChanged(project.groupname)'></span>
                         <i class="fa fa-flask"></i>
-                        <a href="#" ng-click='showGroupDetails($index, group.type, group.groupname)'>
-                            <span translate>{{group.typename}}</span>
-                            <b style="word-wrap: break-word; -ms-word-break: break-all">{{group.groupname}}</b>
+                        <a href="#" ng-click='showGroupDetails($index, project.type, project.groupname)'>
+                            <span translate>{{project.typename}}</span>
+                            <b style="word-wrap: break-word; -ms-word-break: break-all">{{project.groupname}}</b>
                         </a>
                     </div>
                 </div>

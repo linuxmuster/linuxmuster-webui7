@@ -364,11 +364,7 @@
       results = [];
       for (i = 0, len = ref.length; i < len; i++) {
         teacher = ref[i];
-        if (indexOf.call(teacher['memberOf'], groupDN) >= 0) {
-          teacher['membership'] = true;
-        } else {
-          teacher['membership'] = false;
-        }
+        teacher['membership'] = indexOf.call(teacher['memberOf'], groupDN) >= 0;
         results.push($scope.teacherlist.push(teacher['sAMAccountName']));
       }
       return results;
@@ -458,24 +454,23 @@
       }
     };
     $scope.groupChanged = function(item) {
-      var group, i, len, ref;
+      var group, i, len, ref, results;
       ref = $scope.groups;
+      results = [];
       for (i = 0, len = ref.length; i < len; i++) {
         group = ref[i];
         if (group['groupname'] === item) {
-          if (group['changed'] === false) {
-            group['changed'] = true;
-          } else {
-            group['changed'] = false;
-          }
+          results.push(group['changed'] = !group['changed']);
+        } else {
+          results.push(void 0);
         }
       }
-      // set html class
-      if (document.getElementById(item).className.match(/(?:^|\s)changed(?!\S)/)) {
-        return document.getElementById(item).className = document.getElementById(item).className.replace(/(?:^|\s)changed(?!\S)/g, '');
-      } else {
-        return document.getElementById(item).className += " changed";
-      }
+      return results;
+    };
+    $scope.filterGroupType = function(val) {
+      return function(dict) {
+        return dict['type'] === val;
+      };
     };
     $scope.getGroups = function(username) {
       return $http.post('/api/lmn/groupmembership', {
@@ -483,36 +478,13 @@
         username: username,
         profil: $scope.identity.profile
       }).then(function(resp) {
-        var group, i, j, k, len, len1, len2, printergroupCount, projectCount, ref, ref1, ref2, schoolclassCount;
         $scope.groups = resp.data[0];
         $scope.identity.isAdmin = resp.data[1];
-        schoolclassCount = 0;
-        printergroupCount = 0;
-        projectCount = 0;
-        ref = $scope.groups;
-        for (i = 0, len = ref.length; i < len; i++) {
-          group = ref[i];
-          if (group.type === 'schoolclass') {
-            schoolclassCount = schoolclassCount + 1;
-          }
-        }
-        ref1 = $scope.groups;
-        for (j = 0, len1 = ref1.length; j < len1; j++) {
-          group = ref1[j];
-          if (group.type === 'printergroup') {
-            printergroupCount = printergroupCount + 1;
-          }
-        }
-        ref2 = $scope.groups;
-        for (k = 0, len2 = ref2.length; k < len2; k++) {
-          group = ref2[k];
-          if (group.type === 'project') {
-            projectCount = projectCount + 1;
-          }
-        }
-        $scope.schoolclassCount = schoolclassCount;
-        $scope.printergroupCount = printergroupCount;
-        return $scope.projectCount = projectCount;
+        $scope.classes = $scope.groups.filter($scope.filterGroupType('schoolclass'));
+        $scope.projects = $scope.groups.filter($scope.filterGroupType('project'));
+        //# Printers yet DEPRECATED ?
+        $scope.printers = $scope.groups.filter($scope.filterGroupType('printergroup'));
+        return console.log($scope.classes);
       });
     };
     $scope.setGroups = function(groups) {

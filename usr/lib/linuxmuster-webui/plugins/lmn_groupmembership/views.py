@@ -45,12 +45,12 @@ class Handler(HttpPlugin):
                             i = i + 1
                         membersToAddCSV = ",".join(membersToAdd)
                         membersToRemoveCSV = ",".join(membersToRemove)
-                        sophomorixCommand = ['sophomorix-project', '-p', groupName, \
-                                             '--addmembers', membersToAddCSV, \
-                                             '--removemembers', membersToRemoveCSV, \
-                                             '--admins', admins, \
-                                             '--admingroups', admingroups, \
-                                             '--membergroups', membergroups, \
+                        sophomorixCommand = ['sophomorix-project', '-p', groupName,
+                                             '--addmembers', membersToAddCSV,
+                                             '--removemembers', membersToRemoveCSV,
+                                             '--admins', admins,
+                                             '--admingroups', admingroups,
+                                             '--membergroups', membergroups,
                                              '-jj']
                         result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
                         if result['TYPE'] == "ERROR":

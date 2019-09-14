@@ -222,9 +222,9 @@ class Handler(HttpPlugin):
                 with authorize('lm:users:teachers:read'):
                     user = http_context.json_body()['user']
                     sophomorixCommand = ['sophomorix-query', '--teacher', '--schoolbase', schoolname, '--user-full', '-jj', '--sam', user]
-            teachersCheck = lmn_getSophomorixValue(sophomorixCommand, 'LISTS/USER')
-            if len(teachersCheck) != 0:
-                teachers = lmn_getSophomorixValue(sophomorixCommand, 'USER')
+            result = lmn_getSophomorixValue(sophomorixCommand, '')
+            if 'USER' in result.keys():
+                teachers = result['USER']
                 for teacher in teachers:
                     teachersList.append(teachers[teacher])
                 return teachersList
@@ -245,9 +245,9 @@ class Handler(HttpPlugin):
                     user = http_context.json_body()['user']
                     # sophomorixCommand = ['sophomorix-query', '--student', '--schoolbase', schoolname, '--user-full', '-jj', '--sam', user]
                     sophomorixCommand = ['sophomorix-query', '--user-full', '-jj', '--sam', user]
-                studentsCheck = lmn_getSophomorixValue(sophomorixCommand, 'LISTS/USER')
-                if len(studentsCheck) != 0:
-                    students = lmn_getSophomorixValue(sophomorixCommand, 'USER')
+                result = lmn_getSophomorixValue(sophomorixCommand, '')
+                if 'USER' in result.keys():
+                    students = result['USER']
                     for student in students:
                         # TODO: get a better way to remove Birthay from user detail page
                         students[student]['sophomorixBirthdate'] = 'hidden'
@@ -268,9 +268,9 @@ class Handler(HttpPlugin):
                 else:
                     user = http_context.json_body()['user']
                     sophomorixCommand = ['sophomorix-query', '--schooladministrator', '--user-full', '-jj', '--sam', user]
-                schooladminsCheck = lmn_getSophomorixValue(sophomorixCommand, 'LISTS/USER')
-                if len(schooladminsCheck) != 0:
-                    schooladmins = lmn_getSophomorixValue(sophomorixCommand, 'USER')
+                result = lmn_getSophomorixValue(sophomorixCommand, '')
+                if 'USER' in result.keys():
+                    schooladmins = result['USER']
                     for schooladmin in schooladmins:
                         schooladminsList.append(schooladmins[schooladmin])
                     return schooladminsList
@@ -292,9 +292,9 @@ class Handler(HttpPlugin):
                 else:
                     user = http_context.json_body()['user']
                     sophomorixCommand = ['sophomorix-query', '--globaladministrator', '--user-full', '-jj', '--sam', user]
-                globaladminsCheck = lmn_getSophomorixValue(sophomorixCommand, 'LISTS/USER')
-                if len(globaladminsCheck) != 0:
-                    globaladmins = lmn_getSophomorixValue(sophomorixCommand, 'USER')
+                result = lmn_getSophomorixValue(sophomorixCommand, '')
+                if 'USER' in result.keys():
+                    globaladmins = result['USER']
                     for globaladmin in globaladmins:
                         globaladminsList.append(globaladmins[globaladmin])
                     return globaladminsList

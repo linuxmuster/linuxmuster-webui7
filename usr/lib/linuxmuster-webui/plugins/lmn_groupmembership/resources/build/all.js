@@ -24,7 +24,7 @@
   });
 
   angular.module('lmn.groupmembership').controller('LMNGroupDetailsController', function($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, groupType, groupName) {
-    $scope.editGroupMembers = function(groupName, groupDetails, admins) {
+    $scope.editGroupMembers = function(groupName, groupDetails, admins, members) {
       return $uibModal.open({
         templateUrl: '/lmn_groupmembership:resources/partial/editMembers.modal.html',
         controller: 'LMNGroupEditController',
@@ -38,6 +38,9 @@
           },
           admins: function() {
             return admins;
+          },
+          members: function() {
+            return members;
           }
         }
       }).result.then(function(result) {
@@ -200,7 +203,7 @@
     };
   });
 
-  angular.module('lmn.groupmembership').controller('LMNGroupEditController', function($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, groupName, groupDetails, admins) {
+  angular.module('lmn.groupmembership').controller('LMNGroupEditController', function($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, groupName, groupDetails, admins, members) {
     var groupDN;
     $scope.sorts = [
       {
@@ -232,12 +235,17 @@
     $scope.sort = $scope.sorts[1];
     $scope.groupName = groupName;
     $scope.admins = admins;
+    $scope.members = members;
     $scope.sortReverse = false;
     groupDN = groupDetails['DN'];
     $scope.addgroupmembertext = gettext('Add/remove as member group');
     $scope.addgroupadmintext = gettext('Add/remove as admin group');
     $scope.admingroups = groupDetails['sophomorixAdminGroups'];
     $scope.membergroups = groupDetails['sophomorixMemberGroups'];
+    $scope.IsVisible = false;
+    $scope.ShowHide = function() {
+      return $scope.IsVisible = !$scope.IsVisible;
+    };
     $scope.checkInverse = function(sort, currentSort) {
       if (sort === currentSort) {
         return $scope.sortReverse = !$scope.sortReverse;
@@ -272,15 +280,13 @@
               newadmins.push(admin);
             }
           }
-          $scope.admins = newadmins;
-          return console.log($scope.admins, $scope.teacherlist);
+          return $scope.admins = newadmins;
         }
       }
     };
     $scope.updateGroupMemberList = function(cl) {
       var i, idx, j, len, len1, ref, ref1, results, student, teacher;
       idx = $scope.membergroups.indexOf(cl);
-      console.log(cl);
       if (idx >= 0) {
         return $scope.membergroups.splice(idx, 1);
       } else {
@@ -304,15 +310,16 @@
       }
     };
     $scope.setMembers = function(students, teachers) {
-      var members, msg;
+      var memberlist, msg;
       msg = messagebox.show({
         progress: true
       });
-      members = students.concat(teachers);
+      memberlist = students;
+      memberlist['teachers'] = teachers;
       return $http.post('/api/lmn/groupmembership/details', {
         action: 'set-members',
         username: $scope.identity.user,
-        members: members,
+        members: memberlist,
         groupName: groupName,
         admins: $scope.admins,
         membergroups: $scope.membergroups,
@@ -332,27 +339,13 @@
         return msg.close();
       });
     };
-    $http.post('/api/lm/sophomorixUsers/students', {
-      action: 'get-all'
+    $http.post('/api/lmn/groupmembership/details', {
+      action: 'get-students',
+      dn: groupDN
     }).then(function(resp) {
-      var classes, i, len, ref, student, students;
-      students = resp.data;
-      $scope.students = students;
-      classes = [];
-      for (i = 0, len = students.length; i < len; i++) {
-        student = students[i];
-        if (ref = student['sophomorixAdminClass'], indexOf.call(classes, ref) < 0) {
-          classes.push(student['sophomorixAdminClass']);
-        }
-        if (indexOf.call(student['memberOf'], groupDN) >= 0) {
-          student['membership'] = true;
-        } else {
-          student['membership'] = false;
-        }
-      }
-      return $scope.classes = classes;
+      $scope.students = resp.data[0];
+      return $scope.classes = resp.data[1];
     });
-    //# TODO : add class ?
     //# TODO : add other project members ?
     $http.post('/api/lm/sophomorixUsers/teachers', {
       action: 'get-list'
@@ -483,8 +476,7 @@
         $scope.classes = $scope.groups.filter($scope.filterGroupType('schoolclass'));
         $scope.projects = $scope.groups.filter($scope.filterGroupType('project'));
         //# Printers yet DEPRECATED ?
-        $scope.printers = $scope.groups.filter($scope.filterGroupType('printergroup'));
-        return console.log($scope.classes);
+        return $scope.printers = $scope.groups.filter($scope.filterGroupType('printergroup'));
       });
     };
     $scope.setGroups = function(groups) {

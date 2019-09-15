@@ -35,20 +35,18 @@
     <br>
     <!-- Class view Students-->
     <div ng-if="sort.id != 'membership'" class="flex-container lmn-container-list-separated">
-        <div ng:repeat="class in classes | orderBy:class">
-            <h4 style="padding-left: 10px;">{{class}}
+        <div ng:repeat="class in classes|filter:filter|orderBy:class.name">
+            <h4 style="padding-left: 10px;"><a href=# ng:click="class.isVisible = !class.isVisible">{{class.name}}</a>
                 <span class="pull-right">
-                    <i title="{{addgroupadmintext}}" class="fa fa-key" ng:style="(admingroups.indexOf(class) >= 0) && {'color': 'red'}" ng-click="updateGroupAdminList(class)"></i>
-                    <i title="{{addgroupmembertext}}" class="fa fa-users" ng:style="(membergroups.indexOf(class) >= 0) && {'color': 'green'}" ng-click="updateGroupMemberList(class)"></i>
+                    <i title="{{addgroupadmintext}}" class="fa fa-key" ng:style="(admingroups.indexOf(class.name) >= 0) && {'color': 'red'}" ng-click="updateGroupAdminList(class.name)"></i>
+                    <i title="{{addgroupmembertext}}" class="fa fa-users" ng:style="(membergroups.indexOf(class.name) >= 0) && {'color': 'green'}" ng-click="updateGroupMemberList(class.name)"></i>
                 </span>
             </h4>
-            <div ng:repeat="student in students|filter:filter|filter:isActive|orderBy:[sort.fx]:sortReverse">
-                <div ng:if="student.sophomorixAdminClass == class">
-                    <input ng:if="membergroups.indexOf(class) >= 0" type="checkbox" checked disabled>
-                    <span ng:if="membergroups.indexOf(class) < 0" id={{student.sAMAccountName}} checkbox ng:model="student.membership"></span>
-                    <i class="fa fa-user"></i>
-                    <a href="#">{{student.givenName}} <b>{{student.sn}}</b></a>
-                </div>
+            <div ng:repeat="student in students[class.name]|filter:filter|orderBy:[sort.fx]:sortReverse" ng:show="class.isVisible">
+                <input ng:if="membergroups.indexOf(class.name) >= 0" type="checkbox" checked disabled>
+                <span ng:if="membergroups.indexOf(class.name) < 0" id={{student.sAMAccountName}} checkbox ng:model="student.membership"></span>
+                <i class="fa fa-user"></i>
+                <a href="#">{{student.givenName}} <b>{{student.sn}}</b></a>
             </div>
         </div>
     </div>
@@ -62,7 +60,7 @@
                     <i title="{{addgroupmembertext}}" class="fa fa-users" ng:style="(membergroups.indexOf('teachers') >= 0) && {'color': 'green'}" ng-click="updateGroupMemberList('teachers')"></i>
                 </span>
             </h4>
-            <div ng:repeat="teacher in teachers|filter:filter|filter:isActive|orderBy:'Lastname':sortReverse">
+            <div ng:repeat="teacher in teachers|filter:filter|orderBy:'Lastname':sortReverse">
                 <div>
                     <input ng:if="membergroups.indexOf('teachers') >= 0" type="checkbox" checked disabled>
                     <span ng:if="membergroups.indexOf('teachers') < 0" id={{teacher.sAMAccountName}} checkbox ng:model="teacher.membership"></span>
@@ -80,9 +78,9 @@
         <h4 translate>Member</h4>
         <span style="padding-left: 10px;" translate>Students</span>
         <div class="flex-container lmn-container-list">
-            <div ng:repeat="student in students|filter:filter|filter:isActive|orderBy:['-membership','sn']">
-                <div ng-if="student.membership == true">
-                    <span id={{student.sAMAccountName}} checkbox ng:model="student.membership"></span>
+            <div ng:repeat="student in members|filter:filter|orderBy:['sn']">
+                <div ng-if="student.sophomorixAdminClass != teacher">
+                    <span id={{student.sAMAccountName}} checkbox ng:model="students[sophomorixAdminClass][student.sAMAccountName][membership]"></span>
                     <i class="fa fa-user"></i>
                     <a href="#">{{student.givenName}} <b>{{student.sn}}</b> {{student.sophomorixAdminClass}}</a>
                 </div>
@@ -94,7 +92,7 @@
     <div ng-if="sort.id == 'membership'">
         <span style="padding-left: 10px;" translate>Teachers </span>
         <div class="flex-container lmn-container-list">
-            <div ng:repeat="teacher in teachers|filter:filter|filter:isActive|orderBy:['-membership','sn']">
+            <div ng:repeat="teacher in teachers|filter:filter|orderBy:['-membership','sn']">
                 <div ng-if="teacher.membership == true">
                     <span id={{teacher.sAMAccountName}} checkbox ng:model="teacher.membership"></span>
                     <i class="fa fa-key" ng-style="(admins.indexOf(teacher.sAMAccountName) >= 0) && {'color': 'red'}" ng-click="updateAdminList(teacher)"></i>
@@ -107,11 +105,12 @@
 
     <!-- Membership view not member -->
     <!-- Students -->
+<!--
     <div ng-if="sort.id == 'membership'">
         <h4 translate>Not Member</h4>
         <span style="padding-left: 10px;" translate>Students</span>
         <div class="flex-container lmn-container-list">
-            <div ng:repeat="student in students|filter:filter|filter:isActive|orderBy:['membership','sn']">
+            <div ng:repeat="student in students|filter:filter|orderBy:['membership','sn']">
                 <div ng-if="student.membership == false">
                     <span id={{student.sAMAccountName}} checkbox ng:model="student.membership"></span>
                     <i class="fa fa-user"></i>
@@ -120,13 +119,15 @@
             </div>
         </div>
     </div>
+-->
 
     <br>
     <!-- Membership view not member Teacher -->
+<!--
     <div ng-if="sort.id == 'membership'">
         <span style="padding-left: 10px;" translate>Teachers </span>
         <div class="flex-container lmn-container-list">
-            <div ng:repeat="teacher in teachers|filter:filter|filter:isActive|orderBy:['membership','sn']">
+            <div ng:repeat="teacher in teachers|filter:filter|orderBy:['membership','sn']">
                 <div ng-if="teacher.membership == false">
                     <span id={{teacher.sAMAccountName}} checkbox ng:model="teacher.membership"></span>
                     <i class="fa fa-key" ng-style="(admins.indexOf(teacher.sAMAccountName) >= 0) && {'color': 'red'}" ng-click="updateAdminList(teacher)"></i>
@@ -136,6 +137,7 @@
             </div>
         </div>
     </div>
+-->
 
     <br />
     <span><i class="fa fa-key" style="color: red" translate></i>  Project user/group admin</span><br />

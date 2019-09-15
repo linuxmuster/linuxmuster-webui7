@@ -10,7 +10,7 @@ angular.module('lmn.groupmembership').config ($routeProvider) ->
 
 angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, groupType, groupName) ->
 
-        $scope.editGroupMembers = (groupName, groupDetails, admins) ->
+        $scope.editGroupMembers = (groupName, groupDetails, admins, members) ->
             $uibModal.open(
                 templateUrl: '/lmn_groupmembership:resources/partial/editMembers.modal.html'
                 controller:  'LMNGroupEditController'
@@ -19,6 +19,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
                    groupName: () -> groupName
                    groupDetails: () -> groupDetails
                    admins: () -> admins
+                   members: () -> members
             ).result.then (result)->
                 if result.response is 'refresh'
                     $scope.getGroupDetails ([groupType, groupName])
@@ -122,7 +123,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
         $scope.close = () ->
             $uibModalInstance.dismiss()
 
-angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, groupName, groupDetails, admins) ->
+angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, groupName, groupDetails, admins, members) ->
         $scope.sorts = [
             {
                 name: gettext('Given name')
@@ -147,6 +148,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($sco
         $scope.sort = $scope.sorts[1]
         $scope.groupName = groupName
         $scope.admins = admins
+        $scope.members = members
         $scope.sortReverse = false
         groupDN = groupDetails['DN']
         
@@ -183,11 +185,9 @@ angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($sco
                         if idx < 0
                             newadmins.push(admin)
                     $scope.admins = newadmins
-                    console.log($scope.admins, $scope.teacherlist)
                             
         $scope.updateGroupMemberList = (cl) ->
             idx = $scope.membergroups.indexOf(cl)
-            console.log(cl)
             if idx >= 0
                 $scope.membergroups.splice(idx, 1)
             else
@@ -201,12 +201,13 @@ angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($sco
 
         $scope.setMembers = (students, teachers) ->
             msg = messagebox.show(progress: true)
-            members = students.concat(teachers)
+            memberlist = students
+            memberlist['teachers'] = teachers
             $http.post('/api/lmn/groupmembership/details', 
                         {
                             action: 'set-members', 
                             username:$scope.identity.user, 
-                            members: members, 
+                            members: memberlist,
                             groupName: groupName, 
                             admins: $scope.admins, 
                             membergroups: $scope.membergroups, 
@@ -222,19 +223,10 @@ angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($sco
             .finally () ->
                 msg.close()
 
-        $http.post('/api/lm/sophomorixUsers/students', {action: 'get-all'}).then (resp) ->
-            students = resp.data
-            $scope.students = students
-            classes = []
-            for student in students
-                if student['sophomorixAdminClass'] not in classes
-                    classes.push student['sophomorixAdminClass']
-                if groupDN in student['memberOf']
-                    student['membership'] = true
-                else
-                    student['membership'] = false
-            $scope.classes = classes
-            ## TODO : add class ?
+        $http.post('/api/lmn/groupmembership/details', {action: 'get-students', dn: groupDN}).then (resp) ->
+            $scope.students = resp.data[0]
+            $scope.classes = resp.data[1]
+
             ## TODO : add other project members ?
         $http.post('/api/lm/sophomorixUsers/teachers', {action: 'get-list'}).then (resp) ->
             $scope.teachers = resp.data
@@ -329,7 +321,6 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
             $scope.projects = $scope.groups.filter($scope.filterGroupType('project'))
             ## Printers yet DEPRECATED ?
             $scope.printers = $scope.groups.filter($scope.filterGroupType('printergroup'))
-            console.log($scope.classes)
 
     $scope.setGroups = (groups) ->
         $http.post('/api/lmn/groupmembership', {action: 'set-groups', username:$scope.identity.user, groups: groups, profil: $scope.identity.profile}).then (resp) ->

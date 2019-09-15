@@ -41,7 +41,7 @@
     <div class="panel panel-info">
         <div class="panel-heading">
             <a href="#" class="btn btn-default btn-flat pull-right" ng-click="showMemberDetails = ! showMemberDetails">{{showMemberDetails ? hidetext : showtext}}</a>
-            <a class="btn btn-default btn-flat pull-right" ng:show="groupDetails['sophomorixType'] == 'project' && editMembersButton" href="#" ng-click="editGroupMembers(groupName, groupDetails, adminList)" translate >Edit members</a>
+            <a class="btn btn-default btn-flat pull-right" ng:show="groupDetails['sophomorixType'] == 'project' && editMembersButton" href="#" ng-click="editGroupMembers(groupName, groupDetails, adminList, members)" translate >Edit members</a>
             <h4>
                 <span translate> Group Members: </span>
                 {{members.length}} <span translate>user(s) and </span>

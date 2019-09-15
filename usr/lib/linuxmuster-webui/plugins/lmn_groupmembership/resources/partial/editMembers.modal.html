@@ -1,4 +1,6 @@
 <div class="modal-header">
+    <a ng-if="sort.id != 'membership'" class="btn btn-default btn-flat pull-right" ng:click="closeAll()" translate>Close all</a>
+    <a ng-if="sort.id != 'membership'" class="btn btn-default btn-flat pull-right" ng:click="expandAll()" translate>Expand all</a>
     <h4 translate >{{groupName}} Members</h4>
 </div>
 <!--{{students}}-->

@@ -242,9 +242,24 @@
     $scope.addgroupadmintext = gettext('Add/remove as admin group');
     $scope.admingroups = groupDetails['sophomorixAdminGroups'];
     $scope.membergroups = groupDetails['sophomorixMemberGroups'];
-    $scope.IsVisible = false;
-    $scope.ShowHide = function() {
-      return $scope.IsVisible = !$scope.IsVisible;
+    $scope.expandAll = function() {
+      var cl, i, len, ref;
+      ref = $scope.classes;
+      for (i = 0, len = ref.length; i < len; i++) {
+        cl = ref[i];
+        cl['isVisible'] = 1;
+      }
+      return console.log($scope.classes);
+    };
+    $scope.closeAll = function() {
+      var cl, i, len, ref, results;
+      ref = $scope.classes;
+      results = [];
+      for (i = 0, len = ref.length; i < len; i++) {
+        cl = ref[i];
+        results.push(cl['isVisible'] = 0);
+      }
+      return results;
     };
     $scope.checkInverse = function(sort, currentSort) {
       if (sort === currentSort) {

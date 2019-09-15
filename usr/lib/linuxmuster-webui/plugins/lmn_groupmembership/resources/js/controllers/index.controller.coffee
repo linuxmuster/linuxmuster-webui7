@@ -158,6 +158,15 @@ angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($sco
         $scope.admingroups = groupDetails['sophomorixAdminGroups']
         $scope.membergroups = groupDetails['sophomorixMemberGroups']
 
+        $scope.expandAll = () ->
+            for cl in $scope.classes
+                cl['isVisible'] = 1
+            console.log($scope.classes)
+
+        $scope.closeAll = () ->
+            for cl in $scope.classes
+                cl['isVisible'] = 0
+
         $scope.checkInverse = (sort ,currentSort) ->
             if sort == currentSort
                 $scope.sortReverse = !$scope.sortReverse

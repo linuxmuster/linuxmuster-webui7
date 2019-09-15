@@ -138,13 +138,6 @@
         return new Date(year, month, day, hour, min, sec);
       }
     };
-    $scope.filterDNLogin = function(dn) {
-      if (dn.indexOf('=') !== -1) {
-        return dn.split(',')[0].split('=')[1];
-      } else {
-        return dn;
-      }
-    };
     $scope.getGroupDetails = function(group) {
       groupType = group[0];
       groupName = group[1];

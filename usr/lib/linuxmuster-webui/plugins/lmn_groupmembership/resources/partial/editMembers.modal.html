@@ -3,17 +3,7 @@
     <a ng-if="sort.id != 'membership'" class="btn btn-default btn-flat pull-right" ng:click="expandAll()" translate>Expand all</a>
     <h4 translate >{{groupName}} Members</h4>
 </div>
-<!--{{students}}-->
 
-<!--
-    {{students}}
-    <br>
-    {{groupDetails}}
-    <br>
-    <br>
-    {{groupDetails[groupName]}}
-    <br>
--->
 <br>
 <progress-spinner ng:show="students == null"></progress-spinner>
 <div style="padding-left: 40px;" ng:show="students != null">
@@ -37,7 +27,7 @@
     <br>
     <!-- Class view Students-->
     <div ng-if="sort.id != 'membership'" class="flex-container lmn-container-list-separated">
-        <div ng:repeat="class in classes|filter:filter|orderBy:class.name">
+        <div ng:repeat="class in classes|filter:filter|orderBy:['name']">
             <h4 style="padding-left: 10px;"><a href=# ng:click="class.isVisible = !class.isVisible">{{class.name}}</a>
                 <span class="pull-right">
                     <i title="{{addgroupadmintext}}" class="fa fa-key" ng:style="(admingroups.indexOf(class.name) >= 0) && {'color': 'red'}" ng-click="updateGroupAdminList(class.name)"></i>

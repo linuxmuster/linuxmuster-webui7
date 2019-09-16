@@ -15,67 +15,53 @@
             <td width="70%"></td>
         </tr>
         <tr>
-        <td>
-            <label translate>Schoolname</label>
-        </td>
-        <td>
-            <input type="text" class="form-control" ng:model="settings.school.school_longname" />
-        </td>
+            <td>
+                <label translate>Schoolname</label>
+            </td>
+            <td>
+                <input type="text" class="form-control" ng:model="settings.school.school_longname" />
+            </td>
         </tr>
         <tr>
-        <td>
-            <label translate>Email Domain</label>
-        </td>
-        <td>
-        </td>
+            <td>
+                <label translate>Email Domain</label>
+            </td>
+            <td>
+            </td>
         </tr>
         <tr>
-        <td>
-            <label translate>Role Students</label>
-        </td>
-        <td>
-        <input type="text" class="form-control" ng:model="settings['role.student']['MAILDOMAIN']" />
-        </td>
+            <td>
+                <label translate>Role Students</label>
+            </td>
+            <td>
+                <input type="text" class="form-control" placeholder="{{'e.g.: @linuxmuster.net'|translate}}" ng:model="settings['role.student']['maildomain']" />
+            </td>
         </tr>
         <tr>
-        <td>
-            <label translate>Role Teachers</label>
-        </td>
-        <td>
-        <input type="text" class="form-control" ng:model="settings['role.teacher']['MAILDOMAIN']" />
-        </td>
+            <td>
+                <label translate>Role Teachers</label>
+            </td>
+            <td>
+                <input type="text" class="form-control" placeholder="{{'e.g.: @linuxmuster.net'|translate}}" ng:model="settings['role.teacher']['maildomain']" />
+            </td>
         </tr>
         <tr>
-        <td>
-            <label translate>Primary Group Adminclass</label>
-        </td>
-        <td>
-        <input type="text" class="form-control" ng:model="settings['type.adminclass']['MAILDOMAIN']" />
-        </td>
+            <td>
+                <label translate>Primary Group Adminclass</label>
+            </td>
+            <td>
+                <input type="text" class="form-control" placeholder="{{'e.g.: @linuxmuster.net'|translate}}" ng:model="settings['type.adminclass']['maildomain']" />
+            </td>
         </tr>
         <tr>
-        <td>
-            <label translate>Primary Group Teacherclass</label>
-        </td>
-        <td>
-        <input type="text" class="form-control" ng:model="settings['type.teacherclass']['MAILDOMAIN']" />
-        </td>
+            <td>
+                <label translate>Primary Group Teacherclass</label>
+            </td>
+            <td>
+                <input type="text" class="form-control" placeholder="{{'e.g.: @linuxmuster.net'|translate}}" ng:model="settings['type.teacherclass']['maildomain']" />
+            </td>
         </tr>
-</div>
-
-<table class="lm-table lm-table-padded">
-    <tr>
-        <th width="40%"></th>
-        <th translate></th>
-    </tr>
-    <td>
-        <label translate>Email Domain</label>
-    </td>
-    <td>
-        <input type="text" class="form-control" ng:model="settings['role.student']['MAILDOMAIN']" />
-    </td>
-    </tr>
-</table>
+    </table>
 
     </uib:tab>
     <uib:tab heading="{{'Listimport'|translate}}">
@@ -362,5 +348,6 @@
     <floating-toolbar>
         <button ng:click="backups()" class="btn btn-default btn-flat pull-right"><i class="fa fa-history"></i></button>
         <button ng:click="save()" class="btn btn-default btn-flat" translate>Save</button>
+        <button ng:click="saveAndCheck()" class="btn btn-default btn-flat" translate>Save &amp; check</button>
     </floating-toolbar>
-    </div>
+</div>

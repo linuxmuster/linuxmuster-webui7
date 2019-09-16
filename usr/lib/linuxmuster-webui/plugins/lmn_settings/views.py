@@ -84,7 +84,6 @@ class Handler(HttpPlugin):
                     return 'yes' if v else 'no'
                 else:
                     return '%s' % v
-
             section_name = ''
             set_control = 0
             for line in open(path):

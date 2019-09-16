@@ -53,6 +53,16 @@ angular.module('lm.settings').controller 'LMSettingsController', ($scope, $http,
         $http.post('/api/lm/schoolsettings', $scope.settings).then () ->
             notify.success gettext('Saved')
 
+    $scope.saveAndCheck = () ->
+        $http.post('/api/lm/schoolsettings', $scope.settings).then () ->
+            $uibModal.open(
+                templateUrl: '/lmn_users:resources/partial/check.modal.html'
+                controller: 'LMUsersCheckModalController'
+                backdrop: 'static'
+            )
+
+            notify.success gettext('Saved')
+
     $scope.backups = () ->
         school = "default-school"
         lmFileBackups.show('/etc/linuxmuster/sophomorix/' + school + '/school.conf')

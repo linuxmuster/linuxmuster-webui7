@@ -69,6 +69,16 @@
         return notify.success(gettext('Saved'));
       });
     };
+    $scope.saveAndCheck = function() {
+      return $http.post('/api/lm/schoolsettings', $scope.settings).then(function() {
+        $uibModal.open({
+          templateUrl: '/lmn_users:resources/partial/check.modal.html',
+          controller: 'LMUsersCheckModalController',
+          backdrop: 'static'
+        });
+        return notify.success(gettext('Saved'));
+      });
+    };
     return $scope.backups = function() {
       var school;
       school = "default-school";

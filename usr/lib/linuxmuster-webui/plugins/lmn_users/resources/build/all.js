@@ -2219,7 +2219,7 @@
       return $scope.rebuildCSV();
     };
     $scope.accept = function() {
-      console.log($scope.userListCSV);
+      //console.log ($scope.userListCSV)
       return $uibModalInstance.close($scope.userListCSV);
     };
     $scope.close = function() {
@@ -2237,7 +2237,7 @@
         },
         {
           name: gettext('firstname'),
-          id: 'firtname'
+          id: 'firstname'
         },
         {
           name: gettext('birthday'),

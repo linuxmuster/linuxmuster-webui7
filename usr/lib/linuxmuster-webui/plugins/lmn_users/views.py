@@ -585,4 +585,3 @@ class Handler(HttpPlugin):
     def handle_api_users_test_password(self, http_context, name):
         line = subprocess.check_output(['sophomorix-passwd', '--test-firstpassword', '-u', name]).splitlines()[-4]
         return '1 OK' in line
-

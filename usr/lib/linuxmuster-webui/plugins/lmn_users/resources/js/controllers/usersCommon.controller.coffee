@@ -104,7 +104,7 @@ angular.module('lm.users').controller 'LMUsersSortListModalController', ($scope,
 
 
     $scope.accept = () ->
-        console.log ($scope.userListCSV)
+        #console.log ($scope.userListCSV)
         $uibModalInstance.close($scope.userListCSV)
 
     $scope.close = () ->
@@ -114,7 +114,7 @@ angular.module('lm.users').controller 'LMUsersSortListModalController', ($scope,
         $scope.coloumnTitles = [
             {name: gettext('class'), id: 'class'}
             {name: gettext('lastname'), id: 'lastname'}
-            {name: gettext('firstname'), id: 'firtname'}
+            {name: gettext('firstname'), id: 'firstname'}
             {name: gettext('birthday'), id: 'birthday'}
         ]
 

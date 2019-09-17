@@ -1,4 +1,4 @@
-import ConfigParser
+import configparser
 import os
 import subprocess
 
@@ -15,7 +15,7 @@ class Handler(HttpPlugin):
     @url(r'/api/lm/setup-wizard/read-ini')
     @endpoint(api=True, auth=True)
     def handle_api_read_log(self, http_context, path=None):
-        config = ConfigParser.RawConfigParser()
+        config = configparser.RawConfigParser()
         if http_context.method == 'GET':
             if os.path.exists('/tmp/setup.ini'):
                 config.read('/tmp/setup.ini')
@@ -40,7 +40,7 @@ class Handler(HttpPlugin):
     @url(r'/api/lm/setup-wizard/update-ini')
     @endpoint(api=True, auth=True)
     def handle_api_log(self, http_context, path=None):
-        cfg = ConfigParser.RawConfigParser()
+        cfg = configparser.RawConfigParser()
         if os.path.exists('/tmp/setup.ini'):
             cfg.read('/tmp/setup.ini')
 

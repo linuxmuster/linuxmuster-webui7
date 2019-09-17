@@ -12,6 +12,8 @@ case "$1" in
         pip install -U pip wheel setuptools distribute
         hash -r
         pip install -r $webuietc/requirements.txt
+        ## Preparation for Python 3
+        #python3 -m pip install -r $webuietc/requirements.txt
         #echo "link ajcfg to linuxmuster-webui folder"
         #ln -s $ajcfg $webuietc
         #rm /etc/ajenti/config.yml
@@ -48,6 +50,8 @@ case "$1" in
 #    cp -R /usr/lib/linuxmuster-webui/etc/core-build/* /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/resources/build/
     systemctl stop linuxmuster-webui
     pip install -r $webuietc/requirements.txt -q
+    ## Preparation for Python 3
+    #python3 -m pip install -r $webuietc/requirements.txt
     # split ajenti config.yml from webui config.yml if necessary
     $webuietc/split_config_aj.py
     # Set default permissions from true to false

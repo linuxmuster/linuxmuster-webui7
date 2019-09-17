@@ -132,7 +132,7 @@ class Handler(HttpPlugin):
         school = 'default-school'
         path = '/srv/samba/schools/'+school+'/share'
         if http_context.method == 'GET':
-            print os.stat(path).st_mode
+            print(os.stat(path).st_mode)
             return os.stat(path).st_mode & 0o3777 == 0o3777
         else:
             if http_context.json_body():

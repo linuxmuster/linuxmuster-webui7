@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-13 23:13+0200\n"
+"POT-Creation-Date: 2019-09-20 16:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,99 +17,99 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:29
+#: lmn_landingpage/resources/partial/index.html:29
 msgid "Account Information"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:20
+#: lmn_landingpage/resources/partial/index.html:20
 msgid "But keep in mind:"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:37
+#: lmn_landingpage/resources/partial/index.html:37
 msgid "Change password"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:62
+#: lmn_landingpage/resources/partial/index.html:62
 msgid "Cloudquota Calculated in MB:"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:69
+#: lmn_landingpage/resources/partial/index.html:69
 msgid "Groups"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:13
+#: lmn_landingpage/resources/partial/index.html:13
 msgid "Hello {{user.givenName}} {{user.sn}},"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:33
+#: lmn_landingpage/resources/partial/index.html:33
 msgid "Mail:"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:63
+#: lmn_landingpage/resources/partial/index.html:63
 msgid "Mailquota Calculated in MB:"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:32
+#: lmn_landingpage/resources/partial/index.html:32
 msgid "Name:"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:45
+#: lmn_landingpage/resources/partial/index.html:45
 msgid "Quotas"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:35
+#: lmn_landingpage/resources/partial/index.html:35
 msgid "Role:"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:34
+#: lmn_landingpage/resources/partial/index.html:34
 msgid "School:"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:19
+#: lmn_landingpage/resources/partial/index.html:19
 msgid "Use the sidebar to navigate through the options."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:1
+#: lmn_landingpage/resources/partial/index.html:1
 msgid "Welcome to Linuxmuster.net version 7!"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:21
+#: lmn_landingpage/resources/partial/index.html:21
 msgid "With great power comes great responsibility!"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:5
+#: lmn_landingpage/resources/partial/index.html:5
 msgid ""
 "You should not use WebUI as root user! If this is your first time running "
 "WebUI, proceed through the setup wizard. Afterwards login using the global-"
 "admin account."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:16
+#: lmn_landingpage/resources/partial/index.html:16
 msgid ""
 "use the sidebar to navigate through the options. You can start by using the "
 "Enroll module to subscribe to your classes."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:7
+#: lmn_landingpage/resources/js/controllers/index.controller.coffee:7
 msgid "Home"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:25
+#: lmn_landingpage/resources/js/controllers/index.controller.coffee:25
 msgid "NO LIMIT"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:41
+#: lmn_landingpage/resources/js/controllers/index.controller.coffee:41
 msgid "Class"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:43
+#: lmn_landingpage/resources/js/controllers/index.controller.coffee:43
 msgid "Teachers"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:45
+#: lmn_landingpage/resources/js/controllers/index.controller.coffee:45
 msgid "Printers"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:47
+#: lmn_landingpage/resources/js/controllers/index.controller.coffee:47
 msgid "Project"
 msgstr ""

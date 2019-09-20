@@ -116,11 +116,15 @@ def lmn_write_configfile(path, data):
         tmp = path + '_tmp'
         with open(tmp, 'w') as f:
             f.write(data)
-        if not filecmp.cmp(tmp, path):
-            lmn_backup_file(path)
-            os.rename(tmp, path)
+        # check if file already exist before comparing
+        if os.path.isfile(path):
+            if not filecmp.cmp(tmp, path):
+                lmn_backup_file(path)
+                os.rename(tmp, path)
+            else:
+                os.unlink(tmp)
         else:
-            os.unlink(tmp)
+            os.rename(tmp, path)
 
 ##### NOT USED YET
 # def lmn_list_backup_file(path):

@@ -8,29 +8,22 @@
     <uib:tab heading="{{'General'|translate}}">
     <br/>
 
-
+    <h3 translate>General</h3>
     <table class="lm-table lm-table-padded">
         <tr>
-            <td width="30%"></td>
-            <td width="70%"></td>
-        </tr>
-        <tr>
-            <td>
+            <td width=25%>
                 <label translate>Schoolname</label>
             </td>
             <td>
                 <input type="text" class="form-control" ng:model="settings.school.school_longname" />
             </td>
         </tr>
+    </table>
+
+    <h3 translate>Email Domain</h3>
+    <table class="lm-table lm-table-padded">
         <tr>
-            <td>
-                <label translate>Email Domain</label>
-            </td>
-            <td>
-            </td>
-        </tr>
-        <tr>
-            <td>
+            <td width=25%>
                 <label translate>Role Students</label>
             </td>
             <td>
@@ -64,8 +57,10 @@
     </table>
 
     </uib:tab>
+
     <uib:tab heading="{{'Listimport'|translate}}">
     <br/>
+    <h3 translate>Username and Passwords</h3>
     <table class="lm-table lm-table-padded">
         <tr>
             <th width="40%"></th>
@@ -199,8 +194,54 @@
             </td>
         </tr>
     </table>
-
-
+    <h3 translate>Encoding</h3>
+    <table class="lm-table lm-table-padded">
+        <tr>
+            <th width="40%"></th>
+            <th translate>students.csv encoding</th>
+            <th translate>teachers.csv encoding</th>
+            <th translate>extrastudents.csv encoding</th>
+            <!--<th translate>extraclasses.csv encoding</th>-->
+        </tr>
+        <tr>
+            <td>
+                <label translate>List encoding</label>
+            </td>
+            <td>
+                <select class="form-control" ng:model="settings['userfile.students.csv']['encoding']" ng:options="x for x in encodings" />
+                    <div ng:show="settings['userfile.students.csv']['encoding'] == 'auto'" >
+            </td>
+            <td>
+                <select class="form-control" ng:model="settings['userfile.teachers.csv']['encoding']" ng:options="x for x in encodings" />
+                    <div ng:show="settings['userfile.teachers.csv']['encoding'] == 'auto'" >
+            </td>
+            <td>
+                <select class="form-control" ng:model="settings['userfile.extrastudents.csv']['encoding']" ng:options="x for x in encodings" />
+                    <div ng:show="settings['userfile.extrastudents.csv']['encoding'] == 'auto'" >
+            </td>
+            <!--<td>
+                <select class="form-control" ng:model="settings['userfile.extraclasses.csv']['encoding']" ng:options="x for x in encodings" />
+                    <div ng:show="settings['userfile.extraclasses.csv']['encoding'] == 'auto'" >
+            </td>-->
+        </tr>
+        <tr>
+            <td>
+                <label translate>Detected encoding</label>
+            </td>
+            <td>
+                {{encoding['userfile.students.csv']}}
+            </td>
+            <td>
+                {{encoding['userfile.teachers.csv']}}
+            </td>
+            <td>
+                {{encoding['userfile.extrastudents.csv']}}
+            </td>
+            <!--<td>
+                {{encoding['userfile.extraclasses.csv']}}
+            </td>-->
+        </tr>
+    </table>
 
     </uib:tab>
 
@@ -208,6 +249,7 @@
     </uib:tab>
     <uib:tab heading="{{'Quota'|translate}}">
     <br/>
+    <h3 translate>Quota </h3>
     <table class="lm-table lm-table-padded">
         <tr>
             <th width="40%"></th>
@@ -276,69 +318,60 @@
 
 
     </uib:tab>
-    <uib:tab heading="{{'Encoding'|translate}}">
-    <br/>
-    <div class="form-group">
-        <label translate>Students encoding</label>
-        <select class="form-control" ng:model="settings['userfile.students.csv']['encoding']" ng:options="x for x in encodings" />
-            <div ng:show="settings['userfile.students.csv']['encoding'] == 'auto'" >
-                <label translate>Detected encoding</label><br>
-                {{encoding['userfile.students.csv']}}
-            </div>
-    </div>
-    <div class="form-group">
-        <label translate>Teachers encoding</label>
-        <select class="form-control" ng:model="settings['userfile.teachers.csv']['encoding']" ng:options="x for x in encodings" />
-            <div ng:show="settings['userfile.teachers.csv']['encoding'] == 'auto'" >
-                <label translate>Detected encoding</label><br>
-                {{encoding['userfile.teachers.csv']}}
-            </div>
-    </div>
-    <!-- not implemented in sophomorix at the moment
-        <div class="form-group">
-        <label translate>Extra courses encoding</label>
-        <select class="form-control" ng:model="settings['classfile.extraclasses.csv']['encoding']" ng:options="x for x in encodings" />
-        <div ng:show="settings['classfile.extraclasses.csv']['encoding'] == 'auto'" >
-        <label translate>Detected encoding</label><br>
-        {{encoding['classfile.extraclasses.csv']}}
-        </div>
-        </div>
-    -->
-    <div class="form-group">
-        <label translate>Extra students encoding</label>
-        <select class="form-control" ng:model="settings['userfile.extrastudents.csv']['encoding']" ng:options="x for x in encodings" />
-            <div ng:show="settings['userfile.extrastudents.csv']['encoding'] == 'auto'" >
-                <label translate>Detected encoding</label><br>
-                {{encoding['userfile.extrastudents.csv']}}
-            </div>
-    </div>
-    </uib:tab>
     <uib:tab heading="{{'Printing data'|translate}}">
+    <h3 translate>Password printing data</h2>
     <br/>
-    <div class="form-group">
-        <label translate>School name</label>
-        <input type="text" class="form-control" ng:model="settings.school.school_longname" />
-    </div>
-    <div class="form-group">
-        <label translate>Internal FQDN for printing</label>
-        <input type="text" class="form-control" ng:model="settings.server_fqdn_internal_print" />
-    </div>
-    <div class="form-group">
-        <label translate>External FQDN for printing</label>
-        <input type="text" class="form-control" ng:model="settings.server_fqdn_external_print" />
-    </div>
-    <div class="form-group">
-        <label translate>Samba domain for printing</label>
-        <input type="text" class="form-control" ng:model="settings.smb_domain_print" />
-    </div>
-    <div class="form-group">
-        <label translate>MOODLE URL</label>
-        <input type="text" class="form-control" ng:model="settings.moodle_url" />
-    </div>
-    <div class="form-group">
-        <label translate>Admin e-mail</label>
-        <input type="text" class="form-control" ng:model="settings.admins_print" />
-    </div>
+
+    <table class="lm-table lm-table-padded">
+        <tr>
+            <td width=25%>
+                <label translate>School name</label>
+            </td>
+            <td>
+                <input type="text" class="form-control" ng:model="settings.school.school_longname" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label translate>Internal FQDN for printing</label>
+            <td>
+                <input type="text" class="form-control" ng:model="settings.server_fqdn_internal_print" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label translate>External FQDN for printing</label>
+            </td>
+            <td>
+                <input type="text" class="form-control" ng:model="settings.server_fqdn_external_print" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label translate>Samba domain for printing</label>
+            </td>
+            <td>
+                <input type="text" class="form-control" ng:model="settings.smb_domain_print" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label translate>MOODLE URL</label>
+            </td>
+            <td>
+                <input type="text" class="form-control" ng:model="settings.moodle_url" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label translate>Admin e-mail</label>
+            </td>
+            <td>
+                <input type="text" class="form-control" ng:model="settings.admins_print" />
+            </td>
+        </tr>
+    </table>
+
     </uib:tab>
     </uib:tabset>
 

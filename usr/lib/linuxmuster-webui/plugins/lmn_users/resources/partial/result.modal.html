@@ -30,8 +30,13 @@
                     <tr ng-repeat="(id,item) in data['CHECK_RESULT']['UPDATE']">
                         <td>{{id}}</td>
                         <td>
-                            <ul>
-                                <li ng-repeat="(type,values) in item" ng-if="type.length >= 10">{{type.slice(10)}} : {{status_filter(values['OLD'])}} --> {{status_filter(values['NEW'])}}</li>
+                            <ul ng-repeat="(type,values) in item" >
+                                <li ng-if="type.length >= 10">
+                                {{type.slice(10)}} : {{status_filter(values['OLD'])}} --> {{status_filter(values['NEW'])}}
+                                </li>
+                                <li ng-if="type.length <= 10">
+                                {{type}} : {{status_filter(values['OLD'])}} --> {{status_filter(values['NEW'])}}
+                                </li>
                             </ul>
                         </td>
                     </tr>
@@ -91,7 +96,16 @@
             <table class="table table-bordered">
                 <tr ng-repeat="(id,item) in data['CHECK_RESULT']['UPDATE']">
                     <td>{{id}}</td>
-                    <td>{{user_status[item.sophomorixStatus.OLD]}} -->  {{user_status[item.sophomorixStatus.NEW]}}</td>
+                        <td>
+                            <ul ng-repeat="(type,values) in item" >
+                                <li ng-if="type.length >= 10">
+                                    <i>{{type.slice(10)}}</i> : {{status_filter(values['OLD'])}} --> {{status_filter(values['NEW'])}}
+                                </li>
+                                <li ng-if="type.length <= 10">
+                                    <i> {{type}}</i> : {{status_filter(values['OLD'])}} --> {{status_filter(values['NEW'])}}
+                                </li>
+                            </ul>
+                        </td>
                 </tr>
             </table>
         </div>

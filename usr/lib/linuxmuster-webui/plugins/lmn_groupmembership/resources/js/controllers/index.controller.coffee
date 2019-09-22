@@ -93,7 +93,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
                 $scope.members = []
                 for name,member of resp.data['MEMBERS'][groupName]
                     if member.sn != "null" # group member 
-                        $scope.members.push({'sn':member.sn, 'givenName':member.givenName, 'sophomorixAdminClass':member.sophomorixAdminClass})
+                        $scope.members.push({'sn':member.sn, 'givenName':member.givenName, 'login': member.sAMAccountName, 'sophomorixAdminClass':member.sophomorixAdminClass})
 
                 $scope.admins = []
                 for admin in $scope.adminList
@@ -129,11 +129,11 @@ angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($sco
                 id: 'sn'
                 fx: (x) -> x.sn
             }
-            {
-                name: gettext('Membership')
-                id: 'membership'
-                fx: (x) -> x.membership
-            }
+            #{
+                #name: gettext('Membership')
+                #id: 'membership'
+                #fx: (x) -> x.membership
+            #}
             #{
             #    name: gettext('Class')
             #    fx: (x) -> x.sophomorixAdminClass
@@ -155,7 +155,6 @@ angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($sco
         $scope.expandAll = () ->
             for cl in $scope.classes
                 cl['isVisible'] = 1
-            console.log($scope.classes)
 
         $scope.closeAll = () ->
             for cl in $scope.classes
@@ -184,8 +183,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($sco
                 if cl == 'teachers'
                     newadmins = []
                     for admin in $scope.admins
-                        idx = $scope.teacherlist.indexOf(admin)
-                        if idx < 0
+                        if !(admin of $scope.teachersDict)
                             newadmins.push(admin)
                     $scope.admins = newadmins
                             
@@ -195,22 +193,21 @@ angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($sco
                 $scope.membergroups.splice(idx, 1)
             else
                 $scope.membergroups.push(cl)
-                for student in $scope.students
-                    if student['sophomorixAdminClass'] == cl
-                        student['membership'] = false
+                for studentLogin, details of $scope.studentsDict
+                    if details['sophomorixAdminClass'] == cl
+                        details['membership'] = false
                 if cl == 'teachers'
-                    for teacher in $scope.teachers
-                        teacher['membership'] = false 
+                    for teacherLogin, details of $scope.teachersDict
+                        details['membership'] = false
 
         $scope.setMembers = (students, teachers) ->
             msg = messagebox.show(progress: true)
-            memberlist = students
-            memberlist['teachers'] = teachers
+            membersDict = Object.assign(students, teachers)
             $http.post('/api/lmn/groupmembership/details', 
                         {
                             action: 'set-members', 
                             username:$scope.identity.user, 
-                            members: memberlist,
+                            members: membersDict,
                             groupName: groupName, 
                             admins: $scope.admins, 
                             membergroups: $scope.membergroups, 
@@ -229,17 +226,32 @@ angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($sco
         $http.post('/api/lmn/groupmembership/details', {action: 'get-students', dn: groupDN}).then (resp) ->
             $scope.students = resp.data[0]
             $scope.classes = resp.data[1]
+            $scope.studentsDict = resp.data[2]
 
             ## TODO : add other project members ?
         $http.post('/api/lm/sophomorixUsers/teachers', {action: 'get-list'}).then (resp) ->
             $scope.teachers = resp.data
-            $scope.teacherlist = []
+            $scope.teachersDict = {}
             for teacher in $scope.teachers
                 teacher['membership'] = groupDN in teacher['memberOf']
-                $scope.teacherlist.push(teacher['sAMAccountName'])
+                $scope.teachersDict[teacher['sAMAccountName']] = teacher
 
         $scope.close = () ->
             $uibModalInstance.dismiss()
+
+        $scope.search = (item) ->
+            return !$scope.query || (item.sophomorixAdminClass.indexOf($scope.query) != -1) || (item.sn.indexOf($scope.query) != -1) || (item.givenName.indexOf($scope.query) != -1)
+
+        $scope.isMemberOn = false
+        $scope.isMember = (item) ->
+            if $scope.isMemberOn
+                if $scope.membergroups.indexOf(item.sophomorixAdminClass) >= 0
+                    return true
+                if item.sAMAccountName of $scope.teachersDict
+                    return $scope.teachersDict[item.sAMAccountName].membership
+                else
+                    return $scope.studentsDict[item.sAMAccountName].membership
+            return true
 
 angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController', ($scope, $http, $uibModal, gettext, notify, pageTitle, messagebox) ->
     pageTitle.set(gettext('Enrolle'))

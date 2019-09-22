@@ -38,12 +38,11 @@ class Handler(HttpPlugin):
                     membersToAdd = []
                     membersToRemove = []
                     if username in groupAdmins or isAdmin or user_details['sophomorixAdminClass'] in groupAdmingroups:
-                        for memberlist in members.values():
-                            for member in memberlist:
-                                if member['membership'] is True:
-                                    membersToAdd.append(member['sAMAccountName'])
+                        for user, details in members.iteritems():
+                                if details['membership'] is True:
+                                    membersToAdd.append(user)
                                 else:
-                                    membersToRemove.append(member['sAMAccountName'])
+                                    membersToRemove.append(user)
 
                         membersToAddCSV = ",".join(membersToAdd)
                         membersToRemoveCSV = ",".join(membersToRemove)
@@ -77,13 +76,16 @@ class Handler(HttpPlugin):
                     result = lmn_getSophomorixValue(sophomorixCommand, 'MEMBERS')
                     classes = []
                     students_per_class = {cl:[] for cl in result.keys()}
+                    students = {}
                     for cl,student in result.iteritems():
                         classes.append({'name':cl,'isVisible':0})
-                        for details in student.values():
-                            details['membership'] = dn in details['memberOf']
-                            students_per_class[cl].append(details)
+                        for login,details in student.iteritems():
+                            if details['sophomorixRole'] == 'student':
+                                students_per_class[cl].append(details)
+                                details['membership'] = dn in details['memberOf']
+                                students[login] = details
 
-                    return students_per_class, classes
+                    return students_per_class, classes, students
 
             return groupDetails
 

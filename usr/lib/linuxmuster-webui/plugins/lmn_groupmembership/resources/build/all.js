@@ -160,6 +160,7 @@
             $scope.members.push({
               'sn': member.sn,
               'givenName': member.givenName,
+              'login': member.sAMAccountName,
               'sophomorixAdminClass': member.sophomorixAdminClass
             });
           }
@@ -212,15 +213,13 @@
         fx: function(x) {
           return x.sn;
         }
-      },
-      {
-        name: gettext('Membership'),
-        id: 'membership',
-        fx: function(x) {
-          return x.membership;
-        }
       }
     ];
+    //{
+    //name: gettext('Membership')
+    //id: 'membership'
+    //fx: (x) -> x.membership
+    //}
     //{
     //    name: gettext('Class')
     //    fx: (x) -> x.sophomorixAdminClass
@@ -236,13 +235,14 @@
     $scope.admingroups = groupDetails['sophomorixAdminGroups'];
     $scope.membergroups = groupDetails['sophomorixMemberGroups'];
     $scope.expandAll = function() {
-      var cl, i, len, ref;
+      var cl, i, len, ref, results;
       ref = $scope.classes;
+      results = [];
       for (i = 0, len = ref.length; i < len; i++) {
         cl = ref[i];
-        cl['isVisible'] = 1;
+        results.push(cl['isVisible'] = 1);
       }
-      return console.log($scope.classes);
+      return results;
     };
     $scope.closeAll = function() {
       var cl, i, len, ref, results;
@@ -283,8 +283,7 @@
           ref = $scope.admins;
           for (i = 0, len = ref.length; i < len; i++) {
             admin = ref[i];
-            idx = $scope.teacherlist.indexOf(admin);
-            if (idx < 0) {
+            if (!(admin in $scope.teachersDict)) {
               newadmins.push(admin);
             }
           }
@@ -293,41 +292,40 @@
       }
     };
     $scope.updateGroupMemberList = function(cl) {
-      var i, idx, j, len, len1, ref, ref1, results, student, teacher;
+      var details, idx, ref, ref1, results, studentLogin, teacherLogin;
       idx = $scope.membergroups.indexOf(cl);
       if (idx >= 0) {
         return $scope.membergroups.splice(idx, 1);
       } else {
         $scope.membergroups.push(cl);
-        ref = $scope.students;
-        for (i = 0, len = ref.length; i < len; i++) {
-          student = ref[i];
-          if (student['sophomorixAdminClass'] === cl) {
-            student['membership'] = false;
+        ref = $scope.studentsDict;
+        for (studentLogin in ref) {
+          details = ref[studentLogin];
+          if (details['sophomorixAdminClass'] === cl) {
+            details['membership'] = false;
           }
         }
         if (cl === 'teachers') {
-          ref1 = $scope.teachers;
+          ref1 = $scope.teachersDict;
           results = [];
-          for (j = 0, len1 = ref1.length; j < len1; j++) {
-            teacher = ref1[j];
-            results.push(teacher['membership'] = false);
+          for (teacherLogin in ref1) {
+            details = ref1[teacherLogin];
+            results.push(details['membership'] = false);
           }
           return results;
         }
       }
     };
     $scope.setMembers = function(students, teachers) {
-      var memberlist, msg;
+      var membersDict, msg;
       msg = messagebox.show({
         progress: true
       });
-      memberlist = students;
-      memberlist['teachers'] = teachers;
+      membersDict = Object.assign(students, teachers);
       return $http.post('/api/lmn/groupmembership/details', {
         action: 'set-members',
         username: $scope.identity.user,
-        members: memberlist,
+        members: membersDict,
         groupName: groupName,
         admins: $scope.admins,
         membergroups: $scope.membergroups,
@@ -352,7 +350,9 @@
       dn: groupDN
     }).then(function(resp) {
       $scope.students = resp.data[0];
-      return $scope.classes = resp.data[1];
+      $scope.classes = resp.data[1];
+      $scope.studentsDict = resp.data[2];
+      return console.log($scope.students['10a']);
     });
     //# TODO : add other project members ?
     $http.post('/api/lm/sophomorixUsers/teachers', {
@@ -360,18 +360,35 @@
     }).then(function(resp) {
       var i, len, ref, results, teacher;
       $scope.teachers = resp.data;
-      $scope.teacherlist = [];
+      $scope.teachersDict = {};
       ref = $scope.teachers;
       results = [];
       for (i = 0, len = ref.length; i < len; i++) {
         teacher = ref[i];
         teacher['membership'] = indexOf.call(teacher['memberOf'], groupDN) >= 0;
-        results.push($scope.teacherlist.push(teacher['sAMAccountName']));
+        results.push($scope.teachersDict[teacher['sAMAccountName']] = teacher);
       }
       return results;
     });
-    return $scope.close = function() {
+    $scope.close = function() {
       return $uibModalInstance.dismiss();
+    };
+    $scope.search = function(item) {
+      return !$scope.query || (item.sophomorixAdminClass.indexOf($scope.query) !== -1) || (item.sn.indexOf($scope.query) !== -1) || (item.givenName.indexOf($scope.query) !== -1);
+    };
+    $scope.isMemberOn = false;
+    return $scope.isMember = function(item) {
+      if ($scope.isMemberOn) {
+        if ($scope.membergroups.indexOf(item.sophomorixAdminClass) >= 0) {
+          return true;
+        }
+        if (item.sAMAccountName in $scope.teachersDict) {
+          return $scope.teachersDict[item.sAMAccountName].membership;
+        } else {
+          return $scope.studentsDict[item.sAMAccountName].membership;
+        }
+      }
+      return true;
     };
   });
 

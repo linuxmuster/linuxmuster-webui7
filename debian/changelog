@@ -1,3 +1,24 @@
+linuxmuster-webui7 (1.0.99-1) lmn7; urgency=medium 
+
+  * Current snapshot build ae0e7f336175fb3e64dba4408244c3398354af54
+   *     Moving users now shows all attributes which are going to be changed
+
+ -- Andreas Till <andreas.till@netzint.de> Sat Sep 21 11:01:12 UTC 2019
+
+linuxmuster-webui7 (1.0.98-1) lmn7; urgency=medium 
+
+  * Current snapshot build 05f382c77c3547989fdaed1f85661e929ce7557d
+   *     added translations
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Sep 20 16:57:16 UTC 2019
+
+linuxmuster-webui7 (1.0.97-1) lmn7; urgency=medium 
+
+  * Current snapshot build 939ecc9f984162796412af880d7ac9f99bd551ba
+   *     fixed student list import (typo)
+
+ -- Andreas Till <andreas.till@netzint.de> Mon Sep 16 12:13:40 UTC 2019
+
 linuxmuster-webui7 (1.0.96-1) lmn7; urgency=medium 
 
   * Current snapshot build 5274ec63a00bcdbf86afca800e13669323571c42

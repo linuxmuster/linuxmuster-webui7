@@ -92,22 +92,6 @@ class Handler(HttpPlugin):
                 sophomorixCommand = ['sophomorix-session', '--create', '--supervisor', supervisor,  '-j', '--comment', comment]
                 result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
                 return result
-        # TODO: Removed remove block in future release
-        #if action == 'change-exam-supervisor':
-        #    supervisor = http_context.json_body()['supervisor']
-        #    participant = http_context.json_body()['participant']
-        #    comment = http_context.json_body()['comment']
-        #    with authorize('lm:users:students:read'):
-        #        try:
-        #            sophomorixCommand = ['sophomorix-exam-mode', '--unset', '--subdir', session, '-j', '--participants', participant]
-        #            result = lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
-        #        except Exception as e:
-        #            raise Exception('Error:\n' + str(e))
-        #        try:
-        #            sophomorixCommand = ['sophomorix-exam-mode', '--set', '--supervisor', supervisor, '-j', '--participants', participant]
-        #            result = lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
-        #        except Exception as e:
-        #            raise Exception('Error:\n' + str(e))
         if action == 'end-exam':
             supervisor = http_context.json_body()['supervisor']
             participant = http_context.json_body()['participant']
@@ -119,7 +103,7 @@ class Handler(HttpPlugin):
                 try:
                     sophomorixCommand = ['sophomorix-exam-mode', '--unset', '--subdir', 'transfer/collected/'+now+'-'+sessionName+'-ended-by-'+supervisor+'/exam', '-j', '--participants', participant]
                     result = lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
-                except Exception  as e:
+                except Exception as e:
                     raise Exception('Error:\n' + str(e))
 
         if action == 'save-session':
@@ -166,7 +150,6 @@ class Handler(HttpPlugin):
                     checkIfUserInManagementGroup(participant, participant['sAMAccountName'], 'group_printing', printingList, noPrintingList)
                 #i = i + 1
 
-
             # Create CSV lists we need for sophomorix
             participantsCSV = ",".join(participantsList)
             examModeListCSV = ",".join(examModeList)
@@ -181,7 +164,6 @@ class Handler(HttpPlugin):
             noWebfilterListCSV = ",".join(noWebfilterList)
             printingListCSV = ",".join(printingList)
             noPrintingListCSV = ",".join(noPrintingList)
-
 
             # Set managementgroups
             try:
@@ -261,7 +243,7 @@ class Handler(HttpPlugin):
             schoolClassList.append(schoolClassJson)
         return schoolClassList
 
-    @url(r'/api/lmn/session/moveFileToHome') ## TODO authorize
+    @url(r'/api/lmn/session/moveFileToHome')  ## TODO authorize
     @endpoint(api=True)
     def handle_api_create_dir(self, http_context):
         """Create directory with given path, ignoring errors"""
@@ -271,7 +253,7 @@ class Handler(HttpPlugin):
             subdir = http_context.json_body()['subdir']
             try:
                 sophomorixCommand = ['sophomorix-transfer', '--from-unix-path', filepath, '--to-user', user, '--subdir', subdir, '-jj']
-                return  lmn_getSophomorixValue(sophomorixCommand, '', True)
+                return lmn_getSophomorixValue(sophomorixCommand, '', True)
             except Exception:
                 return 0
 
@@ -349,7 +331,7 @@ class Handler(HttpPlugin):
                             returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
                         else:
                             for File in files:
-                                sophomorixCommand = ['sophomorix-transfer', '-jj', '--move', '--from-user', sendersCSV, '--to-user', receiver, '--from-path', 'transfer/'+File, '--to-path', 'transfer/collected/'+now+'-'+session+'/', '--to-path-addon', 'fullinfo' ]
+                                sophomorixCommand = ['sophomorix-transfer', '-jj', '--move', '--from-user', sendersCSV, '--to-user', receiver, '--from-path', 'transfer/'+File, '--to-path', 'transfer/collected/'+now+'-'+session+'/', '--to-path-addon', 'fullinfo']
                                 returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
                 except Exception as e:
                     raise Exception('Something went wrong. Error:\n' + str(e))

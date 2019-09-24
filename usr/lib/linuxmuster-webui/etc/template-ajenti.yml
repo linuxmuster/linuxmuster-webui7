@@ -9,7 +9,7 @@ bind:
   port: 443
 color: default
 language: %%LANGUAGE%%
-max_sessions: 9
+max_sessions: 400
 name: %%SERVERNAME%%.%%DOMAINNAME%%
 restricted_user: nobody
 ssl:

@@ -1,8 +1,3 @@
-isValidName = (name) ->
-        regExp =  /^[a-z0-9]*$/i
-        validName = regExp.test(name)
-        return validName
-
 angular.module('lm.linbo').config ($routeProvider) ->
     $routeProvider.when '/view/lm/linbo',
         controller: 'LMLINBOController'
@@ -458,7 +453,7 @@ angular.module('lm.linbo').controller 'LMLINBOConfigModalController', ($scope, $
 
 
 
-angular.module('lm.linbo').controller 'LMLINBOController', ($scope, $http, $uibModal, $log, $route, gettext, notify, pageTitle, tasks, messagebox) ->
+angular.module('lm.linbo').controller 'LMLINBOController', ($scope, $http, $uibModal, $log, $route, gettext, notify, pageTitle, tasks, messagebox, validation) ->
     pageTitle.set(gettext('LINBO'))
 
     $http.get('/api/lm/linbo/configs').then (resp) ->
@@ -473,7 +468,7 @@ angular.module('lm.linbo').controller 'LMLINBOController', ($scope, $http, $uibM
     $scope.createConfig = (example) ->
         messagebox.prompt('New name', '').then (msg) ->
             newName = msg.value
-            if not isValidName(newName)
+            if not validation.isValidAlphaNum(newName)
                 notify.error gettext('Not a valid name! Only alphanumeric characters are allowed!')
                 return
             if newName

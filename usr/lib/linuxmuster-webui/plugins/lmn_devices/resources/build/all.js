@@ -32,7 +32,7 @@
     };
   });
 
-  angular.module('lm.devices').controller('LMDevicesController', function($scope, $http, $uibModal, $route, gettext, notify, pageTitle, lmFileEditor, lmFileBackups) {
+  angular.module('lm.devices').controller('LMDevicesController', function($scope, $http, $uibModal, $route, gettext, notify, pageTitle, lmFileEditor, lmFileBackups, validation) {
     pageTitle.set(gettext('Devices'));
     $scope.first_save = false;
     $scope.trans = {
@@ -42,7 +42,7 @@
     $scope.validateField = function(name, val, isnew) {
       var valid;
       if (name) {
-        valid = $scope["isValid" + name](val) && val;
+        valid = validation["isValid" + name](val) && val;
       } else {
         valid = val;
       }
@@ -54,37 +54,6 @@
       } else {
         return "has-error";
       }
-    };
-    $scope.findval = function(attr, val) {
-      return function(dict) {
-        return dict[attr] === val;
-      };
-    };
-    $scope.isValidMac = function(mac) {
-      var regExp, validMac;
-      regExp = /^([0-9A-Fa-f]{2}[:]){5}([0-9A-Fa-f]{2})$/;
-      validMac = regExp.test(mac) && ($scope.devices.filter($scope.findval('mac', mac)).length < 2);
-      return validMac;
-    };
-    $scope.isValidIP = function(ip) {
-      var regExp, validIP;
-      regExp = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/; //# TODO all IPs allowed, and 010.1.1.1
-      validIP = regExp.test(ip) && ($scope.devices.filter($scope.findval('ip', ip)).length < 2);
-      return validIP;
-    };
-    $scope.isValidHost = function(hostname) {
-      var regExp, validHostname;
-      regExp = /^[a-zA-Z0-9\-]+$/;
-      validHostname = regExp.test(hostname) && ($scope.devices.filter($scope.findval('hostname', hostname)).length < 2);
-      return validHostname;
-    };
-    $scope.isValidRoom = function(room) {
-      return $scope.isValidHost(room);
-    };
-    $scope.isValidRole = function(role) {
-      var validRole;
-      validRole = ['switch', 'addc', 'wlan', 'staffcomputer', 'mobile', 'printer', 'classroom-teachercomputer', 'server', 'iponly', 'faculty-teachercomputer', 'voip', 'byod', 'classroom-studentcomputer', 'thinclient', 'router'];
-      return validRole.indexOf(role) !== -1;
     };
     $scope.sorts = [
       {
@@ -225,7 +194,8 @@
       }
     };
     $http.get('/api/lm/devices').then(function(resp) {
-      return $scope.devices = resp.data;
+      $scope.devices = resp.data;
+      return validation.set($scope.devices);
     });
     $scope.remove = function(device) {
       return $scope.devices.remove(device);

@@ -6,7 +6,7 @@ angular.module('lm.quotas').config ($routeProvider) ->
         templateUrl: '/lmn_quotas:resources/partial/disabled.html'
 
 
-angular.module('lm.quotas').controller 'LMQuotasApplyModalController', ($scope, $http, $uibModalInstance, gettext, notify) ->
+angular.module('lm.quotas').controller 'LMQuotasApplyModalController', ($scope, $http, $uibModalInstance, $window, gettext, notify) ->
     $scope.logVisible = true
     $scope.isWorking = true
 
@@ -20,6 +20,7 @@ angular.module('lm.quotas').controller 'LMQuotasApplyModalController', ($scope, 
 
     $scope.close = () ->
         $uibModalInstance.close()
+        $window.location.reload()
 
 
 angular.module('lm.quotas').controller 'LMQuotasController', ($scope, $http, $uibModal, $location, $q, gettext, lmEncodingMap, notify, pageTitle, lmFileBackups) ->

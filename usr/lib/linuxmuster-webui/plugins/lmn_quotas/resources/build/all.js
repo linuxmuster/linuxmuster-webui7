@@ -18,7 +18,7 @@
     });
   });
 
-  angular.module('lm.quotas').controller('LMQuotasApplyModalController', function($scope, $http, $uibModalInstance, gettext, notify) {
+  angular.module('lm.quotas').controller('LMQuotasApplyModalController', function($scope, $http, $uibModalInstance, $window, gettext, notify) {
     $scope.logVisible = true;
     $scope.isWorking = true;
     $http.get('/api/lm/quotas/apply').then(function() {
@@ -30,7 +30,8 @@
       return $scope.logVisible = true;
     });
     return $scope.close = function() {
-      return $uibModalInstance.close();
+      $uibModalInstance.close();
+      return $window.location.reload();
     };
   });
 

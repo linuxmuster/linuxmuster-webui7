@@ -351,6 +351,16 @@ angular.module('lm.users').controller 'LMUsersListManagementController', ($scope
         else
             return "has-error"
 
+#Class                  --> Alphanum
+#Name                   --> Alphanum
+#Birthday               --> Date
+#Password
+#Count
+#Date                   --> Date
+#LoginExtrastudent      --> Alphanum + filter
+#Login                  --> Alphanum + filter
+#Course                 --> Alphanum
+
     $scope.findval = (attr, val) ->
         return (dict) ->
             dict[attr] == val

@@ -2804,6 +2804,15 @@
         return "has-error";
       }
     };
+    //Class                  --> Alphanum
+    //Name                   --> Alphanum
+    //Birthday               --> Date
+    //Password
+    //Count
+    //Date                   --> Date
+    //LoginExtrastudent      --> Alphanum + filter
+    //Login                  --> Alphanum + filter
+    //Course                 --> Alphanum
     $scope.findval = function(attr, val) {
       return function(dict) {
         return dict[attr] === val;

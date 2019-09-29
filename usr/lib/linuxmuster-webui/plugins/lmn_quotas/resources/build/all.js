@@ -19,18 +19,15 @@
   });
 
   angular.module('lm.quotas').controller('LMQuotasApplyModalController', function($scope, $http, $uibModalInstance, gettext, notify) {
-    $scope.logVisible = false;
+    $scope.logVisible = true;
     $scope.isWorking = true;
-    $scope.showLog = function() {
-      return $scope.logVisible = true;
-    };
     $http.get('/api/lm/quotas/apply').then(function() {
       $scope.isWorking = false;
       return notify.success(gettext('Update complete'));
     }).catch(function(resp) {
       notify.error(gettext('Update failed'), resp.data.message);
       $scope.isWorking = false;
-      return $scope.showLog();
+      return $scope.logVisible = true;
     });
     return $scope.close = function() {
       return $uibModalInstance.close();
@@ -196,8 +193,9 @@
         }
       }
       qs = [];
-      qs.push($http.post(`/api/lm/users/teachers?encoding=${$scope.teachersEncoding}`, teachers));
-      qs.push($http.post('/api/lm/quotas', $scope.quotas));
+      //qs.push $http.post("/api/lm/users/teachers?encoding=#{$scope.teachersEncoding}", teachers)
+      //qs.push $http.post('/api/lm/quotas', $scope.quotas)
+      qs.push($http.post('/api/lm/schoolsettings', $scope.settings));
       if (classesToChange.length > 0) {
         qs.push($http.post("/api/lm/class-quotas", classesToChange).then(function() {}));
       }

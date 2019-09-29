@@ -7,10 +7,8 @@ angular.module('lm.quotas').config ($routeProvider) ->
 
 
 angular.module('lm.quotas').controller 'LMQuotasApplyModalController', ($scope, $http, $uibModalInstance, gettext, notify) ->
-    $scope.logVisible = false
+    $scope.logVisible = true
     $scope.isWorking = true
-    $scope.showLog = () ->
-        $scope.logVisible = true
 
     $http.get('/api/lm/quotas/apply').then () ->
         $scope.isWorking = false
@@ -18,7 +16,7 @@ angular.module('lm.quotas').controller 'LMQuotasApplyModalController', ($scope, 
     .catch (resp) ->
         notify.error gettext('Update failed'), resp.data.message
         $scope.isWorking = false
-        $scope.showLog()
+        $scope.logVisible = true
 
     $scope.close = () ->
         $uibModalInstance.close()

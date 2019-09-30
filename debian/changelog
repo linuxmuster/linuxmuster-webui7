@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.100-1) lmn7; urgency=medium 
+
+  * Current snapshot build 23099a75d1d4b55e0d076fdb37b697e0f4181f9d
+   *     New version of Ajenti to fix fd problems.
+
+ -- Andreas Till <andreas.till@netzint.de> Mon Sep 30 06:08:37 UTC 2019
+
 linuxmuster-webui7 (1.0.99-1) lmn7; urgency=medium 
 
   * Current snapshot build ae0e7f336175fb3e64dba4408244c3398354af54

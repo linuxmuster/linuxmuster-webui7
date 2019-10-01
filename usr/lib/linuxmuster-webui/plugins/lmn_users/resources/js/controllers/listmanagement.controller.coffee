@@ -4,7 +4,7 @@ angular.module('lm.users').config ($routeProvider) ->
        templateUrl: '/lmn_users:resources/partial/listmanagement.html'
 
 
-angular.module('lm.users').controller 'LMUsersListManagementController', ($scope, $http, $location, $route, $uibModal, gettext, notify, lmEncodingMap, messagebox, pageTitle, lmFileEditor, lmFileBackups, filesystem) ->
+angular.module('lm.users').controller 'LMUsersListManagementController', ($scope, $http, $location, $route, $uibModal, gettext, notify, lmEncodingMap, messagebox, pageTitle, lmFileEditor, lmFileBackups, filesystem, validation) ->
     pageTitle.set(gettext('Listmanagement'))
 
     $scope.students_sorts = [
@@ -342,8 +342,17 @@ angular.module('lm.users').controller 'LMUsersListManagementController', ($scope
 
     # general functions
 
-    $scope.validateField = (name, val, isnew) ->
-        valid = $scope["isValid"+name](val) && val
+    $scope.validateField = (name, val, isnew, filter=null) ->
+        # TODO : what valid chars for class, name and course ?
+        # Temporary solution : not filter these fields
+        if name == 'TODO'
+            return true
+            
+        valid = validation["isValid"+name](val) && val
+        if filter == 'teachers'
+            valid = valid && ($scope.teachers.filter(validation.findval('login', val)).length < 2)
+        else if filter == 'extrastudents'
+            valid = valid && ($scope.extrastudents.filter(validation.findval('login', val)).length < 2)
         if valid
             return ""
         if isnew and !$scope.first_save
@@ -351,81 +360,10 @@ angular.module('lm.users').controller 'LMUsersListManagementController', ($scope
         else
             return "has-error"
 
-#Class                  --> Alphanum
-#Name                   --> Alphanum
-#Birthday               --> Date
-#Password
-#Count
-#Date                   --> Date
-#LoginExtrastudent      --> Alphanum + filter
-#Login                  --> Alphanum + filter
-#Course                 --> Alphanum
-
-    $scope.findval = (attr, val) ->
-        return (dict) ->
-            dict[attr] == val
-
-    $scope.isValidLogin = (login) ->
-        regExp = /^([0-9a-zA-Z]*)$/
-        validLogin = regExp.test(login) && ($scope.teachers.filter($scope.findval('login', login)).length < 2)
-        return true ## TODO : valid chars for a login ?
-
-    $scope.isValidLoginExtrastudent = (login) ->
-        regExp = /^([0-9a-zA-Z]*)$/
-        validLogin = regExp.test(login) && ($scope.extrastudents.filter($scope.findval('login', login)).length < 2)
-        return true ## TODO : valid chars for a login ?
-
-    $scope.isStrongPwd = (password) ->
-        regExp = /(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*()]|(?=.*\d)).{7,}/
-        validPassword = regExp.test(password)
-        return validPassword
-
-    $scope.validCharPwd =(password) ->
-        regExp = /^[a-zA-Z0-9!@#§+\-$%&*{}()\]\[]+$/
-        validPassword = regExp.test(password)
-        return validPassword
-
-    $scope.isValidPassword = (password) ->
-        return $scope.validCharPwd(password) && $scope.isStrongPwd(password)
-
-
-    $scope.isValidClass = (cl) ->
-        regExp = /^([0-9a-zA-Z]*)$/
-        validClass = regExp.test(cl)
-        return true ## TODO : valid chars for a classname ?
-
-    $scope.isValidName = (name) ->
-        regExp = /^([0-9a-zA-Z]*)$/
-        validName = regExp.test(name)
-        return true ## TODO : valid chars for a name ?
-
-    $scope.isValidBirthday = (birthday) ->
-        regExp = /^(0[1-9]|[12][0-9]|3[01])[.](0[1-9]|1[012])[.](19|20)\d\d$/ ## Not perfect : allows 31.02.1920, but not so important
-        validBirthday = regExp.test(birthday)
-        return validBirthday
-
-    $scope.isValidCourse = (course) ->
-        regExp = /^([0-9a-zA-Z]*)$/
-        validCourse = regExp.test(course)
-        return true ## TODO : valid chars for a classname ?
-
-    $scope.isValidCount = (count) ->
-        regExp = /^([0-9]*)$/
-        validCount = regExp.test(count)
-        return validCount
-
-    $scope.isValidDate = (date) ->
-        regExp = /^(0[1-9]|[12][0-9]|3[01])[.](0[1-9]|1[012])[.](19|20)\d\d$/ ## Not perfect : allows 31.02.1920, but not so important
-        validDate = regExp.test(date)
-        return validDate
-
-
-
     $scope.numErrors = () ->
         return document.getElementsByClassName("has-error").length + document.getElementsByClassName("has-error-new").length > 0
 
     $scope.saveAndCheck = (name) ->
-        #valid = $scope["isValid"+name](val) && val
         $scope[name+"_save"]().then () ->
             $uibModal.open(
                 templateUrl: '/lmn_users:resources/partial/check.modal.html'

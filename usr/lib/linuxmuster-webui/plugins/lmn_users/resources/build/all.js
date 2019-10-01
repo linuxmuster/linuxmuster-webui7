@@ -2364,7 +2364,7 @@
     });
   });
 
-  angular.module('lm.users').controller('LMUsersListManagementController', function($scope, $http, $location, $route, $uibModal, gettext, notify, lmEncodingMap, messagebox, pageTitle, lmFileEditor, lmFileBackups, filesystem) {
+  angular.module('lm.users').controller('LMUsersListManagementController', function($scope, $http, $location, $route, $uibModal, gettext, notify, lmEncodingMap, messagebox, pageTitle, lmFileEditor, lmFileBackups, filesystem, validation) {
     pageTitle.set(gettext('Listmanagement'));
     $scope.students_sorts = [
       {
@@ -2792,9 +2792,19 @@
       return lmFileBackups.show('/etc/linuxmuster/sophomorix/default-school/extraclasses.csv', $scope.courses_encoding);
     };
     // general functions
-    $scope.validateField = function(name, val, isnew) {
+    $scope.validateField = function(name, val, isnew, filter = null) {
       var valid;
-      valid = $scope["isValid" + name](val) && val;
+      // TODO : what valid chars for class, name and course ?
+      // Temporary solution : not filter these fields
+      if (name === 'TODO') {
+        return true;
+      }
+      valid = validation["isValid" + name](val) && val;
+      if (filter === 'teachers') {
+        valid = valid && ($scope.teachers.filter(validation.findval('login', val)).length < 2);
+      } else if (filter === 'extrastudents') {
+        valid = valid && ($scope.extrastudents.filter(validation.findval('login', val)).length < 2);
+      }
       if (valid) {
         return "";
       }
@@ -2804,88 +2814,10 @@
         return "has-error";
       }
     };
-    //Class                  --> Alphanum
-    //Name                   --> Alphanum
-    //Birthday               --> Date
-    //Password
-    //Count
-    //Date                   --> Date
-    //LoginExtrastudent      --> Alphanum + filter
-    //Login                  --> Alphanum + filter
-    //Course                 --> Alphanum
-    $scope.findval = function(attr, val) {
-      return function(dict) {
-        return dict[attr] === val;
-      };
-    };
-    $scope.isValidLogin = function(login) {
-      var regExp, validLogin;
-      regExp = /^([0-9a-zA-Z]*)$/;
-      validLogin = regExp.test(login) && ($scope.teachers.filter($scope.findval('login', login)).length < 2);
-      return true; //# TODO : valid chars for a login ?
-    };
-    $scope.isValidLoginExtrastudent = function(login) {
-      var regExp, validLogin;
-      regExp = /^([0-9a-zA-Z]*)$/;
-      validLogin = regExp.test(login) && ($scope.extrastudents.filter($scope.findval('login', login)).length < 2);
-      return true; //# TODO : valid chars for a login ?
-    };
-    $scope.isStrongPwd = function(password) {
-      var regExp, validPassword;
-      regExp = /(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*()]|(?=.*\d)).{7,}/;
-      validPassword = regExp.test(password);
-      return validPassword;
-    };
-    $scope.validCharPwd = function(password) {
-      var regExp, validPassword;
-      regExp = /^[a-zA-Z0-9!@#§+\-$%&*{}()\]\[]+$/;
-      validPassword = regExp.test(password);
-      return validPassword;
-    };
-    $scope.isValidPassword = function(password) {
-      return $scope.validCharPwd(password) && $scope.isStrongPwd(password);
-    };
-    $scope.isValidClass = function(cl) {
-      var regExp, validClass;
-      regExp = /^([0-9a-zA-Z]*)$/;
-      validClass = regExp.test(cl);
-      return true; //# TODO : valid chars for a classname ?
-    };
-    $scope.isValidName = function(name) {
-      var regExp, validName;
-      regExp = /^([0-9a-zA-Z]*)$/;
-      validName = regExp.test(name);
-      return true; //# TODO : valid chars for a name ?
-    };
-    $scope.isValidBirthday = function(birthday) {
-      var regExp, validBirthday;
-      regExp = /^(0[1-9]|[12][0-9]|3[01])[.](0[1-9]|1[012])[.](19|20)\d\d$/; //# Not perfect : allows 31.02.1920, but not so important
-      validBirthday = regExp.test(birthday);
-      return validBirthday;
-    };
-    $scope.isValidCourse = function(course) {
-      var regExp, validCourse;
-      regExp = /^([0-9a-zA-Z]*)$/;
-      validCourse = regExp.test(course);
-      return true; //# TODO : valid chars for a classname ?
-    };
-    $scope.isValidCount = function(count) {
-      var regExp, validCount;
-      regExp = /^([0-9]*)$/;
-      validCount = regExp.test(count);
-      return validCount;
-    };
-    $scope.isValidDate = function(date) {
-      var regExp, validDate;
-      regExp = /^(0[1-9]|[12][0-9]|3[01])[.](0[1-9]|1[012])[.](19|20)\d\d$/; //# Not perfect : allows 31.02.1920, but not so important
-      validDate = regExp.test(date);
-      return validDate;
-    };
     $scope.numErrors = function() {
       return document.getElementsByClassName("has-error").length + document.getElementsByClassName("has-error-new").length > 0;
     };
     $scope.saveAndCheck = function(name) {
-      //valid = $scope["isValid"+name](val) && val
       return $scope[name + "_save"]().then(function() {
         return $uibModal.open({
           templateUrl: '/lmn_users:resources/partial/check.modal.html',

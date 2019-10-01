@@ -63,16 +63,16 @@
                 <th></th>
             </tr>
             <tr  ng:repeat="student in students|filter:students_filter|orderBy:['-_isNew', sort.fx]" ng:show="student.class[0] != '#'">
-                <td ng:if="students_fields.class.visible" class="form-group" ng:class="validateField('Class', student.class, student._isNew)">
+                <td ng:if="students_fields.class.visible" class="form-group" ng:class="validateField('TODO', student.class, student._isNew)">
                     <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="student.class" placeholder="Class" class="form-control"/>
                 </td>
-                <td ng:if="students_fields.last_name.visible" class="form-group" ng:class="validateField('Name', student.last_name, student._isNew)">
+                <td ng:if="students_fields.last_name.visible" class="form-group" ng:class="validateField('TODO', student.last_name, student._isNew)">
                     <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="student.last_name" placeholder="Last name" class="form-control" />
                 </td>
-                <td ng:if="students_fields.first_name.visible" class="form-group" ng:class="validateField('Name', student.first_name, student._isNew)">
+                <td ng:if="students_fields.first_name.visible" class="form-group" ng:class="validateField('TODO', student.first_name, student._isNew)">
                     <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="student.first_name" placeholder="First name" class="form-control" />
                 </td>
-                <td width="150" ng:if="students_fields.birthday.visible" class="form-group" ng:class="validateField('Birthday', student.birthday, student._isNew)">
+                <td width="150" ng:if="students_fields.birthday.visible" class="form-group" ng:class="validateField('Date', student.birthday, student._isNew)">
                     <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="student.birthday" placeholder="Birthday" class="form-control"/>
                 </td>
                 <td width="150" ng:if="students_fields.id.visible" class="form-group" >
@@ -166,19 +166,19 @@
                 <th></th>
             </tr>
             <tr ng:repeat="teacher in teachers|filter:teachers_filter|orderBy:['-_isNew', sort.fx]" ng:show="teacher.class[0] != '#'">
-                <td ng:if="teachers_fields.last_name.visible" class="form-group" ng:class="validateField('Name', teacher.last_name, teacher._isNew)">
+                <td ng:if="teachers_fields.last_name.visible" class="form-group" ng:class="validateField('TODO', teacher.last_name, teacher._isNew)">
                     <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="teacher.last_name" placeholder="Last name" class="form-control" />
                 </td>
-                <td ng:if="teachers_fields.first_name.visible" class="form-group" ng:class="validateField('Name', teacher.first_name, teacher._isNew)">
+                <td ng:if="teachers_fields.first_name.visible" class="form-group" ng:class="validateField('TODO', teacher.first_name, teacher._isNew)">
                     <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="teacher.first_name" placeholder="First name" class="form-control" />
                 </td>
-                <td ng:if="teachers_fields.birthday.visible" width="150" class="form-group" ng:class="validateField('Birthday', teacher.birthday, teacher._isNew)">
+                <td ng:if="teachers_fields.birthday.visible" width="150" class="form-group" ng:class="validateField('Date', teacher.birthday, teacher._isNew)">
                     <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="teacher.birthday" placeholder="Birthday" class="form-control" />
                 </td>
                 <td ng:if="teachers_fields.password.visible" class="form-group" ng:class="validateField('Password', teacher.password, teacher._isNew)">
                     <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="teacher.password" placeholder="Desired Password" class="form-control" />
                 </td>
-                <td ng:if="teachers_fields.login.visible" class="form-group" ng:class="validateField('Login', teacher.login, teacher._isNew)">
+                <td ng:if="teachers_fields.login.visible" class="form-group" ng:class="validateField('AlphaNum', teacher.login, teacher._isNew, 'teachers')">
                     <input type="text" ng:model="teacher.login" ng:disabled="!teacher._isNew" placeholder="Login" class="form-control" />
                 </td>
                 <td width="1">
@@ -275,19 +275,19 @@
                 <th></th>
             </tr>
             <tr ng:repeat="extrastudent in extrastudents|filter:extrastudents_filter|orderBy:['-_isNew', sort.fx]" ng:show="extrastudent.class[0] != '#'">
-                <td ng:if="extrastudents_fields.class.visible" class="form-group" ng:class="validateField('Class', extrastudent.class, extrastudent._isNew)">
+                <td ng:if="extrastudents_fields.class.visible" class="form-group" ng:class="validateField('TODO', extrastudent.class, extrastudent._isNew)">
                     <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="extrastudent.class" placeholder="Class" class="form-control" />
                 </td>
-                <td ng:if="extrastudents_fields.last_name.visible" class="form-group" ng:class="validateField('Name', extrastudent.last_name, student._isNew)">
+                <td ng:if="extrastudents_fields.last_name.visible" class="form-group" ng:class="validateField('TODO', extrastudent.last_name, student._isNew)">
                     <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="extrastudent.last_name" placeholder="Last name" class="form-control" />
                 </td>
-                <td  ng:if="extrastudents_fields.first_name.visible" class="form-group" ng:class="validateField('Name', extrastudent.first_name, student._isNew)">
+                <td  ng:if="extrastudents_fields.first_name.visible" class="form-group" ng:class="validateField('TODO', extrastudent.first_name, student._isNew)">
                     <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="extrastudent.first_name" placeholder="First name" class="form-control" />
                 </td>
-                <td ng:if="extrastudents_fields.birthday.visible" width="150" class="form-group" ng:class="validateField('Birthday', extrastudent.birthday, student._isNew)">
+                <td ng:if="extrastudents_fields.birthday.visible" width="150" class="form-group" ng:class="validateField('Date', extrastudent.birthday, student._isNew)">
                     <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="extrastudent.birthday" placeholder="Birthday" class="form-control" />
                 </td>
-                <td ng:if="extrastudents_fields.login.visible" class="form-group" ng:class="validateField('LoginExtrastudent', extrastudent.login, extrastudent._isNew)">
+                <td ng:if="extrastudents_fields.login.visible" class="form-group" ng:class="validateField('AlphaNum', extrastudent.login, extrastudent._isNew)">
                     <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="extrastudent.login" placeholder="Login" class="form-control" />
                 </td>
                 <td width="1">
@@ -357,16 +357,16 @@
                 <tr ng:repeat="course in courses|filter:filter|orderBy:sort.fx" ng:show="course.course[0] != '#'">
             -->
             <tr ng:repeat="course in courses" ng:show="course.course[0] != '#'">
-                <td class="form-group" ng:class="validateField('Course', course.course, course._isNew)">
+                <td class="form-group" ng:class="validateField('TODO', course.course, course._isNew)">
                     <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="course.course" placeholder="Course" class="form-control" />
                 </td>
-                <td class="form-group" ng:class="validateField('Name', course.base_name, course._isNew)">
+                <td class="form-group" ng:class="validateField('TODO', course.base_name, course._isNew)">
                     <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="course.base_name" placeholder="Base name" class="form-control" />
                 </td>
                 <td class="form-group" ng:class="validateField('Count', course.count, course._isNew)">
                     <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="course.count" placeholder="Count" class="form-control" />
                 </td>
-                <td width="150" class="form-group" ng:class="validateField('Birthday', course.birthday, course._isNew)">
+                <td width="150" class="form-group" ng:class="validateField('Date', course.birthday, course._isNew)">
                     <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="course.birthday" placeholder="Birthday" class="form-control" />
                 </td>
                 <td>

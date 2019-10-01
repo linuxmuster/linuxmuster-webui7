@@ -2,7 +2,7 @@ aj==2.1.31
 ajenti-panel==2.1.31
 ajenti.plugin.ace==0.26
 ajenti.plugin.auth-users==0.29
-ajenti.plugin.core==0.91
+ajenti.plugin.core==0.92
 ajenti.plugin.dashboard==0.36
 ajenti.plugin.filesystem==0.43
 ajenti.plugin.passwd==0.22

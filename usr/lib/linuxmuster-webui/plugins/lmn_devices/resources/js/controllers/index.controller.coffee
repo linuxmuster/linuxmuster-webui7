@@ -158,7 +158,7 @@ angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $
 
     $http.get('/api/lm/devices').then (resp) ->
         $scope.devices = resp.data
-        validation.set($scope.devices)
+        validation.set($scope.devices, 'devices')
 
     $scope.remove = (device) ->
         $scope.devices.remove(device)

@@ -195,7 +195,7 @@
     };
     $http.get('/api/lm/devices').then(function(resp) {
       $scope.devices = resp.data;
-      return validation.set($scope.devices);
+      return validation.set($scope.devices, 'devices');
     });
     $scope.remove = function(device) {
       return $scope.devices.remove(device);

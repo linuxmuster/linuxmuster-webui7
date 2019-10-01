@@ -2799,6 +2799,11 @@
       if (name === 'TODO') {
         return true;
       }
+      // TODO : is pasword necessary for extra course ? Filtered only if not undefined.
+      // Desired passwords will be marked if not strong enough, is it necessary for extra courses ?
+      if (name === 'Password' && !val) {
+        return true;
+      }
       valid = validation["isValid" + name](val) && val;
       if (filter === 'teachers') {
         valid = valid && ($scope.teachers.filter(validation.findval('login', val)).length < 2);

@@ -26,19 +26,25 @@ angular.module('lm.devices').controller 'LMDevicesApplyModalController', ($scope
 angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $uibModal, $route, gettext, notify, pageTitle, lmFileEditor, lmFileBackups, validation) ->
     pageTitle.set(gettext('Devices'))
 
+    $scope.error_msg = {}
     $scope.first_save = false
     $scope.trans ={
         duplicate: gettext('Duplicate')
         remove:  gettext('Remove')
     }
 
-    $scope.validateField = (name, val, isnew) ->
-        if name
-            valid = validation["isValid"+name](val) && val
-        else
-            valid = val
-        if valid
+    $scope.validateField = (name, val, isnew, ev) ->
+        # TODO : valid chars for a group ?
+        if name == 'TODO'
             return ""
+
+        test = validation["isValid"+name](val)
+
+        if test == true && val
+            delete $scope.error_msg[name+"-"+ev]
+            return ""
+
+        $scope.error_msg[name+"-"+ev] = test
         if isnew and !$scope.first_save
             return "has-error-new"
         else

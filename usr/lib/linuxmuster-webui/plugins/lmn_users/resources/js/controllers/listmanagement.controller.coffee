@@ -346,12 +346,12 @@ angular.module('lm.users').controller 'LMUsersListManagementController', ($scope
         # TODO : what valid chars for class, name and course ?
         # Temporary solution : not filter these fields
         if name == 'TODO'
-            return true
+            return ""
 
         # TODO : is pasword necessary for extra course ? Filtered only if not undefined.
         # Desired passwords will be marked if not strong enough, is it necessary for extra courses ?
         if name == 'Password' and !val
-            return true
+            return ""
             
         valid = validation["isValid"+name](val) && val
         if filter == 'teachers'

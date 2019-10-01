@@ -3,6 +3,12 @@
 <progress-spinner ng:show="devices == null"></progress-spinner>
 
 <div ng:show="devices != null">
+
+    <div id="error_messages" class="alert alert-danger" ng:show="(error_msg|json) != '{}'">
+        <ul>
+            <li ng:repeat="(id, err) in error_msg">{{err}}</li>
+        </ul>
+    </div>
     <div class="input-group">
         <input ng:model="filter" type="search" autofocus class="form-control" placeholder="Filter" />
         <div uib-dropdown class="input-group-btn">
@@ -52,19 +58,19 @@
             <th></th>
         </tr>
         <tr ng:repeat="device in devices|filter:filter|filter:stripComments|orderBy:['-_isNew', sort.fx]|page:paging.page:paging.pageSize">
-            <td width="80" ng:if="fields.room.visible" class="form-group" ng:class="validateField('Room', device.room, device._isNew)">
+            <td width="80" ng:if="fields.room.visible" class="form-group" ng:class="validateField('Room', device.room, device._isNew, $index)">
                 <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.room" placeholder="Room" class="form-control" />
             </td>
-            <td ng:if="fields.hostname.visible" class="form-group" ng:class="validateField('Host', device.hostname, device._isNew)">
+            <td ng:if="fields.hostname.visible" class="form-group" ng:class="validateField('Host', device.hostname, device._isNew, $index)">
                 <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.hostname" placeholder="Hostname" class="form-control" />
             </td>
-            <td ng:if="fields.group.visible" class="form-group" ng:class="validateField('', device.group, device._isNew)">
+            <td ng:if="fields.group.visible" class="form-group" ng:class="validateField('TODO', device.group, device._isNew, $index)">
                 <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.group" placeholder="Group" class="form-control" />
             </td>
-            <td ng:if="fields.mac.visible" class="form-group" ng:class="validateField('Mac', device.mac, device._isNew)">
+            <td ng:if="fields.mac.visible" class="form-group" ng:class="validateField('Mac', device.mac, device._isNew, $index)">
                 <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.mac" placeholder="MAC" class="form-control" />
             </td>
-            <td ng:if="fields.ip.visible" class="form-group" ng:class="validateField('IP', device.ip, device._isNew)">
+            <td ng:if="fields.ip.visible" class="form-group" ng:class="validateField('IP', device.ip, device._isNew, $index)">
                 <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.ip" placeholder="IP" class="form-control" />
             </td>
             <td ng:if="fields.officeKey.visible" class="form-group">
@@ -76,7 +82,7 @@
             <td ng:if="fields.dhcpOptions.visible" class="form-group">
                 <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.dhcpOptions" placeholder="DHCP-Options" class="form-control" />
             </td>
-            <td ng:if="fields.sophomorixRole.visible" ng:class="{'has-error': validateField('Role', device.sophomorixRole, device._isNew)}"  class="form-group">
+            <td ng:if="fields.sophomorixRole.visible" ng:class="{'has-error': validateField('Role', device.sophomorixRole, device._isNew, $index)}"  class="form-group">
                 <select ng:model="device.sophomorixRole" class="form-control">
                     <option value="classroom-studentcomputer" translate>classroom-studentcomputer</option>
                     <option value="classroom-teachercomputer" translate>classroom-teachercomputer</option>

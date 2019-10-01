@@ -34,21 +34,24 @@
 
   angular.module('lm.devices').controller('LMDevicesController', function($scope, $http, $uibModal, $route, gettext, notify, pageTitle, lmFileEditor, lmFileBackups, validation) {
     pageTitle.set(gettext('Devices'));
+    $scope.error_msg = {};
     $scope.first_save = false;
     $scope.trans = {
       duplicate: gettext('Duplicate'),
       remove: gettext('Remove')
     };
-    $scope.validateField = function(name, val, isnew) {
-      var valid;
-      if (name) {
-        valid = validation["isValid" + name](val) && val;
-      } else {
-        valid = val;
-      }
-      if (valid) {
+    $scope.validateField = function(name, val, isnew, ev) {
+      var test;
+      // TODO : valid chars for a group ?
+      if (name === 'TODO') {
         return "";
       }
+      test = validation["isValid" + name](val);
+      if (test === true && val) {
+        delete $scope.error_msg[name + "-" + ev];
+        return "";
+      }
+      $scope.error_msg[name + "-" + ev] = test;
       if (isnew && !$scope.first_save) {
         return "has-error-new";
       } else {

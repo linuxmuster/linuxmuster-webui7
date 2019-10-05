@@ -1,5 +1,6 @@
 import logging
 import ldap
+import ldap.filter
 import subprocess
 from jadi import component
 
@@ -25,7 +26,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
         username = username.lower().encode('utf8')
         # get ajenti yaml parameters
         params = lmconfig.data['linuxmuster']['ldap']
-        searchFilter = "(&(cn=%s)(objectClass=user)(|(sophomorixRole=globaladministrator)(sophomorixRole=teacher)(sophomorixRole=schooladministrator) ))" % username
+        searchFilter = ldap.filter.filter_format("(&(cn=%s)(objectClass=user)(|(sophomorixRole=globaladministrator)(sophomorixRole=teacher)(sophomorixRole=schooladministrator) ))", [username])
 
         l = ldap.initialize('ldap://' + params['host'])
         # Binduser bind to the  server

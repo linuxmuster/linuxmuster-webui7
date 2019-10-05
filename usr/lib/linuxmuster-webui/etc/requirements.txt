@@ -1,5 +1,5 @@
-aj==2.1.31
-ajenti-panel==2.1.31
+aj==2.1.32
+ajenti-panel==2.1.32
 ajenti.plugin.ace==0.26
 ajenti.plugin.auth-users==0.29
 ajenti.plugin.core==0.92

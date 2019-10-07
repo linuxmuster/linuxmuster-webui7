@@ -252,6 +252,7 @@ ul.leaders span + span {
 .lmn-container-list-separated {
   display: flex;
   flex-wrap: wrap;
+  align-items: flex-start;
 }
 .lmn-container-list-separated > div {
   text-align: left;

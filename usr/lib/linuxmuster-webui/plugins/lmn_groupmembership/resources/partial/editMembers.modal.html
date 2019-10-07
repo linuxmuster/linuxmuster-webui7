@@ -8,7 +8,7 @@
 <progress-spinner ng:show="students == null"></progress-spinner>
 <div style="padding-left: 40px;" ng:show="students != null">
     <div class="input-group">
-        <input ng:model="query" type="search" autofocus class="form-control" placeholder="Filter" typeahead-min-length="1" />
+        <input ng:model="query" type="search" autofocus class="form-control" placeholder="{{filter_placeholder}}" typeahead-min-length="1" />
 
         <div class="input-group-btn" translate>
             <button class="btn btn-default" ng:click="isMemberOn = !isMemberOn" ng:style="(isMemberOn) && {'font-weight': 'bold'}">

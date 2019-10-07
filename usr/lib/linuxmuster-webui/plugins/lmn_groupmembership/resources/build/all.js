@@ -230,6 +230,7 @@
     $scope.members = members;
     $scope.sortReverse = false;
     groupDN = groupDetails['DN'];
+    $scope.filter_placeholder = gettext('Search for lastname, firstname or class');
     $scope.addgroupmembertext = gettext('Add/remove as member group');
     $scope.addgroupadmintext = gettext('Add/remove as admin group');
     $scope.admingroups = groupDetails['sophomorixAdminGroups'];
@@ -351,8 +352,7 @@
     }).then(function(resp) {
       $scope.students = resp.data[0];
       $scope.classes = resp.data[1];
-      $scope.studentsDict = resp.data[2];
-      return console.log($scope.students['10a']);
+      return $scope.studentsDict = resp.data[2];
     });
     //# TODO : add other project members ?
     $http.post('/api/lm/sophomorixUsers/teachers', {

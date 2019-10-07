@@ -145,7 +145,9 @@ angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($sco
         $scope.members = members
         $scope.sortReverse = false
         groupDN = groupDetails['DN']
-        
+
+
+        $scope.filter_placeholder = gettext('Search for lastname, firstname or class')
         $scope.addgroupmembertext = gettext('Add/remove as member group')
         $scope.addgroupadmintext = gettext('Add/remove as admin group')
 

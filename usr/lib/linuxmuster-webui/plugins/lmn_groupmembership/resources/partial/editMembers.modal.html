@@ -33,41 +33,51 @@
     </div>
     <br>
     <!-- Class view Students-->
-    <div ng-if="sort.id != 'membership'" class="flex-container lmn-container-list-separated">
-        <div ng:repeat="class in classes|orderBy:['name']">
-            <h4 style="padding-left: 10px;"><a href=# ng:click="class.isVisible = !class.isVisible">{{class.name}}</a>
-                <span class="pull-right">
-                    <i title="{{addgroupadmintext}}" class="fa fa-key" ng:style="(admingroups.indexOf(class.name) >= 0) && {'color': 'red'}" ng-click="updateGroupAdminList(class.name)"></i>
-                    <i title="{{addgroupmembertext}}" class="fa fa-users" ng:style="(membergroups.indexOf(class.name) >= 0) && {'color': 'green'}" ng-click="updateGroupMemberList(class.name)"></i>
-                </span>
-            </h4>
-            <div ng:repeat="student in students[class.name]|filter:search|filter:isMember|orderBy:[sort.fx]:sortReverse" ng:show="class.isVisible">
-                <input ng:if="membergroups.indexOf(class.name) >= 0" type="checkbox" checked disabled>
-                <span ng:if="membergroups.indexOf(class.name) < 0" id={{student.sAMAccountName}} checkbox ng:model="studentsDict[student.sAMAccountName].membership"></span>
-                <i class="fa fa-user"></i>
-                <a href="#">{{student.givenName}} <b>{{student.sn}}</b></a>
+    <div class="flex-container lmn-container-list-separated info-cards">
+        <div ng:repeat="class in classes|orderBy:['name']" class="panel panel-info projects">
+            <div class="panel-heading" ng:click="class.isVisible = !class.isVisible">
+                <h4>{{class.name}}<i class="fas fa-chevron-{{!class.isVisible ? 'down' : 'up'}} pull-right"></i></h4>
+            </div>
+            <div class="panel-body">
+                <div ng:repeat="student in students[class.name]|filter:search|filter:isMember|orderBy:[sort.fx]:sortReverse" ng:show="class.isVisible">
+                    <input ng:if="membergroups.indexOf(class.name) >= 0" type="checkbox" checked disabled>
+                    <span ng:if="membergroups.indexOf(class.name) < 0" id={{student.sAMAccountName}} checkbox ng:model="studentsDict[student.sAMAccountName].membership"></span>
+                    <i class="fa fa-user"></i>
+                    <a href="#">{{student.givenName}} <b>{{student.sn}}</b></a>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <i title="{{addgroupadmintext}}" class="fa fa-key" ng:style="(admingroups.indexOf(class.name) >= 0) && {'color': 'red'}" ng-click="updateGroupAdminList(class.name)"></i>
+                <span translate>Class as project admin</span><br /> 
+                <i title="{{addgroupmembertext}}" class="fa fa-users" ng:style="(membergroups.indexOf(class.name) >= 0) && {'color': '#f99e15'}" ng-click="updateGroupMemberList(class.name)"></i>
+                <span translate>Add the whole class to the project</span>
             </div>
         </div>
     </div>
 
     <!-- Class view Teachers-->
-    <div ng-if="sort.id != 'membership'" class="flex-container lmn-container-list-separated">
-        <div>
-            <h4 style="padding-left: 10px;"><span translate>Teachers</span>
-                <span class="pull-right">
-                    <i title="{{addgroupadmintext}}" class="fa fa-key" ng:style="(admingroups.indexOf('teachers') >= 0) && {'color': 'red'}" ng-click="updateGroupAdminList('teachers')"></i>
-                    <i title="{{addgroupmembertext}}" class="fa fa-users" ng:style="(membergroups.indexOf('teachers') >= 0) && {'color': 'green'}" ng-click="updateGroupMemberList('teachers')"></i>
-                </span>
-            </h4>
-            <div ng:repeat="teacher in teachers|filter:search|filter:isMember|orderBy:'Lastname':sortReverse">
-                <div>
-                    <input ng:if="membergroups.indexOf('teachers') >= 0" type="checkbox" checked disabled>
-                    <span ng:if="membergroups.indexOf('teachers') < 0" id={{teacher.sAMAccountName}} checkbox ng:model="teachersDict[teacher.sAMAccountName].membership"></span>
-                    <i class="fa fa-key" ng:if="admingroups.indexOf('teachers') < 0" ng:style="(admins.indexOf(teacher.sAMAccountName) >= 0) && {'color': 'red'}" ng-click="updateAdminList(teacher)"></i>
-                    <i class="fa fa-key" ng:if="admingroups.indexOf('teachers') >= 0"  ng:style="{'color': 'red'}"></i>
-                    <i class="fa fa-user"></i>
-                    <a href="#">{{teacher.givenName}} <b>{{teacher.sn}}</b></a>
+    <div class="flex-container lmn-container-list-separated info-cards">
+        <div class="panel panel-info projects">
+            <div class="panel-heading">
+                <h4 translate>Teachers</h4>
+            </div>
+            <div class="panel-body">
+                <div ng:repeat="teacher in teachers|filter:search|filter:isMember|orderBy:'Lastname':sortReverse">
+                    <div>
+                        <input ng:if="membergroups.indexOf('teachers') >= 0" type="checkbox" checked disabled>
+                        <span ng:if="membergroups.indexOf('teachers') < 0" id={{teacher.sAMAccountName}} checkbox ng:model="teachersDict[teacher.sAMAccountName].membership"></span>
+                        <i class="fa fa-key" ng:if="admingroups.indexOf('teachers') < 0" ng:style="(admins.indexOf(teacher.sAMAccountName) >= 0) && {'color': 'red'}" ng-click="updateAdminList(teacher)"></i>
+                        <i class="fa fa-key" ng:if="admingroups.indexOf('teachers') >= 0"  ng:style="{'color': 'red'}"></i>
+                        <i class="fa fa-user"></i>
+                        <a href="#">{{teacher.givenName}} <b>{{teacher.sn}}</b></a>
+                    </div>
                 </div>
+            </div>
+            <div class="panel-footer">
+                <i title="{{addgroupadmintext}}" class="fa fa-key" ng:style="(admingroups.indexOf('teachers') >= 0) && {'color': 'red'}" ng-click="updateGroupAdminList('teachers')"></i>
+                <span translate>Teachers as project admin</span><br /> 
+                <i title="{{addgroupmembertext}}" class="fa fa-users" ng:style="(membergroups.indexOf('teachers') >= 0) && {'color': '#f99e15'}" ng-click="updateGroupMemberList('teachers')"></i>
+                <span translate>Add all teachers to the project</span>
             </div>
         </div>
     </div>
@@ -141,7 +151,7 @@
     <br />
     <span><i class="fa fa-key" style="color: red" translate></i>  Project user/group admin</span><br />
     <span><i class="fa fa-key" translate></i>  Clic to insert as a project user/group admin</span><br />
-    <span><i class="fa fa-users" style="color: green" translate></i>  Project group member</span><br />
+    <span><i class="fa fa-users" style="color: #f99e15" translate></i>  Project group member</span><br />
 
     <div class="modal-footer">
         <a class="btn btn-default btn-flat" ng:click="setMembers(studentsDict, teachersDict)" translate>Save</a>

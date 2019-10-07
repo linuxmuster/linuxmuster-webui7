@@ -283,7 +283,7 @@ ul.leaders span + span {
         border-color: #eee;
         margin: 10px;
         text-align: left;
-
+    }  
 
     .panel-heading {
         color: #fff;
@@ -291,8 +291,7 @@ ul.leaders span + span {
         background-color: #233c4c;
         border-color: #f99e15;
         border-width: medium;
-        padding:1px;
-        padding-left:15px;
+        padding:1px 15px;;
     }
 
     .panel-body {
@@ -303,6 +302,26 @@ ul.leaders span + span {
         display:inline-block;
         width:100px;
     }
+
+    > div.projects {
+        min-width: 250px;
+
+        div {
+            margin:0;
+        }
+
+        .panel-heading {
+            cursor:pointer;
+        }
+
+        .panel-body {
+            padding:0 10px;
+        }
+
+        .panel-footer {
+            font-size:0.75em;
+            padding:5px 10px;
+        }
     }
 }
 

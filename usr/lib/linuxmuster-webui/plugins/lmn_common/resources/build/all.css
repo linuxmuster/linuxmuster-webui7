@@ -251,9 +251,16 @@ ul.leaders span + span {
 .info-cards > div.projects .panel-body {
   padding: 0 10px;
 }
+.info-cards > div.projects .panel-body div:first-of-type {
+  margin-top: 10px;
+}
+.info-cards > div.projects .panel-body div:last-of-type {
+  margin-bottom: 10px;
+}
 .info-cards > div.projects .panel-footer {
   font-size: 0.75em;
   padding: 5px 10px;
+  background-color: #e9e9e9;
 }
 .lmn-container-list {
   display: flex;

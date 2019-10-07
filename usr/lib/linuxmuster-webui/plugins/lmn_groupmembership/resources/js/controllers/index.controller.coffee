@@ -249,6 +249,13 @@ angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($sco
                 return true
 
         $scope.isMemberOn = false
+        $scope.toggleMember = () ->
+            $scope.isMemberOn = !$scope.isMemberOn
+            if $scope.isMemberOn
+                $scope.expandAll()
+            else
+                $scope.closeAll()
+
         $scope.isMember = (item) ->
             if $scope.isMemberOn
                 if $scope.membergroups.indexOf(item.sophomorixAdminClass) >= 0

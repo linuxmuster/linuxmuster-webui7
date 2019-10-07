@@ -1,6 +1,8 @@
 <div class="modal-header">
     <a ng-if="sort.id != 'membership'" class="btn btn-default btn-flat pull-right" ng:click="closeAll()" translate>Close all</a>
     <a ng-if="sort.id != 'membership'" class="btn btn-default btn-flat pull-right" ng:click="expandAll()" translate>Expand all</a>
+    <a ng-if="sort.id != 'membership' && !isMemberOn" class="btn btn-default btn-flat pull-right" ng:click="toggleMember()" translate>Show only members</a>
+    <a ng-if="sort.id != 'membership' && isMemberOn" class="btn btn-default btn-flat pull-right" ng:click="toggleMember()" translate>Normal view</a>
     <h4 translate >{{groupName}} Members</h4>
 </div>
 
@@ -9,13 +11,6 @@
 <div style="padding-left: 40px;" ng:show="students != null">
     <div class="input-group">
         <input ng:model="query" type="search" autofocus class="form-control" placeholder="{{filter_placeholder}}" typeahead-min-length="1" />
-
-        <div class="input-group-btn" translate>
-            <button class="btn btn-default" ng:click="isMemberOn = !isMemberOn" ng:style="(isMemberOn) && {'font-weight': 'bold'}">
-                <i class="fa fa-user"></i>
-                <span translate>Only member</span>
-            </button>
-        </div>
 
         <div uib-dropdown class="input-group-btn">
             <button class="btn btn-default" uib-dropdown-toggle>

@@ -382,6 +382,14 @@
       }
     };
     $scope.isMemberOn = false;
+    $scope.toggleMember = function() {
+      $scope.isMemberOn = !$scope.isMemberOn;
+      if ($scope.isMemberOn) {
+        return $scope.expandAll();
+      } else {
+        return $scope.closeAll();
+      }
+    };
     return $scope.isMember = function(item) {
       if ($scope.isMemberOn) {
         if ($scope.membergroups.indexOf(item.sophomorixAdminClass) >= 0) {

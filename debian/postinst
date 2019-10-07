@@ -51,8 +51,11 @@ case "$1" in
     # split ajenti config.yml from webui config.yml if necessary
     $webuietc/split_config_aj.py
     # Set default permissions from true to false
-    echo "set reverse permissions"
-    sed -i "s/: True,/: False,/g" /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/main.py
+    if [ "$(cat /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/main.py | grep True | wc -l)" -gt 0 ] ;then
+        echo "set reverse permissions"
+        sed -i "s/: True,/: False,/g" /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/main.py
+        echo more
+    fi
     echo "set default sophomorix webui rights"
     /usr/sbin/sophomorix-ui
     # start webui

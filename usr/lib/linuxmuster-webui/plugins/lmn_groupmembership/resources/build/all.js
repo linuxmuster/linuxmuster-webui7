@@ -374,7 +374,12 @@
       return $uibModalInstance.dismiss();
     };
     $scope.search = function(item) {
-      return !$scope.query || (item.sophomorixAdminClass.indexOf($scope.query) !== -1) || (item.sn.indexOf($scope.query) !== -1) || (item.givenName.indexOf($scope.query) !== -1);
+      if ($scope.query) {
+        $scope.expandAll();
+        return (item.sophomorixAdminClass.indexOf($scope.query) !== -1) || (item.sn.indexOf($scope.query) !== -1) || (item.givenName.indexOf($scope.query) !== -1);
+      } else {
+        return true;
+      }
     };
     $scope.isMemberOn = false;
     return $scope.isMember = function(item) {

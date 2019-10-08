@@ -4,7 +4,7 @@ angular.module('lm.users').config ($routeProvider) ->
         templateUrl: '/lmn_users:resources/partial/students-list.html'
 
 
-angular.module('lm.users').controller 'LMUsersStudentsListController', ($scope, $http, $location, $route, $uibModal, gettext, notify, lmEncodingMap, messagebox, pageTitle, lmFileEditor, lmFileBackups, filesystem) ->
+angular.module('lm.users').controller 'LMUsersStudentsListController', ($scope, $http, $location, $route, $uibModal, gettext, notify, lmEncodingMap, messagebox, pageTitle, lmFileEditor, lmFileBackups, filesystem, validation) ->
     pageTitle.set(gettext('Students'))
 
     $scope.sorts = [
@@ -54,33 +54,20 @@ angular.module('lm.users').controller 'LMUsersStudentsListController', ($scope, 
 
     $scope.first_save = false
 
-    $scope.validateField = (name, val, isnew) ->
-        valid = $scope["isValid"+name](val) && val
+    $scope.validateField = (name, val, isnew, filter=null) ->
+        # TODO : what valid chars for class, name and course ?
+        # Temporary solution : not filter these fields
+        if name == 'TODO'
+            return ""
+            
+        valid = validation["isValid"+name](val) && val
+        
         if valid
             return ""
         if isnew and !$scope.first_save
             return "has-error-new"
         else
             return "has-error"
-
-    $scope.findval = (attr, val) ->
-        return (dict) ->
-            dict[attr] == val
-    
-    $scope.isValidClass = (cl) ->
-        regExp = /^([0-9a-zA-Z]*)$/ 
-        validClass = regExp.test(cl)
-        return true ## TODO : valid chars for a classname ?
-        
-    $scope.isValidName = (name) ->
-        regExp = /^([0-9a-zA-Z]*)$/ 
-        validName = regExp.test(name)
-        return true ## TODO : valid chars for a name ?
-    
-    $scope.isValidBirthday = (birthday) ->
-        regExp = /^(0[1-9]|[12][0-9]|3[01])[.](0[1-9]|1[012])[.](19|20)\d\d$/ ## Not perfect : allows 31.02.1920, but not so important
-        validBirthday = regExp.test(birthday)
-        return validBirthday
 
     $scope.add = () ->
         if $scope.students.length > 0

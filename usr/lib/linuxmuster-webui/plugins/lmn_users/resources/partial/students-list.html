@@ -61,16 +61,16 @@
            <th></th>
         </tr>
         <tr  ng:repeat="student in students|filter:filter|orderBy:['-_isNew', sort.fx]|page:paging.page:paging.pageSize" ng:show="student.class[0] != '#'">
-            <td ng:if="fields.class.visible" class="form-group" ng:class="validateField('Class', student.class, student._isNew)">
+            <td ng:if="fields.class.visible" class="form-group" ng:class="validateField('TODO', student.class, student._isNew)">
                 <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="student.class" placeholder="Class" class="form-control"/>
             </td>
-            <td ng:if="fields.last_name.visible" class="form-group" ng:class="validateField('Name', student.last_name, student._isNew)">
+            <td ng:if="fields.last_name.visible" class="form-group" ng:class="validateField('TODO', student.last_name, student._isNew)">
                 <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="student.last_name" placeholder="Last name" class="form-control" />
             </td>
-            <td ng:if="fields.first_name.visible" class="form-group" ng:class="validateField('Name', student.first_name, student._isNew)">
+            <td ng:if="fields.first_name.visible" class="form-group" ng:class="validateField('TODO', student.first_name, student._isNew)">
                 <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="student.first_name" placeholder="First name" class="form-control" />
             </td>
-            <td width="150" ng:if="fields.birthday.visible" class="form-group" ng:class="validateField('Birthday', student.birthday, student._isNew)">
+            <td width="150" ng:if="fields.birthday.visible" class="form-group" ng:class="validateField('Date', student.birthday, student._isNew)">
                 <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="student.birthday" placeholder="Birthday" class="form-control"/>
             </td>
             <td width="150" ng:if="fields.id.visible" class="form-group" >

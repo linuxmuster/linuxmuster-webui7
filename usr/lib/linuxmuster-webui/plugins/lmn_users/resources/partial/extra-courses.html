@@ -34,16 +34,16 @@
             <th></th>
         </tr>
         <tr ng:repeat="course in courses|filter:filter|orderBy:sort.fx" ng:show="course.course[0] != '#'">
-            <td class="form-group" ng:class="validateField('Course', course.course, course._isNew)">
+            <td class="form-group" ng:class="validateField('TODO', course.course, course._isNew)">
                 <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="course.course" placeholder="Course" class="form-control" />
             </td>
-            <td class="form-group" ng:class="validateField('Name', course.base_name, course._isNew)">
+            <td class="form-group" ng:class="validateField('TODO', course.base_name, course._isNew)">
                 <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="course.base_name" placeholder="Base name" class="form-control" />
             </td>
             <td class="form-group" ng:class="validateField('Count', course.count, course._isNew)">
                 <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="course.count" placeholder="Count" class="form-control" />
             </td>
-            <td width="150" class="form-group" ng:class="validateField('Birthday', course.birthday, course._isNew)">
+            <td width="150" class="form-group" ng:class="validateField('Date', course.birthday, course._isNew)">
                 <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="course.birthday" placeholder="Birthday" class="form-control" />
             </td>
             <td>

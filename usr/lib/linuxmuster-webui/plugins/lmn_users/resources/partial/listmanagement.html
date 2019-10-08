@@ -287,7 +287,7 @@
                 <td ng:if="extrastudents_fields.birthday.visible" width="150" class="form-group" ng:class="validateField('Date', extrastudent.birthday, student._isNew)">
                     <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="extrastudent.birthday" placeholder="Birthday" class="form-control" />
                 </td>
-                <td ng:if="extrastudents_fields.login.visible" class="form-group" ng:class="validateField('AlphaNum', extrastudent.login, extrastudent._isNew)">
+                <td ng:if="extrastudents_fields.login.visible" class="form-group" ng:class="validateField('AlphaNum', extrastudent.login, extrastudent._isNew, 'extrastudents')">
                     <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="extrastudent.login" placeholder="Login" class="form-control" />
                 </td>
                 <td width="1">

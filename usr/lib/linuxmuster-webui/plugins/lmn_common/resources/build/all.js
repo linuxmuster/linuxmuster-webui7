@@ -394,12 +394,15 @@
     };
     // Test both valid chars and strong password
     this.isValidPassword = function(password) {
-      if (this.validCharPwd(password) === true) {
-        if (this.isStrongPwd(password) === true) {
-          return true;
-        }
+      var strong, valid;
+      valid = this.validCharPwd(password);
+      strong = this.isStrongPwd(password);
+      if ((valid === true) && (strong === true)) {
+        return true;
+      } else if (strong !== true) {
+        return strong;
       } else {
-        return password + gettext(' is not a valid password');
+        return valid;
       }
     };
     // Project names can only have lowercase and digits

@@ -2693,8 +2693,9 @@
       return lmFileBackups.show('/etc/linuxmuster/sophomorix/default-school/extraclasses.csv', $scope.courses_encoding);
     };
     // general functions
-    $scope.validateField = function(name, val, isnew, filter = null) {
-      var valid;
+    $scope.error_msg = {};
+    $scope.validateField = function(name, val, isnew, ev, filter = null) {
+      var test, valid;
       // TODO : what valid chars for class, name and course ?
       // Temporary solution : not filter these fields
       if (name === 'TODO') {
@@ -2705,7 +2706,12 @@
       if (name === 'Password' && !val) {
         return "";
       }
-      valid = validation["isValid" + name](val) && val;
+      test = validation["isValid" + name](val);
+      if (test === true && val) {
+        delete $scope.error_msg[name + "-" + ev];
+        return "";
+      }
+      $scope.error_msg[name + "-" + ev] = test;
       if (filter === 'teachers') {
         valid = valid && ($scope.teachers.filter(validation.findval('login', val)).length < 2);
       } else if (filter === 'extrastudents') {

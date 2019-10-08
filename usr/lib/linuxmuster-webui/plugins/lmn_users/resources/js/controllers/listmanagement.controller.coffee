@@ -342,7 +342,8 @@ angular.module('lm.users').controller 'LMUsersListManagementController', ($scope
 
     # general functions
 
-    $scope.validateField = (name, val, isnew, filter=null) ->
+    $scope.error_msg = {}
+    $scope.validateField = (name, val, isnew, ev, filter=null) ->
         # TODO : what valid chars for class, name and course ?
         # Temporary solution : not filter these fields
         if name == 'TODO'
@@ -352,8 +353,15 @@ angular.module('lm.users').controller 'LMUsersListManagementController', ($scope
         # Desired passwords will be marked if not strong enough, is it necessary for extra courses ?
         if name == 'Password' and !val
             return ""
-            
-        valid = validation["isValid"+name](val) && val
+
+        test = validation["isValid"+name](val)
+
+        if test == true && val
+            delete $scope.error_msg[name+"-"+ev]
+            return ""
+
+        $scope.error_msg[name+"-"+ev] = test
+        
         if filter == 'teachers'
             valid = valid && ($scope.teachers.filter(validation.findval('login', val)).length < 2)
         else if filter == 'extrastudents'

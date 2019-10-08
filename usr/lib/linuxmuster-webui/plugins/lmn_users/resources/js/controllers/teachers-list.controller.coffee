@@ -4,7 +4,7 @@ angular.module('lm.users').config ($routeProvider) ->
         templateUrl: '/lmn_users:resources/partial/teachers-list.html'
 
 
-angular.module('lm.users').controller 'LMUsersTeachersListController', ($scope, $http, $location, $route, $uibModal, gettext, lmEncodingMap, notify, messagebox, pageTitle, lmFileEditor, lmFileBackups) ->
+angular.module('lm.users').controller 'LMUsersTeachersListController', ($scope, $http, $location, $route, $uibModal, gettext, lmEncodingMap, notify, messagebox, pageTitle, lmFileEditor, lmFileBackups, validation) ->
     pageTitle.set(gettext('Teachers'))
 
     $scope.sorts = [
@@ -63,46 +63,27 @@ angular.module('lm.users').controller 'LMUsersTeachersListController', ($scope, 
 
     $scope.first_save = false
 
-    $scope.validateField = (name, val, isnew) ->
-        valid = $scope["isValid"+name](val) && val
+    $scope.validateField = (name, val, isnew, filter=null) ->
+        # TODO : what valid chars for class, name and course ?
+        # Temporary solution : not filter these fields
+        if name == 'TODO'
+            return ""
+
+        # TODO : is pasword necessary for extra course ? Filtered only if not undefined.
+        # Desired passwords will be marked if not strong enough, is it necessary for extra courses ?
+        if name == 'Password' and !val
+            return ""
+            
+        valid = validation["isValid"+name](val) && val
+        if filter == 'teachers'
+            valid = valid && ($scope.teachers.filter(validation.findval('login', val)).length < 2)
+            
         if valid
             return ""
         if isnew and !$scope.first_save
             return "has-error-new"
         else
             return "has-error"
-
-    $scope.findval = (attr, val) ->
-        return (dict) ->
-            dict[attr] == val
-
-    $scope.isValidLogin = (login) ->
-        regExp = /^([0-9a-zA-Z]*)$/ 
-        validLogin = regExp.test(login) && ($scope.teachers.filter($scope.findval('login', login)).length < 2)
-        return true ## TODO : valid chars for a login ?
-
-    $scope.isStrongPwd = (password) ->
-        regExp = /(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*()]|(?=.*\d)).{7,}/
-        validPassword = regExp.test(password)
-        return validPassword
-
-    $scope.validCharPwd =(password) ->
-        regExp = /^[a-zA-Z0-9!@#§+\-$%&*{}()\]\[]+$/
-        validPassword = regExp.test(password)
-        return validPassword
-
-    $scope.isValidPassword = (password) ->
-        return $scope.validCharPwd(password) && $scope.isStrongPwd(password)
-
-    $scope.isValidName = (name) ->
-        regExp = /^([0-9a-zA-Z]*)$/ 
-        validName = regExp.test(name)
-        return true ## TODO : valid chars for a name ?
-
-    $scope.isValidBirthday = (birthday) ->
-        regExp = /^(0[1-9]|[12][0-9]|3[01])[.](0[1-9]|1[012])[.](19|20)\d\d$/ ## Not perfect : allows 31.02.1920, but not so important
-        validBirthday = regExp.test(birthday)
-        return validBirthday
 
     $scope.add = () ->
         if $scope.teachers.length > 0

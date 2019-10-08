@@ -2694,7 +2694,7 @@
     };
     // general functions
     $scope.error_msg = {};
-    $scope.validateField = function(name, val, isnew, ev, filter = null) {
+    $scope.validateField = function(name, val, isnew, ev, tab, filter = null) {
       var test, valid;
       // TODO : what valid chars for class, name and course ?
       // Temporary solution : not filter these fields
@@ -2708,10 +2708,10 @@
       }
       test = validation["isValid" + name](val);
       if (test === true && val) {
-        delete $scope.error_msg[name + "-" + ev];
+        delete $scope.error_msg[name + "-" + tab + "-" + ev];
         return "";
       }
-      $scope.error_msg[name + "-" + ev] = test;
+      $scope.error_msg[name + "-" + tab + "-" + ev] = gettext(tab) + ": " + test;
       if (filter === 'teachers') {
         valid = valid && ($scope.teachers.filter(validation.findval('login', val)).length < 2);
       } else if (filter === 'extrastudents') {

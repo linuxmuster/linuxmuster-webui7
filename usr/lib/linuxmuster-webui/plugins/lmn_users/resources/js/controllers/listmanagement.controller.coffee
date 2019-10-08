@@ -343,7 +343,7 @@ angular.module('lm.users').controller 'LMUsersListManagementController', ($scope
     # general functions
 
     $scope.error_msg = {}
-    $scope.validateField = (name, val, isnew, ev, filter=null) ->
+    $scope.validateField = (name, val, isnew, ev, tab, filter=null) ->
         # TODO : what valid chars for class, name and course ?
         # Temporary solution : not filter these fields
         if name == 'TODO'
@@ -357,10 +357,10 @@ angular.module('lm.users').controller 'LMUsersListManagementController', ($scope
         test = validation["isValid"+name](val)
 
         if test == true && val
-            delete $scope.error_msg[name+"-"+ev]
+            delete $scope.error_msg[name+"-"+tab+"-"+ev]
             return ""
 
-        $scope.error_msg[name+"-"+ev] = test
+        $scope.error_msg[name+"-"+tab+"-"+ev] = gettext(tab) + ": " + test
         
         if filter == 'teachers'
             valid = valid && ($scope.teachers.filter(validation.findval('login', val)).length < 2)

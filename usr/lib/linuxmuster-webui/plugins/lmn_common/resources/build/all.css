@@ -224,21 +224,43 @@ ul.leaders span + span {
   margin: 10px;
   text-align: left;
 }
-.info-cards > div .panel-heading {
+.info-cards .panel-heading {
   color: #fff;
   font-weight: bold;
   background-color: #233c4c;
   border-color: #f99e15;
   border-width: medium;
-  padding: 1px;
-  padding-left: 15px;
+  padding: 1px 15px;
 }
-.info-cards > div .panel-body {
+.info-cards .panel-body {
   padding: 20px;
 }
-.info-cards > div .panel-body > span {
+.info-cards .panel-body > span {
   display: inline-block;
   width: 100px;
+}
+.info-cards > div.projects {
+  min-width: 250px;
+}
+.info-cards > div.projects div {
+  margin: 0;
+}
+.info-cards > div.projects .panel-heading {
+  cursor: pointer;
+}
+.info-cards > div.projects .panel-body {
+  padding: 0 10px;
+}
+.info-cards > div.projects .panel-body div:first-of-type {
+  margin-top: 10px;
+}
+.info-cards > div.projects .panel-body div:last-of-type {
+  margin-bottom: 10px;
+}
+.info-cards > div.projects .panel-footer {
+  font-size: 0.75em;
+  padding: 5px 10px;
+  background-color: #e9e9e9;
 }
 .lmn-container-list {
   display: flex;
@@ -252,11 +274,12 @@ ul.leaders span + span {
 .lmn-container-list-separated {
   display: flex;
   flex-wrap: wrap;
+  align-items: flex-start;
 }
 .lmn-container-list-separated > div {
   text-align: left;
   margin-left: 10px;
-  width: 220px;
+  width: 250px;
   background-color: #f1f1f1;
   margin: 10px;
   border: 1px solid #f1f1f1;

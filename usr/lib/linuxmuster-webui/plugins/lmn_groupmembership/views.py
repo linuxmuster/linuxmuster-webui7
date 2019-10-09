@@ -38,13 +38,12 @@ class Handler(HttpPlugin):
                     membersToAdd = []
                     membersToRemove = []
                     if username in groupAdmins or isAdmin or user_details['sophomorixAdminClass'] in groupAdmingroups:
-                        i = 0
-                        for member in members:
-                            if members[i]['membership'] is True:
-                                membersToAdd.append(members[i]['sAMAccountName'])
-                            else:
-                                membersToRemove.append(members[i]['sAMAccountName'])
-                            i = i + 1
+                        for user, details in members.iteritems():
+                                if details['membership'] is True:
+                                    membersToAdd.append(user)
+                                else:
+                                    membersToRemove.append(user)
+
                         membersToAddCSV = ",".join(membersToAdd)
                         membersToRemoveCSV = ",".join(membersToRemove)
                         sophomorixCommand = ['sophomorix-project', '-p', groupName,
@@ -70,6 +69,24 @@ class Handler(HttpPlugin):
                     groupDetails = lmn_getSophomorixValue(sophomorixCommand, '')
                     if not 'MEMBERS' in groupDetails.keys():
                         groupDetails['MEMBERS'] = {}
+
+                if action == 'get-students':
+                    dn = http_context.json_body()['dn']
+                    sophomorixCommand = ['sophomorix-query', '--group-members', '--class', '-jj']
+                    result = lmn_getSophomorixValue(sophomorixCommand, 'MEMBERS')
+                    classes = []
+                    students_per_class = {cl:[] for cl in result.keys()}
+                    students = {}
+                    for cl,student in result.iteritems():
+                        classes.append({'name':cl,'isVisible':0})
+                        for login,details in student.iteritems():
+                            if details['sophomorixRole'] == 'student':
+                                students_per_class[cl].append(details)
+                                details['membership'] = dn in details['memberOf']
+                                students[login] = details
+
+                    return students_per_class, classes, students
+
             return groupDetails
 
     @url(r'/api/lmn/groupmembership')

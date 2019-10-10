@@ -500,11 +500,13 @@
     };
     $scope.createProject = function() {
       return messagebox.prompt(gettext('Project Name'), '').then(function(msg) {
+        var test;
         if (!msg.value) {
           return;
         }
-        if (!validation.isValidProjectName(msg.value)) {
-          notify.error(gettext('Not a valid name! Only lowercase alphanumeric characters are allowed!'));
+        test = validation.isValidProjectName(msg.value);
+        if (test !== true) {
+          notify.error(gettext(test));
           return;
         }
         return $http.post('/api/lmn/groupmembership', {

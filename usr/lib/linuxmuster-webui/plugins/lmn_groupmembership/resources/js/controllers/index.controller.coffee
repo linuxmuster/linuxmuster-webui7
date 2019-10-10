@@ -340,8 +340,9 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
         messagebox.prompt(gettext('Project Name'), '').then (msg) ->
             if not msg.value
                 return
-            if not validation.isValidProjectName(msg.value)
-                notify.error gettext('Not a valid name! Only lowercase alphanumeric characters are allowed!')
+            test = validation.isValidProjectName(msg.value)
+            if test != true
+                notify.error gettext(test)
                 return
             $http.post('/api/lmn/groupmembership', {action: 'create-project', username:$scope.identity.user, project: msg.value, profil: $scope.identity.profile}).then (resp) ->
                 notify.success gettext('Project Created')

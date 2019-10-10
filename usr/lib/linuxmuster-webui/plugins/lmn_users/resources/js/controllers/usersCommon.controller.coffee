@@ -10,14 +10,16 @@ angular.module('lm.users').controller 'LMNUsersCustomPasswordController', ($scop
                 action = 'set-actual'
             else
                 action = 'set'
+        strong = validation.isStrongPwd($scope.userpw)
+        valid = validation.validCharPwd($scope.userpw)
         if not $scope.userpw
             notify.error gettext("You have to enter a password")
             return
-        if not validation.isStrongPwd($scope.userpw)
-           notify.error gettext("Password too weak")
+        if strong != true
+           notify.error gettext(strong)
            return
-        else if not validation.validCharPwd($scope.userpw)
-           notify.error gettext("Password contains invalid characters")
+        else if valid != true
+           notify.error gettext(valid)
            return
         else
             $http.post('/api/lm/users/password', {users: (x['sAMAccountName'] for x in users), action: action, password: $scope.userpw, type: type}).then (resp) ->

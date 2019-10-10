@@ -1980,7 +1980,7 @@
     $scope.username = users;
     $scope.action = type;
     $scope.save = function(userpw) {
-      var action, x;
+      var action, strong, valid, x;
       if (type == null) {
         action = 'set';
       } else {
@@ -1990,15 +1990,17 @@
           action = 'set';
         }
       }
+      strong = validation.isStrongPwd($scope.userpw);
+      valid = validation.validCharPwd($scope.userpw);
       if (!$scope.userpw) {
         notify.error(gettext("You have to enter a password"));
         return;
       }
-      if (!validation.isStrongPwd($scope.userpw)) {
-        notify.error(gettext("Password too weak"));
+      if (strong !== true) {
+        notify.error(gettext(strong));
         return;
-      } else if (!validation.validCharPwd($scope.userpw)) {
-        notify.error(gettext("Password contains invalid characters"));
+      } else if (valid !== true) {
+        notify.error(gettext(valid));
         return;
       } else {
         $http.post('/api/lm/users/password', {

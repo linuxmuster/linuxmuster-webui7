@@ -416,6 +416,17 @@
       }
       return true;
     };
+    // Linbo start.conf names can only have alphanumeric chars ( lowercase or uppercase ) or _+-
+    this.isValidLinboConf = function(name) {
+      var error_msg, regExp, validName;
+      error_msg = name + gettext(' can only contain alphanumeric chars or _+-');
+      regExp = /^[a-z0-9\+\-_]*$/i;
+      validName = regExp.test(name);
+      if (!validName) {
+        return error_msg;
+      }
+      return true;
+    };
     // Config names can only have alphanumeric chars ( lowercase or uppercase )
     this.isValidAlphaNum = function(name) {
       var error_msg, regExp, validName;

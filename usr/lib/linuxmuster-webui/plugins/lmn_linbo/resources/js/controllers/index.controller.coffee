@@ -468,8 +468,9 @@ angular.module('lm.linbo').controller 'LMLINBOController', ($scope, $http, $uibM
     $scope.createConfig = (example) ->
         messagebox.prompt('New name', '').then (msg) ->
             newName = msg.value
-            if not validation.isValidAlphaNum(newName)
-                notify.error gettext('Not a valid name! Only alphanumeric characters are allowed!')
+            test = validation.isValidLinboConf(newName)
+            if test != true
+                notify.error gettext(test)
                 return
             if newName
                 if "start.conf."+newName in $scope.configs

@@ -561,10 +561,11 @@
     });
     $scope.createConfig = function(example) {
       return messagebox.prompt('New name', '').then(function(msg) {
-        var newName, ref;
+        var newName, ref, test;
         newName = msg.value;
-        if (!validation.isValidAlphaNum(newName)) {
-          notify.error(gettext('Not a valid name! Only alphanumeric characters are allowed!'));
+        test = validation.isValidLinboConf(newName);
+        if (test !== true) {
+          notify.error(gettext(test));
           return;
         }
         if (newName) {

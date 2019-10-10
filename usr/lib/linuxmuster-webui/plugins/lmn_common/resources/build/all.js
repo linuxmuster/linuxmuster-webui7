@@ -373,7 +373,7 @@
     // one digit or special char, and more than 7 chars 
     this.isStrongPwd = function(password) {
       var error_msg, regExp, validPassword;
-      error_msg = password + gettext(' must contain at least one lowercase, one uppercase, one special char or number, and at least 7 chars');
+      error_msg = gettext('Passwords must contain at least one lowercase, one uppercase, one special char or number, and at least 7 chars');
       regExp = /(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*()]|(?=.*\d)).{7,}/;
       validPassword = regExp.test(password);
       if (!validPassword) {
@@ -384,7 +384,7 @@
     // Valid chars for user passwords
     this.validCharPwd = function(password) {
       var error_msg, regExp, validPassword;
-      error_msg = password + gettext(' is not valid. Password can only contains a-zA-Z0-9!@#§+\-$%&*{}()\]\[');
+      error_msg = gettext('Password is not valid. Password can only contains a-zA-Z0-9!@#§+\-$%&*{}()\]\[');
       regExp = /^[a-zA-Z0-9!@#§+\-$%&*{}()\]\[]+$/;
       validPassword = regExp.test(password);
       if (!validPassword) {

@@ -12,13 +12,10 @@ angular.module('lm.auth').controller 'LMNPasswordChangeCtrl', ($scope, $http, pa
         if $scope.newPassword != $scope.newPassword2
             notify.error gettext('Passwords do not match')
             return
-        strong = validation.isStrongPwd($scope.userpw)
-        valid = validation.validCharPwd($scope.userpw)
-        if strong != true
-           notify.error gettext(strong)
-           return
-        else if valid != true
-           notify.error gettext(valid)
+
+        test = validation.isValidPassword($scope.newPassword)
+        if test != true
+           notify.error gettext(test)
            return
 
 

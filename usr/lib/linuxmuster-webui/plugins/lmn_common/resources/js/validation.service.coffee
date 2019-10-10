@@ -10,7 +10,7 @@ angular.module('lm.common').service 'validation', (gettext) ->
     # User passwords must contain at least one lower, one upper,
     # one digit or special char, and more than 7 chars 
     this.isStrongPwd = (password) ->
-        error_msg = password + gettext(' must contain at least one lowercase, one uppercase, one special char or number, and at least 7 chars')
+        error_msg = gettext('Passwords must contain at least one lowercase, one uppercase, one special char or number, and at least 7 chars')
         regExp = /(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*()]|(?=.*\d)).{7,}/
         validPassword = regExp.test(password)
         if !validPassword
@@ -19,7 +19,7 @@ angular.module('lm.common').service 'validation', (gettext) ->
 
     # Valid chars for user passwords
     this.validCharPwd = (password) ->
-        error_msg = password + gettext(' is not valid. Password can only contains a-zA-Z0-9!@#§+\-$%&*{}()\]\[')
+        error_msg = gettext('Password is not valid. Password can only contains a-zA-Z0-9!@#§+\-$%&*{}()\]\[')
         regExp = /^[a-zA-Z0-9!@#§+\-$%&*{}()\]\[]+$/
         validPassword = regExp.test(password)
         if !validPassword

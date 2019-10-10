@@ -26,7 +26,7 @@
   angular.module('lm.auth').controller('LMNPasswordChangeCtrl', function($scope, $http, pageTitle, gettext, notify, validation) {
     pageTitle.set(gettext('Change Password'));
     return $scope.change = function() {
-      var strong, valid;
+      var test;
       if (!$scope.newPassword || !$scope.password) {
         return;
       }
@@ -34,13 +34,9 @@
         notify.error(gettext('Passwords do not match'));
         return;
       }
-      strong = validation.isStrongPwd($scope.userpw);
-      valid = validation.validCharPwd($scope.userpw);
-      if (strong !== true) {
-        notify.error(gettext(strong));
-        return;
-      } else if (valid !== true) {
-        notify.error(gettext(valid));
+      test = validation.isValidPassword($scope.newPassword);
+      if (test !== true) {
+        notify.error(gettext(test));
         return;
       }
       return $http.post('/api/lmn/change-password', {

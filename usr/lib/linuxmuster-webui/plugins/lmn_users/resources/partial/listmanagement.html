@@ -185,7 +185,7 @@
                 <td ng:if="teachers_fields.password.visible" class="form-group" ng:class="validateField('Password', teacher.password, teacher._isNew, $index, 'Teachers')">
                     <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="teacher.password" placeholder="Desired Password" class="form-control" />
                 </td>
-                <td ng:if="teachers_fields.login.visible" class="form-group" ng:class="validateField('AlphaNum', teacher.login, teacher._isNew, $index, 'Teachers', 'teachers')">
+                <td ng:if="teachers_fields.login.visible" class="form-group" ng:class="validateField('Login', teacher.login, teacher._isNew, $index, 'Teachers', 'teachers')">
                     <input type="text" ng:model="teacher.login" ng:disabled="!teacher._isNew" placeholder="Login" class="form-control" />
                 </td>
                 <td width="1">
@@ -294,7 +294,7 @@
                 <td ng:if="extrastudents_fields.birthday.visible" width="150" class="form-group" ng:class="validateField('Date', extrastudent.birthday, student._isNew, $index, 'Extra-Students')">
                     <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="extrastudent.birthday" placeholder="Birthday" class="form-control" />
                 </td>
-                <td ng:if="extrastudents_fields.login.visible" class="form-group" ng:class="validateField('AlphaNum', extrastudent.login, extrastudent._isNew, $index, 'Extra-Students', 'extrastudents')">
+                <td ng:if="extrastudents_fields.login.visible" class="form-group" ng:class="validateField('Login', extrastudent.login, extrastudent._isNew, $index, 'Extra-Students', 'extrastudents')">
                     <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="extrastudent.login" placeholder="Login" class="form-control" />
                 </td>
                 <td width="1">

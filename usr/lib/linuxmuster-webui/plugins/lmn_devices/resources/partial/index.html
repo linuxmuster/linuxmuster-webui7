@@ -64,7 +64,7 @@
             <td ng:if="fields.hostname.visible" class="form-group" ng:class="validateField('Host', device.hostname, device._isNew, $index)">
                 <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.hostname" placeholder="Hostname" class="form-control" />
             </td>
-            <td ng:if="fields.group.visible" class="form-group" ng:class="validateField('TODO', device.group, device._isNew, $index)">
+            <td ng:if="fields.group.visible" class="form-group" ng:class="validateField('LinboConf', device.group, device._isNew, $index)">
                 <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.group" placeholder="Group" class="form-control" />
             </td>
             <td ng:if="fields.mac.visible" class="form-group" ng:class="validateField('Mac', device.mac, device._isNew, $index)">

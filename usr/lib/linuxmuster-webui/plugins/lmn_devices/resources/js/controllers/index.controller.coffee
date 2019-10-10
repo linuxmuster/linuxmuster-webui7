@@ -34,10 +34,6 @@ angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $
     }
 
     $scope.validateField = (name, val, isnew, ev) ->
-        # TODO : valid chars for a group ?
-        if name == 'TODO'
-            return ""
-
         test = validation["isValid"+name](val)
 
         if test == true && val

@@ -42,10 +42,6 @@
     };
     $scope.validateField = function(name, val, isnew, ev) {
       var test;
-      // TODO : valid chars for a group ?
-      if (name === 'TODO') {
-        return "";
-      }
       test = validation["isValid" + name](val);
       if (test === true && val) {
         delete $scope.error_msg[name + "-" + ev];

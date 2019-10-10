@@ -46,7 +46,7 @@ angular.module('lm.common').service 'validation', (gettext) ->
             return error_msg
         return true
 
-    # Linbo start.conf names can only have alphanumeric chars ( lowercase or uppercase ) or _+-
+    # Linbo start.conf names or group names can only have alphanumeric chars ( lowercase or uppercase ) or _+-
     this.isValidLinboConf = (name) ->
         error_msg = name + gettext(' can only contain alphanumeric chars or _+-')
         regExp =  /^[a-z0-9\+\-_]*$/i

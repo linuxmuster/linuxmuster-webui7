@@ -356,7 +356,11 @@ angular.module('lm.users').controller 'LMUsersListManagementController', ($scope
 
         test = validation["isValid"+name](val)
 
-        if test == true && val
+        # Login for teachers may be empty
+        if name == 'Login' and filter == 'teachers' and test == true
+            delete $scope.error_msg[name+"-"+tab+"-"+ev]
+            return ""
+        else if test == true && val
             delete $scope.error_msg[name+"-"+tab+"-"+ev]
             return ""
 

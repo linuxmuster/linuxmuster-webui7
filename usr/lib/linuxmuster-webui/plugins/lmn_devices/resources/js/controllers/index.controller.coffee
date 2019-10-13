@@ -176,6 +176,8 @@ angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $
         $scope.devices.remove(device)
 
     $scope.numErrors = () ->
+        # Remove previous errors
+        angular.element(document.getElementsByClassName("has-error")).removeClass('has-error')
         return document.getElementsByClassName("has-error-new").length > 0
 
     $scope.save = () ->

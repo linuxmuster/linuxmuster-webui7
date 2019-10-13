@@ -209,6 +209,8 @@
       return $scope.devices.remove(device);
     };
     $scope.numErrors = function() {
+      // Remove previous errors
+      angular.element(document.getElementsByClassName("has-error")).removeClass('has-error');
       return document.getElementsByClassName("has-error-new").length > 0;
     };
     $scope.save = function() {
@@ -216,7 +218,7 @@
         $scope.first_save = true;
         $scope.show_errors = true;
         angular.element(document.getElementsByClassName("has-error-new")).addClass('has-error');
-        notify.error('Required data missing');
+        notify.error(gettext('Please check the errors.'));
         return;
       }
       return $http.post('/api/lm/devices', $scope.devices).then(function() {
@@ -228,7 +230,7 @@
         $scope.first_save = true;
         $scope.show_errors = true;
         angular.element(document.getElementsByClassName("has-error-new")).addClass('has-error');
-        notify.error('Required data missing');
+        notify.error(gettext('Please check the errors.'));
         return;
       }
       return $scope.save().then(function() {

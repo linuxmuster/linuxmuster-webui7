@@ -2,14 +2,21 @@
 (function() {
   angular.module('lm.auth', ['core']);
 
-  angular.module('lm.auth').run(function(customization, gettext, identity) {
-    return customization.plugins.core.extraProfileMenuItems = [
-      {
-        url: '/view/lmn/change-password',
-        name: gettext('Change password'),
-        icon: 'key'
-      }
-    ];
+  angular.module('lm.auth').run(function(customization, $http, identity, gettextCatalog, config) {
+    var lang;
+    lang = config.data.language || 'en';
+    return $http.get(`/resources/all.locale.js?lang=${lang}`).then(function(rq) {
+      var expr;
+      gettextCatalog.setStrings(lang, rq.data);
+      expr = rq.data['Change password'];
+      return customization.plugins.core.extraProfileMenuItems = [
+        {
+          url: '/view/lmn/change-password',
+          name: expr,
+          icon: 'key'
+        }
+      ];
+    });
   });
 
 }).call(this);

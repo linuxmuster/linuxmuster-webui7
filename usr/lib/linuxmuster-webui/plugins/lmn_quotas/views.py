@@ -24,25 +24,25 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_quotas(self, http_context):
         if http_context.method == 'GET':
-            lines = subprocess.check_output(['sophomorix-quota', '-i']).splitlines()
-            lines = [l for l in lines if l.startswith("|")]
-            lines = lines[1:]
-            quotas = [{}, {}] # Students, teachers
-            for line in lines:
-                name       = line.split('|')[1].strip().split('(')[0]
-                quota_type = line.split('|')[2].strip().strip("*")
-                value      = int(line.split('|')[3].strip().strip("*")) ## TEST INT
-                if 'teacher' in line:
-                    if name not in quotas[1]:
-                        quotas[1][name] = {}
-                    
-                    quotas[1][name][quota_type] = value
+            students = {}
+            teachers = {}
+            sophomorixCommand = ['sophomorix-quota', '-i', '-jj']
+            result = lmn_getSophomorixValue(sophomorixCommand, 'QUOTA/USERS')
+            for login, values in result.items():
+                # Assuming the values are int ... bad idea
+                tmpDict = {
+                        'DEFLT':int(values['SHARES']['default-school']['CALC']),
+                        'CQ':int(values['CLOUDQUOTA']['CALC_MB']),
+                        'GLOBAL':int(values['SHARES']['linuxmuster-global']['CALC']),
+                        'MQ':int(values['MAILQUOTA']['CALC']),
+                        'displayName':' '.join(reversed(values['MAIL']['displayName'].split()))
+                        }
+                if values['sophomorixRole'] == 'student':
+                    students[login] = tmpDict
                 else:
-                    if name not in quotas[0]:
-                        quotas[0][name] = {}
-                    
-                    quotas[0][name][quota_type] = value
-            return quotas
+                    teachers[login] = tmpDict
+            return [students,teachers]
+
         if http_context.method == 'POST':
             lmn_backup_file(path)
             with open(path, 'w') as f:

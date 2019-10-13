@@ -83,7 +83,7 @@
                 </tr>
                 <tr ng:repeat="(login,teacher) in teachers">
                     <td>
-                        {{getName(login)}}
+                        {{teacher.displayName}}
                     </td>
                     <td>
                         <input type="number" ng:model="teacher.DEFLT" class="form-control" />
@@ -116,7 +116,7 @@
                         {{login}}
                     </td>
                     <td>
-                        {{getName(login)}}
+                        {{quota.displayName}}
                     </td>
                     <td>
                         <input type="number" ng:model="quota.DEFLT" class="form-control" />

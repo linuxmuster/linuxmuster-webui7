@@ -84,18 +84,6 @@ angular.module('lm.quotas').controller 'LMQuotasController', ($scope, $http, $ui
     $scope.isDefaultQuota = (login) ->
         return login in (x.login for x in $scope.defaultQuotas)
 
-    $scope.NameCache = {}
-
-    $scope.getName = (login) ->
-        if not angular.isDefined($scope.NameCache[login])
-            $scope.NameCache[login] = '...'
-            $http.get("/api/lm/ldap-search?login=#{login}").then (resp) ->
-                if resp.data
-                    $scope.NameCache[login] = resp.data.sn + " " + resp.data.givenName
-                else
-                    $scope.NameCache[login] = login
-        return $scope.NameCache[login]
-
     $scope.remove = (login) ->
         delete $scope.quotas[login]
 

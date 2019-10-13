@@ -27,6 +27,7 @@ angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $
     pageTitle.set(gettext('Devices'))
 
     $scope.error_msg = {}
+    $scope.show_errors = false
     $scope.first_save = false
     $scope.trans ={
         duplicate: gettext('Duplicate')
@@ -41,10 +42,11 @@ angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $
             return ""
 
         $scope.error_msg[name+"-"+ev] = test
-        if isnew and !$scope.first_save
-            return "has-error-new"
-        else
-            return "has-error"
+        return "has-error-new"
+        #if isnew and !$scope.first_save
+            #return "has-error-new"
+        #else
+            #return "has-error"
 
     $scope.sorts = [
         {
@@ -166,11 +168,12 @@ angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $
         $scope.devices.remove(device)
 
     $scope.numErrors = () ->
-        return document.getElementsByClassName("has-error").length + document.getElementsByClassName("has-error-new").length > 0
+        return document.getElementsByClassName("has-error-new").length > 0
 
     $scope.save = () ->
         if $scope.numErrors()
             $scope.first_save = true
+            $scope.show_errors = true
             angular.element(document.getElementsByClassName("has-error-new")).addClass('has-error')
             notify.error('Required data missing')
             return
@@ -179,6 +182,8 @@ angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $
 
     $scope.saveAndImport = () ->
         if $scope.numErrors()
+            $scope.first_save = true
+            $scope.show_errors = true
             angular.element(document.getElementsByClassName("has-error-new")).addClass('has-error')
             notify.error('Required data missing')
             return

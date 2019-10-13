@@ -35,6 +35,7 @@
   angular.module('lm.devices').controller('LMDevicesController', function($scope, $http, $uibModal, $route, gettext, notify, pageTitle, lmFileEditor, lmFileBackups, validation) {
     pageTitle.set(gettext('Devices'));
     $scope.error_msg = {};
+    $scope.show_errors = false;
     $scope.first_save = false;
     $scope.trans = {
       duplicate: gettext('Duplicate'),
@@ -48,12 +49,12 @@
         return "";
       }
       $scope.error_msg[name + "-" + ev] = test;
-      if (isnew && !$scope.first_save) {
-        return "has-error-new";
-      } else {
-        return "has-error";
-      }
+      return "has-error-new";
     };
+    //if isnew and !$scope.first_save
+    //return "has-error-new"
+    //else
+    //return "has-error"
     $scope.sorts = [
       {
         name: gettext('Room'),
@@ -200,11 +201,12 @@
       return $scope.devices.remove(device);
     };
     $scope.numErrors = function() {
-      return document.getElementsByClassName("has-error").length + document.getElementsByClassName("has-error-new").length > 0;
+      return document.getElementsByClassName("has-error-new").length > 0;
     };
     $scope.save = function() {
       if ($scope.numErrors()) {
         $scope.first_save = true;
+        $scope.show_errors = true;
         angular.element(document.getElementsByClassName("has-error-new")).addClass('has-error');
         notify.error('Required data missing');
         return;
@@ -215,6 +217,8 @@
     };
     $scope.saveAndImport = function() {
       if ($scope.numErrors()) {
+        $scope.first_save = true;
+        $scope.show_errors = true;
         angular.element(document.getElementsByClassName("has-error-new")).addClass('has-error');
         notify.error('Required data missing');
         return;

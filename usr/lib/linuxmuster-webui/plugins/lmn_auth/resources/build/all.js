@@ -2,11 +2,11 @@
 (function() {
   angular.module('lm.auth', ['core']);
 
-  angular.module('lm.auth').run(function(customization, identity) {
+  angular.module('lm.auth').run(function(customization, gettext, identity) {
     return customization.plugins.core.extraProfileMenuItems = [
       {
         url: '/view/lmn/change-password',
-        name: 'Change password',
+        name: gettext('Change password'),
         icon: 'key'
       }
     ];

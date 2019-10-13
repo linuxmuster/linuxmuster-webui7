@@ -70,7 +70,7 @@
                         <span id={{classe.groupname}} checkbox ng:model="classe.membership" ng:class="{changed: classe.changed}" ng-click='groupChanged(classe.groupname)'></span>
                         <i class="fa fa-users"></i>
                         <a href="#" ng-click='showGroupDetails($index, classe.type, classe.groupname)'>
-                            <span translate>{{classe.typename}}</span>
+                            <span>{{classe.typename}}</span>
                             <b style="word-wrap: break-word; -ms-word-break: break-all">{{classe.groupname}}</b>
                         </a>
                     </div>
@@ -91,7 +91,7 @@
                         <span id={{printergroup.groupname}} checkbox ng:model="printergroup.membership" ng:class="{changed: printergroup.changed}" ng-click='groupChanged(printergroup.groupname)'></span>
                         <i class="fa fa-fw fa-print"></i>
                         <a href="#" ng-click='showGroupDetails($index, printergroup.type, printergroup.groupname)'>
-                            <span translate>{{printergroup.typename}}</span>
+                            <span>{{printergroup.typename}}</span>
                             <b style="word-wrap: break-word; -ms-word-break: break-all">{{printergroup.groupname}}</b>
                         </a>
                         </a>
@@ -112,7 +112,7 @@
                         <span id={{project.groupname}} checkbox ng:show="projectIsJoinable(project)" ng:class="{changed: project.changed}" ng:model="project.membership" ng-click='groupChanged(project.groupname)'></span>
                         <i class="fa fa-flask"></i>
                         <a href="#" ng-click='showGroupDetails($index, project.type, project.groupname)'>
-                            <span translate>{{project.typename}}</span>
+                            <span>{{project.typename}}</span>
                             <b style="word-wrap: break-word; -ms-word-break: break-all">{{project.groupname}}</b>
                         </a>
                     </div>

@@ -28,20 +28,28 @@ angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $
 
     $scope.error_msg = {}
     $scope.show_errors = false
+    $scope.emptyCells = {}
     $scope.first_save = false
     $scope.trans ={
         duplicate: gettext('Duplicate')
         remove:  gettext('Remove')
     }
 
+    $scope.dictLen = (d) ->
+        return Object.keys(d).length
+
     $scope.validateField = (name, val, isnew, ev) ->
         test = validation["isValid"+name](val)
 
         if test == true && val
             delete $scope.error_msg[name+"-"+ev]
+            delete $scope.emptyCells[name+"-"+ev]
             return ""
+        else if !val
+            $scope.emptyCells[name+"-"+ev] = 1
+        else
+            $scope.error_msg[name+"-"+ev] = test
 
-        $scope.error_msg[name+"-"+ev] = test
         return "has-error-new"
         #if isnew and !$scope.first_save
             #return "has-error-new"
@@ -175,7 +183,7 @@ angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $
             $scope.first_save = true
             $scope.show_errors = true
             angular.element(document.getElementsByClassName("has-error-new")).addClass('has-error')
-            notify.error('Required data missing')
+            notify.error(gettext('Please check the errors.'))
             return
         return $http.post('/api/lm/devices', $scope.devices).then () ->
             notify.success gettext('Saved')
@@ -185,7 +193,7 @@ angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $
             $scope.first_save = true
             $scope.show_errors = true
             angular.element(document.getElementsByClassName("has-error-new")).addClass('has-error')
-            notify.error('Required data missing')
+            notify.error(gettext('Please check the errors.'))
             return
         $scope.save().then () ->
             $uibModal.open(

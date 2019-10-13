@@ -36,19 +36,27 @@
     pageTitle.set(gettext('Devices'));
     $scope.error_msg = {};
     $scope.show_errors = false;
+    $scope.emptyCells = {};
     $scope.first_save = false;
     $scope.trans = {
       duplicate: gettext('Duplicate'),
       remove: gettext('Remove')
+    };
+    $scope.dictLen = function(d) {
+      return Object.keys(d).length;
     };
     $scope.validateField = function(name, val, isnew, ev) {
       var test;
       test = validation["isValid" + name](val);
       if (test === true && val) {
         delete $scope.error_msg[name + "-" + ev];
+        delete $scope.emptyCells[name + "-" + ev];
         return "";
+      } else if (!val) {
+        $scope.emptyCells[name + "-" + ev] = 1;
+      } else {
+        $scope.error_msg[name + "-" + ev] = test;
       }
-      $scope.error_msg[name + "-" + ev] = test;
       return "has-error-new";
     };
     //if isnew and !$scope.first_save

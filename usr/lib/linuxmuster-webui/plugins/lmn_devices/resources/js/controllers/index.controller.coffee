@@ -48,13 +48,10 @@ angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $
         else if !val
             $scope.emptyCells[name+"-"+ev] = 1
         else
-            $scope.error_msg[name+"-"+ev] = test
+            if Object.values($scope.error_msg).indexOf(test) == -1
+                $scope.error_msg[name+"-"+ev] = test
 
         return "has-error-new"
-        #if isnew and !$scope.first_save
-            #return "has-error-new"
-        #else
-            #return "has-error"
 
     $scope.sorts = [
         {

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ajenti\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-13 13:25+0200\n"
+"POT-Creation-Date: 2019-10-15 10:48+0200\n"
 "PO-Revision-Date: 2016-05-21 17:19-0400\n"
 "Last-Translator: eugenepankov <john.pankov@gmail.com>\n"
 "Language-Team: Slovak\n"
@@ -16,39 +16,39 @@ msgstr ""
 "X-Crowdin-Language: sk\n"
 "X-Crowdin-File: /2.0/lmn_printers.po\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_printers/resources/partial/printer.modal.html:25
+#: lmn_printers/resources/partial/printer.modal.html:25
 msgid "Add"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_printers/resources/partial/printer.modal.html:33
+#: lmn_printers/resources/partial/printer.modal.html:33
 msgid "Close"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_printers/resources/partial/printer.modal.html:16
+#: lmn_printers/resources/partial/printer.modal.html:16
 msgid "No filter is set. All devices can use this printer."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_printers/resources/partial/index.html:16
-#: usr/lib/linuxmuster-webui/plugins/lmn_printers/resources/partial/printer.modal.html:32
+#: lmn_printers/resources/partial/index.html:16
+#: lmn_printers/resources/partial/printer.modal.html:32
 msgid "Save"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_printers/resources/partial/printer.modal.html:23
+#: lmn_printers/resources/partial/printer.modal.html:23
 msgid "Type to search..."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_printers/resources/partial/printer.modal.html:2
+#: lmn_printers/resources/partial/printer.modal.html:2
 msgid "{{printer.name}}"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_printers/main.py:22
+#: lmn_printers/main.py:22
 msgid "Configure printers"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_printers/resources/js/controllers/index.controller.coffee:26
+#: lmn_printers/resources/js/controllers/index.controller.coffee:26
 msgid "Printers"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_printers/resources/js/controllers/index.controller.coffee:90
+#: lmn_printers/resources/js/controllers/index.controller.coffee:90
 msgid "Saved"
 msgstr ""

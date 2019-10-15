@@ -163,7 +163,7 @@ angular.module('lm.users').controller 'LMUsersListManagementController', ($scope
     $scope.teachers_first_save = false
     $scope.students_first_save = false
     $scope.extrastudents_first_save = false
-    $scope.courses= false
+    $scope.courses_first_save= false
 
 
 
@@ -273,36 +273,44 @@ angular.module('lm.users').controller 'LMUsersListManagementController', ($scope
     $scope.students_save = () ->
         if $scope.numErrors()
             $scope.students_first_save = true
+            $scope.show_errors = true
             angular.element(document.getElementsByClassName("has-error-new")).addClass('has-error')
-            notify.error('Required data missing')
+            notify.error(gettext('Please check the errors.'))
             return
+        $scope.show_errors = false
         return $http.post("/api/lm/users/students-list?encoding=#{$scope.students_encoding}", $scope.students).then () ->
             notify.success gettext('Saved')
 
     $scope.teachers_save = () ->
         if $scope.numErrors()
            $scope.teachers_first_save = true
+           $scope.show_errors = true
            angular.element(document.getElementsByClassName("has-error-new")).addClass('has-error')
-           notify.error('Required data missing')
+           notify.error(gettext('Please check the errors.'))
            return
+        $scope.show_errors = false
         return $http.post("/api/lm/users/teachers-list?encoding=#{$scope.teachers_encoding}", $scope.teachers).then () ->
            notify.success gettext('Saved')
 
     $scope.extrastudents_save = () ->
         if $scope.numErrors()
            $scope.extrastudents_first_save = true
+           $scope.show_errors = true
            angular.element(document.getElementsByClassName("has-error-new")).addClass('has-error')
-           notify.error('Required data missing')
+           notify.error(gettext('Please check the errors.'))
            return
+        $scope.show_errors = false
         return $http.post("/api/lm/users/extra-students?encoding=#{$scope.extrastudents_encoding}", $scope.extrastudents).then () ->
            notify.success 'Saved'
 
     $scope.courses_save = () ->
         if $scope.numErrors()
-           $scope.first_save = true
+           $scope.courses_first_save = true
+           $scope.show_errors = true
            angular.element(document.getElementsByClassName("has-error-new")).addClass('has-error')
-           notify.error('Required data missing')
+           notify.error(gettext('Please check the errors.'))
            return
+        $scope.show_errors = false
         return $http.post("/api/lm/users/extra-courses?encoding=#{$scope.courses_encoding}", $scope.courses).then () ->
            notify.success gettext('Saved')
 
@@ -343,11 +351,22 @@ angular.module('lm.users').controller 'LMUsersListManagementController', ($scope
     # general functions
 
     $scope.error_msg = {}
+    $scope.show_errors = false
+    $scope.emptyCells = {}
+
+    $scope.dictLen = (d) ->
+        return Object.keys(d).length
+
     $scope.validateField = (name, val, isnew, ev, tab, filter=null) ->
         # TODO : what valid chars for class, name and course ?
         # Temporary solution : not filter these fields
-        if name == 'TODO'
-            return ""
+        if name.startsWith('TODO')
+            if !val
+                $scope.emptyCells[name+"-"+tab+"-"+ev] = 1
+                return "has-error-new"
+            else
+                delete $scope.emptyCells[name+"-"+tab+"-"+ev]
+                return ""
 
         # TODO : is pasword necessary for extra course ? Filtered only if not undefined.
         # Desired passwords will be marked if not strong enough, is it necessary for extra courses ?
@@ -356,31 +375,42 @@ angular.module('lm.users').controller 'LMUsersListManagementController', ($scope
 
         test = validation["isValid"+name](val)
 
+        if filter == 'teachers'
+            test = test && ($scope.teachers.filter(validation.findval('login', val)).length < 2)
+        else if filter == 'extrastudents'
+            test = test && ($scope.extrastudents.filter(validation.findval('login', val)).length < 2)
+
         # Login for teachers may be empty
         if name == 'Login' and filter == 'teachers' and test == true
             delete $scope.error_msg[name+"-"+tab+"-"+ev]
+            delete $scope.emptyCells[name+"-"+tab+"-"+ev]
             return ""
         else if test == true && val
             delete $scope.error_msg[name+"-"+tab+"-"+ev]
+            delete $scope.emptyCells[name+"-"+tab+"-"+ev]
             return ""
-
-        $scope.error_msg[name+"-"+tab+"-"+ev] = gettext(tab) + ": " + test
-        
-        if filter == 'teachers'
-            valid = valid && ($scope.teachers.filter(validation.findval('login', val)).length < 2)
-        else if filter == 'extrastudents'
-            valid = valid && ($scope.extrastudents.filter(validation.findval('login', val)).length < 2)
-        if valid
-            return ""
-        if isnew and !$scope.first_save
-            return "has-error-new"
+        else if !val
+            delete $scope.error_msg[name+"-"+tab+"-"+ev]
+            $scope.emptyCells[name+"-"+tab+"-"+ev] = 1
         else
-            return "has-error"
+            delete $scope.emptyCells[name+"-"+tab+"-"+ev]
+            if Object.values($scope.error_msg).indexOf(gettext(tab) + ": " + test) == -1
+                $scope.error_msg[name+"-"+tab+"-"+ev] = gettext(tab) + ": " + test
+
+        return "has-error-new"
 
     $scope.numErrors = () ->
-        return document.getElementsByClassName("has-error").length + document.getElementsByClassName("has-error-new").length > 0
+        angular.element(document.getElementsByClassName("has-error")).removeClass('has-error')
+        return document.getElementsByClassName("has-error-new").length > 0
 
     $scope.saveAndCheck = (name) ->
+        if $scope.numErrors()
+            $scope[name+"_first_save"] = true
+            $scope.show_errors = true
+            angular.element(document.getElementsByClassName("has-error-new")).addClass('has-error')
+            notify.error(gettext('Please check the errors.'))
+            return
+        $scope.show_errors = false
         $scope[name+"_save"]().then () ->
             $uibModal.open(
                 templateUrl: '/lmn_users:resources/partial/check.modal.html'

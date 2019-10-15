@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.103-1) lmn7; urgency=medium 
+
+  * Current snapshot build a02ea821cfccff3026c9937b61035d1b095a939c
+   *     Update translations.
+
+ -- Andreas Till <andreas.till@netzint.de> Tue Oct 15 09:44:30 UTC 2019
+
 linuxmuster-webui7 (1.0.102-1) lmn7; urgency=medium 
 
   * Current snapshot build 5cd4805d5d0c7681b0be9449c7068df6cad16929

@@ -4,7 +4,7 @@
 
 <div ng:show="devices != null">
 
-    <div id="error_messages" class="alert alert-danger" ng:show="show_errors">
+    <div id="error_messages" class="alert alert-danger" ng:show="show_errors && dictLen(emptyCells) + dictLen(error_msg)> 0">
         <ul>
             <li ng:show="dictLen(emptyCells) > 0">{{dictLen(emptyCells)}} <span translate>empty cells</span>.</li>
             <li ng:repeat="(id, err) in error_msg">{{err}}</li>

@@ -187,6 +187,7 @@ angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $
             angular.element(document.getElementsByClassName("has-error-new")).addClass('has-error')
             notify.error(gettext('Please check the errors.'))
             return
+        $scope.show_errors = false
         return $http.post('/api/lm/devices', $scope.devices).then () ->
             notify.success gettext('Saved')
 
@@ -197,6 +198,7 @@ angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $
             angular.element(document.getElementsByClassName("has-error-new")).addClass('has-error')
             notify.error(gettext('Please check the errors.'))
             return
+        $scope.show_errors = false
         $scope.save().then () ->
             $uibModal.open(
                 templateUrl: '/lmn_devices:resources/partial/apply.modal.html'

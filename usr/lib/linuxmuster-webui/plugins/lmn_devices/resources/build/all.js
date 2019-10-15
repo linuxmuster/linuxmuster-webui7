@@ -221,6 +221,7 @@
         notify.error(gettext('Please check the errors.'));
         return;
       }
+      $scope.show_errors = false;
       return $http.post('/api/lm/devices', $scope.devices).then(function() {
         return notify.success(gettext('Saved'));
       });
@@ -233,6 +234,7 @@
         notify.error(gettext('Please check the errors.'));
         return;
       }
+      $scope.show_errors = false;
       return $scope.save().then(function() {
         return $uibModal.open({
           templateUrl: '/lmn_devices:resources/partial/apply.modal.html',

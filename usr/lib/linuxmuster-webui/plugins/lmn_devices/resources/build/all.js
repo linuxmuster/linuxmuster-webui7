@@ -53,8 +53,10 @@
         delete $scope.emptyCells[name + "-" + ev];
         return "";
       } else if (!val) {
+        delete $scope.error_msg[name + "-" + ev];
         $scope.emptyCells[name + "-" + ev] = 1;
       } else {
+        delete $scope.emptyCells[name + "-" + ev];
         if (Object.values($scope.error_msg).indexOf(test) === -1) {
           $scope.error_msg[name + "-" + ev] = test;
         }

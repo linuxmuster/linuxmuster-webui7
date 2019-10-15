@@ -2467,6 +2467,10 @@
     $scope.students_first_save = false;
     $scope.extrastudents_first_save = false;
     $scope.courses_first_save = false;
+    $scope.teachers = '';
+    $scope.students = '';
+    $scope.extrastudents = '';
+    $scope.courses = '';
     $scope.students_add = function() {
       if ($scope.students.length > 0) {
         $scope.paging.page = Math.floor(($scope.students.length - 1) / $scope.paging.pageSize) + 1;
@@ -2520,75 +2524,83 @@
       return $scope.courses.remove(course);
     };
     $scope.getstudents = function() {
-      return $http.get('/api/lm/schoolsettings').then(function(resp) {
-        var school;
-        school = 'default-school';
-        $scope.students_encoding = resp.data["userfile.students.csv"].encoding;
-        if ($scope.students_encoding === 'auto') {
-          $http.post('/api/lmn/schoolsettings/determine-encoding', {
-            path: '/etc/linuxmuster/sophomorix/' + school + '/students.csv'
-          }).then(function(response) {
-            if (response.data === 'unknown') {
-              return $scope.students_encoding = 'utf-8';
-            } else {
-              return $scope.students_encoding = response.data;
-            }
+      if (!$scope.students) {
+        return $http.get('/api/lm/schoolsettings').then(function(resp) {
+          var school;
+          school = 'default-school';
+          $scope.students_encoding = resp.data["userfile.students.csv"].encoding;
+          if ($scope.students_encoding === 'auto') {
+            $http.post('/api/lmn/schoolsettings/determine-encoding', {
+              path: '/etc/linuxmuster/sophomorix/' + school + '/students.csv'
+            }).then(function(response) {
+              if (response.data === 'unknown') {
+                return $scope.students_encoding = 'utf-8';
+              } else {
+                return $scope.students_encoding = response.data;
+              }
+            });
+          }
+          return $http.get(`/api/lm/users/students-list?encoding=${$scope.students_encoding}`).then(function(resp) {
+            return $scope.students = resp.data;
           });
-        }
-        return $http.get(`/api/lm/users/students-list?encoding=${$scope.students_encoding}`).then(function(resp) {
-          return $scope.students = resp.data;
         });
-      });
+      }
     };
     $scope.getteachers = function() {
-      return $http.get('/api/lm/schoolsettings').then(function(resp) {
-        var school;
-        school = 'default-school';
-        $scope.teachers_encoding = resp.data["userfile.teachers.csv"].encoding;
-        if ($scope.teachers_encoding === 'auto') {
-          $http.post('/api/lmn/schoolsettings/determine-encoding', {
-            path: '/etc/linuxmuster/sophomorix/' + school + '/teachers.csv'
-          }).then(function(response) {
-            if (response.data === 'unknown') {
-              return $scope.teachers_encoding = 'utf-8';
-            } else {
-              return $scope.teachers_encoding = response.data;
-            }
+      if (!$scope.teachers) {
+        return $http.get('/api/lm/schoolsettings').then(function(resp) {
+          var school;
+          school = 'default-school';
+          $scope.teachers_encoding = resp.data["userfile.teachers.csv"].encoding;
+          if ($scope.teachers_encoding === 'auto') {
+            $http.post('/api/lmn/schoolsettings/determine-encoding', {
+              path: '/etc/linuxmuster/sophomorix/' + school + '/teachers.csv'
+            }).then(function(response) {
+              if (response.data === 'unknown') {
+                return $scope.teachers_encoding = 'utf-8';
+              } else {
+                return $scope.teachers_encoding = response.data;
+              }
+            });
+          }
+          return $http.get(`/api/lm/users/teachers-list?encoding=${$scope.students_encoding}`).then(function(resp) {
+            return $scope.teachers = resp.data;
           });
-        }
-        return $http.get(`/api/lm/users/teachers-list?encoding=${$scope.students_encoding}`).then(function(resp) {
-          return $scope.teachers = resp.data;
         });
-      });
+      }
     };
     $scope.getextrastudents = function() {
-      return $http.get('/api/lm/schoolsettings').then(function(resp) {
-        var school;
-        school = 'default-school';
-        $scope.extrastudents_encoding = resp.data["userfile.extrastudents.csv"].encoding;
-        if ($scope.extrastudents_encoding === 'auto') {
-          $http.post('/api/lmn/schoolsettings/determine-encoding', {
-            path: '/etc/linuxmuster/sophomorix/' + school + '/extrastudents.csv'
-          }).then(function(response) {
-            if (response.data === 'unknown') {
-              return $scope.extrastudents_encoding = 'utf-8';
-            } else {
-              return $scope.extrastudents_encoding = response.data;
-            }
+      if (!$scope.extrastudents) {
+        return $http.get('/api/lm/schoolsettings').then(function(resp) {
+          var school;
+          school = 'default-school';
+          $scope.extrastudents_encoding = resp.data["userfile.extrastudents.csv"].encoding;
+          if ($scope.extrastudents_encoding === 'auto') {
+            $http.post('/api/lmn/schoolsettings/determine-encoding', {
+              path: '/etc/linuxmuster/sophomorix/' + school + '/extrastudents.csv'
+            }).then(function(response) {
+              if (response.data === 'unknown') {
+                return $scope.extrastudents_encoding = 'utf-8';
+              } else {
+                return $scope.extrastudents_encoding = response.data;
+              }
+            });
+          }
+          return $http.get(`/api/lm/users/extra-students?encoding=${$scope.extrastudents_encoding}`).then(function(resp) {
+            return $scope.extrastudents = resp.data;
           });
-        }
-        return $http.get(`/api/lm/users/extra-students?encoding=${$scope.extrastudents_encoding}`).then(function(resp) {
-          return $scope.extrastudents = resp.data;
         });
-      });
+      }
     };
     $scope.getcourses = function() {
-      return $http.get('/api/lm/schoolsettings').then(function(resp) {
-        $scope.courses_encoding = lmEncodingMap[resp.data.encoding_courses_extra] || 'ISO8859-1';
-        return $http.get(`/api/lm/users/extra-courses?encoding=${$scope.courses_encoding}`).then(function(resp) {
-          return $scope.courses = resp.data;
+      if (!$scope.courses) {
+        return $http.get('/api/lm/schoolsettings').then(function(resp) {
+          $scope.courses_encoding = lmEncodingMap[resp.data.encoding_courses_extra] || 'ISO8859-1';
+          return $http.get(`/api/lm/users/extra-courses?encoding=${$scope.courses_encoding}`).then(function(resp) {
+            return $scope.courses = resp.data;
+          });
         });
-      });
+      }
     };
     $scope.students_editCSV = function() {
       return lmFileEditor.show('/etc/linuxmuster/sophomorix/default-school/students.csv', $scope.students_encoding).then(function() {
@@ -2755,7 +2767,6 @@
     };
     $scope.saveAndCheck = function(name) {
       if ($scope.numErrors()) {
-        console.log($scope.emptyCells);
         $scope[name + "_first_save"] = true;
         $scope.show_errors = true;
         angular.element(document.getElementsByClassName("has-error-new")).addClass('has-error');
@@ -2771,12 +2782,9 @@
         });
       });
     };
-    // TODO: Do this on tab open
     // TODO: Add paging
-    $scope.getstudents();
-    $scope.getteachers();
-    $scope.getextrastudents();
-    return $scope.getcourses();
+    // Loading first tab
+    return $scope.getstudents();
   });
 
 }).call(this);

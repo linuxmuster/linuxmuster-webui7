@@ -9,7 +9,7 @@
     </div>
     
     <uib:tabset>
-    <uib:tab heading="{{'Students'|translate}}">
+    <uib:tab heading="{{'Students'|translate}}" ng-click="getstudents()">
     <br/>
 
     <progress-spinner ng:show="students == null"></progress-spinner>
@@ -117,7 +117,7 @@
     <div class="floating-toolbar-padder"></div>
     </uib:tab>
 
-    <uib:tab heading="{{'Teachers'|translate}}">
+    <uib:tab heading="{{'Teachers'|translate}}" ng-click="getteachers()">
     <br/>
 
     <progress-spinner ng:show="teachers == null"></progress-spinner>
@@ -220,7 +220,7 @@
 
 
     </uib:tab>
-    <uib:tab heading="{{'Extra-Students'|translate}}">
+    <uib:tab heading="{{'Extra-Students'|translate}}" ng-click="getextrastudents()">
     <br/>
     <progress-spinner ng:show="extrastudents == null"></progress-spinner>
 
@@ -326,7 +326,7 @@
 
 
     </uib:tab>
-    <uib:tab heading="{{'Extra-Courses'|translate}}">
+    <uib:tab heading="{{'Extra-Courses'|translate}}" ng-click="getcourses()">
     <br/>
     <progress-spinner ng:show="courses == null"></progress-spinner>
 

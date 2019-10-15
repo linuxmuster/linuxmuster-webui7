@@ -165,9 +165,10 @@ angular.module('lm.users').controller 'LMUsersListManagementController', ($scope
     $scope.extrastudents_first_save = false
     $scope.courses_first_save= false
 
-
-
-
+    $scope.teachers = ''
+    $scope.students = ''
+    $scope.extrastudents = ''
+    $scope.courses = ''
 
     $scope.students_add = () ->
         if $scope.students.length > 0
@@ -207,49 +208,53 @@ angular.module('lm.users').controller 'LMUsersListManagementController', ($scope
        $scope.courses.remove(course)
 
     $scope.getstudents = () ->
-       $http.get('/api/lm/schoolsettings').then (resp) ->
-           school = 'default-school'
-           $scope.students_encoding = resp.data["userfile.students.csv"].encoding
-           if $scope.students_encoding is 'auto'
-               $http.post('/api/lmn/schoolsettings/determine-encoding', {path: '/etc/linuxmuster/sophomorix/'+school+'/students.csv'}).then (response) ->
-                 if response.data is 'unknown'
-                     $scope.students_encoding = 'utf-8'
-                 else
-                     $scope.students_encoding = response.data
-           $http.get("/api/lm/users/students-list?encoding=#{$scope.students_encoding}").then (resp) ->
-               $scope.students = resp.data
+        if !$scope.students
+           $http.get('/api/lm/schoolsettings').then (resp) ->
+               school = 'default-school'
+               $scope.students_encoding = resp.data["userfile.students.csv"].encoding
+               if $scope.students_encoding is 'auto'
+                   $http.post('/api/lmn/schoolsettings/determine-encoding', {path: '/etc/linuxmuster/sophomorix/'+school+'/students.csv'}).then (response) ->
+                     if response.data is 'unknown'
+                         $scope.students_encoding = 'utf-8'
+                     else
+                         $scope.students_encoding = response.data
+               $http.get("/api/lm/users/students-list?encoding=#{$scope.students_encoding}").then (resp) ->
+                   $scope.students = resp.data
 
     $scope.getteachers = () ->
-       $http.get('/api/lm/schoolsettings').then (resp) ->
-           school = 'default-school'
-           $scope.teachers_encoding = resp.data["userfile.teachers.csv"].encoding
-           if $scope.teachers_encoding is 'auto'
-              $http.post('/api/lmn/schoolsettings/determine-encoding', {path: '/etc/linuxmuster/sophomorix/'+school+'/teachers.csv'}).then (response) ->
-                 if response.data is 'unknown'
-                    $scope.teachers_encoding = 'utf-8'
-                 else
-                    $scope.teachers_encoding = response.data
-           $http.get("/api/lm/users/teachers-list?encoding=#{$scope.students_encoding}").then (resp) ->
-                $scope.teachers = resp.data
+        if !$scope.teachers
+           $http.get('/api/lm/schoolsettings').then (resp) ->
+               school = 'default-school'
+               $scope.teachers_encoding = resp.data["userfile.teachers.csv"].encoding
+               if $scope.teachers_encoding is 'auto'
+                  $http.post('/api/lmn/schoolsettings/determine-encoding', {path: '/etc/linuxmuster/sophomorix/'+school+'/teachers.csv'}).then (response) ->
+                     if response.data is 'unknown'
+                        $scope.teachers_encoding = 'utf-8'
+                     else
+                        $scope.teachers_encoding = response.data
+               $http.get("/api/lm/users/teachers-list?encoding=#{$scope.students_encoding}").then (resp) ->
+                    $scope.teachers = resp.data
 
     $scope.getextrastudents = () ->
-        $http.get('/api/lm/schoolsettings').then (resp) ->
-            school = 'default-school'
-            $scope.extrastudents_encoding = resp.data["userfile.extrastudents.csv"].encoding
-            if $scope.extrastudents_encoding is 'auto'
-               $http.post('/api/lmn/schoolsettings/determine-encoding', {path: '/etc/linuxmuster/sophomorix/'+school+'/extrastudents.csv'}).then (response) ->
-                  if response.data is 'unknown'
-                     $scope.extrastudents_encoding = 'utf-8'
-                  else
-                     $scope.extrastudents_encoding = response.data
-            $http.get("/api/lm/users/extra-students?encoding=#{$scope.extrastudents_encoding}").then (resp) ->
-                $scope.extrastudents = resp.data
+        if !$scope.extrastudents
+            $http.get('/api/lm/schoolsettings').then (resp) ->
+                school = 'default-school'
+                $scope.extrastudents_encoding = resp.data["userfile.extrastudents.csv"].encoding
+                if $scope.extrastudents_encoding is 'auto'
+                   $http.post('/api/lmn/schoolsettings/determine-encoding', {path: '/etc/linuxmuster/sophomorix/'+school+'/extrastudents.csv'}).then (response) ->
+                      if response.data is 'unknown'
+                         $scope.extrastudents_encoding = 'utf-8'
+                      else
+                         $scope.extrastudents_encoding = response.data
+                $http.get("/api/lm/users/extra-students?encoding=#{$scope.extrastudents_encoding}").then (resp) ->
+                    $scope.extrastudents = resp.data
 
     $scope.getcourses = () ->
-        $http.get('/api/lm/schoolsettings').then (resp) ->
-            $scope.courses_encoding = lmEncodingMap[resp.data.encoding_courses_extra] or 'ISO8859-1'
-            $http.get("/api/lm/users/extra-courses?encoding=#{$scope.courses_encoding}").then (resp) ->
-                $scope.courses = resp.data
+        if !$scope.courses
+            $http.get('/api/lm/schoolsettings').then (resp) ->
+                $scope.courses_encoding = lmEncodingMap[resp.data.encoding_courses_extra] or 'ISO8859-1'
+                $http.get("/api/lm/users/extra-courses?encoding=#{$scope.courses_encoding}").then (resp) ->
+                    $scope.courses = resp.data
 
 
 
@@ -418,9 +423,6 @@ angular.module('lm.users').controller 'LMUsersListManagementController', ($scope
                 backdrop: 'static'
             )
 
-    # TODO: Do this on tab open
     # TODO: Add paging
+    # Loading first tab
     $scope.getstudents()
-    $scope.getteachers()
-    $scope.getextrastudents()
-    $scope.getcourses()

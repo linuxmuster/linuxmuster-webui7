@@ -283,6 +283,7 @@ angular.module('lm.users').controller 'LMUsersListManagementController', ($scope
             notify.error(gettext('Please check the errors.'))
             return
         $scope.show_errors = false
+        $scope.students_first_save = false
         return $http.post("/api/lm/users/students-list?encoding=#{$scope.students_encoding}", $scope.students).then () ->
             notify.success gettext('Saved')
 
@@ -294,6 +295,7 @@ angular.module('lm.users').controller 'LMUsersListManagementController', ($scope
            notify.error(gettext('Please check the errors.'))
            return
         $scope.show_errors = false
+        $scope.teachers_first_save = false
         return $http.post("/api/lm/users/teachers-list?encoding=#{$scope.teachers_encoding}", $scope.teachers).then () ->
            notify.success gettext('Saved')
 
@@ -305,6 +307,7 @@ angular.module('lm.users').controller 'LMUsersListManagementController', ($scope
            notify.error(gettext('Please check the errors.'))
            return
         $scope.show_errors = false
+        $scope.extrastudents_first_save = false
         return $http.post("/api/lm/users/extra-students?encoding=#{$scope.extrastudents_encoding}", $scope.extrastudents).then () ->
            notify.success 'Saved'
 
@@ -316,6 +319,7 @@ angular.module('lm.users').controller 'LMUsersListManagementController', ($scope
            notify.error(gettext('Please check the errors.'))
            return
         $scope.show_errors = false
+        $scope.courses_first_save = false
         return $http.post("/api/lm/users/extra-courses?encoding=#{$scope.courses_encoding}", $scope.courses).then () ->
            notify.success gettext('Saved')
 
@@ -355,6 +359,11 @@ angular.module('lm.users').controller 'LMUsersListManagementController', ($scope
 
     # general functions
 
+    $scope.paging = {
+       page: 1,
+       pageSize: 50
+       }
+
     $scope.error_msg = {}
     $scope.show_errors = false
     $scope.emptyCells = {}
@@ -365,10 +374,16 @@ angular.module('lm.users').controller 'LMUsersListManagementController', ($scope
     $scope.validateField = (name, val, isnew, ev, tab, filter=null) ->
         # TODO : what valid chars for class, name and course ?
         # Temporary solution : not filter these fields
+        #ev = ($scope.paging.page-1) +ev+1
+        if $scope[tab+"_first_save"]
+            errorClass = "has-error-new has-error"
+        else
+            errorClass = "has-error-new"
+        ev = ($scope.paging.page-1)*$scope.paging.pageSize+1+parseInt(ev,10)
         if name.startsWith('TODO')
             if !val
                 $scope.emptyCells[name+"-"+tab+"-"+ev] = 1
-                return "has-error-new"
+                return errorClass
             else
                 delete $scope.emptyCells[name+"-"+tab+"-"+ev]
                 return ""
@@ -402,11 +417,11 @@ angular.module('lm.users').controller 'LMUsersListManagementController', ($scope
             if Object.values($scope.error_msg).indexOf(gettext(tab) + ": " + test) == -1
                 $scope.error_msg[name+"-"+tab+"-"+ev] = gettext(tab) + ": " + test
 
-        return "has-error-new"
+        return errorClass
 
     $scope.numErrors = () ->
         angular.element(document.getElementsByClassName("has-error")).removeClass('has-error')
-        return document.getElementsByClassName("has-error-new").length > 0
+        return $scope.dictLen($scope.error_msg) + $scope.dictLen($scope.emptyCells) > 0
 
     $scope.saveAndCheck = (name) ->
         if $scope.numErrors()
@@ -423,6 +438,5 @@ angular.module('lm.users').controller 'LMUsersListManagementController', ($scope
                 backdrop: 'static'
             )
 
-    # TODO: Add paging
     # Loading first tab
     $scope.getstudents()

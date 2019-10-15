@@ -1,8 +1,3 @@
-isValidName = (name) ->
-    regExp =  /^[a-z0-9]*$/
-    validName = regExp.test(name)
-    return validName
-
 angular.module('lmn.groupmembership').config ($routeProvider) ->
     $routeProvider.when '/view/lmn/groupmembership',
         controller: 'LMNGroupMembershipController'
@@ -266,7 +261,9 @@ angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($sco
                     return $scope.studentsDict[item.sAMAccountName].membership
             return true
 
-angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController', ($scope, $http, $uibModal, gettext, notify, pageTitle, messagebox) ->
+
+angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController', ($scope, $http, $uibModal, gettext, notify, pageTitle, messagebox, validation) ->
+
     pageTitle.set(gettext('Enrolle'))
     $scope.types = {
         schoolclass:
@@ -364,8 +361,9 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
         messagebox.prompt(gettext('Project Name'), '').then (msg) ->
             if not msg.value
                 return
-            if not isValidName(msg.value)
-                notify.error gettext('Not a valid name! Only lowercase alphanumeric characters are allowed!')
+            test = validation.isValidProjectName(msg.value)
+            if test != true
+                notify.error gettext(test)
                 return
             $http.post('/api/lmn/groupmembership', {action: 'create-project', username:$scope.identity.user, project: msg.value, profil: $scope.identity.profile}).then (resp) ->
                 notify.success gettext('Project Created')

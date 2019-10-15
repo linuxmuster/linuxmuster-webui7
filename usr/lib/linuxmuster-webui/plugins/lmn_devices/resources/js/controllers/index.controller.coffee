@@ -23,52 +23,37 @@ angular.module('lm.devices').controller 'LMDevicesApplyModalController', ($scope
 
 
 
-angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $uibModal, $route, gettext, notify, pageTitle, lmFileEditor, lmFileBackups) ->
+angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $uibModal, $route, gettext, notify, pageTitle, lmFileEditor, lmFileBackups, validation) ->
     pageTitle.set(gettext('Devices'))
 
+    $scope.error_msg = {}
+    $scope.show_errors = false
+    $scope.emptyCells = {}
     $scope.first_save = false
     $scope.trans ={
         duplicate: gettext('Duplicate')
         remove:  gettext('Remove')
     }
 
-    $scope.validateField = (name, val, isnew) ->
-        if name
-            valid = $scope["isValid"+name](val) && val
-        else
-            valid = val
-        if valid
+    $scope.dictLen = (d) ->
+        return Object.keys(d).length
+
+    $scope.validateField = (name, val, isnew, ev) ->
+        test = validation["isValid"+name](val)
+
+        if test == true && val
+            delete $scope.error_msg[name+"-"+ev]
+            delete $scope.emptyCells[name+"-"+ev]
             return ""
-        if isnew and !$scope.first_save
-            return "has-error-new"
+        else if !val
+            delete $scope.error_msg[name+"-"+ev]
+            $scope.emptyCells[name+"-"+ev] = 1
         else
-            return "has-error"
+            delete $scope.emptyCells[name+"-"+ev]
+            if Object.values($scope.error_msg).indexOf(test) == -1
+                $scope.error_msg[name+"-"+ev] = test
 
-    $scope.findval = (attr, val) ->
-        return (dict) ->
-            dict[attr] == val
-
-    $scope.isValidMac = (mac) ->
-          regExp = /^([0-9A-Fa-f]{2}[:]){5}([0-9A-Fa-f]{2})$/
-          validMac = regExp.test(mac) && ($scope.devices.filter($scope.findval('mac', mac)).length < 2)
-          return validMac
-
-    $scope.isValidIP = (ip) ->
-          regExp = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/ ## TODO all IPs allowed, and 010.1.1.1
-          validIP = regExp.test(ip) && ($scope.devices.filter($scope.findval('ip', ip)).length < 2)
-          return validIP
-
-    $scope.isValidHost =(hostname) ->
-        regExp = /^[a-zA-Z0-9\-]+$/
-        validHostname = regExp.test(hostname) && ($scope.devices.filter($scope.findval('hostname', hostname)).length < 2)
-        return validHostname;
-
-    $scope.isValidRoom =(room) ->
-        return $scope.isValidHost(room);
-
-    $scope.isValidRole =(role) -> 
-        validRole = ['switch','addc','wlan','staffcomputer','mobile','printer','classroom-teachercomputer','server','iponly','faculty-teachercomputer','voip','byod','classroom-studentcomputer','thinclient','router']
-        return validRole.indexOf(role) != -1
+        return "has-error-new"
 
     $scope.sorts = [
         {
@@ -184,27 +169,35 @@ angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $
 
     $http.get('/api/lm/devices').then (resp) ->
         $scope.devices = resp.data
+        validation.set($scope.devices, 'devices')
 
     $scope.remove = (device) ->
         $scope.devices.remove(device)
 
     $scope.numErrors = () ->
-        return document.getElementsByClassName("has-error").length + document.getElementsByClassName("has-error-new").length > 0
+        # Remove previous errors
+        angular.element(document.getElementsByClassName("has-error")).removeClass('has-error')
+        return document.getElementsByClassName("has-error-new").length > 0
 
     $scope.save = () ->
         if $scope.numErrors()
             $scope.first_save = true
+            $scope.show_errors = true
             angular.element(document.getElementsByClassName("has-error-new")).addClass('has-error')
-            notify.error('Required data missing')
+            notify.error(gettext('Please check the errors.'))
             return
+        $scope.show_errors = false
         return $http.post('/api/lm/devices', $scope.devices).then () ->
             notify.success gettext('Saved')
 
     $scope.saveAndImport = () ->
         if $scope.numErrors()
+            $scope.first_save = true
+            $scope.show_errors = true
             angular.element(document.getElementsByClassName("has-error-new")).addClass('has-error')
-            notify.error('Required data missing')
+            notify.error(gettext('Please check the errors.'))
             return
+        $scope.show_errors = false
         $scope.save().then () ->
             $uibModal.open(
                 templateUrl: '/lmn_devices:resources/partial/apply.modal.html'

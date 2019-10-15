@@ -13,7 +13,7 @@
     });
   });
 
-  angular.module('lm.users').controller('LMUsersStudentsListController', function($scope, $http, $location, $route, $uibModal, gettext, notify, lmEncodingMap, messagebox, pageTitle, lmFileEditor, lmFileBackups, filesystem) {
+  angular.module('lm.users').controller('LMUsersStudentsListController', function($scope, $http, $location, $route, $uibModal, gettext, notify, lmEncodingMap, messagebox, pageTitle, lmFileEditor, lmFileBackups, filesystem, validation) {
     pageTitle.set(gettext('Students'));
     $scope.sorts = [
       {
@@ -75,9 +75,14 @@
       }
     };
     $scope.first_save = false;
-    $scope.validateField = function(name, val, isnew) {
+    $scope.validateField = function(name, val, isnew, filter = null) {
       var valid;
-      valid = $scope["isValid" + name](val) && val;
+      // TODO : what valid chars for class, name and course ?
+      // Temporary solution : not filter these fields
+      if (name === 'TODO') {
+        return "";
+      }
+      valid = validation["isValid" + name](val) && val;
       if (valid) {
         return "";
       }
@@ -86,29 +91,6 @@
       } else {
         return "has-error";
       }
-    };
-    $scope.findval = function(attr, val) {
-      return function(dict) {
-        return dict[attr] === val;
-      };
-    };
-    $scope.isValidClass = function(cl) {
-      var regExp, validClass;
-      regExp = /^([0-9a-zA-Z]*)$/;
-      validClass = regExp.test(cl);
-      return true; //# TODO : valid chars for a classname ?
-    };
-    $scope.isValidName = function(name) {
-      var regExp, validName;
-      regExp = /^([0-9a-zA-Z]*)$/;
-      validName = regExp.test(name);
-      return true; //# TODO : valid chars for a name ?
-    };
-    $scope.isValidBirthday = function(birthday) {
-      var regExp, validBirthday;
-      regExp = /^(0[1-9]|[12][0-9]|3[01])[.](0[1-9]|1[012])[.](19|20)\d\d$/; //# Not perfect : allows 31.02.1920, but not so important
-      validBirthday = regExp.test(birthday);
-      return validBirthday;
     };
     $scope.add = function() {
       if ($scope.students.length > 0) {
@@ -1181,7 +1163,7 @@
     });
   });
 
-  angular.module('lm.users').controller('LMUsersTeachersListController', function($scope, $http, $location, $route, $uibModal, gettext, lmEncodingMap, notify, messagebox, pageTitle, lmFileEditor, lmFileBackups) {
+  angular.module('lm.users').controller('LMUsersTeachersListController', function($scope, $http, $location, $route, $uibModal, gettext, lmEncodingMap, notify, messagebox, pageTitle, lmFileEditor, lmFileBackups, validation) {
     pageTitle.set(gettext('Teachers'));
     $scope.sorts = [
       {
@@ -1256,9 +1238,22 @@
       });
     });
     $scope.first_save = false;
-    $scope.validateField = function(name, val, isnew) {
+    $scope.validateField = function(name, val, isnew, filter = null) {
       var valid;
-      valid = $scope["isValid" + name](val) && val;
+      // TODO : what valid chars for class, name and course ?
+      // Temporary solution : not filter these fields
+      if (name === 'TODO') {
+        return "";
+      }
+      // TODO : is pasword necessary for extra course ? Filtered only if not undefined.
+      // Desired passwords will be marked if not strong enough, is it necessary for extra courses ?
+      if (name === 'Password' && !val) {
+        return "";
+      }
+      valid = validation["isValid" + name](val) && val;
+      if (filter === 'teachers') {
+        valid = valid && ($scope.teachers.filter(validation.findval('login', val)).length < 2);
+      }
       if (valid) {
         return "";
       }
@@ -1267,44 +1262,6 @@
       } else {
         return "has-error";
       }
-    };
-    $scope.findval = function(attr, val) {
-      return function(dict) {
-        return dict[attr] === val;
-      };
-    };
-    $scope.isValidLogin = function(login) {
-      var regExp, validLogin;
-      regExp = /^([0-9a-zA-Z]*)$/;
-      validLogin = regExp.test(login) && ($scope.teachers.filter($scope.findval('login', login)).length < 2);
-      return true; //# TODO : valid chars for a login ?
-    };
-    $scope.isStrongPwd = function(password) {
-      var regExp, validPassword;
-      regExp = /(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*()]|(?=.*\d)).{7,}/;
-      validPassword = regExp.test(password);
-      return validPassword;
-    };
-    $scope.validCharPwd = function(password) {
-      var regExp, validPassword;
-      regExp = /^[a-zA-Z0-9!@#§+\-$%&*{}()\]\[]+$/;
-      validPassword = regExp.test(password);
-      return validPassword;
-    };
-    $scope.isValidPassword = function(password) {
-      return $scope.validCharPwd(password) && $scope.isStrongPwd(password);
-    };
-    $scope.isValidName = function(name) {
-      var regExp, validName;
-      regExp = /^([0-9a-zA-Z]*)$/;
-      validName = regExp.test(name);
-      return true; //# TODO : valid chars for a name ?
-    };
-    $scope.isValidBirthday = function(birthday) {
-      var regExp, validBirthday;
-      regExp = /^(0[1-9]|[12][0-9]|3[01])[.](0[1-9]|1[012])[.](19|20)\d\d$/; //# Not perfect : allows 31.02.1920, but not so important
-      validBirthday = regExp.test(birthday);
-      return validBirthday;
     };
     $scope.add = function() {
       if ($scope.teachers.length > 0) {
@@ -1375,7 +1332,7 @@
     });
   });
 
-  angular.module('lm.users').controller('LMUsersExtraStudentsController', function($scope, $http, $uibModal, $route, gettext, notify, pageTitle, lmEncodingMap, lmFileEditor, lmFileBackups) {
+  angular.module('lm.users').controller('LMUsersExtraStudentsController', function($scope, $http, $uibModal, $route, gettext, notify, pageTitle, lmEncodingMap, lmFileEditor, lmFileBackups, validation) {
     pageTitle.set(gettext('Extra Students'));
     $scope.sorts = [
       {
@@ -1415,9 +1372,22 @@
       pageSize: 100
     };
     $scope.first_save = false;
-    $scope.validateField = function(name, val, isnew) {
+    $scope.validateField = function(name, val, isnew, filter = null) {
       var valid;
-      valid = $scope["isValid" + name](val) && val;
+      // TODO : what valid chars for class, name and course ?
+      // Temporary solution : not filter these fields
+      if (name === 'TODO') {
+        return "";
+      }
+      // TODO : is pasword necessary for extra course ? Filtered only if not undefined.
+      // Desired passwords will be marked if not strong enough, is it necessary for extra courses ?
+      if (name === 'Password' && !val) {
+        return "";
+      }
+      valid = validation["isValid" + name](val) && val;
+      if (filter === 'students') {
+        valid = valid && ($scope.students.filter(validation.findval('login', val)).length < 2);
+      }
       if (valid) {
         return "";
       }
@@ -1426,35 +1396,6 @@
       } else {
         return "has-error";
       }
-    };
-    $scope.findval = function(attr, val) {
-      return function(dict) {
-        return dict[attr] === val;
-      };
-    };
-    $scope.isValidClass = function(cl) {
-      var regExp, validClass;
-      regExp = /^([0-9a-zA-Z]*)$/;
-      validClass = regExp.test(cl);
-      return true; //# TODO : valid chars for a classname ?
-    };
-    $scope.isValidLogin = function(login) {
-      var regExp, validLogin;
-      regExp = /^([0-9a-zA-Z]*)$/;
-      validLogin = regExp.test(login) && ($scope.students.filter($scope.findval('login', login)).length < 2);
-      return true; //# TODO : valid chars for a login ?
-    };
-    $scope.isValidName = function(name) {
-      var regExp, validName;
-      regExp = /^([0-9a-zA-Z]*)$/;
-      validName = regExp.test(name);
-      return true; //# TODO : valid chars for a name ?
-    };
-    $scope.isValidBirthday = function(birthday) {
-      var regExp, validBirthday;
-      regExp = /^(0[1-9]|[12][0-9]|3[01])[.](0[1-9]|1[012])[.](19|20)\d\d$/; //# Not perfect : allows 31.02.1920, but not so important
-      validBirthday = regExp.test(birthday);
-      return validBirthday;
     };
     $http.get('/api/lm/schoolsettings').then(function(resp) {
       $scope.encoding = lmEncodingMap[resp.data.encoding_students_extra] || 'ISO8859-1';
@@ -1517,7 +1458,7 @@
     });
   });
 
-  angular.module('lm.users').controller('LMUsersExtraCoursesController', function($scope, $http, $uibModal, $route, notify, gettext, pageTitle, lmEncodingMap, lmFileEditor, lmFileBackups) {
+  angular.module('lm.users').controller('LMUsersExtraCoursesController', function($scope, $http, $uibModal, $route, notify, gettext, pageTitle, lmEncodingMap, lmFileEditor, lmFileBackups, validation) {
     pageTitle.set(gettext('Extra Courses'));
     $scope.sorts = [
       {
@@ -1563,9 +1504,19 @@
       });
     });
     $scope.first_save = false;
-    $scope.validateField = function(name, val, isnew) {
+    $scope.validateField = function(name, val, isnew, filter = null) {
       var valid;
-      valid = $scope["isValid" + name](val) && val;
+      // TODO : what valid chars for class, name and course ?
+      // Temporary solution : not filter these fields
+      if (name === 'TODO') {
+        return "";
+      }
+      // TODO : is pasword necessary for extra course ? Filtered only if not undefined.
+      // Desired passwords will be marked if not strong enough, is it necessary for extra courses ?
+      if (name === 'Password' && !val) {
+        return "";
+      }
+      valid = validation["isValid" + name](val) && val;
       if (valid) {
         return "";
       }
@@ -1574,56 +1525,6 @@
       } else {
         return "has-error";
       }
-    };
-    $scope.findval = function(attr, val) {
-      return function(dict) {
-        return dict[attr] === val;
-      };
-    };
-    $scope.isValidCourse = function(course) {
-      var regExp, validCourse;
-      regExp = /^([0-9a-zA-Z]*)$/;
-      validCourse = regExp.test(course);
-      return true; //# TODO : valid chars for a classname ?
-    };
-    $scope.isValidCount = function(count) {
-      var regExp, validCount;
-      regExp = /^([0-9]*)$/;
-      validCount = regExp.test(count);
-      return validCount;
-    };
-    $scope.isStrongPwd = function(password) {
-      var regExp, validPassword;
-      regExp = /(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*()]|(?=.*\d)).{7,}/;
-      validPassword = regExp.test(password);
-      return validPassword;
-    };
-    $scope.validCharPwd = function(password) {
-      var regExp, validPassword;
-      regExp = /^[a-zA-Z0-9!@#§+\-$%&*{}()\]\[]+$/;
-      validPassword = regExp.test(password);
-      return validPassword;
-    };
-    $scope.isValidPassword = function(password) {
-      return $scope.validCharPwd(password) && $scope.isStrongPwd(password);
-    };
-    $scope.isValidName = function(name) {
-      var regExp, validName;
-      regExp = /^([0-9a-zA-Z]*)$/;
-      validName = regExp.test(name);
-      return true; //# TODO : valid chars for a name ?
-    };
-    $scope.isValidBirthday = function(birthday) {
-      var regExp, validBirthday;
-      regExp = /^(0[1-9]|[12][0-9]|3[01])[.](0[1-9]|1[012])[.](19|20)\d\d$/; //# Not perfect : allows 31.02.1920, but not so important
-      validBirthday = regExp.test(birthday);
-      return validBirthday;
-    };
-    $scope.isValidDate = function(date) {
-      var regExp, validDate;
-      regExp = /^(0[1-9]|[12][0-9]|3[01])[.](0[1-9]|1[012])[.](19|20)\d\d$/; //# Not perfect : allows 31.02.1920, but not so important
-      validDate = regExp.test(date);
-      return validDate;
     };
     $scope.add = function() {
       if ($scope.courses.length > 0) {
@@ -2075,27 +1976,11 @@
 
 // Generated by CoffeeScript 2.4.1
 (function() {
-  var isStrongPwd1, validCharPwd;
-
-  isStrongPwd1 = function(password) {
-    var regExp, validPassword;
-    regExp = /(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*()]|(?=.*\d)).{7,}/;
-    validPassword = regExp.test(password);
-    return validPassword;
-  };
-
-  validCharPwd = function(password) {
-    var regExp, validPassword;
-    regExp = /^[a-zA-Z0-9!@#§+\-$%&*{}()\]\[]+$/;
-    validPassword = regExp.test(password);
-    return validPassword;
-  };
-
-  angular.module('lm.users').controller('LMNUsersCustomPasswordController', function($scope, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, users, type) {
+  angular.module('lm.users').controller('LMNUsersCustomPasswordController', function($scope, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, users, type, validation) {
     $scope.username = users;
     $scope.action = type;
     $scope.save = function(userpw) {
-      var action, x;
+      var action, test, x;
       if (type == null) {
         action = 'set';
       } else {
@@ -2109,11 +1994,9 @@
         notify.error(gettext("You have to enter a password"));
         return;
       }
-      if (!isStrongPwd1($scope.userpw)) {
-        notify.error(gettext("Password too weak"));
-        return;
-      } else if (!validCharPwd($scope.userpw)) {
-        notify.error(gettext("Password contains invalid characters"));
+      test = validation.isValidPassword($scope.userpw);
+      if (test !== true) {
+        notify.error(gettext(test));
         return;
       } else {
         $http.post('/api/lm/users/password', {
@@ -2380,7 +2263,7 @@
     });
   });
 
-  angular.module('lm.users').controller('LMUsersListManagementController', function($scope, $http, $location, $route, $uibModal, gettext, notify, lmEncodingMap, messagebox, pageTitle, lmFileEditor, lmFileBackups, filesystem) {
+  angular.module('lm.users').controller('LMUsersListManagementController', function($scope, $http, $location, $route, $uibModal, gettext, notify, lmEncodingMap, messagebox, pageTitle, lmFileEditor, lmFileBackups, filesystem, validation) {
     pageTitle.set(gettext('Listmanagement'));
     $scope.students_sorts = [
       {
@@ -2583,7 +2466,11 @@
     $scope.teachers_first_save = false;
     $scope.students_first_save = false;
     $scope.extrastudents_first_save = false;
-    $scope.courses = false;
+    $scope.courses_first_save = false;
+    $scope.teachers = '';
+    $scope.students = '';
+    $scope.extrastudents = '';
+    $scope.courses = '';
     $scope.students_add = function() {
       if ($scope.students.length > 0) {
         $scope.paging.page = Math.floor(($scope.students.length - 1) / $scope.paging.pageSize) + 1;
@@ -2637,75 +2524,83 @@
       return $scope.courses.remove(course);
     };
     $scope.getstudents = function() {
-      return $http.get('/api/lm/schoolsettings').then(function(resp) {
-        var school;
-        school = 'default-school';
-        $scope.students_encoding = resp.data["userfile.students.csv"].encoding;
-        if ($scope.students_encoding === 'auto') {
-          $http.post('/api/lmn/schoolsettings/determine-encoding', {
-            path: '/etc/linuxmuster/sophomorix/' + school + '/students.csv'
-          }).then(function(response) {
-            if (response.data === 'unknown') {
-              return $scope.students_encoding = 'utf-8';
-            } else {
-              return $scope.students_encoding = response.data;
-            }
+      if (!$scope.students) {
+        return $http.get('/api/lm/schoolsettings').then(function(resp) {
+          var school;
+          school = 'default-school';
+          $scope.students_encoding = resp.data["userfile.students.csv"].encoding;
+          if ($scope.students_encoding === 'auto') {
+            $http.post('/api/lmn/schoolsettings/determine-encoding', {
+              path: '/etc/linuxmuster/sophomorix/' + school + '/students.csv'
+            }).then(function(response) {
+              if (response.data === 'unknown') {
+                return $scope.students_encoding = 'utf-8';
+              } else {
+                return $scope.students_encoding = response.data;
+              }
+            });
+          }
+          return $http.get(`/api/lm/users/students-list?encoding=${$scope.students_encoding}`).then(function(resp) {
+            return $scope.students = resp.data;
           });
-        }
-        return $http.get(`/api/lm/users/students-list?encoding=${$scope.students_encoding}`).then(function(resp) {
-          return $scope.students = resp.data;
         });
-      });
+      }
     };
     $scope.getteachers = function() {
-      return $http.get('/api/lm/schoolsettings').then(function(resp) {
-        var school;
-        school = 'default-school';
-        $scope.teachers_encoding = resp.data["userfile.teachers.csv"].encoding;
-        if ($scope.teachers_encoding === 'auto') {
-          $http.post('/api/lmn/schoolsettings/determine-encoding', {
-            path: '/etc/linuxmuster/sophomorix/' + school + '/teachers.csv'
-          }).then(function(response) {
-            if (response.data === 'unknown') {
-              return $scope.teachers_encoding = 'utf-8';
-            } else {
-              return $scope.teachers_encoding = response.data;
-            }
+      if (!$scope.teachers) {
+        return $http.get('/api/lm/schoolsettings').then(function(resp) {
+          var school;
+          school = 'default-school';
+          $scope.teachers_encoding = resp.data["userfile.teachers.csv"].encoding;
+          if ($scope.teachers_encoding === 'auto') {
+            $http.post('/api/lmn/schoolsettings/determine-encoding', {
+              path: '/etc/linuxmuster/sophomorix/' + school + '/teachers.csv'
+            }).then(function(response) {
+              if (response.data === 'unknown') {
+                return $scope.teachers_encoding = 'utf-8';
+              } else {
+                return $scope.teachers_encoding = response.data;
+              }
+            });
+          }
+          return $http.get(`/api/lm/users/teachers-list?encoding=${$scope.students_encoding}`).then(function(resp) {
+            return $scope.teachers = resp.data;
           });
-        }
-        return $http.get(`/api/lm/users/teachers-list?encoding=${$scope.students_encoding}`).then(function(resp) {
-          return $scope.teachers = resp.data;
         });
-      });
+      }
     };
     $scope.getextrastudents = function() {
-      return $http.get('/api/lm/schoolsettings').then(function(resp) {
-        var school;
-        school = 'default-school';
-        $scope.extrastudents_encoding = resp.data["userfile.extrastudents.csv"].encoding;
-        if ($scope.extrastudents_encoding === 'auto') {
-          $http.post('/api/lmn/schoolsettings/determine-encoding', {
-            path: '/etc/linuxmuster/sophomorix/' + school + '/extrastudents.csv'
-          }).then(function(response) {
-            if (response.data === 'unknown') {
-              return $scope.extrastudents_encoding = 'utf-8';
-            } else {
-              return $scope.extrastudents_encoding = response.data;
-            }
+      if (!$scope.extrastudents) {
+        return $http.get('/api/lm/schoolsettings').then(function(resp) {
+          var school;
+          school = 'default-school';
+          $scope.extrastudents_encoding = resp.data["userfile.extrastudents.csv"].encoding;
+          if ($scope.extrastudents_encoding === 'auto') {
+            $http.post('/api/lmn/schoolsettings/determine-encoding', {
+              path: '/etc/linuxmuster/sophomorix/' + school + '/extrastudents.csv'
+            }).then(function(response) {
+              if (response.data === 'unknown') {
+                return $scope.extrastudents_encoding = 'utf-8';
+              } else {
+                return $scope.extrastudents_encoding = response.data;
+              }
+            });
+          }
+          return $http.get(`/api/lm/users/extra-students?encoding=${$scope.extrastudents_encoding}`).then(function(resp) {
+            return $scope.extrastudents = resp.data;
           });
-        }
-        return $http.get(`/api/lm/users/extra-students?encoding=${$scope.extrastudents_encoding}`).then(function(resp) {
-          return $scope.extrastudents = resp.data;
         });
-      });
+      }
     };
     $scope.getcourses = function() {
-      return $http.get('/api/lm/schoolsettings').then(function(resp) {
-        $scope.courses_encoding = lmEncodingMap[resp.data.encoding_courses_extra] || 'ISO8859-1';
-        return $http.get(`/api/lm/users/extra-courses?encoding=${$scope.courses_encoding}`).then(function(resp) {
-          return $scope.courses = resp.data;
+      if (!$scope.courses) {
+        return $http.get('/api/lm/schoolsettings').then(function(resp) {
+          $scope.courses_encoding = lmEncodingMap[resp.data.encoding_courses_extra] || 'ISO8859-1';
+          return $http.get(`/api/lm/users/extra-courses?encoding=${$scope.courses_encoding}`).then(function(resp) {
+            return $scope.courses = resp.data;
+          });
         });
-      });
+      }
     };
     $scope.students_editCSV = function() {
       return lmFileEditor.show('/etc/linuxmuster/sophomorix/default-school/students.csv', $scope.students_encoding).then(function() {
@@ -2730,10 +2625,13 @@
     $scope.students_save = function() {
       if ($scope.numErrors()) {
         $scope.students_first_save = true;
+        $scope.show_errors = true;
         angular.element(document.getElementsByClassName("has-error-new")).addClass('has-error');
-        notify.error('Required data missing');
+        notify.error(gettext('Please check the errors.'));
         return;
       }
+      $scope.show_errors = false;
+      $scope.students_first_save = false;
       return $http.post(`/api/lm/users/students-list?encoding=${$scope.students_encoding}`, $scope.students).then(function() {
         return notify.success(gettext('Saved'));
       });
@@ -2741,10 +2639,13 @@
     $scope.teachers_save = function() {
       if ($scope.numErrors()) {
         $scope.teachers_first_save = true;
+        $scope.show_errors = true;
         angular.element(document.getElementsByClassName("has-error-new")).addClass('has-error');
-        notify.error('Required data missing');
+        notify.error(gettext('Please check the errors.'));
         return;
       }
+      $scope.show_errors = false;
+      $scope.teachers_first_save = false;
       return $http.post(`/api/lm/users/teachers-list?encoding=${$scope.teachers_encoding}`, $scope.teachers).then(function() {
         return notify.success(gettext('Saved'));
       });
@@ -2752,21 +2653,27 @@
     $scope.extrastudents_save = function() {
       if ($scope.numErrors()) {
         $scope.extrastudents_first_save = true;
+        $scope.show_errors = true;
         angular.element(document.getElementsByClassName("has-error-new")).addClass('has-error');
-        notify.error('Required data missing');
+        notify.error(gettext('Please check the errors.'));
         return;
       }
+      $scope.show_errors = false;
+      $scope.extrastudents_first_save = false;
       return $http.post(`/api/lm/users/extra-students?encoding=${$scope.extrastudents_encoding}`, $scope.extrastudents).then(function() {
         return notify.success('Saved');
       });
     };
     $scope.courses_save = function() {
       if ($scope.numErrors()) {
-        $scope.first_save = true;
+        $scope.courses_first_save = true;
+        $scope.show_errors = true;
         angular.element(document.getElementsByClassName("has-error-new")).addClass('has-error');
-        notify.error('Required data missing');
+        notify.error(gettext('Please check the errors.'));
         return;
       }
+      $scope.show_errors = false;
+      $scope.courses_first_save = false;
       return $http.post(`/api/lm/users/extra-courses?encoding=${$scope.courses_encoding}`, $scope.courses).then(function() {
         return notify.success(gettext('Saved'));
       });
@@ -2808,91 +2715,80 @@
       return lmFileBackups.show('/etc/linuxmuster/sophomorix/default-school/extraclasses.csv', $scope.courses_encoding);
     };
     // general functions
-    $scope.validateField = function(name, val, isnew) {
-      var valid;
-      valid = $scope["isValid" + name](val) && val;
-      if (valid) {
+    $scope.paging = {
+      page: 1,
+      pageSize: 50
+    };
+    $scope.error_msg = {};
+    $scope.show_errors = false;
+    $scope.emptyCells = {};
+    $scope.dictLen = function(d) {
+      return Object.keys(d).length;
+    };
+    $scope.validateField = function(name, val, isnew, ev, tab, filter = null) {
+      var errorClass, test;
+      // TODO : what valid chars for class, name and course ?
+      // Temporary solution : not filter these fields
+      //ev = ($scope.paging.page-1) +ev+1
+      if ($scope[tab + "_first_save"]) {
+        errorClass = "has-error-new has-error";
+      } else {
+        errorClass = "has-error-new";
+      }
+      ev = ($scope.paging.page - 1) * $scope.paging.pageSize + 1 + parseInt(ev, 10);
+      if (name.startsWith('TODO')) {
+        if (!val) {
+          $scope.emptyCells[name + "-" + tab + "-" + ev] = 1;
+          return errorClass;
+        } else {
+          delete $scope.emptyCells[name + "-" + tab + "-" + ev];
+          return "";
+        }
+      }
+      // TODO : is pasword necessary for extra course ? Filtered only if not undefined.
+      // Desired passwords will be marked if not strong enough, is it necessary for extra courses ?
+      if (name === 'Password' && !val) {
         return "";
       }
-      if (isnew && !$scope.first_save) {
-        return "has-error-new";
-      } else {
-        return "has-error";
+      test = validation["isValid" + name](val);
+      if (filter === 'teachers') {
+        test = test && ($scope.teachers.filter(validation.findval('login', val)).length < 2);
+      } else if (filter === 'extrastudents') {
+        test = test && ($scope.extrastudents.filter(validation.findval('login', val)).length < 2);
       }
-    };
-    $scope.findval = function(attr, val) {
-      return function(dict) {
-        return dict[attr] === val;
-      };
-    };
-    $scope.isValidLogin = function(login) {
-      var regExp, validLogin;
-      regExp = /^([0-9a-zA-Z]*)$/;
-      validLogin = regExp.test(login) && ($scope.teachers.filter($scope.findval('login', login)).length < 2);
-      return true; //# TODO : valid chars for a login ?
-    };
-    $scope.isValidLoginExtrastudent = function(login) {
-      var regExp, validLogin;
-      regExp = /^([0-9a-zA-Z]*)$/;
-      validLogin = regExp.test(login) && ($scope.extrastudents.filter($scope.findval('login', login)).length < 2);
-      return true; //# TODO : valid chars for a login ?
-    };
-    $scope.isStrongPwd = function(password) {
-      var regExp, validPassword;
-      regExp = /(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*()]|(?=.*\d)).{7,}/;
-      validPassword = regExp.test(password);
-      return validPassword;
-    };
-    $scope.validCharPwd = function(password) {
-      var regExp, validPassword;
-      regExp = /^[a-zA-Z0-9!@#§+\-$%&*{}()\]\[]+$/;
-      validPassword = regExp.test(password);
-      return validPassword;
-    };
-    $scope.isValidPassword = function(password) {
-      return $scope.validCharPwd(password) && $scope.isStrongPwd(password);
-    };
-    $scope.isValidClass = function(cl) {
-      var regExp, validClass;
-      regExp = /^([0-9a-zA-Z]*)$/;
-      validClass = regExp.test(cl);
-      return true; //# TODO : valid chars for a classname ?
-    };
-    $scope.isValidName = function(name) {
-      var regExp, validName;
-      regExp = /^([0-9a-zA-Z]*)$/;
-      validName = regExp.test(name);
-      return true; //# TODO : valid chars for a name ?
-    };
-    $scope.isValidBirthday = function(birthday) {
-      var regExp, validBirthday;
-      regExp = /^(0[1-9]|[12][0-9]|3[01])[.](0[1-9]|1[012])[.](19|20)\d\d$/; //# Not perfect : allows 31.02.1920, but not so important
-      validBirthday = regExp.test(birthday);
-      return validBirthday;
-    };
-    $scope.isValidCourse = function(course) {
-      var regExp, validCourse;
-      regExp = /^([0-9a-zA-Z]*)$/;
-      validCourse = regExp.test(course);
-      return true; //# TODO : valid chars for a classname ?
-    };
-    $scope.isValidCount = function(count) {
-      var regExp, validCount;
-      regExp = /^([0-9]*)$/;
-      validCount = regExp.test(count);
-      return validCount;
-    };
-    $scope.isValidDate = function(date) {
-      var regExp, validDate;
-      regExp = /^(0[1-9]|[12][0-9]|3[01])[.](0[1-9]|1[012])[.](19|20)\d\d$/; //# Not perfect : allows 31.02.1920, but not so important
-      validDate = regExp.test(date);
-      return validDate;
+      // Login for teachers may be empty
+      if (name === 'Login' && filter === 'teachers' && test === true) {
+        delete $scope.error_msg[name + "-" + tab + "-" + ev];
+        delete $scope.emptyCells[name + "-" + tab + "-" + ev];
+        return "";
+      } else if (test === true && val) {
+        delete $scope.error_msg[name + "-" + tab + "-" + ev];
+        delete $scope.emptyCells[name + "-" + tab + "-" + ev];
+        return "";
+      } else if (!val) {
+        delete $scope.error_msg[name + "-" + tab + "-" + ev];
+        $scope.emptyCells[name + "-" + tab + "-" + ev] = 1;
+      } else {
+        delete $scope.emptyCells[name + "-" + tab + "-" + ev];
+        if (Object.values($scope.error_msg).indexOf(gettext(tab) + ": " + test) === -1) {
+          $scope.error_msg[name + "-" + tab + "-" + ev] = gettext(tab) + ": " + test;
+        }
+      }
+      return errorClass;
     };
     $scope.numErrors = function() {
-      return document.getElementsByClassName("has-error").length + document.getElementsByClassName("has-error-new").length > 0;
+      angular.element(document.getElementsByClassName("has-error")).removeClass('has-error');
+      return $scope.dictLen($scope.error_msg) + $scope.dictLen($scope.emptyCells) > 0;
     };
     $scope.saveAndCheck = function(name) {
-      //valid = $scope["isValid"+name](val) && val
+      if ($scope.numErrors()) {
+        $scope[name + "_first_save"] = true;
+        $scope.show_errors = true;
+        angular.element(document.getElementsByClassName("has-error-new")).addClass('has-error');
+        notify.error(gettext('Please check the errors.'));
+        return;
+      }
+      $scope.show_errors = false;
       return $scope[name + "_save"]().then(function() {
         return $uibModal.open({
           templateUrl: '/lmn_users:resources/partial/check.modal.html',
@@ -2901,12 +2797,8 @@
         });
       });
     };
-    // TODO: Do this on tab open
-    // TODO: Add paging
-    $scope.getstudents();
-    $scope.getteachers();
-    $scope.getextrastudents();
-    return $scope.getcourses();
+    // Loading first tab
+    return $scope.getstudents();
   });
 
 }).call(this);

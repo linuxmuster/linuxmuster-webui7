@@ -1,14 +1,4 @@
-isStrongPwd1 = (password) ->
-      regExp = /(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*()]|(?=.*\d)).{7,}/
-      validPassword = regExp.test(password)
-      return validPassword
-
-validCharPwd =(password) ->
-    regExp = /^[a-zA-Z0-9!@#§+\-$%&*{}()\]\[]+$/
-    validPassword = regExp.test(password)
-    return validPassword;
-
-angular.module('lm.users').controller 'LMNUsersCustomPasswordController', ($scope, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, users, type) ->
+angular.module('lm.users').controller 'LMNUsersCustomPasswordController', ($scope, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, users, type, validation) ->
     $scope.username = users
     $scope.action = type
 
@@ -20,14 +10,14 @@ angular.module('lm.users').controller 'LMNUsersCustomPasswordController', ($scop
                 action = 'set-actual'
             else
                 action = 'set'
+
         if not $scope.userpw
             notify.error gettext("You have to enter a password")
             return
-        if not isStrongPwd1($scope.userpw)
-           notify.error gettext("Password too weak")
-           return
-        else if not validCharPwd($scope.userpw)
-           notify.error gettext("Password contains invalid characters")
+
+        test = validation.isValidPassword($scope.userpw)
+        if test != true
+           notify.error gettext(test)
            return
         else
             $http.post('/api/lm/users/password', {users: (x['sAMAccountName'] for x in users), action: action, password: $scope.userpw, type: type}).then (resp) ->

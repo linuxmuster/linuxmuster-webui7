@@ -14,6 +14,7 @@ resources:
     - 'resources/js/directives.coffee'
     - 'resources/js/upload.directives.coffee'
     - 'resources/js/lmFileEditor.service.coffee'
+    - 'resources/js/validation.service.coffee'
     - 'resources/js/lmFileEditor.modal.html'
     - 'resources/js/lmFileBackups.service.coffee'
     - 'resources/js/lmFileBackups.modal.html'

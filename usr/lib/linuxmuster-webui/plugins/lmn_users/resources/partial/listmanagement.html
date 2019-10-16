@@ -325,6 +325,7 @@
 
 
     </uib:tab>
+<!-- TODO: Removed extra courses till this function is properly implemented in backend
     <uib:tab heading="{{'Extra-Courses'|translate}}" ng-click="getcourses()">
     <br/>
     <progress-spinner ng:show="courses == null"></progress-spinner>
@@ -363,6 +364,7 @@
             <!--
                 <tr ng:repeat="course in courses|filter:filter|orderBy:sort.fx" ng:show="course.course[0] != '#'">
             -->
+            <!--
             <tr ng:repeat="course in courses" ng:show="course.course[0] != '#'">
                 <td class="form-group" ng:class="validateField('TODOcourse', course.course, course._isNew, $index, 'courses')">
                     <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="course.course" placeholder="Course" class="form-control" />
@@ -412,6 +414,7 @@
     </div>
 
     </uib:tab>
+    -->
     </uib:tabset>
 </div>
 

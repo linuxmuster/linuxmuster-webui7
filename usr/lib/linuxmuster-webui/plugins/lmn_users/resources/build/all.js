@@ -2392,11 +2392,12 @@
     $scope.extrastudents_sort = $scope.students_sorts[0];
     $scope.courses_sort = $scope.teachers_sorts[0];
     $scope.paging = {
-      page: 1
+      page_students: 1,
+      page_teachers: 1,
+      page_extrastudents: 1,
+      page_courses: 1,
+      pageSize: 50
     };
-    ({
-      pageSize: 100
-    });
     $scope.students_fields = {
       class: {
         visible: true,
@@ -2473,7 +2474,7 @@
     $scope.courses = '';
     $scope.students_add = function() {
       if ($scope.students.length > 0) {
-        $scope.paging.page = Math.floor(($scope.students.length - 1) / $scope.paging.pageSize) + 1;
+        $scope.paging.page_students = Math.floor(($scope.students.length - 1) / $scope.paging.pageSize) + 1;
       }
       $scope.students_filter = '';
       return $scope.students.push({
@@ -2485,7 +2486,7 @@
     };
     $scope.teachers_add = function() {
       if ($scope.teachers.length > 0) {
-        $scope.paging.page = Math.floor(($scope.teachers.length - 1) / $scope.paging.pageSize) + 1;
+        $scope.paging.page_teachers = Math.floor(($scope.teachers.length - 1) / $scope.paging.pageSize) + 1;
       }
       $scope.teachers_filter = '';
       return $scope.teachers.push({
@@ -2495,7 +2496,7 @@
     };
     $scope.extrastudents_add = function() {
       if ($scope.extrastudents.length > 0) {
-        $scope.paging.page = Math.floor(($scope.extrastudents.length - 1) / $scope.paging.pageSize) + 1;
+        $scope.paging.page_extrastudents = Math.floor(($scope.extrastudents.length - 1) / $scope.paging.pageSize) + 1;
       }
       $scope.extrastudents_filter = '';
       return $scope.extrastudents.push({
@@ -2504,7 +2505,7 @@
     };
     $scope.courses_add = function() {
       if ($scope.courses.length > 0) {
-        $scope.paging.page = Math.floor(($scope.courses.length - 1) / $scope.paging.pageSize) + 1;
+        $scope.paging.page_courses = Math.floor(($scope.courses.length - 1) / $scope.paging.pageSize) + 1;
       }
       $scope.courses_filter = '';
       return $scope.courses.push({
@@ -2715,10 +2716,6 @@
       return lmFileBackups.show('/etc/linuxmuster/sophomorix/default-school/extraclasses.csv', $scope.courses_encoding);
     };
     // general functions
-    $scope.paging = {
-      page: 1,
-      pageSize: 50
-    };
     $scope.error_msg = {};
     $scope.show_errors = false;
     $scope.emptyCells = {};
@@ -2729,13 +2726,12 @@
       var errorClass, test;
       // TODO : what valid chars for class, name and course ?
       // Temporary solution : not filter these fields
-      //ev = ($scope.paging.page-1) +ev+1
       if ($scope[tab + "_first_save"]) {
         errorClass = "has-error-new has-error";
       } else {
         errorClass = "has-error-new";
       }
-      ev = ($scope.paging.page - 1) * $scope.paging.pageSize + 1 + parseInt(ev, 10);
+      ev = ($scope.paging["page_" + tab] - 1) * $scope.paging.pageSize + 1 + parseInt(ev, 10);
       if (name.startsWith('TODO')) {
         if (!val) {
           $scope.emptyCells[name + "-" + tab + "-" + ev] = 1;

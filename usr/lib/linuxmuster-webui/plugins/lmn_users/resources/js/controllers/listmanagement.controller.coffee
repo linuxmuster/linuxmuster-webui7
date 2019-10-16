@@ -101,9 +101,13 @@ angular.module('lm.users').controller 'LMUsersListManagementController', ($scope
     $scope.extrastudents_sort = $scope.students_sorts[0]
     $scope.courses_sort= $scope.teachers_sorts[0]
 
-    $scope.paging =
-        page: 1
-       pageSize: 100
+    $scope.paging = {
+        page_students: 1,
+        page_teachers:1,
+        page_extrastudents:1,
+        page_courses:1,
+        pageSize: 50
+        }
 
     $scope.students_fields = {
         class:
@@ -172,25 +176,25 @@ angular.module('lm.users').controller 'LMUsersListManagementController', ($scope
 
     $scope.students_add = () ->
         if $scope.students.length > 0
-            $scope.paging.page = Math.floor(($scope.students.length - 1) / $scope.paging.pageSize) + 1
+            $scope.paging.page_students = Math.floor(($scope.students.length - 1) / $scope.paging.pageSize) + 1
         $scope.students_filter = ''
         $scope.students.push { '_isNew': true, 'first_name': '', 'last_name': '', 'class': ''}
 
     $scope.teachers_add = () ->
         if $scope.teachers.length > 0
-                $scope.paging.page = Math.floor(($scope.teachers.length - 1) / $scope.paging.pageSize) + 1
+                $scope.paging.page_teachers = Math.floor(($scope.teachers.length - 1) / $scope.paging.pageSize) + 1
             $scope.teachers_filter = ''
             $scope.teachers.push {class: 'Lehrer', _isNew: true}
 
     $scope.extrastudents_add = () ->
        if $scope.extrastudents.length > 0
-          $scope.paging.page = Math.floor(($scope.extrastudents.length - 1) / $scope.paging.pageSize) + 1
+          $scope.paging.page_extrastudents = Math.floor(($scope.extrastudents.length - 1) / $scope.paging.pageSize) + 1
        $scope.extrastudents_filter = ''
        $scope.extrastudents.push {_isNew: true}
 
     $scope.courses_add = () ->
         if $scope.courses.length > 0
-            $scope.paging.page = Math.floor(($scope.courses.length - 1) / $scope.paging.pageSize) + 1
+            $scope.paging.page_courses = Math.floor(($scope.courses.length - 1) / $scope.paging.pageSize) + 1
         $scope.courses_filter = ''
         $scope.courses.push {_isNew: true}
 
@@ -359,11 +363,6 @@ angular.module('lm.users').controller 'LMUsersListManagementController', ($scope
 
     # general functions
 
-    $scope.paging = {
-       page: 1,
-       pageSize: 50
-       }
-
     $scope.error_msg = {}
     $scope.show_errors = false
     $scope.emptyCells = {}
@@ -374,12 +373,12 @@ angular.module('lm.users').controller 'LMUsersListManagementController', ($scope
     $scope.validateField = (name, val, isnew, ev, tab, filter=null) ->
         # TODO : what valid chars for class, name and course ?
         # Temporary solution : not filter these fields
-        #ev = ($scope.paging.page-1) +ev+1
+
         if $scope[tab+"_first_save"]
             errorClass = "has-error-new has-error"
         else
             errorClass = "has-error-new"
-        ev = ($scope.paging.page-1)*$scope.paging.pageSize+1+parseInt(ev,10)
+        ev = ($scope.paging["page_"+tab]-1)*$scope.paging.pageSize+1+parseInt(ev,10)
         if name.startsWith('TODO')
             if !val
                 $scope.emptyCells[name+"-"+tab+"-"+ev] = 1

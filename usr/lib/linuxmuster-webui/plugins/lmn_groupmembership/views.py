@@ -12,7 +12,7 @@ class Handler(HttpPlugin):
         self.context = context
 
     @url(r'/api/lmn/groupmembership/details')
-    @authorize('lmn:groupmemberships:write')
+    @authorize('lmn:groupmemberships: write')
     @endpoint(api=True)
     def handle_api_groupmembership_details(self, http_context):
         action = http_context.json_body()['action']
@@ -75,11 +75,11 @@ class Handler(HttpPlugin):
                     sophomorixCommand = ['sophomorix-query', '--group-members', '--class', '-jj']
                     result = lmn_getSophomorixValue(sophomorixCommand, 'MEMBERS')
                     classes = []
-                    students_per_class = {cl:[] for cl in result.keys()}
+                    students_per_class = {cl: [] for cl in result.keys()}
                     students = {}
-                    for cl,student in result.iteritems():
-                        classes.append({'name':cl,'isVisible':0})
-                        for login,details in student.iteritems():
+                    for cl, student in result.iteritems():
+                        classes.append({'name': cl, 'isVisible': 0})
+                        for login, details in student.iteritems():
                             if details['sophomorixRole'] == 'student':
                                 students_per_class[cl].append(details)
                                 details['membership'] = dn in details['memberOf']
@@ -136,16 +136,15 @@ class Handler(HttpPlugin):
 
                         membershipList.append(membershipDict)
 
-                ## DEPRECATED ???
-                # get printers
-                # sophomorixCommand = ['sophomorix-query', '--printergroup', '--schoolbase', schoolname, '-jj']
-                # printergroups = lmn_getSophomorixValue(sophomorixCommand, 'LISTS/GROUP')
+                #get printers
+                sophomorixCommand = ['sophomorix-query', '--printergroup', '--schoolbase', schoolname, '-jj']
+                printergroups = lmn_getSophomorixValue(sophomorixCommand, 'LISTS/GROUP')
 
-                # for printergroup in printergroups:
-                    # if printergroup in usergroups or isAdmin:
-                        # membershipList.append({'type': 'printergroup', 'typename': 'Printer', 'groupname': printergroup, 'changed': False, 'membership': True})
-                    # else:
-                        # membershipList.append({'type': 'printergroup', 'typename': 'Printer', 'groupname': printergroup, 'changed': False, 'membership': False})
+                for printergroup in printergroups:
+                  if printergroup in usergroups or isAdmin:
+                    membershipList.append({'type': 'printergroup', 'typename': 'Printer', 'groupname': printergroup, 'changed': False, 'membership': True})
+                  else:
+                    membershipList.append({'type': 'printergroup', 'typename': 'Printer', 'groupname': printergroup, 'changed': False, 'membership': False})
                 return membershipList, isAdmin, user_details
 
             if action == 'kill-project':

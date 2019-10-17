@@ -344,7 +344,6 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
 
             $scope.classes = $scope.groups.filter($scope.filterGroupType('schoolclass'))
             $scope.projects = $scope.groups.filter($scope.filterGroupType('project'))
-            ## Printers yet DEPRECATED ?
             $scope.printers = $scope.groups.filter($scope.filterGroupType('printergroup'))
 
     $scope.setGroups = (groups) ->

@@ -86,7 +86,7 @@
                 <span translate> There are no printers configured yet. Ask your administrator to configure one.</span>
             </div>
             <div class="flex-container lmn-container-list" >
-                <div ng:repeat="printergroup in printergroups|orderBy:[sort.fx]:sortReverse">
+                <div ng:repeat="printergroup in printers|orderBy:[sort.fx]:sortReverse">
                     <div>
                         <span id={{printergroup.groupname}} checkbox ng:model="printergroup.membership" ng:class="{changed: printergroup.changed}" ng-click='groupChanged(printergroup.groupname)'></span>
                         <i class="fa fa-fw fa-print"></i>

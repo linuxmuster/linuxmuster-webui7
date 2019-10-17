@@ -506,7 +506,8 @@
         $scope.classes = $scope.groups.filter($scope.filterGroupType('schoolclass'));
         $scope.projects = $scope.groups.filter($scope.filterGroupType('project'));
         //# Printers yet DEPRECATED ?
-        return $scope.printers = $scope.groups.filter($scope.filterGroupType('printergroup'));
+        $scope.printers = $scope.groups.filter($scope.filterGroupType('printergroup'));
+        return console.log($scope.printers);
       });
     };
     $scope.setGroups = function(groups) {

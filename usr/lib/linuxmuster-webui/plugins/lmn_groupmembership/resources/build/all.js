@@ -505,9 +505,7 @@
         $scope.identity.isAdmin = resp.data[1];
         $scope.classes = $scope.groups.filter($scope.filterGroupType('schoolclass'));
         $scope.projects = $scope.groups.filter($scope.filterGroupType('project'));
-        //# Printers yet DEPRECATED ?
-        $scope.printers = $scope.groups.filter($scope.filterGroupType('printergroup'));
-        return console.log($scope.printers);
+        return $scope.printers = $scope.groups.filter($scope.filterGroupType('printergroup'));
       });
     };
     $scope.setGroups = function(groups) {

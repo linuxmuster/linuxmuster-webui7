@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.105-1) lmn7; urgency=medium 
+
+  * Current snapshot build 
+   * 
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Oct 17 07:44:50 UTC 2019
+
 linuxmuster-webui7 (1.0.104-1) lmn7; urgency=medium 
 
   * Current snapshot build 414ea22ce43166cff2c2227d97c650785af110b6

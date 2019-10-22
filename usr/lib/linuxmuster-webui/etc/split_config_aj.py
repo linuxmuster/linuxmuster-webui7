@@ -20,7 +20,7 @@ if not os.path.isfile(path_webui + config_file):
         ## Load existing config
         print("Load existing ajenti config file ...")
         with open(path_ajenti + config_file, 'r') as f:
-            config_ajenti = yaml.load(f)
+            config_ajenti = yaml.load(f, Loader=yaml.Loader)
     except:
         print("Error loading ajenti config file ...")
         sys.exit()

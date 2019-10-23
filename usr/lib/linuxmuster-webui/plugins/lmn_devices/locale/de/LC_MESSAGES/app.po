@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-16 07:58+0200\n"
-"PO-Revision-Date: 2019-10-16 06:33\n"
+"PO-Revision-Date: 2019-10-23 16:02\n"
 "Last-Translator: kiarn\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -130,7 +130,7 @@ msgstr "Lehrer-PC im Klassenzimmer"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:9
 msgid "empty cells"
-msgstr ""
+msgstr "leere Zellen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:93
 msgid "router"
@@ -233,7 +233,7 @@ msgstr "Sophomorix-Kommentar"
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:187
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:198
 msgid "Please check the errors."
-msgstr ""
+msgstr "Überprüfen Sie bitte die Fehler."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:191
 msgid "Saved"

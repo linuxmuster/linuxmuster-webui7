@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-16 07:58+0200\n"
-"PO-Revision-Date: 2019-10-16 06:33\n"
+"POT-Creation-Date: 2019-10-23 17:58+0200\n"
+"PO-Revision-Date: 2019-10-23 16:01\n"
 "Last-Translator: kiarn\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -275,15 +275,15 @@ msgstr "Classes"
 msgid "Groupname"
 msgstr "Nom du groupe"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:358
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:357
 msgid "Nothing changed"
 msgstr "Aucune modification"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:361
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:360
 msgid "Project Name"
 msgstr "Nom du projet"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:369
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:368
 msgid "Project Created"
 msgstr "Projet créé"
 

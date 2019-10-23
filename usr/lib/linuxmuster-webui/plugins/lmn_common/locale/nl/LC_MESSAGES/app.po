@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-16 07:58+0200\n"
-"PO-Revision-Date: 2019-10-16 06:33\n"
+"PO-Revision-Date: 2019-10-23 16:02\n"
 "Last-Translator: kiarn\n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
@@ -18,149 +18,149 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:148
 msgid "A bootstrap error has occured"
-msgstr ""
+msgstr "Een bootstrap fout opgetreden"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileBackups.modal.html:2
 msgid "Backups"
-msgstr ""
+msgstr "Back-ups"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileEditor.modal.html:18
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileBackups.service.coffee:53
 msgid "Cancel"
-msgstr ""
+msgstr "Annuleren"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileBackups.modal.html:23
 msgid "Close"
-msgstr ""
+msgstr "Sluiten"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileEditor.modal.html:17
 msgid "Download CSV"
-msgstr ""
+msgstr "Download CSV"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileEditor.modal.html:5
 msgid "Drop a CSV file here to import"
-msgstr ""
+msgstr "Sleep hier een CSV bestand om te importeren"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:86
 msgid "Elevate"
-msgstr ""
+msgstr "Verheffen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:131
 msgid "Enter"
-msgstr ""
+msgstr "Invoeren"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:91
 msgid "Log out"
-msgstr ""
+msgstr "Uitloggen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileBackups.modal.html:5
 msgid "No backups available"
-msgstr ""
+msgstr "Geen back-ups beschikbaar"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:172
 msgid "OK"
-msgstr ""
+msgstr "Oké"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:151
 msgid "Please see browser console"
-msgstr ""
+msgstr "Raadpleeg browser console"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:127
 msgid "Quick search"
-msgstr ""
+msgstr "Snel zoeken"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileEditor.modal.html:16
 msgid "Save"
-msgstr ""
+msgstr "Opslaan"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:48
 msgid "School Console"
-msgstr ""
+msgstr "School Console"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:15
 msgid "User Management"
-msgstr ""
+msgstr "Gebruikersbeheer"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:22
 msgid "List Management"
-msgstr ""
+msgstr "Lijstbeheer"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:29
 msgid "Quota"
-msgstr ""
+msgstr "Quota"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:36
 msgid "Device Management"
-msgstr ""
+msgstr "Apparaatbeheer"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:43
 msgid "Classroom"
-msgstr ""
+msgstr "Klaslokaal"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:50
 msgid "Settings"
-msgstr ""
+msgstr "Instellingen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:57
 msgid "Global Settings"
-msgstr ""
+msgstr "Globale instellingen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/api.py:37
 msgid "Access refused."
-msgstr ""
+msgstr "Toegang geweigerd."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileBackups.service.coffee:52
 msgid "Do you really want to delete"
-msgstr ""
+msgstr "Weet je zeker dat je dit wilt verwijderen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileBackups.service.coffee:53
 msgid "Confirmation"
-msgstr ""
+msgstr "Bevestiging"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:13
 msgid "Passwords must contain at least one lowercase, one uppercase, one special char or number, and at least 7 chars"
-msgstr ""
+msgstr "Het wachtwoord moet ten minste een kleine letter, een hoofdletter, een speciaal teken of nummer, en 7 letters bevatten"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:22
 msgid "Password is not valid. Password can only contains a-zA-Z0-9!@#§+-$%&*{}()]["
-msgstr ""
+msgstr "Wachtwoord is niet geldig. Het wachtwoord kan alleen de volgende letters en symbolen bevatten a-zA-Z0-9!@#§+-$%&*{}()]["
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:42
 msgid " can only contain lowercase chars or numbers"
-msgstr ""
+msgstr " kan alleen kleine letters of cijfers bevatten"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:51
 msgid " can only contain alphanumeric chars or _+-"
-msgstr ""
+msgstr " kan alleen alfanumerieke tekens of _+- bevatten"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:60
 msgid " can only contain alphanumeric chars or -"
-msgstr ""
+msgstr " kan alleen alfanumerieke tekens of - bevatten"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:69
 msgid " can only contain alphanumeric chars"
-msgstr ""
+msgstr " kan alleen alfanumerieke tekens bevatten"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:78
 msgid " is not a valid number"
-msgstr ""
+msgstr " is geen geldig nummer"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:89
 msgid " is not a valid date"
-msgstr ""
+msgstr " is een ongeldige datum"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:98
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:107
 msgid " is not valid or duplicated"
-msgstr ""
+msgstr " is niet geldig of is gedupliceerd"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:116
 msgid " does not contain valid chars or is duplicated"
-msgstr ""
+msgstr " bevat geen geldige tekens of is gedupliceerd"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:129
 msgid " is not a valid role"
-msgstr ""
+msgstr " is een ongeldige rol"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:44
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:47
@@ -169,5 +169,5 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:138
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:141
 msgid "Uploaded"
-msgstr ""
+msgstr "Geüpload"
 

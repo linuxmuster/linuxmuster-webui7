@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-16 07:58+0200\n"
-"PO-Revision-Date: 2019-10-16 06:33\n"
+"PO-Revision-Date: 2019-10-23 16:01\n"
 "Last-Translator: kiarn\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -119,48 +119,48 @@ msgstr "Bestätigung"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:13
 msgid "Passwords must contain at least one lowercase, one uppercase, one special char or number, and at least 7 chars"
-msgstr ""
+msgstr "Passwörter müssen mindestens einen Kleinbuchstaben, einen Großbuchstaben, ein Sonderzeichen oder eine Ziffer enthalten und mindestens 7 Zeichen lang sein"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:22
 msgid "Password is not valid. Password can only contains a-zA-Z0-9!@#§+-$%&*{}()]["
-msgstr ""
+msgstr "Passwort ist ungültig. Folgende Zeichen sind erlaubt: a-zA-Z0-9!@#§+-$%&*{}()]["
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:42
 msgid " can only contain lowercase chars or numbers"
-msgstr ""
+msgstr " darf nur Kleinbuchstaben oder Zahlen enthalten"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:51
 msgid " can only contain alphanumeric chars or _+-"
-msgstr ""
+msgstr " darf nur alphanumerische Zeichen oder _+- enthalten"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:60
 msgid " can only contain alphanumeric chars or -"
-msgstr ""
+msgstr " darf nur alphanumerische Zeichen oder - enthalten"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:69
 msgid " can only contain alphanumeric chars"
-msgstr ""
+msgstr " darf nur alphanumerische Zeichen enthalten"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:78
 msgid " is not a valid number"
-msgstr ""
+msgstr " ist keine gültige Zahl"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:89
 msgid " is not a valid date"
-msgstr ""
+msgstr " ist ein ungültiges Datumsformat"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:98
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:107
 msgid " is not valid or duplicated"
-msgstr ""
+msgstr " ist ungültig oder doppelt vorhanden"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:116
 msgid " does not contain valid chars or is duplicated"
-msgstr ""
+msgstr " enthält keine gültigen Zeichen oder ist doppelt vorhanden"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:129
 msgid " is not a valid role"
-msgstr ""
+msgstr " ungültiges Format"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:44
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:47

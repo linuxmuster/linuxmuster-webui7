@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-16 07:58+0200\n"
-"PO-Revision-Date: 2019-10-16 06:33\n"
+"POT-Creation-Date: 2019-10-23 17:58+0200\n"
+"PO-Revision-Date: 2019-10-23 16:02\n"
 "Last-Translator: kiarn\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -34,7 +34,7 @@ msgstr "Übernehmen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/editMembers.modal.html:46
 msgid "Class as project admin"
-msgstr ""
+msgstr "Klasse als Projektadministrator"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:35
 msgid "Classes"
@@ -47,7 +47,7 @@ msgstr "Schließen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/editMembers.modal.html:2
 msgid "Close all"
-msgstr ""
+msgstr "Alle schließen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:13
 msgid "Creationdate:"
@@ -63,7 +63,7 @@ msgstr "Mitglieder bearbeiten"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/editMembers.modal.html:3
 msgid "Expand all"
-msgstr ""
+msgstr "Alle anzeigen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:68
 msgid "Group Admins:"
@@ -117,7 +117,7 @@ msgstr "Keine Mitglieder"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/editMembers.modal.html:5
 msgid "Normal view"
-msgstr ""
+msgstr "Normalansicht"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:28
 msgid "Objectsfilter"
@@ -156,7 +156,7 @@ msgstr "Schulname:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/editMembers.modal.html:4
 msgid "Show only members"
-msgstr ""
+msgstr "Nur Mitglieder anzeigen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:25
 msgid "Sophomorix Status:"
@@ -173,7 +173,7 @@ msgstr "Lehrer"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/editMembers.modal.html:73
 msgid "Teachers as project admin"
-msgstr ""
+msgstr "Lehrer als Projektadministrator"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:86
 msgid "There are no printers configured yet. Ask your administrator to configure one."
@@ -252,7 +252,7 @@ msgstr "Klasse"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:145
 msgid "Search for lastname, firstname or class"
-msgstr ""
+msgstr "Nach Nachname, Vorname oder Klasse suchen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:146
 msgid "Add/remove as member group"
@@ -275,15 +275,15 @@ msgstr "Schulklasse"
 msgid "Groupname"
 msgstr "Gruppenname"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:358
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:357
 msgid "Nothing changed"
 msgstr "Es wurden keine Änderungen vorgenommen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:361
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:360
 msgid "Project Name"
 msgstr "Projektname"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:369
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:368
 msgid "Project Created"
 msgstr "Projekt erstellt"
 

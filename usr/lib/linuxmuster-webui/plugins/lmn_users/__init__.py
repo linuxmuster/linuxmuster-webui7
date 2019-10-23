@@ -1,2 +1,2 @@
-import main
-import views
+from .main import *
+from .views import *

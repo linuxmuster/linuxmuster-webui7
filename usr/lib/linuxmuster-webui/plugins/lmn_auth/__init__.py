@@ -1,2 +1,2 @@
-import api
-import views
+from .api import *
+from .views import *

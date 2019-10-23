@@ -40,8 +40,8 @@ class LMAuthenticationProvider(AuthenticationProvider):
         try:
             res = l.search_s(params['searchdn'], ldap.SCOPE_SUBTREE, searchFilter)
             userDN = res[0][0]
-        except ldap.LDAPError, e:
-            print e
+        except ldap.LDAPError as e:
+            print(e)
 
 
         l.unbind_s()

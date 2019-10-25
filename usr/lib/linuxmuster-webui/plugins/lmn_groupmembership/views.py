@@ -12,7 +12,7 @@ class Handler(HttpPlugin):
         self.context = context
 
     @url(r'/api/lmn/groupmembership/details')
-    @authorize('lmn:groupmemberships: write')
+    @authorize('lmn:groupmemberships:write')
     @endpoint(api=True)
     def handle_api_groupmembership_details(self, http_context):
         action = http_context.json_body()['action']

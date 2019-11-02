@@ -418,6 +418,7 @@ class Handler(HttpPlugin):
             sophomorixCommand = ['sophomorix-passwd', '--set-firstpassword', '-jj', '-u', user]
             return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
         if action == 'set-random':
+            # TODO: Password length should be read from school settings
             sophomorixCommand = ['sophomorix-passwd', '-u', user, '--random', '8', '-jj']
             return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
         if action == 'set':

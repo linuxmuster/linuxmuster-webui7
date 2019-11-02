@@ -17,15 +17,25 @@ case "$1" in
         #echo "link ajcfg to linuxmuster-webui folder"
         #ln -s $ajcfg $webuietc
         #rm /etc/ajenti/config.yml
-        echo "copy default config files for webui"
+        echo "Copy default config files for webui"
         mkdir -p /etc/linuxmuster/webui/
-        cp /usr/lib/linuxmuster-webui/etc/ajenti_default.yml $ajcfg
-        cp /usr/lib/linuxmuster-webui/etc/webui_default.yml  $wucfg
+        if [ ! -f $ajcfg ]; then
+            # cp -n would be silent, but it's important to inform the user
+            cp /usr/lib/linuxmuster-webui/etc/ajenti_default.yml $ajcfg
+        else
+            echo "$ajcfg already exists ... not overwriting with the default config file."
+        fi
+        if [ ! -f $wucfg ]; then
+            # cp -n would be silent, but it's important to inform the user
+            cp /usr/lib/linuxmuster-webui/etc/webui_default.yml  $wucfg
+        else
+            echo "$wucfg already exists ... not overwriting with the default config file."
+        fi
         # Set default permissions from true to false
-        echo "set reverse permissions"
+        echo "Set reverse permissions"
         sed -i "s/: True,/: False,/g" /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/main.py
 	# systemctl einrichten und starten
-        echo "configure systemctl.."
+        echo "Configure systemctl.."
         systemctl daemon-reload
         systemctl enable linuxmuster-webui
         systemctl start linuxmuster-webui
@@ -42,7 +52,7 @@ case "$1" in
      else
     # do update
     echo "---------------------------------------------------------------"
-        echo "updating linuxmuster-webui"
+        echo "Updating linuxmuster-webui"
         echo "---------------------------------------------------------------"
     echo "Stop linuxmuster-webui"
 #    sed -i -e  's/dialog ng:show="message.visible" ng:repeat="message in messagebox.messages"/dialog ng:show="message.visible" style="z-index: 1050" ng:repeat="message in messagebox.messages"/' /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/resources/js/core/directives/messageboxContainer.es
@@ -56,17 +66,17 @@ case "$1" in
     $webuietc/split_config_aj.py
     # Set default permissions from true to false
     if [ "$(cat /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/main.py | grep True | wc -l)" -gt 0 ] ;then
-        echo "set reverse permissions"
+        echo "Set reverse permissions"
         sed -i "s/: True,/: False,/g" /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/main.py
         echo more
     fi
-    echo "set default sophomorix webui rights"
+    echo "Set default sophomorix webui rights"
     /usr/sbin/sophomorix-ui
     # start webui
     echo "Start linuxmuster-webui"
     systemctl start linuxmuster-webui
         echo "---------------------------------------------------------------"
-        echo "updating linuxmuster-webui ..done"
+        echo "Updating linuxmuster-webui ..done"
         echo "---------------------------------------------------------------"
      fi
         ;;

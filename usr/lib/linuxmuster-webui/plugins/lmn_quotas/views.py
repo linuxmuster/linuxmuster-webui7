@@ -135,8 +135,12 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_ldap_search(self, http_context):
         login = http_context.query['login']
-        sophomorixCommand = ['sophomorix-query', '--sam', login, '-jj']
-        return lmn_getSophomorixValue(sophomorixCommand, 'USER/'+login)
+        sophomorixCommand = ['sophomorix-query', '--anyname', login+'*', '-jj']
+        result = lmn_getSophomorixValue(sophomorixCommand, 'USER')
+        resultArray = []
+        for user, details in result.items():
+            resultArray.append(details['sn'] + " " + details['givenName'] + " (" + user + ")")
+        return resultArray
 
     @url(r'/api/lm/quotas/apply')
     @authorize('lm:quotas:apply')
@@ -146,3 +150,11 @@ class Handler(HttpPlugin):
             subprocess.check_call('sophomorix-quota > /tmp/apply-sophomorix.log', shell=True)
         except Exception as e:
             raise EndpointError(None, message=str(e))
+
+    @url(r'/api/lm/get-all-users')
+    @authorize('lm:quotas:configure')
+    @endpoint(api=True)
+    def handle_api_get_all_users(self, http_context):
+        all_users = {}
+        sophomorixCommand = ['sophomorix-query', '--teacher', '--student', '--schooladministrator', '--globaladministrator', '-jj']
+        return lmn_getSophomorixValue(sophomorixCommand, 'USER')

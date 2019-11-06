@@ -65,6 +65,11 @@ angular.module('lm.quotas').controller 'LMQuotasController', ($scope, $http, $ui
             $scope._.addNewSpecial = null
 
     $scope.findUsers = (q) ->
+        #result = []
+        #for user, details of $scope.all_users
+            #if user.indexOf(q) == 0 or details.sn.indexOf(q) == 0 or details.givenName.indexOf(q) == 0
+                #result.push(details.sn + " " + details.givenName + " (" + user + ")")
+        #return result
         return $http.get("/api/lm/ldap-search?login=#{q}").then (resp) ->
             return resp.data
 

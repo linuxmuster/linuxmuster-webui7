@@ -1,8 +1,8 @@
 <br/>
 
-<progress-spinner ng:show="teachers == null"></progress-spinner>
+<progress-spinner ng:show="settings == null"></progress-spinner>
 
-<div ng:show="teachers != null">
+<div ng:show="settings != null">
     <uib:tabset>
         <uib:tab heading="{{'Defaults'|translate}}">
             <br/>
@@ -81,24 +81,43 @@
                     <th>Cloud</th>
                     <th translate>Mail</th>
                 </tr>
-                <tr ng:repeat="(login,teacher) in teachers">
-                    <td>
-                        {{teacher.displayName}}
+                <tr>
+                    <td translate>
+                        Default
                     </td>
                     <td>
-                        <input type="number" ng:model="teacher.DEFLT" class="form-control" />
+                        <input type="number" ng:model="settings['role.teacher']['quota_default_global']" class="form-control" />
                     </td>
                     <td>
-                        <input type="number" ng:model="teacher.GLOBAL" class="form-control" />
+                        <input type="number" ng:model="settings['role.teacher']['quota_default_school']" class="form-control" />
                     </td>
                     <td>
-                        <input type="number" ng:model="teacher.CQ" class="form-control" />
+                        <input type="number" ng:model="settings['role.teacher']['cloudquota_percentage']" class="form-control" />
                     </td>
                     <td>
-                        <input type="number" ng:model="teacher.MQ" class="form-control" />
+                        <input type="number" ng:model="settings['role.teacher']['mailquota_default']" class="form-control" />
+                    </td>
+                </tr>
+                <tr ng:repeat="(login,details) in non_default.teacher">
+                    <td>
+                        {{details.displayName}}
+                    </td>
+                    <td>
+                        <input type="number" ng:model="details.QUOTA['linuxmuster-global'].VALUE" class="form-control" />
+                    </td>
+                    <td>
+                        <input type="number" ng:model="details.QUOTA['default-school'].VALUE" class="form-control" />
+                    </td>
+                    <td>
+                        <input type="number" ng:model="details.QUOTA.CQ.VALUE" class="form-control" />
+                    </td>
+                    <td>
+                        <input type="number" ng:model="details.QUOTA.MQ.VALUE" class="form-control" />
                     </td>
                 </tr>
             </table>
+            <h4 translate>Add special quota</h4>
+            <input type="text" placeholder="TEST" ng:model="_.addNewSpecial" typeahead-editable="false" typeahead-min-length="3" uib-typeahead="user for user in findUsers($viewValue) | limitTo:8" class="form-control" />
         </uib:tab>
         <uib:tab heading="{{'Students'|translate}}">
             <br/>
@@ -111,6 +130,47 @@
                     <th>Cloud</th>
                     <th translate>Mail</th>
                 </tr>
+                <tr>
+                    <td translate>
+                        Default
+                    </td>
+                    <td translate>
+                        Student
+                    </td>
+                    <td>
+                        <input type="number" ng:model="settings['role.student']['quota_default_global']" class="form-control" />
+                    </td>
+                    <td>
+                        <input type="number" ng:model="settings['role.student']['quota_default_school']" class="form-control" />
+                    </td>
+                    <td>
+                        <input type="number" ng:model="settings['role.student']['cloudquota_percentage']" class="form-control" />
+                    </td>
+                    <td>
+                        <input type="number" ng:model="settings['role.student']['mailquota_default']" class="form-control" />
+                    </td>
+                </tr>
+                <tr ng:repeat="(login,details) in non_default.student">
+                    <td>
+                        {{login}}
+                    </td>
+                    <td>
+                        {{details.displayName}}
+                    </td>
+                    <td>
+                        <input type="number" ng:model="details.QUOTA['linuxmuster-global'].VALUE" class="form-control" />
+                    </td>
+                    <td>
+                        <input type="number" ng:model="details.QUOTA['default-school'].VALUE" class="form-control" />
+                    </td>
+                    <td>
+                        <input type="number" ng:model="details.QUOTA.CQ.VALUE" class="form-control" />
+                    </td>
+                    <td>
+                        <input type="number" ng:model="details.QUOTA.MQ.VALUE" class="form-control" />
+                    </td>
+                </tr>
+<!--
                 <tr ng:repeat="(login, quota) in quotas" ng:if="!isSpecialQuota(login) && !isDefaultQuota(login)">
                     <td>
                         {{login}}
@@ -136,7 +196,9 @@
                         </button>
                     </td>
                 </tr>
+-->
             </table>
+            <h4 translate>Add special quota</h4>
             <input type="text" placeholder="Add new" ng:model="_.addNewSpecial" typeahead-editable="false" typeahead-min-length="3" uib-typeahead="user[1].uid[0] as user[1].cn[0] for user in findUsers($viewValue) | limitTo:8" class="form-control" />
         </uib:tab>
         <uib:tab heading="{{'Classes'|translate}}">

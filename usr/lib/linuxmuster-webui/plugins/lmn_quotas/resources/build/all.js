@@ -49,16 +49,17 @@
     //$http.get('/api/lm/settings').then (resp) ->
     //if not resp.data.use_quota
     //$location.path('/view/lm/quotas-disabled')
-    $http.get('/api/lm/schoolsettings').then(function(resp) {
-      var school;
-      school = 'default-school';
-      return $scope.settings = resp.data;
+    $http.post('/api/lm/get-all-users').then(function(resp) {
+      return $scope.all_users = resp.data;
     });
     $http.get('/api/lm/quotas').then(function(resp) {
-      $scope.quotas = resp.data[0];
-      $scope.teachers = resp.data[1];
-      return $scope.standardQuota = $scope.quotas['standard-lehrer'];
+      $scope.non_default = resp.data[0];
+      $scope.settings = resp.data[1];
+      console.log($scope.settings);
+      return console.log($scope.non_default);
     });
+    //$scope.teachers = resp.data[1]
+    //$scope.standardQuota = $scope.quotas['standard-lehrer']
     $http.get('/api/lm/class-quotas').then(function(resp) {
       $scope.classes = resp.data;
       return $scope.originalClasses = angular.copy($scope.classes);
@@ -106,7 +107,13 @@
       }
     });
     $scope.findUsers = function(q) {
+      //result = []
+      //for user, details of $scope.all_users
+      //if user.indexOf(q) == 0 or details.sn.indexOf(q) == 0 or details.givenName.indexOf(q) == 0
+      //result.push(details.sn + " " + details.givenName + " (" + user + ")")
+      //return result
       return $http.get(`/api/lm/ldap-search?login=${q}`).then(function(resp) {
+        console.log(resp.data);
         return resp.data;
       });
     };

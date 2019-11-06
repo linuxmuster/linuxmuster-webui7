@@ -29,24 +29,14 @@ angular.module('lm.quotas').controller 'LMQuotasController', ($scope, $http, $ui
     $scope._ =
         addNewSpecial: null
 
-    #$http.get("/api/lm/users/teachers-list").then (resp) ->
-        #$scope.teachers = resp.data
-        #for teacher in $scope.teachers
-            #teacher.quota = parseInt(teacher.quota)
-            #teacher.mailquota = parseInt(teacher.mailquota)
-
-    #$http.get('/api/lm/settings').then (resp) ->
-        #if not resp.data.use_quota
-            #$location.path('/view/lm/quotas-disabled')
-            
-    $http.get('/api/lm/schoolsettings').then (resp) ->
-        school = 'default-school'
-        $scope.settings = resp.data
+    $http.post('/api/lm/get-all-users').then (resp) ->
+        $scope.all_users = resp.data
 
     $http.get('/api/lm/quotas').then (resp) ->
-        $scope.quotas = resp.data[0]
-        $scope.teachers = resp.data[1]
-        $scope.standardQuota = $scope.quotas['standard-lehrer']
+        $scope.non_default = resp.data[0]
+        $scope.settings = resp.data[1]
+        console.log($scope.settings)
+        console.log($scope.non_default)
 
     $http.get('/api/lm/class-quotas').then (resp) ->
         $scope.classes = resp.data

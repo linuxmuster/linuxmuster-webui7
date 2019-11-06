@@ -7,6 +7,7 @@ from aj.api.http import url, HttpPlugin
 from aj.auth import authorize
 from aj.api.endpoint import endpoint, EndpointError
 from aj.plugins.lmn_common.api import lmn_backup_file, lmconfig, lmn_getSophomorixValue
+from configparser import ConfigParser
 
 # Fix user quota : 
     # sophomorix-user --quota linuxmuster-global:500:bla -u de
@@ -23,44 +24,67 @@ class Handler(HttpPlugin):
     @authorize('lm:quotas:configure')
     @endpoint(api=True)
     def handle_api_quotas(self, http_context):
+        school = 'default-school'
+        settings_path = '/etc/linuxmuster/sophomorix/'+school+'/school.conf'
+
         if http_context.method == 'GET':
-            students = {}
-            teachers = {}
+            ## Parse csv config file
+            config = ConfigParser()
+            config.read(settings_path)
+            settings = {}
+            for section in config.sections():
+                settings[section] = {}
+                for (key, val) in config.items(section):
+                   if val.isdigit():
+                      val = int(val)
+                   if val == 'no':
+                        val = False
+                   if val == 'yes':
+                        val = True
+                   settings[section][key] = val
+            print(settings)
+
+            ## Get list of non default quota user, others get the default value
+            ## Teachers and students are mixed in the same dict
+            non_default = {'teacher':{}, 'student':{}}
+            quota_types = {
+                'linuxmuster-global':'quota_default_global',
+                'default-school':'quota_default_school',
+                'CQ':'cloudquota_percentage',
+                'MQ':'mailquota_default'
+                }
             sophomorixCommand = ['sophomorix-quota', '-i', '-jj']
-            result = lmn_getSophomorixValue(sophomorixCommand, 'QUOTA/USERS')
+            result = lmn_getSophomorixValue(sophomorixCommand, 'NONDEFAULT_QUOTA/' + school + '/USER')
             for login, values in result.items():
-                # Assuming the values are int ... bad idea
-                tmpDict = {
-                        'DEFLT':int(values['SHARES']['default-school']['CALC']),
-                        'CQ':int(values['CLOUDQUOTA']['CALC_MB']),
-                        'GLOBAL':int(values['SHARES']['linuxmuster-global']['CALC']),
-                        'MQ':int(values['MAILQUOTA']['CALC']),
-                        'displayName':' '.join(reversed(values['MAIL']['displayName'].split()))
-                        }
-                if values['sophomorixRole'] == 'student':
-                    students[login] = tmpDict
-                else:
-                    teachers[login] = tmpDict
-            return [students,teachers]
+                role = values['sophomorixRole']
+                non_default[role][login] = values
+                for share, tag in quota_types.items():
+                    if share not in values['QUOTA']:
+                        values['QUOTA'][share] = {'VALUE':settings['role.'+role][tag]}
+                    else:
+                        values['QUOTA'][share]['VALUE'] = int(values['QUOTA'][share]['VALUE'])
+            return [non_default, settings]
 
         if http_context.method == 'POST':
-            lmn_backup_file(path)
-            with open(path, 'w') as f:
-                f.write('\n'.join(
-                    '%s: %s+%s' % (
-                        k, v['home'], v['var'],
-                    )
-                    for k, v in http_context.json_body().items()
-                ))
-            lmn_backup_file(mpath)
-            with open(mpath, 'w') as f:
-                f.write('\n'.join(
-                    '%s: %s' % (
-                        k, v['mail'],
-                    )
-                    for k, v in http_context.json_body().items()
-                    if v.get('mail', None)
-                ))
+            ## Update quota per user
+            pass
+            # lmn_backup_file(path)
+            # with open(path, 'w') as f:
+                # f.write('\n'.join(
+                    # '%s: %s+%s' % (
+                        # k, v['home'], v['var'],
+                    # )
+                    # for k, v in http_context.json_body().items()
+                # ))
+            # lmn_backup_file(mpath)
+            # with open(mpath, 'w') as f:
+                # f.write('\n'.join(
+                    # '%s: %s' % (
+                        # k, v['mail'],
+                    # )
+                    # for k, v in http_context.json_body().items()
+                    # if v.get('mail', None)
+                # ))
 
     @url(r'/api/lm/class-quotas')
     @authorize('lm:quotas:configure')
@@ -107,7 +131,7 @@ class Handler(HttpPlugin):
                     subprocess.check_call(['sophomorix-project', '-c', project['name'], '--addquota', '%s+%s' % (project['quota']['home'], project['quota']['var'])])
 
     @url(r'/api/lm/ldap-search')
-    @authorize('lm:quotas:ldap-search')
+    @authorize('lm:quotas:configure')
     @endpoint(api=True)
     def handle_api_ldap_search(self, http_context):
         login = http_context.query['login']

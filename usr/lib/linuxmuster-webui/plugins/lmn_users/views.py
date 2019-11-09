@@ -415,19 +415,19 @@ class Handler(HttpPlugin):
             sophomorixCommand = ['sophomorix-user', '--info', '-jj', '-u', user]
             return lmn_getSophomorixValue(sophomorixCommand, '/USERS/'+user+'/sophomorixFirstPassword')
         if action == 'set-initial':
-            sophomorixCommand = ['sophomorix-passwd', '--set-firstpassword', '-jj', '-u', user]
+            sophomorixCommand = ['sophomorix-passwd', '--set-firstpassword', '-jj', '-u', user, '--use-smbpasswd']
             return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
         if action == 'set-random':
             # TODO: Password length should be read from school settings
-            sophomorixCommand = ['sophomorix-passwd', '-u', user, '--random', '8', '-jj']
+            sophomorixCommand = ['sophomorix-passwd', '-u', user, '--random', '8', '-jj', '--use-smbpasswd']
             return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
         if action == 'set':
             password = http_context.json_body()['password']
-            sophomorixCommand = ['sophomorix-passwd', '-u', user, '--pass', password, '-jj']
+            sophomorixCommand = ['sophomorix-passwd', '-u', user, '--pass', password, '-jj', '--use-smbpasswd']
             return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
         if action == 'set-actual':
             password = http_context.json_body()['password']
-            sophomorixCommand = ['sophomorix-passwd', '-u', user, '--pass', password, '--nofirstpassupdate', '--hide', '-jj']
+            sophomorixCommand = ['sophomorix-passwd', '-u', user, '--pass', password, '--nofirstpassupdate', '--hide', '-jj', '--use-smbpasswd']
             return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
 
     @url(r'/api/lm/users/change-school-admin')

@@ -4,115 +4,27 @@
 
 <div ng:show="settings != null">
     <uib:tabset>
-        <uib:tab heading="{{'Defaults'|translate}}">
-            <br/>
-            <table class="lm-table lm-table-padded">
-                <tr>
-                    <th width="40%"></th>
-                    <th translate>Students</th>
-                    <th translate>Teachers</th>
-                    <th translate>Schooladministrator</th>
-                </tr>
-                <tr>
-                    <td>
-                        <label translate>Quota Default Global in MiB</label>
-                    </td>
-                    <td>
-                        <input type="number" class="form-control" ng:model="settings['role.student']['quota_default_global']" />
-                    </td>
-                    <td>
-                        <input type="number" class="form-control" ng:model="settings['role.teacher']['quota_default_global']" />
-                    </td>
-                    <td>
-                        <input type="number" class="form-control" ng:model="settings['role.schooladministrator']['quota_default_global']" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label translate>Quota Default School in MiB</label>
-                    </td>
-                    <td>
-                        <input type="number" class="form-control" ng:model="settings['role.student']['quota_default_school']" />
-                    </td>
-                    <td>
-                        <input type="number" class="form-control" ng:model="settings['role.teacher']['quota_default_school']" />
-                    </td>
-                    <td>
-                        <input type="number" class="form-control" ng:model="settings['role.schooladministrator']['quota_default_school']" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label translate>Cloudquota Percentage</label>
-                    </td>
-                    <td>
-                        <input type="number" class="form-control" ng:model="settings['role.student']['cloudquota_percentage']" />
-                    </td>
-                    <td>
-                        <input type="number" class="form-control" ng:model="settings['role.teacher']['cloudquota_percentage']" />
-                    </td>
-                    <td>
-                        <input type="number" class="form-control" ng:model="settings['role.schooladministrator']['cloudquota_percentage']" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label translate>Mailquota Default in MiB</label>
-                    </td>
-                    <td>
-                        <input type="number" class="form-control" ng:model="settings['role.student']['mailquota_default']" />
-                    </td>
-                    <td>
-                        <input type="number" class="form-control" ng:model="settings['role.teacher']['mailquota_default']" />
-                    </td>
-                    <td>
-                        <input type="number" class="form-control" ng:model="settings['role.schooladministrator']['mailquota_default']" />
-                    </td>
-                </tr>
-            </table>
-        </uib:tab>
         <uib:tab heading="{{'Teachers'|translate}}">
             <br/>
             <table class="lm-table lm-table-padded">
                 <tr>
                     <th translate>Name</th>
-                    <th>Default</th>
-                    <th>Global</th>
-                    <th>Cloud</th>
-                    <th translate>Mail</th>
+                    <th ng:repeat="qt in quota_types">{{qt.name}}</th>
                 </tr>
-                <tr>
+                <tr style="font-weight:bold;">
                     <td translate>
-                        Default
+                        Default value in school.conf
                     </td>
-                    <td>
-                        <input type="number" ng:model="settings['role.teacher']['quota_default_global']" class="form-control" />
-                    </td>
-                    <td>
-                        <input type="number" ng:model="settings['role.teacher']['quota_default_school']" class="form-control" />
-                    </td>
-                    <td>
-                        <input type="number" ng:model="settings['role.teacher']['cloudquota_percentage']" class="form-control" />
-                    </td>
-                    <td>
-                        <input type="number" ng:model="settings['role.teacher']['mailquota_default']" class="form-control" />
+                    <td ng:repeat="qt in quota_types">
+                        <input type="number" ng:model="settings['role.teacher'][qt.type]" class="form-control" />
                     </td>
                 </tr>
                 <tr ng:repeat="(login,details) in non_default.teacher">
                     <td>
                         {{details.displayName}}
                     </td>
-                    <td>
-                        <input type="number" ng:model="details.QUOTA['quota_default_global']" class="form-control" />
-                    </td>
-                    <td>
-                        <input type="number" ng:model="details.QUOTA['quota_default_school']" class="form-control" />
-                    </td>
-                    <td>
-                        <input type="number" ng:model="details.QUOTA['cloudquota_percentage']" class="form-control" disabled />
-                    </td>
-                    <td>
-                        <input type="number" ng:model="details.QUOTA['mailquota_default']" class="form-control" />
+                    <td ng:repeat="qt in quota_types">
+                        <input type="number" ng:model="details.QUOTA[qt.type]" class="form-control"  ng:class="{'nondefault': defaultTest('role.teacher', qt.type, details.QUOTA[qt.type])}" ng:disabled="qt.type == 'cloudquota_percentage'" />
                     </td>
                 </tr>
             </table>
@@ -124,57 +36,55 @@
             <br/>
             <table class="lm-table lm-table-padded">
                 <tr>
-                    <th translate>Login</th>
-                    <th translate>Name</th>
-                    <th>Default</th>
-                    <th>Global</th>
-                    <th>Cloud</th>
-                    <th translate>Mail</th>
+                    <th translate>Name (login)</th>
+                    <th ng:repeat="qt in quota_types">{{qt.name}}</th>
                 </tr>
-                <tr>
+                <tr style="font-weight:bold;">
                     <td translate>
-                        Default
+                        Default value in school.conf
                     </td>
-                    <td translate>
-                        Student
-                    </td>
-                    <td>
-                        <input type="number" ng:model="settings['role.student']['quota_default_global']" class="form-control" />
-                    </td>
-                    <td>
-                        <input type="number" ng:model="settings['role.student']['quota_default_school']" class="form-control" />
-                    </td>
-                    <td>
-                        <input type="number" ng:model="settings['role.student']['cloudquota_percentage']" class="form-control" />
-                    </td>
-                    <td>
-                        <input type="number" ng:model="settings['role.student']['mailquota_default']" class="form-control" />
+                    <td ng:repeat="qt in quota_types">
+                        <input type="number" ng:model="settings['role.student'][qt.type]" class="form-control" />
                     </td>
                 </tr>
                 <tr ng:repeat="(login,details) in non_default.student">
-                    <td>
-                        {{login}}
-                    </td>
-                    <td>
-                        {{details.displayName}}
-                    </td>
-                    <td>
-                        <input type="number" ng:model="details.QUOTA['quota_default_global']" class="form-control" />
-                    </td>
-                    <td>
-                        <input type="number" ng:model="details.QUOTA['quota_default_school']" class="form-control" />
-                    </td>
-                    <td>
-                        <input type="number" ng:model="details.QUOTA['cloudquota_percentage']" class="form-control" disabled />
-                    </td>
-                    <td>
-                        <input type="number" ng:model="details.QUOTA['mailquota_default']" class="form-control" />
+                    <td>{{details.displayName}} ({{login}})</td>
+                    <td ng:repeat="qt in quota_types">
+                        <input type="number" ng:model="details.QUOTA[qt.type]" class="form-control"  ng:class="{'nondefault': defaultTest('role.student', qt.type, details.QUOTA[qt.type])}" ng:disabled="qt.type == 'cloudquota_percentage'" />
                     </td>
                 </tr>
             </table>
             <hr />
             <h4 translate>Add special quota</h4>
             <input type="text" placeholder="{{searchText}}" ng:model="_.addNewSpecial" typeahead-editable="false" typeahead-min-length="3" uib-typeahead="user as user.label for user in findUsers($viewValue, 'student') | limitTo:8" class="form-control" />
+        </uib:tab>
+        <uib:tab heading="{{'Admins'|translate}}">
+            <br/>
+            <table class="lm-table lm-table-padded">
+                <tr>
+                    <th translate>Name</th>
+                    <th ng:repeat="qt in quota_types">{{qt.name}}</th>
+                </tr>
+                <tr style="font-weight:bold;">
+                    <td translate>
+                        Default value in school.conf
+                    </td>
+                    <td ng:repeat="qt in quota_types">
+                        <input type="number" ng:model="settings['role.schooladministrator'][qt.type]" class="form-control" />
+                    </td>
+                </tr>
+                <tr ng:repeat="(login,details) in non_default.schooladministrator">
+                    <td>
+                        {{details.displayName}}
+                    </td>
+                    <td ng:repeat="qt in quota_types">
+                        <input type="number" ng:model="details.QUOTA[qt.type]" class="form-control"  ng:class="{'nondefault': defaultTest('role.schooladministrator', qt.type, details.QUOTA[qt.type])}" ng:disabled="qt.type == 'cloudquota_percentage'" />
+                    </td>
+                </tr>
+            </table>
+            <hr />
+            <h4 translate>Add special quota</h4>
+            <input type="text" placeholder="{{searchText}}" ng:model="_.addNewSpecial" typeahead-editable="false" typeahead-min-length="3" uib-typeahead="user as user.label for user in findUsers($viewValue, 'teacher') | limitTo:8" class="form-control" />
         </uib:tab>
         <uib:tab heading="{{'Classes'|translate}}">
             <br/>

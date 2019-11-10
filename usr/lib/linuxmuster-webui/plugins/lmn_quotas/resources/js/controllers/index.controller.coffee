@@ -29,7 +29,7 @@ angular.module('lm.quotas').controller 'LMQuotasController', ($scope, $http, $ui
     $scope._ =
         addNewSpecial: null
 
-    $scope.searchText = gettext('Search by login, firstname or lastname.')
+    $scope.searchText = gettext('Search user by login, firstname or lastname.')
 
     $scope.newquota = {
         'teacher':{},
@@ -37,6 +37,14 @@ angular.module('lm.quotas').controller 'LMQuotasController', ($scope, $http, $ui
         'class':{},
         'project':{},
     }
+
+    # Need an array to keep the order ...
+    $scope.quota_types = [
+        {'type' : 'quota_default_global', 'name' : gettext('Quota Default Global in MiB')},
+        {'type' : 'quota_default_school', 'name' : gettext('Quota Default School in MiB')},
+        {'type' : 'cloudquota_percentage', 'name' : gettext('Cloudquota Percentage')},
+        {'type' : 'mailquota_default', 'name' : gettext('Mailquota Default in MiB')},
+    ]
 
     $http.get('/api/lm/quotas').then (resp) ->
         $scope.non_default = resp.data[0]
@@ -56,6 +64,9 @@ angular.module('lm.quotas').controller 'LMQuotasController', ($scope, $http, $ui
 
             $scope.non_default[user.role][user.login] = tmpDict
             $scope._.addNewSpecial = null
+
+    $scope.defaultTest = (role, quota, value) ->
+        return $scope.settings[role][quota] != value
 
     $scope.findUsers = (q, role='') ->
         return $http.post("/api/lm/ldap-search", {role:role, login:q}).then (resp) ->

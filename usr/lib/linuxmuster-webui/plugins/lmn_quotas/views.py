@@ -29,13 +29,14 @@ class Handler(HttpPlugin):
             for section in config.sections():
                 settings[section] = {}
                 for (key, val) in config.items(section):
-                   if val.isdigit():
-                      val = int(val)
-                   if val == 'no':
-                        val = False
-                   if val == 'yes':
-                        val = True
-                   settings[section][key] = val
+                    if 'quota' in key:
+                        if val.isdigit():
+                            val = int(val)
+                        if val == 'no':
+                            val = False
+                        if val == 'yes':
+                            val = True
+                        settings[section][key] = val
 
             ## Get list of non default quota user, others get the default value
             ## Teachers and students are mixed in the same dict

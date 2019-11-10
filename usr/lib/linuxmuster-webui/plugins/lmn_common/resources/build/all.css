@@ -33,6 +33,10 @@
   background-color: rgba(255, 178, 178, 0.29);
   border-color: red;
 }
+.nondefault {
+  color: #5bc0de;
+  font-weight: bold;
+}
 li.cardlist {
   padding: 0 10px;
   margin: 0 15px 5px 15px;

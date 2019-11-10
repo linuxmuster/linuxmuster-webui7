@@ -9,12 +9,6 @@ from aj.api.endpoint import endpoint, EndpointError
 from aj.plugins.lmn_common.api import lmn_backup_file, lmconfig, lmn_getSophomorixValue
 from configparser import ConfigParser
 
-# Fix user quota : 
-    # sophomorix-user --quota linuxmuster-global:500:bla -u de
-    # sophomorix-quota -u de
-# Call all quotas :
-    # sophomorix-quota -n ( no -jj ? )
-
 @component(HttpPlugin)
 class Handler(HttpPlugin):
     def __init__(self, context):
@@ -49,19 +43,30 @@ class Handler(HttpPlugin):
             quota_types = {
                 'linuxmuster-global':'quota_default_global',
                 'default-school':'quota_default_school',
-                'CQ':'cloudquota_percentage',
-                'MQ':'mailquota_default'
                 }
             sophomorixCommand = ['sophomorix-quota', '-i', '-jj']
             result = lmn_getSophomorixValue(sophomorixCommand, 'NONDEFAULT_QUOTA/' + school + '/USER')
             for login, values in result.items():
                 role = values['sophomorixRole']
                 non_default[role][login] = values
+
+                # Normal shares
                 for share, tag in quota_types.items():
                     if share not in values['QUOTA']:
-                        values['QUOTA'][share] = {'VALUE':settings['role.'+role][tag]}
+                        values['QUOTA'][tag] = settings['role.'+role][tag]
                     else:
-                        values['QUOTA'][share]['VALUE'] = int(values['QUOTA'][share]['VALUE'])
+                        values['QUOTA'][tag] = int(values['QUOTA'][share]['VALUE'])
+                        del values['QUOTA'][share]
+
+                # Mailquota
+                if 'MAILQUOTA' in values.keys():
+                    values['QUOTA']['mailquota_default'] = int(values['MAILQUOTA']['VALUE'])
+                else:
+                    values['QUOTA']['mailquota_default'] = settings['role.'+role][tag]
+
+                # Cloudquota ( always like settings ? non individual ? )
+                values['QUOTA']['cloudquota_percentage'] = settings['role.'+role]['cloudquota_percentage']
+
             return [non_default, settings]
 
         if http_context.method == 'POST':
@@ -151,6 +156,7 @@ class Handler(HttpPlugin):
                             'label':details['sn'] + " " + details['givenName'] + " (" + user + ")",
                             'login':details['sAMAccountName'],
                             'role':details['sophomorixRole'],
+                            'displayName':details['sn'] + " " + details['givenName']
                             })
             except:
                 # Ignore SophomorixValue errors
@@ -161,6 +167,7 @@ class Handler(HttpPlugin):
     @authorize('lm:quotas:apply')
     @endpoint(api=True)
     def handle_api_apply(self, http_context):
+        ## How to remove non default ?
         try:
             subprocess.check_call('sophomorix-quota > /tmp/apply-sophomorix.log', shell=True)
         except Exception as e:

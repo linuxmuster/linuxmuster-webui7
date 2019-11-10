@@ -47,38 +47,21 @@
       'class': {},
       'project': {}
     };
-    //$http.post('/api/lm/get-all-users').then (resp) ->
-    //$scope.all_users = resp.data
     $http.get('/api/lm/quotas').then(function(resp) {
       $scope.non_default = resp.data[0];
       return $scope.settings = resp.data[1];
     });
-    //$http.get('/api/lm/class-quotas').then (resp) ->
-    //$scope.classes = resp.data
-    //$scope.originalClasses = angular.copy($scope.classes)
-
-    //$http.get('/api/lm/project-quotas').then (resp) ->
-    //$scope.projects = resp.data
-    //$scope.originalProjects = angular.copy($scope.projects)
-
-    //$scope.specialQuotas = [
-    //{login: 'www-data', name: gettext('Webspace')}
-    //{login: 'administrator', name: gettext('Main admin')}
-    //{login: 'pgmadmin', name: gettext('Program admin')}
-    //{login: 'wwwadmin', name: gettext('Web admin')}
-    //]
-
-    //$scope.defaultQuotas = [
-    //{login: 'standard-workstations', name: gettext('Workstation default')}
-    //{login: 'standard-schueler', name: gettext('Student default')}
-    //{login: 'standard-lehrer', name: gettext('Teacher default')}
-    //]
     $scope.$watch('_.addNewSpecial', function() {
-      var user;
+      var tmpDict, user;
       if ($scope._.addNewSpecial) {
         user = $scope._.addNewSpecial;
-        $scope.newquota[user.role][user] = angular.copy($scope.settings['role.' + user.role]);
-        $scope.non_default[user.role][user.login] = angular.copy($scope.settings['role.' + user.role]);
+        // Add to newquota, in order to save later in sophomorix
+        $scope.newquota[user.role][user.login] = angular.copy($scope.settings['role.' + user.role]);
+        // Add to non_default, in order to show it
+        tmpDict = {};
+        tmpDict['QUOTA'] = angular.copy($scope.settings['role.' + user.role]);
+        tmpDict['displayName'] = user.displayName;
+        $scope.non_default[user.role][user.login] = tmpDict;
         return $scope._.addNewSpecial = null;
       }
     });
@@ -188,6 +171,31 @@
       return lmFileBackups.show('/etc/linuxmuster/sophomorix/user/quota.txt');
     };
   });
+
+  //# Archives
+//$http.get('/api/lm/class-quotas').then (resp) ->
+//$scope.classes = resp.data
+//$scope.originalClasses = angular.copy($scope.classes)
+
+//$http.get('/api/lm/project-quotas').then (resp) ->
+//$scope.projects = resp.data
+//$scope.originalProjects = angular.copy($scope.projects)
+
+//$scope.specialQuotas = [
+//{login: 'www-data', name: gettext('Webspace')}
+//{login: 'administrator', name: gettext('Main admin')}
+//{login: 'pgmadmin', name: gettext('Program admin')}
+//{login: 'wwwadmin', name: gettext('Web admin')}
+//]
+
+//$scope.defaultQuotas = [
+//{login: 'standard-workstations', name: gettext('Workstation default')}
+//{login: 'standard-schueler', name: gettext('Student default')}
+//{login: 'standard-lehrer', name: gettext('Teacher default')}
+//]
+
+//$http.post('/api/lm/get-all-users').then (resp) ->
+//$scope.all_users = resp.data
 
 }).call(this);
 

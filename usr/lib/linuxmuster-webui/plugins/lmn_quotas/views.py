@@ -42,7 +42,6 @@ class Handler(HttpPlugin):
                    if val == 'yes':
                         val = True
                    settings[section][key] = val
-            print(settings)
 
             ## Get list of non default quota user, others get the default value
             ## Teachers and students are mixed in the same dict
@@ -134,13 +133,29 @@ class Handler(HttpPlugin):
     @authorize('lm:quotas:configure')
     @endpoint(api=True)
     def handle_api_ldap_search(self, http_context):
-        login = http_context.query['login']
-        sophomorixCommand = ['sophomorix-query', '--anyname', login+'*', '-jj']
-        result = lmn_getSophomorixValue(sophomorixCommand, 'USER')
-        resultArray = []
-        for user, details in result.items():
-            resultArray.append(details['sn'] + " " + details['givenName'] + " (" + user + ")")
-        return resultArray
+        if http_context.method == 'POST':
+            # Problem with unicode In&egraves --> In\xe8s (py) --> In\ufffds (replace)
+            # Should be In&egraves --> Ines ( sophomorix supports this )
+            # login = http_context.json_body()['login'].decode('utf-8', 'replace')
+            login = http_context.json_body()['login']
+            role = http_context.json_body()['role']
+            if role:
+                role = '--' + role
+            resultArray = []
+            try:
+                sophomorixCommand = ['sophomorix-query', '--anyname', login+'*', role, '-jj']
+                result = lmn_getSophomorixValue(sophomorixCommand, 'USER')
+
+                for user, details in result.items():
+                    resultArray.append({
+                            'label':details['sn'] + " " + details['givenName'] + " (" + user + ")",
+                            'login':details['sAMAccountName'],
+                            'role':details['sophomorixRole'],
+                            })
+            except:
+                # Ignore SophomorixValue errors
+                pass
+            return resultArray
 
     @url(r'/api/lm/quotas/apply')
     @authorize('lm:quotas:apply')
@@ -151,10 +166,10 @@ class Handler(HttpPlugin):
         except Exception as e:
             raise EndpointError(None, message=str(e))
 
-    @url(r'/api/lm/get-all-users')
-    @authorize('lm:quotas:configure')
-    @endpoint(api=True)
-    def handle_api_get_all_users(self, http_context):
-        all_users = {}
-        sophomorixCommand = ['sophomorix-query', '--teacher', '--student', '--schooladministrator', '--globaladministrator', '-jj']
-        return lmn_getSophomorixValue(sophomorixCommand, 'USER')
+    # @url(r'/api/lm/get-all-users')
+    # @authorize('lm:quotas:configure')
+    # @endpoint(api=True)
+    # def handle_api_get_all_users(self, http_context):
+        # all_users = {}
+        # sophomorixCommand = ['sophomorix-query', '--teacher', '--student', '--schooladministrator', '--globaladministrator', '-jj']
+        # return lmn_getSophomorixValue(sophomorixCommand, 'USER')

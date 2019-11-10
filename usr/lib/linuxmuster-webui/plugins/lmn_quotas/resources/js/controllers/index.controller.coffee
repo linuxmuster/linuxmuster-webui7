@@ -29,48 +29,52 @@ angular.module('lm.quotas').controller 'LMQuotasController', ($scope, $http, $ui
     $scope._ =
         addNewSpecial: null
 
-    $http.post('/api/lm/get-all-users').then (resp) ->
-        $scope.all_users = resp.data
+    $scope.searchText = gettext('Search by login, firstname or lastname.')
+
+    $scope.newquota = {
+        'teacher':{},
+        'student':{},
+        'class':{},
+        'project':{},
+    }
+
+    #$http.post('/api/lm/get-all-users').then (resp) ->
+        #$scope.all_users = resp.data
 
     $http.get('/api/lm/quotas').then (resp) ->
         $scope.non_default = resp.data[0]
         $scope.settings = resp.data[1]
-        console.log($scope.settings)
-        console.log($scope.non_default)
 
-    $http.get('/api/lm/class-quotas').then (resp) ->
-        $scope.classes = resp.data
-        $scope.originalClasses = angular.copy($scope.classes)
+    #$http.get('/api/lm/class-quotas').then (resp) ->
+        #$scope.classes = resp.data
+        #$scope.originalClasses = angular.copy($scope.classes)
 
-    $http.get('/api/lm/project-quotas').then (resp) ->
-        $scope.projects = resp.data
-        $scope.originalProjects = angular.copy($scope.projects)
+    #$http.get('/api/lm/project-quotas').then (resp) ->
+        #$scope.projects = resp.data
+        #$scope.originalProjects = angular.copy($scope.projects)
 
-    $scope.specialQuotas = [
-        {login: 'www-data', name: gettext('Webspace')}
-        {login: 'administrator', name: gettext('Main admin')}
-        {login: 'pgmadmin', name: gettext('Program admin')}
-        {login: 'wwwadmin', name: gettext('Web admin')}
-    ]
+    #$scope.specialQuotas = [
+        #{login: 'www-data', name: gettext('Webspace')}
+        #{login: 'administrator', name: gettext('Main admin')}
+        #{login: 'pgmadmin', name: gettext('Program admin')}
+        #{login: 'wwwadmin', name: gettext('Web admin')}
+    #]
 
-    $scope.defaultQuotas = [
-        {login: 'standard-workstations', name: gettext('Workstation default')}
-        {login: 'standard-schueler', name: gettext('Student default')}
-        {login: 'standard-lehrer', name: gettext('Teacher default')}
-    ]
+    #$scope.defaultQuotas = [
+        #{login: 'standard-workstations', name: gettext('Workstation default')}
+        #{login: 'standard-schueler', name: gettext('Student default')}
+        #{login: 'standard-lehrer', name: gettext('Teacher default')}
+    #]
 
     $scope.$watch '_.addNewSpecial', () ->
         if $scope._.addNewSpecial
-            $scope.quotas[$scope._.addNewSpecial] = angular.copy($scope.standardQuota)
+            user = $scope._.addNewSpecial
+            $scope.newquota[user.role][user] = angular.copy($scope.settings['role.'+user.role])
+            $scope.non_default[user.role][user.login] = angular.copy($scope.settings['role.'+user.role])
             $scope._.addNewSpecial = null
 
-    $scope.findUsers = (q) ->
-        #result = []
-        #for user, details of $scope.all_users
-            #if user.indexOf(q) == 0 or details.sn.indexOf(q) == 0 or details.givenName.indexOf(q) == 0
-                #result.push(details.sn + " " + details.givenName + " (" + user + ")")
-        #return result
-        return $http.get("/api/lm/ldap-search?login=#{q}").then (resp) ->
+    $scope.findUsers = (q, role='') ->
+        return $http.post("/api/lm/ldap-search", {role:role, login:q}).then (resp) ->
             return resp.data
 
     $scope.isSpecialQuota = (login) ->

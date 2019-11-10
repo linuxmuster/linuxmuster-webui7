@@ -109,15 +109,16 @@
                         <input type="number" ng:model="details.QUOTA['default-school'].VALUE" class="form-control" />
                     </td>
                     <td>
-                        <input type="number" ng:model="details.QUOTA.CQ.VALUE" class="form-control" />
+                        <input type="number" ng:model="details.QUOTA.CQ.VALUE" class="form-control" disabled />
                     </td>
                     <td>
                         <input type="number" ng:model="details.QUOTA.MQ.VALUE" class="form-control" />
                     </td>
                 </tr>
             </table>
+            <hr />
             <h4 translate>Add special quota</h4>
-            <input type="text" placeholder="TEST" ng:model="_.addNewSpecial" typeahead-editable="false" typeahead-min-length="3" uib-typeahead="user for user in findUsers($viewValue) | limitTo:8" class="form-control" />
+            <input type="text" placeholder="{{searchText}}" ng:model="_.addNewSpecial" typeahead-editable="false" typeahead-min-length="3" uib-typeahead="user as user.label for user in findUsers($viewValue, 'teacher') | limitTo:8" class="form-control" />
         </uib:tab>
         <uib:tab heading="{{'Students'|translate}}">
             <br/>
@@ -170,36 +171,10 @@
                         <input type="number" ng:model="details.QUOTA.MQ.VALUE" class="form-control" />
                     </td>
                 </tr>
-<!--
-                <tr ng:repeat="(login, quota) in quotas" ng:if="!isSpecialQuota(login) && !isDefaultQuota(login)">
-                    <td>
-                        {{login}}
-                    </td>
-                    <td>
-                        {{quota.displayName}}
-                    </td>
-                    <td>
-                        <input type="number" ng:model="quota.DEFLT" class="form-control" />
-                    </td>
-                    <td>
-                        <input type="number" ng:model="quota.GLOBAL" class="form-control" />
-                    </td>
-                    <td>
-                        <input type="number" ng:model="quota.CQ" class="form-control" />
-                    </td>
-                    <td>
-                        <input type="number" ng:model="quota.MQ" class="form-control" />
-                    </td>
-                    <td>
-                        <button class="btn btn-default" ng:click="remove(login)">
-                            <i class="fa fa-trash-o"></i>
-                        </button>
-                    </td>
-                </tr>
--->
             </table>
+            <hr />
             <h4 translate>Add special quota</h4>
-            <input type="text" placeholder="Add new" ng:model="_.addNewSpecial" typeahead-editable="false" typeahead-min-length="3" uib-typeahead="user[1].uid[0] as user[1].cn[0] for user in findUsers($viewValue) | limitTo:8" class="form-control" />
+            <input type="text" placeholder="{{searchText}}" ng:model="_.addNewSpecial" typeahead-editable="false" typeahead-min-length="3" uib-typeahead="user as user.label for user in findUsers($viewValue, 'student') | limitTo:8" class="form-control" />
         </uib:tab>
         <uib:tab heading="{{'Classes'|translate}}">
             <br/>

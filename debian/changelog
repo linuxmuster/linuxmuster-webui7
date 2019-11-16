@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.107-1) lmn7; urgency=medium 
+
+  * Current snapshot build b6106f606cabc9e430e92352f2976936ef74295f
+  * Not overwriting existing config files.
+
+ -- Andreas Till <andreas.till@netzint.de> Mon Nov  3 07:57:03 UTC 2019
+
 linuxmuster-webui7 (1.0.106-1) lmn7; urgency=medium 
 
   * Current snapshot build 347f7940e9976134e451df514c4ebd9c9a1c9755

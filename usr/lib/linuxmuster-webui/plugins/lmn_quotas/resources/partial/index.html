@@ -21,7 +21,7 @@
                         {{details.displayName}}
                     </td>
                     <td ng:repeat="qt in quota_types">
-                        <input type="number" ng:model="details.QUOTA[qt.type]" class="form-control"  ng:class="{'nondefault': defaultTest('role.teacher', qt.type, details.QUOTA[qt.type])}" ng:disabled="qt.type == 'cloudquota_percentage'" />
+                        <input type="number" ng:model="details.QUOTA[qt.type]" class="form-control"  ng:class="{'nondefault': isDefaultQuota('role.teacher', qt.type, details.QUOTA[qt.type])}" ng:disabled="qt.type == 'cloudquota_percentage'" ng:change="userToChange('teacher', login, qt.type)" />
                     </td>
                 </tr>
             </table>
@@ -43,7 +43,7 @@
                 <tr ng:repeat="(login,details) in non_default.student">
                     <td>{{details.displayName}} ({{login}})</td>
                     <td ng:repeat="qt in quota_types">
-                        <input type="number" ng:model="details.QUOTA[qt.type]" class="form-control"  ng:class="{'nondefault': defaultTest('role.student', qt.type, details.QUOTA[qt.type])}" ng:disabled="qt.type == 'cloudquota_percentage'" />
+                        <input type="number" ng:model="details.QUOTA[qt.type]" class="form-control"  ng:class="{'nondefault': isDefaultQuota('role.student', qt.type, details.QUOTA[qt.type])}" ng:disabled="qt.type == 'cloudquota_percentage'" ng:change="userToChange('student', login, qt.type)" />
                     </td>
                 </tr>
             </table>
@@ -68,7 +68,7 @@
                         {{details.displayName}}
                     </td>
                     <td ng:repeat="qt in quota_types">
-                        <input type="number" ng:model="details.QUOTA[qt.type]" class="form-control"  ng:class="{'nondefault': defaultTest('role.schooladministrator', qt.type, details.QUOTA[qt.type])}" ng:disabled="qt.type == 'cloudquota_percentage'" />
+                        <input type="number" ng:model="details.QUOTA[qt.type]" class="form-control"  ng:class="{'nondefault': isDefaultQuota('role.schooladministrator', qt.type, details.QUOTA[qt.type])}" ng:disabled="qt.type == 'cloudquota_percentage'" ng:change="userToChange('schooladministrator', login, qt.type)" />
                     </td>
                 </tr>
             </table>

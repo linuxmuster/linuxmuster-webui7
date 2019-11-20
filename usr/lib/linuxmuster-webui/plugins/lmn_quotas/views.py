@@ -9,6 +9,8 @@ from aj.api.endpoint import endpoint, EndpointError
 from aj.plugins.lmn_common.api import lmn_backup_file, lmconfig, lmn_getSophomorixValue
 from configparser import ConfigParser
 
+## TODO : mark quota to update in smb
+
 @component(HttpPlugin)
 class Handler(HttpPlugin):
     def __init__(self, context):
@@ -71,25 +73,12 @@ class Handler(HttpPlugin):
             return [non_default, settings]
 
         if http_context.method == 'POST':
-            ## Update quota per user
-            pass
-            # lmn_backup_file(path)
-            # with open(path, 'w') as f:
-                # f.write('\n'.join(
-                    # '%s: %s+%s' % (
-                        # k, v['home'], v['var'],
-                    # )
-                    # for k, v in http_context.json_body().items()
-                # ))
-            # lmn_backup_file(mpath)
-            # with open(mpath, 'w') as f:
-                # f.write('\n'.join(
-                    # '%s: %s' % (
-                        # k, v['mail'],
-                    # )
-                    # for k, v in http_context.json_body().items()
-                    # if v.get('mail', None)
-                # ))
+            ## Update quota per user, but not applied yet
+            ## Not possible to factorise the command for many users
+            for role, userDict in http_context.json_body()['toChange'].items():
+                for _,values in userDict.items():
+                    sophomorixCommand = ['sophomorix-user', '--quota', values['quota']+':'+values['value']+':', '-u', values['login'], '-jj']
+                    lmn_getSophomorixValue(sophomorixCommand, '')
 
     @url(r'/api/lm/class-quotas')
     @authorize('lm:quotas:configure')
@@ -145,6 +134,7 @@ class Handler(HttpPlugin):
             # login = http_context.json_body()['login'].decode('utf-8', 'replace')
             login = http_context.json_body()['login']
             role = http_context.json_body()['role']
+            ## --teacher limit the query only to teachers
             if role:
                 role = '--' + role
             resultArray = []

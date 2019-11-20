@@ -32,17 +32,16 @@ angular.module('lm.quotas').controller 'LMQuotasController', ($scope, $http, $ui
     # Quota for class
     # Quota for project
 
+    $scope.toChange = {
+        'teacher': {},
+        'student': {},
+        'schooladministrator': {}
+    }
+
     $scope._ =
         addNewSpecial: null
 
-    $scope.searchText = gettext('Search user by login, firstname or lastname.')
-
-    $scope.newquota = {
-        'teacher':{},
-        'student':{},
-        'class':{},
-        'project':{},
-    }
+    $scope.searchText = gettext('Search user by login, firstname or lastname (min. 3 chars)')
 
     # Need an array to keep the order ...
     $scope.quota_types = [
@@ -60,71 +59,39 @@ angular.module('lm.quotas').controller 'LMQuotasController', ($scope, $http, $ui
         if $scope._.addNewSpecial
             user = $scope._.addNewSpecial
 
-            # Add to newquota, in order to save later in sophomorix
-            $scope.newquota[user.role][user.login] = angular.copy($scope.settings['role.'+user.role])
-
-            # Add to non_default, in order to show it
-            tmpDict = {}
-            tmpDict['QUOTA'] = angular.copy($scope.settings['role.'+user.role])
-            tmpDict['displayName'] = user.displayName
-
-            $scope.non_default[user.role][user.login] = tmpDict
+            $scope.non_default[user.role][user.login] = {
+                'QUOTA' : angular.copy($scope.settings['role.'+user.role]),
+                'displayName' : user.displayName
+                }
             $scope._.addNewSpecial = null
 
-    $scope.defaultTest = (role, quota, value) ->
+    $scope.isDefaultQuota = (role, quota, value) ->
         return $scope.settings[role][quota] != value
 
     $scope.findUsers = (q, role='') ->
         return $http.post("/api/lm/ldap-search", {role:role, login:q}).then (resp) ->
             return resp.data
 
-    $scope.isSpecialQuota = (login) ->
-        return login in (x.login for x in $scope.specialQuotas)
-
-    $scope.isDefaultQuota = (login) ->
-        return login in (x.login for x in $scope.defaultQuotas)
-
     $scope.remove = (login) ->
+        # TODO
         delete $scope.quotas[login]
 
+    $scope.userToChange = (role, login, quota) ->
+        delete $scope.toChange[role][login+"_"+quota]
+        ## Default value for a quota in sophomorix
+        value = '---'
+        if $scope.non_default[role][login]['QUOTA'][quota] != $scope.settings['role.'+role][quota]
+            value = $scope.non_default[role][login]['QUOTA'][quota]
+        $scope.toChange[role][login+"_"+quota] = {
+            'login': login,
+            'quota': quota,
+            'value': value
+        }
+
     $scope.save = () ->
-        teachers = angular.copy($scope.teachers)
-        for teacher in teachers
-            if not teacher.quota.home and not teacher.quota.var
-                teacher.quota = ''
-            else
-                teacher.quota = "#{teacher.quota.home or $scope.standardQuota.home}+#{teacher.quota.var or $scope.standardQuota.var}"
-            teacher.mailquota = "#{teacher.mailquota or ''}"
-
-        classesToChange = []
-        for cls, index in $scope.classes
-            if not angular.equals(cls, $scope.originalClasses[index])
-                cls.quota.home ?= $scope.standardQuota.home
-                cls.quota.var ?= $scope.standardQuota.var
-                classesToChange.push cls
-
-        projectsToChange = []
-        for project, index in $scope.projects
-            if not angular.equals(project, $scope.originalProjects[index])
-                project.quota.home ?= $scope.standardQuota.home
-                project.quota.var ?= $scope.standardQuota.var
-                projectsToChange.push project
-
-        qs = []
-        #qs.push $http.post("/api/lm/users/teachers?encoding=#{$scope.teachersEncoding}", teachers)
-        #qs.push $http.post('/api/lm/quotas', $scope.quotas)
-        qs.push $http.post('/api/lm/schoolsettings', $scope.settings)
-
-        if classesToChange.length > 0
-            qs.push $http.post("/api/lm/class-quotas", classesToChange).then () ->
-
-        if projectsToChange.length > 0
-            qs.push $http.post("/api/lm/project-quotas", projectsToChange).then () ->
-
-        return $q.all(qs).then () ->
-            $scope.originalClasses = angular.copy($scope.classes)
-            $scope.originalProjects = angular.copy($scope.projects)
-            notify.success gettext('Saved')
+        console.log($scope.toChange)
+        $http.post('/api/lm/quotas', {toChange : $scope.toChange})
+        ## Then reset $scope.toChange
 
     $scope.saveApply = () ->
         $scope.save().then () ->
@@ -161,3 +128,49 @@ angular.module('lm.quotas').controller 'LMQuotasController', ($scope, $http, $ui
 
     #$http.post('/api/lm/get-all-users').then (resp) ->
         #$scope.all_users = resp.data
+
+    #$scope.isSpecialQuota = (login) ->
+        #return login in (x.login for x in $scope.specialQuotas)
+
+    #$scope.isDefaultQuota = (login) ->
+        #return login in (x.login for x in $scope.defaultQuotas)
+
+    #$scope.save = () ->
+
+        #teachers = angular.copy($scope.teachers)
+        #for teacher in teachers
+            #if not teacher.quota.home and not teacher.quota.var
+                #teacher.quota = ''
+            #else
+                #teacher.quota = "#{teacher.quota.home or $scope.standardQuota.home}+#{teacher.quota.var or $scope.standardQuota.var}"
+            #teacher.mailquota = "#{teacher.mailquota or ''}"
+
+        #classesToChange = []
+        #for cls, index in $scope.classes
+            #if not angular.equals(cls, $scope.originalClasses[index])
+                #cls.quota.home ?= $scope.standardQuota.home
+                #cls.quota.var ?= $scope.standardQuota.var
+                #classesToChange.push cls
+
+        #projectsToChange = []
+        #for project, index in $scope.projects
+            #if not angular.equals(project, $scope.originalProjects[index])
+                #project.quota.home ?= $scope.standardQuota.home
+                #project.quota.var ?= $scope.standardQuota.var
+                #projectsToChange.push project
+
+        #qs = []
+        ##qs.push $http.post("/api/lm/users/teachers?encoding=#{$scope.teachersEncoding}", teachers)
+        ##qs.push $http.post('/api/lm/quotas', $scope.quotas)
+        #qs.push $http.post('/api/lm/schoolsettings', $scope.settings)
+
+        #if classesToChange.length > 0
+            #qs.push $http.post("/api/lm/class-quotas", classesToChange).then () ->
+
+        #if projectsToChange.length > 0
+            #qs.push $http.post("/api/lm/project-quotas", projectsToChange).then () ->
+
+        #return $q.all(qs).then () ->
+            #$scope.originalClasses = angular.copy($scope.classes)
+            #$scope.originalProjects = angular.copy($scope.projects)
+            #notify.success gettext('Saved')

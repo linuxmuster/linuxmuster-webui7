@@ -26,6 +26,12 @@ angular.module('lm.quotas').controller 'LMQuotasApplyModalController', ($scope, 
 angular.module('lm.quotas').controller 'LMQuotasController', ($scope, $http, $uibModal, $location, $q, gettext, lmEncodingMap, notify, pageTitle, lmFileBackups) ->
     pageTitle.set(gettext('Quotas'))
 
+    ## TODO
+    # Save new quota
+    # Delete special quota
+    # Quota for class
+    # Quota for project
+
     $scope._ =
         addNewSpecial: null
 

@@ -6,18 +6,15 @@
     <uib:tabset>
         <uib:tab heading="{{'Teachers'|translate}}">
             <br/>
-            <table class="lm-table lm-table-padded">
+            <div ng:show="!non_default.teacher" class="alert alert-info" translate>There is no special quota here.</div>
+            <table ng:show="non_default.teacher" class="lm-table lm-table-padded">
                 <tr>
                     <th translate>Name</th>
-                    <th ng:repeat="qt in quota_types">{{qt.name}}</th>
-                </tr>
-                <tr style="font-weight:bold;">
-                    <td translate>
-                        Default value in school.conf
-                    </td>
-                    <td ng:repeat="qt in quota_types">
-                        <input type="number" ng:model="settings['role.teacher'][qt.type]" class="form-control" />
-                    </td>
+                    <th ng:repeat="qt in quota_types">
+                        {{qt.name}}<br />
+                        <span translate>Default: </span>
+                        <span style="font-weight:bold;color:#dc3545;" >{{settings['role.teacher'][qt.type]}}</span>
+                    </th>
                 </tr>
                 <tr ng:repeat="(login,details) in non_default.teacher">
                     <td>
@@ -34,18 +31,14 @@
         </uib:tab>
         <uib:tab heading="{{'Students'|translate}}">
             <br/>
-            <table class="lm-table lm-table-padded">
+            <div ng:show="!non_default.student" class="alert alert-info" translate>There is no special quota here.</div>
+            <table  ng:show="non_default.student" class="lm-table lm-table-padded">
                 <tr>
                     <th translate>Name (login)</th>
-                    <th ng:repeat="qt in quota_types">{{qt.name}}</th>
-                </tr>
-                <tr style="font-weight:bold;">
-                    <td translate>
-                        Default value in school.conf
-                    </td>
-                    <td ng:repeat="qt in quota_types">
-                        <input type="number" ng:model="settings['role.student'][qt.type]" class="form-control" />
-                    </td>
+                    <th ng:repeat="qt in quota_types">
+                        {{qt.name}}<br />
+                        <span translate>Default: </span>
+                        <span style="font-weight:bold;color:#dc3545;" >{{settings['role.student'][qt.type]}}</span></th>
                 </tr>
                 <tr ng:repeat="(login,details) in non_default.student">
                     <td>{{details.displayName}} ({{login}})</td>
@@ -58,20 +51,17 @@
             <h4 translate>Add special quota</h4>
             <input type="text" placeholder="{{searchText}}" ng:model="_.addNewSpecial" typeahead-editable="false" typeahead-min-length="3" uib-typeahead="user as user.label for user in findUsers($viewValue, 'student') | limitTo:8" class="form-control" />
         </uib:tab>
-        <uib:tab heading="{{'Admins'|translate}}">
+        <uib:tab heading="{{'Schooladmins'|translate}}">
             <br/>
-            <table class="lm-table lm-table-padded">
+            <div ng:show="!non_default.schooladministrator" class="alert alert-info" translate>There is no special quota here.</div>
+            <table  ng:show="non_default.schooladministrator" class="lm-table lm-table-padded">
                 <tr>
                     <th translate>Name</th>
-                    <th ng:repeat="qt in quota_types">{{qt.name}}</th>
-                </tr>
-                <tr style="font-weight:bold;">
-                    <td translate>
-                        Default value in school.conf
-                    </td>
-                    <td ng:repeat="qt in quota_types">
-                        <input type="number" ng:model="settings['role.schooladministrator'][qt.type]" class="form-control" />
-                    </td>
+                    <th ng:repeat="qt in quota_types">
+                        {{qt.name}}<br />
+                        <span translate>Default: </span>
+                        <span style="font-weight:bold;color:#dc3545;" >{{settings['role.schooladministrator'][qt.type]}}</span>
+                    </th>
                 </tr>
                 <tr ng:repeat="(login,details) in non_default.schooladministrator">
                     <td>
@@ -86,6 +76,7 @@
             <h4 translate>Add special quota</h4>
             <input type="text" placeholder="{{searchText}}" ng:model="_.addNewSpecial" typeahead-editable="false" typeahead-min-length="3" uib-typeahead="user as user.label for user in findUsers($viewValue, 'teacher') | limitTo:8" class="form-control" />
         </uib:tab>
+<!--
         <uib:tab heading="{{'Classes'|translate}}">
             <br/>
             <table class="lm-table lm-table-padded">
@@ -128,6 +119,7 @@
                 </tr>
             </table>
         </uib:tab>
+-->
     </uib:tabset>
 
     <div class="floating-toolbar-padder"></div>

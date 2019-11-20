@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-16 07:58+0200\n"
-"PO-Revision-Date: 2019-10-23 16:01\n"
+"POT-Creation-Date: 2019-11-20 14:21+0100\n"
+"PO-Revision-Date: 2019-11-20 13:28\n"
 "Last-Translator: kiarn\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -100,7 +100,7 @@ msgstr "Druck-Daten"
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:250
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:252
 msgid "Quota"
-msgstr "Limit"
+msgstr "Quota"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:262
 msgid "Quota Default Global in MiB"

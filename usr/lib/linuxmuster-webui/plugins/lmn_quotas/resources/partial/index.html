@@ -128,32 +128,6 @@
                 </tr>
             </table>
         </uib:tab>
-        <uib:tab heading="{{'Special'|translate}}">
-            <br/>
-            <table class="lm-table lm-table-padded">
-                <tr>
-                    <th translate>Name</th>
-                    <th>/home</th>
-                    <th>/var</th>
-                    <th translate>Mail</th>
-                    <th></th>
-                </tr>
-                <tr ng:repeat="quota in specialQuotas">
-                    <td>
-                        {{quota.name}}
-                    </td>
-                    <td>
-                        <input type="number" ng:model="quotas[quota.login].home" class="form-control" />
-                    </td>
-                    <td>
-                        <input type="number" ng:model="quotas[quota.login].var" class="form-control" />
-                    </td>
-                    <td>
-                        <input type="number" ng:model="quotas[quota.login].mail" class="form-control" />
-                    </td>
-                </tr>
-            </table>
-        </uib:tab>
     </uib:tabset>
 
     <div class="floating-toolbar-padder"></div>

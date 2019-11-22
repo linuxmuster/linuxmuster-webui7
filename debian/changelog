@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.108-1) lmn7; urgency=medium 
+
+  * Current snapshot build bc46452d64dca50e7b90cd3697c5e0a661dee458
+   *     Cleanup.
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Nov 22 11:08:40 UTC 2019
+
 linuxmuster-webui7 (1.0.107-1) lmn7; urgency=medium 
 
   * Current snapshot build b6106f606cabc9e430e92352f2976936ef74295f

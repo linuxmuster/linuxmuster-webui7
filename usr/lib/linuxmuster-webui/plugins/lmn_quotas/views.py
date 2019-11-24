@@ -79,7 +79,10 @@ class Handler(HttpPlugin):
             ## Not possible to factorise the command for many users
             for role, userDict in http_context.json_body()['toChange'].items():
                 for _,values in userDict.items():
-                    sophomorixCommand = ['sophomorix-user', '--quota', '%s:%s:' % (quota_types[values['quota']], values['value']), '-u', values['login'], '-jj']
+                    if values['quota'] == 'mailquota_default':
+                        sophomorixCommand = ['sophomorix-user', '--mailquota', '%s' % (values['value']), '-u', values['login'], '-jj']
+                    else:
+                        sophomorixCommand = ['sophomorix-user', '--quota', '%s:%s' % (quota_types[values['quota']], values['value']), '-u', values['login'], '-jj']
                     lmn_getSophomorixValue(sophomorixCommand, '')
 
     @url(r'/api/lm/class-quotas')

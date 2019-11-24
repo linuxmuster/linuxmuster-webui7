@@ -23,6 +23,11 @@ class Handler(HttpPlugin):
         school = 'default-school'
         settings_path = '/etc/linuxmuster/sophomorix/'+school+'/school.conf'
 
+        quota_types = {
+            'quota_default_global':'linuxmuster-global',
+            'quota_default_school':'default-school',
+        }
+
         if http_context.method == 'GET':
             ## Parse csv config file
             config = ConfigParser()
@@ -43,10 +48,7 @@ class Handler(HttpPlugin):
             ## Get list of non default quota user, others get the default value
             ## Teachers and students are mixed in the same dict
             non_default = {'teacher':{}, 'student':{}}
-            quota_types = {
-                'linuxmuster-global':'quota_default_global',
-                'default-school':'quota_default_school',
-                }
+
             sophomorixCommand = ['sophomorix-quota', '-i', '-jj']
             result = lmn_getSophomorixValue(sophomorixCommand, 'NONDEFAULT_QUOTA/' + school + '/USER')
             for login, values in result.items():
@@ -54,8 +56,8 @@ class Handler(HttpPlugin):
                 non_default[role][login] = values
 
                 # Normal shares
-                for share, tag in quota_types.items():
-                    if share not in values['QUOTA']:
+                for tag, share in quota_types.items():
+                    if share not in values['QUOTA'] or values['QUOTA'][share]['VALUE'] == "---":
                         values['QUOTA'][tag] = settings['role.'+role][tag]
                     else:
                         values['QUOTA'][tag] = int(values['QUOTA'][share]['VALUE'])
@@ -77,7 +79,7 @@ class Handler(HttpPlugin):
             ## Not possible to factorise the command for many users
             for role, userDict in http_context.json_body()['toChange'].items():
                 for _,values in userDict.items():
-                    sophomorixCommand = ['sophomorix-user', '--quota', values['quota']+':'+values['value']+':', '-u', values['login'], '-jj']
+                    sophomorixCommand = ['sophomorix-user', '--quota', '%s:%s:' % (quota_types[values['quota']], values['value']), '-u', values['login'], '-jj']
                     lmn_getSophomorixValue(sophomorixCommand, '')
 
     @url(r'/api/lm/class-quotas')

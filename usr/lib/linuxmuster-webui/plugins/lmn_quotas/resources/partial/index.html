@@ -96,15 +96,16 @@
             <input type="text" placeholder="{{searchText}}" ng:model="_.addNewSpecial" typeahead-editable="false" typeahead-min-length="3" uib-typeahead="user as user.label for user in findUsers($viewValue, 'schooladministrator')" class="form-control" />
         </uib:tab>
 <!--
-        <uib:tab heading="{{'Classes'|translate}}">
+        <uib:tab heading="{{'Classes'|translate}}" ng:click="get_class_quota()">
             <br/>
             <table class="lm-table lm-table-padded">
                 <tr>
                     <th translate>Name</th>
                     <th>Default</th>
                     <th translate>Mail</th>
+                    <th></th>
                 </tr>
-                <tr ng:repeat="class in classes">
+                <tr ng:repeat="class in classquota">
                     <td>
                         {{class.name}}
                     </td>
@@ -113,6 +114,11 @@
                     </td>
                     <td>
                         <input type="number" ng:model="class.mailquota" class="form-control" />
+                    </td>
+                    <td>
+                        <button class="btn btn-default" title="Remove">
+                                <i class="fa fa-trash-o"></i>
+                        </button>
                     </td>
                 </tr>
             </table>

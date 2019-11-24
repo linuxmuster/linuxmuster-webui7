@@ -9,8 +9,6 @@ from aj.api.endpoint import endpoint, EndpointError
 from aj.plugins.lmn_common.api import lmn_backup_file, lmconfig, lmn_getSophomorixValue
 from configparser import ConfigParser
 
-## TODO : mark quota to update in smb
-
 @component(HttpPlugin)
 class Handler(HttpPlugin):
     def __init__(self, context):
@@ -167,11 +165,3 @@ class Handler(HttpPlugin):
             subprocess.check_call('sophomorix-quota > /tmp/apply-sophomorix.log', shell=True)
         except Exception as e:
             raise EndpointError(None, message=str(e))
-
-    # @url(r'/api/lm/get-all-users')
-    # @authorize('lm:quotas:configure')
-    # @endpoint(api=True)
-    # def handle_api_get_all_users(self, http_context):
-        # all_users = {}
-        # sophomorixCommand = ['sophomorix-query', '--teacher', '--student', '--schooladministrator', '--globaladministrator', '-jj']
-        # return lmn_getSophomorixValue(sophomorixCommand, 'USER')

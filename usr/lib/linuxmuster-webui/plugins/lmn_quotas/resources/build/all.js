@@ -73,8 +73,7 @@
     };
     $http.get('/api/lm/quotas').then(function(resp) {
       $scope.non_default = resp.data[0];
-      $scope.settings = resp.data[1];
-      return console.log($scope.settings);
+      return $scope.settings = resp.data[1];
     });
     $scope.$watch('_.addNewSpecial', function() {
       var user;

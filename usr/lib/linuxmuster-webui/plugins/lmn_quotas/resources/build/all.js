@@ -36,8 +36,6 @@
   angular.module('lm.quotas').controller('LMQuotasController', function($scope, $http, $uibModal, $location, $q, gettext, lmEncodingMap, notify, pageTitle, lmFileBackups) {
     pageTitle.set(gettext('Quotas'));
     //# TODO
-    // Save new quota
-    // Delete special quota
     // Quota for class
     // Quota for project
     $scope.toChange = {
@@ -94,10 +92,6 @@
         return resp.data;
       });
     };
-    $scope.remove = function(login) {
-      // TODO
-      return delete $scope.quotas[login];
-    };
     $scope.userToChange = function(role, login, quota) {
       var value;
       delete $scope.toChange[role][login + "_" + quota];
@@ -112,15 +106,18 @@
         'value': value
       };
     };
-    $scope.save = function() {
-      console.log($scope.toChange);
+    $scope.remove = function(role, login) {
+      //# Reset all 3 quotas to default
+      $scope.non_default[role][login]['QUOTA'] = angular.copy($scope.settings['role.' + role]);
+      $scope.userToChange(role, login, 'quota_default_global');
+      $scope.userToChange(role, login, 'quota_default_school');
+      $scope.userToChange(role, login, 'mailquota_default');
+      return delete $scope.non_default[role][login];
+    };
+    $scope.saveApply = function() {
       return $http.post('/api/lm/quotas', {
         toChange: $scope.toChange
-      });
-    };
-    //# Then reset $scope.toChange
-    $scope.saveApply = function() {
-      return $scope.save().then(function() {
+      }).then(function() {
         return $uibModal.open({
           templateUrl: '/lmn_quotas:resources/partial/apply.modal.html',
           controller: 'LMQuotasApplyModalController',

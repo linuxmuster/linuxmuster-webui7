@@ -163,7 +163,6 @@ class Handler(HttpPlugin):
     @authorize('lm:quotas:apply')
     @endpoint(api=True)
     def handle_api_apply(self, http_context):
-        ## How to remove non default ?
         try:
             subprocess.check_call('sophomorix-quota > /tmp/apply-sophomorix.log', shell=True)
         except Exception as e:

@@ -27,8 +27,6 @@ angular.module('lm.quotas').controller 'LMQuotasController', ($scope, $http, $ui
     pageTitle.set(gettext('Quotas'))
 
     ## TODO
-    # Save new quota
-    # Delete special quota
     # Quota for class
     # Quota for project
 
@@ -72,10 +70,6 @@ angular.module('lm.quotas').controller 'LMQuotasController', ($scope, $http, $ui
         return $http.post("/api/lm/ldap-search", {role:role, login:q}).then (resp) ->
             return resp.data
 
-    $scope.remove = (login) ->
-        # TODO
-        delete $scope.quotas[login]
-
     $scope.userToChange = (role, login, quota) ->
         delete $scope.toChange[role][login+"_"+quota]
         ## Default value for a quota in sophomorix
@@ -88,13 +82,16 @@ angular.module('lm.quotas').controller 'LMQuotasController', ($scope, $http, $ui
             'value': value
         }
 
-    $scope.save = () ->
-        console.log($scope.toChange)
-        $http.post('/api/lm/quotas', {toChange : $scope.toChange})
-        ## Then reset $scope.toChange
+    $scope.remove = (role, login) ->
+        ## Reset all 3 quotas to default
+        $scope.non_default[role][login]['QUOTA'] = angular.copy($scope.settings['role.'+role])
+        $scope.userToChange(role, login, 'quota_default_global')
+        $scope.userToChange(role, login, 'quota_default_school')
+        $scope.userToChange(role, login, 'mailquota_default')
+        delete $scope.non_default[role][login]
 
     $scope.saveApply = () ->
-        $scope.save().then () ->
+        $http.post('/api/lm/quotas', {toChange : $scope.toChange}).then () ->
             $uibModal.open(
                 templateUrl: '/lmn_quotas:resources/partial/apply.modal.html'
                 controller: 'LMQuotasApplyModalController'

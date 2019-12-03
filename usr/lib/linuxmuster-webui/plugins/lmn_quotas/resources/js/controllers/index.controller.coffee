@@ -43,15 +43,32 @@ angular.module('lm.quotas').controller 'LMQuotasController', ($scope, $http, $ui
 
     # Need an array to keep the order ...
     $scope.quota_types = [
-        {'type' : 'quota_default_global', 'name' : gettext('Quota Default Global in MiB')},
-        {'type' : 'quota_default_school', 'name' : gettext('Quota Default School in MiB')},
-        {'type' : 'cloudquota_percentage', 'name' : gettext('Cloudquota Percentage')},
-        {'type' : 'mailquota_default', 'name' : gettext('Mailquota Default in MiB')},
+        {'type' : 'quota_default_global', 'name' : gettext('Quota default global (MiB)')},
+        {'type' : 'quota_default_school', 'name' : gettext('Quota default school (MiB)')},
+        {'type' : 'cloudquota_percentage', 'name' : gettext('Cloudquota (%)')},
+        {'type' : 'mailquota_default', 'name' : gettext('Mailquota default (MiB)')},
+    ]
+    $scope.groupquota_types = [
+        {
+        'type' : 'linuxmuster-global',
+        'classname' : gettext('Quota default global (MiB)'),
+        'projname' : gettext('Add to default global (MiB)')},
+        {
+        'type' : 'default-school',
+        'classname' : gettext('Quota default school (MiB)'),
+        'projname' : gettext('Add to default school (MiB)')},
+        {
+        'type' : 'mailquota',
+        'classname' : gettext('Mailquota default (MiB)'),
+        'projname' : gettext('Add to mailquota (MiB)')},
     ]
 
+    $scope.groupquota = 0
     $scope.get_class_quota = () ->
-        $http.get('/api/lm/class-quotas').then (resp) ->
-            $scope.classquota = resp.data
+        if !$scope.groupquota
+            $http.get('/api/lm/group-quotas').then (resp) ->
+                $scope.groupquota = resp.data
+                console.log(resp.data.project)
 
     $http.get('/api/lm/quotas').then (resp) ->
         $scope.non_default = resp.data[0]

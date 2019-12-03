@@ -95,25 +95,20 @@
             <h4 translate>Add special quota</h4>
             <input type="text" placeholder="{{searchText}}" ng:model="_.addNewSpecial" typeahead-editable="false" typeahead-min-length="3" uib-typeahead="user as user.label for user in findUsers($viewValue, 'schooladministrator')" class="form-control" />
         </uib:tab>
-<!--
         <uib:tab heading="{{'Classes'|translate}}" ng:click="get_class_quota()">
             <br/>
             <table class="lm-table lm-table-padded">
                 <tr>
                     <th translate>Name</th>
-                    <th>Default</th>
-                    <th translate>Mail</th>
+                    <th ng:repeat="share in groupquota_types">{{share.name}}</th>
                     <th></th>
                 </tr>
-                <tr ng:repeat="class in classquota">
+                <tr ng:repeat="(class, details) in groupquota['adminclass']">
                     <td>
-                        {{class.name}}
+                        {{class}}
                     </td>
-                    <td>
-                        <input type="number" ng:model="class.quota" class="form-control" />
-                    </td>
-                    <td>
-                        <input type="number" ng:model="class.mailquota" class="form-control" />
+                    <td ng:repeat="share in groupquota_types">
+                        <input type="number" ng:model="details.QUOTA[share.type].value" class="form-control" />
                     </td>
                     <td>
                         <button class="btn btn-default" title="Remove">
@@ -123,37 +118,29 @@
                 </tr>
             </table>
         </uib:tab>
-        <uib:tab heading="{{'Projects'|translate}}">
+        <uib:tab heading="{{'Projects'|translate}}" ng:click="get_class_quota()">
             <br/>
             <table class="lm-table lm-table-padded">
                 <tr>
                     <th translate>Name</th>
-                    <th>Default</th>
-                    <th>Mail</th>
+                    <th ng:repeat="share in groupquota_types">{{share.name}}</th>
+                    <th></th>
                 </tr>
-                <tr ng:repeat="project in projects">
+                <tr ng:repeat="(project, details) in groupquota['project']">
                     <td>
-                        {{project.name}}
+                        {{project}}
                     </td>
-                    <td>
-                        <input type="number" ng:model="project.quota" class="form-control" />
-                    </td>
-                    <td>
-                        <input type="number" ng:model="project.mailquota" class="form-control" />
+                    <td ng:repeat="share in groupquota_types">
+                        <input type="number" ng:model="details.QUOTA[share.type].value" class="form-control" />
                     </td>
                 </tr>
             </table>
         </uib:tab>
--->
     </uib:tabset>
 
     <div class="floating-toolbar-padder"></div>
 
     <floating-toolbar>
-<!--
-        <button ng:click="backups()" class="btn btn-default btn-flat pull-right"><i class="fa fa-history"></i></button>
-        <button ng:click="save()" class="btn btn-default btn-flat" translate>Save</button>
--->
         <a href="/view/lm/schoolsettings#quota" class="btn btn-default btn-flat pull-right" translate>Configure default quota</a>
         <button ng:click="saveApply()" class="btn btn-default btn-flat" translate>Save & apply</button>
     </floating-toolbar>

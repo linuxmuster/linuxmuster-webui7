@@ -67,7 +67,7 @@ class Handler(HttpPlugin):
                 else:
                     values['QUOTA']['mailquota_default'] = settings['role.'+role][tag]
 
-                # Cloudquota ( always like settings ? non individual ? )
+                # Cloudquota
                 values['QUOTA']['cloudquota_percentage'] = settings['role.'+role]['cloudquota_percentage']
 
             return [non_default, settings]
@@ -83,22 +83,47 @@ class Handler(HttpPlugin):
                         sophomorixCommand = ['sophomorix-user', '--quota', '%s:%s' % (quota_types[values['quota']], values['value']), '-u', values['login'], '-jj']
                     lmn_getSophomorixValue(sophomorixCommand, '')
 
-    @url(r'/api/lm/class-quotas')
+    @url(r'/api/lm/group-quotas')
     @authorize('lm:quotas:configure')
     @endpoint(api=True)
     def handle_api_class_quotas(self, http_context):
+        ## Get quotas for projects and classes
         if http_context.method == 'GET':
-            lines = subprocess.check_output(['sophomorix-class', '-i']).splitlines()
-            lines = [l for l in lines if l.startswith("|")]
-            lines = lines[1:-1]
-            return [
-                {
-                    'name': line.split('|')[1].strip(),
-                    'quota': 0 if '-' in line else int(line.split('|')[4].strip()), 
-                    'mailquota': 0 if '-' in line else int(line.split('|')[5].strip()), 
-                }
-                for line in lines
-            ]
+            groups = {'adminclass':{}, 'project':{}}
+            shares = ['linuxmuster-global', 'default-school']
+
+            sophomorixCommand = ['sophomorix-class', '-ij']
+            result = lmn_getSophomorixValue(sophomorixCommand, 'GROUPS')
+
+            for group, details in result.items():
+                if 'sophomorixType' in details.keys():
+                    ## Class
+                    if details['sophomorixType'] == 'adminclass':
+                        details['QUOTA'] = {}
+                        details['QUOTA']['mailquota'] = {'value':0 if details['sophomorixMailQuota'].startswith('---') else int(details['sophomorixMailQuota'].split(':')[0])}
+                        for line in details['sophomorixQuota']:
+                            share,value,comment,_ = line.split(':')
+                            details['QUOTA'][share] = {'value':int(value) if value != '---' else 0, 'comment':comment}
+                        for share in shares:
+                            if share not in details['QUOTA'].keys():
+                                details['QUOTA'][share] = {'value':0, 'comment':''}
+
+                        groups[details['sophomorixType']][group] = details
+
+                    ## Project
+                    elif details['sophomorixType'] == 'project':
+                        details['QUOTA'] = {}
+                        details['QUOTA']['mailquota'] = {'value':0 if details['sophomorixAddMailQuota'].startswith('---') else int(details['sophomorixAddMailQuota'].split(':')[0])}
+                        for line in details['sophomorixAddQuota']:
+                            share,value,comment,_ = line.split(':')
+                            details['QUOTA'][share] = {'value':int(value) if value != '---' else 0, 'Comment':comment}
+                        for share in shares:
+                            if share not in details['QUOTA'].keys():
+                                details['QUOTA'][share] = {'value':0, 'Comment':''}
+                        groups[details['sophomorixType']][group] = details
+            return groups
+
+
         if http_context.method == 'POST':
             for cls in http_context.json_body():
                 if cls['quota']['home']:
@@ -106,26 +131,6 @@ class Handler(HttpPlugin):
                 if cls['mailquota']:
                     subprocess.check_call(['sophomorix-class', '-c', cls['name'], '--mailquota', cls['mailquota']])
 
-    @url(r'/api/lm/project-quotas')
-    @authorize('lm:quotas:configure')
-    @endpoint(api=True)
-    def handle_api_project_quotas(self, http_context):
-        if http_context.method == 'GET':
-            lines = subprocess.check_output(['sophomorix-project', '-i']).splitlines()
-            lines = [l for l in lines if l.startswith("|")]
-            lines = lines[1:-1]
-            return [
-                {
-                    'name': line.split('|')[1].strip(),
-                    'quota': 0 if '-' in line else int(line.split('|')[2].strip()),
-                    'mailquota': 0 if '-' in line else int(line.split('|')[3].strip()),
-                }
-                for line in lines
-            ]
-        if http_context.method == 'POST':
-            for project in http_context.json_body():
-                if project['quota']['home']:
-                    subprocess.check_call(['sophomorix-project', '-c', project['name'], '--addquota', '%s+%s' % (project['quota']['home'], project['quota']['var'])])
 
     @url(r'/api/lm/ldap-search')
     @authorize('lm:quotas:configure')

@@ -51,25 +51,46 @@
     $scope.quota_types = [
       {
         'type': 'quota_default_global',
-        'name': gettext('Quota Default Global in MiB')
+        'name': gettext('Quota default global (MiB)')
       },
       {
         'type': 'quota_default_school',
-        'name': gettext('Quota Default School in MiB')
+        'name': gettext('Quota default school (MiB)')
       },
       {
         'type': 'cloudquota_percentage',
-        'name': gettext('Cloudquota Percentage')
+        'name': gettext('Cloudquota (%)')
       },
       {
         'type': 'mailquota_default',
-        'name': gettext('Mailquota Default in MiB')
+        'name': gettext('Mailquota default (MiB)')
       }
     ];
+    $scope.groupquota_types = [
+      {
+        'type': 'linuxmuster-global',
+        'classname': gettext('Quota default global (MiB)'),
+        'projname': gettext('Add to default global (MiB)')
+      },
+      {
+        'type': 'default-school',
+        'classname': gettext('Quota default school (MiB)'),
+        'projname': gettext('Add to default school (MiB)')
+      },
+      {
+        'type': 'mailquota',
+        'classname': gettext('Mailquota default (MiB)'),
+        'projname': gettext('Add to mailquota (MiB)')
+      }
+    ];
+    $scope.groupquota = 0;
     $scope.get_class_quota = function() {
-      return $http.get('/api/lm/class-quotas').then(function(resp) {
-        return $scope.classquota = resp.data;
-      });
+      if (!$scope.groupquota) {
+        return $http.get('/api/lm/group-quotas').then(function(resp) {
+          $scope.groupquota = resp.data;
+          return console.log(resp.data.project);
+        });
+      }
     };
     $http.get('/api/lm/quotas').then(function(resp) {
       $scope.non_default = resp.data[0];

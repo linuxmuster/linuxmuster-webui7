@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-20 14:21+0100\n"
-"PO-Revision-Date: 2019-11-20 13:27\n"
+"POT-Creation-Date: 2019-12-07 11:57+0100\n"
+"PO-Revision-Date: 2019-12-07 13:38\n"
 "Last-Translator: kiarn\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -49,7 +49,6 @@ msgid "Collect"
 msgstr "Récupérer"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/selectFile.modal.html:7
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:102
 msgid "Collect files"
 msgstr "Récupérez les fichiers"
 
@@ -65,17 +64,13 @@ msgstr "Récupérer du cours"
 msgid "Collect from User"
 msgstr "Récupérer de l'utilisateur"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:210
-msgid "Collect transfer from whole session"
-msgstr "Récupérer le contenu du dossier transfer de l'ensemble du cours"
-
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:97
-msgid "Copy files"
-msgstr "Copier les fichiers"
+msgid "Copy"
+msgstr "Copier"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:209
-msgid "Copy transfer from whole session"
-msgstr "Copier le dossier transfer de l'ensemble du cours"
+msgid "Copy transfer directory from whole session"
+msgstr "Copier le dossier \"transfer\" de l'ensemble du cours"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:231
 msgid "Creation Date: {{session.ID}}"
@@ -92,6 +87,14 @@ msgstr "Editer la session"
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:122
 msgid "End running exam"
 msgstr "Fin de l'examen en cours"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:102
+msgid "Move"
+msgstr "Déplacer"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:210
+msgid "Move transfer directory from whole session"
+msgstr "Déplacer le dossier \"transfer\" de l'ensemble du cours"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:30
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:44
@@ -156,8 +159,8 @@ msgid "Share"
 msgstr "Partager"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:200
-msgid "Share file(s) from transfer with whole session"
-msgstr "Partager le(s) fichier(s) du dossier transfer avec tout le cours"
+msgid "Share file(s) from transfer directory with whole session"
+msgstr "Partager le(s) fichier(s) du dossier \"transfer\" avec toute la session"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/selectFile.modal.html:4
 msgid "Share files"

@@ -102,7 +102,7 @@ angular.module('lmn.session').config ($routeProvider) ->
         templateUrl: '/lmn_session:resources/partial/session.html'
 
 
-angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem) ->
+angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem, validation) ->
     pageTitle.set(gettext('Session'))
 
 
@@ -200,6 +200,10 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
     $scope.newSession = (username) ->
                 messagebox.prompt(gettext('Session Name'), '').then (msg) ->
                     if not msg.value
+                        return
+                    testChar = validation.isValidLinboConf(msg.value)
+                    if testChar != true
+                        notify.error gettext(testChar)
                         return
                     $http.post('/api/lmn/session/sessions', {action: 'new-session', username: username, comment: msg.value}).then (resp) ->
                         $scope.new-sessions = resp.data

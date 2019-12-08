@@ -141,7 +141,7 @@
     });
   });
 
-  angular.module('lmn.session').controller('LMNSessionController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem) {
+  angular.module('lmn.session').controller('LMNSessionController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem, validation) {
     var typeIsArray, validateResult;
     pageTitle.set(gettext('Session'));
     $scope.currentSession = {
@@ -251,7 +251,13 @@
     };
     $scope.newSession = function(username) {
       return messagebox.prompt(gettext('Session Name'), '').then(function(msg) {
+        var testChar;
         if (!msg.value) {
+          return;
+        }
+        testChar = validation.isValidLinboConf(msg.value);
+        if (testChar !== true) {
+          notify.error(gettext(testChar));
           return;
         }
         return $http.post('/api/lmn/session/sessions', {

@@ -520,21 +520,20 @@ class Handler(HttpPlugin):
         school = 'default-school'
         if http_context.method == 'GET':
 
-            sophomorixCommand = ['sophomorix-print', '--school', school, '--info', '-jj']
+            sophomorixCommand = ['sophomorix-query', '--class', '--group-full', '-jj']
 
             with authorize('lm:users:students:read'):
-                # classes = lmn_getSophomorixValue(sophomorixCommand, 'LIST_BY_sophomorixSchoolname_sophomorixAdminClass/'+school)
                 # Check if there are any classes if not return empty list
-                classes_raw = lmn_getSophomorixValue(sophomorixCommand, '')
-                if 'LIST_BY_sophomorixSchoolname_sophomorixAdminClass' not in classes_raw:
-                    classes = []
-                else:
-                    classes = classes_raw['LIST_BY_sophomorixSchoolname_sophomorixAdminClass'][school]
-                    if lmn_checkPermission({'id': 'lm:users:teachers:read', 'default': False}):
-                        # append empty element. This references to all users
-                        classes.append('')
-                    else:
-                        classes.remove('teachers')
+                classes_raw = lmn_getSophomorixValue(sophomorixCommand, 'GROUP')
+                classes = []
+                for c, details in classes_raw.items():
+                    if details["sophomorixHidden"] == "FALSE":
+                        classes.append(c)
+                if lmn_checkPermission({'id': 'lm:users:teachers:read', 'default': False}):
+                    # append empty element. This references to all users
+                    classes.append('')
+                    # add also teachers passwords
+                    classes.append('teachers')
                 return classes
 
         if http_context.method == 'POST':

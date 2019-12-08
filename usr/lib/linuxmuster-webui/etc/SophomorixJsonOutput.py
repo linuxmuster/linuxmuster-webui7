@@ -61,19 +61,31 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
     if output:
         jsonDict = ast.literal_eval(output)
 
+    # Option to only list keys on all levels
+    keys = False
+    if jsonpath[-1] is '-':
+        jsonpath = jsonpath[:-1]
+        keys = True
+
     ## Without key, simply return the dict
     if jsonpath is '':
-        return jsonDict
+        if not keys:
+            return jsonDict
+        else:
+            return jsonDict.keys()
 
     if ignoreErrors is False:
         try:
-            resultString = dpath.util.get(jsonDict, jsonpath)
+            resultDict = dpath.util.get(jsonDict, jsonpath)
         except Exception as e:
             raise Exception('getSophomorix Value error. Either sophomorix field does not exist or ajenti binduser does not have sufficient permissions:\n' +
                             'Error Message: ' + str(e) + '\n Dictionary we looked for information:\n' + str(jsonDict))
     else:
-        resultString = dpath.util.get(jsonDict, jsonpath)
-    return resultString
+        resultDict = dpath.util.get(jsonDict, jsonpath)
+    if not keys:
+        return resultDict
+    else:
+        return resultDict.keys()
 
 def main(argv):
     inputfile = ''

@@ -233,7 +233,7 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
     ## Cleanup stderr output
     #output = t.stderr.replace(':null,', ":\"null\",")
     #TODO: Maybe sophomorix should provide the null value  in  a python usable format
-    output = t.stderr.replace(':null', "\"null\"")
+    output = t.stderr.replace(':null', ":\"null\"")
     output = output.replace(':null}', ":\"null\"}")
     output = output.replace(':null]', ":\"null\"]")
 

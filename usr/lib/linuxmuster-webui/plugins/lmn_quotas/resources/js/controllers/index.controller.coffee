@@ -26,10 +26,6 @@ angular.module('lm.quotas').controller 'LMQuotasApplyModalController', ($scope, 
 angular.module('lm.quotas').controller 'LMQuotasController', ($scope, $http, $uibModal, $location, $q, gettext, lmEncodingMap, notify, pageTitle, lmFileBackups) ->
     pageTitle.set(gettext('Quotas'))
 
-    ## TODO
-    # Quota for class
-    # Quota for project
-
     $scope.toChange = {
         'teacher': {},
         'student': {},
@@ -145,6 +141,3 @@ angular.module('lm.quotas').controller 'LMQuotasController', ($scope, $http, $ui
                 controller: 'LMQuotasApplyModalController'
                 backdrop: 'static'
             )
-
-    $scope.backups = () ->
-        lmFileBackups.show('/etc/linuxmuster/sophomorix/user/quota.txt')

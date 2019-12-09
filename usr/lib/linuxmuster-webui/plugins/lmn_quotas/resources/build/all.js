@@ -35,9 +35,6 @@
 
   angular.module('lm.quotas').controller('LMQuotasController', function($scope, $http, $uibModal, $location, $q, gettext, lmEncodingMap, notify, pageTitle, lmFileBackups) {
     pageTitle.set(gettext('Quotas'));
-    //# TODO
-    // Quota for class
-    // Quota for project
     $scope.toChange = {
       'teacher': {},
       'student': {},
@@ -180,7 +177,7 @@
       $scope.changeUser(role, login, 'mailquota_default');
       return delete $scope.non_default[role][login];
     };
-    $scope.saveApply = function() {
+    return $scope.saveApply = function() {
       return $http.post('/api/lm/quotas/save', {
         users: $scope.toChange,
         groups: $scope.groupsToChange
@@ -191,9 +188,6 @@
           backdrop: 'static'
         });
       });
-    };
-    return $scope.backups = function() {
-      return lmFileBackups.show('/etc/linuxmuster/sophomorix/user/quota.txt');
     };
   });
 

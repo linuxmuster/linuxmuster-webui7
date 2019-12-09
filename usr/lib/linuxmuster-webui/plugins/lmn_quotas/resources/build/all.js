@@ -35,6 +35,9 @@
 
   angular.module('lm.quotas').controller('LMQuotasController', function($scope, $http, $uibModal, $location, $q, gettext, lmEncodingMap, notify, pageTitle, lmFileBackups) {
     pageTitle.set(gettext('Quotas'));
+    $scope.UserSearchVisible = false;
+    $scope.activeTab = 0;
+    $scope.tabs = ['teacher', 'student', 'schooladministrator'];
     $scope.toChange = {
       'teacher': {},
       'student': {},
@@ -104,13 +107,21 @@
           'QUOTA': angular.copy($scope.settings['role.' + user.role]),
           'displayName': user.displayName
         };
-        return $scope._.addNewSpecial = null;
+        $scope._.addNewSpecial = null;
+        $scope.UserSearchVisible = false;
+        return notify.success(user.displayName + gettext(" added with default values in the list."));
       }
     });
     $scope.isDefaultQuota = function(role, quota, value) {
       return $scope.settings[role][quota] !== value;
     };
-    $scope.findUsers = function(q, role = '') {
+    $scope.showUserSearch = function() {
+      return $scope.UserSearchVisible = true;
+    };
+    $scope.findUsers = function(q) {
+      var role;
+      role = $scope.tabs[$scope.activeTab];
+      console.log(role);
       return $http.post("/api/lm/ldap-search", {
         role: role,
         login: q

@@ -26,6 +26,10 @@ angular.module('lm.quotas').controller 'LMQuotasApplyModalController', ($scope, 
 angular.module('lm.quotas').controller 'LMQuotasController', ($scope, $http, $uibModal, $location, $q, gettext, lmEncodingMap, notify, pageTitle, lmFileBackups) ->
     pageTitle.set(gettext('Quotas'))
 
+    $scope.UserSearchVisible = false
+    $scope.activeTab = 0
+    $scope.tabs = ['teacher', 'student', 'schooladministrator', 'adminclass', 'project']
+
     $scope.toChange = {
         'teacher': {},
         'student': {},
@@ -40,7 +44,7 @@ angular.module('lm.quotas').controller 'LMQuotasController', ($scope, $http, $ui
     $scope._ =
         addNewSpecial: null
 
-    $scope.searchText = gettext('Search user by login, firstname or lastname (min. 3 chars)')
+    $scope.searchText = gettext('Search user by login, firstname or lastname (min. 3 chars), without special char.')
 
     # Need an array to keep the order ...
     $scope.quota_types = [
@@ -83,11 +87,18 @@ angular.module('lm.quotas').controller 'LMQuotasController', ($scope, $http, $ui
                 'displayName' : user.displayName
                 }
             $scope._.addNewSpecial = null
+            $scope.UserSearchVisible = false
+            notify.success(user.displayName + gettext(" added with default values in the list."))
 
     $scope.isDefaultQuota = (role, quota, value) ->
         return $scope.settings[role][quota] != value
 
-    $scope.findUsers = (q, role='') ->
+    $scope.showUserSearch = () ->
+        $scope.UserSearchVisible = true
+
+    $scope.findUsers = (q) ->
+        role = $scope.tabs[$scope.activeTab]
+        console.log(role)
         return $http.post("/api/lm/ldap-search", {role:role, login:q}).then (resp) ->
             return resp.data
 

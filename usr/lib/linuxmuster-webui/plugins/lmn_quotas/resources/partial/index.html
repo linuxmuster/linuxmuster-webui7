@@ -3,7 +3,7 @@
 <progress-spinner ng:show="settings == null"></progress-spinner>
 
 <div ng:show="settings != null">
-    <uib:tabset>
+    <uib:tabset active="activeTab">
         <uib:tab heading="{{'Teachers'|translate}}">
             <br/>
             <div ng:show="!non_default.teacher" class="alert alert-info" translate>There is no special quota here.</div>
@@ -31,9 +31,6 @@
                     </td>
                 </tr>
             </table>
-            <hr />
-            <h4 translate>Add special quota</h4>
-            <input type="text" placeholder="{{searchText}}" ng:model="_.addNewSpecial" typeahead-editable="false" typeahead-min-length="3" uib-typeahead="user as user.label for user in findUsers($viewValue, 'teacher')" class="form-control" />
         </uib:tab>
         <uib:tab heading="{{'Students'|translate}}">
             <br/>
@@ -60,9 +57,6 @@
                     </td>
                 </tr>
             </table>
-            <hr />
-            <h4 translate>Add special quota</h4>
-            <input type="text" placeholder="{{searchText}}" ng:model="_.addNewSpecial" typeahead-editable="false" typeahead-min-length="3" uib-typeahead="user as user.label for user in findUsers($viewValue, 'student') " class="form-control" />
         </uib:tab>
         <uib:tab heading="{{'Schooladmins'|translate}}">
             <br/>
@@ -91,9 +85,6 @@
                     </td>
                 </tr>
             </table>
-            <hr />
-            <h4 translate>Add special quota</h4>
-            <input type="text" placeholder="{{searchText}}" ng:model="_.addNewSpecial" typeahead-editable="false" typeahead-min-length="3" uib-typeahead="user as user.label for user in findUsers($viewValue, 'schooladministrator')" class="form-control" />
         </uib:tab>
         <uib:tab heading="{{'Classes'|translate}}" ng:click="get_class_quota()">
             <br/>
@@ -143,10 +134,23 @@
         </uib:tab>
     </uib:tabset>
 
+    <dialog ng:show="UserSearchVisible">
+        <div class="modal-header">
+            <h3 class="modal-title" translate>Add special quota</h3>
+        </div>
+        <div class="modal-body">
+            <input type="text" placeholder="{{searchText}}" ng:model="$parent._.addNewSpecial" typeahead-editable="false" typeahead-min-length="3" uib-typeahead="user as user.label for user in findUsers($viewValue)" class="form-control" autofocus />
+        </div>
+        <div class="modal-footer">
+
+        </div>
+    </dialog>
+
     <div class="floating-toolbar-padder"></div>
 
     <floating-toolbar>
         <a href="/view/lm/schoolsettings#quota" class="btn btn-default btn-flat pull-right" translate>Configure default quota</a>
         <button ng:click="saveApply()" class="btn btn-default btn-flat" translate>Save & apply</button>
+        <a ng:click="showUserSearch()" ng:show="activeTab <= 2" class="btn btn-default btn-flat" translate>Search & add user</a>
     </floating-toolbar>
 </div>

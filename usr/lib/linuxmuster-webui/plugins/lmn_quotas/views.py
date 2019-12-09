@@ -72,18 +72,7 @@ class Handler(HttpPlugin):
 
             return [non_default, settings]
 
-        if http_context.method == 'POST':
-            ## Update quota per user, but not applied yet
-            ## Not possible to factorise the command for many users
-            for role, userDict in http_context.json_body()['toChange'].items():
-                for _,values in userDict.items():
-                    if values['quota'] == 'mailquota_default':
-                        sophomorixCommand = ['sophomorix-user', '--mailquota', '%s' % (values['value']), '-u', values['login'], '-jj']
-                    else:
-                        sophomorixCommand = ['sophomorix-user', '--quota', '%s:%s' % (quota_types[values['quota']], values['value']), '-u', values['login'], '-jj']
-                    lmn_getSophomorixValue(sophomorixCommand, '')
-
-    @url(r'/api/lm/group-quotas')
+    @url(r'/api/lm/quotas/group')
     @authorize('lm:quotas:configure')
     @endpoint(api=True)
     def handle_api_class_quotas(self, http_context):
@@ -123,14 +112,42 @@ class Handler(HttpPlugin):
                         groups[details['sophomorixType']][group] = details
             return groups
 
+    @url(r'/api/lm/quotas/save')
+    @authorize('lm:quotas:configure')
+    @endpoint(api=True)
+    def handle_api_save_quotas(self, http_context):
+
+        quota_types = {
+            'quota_default_global':'linuxmuster-global',
+            'quota_default_school':'default-school',
+        }
 
         if http_context.method == 'POST':
-            for cls in http_context.json_body():
-                if cls['quota']['home']:
-                    subprocess.check_call(['sophomorix-class', '-c', cls['name'], '--quota', '%s+%s' % (cls['quota']['home'], cls['quota']['var'])])
-                if cls['mailquota']:
-                    subprocess.check_call(['sophomorix-class', '-c', cls['name'], '--mailquota', cls['mailquota']])
+            ## Update quota per user, but not applied yet
+            ## Not possible to factorise the command for many users
+            for role, userDict in http_context.json_body()['users'].items():
+                for _,values in userDict.items():
+                    if values['quota'] == 'mailquota_default':
+                        sophomorixCommand = ['sophomorix-user', '--mailquota', '%s' % (values['value']), '-u', values['login'], '-jj']
+                    else:
+                        sophomorixCommand = ['sophomorix-user', '--quota', '%s:%s' % (quota_types[values['quota']], values['value']), '-u', values['login'], '-jj']
+                    lmn_getSophomorixValue(sophomorixCommand, '')
 
+            ## Update quota per class, but not applied yet
+            for _, grpDict in http_context.json_body()['groups']['adminclass'].items():
+                if grpDict['quota'] == 'mailquota':
+                    sophomorixCommand = ['sophomorix-class', '-c', grpDict['group'], '--mailquota', '%s:' % grpDict['value'], '-jj']
+                else:
+                    sophomorixCommand = ['sophomorix-class', '-c', grpDict['group'], '--quota', '%s:%s:' % (grpDict['quota'], grpDict['value']), '-jj']
+                lmn_getSophomorixValue(sophomorixCommand, '')
+
+            ## Update quota per project, but not applied yet
+            for _, grpDict in http_context.json_body()['groups']['project'].items():
+                if grpDict['quota'] == 'mailquota':
+                    sophomorixCommand = ['sophomorix-project', '-p', grpDict['group'], '--addmailquota', '%s:' % grpDict['value'], '-jj']
+                else:
+                    sophomorixCommand = ['sophomorix-project', '-p', grpDict['group'], '--addquota', '%s:%s:' % (grpDict['quota'], grpDict['value']), '-jj']
+                lmn_getSophomorixValue(sophomorixCommand, '')
 
     @url(r'/api/lm/ldap-search')
     @authorize('lm:quotas:configure')

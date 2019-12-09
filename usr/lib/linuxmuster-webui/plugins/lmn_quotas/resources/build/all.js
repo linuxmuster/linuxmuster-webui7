@@ -43,6 +43,10 @@
       'student': {},
       'schooladministrator': {}
     };
+    $scope.groupsToChange = {
+      'adminclass': {},
+      'project': {}
+    };
     $scope._ = {
       addNewSpecial: null
     };
@@ -86,9 +90,8 @@
     $scope.groupquota = 0;
     $scope.get_class_quota = function() {
       if (!$scope.groupquota) {
-        return $http.get('/api/lm/group-quotas').then(function(resp) {
-          $scope.groupquota = resp.data;
-          return console.log(resp.data.project);
+        return $http.get('/api/lm/quotas/group').then(function(resp) {
+          return $scope.groupquota = resp.data;
         });
       }
     };
@@ -118,7 +121,7 @@
         return resp.data;
       });
     };
-    $scope.userToChange = function(role, login, quota) {
+    $scope.changeUser = function(role, login, quota) {
       var value;
       delete $scope.toChange[role][login + "_" + quota];
       //# Default value for a quota in sophomorix
@@ -132,17 +135,55 @@
         'value': value
       };
     };
+    $scope.changeGroup = function(type, group, quota) {
+      var value;
+      delete $scope.groupsToChange[type][group + "_" + quota];
+      //# Default value for a quota in sophomorix
+      value = '---';
+      if ($scope.groupquota[type][group]['QUOTA'][quota].value !== 0) {
+        value = $scope.groupquota[type][group]['QUOTA'][quota].value;
+      }
+      return $scope.groupsToChange[type][group + "_" + quota] = {
+        'group': group,
+        'quota': quota,
+        'type': type,
+        'value': value
+      };
+    };
+    $scope.resetClass = function(cl) {
+      var i, len, ref, results, share;
+      ref = $scope.groupquota_types;
+      results = [];
+      for (i = 0, len = ref.length; i < len; i++) {
+        share = ref[i];
+        $scope.groupquota['adminclass'][cl]['QUOTA'][share.type].value = 0;
+        results.push($scope.changeGroup('adminclass', cl, share.type));
+      }
+      return results;
+    };
+    $scope.resetProject = function(pr) {
+      var i, len, ref, results, share;
+      ref = $scope.groupquota_types;
+      results = [];
+      for (i = 0, len = ref.length; i < len; i++) {
+        share = ref[i];
+        $scope.groupquota['project'][pr]['QUOTA'][share.type].value = 0;
+        results.push($scope.changeGroup('project', pr, share.type));
+      }
+      return results;
+    };
     $scope.remove = function(role, login) {
       //# Reset all 3 quotas to default
       $scope.non_default[role][login]['QUOTA'] = angular.copy($scope.settings['role.' + role]);
-      $scope.userToChange(role, login, 'quota_default_global');
-      $scope.userToChange(role, login, 'quota_default_school');
-      $scope.userToChange(role, login, 'mailquota_default');
+      $scope.changeUser(role, login, 'quota_default_global');
+      $scope.changeUser(role, login, 'quota_default_school');
+      $scope.changeUser(role, login, 'mailquota_default');
       return delete $scope.non_default[role][login];
     };
     $scope.saveApply = function() {
-      return $http.post('/api/lm/quotas', {
-        toChange: $scope.toChange
+      return $http.post('/api/lm/quotas/save', {
+        users: $scope.toChange,
+        groups: $scope.groupsToChange
       }).then(function() {
         return $uibModal.open({
           templateUrl: '/lmn_quotas:resources/partial/apply.modal.html',

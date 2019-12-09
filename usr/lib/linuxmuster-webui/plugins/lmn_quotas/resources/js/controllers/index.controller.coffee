@@ -36,6 +36,11 @@ angular.module('lm.quotas').controller 'LMQuotasController', ($scope, $http, $ui
         'schooladministrator': {}
     }
 
+    $scope.groupsToChange = {
+        'adminclass': {},
+        'project': {}
+    }
+
     $scope._ =
         addNewSpecial: null
 
@@ -66,9 +71,8 @@ angular.module('lm.quotas').controller 'LMQuotasController', ($scope, $http, $ui
     $scope.groupquota = 0
     $scope.get_class_quota = () ->
         if !$scope.groupquota
-            $http.get('/api/lm/group-quotas').then (resp) ->
+            $http.get('/api/lm/quotas/group').then (resp) ->
                 $scope.groupquota = resp.data
-                console.log(resp.data.project)
 
     $http.get('/api/lm/quotas').then (resp) ->
         $scope.non_default = resp.data[0]
@@ -91,7 +95,7 @@ angular.module('lm.quotas').controller 'LMQuotasController', ($scope, $http, $ui
         return $http.post("/api/lm/ldap-search", {role:role, login:q}).then (resp) ->
             return resp.data
 
-    $scope.userToChange = (role, login, quota) ->
+    $scope.changeUser = (role, login, quota) ->
         delete $scope.toChange[role][login+"_"+quota]
         ## Default value for a quota in sophomorix
         value = '---'
@@ -103,16 +107,39 @@ angular.module('lm.quotas').controller 'LMQuotasController', ($scope, $http, $ui
             'value': value
         }
 
+    $scope.changeGroup = (type, group, quota) ->
+        delete $scope.groupsToChange[type][group+"_"+quota]
+        ## Default value for a quota in sophomorix
+        value = '---'
+        if $scope.groupquota[type][group]['QUOTA'][quota].value != 0
+            value = $scope.groupquota[type][group]['QUOTA'][quota].value
+        $scope.groupsToChange[type][group+"_"+quota] = {
+            'group': group,
+            'quota': quota,
+            'type': type,
+            'value': value
+        }
+
+    $scope.resetClass = (cl) ->
+        for share in $scope.groupquota_types
+            $scope.groupquota['adminclass'][cl]['QUOTA'][share.type].value = 0
+            $scope.changeGroup('adminclass', cl, share.type)
+
+    $scope.resetProject = (pr) ->
+        for share in $scope.groupquota_types
+            $scope.groupquota['project'][pr]['QUOTA'][share.type].value = 0
+            $scope.changeGroup('project', pr, share.type)
+
     $scope.remove = (role, login) ->
         ## Reset all 3 quotas to default
         $scope.non_default[role][login]['QUOTA'] = angular.copy($scope.settings['role.'+role])
-        $scope.userToChange(role, login, 'quota_default_global')
-        $scope.userToChange(role, login, 'quota_default_school')
-        $scope.userToChange(role, login, 'mailquota_default')
+        $scope.changeUser(role, login, 'quota_default_global')
+        $scope.changeUser(role, login, 'quota_default_school')
+        $scope.changeUser(role, login, 'mailquota_default')
         delete $scope.non_default[role][login]
 
     $scope.saveApply = () ->
-        $http.post('/api/lm/quotas', {toChange : $scope.toChange}).then () ->
+        $http.post('/api/lm/quotas/save', {users: $scope.toChange, groups: $scope.groupsToChange}).then () ->
             $uibModal.open(
                 templateUrl: '/lmn_quotas:resources/partial/apply.modal.html'
                 controller: 'LMQuotasApplyModalController'

@@ -141,12 +141,11 @@
       if ($scope.non_default[role][login]['QUOTA'][quota] !== $scope.settings['role.' + role][quota]) {
         value = $scope.non_default[role][login]['QUOTA'][quota];
       }
-      $scope.toChange[role][login + "_" + quota] = {
+      return $scope.toChange[role][login + "_" + quota] = {
         'login': login,
         'quota': quota,
         'value': value
       };
-      return console.log($scope.toChange);
     };
     $scope.changeGroup = function(type, group, quota) {
       var value;

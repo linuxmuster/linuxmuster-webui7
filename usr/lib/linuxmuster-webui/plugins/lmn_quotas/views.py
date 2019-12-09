@@ -66,7 +66,7 @@ class Handler(HttpPlugin):
                 if 'MAILQUOTA' in values.keys():
                     values['QUOTA']['mailquota_default'] = int(values['MAILQUOTA']['VALUE'])
                 else:
-                    values['QUOTA']['mailquota_default'] = settings['role.'+role][tag]
+                    values['QUOTA']['mailquota_default'] = settings['role.'+role]['mailquota_default']
 
                 # Cloudquota
                 values['QUOTA']['cloudquota_percentage'] = settings['role.'+role]['cloudquota_percentage']

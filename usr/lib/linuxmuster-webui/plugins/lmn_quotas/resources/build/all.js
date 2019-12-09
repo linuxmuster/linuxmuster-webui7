@@ -37,7 +37,7 @@
     pageTitle.set(gettext('Quotas'));
     $scope.UserSearchVisible = false;
     $scope.activeTab = 0;
-    $scope.tabs = ['teacher', 'student', 'schooladministrator'];
+    $scope.tabs = ['teacher', 'student', 'schooladministrator', 'adminclass', 'project'];
     $scope.toChange = {
       'teacher': {},
       'student': {},
@@ -50,7 +50,7 @@
     $scope._ = {
       addNewSpecial: null
     };
-    $scope.searchText = gettext('Search user by login, firstname or lastname (min. 3 chars)');
+    $scope.searchText = gettext('Search user by login, firstname or lastname (min. 3 chars), without special char.');
     // Need an array to keep the order ...
     $scope.quota_types = [
       {
@@ -107,6 +107,11 @@
           'QUOTA': angular.copy($scope.settings['role.' + user.role]),
           'displayName': user.displayName
         };
+        $scope.non_default[user.role].list.push({
+          'sn': user.sn,
+          'login': user.login,
+          'givenname': user.givenName
+        });
         $scope._.addNewSpecial = null;
         $scope.UserSearchVisible = false;
         return notify.success(user.displayName + gettext(" added with default values in the list."));
@@ -121,7 +126,6 @@
     $scope.findUsers = function(q) {
       var role;
       role = $scope.tabs[$scope.activeTab];
-      console.log(role);
       return $http.post("/api/lm/ldap-search", {
         role: role,
         login: q
@@ -137,11 +141,12 @@
       if ($scope.non_default[role][login]['QUOTA'][quota] !== $scope.settings['role.' + role][quota]) {
         value = $scope.non_default[role][login]['QUOTA'][quota];
       }
-      return $scope.toChange[role][login + "_" + quota] = {
+      $scope.toChange[role][login + "_" + quota] = {
         'login': login,
         'quota': quota,
         'value': value
       };
+      return console.log($scope.toChange);
     };
     $scope.changeGroup = function(type, group, quota) {
       var value;
@@ -180,13 +185,14 @@
       }
       return results;
     };
-    $scope.remove = function(role, login) {
+    $scope.remove = function(role, user) {
       //# Reset all 3 quotas to default
-      $scope.non_default[role][login]['QUOTA'] = angular.copy($scope.settings['role.' + role]);
-      $scope.changeUser(role, login, 'quota_default_global');
-      $scope.changeUser(role, login, 'quota_default_school');
-      $scope.changeUser(role, login, 'mailquota_default');
-      return delete $scope.non_default[role][login];
+      $scope.non_default[role][user.login]['QUOTA'] = angular.copy($scope.settings['role.' + role]);
+      $scope.changeUser(role, user.login, 'quota_default_global');
+      $scope.changeUser(role, user.login, 'quota_default_school');
+      $scope.changeUser(role, user.login, 'mailquota_default');
+      delete $scope.non_default[role][user.login];
+      return $scope.non_default[role].list.splice($scope.non_default[role].list.indexOf(user), 1);
     };
     return $scope.saveApply = function() {
       return $http.post('/api/lm/quotas/save', {

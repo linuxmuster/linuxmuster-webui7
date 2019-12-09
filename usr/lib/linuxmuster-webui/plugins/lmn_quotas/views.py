@@ -45,13 +45,14 @@ class Handler(HttpPlugin):
 
             ## Get list of non default quota user, others get the default value
             ## Teachers and students are mixed in the same dict
-            non_default = {'teacher':{}, 'student':{}}
+            non_default = {'teacher':{'list':[]}, 'student':{'list':[]}, 'schooladministrator':{'list':[]}}
 
             sophomorixCommand = ['sophomorix-quota', '-i', '-jj']
             result = lmn_getSophomorixValue(sophomorixCommand, 'NONDEFAULT_QUOTA/' + school + '/USER')
             for login, values in result.items():
                 role = values['sophomorixRole']
                 non_default[role][login] = values
+                non_default[role]['list'].append({'sn':values['sn'], 'login':login, 'givenname':values['givenName']})
 
                 # Normal shares
                 for tag, share in quota_types.items():

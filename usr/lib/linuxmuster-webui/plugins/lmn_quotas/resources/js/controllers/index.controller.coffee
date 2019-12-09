@@ -86,6 +86,7 @@ angular.module('lm.quotas').controller 'LMQuotasController', ($scope, $http, $ui
                 'QUOTA' : angular.copy($scope.settings['role.'+user.role]),
                 'displayName' : user.displayName
                 }
+            $scope.non_default[user.role].list.push({'sn':user.sn, 'login':user.login, 'givenname':user.givenName})
             $scope._.addNewSpecial = null
             $scope.UserSearchVisible = false
             notify.success(user.displayName + gettext(" added with default values in the list."))
@@ -98,7 +99,6 @@ angular.module('lm.quotas').controller 'LMQuotasController', ($scope, $http, $ui
 
     $scope.findUsers = (q) ->
         role = $scope.tabs[$scope.activeTab]
-        console.log(role)
         return $http.post("/api/lm/ldap-search", {role:role, login:q}).then (resp) ->
             return resp.data
 
@@ -137,13 +137,14 @@ angular.module('lm.quotas').controller 'LMQuotasController', ($scope, $http, $ui
             $scope.groupquota['project'][pr]['QUOTA'][share.type].value = 0
             $scope.changeGroup('project', pr, share.type)
 
-    $scope.remove = (role, login) ->
+    $scope.remove = (role, user) ->
         ## Reset all 3 quotas to default
-        $scope.non_default[role][login]['QUOTA'] = angular.copy($scope.settings['role.'+role])
-        $scope.changeUser(role, login, 'quota_default_global')
-        $scope.changeUser(role, login, 'quota_default_school')
-        $scope.changeUser(role, login, 'mailquota_default')
-        delete $scope.non_default[role][login]
+        $scope.non_default[role][user.login]['QUOTA'] = angular.copy($scope.settings['role.'+role])
+        $scope.changeUser(role, user.login, 'quota_default_global')
+        $scope.changeUser(role, user.login, 'quota_default_school')
+        $scope.changeUser(role, user.login, 'mailquota_default')
+        delete $scope.non_default[role][user.login]
+        $scope.non_default[role].list.splice($scope.non_default[role].list.indexOf(user),1)
 
     $scope.saveApply = () ->
         $http.post('/api/lm/quotas/save', {users: $scope.toChange, groups: $scope.groupsToChange}).then () ->

@@ -21,7 +21,7 @@ angular.module('lm.settings').controller 'LMSettingsController', ($scope, $http,
         'ISO_8859-1',
         'ISO_8859-15',
         'WIN-1252',
-        'UTF-8',
+        'UTF8',
     ]
 
     $http.get('/api/lm/schoolsettings').then (resp) ->

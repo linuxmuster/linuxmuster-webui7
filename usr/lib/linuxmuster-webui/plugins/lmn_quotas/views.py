@@ -131,7 +131,7 @@ class Handler(HttpPlugin):
                     if values['quota'] == 'mailquota_default':
                         sophomorixCommand = ['sophomorix-user', '--mailquota', '%s' % (values['value']), '-u', values['login'], '-jj']
                     else:
-                        sophomorixCommand = ['sophomorix-user', '--quota', '%s:%s' % (quota_types[values['quota']], values['value']), '-u', values['login'], '-jj']
+                        sophomorixCommand = ['sophomorix-user', '--quota', '%s:%s:---' % (quota_types[values['quota']], values['value']), '-u', values['login'], '-jj']
                     lmn_getSophomorixValue(sophomorixCommand, '')
 
             ## Update quota per class, but not applied yet
@@ -139,7 +139,7 @@ class Handler(HttpPlugin):
                 if grpDict['quota'] == 'mailquota':
                     sophomorixCommand = ['sophomorix-class', '-c', grpDict['group'], '--mailquota', '%s:' % grpDict['value'], '-jj']
                 else:
-                    sophomorixCommand = ['sophomorix-class', '-c', grpDict['group'], '--quota', '%s:%s:' % (grpDict['quota'], grpDict['value']), '-jj']
+                    sophomorixCommand = ['sophomorix-class', '-c', grpDict['group'], '--quota', '%s:%s:---' % (grpDict['quota'], grpDict['value']), '-jj']
                 lmn_getSophomorixValue(sophomorixCommand, '')
 
             ## Update quota per project, but not applied yet
@@ -147,7 +147,7 @@ class Handler(HttpPlugin):
                 if grpDict['quota'] == 'mailquota':
                     sophomorixCommand = ['sophomorix-project', '-p', grpDict['group'], '--addmailquota', '%s:' % grpDict['value'], '-jj']
                 else:
-                    sophomorixCommand = ['sophomorix-project', '-p', grpDict['group'], '--addquota', '%s:%s:' % (grpDict['quota'], grpDict['value']), '-jj']
+                    sophomorixCommand = ['sophomorix-project', '-p', grpDict['group'], '--addquota', '%s:%s:---' % (grpDict['quota'], grpDict['value']), '-jj']
                 lmn_getSophomorixValue(sophomorixCommand, '')
 
     @url(r'/api/lm/ldap-search')

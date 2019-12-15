@@ -315,6 +315,10 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                 messagebox.prompt(gettext('Session Name'), comment).then (msg) ->
                     if not msg.value
                         return
+                    testChar = validation.isValidLinboConf(msg.value)
+                    if testChar != true
+                        notify.error gettext(testChar)
+                        return
                     $http.post('/api/lmn/session/sessions', {action: 'rename-session', session: session, comment: msg.value}).then (resp) ->
                         $scope.getSessions($scope.identity.user)
                         $scope.currentSession.name = ''

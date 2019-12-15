@@ -398,7 +398,13 @@
         return;
       }
       return messagebox.prompt(gettext('Session Name'), comment).then(function(msg) {
+        var testChar;
         if (!msg.value) {
+          return;
+        }
+        testChar = validation.isValidLinboConf(msg.value);
+        if (testChar !== true) {
+          notify.error(gettext(testChar));
           return;
         }
         return $http.post('/api/lmn/session/sessions', {

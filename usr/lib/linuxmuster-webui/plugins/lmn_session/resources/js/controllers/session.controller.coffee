@@ -326,6 +326,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                         $scope.currentSession.comment = ''
                         $scope.visible.sessiontable = 'none'
                         $scope.visible.participanttable = 'none'
+                        $scope.info.message = ''
                         notify.success gettext('Session Renamed')
 
     $scope.getParticipants = (username,session) ->

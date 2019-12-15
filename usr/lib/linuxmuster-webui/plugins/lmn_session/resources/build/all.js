@@ -418,6 +418,7 @@
           $scope.currentSession.comment = '';
           $scope.visible.sessiontable = 'none';
           $scope.visible.participanttable = 'none';
+          $scope.info.message = '';
           return notify.success(gettext('Session Renamed'));
         });
       });

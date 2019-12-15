@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.109-1) lmn7; urgency=medium 
+
+  * Current snapshot build 2bdf3446b37e9c3e959bbdb3a4ca74ee663abb53
+   *     fixed null handling when operating trhough perl json
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Nov 22 12:11:07 UTC 2019
+
 linuxmuster-webui7 (1.0.108-1) lmn7; urgency=medium 
 
   * Current snapshot build bc46452d64dca50e7b90cd3697c5e0a661dee458

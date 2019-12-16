@@ -82,7 +82,7 @@ class Handler(HttpPlugin):
             groups = {'adminclass':{}, 'project':{}}
             shares = ['linuxmuster-global', 'default-school']
 
-            sophomorixCommand = ['sophomorix-class', '-ij']
+            sophomorixCommand = ['sophomorix-class', '-i', '-jj']
             result = lmn_getSophomorixValue(sophomorixCommand, 'GROUPS')
 
             for group, details in result.items():

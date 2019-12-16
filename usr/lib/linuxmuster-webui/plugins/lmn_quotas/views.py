@@ -55,12 +55,17 @@ class Handler(HttpPlugin):
                 non_default[role]['list'].append({'sn':values['sn'], 'login':login, 'givenname':values['givenName']})
 
                 # Normal shares
-                for tag, share in quota_types.items():
-                    if share not in values['QUOTA'] or values['QUOTA'][share]['VALUE'] == "---":
+                if 'QUOTA' in values.keys():
+                    for tag, share in quota_types.items():
+                        if share not in values['QUOTA'] or values['QUOTA'][share]['VALUE'] == "---":
+                            values['QUOTA'][tag] = settings['role.'+role][tag]
+                        else:
+                            values['QUOTA'][tag] = int(values['QUOTA'][share]['VALUE'])
+                            del values['QUOTA'][share]
+                else:
+                    values['QUOTA'] = {}
+                    for tag, _ in quota_types.items():
                         values['QUOTA'][tag] = settings['role.'+role][tag]
-                    else:
-                        values['QUOTA'][tag] = int(values['QUOTA'][share]['VALUE'])
-                        del values['QUOTA'][share]
 
                 # Mailquota
                 if 'MAILQUOTA' in values.keys():
@@ -82,7 +87,7 @@ class Handler(HttpPlugin):
             groups = {'adminclass':{}, 'project':{}}
             shares = ['linuxmuster-global', 'default-school']
 
-            sophomorixCommand = ['sophomorix-class', '-i', '-jj']
+            sophomorixCommand = ['sophomorix-class', '-ij']
             result = lmn_getSophomorixValue(sophomorixCommand, 'GROUPS')
 
             for group, details in result.items():

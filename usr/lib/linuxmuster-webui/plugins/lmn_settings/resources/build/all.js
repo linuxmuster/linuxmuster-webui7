@@ -18,7 +18,7 @@
   angular.module('lm.settings').controller('LMSettingsController', function($scope, $location, $http, $uibModal, gettext, notify, pageTitle, lmFileBackups) {
     var tag;
     pageTitle.set(gettext('Settings'));
-    $scope.tabs = ['general', 'quota', 'encoding', 'printing'];
+    $scope.tabs = ['general', 'listimport', 'quota', 'printing'];
     tag = $location.$$url.split("#")[1];
     if (tag && indexOf.call($scope.tabs, tag) >= 0) {
       $scope.activetab = $scope.tabs.indexOf(tag);

@@ -7,7 +7,7 @@ angular.module('lm.settings').config ($routeProvider) ->
 angular.module('lm.settings').controller 'LMSettingsController', ($scope, $location, $http, $uibModal, gettext, notify, pageTitle, lmFileBackups) ->
     pageTitle.set(gettext('Settings'))
 
-    $scope.tabs = ['general', 'quota', 'encoding', 'printing']
+    $scope.tabs = ['general', 'listimport', 'quota', 'printing']
 
     tag = $location.$$url.split("#")[1]
     if tag and tag in $scope.tabs

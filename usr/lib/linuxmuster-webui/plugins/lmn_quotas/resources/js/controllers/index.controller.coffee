@@ -6,11 +6,9 @@ angular.module('lm.quotas').config ($routeProvider) ->
         templateUrl: '/lmn_quotas:resources/partial/disabled.html'
 
 
-angular.module('lm.quotas').controller 'LMQuotasApplyModalController', ($scope, $http, $uibModalInstance, gettext, notify) ->
-    $scope.logVisible = false
+angular.module('lm.quotas').controller 'LMQuotasApplyModalController', ($scope, $http, $uibModalInstance, $window, gettext, notify) ->
+    $scope.logVisible = true
     $scope.isWorking = true
-    $scope.showLog = () ->
-        $scope.logVisible = true
 
     $http.get('/api/lm/quotas/apply').then () ->
         $scope.isWorking = false
@@ -18,133 +16,144 @@ angular.module('lm.quotas').controller 'LMQuotasApplyModalController', ($scope, 
     .catch (resp) ->
         notify.error gettext('Update failed'), resp.data.message
         $scope.isWorking = false
-        $scope.showLog()
+        $scope.logVisible = true
 
     $scope.close = () ->
         $uibModalInstance.close()
+        $window.location.reload()
 
 
-angular.module('lm.quotas').controller 'LMQuotasController', ($scope, $http, $uibModal, $location, $q, gettext, lmEncodingMap, notify, pageTitle, lmFileBackups) ->
+angular.module('lm.quotas').controller 'LMQuotasController', ($scope, $http, $uibModal, $location, $q, gettext, lmEncodingMap, notify, pageTitle, lmFileBackups, $rootScope) ->
     pageTitle.set(gettext('Quotas'))
+
+    $scope.UserSearchVisible = false
+    $scope.activeTab = 0
+    $scope.tabs = ['teacher', 'student', 'schooladministrator', 'adminclass', 'project']
+
+    $scope.toChange = {
+        'teacher': {},
+        'student': {},
+        'schooladministrator': {}
+    }
+
+    $scope.groupsToChange = {
+        'adminclass': {},
+        'project': {}
+    }
 
     $scope._ =
         addNewSpecial: null
 
-    #$http.get("/api/lm/users/teachers-list").then (resp) ->
-        #$scope.teachers = resp.data
-        #for teacher in $scope.teachers
-            #teacher.quota = parseInt(teacher.quota)
-            #teacher.mailquota = parseInt(teacher.mailquota)
+    $scope.searchText = gettext('Search user by login, firstname or lastname (min. 3 chars), without special char.')
 
-    #$http.get('/api/lm/settings').then (resp) ->
-        #if not resp.data.use_quota
-            #$location.path('/view/lm/quotas-disabled')
-            
-    $http.get('/api/lm/schoolsettings').then (resp) ->
-        school = 'default-school'
-        $scope.settings = resp.data
+    # Need an array to keep the order ...
+    $scope.quota_types = [
+        {'type' : 'quota_default_global', 'name' : gettext('Quota default global (MiB)')},
+        {'type' : 'quota_default_school', 'name' : gettext('Quota default school (MiB)')},
+        {'type' : 'cloudquota_percentage', 'name' : gettext('Cloudquota (%)')},
+        {'type' : 'mailquota_default', 'name' : gettext('Mailquota default (MiB)')},
+    ]
+    $scope.groupquota_types = [
+        {
+        'type' : 'linuxmuster-global',
+        'classname' : gettext('Quota default global (MiB)'),
+        'projname' : gettext('Add to default global (MiB)')},
+        {
+        'type' : 'default-school',
+        'classname' : gettext('Quota default school (MiB)'),
+        'projname' : gettext('Add to default school (MiB)')},
+        {
+        'type' : 'mailquota',
+        'classname' : gettext('Mailquota default (MiB)'),
+        'projname' : gettext('Add to mailquota (MiB)')},
+    ]
+
+    $scope.groupquota = 0
+    $scope.get_class_quota = () ->
+        if !$scope.groupquota
+            $rootScope.appReady = false
+            $http.get('/api/lm/quotas/group').then (resp) ->
+                $rootScope.appReady = true
+                $scope.groupquota = resp.data
 
     $http.get('/api/lm/quotas').then (resp) ->
-        $scope.quotas = resp.data[0]
-        $scope.teachers = resp.data[1]
-        $scope.standardQuota = $scope.quotas['standard-lehrer']
-
-    $http.get('/api/lm/class-quotas').then (resp) ->
-        $scope.classes = resp.data
-        $scope.originalClasses = angular.copy($scope.classes)
-
-    $http.get('/api/lm/project-quotas').then (resp) ->
-        $scope.projects = resp.data
-        $scope.originalProjects = angular.copy($scope.projects)
-
-    $scope.specialQuotas = [
-        {login: 'www-data', name: gettext('Webspace')}
-        {login: 'administrator', name: gettext('Main admin')}
-        {login: 'pgmadmin', name: gettext('Program admin')}
-        {login: 'wwwadmin', name: gettext('Web admin')}
-    ]
-
-    $scope.defaultQuotas = [
-        {login: 'standard-workstations', name: gettext('Workstation default')}
-        {login: 'standard-schueler', name: gettext('Student default')}
-        {login: 'standard-lehrer', name: gettext('Teacher default')}
-    ]
+        $scope.non_default = resp.data[0]
+        $scope.settings = resp.data[1]
 
     $scope.$watch '_.addNewSpecial', () ->
         if $scope._.addNewSpecial
-            $scope.quotas[$scope._.addNewSpecial] = angular.copy($scope.standardQuota)
+            user = $scope._.addNewSpecial
+
+            $scope.non_default[user.role][user.login] = {
+                'QUOTA' : angular.copy($scope.settings['role.'+user.role]),
+                'displayName' : user.displayName
+                }
+            $scope.non_default[user.role].list.push({'sn':user.sn, 'login':user.login, 'givenname':user.givenName})
             $scope._.addNewSpecial = null
+            $scope.UserSearchVisible = false
+            notify.success(user.displayName + gettext(" added with default values in the list."))
+
+    $scope.isDefaultQuota = (role, quota, value) ->
+        return $scope.settings[role][quota] != value
+
+    $scope.showUserSearch = () ->
+        $scope.UserSearchVisible = true
 
     $scope.findUsers = (q) ->
-        return $http.get("/api/lm/ldap-search?login=#{q}").then (resp) ->
+        role = $scope.tabs[$scope.activeTab]
+        return $http.post("/api/lm/ldap-search", {role:role, login:q}).then (resp) ->
             return resp.data
 
-    $scope.isSpecialQuota = (login) ->
-        return login in (x.login for x in $scope.specialQuotas)
+    $scope.changeUser = (role, login, quota) ->
+        delete $scope.toChange[role][login+"_"+quota]
+        ## Default value for a quota in sophomorix
+        value = '---'
+        if $scope.non_default[role][login]['QUOTA'][quota] != $scope.settings['role.'+role][quota]
+            value = $scope.non_default[role][login]['QUOTA'][quota]
+        $scope.toChange[role][login+"_"+quota] = {
+            'login': login,
+            'quota': quota,
+            'value': value
+        }
 
-    $scope.isDefaultQuota = (login) ->
-        return login in (x.login for x in $scope.defaultQuotas)
+    $scope.changeGroup = (type, group, quota) ->
+        delete $scope.groupsToChange[type][group+"_"+quota]
+        ## Default value for a quota in sophomorix
+        value = '---'
+        if $scope.groupquota[type][group]['QUOTA'][quota].value != 0
+            value = $scope.groupquota[type][group]['QUOTA'][quota].value
+        $scope.groupsToChange[type][group+"_"+quota] = {
+            'group': group,
+            'quota': quota,
+            'type': type,
+            'value': value
+        }
 
-    $scope.NameCache = {}
+    $scope.resetClass = (cl) ->
+        for share in $scope.groupquota_types
+            $scope.groupquota['adminclass'][cl]['QUOTA'][share.type].value = 0
+            $scope.changeGroup('adminclass', cl, share.type)
 
-    $scope.getName = (login) ->
-        if not angular.isDefined($scope.NameCache[login])
-            $scope.NameCache[login] = '...'
-            $http.get("/api/lm/ldap-search?login=#{login}").then (resp) ->
-                if resp.data
-                    $scope.NameCache[login] = resp.data.sn + " " + resp.data.givenName
-                else
-                    $scope.NameCache[login] = login
-        return $scope.NameCache[login]
+    $scope.resetProject = (pr) ->
+        for share in $scope.groupquota_types
+            $scope.groupquota['project'][pr]['QUOTA'][share.type].value = 0
+            $scope.changeGroup('project', pr, share.type)
 
-    $scope.remove = (login) ->
-        delete $scope.quotas[login]
-
-    $scope.save = () ->
-        teachers = angular.copy($scope.teachers)
-        for teacher in teachers
-            if not teacher.quota.home and not teacher.quota.var
-                teacher.quota = ''
-            else
-                teacher.quota = "#{teacher.quota.home or $scope.standardQuota.home}+#{teacher.quota.var or $scope.standardQuota.var}"
-            teacher.mailquota = "#{teacher.mailquota or ''}"
-
-        classesToChange = []
-        for cls, index in $scope.classes
-            if not angular.equals(cls, $scope.originalClasses[index])
-                cls.quota.home ?= $scope.standardQuota.home
-                cls.quota.var ?= $scope.standardQuota.var
-                classesToChange.push cls
-
-        projectsToChange = []
-        for project, index in $scope.projects
-            if not angular.equals(project, $scope.originalProjects[index])
-                project.quota.home ?= $scope.standardQuota.home
-                project.quota.var ?= $scope.standardQuota.var
-                projectsToChange.push project
-
-        qs = []
-        qs.push $http.post("/api/lm/users/teachers?encoding=#{$scope.teachersEncoding}", teachers)
-        qs.push $http.post('/api/lm/quotas', $scope.quotas)
-
-        if classesToChange.length > 0
-            qs.push $http.post("/api/lm/class-quotas", classesToChange).then () ->
-
-        if projectsToChange.length > 0
-            qs.push $http.post("/api/lm/project-quotas", projectsToChange).then () ->
-
-        return $q.all(qs).then () ->
-            $scope.originalClasses = angular.copy($scope.classes)
-            $scope.originalProjects = angular.copy($scope.projects)
-            notify.success gettext('Saved')
+    $scope.remove = (role, user) ->
+        ## Reset all 3 quotas to default
+        $scope.non_default[role][user.login]['QUOTA'] = angular.copy($scope.settings['role.'+role])
+        $scope.changeUser(role, user.login, 'quota_default_global')
+        $scope.changeUser(role, user.login, 'quota_default_school')
+        $scope.changeUser(role, user.login, 'mailquota_default')
+        delete $scope.non_default[role][user.login]
+        $scope.non_default[role].list.splice($scope.non_default[role].list.indexOf(user),1)
 
     $scope.saveApply = () ->
-        $scope.save().then () ->
+        $rootScope.appReady = false
+        $http.post('/api/lm/quotas/save', {users: $scope.toChange, groups: $scope.groupsToChange}).then () ->
+            $rootScope.appReady = true
             $uibModal.open(
                 templateUrl: '/lmn_quotas:resources/partial/apply.modal.html'
                 controller: 'LMQuotasApplyModalController'
                 backdrop: 'static'
             )
-
-    $scope.backups = () ->
-        lmFileBackups.show('/etc/linuxmuster/sophomorix/user/quota.txt')

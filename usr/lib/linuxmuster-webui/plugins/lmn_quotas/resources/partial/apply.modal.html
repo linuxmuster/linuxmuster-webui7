@@ -6,6 +6,7 @@
     <lm-log path="'/tmp/apply-sophomorix.log'" ng:show="logVisible"></lm-log>
 </div>
 <div class="modal-footer">
-    <a class="btn btn-default btn-flat" ng:click="showLog()" translate ng:show="!logVisible">Details</a>
+    <a class="btn btn-default btn-flat" ng:click="logVisible = !logVisible" translate ng:show="!logVisible">Details</a>
+    <a class="btn btn-default btn-flat" ng:click="logVisible = !logVisible" translate ng:show="logVisible">Hide details</a>
     <a class="btn btn-default btn-flat" ng:click="close()" translate ng:show="!isWorking">Close</a>
 </div>

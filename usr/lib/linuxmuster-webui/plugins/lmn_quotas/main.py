@@ -12,7 +12,7 @@ class ItemProvider(SidebarItemProvider):
         return [
             {
                 'attach': 'category:schoolsettingsdefaults',
-                'name': _('Quotas'),
+                'name': _('Extra-Quotas'),
                 'icon': 'chart-pie',
                 'url': '/view/lm/quotas',
                 'children': [],

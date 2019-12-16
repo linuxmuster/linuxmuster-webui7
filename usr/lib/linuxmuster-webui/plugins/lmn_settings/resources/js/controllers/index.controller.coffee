@@ -4,8 +4,16 @@ angular.module('lm.settings').config ($routeProvider) ->
         templateUrl: '/lmn_settings:resources/partial/index.html'
 
 
-angular.module('lm.settings').controller 'LMSettingsController', ($scope, $http, $uibModal, gettext, notify, pageTitle, lmFileBackups) ->
+angular.module('lm.settings').controller 'LMSettingsController', ($scope, $location, $http, $uibModal, gettext, notify, pageTitle, lmFileBackups) ->
     pageTitle.set(gettext('Settings'))
+
+    $scope.tabs = ['general', 'quota', 'encoding', 'printing']
+
+    tag = $location.$$url.split("#")[1]
+    if tag and tag in $scope.tabs
+        $scope.activetab = $scope.tabs.indexOf(tag)
+    else
+        $scope.activetab = 0
 
     $scope.logLevels = [
         {name: gettext('Minimal'), value: 0}

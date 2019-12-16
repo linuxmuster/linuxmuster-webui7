@@ -7,12 +7,7 @@ from aj.api.http import url, HttpPlugin
 from aj.auth import authorize
 from aj.api.endpoint import endpoint, EndpointError
 from aj.plugins.lmn_common.api import lmn_backup_file, lmconfig, lmn_getSophomorixValue
-
-# Fix user quota : 
-    # sophomorix-user --quota linuxmuster-global:500:bla -u de
-    # sophomorix-quota -u de
-# Call all quotas :
-    # sophomorix-quota -n ( no -jj ? )
+from configparser import ConfigParser
 
 @component(HttpPlugin)
 class Handler(HttpPlugin):
@@ -23,104 +18,167 @@ class Handler(HttpPlugin):
     @authorize('lm:quotas:configure')
     @endpoint(api=True)
     def handle_api_quotas(self, http_context):
-        if http_context.method == 'GET':
-            lines = subprocess.check_output(['sophomorix-quota', '-i']).splitlines()
-            lines = [l for l in lines if l.startswith("|")]
-            lines = lines[1:]
-            quotas = [{}, {}] # Students, teachers
-            for line in lines:
-                name       = line.split('|')[1].strip().split('(')[0]
-                quota_type = line.split('|')[2].strip().strip("*")
-                value      = line.split('|')[3].strip()
-                if 'teacher' in line:
-                    if name not in quotas[1]:
-                        quotas[1][name] = {}
-                    if "*" in value:
-                        quotas[1][name][quota_type+'_set'] = False
-                    else:
-                        quotas[1][name][quota_type+'_set'] = True
-                    quotas[1][name][quota_type] = int(value.strip("*"))
-                else:
-                    if name not in quotas[0]:
-                        quotas[0][name] = {}
-                    if "*" in value:
-                        quotas[0][name][quota_type+'_set'] = False
-                    else:
-                        quotas[0][name][quota_type+'_set'] = True
-                    quotas[0][name][quota_type] = int(value.strip("*"))
-            return quotas
-        
-        ## Not used yet
-        # if http_context.method == 'POST':
-            # lmn_backup_file(path)
-            # with open(path, 'w') as f:
-                # f.write('\n'.join(
-                    # '%s: %s+%s' % (
-                        # k, v['home'], v['var'],
-                    # )
-                    # for k, v in http_context.json_body().items()
-                # ))
-            # lmn_backup_file(mpath)
-            # with open(mpath, 'w') as f:
-                # f.write('\n'.join(
-                    # '%s: %s' % (
-                        # k, v['mail'],
-                    # )
-                    # for k, v in http_context.json_body().items()
-                    # if v.get('mail', None)
-                # ))
+        school = 'default-school'
+        settings_path = '/etc/linuxmuster/sophomorix/'+school+'/school.conf'
 
-    @url(r'/api/lm/class-quotas')
+        quota_types = {
+            'quota_default_global':'linuxmuster-global',
+            'quota_default_school':'default-school',
+        }
+
+        if http_context.method == 'GET':
+            ## Parse csv config file
+            config = ConfigParser()
+            config.read(settings_path)
+            settings = {}
+            for section in config.sections():
+                settings[section] = {}
+                for (key, val) in config.items(section):
+                    if 'quota' in key:
+                        if val.isdigit():
+                            val = int(val)
+                        if val == 'no':
+                            val = False
+                        if val == 'yes':
+                            val = True
+                        settings[section][key] = val
+
+            ## Get list of non default quota user, others get the default value
+            ## Teachers and students are mixed in the same dict
+            non_default = {'teacher':{'list':[]}, 'student':{'list':[]}, 'schooladministrator':{'list':[]}}
+
+            sophomorixCommand = ['sophomorix-quota', '-i', '-jj']
+            result = lmn_getSophomorixValue(sophomorixCommand, 'NONDEFAULT_QUOTA/' + school + '/USER')
+            for login, values in result.items():
+                role = values['sophomorixRole']
+                non_default[role][login] = values
+                non_default[role]['list'].append({'sn':values['sn'], 'login':login, 'givenname':values['givenName']})
+
+                # Normal shares
+                for tag, share in quota_types.items():
+                    if share not in values['QUOTA'] or values['QUOTA'][share]['VALUE'] == "---":
+                        values['QUOTA'][tag] = settings['role.'+role][tag]
+                    else:
+                        values['QUOTA'][tag] = int(values['QUOTA'][share]['VALUE'])
+                        del values['QUOTA'][share]
+
+                # Mailquota
+                if 'MAILQUOTA' in values.keys():
+                    values['QUOTA']['mailquota_default'] = int(values['MAILQUOTA']['VALUE'])
+                else:
+                    values['QUOTA']['mailquota_default'] = settings['role.'+role]['mailquota_default']
+
+                # Cloudquota
+                values['QUOTA']['cloudquota_percentage'] = settings['role.'+role]['cloudquota_percentage']
+
+            return [non_default, settings]
+
+    @url(r'/api/lm/quotas/group')
     @authorize('lm:quotas:configure')
     @endpoint(api=True)
     def handle_api_class_quotas(self, http_context):
+        ## Get quotas for projects and classes
         if http_context.method == 'GET':
-            lines = subprocess.check_output(['sophomorix-class', '-i']).splitlines()
-            lines = [l for l in lines if l.startswith("|")]
-            lines = lines[1:-1]
-            return [
-                {
-                    'name': line.split('|')[1].strip(),
-                    'quota': 0 if '-' in line else int(line.split('|')[4].strip()), 
-                    'mailquota': 0 if '-' in line else int(line.split('|')[5].strip()), 
-                }
-                for line in lines
-            ]
-        if http_context.method == 'POST':
-            for cls in http_context.json_body():
-                if cls['quota']['home']:
-                    subprocess.check_call(['sophomorix-class', '-c', cls['name'], '--quota', '%s+%s' % (cls['quota']['home'], cls['quota']['var'])])
-                if cls['mailquota']:
-                    subprocess.check_call(['sophomorix-class', '-c', cls['name'], '--mailquota', cls['mailquota']])
+            groups = {'adminclass':{}, 'project':{}}
+            shares = ['linuxmuster-global', 'default-school']
 
-    @url(r'/api/lm/project-quotas')
+            sophomorixCommand = ['sophomorix-class', '-ij']
+            result = lmn_getSophomorixValue(sophomorixCommand, 'GROUPS')
+
+            for group, details in result.items():
+                if 'sophomorixType' in details.keys():
+                    ## Class
+                    if details['sophomorixType'] == 'adminclass':
+                        details['QUOTA'] = {}
+                        details['QUOTA']['mailquota'] = {'value':0 if details['sophomorixMailQuota'].startswith('---') else int(details['sophomorixMailQuota'].split(':')[0])}
+                        for line in details['sophomorixQuota']:
+                            share,value,comment,_ = line.split(':')
+                            details['QUOTA'][share] = {'value':int(value) if value != '---' else 0, 'comment':comment}
+                        for share in shares:
+                            if share not in details['QUOTA'].keys():
+                                details['QUOTA'][share] = {'value':0, 'comment':''}
+
+                        groups[details['sophomorixType']][group] = details
+
+                    ## Project
+                    elif details['sophomorixType'] == 'project':
+                        details['QUOTA'] = {}
+                        details['QUOTA']['mailquota'] = {'value':0 if details['sophomorixAddMailQuota'].startswith('---') else int(details['sophomorixAddMailQuota'].split(':')[0])}
+                        for line in details['sophomorixAddQuota']:
+                            share,value,comment,_ = line.split(':')
+                            details['QUOTA'][share] = {'value':int(value) if value != '---' else 0, 'Comment':comment}
+                        for share in shares:
+                            if share not in details['QUOTA'].keys():
+                                details['QUOTA'][share] = {'value':0, 'Comment':''}
+                        groups[details['sophomorixType']][group] = details
+            return groups
+
+    @url(r'/api/lm/quotas/save')
     @authorize('lm:quotas:configure')
     @endpoint(api=True)
-    def handle_api_project_quotas(self, http_context):
-        if http_context.method == 'GET':
-            lines = subprocess.check_output(['sophomorix-project', '-i']).splitlines()
-            lines = [l for l in lines if l.startswith("|")]
-            lines = lines[1:-1]
-            return [
-                {
-                    'name': line.split('|')[1].strip(),
-                    'quota': 0 if '-' in line else int(line.split('|')[2].strip()),
-                    'mailquota': 0 if '-' in line else int(line.split('|')[3].strip()),
-                }
-                for line in lines
-            ]
+    def handle_api_save_quotas(self, http_context):
+
+        quota_types = {
+            'quota_default_global':'linuxmuster-global',
+            'quota_default_school':'default-school',
+        }
+
         if http_context.method == 'POST':
-            for project in http_context.json_body():
-                if project['quota']['home']:
-                    subprocess.check_call(['sophomorix-project', '-c', project['name'], '--addquota', '%s+%s' % (project['quota']['home'], project['quota']['var'])])
+            ## Update quota per user, but not applied yet
+            ## Not possible to factorise the command for many users
+            for role, userDict in http_context.json_body()['users'].items():
+                for _,values in userDict.items():
+                    if values['quota'] == 'mailquota_default':
+                        sophomorixCommand = ['sophomorix-user', '--mailquota', '%s' % (values['value']), '-u', values['login'], '-jj']
+                    else:
+                        sophomorixCommand = ['sophomorix-user', '--quota', '%s:%s:---' % (quota_types[values['quota']], values['value']), '-u', values['login'], '-jj']
+                    lmn_getSophomorixValue(sophomorixCommand, '')
+
+            ## Update quota per class, but not applied yet
+            for _, grpDict in http_context.json_body()['groups']['adminclass'].items():
+                if grpDict['quota'] == 'mailquota':
+                    sophomorixCommand = ['sophomorix-class', '-c', grpDict['group'], '--mailquota', '%s:' % grpDict['value'], '-jj']
+                else:
+                    sophomorixCommand = ['sophomorix-class', '-c', grpDict['group'], '--quota', '%s:%s:---' % (grpDict['quota'], grpDict['value']), '-jj']
+                lmn_getSophomorixValue(sophomorixCommand, '')
+
+            ## Update quota per project, but not applied yet
+            for _, grpDict in http_context.json_body()['groups']['project'].items():
+                if grpDict['quota'] == 'mailquota':
+                    sophomorixCommand = ['sophomorix-project', '-p', grpDict['group'], '--addmailquota', '%s:' % grpDict['value'], '-jj']
+                else:
+                    sophomorixCommand = ['sophomorix-project', '-p', grpDict['group'], '--addquota', '%s:%s:---' % (grpDict['quota'], grpDict['value']), '-jj']
+                lmn_getSophomorixValue(sophomorixCommand, '')
 
     @url(r'/api/lm/ldap-search')
-    @authorize('lm:quotas:ldap-search')
+    @authorize('lm:quotas:configure')
     @endpoint(api=True)
     def handle_api_ldap_search(self, http_context):
-        login = http_context.query['login']
-        sophomorixCommand = ['sophomorix-query', '--sam', login, '-jj']
-        return lmn_getSophomorixValue(sophomorixCommand, 'USER/'+login)
+        if http_context.method == 'POST':
+            # Problem with unicode In&egraves --> In\xe8s (py) --> In\ufffds (replace)
+            # Should be In&egraves --> Ines ( sophomorix supports this )
+            # login = http_context.json_body()['login'].decode('utf-8', 'replace')
+            login = http_context.json_body()['login']
+            role = http_context.json_body()['role']
+            ## --teacher limit the query only to teachers
+            if role:
+                role = '--' + role
+            resultArray = []
+            try:
+                sophomorixCommand = ['sophomorix-query', '--anyname', login+'*', role, '-jj']
+                result = lmn_getSophomorixValue(sophomorixCommand, 'USER')
+
+                for user, details in result.items():
+                    resultArray.append({
+                            'label':details['sn'] + " " + details['givenName'] + " (" + user + ")",
+                            'login':details['sAMAccountName'],
+                            'role':details['sophomorixRole'],
+                            'displayName':details['sn'] + " " + details['givenName']
+                            })
+            except:
+                # Ignore SophomorixValue errors
+                pass
+            return resultArray
 
     @url(r'/api/lm/quotas/apply')
     @authorize('lm:quotas:apply')

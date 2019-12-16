@@ -1,226 +1,158 @@
 <br/>
 
-<progress-spinner ng:show="teachers == null"></progress-spinner>
+<progress-spinner ng:show="settings == null"></progress-spinner>
 
-<div ng:show="teachers != null">
-    <uib:tabset>
-        <uib:tab heading="{{'Defaults'|translate}}">
-            <br/>
-            <table class="lm-table lm-table-padded">
-                <tr>
-                    <th width="40%"></th>
-                    <th translate>Students</th>
-                    <th translate>Teachers</th>
-                    <th translate>Schooladministrator</th>
-                </tr>
-                <tr>
-                    <td>
-                        <label translate>Quota Default Global in MiB</label>
-                    </td>
-                    <td>
-                        <input type="number" class="form-control" ng:model="settings['role.student']['quota_default_global']" />
-                    </td>
-                    <td>
-                        <input type="number" class="form-control" ng:model="settings['role.teacher']['quota_default_global']" />
-                    </td>
-                    <td>
-                        <input type="number" class="form-control" ng:model="settings['role.schooladministrator']['quota_default_global']" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label translate>Quota Default School in MiB</label>
-                    </td>
-                    <td>
-                        <input type="number" class="form-control" ng:model="settings['role.student']['quota_default_school']" />
-                    </td>
-                    <td>
-                        <input type="number" class="form-control" ng:model="settings['role.teacher']['quota_default_school']" />
-                    </td>
-                    <td>
-                        <input type="number" class="form-control" ng:model="settings['role.schooladministrator']['quota_default_school']" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label translate>Cloudquota Percentage</label>
-                    </td>
-                    <td>
-                        <input type="number" class="form-control" ng:model="settings['role.student']['cloudquota_percentage']" />
-                    </td>
-                    <td>
-                        <input type="number" class="form-control" ng:model="settings['role.teacher']['cloudquota_percentage']" />
-                    </td>
-                    <td>
-                        <input type="number" class="form-control" ng:model="settings['role.schooladministrator']['cloudquota_percentage']" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label translate>Mailquota Default in MiB</label>
-                    </td>
-                    <td>
-                        <input type="number" class="form-control" ng:model="settings['role.student']['mailquota_default']" />
-                    </td>
-                    <td>
-                        <input type="number" class="form-control" ng:model="settings['role.teacher']['mailquota_default']" />
-                    </td>
-                    <td>
-                        <input type="number" class="form-control" ng:model="settings['role.schooladministrator']['mailquota_default']" />
-                    </td>
-                </tr>
-            </table>
-        </uib:tab>
+<div ng:show="settings != null">
+    <uib:tabset active="activeTab">
         <uib:tab heading="{{'Teachers'|translate}}">
             <br/>
-            <table class="lm-table lm-table-padded">
+            <div ng:show="!non_default.teacher" class="alert alert-info" translate>There is no special quota here.</div>
+            <table ng:show="non_default.teacher" class="lm-table lm-table-padded">
                 <tr>
                     <th translate>Name</th>
-                    <th>Default</th>
-                    <th>Global</th>
-                    <th>Cloud</th>
-                    <th translate>Mail</th>
+                    <th ng:repeat="qt in quota_types">
+                        {{qt.name}}<br />
+                        <span translate>Default: </span>
+                        <span style="font-weight:bold;color:#dc3545;" >{{settings['role.teacher'][qt.type]}}</span>
+                    </th>
+                    <th></th> <!-- Column for remove -->
                 </tr>
-                <tr ng:repeat="(login,teacher) in teachers">
+                <tr ng:repeat="teacher in non_default.teacher.list | orderBy:['sn','givenname']">
                     <td>
-                        {{getName(login)}}
+                        {{non_default.teacher[teacher.login].displayName}}
+                    </td>
+                    <td ng:repeat="qt in quota_types">
+                        <input type="number" ng:model="non_default.teacher[teacher.login].QUOTA[qt.type]" class="form-control"  ng:class="{'nondefault': isDefaultQuota('role.teacher', qt.type, non_default.teacher[teacher.login].QUOTA[qt.type])}" ng:disabled="qt.type == 'cloudquota_percentage'" ng:change="changeUser('teacher', teacher.login, qt.type)" />
                     </td>
                     <td>
-                        <input type="number" ng:model="teacher.DEFLT" class="form-control" ng:style="!teacher.DEFLT_set && {'background-color':'#fff3cd'}" />
-                    </td>
-                    <td>
-                        <input type="number" ng:model="teacher.GLOBAL" class="form-control" ng:style="!teacher.GLOBAL_set && {'background-color':'#fff3cd'}" />
-                    </td>
-                    <td>
-                        <input type="number" ng:model="teacher.CQ" class="form-control" ng:style="!teacher.CQ_set && {'background-color':'#fff3cd'}" />
-                    </td>
-                    <td>
-                        <input type="number" ng:model="teacher.MQ" class="form-control" ng:style="!teacher.MQ_set && {'background-color':'#fff3cd'}" />
+                        <button class="btn btn-default" ng:click="remove('teacher', teacher)" title="Remove">
+                                <i class="fa fa-trash-o"></i>
+                        </button>
                     </td>
                 </tr>
             </table>
         </uib:tab>
         <uib:tab heading="{{'Students'|translate}}">
             <br/>
-            <table class="lm-table lm-table-padded">
+            <div ng:show="!non_default.student" class="alert alert-info" translate>There is no special quota here.</div>
+            <table  ng:show="non_default.student" class="lm-table lm-table-padded">
                 <tr>
-                    <th translate>Login</th>
-                    <th translate>Name</th>
-                    <th>Default</th>
-                    <th>Global</th>
-                    <th>Cloud</th>
-                    <th translate>Mail</th>
+                    <th translate>Name (login)</th>
+                    <th ng:repeat="qt in quota_types">
+                        {{qt.name}}<br />
+                        <span translate>Default: </span>
+                        <span style="font-weight:bold;color:#dc3545;" >{{settings['role.student'][qt.type]}}</span>
+                    </th>
+                    <th></th> <!-- Column for remove -->
                 </tr>
-                <tr ng:repeat="(login, quota) in quotas" ng:if="!isSpecialQuota(login) && !isDefaultQuota(login)">
+                <tr ng:repeat="student in non_default.student.list|orderBy:['sn','givenname']">
                     <td>
-                        {{login}}
+                        {{non_default.student[student.login].displayName}} ({{student.login}})
+                    </td>
+                    <td ng:repeat="qt in quota_types">
+                        <input type="number" ng:model="non_default.student[student.login].QUOTA[qt.type]" class="form-control"  ng:class="{'nondefault': isDefaultQuota('role.student', qt.type, non_default.student[student.login].QUOTA[qt.type])}" ng:disabled="qt.type == 'cloudquota_percentage'" ng:change="changeUser('student', student.login, qt.type)" />
                     </td>
                     <td>
-                        {{getName(login)}}
-                    </td>
-                    <td>
-                        <input type="number" ng:model="quota.DEFLT" class="form-control" ng:style="!quota.DEFLT_set && {'background-color':'#fff3cd'}" />
-                    </td>
-                    <td>
-                        <input type="number" ng:model="quota.GLOBAL" class="form-control" ng:style="!quota.QUOTA_set && {'background-color':'#fff3cd'}" />
-                    </td>
-                    <td>
-                        <input type="number" ng:model="quota.CQ" class="form-control" ng:style="!quota.CQ_set && {'background-color':'#fff3cd'}" />
-                    </td>
-                    <td>
-                        <input type="number" ng:model="quota.MQ" class="form-control" ng:style="!quota.MQ_set && {'background-color':'#fff3cd'}" />
-                    </td>
-                    <td>
-                        <button class="btn btn-default" ng:click="remove(login)">
-                            <i class="fa fa-trash-o"></i>
+                        <button class="btn btn-default" ng:click="remove('student', student)" title="Remove">
+                                <i class="fa fa-trash-o"></i>
                         </button>
                     </td>
                 </tr>
             </table>
-            <input type="text" placeholder="Add new" ng:model="_.addNewSpecial" typeahead-editable="false" typeahead-min-length="3" uib-typeahead="user[1].uid[0] as user[1].cn[0] for user in findUsers($viewValue) | limitTo:8" class="form-control" />
         </uib:tab>
-        <uib:tab heading="{{'Classes'|translate}}">
+        <uib:tab heading="{{'Schooladmins'|translate}}">
             <br/>
-            <table class="lm-table lm-table-padded">
+            <div ng:show="!non_default.schooladministrator" class="alert alert-info" translate>There is no special quota here.</div>
+            <table  ng:show="non_default.schooladministrator" class="lm-table lm-table-padded">
                 <tr>
                     <th translate>Name</th>
-                    <th>Default</th>
-                    <th translate>Mail</th>
+                    <th ng:repeat="qt in quota_types">
+                        {{qt.name}}<br />
+                        <span translate>Default: </span>
+                        <span style="font-weight:bold;color:#dc3545;" >{{settings['role.schooladministrator'][qt.type]}}</span>
+                    </th>
+                    <th></th> <!-- Column for remove -->
                 </tr>
-                <tr ng:repeat="class in classes">
+                <tr ng:repeat="schooladministrator in non_default.schooladministrator.list|orderBy:['sn','givenname']">
                     <td>
-                        {{class.name}}
+                        {{non_default.schooladministrator[schooladministrator.login].displayName}}
+                    </td>
+                    <td ng:repeat="qt in quota_types">
+                        <input type="number" ng:model="non_default.schooladministrator[schooladministrator.login].QUOTA[qt.type]" class="form-control"  ng:class="{'nondefault': isDefaultQuota('role.schooladministrator', qt.type, non_default.schooladministrator[schooladministrator.login].QUOTA[qt.type])}" ng:disabled="qt.type == 'cloudquota_percentage'" ng:change="changeUser('schooladministrator', schooladministrator.login, qt.type)" />
                     </td>
                     <td>
-                        <input type="number" ng:model="class.quota" class="form-control" />
-                    </td>
-                    <td>
-                        <input type="number" ng:model="class.mailquota" class="form-control" />
+                        <button class="btn btn-default" ng:click="remove('schooladministrator', schooladministrator)" title="Remove">
+                                <i class="fa fa-trash-o"></i>
+                        </button>
                     </td>
                 </tr>
             </table>
         </uib:tab>
-        <uib:tab heading="{{'Projects'|translate}}">
+        <uib:tab heading="{{'Classes'|translate}}" ng:click="get_class_quota()">
             <br/>
             <table class="lm-table lm-table-padded">
                 <tr>
                     <th translate>Name</th>
-                    <th>Default</th>
-                    <th>Mail</th>
-                </tr>
-                <tr ng:repeat="project in projects">
-                    <td>
-                        {{project.name}}
-                    </td>
-                    <td>
-                        <input type="number" ng:model="project.quota" class="form-control" />
-                    </td>
-                    <td>
-                        <input type="number" ng:model="project.mailquota" class="form-control" />
-                    </td>
-                </tr>
-            </table>
-        </uib:tab>
-        <uib:tab heading="{{'Special'|translate}}">
-            <br/>
-            <table class="lm-table lm-table-padded">
-                <tr>
-                    <th translate>Name</th>
-                    <th>/home</th>
-                    <th>/var</th>
-                    <th translate>Mail</th>
+                    <th ng:repeat="share in groupquota_types">{{share.classname}}</th>
                     <th></th>
                 </tr>
-                <tr ng:repeat="quota in specialQuotas">
+                <tr ng:repeat="(class, details) in groupquota['adminclass']">
                     <td>
-                        {{quota.name}}
+                        {{class}}
+                    </td>
+                    <td ng:repeat="share in groupquota_types">
+                        <input type="number" ng:model="details.QUOTA[share.type].value" ng:class="{'nondefault': details.QUOTA[share.type].value != 0}" ng:change="changeGroup('adminclass',class,share.type)" class="form-control" />
                     </td>
                     <td>
-                        <input type="number" ng:model="quotas[quota.login].home" class="form-control" />
+                        <button class="btn btn-default" title="Set to default" ng:click="resetClass(class)">
+                                <i class="fa fa-trash-o"></i>
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </uib:tab>
+        <uib:tab heading="{{'Projects'|translate}}" ng:click="get_class_quota()">
+            <br/>
+            <table class="lm-table lm-table-padded">
+                <tr>
+                    <th translate>Name</th>
+                    <th ng:repeat="share in groupquota_types">{{share.projname}}</th>
+                    <th></th>
+                </tr>
+                <tr ng:repeat="(project, details) in groupquota['project']">
+                    <td>
+                        {{project}}
+                    </td>
+                    <td ng:repeat="share in groupquota_types">
+                        <input type="number" ng:model="details.QUOTA[share.type].value" ng:class="{'nondefault': details.QUOTA[share.type].value != 0}" ng:change="changeGroup('project',project,share.type)" class="form-control" />
                     </td>
                     <td>
-                        <input type="number" ng:model="quotas[quota.login].var" class="form-control" />
-                    </td>
-                    <td>
-                        <input type="number" ng:model="quotas[quota.login].mail" class="form-control" />
+                        <button class="btn btn-default" title="Set to default" ng:click="resetProject(project)">
+                                <i class="fa fa-trash-o"></i>
+                        </button>
                     </td>
                 </tr>
             </table>
         </uib:tab>
     </uib:tabset>
 
-    <div class="legend">
-        <div class="legend-element" style="background-color:#dddddd;">&nbsp;</div><span style="font-weight:bold;padding:10px;"translate>Quota is currently set in ldap</span>
-        <br />
-        <div class="legend-element" style="background-color:#fff3cd;">&nbsp;</div><span style="font-weight:bold;padding:10px;"translate>Quota is currently not set in ldap</span>
-    </div>
+    <dialog ng:show="UserSearchVisible">
+        <div class="modal-header">
+            <h3 class="modal-title" translate>Add special quota</h3>
+        </div>
+        <div class="modal-body">
+            <input type="text" placeholder="{{searchText}}" ng:model="$parent._.addNewSpecial" typeahead-editable="false" typeahead-min-length="3" uib-typeahead="user as user.label for user in findUsers($viewValue)" class="form-control" autofocus />
+        </div>
+        <div class="modal-footer">
+
+        </div>
+    </dialog>
+
     <div class="floating-toolbar-padder"></div>
 
     <floating-toolbar>
-<!--
-        <button ng:click="backups()" class="btn btn-default btn-flat pull-right"><i class="fa fa-history"></i></button>
-
-        <button ng:click="save()" class="btn btn-default btn-flat" translate>Save</button>
-        <button ng:click="saveApply()" class="btn btn-default btn-flat" translate>Save & apply</button>-->
+        <a href="/view/lm/schoolsettings#quota" class="btn btn-default btn-flat pull-right" translate>Configure default quota</a>
+        <button ng:click="saveApply()" class="btn btn-default btn-flat" translate>Save & apply</button>
+        <a ng:click="showUserSearch()" ng:show="activeTab <= 2" class="btn btn-default btn-flat" translate>Search & add user</a>
     </floating-toolbar>
 </div>

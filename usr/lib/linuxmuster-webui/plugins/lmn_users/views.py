@@ -13,9 +13,22 @@ from aj.plugins.lmn_common.api import lmn_checkPermission, lmn_write_csv, lmn_ge
 
 
 @component(HttpPlugin)
-class Handler(HttpPlugin):
+class Handler(HttpPlugin):    
     def __init__(self, context):
         self.context = context
+        self.userStatus = {
+        'A' : {'tag':'Activated', 'color':'success'},
+        'U' : {'tag':'Usable', 'color':'success'},
+        'P' : {'tag':'Permanent', 'color':'success'},
+        'E' : {'tag':'Enabled', 'color':'success'},
+        'S' : {'tag':'Self-activated', 'color':'success'},
+        'T' : {'tag':'Tolerated', 'color':'info'},
+        'L' : {'tag':'Locked', 'color':'warning'},
+        'D' : {'tag':'Deactivated', 'color':'warning'},
+        'F' : {'tag':'Frozen', 'color':'warning'},
+        'R' : {'tag':'Removable', 'color':'danger'},
+        'K' : {'tag':'Killable', 'color':'danger'},
+    }
 
     @url(r'/api/lmn/sophomorixUsers/import-list')
     @endpoint(api=True)
@@ -212,7 +225,7 @@ class Handler(HttpPlugin):
             if action == 'get-all':
                 with authorize('lm:users:teachers:read'):
                     # TODO: This could run with --user-basic but not all memberOf are filled. Needs verification
-                    sophomorixCommand = ['sophomorix-query', '--teacher', '--schoolbase', schoolname, '--user-basic', '-jj']
+                    sophomorixCommand = ['sophomorix-query', '--teacher', '--schoolbase', schoolname, '--user-full', '-jj']
             elif action == 'get-list':
                 with authorize('lm:users:teachers:list'):
                     # TODO: This could run with --user-basic but not all memberOf are filled. Needs verification
@@ -225,8 +238,9 @@ class Handler(HttpPlugin):
             result = lmn_getSophomorixValue(sophomorixCommand, '')
             if 'USER' in result.keys():
                 teachers = result['USER']
-                for teacher in teachers:
-                    teachersList.append(teachers[teacher])
+                for teacher, details in teachers.items():
+                    details['sophomorixStatus'] = self.userStatus[details['sophomorixStatus']]
+                    teachersList.append(details)
                 return teachersList
             else:
                 return ["none"]
@@ -240,7 +254,7 @@ class Handler(HttpPlugin):
             studentsList = []
             with authorize('lm:users:students:read'):
                 if action == 'get-all':
-                    sophomorixCommand = ['sophomorix-query', '--student', '--schoolbase', schoolname, '--user-basic', '-jj']
+                    sophomorixCommand = ['sophomorix-query', '--student', '--schoolbase', schoolname, '--user-full', '-jj']
                 else:
                     user = http_context.json_body()['user']
                     # sophomorixCommand = ['sophomorix-query', '--student', '--schoolbase', schoolname, '--user-full', '-jj', '--sam', user]
@@ -248,10 +262,11 @@ class Handler(HttpPlugin):
                 result = lmn_getSophomorixValue(sophomorixCommand, '')
                 if 'USER' in result.keys():
                     students = result['USER']
-                    for student in students:
+                    for student, details in students.items():
                         # TODO: get a better way to remove Birthay from user detail page
-                        students[student]['sophomorixBirthdate'] = 'hidden'
-                        studentsList.append(students[student])
+                        details['sophomorixBirthdate'] = 'hidden'
+                        details['sophomorixStatus'] = self.userStatus[details['sophomorixStatus']]
+                        studentsList.append(details)
                     return studentsList
                 else:
                     return ["none"]

@@ -144,7 +144,9 @@
             <input type="text" placeholder="{{searchText}}" ng:model="$parent._.addNewSpecial" typeahead-editable="false" typeahead-min-length="3" uib-typeahead="user as user.label for user in findUsers($viewValue)" class="form-control" autofocus />
         </div>
         <div class="modal-footer">
-
+            <a ng:click="$parent.UserSearchVisible = false" class="btn btn-default btn-flat" translate>
+                Close
+            </a>
         </div>
     </dialog>
 

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-20 14:21+0100\n"
-"PO-Revision-Date: 2019-12-16 22:07\n"
+"POT-Creation-Date: 2019-12-26 17:02+0100\n"
+"PO-Revision-Date: 2019-12-26 16:04\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -15,292 +15,292 @@ msgstr ""
 "X-Crowdin-Language: ru\n"
 "X-Crowdin-File: /2.0/lmn_linbo.po\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:115
+#: lmn_linbo/resources/partial/config.modal.html:115
 msgid "Add <span class=\"caret\"></span>"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/partition.modal.html:147
+#: lmn_linbo/resources/partial/partition.modal.html:147
 msgid "Additional kernel parameters"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/partition.modal.html:172
+#: lmn_linbo/resources/partial/partition.modal.html:172
 msgid "Advanced"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:105
+#: lmn_linbo/resources/partial/config.modal.html:105
 msgid "Auto partition formatting"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:103
+#: lmn_linbo/resources/partial/config.modal.html:103
 msgid "Auto partition recovery"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:107
+#: lmn_linbo/resources/partial/config.modal.html:107
 msgid "Auto update cache"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/partition.modal.html:127
+#: lmn_linbo/resources/partial/partition.modal.html:127
 msgid "Autostart timeout"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/partition.modal.html:99
+#: lmn_linbo/resources/partial/partition.modal.html:99
 msgid "Base image"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/partition.modal.html:116
+#: lmn_linbo/resources/partial/partition.modal.html:116
 msgid "Boot buttons"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:205
+#: lmn_linbo/resources/partial/config.modal.html:205
 msgid "Cache"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/accept.modal.html:9
+#: lmn_linbo/resources/partial/accept.modal.html:9
 msgid "Cancel"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:225
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/image.modal.html:61
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/partition.modal.html:173
+#: lmn_linbo/resources/partial/config.modal.html:225
+#: lmn_linbo/resources/partial/image.modal.html:61
+#: lmn_linbo/resources/partial/partition.modal.html:173
 msgid "Close"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:51
+#: lmn_linbo/resources/partial/index.html:51
 msgid "Comment: {{image.description}}"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:28
+#: lmn_linbo/resources/partial/index.html:28
 msgid "Create"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:199
+#: lmn_linbo/resources/partial/config.modal.html:199
 msgid "Data"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/partition.modal.html:67
+#: lmn_linbo/resources/partial/partition.modal.html:67
 msgid "Default"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/image.modal.html:9
+#: lmn_linbo/resources/partial/image.modal.html:9
 msgid "Description"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/partition.modal.html:107
+#: lmn_linbo/resources/partial/partition.modal.html:107
 msgid "Differential image"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:90
+#: lmn_linbo/resources/partial/config.modal.html:90
 msgid "Download type"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:184
+#: lmn_linbo/resources/partial/config.modal.html:184
 msgid "EFI"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:31
+#: lmn_linbo/resources/partial/index.html:31
 msgid "Empty"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:42
+#: lmn_linbo/resources/partial/config.modal.html:42
 msgid "Error color"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:202
+#: lmn_linbo/resources/partial/config.modal.html:202
 msgid "Extended"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/partition.modal.html:33
+#: lmn_linbo/resources/partial/partition.modal.html:33
 msgid "Filesystem"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/partition.modal.html:17
+#: lmn_linbo/resources/partial/partition.modal.html:17
 msgid "Flags"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/partition.modal.html:156
+#: lmn_linbo/resources/partial/partition.modal.html:156
 msgid "Force Opsi setup"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:6
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/image.modal.html:6
+#: lmn_linbo/resources/partial/config.modal.html:6
+#: lmn_linbo/resources/partial/image.modal.html:6
 msgid "General"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:7
+#: lmn_linbo/resources/partial/index.html:7
 msgid "Groups"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/partition.modal.html:77
+#: lmn_linbo/resources/partial/partition.modal.html:77
 msgid "Icon"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:37
+#: lmn_linbo/resources/partial/index.html:37
 msgid "Images"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:222
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/image.modal.html:13
+#: lmn_linbo/resources/partial/config.modal.html:222
+#: lmn_linbo/resources/partial/image.modal.html:13
 msgid "Info"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/partition.modal.html:143
+#: lmn_linbo/resources/partial/partition.modal.html:143
 msgid "Initrd"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/partition.modal.html:131
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/partition.modal.html:139
+#: lmn_linbo/resources/partial/partition.modal.html:131
+#: lmn_linbo/resources/partial/partition.modal.html:139
 msgid "Kernel"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:111
+#: lmn_linbo/resources/partial/config.modal.html:111
 msgid "Kernel options"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/partition.modal.html:9
+#: lmn_linbo/resources/partial/partition.modal.html:9
 msgid "Label"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:187
+#: lmn_linbo/resources/partial/config.modal.html:187
 msgid "MSR"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/partition.modal.html:51
+#: lmn_linbo/resources/partial/partition.modal.html:51
 msgid "Name"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:215
+#: lmn_linbo/resources/partial/config.modal.html:215
 msgid "New disk"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/partition.modal.html:45
+#: lmn_linbo/resources/partial/partition.modal.html:45
 msgid "OS"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/partition.modal.html:160
+#: lmn_linbo/resources/partial/partition.modal.html:160
 msgid "Options"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:27
+#: lmn_linbo/resources/partial/config.modal.html:27
 msgid "Output color"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/partition.modal.html:6
+#: lmn_linbo/resources/partial/partition.modal.html:6
 msgid "Partition"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/partition.modal.html:22
+#: lmn_linbo/resources/partial/partition.modal.html:22
 msgid "Partition type"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:129
+#: lmn_linbo/resources/partial/config.modal.html:129
 msgid "Partitions"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/image.modal.html:39
+#: lmn_linbo/resources/partial/image.modal.html:39
 msgid "Postsync Script"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/image.modal.html:21
+#: lmn_linbo/resources/partial/image.modal.html:21
 msgid "Registry patch"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/accept.modal.html:8
+#: lmn_linbo/resources/partial/accept.modal.html:8
 msgid "Remove"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/accept.modal.html:5
+#: lmn_linbo/resources/partial/accept.modal.html:5
 msgid "Remove Partition {{partition}}"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/accept.modal.html:2
+#: lmn_linbo/resources/partial/accept.modal.html:2
 msgid "Remove Partition?"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:180
+#: lmn_linbo/resources/partial/config.modal.html:180
 msgid "Remove this disk"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/partition.modal.html:151
+#: lmn_linbo/resources/partial/partition.modal.html:151
 msgid "Restore Opsi state"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:69
+#: lmn_linbo/resources/partial/config.modal.html:69
 msgid "Root logout timeout"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:223
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/image.modal.html:60
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/partition.modal.html:171
+#: lmn_linbo/resources/partial/config.modal.html:223
+#: lmn_linbo/resources/partial/image.modal.html:60
+#: lmn_linbo/resources/partial/partition.modal.html:171
 msgid "Save"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:14
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:29
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:44
+#: lmn_linbo/resources/partial/config.modal.html:14
+#: lmn_linbo/resources/partial/config.modal.html:29
+#: lmn_linbo/resources/partial/config.modal.html:44
 msgid "Select color"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/image.modal.html:17
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/partition.modal.html:13
+#: lmn_linbo/resources/partial/image.modal.html:17
+#: lmn_linbo/resources/partial/partition.modal.html:13
 msgid "Size"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:101
+#: lmn_linbo/resources/partial/config.modal.html:101
 msgid "Start options"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:196
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:240
+#: lmn_linbo/resources/partial/config.modal.html:196
+#: lmn_linbo/resources/js/controllers/index.controller.coffee:240
 msgid "Swap"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:79
+#: lmn_linbo/resources/partial/config.modal.html:79
 msgid "System type"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:63
+#: lmn_linbo/resources/partial/config.modal.html:63
 msgid "TFTP server"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:12
+#: lmn_linbo/resources/partial/config.modal.html:12
 msgid "Text color"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/partition.modal.html:57
+#: lmn_linbo/resources/partial/partition.modal.html:57
 msgid "Version"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/main.py:15
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:457
+#: lmn_linbo/main.py:15
+#: lmn_linbo/resources/js/controllers/index.controller.coffee:457
 msgid "LINBO"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/main.py:30
+#: lmn_linbo/main.py:30
 msgid "Read/write start.conf"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/main.py:35
+#: lmn_linbo/main.py:35
 msgid "Read/write images"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/main.py:40
+#: lmn_linbo/main.py:40
 msgid "Read examples"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/main.py:45
+#: lmn_linbo/main.py:45
 msgid "Read/write icons"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:242
+#: lmn_linbo/resources/js/controllers/index.controller.coffee:242
 msgid "LINBO Cache"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:477
+#: lmn_linbo/resources/js/controllers/index.controller.coffee:477
 msgid "A config file with this name already exists!"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:523
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:564
+#: lmn_linbo/resources/js/controllers/index.controller.coffee:523
+#: lmn_linbo/resources/js/controllers/index.controller.coffee:564
 msgid "Saved"
 msgstr ""
 

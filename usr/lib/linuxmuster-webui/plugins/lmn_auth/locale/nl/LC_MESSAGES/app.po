@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-20 14:21+0100\n"
-"PO-Revision-Date: 2019-12-16 22:07\n"
+"POT-Creation-Date: 2019-12-26 17:02+0100\n"
+"PO-Revision-Date: 2019-12-26 16:04\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
@@ -15,47 +15,47 @@ msgstr ""
 "X-Crowdin-Language: nl\n"
 "X-Crowdin-File: /2.0/lmn_auth.po\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:27
+#: lmn_auth/resources/partial/index.html:27
 msgid "Change password"
 msgstr "Wachtwoord wijzigen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:14
+#: lmn_auth/resources/partial/index.html:14
 msgid "Current password"
 msgstr "Huidig wachtwoord"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:3
+#: lmn_auth/resources/partial/index.html:3
 msgid "Minimal length is 7 characters. Use upper, lower and special characters or numbers. (e.g. Muster!)"
 msgstr "Minimale lengte is 7 letters. Gebruik hoofdletters, kleine letters, speciale tekens of nummers. (bijv. Muster!)"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:18
+#: lmn_auth/resources/partial/index.html:18
 msgid "New password"
 msgstr "Nieuw wachtwoord"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:22
+#: lmn_auth/resources/partial/index.html:22
 msgid "Repeat password"
 msgstr "Herhaal wachtwoord"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:5
+#: lmn_auth/resources/partial/index.html:5
 msgid "Valid characters are: a-z A-Z 0-9 !§+-@#$%&amp;*( )[ ]{ }"
 msgstr "Geldige tekens zijn: a-z A-Z 0-9 !§+-@#$%&amp;*( )[ ]{ }"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:14
+#: lmn_auth/api.py:14
 msgid "Linux Muster LDAP"
 msgstr "Linux Muster LDAP"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:7
+#: lmn_auth/resources/js/controllers/index.controller.coffee:7
 msgid "Change Password"
 msgstr "Wachtwoord wijzigen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:13
+#: lmn_auth/resources/js/controllers/index.controller.coffee:13
 msgid "Passwords do not match"
 msgstr "Wachtwoorden komen niet overeen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:23
+#: lmn_auth/resources/js/controllers/index.controller.coffee:23
 msgid "Password changed"
 msgstr "Wachtwoord is gewijzigd"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:26
+#: lmn_auth/resources/js/controllers/index.controller.coffee:26
 msgid "Password change failed"
 msgstr "Het wijzigen van het wachtwoord is mislukt"
 

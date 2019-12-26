@@ -9,5 +9,5 @@ msgstr ""
 "X-Crowdin-File: /2.0/lmn_w_datetime.po\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
-"PO-Revision-Date: 2019-12-16 22:07\n"
+"PO-Revision-Date: 2019-12-26 16:04\n"
 

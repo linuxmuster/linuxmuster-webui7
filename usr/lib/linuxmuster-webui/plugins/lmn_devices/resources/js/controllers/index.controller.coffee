@@ -35,6 +35,11 @@ angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $
         remove:  gettext('Remove')
     }
 
+    $scope.$on("$locationChangeStart", (event) ->
+        if ($scope.devices_form.$dirty && !confirm(gettext('Changes are saved, continue anyway ?')))
+            event.preventDefault()
+        )
+
     $scope.dictLen = (d) ->
         return Object.keys(d).length
 

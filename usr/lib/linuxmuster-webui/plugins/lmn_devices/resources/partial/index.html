@@ -53,90 +53,92 @@
 
     <br/>
 
-    <table class="lm-table lm-table-inputs">
-        <tr>
-            <th ng:repeat="(id, field) in fields" ng:if="field.visible">{{field.name}}</th>
-            <th></th>
-        </tr>
-        <tr ng:repeat="device in devices|filter:filter|filter:stripComments|orderBy:['-_isNew', sort.fx]|page:paging.page:paging.pageSize">
-            <td width="80" ng:if="fields.room.visible" class="form-group" ng:class="validateField('Room', device.room, device._isNew, $index)">
-                <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.room" placeholder="Room" class="form-control" />
-            </td>
-            <td ng:if="fields.hostname.visible" class="form-group" ng:class="validateField('Host', device.hostname, device._isNew, $index)">
-                <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.hostname" placeholder="Hostname" class="form-control" />
-            </td>
-            <td ng:if="fields.group.visible" class="form-group" ng:class="validateField('LinboConf', device.group, device._isNew, $index)">
-                <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.group" placeholder="Group" class="form-control" />
-            </td>
-            <td ng:if="fields.mac.visible" class="form-group" ng:class="validateField('Mac', device.mac, device._isNew, $index)">
-                <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.mac" placeholder="MAC" class="form-control" />
-            </td>
-            <td ng:if="fields.ip.visible" class="form-group" ng:class="validateField('IP', device.ip, device._isNew, $index)">
-                <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.ip" placeholder="IP" class="form-control" />
-            </td>
-            <td ng:if="fields.officeKey.visible" class="form-group">
-                <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.officeKey" placeholder="Office-Key" class="form-control" />
-            </td>
-            <td ng:if="fields.windowsKey.visible" class="form-group">
-                <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.windowsKey" placeholder="Windows-Key" class="form-control" />
-            </td>
-            <td ng:if="fields.dhcpOptions.visible" class="form-group">
-                <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.dhcpOptions" placeholder="DHCP-Options" class="form-control" />
-            </td>
-            <td ng:if="fields.sophomorixRole.visible" ng:class="{'has-error': validateField('Role', device.sophomorixRole, device._isNew, $index)}"  class="form-group">
-                <select ng:model="device.sophomorixRole" class="form-control">
-                    <option value="classroom-studentcomputer" translate>classroom-studentcomputer</option>
-                    <option value="classroom-teachercomputer" translate>classroom-teachercomputer</option>
-                    <option value="staffcomputer" translate>Staffcomputer</option>
-                    <option value="faculty-teachercomputer" translate>Faculty-Teachercomputer</option>
-                    <option value="server" translate>Server</option>
-                    <option value="router" translate>router</option>
-                    <option value="switch" translate>Switch</option>
-                    <option value="printer" translate>Printer</option>
-                    <option value="thinclient" translate>Thinclient</option>
-                    <option value="byod" translate>BYOD</option>
-                    <option value="voip" translate>VOIP</option>
-                    <option value="wlan" translate>WLan</option>
-                    <option value="iponly" translate>IP-Only</option>
-                    <option value="mobile" translate>Mobile</option>
-                    <option value="addc" translate>Domain-Controller</option>
-                </select>
-            </td>
-            <td ng:if="fields.lmnReserved10.visible">
-                <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.lmnReserved10" placeholder="LMN-Reserved10" class="form-control" />
-            </td>
-            <td width="100" ng:if="fields.pxeFlag.visible">
-                <select ng:model="device.pxeFlag" class="form-control">
-                    <option value="0" translate>No PXE</option>
-                    <option value="1" translate>Linbo-PXE</option>
-                    <option value="2" translate>Linbo-PXE + OPSI-MGMT</option>
-                    <option value="3" translate>OPSI-PXE</option>
-                </select>
-            </td>
-            <td ng:if="fields.lmnReserved12.visible">
-                <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.lmnReserved12" placeholder="LMN-Reserved12" class="form-control" />
-            </td>
-            <td ng:if="fields.lmnReserved13.visible">
-                <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.lmnReserved13" placeholder="LMN-Reserved13" class="form-control" />
-            </td>
-            <td ng:if="fields.lmnReserved14.visible">
-                <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.lmnReserved14" placeholder="LMN-Reserved14" class="form-control" />
-            </td>
-            <td ng:if="fields.sophomorixComment.visible">
-                <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.sophomorixComment" placeholder="Sophomorix-Comment" class="form-control" />
-            </td>
-            <td width="1">
-                <button class="btn btn-default" ng:click="duplicate(device)" title={{trans.duplicate}}>
-                    <i class="fa fa-copy"></i>
-                </button>
-            </td>
-            <td width="1">
-                <button class="btn btn-default" ng:click="remove(device)" title={{trans.remove}}>
-                    <i class="fa fa-trash-o"></i>
-                </button>
-            </td>
-        </tr>
-    </table>
+    <form name="devices_form">
+        <table class="lm-table lm-table-inputs">
+            <tr>
+                <th ng:repeat="(id, field) in fields" ng:if="field.visible">{{field.name}}</th>
+                <th></th>
+            </tr>
+            <tr ng:repeat="device in devices|filter:filter|filter:stripComments|orderBy:['-_isNew', sort.fx]|page:paging.page:paging.pageSize">
+                <td width="80" ng:if="fields.room.visible" class="form-group" ng:class="validateField('Room', device.room, device._isNew, $index)">
+                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.room" placeholder="Room" class="form-control" />
+                </td>
+                <td ng:if="fields.hostname.visible" class="form-group" ng:class="validateField('Host', device.hostname, device._isNew, $index)">
+                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.hostname" placeholder="Hostname" class="form-control" />
+                </td>
+                <td ng:if="fields.group.visible" class="form-group" ng:class="validateField('LinboConf', device.group, device._isNew, $index)">
+                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.group" placeholder="Group" class="form-control" />
+                </td>
+                <td ng:if="fields.mac.visible" class="form-group" ng:class="validateField('Mac', device.mac, device._isNew, $index)">
+                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.mac" placeholder="MAC" class="form-control" />
+                </td>
+                <td ng:if="fields.ip.visible" class="form-group" ng:class="validateField('IP', device.ip, device._isNew, $index)">
+                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.ip" placeholder="IP" class="form-control" />
+                </td>
+                <td ng:if="fields.officeKey.visible" class="form-group">
+                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.officeKey" placeholder="Office-Key" class="form-control" />
+                </td>
+                <td ng:if="fields.windowsKey.visible" class="form-group">
+                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.windowsKey" placeholder="Windows-Key" class="form-control" />
+                </td>
+                <td ng:if="fields.dhcpOptions.visible" class="form-group">
+                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.dhcpOptions" placeholder="DHCP-Options" class="form-control" />
+                </td>
+                <td ng:if="fields.sophomorixRole.visible" ng:class="{'has-error': validateField('Role', device.sophomorixRole, device._isNew, $index)}"  class="form-group">
+                    <select ng:model="device.sophomorixRole" class="form-control">
+                        <option value="classroom-studentcomputer" translate>classroom-studentcomputer</option>
+                        <option value="classroom-teachercomputer" translate>classroom-teachercomputer</option>
+                        <option value="staffcomputer" translate>Staffcomputer</option>
+                        <option value="faculty-teachercomputer" translate>Faculty-Teachercomputer</option>
+                        <option value="server" translate>Server</option>
+                        <option value="router" translate>router</option>
+                        <option value="switch" translate>Switch</option>
+                        <option value="printer" translate>Printer</option>
+                        <option value="thinclient" translate>Thinclient</option>
+                        <option value="byod" translate>BYOD</option>
+                        <option value="voip" translate>VOIP</option>
+                        <option value="wlan" translate>WLan</option>
+                        <option value="iponly" translate>IP-Only</option>
+                        <option value="mobile" translate>Mobile</option>
+                        <option value="addc" translate>Domain-Controller</option>
+                    </select>
+                </td>
+                <td ng:if="fields.lmnReserved10.visible">
+                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.lmnReserved10" placeholder="LMN-Reserved10" class="form-control" />
+                </td>
+                <td width="100" ng:if="fields.pxeFlag.visible">
+                    <select ng:model="device.pxeFlag" class="form-control">
+                        <option value="0" translate>No PXE</option>
+                        <option value="1" translate>Linbo-PXE</option>
+                        <option value="2" translate>Linbo-PXE + OPSI-MGMT</option>
+                        <option value="3" translate>OPSI-PXE</option>
+                    </select>
+                </td>
+                <td ng:if="fields.lmnReserved12.visible">
+                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.lmnReserved12" placeholder="LMN-Reserved12" class="form-control" />
+                </td>
+                <td ng:if="fields.lmnReserved13.visible">
+                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.lmnReserved13" placeholder="LMN-Reserved13" class="form-control" />
+                </td>
+                <td ng:if="fields.lmnReserved14.visible">
+                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.lmnReserved14" placeholder="LMN-Reserved14" class="form-control" />
+                </td>
+                <td ng:if="fields.sophomorixComment.visible">
+                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.sophomorixComment" placeholder="Sophomorix-Comment" class="form-control" />
+                </td>
+                <td width="1">
+                    <button class="btn btn-default" ng:click="duplicate(device)" title={{trans.duplicate}}>
+                        <i class="fa fa-copy"></i>
+                    </button>
+                </td>
+                <td width="1">
+                    <button class="btn btn-default" ng:click="remove(device)" title={{trans.remove}}>
+                        <i class="fa fa-trash-o"></i>
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </form>
 
     <br/>
 

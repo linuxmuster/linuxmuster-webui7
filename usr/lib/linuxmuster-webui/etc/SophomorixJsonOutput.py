@@ -63,7 +63,7 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
 
     # Option to only list keys on all levels
     keys = False
-    if jsonpath[-1] is '-':
+    if len(jsonpath)>=1 and jsonpath[-1] is '-':
         jsonpath = jsonpath[:-1]
         keys = True
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ajenti\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-26 17:02+0100\n"
+"POT-Creation-Date: 2019-12-28 22:40+0100\n"
 "PO-Revision-Date: 2016-05-21 17:19-0400\n"
 "Last-Translator: eugenepankov <john.pankov@gmail.com>\n"
 "Language-Team: Swahili\n"
@@ -16,854 +16,869 @@ msgstr ""
 "X-Crowdin-Language: sw\n"
 "X-Crowdin-File: /2.0/lmn_users.po\n"
 
-#: lmn_users/resources/partial/sortList.modal.html:23
-#: lmn_users/resources/partial/sortList.modal.html:72
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/sortList.modal.html:23
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/sortList.modal.html:72
 msgid "Abort"
 msgstr ""
 
-#: lmn_users/resources/partial/addAdmin.modal.html:12
-#: lmn_users/resources/partial/customPassword.modal.html:22
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/addAdmin.modal.html:12
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/customPassword.modal.html:22
 msgid "Accept"
 msgstr ""
 
-#: lmn_users/resources/partial/sortList.modal.html:24
-#: lmn_users/resources/partial/sortList.modal.html:73
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/sortList.modal.html:24
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/sortList.modal.html:73
 msgid "Accept Sorting"
 msgstr ""
 
-#: lmn_users/resources/partial/addAdmin.modal.html:2
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/addAdmin.modal.html:2
 msgid "Add Administrator"
 msgstr ""
 
-#: lmn_users/resources/partial/extra-courses.html:69
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-courses.html:69
 msgid "Add a course"
 msgstr ""
 
-#: lmn_users/resources/partial/extra-students.html:61
-#: lmn_users/resources/partial/listmanagement.html:100
-#: lmn_users/resources/partial/listmanagement.html:311
-#: lmn_users/resources/partial/students-list.html:90
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-students.html:61
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:100
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:311
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students-list.html:90
 msgid "Add a student"
 msgstr ""
 
-#: lmn_users/resources/partial/listmanagement.html:202
-#: lmn_users/resources/partial/teachers-list.html:83
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:202
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers-list.html:83
 msgid "Add a teacher"
 msgstr ""
 
-#: lmn_users/resources/partial/globaladmins.html:131
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/globaladmins.html:131
 msgid "Add global administrator"
 msgstr ""
 
-#: lmn_users/resources/partial/result.modal.html:61
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/result.modal.html:61
 msgid "Add new users"
 msgstr ""
 
-#: lmn_users/resources/partial/schooladmins.html:127
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/schooladmins.html:127
 msgid "Add school administrator"
 msgstr ""
 
-#: lmn_users/resources/partial/result.modal.html:74
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/result.modal.html:74
 msgid "Added users"
 msgstr ""
 
-#: lmn_users/resources/partial/print-passwords.html:11
-#: lmn_users/resources/js/controllers/printPasswords.controller.coffee:18
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:11
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/printPasswords.controller.coffee:18
 msgid "All users"
 msgstr ""
 
-#: lmn_users/resources/partial/result.modal.html:141
-msgid "Apply"
-msgstr ""
-
-#: lmn_users/resources/partial/apply.modal.html:2
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/apply.modal.html:2
 msgid "Applying changes"
 msgstr ""
 
-#: lmn_users/resources/partial/extra-courses.html:28
-#: lmn_users/resources/js/controllers/extraCourses.controller.coffee:16
-#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:80
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-courses.html:28
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/extraCourses.controller.coffee:16
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:80
 msgid "Base name"
 msgstr ""
 
-#: lmn_users/resources/partial/extra-courses.html:30
-#: lmn_users/resources/partial/extra-students.html:30
-#: lmn_users/resources/js/controllers/students-list.controller.coffee:24
-#: lmn_users/resources/js/controllers/students-list.controller.coffee:49
-#: lmn_users/resources/js/controllers/students.controller.coffee:23
-#: lmn_users/resources/js/controllers/extraStudents.controller.coffee:24
-#: lmn_users/resources/js/controllers/teachers-list.controller.coffee:24
-#: lmn_users/resources/js/controllers/teachers-list.controller.coffee:42
-#: lmn_users/resources/js/controllers/extraCourses.controller.coffee:20
-#: lmn_users/resources/js/controllers/teachers.controller.coffee:23
-#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:24
-#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:66
-#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:84
-#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:124
-#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:139
-#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:160
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-courses.html:30
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-students.html:30
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students-list.controller.coffee:24
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students-list.controller.coffee:49
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students.controller.coffee:23
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/extraStudents.controller.coffee:24
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers-list.controller.coffee:24
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers-list.controller.coffee:42
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/extraCourses.controller.coffee:20
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers.controller.coffee:23
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:24
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:66
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:84
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:124
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:139
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:160
 msgid "Birthday"
 msgstr ""
 
-#: lmn_users/resources/partial/userDetails.modal.html:23
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:23
 msgid "Birthday:"
 msgstr ""
 
-#: lmn_users/resources/partial/addAdmin.modal.html:11
-#: lmn_users/resources/partial/customPassword.modal.html:21
-#: lmn_users/resources/partial/print-passwords.options.modal.html:27
-#: lmn_users/resources/partial/result.modal.html:142
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/addAdmin.modal.html:11
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/customPassword.modal.html:21
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.options.modal.html:27
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/result.modal.html:142
 msgid "Cancel"
 msgstr ""
 
-#: lmn_users/resources/partial/customPassword.modal.html:2
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/customPassword.modal.html:2
 msgid "Change Password"
 msgstr ""
 
-#: lmn_users/resources/partial/check.modal.html:6
-#: lmn_users/resources/partial/result.modal.html:9
-#: lmn_users/resources/js/controllers/checkModal.controller.coffee:72
-#: lmn_users/resources/js/controllers/checkModal.controller.coffee:82
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/check.modal.html:6
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/result.modal.html:9
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/checkModal.controller.coffee:89
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/checkModal.controller.coffee:99
 msgid "Check failed"
 msgstr ""
 
-#: lmn_users/resources/partial/result.modal.html:2
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/result.modal.html:2
 msgid "Check result"
 msgstr ""
 
-#: lmn_users/resources/partial/check.modal.html:2
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/check.modal.html:2
 msgid "Checking users"
 msgstr ""
 
-#: lmn_users/resources/partial/extra-students.html:27
-#: lmn_users/resources/partial/print-passwords.html:12
-#: lmn_users/resources/js/controllers/students-list.controller.coffee:12
-#: lmn_users/resources/js/controllers/students-list.controller.coffee:40
-#: lmn_users/resources/js/controllers/students.controller.coffee:11
-#: lmn_users/resources/js/controllers/extraStudents.controller.coffee:12
-#: lmn_users/resources/js/controllers/printPasswords.controller.coffee:18
-#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:12
-#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:54
-#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:115
-#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:151
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-students.html:27
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:12
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students-list.controller.coffee:12
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students-list.controller.coffee:40
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students.controller.coffee:11
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/extraStudents.controller.coffee:12
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/printPasswords.controller.coffee:18
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:12
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:54
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:115
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:151
 msgid "Class"
 msgstr ""
 
-#: lmn_users/resources/partial/userDetails.modal.html:19
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:19
 msgid "Class:"
 msgstr ""
 
-#: lmn_users/resources/partial/apply.modal.html:11
-#: lmn_users/resources/partial/check.modal.html:14
-#: lmn_users/resources/partial/upload.modal.html:14
-#: lmn_users/resources/partial/userDetails.modal.html:80
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/apply.modal.html:11
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/check.modal.html:14
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/upload.modal.html:14
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:80
 msgid "Close"
 msgstr ""
 
-#: lmn_users/resources/partial/userDetails.modal.html:76
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:76
 msgid "Cloudquota Calculated in MiB:"
 msgstr ""
 
-#: lmn_users/resources/partial/extra-courses.html:29
-#: lmn_users/resources/js/controllers/extraCourses.controller.coffee:24
-#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:88
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-courses.html:29
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/extraCourses.controller.coffee:24
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:88
 msgid "Count"
 msgstr ""
 
-#: lmn_users/resources/partial/extra-courses.html:27
-#: lmn_users/resources/js/controllers/extraCourses.controller.coffee:12
-#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:76
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-courses.html:27
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/extraCourses.controller.coffee:12
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:76
 msgid "Course"
 msgstr ""
 
-#: lmn_users/resources/partial/userDetails.modal.html:47
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:47
 msgid "CreationDate:"
 msgstr ""
 
-#: lmn_users/resources/partial/userDetails.modal.html:39
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:39
 msgid "DeactivationDate:"
 msgstr ""
 
-#: lmn_users/resources/partial/globaladmins.html:107
-#: lmn_users/resources/partial/schooladmins.html:106
-#: lmn_users/resources/js/controllers/schooladmins.controller.coffee:53
-#: lmn_users/resources/js/controllers/globaladmins.controller.coffee:53
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/globaladmins.html:107
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/schooladmins.html:106
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/schooladmins.controller.coffee:53
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/globaladmins.controller.coffee:53
 msgid "Delete User"
 msgstr ""
 
-#: lmn_users/resources/partial/extra-courses.html:80
-#: lmn_users/resources/partial/extra-students.html:73
-#: lmn_users/resources/partial/listmanagement.html:111
-#: lmn_users/resources/partial/listmanagement.html:214
-#: lmn_users/resources/partial/listmanagement.html:322
-#: lmn_users/resources/partial/students-list.html:101
-#: lmn_users/resources/partial/teachers-list.html:95
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-courses.html:80
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-students.html:73
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:111
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:214
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:322
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students-list.html:101
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers-list.html:95
 msgid "Edit CSV"
 msgstr ""
 
-#: lmn_users/resources/partial/customPassword.modal.html:6
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/customPassword.modal.html:6
 msgid ""
 "Enter new <span ng:show=\"action == 'actual'\" translate=\"\">userpassword</"
 "span> <span ng:show=\"action == 'initial'\" translate=\"\">initial password</"
 "span> for user:"
 msgstr ""
 
-#: lmn_users/resources/partial/result.modal.html:128
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/result.modal.html:128
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/checkModal.controller.coffee:15
 msgid "Errors"
 msgstr ""
 
-#: lmn_users/resources/partial/result.modal.html:58
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/result.modal.html:58
 msgid "Errors found"
 msgstr ""
 
-#: lmn_users/resources/partial/listmanagement.html:329
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:329
 msgid "Extra-Courses"
 msgstr ""
 
-#: lmn_users/resources/partial/listmanagement.html:222
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:222
 msgid "Extra-Students"
 msgstr ""
 
-#: lmn_users/resources/partial/listmanagement.html:145
-#: lmn_users/resources/partial/listmanagement.html:244
-#: lmn_users/resources/partial/listmanagement.html:37
-#: lmn_users/resources/partial/students-list.html:26
-#: lmn_users/resources/partial/teachers-list.html:26
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:145
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:244
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:37
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students-list.html:26
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers-list.html:26
 msgid "Fields"
 msgstr ""
 
-#: lmn_users/resources/partial/extra-students.html:29
-#: lmn_users/resources/js/controllers/students-list.controller.coffee:16
-#: lmn_users/resources/js/controllers/students.controller.coffee:15
-#: lmn_users/resources/js/controllers/extraStudents.controller.coffee:16
-#: lmn_users/resources/js/controllers/teachers-list.controller.coffee:16
-#: lmn_users/resources/js/controllers/teachers.controller.coffee:11
-#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:16
-#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:39
-#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:58
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-students.html:29
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students-list.controller.coffee:16
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students.controller.coffee:15
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/extraStudents.controller.coffee:16
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers-list.controller.coffee:16
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers.controller.coffee:11
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:16
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:39
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:58
 msgid "First name"
 msgstr ""
 
-#: lmn_users/resources/partial/print-passwords.options.modal.html:6
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.options.modal.html:6
 msgid "Format"
 msgstr ""
 
-#: lmn_users/resources/partial/extra-courses.html:31
-#: lmn_users/resources/js/controllers/extraCourses.controller.coffee:28
-#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:92
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-courses.html:31
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/extraCourses.controller.coffee:28
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:92
 msgid "GECOS"
 msgstr ""
 
-#: lmn_users/resources/partial/userDetails.modal.html:55
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:55
 msgid "Group Membership:"
 msgstr ""
 
-#: lmn_users/resources/partial/result.modal.html:65
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/result.modal.html:65
 msgid "Kill users"
 msgstr ""
 
-#: lmn_users/resources/partial/result.modal.html:114
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/result.modal.html:114
 msgid "Killed users"
 msgstr ""
 
-#: lmn_users/resources/partial/extra-students.html:28
-#: lmn_users/resources/js/controllers/students-list.controller.coffee:20
-#: lmn_users/resources/js/controllers/students.controller.coffee:19
-#: lmn_users/resources/js/controllers/extraStudents.controller.coffee:20
-#: lmn_users/resources/js/controllers/teachers-list.controller.coffee:20
-#: lmn_users/resources/js/controllers/teachers.controller.coffee:15
-#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:20
-#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:43
-#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:62
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-students.html:28
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students-list.controller.coffee:20
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students.controller.coffee:19
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/extraStudents.controller.coffee:20
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers-list.controller.coffee:20
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers.controller.coffee:15
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:20
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:43
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:62
 msgid "Last name"
 msgstr ""
 
-#: lmn_users/resources/partial/sortList.modal.html:8
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/sortList.modal.html:8
 msgid ""
 "Linuxmuster needs to know which column contains which userdata. This is "
 "mandatory for importing the CSV list.<br>Please set the column into the "
 "right order."
 msgstr ""
 
-#: lmn_users/resources/partial/extra-students.html:31
-#: lmn_users/resources/js/controllers/schooladmins.controller.coffee:11
-#: lmn_users/resources/js/controllers/extraStudents.controller.coffee:28
-#: lmn_users/resources/js/controllers/teachers-list.controller.coffee:12
-#: lmn_users/resources/js/controllers/teachers-list.controller.coffee:48
-#: lmn_users/resources/js/controllers/globaladmins.controller.coffee:11
-#: lmn_users/resources/js/controllers/teachers.controller.coffee:19
-#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:35
-#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:47
-#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:70
-#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:145
-#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:163
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-students.html:31
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/schooladmins.controller.coffee:11
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/extraStudents.controller.coffee:28
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers-list.controller.coffee:12
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers-list.controller.coffee:48
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/globaladmins.controller.coffee:11
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers.controller.coffee:19
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:35
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:47
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:70
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:145
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:163
 msgid "Login"
 msgstr ""
 
-#: lmn_users/resources/partial/students.html:52
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students.html:52
 msgid "Loginname / Class"
 msgstr ""
 
-#: lmn_users/resources/partial/userDetails.modal.html:15
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:15
 msgid "Loginname:"
 msgstr ""
 
-#: lmn_users/resources/partial/userDetails.modal.html:77
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:77
 msgid "Mailquota Calculated in MiB:"
 msgstr ""
 
-#: lmn_users/resources/partial/result.modal.html:63
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/result.modal.html:63
 msgid "Move users"
 msgstr ""
 
-#: lmn_users/resources/partial/result.modal.html:91
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/result.modal.html:91
 msgid "Moved users"
 msgstr ""
 
-#: lmn_users/resources/partial/print-passwords.html:5
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:5
 msgid ""
 "No Classes found. You have to create a class by importing userlist before "
 "you can print user passwords."
 msgstr ""
 
-#: lmn_users/resources/partial/customPassword.modal.html:16
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/customPassword.modal.html:16
 msgid ""
 "Note: Minimal length is 7 characters. Use upper, lower and special "
 "characters or numbers. (e.g. Muster!)"
 msgstr ""
 
-#: lmn_users/resources/partial/print-passwords.options.modal.html:20
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.options.modal.html:20
 msgid "One per page"
 msgstr ""
 
-#: lmn_users/resources/partial/print-passwords.options.modal.html:18
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.options.modal.html:18
 msgid "Options"
 msgstr ""
 
-#: lmn_users/resources/partial/extra-courses.html:32
-#: lmn_users/resources/partial/globaladmins.html:68
-#: lmn_users/resources/partial/schooladmins.html:67
-#: lmn_users/resources/partial/students.html:67
-#: lmn_users/resources/partial/teachers.html:71
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-courses.html:32
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/globaladmins.html:68
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/schooladmins.html:67
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students.html:67
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:71
 msgid "Password"
 msgstr ""
 
-#: lmn_users/resources/partial/print-passwords.options.modal.html:26
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.options.modal.html:26
 msgid "Print"
 msgstr ""
 
-#: lmn_users/resources/partial/userDetails.modal.html:12
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:12
 msgid "Properties"
 msgstr ""
 
-#: lmn_users/resources/partial/extra-courses.html:33
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-courses.html:33
 msgid "Removal date"
 msgstr ""
 
-#: lmn_users/resources/partial/extra-courses.html:59
-#: lmn_users/resources/partial/extra-students.html:51
-#: lmn_users/resources/partial/listmanagement.html:301
-#: lmn_users/resources/partial/listmanagement.html:391
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-courses.html:59
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-students.html:51
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:301
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:391
 msgid "Remove"
 msgstr ""
 
-#: lmn_users/resources/partial/result.modal.html:69
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/result.modal.html:69
 msgid "Report"
 msgstr ""
 
-#: lmn_users/resources/partial/globaladmins.html:78
-#: lmn_users/resources/partial/schooladmins.html:77
-#: lmn_users/resources/partial/students.html:77
-#: lmn_users/resources/partial/teachers.html:81
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/globaladmins.html:78
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/schooladmins.html:77
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students.html:77
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:81
 msgid "Restore initial password"
 msgstr ""
 
-#: lmn_users/resources/partial/userDetails.modal.html:31
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:31
 msgid "Role:"
 msgstr ""
 
-#: lmn_users/resources/partial/globaladmins.html:31
-#: lmn_users/resources/partial/listmanagement.html:155
-#: lmn_users/resources/partial/listmanagement.html:255
-#: lmn_users/resources/partial/listmanagement.html:48
-#: lmn_users/resources/partial/schooladmins.html:30
-#: lmn_users/resources/partial/students-list.html:37
-#: lmn_users/resources/partial/students.html:32
-#: lmn_users/resources/partial/teachers-list.html:36
-#: lmn_users/resources/partial/teachers.html:31
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/globaladmins.html:31
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:155
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:255
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:48
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/schooladmins.html:30
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students-list.html:37
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students.html:32
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers-list.html:36
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:31
 msgid "Rows"
 msgstr ""
 
-#: lmn_users/resources/partial/extra-courses.html:78
-#: lmn_users/resources/partial/extra-students.html:71
-#: lmn_users/resources/partial/listmanagement.html:109
-#: lmn_users/resources/partial/listmanagement.html:212
-#: lmn_users/resources/partial/listmanagement.html:320
-#: lmn_users/resources/partial/students-list.html:99
-#: lmn_users/resources/partial/teachers-list.html:93
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-courses.html:78
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-students.html:71
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:109
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:212
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:320
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students-list.html:99
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers-list.html:93
 msgid "Save"
 msgstr ""
 
-#: lmn_users/resources/partial/extra-courses.html:79
-#: lmn_users/resources/partial/extra-students.html:72
-#: lmn_users/resources/partial/listmanagement.html:110
-#: lmn_users/resources/partial/listmanagement.html:213
-#: lmn_users/resources/partial/listmanagement.html:321
-#: lmn_users/resources/partial/students-list.html:100
-#: lmn_users/resources/partial/teachers-list.html:94
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-courses.html:79
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-students.html:72
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:110
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:213
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:321
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students-list.html:100
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers-list.html:94
 msgid "Save &amp; check"
 msgstr ""
 
-#: lmn_users/resources/partial/userDetails.modal.html:35
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:35
 msgid "Schoolname:"
 msgstr ""
 
-#: lmn_users/resources/partial/globaladmins.html:132
-#: lmn_users/resources/partial/schooladmins.html:128
-#: lmn_users/resources/partial/students.html:124
-#: lmn_users/resources/partial/teachers.html:128
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/globaladmins.html:132
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/schooladmins.html:128
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students.html:124
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:128
 msgid "Select all"
 msgstr ""
 
-#: lmn_users/resources/partial/globaladmins.html:93
-#: lmn_users/resources/partial/schooladmins.html:92
-#: lmn_users/resources/partial/students.html:92
-#: lmn_users/resources/partial/teachers.html:96
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/globaladmins.html:93
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/schooladmins.html:92
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students.html:92
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:96
 msgid "Set actual user password"
 msgstr ""
 
-#: lmn_users/resources/partial/globaladmins.html:88
-#: lmn_users/resources/partial/schooladmins.html:87
-#: lmn_users/resources/partial/students.html:87
-#: lmn_users/resources/partial/teachers.html:91
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/globaladmins.html:88
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/schooladmins.html:87
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students.html:87
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:91
 msgid "Set custom initial password"
 msgstr ""
 
-#: lmn_users/resources/partial/globaladmins.html:135
-#: lmn_users/resources/partial/schooladmins.html:131
-#: lmn_users/resources/partial/students.html:127
-#: lmn_users/resources/partial/teachers.html:131
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/globaladmins.html:135
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/schooladmins.html:131
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students.html:127
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:131
 msgid "Set custom password for selected"
 msgstr ""
 
-#: lmn_users/resources/partial/globaladmins.html:133
-#: lmn_users/resources/partial/schooladmins.html:129
-#: lmn_users/resources/partial/students.html:125
-#: lmn_users/resources/partial/teachers.html:129
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/globaladmins.html:133
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/schooladmins.html:129
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students.html:125
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:129
 msgid "Set initial password for selected"
 msgstr ""
 
-#: lmn_users/resources/partial/globaladmins.html:83
-#: lmn_users/resources/partial/schooladmins.html:82
-#: lmn_users/resources/partial/students.html:82
-#: lmn_users/resources/partial/teachers.html:86
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/globaladmins.html:83
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/schooladmins.html:82
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students.html:82
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:86
 msgid "Set random initial password"
 msgstr ""
 
-#: lmn_users/resources/partial/globaladmins.html:134
-#: lmn_users/resources/partial/schooladmins.html:130
-#: lmn_users/resources/partial/students.html:126
-#: lmn_users/resources/partial/teachers.html:130
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/globaladmins.html:134
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/schooladmins.html:130
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students.html:126
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:130
 msgid "Set random password for selected"
 msgstr ""
 
-#: lmn_users/resources/partial/globaladmins.html:73
-#: lmn_users/resources/partial/schooladmins.html:72
-#: lmn_users/resources/partial/students.html:72
-#: lmn_users/resources/partial/teachers.html:76
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/globaladmins.html:73
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/schooladmins.html:72
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students.html:72
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:76
 msgid "Show initial password"
 msgstr ""
 
-#: lmn_users/resources/partial/userDetails.modal.html:27
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:27
 msgid "Sophomorix Status:"
 msgstr ""
 
-#: lmn_users/resources/partial/sortList.modal.html:3
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/sortList.modal.html:3
 msgid "Sort List"
 msgstr ""
 
-#: lmn_users/resources/partial/listmanagement.html:12 lmn_users/main.py:22
-#: lmn_users/resources/js/controllers/students-list.controller.coffee:8
-#: lmn_users/resources/js/controllers/students.controller.coffee:7
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:12
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:22
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students-list.controller.coffee:8
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students.controller.coffee:7
 msgid "Students"
 msgstr ""
 
-#: lmn_users/resources/partial/result.modal.html:6
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/result.modal.html:6
 msgid "Summary"
 msgstr ""
 
-#: lmn_users/resources/partial/listmanagement.html:119 lmn_users/main.py:15
-#: lmn_users/resources/js/controllers/teachers-list.controller.coffee:8
-#: lmn_users/resources/js/controllers/teachers.controller.coffee:7
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:119
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:15
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers-list.controller.coffee:8
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers.controller.coffee:7
 msgid "Teachers"
 msgstr ""
 
-#: lmn_users/resources/partial/globaladmins.html:9
-#: lmn_users/resources/partial/schooladmins.html:8
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/globaladmins.html:9
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/schooladmins.html:8
 msgid ""
 "There are no School-Administrator to manage yet. You can add a School-"
 "Administrator using the buttons below"
 msgstr ""
 
-#: lmn_users/resources/partial/students.html:9
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students.html:9
 msgid ""
 "There are no students to manage yet. You can add students using the list "
 "management module"
 msgstr ""
 
-#: lmn_users/resources/partial/teachers.html:9
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:9
 msgid ""
 "There are no teachers to manage yet. You can add teachers using the list "
 "management module"
 msgstr ""
 
-#: lmn_users/resources/partial/userDetails.modal.html:43
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:43
 msgid "TolerationDate:"
 msgstr ""
 
-#: lmn_users/resources/partial/listmanagement.html:112
-#: lmn_users/resources/partial/listmanagement.html:215
-#: lmn_users/resources/partial/students-list.html:102
-#: lmn_users/resources/partial/teachers-list.html:96
-#: lmn_users/resources/partial/upload.modal.html:3
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:112
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:215
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students-list.html:102
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers-list.html:96
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/upload.modal.html:3
 msgid "Upload CSV"
 msgstr ""
 
-#: lmn_users/resources/partial/print-passwords.options.modal.html:22
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.options.modal.html:22
 msgid "Use pdflatex instead of latex"
 msgstr ""
 
-#: lmn_users/resources/partial/userDetails.modal.html:3
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:3
 msgid "User Details"
 msgstr ""
 
-#: lmn_users/resources/partial/globaladmins.html:103
-#: lmn_users/resources/partial/schooladmins.html:102
-#: lmn_users/resources/partial/students.html:102
-#: lmn_users/resources/partial/teachers.html:106
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/globaladmins.html:103
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/schooladmins.html:102
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students.html:102
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:106
 msgid "User Settings"
 msgstr ""
 
-#: lmn_users/resources/partial/globaladmins.html:112
-#: lmn_users/resources/partial/schooladmins.html:111
-#: lmn_users/resources/partial/students.html:106
-#: lmn_users/resources/partial/teachers.html:110
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/globaladmins.html:112
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/schooladmins.html:111
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students.html:106
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:110
 msgid "User information"
 msgstr ""
 
-#: lmn_users/resources/partial/result.modal.html:13
-#: lmn_users/resources/partial/result.modal.html:77
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/result.modal.html:13
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/result.modal.html:77
 msgid "Users to be added"
 msgstr ""
 
-#: lmn_users/resources/partial/result.modal.html:117
-#: lmn_users/resources/partial/result.modal.html:47
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/result.modal.html:117
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/result.modal.html:47
 msgid "Users to be killed"
 msgstr ""
 
-#: lmn_users/resources/partial/result.modal.html:27
-#: lmn_users/resources/partial/result.modal.html:94
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/result.modal.html:27
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/result.modal.html:94
 msgid "Users to be updated"
 msgstr ""
 
-#: lmn_users/resources/partial/upload.modal.html:7
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/upload.modal.html:7
 msgid ""
 "Would you like to upload a list csv? This will replace your current CSV! "
 "Please respect the format columns..."
 msgstr ""
 
-#: lmn_users/resources/partial/listmanagement.html:6
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:6
 msgid "empty cells"
 msgstr ""
 
-#: lmn_users/resources/partial/globaladmins.html:36
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/globaladmins.html:36
 msgid "globaladmins"
 msgstr ""
 
-#: lmn_users/resources/partial/customPassword.modal.html:6
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/customPassword.modal.html:6
 msgid "initial password"
 msgstr ""
 
-#: lmn_users/resources/partial/schooladmins.html:35
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/schooladmins.html:35
 msgid "schooladmins"
 msgstr ""
 
-#: lmn_users/resources/partial/students.html:37
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students.html:37
 msgid "students"
 msgstr ""
 
-#: lmn_users/resources/partial/teachers.html:36
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:36
 msgid "teachers"
 msgstr ""
 
-#: lmn_users/resources/partial/customPassword.modal.html:6
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/customPassword.modal.html:6
 msgid "userpassword"
 msgstr ""
 
-#: lmn_users/main.py:29
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:29
 msgid "School-Admins"
 msgstr ""
 
-#: lmn_users/main.py:36
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:36
 msgid "Global-Admins"
 msgstr ""
 
-#: lmn_users/main.py:43
-#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:8
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:43
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:8
 msgid "Listmanagement"
 msgstr ""
 
-#: lmn_users/main.py:57
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:57
 msgid "Read students"
 msgstr ""
 
-#: lmn_users/main.py:62
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:62
 msgid "Write students"
 msgstr ""
 
-#: lmn_users/main.py:67
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:67
 msgid "Read teachers"
 msgstr ""
 
-#: lmn_users/main.py:72
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:72
 msgid "List teachers"
 msgstr ""
 
-#: lmn_users/main.py:77
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:77
 msgid "Write teachers"
 msgstr ""
 
-#: lmn_users/main.py:82
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:82
 msgid "Read schooladmins"
 msgstr ""
 
-#: lmn_users/main.py:87
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:87
 msgid "Write schooladmins"
 msgstr ""
 
-#: lmn_users/main.py:92
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:92
 msgid "Read globaladmins"
 msgstr ""
 
-#: lmn_users/main.py:97
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:97
 msgid "Write globaladmins"
 msgstr ""
 
-#: lmn_users/main.py:102
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:102
 msgid "Read extra students"
 msgstr ""
 
-#: lmn_users/main.py:107
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:107
 msgid "Write extra students"
 msgstr ""
 
-#: lmn_users/main.py:112
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:112
 msgid "Read extra courses"
 msgstr ""
 
-#: lmn_users/main.py:117
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:117
 msgid "Write extra courses"
 msgstr ""
 
-#: lmn_users/main.py:122
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:122
 msgid "Check user changes"
 msgstr ""
 
-#: lmn_users/main.py:127
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:127
 msgid "Apply user changes"
 msgstr ""
 
-#: lmn_users/main.py:132
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:132
 msgid "Read/write passwords"
 msgstr ""
 
-#: lmn_users/main.py:137
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:137
 msgid "Add school admins"
 msgstr ""
 
-#: lmn_users/main.py:142
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:142
 msgid "Add global admins"
 msgstr ""
 
-#: lmn_users/main.py:147
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:147
 msgid "Delete school admins"
 msgstr ""
 
-#: lmn_users/main.py:152
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:152
 msgid "Delete global admins"
 msgstr ""
 
-#: lmn_users/resources/js/controllers/students-list.controller.coffee:28
-#: lmn_users/resources/js/controllers/students-list.controller.coffee:52
-#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:28
-#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:127
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students-list.controller.coffee:28
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students-list.controller.coffee:52
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:28
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:127
 msgid "Student ID"
 msgstr ""
 
-#: lmn_users/resources/js/controllers/students-list.controller.coffee:43
-#: lmn_users/resources/js/controllers/teachers-list.controller.coffee:36
-#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:118
-#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:133
-#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:154
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students-list.controller.coffee:43
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers-list.controller.coffee:36
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:118
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:133
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:154
 msgid "Last Name"
 msgstr ""
 
-#: lmn_users/resources/js/controllers/students-list.controller.coffee:46
-#: lmn_users/resources/js/controllers/teachers-list.controller.coffee:39
-#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:121
-#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:136
-#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:157
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students-list.controller.coffee:46
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers-list.controller.coffee:39
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:121
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:136
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:157
 msgid "First Name"
 msgstr ""
 
-#: lmn_users/resources/js/controllers/students-list.controller.coffee:107
-#: lmn_users/resources/js/controllers/teachers-list.controller.coffee:111
-#: lmn_users/resources/js/controllers/extraCourses.controller.coffee:85
-#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:292
-#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:304
-#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:328
-#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:157
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students-list.controller.coffee:107
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers-list.controller.coffee:111
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/extraCourses.controller.coffee:85
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:292
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:304
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:328
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:157
 msgid "Saved"
 msgstr ""
 
-#: lmn_users/resources/js/controllers/schooladmins.controller.coffee:7
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/schooladmins.controller.coffee:7
 msgid "Schooladmins"
 msgstr ""
 
-#: lmn_users/resources/js/controllers/schooladmins.controller.coffee:28
-#: lmn_users/resources/js/controllers/students.controller.coffee:40
-#: lmn_users/resources/js/controllers/globaladmins.controller.coffee:28
-#: lmn_users/resources/js/controllers/teachers.controller.coffee:40
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/schooladmins.controller.coffee:28
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students.controller.coffee:40
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/globaladmins.controller.coffee:28
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers.controller.coffee:40
 msgid "Initial password (still set)"
 msgstr ""
 
-#: lmn_users/resources/js/controllers/schooladmins.controller.coffee:30
-#: lmn_users/resources/js/controllers/students.controller.coffee:42
-#: lmn_users/resources/js/controllers/globaladmins.controller.coffee:30
-#: lmn_users/resources/js/controllers/teachers.controller.coffee:42
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/schooladmins.controller.coffee:30
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students.controller.coffee:42
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/globaladmins.controller.coffee:30
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers.controller.coffee:42
 msgid "Initial password (changed from user)"
 msgstr ""
 
-#: lmn_users/resources/js/controllers/schooladmins.controller.coffee:36
-#: lmn_users/resources/js/controllers/students.controller.coffee:48
-#: lmn_users/resources/js/controllers/globaladmins.controller.coffee:36
-#: lmn_users/resources/js/controllers/teachers.controller.coffee:48
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/schooladmins.controller.coffee:36
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students.controller.coffee:48
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/globaladmins.controller.coffee:36
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers.controller.coffee:48
 msgid "Initial password set"
 msgstr ""
 
-#: lmn_users/resources/js/controllers/schooladmins.controller.coffee:40
-#: lmn_users/resources/js/controllers/students.controller.coffee:52
-#: lmn_users/resources/js/controllers/globaladmins.controller.coffee:40
-#: lmn_users/resources/js/controllers/teachers.controller.coffee:52
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/schooladmins.controller.coffee:40
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students.controller.coffee:52
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/globaladmins.controller.coffee:40
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers.controller.coffee:52
 msgid "Random password set"
 msgstr ""
 
-#: lmn_users/resources/js/controllers/schooladmins.controller.coffee:53
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/schooladmins.controller.coffee:53
 msgid "Delete school-administrator "
 msgstr ""
 
-#: lmn_users/resources/js/controllers/schooladmins.controller.coffee:56
-#: lmn_users/resources/js/controllers/globaladmins.controller.coffee:56
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/schooladmins.controller.coffee:56
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/globaladmins.controller.coffee:56
 msgid "User deleted"
 msgstr ""
 
-#: lmn_users/resources/js/controllers/extraStudents.controller.coffee:8
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/extraStudents.controller.coffee:8
 msgid "Extra Students"
 msgstr ""
 
-#: lmn_users/resources/js/controllers/printPasswords.controller.coffee:33
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/printPasswords.controller.coffee:33
 msgid "Print Passwords"
 msgstr ""
 
-#: lmn_users/resources/js/controllers/teachers-list.controller.coffee:45
-#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:142
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers-list.controller.coffee:45
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:142
 msgid "Desired Password"
 msgstr ""
 
-#: lmn_users/resources/js/controllers/checkModal.controller.coffee:58
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/checkModal.controller.coffee:11
+msgid "Apply"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/checkModal.controller.coffee:12
+msgid "Add user(s)"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/checkModal.controller.coffee:13
+msgid "Move user(s)"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/checkModal.controller.coffee:14
+msgid "Kill user(s)"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/checkModal.controller.coffee:75
 msgid "Changes applied"
 msgstr ""
 
-#: lmn_users/resources/js/controllers/checkModal.controller.coffee:63
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/checkModal.controller.coffee:80
 msgid "Failed"
 msgstr ""
 
-#: lmn_users/resources/js/controllers/extraCourses.controller.coffee:8
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/extraCourses.controller.coffee:8
 msgid "Extra Courses"
 msgstr ""
 
-#: lmn_users/resources/js/controllers/globaladmins.controller.coffee:7
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/globaladmins.controller.coffee:7
 msgid "Globaladmins"
 msgstr ""
 
-#: lmn_users/resources/js/controllers/globaladmins.controller.coffee:53
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/globaladmins.controller.coffee:53
 msgid "Delete global-administrator "
 msgstr ""
 
-#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:287
-#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:299
-#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:311
-#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:323
-#: lmn_users/resources/js/controllers/listmanagement.controller.coffee:430
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:287
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:299
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:311
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:323
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:430
 msgid "Please check the errors."
 msgstr ""
 
-#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:15
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:15
 msgid "You have to enter a password"
 msgstr ""
 
-#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:24
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:24
 msgid "New password set"
 msgstr ""
 
-#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:32
-#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:173
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:32
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:173
 msgid "You have to enter a username"
 msgstr ""
 
-#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:35
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:35
 msgid "Never"
 msgstr ""
 
-#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:52
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:52
 msgid "Hide"
 msgstr ""
 
-#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:53
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:53
 msgid "Show"
 msgstr ""
 
-#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:79
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:79
 msgid "not used"
 msgstr ""
 
-#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:112
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:112
 msgid "class"
 msgstr ""
 
-#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:113
-#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:120
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:113
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:120
 msgid "lastname"
 msgstr ""
 
-#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:114
-#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:121
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:114
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:121
 msgid "firstname"
 msgstr ""
 
-#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:115
-#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:122
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:115
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:122
 msgid "birthday"
 msgstr ""
 
-#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:123
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:123
 msgid "login"
 msgstr ""
 
-#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:134
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:134
 msgid "Uploaded"
 msgstr ""
 
-#: lmn_users/resources/js/controllers/usersCommon.controller.coffee:176
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:176
 msgid "Adding administrator..."
 msgstr ""

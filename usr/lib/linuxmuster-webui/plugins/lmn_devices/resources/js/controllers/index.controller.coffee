@@ -36,7 +36,7 @@ angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $
     }
 
     $scope.$on("$locationChangeStart", (event) ->
-        if ($scope.devices_form.$dirty && !confirm(gettext('Changes are saved, continue anyway ?')))
+        if ($scope.devices_form.$dirty && !confirm(gettext('Changes are not saved, continue anyway ?')))
             event.preventDefault()
         )
 

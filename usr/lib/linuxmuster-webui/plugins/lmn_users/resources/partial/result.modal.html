@@ -3,7 +3,7 @@
 </div>
 <div class="modal-body">
     <uib:tabset>
-    <uib:tab heading="{{'Summary'|translate}}">
+    <uib:tab heading="{{'Summary'|translate}}" select="select('all')">
     <br/>
     <div class="alert alert-danger" ng:show="data.error">
         <i class="fa fa-warning"></i> <span translate>Check failed</span>: {{data.error}}
@@ -71,7 +71,7 @@
     <pre ng:bind="data.report"></pre>
     </uib:tab>
     -->
-    <uib:tab heading="{{'Added users'|translate}}" ng:show="data['SUMMARY'][1]['ADD']['RESULT'] > 0">
+    <uib:tab heading="{{'Added users'|translate}}" ng:show="data['SUMMARY'][1]['ADD']['RESULT'] > 0" select="select('add')">
     <br/>
     <div class="panel panel-info">
         <div class="panel-heading"><i class="fa fa-info-circle"></i> <span translate>Users to be added</span>: {{data['SUMMARY'][1]['ADD']['RESULT']}}</div>
@@ -88,7 +88,7 @@
         </div>
     </div>
     </uib:tab>
-    <uib:tab heading="{{'Moved users'|translate}}" ng:show="data['SUMMARY'][2]['UPDATE']['RESULT'] > 0">
+    <uib:tab heading="{{'Moved users'|translate}}" ng:show="data['SUMMARY'][2]['UPDATE']['RESULT'] > 0" select="select('move')">
     <br/>
     <div class="panel panel-warning">
         <div class="panel-heading"><i class="fa fa-info-circle"></i> <span translate>Users to be updated</span>: {{data['SUMMARY'][2]['UPDATE']['RESULT']}}</div>
@@ -111,7 +111,7 @@
         </div>
     </div>
     </uib:tab>
-    <uib:tab heading="{{'Killed users'|translate}}" ng:show="data['SUMMARY'][3]['KILL']['RESULT'] > 0">
+    <uib:tab heading="{{'Killed users'|translate}}" ng:show="data['SUMMARY'][3]['KILL']['RESULT'] > 0" select="select('kill')">
     <br/><!-- TODO add real fields ?? -->
     <div class="panel panel-danger">
         <div class="panel-heading"><i class="fa fa-info-circle"></i> <span translate>Users to be killed</span>: {{data['SUMMARY'][3]['KILL']['RESULT']}}</div>
@@ -125,7 +125,7 @@
         </div>
     </div>
     </uib:tab>
-    <uib:tab heading="{{'Errors'|translate}}" ng:show="data['SUMMARY'][5]['ERROR']['RESULT'] > 0">
+    <uib:tab heading="{{'Errors'|translate}}" ng:show="data['SUMMARY'][5]['ERROR']['RESULT'] > 0" select="select('error')">
     <br/>
     <table>
         <tr ng-repeat="(id,item) in data['CHECK_RESULT']['ERROR']">
@@ -138,6 +138,6 @@
     </uib:tabset>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-default btn-flat" ng:click="apply()" translate ng:disabled="!_.doAdd && !_.doMove && !_.doKill">Apply</button>
+    <button class="btn btn-default btn-flat" ng:click="apply(tab_selected)" translate ng:disabled="!_.doAdd && !_.doMove && !_.doKill">{{tab_selected_text[tab_selected]}}</button>
     <button class="btn btn-default btn-flat" ng:click="cancel()" translate>Cancel</button>
 </div>

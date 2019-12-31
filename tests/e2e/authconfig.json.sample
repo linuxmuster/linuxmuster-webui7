@@ -1,0 +1,11 @@
+{
+    "url": "https://watch_my.url:8000",
+    "teacher": {
+        "login": "teacher_login",
+        "pw": "PW"
+    },
+    "admin": {
+        "login": "global-admin",
+        "pw": "PW"
+    }
+}

@@ -438,6 +438,17 @@
       }
       return true;
     };
+    // Comments can only have alphanumeric chars ( lowercase or uppercase ) or -, space and _
+    this.isValidComment = function(comment) {
+      var error_msg, regExp, validName;
+      error_msg = comment + gettext(' can only contain alphanumeric chars or -, space and _');
+      regExp = /^[a-z0-9\-_ ]*$/i;
+      validName = regExp.test(comment);
+      if (!validName) {
+        return error_msg;
+      }
+      return true;
+    };
     // Config names can only have alphanumeric chars ( lowercase or uppercase )
     this.isValidAlphaNum = function(name) {
       var error_msg, regExp, validName;

@@ -46,7 +46,7 @@ angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $
     $scope.validateField = (name, val, isnew, ev) ->
         test = validation["isValid"+name](val)
 
-        if test == true && val
+        if test == true && (val || name == "Comment")
             delete $scope.error_msg[name+"-"+ev]
             delete $scope.emptyCells[name+"-"+ev]
             return ""

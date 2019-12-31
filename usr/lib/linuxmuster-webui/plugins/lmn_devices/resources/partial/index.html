@@ -123,7 +123,7 @@
                 <td ng:if="fields.lmnReserved14.visible">
                     <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.lmnReserved14" placeholder="LMN-Reserved14" class="form-control" />
                 </td>
-                <td ng:if="fields.sophomorixComment.visible">
+                <td ng:if="fields.sophomorixComment.visible" ng:class="validateField('Comment', device.sophomorixComment, device._isNew, $index)">
                     <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.sophomorixComment" placeholder="Sophomorix-Comment" class="form-control" />
                 </td>
                 <td width="1">

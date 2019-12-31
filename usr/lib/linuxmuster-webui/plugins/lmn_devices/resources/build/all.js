@@ -53,7 +53,7 @@
     $scope.validateField = function(name, val, isnew, ev) {
       var test;
       test = validation["isValid" + name](val);
-      if (test === true && val) {
+      if (test === true && (val || name === "Comment")) {
         delete $scope.error_msg[name + "-" + ev];
         delete $scope.emptyCells[name + "-" + ev];
         return "";

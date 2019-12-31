@@ -64,6 +64,15 @@ angular.module('lm.common').service 'validation', (gettext) ->
             return error_msg
         return true
 
+    # Comments can only have alphanumeric chars ( lowercase or uppercase ) or -, space and _
+    this.isValidComment = (comment) ->
+        error_msg = comment + gettext(' can only contain alphanumeric chars or -, space and _')
+        regExp =  /^[a-z0-9\-_ ]*$/i
+        validName = regExp.test(comment)
+        if !validName
+            return error_msg
+        return true
+
     # Config names can only have alphanumeric chars ( lowercase or uppercase )
     this.isValidAlphaNum = (name) ->
         error_msg = name + gettext(' can only contain alphanumeric chars')

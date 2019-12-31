@@ -43,7 +43,7 @@
       remove: gettext('Remove')
     };
     $scope.$on("$locationChangeStart", function(event) {
-      if ($scope.devices_form.$dirty && !confirm(gettext('Changes are saved, continue anyway ?'))) {
+      if ($scope.devices_form.$dirty && !confirm(gettext('Changes are not saved, continue anyway ?'))) {
         return event.preventDefault();
       }
     });

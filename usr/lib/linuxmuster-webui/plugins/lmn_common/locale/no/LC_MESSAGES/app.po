@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-28 22:37+0100\n"
-"PO-Revision-Date: 2019-12-28 21:44\n"
+"POT-Creation-Date: 2020-01-01 13:02+0100\n"
+"PO-Revision-Date: 2020-01-01 12:05\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Norwegian\n"
 "Language: no_NO\n"
@@ -137,27 +137,31 @@ msgid " can only contain alphanumeric chars or -"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:69
-msgid " can only contain alphanumeric chars"
+msgid " can only contain alphanumeric chars or -, space and _"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:78
+msgid " can only contain alphanumeric chars"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:87
 msgid " is not a valid number"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:89
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:98
 msgid " is not a valid date"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:98
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:107
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:116
 msgid " is not valid or duplicated"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:116
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:125
 msgid " does not contain valid chars or is duplicated"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:129
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:138
 msgid " is not a valid role"
 msgstr ""
 

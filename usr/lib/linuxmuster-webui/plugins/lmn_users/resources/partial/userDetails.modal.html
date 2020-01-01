@@ -19,7 +19,7 @@
             <td><b translate>Class:</b></td>
             <td>{{userDetails[0]['sophomorixAdminClass']}}</td>
         </tr>
-        <tr>
+        <tr ng:if="userDetails[0]['sophomorixBirthdate'] != 'hidden'">
             <td><b translate>Birthday:</b></td>
             <td>{{userDetails[0]['sophomorixBirthdate']}}</td>
         </tr>

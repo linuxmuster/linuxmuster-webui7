@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-28 22:37+0100\n"
-"PO-Revision-Date: 2020-01-01 12:05\n"
+"POT-Creation-Date: 2020-01-01 23:53+0100\n"
+"PO-Revision-Date: 2020-01-01 21:45\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -76,34 +76,44 @@ msgid "With great power comes great responsibility!"
 msgstr "Aus großer Macht folgt große Verantwortung!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:5
-msgid "You should not use WebUI as root user! If this is your first time running WebUI, proceed through the setup wizard. Afterwards login using the global-admin account."
-msgstr "Sie sollten das Webinterface nicht als root verwenden Beim ersten Mal sollten Sie den Setup-Wizard durchlaufen und anschließend den Global-Admin Account verwenden."
+msgid ""
+"You should not use WebUI as root user! If this is your first time running "
+"WebUI, proceed through the setup wizard. Afterwards login using the global-"
+"admin account."
+msgstr ""
+"Sie sollten das Webinterface nicht als root verwenden Beim ersten Mal "
+"sollten Sie den Setup-Wizard durchlaufen und anschließend den Global-Admin "
+"Account verwenden."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:16
-msgid "use the sidebar to navigate through the options. You can start by using the Enroll module to subscribe to your classes."
-msgstr "verwenden Sie die Seitenleiste, um in den Einstellungen zu navigieren. Sie könnten damit beginnen, sich mit Hilfe des Einschreiben-Moduls in Ihre Klassen einzutragen."
+msgid ""
+"use the sidebar to navigate through the options. You can start by using the "
+"Enroll module to subscribe to your classes."
+msgstr ""
+"verwenden Sie die Seitenleiste, um in den Einstellungen zu navigieren. Sie "
+"könnten damit beginnen, sich mit Hilfe des Einschreiben-Moduls in Ihre "
+"Klassen einzutragen."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:7
 msgid "Home"
 msgstr "Hauptseite"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:25
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:27
 msgid "NO LIMIT"
 msgstr "UNBEGRENZT"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:41
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:43
 msgid "Class"
 msgstr "Klasse"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:43
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:45
 msgid "Teachers"
 msgstr "Lehrer"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:45
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:47
 msgid "Printers"
 msgstr "Drucker"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:47
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:49
 msgid "Project"
 msgstr "Projekt"
-

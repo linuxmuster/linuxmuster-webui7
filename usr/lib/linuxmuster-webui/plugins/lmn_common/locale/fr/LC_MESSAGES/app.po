@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-01 13:02+0100\n"
-"PO-Revision-Date: 2020-01-01 12:05\n"
+"POT-Creation-Date: 2020-01-01 23:53+0100\n"
+"PO-Revision-Date: 2020-01-01 21:45\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -116,13 +116,75 @@ msgstr "Voulez-vous vraiment supprimer"
 msgid "Confirmation"
 msgstr "Confirmation"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:4
+#, javascript-format
+msgid "Adding user %s."
+msgstr "Ajout de l'utilisateur %s."
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:5
+#, javascript-format
+msgid "Updating user %s."
+msgstr "Mise à jour de l'utilisateur %s."
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:6
+#, javascript-format
+msgid "Deleting user %s."
+msgstr "Suppression de l'utilisateur %s."
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:7
+#, javascript-format
+msgid "Adding examuser %s."
+msgstr "Ajout de l'utilisateur examen %s."
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:8
+#, javascript-format
+msgid "Deleting examuser %s."
+msgstr "Suppression de l'utilisateur examen %s."
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:9
+#, javascript-format
+msgid "Adding computer %s."
+msgstr "Ajout de l'ordinateur %s."
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:10
+#, javascript-format
+msgid "Deleting computer %s."
+msgstr "Suppression de l'ordinateur %s."
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:11
+#, javascript-format
+msgid "Collecting data (copy): %s."
+msgstr "Collecte des données (copie) : %s."
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:12
+#, javascript-format
+msgid "Collecting data (move): %s."
+msgstr "Collecte des données (déplacer): %s."
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:13
+#, javascript-format
+msgid "Copying files to user %s."
+msgstr "Copie des fichiers vers l'utilisateur %s."
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:14
+#, javascript-format
+msgid "Copying files: %s."
+msgstr "Copie des fichiers : %s."
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:13
-msgid "Passwords must contain at least one lowercase, one uppercase, one special char or number, and at least 7 chars"
-msgstr "Les mots de passe doivent contenir au moins un minuscule, un majuscule, un caractère spécial ou un chiffre, et au moins 7 caractères"
+msgid ""
+"Passwords must contain at least one lowercase, one uppercase, one special "
+"char or number, and at least 7 chars"
+msgstr ""
+"Les mots de passe doivent contenir au moins un minuscule, un majuscule, un "
+"caractère spécial ou un chiffre, et au moins 7 caractères"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:22
-msgid "Password is not valid. Password can only contains a-zA-Z0-9!@#§+-$%&*{}()]["
-msgstr "Le mot de passe n'est pas valide. Le mot de passe ne peut contenir que a-zA-Z0-9!@#§+-$%&*{}()]["
+msgid ""
+"Password is not valid. Password can only contains a-zA-Z0-9!@#§+-$%&*{}()]["
+msgstr ""
+"Le mot de passe n'est pas valide. Le mot de passe ne peut contenir que a-zA-"
+"Z0-9!@#§+-$%&*{}()]["
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:42
 msgid " can only contain lowercase chars or numbers"
@@ -173,4 +235,3 @@ msgstr " n'est pas un rôle valide"
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:141
 msgid "Uploaded"
 msgstr "Transfert réussi"
-

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ajenti\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-01 13:02+0100\n"
+"POT-Creation-Date: 2020-01-01 23:53+0100\n"
 "PO-Revision-Date: 2016-05-21 17:18-0400\n"
 "Last-Translator: eugenepankov <john.pankov@gmail.com>\n"
 "Language-Team: Bulgarian\n"
@@ -115,6 +115,61 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileBackups.service.coffee:53
 msgid "Confirmation"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:4
+#, javascript-format
+msgid "Adding user %s."
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:5
+#, javascript-format
+msgid "Updating user %s."
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:6
+#, javascript-format
+msgid "Deleting user %s."
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:7
+#, javascript-format
+msgid "Adding examuser %s."
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:8
+#, javascript-format
+msgid "Deleting examuser %s."
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:9
+#, javascript-format
+msgid "Adding computer %s."
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:10
+#, javascript-format
+msgid "Deleting computer %s."
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:11
+#, javascript-format
+msgid "Collecting data (copy): %s."
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:12
+#, javascript-format
+msgid "Collecting data (move): %s."
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:13
+#, javascript-format
+msgid "Copying files to user %s."
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:14
+#, javascript-format
+msgid "Copying files: %s."
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:13

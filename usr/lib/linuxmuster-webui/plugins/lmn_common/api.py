@@ -287,3 +287,20 @@ def lmn_user_details(username):
         return "root"
     sophomorixCommand = ['sophomorix-query', '--sam',  username,'-jj']
     return lmn_getSophomorixValue(sophomorixCommand, 'USER/'+username)
+
+def get_sophomorix_comment(key, value=''):
+    """Extract the right translation for a sophomorix comment in json output."""
+    SOPHOMORIX_COMMENTS = {
+        "ADDUSER" : _("Adding user %s."),
+        "UPDATEUSER" : _("Updating user %s."),
+        "KILLUSER" : _("Deleting user %s."),
+        "ADDEXAMUSER" : _("Adding examuser %s."),
+        "KILLEXAMUSER" : _("Deleting examuser %s."),
+        "ADDCOMPUTER" : _("Adding computer %s."),
+        "KILLCOMPUTER" : _("Deleting computer %s."),
+        "COLLECTCOPY" : _("Collecting data (copy): %s."),
+        "COLLECTMOVE" : _("Collecting data (move): %s."),
+        "MPUTFILES" : _("Copying files to user %s."),
+        "SCOPY_FILES" : _("Copying files: %s."),
+    }
+    return SOPHOMORIX_COMMENTS.get(key, default='%s') % value

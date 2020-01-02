@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-01 23:53+0100\n"
-"PO-Revision-Date: 2020-01-01 21:45\n"
+"PO-Revision-Date: 2020-01-02 09:02\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -76,22 +76,12 @@ msgid "With great power comes great responsibility!"
 msgstr "Un grand pouvoir implique une grande responsabilité!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:5
-msgid ""
-"You should not use WebUI as root user! If this is your first time running "
-"WebUI, proceed through the setup wizard. Afterwards login using the global-"
-"admin account."
-msgstr ""
-"Vous ne devriez pas utiliser WebUI en tant qu'utilisateur root! Si c'est la "
-"première fois que vous exécutez WebUI, passez par l'assistant de "
-"configuration. Ensuite, connectez-vous à l'aide du compte global-admin."
+msgid "You should not use WebUI as root user! If this is your first time running WebUI, proceed through the setup wizard. Afterwards login using the global-admin account."
+msgstr "Vous ne devriez pas utiliser WebUI en tant qu'utilisateur root! Si c'est la première fois que vous exécutez WebUI, passez par l'assistant de configuration. Ensuite, connectez-vous à l'aide du compte global-admin."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:16
-msgid ""
-"use the sidebar to navigate through the options. You can start by using the "
-"Enroll module to subscribe to your classes."
-msgstr ""
-"utilisez la barre latérale pour naviguer dans les options. Vous pouvez "
-"commencer en utilisant le module Adhésion pour vous abonner à vos classes."
+msgid "use the sidebar to navigate through the options. You can start by using the Enroll module to subscribe to your classes."
+msgstr "utilisez la barre latérale pour naviguer dans les options. Vous pouvez commencer en utilisant le module Adhésion pour vous abonner à vos classes."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:7
 msgid "Home"
@@ -116,3 +106,4 @@ msgstr "Imprimantes"
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:49
 msgid "Project"
 msgstr "Projets"
+

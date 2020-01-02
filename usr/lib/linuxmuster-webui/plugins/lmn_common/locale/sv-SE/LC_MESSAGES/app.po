@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-01 23:53+0100\n"
-"PO-Revision-Date: 2020-01-01 21:46\n"
+"PO-Revision-Date: 2020-01-02 09:03\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -172,14 +172,11 @@ msgid "Copying files: %s."
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:13
-msgid ""
-"Passwords must contain at least one lowercase, one uppercase, one special "
-"char or number, and at least 7 chars"
+msgid "Passwords must contain at least one lowercase, one uppercase, one special char or number, and at least 7 chars"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:22
-msgid ""
-"Password is not valid. Password can only contains a-zA-Z0-9!@#§+-$%&*{}()]["
+msgid "Password is not valid. Password can only contains a-zA-Z0-9!@#§+-$%&*{}()]["
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:42
@@ -231,3 +228,4 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:141
 msgid "Uploaded"
 msgstr ""
+

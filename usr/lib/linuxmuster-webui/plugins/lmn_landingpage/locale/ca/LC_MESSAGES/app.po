@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-01 23:53+0100\n"
-"PO-Revision-Date: 2020-01-01 21:45\n"
+"PO-Revision-Date: 2020-01-02 09:03\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -76,16 +76,11 @@ msgid "With great power comes great responsibility!"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:5
-msgid ""
-"You should not use WebUI as root user! If this is your first time running "
-"WebUI, proceed through the setup wizard. Afterwards login using the global-"
-"admin account."
+msgid "You should not use WebUI as root user! If this is your first time running WebUI, proceed through the setup wizard. Afterwards login using the global-admin account."
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:16
-msgid ""
-"use the sidebar to navigate through the options. You can start by using the "
-"Enroll module to subscribe to your classes."
+msgid "use the sidebar to navigate through the options. You can start by using the Enroll module to subscribe to your classes."
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:7
@@ -111,3 +106,4 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:49
 msgid "Project"
 msgstr ""
+

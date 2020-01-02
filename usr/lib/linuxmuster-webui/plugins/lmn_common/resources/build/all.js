@@ -555,9 +555,11 @@
       "MPUTFILES": gettext("Copying files to user %s."),
       "SCOPY_FILES": gettext("Copying files: %s.")
     };
-    this.get = function(key, value) {
+    //# Use in controller (gettext must be done in frontend):
+    // gettext(sophComment.get("ADDUSER")).replace(/%s/, value)
+    this.get = function(key) {
       if (key in this.sophomorixCommentsKeys) {
-        return this.sophomorixCommentsKeys[key].replace(/%s/, value);
+        return this.sophomorixCommentsKeys[key];
       } else {
         return '';
       }

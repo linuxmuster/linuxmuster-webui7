@@ -14,9 +14,12 @@ angular.module('lm.common').service 'sophComment', (gettext) ->
             "SCOPY_FILES" : gettext("Copying files: %s."),
         }
 
-    this.get = (key, value) ->
+    ## Use in controller (gettext must be done in frontend):
+    # gettext(sophComment.get("ADDUSER")).replace(/%s/, value)
+
+    this.get = (key) ->
         if key of this.sophomorixCommentsKeys
-            return this.sophomorixCommentsKeys[key].replace(/%s/, value)
+            return this.sophomorixCommentsKeys[key]
         else
             return ''
 

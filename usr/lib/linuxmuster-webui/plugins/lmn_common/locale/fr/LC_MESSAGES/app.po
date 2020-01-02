@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-01 23:53+0100\n"
-"PO-Revision-Date: 2020-01-01 21:45\n"
+"PO-Revision-Date: 2020-01-02 09:02\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -172,19 +172,12 @@ msgid "Copying files: %s."
 msgstr "Copie des fichiers : %s."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:13
-msgid ""
-"Passwords must contain at least one lowercase, one uppercase, one special "
-"char or number, and at least 7 chars"
-msgstr ""
-"Les mots de passe doivent contenir au moins un minuscule, un majuscule, un "
-"caractère spécial ou un chiffre, et au moins 7 caractères"
+msgid "Passwords must contain at least one lowercase, one uppercase, one special char or number, and at least 7 chars"
+msgstr "Les mots de passe doivent contenir au moins un minuscule, un majuscule, un caractère spécial ou un chiffre, et au moins 7 caractères"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:22
-msgid ""
-"Password is not valid. Password can only contains a-zA-Z0-9!@#§+-$%&*{}()]["
-msgstr ""
-"Le mot de passe n'est pas valide. Le mot de passe ne peut contenir que a-zA-"
-"Z0-9!@#§+-$%&*{}()]["
+msgid "Password is not valid. Password can only contains a-zA-Z0-9!@#§+-$%&*{}()]["
+msgstr "Le mot de passe n'est pas valide. Le mot de passe ne peut contenir que a-zA-Z0-9!@#§+-$%&*{}()]["
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:42
 msgid " can only contain lowercase chars or numbers"
@@ -235,3 +228,4 @@ msgstr " n'est pas un rôle valide"
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:141
 msgid "Uploaded"
 msgstr "Transfert réussi"
+

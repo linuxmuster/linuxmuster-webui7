@@ -37,6 +37,13 @@ angular.module('lm.users').controller 'LMUsersTeachersController', ($scope, $htt
     $http.post('/api/lm/sophomorixUsers/teachers',{action: 'get-all'}).then (resp) ->
         $scope.teachers = resp.data
 
+    $scope.teachersQuota = false
+    $scope.getQuotas = () ->
+        teacherList = (t.sAMAccountName for t in $scope.teachers)
+        $http.post('/api/lm/users/get-group-quota',{groupList: teacherList}).then (resp) ->
+            $scope.teachersQuota = resp.data
+            console.log($scope.teachersQuota)
+
     $scope.showInitialPassword = (user) ->
        $http.post('/api/lm/users/password', {users: ( x['sAMAccountName'] for x in user ), action: 'get'}).then (resp) ->
           $http.post('/api/lm/users/test-first-password/' + user[0]['sAMAccountName']).then (response) ->

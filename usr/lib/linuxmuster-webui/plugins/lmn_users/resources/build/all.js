@@ -57,6 +57,26 @@
     }).then(function(resp) {
       return $scope.teachers = resp.data;
     });
+    $scope.teachersQuota = false;
+    $scope.getQuotas = function() {
+      var t, teacherList;
+      teacherList = (function() {
+        var i, len, ref, results;
+        ref = $scope.teachers;
+        results = [];
+        for (i = 0, len = ref.length; i < len; i++) {
+          t = ref[i];
+          results.push(t.sAMAccountName);
+        }
+        return results;
+      })();
+      return $http.post('/api/lm/users/get-group-quota', {
+        groupList: teacherList
+      }).then(function(resp) {
+        $scope.teachersQuota = resp.data;
+        return console.log($scope.teachersQuota);
+      });
+    };
     $scope.showInitialPassword = function(user) {
       var x;
       return $http.post('/api/lm/users/password', {
@@ -1299,6 +1319,26 @@
     }).then(function(resp) {
       return $scope.teachers = resp.data;
     });
+    $scope.teachersQuota = false;
+    $scope.getQuotas = function() {
+      var t, teacherList;
+      teacherList = (function() {
+        var i, len, ref, results;
+        ref = $scope.teachers;
+        results = [];
+        for (i = 0, len = ref.length; i < len; i++) {
+          t = ref[i];
+          results.push(t.sAMAccountName);
+        }
+        return results;
+      })();
+      return $http.post('/api/lm/users/get-group-quota', {
+        groupList: teacherList
+      }).then(function(resp) {
+        $scope.teachersQuota = resp.data;
+        return console.log($scope.teachersQuota);
+      });
+    };
     $scope.showInitialPassword = function(user) {
       var x;
       return $http.post('/api/lm/users/password', {

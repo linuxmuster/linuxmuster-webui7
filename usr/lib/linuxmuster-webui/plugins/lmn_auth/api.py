@@ -3,6 +3,7 @@ import ldap
 import ldap.filter
 import subprocess
 from jadi import component
+import pwd
 
 import aj
 from aj.auth import AuthenticationProvider, OSAuthenticationProvider
@@ -92,6 +93,11 @@ class LMAuthenticationProvider(AuthenticationProvider):
         subprocess.check_call(systemString, shell=False)
 
     def get_isolation_uid(self, username):
+        """Returns the uid of the user which will run each worker."""
+        ## To restrain the user context, this function must return something else as 0 ( root uid --> root context )
+        ## To run as www-data user, first get the uid : pwd.getpwnam('www-data').pw_uid ( mostly 33 )
+        ## and then return 33.
+        ## But this need some adaptations, because e.g. sophomorix-* can not be called as www-data
         return 0
 
     def get_profile(self, username):
@@ -101,7 +107,6 @@ class LMAuthenticationProvider(AuthenticationProvider):
             profil = lmn_user_details(username)
             profil['isAdmin'] = "administrator" in profil['sophomorixRole']
             return profil
-        # TODO: Check if this is suitable. This appears to break when not using ajenti-dev mode
         except:
             return {}
 

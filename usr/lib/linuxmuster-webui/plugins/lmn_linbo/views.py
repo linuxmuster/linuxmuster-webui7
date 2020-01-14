@@ -88,8 +88,8 @@ class Handler(HttpPlugin):
                     'description': open(desc_file).read().decode(mime.from_buffer(open(desc_file).read())) if os.path.exists(desc_file) else None,
                     'info': open(info_file).read().decode('utf-8') if os.path.exists(info_file) else None,
                     'macct': open(macct_file).read().decode('utf-8') if os.path.exists(macct_file) else None,
-                    'reg': open(reg_file).read().decode(mime.from_buffer(open(desc_file).read())) if os.path.exists(reg_file) else None,
-                    'postsync': open(postsync_file).read().decode(mime.from_buffer(open(desc_file).read())) if os.path.exists(postsync_file) else None,
+                    'reg': open(reg_file).read().decode(mime.from_buffer(open(reg_file).read())) if os.path.exists(reg_file) else None,
+                    'postsync': open(postsync_file).read().decode(mime.from_buffer(open(postsync_file).read())) if os.path.exists(postsync_file) else None,
                 })
         return r
 

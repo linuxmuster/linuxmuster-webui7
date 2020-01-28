@@ -71,6 +71,16 @@ angular.module('lm.settings').controller 'LMSettingsController', ($scope, $locat
 
             notify.success gettext('Saved')
 
+    $scope.saveApplyQuota = () ->
+        console.log('test')
+        $http.post('/api/lm/schoolsettings', $scope.settings).then () ->
+            notify.success gettext('Saved')
+        $uibModal.open(
+            templateUrl: '/lmn_quotas:resources/partial/apply.modal.html'
+            controller: 'LMQuotasApplyModalController'
+            backdrop: 'static'
+        )
+
     $scope.backups = () ->
         school = "default-school"
         lmFileBackups.show('/etc/linuxmuster/sophomorix/' + school + '/school.conf')

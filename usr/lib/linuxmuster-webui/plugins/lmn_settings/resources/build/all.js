@@ -89,6 +89,18 @@
         return notify.success(gettext('Saved'));
       });
     };
+    $scope.saveApplyQuota = function() {
+      console.log('test');
+      $http.post('/api/lm/schoolsettings', $scope.settings).then(function() {
+        return notify.success(gettext('Saved'));
+      });
+      //$rootScope.appReady = false
+      return $uibModal.open({
+        templateUrl: '/lmn_quotas:resources/partial/apply.modal.html',
+        controller: 'LMQuotasApplyModalController',
+        backdrop: 'static'
+      });
+    };
     return $scope.backups = function() {
       var school;
       school = "default-school";

@@ -375,12 +375,11 @@
     </uib:tab>
     </uib:tabset>
 
-
     <div class="floating-toolbar-padder"></div>
-
     <floating-toolbar>
         <button ng:click="backups()" class="btn btn-default btn-flat pull-right"><i class="fa fa-history"></i></button>
         <button ng:click="save()" class="btn btn-default btn-flat" translate>Save</button>
-        <button ng:click="saveAndCheck()" class="btn btn-default btn-flat" translate>Save &amp; check</button>
+        <button ng-show="activetab == 0" ng:click="saveAndCheck()" class="btn btn-default btn-flat" translate>Save &amp; check</button>
+        <button ng-show="activetab == 2" ng:click="saveApplyQuota()" class="btn btn-default btn-flat" translate>Save &amp; Apply Quota</button>
     </floating-toolbar>
 </div>

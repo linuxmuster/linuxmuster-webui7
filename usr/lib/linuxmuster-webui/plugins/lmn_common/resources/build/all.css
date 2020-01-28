@@ -80,6 +80,7 @@ span.cardlist {
 }
 html body.customized #loading-bar .bar {
   background: #ffab40;
+  height: 5px;
 }
 html body.customized .container > .row > .sidebar .sidebar-item.active > div > .expander,
 html body.customized .container > .row > .sidebar .sidebar-item.active > div > .link,

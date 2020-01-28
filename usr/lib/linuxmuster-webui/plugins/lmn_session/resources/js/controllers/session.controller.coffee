@@ -102,7 +102,7 @@ angular.module('lmn.session').config ($routeProvider) ->
         templateUrl: '/lmn_session:resources/partial/session.html'
 
 
-angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem, validation) ->
+angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem, validation, $rootScope) ->
     pageTitle.set(gettext('Session'))
 
 
@@ -438,8 +438,18 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                     $scope.getParticipants(supervisor,session)
 
     $scope.saveApply = (username,participants, session, sessionName) ->
-                # console.log (participants)
+                $uibModal.open(
+                    templateUrl: '/lmn_common:resources/partial/wait.modal.html'
+                    controller: 'lmWaitController'
+                    backdrop: 'static',
+                    keyboard: false
+                    size: 'mg'
+                    resolve:
+                        status: () -> status
+                )
                 $http.post('/api/lmn/session/sessions', {action: 'save-session',username: username, participants: participants, session: session, sessionName: sessionName}).then (resp) ->
+                    # emit process is done
+                    $rootScope.$emit('updateWaiting', 'done')
                     $scope.output = resp.data
                     $scope.getParticipants(username,session)
                     notify.success gettext($scope.output)

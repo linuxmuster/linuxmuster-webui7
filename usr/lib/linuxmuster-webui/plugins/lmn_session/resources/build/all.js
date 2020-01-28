@@ -141,7 +141,7 @@
     });
   });
 
-  angular.module('lmn.session').controller('LMNSessionController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem, validation) {
+  angular.module('lmn.session').controller('LMNSessionController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem, validation, $rootScope) {
     var typeIsArray, validateResult;
     pageTitle.set(gettext('Session'));
     $scope.currentSession = {
@@ -580,7 +580,18 @@
       });
     };
     $scope.saveApply = function(username, participants, session, sessionName) {
-      // console.log (participants)
+      $uibModal.open({
+        templateUrl: '/lmn_common:resources/partial/wait.modal.html',
+        controller: 'lmWaitController',
+        backdrop: 'static',
+        keyboard: false,
+        size: 'lg',
+        resolve: {
+          status: function() {
+            return status;
+          }
+        }
+      });
       return $http.post('/api/lmn/session/sessions', {
         action: 'save-session',
         username: username,
@@ -588,6 +599,8 @@
         session: session,
         sessionName: sessionName
       }).then(function(resp) {
+        // emit process is done
+        $rootScope.$emit('updateWaiting', 'done');
         $scope.output = resp.data;
         $scope.getParticipants(username, session);
         return notify.success(gettext($scope.output));

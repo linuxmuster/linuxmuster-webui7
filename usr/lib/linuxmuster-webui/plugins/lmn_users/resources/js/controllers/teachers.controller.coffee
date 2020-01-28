@@ -23,6 +23,10 @@ angular.module('lm.users').controller 'LMUsersTeachersController', ($scope, $htt
         name: gettext('Birthday')
         fx: (x) -> x.sophomorixBirthdate
       }
+      {
+        name: gettext('Status')
+        fx: (x) -> x.sophomorixStatus.tag
+      }
     ]
     $scope.sort = $scope.sorts[0]
     $scope.paging =

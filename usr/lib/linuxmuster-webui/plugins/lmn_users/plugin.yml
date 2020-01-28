@@ -10,12 +10,10 @@ dependencies:
     - !!python/object:aj.plugins.PluginDependency { plugin_name: lmn_common }
 resources:
     - 'resources/js/module.coffee'
-    - 'resources/js/controllers/students-list.controller.coffee'
     - 'resources/js/controllers/teachers.controller.coffee'
     - 'resources/js/controllers/students.controller.coffee'
     - 'resources/js/controllers/schooladmins.controller.coffee'
     - 'resources/js/controllers/globaladmins.controller.coffee'
-    - 'resources/js/controllers/teachers-list.controller.coffee'
     - 'resources/js/controllers/extraStudents.controller.coffee'
     - 'resources/js/controllers/extraCourses.controller.coffee'
     - 'resources/js/controllers/teachers.controller.coffee'
@@ -24,8 +22,6 @@ resources:
     - 'resources/js/controllers/usersCommon.controller.coffee'
     - 'resources/js/controllers/listmanagement.controller.coffee'
     - 'resources/partial/listmanagement.html'
-    - 'resources/partial/students-list.html'
-    - 'resources/partial/teachers-list.html'
     - 'resources/partial/extra-students.html'
     - 'resources/partial/extra-courses.html'
     - 'resources/partial/print-passwords.html'

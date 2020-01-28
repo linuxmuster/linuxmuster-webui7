@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.111-1) lmn7-testing; urgency=medium 
+
+  * Current snapshot build aa5fbbf20b6706b15fc5e72f5e9627c377792ae4
+   *     added option to apply default role quota
+
+ -- Andreas Till <andreas.till@netzint.de> Tue Jan 28 10:59:32 UTC 2020
+
 linuxmuster-webui7 (1.0.110-1) lmn7; urgency=medium 
 
   * Current snapshot build e7baa5f305183e04f7cbd312ec95146c8f0b9359

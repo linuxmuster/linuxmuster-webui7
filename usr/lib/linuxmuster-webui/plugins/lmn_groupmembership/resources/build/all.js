@@ -170,7 +170,6 @@
         }
         $scope.joinable = resp.data['GROUP'][groupName]['sophomorixJoinable'] === 'TRUE';
         $scope.hidden = resp.data['GROUP'][groupName]['sophomorixHidden'] === 'TRUE';
-        
         // Admin or admin of the project can edit members of a project
         // Only admins can change hide and join option for a class
         if ($scope.identity.isAdmin) {

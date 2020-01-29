@@ -97,7 +97,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
 
                 $scope.joinable = resp.data['GROUP'][groupName]['sophomorixJoinable'] == 'TRUE'
                 $scope.hidden = resp.data['GROUP'][groupName]['sophomorixHidden'] == 'TRUE'
-                
+
                 # Admin or admin of the project can edit members of a project
                 # Only admins can change hide and join option for a class
                 if $scope.identity.isAdmin
@@ -183,7 +183,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($sco
                         if !(admin of $scope.teachersDict)
                             newadmins.push(admin)
                     $scope.admins = newadmins
-                            
+
         $scope.updateGroupMemberList = (cl) ->
             idx = $scope.membergroups.indexOf(cl)
             if idx >= 0
@@ -341,7 +341,6 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
         $http.post('/api/lmn/groupmembership', {action: 'list-groups', username: username, profil: $scope.identity.profile}).then (resp) ->
             $scope.groups = resp.data[0]
             $scope.identity.isAdmin = resp.data[1]
-
             $scope.classes = $scope.groups.filter($scope.filterGroupType('schoolclass'))
             $scope.projects = $scope.groups.filter($scope.filterGroupType('project'))
             $scope.printers = $scope.groups.filter($scope.filterGroupType('printergroup'))

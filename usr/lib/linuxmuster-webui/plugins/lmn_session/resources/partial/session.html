@@ -215,9 +215,13 @@
             <button ng:click="cancel(identity.user,currentSession.name)" ng:show="currentSession.name != ''" class="btn btn-default btn-flat pull-right" translate>Close</button>
         </div>
     </floating-toolbar>
+    <!-- session overview list -->
     <div ng:show="sessions[0]['SESSIONCOUNT'] != 0">
         <progress-spinner ng:show="sessions == null && identity.user != 'root'"></progress-spinner>
+
+        <!-- selfcreated sessions -->
         <div ng:show="visible.sessiontable == 'show'"  class="list-group">
+            <h4 translate>My Sessions </h4>
             <!--
                 <progress-spinner ng:show="sessions == null"></progress-spinner>
                 <div ng:show="currentSession.name == ''"  class="list-group">
@@ -232,5 +236,32 @@
                 </p>
             </a>
                 </div>
+        </div>
+
+        <!-- auto sessions -->
+        <div ng:show="visible.sessiontable == 'show'"  class="list-group">
+            <h4 translate>My Classes</h4>
+
+        <div class="flex-container lmn-container-list" >
+            <div class="list-group-item" ng:repeat="class in classes|filter:filter | orderBy: 'groupname' :false">
+                <!--     <div ng:repeat="printergroup in printers|orderBy:[sort.fx]:sortReverse">-->
+                        <div>
+                            <!--<span id={{class.groupname}} checkbox ng:model="printergroup.membership" ng:class="{changed: printergroup.changed}" ng-click='groupChanged(printergroup.groupname)'></span>
+                            <td><button class="btn btn-default" ng:click="removeParticipant(participant)"> <i class="fa fa-trash"></i></td>-->
+                           <a href="#" ng-click='showGroupDetails($index, class.type, class.groupname)'>
+                           <i class="fa fa-users"></i>
+                              <span>{{class.groupname}}</span>
+                           </a>
+                           <span style="float:right;">
+                              <button class="btn btn-default" ng:click="loadGeneratedSession(class.groupname)">
+                                  <i style="color:green;" class="fa fa-cog"></i>
+                              </button>
+                              <button class="btn btn-default" ng:click="regenerateSession(class.groupname)">
+                                  <i style="color:red;" class="fa fa-cog"></i>
+                              </button>
+                           </span>
+                        </div>
+                     </div>
+                  </div>
         </div>
     </div>

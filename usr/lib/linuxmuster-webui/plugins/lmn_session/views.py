@@ -97,6 +97,18 @@ class Handler(HttpPlugin):
             with authorize('lm:users:students:read'):
                 result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
                 return result
+        if action == 'update-session':
+            supervisor = http_context.json_body()['username']
+            sessionID = http_context.json_body()['sessionID']
+            if "participants" in  http_context.json_body():
+                participantsArray = http_context.json_body()['participants']
+                participants = ','.join(participantsArray)
+                sophomorixCommand = ['sophomorix-session', '--session', sessionID, '--supervisor', supervisor,  '-j', '--participants', participants]
+            else:
+                sophomorixCommand = ['sophomorix-session', '--session', sessionID, '--supervisor', supervisor,  '-j', '--participants', '']
+            with authorize('lm:users:students:read'):
+                result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
+                return result
         if action == 'end-exam':
             supervisor = http_context.json_body()['supervisor']
             participant = http_context.json_body()['participant']

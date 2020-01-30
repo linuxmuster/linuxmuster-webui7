@@ -998,7 +998,7 @@
             size: 'mg',
             resolve: {
               status: function() {
-                return gettext('Sharing files...');
+                return gettext('Collecting files...');
               },
               style: function() {
                 return 'progressbar';

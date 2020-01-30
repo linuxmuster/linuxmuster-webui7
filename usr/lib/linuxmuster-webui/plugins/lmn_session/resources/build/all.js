@@ -795,6 +795,15 @@
       });
     };
     $scope.setInitialPassword = function(user) {
+      // if user is in exammode prohibit password change in session
+      if (user[0].endsWith('-exam')) {
+        messagebox.show({
+          title: gettext('User in exam'),
+          text: gettext('This user seems to be in exam. End exam mode before changing password!'),
+          positive: 'OK'
+        });
+        return;
+      }
       return $http.post('/api/lm/users/password', {
         users: user,
         action: 'set-initial'
@@ -803,6 +812,14 @@
       });
     };
     $scope.setRandomPassword = function(user) {
+      if (user[0].endsWith('-exam')) {
+        messagebox.show({
+          title: gettext('User in exam'),
+          text: gettext('This user seems to be in exam. End exam mode before changing password!'),
+          positive: 'OK'
+        });
+        return;
+      }
       return $http.post('/api/lm/users/password', {
         users: user,
         action: 'set-random'
@@ -811,6 +828,14 @@
       });
     };
     $scope.setCustomPassword = function(user, id, type) {
+      if (user[0]['sAMAccountName'].endsWith('-exam')) {
+        messagebox.show({
+          title: gettext('User in exam'),
+          text: gettext('This user seems to be in exam. End exam mode before changing password!'),
+          positive: 'OK'
+        });
+        return;
+      }
       // Set sAMAccountName to establish compability to userInfo Module
       // This information is provided only as key (id) in sophomorix session
       user[0]['sAMAccountName'] = id;
@@ -829,9 +854,6 @@
       });
     };
     $scope.userInfo = function(user) {
-      //console.log (user)
-      //if user.endsWith('-exam')
-      //    user = user.replace('-exam', '')
       console.log(user);
       return $uibModal.open({
         templateUrl: '/lmn_users:resources/partial/userDetails.modal.html',

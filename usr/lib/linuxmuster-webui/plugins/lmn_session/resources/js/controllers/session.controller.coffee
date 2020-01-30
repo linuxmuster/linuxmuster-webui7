@@ -577,14 +577,24 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                     messagebox.show(title: gettext('Initial password'), text: resp.data, positive: 'OK')
 
     $scope.setInitialPassword = (user) ->
+                # if user is in exammode prohibit password change in session
+                if user[0].endsWith('-exam')
+                    messagebox.show(title: gettext('User in exam'), text: gettext('This user seems to be in exam. End exam mode before changing password!'), positive: 'OK')
+                    return
                 $http.post('/api/lm/users/password', {users: user, action: 'set-initial'}).then (resp) ->
                     notify.success gettext('Initial password set')
 
     $scope.setRandomPassword = (user) ->
+            if user[0].endsWith('-exam')
+                messagebox.show(title: gettext('User in exam'), text: gettext('This user seems to be in exam. End exam mode before changing password!'), positive: 'OK')
+                return
             $http.post('/api/lm/users/password', {users: user, action: 'set-random'}).then (resp) ->
                 notify.success gettext('Random password set')
 
     $scope.setCustomPassword = (user, id, type) ->
+        if user[0]['sAMAccountName'].endsWith('-exam')
+            messagebox.show(title: gettext('User in exam'), text: gettext('This user seems to be in exam. End exam mode before changing password!'), positive: 'OK')
+            return
         # Set sAMAccountName to establish compability to userInfo Module
         # This information is provided only as key (id) in sophomorix session
         user[0]['sAMAccountName'] = id

@@ -13,7 +13,7 @@ from aj.plugins.lmn_common.api import lmn_checkPermission, lmn_write_csv, lmn_ge
 
 
 @component(HttpPlugin)
-class Handler(HttpPlugin):    
+class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
         self.userStatus = {
@@ -28,6 +28,7 @@ class Handler(HttpPlugin):
         'F' : {'tag':'Frozen', 'color':'warning'},
         'R' : {'tag':'Removable', 'color':'danger'},
         'K' : {'tag':'Killable', 'color':'danger'},
+        'X' : {'tag':'Exam', 'color':'danger'},
     }
 
     @url(r'/api/lmn/sophomorixUsers/import-list')

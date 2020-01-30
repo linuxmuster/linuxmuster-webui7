@@ -570,6 +570,9 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
         $scope.visible.participanttable = 'none'
 
     $scope.showInitialPassword = (user) ->
+                # if user is exam user show InitialPassword of real user
+                if user[0].endsWith('-exam')
+                    user[0] = user[0].replace('-exam', '')
                 $http.post('/api/lm/users/password', {users: user, action: 'get'}).then (resp) ->
                     messagebox.show(title: gettext('Initial password'), text: resp.data, positive: 'OK')
 
@@ -596,6 +599,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
 
 
     $scope.userInfo = (user) ->
+        console.log (user)
         $uibModal.open(
             templateUrl: '/lmn_users:resources/partial/userDetails.modal.html'
             controller: 'LMNUserDetailsController'

@@ -779,6 +779,10 @@
       return $scope.visible.participanttable = 'none';
     };
     $scope.showInitialPassword = function(user) {
+      // if user is exam user show InitialPassword of real user
+      if (user[0].endsWith('-exam')) {
+        user[0] = user[0].replace('-exam', '');
+      }
       return $http.post('/api/lm/users/password', {
         users: user,
         action: 'get'
@@ -825,6 +829,10 @@
       });
     };
     $scope.userInfo = function(user) {
+      //console.log (user)
+      //if user.endsWith('-exam')
+      //    user = user.replace('-exam', '')
+      console.log(user);
       return $uibModal.open({
         templateUrl: '/lmn_users:resources/partial/userDetails.modal.html',
         controller: 'LMNUserDetailsController',

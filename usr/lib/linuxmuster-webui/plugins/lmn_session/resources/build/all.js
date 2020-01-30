@@ -921,16 +921,33 @@
         }
       }).result.then(function(result) {
         if (result.response === 'accept') {
-          return $http.post('/api/lmn/session/trans', {
-            command: command,
-            senders: senders,
-            receivers: receivers,
-            files: result.files,
-            session: sessioncomment
-          }).then(function(resp) {
-            return validateResult(resp);
+          $uibModal.open({
+            templateUrl: '/lmn_common:resources/partial/wait.modal.html',
+            controller: 'lmWaitController',
+            backdrop: 'static',
+            keyboard: false,
+            size: 'mg',
+            resolve: {
+              status: function() {
+                return gettext('Sharing files...');
+              },
+              style: function() {
+                return 'progressbar';
+              }
+            }
           });
         }
+        return $http.post('/api/lmn/session/trans', {
+          command: command,
+          senders: senders,
+          receivers: receivers,
+          files: result.files,
+          session: sessioncomment
+        }).then(function(resp) {
+          $rootScope.$emit('updateWaiting', 'done');
+          console.log(resp);
+          return validateResult(resp);
+        });
       });
     };
     $scope.collectTrans = function(command, senders, receivers, sessioncomment) {
@@ -973,6 +990,21 @@
       }).result.then(function(result) {
         if (result.response === 'accept') {
           //return
+          $uibModal.open({
+            templateUrl: '/lmn_common:resources/partial/wait.modal.html',
+            controller: 'lmWaitController',
+            backdrop: 'static',
+            keyboard: false,
+            size: 'mg',
+            resolve: {
+              status: function() {
+                return gettext('Sharing files...');
+              },
+              style: function() {
+                return 'progressbar';
+              }
+            }
+          });
           if (command === 'copy') {
             $http.post('/api/lmn/session/trans', {
               command: command,
@@ -981,6 +1013,7 @@
               files: result.files,
               session: sessioncomment
             }).then(function(resp) {
+              $rootScope.$emit('updateWaiting', 'done');
               return validateResult(resp);
             });
           }
@@ -992,6 +1025,7 @@
               files: result.files,
               session: sessioncomment
             }).then(function(resp) {
+              $rootScope.$emit('updateWaiting', 'done');
               return validateResult(resp);
             });
           }

@@ -88,7 +88,7 @@ class Handler(HttpPlugin):
         if action == 'new-session':
             supervisor = http_context.json_body()['username']
             comment = http_context.json_body()['comment']
-            if "participants" in  http_context.json_body():
+            if "participants" in http_context.json_body():
                 participantsArray = http_context.json_body()['participants']
                 participants = ','.join(participantsArray)
                 sophomorixCommand = ['sophomorix-session', '--create', '--supervisor', supervisor,  '-j', '--comment', comment, '--participants', participants]
@@ -100,7 +100,7 @@ class Handler(HttpPlugin):
         if action == 'update-session':
             supervisor = http_context.json_body()['username']
             sessionID = http_context.json_body()['sessionID']
-            if "participants" in  http_context.json_body():
+            if "participants" in http_context.json_body():
                 participantsArray = http_context.json_body()['participants']
                 participants = ','.join(participantsArray)
                 sophomorixCommand = ['sophomorix-session', '--session', sessionID, '--supervisor', supervisor,  '-j', '--participants', participants]
@@ -114,8 +114,6 @@ class Handler(HttpPlugin):
             participant = http_context.json_body()['participant']
             sessionName = http_context.json_body()['sessionName']
             now = strftime("%Y%m%d_%H-%M-%S", gmtime())
-            #raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(http_context.json_body()))
-
             with authorize('lm:users:students:read'):
                 try:
                     sophomorixCommand = ['sophomorix-exam-mode', '--unset', '--subdir', 'transfer/collected/'+now+'-'+sessionName+'-ended-by-'+supervisor+'/exam', '-j', '--participants', participant]
@@ -312,7 +310,7 @@ class Handler(HttpPlugin):
                         # check if bulkmode (array of usernames) or single user (object containing username)
                         # if first element is not a string
                         if not isinstance(receivers[0], six.string_types):
-                            receivers[0]= receivers[0]['sAMAccountName']
+                            receivers[0] = receivers[0]['sAMAccountName']
                         receiversCSV = ",".join(receivers)
                         for File in files:
                             sophomorixCommand = ['sophomorix-transfer', '-jj', '--scopy', '--from-user', sender, '--to-user', receiversCSV, '--from-path', 'transfer/'+File, '--to-path', 'transfer/']
@@ -332,7 +330,7 @@ class Handler(HttpPlugin):
                             returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
                         else:
                             for File in files:
-                                sophomorixCommand = ['sophomorix-transfer', '-jj', '--scopy', '--from-user', sendersCSV, '--to-user', receiver, '--from-path', 'transfer/'+File, '--to-path', 'transfer/collected/'+now+'-'+session+'/', '--to-path-addon', 'fullinfo' ]
+                                sophomorixCommand = ['sophomorix-transfer', '-jj', '--scopy', '--from-user', sendersCSV, '--to-user', receiver, '--from-path', 'transfer/'+File, '--to-path', 'transfer/collected/'+now+'-'+session+'/', '--to-path-addon', 'fullinfo']
                                 returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
                 except Exception as e:
                     raise Exception('Something went wrong. Error:\n' + str(e))

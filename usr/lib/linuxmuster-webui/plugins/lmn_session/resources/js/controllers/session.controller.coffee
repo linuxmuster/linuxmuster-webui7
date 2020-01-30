@@ -656,7 +656,19 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
               command: () -> command
         ).result.then (result) ->
            if result.response is 'accept'
+                $uibModal.open(
+                   templateUrl: '/lmn_common:resources/partial/wait.modal.html'
+                   controller: 'lmWaitController'
+                   backdrop: 'static',
+                   keyboard: false
+                   size: 'mg'
+                   resolve:
+                      status: () -> gettext('Sharing files...')
+                      style: () -> 'progressbar'
+                )
                $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers, files: result.files, session: sessioncomment}).then (resp) ->
+                   $rootScope.$emit('updateWaiting', 'done')
+                   console.log (resp)
                    validateResult(resp)
 
 
@@ -687,11 +699,23 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
         ).result.then (result) ->
             if result.response is 'accept'
                 #return
+                $uibModal.open(
+                   templateUrl: '/lmn_common:resources/partial/wait.modal.html'
+                   controller: 'lmWaitController'
+                   backdrop: 'static',
+                   keyboard: false
+                   size: 'mg'
+                   resolve:
+                      status: () -> gettext('Collecting files...')
+                      style: () -> 'progressbar'
+                )
                 if command is 'copy'
                     $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers, files: result.files, session: sessioncomment}).then (resp) ->
+                        $rootScope.$emit('updateWaiting', 'done')
                         validateResult(resp)
                 if command is 'move'
                     $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers, files: result.files, session: sessioncomment}).then (resp) ->
+                        $rootScope.$emit('updateWaiting', 'done')
                         validateResult(resp)
 
 

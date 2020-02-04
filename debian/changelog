@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.113-1) lmn7-testing; urgency=medium 
+
+  * Current snapshot build fb714ae0aabf7020e34e4bf77276507112d51694
+   *     fixed some session genration issues
+
+ -- Andreas Till <andreas.till@netzint.de> Tue Feb  4 12:05:41 UTC 2020
+
 linuxmuster-webui7 (1.0.112-1) lmn7-testing; urgency=medium 
 
   * Current snapshot build 9001d16c7f48e36953465c6ddab3e9d6adc0cda8

@@ -313,6 +313,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                     $scope.groups = resp.data[0]
                     $scope.identity.isAdmin = resp.data[1]
                     $scope.classes = $scope.groups.filter($scope.filterGroupType('schoolclass'))
+                    $scope.classes = $scope.classes.filter($scope.filterMembership(true))
                 #get sessions
                 $http.post('/api/lmn/session/sessions', {action: 'get-sessions', username: username}).then (resp) ->
                     if resp.data[0]['SESSIONCOUNT'] is 0
@@ -327,6 +328,10 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
     $scope.filterGroupType = (val) ->
             return (dict) ->
                 dict['type'] == val
+
+    $scope.filterMembership = (val) ->
+            return (dict) ->
+                dict['membership'] == val
 
     $scope.showGroupDetails = (index, groupType, groupName) ->
        $uibModal.open(
@@ -429,10 +434,14 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
         )
         $http.post('/api/lmn/groupmembership/details', {action: 'get-specified', groupType: 'class', groupName: classname}).then (resp) ->
             # get participants from specified class
-            participants= resp.data['LISTS']['MEMBERLIST'][classname]
+            participants = resp.data['MEMBERS'][classname]
+            participantsArray = []
+            for participant,data of participants
+                if participants[participant]['sophomorixAdminClass'] != 'teachers'
+                    participantsArray.push participant
             # fix existing session
             if sessionExist == true
-                $http.post('/api/lmn/session/sessions', {action: 'update-session', username: $scope.identity.user, sessionID: sessionID, participants: participants}).then (resp) ->
+                $http.post('/api/lmn/session/sessions', {action: 'update-session', username: $scope.identity.user, sessionID: sessionID, participants: participantsArray}).then (resp) ->
                     # emit wait process is done
                     $rootScope.$emit('updateWaiting', 'done')
                     # refresh Session table
@@ -442,9 +451,6 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                     $scope.currentSession.name=sessionID
                     $scope.currentSession.comment=sessionComment
                     $scope.getParticipants($scope.identity.user,sessionID)
-                    #username = $scope.identity.user
-                    #    $scope.classes = $scope.groups.filter($scope.filterGroupType('schoolclass'))
-                    #$scope.getParticipants($scope.identity.user,'2020-01-29_15-19-21')
 
             # create new session
             if sessionExist == false

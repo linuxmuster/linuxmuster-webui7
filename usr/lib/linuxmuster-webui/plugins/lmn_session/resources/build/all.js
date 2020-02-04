@@ -398,7 +398,8 @@
       }).then(function(resp) {
         $scope.groups = resp.data[0];
         $scope.identity.isAdmin = resp.data[1];
-        return $scope.classes = $scope.groups.filter($scope.filterGroupType('schoolclass'));
+        $scope.classes = $scope.groups.filter($scope.filterGroupType('schoolclass'));
+        return $scope.classes = $scope.classes.filter($scope.filterMembership(true));
       });
       //get sessions
       return $http.post('/api/lmn/session/sessions', {
@@ -419,6 +420,11 @@
     $scope.filterGroupType = function(val) {
       return function(dict) {
         return dict['type'] === val;
+      };
+    };
+    $scope.filterMembership = function(val) {
+      return function(dict) {
+        return dict['membership'] === val;
       };
     };
     $scope.showGroupDetails = function(index, groupType, groupName) {
@@ -566,16 +572,26 @@
         groupType: 'class',
         groupName: classname
       }).then(function(resp) {
-        var participants;
+        var data, participant, participants, participantsArray;
         // get participants from specified class
-        participants = resp.data['LISTS']['MEMBERLIST'][classname];
+        participants = resp.data['MEMBERS'][classname];
+        participantsArray = [];
+        for (participant in participants) {
+          data = participants[participant];
+          if (participants[participant]['sophomorixAdminClass'] !== 'teachers') {
+            participantsArray.push(participant);
+          }
+        }
+        //console.log (participants[participant])
+        //participants= resp.data['LISTS']['MEMBERLIST'][classname]
+        //console.log (participants)
         // fix existing session
         if (sessionExist === true) {
           $http.post('/api/lmn/session/sessions', {
             action: 'update-session',
             username: $scope.identity.user,
             sessionID: sessionID,
-            participants: participants
+            participants: participantsArray
           }).then(function(resp) {
             // emit wait process is done
             $rootScope.$emit('updateWaiting', 'done');

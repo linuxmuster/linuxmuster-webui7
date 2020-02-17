@@ -252,9 +252,9 @@
                               <span>{{class.groupname}}</span>
                            </a>
                            <span style="float:right;">
-                              <button style="background-color: #4CAF50; font-size: 18px; color: white; padding: 5px 15px;" class="btn btn-default fas fa-play" ng:click="loadGeneratedSession(class.groupname)">
+                               <button style="background-color: #4CAF50; font-size: 18px; color: white; padding: 5px 15px;" class="btn btn-default fas fa-play" ng:click="loadGeneratedSession(class.groupname)" title="{{startGeneratedSessionMouseover}}">
                               </button>
-                              <button style="background-color:#ff0000; font-size: 18px; color: white; padding: 5px 15px;" class="btn btn-default fab fa-rev" ng:click="regenerateSession(class.groupname)">
+                              <button style="background-color:#ff0000; font-size: 18px; color: white; padding: 5px 15px;" class="btn btn-default fab fa-rev" ng:click="regenerateSession(class.groupname)" title="{{generateSessionMouseover}}">
                               </button>
                            </span>
                         </div>

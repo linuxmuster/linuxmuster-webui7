@@ -144,6 +144,8 @@
   angular.module('lmn.session').controller('LMNSessionController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem, validation, $rootScope) {
     var typeIsArray, validateResult;
     pageTitle.set(gettext('Session'));
+    $scope.generateSessionMouseover = gettext('Regenerate this session');
+    $scope.startGeneratedSessionMouseover = gettext('Start this session unchanged (may not be up to date)');
     $scope.currentSession = {
       name: "",
       comment: ""
@@ -582,9 +584,6 @@
             participantsArray.push(participant);
           }
         }
-        //console.log (participants[participant])
-        //participants= resp.data['LISTS']['MEMBERLIST'][classname]
-        //console.log (participants)
         // fix existing session
         if (sessionExist === true) {
           $http.post('/api/lmn/session/sessions', {
@@ -603,10 +602,6 @@
             return $scope.getParticipants($scope.identity.user, sessionID);
           });
         }
-        //username = $scope.identity.user
-        //    $scope.classes = $scope.groups.filter($scope.filterGroupType('schoolclass'))
-        //$scope.getParticipants($scope.identity.user,'2020-01-29_15-19-21')
-
         // create new session
         if (sessionExist === false) {
           // create new specified session
@@ -614,7 +609,7 @@
             action: 'new-session',
             username: $scope.identity.user,
             comment: sessionComment,
-            participants: participants
+            participants: participantsArray
           }).then(async function(resp) {
             var j, len1, ref1, sessions;
             // emit wait process is done

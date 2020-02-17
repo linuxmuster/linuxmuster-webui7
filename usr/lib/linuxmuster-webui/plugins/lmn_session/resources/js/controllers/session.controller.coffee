@@ -106,6 +106,8 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
     pageTitle.set(gettext('Session'))
 
 
+    $scope.generateSessionMouseover = gettext('Regenerate this session')
+    $scope.startGeneratedSessionMouseover = gettext('Start this session unchanged (may not be up to date)')
 
     $scope.currentSession = {
         name: ""
@@ -455,7 +457,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
             # create new session
             if sessionExist == false
                 # create new specified session
-                $http.post('/api/lmn/session/sessions', {action: 'new-session', username: $scope.identity.user, comment: sessionComment, participants: participants}).then (resp) ->
+                $http.post('/api/lmn/session/sessions', {action: 'new-session', username: $scope.identity.user, comment: sessionComment, participants: participantsArray}).then (resp) ->
                     # emit wait process is done
                     $rootScope.$emit('updateWaiting', 'done')
                     $scope.new-sessions = resp.data

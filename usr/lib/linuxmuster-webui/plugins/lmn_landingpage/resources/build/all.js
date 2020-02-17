@@ -16,7 +16,7 @@
   angular.module('lmn.landingpage').controller('LMNLandingController', function($scope, $http, $uibModal, $location, gettext, notify, pageTitle, messagebox) {
     pageTitle.set(gettext('Home'));
     $scope.getQuota = $http.post('/api/lmn/quota/').then(function(resp) {
-      var category, cn, dn, i, len, ref, ref1, results, share, total, used, values;
+      var category, cn, dn, i, len, ref, ref1, results, share, total, type, usage, used, values;
       $scope.user = resp.data;
       $scope.quotas = [];
       // skip if user is root
@@ -38,14 +38,24 @@
             'share': share,
             'total': gettext(total),
             'used': used,
-            'usage': 0
+            'usage': 0,
+            'type': "success"
           });
         } else {
+          usage = Math.floor((100 * used) / total);
+          if (usage < 60) {
+            type = "success";
+          } else if (usage < 80) {
+            type = "warning";
+          } else {
+            type = "danger";
+          }
           $scope.quotas.push({
             'share': share,
             'total': total + " MiB",
             'used': used,
-            'usage': Math.floor((100 * used) / total)
+            'usage': usage,
+            'type': type
           });
         }
       }

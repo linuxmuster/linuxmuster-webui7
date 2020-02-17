@@ -48,7 +48,7 @@
                     <div ng:repeat="quota in quotas" style="margin-bottom: 15px;">
 
                         <div class="widget-header">{{quota.share}}</div>
-                        <smart-progress value="quota.usage" max="100"></smart-progress>
+                        <smart-progress type="{{quota.type}}" value="quota.usage" max="100"></smart-progress>
 
                         <div class="widget-value">
                             {{quota.used}} MiB / {{quota.total}}

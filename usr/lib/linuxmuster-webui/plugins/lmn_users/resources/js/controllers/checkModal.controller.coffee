@@ -30,6 +30,7 @@ angular.module('lm.users').controller 'LMUsersCheckResultsModalController', ($sc
         'F' : 'Frozen (F)',
         'R' : 'Removable (R)',
         'K' : 'Killable (K)',
+        'X' : 'Exam (X)',
     }
 
     $scope.status_filter = (status) ->

@@ -64,6 +64,11 @@ case "$1" in
     #python3 -m pip install -r $webuietc/requirements.txt
     # split ajenti config.yml from webui config.yml if necessary
     $webuietc/split_config_aj.py
+    # Add fqdn_certificate in config.yml if not present - for update ajenti 2.1.33
+    if [ "$(grep -e '^\s\{2,\}fqdn_certificate' /etc/ajenti/config.yml | wc -l)" -eq 0 ] ; then
+	echo "Add FQDN certificate parameter to /etc/ajenti/config.yml"
+	sed -i '/^\s\{2,\}certificate:/p;0,/^\s\{2,\}certificate:/ s/certificate/fqdn_certificate/' /etc/ajenti/config.yml
+    fi
     # Set default permissions from true to false
     if [ "$(cat /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/main.py | grep True | wc -l)" -gt 0 ] ;then
         echo "Set reverse permissions"

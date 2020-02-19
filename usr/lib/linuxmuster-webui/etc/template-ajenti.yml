@@ -10,10 +10,12 @@ bind:
 color: default
 language: %%LANGUAGE%%
 max_sessions: 400
+session_max_time: 3600
 name: %%SERVERNAME%%.%%DOMAINNAME%%
 restricted_user: nobody
 ssl:
   certificate: /etc/linuxmuster/ssl/%%SERVERNAME%%.cert.bundle.pem
+  fqdn_certificate: /etc/linuxmuster/ssl/%%SERVERNAME%%.cert.bundle.pem
   client_auth:
     certificates: []
     enable: false

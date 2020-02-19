@@ -581,8 +581,15 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                 # if user is exam user show InitialPassword of real user
                 if user[0].endsWith('-exam')
                     user[0] = user[0].replace('-exam', '')
-                $http.post('/api/lm/users/password', {users: user, action: 'get'}).then (resp) ->
-                    messagebox.show(title: gettext('Initial password'), text: resp.data, positive: 'OK')
+                type=gettext('Initial password')
+                $uibModal.open(
+                    templateUrl: '/lmn_users:resources/partial/showPassword.modal.html'
+                    controller: 'LMNUsersShowPasswordController'
+                    resolve:
+                        user: () -> user
+                        type: () -> type
+                )
+
 
     $scope.setInitialPassword = (user) ->
                 # if user is in exammode prohibit password change in session

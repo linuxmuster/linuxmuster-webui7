@@ -1,3 +1,22 @@
+angular.module('lm.users').controller 'LMNUsersShowPasswordController', ($scope, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, user, type) ->
+    $scope.username = user[0]
+    $scope.type = type
+
+    $http.post('/api/lm/users/password', {users: user, action: 'get'}).then (resp) ->
+        password = resp.data
+        $scope.password = password
+        $http.post('/api/lm/users/test-first-password/' + user).then (response) ->
+            if response.data == true
+                $scope.passwordStatus = gettext('Still Set')
+            else
+                $scope.passwordStatus = gettext('Changed from user')
+          #messagebox.show(title: msg, text: resp.data, positive: 'OK')
+
+    #$http.post('/api/lm/users/password', {users: user, action: 'get'}).then (resp) ->
+
+    $scope.close = () ->
+        $uibModalInstance.dismiss()
+
 angular.module('lm.users').controller 'LMNUsersCustomPasswordController', ($scope, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, users, type, validation) ->
     $scope.username = users
     $scope.action = type

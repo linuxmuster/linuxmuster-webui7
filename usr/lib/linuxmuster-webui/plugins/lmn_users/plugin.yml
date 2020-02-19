@@ -36,6 +36,7 @@ resources:
     - 'resources/partial/schooladmins.html'
     - 'resources/partial/globaladmins.html'
     - 'resources/partial/customPassword.modal.html'
+    - 'resources/partial/showPassword.modal.html'
     - 'resources/partial/userDetails.modal.html'
     - 'resources/partial/addAdmin.modal.html'
     - 'ng:lm.users'

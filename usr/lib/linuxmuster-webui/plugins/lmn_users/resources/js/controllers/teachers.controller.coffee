@@ -37,15 +37,18 @@ angular.module('lm.users').controller 'LMUsersTeachersController', ($scope, $htt
     $http.post('/api/lm/sophomorixUsers/teachers',{action: 'get-all'}).then (resp) ->
         $scope.teachers = resp.data
 
-    $scope.showInitialPassword = (user) ->
-       $http.post('/api/lm/users/password', {users: ( x['sAMAccountName'] for x in user ), action: 'get'}).then (resp) ->
-          $http.post('/api/lm/users/test-first-password/' + user[0]['sAMAccountName']).then (response) ->
-            if response.data == true
-                msg = gettext('Initial password (still set)')
-            else
-                msg = gettext('Initial password (changed from user)')
-            messagebox.show(title: msg, text: resp.data, positive: 'OK')
-
+    $scope.showInitialPassword = (users) ->
+        user=[]
+        user[0]=users[0]["sAMAccountName"]
+        # function needs an array which contains user on first position
+        type=gettext('Initial password')
+        $uibModal.open(
+           templateUrl: '/lmn_users:resources/partial/showPassword.modal.html'
+           controller: 'LMNUsersShowPasswordController'
+           resolve:
+              user: () -> user
+              type: () -> type
+        )
 
     $scope.setInitialPassword = (user) ->
        $http.post('/api/lm/users/password', {users: (x['sAMAccountName'] for x in user), action: 'set-initial'}).then (resp) ->

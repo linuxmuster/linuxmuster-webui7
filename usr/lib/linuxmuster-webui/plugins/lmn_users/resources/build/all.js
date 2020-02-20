@@ -298,9 +298,8 @@
     $scope.showInitialPassword = function(users) {
       var type, user;
       user = [];
-      console.log(users);
       user[0] = users[0]["sAMAccountName"];
-      console.log(user);
+      // function needs an array which contains user on first position
       type = gettext('Initial password');
       return $uibModal.open({
         templateUrl: '/lmn_users:resources/partial/showPassword.modal.html',
@@ -315,14 +314,6 @@
         }
       });
     };
-    //$http.post('/api/lm/users/password', {users: ( x['sAMAccountName'] for x in user ), action: 'get'}).then (resp) ->
-    //  #$http.post('/api/lm/users/test-first-password/' + user[0]['sAMAccountName']).then (response) ->
-
-    //    if response.data == true
-    //        msg = gettext('Initial password (still set)')
-    //    else
-    //        msg = gettext('Initial password (changed from user)')
-    //    messagebox.show(title: msg, text: resp.data, positive: 'OK')
     $scope.setInitialPassword = function(user) {
       var x;
       return $http.post('/api/lm/users/password', {

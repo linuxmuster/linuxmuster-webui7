@@ -76,13 +76,6 @@
         }
       });
     };
-    //$http.post('/api/lm/users/password', {users: ( x['sAMAccountName'] for x in user ), action: 'get'}).then (resp) ->
-    //   $http.post('/api/lm/users/test-first-password/' + user[0]['sAMAccountName']).then (response) ->
-    //     if response.data == true
-    //         msg = gettext('Initial password (still set)')
-    //     else
-    //         msg = gettext('Initial password (changed from user)')
-    //     messagebox.show(title: msg, text: resp.data, positive: 'OK')
     $scope.setInitialPassword = function(user) {
       var x;
       return $http.post('/api/lm/users/password', {
@@ -1305,13 +1298,6 @@
         }
       });
     };
-    //$http.post('/api/lm/users/password', {users: ( x['sAMAccountName'] for x in user ), action: 'get'}).then (resp) ->
-    //   $http.post('/api/lm/users/test-first-password/' + user[0]['sAMAccountName']).then (response) ->
-    //     if response.data == true
-    //         msg = gettext('Initial password (still set)')
-    //     else
-    //         msg = gettext('Initial password (changed from user)')
-    //     messagebox.show(title: msg, text: resp.data, positive: 'OK')
     $scope.setInitialPassword = function(user) {
       var x;
       return $http.post('/api/lm/users/password', {

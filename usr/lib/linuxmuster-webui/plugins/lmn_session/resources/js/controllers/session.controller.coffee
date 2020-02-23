@@ -102,7 +102,7 @@ angular.module('lmn.session').config ($routeProvider) ->
         templateUrl: '/lmn_session:resources/partial/session.html'
 
 
-angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem, validation, $rootScope) ->
+angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem, validation, $rootScope, wait) ->
     pageTitle.set(gettext('Session'))
 
 
@@ -424,16 +424,8 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                 sessionID= session['ID']
                 console.log ('sessionExist '+sessionExist )
 
-        $uibModal.open(
-            templateUrl: '/lmn_common:resources/partial/wait.modal.html'
-            controller: 'lmWaitController'
-            backdrop: 'static',
-            keyboard: false
-            size: 'mg'
-            resolve:
-                status: () -> gettext('Generating session...')
-                style: () -> 'spinner'
-        )
+        wait.modal(gettext('Generating session...'), 'spinner')
+
         $http.post('/api/lmn/groupmembership/details', {action: 'get-specified', groupType: 'class', groupName: classname}).then (resp) ->
             # get participants from specified class
             participants = resp.data['MEMBERS'][classname]

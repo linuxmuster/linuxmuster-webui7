@@ -141,7 +141,7 @@
     });
   });
 
-  angular.module('lmn.session').controller('LMNSessionController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem, validation, $rootScope) {
+  angular.module('lmn.session').controller('LMNSessionController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem, validation, $rootScope, wait) {
     var typeIsArray, validateResult;
     pageTitle.set(gettext('Session'));
     $scope.generateSessionMouseover = gettext('Regenerate this session');
@@ -554,21 +554,7 @@
           console.log('sessionExist ' + sessionExist);
         }
       }
-      $uibModal.open({
-        templateUrl: '/lmn_common:resources/partial/wait.modal.html',
-        controller: 'lmWaitController',
-        backdrop: 'static',
-        keyboard: false,
-        size: 'mg',
-        resolve: {
-          status: function() {
-            return gettext('Generating session...');
-          },
-          style: function() {
-            return 'spinner';
-          }
-        }
-      });
+      wait.modal(gettext('Generating session...'), 'spinner');
       return $http.post('/api/lmn/groupmembership/details', {
         action: 'get-specified',
         groupType: 'class',

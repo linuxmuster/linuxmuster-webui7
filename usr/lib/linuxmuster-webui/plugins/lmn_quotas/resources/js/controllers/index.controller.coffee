@@ -23,7 +23,7 @@ angular.module('lm.quotas').controller 'LMQuotasApplyModalController', ($scope, 
         $window.location.reload()
 
 
-angular.module('lm.quotas').controller 'LMQuotasController', ($scope, $http, $uibModal, $location, $q, gettext, lmEncodingMap, notify, pageTitle, lmFileBackups, $rootScope) ->
+angular.module('lm.quotas').controller 'LMQuotasController', ($scope, $http, $uibModal, $location, $q, gettext, lmEncodingMap, notify, pageTitle, lmFileBackups, $rootScope, wait) ->
     pageTitle.set(gettext('Quotas'))
 
     $scope.UserSearchVisible = false
@@ -71,10 +71,10 @@ angular.module('lm.quotas').controller 'LMQuotasController', ($scope, $http, $ui
     $scope.groupquota = 0
     $scope.get_class_quota = () ->
         if !$scope.groupquota
-            $rootScope.appReady = false
+            wait.modal(gettext("Retrieving groups quotas ..."), 'progressbar')
             $http.get('/api/lm/quotas/group').then (resp) ->
-                $rootScope.appReady = true
                 $scope.groupquota = resp.data
+                $rootScope.$emit('updateWaiting', 'done')
 
     $http.get('/api/lm/quotas').then (resp) ->
         $scope.non_default = resp.data[0]
@@ -149,9 +149,9 @@ angular.module('lm.quotas').controller 'LMQuotasController', ($scope, $http, $ui
         $scope.non_default[role].list.splice($scope.non_default[role].list.indexOf(user),1)
 
     $scope.saveApply = () ->
-        $rootScope.appReady = false
+        wait.modal(gettext("Saving quotas ..."), 'progressbar')
         $http.post('/api/lm/quotas/save', {users: $scope.toChange, groups: $scope.groupsToChange}).then () ->
-            $rootScope.appReady = true
+            $rootScope.$emit('updateWaiting', 'done')
             $uibModal.open(
                 templateUrl: '/lmn_quotas:resources/partial/apply.modal.html'
                 controller: 'LMQuotasApplyModalController'

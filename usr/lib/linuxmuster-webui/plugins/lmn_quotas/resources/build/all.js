@@ -33,7 +33,7 @@
     };
   });
 
-  angular.module('lm.quotas').controller('LMQuotasController', function($scope, $http, $uibModal, $location, $q, gettext, lmEncodingMap, notify, pageTitle, lmFileBackups, $rootScope) {
+  angular.module('lm.quotas').controller('LMQuotasController', function($scope, $http, $uibModal, $location, $q, gettext, lmEncodingMap, notify, pageTitle, lmFileBackups, $rootScope, wait) {
     pageTitle.set(gettext('Quotas'));
     $scope.UserSearchVisible = false;
     $scope.activeTab = 0;
@@ -90,10 +90,10 @@
     $scope.groupquota = 0;
     $scope.get_class_quota = function() {
       if (!$scope.groupquota) {
-        $rootScope.appReady = false;
+        wait.modal(gettext("Retrieving groups quotas ..."), 'progressbar');
         return $http.get('/api/lm/quotas/group').then(function(resp) {
-          $rootScope.appReady = true;
-          return $scope.groupquota = resp.data;
+          $scope.groupquota = resp.data;
+          return $rootScope.$emit('updateWaiting', 'done');
         });
       }
     };
@@ -196,12 +196,12 @@
       return $scope.non_default[role].list.splice($scope.non_default[role].list.indexOf(user), 1);
     };
     return $scope.saveApply = function() {
-      $rootScope.appReady = false;
+      wait.modal(gettext("Saving quotas ..."), 'progressbar');
       return $http.post('/api/lm/quotas/save', {
         users: $scope.toChange,
         groups: $scope.groupsToChange
       }).then(function() {
-        $rootScope.appReady = true;
+        $rootScope.$emit('updateWaiting', 'done');
         return $uibModal.open({
           templateUrl: '/lmn_quotas:resources/partial/apply.modal.html',
           controller: 'LMQuotasApplyModalController',

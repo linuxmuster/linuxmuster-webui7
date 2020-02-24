@@ -6,9 +6,8 @@ describe('lmn landingpage connect', function() {
 
         element(by.model('username')).sendKeys(auth.admin.login);
         element(by.model('password')).sendKeys(auth.admin.pw);
-        element(by.linkText('Log in')).click();
-        //console.log('Click is done !');
-        browser.sleep(5000);
+        element(by.css('a[ng\\:click^="login"]')).click();
+        browser.sleep(8000);
         expect(element.all(by.tagName('h2')).first().getText()).toContain('Linuxmuster.net 7');
 
     });

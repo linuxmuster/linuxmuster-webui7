@@ -24,7 +24,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
             return OSAuthenticationProvider.get(self.context).authenticate(username, password)
 
-        username = username.lower().encode('utf8')
+        username = username.lower()
         # get ajenti yaml parameters
         params = lmconfig.data['linuxmuster']['ldap']
         searchFilter = ldap.filter.filter_format("(&(cn=%s)(objectClass=user)(|(sophomorixRole=globaladministrator)(sophomorixRole=teacher)(sophomorixRole=schooladministrator) ))", [username])
@@ -63,7 +63,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
         # convert python list we get from AD to dict
         if ldappermissions[0][1]: # is false if no values in SophomorixUserPermissions
             for b in ldappermissions[0][1]['sophomorixWebuiPermissionsCalculated']:
-                i = b.split(': ')
+                i = b.split(b': ')
                 try:
                     i[1]
                     if i[1] == 'false': # translate strings to real bool values

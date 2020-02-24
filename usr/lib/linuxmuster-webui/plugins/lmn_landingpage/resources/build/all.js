@@ -15,8 +15,8 @@
 
   angular.module('lmn.landingpage').controller('LMNLandingController', function($scope, $http, $uibModal, $location, gettext, notify, pageTitle, messagebox) {
     pageTitle.set(gettext('Home'));
-    $scope.getQuota = $http.post('/api/lmn/quota/').then(function(resp) {
-      var category, cn, dn, i, len, ref, ref1, results, share, total, used, values;
+    $scope.getQuota = $http.get('/api/lmn/quota/').then(function(resp) {
+      var category, cn, dn, i, len, ref, ref1, results, share, total, type, usage, used, values;
       $scope.user = resp.data;
       $scope.quotas = [];
       // skip if user is root

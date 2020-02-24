@@ -15,7 +15,7 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_quota(self, http_context):
 
-       if http_context.method == 'POST':
+       if http_context.method == 'GET':
 
                 user = self.context.identity
 
@@ -23,4 +23,3 @@ class Handler(HttpPlugin):
                     sophomorixCommand = ['sophomorix-query', '--sam', user, '--user-full', '--quota-usage', '-jj']
                     jsonpath          = 'USER/' + user
                     return lmn_getSophomorixValue(sophomorixCommand, jsonpath)
-

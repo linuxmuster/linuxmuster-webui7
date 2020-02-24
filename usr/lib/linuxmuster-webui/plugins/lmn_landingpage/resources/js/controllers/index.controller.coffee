@@ -6,7 +6,7 @@ angular.module('lmn.landingpage').config ($routeProvider) ->
 angular.module('lmn.landingpage').controller 'LMNLandingController', ($scope, $http, $uibModal, $location, gettext, notify, pageTitle, messagebox) ->
     pageTitle.set(gettext('Home'))
 
-    $scope.getQuota = $http.post('/api/lmn/quota/').then (resp) ->
+    $scope.getQuota = $http.get('/api/lmn/quota/').then (resp) ->
         $scope.user = resp.data
         $scope.quotas = []
         # skip if user is root

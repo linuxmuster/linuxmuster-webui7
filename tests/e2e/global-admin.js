@@ -12,3 +12,13 @@ describe('lmn landingpage connect', function() {
 
     });
 });
+
+describe('lmn disconnect', function() {
+    it('should show the login page again', function() {
+        element(by.css('a[uib-dropdown-toggle]')).click();
+        element(by.css('a[ng\\:click^="identity.logout"]')).click();
+        browser.sleep(5000);
+        expect(element.all(by.tagName('input')).first().getAttribute('ng:model')).toContain('username');
+
+    });
+});

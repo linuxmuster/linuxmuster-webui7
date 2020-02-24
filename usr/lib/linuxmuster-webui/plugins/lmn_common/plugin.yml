@@ -22,7 +22,5 @@ resources:
     - 'resources/js/lmFileBackups.modal.html'
     - 'resources/styles.less'
     - 'resources/partial/index.html'
-    - 'resources/partial/wait.modal.html'
-    - 'resources/js/wait.coffee'
     - 'resources/js/messageboxContainer.es'
     - 'ng:lm.common'

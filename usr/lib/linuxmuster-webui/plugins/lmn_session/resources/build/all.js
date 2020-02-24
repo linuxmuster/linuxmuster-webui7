@@ -737,21 +737,7 @@
       });
     };
     $scope.saveApply = function(username, participants, session, sessionName) {
-      $uibModal.open({
-        templateUrl: '/lmn_common:resources/partial/wait.modal.html',
-        controller: 'lmWaitController',
-        backdrop: 'static',
-        keyboard: false,
-        size: 'mg',
-        resolve: {
-          status: function() {
-            return gettext('Changes are applied...');
-          },
-          style: function() {
-            return 'progressbar';
-          }
-        }
-      });
+      wait.modal(gettext('Changes are applied...'), 'progressbar');
       return $http.post('/api/lmn/session/sessions', {
         action: 'save-session',
         username: username,
@@ -922,33 +908,19 @@
         }
       }).result.then(function(result) {
         if (result.response === 'accept') {
-          $uibModal.open({
-            templateUrl: '/lmn_common:resources/partial/wait.modal.html',
-            controller: 'lmWaitController',
-            backdrop: 'static',
-            keyboard: false,
-            size: 'mg',
-            resolve: {
-              status: function() {
-                return gettext('Sharing files...');
-              },
-              style: function() {
-                return 'progressbar';
-              }
-            }
+          wait.modal(gettext('Sharing files...'), 'progressbar');
+          return $http.post('/api/lmn/session/trans', {
+            command: command,
+            senders: senders,
+            receivers: receivers,
+            files: result.files,
+            session: sessioncomment
+          }).then(function(resp) {
+            $rootScope.$emit('updateWaiting', 'done');
+            console.log(resp);
+            return validateResult(resp);
           });
         }
-        return $http.post('/api/lmn/session/trans', {
-          command: command,
-          senders: senders,
-          receivers: receivers,
-          files: result.files,
-          session: sessioncomment
-        }).then(function(resp) {
-          $rootScope.$emit('updateWaiting', 'done');
-          console.log(resp);
-          return validateResult(resp);
-        });
       });
     };
     $scope.collectTrans = function(command, senders, receivers, sessioncomment) {
@@ -990,22 +962,8 @@
         }
       }).result.then(function(result) {
         if (result.response === 'accept') {
-          //return
-          $uibModal.open({
-            templateUrl: '/lmn_common:resources/partial/wait.modal.html',
-            controller: 'lmWaitController',
-            backdrop: 'static',
-            keyboard: false,
-            size: 'mg',
-            resolve: {
-              status: function() {
-                return gettext('Collecting files...');
-              },
-              style: function() {
-                return 'progressbar';
-              }
-            }
-          });
+          //return 
+          wait.modal(gettext('Collecting files...'), 'progressbar');
           if (command === 'copy') {
             $http.post('/api/lmn/session/trans', {
               command: command,

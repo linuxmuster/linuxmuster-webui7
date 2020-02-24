@@ -543,16 +543,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                     $scope.getParticipants(supervisor,session)
 
     $scope.saveApply = (username,participants, session, sessionName) ->
-                $uibModal.open(
-                    templateUrl: '/lmn_common:resources/partial/wait.modal.html'
-                    controller: 'lmWaitController'
-                    backdrop: 'static',
-                    keyboard: false
-                    size: 'mg'
-                    resolve:
-                        status: () -> gettext('Changes are applied...')
-                        style: () -> 'progressbar'
-                )
+                wait.modal(gettext('Changes are applied...'), 'progressbar')
                 $http.post('/api/lmn/session/sessions', {action: 'save-session',username: username, participants: participants, session: session, sessionName: sessionName}).then (resp) ->
                     # emit process is done
                     $rootScope.$emit('updateWaiting', 'done')
@@ -663,16 +654,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
               command: () -> command
         ).result.then (result) ->
            if result.response is 'accept'
-                $uibModal.open(
-                   templateUrl: '/lmn_common:resources/partial/wait.modal.html'
-                   controller: 'lmWaitController'
-                   backdrop: 'static',
-                   keyboard: false
-                   size: 'mg'
-                   resolve:
-                      status: () -> gettext('Sharing files...')
-                      style: () -> 'progressbar'
-                )
+               wait.modal(gettext('Sharing files...'), 'progressbar')
                $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers, files: result.files, session: sessioncomment}).then (resp) ->
                    $rootScope.$emit('updateWaiting', 'done')
                    console.log (resp)
@@ -705,17 +687,8 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
               command: () -> command
         ).result.then (result) ->
             if result.response is 'accept'
-                #return
-                $uibModal.open(
-                   templateUrl: '/lmn_common:resources/partial/wait.modal.html'
-                   controller: 'lmWaitController'
-                   backdrop: 'static',
-                   keyboard: false
-                   size: 'mg'
-                   resolve:
-                      status: () -> gettext('Collecting files...')
-                      style: () -> 'progressbar'
-                )
+                #return 
+                wait.modal(gettext('Collecting files...'), 'progressbar')
                 if command is 'copy'
                     $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers, files: result.files, session: sessioncomment}).then (resp) ->
                         $rootScope.$emit('updateWaiting', 'done')

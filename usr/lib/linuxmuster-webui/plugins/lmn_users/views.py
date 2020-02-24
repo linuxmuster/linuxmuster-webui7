@@ -240,8 +240,12 @@ class Handler(HttpPlugin):
             if 'USER' in result.keys():
                 teachers = result['USER']
                 for teacher, details in teachers.items():
-                    details['sophomorixStatus'] = self.userStatus[details['sophomorixStatus']]
-                    teachersList.append(details)
+                    # TODO: This is a bad and dirty fix. When used teachers:list there is no sophomorixStatus key, so we skip this in that case
+                    if 'sophomorixStatus' in details.keys():
+                        details['sophomorixStatus'] = self.userStatus[details['sophomorixStatus']]
+                        teachersList.append(details)
+                    else:
+                        teachersList.append(details)
                 return teachersList
             else:
                 return ["none"]

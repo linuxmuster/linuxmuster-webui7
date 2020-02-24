@@ -49,9 +49,14 @@
 
 
         <table class="table" style="width:100%">
-            <tr><th> </th>
-                <th width="120"> Login </th>
-                <th> Name </th></tr>
+            <tr>
+                <th> </th>
+                <th width="120"> Login</th>
+                <th> Name </th>
+                <th ng:show="teachersQuota"> </th>
+                <th> </th>
+                <th> </th>
+            </tr>
 
             <tr ng:repeat="teacher in teachers|filter:filter|orderBy:['-_isNew', sort.fx]|page:paging.page:paging.pageSize" ng:show="teacher.class[0] != '#'">
 
@@ -64,6 +69,9 @@
                 </td>
                 <td>
                     <b>{{teacher.givenName}}</b> <br> {{teacher.sn}}
+                </td>
+                <td ng:show="teachersQuota" width="200">
+                    <smart-progress type="{{teachersQuota[teacher.sAMAccountName].USED > teachersQuota[teacher.sAMAccountName].SOFTLIMIT ? 'danger' : 'warning' }}" value="teachersQuota[teacher.sAMAccountName].USED" max="100"></smart-progress>
                 </td>
                 <td width="1">
                     <span  uib-dropdown class="dropup" >
@@ -129,5 +137,6 @@
             <button ng:click="batchSetInitialPassword()" ng:show="haveSelection()" class="btn btn-default btn-flat pull-right" translate>Set initial password for selected</button>
             <button ng:click="batchSetRandomPassword()" ng:show="haveSelection()" class="btn btn-default btn-flat pull-right" translate>Set random password for selected</button>
             <button ng:click="batchSetCustomPassword()" ng:show="haveSelection()" class="btn btn-default btn-flat pull-right" translate>Set custom password for selected</button>
+            <button ng:click="getQuotas()" class="btn btn-default btn-flat pull-right" translate>Show quota</button>
             <br>
     </div>

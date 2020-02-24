@@ -119,7 +119,13 @@ html body.customized .btn-flat {
 html body.customized *[checkbox].active i.on {
   color: #233c4c;
 }
-html body.customized smart-progress .progress .progress-bar {
+html body.customized smart-progress .progress .progress-bar-warning {
+  background: #DC6D1D;
+}
+html body.customized smart-progress .progress .progress-bar-danger {
+  background: #d9534a;
+}
+html body.customized smart-progress .progress .progress-bar-success {
   background: #ffab40;
 }
 html body.customized progress-spinner .one {
@@ -291,5 +297,11 @@ ul.leaders span + span {
 }
 .lmn-container-list-separated > div > div {
   margin-left: 10px;
+}
+.sessiontime {
+  color: #ffab40;
+  font-size: 10px;
+  margin-right: -134px;
+  margin-top: 40px;
 }
 

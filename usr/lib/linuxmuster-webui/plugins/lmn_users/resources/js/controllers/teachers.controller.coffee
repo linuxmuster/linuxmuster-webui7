@@ -49,6 +49,13 @@ angular.module('lm.users').controller 'LMUsersTeachersController', ($scope, $htt
               user: () -> user
               type: () -> type
         )
+    $scope.teachersQuota = false
+    $scope.getQuotas = () ->
+        teacherList = (t.sAMAccountName for t in $scope.teachers)
+        $http.post('/api/lm/users/get-group-quota',{groupList: teacherList}).then (resp) ->
+            $scope.teachersQuota = resp.data
+            console.log($scope.teachersQuota)
+
 
     $scope.setInitialPassword = (user) ->
        $http.post('/api/lm/users/password', {users: (x['sAMAccountName'] for x in user), action: 'set-initial'}).then (resp) ->

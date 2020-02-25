@@ -148,7 +148,7 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_subnet(self, http_context):
         school = 'default-school'
-        path = '/etc/linuxmuster/subnets-dev.csv'
+        path = '/etc/linuxmuster/subnets.csv'
         fieldnames = [
             'network',
             'routerIp',

@@ -262,7 +262,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($sco
             return true
 
 
-angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController', ($scope, $http, $uibModal, gettext, notify, pageTitle, messagebox, validation) ->
+angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController', ($scope, $http, identity, $uibModal, gettext, notify, pageTitle, messagebox, validation) ->
 
     pageTitle.set(gettext('Enrolle'))
     $scope.types = {
@@ -352,6 +352,8 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
             if resp['data'][0] == 'LOG'
                 notify.success gettext(resp['data'][1])
                 $scope.resetClass()
+                identity.init().then () ->
+                  $scope.getGroups($scope.identity.user)
             if resp.data == 0
                 notify.success gettext("Nothing changed")
 

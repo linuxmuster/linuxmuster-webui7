@@ -396,7 +396,7 @@
     };
   });
 
-  angular.module('lmn.groupmembership').controller('LMNGroupMembershipController', function($scope, $http, $uibModal, gettext, notify, pageTitle, messagebox, validation) {
+  angular.module('lmn.groupmembership').controller('LMNGroupMembershipController', function($scope, $http, identity, $uibModal, gettext, notify, pageTitle, messagebox, validation) {
     pageTitle.set(gettext('Enrolle'));
     $scope.types = {
       schoolclass: {
@@ -520,6 +520,9 @@
         if (resp['data'][0] === 'LOG') {
           notify.success(gettext(resp['data'][1]));
           $scope.resetClass();
+          identity.init().then(function() {
+            return $scope.getGroups($scope.identity.user);
+          });
         }
         if (resp.data === 0) {
           return notify.success(gettext("Nothing changed"));

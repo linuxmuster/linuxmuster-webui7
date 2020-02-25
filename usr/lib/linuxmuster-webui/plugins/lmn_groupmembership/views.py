@@ -38,7 +38,7 @@ class Handler(HttpPlugin):
                     membersToAdd = []
                     membersToRemove = []
                     if username in groupAdmins or isAdmin or user_details['sophomorixAdminClass'] in groupAdmingroups:
-                        for user, details in members.iteritems():
+                        for user, details in members.items():
                                 if details['membership'] is True:
                                     membersToAdd.append(user)
                                 else:
@@ -77,9 +77,9 @@ class Handler(HttpPlugin):
                     classes = []
                     students_per_class = {cl: [] for cl in result.keys()}
                     students = {}
-                    for cl, student in result.iteritems():
+                    for cl, student in result.items():
                         classes.append({'name': cl, 'isVisible': 0})
-                        for login, details in student.iteritems():
+                        for login, details in student.items():
                             if details['sophomorixRole'] == 'student':
                                 students_per_class[cl].append(details)
                                 details['membership'] = dn in details['memberOf']

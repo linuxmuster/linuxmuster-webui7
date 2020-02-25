@@ -63,7 +63,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
         # convert python list we get from AD to dict
         if ldappermissions[0][1]: # is false if no values in SophomorixUserPermissions
             for b in ldappermissions[0][1]['sophomorixWebuiPermissionsCalculated']:
-                i = b.split(b': ')
+                i = b.decode('utf-8').split(': ')
                 try:
                     i[1]
                     if i[1] == 'false': # translate strings to real bool values

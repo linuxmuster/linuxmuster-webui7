@@ -1,6 +1,8 @@
 *.pyc
 .*.swp
 .idea*
+.installed
 .crowdin.key
+tests/e2e/authconfig.json
 usr/lib/linuxmuster-webui/plugins/extra_*
 usr/lib/linuxmuster-webui/plugins/ni_*

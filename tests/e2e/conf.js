@@ -1,11 +1,14 @@
 exports.config = {
   seleniumAddress: 'http://localhost:4444/wd/hub',
-  specs: ['global-admin.js'],
   multiCapabilities: [{
-        'browserName': 'firefox',
+      browserName: 'firefox',
+      specs: ['global-admin.js','teacher.js'],
+      maxInstances: 2,
     }, {
-        'browserName': 'chrome',
-    }]
+      browserName: 'chrome',
+      specs: ['global-admin.js', 'teacher.js'],
+      maxInstances: 2,
+  }],
 };
 
 

@@ -15,9 +15,12 @@
     });
   });
 
-  angular.module('lm.settings').controller('LMSettingsController', function($scope, $location, $http, $uibModal, gettext, notify, pageTitle, lmFileBackups) {
+  angular.module('lm.settings').controller('LMSettingsController', function($scope, $location, $http, $uibModal, messagebox, gettext, notify, pageTitle, lmFileBackups) {
     var tag;
     pageTitle.set(gettext('Settings'));
+    $scope.trans = {
+      remove: gettext('Remove')
+    };
     $scope.tabs = ['general', 'listimport', 'quota', 'printing'];
     tag = $location.$$url.split("#")[1];
     if (tag && indexOf.call($scope.tabs, tag) >= 0) {
@@ -68,12 +71,33 @@
       $scope.encoding = encoding;
       return $scope.settings = resp.data;
     });
+    $http.get('/api/lm/subnets').then(function(resp) {
+      return $scope.subnets = resp.data;
+    });
     // $http.get('/api/lm/schoolsettings/school-share').then (resp) ->
     //     $scope.schoolShareEnabled = resp.data
 
     // $scope.setSchoolShare = (enabled) ->
     //     $scope.schoolShareEnabled = enabled
     //     $http.post('/api/lm/schoolsettings/school-share', enabled)
+    $scope.removeSubnet = function(subnet) {
+      return messagebox.show({
+        text: gettext('Are you sure you want to delete permanently this subnet ?'),
+        positive: gettext('Delete'),
+        negative: gettext('Cancel')
+      }).then(function() {
+        return $scope.subnets.remove(subnet);
+      });
+    };
+    $scope.addSubnet = function() {
+      return $scope.subnets.push({
+        'routerIp': '',
+        'network': '',
+        'beginRange': '',
+        'endRange': '',
+        'setupFlag': ''
+      });
+    };
     $scope.save = function() {
       return $http.post('/api/lm/schoolsettings', $scope.settings).then(function() {
         return notify.success(gettext('Saved'));
@@ -90,7 +114,6 @@
       });
     };
     $scope.saveApplyQuota = function() {
-      console.log('test');
       $http.post('/api/lm/schoolsettings', $scope.settings).then(function() {
         return notify.success(gettext('Saved'));
       });
@@ -98,6 +121,11 @@
         templateUrl: '/lmn_quotas:resources/partial/apply.modal.html',
         controller: 'LMQuotasApplyModalController',
         backdrop: 'static'
+      });
+    };
+    $scope.saveApplySubnets = function() {
+      return $http.post('/api/lm/subnets', $scope.subnets).then(function() {
+        return notify.success(gettext('Saved'));
       });
     };
     return $scope.backups = function() {

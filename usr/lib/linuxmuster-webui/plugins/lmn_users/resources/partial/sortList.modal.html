@@ -1,74 +1,85 @@
-<style>.modal-dialog {width: 1000px;} </style>
-<div  class="modal-header">
-    <h3 translate> Sort List</h3>
-</div>
-<div class="modal-body scrollable" style="height: 100%;">
-    <div class="alert alert-warning">
-        <i class="fa fa-info"></i> 
-        <span translate>Linuxmuster needs to know which column contains which userdata. This is mandatory for importing the CSV list.<br />Please set the column into the right order.</span>
-        <br>
-    </div>
+<style>
+.modal-dialog {
+    width: 95%;
+}
+.modal-body {
+    max-height: calc(100% - 40px);
+    overflow-y: scroll;
+}
+.csvData{
+    height: calc(60vh - 120px);
+    overflow-y: scroll;
+}
+</style>
 
-    <h4>Customizations</h4>
-    <div ng:show="userlist == 'students.csv'">
-    <label>CSV contains custom student ID attribute (optional)</label>
-    <span checkbox ng:model="customStudentID" ng:click="togglecustomField('id')" />
+<div class="modal-dialog">
+    <div  class="modal-header">
+        <h3 translate> Sort List</h3>
     </div>
-    <div ng:show="userlist == 'teachers.csv'">
-    <label>CSV contains custom teacher password attribute (optional)</label>
-    <span checkbox ng:model="customStudentID" ng:click="togglecustomField('password')" />
-    </div>
+    <div class="modal-body " style="height: 100%;">
+        <div class="alert alert-warning" >
+            <i class="fa fa-info"></i> 
+            <span translate>Linuxmuster needs to know which column contains which userdata. This is mandatory for importing the CSV list.<br />Please set the column into the right order.</span>
+            <br>
+        </div>
 
+        <h4 translate>Customizations</h4>
+        <div ng:show="userlist == 'students.csv'">
+            <labeltranslate >CSV contains custom student ID attribute (optional)</label>
+            <span checkbox ng:model="customStudentID" ng:click="togglecustomField('id')" />
+        </div>
+        <div ng:show="userlist == 'teachers.csv'">
+            <label translate>CSV contains custom teacher password attribute (optional)</label>
+            <span checkbox ng:model="customStudentID" ng:click="togglecustomField('password')" />
+        </div>
+        <div  sv:root   sv:on-sort="rebuildCSV()" >
+            <div sv:part="coloumnTitles"  style="
+            width: auto;
+            position:relative;
+            border: 1px solid #ccc;
+            white-space:nowrap;
+            border-radius: 5px;
+            min-height: 60px;
+            ">
+                <div class="csvData">
+                    <div sv:element ng:repeat="title in coloumnTitles"
+                     style="
+                     display: inline-block;
+                     padding: 10px 20px;
+                     background: white;
+                     border: 2px solid #ccc;
+                     border-radius: 3px;
+                     margin: 3px;
+                     min-width: 200px;
+                     " ng:style="{
+                     'border-color': 'orange'
+                     }">
+                        <b>{{title.name}}</b>
+
+                    </div>
+                    <br />
+                    <div  ng:repeat="coloumn in userListCSV"
+                     style="
+                     display: inline-block;
+                     padding: 10px 20px;
+                     background: white;
+                     border: 2px solid #ccc;
+                     border-radius: 1px;
+                     margin: 3px;
+                     min-width: 200px;
+                     ">
+                        <div ng:repeat="data in coloumn.data track by $index">
+                            <span ng:if="data">{{data}}</span>
+                            <span ng:if="!data">&nbsp;</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <progress-spinner ng:show="isWorking"></progress-spinner>
+        </div>
+    </div>
     <div class="modal-footer">
         <button class="btn btn-default btn-flat" ng:click="close()" translate>Abort</button>
         <button class="btn btn-default btn-flat" ng:click="accept()" translate>Accept Sorting</button>
     </div>
-
-    <div class="scrollable" sv:root  has-relative-parent=".modal-content" sv:on-sort="rebuildCSV()" style="overflow-x: auto; white-space: nowrap" >
-        <div sv:part="coloumnTitles"  style="
-        overflow-x:scroll;
-        width: auto;
-        position:relative;
-        border: 1px solid #ccc;
-        white-space:nowrap;
-        border-radius: 5px;
-        min-height: 60px;
-        ">
-            <div sv:element ng:repeat="title in coloumnTitles"
-                                    style="
-                                    display: inline-block;
-                                    padding: 10px 20px;
-                                    background: white;
-                                    border: 2px solid #ccc;
-                                    border-radius: 3px;
-                                    margin: 3px;
-                                    min-width: 200px;
-                                    " ng:style="{
-                                    'border-color': 'orange'
-                                    }">
-                <b>{{title.name}}</b>
-
-            </div>
-            <br />
-            <div  ng:repeat="coloumn in userListCSV"
-                                    style="
-                                    display: inline-block;
-                                    padding: 10px 20px;
-                                    background: white;
-                                    border: 2px solid #ccc;
-                                    border-radius: 1px;
-                                    margin: 3px;
-                                    min-width: 200px;
-                                    ">
-                <div ng:repeat="data in coloumn.data track by $index">
-                    <span ng:if="data">{{data}}</span>
-                    <span ng:if="!data">&nbsp;</span>
-                </div>
-            </div>
-        </div>
-            <progress-spinner ng:show="isWorking"></progress-spinner>
-</div>
-<div class="modal-footer">
-    <button class="btn btn-default btn-flat" ng:click="close()" translate>Abort</button>
-    <button class="btn btn-default btn-flat" ng:click="accept()" translate>Accept Sorting</button>
 </div>

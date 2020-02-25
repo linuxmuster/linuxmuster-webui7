@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-23 20:23+0100\n"
-"PO-Revision-Date: 2020-02-23 20:02\n"
+"POT-Creation-Date: 2020-02-24 20:23+0100\n"
+"PO-Revision-Date: 2020-02-25 11:02\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -15,7 +15,7 @@ msgstr ""
 "X-Crowdin-Language: de\n"
 "X-Crowdin-File: /2.0/lmn_common.po\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:148
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:149
 msgid "A bootstrap error has occured"
 msgstr "Ein Bootstrap-Fehler ist aufgetreten"
 
@@ -44,7 +44,7 @@ msgstr "Datei hier hin schieben um sie zu importieren"
 msgid "Elevate"
 msgstr "Erhöhen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:131
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:132
 msgid "Enter"
 msgstr "Eintreten"
 
@@ -56,15 +56,15 @@ msgstr "Ausloggen"
 msgid "No backups available"
 msgstr "Keine Sicherungen vorhanden"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:172
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:173
 msgid "OK"
 msgstr "OK"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:151
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:152
 msgid "Please see browser console"
 msgstr "Bitte schauen Sie in die Browser Konsole"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:127
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:128
 msgid "Quick search"
 msgstr "Schnellsuche"
 
@@ -76,9 +76,9 @@ msgstr "Speichern"
 msgid "School Console"
 msgstr "Schulkonsole"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/wait.modal.html:2
-msgid "{{status}}"
-msgstr "{{status}}"
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:101
+msgid "Session time : {{ counter[0] }}:{{ counter[1] }}:{{ counter[2] }}"
+msgstr "Sitzungszeit: {{ counter[0] }}:{{ counter[1] }}:{{ counter[2] }}"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/api.py:37
 msgid "Access refused."

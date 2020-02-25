@@ -19,8 +19,9 @@ import filecmp
 from aj.auth import AuthenticationService
 
 ALLOWED_PATHS = [
-                '/etc/linuxmuster/sophomorix/', # used for school.conf or *.csv in lmn_settings, lmn_devices and lmn_users
-                '/srv/linbo',                   # used in lmn_linbo for start.conf
+                '/etc/linuxmuster/sophomorix/',     # used for school.conf or *.csv in lmn_settings, lmn_devices and lmn_users
+                '/srv/linbo',                       # used in lmn_linbo for start.conf
+                '/etc/linuxmuster/subnets-dev.csv'  # used in lmn_settings for subnets configuration
                 ]
 
 def check_allowed_path(path):

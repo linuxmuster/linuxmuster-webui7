@@ -240,7 +240,7 @@ class Handler(HttpPlugin):
             if 'USER' in result.keys():
                 teachers = result['USER']
                 for teacher, details in teachers.items():
-                    details['sophomorixStatus'] = self.userStatus[details['sophomorixStatus']]
+                    details['sophomorixStatus'] = self.userStatus[details['sophomorixStatus']] if 'sophomorixStatus' in details.keys() else None
                     teachersList.append(details)
                 return teachersList
             else:
@@ -604,5 +604,33 @@ class Handler(HttpPlugin):
     @authorize('lm:users:passwords')
     @endpoint(api=True)
     def handle_api_users_test_password(self, http_context, name):
+        """Check if first password is still set."""
         line = subprocess.check_output(['sophomorix-passwd', '--test-firstpassword', '-u', name]).splitlines()[-4]
         return '1 OK' in line
+
+    @url(r'/api/lm/users/get-group-quota')
+    @authorize('lm:users:passwords')
+    @endpoint(api=True)
+    def handle_group_quota(self, http_context):
+        """Get samba share limits for a group list."""
+        if http_context.method == 'POST':
+            groupList = http_context.json_body()['groupList']
+            sophomorixCommand = ['sophomorix-quota', '--smbcquotas-only', '-i', '--user', ','.join(groupList),'-jj']
+            result = lmn_getSophomorixValue(sophomorixCommand, 'QUOTA/USERS')
+
+            quotaMap = {}
+            # Only read default-school for the moment, must be maybe adapted later
+            for user in groupList:
+                share = result[user]["SHARES"]['default-school']['smbcquotas']
+                if int(share['HARDLIMIT_MiB']) == share['HARDLIMIT_MiB']:
+                    # Avoid strings for non set quotas
+                    quotaMap[user] = {
+                        "USED": int(float(share['USED_MiB']) / share['HARDLIMIT_MiB'] * 100),
+                        "SOFTLIMIT": int(float(share['SOFTLIMIT_MiB']) / share['HARDLIMIT_MiB'] * 100),
+                    }
+                else:
+                    quotaMap[user] = {
+                        "USED": 0,
+                        "SOFTLIMIT": 0,
+                    }
+            return quotaMap

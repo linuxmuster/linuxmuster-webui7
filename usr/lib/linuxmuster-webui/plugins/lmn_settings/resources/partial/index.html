@@ -55,6 +55,17 @@
             </td>
         </tr>
     </table>
+    <h3 translate>Printserver </h3>
+    <table class="lm-table lm-table-padded">
+        <tr>
+            <td width=25%>
+                <label translate>Printserver</label>
+            </td>
+            <td>
+                <input type="text" class="form-control" placeholder="{{'default: server'|translate}}" ng:model="settings.school.printserver" />
+            </td>
+        </tr>
+    </table>
 
     </uib:tab>
 
@@ -373,13 +384,56 @@
     </table>
 
     </uib:tab>
+    <uib:tab heading="{{'Subnets'|translate}}">
+        <h2 translate>List of subnets</h2>
+        <div class="alert alert-danger" translate>
+            <i class="fa fa-warning "></i>
+            Change this values with high precaution ! A wrong value may completely block your network !
+        </div>
+        <table class="table">
+            <tr>
+                <th translate>Network / Prefix</th>
+                <th translate>Ip router</th>
+                <th translate>Begin lease range</th>
+                <th translate>End lease range</th>
+                <th translate>Setup flag</th>
+            </tr>
+            <tr ng:repeat="subnet in subnets">
+                <td>
+                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="subnet.network" placeholder="Network" class="form-control" />
+                </td>
+                <td>
+                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="subnet.routerIp" placeholder="Ip router" class="form-control" />
+                </td>
+                <td>
+                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="subnet.beginRange" placeholder="Begin lease range" class="form-control" />
+                </td>
+                <td>
+                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="subnet.endRange" placeholder="End lease range" class="form-control" />
+                </td>
+                <td>
+                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="subnet.setupFlag" placeholder="Setup flag" class="form-control" />
+                </td>
+                <td width="1">
+                    <button class="btn btn-default" ng:click="removeSubnet(subnet)" title={{trans.remove}}>
+                        <i class="fa fa-trash-o"></i>
+                    </button>
+                </td>
+            </tr>
+        </table>
+
+        <button class="btn btn-default" ng:click="addSubnet()">
+            <i class="fa fa-plus"></i> <span translate>Add a subnet</span>
+        </button>
+    </uib:tab>
     </uib:tabset>
 
     <div class="floating-toolbar-padder"></div>
     <floating-toolbar>
         <button ng:click="backups()" class="btn btn-default btn-flat pull-right"><i class="fa fa-history"></i></button>
-        <button ng:click="save()" class="btn btn-default btn-flat" translate>Save</button>
+        <button ng-show="activetab <= 3" ng:click="save()" class="btn btn-default btn-flat" translate>Save</button>
         <button ng-show="activetab == 0" ng:click="saveAndCheck()" class="btn btn-default btn-flat" translate>Save &amp; check</button>
         <button ng-show="activetab == 2" ng:click="saveApplyQuota()" class="btn btn-default btn-flat" translate>Save &amp; Apply Quota</button>
+        <button ng-show="activetab == 4" ng:click="saveApplySubnets()" class="btn btn-default btn-flat" translate>Save &amp; Apply Subnets</button>
     </floating-toolbar>
 </div>

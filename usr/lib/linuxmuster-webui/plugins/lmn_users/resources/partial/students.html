@@ -48,7 +48,7 @@
         </div>
         <table class="table" style="width:100%">
             <tr><th> </th>
-                <th width="120"> <span translate> Loginname / Class </span> </th>
+                <th width="120"> <span translate> Login / Class </span> </th>
                 <th> Name </th></tr>
             <tr ng:repeat="student in students|filter:filter|orderBy:['-_isNew', sort.fx]|page:paging.page:paging.pageSize" ng:show="student.class[0] != '#'">
                 <td width="30" style="text-align:center;">

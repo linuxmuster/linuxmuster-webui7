@@ -4,8 +4,12 @@ angular.module('lm.settings').config ($routeProvider) ->
         templateUrl: '/lmn_settings:resources/partial/index.html'
 
 
-angular.module('lm.settings').controller 'LMSettingsController', ($scope, $location, $http, $uibModal, gettext, notify, pageTitle, lmFileBackups) ->
+angular.module('lm.settings').controller 'LMSettingsController', ($scope, $location, $http, $uibModal, messagebox, gettext, notify, pageTitle, lmFileBackups) ->
     pageTitle.set(gettext('Settings'))
+
+    $scope.trans = {
+        remove: gettext('Remove')
+    }
 
     $scope.tabs = ['general', 'listimport', 'quota', 'printing']
 
@@ -53,12 +57,24 @@ angular.module('lm.settings').controller 'LMSettingsController', ($scope, $locat
 
     $http.get('/api/lm/subnets').then (resp) ->
         $scope.subnets = resp.data
+
     # $http.get('/api/lm/schoolsettings/school-share').then (resp) ->
     #     $scope.schoolShareEnabled = resp.data
 
     # $scope.setSchoolShare = (enabled) ->
     #     $scope.schoolShareEnabled = enabled
     #     $http.post('/api/lm/schoolsettings/school-share', enabled)
+
+    $scope.removeSubnet = (subnet) ->
+        messagebox.show({
+            text: gettext('Are you sure you want to delete permanently this subnet ?'),
+            positive: gettext('Delete'),
+            negative: gettext('Cancel')
+        }).then () ->
+            $scope.subnets.remove(subnet)
+
+    $scope.addSubnet = () ->
+        $scope.subnets.push({'routerIp':'', 'network':'', 'beginRange':'', 'endRange':'', 'setupFlag':''})
 
     $scope.save = () ->
         $http.post('/api/lm/schoolsettings', $scope.settings).then () ->
@@ -84,7 +100,6 @@ angular.module('lm.settings').controller 'LMSettingsController', ($scope, $locat
         )
 
     $scope.saveApplySubnets = () ->
-        console.log($scope.subnets)
         $http.post('/api/lm/subnets', $scope.subnets).then () ->
             notify.success gettext('Saved')
 

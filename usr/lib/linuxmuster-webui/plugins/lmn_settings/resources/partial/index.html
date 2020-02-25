@@ -414,8 +414,17 @@
                 <td>
                     <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="subnet.setupFlag" placeholder="Setup flag" class="form-control" />
                 </td>
+                <td width="1">
+                    <button class="btn btn-default" ng:click="removeSubnet(subnet)" title={{trans.remove}}>
+                        <i class="fa fa-trash-o"></i>
+                    </button>
+                </td>
             </tr>
         </table>
+
+        <button class="btn btn-default" ng:click="addSubnet()">
+            <i class="fa fa-plus"></i> <span translate>Add a subnet</span>
+        </button>
     </uib:tab>
     </uib:tabset>
 

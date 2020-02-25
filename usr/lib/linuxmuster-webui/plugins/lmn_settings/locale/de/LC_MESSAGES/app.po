@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-23 20:23+0100\n"
-"PO-Revision-Date: 2020-02-23 20:02\n"
+"POT-Creation-Date: 2020-02-24 20:23+0100\n"
+"PO-Revision-Date: 2020-02-25 11:02\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -15,15 +15,15 @@ msgstr ""
 "X-Crowdin-Language: de\n"
 "X-Crowdin-File: /2.0/lmn_settings.po\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:367
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:378
 msgid "Admin e-mail"
 msgstr "Admin E-Mail"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:290
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:301
 msgid "Cloudquota Percentage"
 msgstr "Cloudquota in Prozent"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:229
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:240
 msgid "Detected encoding"
 msgstr "Erkannter Zeichensatz"
 
@@ -31,15 +31,19 @@ msgstr "Erkannter Zeichensatz"
 msgid "Email Domain"
 msgstr "E-Mail Domäne"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:197
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:208
 msgid "Encoding"
 msgstr "Zeichenkodierung"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:343
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:354
 msgid "External FQDN for printing"
 msgstr "Externer FQDN für den Druck"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:101
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:36
+msgid "FQDN SSL certificate file"
+msgstr "FQDN SSL Zertifikatsdatei"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:112
 msgid "Firstname Chars"
 msgstr "Vornamen Zeichen"
 
@@ -48,7 +52,7 @@ msgstr "Vornamen Zeichen"
 msgid "General"
 msgstr "Allgemein"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:336
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:347
 msgid "Internal FQDN for printing"
 msgstr "Interner FQDN für den Druck"
 
@@ -56,31 +60,35 @@ msgstr "Interner FQDN für den Druck"
 msgid "Language"
 msgstr "Sprache"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:208
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:219
 msgid "List encoding"
 msgstr "Listenkodierung"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:61
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:72
 msgid "Listimport"
 msgstr "Listenimport"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:359
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:370
 msgid "MOODLE URL"
 msgstr "MOODLE URL"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:304
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:315
 msgid "Mailquota Default in MiB"
 msgstr "Mailquota Standard in MiB"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:115
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:17
+msgid "Max session time"
+msgstr "Maximale Sitzungsdauer"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:126
 msgid "Password Length"
 msgstr "Passwortlänge"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:129
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:140
 msgid "Password length"
 msgstr "Passwortlänge"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:322
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:333
 msgid "Password printing data"
 msgstr "Passwort Druckdaten"
 
@@ -92,40 +100,45 @@ msgstr "Primäre Gruppe Adminclass"
 msgid "Primary Group Teacherclass"
 msgstr "Primäre Gruppe Teacherclass"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:321
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:332
 msgid "Printing data"
 msgstr "Druck-Daten"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:250
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:252
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:58
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:62
+msgid "Printserver"
+msgstr "Druckserver"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:261
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:263
 msgid "Quota"
 msgstr "Quota"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:262
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:273
 msgid "Quota Default Global in MiB"
 msgstr "Standardquota (global) in MiB"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:276
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:287
 msgid "Quota Default School in MiB"
 msgstr "Standardquota (Schule) in MiB"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:143
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:154
 msgid "Random password"
 msgstr "Zufallspasswort"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:172
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:183
 msgid "Removal after departure (days)"
 msgstr "Tage bis zum endgültigen Löschen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:186
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:197
 msgid "Replace slash(/) in classname by hypen(-)"
 msgstr "Ersetze Schrägstrich(/) in Klassenname durch Bindestrich(-)"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:41
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:58
 msgid "Restart WebUI"
 msgstr "Schulkonsole neu starten"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:73
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:84
 msgid "Reverse Surname and Firstname in username"
 msgstr "Nachname und Vorname im Benutzernamen umkehren"
 
@@ -137,32 +150,32 @@ msgstr "Rolle Schüler"
 msgid "Role Teachers"
 msgstr "Rolle Lehrer"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:20
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:28
 msgid "SSL certificate file"
 msgstr "SSL-Zertifikats-Datei"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:351
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:362
 msgid "Samba domain for printing"
 msgstr "Domänen-Name"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:40
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:381
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:57
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:392
 msgid "Save"
 msgstr "Speichern"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:383
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:394
 msgid "Save &amp; Apply Quota"
 msgstr "Speichern &amp; Quota übernehmen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:382
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:393
 msgid "Save &amp; check"
 msgstr "Speichern &amp; Prüfen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:328
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:339
 msgid "School name"
 msgstr "Schulname"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:258
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:269
 msgid "Schooladministrator"
 msgstr "Schuladministrator"
 
@@ -170,27 +183,31 @@ msgstr "Schuladministrator"
 msgid "Schoolname"
 msgstr "Schulname"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:256
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:67
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:267
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:78
 msgid "Students"
 msgstr "Schüler"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:87
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:98
 msgid "Surname Characters"
 msgstr "Nachname Zeichen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:257
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:68
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:268
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:79
 msgid "Teachers"
 msgstr "Lehrer"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:158
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:169
 msgid "Tolerance after departure (days)"
 msgstr "Tage bis zum Deaktivieren nach Austreten"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:63
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:74
 msgid "Username and Passwords"
 msgstr "Benutzername und Passwörter"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:65
+msgid "default: server"
+msgstr "Standard: Server"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:30
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:38
@@ -199,19 +216,19 @@ msgstr "Benutzername und Passwörter"
 msgid "e.g.: linuxmuster.net"
 msgstr "z.B.: linuxmuster.net"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:69
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:80
 msgid "extrastudents"
 msgstr "Extraschüler"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:203
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:214
 msgid "extrastudents.csv encoding"
 msgstr "extrastudents.csv Kodierung"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:201
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:212
 msgid "students.csv encoding"
 msgstr "students.csv Kodierung"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:202
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:213
 msgid "teachers.csv encoding"
 msgstr "teachers.csv Kodierung"
 

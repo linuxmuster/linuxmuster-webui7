@@ -68,6 +68,9 @@
       $scope.encoding = encoding;
       return $scope.settings = resp.data;
     });
+    $http.get('/api/lm/subnets').then(function(resp) {
+      return $scope.subnets = resp.data;
+    });
     // $http.get('/api/lm/schoolsettings/school-share').then (resp) ->
     //     $scope.schoolShareEnabled = resp.data
 

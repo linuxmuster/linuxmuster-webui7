@@ -1,10 +1,11 @@
 # coding=utf-8
 import os
+import csv
 from jadi import component
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint
 from aj.auth import authorize
-from aj.plugins.lmn_common.api import lmn_write_configfile, lmn_getSophomorixValue
+from aj.plugins.lmn_common.api import lmn_write_configfile, lmn_getSophomorixValue, CSVSpaceStripper, lmn_write_csv
 from configparser import ConfigParser
 
 class IniParser(ConfigParser):
@@ -138,3 +139,27 @@ class Handler(HttpPlugin):
                 os.chmod(path, 0o3777)
             else:
                 os.chmod(path, 0o0700)
+
+    @url(r'/api/lm/subnets')
+    @authorize('lm:schoolsettings')
+    @endpoint(api=True)
+    def handle_api_subnet(self, http_context):
+        school = 'default-school'
+        path = '/etc/linuxmuster/subnets-dev.csv'
+        if http_context.method == 'GET':
+            fieldnames = [
+                'network',
+                'routerIp',
+                'beginRange',
+                'endRange',
+                'setupFlag',
+            ]
+            return list(
+                csv.DictReader(CSVSpaceStripper(open(path)), delimiter=';', fieldnames=fieldnames)
+            )
+        if http_context.method == 'POST':
+            data = http_context.json_body()
+            for item in data:
+                item.pop('_isNew', None)
+                item.pop('null', None)
+            lmn_write_csv(path, fieldnames, data)

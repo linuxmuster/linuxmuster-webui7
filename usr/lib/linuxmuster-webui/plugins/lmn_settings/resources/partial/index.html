@@ -384,6 +384,29 @@
     </table>
 
     </uib:tab>
+    <uib:tab heading="{{'Subnets'|translate}}">
+        <h2 translate>List of subnets</h2>
+        <div class="alert alert-danger" translate>
+            <i class="fa fa-warning "></i>
+            Change this values with high precaution ! A wrong value may completely block your network !
+        </div>
+        <table class="table">
+            <tr>
+                <th translate>Network / Prefix</th>
+                <th translate>Ip router</th>
+                <th translate>Begin lease range</th>
+                <th translate>End lease range</th>
+                <th translate>Setup flag</th>
+            </tr>
+            <tr ng:repeat="subnet in subnets">
+                <td>{{subnet.network}}</td>
+                <td>{{subnet.routerIp}}</td>
+                <td>{{subnet.beginRange}}</td>
+                <td>{{subnet.endRange}}</td>
+                <td>{{subnet.setupFlag}}</td>
+            </tr>
+        </table>
+    </uib:tab>
     </uib:tabset>
 
     <div class="floating-toolbar-padder"></div>

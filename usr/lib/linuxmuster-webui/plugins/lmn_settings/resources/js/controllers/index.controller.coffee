@@ -50,6 +50,9 @@ angular.module('lm.settings').controller 'LMSettingsController', ($scope, $locat
         $scope.encoding = encoding
         $scope.settings = resp.data
 
+
+    $http.get('/api/lm/subnets').then (resp) ->
+        $scope.subnets = resp.data
     # $http.get('/api/lm/schoolsettings/school-share').then (resp) ->
     #     $scope.schoolShareEnabled = resp.data
 

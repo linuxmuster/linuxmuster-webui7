@@ -399,11 +399,21 @@
                 <th translate>Setup flag</th>
             </tr>
             <tr ng:repeat="subnet in subnets">
-                <td>{{subnet.network}}</td>
-                <td>{{subnet.routerIp}}</td>
-                <td>{{subnet.beginRange}}</td>
-                <td>{{subnet.endRange}}</td>
-                <td>{{subnet.setupFlag}}</td>
+                <td>
+                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="subnet.network" placeholder="Network" class="form-control" />
+                </td>
+                <td>
+                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="subnet.routerIp" placeholder="Ip router" class="form-control" />
+                </td>
+                <td>
+                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="subnet.beginRange" placeholder="Begin lease range" class="form-control" />
+                </td>
+                <td>
+                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="subnet.endRange" placeholder="End lease range" class="form-control" />
+                </td>
+                <td>
+                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="subnet.setupFlag" placeholder="Setup flag" class="form-control" />
+                </td>
             </tr>
         </table>
     </uib:tab>
@@ -412,8 +422,9 @@
     <div class="floating-toolbar-padder"></div>
     <floating-toolbar>
         <button ng:click="backups()" class="btn btn-default btn-flat pull-right"><i class="fa fa-history"></i></button>
-        <button ng:click="save()" class="btn btn-default btn-flat" translate>Save</button>
+        <button ng-show="activetab <= 3" ng:click="save()" class="btn btn-default btn-flat" translate>Save</button>
         <button ng-show="activetab == 0" ng:click="saveAndCheck()" class="btn btn-default btn-flat" translate>Save &amp; check</button>
         <button ng-show="activetab == 2" ng:click="saveApplyQuota()" class="btn btn-default btn-flat" translate>Save &amp; Apply Quota</button>
+        <button ng-show="activetab == 4" ng:click="saveApplySubnets()" class="btn btn-default btn-flat" translate>Save &amp; Apply Subnets</button>
     </floating-toolbar>
 </div>

@@ -75,7 +75,6 @@ angular.module('lm.settings').controller 'LMSettingsController', ($scope, $locat
             notify.success gettext('Saved')
 
     $scope.saveApplyQuota = () ->
-        console.log('test')
         $http.post('/api/lm/schoolsettings', $scope.settings).then () ->
             notify.success gettext('Saved')
         $uibModal.open(
@@ -83,6 +82,11 @@ angular.module('lm.settings').controller 'LMSettingsController', ($scope, $locat
             controller: 'LMQuotasApplyModalController'
             backdrop: 'static'
         )
+
+    $scope.saveApplySubnets = () ->
+        console.log($scope.subnets)
+        $http.post('/api/lm/subnets', $scope.subnets).then () ->
+            notify.success gettext('Saved')
 
     $scope.backups = () ->
         school = "default-school"

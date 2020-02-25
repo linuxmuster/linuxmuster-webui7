@@ -93,7 +93,6 @@
       });
     };
     $scope.saveApplyQuota = function() {
-      console.log('test');
       $http.post('/api/lm/schoolsettings', $scope.settings).then(function() {
         return notify.success(gettext('Saved'));
       });
@@ -101,6 +100,12 @@
         templateUrl: '/lmn_quotas:resources/partial/apply.modal.html',
         controller: 'LMQuotasApplyModalController',
         backdrop: 'static'
+      });
+    };
+    $scope.saveApplySubnets = function() {
+      console.log($scope.subnets);
+      return $http.post('/api/lm/subnets', $scope.subnets).then(function() {
+        return notify.success(gettext('Saved'));
       });
     };
     return $scope.backups = function() {

@@ -235,21 +235,7 @@
         positive: gettext('Delete'),
         negative: gettext('Cancel')
       }).then(function() {
-        $uibModal.open({
-          templateUrl: '/lmn_common:resources/partial/wait.modal.html',
-          controller: 'lmWaitController',
-          backdrop: 'static',
-          keyboard: false,
-          size: 'mg',
-          resolve: {
-            status: function() {
-              return gettext('Deleting session...');
-            },
-            style: function() {
-              return 'spinner';
-            }
-          }
-        });
+        wait.modal(gettext('Deleting session...'), 'spinner');
         return $http.post('/api/lmn/session/sessions', {
           action: 'kill-sessions',
           session: session

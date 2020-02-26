@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.117-1) lmn7-testing; urgency=medium 
+
+  * Current snapshot build 2eef62bd57cb6859d2021eab53aa8b28b79ebc29
+   *     Fixed kill session waiting bug
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Feb 26 11:40:32 UTC 2020
+
 linuxmuster-webui7 (1.0.116-1) lmn7-testing; urgency=medium 
 
   * Current snapshot build 6f833a2fe1377de1cc8bebb21f2f87b0978108f4

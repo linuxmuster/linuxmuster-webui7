@@ -23,7 +23,7 @@ angular.module('lm.users').controller 'LMUsersGloballadminsController', ($scope,
 
     $scope.showInitialPassword = (user) ->
       $http.post('/api/lm/users/password', {users: ( x['sAMAccountName'] for x in user ), action: 'get'}).then (resp) ->
-          $http.post('/api/lm/users/test-first-password/' + user[0]['sAMAccountName']).then (response) ->
+          $http.get('/api/lm/users/test-first-password/' + user[0]['sAMAccountName']).then (response) ->
             if response.data == true
                 msg = gettext('Initial password (still set)')
             else

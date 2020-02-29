@@ -606,7 +606,7 @@ class Handler(HttpPlugin):
     def handle_api_users_test_password(self, http_context, name):
         """Check if first password is still set."""
         line = subprocess.check_output(['sophomorix-passwd', '--test-firstpassword', '-u', name]).splitlines()[-4]
-        return '1 OK' in line
+        return b'1 OK' in line
 
     @url(r'/api/lm/users/get-group-quota')
     @authorize('lm:users:passwords')

@@ -5,7 +5,7 @@ angular.module('lm.users').controller 'LMNUsersShowPasswordController', ($scope,
     $http.post('/api/lm/users/password', {users: user, action: 'get'}).then (resp) ->
         password = resp.data
         $scope.password = password
-        $http.post('/api/lm/users/test-first-password/' + user).then (response) ->
+        $http.get('/api/lm/users/test-first-password/' + user).then (response) ->
             if response.data == true
                 $scope.passwordStatus = gettext('Still Set')
             else

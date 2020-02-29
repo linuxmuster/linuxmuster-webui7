@@ -522,7 +522,7 @@
         })(),
         action: 'get'
       }).then(function(resp) {
-        return $http.post('/api/lm/users/test-first-password/' + user[0]['sAMAccountName']).then(function(response) {
+        return $http.get('/api/lm/users/test-first-password/' + user[0]['sAMAccountName']).then(function(response) {
           var msg;
           if (response.data === true) {
             msg = gettext('Initial password (still set)');
@@ -781,7 +781,7 @@
         })(),
         action: 'get'
       }).then(function(resp) {
-        return $http.post('/api/lm/users/test-first-password/' + user[0]['sAMAccountName']).then(function(response) {
+        return $http.get('/api/lm/users/test-first-password/' + user[0]['sAMAccountName']).then(function(response) {
           var msg;
           if (response.data === true) {
             msg = gettext('Initial password (still set)');
@@ -1709,7 +1709,7 @@
       var password;
       password = resp.data;
       $scope.password = password;
-      return $http.post('/api/lm/users/test-first-password/' + user).then(function(response) {
+      return $http.get('/api/lm/users/test-first-password/' + user).then(function(response) {
         if (response.data === true) {
           return $scope.passwordStatus = gettext('Still Set');
         } else {

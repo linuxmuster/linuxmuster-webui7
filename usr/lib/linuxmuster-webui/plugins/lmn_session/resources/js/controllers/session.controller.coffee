@@ -379,7 +379,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                         $scope.visible.participanttable = 'show'
 
     $scope.findUsers = (q) ->
-                return $http.get("/api/lmn/session/user-search?q=#{q}").then (resp) ->
+                return $http.post("/api/lmn/session/user-search", {q:q}).then (resp) ->
                             $scope.users = resp.data
                             return resp.data
 

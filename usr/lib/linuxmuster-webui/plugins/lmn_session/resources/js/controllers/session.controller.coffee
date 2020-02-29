@@ -187,16 +187,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                     messagebox.show(title: gettext('No Session selected'), text: gettext('You have to select a session first.'), positive: 'OK')
                     return
                 messagebox.show(text: gettext("Delete Session:  "+comment+" ?"), positive: gettext('Delete'), negative: gettext('Cancel')).then () ->
-                    $uibModal.open(
-                        templateUrl: '/lmn_common:resources/partial/wait.modal.html'
-                        controller: 'lmWaitController'
-                        backdrop: 'static',
-                        keyboard: false
-                        size: 'mg'
-                        resolve:
-                            status: () -> gettext('Deleting session...')
-                            style: () -> 'spinner'
-                    )
+                    wait.modal(gettext('Deleting session...'), 'spinner')
                     $http.post('/api/lmn/session/sessions', {action: 'kill-sessions', session: session}).then (resp) ->
                         $rootScope.$emit('updateWaiting', 'done')
                         #notify.success gettext('Session Deleted')

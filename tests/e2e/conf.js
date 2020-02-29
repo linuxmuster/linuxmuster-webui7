@@ -8,7 +8,11 @@ exports.config = {
       browserName: 'chrome',
       specs: ['global-admin.js', 'teacher.js'],
       maxInstances: 2,
-  }],
+  }
+  ],
+    jasmineNodeOpts: { // Let a lot of time for all promises
+    defaultTimeoutInterval: 100000000
+},
 };
 
 

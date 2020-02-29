@@ -112,7 +112,7 @@ class Handler(HttpPlugin):
         path = '/var/lib/linuxmuster/setup.ini'
         if http_context.method == 'GET':
             config = {}
-            for line in open(path):
+            for line in open(path, 'rb'):
                 line = line.decode('utf-8', errors='ignore')
                 line = line.split('#')[0].strip()
 

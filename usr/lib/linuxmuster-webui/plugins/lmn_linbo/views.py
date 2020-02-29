@@ -222,5 +222,5 @@ class Handler(HttpPlugin):
                     content += '%s = %s\n' % (k, convert(v))
                 content += '\n'
 
-            lmn_write_configfile(path, content.encode('utf-8'))
+            lmn_write_configfile(path, content)
             os.chmod(path, 0o755)

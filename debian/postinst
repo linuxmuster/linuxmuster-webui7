@@ -6,14 +6,13 @@ case "$1" in
         ajcfg="/etc/ajenti/config.yml"
         wucfg="/etc/linuxmuster/webui/config.yml"
         webuietc="/usr/lib/linuxmuster-webui/etc"
+	python_version=$(basename $(readlink -f /usr/bin/python3))
      if [ ! -f $webuietc/.installed ];
       then
         # do first install
-        pip install -U pip wheel setuptools distribute
+        /usr/bin/python3 -m pip install -U pip wheel setuptools distribute
         hash -r
-        pip install -r $webuietc/requirements.txt
-        ## Preparation for Python 3
-        #python3 -m pip install -r $webuietc/requirements.txt
+        /usr/bin/python3 -m pip install -r $webuietc/requirements.txt
         #echo "link ajcfg to linuxmuster-webui folder"
         #ln -s $ajcfg $webuietc
         #rm /etc/ajenti/config.yml
@@ -33,7 +32,7 @@ case "$1" in
         fi
         # Set default permissions from true to false
         echo "Set reverse permissions"
-        sed -i "s/: True,/: False,/g" /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/main.py
+        sed -i "s/: True,/: False,/g" /usr/local/lib/$python_version/dist-packages/ajenti_plugin_core/main.py
 	# systemctl einrichten und starten
         echo "Configure systemctl.."
         systemctl daemon-reload
@@ -59,9 +58,7 @@ case "$1" in
 #    rm -rf /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/resources/build/
 #    cp -R /usr/lib/linuxmuster-webui/etc/core-build/* /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/resources/build/
     systemctl stop linuxmuster-webui
-    pip install -r $webuietc/requirements.txt -q
-    ## Preparation for Python 3
-    #python3 -m pip install -r $webuietc/requirements.txt
+    /usr/bin/python3 -m pip install -r $webuietc/requirements.txt -q
     # split ajenti config.yml from webui config.yml if necessary
     $webuietc/split_config_aj.py
     # Add fqdn_certificate in config.yml if not present - for update ajenti 2.1.33
@@ -70,9 +67,9 @@ case "$1" in
 	sed -i '/^\s\{2,\}certificate:/p;0,/^\s\{2,\}certificate:/ s/certificate/fqdn_certificate/' /etc/ajenti/config.yml
     fi
     # Set default permissions from true to false
-    if [ "$(cat /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/main.py | grep True | wc -l)" -gt 0 ] ;then
+    if [ "$(cat /usr/local/lib/$python_version/dist-packages/ajenti_plugin_core/main.py | grep True | wc -l)" -gt 0 ] ;then
         echo "Set reverse permissions"
-        sed -i "s/: True,/: False,/g" /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/main.py
+        sed -i "s/: True,/: False,/g" /usr/local/lib/$python_version/dist-packages/ajenti_plugin_core/main.py
         echo more
     fi
     echo "Set default sophomorix webui rights"

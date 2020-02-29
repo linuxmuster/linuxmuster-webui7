@@ -1,6 +1,6 @@
 # coding=utf-8
 import os
-import csv
+import unicodecsv as csv
 import subprocess
 import filecmp
 from datetime import datetime

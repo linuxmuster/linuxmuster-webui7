@@ -83,7 +83,8 @@ class CSVSpaceStripper:
         while nextline.startswith('#'):
             self.comments += nextline
             nextline = self.f.readline()
-        return nextline.strip()
+        # Reader is unicodecsv, which needs bytes
+        return nextline.encode('utf-8').strip()
         # return self.f.next().decode(self.encoding, errors='ignore').strip()
 
 
@@ -106,7 +107,7 @@ def lmn_write_csv(path, fieldnames, data, encoding='utf-8'):
 
     if check_allowed_path(path):
         tmp = path + '_tmp'
-        with open(tmp, 'w') as f:
+        with open(tmp, 'wb') as f:
             csv.DictWriter(
                 f,
                 delimiter=';',

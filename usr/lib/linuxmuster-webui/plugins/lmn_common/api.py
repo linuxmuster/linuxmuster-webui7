@@ -62,6 +62,8 @@ class CSVSpaceStripper:
     def __init__(self, file, encoding='utf-8'):
         self.f = file
         self.encoding = encoding
+        # TODO : use self.comments to write the comments again in the file after modification
+        self.comments = ""
 
     def close(self):
         self.f.close()
@@ -70,11 +72,18 @@ class CSVSpaceStripper:
         return self
 
     def next(self):
-        ## Ignore comments
-        nextline = self.f.next()
+        """For compatibility with PY2"""
+        return self.__next__()
+
+    def __next__(self):
+        ## Store comments in self.comments
+        nextline = self.f.readline()
+        if nextline == '':
+            raise StopIteration()
         while nextline.startswith('#'):
-            nextline = self.f.next()
-        return nextline.decode(encoding='utf-8', errors='ignore').strip()
+            self.comments += nextline
+            nextline = self.f.readline()
+        return nextline.strip()
         # return self.f.next().decode(self.encoding, errors='ignore').strip()
 
 

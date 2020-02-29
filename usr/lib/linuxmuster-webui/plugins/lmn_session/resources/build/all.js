@@ -492,7 +492,9 @@
       });
     };
     $scope.findUsers = function(q) {
-      return $http.get(`/api/lmn/session/user-search?q=${q}`).then(function(resp) {
+      return $http.post("/api/lmn/session/user-search", {
+        q: q
+      }).then(function(resp) {
         $scope.users = resp.data;
         return resp.data;
       });

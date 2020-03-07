@@ -1592,7 +1592,8 @@
       'F': 'Frozen (F)',
       'R': 'Removable (R)',
       'K': 'Killable (K)',
-      'X': 'Exam (X)'
+      'X': 'Exam (X)',
+      'M': 'Managed (M)'
     };
     $scope.status_filter = function(status) {
       if ($scope.user_status[status] === void 0) {

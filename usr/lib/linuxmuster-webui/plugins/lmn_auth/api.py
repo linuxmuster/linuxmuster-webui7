@@ -94,15 +94,33 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
     def get_isolation_uid(self, username):
         """Returns the uid of the user which will run each worker."""
-        # if username in ["root"]:
+        # if username in ["root"] or 'administrator' in username:
         #     # Root context on the server
         #     return 0
+        # params = lmconfig.data['linuxmuster']['ldap']
+        # searchFilter = "(&(cn=%s)(objectClass=user))" % username
+        # l = ldap.initialize('ldap://' + params['host'])
         # try:
-        #     # TODO : do this with LDAP
-        #     # TODO : get school as prefix
-        #     role = 'lmn7-' + lmn_user_details(username)['sophomorixRole']
+        #     l.set_option(ldap.OPT_REFERRALS, 0)
+        #     l.protocol_version = ldap.VERSION3
+        #     l.bind_s(params['binddn'], params['bindpw'])
+        # except Exception as e:
+        #     logging.error(str(e))
+        #     return False
+        # try:
+        #     res = l.search_s(params['searchdn'], ldap.SCOPE_SUBTREE, searchFilter)
+        #     userDN = res[0][0]
+        # except Exception as e:
+        #     # except ldap.LDAPError, e:
+        #     print(e)
+        # try:
+        #     role = userDN.split(',')[1].split('=')[1].lower()[:-1]
+        #     school = userDN.split(',')[2].split('=')[1]
+        #     school_prefix = '' if school == 'default-school' else school + '-'
+        #     posix_user = school_prefix + role
+        #     print('LA ' * 50, posix_user)
         #     # Return uid for defined role, e.g. teacher will returned uid from system user lmn7-teacher
-        #     return pwd.getpwnam(role).pw_uid
+        #     return pwd.getpwnam(posix_user).pw_uid
         # except:
         #     logging.error("Context user not found, running Webui as %s", 'nobody')
         #     return 65534

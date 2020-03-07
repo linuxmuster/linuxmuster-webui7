@@ -94,10 +94,18 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
     def get_isolation_uid(self, username):
         """Returns the uid of the user which will run each worker."""
-        ## To restrain the user context, this function must return something else as 0 ( root uid --> root context )
-        ## To run as www-data user, first get the uid : pwd.getpwnam('www-data').pw_uid ( mostly 33 )
-        ## and then return 33.
-        ## But this need some adaptations, because e.g. sophomorix-* can not be called as www-data
+        # if username in ["root"]:
+        #     # Root context on the server
+        #     return 0
+        # try:
+        #     # TODO : do this with LDAP
+        #     # TODO : get school as prefix
+        #     role = 'lmn7-' + lmn_user_details(username)['sophomorixRole']
+        #     # Return uid for defined role, e.g. teacher will returned uid from system user lmn7-teacher
+        #     return pwd.getpwnam(role).pw_uid
+        # except:
+        #     logging.error("Context user not found, running Webui as %s", 'nobody')
+        #     return 65534
         return 0
 
     def get_profile(self, username):

@@ -124,7 +124,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
        participanttable : 'none',
        sessiontable : 'none',
        sessionname : 'none',
-       mainpage: 'show'
+       mainpage: 'show',
     }
 
 

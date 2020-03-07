@@ -182,7 +182,7 @@
         </tr>
     </table>
 
-    <div ng:show="info.message != ''" class="alert alert-info">
+    <div ng:show="info.message != '' && classes.length == 0" class="alert alert-info">
         <i class="fa fa-info-circle"></i> <span>{{info.message}}</span>
     </div>
 
@@ -238,7 +238,7 @@
         </div>
 
         <!-- auto sessions -->
-        <div ng:show="visible.sessiontable == 'show'"  class="list-group">
+        <div ng:show="classes.length > 0 && !sessionLoaded"  class="list-group">
             <h4 translate>My Classes</h4>
 
         <div class="flex-container lmn-container-list" >

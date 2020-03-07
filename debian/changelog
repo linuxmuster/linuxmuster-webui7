@@ -1,3 +1,17 @@
+linuxmuster-webui7 (1.0.119-1) lmn7; urgency=medium 
+
+  * Current snapshot build b0f54953c4b31512f4d8f891e41bb3c44cb27ab2
+   *     temporary removed subnets from schoolsettings
+
+ -- Andreas Till <andreas.till@netzint.de> Tue Mar  3 14:57:28 UTC 2020
+
+linuxmuster-webui7 (1.0.118-1) lmn7-testing; urgency=medium 
+
+  * Current snapshot build 643a8daba67714daa8fde837ce1e32238f597cd1
+   *     Possible fix #117, works for me, must be tested again.
+
+ -- Andreas Till <andreas.till@netzint.de> Mon Mar  2 15:09:55 UTC 2020
+
 linuxmuster-webui7 (1.0.117-1) lmn7-testing; urgency=medium 
 
   * Current snapshot build 2eef62bd57cb6859d2021eab53aa8b28b79ebc29

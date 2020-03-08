@@ -89,15 +89,51 @@ class LMAuthenticationProvider(AuthenticationProvider):
     def change_password(self, username, password, new_password):
         if not self.authenticate(username, password):
             raise Exception('Wrong password')
+        # Activate with user context
+        # systemString = ['sudo', 'sophomorix-passwd', '--user', username, '--pass', new_password, '--hide', '--nofirstpassupdate', '--use-smbpasswd']
         systemString = ['sophomorix-passwd', '--user', username, '--pass', new_password, '--hide', '--nofirstpassupdate', '--use-smbpasswd']
         subprocess.check_call(systemString, shell=False)
 
     def get_isolation_uid(self, username):
         """Returns the uid of the user which will run each worker."""
-        ## To restrain the user context, this function must return something else as 0 ( root uid --> root context )
-        ## To run as www-data user, first get the uid : pwd.getpwnam('www-data').pw_uid ( mostly 33 )
-        ## and then return 33.
-        ## But this need some adaptations, because e.g. sophomorix-* can not be called as www-data
+
+        # if username in ["root"] or 'administrator' in username:
+        #     # Root context on the server
+        #     return 0
+        #
+        # params = lmconfig.data['linuxmuster']['ldap']
+        # searchFilter = "(&(cn=%s)(objectClass=user))" % username
+        # l = ldap.initialize('ldap://' + params['host'])
+        #
+        # try:
+        #     l.set_option(ldap.OPT_REFERRALS, 0)
+        #     l.protocol_version = ldap.VERSION3
+        #     l.bind_s(params['binddn'], params['bindpw'])
+        # except Exception as e:
+        #     logging.error(str(e))
+        #     return False
+        #
+        # try:
+        #     res = l.search_s(params['searchdn'], ldap.SCOPE_SUBTREE, searchFilter)
+        #     userDN = res[0][0]
+        # except Exception as e:
+        #     # except ldap.LDAPError, e:
+        #     print(e)
+        #
+        # try:
+        #     if 'Teacher' in userDN:
+        #         role = userDN.split(',')[1].split('=')[1].lower()[:-1]
+        #         school = userDN.split(',')[2].split('=')[1]
+        #     else:
+        #         role = userDN.split(',')[2].split('=')[1].lower()[:-1]
+        #         school = userDN.split(',')[3].split('=')[1]
+        #     school_prefix = '' if school == 'default-school' else school + '-'
+        #     posix_user = school_prefix + role
+        #     # Return uid for defined role, e.g. teacher will returned uid from system user lmn7-teacher
+        #     return pwd.getpwnam(posix_user).pw_uid
+        # except:
+        #     logging.error("Context user not found, running Webui as %s", 'nobody')
+        #     return 65534
         return 0
 
     def get_profile(self, username):

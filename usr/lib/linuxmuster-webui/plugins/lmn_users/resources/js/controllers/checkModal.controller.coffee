@@ -31,6 +31,7 @@ angular.module('lm.users').controller 'LMUsersCheckResultsModalController', ($sc
         'R' : 'Removable (R)',
         'K' : 'Killable (K)',
         'X' : 'Exam (X)',
+        'M' : 'Managed (M)',
     }
 
     $scope.status_filter = (status) ->

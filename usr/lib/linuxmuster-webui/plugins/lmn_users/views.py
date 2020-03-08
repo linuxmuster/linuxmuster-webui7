@@ -29,6 +29,7 @@ class Handler(HttpPlugin):
         'R' : {'tag':'Removable', 'color':'danger'},
         'K' : {'tag':'Killable', 'color':'danger'},
         'X' : {'tag':'Exam', 'color':'danger'},
+        'M' : {'tag':'Managed', 'color': 'info'},
     }
 
     @url(r'/api/lmn/sophomorixUsers/import-list')
@@ -240,7 +241,10 @@ class Handler(HttpPlugin):
             if 'USER' in result.keys():
                 teachers = result['USER']
                 for teacher, details in teachers.items():
-                    details['sophomorixStatus'] = self.userStatus[details['sophomorixStatus']] if 'sophomorixStatus' in details.keys() else None
+                    if details['sophomorixStatus'] in self.userStatus.keys():
+                        details['sophomorixStatus'] = self.userStatus[details['sophomorixStatus']]
+                    else:
+                        details['sophomorixStatus'] = {'tag': details['sophomorixStatus'], 'color': 'default'}
                     teachersList.append(details)
                 return teachersList
             else:
@@ -266,7 +270,10 @@ class Handler(HttpPlugin):
                     for student, details in students.items():
                         # TODO: get a better way to remove Birthay from user detail page
                         details['sophomorixBirthdate'] = 'hidden'
-                        details['sophomorixStatus'] = self.userStatus[details['sophomorixStatus']]
+                        if details['sophomorixStatus'] in self.userStatus.keys():
+                            details['sophomorixStatus'] = self.userStatus[details['sophomorixStatus']]
+                        else:
+                            details['sophomorixStatus'] = {'tag': details['sophomorixStatus'], 'color': 'default'}
                         studentsList.append(details)
                     return studentsList
                 else:
@@ -615,7 +622,7 @@ class Handler(HttpPlugin):
         """Get samba share limits for a group list."""
         if http_context.method == 'POST':
             groupList = http_context.json_body()['groupList']
-            sophomorixCommand = ['sophomorix-quota', '--smbcquotas-only', '-i', '--user', ','.join(groupList),'-jj']
+            sophomorixCommand = ['sophomorix-quota', '--smbcquotas-only', '-i', '--user', ','.join(groupList), '-jj']
             result = lmn_getSophomorixValue(sophomorixCommand, 'QUOTA/USERS')
 
             quotaMap = {}

@@ -19,7 +19,7 @@
             <label>Mail</label>
             <span checkbox ng:model="$ctrl.enableMail" />
             </br>
-            <input ng:if="$ctrl.enableMail" type="text" class="form-control" ng:model="$ctrl.ini.mailip" placeholder="e.g.: 10.0.0.3" />
+            <input ng:if="$ctrl.enableMail" type="text" class="form-control" ng:model="$ctrl.ini.mailip" placeholder="e.g.: 10.0.0.3:587 or 10.0.0.3" />
             <input ng:if="$ctrl.enableMail" type="text" class="form-control" ng:model="$ctrl.ini.smtprelay" placeholder="e.g.: mbox1.belwue.de" />
             <input ng:if="$ctrl.enableMail" type="text" class="form-control" ng:model="$ctrl.ini.smtpuser" placeholder="e.g.: smtpuser" />
             <input ng:if="$ctrl.enableMail" type="password" class="form-control" ng:model="$ctrl.ini.smtppw" placeholder="Password" />

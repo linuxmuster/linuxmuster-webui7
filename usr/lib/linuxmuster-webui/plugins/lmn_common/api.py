@@ -235,6 +235,10 @@ class SophomorixProcess(threading.Thread):
 def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
     """Get the response dict or value for a key after running a sophomorix command"""
 
+    uid = os.getuid()
+    if uid != 0:
+        sophomorixCommand = ['sudo'] + sophomorixCommand
+
     ## New Thread for one process to avoid conflicts
     t = SophomorixProcess(sophomorixCommand)
     t.daemon = True

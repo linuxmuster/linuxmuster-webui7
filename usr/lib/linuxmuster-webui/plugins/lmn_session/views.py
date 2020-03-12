@@ -182,13 +182,31 @@ class Handler(HttpPlugin):
 
             # Set managementgroups
             try:
-                sophomorixCommand = ['sophomorix-managementgroup',
-                                                '--wifi', wifiListCSV, '--nowifi', noWifiListCSV,
-                                                '--internet', internetListCSV, '--nointernet', noInternetListCSV,
-                                                '--intranet', intranetListCSV, '--nointranet',  noIntranetListCSV,
-                                                '--webfilter', webfilterListCSV, '--nowebfilter',  noWebfilterListCSV,
-                                                '--printing', printingListCSV, '--noprinting', noPrintingListCSV,
-                                                '-jj']
+                sophomorixCommand = ['sophomorix-managementgroup']
+
+                if wifiListCSV:
+                    sophomorixCommand += ['--wifi', wifiListCSV]
+                if noWifiListCSV:
+                    sophomorixCommand += ['--nowifi', noWifiListCSV]
+                if internetListCSV:
+                    sophomorixCommand += ['--internet', internetListCSV]
+                if noInternetListCSV:
+                    sophomorixCommand += ['--nointernet', noInternetListCSV]
+                if intranetListCSV:
+                    sophomorixCommand += ['--intranet', intranetListCSV]
+                if noIntranetListCSV:
+                    sophomorixCommand += ['--nointranet', noIntranetListCSV]
+                if webfilterListCSV:
+                    sophomorixCommand += ['--webfilter', webfilterListCSV]
+                if noWebfilterListCSV:
+                    sophomorixCommand += ['--nowebfilter', noWebfilterListCSV]
+                if printingListCSV:
+                    sophomorixCommand += ['--printing', printingListCSV]
+                if noPrintingListCSV:
+                    sophomorixCommand += ['--noprinting', noPrintingListCSV]
+
+                sophomorixCommand += ['-jj']
+
                 result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
             except Exception as e:
                 raise Exception('Error:\n' + str('sophomorix-managementgroup \

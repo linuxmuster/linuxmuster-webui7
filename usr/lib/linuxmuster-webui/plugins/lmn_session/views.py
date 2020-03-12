@@ -209,13 +209,7 @@ class Handler(HttpPlugin):
 
                 result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
             except Exception as e:
-                raise Exception('Error:\n' + str('sophomorix-managementgroup \
-                                                 --wifi "' + wifiListCSV + '" --nowifi "' + noWifiListCSV +
-                                                 '" --internet "' + internetListCSV + '" --nointernet "' + noInternetListCSV +
-                                                 '" --intranet "' + intranetListCSV + '" --nointranet "' + noIntranetListCSV +
-                                                 '" --webfilter "' + webfilterListCSV + '" --nowebfilter "' + noWebfilterListCSV +
-                                                 '" --printing "' + printingListCSV + '" --noprinting "' + noPrintingListCSV +
-                                                 '" -jj ') + "\n Error was: " + str(e))
+                raise Exception('Error:\n' + ' '.join(sophomorixCommand) + "\n Error was: " + str(e))
             # Save session members
 
             try:

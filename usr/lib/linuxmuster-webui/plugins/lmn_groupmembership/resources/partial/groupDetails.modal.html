@@ -51,12 +51,21 @@
         <div ng-show="showMemberDetails" class="panel-body">
             <h4 translate>Members</h4>
             <ul ng:if="members.length > 0" class="list-unstyled" style="column-width:300px;padding:0;">
-                <li ng:repeat="member in members|orderBy :['sophomorixAdminClass','sn']" class="cardlist">{{member.sn}} {{member.givenName}} <span style="position:absolute;right:10px;">{{member.sophomorixAdminClass}}</span></li>
+                <li ng:repeat="member in members|orderBy :['sophomorixAdminClass','sn']" class="cardlist">
+                    {{member.sn}} {{member.givenName}}
+                    <span style="position:absolute;right:50px;">{{member.sophomorixAdminClass}}</span>
+                    <i class="fas fa-trash pull-right" ng:click="removeMember(member)"></i>
+                    <i class="fas fa-arrow-up pull-right" ng:click="elevateMember(member)"></i>
+                </li>
             </ul>
             <span ng:if="members.length == 0" translate class="cardlist">No member</span>
             <h4 translate>Groups</h4>
             <ul ng:if="groupmemberlist.length > 0" class="list-unstyled" style="column-width:300px;padding:0;">
-                <li ng:repeat="group in groupmemberlist" class="cardlist">{{group}}</li>
+                <li ng:repeat="group in groupmemberlist" class="cardlist">
+                    {{group}}
+                    <i class="fas fa-trash pull-right" ng:click="removeGroup(group)"></i>
+                    <i class="fas fa-arrow-up pull-right" ng:click="elevateGroup(group)"></i>
+                </li>
             </ul>
             <span ng:if="groupmemberlist.length == 0" translate class="cardlist">No group</span>
         </div>
@@ -73,16 +82,39 @@
         <div ng-show="showAdminDetails" class="panel-body">
             <h4 translate>Admins</h4>
             <ul ng:if="admins.length > 0" class="list-unstyled" style="column-width:300px;padding:0;">
-                <li ng:repeat="admin in admins|orderBy :['sophomorixAdminClass','sn']" class="cardlist">{{admin.sn}} {{admin.givenName}} <span style="position:absolute;right:10px;">{{admin.sophomorixAdminClass}}</span></li>
+                <li ng:repeat="admin in admins|orderBy :['sophomorixAdminClass','sn']" class="cardlist">
+                    {{admin.sn}} {{admin.givenName}}
+                    <span style="position:absolute;right:50px;">{{admin.sophomorixAdminClass}}</span>
+                    <i class="fas fa-trash pull-right" ng:click="removeAdmin(admin)"></i>
+                    <i class="fas fa-arrow-down pull-right" ng:click="demoteMember(admin)"></i>
+                </li>
             </ul>
             <span ng:if="admins.length == 0" translate class="cardlist">No admin</span>
             <h4 translate>Groups</h4>
             <ul ng:if="groupadminlist.length > 0" class="list-unstyled" style="column-width:300px;padding:0;">
-                <li ng:repeat="group in groupadminlist" class="cardlist">{{group}}</li>
+                <li ng:repeat="group in groupadminlist" class="cardlist">
+                    {{group}}
+                    <i class="fas fa-trash pull-right" ng:click="removeAdminGroup(group)"></i>
+                    <i class="fas fa-arrow-down pull-right" ng:click="demoteGroup(group)"></i>
+                </li>
             </ul>
             <span ng:if="groupadminlist.length == 0" translate class="cardlist">No group</span>
         </div>
     </div>
+<!--    <dialog>-->
+<!--        <div class="modal-header">-->
+<!--            <h3 class="modal-title" translate>Add member</h3>-->
+<!--        </div>-->
+<!--        <div class="modal-body">-->
+<!--            <input type="text" placeholder="Search for group, student or teacher" ng:model="$parent._.addNewSpecial" typeahead-editable="false" typeahead-min-length="3" uib-typeahead="user as user.label for user in findUsers($viewValue)" class="form-control" autofocus />-->
+<!--        </div>-->
+<!--        <div class="modal-footer">-->
+<!--            <input type="checkbox"> </input><span>Add as admin</span>-->
+<!--            <a ng:click="$parent.UserSearchVisible = false" class="btn btn-default btn-flat" translate>-->
+<!--                Close-->
+<!--            </a>-->
+<!--        </div>-->
+<!--    </dialog>-->
     <br />
     <br />
 

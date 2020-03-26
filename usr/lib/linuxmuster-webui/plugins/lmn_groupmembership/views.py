@@ -270,3 +270,32 @@ class Handler(HttpPlugin):
                 return result['TYPE'], result['MESSAGE_EN']
             else:
                 return result['TYPE'], result['LOG']
+
+    @url(r'/api/lmn/groupmembership/membership')
+    @authorize('lmn:groupmembership')
+    @endpoint(api=True)
+    def handle_api_set_members(self, http_context):
+        """Manages the members of a project"""
+        if http_context.method == 'POST':
+            action  = http_context.json_body()['action']
+            project = http_context.json_body()['project']
+            entity = http_context.json_body()['entity']
+            possible_actions = [
+                'removemembers',
+                'addmembers',
+                'addadmins',
+                'removeadmins',
+                'addmembersgroups',
+                'removemembersgroups',
+                'addadmingroups',
+                'removeadmingroups',
+
+            ]
+            # TODO : check rights ?
+            if action in possible_actions:
+                sophomorixCommand = ['sophomorix-project',  '--'+action, entity, '--project', project, '-jj']
+                result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
+                if result['TYPE'] == "ERROR":
+                    return result['TYPE'], result['MESSAGE_EN']
+                else:
+                    return result['TYPE'], result['LOG']

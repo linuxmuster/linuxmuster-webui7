@@ -491,6 +491,44 @@
       $scope.removeMember(user);
       return $scope.addAdmin(user);
     };
+    $scope._ = {
+      addNewSpecial: null,
+      addasadmin: false
+    };
+    $scope.$watch('_.addNewSpecial', function() {
+      var user;
+      if ($scope._.addNewSpecial) {
+        user = $scope._.addNewSpecial;
+        $scope.addMember(user);
+        $scope._.addNewSpecial = null;
+        $scope.UserSearchVisible = false;
+        return notify.success(user.displayName + gettext(" added."));
+      }
+    });
+    $scope.findUsers = function(q) {
+      return $http.post("/api/lm/search-project", {
+        login: q,
+        type: 'user'
+      }).then(function(resp) {
+        return resp.data;
+      });
+    };
+    $scope.findGroups = function(q) {
+      return $http.post("/api/lm/search-project", {
+        login: q,
+        type: 'group'
+      }).then(function(resp) {
+        return resp.data;
+      });
+    };
+    $scope.findUsersGroup = function(q) {
+      return $http.post("/api/lm/search-project", {
+        login: q,
+        type: 'usergroup'
+      }).then(function(resp) {
+        return resp.data;
+      });
+    };
     $scope.groupType = groupType;
     $scope.getGroupDetails([groupType, groupName]);
     return $scope.close = function() {

@@ -299,3 +299,42 @@ class Handler(HttpPlugin):
                     return result['TYPE'], result['MESSAGE_EN']
                 else:
                     return result['TYPE'], result['LOG']
+
+    @url(r'/api/lm/search-project')
+    @authorize('lmn:groupmembership')
+    @endpoint(api=True)
+    def handle_api_search_project(self, http_context):
+        if http_context.method == 'POST':
+            # Problem with unicode In&egraves --> In\xe8s (py) --> In\ufffds (replace)
+            # Should be In&egraves --> Ines ( sophomorix supports this )
+            # login = http_context.json_body()['login'].decode('utf-8', 'replace')
+            login = http_context.json_body()['login']
+            type = http_context.json_body()['type']
+            resultArray = []
+            try:
+                if type == 'user':
+                    sophomorixCommand = ['sophomorix-query', '--anyname', login+'*', '-jj']
+                    result = lmn_getSophomorixValue(sophomorixCommand, 'USER')
+                elif type == 'usergroup':
+                    sophomorixCommand = ['sophomorix-query', '--sam', login+'*', '--group-members', '-jj']
+                    result = lmn_getSophomorixValue(sophomorixCommand, 'MEMBERS')
+                    if len(result) != 1:
+                        return []
+                    else:
+                        result = result[login]
+                elif type == 'group':
+                    sophomorixCommand = ['sophomorix-query', '--anyname', login+'*', '-jj']
+                    return lmn_getSophomorixValue(sophomorixCommand, 'LISTS/GROUP')
+
+                for user, details in result.items():
+                    resultArray.append({
+                            'label':details['sn'] + " " + details['givenName'] + " (" + user + ")",
+                            'sn': details['sn'],
+                            'givenName': details['givenName'],
+                            'login': details['sAMAccountName'],
+                            'sophomorixAdminClass': details['sophomorixAdminClass'],
+                            })
+            except:
+                # Ignore SophomorixValue errors
+                pass
+            return resultArray

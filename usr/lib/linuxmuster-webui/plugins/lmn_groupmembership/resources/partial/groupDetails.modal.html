@@ -101,20 +101,25 @@
             <span ng:if="groupadminlist.length == 0" translate class="cardlist">No group</span>
         </div>
     </div>
-<!--    <dialog>-->
-<!--        <div class="modal-header">-->
-<!--            <h3 class="modal-title" translate>Add member</h3>-->
-<!--        </div>-->
-<!--        <div class="modal-body">-->
-<!--            <input type="text" placeholder="Search for group, student or teacher" ng:model="$parent._.addNewSpecial" typeahead-editable="false" typeahead-min-length="3" uib-typeahead="user as user.label for user in findUsers($viewValue)" class="form-control" autofocus />-->
-<!--        </div>-->
-<!--        <div class="modal-footer">-->
-<!--            <input type="checkbox"> </input><span>Add as admin</span>-->
-<!--            <a ng:click="$parent.UserSearchVisible = false" class="btn btn-default btn-flat" translate>-->
-<!--                Close-->
-<!--            </a>-->
-<!--        </div>-->
-<!--    </dialog>-->
+    <dialog ng:show="UserSearchVisible">
+        <div class="modal-header">
+            <h3 class="modal-title" translate>Add member or group</h3>
+        </div>
+        <div class="modal-body">
+            <h4>Search for user</h4>
+            <input type="text" placeholder="Search for student or teacher" ng:model="$parent._.addNewSpecial" typeahead-editable="false" typeahead-min-length="3" uib-typeahead="user as user.label for user in findUsers($viewValue)" class="form-control" autofocus />
+            <h4>Search for student in class</h4>
+            <input type="text" placeholder="Please write the complete classname" ng:model="$parent._.addNewSpecial" typeahead-editable="false" typeahead-min-length="2" uib-typeahead="user as user.label for user in findUsersGroup($viewValue)" class="form-control" autofocus />
+            <h4>Search for group</h4>
+            <input type="text" placeholder="Search for groupname" ng:model="$parent._.addNewSpecial" typeahead-editable="false" typeahead-min-length="2" uib-typeahead="user for user in findGroups($viewValue)" class="form-control" autofocus />
+        </div>
+        <div class="modal-footer">
+            <input type="checkbox" ng:model="$parent._.addasadmin"> </input><span>Add as admin</span>
+            <a ng:click="$parent.UserSearchVisible = false" class="btn btn-default btn-flat" translate>
+                Close
+            </a>
+        </div>
+    </dialog>
     <br />
     <br />
 
@@ -122,5 +127,6 @@
     <div class="modal-footer">
         <a class="btn btn-default btn-flat pull-left" ng:show="groupDetails['sophomorixType'] == 'project' && editMembersButton" ng-click="killProject(groupName)" translate >Delete Project</a>
         <a class="btn btn-default btn-flat pull-right" ng:click="close()" translate>Close</a>
+        <a class="btn btn-default btn-flat pull-right" ng:click="UserSearchVisible = true" translate>Add member</a>
     </div>
 </div>

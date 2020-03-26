@@ -310,6 +310,29 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
             $scope.removeMember(user)
             $scope.addAdmin(user)
 
+        $scope._ =
+            addNewSpecial: null
+            addasadmin: false
+
+        $scope.$watch '_.addNewSpecial', () ->
+            if $scope._.addNewSpecial
+                user = $scope._.addNewSpecial
+                $scope.addMember(user)
+                $scope._.addNewSpecial = null
+                $scope.UserSearchVisible = false
+                notify.success(user.displayName + gettext(" added."))
+
+
+        $scope.findUsers = (q) ->
+            return $http.post("/api/lm/search-project", {login:q, type:'user'}).then (resp) ->
+                return resp.data
+        $scope.findGroups = (q) ->
+            return $http.post("/api/lm/search-project", {login:q, type:'group'}).then (resp) ->
+                return resp.data
+        $scope.findUsersGroup = (q) ->
+            return $http.post("/api/lm/search-project", {login:q, type:'usergroup'}).then (resp) ->
+                return resp.data
+
         $scope.groupType = groupType
         $scope.getGroupDetails ([groupType, groupName])
         $scope.close = () ->

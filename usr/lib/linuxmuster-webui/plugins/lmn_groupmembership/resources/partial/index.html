@@ -65,7 +65,7 @@
                 <span translate> There are no schoolclasses available. Ask the administrator to import students</span>
             </div>
             <div class="flex-container lmn-container-list">
-                <div ng:repeat="classe in classes|orderBy:[sort.fx]:sortReverse">
+                <div ng:repeat="classe in classes|orderBy:[sort.fx]:sortReverse|filter:filter">
                     <div>
                         <span id={{classe.groupname}} checkbox ng:model="classe.membership" ng:class="{changed: classe.changed}" ng-click='groupChanged(classe.groupname)'></span>
                         <i class="fa fa-users"></i>
@@ -86,7 +86,7 @@
                 <span translate> There are no printers configured yet. Ask your administrator to configure one.</span>
             </div>
             <div class="flex-container lmn-container-list" >
-                <div ng:repeat="printergroup in printers|orderBy:[sort.fx]:sortReverse">
+                <div ng:repeat="printergroup in printers|orderBy:[sort.fx]:sortReverse|filter:filter">
                     <div>
                         <span id={{printergroup.groupname}} checkbox ng:model="printergroup.membership" ng:class="{changed: printergroup.changed}" ng-click='groupChanged(printergroup.groupname)'></span>
                         <i class="fa fa-fw fa-print"></i>
@@ -107,7 +107,7 @@
                 <span translate> There are no projects yet. You can create a new project using the menu bar.</span>
             </div>
             <div class="flex-container lmn-container-list" >
-                <div ng:repeat="project in projects|orderBy:[sort.fx]:sortReverse">
+                <div ng:repeat="project in projects|orderBy:[sort.fx]:sortReverse|filter:filter">
                     <div ng:show="!projectIsHidden(project)">
                         <span id={{project.groupname}} checkbox ng:show="projectIsJoinable(project)" ng:class="{changed: project.changed}" ng:model="project.membership" ng-click='groupChanged(project.groupname)'></span>
                         <i class="fa fa-flask"></i>

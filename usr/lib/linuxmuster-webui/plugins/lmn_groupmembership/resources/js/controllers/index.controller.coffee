@@ -318,6 +318,8 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
         $scope.demoteMember = (user) ->
             $scope.removeAdmin(user)
             $scope.addMember(user)
+            if user.login == $scope.identity.user
+                $scope.editMembers = false
 
         $scope.elevateGroup = (group) ->
             $scope.removeMemberGroup(group)

@@ -210,6 +210,7 @@
     $scope.showMemberDetails = true;
     $scope.changeState = false;
     $scope.editGroup = false;
+    $scope.editMembers = false;
     $scope.hidetext = gettext("Hide");
     $scope.showtext = gettext("Show");
     $scope.changeJoin = function(group, type) {
@@ -497,7 +498,10 @@
     };
     $scope.demoteMember = function(user) {
       $scope.removeAdmin(user);
-      return $scope.addMember(user);
+      $scope.addMember(user);
+      if (user.login === $scope.identity.user) {
+        return $scope.editMembers = false;
+      }
     };
     $scope.elevateGroup = function(group) {
       $scope.removeMemberGroup(group);

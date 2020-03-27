@@ -19,71 +19,12 @@ class Handler(HttpPlugin):
         if http_context.method == 'POST':
             schoolname = 'default-school'
             with authorize('lmn:groupmemberships:write'):
-                if action == 'set-members':
-                    members = http_context.json_body()['members']
-                    groupName = http_context.json_body()['groupName']
-                    username = http_context.json_body()['username']
-                    membergroups = ",".join(http_context.json_body()['membergroups'])
-                    admingroups = ",".join(http_context.json_body()['admingroups'])
-
-                    admins = ",".join(http_context.json_body()['admins'])
-
-                    user_details = lmn_user_details(username)
-                    isAdmin = "administrator" in user_details['sophomorixRole']
-
-                    sophomorixCommand = ['sophomorix-project', '-i', '-p', groupName, '-jj']
-                    result = lmn_getSophomorixValue(sophomorixCommand, 'GROUPS/'+groupName)
-                    groupAdmins = result['sophomorixAdmins']
-                    groupAdmingroups = result['sophomorixAdminGroups']
-                    membersToAdd = []
-                    membersToRemove = []
-                    if username in groupAdmins or isAdmin or user_details['sophomorixAdminClass'] in groupAdmingroups:
-                        for user, details in members.iteritems():
-                                if details['membership'] is True:
-                                    membersToAdd.append(user)
-                                else:
-                                    membersToRemove.append(user)
-
-                        membersToAddCSV = ",".join(membersToAdd)
-                        membersToRemoveCSV = ",".join(membersToRemove)
-                        sophomorixCommand = ['sophomorix-project', '-p', groupName,
-                                             '--addmembers', membersToAddCSV,
-                                             '--removemembers', membersToRemoveCSV,
-                                             '--admins', admins,
-                                             '--admingroups', admingroups,
-                                             '--membergroups', membergroups,
-                                             '-jj']
-                        result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
-                        if result['TYPE'] == "ERROR":
-                            return result['TYPE']['LOG']
-                        # Try to return last result to frontend
-                        else:
-                            return result['TYPE'], result['LOG']
-                    else:
-                        # TODO: This should be done by sophomorix
-                        return ['ERROR', 'Permission Denied']
-
                 if action == 'get-specified':
                     groupName = http_context.json_body()['groupName']
                     sophomorixCommand = ['sophomorix-query', '--group-members', '--group-full', '--sam', groupName, '-jj']
                     groupDetails = lmn_getSophomorixValue(sophomorixCommand, '')
                     if not 'MEMBERS' in groupDetails.keys():
                         groupDetails['MEMBERS'] = {}
-
-                if action == 'get-students':
-                    dn = http_context.json_body()['dn']
-                    sophomorixCommand = ['sophomorix-query', '--group-members', '--class', '-jj']
-                    result = lmn_getSophomorixValue(sophomorixCommand, 'MEMBERS')
-                    classes = []
-                    students_per_class = {cl: [] for cl in result.keys()}
-                    students = {}
-                    for cl, student in result.iteritems():
-                        classes.append({'name': cl, 'isVisible': 0})
-                        for login, details in student.iteritems():
-                            if details['sophomorixRole'] == 'student':
-                                students_per_class[cl].append(details)
-                                details['membership'] = dn in details['memberOf']
-                                students[login] = details
 
                     return students_per_class, classes, students
 

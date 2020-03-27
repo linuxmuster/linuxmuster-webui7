@@ -209,7 +209,7 @@
     $scope.showAdminDetails = true;
     $scope.showMemberDetails = true;
     $scope.changeState = false;
-    $scope.editMembersButton = false;
+    $scope.editGroup = false;
     $scope.hidetext = gettext("Hide");
     $scope.showtext = gettext("Show");
     $scope.changeJoin = function(group, type) {
@@ -340,10 +340,13 @@
         // Admin or admin of the project can edit members of a project
         // Only admins can change hide and join option for a class
         if ($scope.identity.isAdmin) {
-          return $scope.editMembersButton = true;
-        } else if ((groupType === "project") && ($scope.adminList.indexOf($scope.identity.user) !== -1 || $scope.groupadminlist.indexOf($scope.identity.profile.sophomorixAdminClass) !== -1)) {
-          return $scope.editMembersButton = true;
+          $scope.editGroup = true;
+        } else if ($scope.adminList.indexOf($scope.identity.user) !== -1) {
+          $scope.editGroup = true;
+        } else if ($scope.groupadminlist.indexOf($scope.identity.profile.sophomorixAdminClass) !== -1) {
+          $scope.editGroup = true;
         }
+        return $scope.editMembers = $scope.editGroup && (groupType === 'project');
       });
     };
     $scope.addMember = function(user) {
@@ -362,6 +365,7 @@
       });
     };
     $scope.removeMember = function(user) {
+      $scope.changeState = true;
       return $http.post('/api/lmn/groupmembership/membership', {
         action: 'removemembers',
         entity: user.login,
@@ -374,11 +378,13 @@
         if (resp['data'][0] === 'LOG') {
           notify.success(gettext(resp['data'][1]));
           position = $scope.members.indexOf(user);
-          return $scope.members.splice(position, 1);
+          $scope.members.splice(position, 1);
+          return $scope.changeState = false;
         }
       });
     };
     $scope.addAdmin = function(user) {
+      $scope.changeState = true;
       return $http.post('/api/lmn/groupmembership/membership', {
         action: 'addadmins',
         entity: user.login,
@@ -389,11 +395,13 @@
         }
         if (resp['data'][0] === 'LOG') {
           notify.success(gettext(resp['data'][1]));
-          return $scope.admins.push(user);
+          $scope.admins.push(user);
+          return $scope.changeState = false;
         }
       });
     };
     $scope.removeAdmin = function(user) {
+      $scope.changeState = true;
       return $http.post('/api/lmn/groupmembership/membership', {
         action: 'removeadmins',
         entity: user.login,
@@ -406,11 +414,13 @@
         if (resp['data'][0] === 'LOG') {
           notify.success(gettext(resp['data'][1]));
           position = $scope.admins.indexOf(user);
-          return $scope.admins.splice(position, 1);
+          $scope.admins.splice(position, 1);
+          return $scope.changeState = false;
         }
       });
     };
     $scope.addMemberGroup = function(group) {
+      $scope.changeState = true;
       return $http.post('/api/lmn/groupmembership/membership', {
         action: 'addmembergroups',
         entity: group,
@@ -421,11 +431,13 @@
         }
         if (resp['data'][0] === 'LOG') {
           notify.success(gettext(resp['data'][1]));
-          return $scope.groupmemberlist.push(group);
+          $scope.groupmemberlist.push(group);
+          return $scope.changeState = false;
         }
       });
     };
     $scope.removeMemberGroup = function(group) {
+      $scope.changeState = true;
       return $http.post('/api/lmn/groupmembership/membership', {
         action: 'removemembergroups',
         entity: group,
@@ -438,11 +450,13 @@
         if (resp['data'][0] === 'LOG') {
           notify.success(gettext(resp['data'][1]));
           position = $scope.groupmemberlist.indexOf(group);
-          return $scope.groupmemberlist.splice(position, 1);
+          $scope.groupmemberlist.splice(position, 1);
+          return $scope.changeState = false;
         }
       });
     };
     $scope.addAdminGroup = function(group) {
+      $scope.changeState = true;
       return $http.post('/api/lmn/groupmembership/membership', {
         action: 'addadmingroups',
         entity: group,
@@ -453,11 +467,13 @@
         }
         if (resp['data'][0] === 'LOG') {
           notify.success(gettext(resp['data'][1]));
-          return $scope.groupadminlist.push(group);
+          $scope.groupadminlist.push(group);
+          return $scope.changeState = false;
         }
       });
     };
     $scope.removeAdminGroup = function(group) {
+      $scope.changeState = true;
       return $http.post('/api/lmn/groupmembership/membership', {
         action: 'removeadmingroups',
         entity: group,
@@ -470,7 +486,8 @@
         if (resp['data'][0] === 'LOG') {
           notify.success(gettext(resp['data'][1]));
           position = $scope.groupadminlist.indexOf(group);
-          return $scope.groupadminlist.splice(position, 1);
+          $scope.groupadminlist.splice(position, 1);
+          return $scope.changeState = false;
         }
       });
     };

@@ -428,7 +428,7 @@
     };
     $scope.removeMemberGroup = function(group) {
       return $http.post('/api/lmn/groupmembership/membership', {
-        action: 'removeadmingroups',
+        action: 'removemembergroups',
         entity: group,
         project: groupName
       }).then(function(resp) {
@@ -438,7 +438,7 @@
         }
         if (resp['data'][0] === 'LOG') {
           notify.success(gettext(resp['data'][1]));
-          position = $scope.groupadminlist.indexOf(group);
+          position = $scope.groupmemberlist.indexOf(group);
           return $scope.groupmemberlist.splice(position, 1);
         }
       });
@@ -492,17 +492,38 @@
       return $scope.addAdmin(user);
     };
     $scope._ = {
-      addNewSpecial: null,
+      addMember: null,
+      addGroup: null,
       addasadmin: false
     };
-    $scope.$watch('_.addNewSpecial', function() {
+    $scope.$watch('_.addMember', function() {
       var user;
-      if ($scope._.addNewSpecial) {
-        user = $scope._.addNewSpecial;
-        $scope.addMember(user);
-        $scope._.addNewSpecial = null;
+      if ($scope._.addMember) {
+        user = $scope._.addMember;
+        if ($scope._.addasadmin) {
+          $scope.addAdmin(user);
+        } else {
+          $scope.addMember(user);
+        }
+        $scope._.addMember = null;
+        $scope._.addasadmin = false;
         $scope.UserSearchVisible = false;
-        return notify.success(user.displayName + gettext(" added."));
+        return notify.success(user.label + gettext(" added."));
+      }
+    });
+    $scope.$watch('_.addGroup', function() {
+      var group;
+      if ($scope._.addGroup) {
+        group = $scope._.addGroup;
+        if ($scope._.addasadmin) {
+          $scope.addAdminGroup(group);
+        } else {
+          $scope.addMemberGroup(group);
+        }
+        $scope._.addGroup = null;
+        $scope._.addasadmin = false;
+        $scope.UserSearchVisible = false;
+        return notify.success(group.label + gettext(" added."));
       }
     });
     $scope.findUsers = function(q) {

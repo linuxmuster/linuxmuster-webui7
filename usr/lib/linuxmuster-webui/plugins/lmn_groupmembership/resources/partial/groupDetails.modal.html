@@ -63,7 +63,7 @@
             <ul ng:if="groupmemberlist.length > 0" class="list-unstyled" style="column-width:300px;padding:0;">
                 <li ng:repeat="group in groupmemberlist" class="cardlist">
                     {{group}}
-                    <i class="fas fa-trash pull-right" ng:click="removeGroup(group)"></i>
+                    <i class="fas fa-trash pull-right" ng:click="removeMemberGroup(group)"></i>
                     <i class="fas fa-arrow-up pull-right" ng:click="elevateGroup(group)"></i>
                 </li>
             </ul>
@@ -107,11 +107,11 @@
         </div>
         <div class="modal-body">
             <h4>Search for user</h4>
-            <input type="text" placeholder="Search for student or teacher" ng:model="$parent._.addNewSpecial" typeahead-editable="false" typeahead-min-length="3" uib-typeahead="user as user.label for user in findUsers($viewValue)" class="form-control" autofocus />
+            <input type="text" placeholder="Search for student or teacher" ng:model="$parent._.addMember" typeahead-editable="false" typeahead-min-length="3" uib-typeahead="user as user.label for user in findUsers($viewValue)" class="form-control" autofocus />
             <h4>Search for student in class</h4>
-            <input type="text" placeholder="Please write the complete classname" ng:model="$parent._.addNewSpecial" typeahead-editable="false" typeahead-min-length="2" uib-typeahead="user as user.label for user in findUsersGroup($viewValue)" class="form-control" autofocus />
+            <input type="text" placeholder="Please write the complete classname" ng:model="$parent._.addMember" typeahead-editable="false" typeahead-min-length="2" uib-typeahead="user as user.label for user in findUsersGroup($viewValue)" class="form-control" autofocus />
             <h4>Search for group</h4>
-            <input type="text" placeholder="Search for groupname" ng:model="$parent._.addNewSpecial" typeahead-editable="false" typeahead-min-length="2" uib-typeahead="user for user in findGroups($viewValue)" class="form-control" autofocus />
+            <input type="text" placeholder="Search for groupname" ng:model="$parent._.addGroup" typeahead-editable="false" typeahead-min-length="2" uib-typeahead="user for user in findGroups($viewValue)" class="form-control" autofocus />
         </div>
         <div class="modal-footer">
             <input type="checkbox" ng:model="$parent._.addasadmin"> </input><span>Add as admin</span>

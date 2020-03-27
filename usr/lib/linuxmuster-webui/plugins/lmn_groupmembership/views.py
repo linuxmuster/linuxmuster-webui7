@@ -285,8 +285,8 @@ class Handler(HttpPlugin):
                 'addmembers',
                 'addadmins',
                 'removeadmins',
-                'addmembersgroups',
-                'removemembersgroups',
+                'addmembergroups',
+                'removemembergroups',
                 'addadmingroups',
                 'removeadmingroups',
 
@@ -328,7 +328,7 @@ class Handler(HttpPlugin):
 
                 for user, details in result.items():
                     resultArray.append({
-                            'label':details['sn'] + " " + details['givenName'] + " (" + user + ")",
+                            'label':details['sophomorixAdminClass'] + " " + details['sn'] + " " + details['givenName'],
                             'sn': details['sn'],
                             'givenName': details['givenName'],
                             'login': details['sAMAccountName'],

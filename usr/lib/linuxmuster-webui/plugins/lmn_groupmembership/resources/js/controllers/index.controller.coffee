@@ -269,12 +269,12 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
                     $scope.groupmemberlist.push(group)
 
         $scope.removeMemberGroup = (group) ->
-            $http.post('/api/lmn/groupmembership/membership', {action: 'removeadmingroups', entity: group, project: groupName}).then (resp) ->
+            $http.post('/api/lmn/groupmembership/membership', {action: 'removemembergroups', entity: group, project: groupName}).then (resp) ->
                 if resp['data'][0] == 'ERROR'
                   notify.error (resp['data'][1])
                 if resp['data'][0] == 'LOG'
                   notify.success gettext(resp['data'][1])
-                  position = $scope.groupadminlist.indexOf(group)
+                  position = $scope.groupmemberlist.indexOf(group)
                   $scope.groupmemberlist.splice(position, 1)
 
         $scope.addAdminGroup = (group) ->
@@ -311,17 +311,33 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
             $scope.addAdmin(user)
 
         $scope._ =
-            addNewSpecial: null
+            addMember: null
+            addGroup: null
             addasadmin: false
 
-        $scope.$watch '_.addNewSpecial', () ->
-            if $scope._.addNewSpecial
-                user = $scope._.addNewSpecial
-                $scope.addMember(user)
-                $scope._.addNewSpecial = null
+        $scope.$watch '_.addMember', () ->
+            if $scope._.addMember
+                user = $scope._.addMember
+                if $scope._.addasadmin
+                  $scope.addAdmin(user)
+                else
+                  $scope.addMember(user)
+                $scope._.addMember = null
+                $scope._.addasadmin = false
                 $scope.UserSearchVisible = false
-                notify.success(user.displayName + gettext(" added."))
+                notify.success(user.label + gettext(" added."))
 
+        $scope.$watch '_.addGroup', () ->
+            if $scope._.addGroup
+                group = $scope._.addGroup
+                if $scope._.addasadmin
+                  $scope.addAdminGroup(group)
+                else
+                  $scope.addMemberGroup(group)
+                $scope._.addGroup = null
+                $scope._.addasadmin = false
+                $scope.UserSearchVisible = false
+                notify.success(group.label + gettext(" added."))
 
         $scope.findUsers = (q) ->
             return $http.post("/api/lm/search-project", {login:q, type:'user'}).then (resp) ->

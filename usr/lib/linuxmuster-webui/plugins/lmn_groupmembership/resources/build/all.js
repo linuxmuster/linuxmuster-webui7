@@ -209,6 +209,7 @@
     $scope.showAdminDetails = true;
     $scope.showMemberDetails = true;
     $scope.changeState = false;
+    $scope.editMembersButton = false;
     $scope.hidetext = gettext("Hide");
     $scope.showtext = gettext("Show");
     $scope.changeJoin = function(group, type) {
@@ -342,8 +343,6 @@
           return $scope.editMembersButton = true;
         } else if ((groupType === "project") && ($scope.adminList.indexOf($scope.identity.user) !== -1 || $scope.groupadminlist.indexOf($scope.identity.profile.sophomorixAdminClass) !== -1)) {
           return $scope.editMembersButton = true;
-        } else {
-          return $scope.editMembersButton = false;
         }
       });
     };

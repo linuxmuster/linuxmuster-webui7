@@ -141,6 +141,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
         $scope.showAdminDetails = true
         $scope.showMemberDetails = true
         $scope.changeState = false
+        $scope.editMembersButton = false
 
         $scope.hidetext = gettext("Hide")
         $scope.showtext = gettext("Show")
@@ -223,8 +224,6 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
                     $scope.editMembersButton = true
                 else if (groupType == "project") and ($scope.adminList.indexOf($scope.identity.user) != -1 or $scope.groupadminlist.indexOf($scope.identity.profile.sophomorixAdminClass) != -1)
                     $scope.editMembersButton = true
-                else
-                    $scope.editMembersButton = false
 
         $scope.addMember = (user) ->
             $http.post('/api/lmn/groupmembership/membership', {action: 'addmembers', entity: user.login, project: groupName}).then (resp) ->

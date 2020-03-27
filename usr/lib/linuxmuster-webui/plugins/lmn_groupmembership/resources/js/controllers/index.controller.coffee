@@ -142,7 +142,6 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
         $scope.showMemberDetails = true
         $scope.changeState = false
         $scope.editGroup = false
-        $scope.editMembers = false
 
         $scope.hidetext = gettext("Hide")
         $scope.showtext = gettext("Show")
@@ -223,11 +222,10 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
                 # Only admins can change hide and join option for a class
                 if $scope.identity.isAdmin
                     $scope.editGroup = true
-                else if ($scope.adminList.indexOf($scope.identity.user) != -1)
+                else if (groupType == 'project') and ($scope.adminList.indexOf($scope.identity.user) != -1)
                     $scope.editGroup = true
-                else if ($scope.groupadminlist.indexOf($scope.identity.profile.sophomorixAdminClass) != -1)
+                else if (groupType == 'project') and ($scope.groupadminlist.indexOf($scope.identity.profile.sophomorixAdminClass) != -1)
                     $scope.editGroup = true
-                $scope.editMembers = $scope.editGroup && (groupType == 'project')
 
         $scope.addMember = (user) ->
             $http.post('/api/lmn/groupmembership/membership', {action: 'addmembers', entity: user.login, project: groupName}).then (resp) ->

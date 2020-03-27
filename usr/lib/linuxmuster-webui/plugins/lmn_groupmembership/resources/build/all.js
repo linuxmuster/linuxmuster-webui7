@@ -210,7 +210,6 @@
     $scope.showMemberDetails = true;
     $scope.changeState = false;
     $scope.editGroup = false;
-    $scope.editMembers = false;
     $scope.hidetext = gettext("Hide");
     $scope.showtext = gettext("Show");
     $scope.changeJoin = function(group, type) {
@@ -341,13 +340,12 @@
         // Admin or admin of the project can edit members of a project
         // Only admins can change hide and join option for a class
         if ($scope.identity.isAdmin) {
-          $scope.editGroup = true;
-        } else if ($scope.adminList.indexOf($scope.identity.user) !== -1) {
-          $scope.editGroup = true;
-        } else if ($scope.groupadminlist.indexOf($scope.identity.profile.sophomorixAdminClass) !== -1) {
-          $scope.editGroup = true;
+          return $scope.editGroup = true;
+        } else if ((groupType === 'project') && ($scope.adminList.indexOf($scope.identity.user) !== -1)) {
+          return $scope.editGroup = true;
+        } else if ((groupType === 'project') && ($scope.groupadminlist.indexOf($scope.identity.profile.sophomorixAdminClass) !== -1)) {
+          return $scope.editGroup = true;
         }
-        return $scope.editMembers = $scope.editGroup && (groupType === 'project');
       });
     };
     $scope.addMember = function(user) {

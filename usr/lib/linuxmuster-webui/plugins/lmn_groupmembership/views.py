@@ -26,8 +26,6 @@ class Handler(HttpPlugin):
                     if not 'MEMBERS' in groupDetails.keys():
                         groupDetails['MEMBERS'] = {}
 
-                    return students_per_class, classes, students
-
             return groupDetails
 
     @url(r'/api/lmn/groupmembership')

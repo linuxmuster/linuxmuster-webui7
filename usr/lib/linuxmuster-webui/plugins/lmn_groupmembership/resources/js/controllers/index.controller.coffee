@@ -178,7 +178,11 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
                 .finally () ->
                     msg.close()
 
-        $scope.nevertext = gettext('Never')
+        $scope.text = {
+                'addAsAdmin' : gettext('Move to admin group'),
+                'removeFromAdmin' : gettext('Remove from admin group'),
+                'remove' : gettext('Remove')
+        }
 
         $scope.formatDate = (date) ->
             if (date == "19700101000000.0Z")
@@ -228,86 +232,141 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
                     $scope.editGroup = true
 
         $scope.addMember = (user) ->
-            $http.post('/api/lmn/groupmembership/membership', {action: 'addmembers', entity: user.login, project: groupName}).then (resp) ->
+            entity = ''
+            if Array.isArray(user)
+                for u in user
+                    if $scope.members.indexOf(u) < 0
+                        entity += u.login + ","
+                        console.log(entity)
+            else
+                if $scope.members.indexOf(user) < 0
+                    entity = user.login
+            if not entity
+                return
+            $scope.changeState = true
+            $http.post('/api/lmn/groupmembership/membership', {action: 'addmembers', entity: entity, project: groupName}).then (resp) ->
                 if resp['data'][0] == 'ERROR'
                     notify.error (resp['data'][1])
                 if resp['data'][0] == 'LOG'
                     notify.success gettext(resp['data'][1])
-                    $scope.members.push(user)
+                    if Array.isArray(user)
+                        $scope.members = $scope.members.concat(user.filter((u) -> $scope.members.indexOf(u) < 0))
+                    else
+                        $scope.members.push(user)
+                $scope.changeState = false
 
         $scope.removeMember = (user) ->
             $scope.changeState = true
             $http.post('/api/lmn/groupmembership/membership', {action: 'removemembers', entity: user.login, project: groupName}).then (resp) ->
                 if resp['data'][0] == 'ERROR'
-                  notify.error (resp['data'][1])
+                    notify.error (resp['data'][1])
                 if resp['data'][0] == 'LOG'
-                  notify.success gettext(resp['data'][1])
-                  position = $scope.members.indexOf(user)
-                  $scope.members.splice(position, 1)
-                  $scope.changeState = false
+                    notify.success gettext(resp['data'][1])
+                    position = $scope.members.indexOf(user)
+                    $scope.members.splice(position, 1)
+                $scope.changeState = false
 
         $scope.addAdmin = (user) ->
+            entity = ''
+            if Array.isArray(user)
+                for u in user
+                    if $scope.admins.indexOf(u) < 0
+                        entity += u.login + ","
+            else
+                if $scope.admins.indexOf(user) < 0
+                    entity = user.login
+            if not entity
+                return
             $scope.changeState = true
-            $http.post('/api/lmn/groupmembership/membership', {action: 'addadmins', entity: user.login, project: groupName}).then (resp) ->
+            $http.post('/api/lmn/groupmembership/membership', {action: 'addadmins', entity: entity, project: groupName}).then (resp) ->
                 if resp['data'][0] == 'ERROR'
                     notify.error (resp['data'][1])
                 if resp['data'][0] == 'LOG'
                     notify.success gettext(resp['data'][1])
-                    $scope.admins.push(user)
-                    $scope.changeState = false
+                   if Array.isArray(user)
+                        $scope.admins = $scope.admins.concat(user.filter((u) -> $scope.admins.indexOf(u) < 0))
+                    else
+                        $scope.admins.push(user)
+                $scope.changeState = false
 
         $scope.removeAdmin = (user) ->
             $scope.changeState = true
             $http.post('/api/lmn/groupmembership/membership', {action: 'removeadmins', entity: user.login, project: groupName}).then (resp) ->
                 if resp['data'][0] == 'ERROR'
-                  notify.error (resp['data'][1])
+                    notify.error (resp['data'][1])
                 if resp['data'][0] == 'LOG'
-                  notify.success gettext(resp['data'][1])
-                  position = $scope.admins.indexOf(user)
-                  $scope.admins.splice(position, 1)
-                  $scope.changeState = false
+                    notify.success gettext(resp['data'][1])
+                    position = $scope.admins.indexOf(user)
+                    $scope.admins.splice(position, 1)
+                $scope.changeState = false
 
         $scope.addMemberGroup = (group) ->
+            entity = ''
+            if Array.isArray(group)
+                for g in group
+                    if $scope.groupmemberlist.indexOf(g) < 0
+                        entity += g + ","
+            else
+                if $scope.groupmemberlist.indexOf(group) < 0
+                    entity = group
+            if not entity
+                return
             $scope.changeState = true
-            $http.post('/api/lmn/groupmembership/membership', {action: 'addmembergroups', entity: group, project: groupName}).then (resp) ->
+            $http.post('/api/lmn/groupmembership/membership', {action: 'addmembergroups', entity: entity, project: groupName}).then (resp) ->
                 if resp['data'][0] == 'ERROR'
                     notify.error (resp['data'][1])
                 if resp['data'][0] == 'LOG'
                     notify.success gettext(resp['data'][1])
-                    $scope.groupmemberlist.push(group)
-                    $scope.changeState = false
+                    if Array.isArray(group)
+                        $scope.groupmemberlist = $scope.groupmemberlist.concat(group.filter((g) -> $scope.groupmemberlist.indexOf(g) < 0))
+                    else
+                        $scope.groupmemberlist.push(group)
+                $scope.changeState = false
 
         $scope.removeMemberGroup = (group) ->
             $scope.changeState = true
             $http.post('/api/lmn/groupmembership/membership', {action: 'removemembergroups', entity: group, project: groupName}).then (resp) ->
                 if resp['data'][0] == 'ERROR'
-                  notify.error (resp['data'][1])
+                    notify.error (resp['data'][1])
                 if resp['data'][0] == 'LOG'
-                  notify.success gettext(resp['data'][1])
-                  position = $scope.groupmemberlist.indexOf(group)
-                  $scope.groupmemberlist.splice(position, 1)
-                  $scope.changeState = false
+                    notify.success gettext(resp['data'][1])
+                    position = $scope.groupmemberlist.indexOf(group)
+                    $scope.groupmemberlist.splice(position, 1)
+                $scope.changeState = false
 
         $scope.addAdminGroup = (group) ->
+            entity = ''
+            if Array.isArray(group)
+                for g in group
+                    if $scope.groupadminlist.indexOf(g) < 0
+                        entity += g + ","
+            else
+                if $scope.groupadminlist.indexOf(group) < 0
+                    entity = group
+            if not entity
+                return
             $scope.changeState = true
-            $http.post('/api/lmn/groupmembership/membership', {action: 'addadmingroups', entity: group, project: groupName}).then (resp) ->
+            $http.post('/api/lmn/groupmembership/membership', {action: 'addadmingroups', entity: entity, project: groupName}).then (resp) ->
                 if resp['data'][0] == 'ERROR'
                     notify.error (resp['data'][1])
                 if resp['data'][0] == 'LOG'
                     notify.success gettext(resp['data'][1])
-                    $scope.groupadminlist.push(group)
-                    $scope.changeState = false
+                    if Array.isArray(group)
+                        $scope.groupadminlist = $scope.groupadminlist.concat(group.filter((g) -> $scope.groupadminlist.indexOf(g) < 0))
+                    else
+                        $scope.groupadminlist.push(group)
+                $scope.changeState = false
 
         $scope.removeAdminGroup = (group) ->
             $scope.changeState = true
             $http.post('/api/lmn/groupmembership/membership', {action: 'removeadmingroups', entity: group, project: groupName}).then (resp) ->
                 if resp['data'][0] == 'ERROR'
-                  notify.error (resp['data'][1])
+                    notify.error (resp['data'][1])
                 if resp['data'][0] == 'LOG'
-                  notify.success gettext(resp['data'][1])
-                  position = $scope.groupadminlist.indexOf(group)
-                  $scope.groupadminlist.splice(position, 1)
-                  $scope.changeState = false
+                    notify.success gettext(resp['data'][1])
+                    position = $scope.groupadminlist.indexOf(group)
+                    $scope.groupadminlist.splice(position, 1)
+                $scope.changeState = false
 
         $scope.demoteGroup = (group) ->
             $scope.removeAdminGroup(group)
@@ -317,7 +376,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
             $scope.removeAdmin(user)
             $scope.addMember(user)
             if user.login == $scope.identity.user
-                $scope.editMembers = false
+                $scope.editGroup = false
 
         $scope.elevateGroup = (group) ->
             $scope.removeMemberGroup(group)
@@ -331,30 +390,31 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
             addMember: null
             addGroup: null
             addasadmin: false
+            newGroup: []
+            newUser: []
 
         $scope.$watch '_.addMember', () ->
             if $scope._.addMember
-                user = $scope._.addMember
-                if $scope._.addasadmin
-                  $scope.addAdmin(user)
-                else
-                  $scope.addMember(user)
+                $scope._.newUser.push($scope._.addMember)
                 $scope._.addMember = null
-                $scope._.addasadmin = false
-                $scope.UserSearchVisible = false
-                notify.success(user.label + gettext(" added."))
 
         $scope.$watch '_.addGroup', () ->
             if $scope._.addGroup
-                group = $scope._.addGroup
-                if $scope._.addasadmin
-                  $scope.addAdminGroup(group)
-                else
-                  $scope.addMemberGroup(group)
+                $scope._.newGroup.push($scope._.addGroup)
                 $scope._.addGroup = null
-                $scope._.addasadmin = false
-                $scope.UserSearchVisible = false
-                notify.success(group.label + gettext(" added."))
+
+        $scope.addEntities = () ->
+            $scope.UserSearchVisible = false
+            if $scope._.addasadmin
+                $scope.addAdmin($scope._.newUser)
+                $scope.addAdminGroup($scope._.newGroup)
+            else
+                $scope.addMember($scope._.newUser)
+                $scope.addMemberGroup($scope._.newGroup)
+            $scope._.newUser = []
+            $scope._.newGroup = []
+            $scope._.addasadmin = false
+
 
         $scope.findUsers = (q) ->
             return $http.post("/api/lm/search-project", {login:q, type:'user'}).then (resp) ->

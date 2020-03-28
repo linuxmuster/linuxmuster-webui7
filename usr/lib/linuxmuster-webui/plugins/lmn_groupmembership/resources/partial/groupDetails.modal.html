@@ -52,10 +52,10 @@
             <ul ng:if="admins.length > 0" class="list-unstyled" style="column-width:300px;padding:0;">
                 <li ng:repeat="admin in admins|orderBy :['sophomorixAdminClass','sn']" class="cardlist">
                     {{admin.sn}} {{admin.givenName}}
-                    <span class="cardbtn" ng:show="editMembers">
+                    <span class="cardbtn" ng:show="editGroup">
                         {{admin.sophomorixAdminClass}}
-                        <button class="cardbtn"><i class="fas fa-level-down-alt" ng:click="demoteMember(admin)"></i></button>
-                        <button class="cardbtn"><i class="fas fa-trash" g:click="removeAdmin(admin)"></i></button>
+                        <button class="cardbtn" title="{{text.removeFromAdmin}}"><i class="fas fa-level-down-alt" ng:click="demoteMember(admin)"></i></button>
+                        <button class="cardbtn" title="{{text.remove}}"><i class="fas fa-trash" ng:click="removeAdmin(admin)"></i></button>
                     </span>
                 </li>
             </ul>
@@ -64,9 +64,9 @@
             <ul ng:if="groupadminlist.length > 0" class="list-unstyled" style="column-width:300px;padding:0;">
                 <li ng:repeat="group in groupadminlist" class="cardlist">
                     {{group}}
-                   <span class="cardbtn" ng:show="editMembers">
-                        <button class="cardbtn"><i class="fas fa-level-down-alt" ng:click="demoteGroup(group)"></i></button>
-                        <button class="cardbtn"><i class="fas fa-trash" ng:click="removeAdminGroup(group)"></i></button>
+                   <span class="cardbtn" ng:show="editGroup">
+                        <button class="cardbtn" title="{{text.removeFromAdmin}}"><i class="fas fa-level-down-alt" ng:click="demoteGroup(group)"></i></button>
+                        <button class="cardbtn" title="{{text.remove}}"><i class="fas fa-trash" ng:click="removeAdminGroup(group)"></i></button>
                    </span>
                 </li>
             </ul>
@@ -87,10 +87,10 @@
             <ul ng:if="members.length > 0" class="list-unstyled" style="column-width:300px;padding:0;">
                 <li ng:repeat="member in members|orderBy :['sophomorixAdminClass','sn']" class="cardlist">
                     {{member.sn}} {{member.givenName}}
-                    <span class="cardbtn" ng:show="editMembers">
+                    <span class="cardbtn" ng:show="editGroup">
                         {{member.sophomorixAdminClass}}
-                        <button class="cardbtn"><i class="fas fa-level-up-alt" ng:click="elevateMember(member)"></i></button>
-                        <button class="cardbtn"><i class="fas fa-trash" ng:click="removeMember(member)"></i></button>
+                        <button class="cardbtn" title="{{text.addAsAdmin}}"><i class="fas fa-level-up-alt" ng:click="elevateMember(member)"></i></button>
+                        <button class="cardbtn" title="{{text.remove}}"><i class="fas fa-trash" ng:click="removeMember(member)"></i></button>
                     </span>
 <!--                    <span class="">{{member.sophomorixAdminClass}}</span>-->
                 </li>
@@ -100,9 +100,9 @@
             <ul ng:if="groupmemberlist.length > 0" class="list-unstyled" style="column-width:300px;padding:0;">
                 <li ng:repeat="group in groupmemberlist" class="cardlist">
                     {{group}}
-                    <span class="cardbtn" ng:show="editMembers">
-                        <button class="cardbtn"><i class="fas fa-level-up-alt " ng:click="elevateGroup(group)"></i></button>
-                        <button class="cardbtn"><i class="fas fa-trash" ng:click="removeMemberGroup(group)"></i></button>
+                    <span class="cardbtn" ng:show="editGroup">
+                        <button class="cardbtn" title="{{text.addAsAdmin}}"><i class="fas fa-level-up-alt " ng:click="elevateGroup(group)"></i></button>
+                        <button class="cardbtn" title="{{text.remove}}"><i class="fas fa-trash" ng:click="removeMemberGroup(group)"></i></button>
                     </span>
                 </li>
             </ul>
@@ -111,7 +111,7 @@
     </div>
     <dialog ng:show="UserSearchVisible">
         <div class="modal-header">
-            <h3 class="modal-title" translate>Add member or group</h3>
+            <h3 class="modal-title" translate>Add members and/or groups</h3>
         </div>
         <div class="modal-body">
             <h4>Search for user</h4>
@@ -120,19 +120,31 @@
             <input type="text" placeholder="Please write the complete classname" ng:model="$parent._.addMember" typeahead-editable="false" typeahead-min-length="2" uib-typeahead="user as user.label for user in findUsersGroup($viewValue)" class="form-control" autofocus />
             <h4>Search for group</h4>
             <input type="text" placeholder="Search for groupname" ng:model="$parent._.addGroup" typeahead-editable="false" typeahead-min-length="2" uib-typeahead="user for user in findGroups($viewValue)" class="form-control" autofocus />
+            <div ng:show="$parent._.newGroup.length + $parent._.newUser.length > 0">
+                <h3 translate>To add</h3>
+                <ul ng:show="$parent._.newGroup.length > 0">
+                    <li ng:repeat="group in $parent._.newGroup"><span translate>Group</span> {{group}}</li>
+                </ul>
+                <ul ng:show="$parent._.newUser.length > 0">
+                    <li ng:repeat="user in $parent._.newUser"><span translate>User</span> {{user.sn}} {{user.givenName}} {{user.sophomorixAdminClass}}</li>
+                </ul>
+            </div>
         </div>
         <div class="modal-footer">
             <input type="checkbox" ng:model="$parent._.addasadmin"> </input><span>Add as admin</span>
+            <a ng:click="$parent.addEntities()" ng:disabled="$parent._.newGroup.length + $parent._.newUser.length == 0" class="btn btn-default btn-flat" translate>
+                Apply
+            </a>
             <a ng:click="$parent.UserSearchVisible = false" class="btn btn-default btn-flat" translate>
-                Close
+                Cancel
             </a>
         </div>
     </dialog>
     <br />
 
     <div class="modal-footer">
-        <a class="btn btn-default btn-flat pull-left" ng:show="editMembers" ng-click="killProject(groupName)" translate >Delete Project</a>
+        <a class="btn btn-default btn-flat pull-left" ng:show="editGroup" ng-click="killProject(groupName)" translate >Delete Project</a>
         <a class="btn btn-default btn-flat pull-right" ng:click="close()" translate>Close</a>
-        <a class="btn btn-default btn-flat pull-right" ng:show="editMembers" ng:click="UserSearchVisible = true" translate>Add user or group</a>
+        <a class="btn btn-default btn-flat pull-right" ng:show="editGroup" ng:click="UserSearchVisible = true" translate>Add user or group</a>
     </div>
 </div>

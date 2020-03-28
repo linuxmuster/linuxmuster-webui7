@@ -278,7 +278,11 @@
         });
       });
     };
-    $scope.nevertext = gettext('Never');
+    $scope.text = {
+      'addAsAdmin': gettext('Move to admin group'),
+      'removeFromAdmin': gettext('Remove from admin group'),
+      'remove': gettext('Remove')
+    };
     $scope.formatDate = function(date) {
       var day, hour, min, month, sec, year;
       if (date === "19700101000000.0Z") {
@@ -349,9 +353,28 @@
       });
     };
     $scope.addMember = function(user) {
+      var entity, i, len, u;
+      entity = '';
+      if (Array.isArray(user)) {
+        for (i = 0, len = user.length; i < len; i++) {
+          u = user[i];
+          if ($scope.members.indexOf(u) < 0) {
+            entity += u.login + ",";
+            console.log(entity);
+          }
+        }
+      } else {
+        if ($scope.members.indexOf(user) < 0) {
+          entity = user.login;
+        }
+      }
+      if (!entity) {
+        return;
+      }
+      $scope.changeState = true;
       return $http.post('/api/lmn/groupmembership/membership', {
         action: 'addmembers',
-        entity: user.login,
+        entity: entity,
         project: groupName
       }).then(function(resp) {
         if (resp['data'][0] === 'ERROR') {
@@ -359,8 +382,15 @@
         }
         if (resp['data'][0] === 'LOG') {
           notify.success(gettext(resp['data'][1]));
-          return $scope.members.push(user);
+          if (Array.isArray(user)) {
+            $scope.members = $scope.members.concat(user.filter(function(u) {
+              return $scope.members.indexOf(u) < 0;
+            }));
+          } else {
+            $scope.members.push(user);
+          }
         }
+        return $scope.changeState = false;
       });
     };
     $scope.removeMember = function(user) {
@@ -378,15 +408,32 @@
           notify.success(gettext(resp['data'][1]));
           position = $scope.members.indexOf(user);
           $scope.members.splice(position, 1);
-          return $scope.changeState = false;
         }
+        return $scope.changeState = false;
       });
     };
     $scope.addAdmin = function(user) {
+      var entity, i, len, u;
+      entity = '';
+      if (Array.isArray(user)) {
+        for (i = 0, len = user.length; i < len; i++) {
+          u = user[i];
+          if ($scope.admins.indexOf(u) < 0) {
+            entity += u.login + ",";
+          }
+        }
+      } else {
+        if ($scope.admins.indexOf(user) < 0) {
+          entity = user.login;
+        }
+      }
+      if (!entity) {
+        return;
+      }
       $scope.changeState = true;
       return $http.post('/api/lmn/groupmembership/membership', {
         action: 'addadmins',
-        entity: user.login,
+        entity: entity,
         project: groupName
       }).then(function(resp) {
         if (resp['data'][0] === 'ERROR') {
@@ -394,9 +441,15 @@
         }
         if (resp['data'][0] === 'LOG') {
           notify.success(gettext(resp['data'][1]));
-          $scope.admins.push(user);
-          return $scope.changeState = false;
         }
+        if (Array.isArray(user)) {
+          $scope.admins = $scope.admins.concat(user.filter(function(u) {
+            return $scope.admins.indexOf(u) < 0;
+          }));
+        } else {
+          $scope.admins.push(user);
+        }
+        return $scope.changeState = false;
       });
     };
     $scope.removeAdmin = function(user) {
@@ -414,15 +467,32 @@
           notify.success(gettext(resp['data'][1]));
           position = $scope.admins.indexOf(user);
           $scope.admins.splice(position, 1);
-          return $scope.changeState = false;
         }
+        return $scope.changeState = false;
       });
     };
     $scope.addMemberGroup = function(group) {
+      var entity, g, i, len;
+      entity = '';
+      if (Array.isArray(group)) {
+        for (i = 0, len = group.length; i < len; i++) {
+          g = group[i];
+          if ($scope.groupmemberlist.indexOf(g) < 0) {
+            entity += g + ",";
+          }
+        }
+      } else {
+        if ($scope.groupmemberlist.indexOf(group) < 0) {
+          entity = group;
+        }
+      }
+      if (!entity) {
+        return;
+      }
       $scope.changeState = true;
       return $http.post('/api/lmn/groupmembership/membership', {
         action: 'addmembergroups',
-        entity: group,
+        entity: entity,
         project: groupName
       }).then(function(resp) {
         if (resp['data'][0] === 'ERROR') {
@@ -430,9 +500,15 @@
         }
         if (resp['data'][0] === 'LOG') {
           notify.success(gettext(resp['data'][1]));
-          $scope.groupmemberlist.push(group);
-          return $scope.changeState = false;
+          if (Array.isArray(group)) {
+            $scope.groupmemberlist = $scope.groupmemberlist.concat(group.filter(function(g) {
+              return $scope.groupmemberlist.indexOf(g) < 0;
+            }));
+          } else {
+            $scope.groupmemberlist.push(group);
+          }
         }
+        return $scope.changeState = false;
       });
     };
     $scope.removeMemberGroup = function(group) {
@@ -450,15 +526,32 @@
           notify.success(gettext(resp['data'][1]));
           position = $scope.groupmemberlist.indexOf(group);
           $scope.groupmemberlist.splice(position, 1);
-          return $scope.changeState = false;
         }
+        return $scope.changeState = false;
       });
     };
     $scope.addAdminGroup = function(group) {
+      var entity, g, i, len;
+      entity = '';
+      if (Array.isArray(group)) {
+        for (i = 0, len = group.length; i < len; i++) {
+          g = group[i];
+          if ($scope.groupadminlist.indexOf(g) < 0) {
+            entity += g + ",";
+          }
+        }
+      } else {
+        if ($scope.groupadminlist.indexOf(group) < 0) {
+          entity = group;
+        }
+      }
+      if (!entity) {
+        return;
+      }
       $scope.changeState = true;
       return $http.post('/api/lmn/groupmembership/membership', {
         action: 'addadmingroups',
-        entity: group,
+        entity: entity,
         project: groupName
       }).then(function(resp) {
         if (resp['data'][0] === 'ERROR') {
@@ -466,9 +559,15 @@
         }
         if (resp['data'][0] === 'LOG') {
           notify.success(gettext(resp['data'][1]));
-          $scope.groupadminlist.push(group);
-          return $scope.changeState = false;
+          if (Array.isArray(group)) {
+            $scope.groupadminlist = $scope.groupadminlist.concat(group.filter(function(g) {
+              return $scope.groupadminlist.indexOf(g) < 0;
+            }));
+          } else {
+            $scope.groupadminlist.push(group);
+          }
         }
+        return $scope.changeState = false;
       });
     };
     $scope.removeAdminGroup = function(group) {
@@ -486,8 +585,8 @@
           notify.success(gettext(resp['data'][1]));
           position = $scope.groupadminlist.indexOf(group);
           $scope.groupadminlist.splice(position, 1);
-          return $scope.changeState = false;
         }
+        return $scope.changeState = false;
       });
     };
     $scope.demoteGroup = function(group) {
@@ -498,7 +597,7 @@
       $scope.removeAdmin(user);
       $scope.addMember(user);
       if (user.login === $scope.identity.user) {
-        return $scope.editMembers = false;
+        return $scope.editGroup = false;
       }
     };
     $scope.elevateGroup = function(group) {
@@ -512,38 +611,35 @@
     $scope._ = {
       addMember: null,
       addGroup: null,
-      addasadmin: false
+      addasadmin: false,
+      newGroup: [],
+      newUser: []
     };
     $scope.$watch('_.addMember', function() {
-      var user;
       if ($scope._.addMember) {
-        user = $scope._.addMember;
-        if ($scope._.addasadmin) {
-          $scope.addAdmin(user);
-        } else {
-          $scope.addMember(user);
-        }
-        $scope._.addMember = null;
-        $scope._.addasadmin = false;
-        $scope.UserSearchVisible = false;
-        return notify.success(user.label + gettext(" added."));
+        $scope._.newUser.push($scope._.addMember);
+        return $scope._.addMember = null;
       }
     });
     $scope.$watch('_.addGroup', function() {
-      var group;
       if ($scope._.addGroup) {
-        group = $scope._.addGroup;
-        if ($scope._.addasadmin) {
-          $scope.addAdminGroup(group);
-        } else {
-          $scope.addMemberGroup(group);
-        }
-        $scope._.addGroup = null;
-        $scope._.addasadmin = false;
-        $scope.UserSearchVisible = false;
-        return notify.success(group.label + gettext(" added."));
+        $scope._.newGroup.push($scope._.addGroup);
+        return $scope._.addGroup = null;
       }
     });
+    $scope.addEntities = function() {
+      $scope.UserSearchVisible = false;
+      if ($scope._.addasadmin) {
+        $scope.addAdmin($scope._.newUser);
+        $scope.addAdminGroup($scope._.newGroup);
+      } else {
+        $scope.addMember($scope._.newUser);
+        $scope.addMemberGroup($scope._.newGroup);
+      }
+      $scope._.newUser = [];
+      $scope._.newGroup = [];
+      return $scope._.addasadmin = false;
+    };
     $scope.findUsers = function(q) {
       return $http.post("/api/lm/search-project", {
         login: q,

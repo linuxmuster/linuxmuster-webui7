@@ -593,7 +593,8 @@
       addGroup: null,
       addasadmin: false,
       newGroup: [],
-      newUser: []
+      newUser: [],
+      noResults: false
     };
     $scope.$watch('_.addMember', function() {
       if ($scope._.addMember) {

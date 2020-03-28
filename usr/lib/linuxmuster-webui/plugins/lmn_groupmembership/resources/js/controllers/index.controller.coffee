@@ -385,6 +385,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
             addasadmin: false
             newGroup: []
             newUser: []
+            noResults : false
 
         $scope.$watch '_.addMember', () ->
             if $scope._.addMember

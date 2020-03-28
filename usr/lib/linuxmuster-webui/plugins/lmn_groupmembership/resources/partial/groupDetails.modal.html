@@ -114,12 +114,15 @@
             <h3 class="modal-title" translate>Add members and/or groups</h3>
         </div>
         <div class="modal-body">
+            <div ng:if="$parent._.noResults" class="alert alert-warning" translate>
+                No results found ...
+            </div>
             <h4>Search for user</h4>
-            <input type="text" placeholder="Search for student or teacher by name or login" ng:model="$parent._.addMember" typeahead-editable="false" typeahead-min-length="3" uib-typeahead="user as user.label for user in findUsers($viewValue)" class="form-control" autofocus />
+            <input type="text" placeholder="Search for student or teacher by name or login" ng:model="$parent._.addMember" typeahead-editable="false" typeahead-min-length="3" uib-typeahead="user as user.label for user in findUsers($viewValue)" typeahead-no-results="$parent._.noResults" class="form-control" autofocus />
             <h4>Search for student in class</h4>
-            <input type="text" placeholder="Please write the complete classname" ng:model="$parent._.addMember" typeahead-editable="false" typeahead-min-length="2" uib-typeahead="user as user.label for user in findUsersGroup($viewValue)" class="form-control" autofocus />
+            <input type="text" placeholder="Please write the complete classname" ng:model="$parent._.addMember" typeahead-editable="false" typeahead-min-length="2" uib-typeahead="user as user.label for user in findUsersGroup($viewValue)" typeahead-no-results="$parent._.noResults" class="form-control" autofocus />
             <h4>Search for group</h4>
-            <input type="text" placeholder="Search for groupname" ng:model="$parent._.addGroup" typeahead-editable="false" typeahead-min-length="2" uib-typeahead="user for user in findGroups($viewValue)" class="form-control" autofocus />
+            <input type="text" placeholder="Search for groupname" ng:model="$parent._.addGroup" typeahead-editable="false" typeahead-min-length="2" uib-typeahead="user for user in findGroups($viewValue)" typeahead-no-results="$parent._.noResults" class="form-control" autofocus />
             <div ng:show="$parent._.newGroup.length + $parent._.newUser.length > 0">
                 <h3 translate>To add</h3>
                 <ul ng:show="$parent._.newGroup.length > 0">

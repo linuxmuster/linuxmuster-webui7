@@ -10,7 +10,7 @@
 
 <div ng:show="identity.user != 'root'">
 
-    <progress-spinner ng:show="groups == null"></progress-spinner>
+    <progress-spinner ng:show="(groups == null) || (changeState)"></progress-spinner>
 
     <div ng:show="groups != null">
         <div class="input-group">
@@ -66,8 +66,8 @@
             </div>
             <div class="flex-container lmn-container-list">
                 <div ng:repeat="classe in classes|orderBy:[sort.fx]:sortReverse|filter:filter">
-                    <div>
-                        <span id={{classe.groupname}} checkbox ng:model="classe.membership" ng:class="{changed: classe.changed}" ng-click='groupChanged(classe.groupname)'></span>
+                    <div ng-class="{'color-orange': classe.membership}">
+                        <input id={{classe.groupname}} type="checkbox" ng-click='setMembership(classe)' ng-checked="classe.membership"></input>
                         <i class="fa fa-users"></i>
                         <a href="#" ng-click='showGroupDetails($index, classe.type, classe.groupname)'>
                             <span>{{classe.typename}}</span>
@@ -87,8 +87,8 @@
             </div>
             <div class="flex-container lmn-container-list" >
                 <div ng:repeat="printergroup in printers|orderBy:[sort.fx]:sortReverse|filter:filter">
-                    <div>
-                        <span id={{printergroup.groupname}} checkbox ng:model="printergroup.membership" ng:class="{changed: printergroup.changed}" ng-click='groupChanged(printergroup.groupname)'></span>
+                    <div ng-class="{'color-orange': printergroup.membership}">
+                        <input id={{printergroup.groupname}} type="checkbox" ng-click='setMembership(printergroup)' ng-checked="printergroup.membership"></input>
                         <i class="fa fa-fw fa-print"></i>
                         <a href="#" ng-click='showGroupDetails($index, printergroup.type, printergroup.groupname)'>
                             <span>{{printergroup.typename}}</span>
@@ -108,8 +108,8 @@
             </div>
             <div class="flex-container lmn-container-list" >
                 <div ng:repeat="project in projects|orderBy:[sort.fx]:sortReverse|filter:filter">
-                    <div ng:show="!projectIsHidden(project)">
-                        <span id={{project.groupname}} checkbox ng:show="projectIsJoinable(project)" ng:class="{changed: project.changed}" ng:model="project.membership" ng-click='groupChanged(project.groupname)'></span>
+                    <div ng:show="!projectIsHidden(project)" ng-class="{'color-orange': project.membership}">
+                        <input id={{project.groupname}} type="checkbox" ng:show="projectIsJoinable(project)" ng-click='setMembership(project)' ng-checked="project.membership"></input>
                         <i class="fa fa-flask"></i>
                         <a href="#" ng-click='showGroupDetails($index, project.type, project.groupname)'>
                             <span>{{project.typename}}</span>
@@ -119,12 +119,5 @@
                 </div>
             </div>
         </div>
-
-        <br/>
-        <div class="floating-toolbar-padder"></div>
-
-        <floating-toolbar>
-            <button ng:click="setGroups(groups)" class="btn btn-default btn-flat" translate>Apply</button>
-        </floating-toolbar>
     </div>
 </div>

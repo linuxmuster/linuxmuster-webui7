@@ -56,6 +56,9 @@ span.cardlist span.cardbtn button.cardbtn {
   color: #233c4c;
   margin-left: 5px;
 }
+.color-orange {
+  color: #ff8f00;
+}
 .dragdroparea {
   color: gray;
   background-color: lightgray;

@@ -78,33 +78,35 @@
         return $scope.sortReverse = false;
       }
     };
-    $scope.resetClass = function() {
-      var group, i, len, ref, result;
-      // reset html class back (remove changed) so its not highlighted anymore
-      result = document.getElementsByClassName("changed");
-      while (result.length) {
-        result[0].className = result[0].className.replace(/(?:^|\s)changed(?!\S)/g, '');
+    $scope.changeState = false;
+    $scope.setMembership = function(group) {
+      var action, type;
+      $scope.changeState = true;
+      console.log(group);
+      action = group.membership ? 'removeadmins' : 'addadmins';
+      if (group.typename === 'Class') {
+        type = 'class';
+      } else if (group.typename === 'Printer') {
+        type = 'group';
+        action = group.membership ? 'removemembers' : 'addmembers';
+      } else {
+        type = 'project';
       }
-      ref = $scope.groups;
-      // reset $scope.group attribute back not not changed so an additional enroll will not set these groups again
-      for (i = 0, len = ref.length; i < len; i++) {
-        group = ref[i];
-        group['changed'] = false;
-      }
-    };
-    $scope.groupChanged = function(item) {
-      var group, i, len, ref, results;
-      ref = $scope.groups;
-      results = [];
-      for (i = 0, len = ref.length; i < len; i++) {
-        group = ref[i];
-        if (group['groupname'] === item) {
-          results.push(group['changed'] = !group['changed']);
-        } else {
-          results.push(void 0);
+      return $http.post('/api/lmn/groupmembership/membership', {
+        action: action,
+        entity: $scope.identity.user,
+        groupname: group.groupname,
+        type: type
+      }).then(function(resp) {
+        if (resp['data'][0] === 'ERROR') {
+          notify.error(resp['data'][1]);
         }
-      }
-      return results;
+        if (resp['data'][0] === 'LOG') {
+          notify.success(gettext(resp['data'][1]));
+          group.membership = !group.membership;
+          return $scope.changeState = false;
+        }
+      });
     };
     $scope.filterGroupType = function(val) {
       return function(dict) {
@@ -122,28 +124,6 @@
         $scope.classes = $scope.groups.filter($scope.filterGroupType('schoolclass'));
         $scope.projects = $scope.groups.filter($scope.filterGroupType('project'));
         return $scope.printers = $scope.groups.filter($scope.filterGroupType('printergroup'));
-      });
-    };
-    $scope.setGroups = function(groups) {
-      return $http.post('/api/lmn/groupmembership', {
-        action: 'set-groups',
-        username: $scope.identity.user,
-        groups: groups,
-        profil: $scope.identity.profile
-      }).then(function(resp) {
-        if (resp['data'][0] === 'ERROR') {
-          notify.error(resp['data'][1]);
-        }
-        if (resp['data'][0] === 'LOG') {
-          notify.success(gettext(resp['data'][1]));
-          $scope.resetClass();
-          identity.init().then(function() {
-            return $scope.getGroups($scope.identity.user);
-          });
-        }
-        if (resp.data === 0) {
-          return notify.success(gettext("Nothing changed"));
-        }
       });
     };
     $scope.createProject = function() {
@@ -375,7 +355,7 @@
       return $http.post('/api/lmn/groupmembership/membership', {
         action: 'addmembers',
         entity: entity,
-        project: groupName
+        groupname: groupName
       }).then(function(resp) {
         if (resp['data'][0] === 'ERROR') {
           notify.error(resp['data'][1]);
@@ -398,7 +378,7 @@
       return $http.post('/api/lmn/groupmembership/membership', {
         action: 'removemembers',
         entity: user.login,
-        project: groupName
+        groupname: groupName
       }).then(function(resp) {
         var position;
         if (resp['data'][0] === 'ERROR') {
@@ -434,7 +414,7 @@
       return $http.post('/api/lmn/groupmembership/membership', {
         action: 'addadmins',
         entity: entity,
-        project: groupName
+        groupname: groupName
       }).then(function(resp) {
         if (resp['data'][0] === 'ERROR') {
           notify.error(resp['data'][1]);
@@ -457,7 +437,7 @@
       return $http.post('/api/lmn/groupmembership/membership', {
         action: 'removeadmins',
         entity: user.login,
-        project: groupName
+        groupname: groupName
       }).then(function(resp) {
         var position;
         if (resp['data'][0] === 'ERROR') {
@@ -493,7 +473,7 @@
       return $http.post('/api/lmn/groupmembership/membership', {
         action: 'addmembergroups',
         entity: entity,
-        project: groupName
+        groupname: groupName
       }).then(function(resp) {
         if (resp['data'][0] === 'ERROR') {
           notify.error(resp['data'][1]);
@@ -516,7 +496,7 @@
       return $http.post('/api/lmn/groupmembership/membership', {
         action: 'removemembergroups',
         entity: group,
-        project: groupName
+        groupname: groupName
       }).then(function(resp) {
         var position;
         if (resp['data'][0] === 'ERROR') {
@@ -552,7 +532,7 @@
       return $http.post('/api/lmn/groupmembership/membership', {
         action: 'addadmingroups',
         entity: entity,
-        project: groupName
+        groupname: groupName
       }).then(function(resp) {
         if (resp['data'][0] === 'ERROR') {
           notify.error(resp['data'][1]);
@@ -575,7 +555,7 @@
       return $http.post('/api/lmn/groupmembership/membership', {
         action: 'removeadmingroups',
         entity: group,
-        project: groupName
+        groupname: groupName
       }).then(function(resp) {
         var position;
         if (resp['data'][0] === 'ERROR') {

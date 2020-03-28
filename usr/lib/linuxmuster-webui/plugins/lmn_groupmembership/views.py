@@ -59,7 +59,6 @@ class Handler(HttpPlugin):
 
                     if group in usergroups or isAdmin or groupDetails['sophomorixHidden'] == "FALSE":
                         membershipDict['groupname'] = group
-                        membershipDict['changed'] = False
                         membershipDict['membership'] = group in usergroups or isAdmin
                         membershipDict['admin'] = username in groupDetails['sophomorixAdmins'] or isAdmin
                         membershipDict['joinable'] = groupDetails['sophomorixJoinable']
@@ -81,9 +80,9 @@ class Handler(HttpPlugin):
 
                 for printergroup in printergroups:
                   if printergroup in usergroups or isAdmin:
-                    membershipList.append({'type': 'printergroup', 'typename': 'Printer', 'groupname': printergroup, 'changed': False, 'membership': True})
+                    membershipList.append({'type': 'printergroup', 'typename': 'Printer', 'groupname': printergroup, 'membership': True})
                   else:
-                    membershipList.append({'type': 'printergroup', 'typename': 'Printer', 'groupname': printergroup, 'changed': False, 'membership': False})
+                    membershipList.append({'type': 'printergroup', 'typename': 'Printer', 'groupname': printergroup, 'membership': False})
                 return membershipList, isAdmin, user_details
 
             if action == 'kill-project':
@@ -119,77 +118,6 @@ class Handler(HttpPlugin):
                 else:
                     return result['TYPE'], result['LOG']
 
-            if action == 'set-groups':
-                groups = http_context.json_body()['groups']
-                schoolclassToAdd = ''
-                schoolclassToRemove = ''
-                printergroupToAdd = ''
-                printergroupToRemove = ''
-                projectToAdd = []
-                projectToRemove = []
-                for group in groups:
-                    # TODO
-                    # Temporary removed because changed attribute is set wrong
-                    if group['changed'] is False:
-                        continue
-
-                    # schoolclasses
-                    if group['type'] == 'schoolclass':
-                        if group['membership'] is True:
-                            schoolclassToAdd += group['groupname']+','
-                        if group['membership'] is False:
-                            schoolclassToRemove += group['groupname']+','
-                    # printergroups
-                    if group['type'] == 'printergroup':
-                        if group['membership'] is True:
-                            printergroupToAdd += group['groupname']+','
-                        if group['membership'] is False:
-                            printergroupToRemove += group['groupname']+','
-                    # projects
-                    if group['type'] == 'project':
-                        if group['membership'] is True:
-                            projectToAdd.append(group['groupname'])
-                        if group['membership'] is False:
-                            projectToRemove.append(group['groupname'])
-                if schoolclassToAdd:
-                    sophomorixCommand = ['sophomorix-class',  '--addadmins', username, '--class', schoolclassToAdd, '-jj']
-                    result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
-                    if result['TYPE'] == "ERROR":
-                        return result['TYPE']['LOG']
-                if schoolclassToRemove:
-                    sophomorixCommand = ['sophomorix-class',  '--removeadmins', username, '--class', schoolclassToRemove, '-jj']
-                    result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
-                    if result['TYPE'] == "ERROR":
-                        return result['TYPE']['LOG']
-                if printergroupToAdd:
-                    sophomorixCommand = ['sophomorix-group',  '--addmembers', username, '--group', printergroupToAdd, '-jj']
-                    result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
-                    if result['TYPE'] == "ERROR":
-                        return result['TYPE'], result['MESSAGE_EN']
-                if printergroupToRemove:
-                    sophomorixCommand = ['sophomorix-group',  '--removemembers', username, '--group', printergroupToRemove, '-jj']
-                    result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
-                    if result['TYPE'] == "ERROR":
-                        return result['TYPE']['LOG']
-                if projectToAdd:
-                    for project in projectToAdd:
-                        sophomorixCommand = ['sophomorix-project',  '--addadmins', username, '--project', project, '-jj']
-                        result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
-                        if result['TYPE'] == "ERROR":
-                            return result['TYPE'], result['MESSAGE_EN']
-                if projectToRemove:
-                    for project in projectToRemove:
-                        sophomorixCommand = ['sophomorix-project',  '--removeadmins', username, '--project', project, '-jj']
-                        result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
-                        if result['TYPE'] == "ERROR":
-                            return result['TYPE']['LOG']
-                # Try to return last result to frontend
-                try:
-                    return result['TYPE'], result['LOG']
-                # If nothing changed result is empty so return 0
-                except NameError:
-                    return 0
-
     @url(r'/api/lmn/changeGroup')
     @authorize('lmn:groupmembership')
     @endpoint(api=True)
@@ -217,8 +145,13 @@ class Handler(HttpPlugin):
         """Manages the members of a project"""
         if http_context.method == 'POST':
             action  = http_context.json_body()['action']
-            project = http_context.json_body()['project']
+            groupname = http_context.json_body()['groupname']
             entity = http_context.json_body()['entity']
+            try:
+                type = http_context.json_body()['type']
+            except KeyError:
+                type = 'project'
+
             possible_actions = [
                 'removemembers',
                 'addmembers',
@@ -230,9 +163,9 @@ class Handler(HttpPlugin):
                 'removeadmingroups',
 
             ]
-            # TODO : check rights ?
+
             if action in possible_actions:
-                sophomorixCommand = ['sophomorix-project',  '--'+action, entity, '--project', project, '-jj']
+                sophomorixCommand = ['sophomorix-'+type,  '--'+action, entity, '--'+type, groupname, '-jj']
                 result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
                 if result['TYPE'] == "ERROR":
                     return result['TYPE'], result['MESSAGE_EN']

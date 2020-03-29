@@ -52,10 +52,10 @@
             <ul ng:if="admins.length > 0" class="list-unstyled" style="column-width:300px;padding:0;">
                 <li ng:repeat="admin in admins|orderBy :['sophomorixAdminClass','sn']" class="cardlist">
                     {{admin.sn}} {{admin.givenName}}
-                    <span class="cardbtn" ng:show="editGroup">
+                    <span class="cardbtn">
                         {{admin.sophomorixAdminClass}}
-                        <button class="cardbtn" title="{{text.removeFromAdmin}}"><i class="fas fa-level-down-alt" ng:click="demoteMember(admin)"></i></button>
-                        <button class="cardbtn" title="{{text.remove}}"><i class="fas fa-trash" ng:click="removeAdmin(admin)"></i></button>
+                        <button class="cardbtn" ng:show="editGroup" title="{{text.removeFromAdmin}}"><i class="fas fa-level-down-alt" ng:click="demoteMember(admin)"></i></button>
+                        <button class="cardbtn" ng:show="editGroup" title="{{text.remove}}"><i class="fas fa-trash" ng:click="removeAdmin(admin)"></i></button>
                     </span>
                 </li>
             </ul>
@@ -87,12 +87,11 @@
             <ul ng:if="members.length > 0" class="list-unstyled" style="column-width:300px;padding:0;">
                 <li ng:repeat="member in members|orderBy :['sophomorixAdminClass','sn']" class="cardlist">
                     {{member.sn}} {{member.givenName}}
-                    <span class="cardbtn" ng:show="editGroup">
+                    <span class="cardbtn">
                         {{member.sophomorixAdminClass}}
-                        <button class="cardbtn" title="{{text.addAsAdmin}}"><i class="fas fa-level-up-alt" ng:click="elevateMember(member)"></i></button>
-                        <button class="cardbtn" title="{{text.remove}}"><i class="fas fa-trash" ng:click="removeMember(member)"></i></button>
+                        <button class="cardbtn" ng:show="editGroup" title="{{text.addAsAdmin}}"><i class="fas fa-level-up-alt" ng:click="elevateMember(member)"></i></button>
+                        <button class="cardbtn" ng:show="editGroup" title="{{text.remove}}"><i class="fas fa-trash" ng:click="removeMember(member)"></i></button>
                     </span>
-<!--                    <span class="">{{member.sophomorixAdminClass}}</span>-->
                 </li>
             </ul>
             <span ng:if="members.length == 0" translate class="cardlist">No member</span>

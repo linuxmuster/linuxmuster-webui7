@@ -324,13 +324,20 @@
         // Admin or admin of the project can edit members of a project
         // Only admins can change hide and join option for a class
         if ($scope.identity.isAdmin) {
-          return $scope.editGroup = true;
-        } else if ((groupType === 'project') && ($scope.adminList.indexOf($scope.identity.user) !== -1)) {
-          return $scope.editGroup = true;
-        } else if ((groupType === 'project') && ($scope.groupadminlist.indexOf($scope.identity.profile.sophomorixAdminClass) !== -1)) {
-          return $scope.editGroup = true;
+          $scope.editGroup = true;
+        } else if ((groupType === 'project') && ($scope.adminList.indexOf($scope.identity.user) >= 0)) {
+          $scope.editGroup = true;
+        } else if ((groupType === 'project') && ($scope.groupadminlist.indexOf($scope.identity.profile.sophomorixAdminClass) >= 0)) {
+          $scope.editGroup = true;
         }
+        // List will not be updated later, avoir using it
+        return $scope.adminList = [];
       });
+    };
+    $scope.filterLogin = function(membersArray, login) {
+      return membersArray.filter(function(u) {
+        return u.login === login;
+      }).length === 0;
     };
     $scope.addMember = function(user) {
       var entity, i, len, u;
@@ -338,13 +345,12 @@
       if (Array.isArray(user)) {
         for (i = 0, len = user.length; i < len; i++) {
           u = user[i];
-          if ($scope.members.indexOf(u) < 0) {
+          if ($scope.filterLogin($scope.members, user.login)) {
             entity += u.login + ",";
-            console.log(entity);
           }
         }
       } else {
-        if ($scope.members.indexOf(user) < 0) {
+        if ($scope.filterLogin($scope.members, user.login)) {
           entity = user.login;
         }
       }
@@ -398,12 +404,12 @@
       if (Array.isArray(user)) {
         for (i = 0, len = user.length; i < len; i++) {
           u = user[i];
-          if ($scope.admins.indexOf(u) < 0) {
+          if ($scope.filterLogin($scope.admins, user.login)) {
             entity += u.login + ",";
           }
         }
       } else {
-        if ($scope.admins.indexOf(user) < 0) {
+        if ($scope.filterLogin($scope.admins, user.login)) {
           entity = user.login;
         }
       }
@@ -571,12 +577,15 @@
     };
     $scope.demoteGroup = function(group) {
       $scope.removeAdminGroup(group);
-      return $scope.addMemberGroup(group);
+      $scope.addMemberGroup(group);
+      if ((group === $scope.identity.profile.sophomorixAdminClass) && ($scope.filterLogin($scope.admins, $scope.identity.user))) {
+        return $scope.editGroup = false;
+      }
     };
     $scope.demoteMember = function(user) {
       $scope.removeAdmin(user);
       $scope.addMember(user);
-      if (user.login === $scope.identity.user) {
+      if ((user.login === $scope.identity.user) && ($scope.groupadminlist.indexOf($scope.identity.profile.sophomorixAdminClass) < 0)) {
         return $scope.editGroup = false;
       }
     };

@@ -219,20 +219,24 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
                 # Only admins can change hide and join option for a class
                 if $scope.identity.isAdmin
                     $scope.editGroup = true
-                else if (groupType == 'project') and ($scope.adminList.indexOf($scope.identity.user) != -1)
+                else if (groupType == 'project') and ($scope.adminList.indexOf($scope.identity.user) >= 0)
                     $scope.editGroup = true
-                else if (groupType == 'project') and ($scope.groupadminlist.indexOf($scope.identity.profile.sophomorixAdminClass) != -1)
+                else if (groupType == 'project') and ($scope.groupadminlist.indexOf($scope.identity.profile.sophomorixAdminClass) >= 0)
                     $scope.editGroup = true
+                # List will not be updated later, avoir using it
+                $scope.adminList = []
+
+        $scope.filterLogin = (membersArray, login) ->
+            return membersArray.filter((u) -> u.login == login).length == 0
 
         $scope.addMember = (user) ->
             entity = ''
             if Array.isArray(user)
                 for u in user
-                    if $scope.members.indexOf(u) < 0
+                    if $scope.filterLogin($scope.members, user.login)
                         entity += u.login + ","
-                        console.log(entity)
             else
-                if $scope.members.indexOf(user) < 0
+                if $scope.filterLogin($scope.members, user.login)
                     entity = user.login
             if not entity
                 return
@@ -263,10 +267,10 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
             entity = ''
             if Array.isArray(user)
                 for u in user
-                    if $scope.admins.indexOf(u) < 0
+                    if $scope.filterLogin($scope.admins, user.login)
                         entity += u.login + ","
             else
-                if $scope.admins.indexOf(user) < 0
+                if $scope.filterLogin($scope.admins, user.login)
                     entity = user.login
             if not entity
                 return
@@ -364,11 +368,13 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
         $scope.demoteGroup = (group) ->
             $scope.removeAdminGroup(group)
             $scope.addMemberGroup(group)
+            if (group == $scope.identity.profile.sophomorixAdminClass) and ($scope.filterLogin($scope.admins, $scope.identity.user))
+                $scope.editGroup = false
 
         $scope.demoteMember = (user) ->
             $scope.removeAdmin(user)
             $scope.addMember(user)
-            if user.login == $scope.identity.user
+            if (user.login == $scope.identity.user) and ($scope.groupadminlist.indexOf($scope.identity.profile.sophomorixAdminClass) < 0)
                 $scope.editGroup = false
 
         $scope.elevateGroup = (group) ->

@@ -38,6 +38,7 @@ angular.module('lm.users').controller 'LMUsersStudentsController', ($scope, $htt
         $scope.students = resp.data
 
     $scope.showInitialPassword = (users) ->
+        console.log (users)
         user=[]
         user[0]=users[0]["sAMAccountName"]
         # function needs an array which contains user on first position

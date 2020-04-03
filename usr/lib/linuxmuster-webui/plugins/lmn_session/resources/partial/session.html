@@ -215,6 +215,67 @@
             <button ng:click="cancel(identity.user,currentSession.name)" ng:show="currentSession.name != ''" class="btn btn-default btn-flat pull-right" translate>Close</button>
         </div>
     </floating-toolbar>
+    <!-- Room -->
+    <div   class="list-group">
+        <h4 translate>This Room</h4>
+
+        <div class="flex-container lmn-container-list" >
+
+            <div class="list-group-item">
+                <div>
+                    <a href="#" ng-click='showGroupDetails($index, class.type, class.groupname)'>
+                        <i class="fa fa-users"></i>
+                        <span>This Room</span>
+                    </a>
+                    <span style="float:left;">
+                        <span>
+                            <img src="/resources/lmn_common/resources/img/class.png" style="height:75px;"</img>
+                        </span>
+                        <button style="background-color:#ff0000; font-size: 18px; color: white; padding: 5px 15px;" class="btn btn-default fab fa-rev" ng:click="regenerateSession(class.groupname)" title="{{generateSessionMouseover}}">
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- auto sessions -->
+<div ng:show="classes.length > 0 && !sessionLoaded"  class="list-group">
+    <h4 translate>My Classes</h4>
+
+    <div class="flex-container lmn-container-list" >
+        <div class="list-group-item" ng:repeat="class in classes|filter:filter | orderBy: 'groupname' :false">
+            <!--     <div ng:repeat="printergroup in printers|orderBy:[sort.fx]:sortReverse">-->
+        <div>
+            <!--<span id={{class.groupname}} checkbox ng:model="printergroup.membership" ng:class="{changed: printergroup.changed}" ng-click='groupChanged(printergroup.groupname)'></span>
+                <td><button class="btn btn-default" ng:click="removeParticipant(participant)"> <i class="fa fa-trash"></i></td>-->
+                    <span style="float:right;">
+                        <a href="#" ng-click='showGroupDetails($index, class.type, class.groupname)'>
+                            <i class="fa fa-users"></i>
+                            <span>{{class.groupname}}</span>
+                        </a>
+                    </span>
+                    <span style="float:left;">
+                        <div class="class-img-container">
+                            <img src="/resources/lmn_common/resources/img/class.png" style="height:100px;">
+                            <button style="background-color:#ff0000; font-size: 18px; color: white;" class="btn btn-default fab fa-rev" ng:click="regenerateSession(class.groupname)" title="{{generateSessionMouseover}}">
+                            </button>
+                        </div>
+                    </span>
+
+                    <span style="float:right;">
+                        <button style="background-color: #4CAF50; font-size: 18px; color: white; padding: 5px 15px;" class="btn btn-default fas fa-play" ng:click="loadGeneratedSession(class.groupname)" title="{{startGeneratedSessionMouseover}}">
+                        </button>
+                        <button style="background-color:#ff0000; font-size: 18px; color: white; padding: 5px 15px;" class="btn btn-default fab fa-rev" ng:click="regenerateSession(class.groupname)" title="{{generateSessionMouseover}}">
+                        </button>
+                    </span>
+        </div>
+            </div>
+        </div>
+    </div>
+
     <!-- session overview list -->
     <div ng:show="sessions[0]['SESSIONCOUNT'] != 0">
         <progress-spinner ng:show="sessions == null && identity.user != 'root'"></progress-spinner>
@@ -236,29 +297,5 @@
             </a>
                 </div>
         </div>
-
-        <!-- auto sessions -->
-        <div ng:show="classes.length > 0 && !sessionLoaded"  class="list-group">
-            <h4 translate>My Classes</h4>
-
-        <div class="flex-container lmn-container-list" >
-            <div class="list-group-item" ng:repeat="class in classes|filter:filter | orderBy: 'groupname' :false">
-                <!--     <div ng:repeat="printergroup in printers|orderBy:[sort.fx]:sortReverse">-->
-                        <div>
-                            <!--<span id={{class.groupname}} checkbox ng:model="printergroup.membership" ng:class="{changed: printergroup.changed}" ng-click='groupChanged(printergroup.groupname)'></span>
-                            <td><button class="btn btn-default" ng:click="removeParticipant(participant)"> <i class="fa fa-trash"></i></td>-->
-                           <a href="#" ng-click='showGroupDetails($index, class.type, class.groupname)'>
-                           <i class="fa fa-users"></i>
-                              <span>{{class.groupname}}</span>
-                           </a>
-                           <span style="float:right;">
-                               <button style="background-color: #4CAF50; font-size: 18px; color: white; padding: 5px 15px;" class="btn btn-default fas fa-play" ng:click="loadGeneratedSession(class.groupname)" title="{{startGeneratedSessionMouseover}}">
-                              </button>
-                              <button style="background-color:#ff0000; font-size: 18px; color: white; padding: 5px 15px;" class="btn btn-default fab fa-rev" ng:click="regenerateSession(class.groupname)" title="{{generateSessionMouseover}}">
-                              </button>
-                           </span>
-                        </div>
-                     </div>
-                  </div>
-        </div>
     </div>
+</div>

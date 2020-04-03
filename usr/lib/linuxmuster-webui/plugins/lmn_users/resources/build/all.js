@@ -307,6 +307,7 @@
     });
     $scope.showInitialPassword = function(users) {
       var type, user;
+      console.log(users);
       user = [];
       user[0] = users[0]["sAMAccountName"];
       // function needs an array which contains user on first position
@@ -1534,11 +1535,7 @@
 
   angular.module('lm.users').controller('LMUsersPrintPasswordsController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor) {
     pageTitle.set(gettext('Print Passwords'));
-    $http.get('/api/lm/users/print').then(function(resp) {
-      $scope.classes = resp.data;
-      return console.log($scope.classes);
-    });
-    return $scope.select = function(schoolclass, user) {
+    $scope.select = function(schoolclass, user) {
       return $uibModal.open({
         templateUrl: '/lmn_users:resources/partial/print-passwords.options.modal.html',
         controller: 'LMUsersPrintPasswordsOptionsModalController',
@@ -1555,6 +1552,48 @@
         }
       });
     };
+    $scope.filterGroupType = function(val) {
+      return function(dict) {
+        return dict['type'] === val;
+      };
+    };
+    $scope.filterGroupMembership = function(val) {
+      return function(dict) {
+        return dict['membership'] === val;
+      };
+    };
+    $scope.getGroups = function(username) {
+      return $http.post('/api/lmn/groupmembership', {
+        action: 'list-groups',
+        username: username,
+        profil: $scope.identity.profile
+      }).then(function(resp) {
+        var i, item, len, ref, results;
+        $scope.groups = resp.data[0];
+        $scope.userclasses = $scope.groups.filter($scope.filterGroupType('schoolclass'));
+        $scope.userclasses = $scope.userclasses.filter($scope.filterGroupMembership(true));
+        $scope.classes = [];
+        ref = $scope.userclasses;
+        results = [];
+        for (i = 0, len = ref.length; i < len; i++) {
+          item = ref[i];
+          results.push($scope.classes.push(item.groupname));
+        }
+        return results;
+      });
+    };
+    return $scope.$watch('identity.user', function() {
+      if ($scope.identity.user === void 0) {
+        return;
+      }
+      if ($scope.identity.user === null) {
+        return;
+      }
+      if ($scope.identity.user === 'root') {
+        return;
+      }
+      $scope.getGroups($scope.identity.user);
+    });
   });
 
 }).call(this);

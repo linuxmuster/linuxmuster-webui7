@@ -2,10 +2,12 @@
   color: green !important;
   background-color: yellow !important;
 }
-.messagebox {
-  z-index: 1050;
+.class-img-container {
+  position: relative;
 }
-.animate-modal {
-  z-index: 1100;
+.class-img-container .btn {
+  position: absolute;
+  bottom: 0;
+  right: 0;
 }
 

@@ -4,6 +4,7 @@ import ldap.filter
 import subprocess
 from jadi import component
 import pwd
+import grp
 
 import aj
 from aj.auth import AuthenticationProvider, OSAuthenticationProvider
@@ -94,46 +95,34 @@ class LMAuthenticationProvider(AuthenticationProvider):
         systemString = ['sophomorix-passwd', '--user', username, '--pass', new_password, '--hide', '--nofirstpassupdate', '--use-smbpasswd']
         subprocess.check_call(systemString, shell=False)
 
+    def get_isolation_gid(self, username):
+        """Returns the gid of the group which will run each worker."""
+        # PREPARE FOR GROUP CONTEXT
+        # try:
+        #     groups = subprocess.check_output(['groups', username])
+        # except subprocess.CalledProcessError as e:
+        #     groups = e.output
+        # for role_group in ['all-admins', 'all-teachers', 'all-students']:
+        #     if role_group in groups:
+        #         try:
+        #             gid = grp.getgrnam(role_group).gr_gid
+        #             logging.debug("Running Webui as %s", role_group)
+        #         except KeyError:
+        #             gid = grp.getgrnam('nogroup').gr_gid
+        #             logging.debug("Context group not found, running Webui as %s", 'nogroup')
+        #         return gid
+        return None
+
     def get_isolation_uid(self, username):
         """Returns the uid of the user which will run each worker."""
-
-        # if username in ["root"] or 'administrator' in username:
-        #     # Root context on the server
-        #     return 0
-        #
-        # params = lmconfig.data['linuxmuster']['ldap']
-        # searchFilter = "(&(cn=%s)(objectClass=user))" % username
-        # l = ldap.initialize('ldap://' + params['host'])
-        #
+        # PREPARE FOR USER CONTEXT
         # try:
-        #     l.set_option(ldap.OPT_REFERRALS, 0)
-        #     l.protocol_version = ldap.VERSION3
-        #     l.bind_s(params['binddn'], params['bindpw'])
-        # except Exception as e:
-        #     logging.error(str(e))
-        #     return False
-        #
-        # try:
-        #     res = l.search_s(params['searchdn'], ldap.SCOPE_SUBTREE, searchFilter)
-        #     userDN = res[0][0]
-        # except Exception as e:
-        #     # except ldap.LDAPError, e:
-        #     print(e)
-        #
-        # try:
-        #     if 'Teacher' in userDN:
-        #         role = userDN.split(',')[1].split('=')[1].lower()[:-1]
-        #         school = userDN.split(',')[2].split('=')[1]
-        #     else:
-        #         role = userDN.split(',')[2].split('=')[1].lower()[:-1]
-        #         school = userDN.split(',')[3].split('=')[1]
-        #     school_prefix = '' if school == 'default-school' else school + '-'
-        #     posix_user = school_prefix + role
-        #     # Return uid for defined role, e.g. teacher will returned uid from system user lmn7-teacher
-        #     return pwd.getpwnam(posix_user).pw_uid
-        # except:
-        #     logging.error("Context user not found, running Webui as %s", 'nobody')
-        #     return 65534
+        #     uid = pwd.getpwnam(username).pw_uid
+        #     logging.debug("Running Webui as %s", username)
+        # except KeyError:
+        #     uid = pwd.getpwnam('nobody').pw_uid
+        #     logging.debug("Context user not found, running Webui as %s", 'nobody')
+        # return uid
         return 0
 
     def get_profile(self, username):

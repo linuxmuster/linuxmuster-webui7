@@ -41,40 +41,22 @@ class LMAuthenticationProvider(AuthenticationProvider):
             return False
         try:
             res = l.search_s(params['searchdn'], ldap.SCOPE_SUBTREE, searchFilter)
-            userDN = res[0][0]
+            userDN, userAttrs = res[0][0], res[0][1]
         except ldap.LDAPError as e:
             print(e)
 
-
         l.unbind_s()
 
-        #userbind
-        try:
-            l = ldap.initialize('ldap://' + params['host'])
-            l.set_option(ldap.OPT_REFERRALS, 0)
-            l.protocol_version = ldap.VERSION3
-            l.bind_s(userDN, password)
-
-        except Exception as e:
-            logging.error(str(e))
-            return False
-
-        ldappermissions = l.search_s(userDN,ldap.SCOPE_SUBTREE,attrlist=['sophomorixWebuiPermissionsCalculated'],)
+        webuiPermissions = userAttrs['sophomorixWebuiPermissionsCalculated']
         permissions = {}
         # convert python list we get from AD to dict
-        if ldappermissions[0][1]: # is false if no values in SophomorixUserPermissions
-            for b in ldappermissions[0][1]['sophomorixWebuiPermissionsCalculated']:
-                i = b.decode('utf-8').split(': ')
-                try:
-                    i[1]
-                    if i[1] == 'false': # translate strings to real bool values
-                        i[1] = False
-                    else:
-                        i[1] = True
-                    permissions[i[0]] = i[1]
-                except Exception as e:
-                    raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(e))
-                    logging.error(str(e))
+        for perm in webuiPermissions:
+            module, value = perm.decode('utf-8').split(': ')
+            try:
+                permissions[module] = value == 'true'
+            except Exception as e:
+                raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(e))
+                logging.error(str(e))
 
         return {
             'username': username,

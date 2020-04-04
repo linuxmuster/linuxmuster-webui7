@@ -85,7 +85,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
     def authorize(self, username, permission):
         if username == 'root':
             return True
-        return self.context.session.auth_info['permissions'].get(permission['id'], permission['default'])
+        return self.context.session.auth_info['permissions'].get(permission['id'], False)
 
     def change_password(self, username, password, new_password):
         if not self.authenticate(username, password):

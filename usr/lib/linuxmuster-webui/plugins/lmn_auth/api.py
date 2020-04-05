@@ -5,47 +5,96 @@ import subprocess
 from jadi import component
 import pwd
 import grp
+import simplejson as json
 
 import aj
 from aj.auth import AuthenticationProvider, OSAuthenticationProvider
-from aj.plugins.lmn_common.api import lmconfig, lmn_user_details
+from aj.plugins.lmn_common.api import lmconfig
 
 @component(AuthenticationProvider)
 class LMAuthenticationProvider(AuthenticationProvider):
     id = 'lm'
     name = _('Linux Muster LDAP')
 
-
-
     def __init__(self, context):
         self.context = context
 
-    def authenticate(self, username, password):
-        if username == 'root':
+    def _get_ldap_user(self, username, auth=False):
+        """Retrieve user's DN and attributes from LDAP."""
+        ldap_filter = """(&
+                            (cn=%s)
+                            (objectClass=user)
+                            (|
+                                (sophomorixRole=globaladministrator)
+                                (sophomorixRole=schooladministrator)
+                                (sophomorixRole=teacher)
+                            )
+                        )"""
 
-            return OSAuthenticationProvider.get(self.context).authenticate(username, password)
+        ldap_attrs = [
+            'sophomorixQuota',
+            'givenName',
+            'DN',
+            'sophomorixRole',
+            'memberOf',
+            'sophomorixAdminClass',
+            'sAMAccountName',
+            'sn',
+            'mail',
+            'sophomorixSchoolname',
+        ]
+        if auth:
+            ldap_attrs.append('sophomorixWebuiPermissionsCalculated')
 
-        username = username.lower()
-        # get ajenti yaml parameters
+        searchFilter = ldap.filter.filter_format(ldap_filter, [username])
         params = lmconfig.data['linuxmuster']['ldap']
-        searchFilter = ldap.filter.filter_format("(&(cn=%s)(objectClass=user)(|(sophomorixRole=globaladministrator)(sophomorixRole=teacher)(sophomorixRole=schooladministrator) ))", [username])
 
         l = ldap.initialize('ldap://' + params['host'])
         # Binduser bind to the  server
         try:
             l.set_option(ldap.OPT_REFERRALS, 0)
             l.protocol_version = ldap.VERSION3
-            l.bind_s(params['binddn'],  params['bindpw'] )
+            l.bind_s(params['binddn'], params['bindpw'])
         except Exception as e:
             logging.error(str(e))
-            return False
+            raise KeyError(e)
         try:
-            res = l.search_s(params['searchdn'], ldap.SCOPE_SUBTREE, searchFilter)
-            userDN, userAttrs = res[0][0], res[0][1]
+            res = l.search_s(params['searchdn'], ldap.SCOPE_SUBTREE, searchFilter, attrlist=ldap_attrs)
+            if res[0][0] is None:
+                raise KeyError
+            userAttrs = {
+                attr:( value[0] if isinstance(value, list) and len(value) == 1 else value )
+                for attr, value in res[0][1].items()
+            }
+            userAttrs['dn'] = res[0][0]
         except ldap.LDAPError as e:
             print(e)
 
         l.unbind_s()
+        return userAttrs
+
+    def authenticate(self, username, password):
+        if username == 'root':
+            return OSAuthenticationProvider.get(self.context).authenticate(username, password)
+
+        username = username.lower()
+
+        # Does the user exist in LDAP ?
+        try:
+            userAttrs = self._get_ldap_user(username, auth=True)
+        except KeyError as e:
+            return False
+
+        # Is the password right ?
+        try:
+            params = lmconfig.data['linuxmuster']['ldap']
+            l = ldap.initialize('ldap://' + params['host'])
+            l.set_option(ldap.OPT_REFERRALS, 0)
+            l.protocol_version = ldap.VERSION3
+            l.bind_s(userAttrs['dn'], password)
+        except Exception as e:
+            logging.error(str(e))
+            return False
 
         webuiPermissions = userAttrs['sophomorixWebuiPermissionsCalculated']
         permissions = {}
@@ -111,9 +160,10 @@ class LMAuthenticationProvider(AuthenticationProvider):
         if username in ["root",None]:
             return {}
         try:
-            profil = lmn_user_details(username)
-            profil['isAdmin'] = "administrator" in profil['sophomorixRole']
-            return profil
-        except:
+            profil = self._get_ldap_user(username)
+            profil['isAdmin'] = b"administrator" in profil['sophomorixRole']
+            return json.loads(json.dumps(profil))
+        except Exception as e:
+            logging.error(e)
             return {}
 

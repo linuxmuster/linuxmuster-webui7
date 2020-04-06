@@ -237,6 +237,28 @@ class Handler(HttpPlugin):
             with authorize('lm:users:students:write'):
                 return 0
 
+    @url(r'/api/lmn/session/getUserInRoom')
+    @endpoint(api=True)
+    def handle_api_get_user_in_room(self, http_context):
+        if http_context.method == 'POST':
+            school = 'default-school'
+            action = http_context.json_body()['action']
+            username = http_context.json_body()['username']
+            with authorize('lm:users:students:read'):
+                if action == 'get-my-room':
+                    try:
+                        sophomorixCommand = ['sophomorix-query', '-jj', '--smbstatus', '--schoolbase', school, '--query-user', username]
+                        response = lmn_getSophomorixValue(sophomorixCommand, '')
+                        # remove our own 
+                        response.pop(username, None)
+                        usersInRoom=[]
+                        for user in response:
+                            usersInRoom.append(user)
+                        return usersInRoom
+                    except Exception:
+                        return 0
+
+
     @url(r'/api/lmn/session/user-search')
     @endpoint(api=True)
     def handle_api_ldap_user_search(self, http_context):

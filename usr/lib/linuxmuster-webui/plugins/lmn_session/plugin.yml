@@ -13,6 +13,7 @@ resources:
     - 'resources/js/controllers/session.controller.coffee' # angular module
     - 'resources/partial/session.html' # view
     - 'resources/partial/selectFile.modal.html' # view
+    - 'resources/partial/roomDetails.modal.html' # view
     - 'resources/styles.less'
     - 'ng:lmn.session'
 

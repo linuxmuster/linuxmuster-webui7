@@ -215,15 +215,16 @@
             <button ng:click="cancel(identity.user,currentSession.name)" ng:show="currentSession.name != ''" class="btn btn-default btn-flat pull-right" translate>Close</button>
         </div>
     </floating-toolbar>
+
     <!-- Room -->
-    <div   class="list-group">
+    <div ng:show="!sessionLoaded"  class="list-group">
         <h4 translate>This Room</h4>
 
         <div class="flex-container lmn-container-list" >
 
             <div class="list-group-item">
                 <div>
-                    <a href="#" ng-click='showGroupDetails($index, class.type, class.groupname)'>
+                    <a href="#" ng-click='showRoomDetails(identity.user)'>
                         <i class="fa fa-users"></i>
                         <span>This Room</span>
                     </a>
@@ -231,7 +232,7 @@
                         <span>
                             <img src="/resources/lmn_common/resources/img/class.png" style="height:75px;"</img>
                         </span>
-                        <button style="background-color:#ff0000; font-size: 18px; color: white; padding: 5px 15px;" class="btn btn-default fab fa-rev" ng:click="regenerateSession(class.groupname)" title="{{generateSessionMouseover}}">
+                        <button style="background-color:#ff0000; font-size: 18px; color: white; padding: 5px 15px;" class="btn btn-default fab fa-rev" ng:click="generateRoomSession(identity.user)" title="{{generateRoomsessionMouseover}}">
                         </button>
                     </span>
                 </div>
@@ -239,7 +240,6 @@
         </div>
     </div>
 </div>
-
 
 <!-- auto sessions -->
 <div ng:show="classes.length > 0 && !sessionLoaded"  class="list-group">
@@ -276,11 +276,12 @@
         </div>
     </div>
 
+    
     <!-- session overview list -->
-    <div ng:show="sessions[0]['SESSIONCOUNT'] != 0">
-        <progress-spinner ng:show="sessions == null && identity.user != 'root'"></progress-spinner>
+    <!--<div ng:show="sessions[0]['SESSIONCOUNT'] != 0">
+        <progress-spinner ng:show="sessions == null && identity.user != 'root'"></progress-spinner>-->
         <!-- selfcreated sessions -->
-        <div ng:show="visible.sessiontable == 'show'"  class="list-group">
+        <div ng:show="sessions.length > 0 && !sessionLoaded"  class="list-group">
             <h4 translate>My Sessions </h4>
             <!--
                 <progress-spinner ng:show="sessions == null"></progress-spinner>
@@ -298,4 +299,4 @@
                 </div>
         </div>
     </div>
-</div>
+<!--</div>-->

@@ -217,7 +217,7 @@
     </floating-toolbar>
 
     <!-- Room -->
-    <div ng:show="!sessionLoaded"  class="list-group">
+    <div ng:show="!sessionLoaded && identity.user != 'root'"  class="list-group">
         <h4 translate>This Room</h4>
 
         <div class="flex-container lmn-container-list" >
@@ -242,7 +242,7 @@
 </div>
 
 <!-- auto sessions -->
-<div ng:show="classes.length > 0 && !sessionLoaded"  class="list-group">
+<div ng:show="classes.length > 0 && !sessionLoaded && identity.user != 'root'"  class="list-group">
     <h4 translate>My Classes</h4>
 
     <div class="flex-container lmn-container-list" >

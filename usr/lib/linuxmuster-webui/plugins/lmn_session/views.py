@@ -249,11 +249,14 @@ class Handler(HttpPlugin):
                     try:
                         sophomorixCommand = ['sophomorix-query', '-jj', '--smbstatus', '--schoolbase', school, '--query-user', username]
                         response = lmn_getSophomorixValue(sophomorixCommand, '')
-                        # remove our own 
+                        # remove our own
+                        room = response[username]['ROOM']
                         response.pop(username, None)
-                        usersInRoom=[]
+                        usersList=[]
+                        usersInRoom={}
                         for user in response:
-                            usersInRoom.append(user)
+                            usersList.append(user)
+                        usersInRoom={"usersList":usersList, "room":room, "objects": response}
                         return usersInRoom
                     except Exception:
                         return 0

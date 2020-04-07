@@ -337,7 +337,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
             groupType: () -> groupType
             groupName: () -> groupName
        )
-    
+
     $scope.showRoomDetails = (username) ->
         $http.post('/api/lmn/session/getUserInRoom', {action: 'get-my-room', username: username}).then (resp) ->
             if resp.data == 0
@@ -446,7 +446,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                 sessionExist=true
                 sessionID= session['ID']
                 console.log ('sessionExist '+sessionExist )
-        
+
         wait.modal(gettext('Generating session...'), 'spinner')
         $http.post('/api/lmn/groupmembership/details', {action: 'get-specified', groupType: 'class', groupName: classname}).then (resp) ->
             # get participants from specified class
@@ -474,7 +474,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
         # create new session
         if sessionExist == false
             # create new specified session
-            $http.post('/api/lmn/session/sessions', {action: 'new-session', username: $scope.identity.user, comment: sessionComment, participants: participantsArray}).then (resp) ->
+            $http.post('/api/lmn/session/sessions', {action: 'new-session', username: $scope.identity.user, comment: sessionComment, participants: participants}).then (resp) ->
                 # emit wait process is done
                 $rootScope.$emit('updateWaiting', 'done')
                 $scope.new-sessions = resp.data
@@ -714,7 +714,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
               command: () -> command
         ).result.then (result) ->
             if result.response is 'accept'
-                #return 
+                #return
                 wait.modal(gettext('Collecting files...'), 'progressbar')
                 if command is 'copy'
                     $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers, files: result.files, session: sessioncomment}).then (resp) ->

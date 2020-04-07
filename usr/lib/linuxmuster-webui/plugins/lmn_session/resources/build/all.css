@@ -10,4 +10,55 @@
   bottom: 0;
   right: 0;
 }
+.session_btn {
+  border: 1px solid #eeeeee;
+  background-color: white;
+  font-size: 18px;
+  height: 30px;
+  width: 30px;
+  color: #233c4c;
+  padding: 5px;
+  margin-top: 3px;
+  margin-right: 2px;
+  box-shadow: 3px 3px 3px silver;
+}
+.session_hr {
+  border-bottom: 1px solid #eeeeee;
+  width: 100%;
+}
+.session_image {
+  height: 75px;
+  padding: 5px;
+  border: 1px solid #eeeeee;
+  box-shadow: 3px 3px 3px silver;
+}
+.session_image_btn {
+  border: 1px solid #eeeeee;
+  background-color: white;
+  font-size: 20px;
+  z-index: 1000;
+  height: 35px;
+  width: 35px;
+  color: #233c4c;
+  padding: 6px;
+  position: absolute;
+  right: 4px !important;
+  top: 40px;
+  text-align: center;
+}
+.session_image:hover {
+  color: #333333;
+  background-color: #e6e6e6;
+  border-color: #cfcfcf;
+}
+.session_image:hover ~ span.session_image_btn {
+  color: #333333;
+  background-color: #e6e6e6;
+  border-color: #cfcfcf;
+}
+.session_image_btn:hover {
+  color: #333333;
+  background-color: #e6e6e6;
+  border-color: #cfcfcf;
+}
 

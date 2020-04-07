@@ -647,7 +647,7 @@
           action: 'new-session',
           username: $scope.identity.user,
           comment: sessionComment,
-          participants: participantsArray
+          participants: participants
         }).then(async function(resp) {
           var i, len, ref, session, sessions;
           // emit wait process is done
@@ -1013,7 +1013,7 @@
         }
       }).result.then(function(result) {
         if (result.response === 'accept') {
-          //return 
+          //return
           wait.modal(gettext('Collecting files...'), 'progressbar');
           if (command === 'copy') {
             $http.post('/api/lmn/session/trans', {

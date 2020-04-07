@@ -110,7 +110,7 @@
             </td>
             <td class="ng-binding">
                 <span style="display:inline-block; width:100px; font-size:100%"  class="label label-danger" ng:show="participant.sophomorixRole == 'examuser'"><i class="fa fa-graduation-cap"></i> {{participant.sophomorixExamMode}}</span></td>
-            <td width="1" style="text-align:center;"> 
+            <td width="1" style="text-align:center;">
                 <span title="Exam-Mode" checkbox id="{{participant.sAMAccountName}}.exammode" ng-click="changeClass('exammode', participant)" ng:model="participant.exammode_boolean" ng:show="participant.sophomorixExamMode == identity.user || participant.sophomorixExamMode == '---'"></span>
                 <span uib-dropdown>
                     <button class="btn btn-primary btn-xs" style="color:orange; background:white; font-size:20px" ng:show="participant.sophomorixExamMode != identity.user && participant.sophomorixExamMode != '---'" uib-dropdown-toggle>
@@ -224,16 +224,22 @@
 
             <div class="list-group-item">
                 <div>
-                    <a href="#" ng-click='showRoomDetails(identity.user)'>
-                        <i class="fa fa-users"></i>
-                        <span>This Room</span>
-                    </a>
-                    <span style="float:left;">
-                        <span>
-                            <img src="/resources/lmn_common/resources/img/class.png" style="height:75px;"</img>
-                        </span>
-                        <button style="background-color:#ff0000; font-size: 18px; color: white; padding: 5px 15px;" class="btn btn-default fab fa-rev" ng:click="generateRoomSession(identity.user)" title="{{generateRoomsessionMouseover}}">
-                        </button>
+                    <span style="float:right;width:50%;">
+                        <span style="overflow:hidden;width:100%;" translate>This Room</span>
+                        <div class="session_hr"></div>
+                        <br>
+                        <button class="btn btn-default fas fa-step-backward session_btn" disabled></button>
+                        <button class="btn btn-default fas fa-history session_btn" ng:click="generateRoomSession(identity.user)" title="{{generateRoomsessionMouseover}}"></button>
+                    </span>
+                    <span style="float:left;width:50%">
+                        <div style="position:relative;width:80px;height:80px;">
+                            <a ng:click="generateRoomSession(identity.user)" title="{{generateRoomsessionMouseover}}">
+                                <div class="class-img-container">
+                                    <img src="/resources/lmn_common/resources/img/session.png" class="session_image">
+                                    <span class="fas fa-history session_image_btn"></span>
+                                </div>
+                            </a>
+                        </div>
                     </span>
                 </div>
             </div>
@@ -246,47 +252,68 @@
     <h4 translate>My Classes</h4>
 
     <div class="flex-container lmn-container-list" >
-        <div class="list-group-item" ng:repeat="class in classes|filter:filter | orderBy: 'groupname' :false">
-            <!--     <div ng:repeat="printergroup in printers|orderBy:[sort.fx]:sortReverse">-->
-        <div>
-            <!--<span id={{class.groupname}} checkbox ng:model="printergroup.membership" ng:class="{changed: printergroup.changed}" ng-click='groupChanged(printergroup.groupname)'></span>
-                <td><button class="btn btn-default" ng:click="removeParticipant(participant)"> <i class="fa fa-trash"></i></td>-->
-                    <span style="float:right;">
-                        <a href="#" ng-click='showGroupDetails($index, class.type, class.groupname)'>
-                            <i class="fa fa-users"></i>
-                            <span>{{class.groupname}}</span>
+        <div class="list-group-item" ng:repeat="class in classes|filter:filter | orderBy: 'groupname' :false" style="margin-bottom:10px;">
+            <div>
+                <span style="float:right;width:50%;">
+                    <span style="overflow:hidden;width:100%;">{{class.groupname}}</span>
+                    <div class="session_hr"></div>
+                    <br>
+                    <button class="btn btn-default fas fa-step-backward session_btn" ng:click="loadGeneratedSession(class.groupname)" title="{{startGeneratedSessionMouseover}}"></button>
+                    <button class="btn btn-default fas fa-history session_btn" ng:click="regenerateSession(class.groupname)" title="{{generateSessionMouseover}}"></button>
+                </span>
+                <span style="float:left;width:50%">
+                    <div style="position:relative;width:80px;height:80px;">
+                        <a ng:click="regenerateSession(class.groupname)" title="{{generateSessionMouseover}}">
+                            <div class="class-img-container">
+                                <img src="/resources/lmn_common/resources/img/session.png" class="session_image">
+                                <span class="fas fa-history session_image_btn"></span>
+                            </div>
                         </a>
-                    </span>
-                    <span style="float:left;">
-                        <div class="class-img-container">
-                            <img src="/resources/lmn_common/resources/img/class.png" style="height:100px;">
-                            <button style="background-color:#ff0000; font-size: 18px; color: white;" class="btn btn-default fab fa-rev" ng:click="regenerateSession(class.groupname)" title="{{generateSessionMouseover}}">
-                            </button>
-                        </div>
-                    </span>
-
-                    <span style="float:right;">
-                        <button style="background-color: #4CAF50; font-size: 18px; color: white; padding: 5px 15px;" class="btn btn-default fas fa-play" ng:click="loadGeneratedSession(class.groupname)" title="{{startGeneratedSessionMouseover}}">
-                        </button>
-                        <button style="background-color:#ff0000; font-size: 18px; color: white; padding: 5px 15px;" class="btn btn-default fab fa-rev" ng:click="regenerateSession(class.groupname)" title="{{generateSessionMouseover}}">
-                        </button>
-                    </span>
-        </div>
+                    </div>
+                </span>
             </div>
         </div>
     </div>
+</div>
 
-    
+
     <!-- session overview list -->
     <!--<div ng:show="sessions[0]['SESSIONCOUNT'] != 0">
         <progress-spinner ng:show="sessions == null && identity.user != 'root'"></progress-spinner>-->
         <!-- selfcreated sessions -->
         <div ng:show="sessions.length > 0 && !sessionLoaded"  class="list-group">
             <h4 translate>My Sessions </h4>
+
+            <div class="flex-container lmn-container-list">
+                <div class="list-group-item" ng:repeat="session in sessions|filter:filter | orderBy: '-COMMENT' :true | filter: '!-autoGenerated'" style="margin-bottom:10px;">
+                    <div>
+                        <span style="float:right;width:50%;">
+                            <span style="overflow:hidden;display:block;">{{session.COMMENT}}</span>
+                            <div class="session_hr"></div>
+                            <i class="fa fa-users"></i>
+                            <span>{{session.PARTICIPANT_COUNT}}</span>
+                            <br>
+                            <button class="btn btn-default fas fa-step-backward session_btn" disabled></button>
+                            <button class="btn btn-default fas fa-history session_btn" ng:click="getParticipants(identity.user,session.ID); currentSession.name=session.ID; currentSession.comment=session.COMMENT" title="{{generateSessionMouseover}}"></button>
+                        </span>
+                        <span style="float:left;width:50%">
+                            <div style="position:relative;width:80px;height:80px;">
+                                <a ng:click="getParticipants(identity.user,session.ID); currentSession.name=session.ID; currentSession.comment=session.COMMENT" title="{{generateSessionMouseover}}">
+                                    <div class="class-img-container">
+                                        <img src="/resources/lmn_common/resources/img/session.png" class="session_image">
+                                        <span class="fas fa-history session_image_btn"></span>
+                                    </div>
+                                </a>
+                            </div>
+                        </span>
+                    </div>
+                </div>
+            </div>
             <!--
                 <progress-spinner ng:show="sessions == null"></progress-spinner>
                 <div ng:show="currentSession.name == ''"  class="list-group">
             -->
+            <!--
             <a class="list-group-item" ng:repeat="session in sessions|filter:filter | orderBy: '-COMMENT' :true | filter: '!-autoGenerated'" ng:click="getParticipants(identity.user,session.ID); currentSession.name=session.ID; currentSession.comment=session.COMMENT">
                 <i class="fa fa-users"></i> {{session.COMMENT}}
                 <br />
@@ -296,7 +323,8 @@
                 <h6 style="margin-bottom:15px;"><span style="float:right;" translate> Creation Date: {{session.ID}}</span></h6>
                 </p>
             </a>
-                </div>
+            -->
         </div>
+<!--        </div>
     </div>
-<!--</div>-->
+</div>-->

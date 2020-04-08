@@ -6,82 +6,69 @@ case "$1" in
         ajcfg="/etc/ajenti/config.yml"
         wucfg="/etc/linuxmuster/webui/config.yml"
         webuietc="/usr/lib/linuxmuster-webui/etc"
-	      python_version=$(basename $(readlink -f /usr/bin/python3))
-     if [ ! -f $webuietc/.installed ];
-      then
-        # do first install
-        /usr/bin/python3 -m pip install -U pip wheel setuptools distribute
-        hash -r
-        /usr/bin/python3 -m pip install -r $webuietc/requirements.txt
-        #echo "link ajcfg to linuxmuster-webui folder"
-        #ln -s $ajcfg $webuietc
-        #rm /etc/ajenti/config.yml
-        echo "Copy default config files for webui"
-        mkdir -p /etc/linuxmuster/webui/
-        if [ ! -f $ajcfg ]; then
-            # cp -n would be silent, but it's important to inform the user
-            cp /usr/lib/linuxmuster-webui/etc/ajenti_default.yml $ajcfg
+        python_version=$(basename $(readlink -f /usr/bin/python3))
+        if [ ! -f $webuietc/.installed ];
+        then
+            echo "---------------------------------------------------------------"
+            echo "Installing linuxmuster-webui"
+            echo "---------------------------------------------------------------"
+            # do first install
+            /usr/bin/python3 -m pip install -U pip wheel setuptools distribute
+            hash -r
+            /usr/bin/python3 -m pip install -r $webuietc/requirements.txt
+            echo "Copy default config files for webui"
+            mkdir -p /etc/linuxmuster/webui/
+            if [ ! -f $ajcfg ]; then
+                # cp -n would be silent, but it's important to inform the user
+                cp /usr/lib/linuxmuster-webui/etc/ajenti_default.yml $ajcfg
+            else
+                echo "$ajcfg already exists ... not overwriting with the default config file."
+            fi
+            if [ ! -f $wucfg ]; then
+                # cp -n would be silent, but it's important to inform the user
+                cp /usr/lib/linuxmuster-webui/etc/webui_default.yml  $wucfg
+            else
+                echo "$wucfg already exists ... not overwriting with the default config file."
+            fi
+            # systemctl einrichten und starten
+            echo "Configure systemctl.."
+            systemctl daemon-reload
+            systemctl enable linuxmuster-webui
+            systemctl start linuxmuster-webui
+            touch $webuietc/.installed
+            hostname=$(hostname --fqdn)
+            ipaddress=$(hostname --ip-address)
+            echo "---------------------------------------------------------------"
+            echo "linuxmuster-webui is now installed but not initialised!  http://$ipaddress"
+            echo "---------------------------------------------------------------"
         else
-            echo "$ajcfg already exists ... not overwriting with the default config file."
+            # do update
+            echo "---------------------------------------------------------------"
+            echo "Updating linuxmuster-webui"
+            echo "---------------------------------------------------------------"
+            echo "Stop linuxmuster-webui"
+            # Add fqdn_certificate in config.yml if not present - for update ajenti 2.1.33
+            if [ "$(grep -e '^\s\{2,\}fqdn_certificate' /etc/ajenti/config.yml | wc -l)" -eq 0 ] ; then
+                echo "Add FQDN certificate parameter to /etc/ajenti/config.yml"
+                sed -i '/^\s\{2,\}certificate:/p;0,/^\s\{2,\}certificate:/ s/certificate/fqdn_certificate/' $ajcfg
+            fi
+            echo "Set default sophomorix webui rights"
+            /usr/sbin/sophomorix-ui
+            # start webui
+            echo "Start linuxmuster-webui"
+            systemctl start linuxmuster-webui
+            echo "---------------------------------------------------------------"
+            echo "Updating linuxmuster-webui ..done"
+            echo "---------------------------------------------------------------"
         fi
-        if [ ! -f $wucfg ]; then
-            # cp -n would be silent, but it's important to inform the user
-            cp /usr/lib/linuxmuster-webui/etc/webui_default.yml  $wucfg
-        else
-            echo "$wucfg already exists ... not overwriting with the default config file."
-        fi
-	      # systemctl einrichten und starten
-        echo "Configure systemctl.."
-        systemctl daemon-reload
-        systemctl enable linuxmuster-webui
-        systemctl start linuxmuster-webui
-        touch $webuietc/.installed
-        touch /etc/linuxmuster/sophomorix/default-school/students.csv
-        touch /etc/linuxmuster/sophomorix/default-school/teachers.csv
-        touch /etc/linuxmuster/sophomorix/default-school/extrastudents.csv
-        touch /etc/linuxmuster/sophomorix/default-school/extraclasses.csv
-        hostname=$(hostname --fqdn)
-        ipaddress=$(hostname --ip-address)
-        echo "---------------------------------------------------------------"
-        echo "linuxmuster-webui is now installed but not initialised!  http://$ipaddress"
-        echo "---------------------------------------------------------------"
-     else
-    # do update
-    echo "---------------------------------------------------------------"
-        echo "Updating linuxmuster-webui"
-        echo "---------------------------------------------------------------"
-    echo "Stop linuxmuster-webui"
-#    sed -i -e  's/dialog ng:show="message.visible" ng:repeat="message in messagebox.messages"/dialog ng:show="message.visible" style="z-index: 1050" ng:repeat="message in messagebox.messages"/' /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/resources/js/core/directives/messageboxContainer.es
-#    rm -rf /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/resources/build/
-#    cp -R /usr/lib/linuxmuster-webui/etc/core-build/* /usr/local/lib/python2.7/dist-packages/ajenti_plugin_core/resources/build/
-    systemctl stop linuxmuster-webui
-    /usr/bin/python3 -m pip install -r $webuietc/requirements.txt -q
-    # split ajenti config.yml from webui config.yml if necessary
-    $webuietc/split_config_aj.py
-    # Add fqdn_certificate in config.yml if not present - for update ajenti 2.1.33
-    if [ "$(grep -e '^\s\{2,\}fqdn_certificate' /etc/ajenti/config.yml | wc -l)" -eq 0 ] ; then
-      echo "Add FQDN certificate parameter to /etc/ajenti/config.yml"
-      sed -i '/^\s\{2,\}certificate:/p;0,/^\s\{2,\}certificate:/ s/certificate/fqdn_certificate/' /etc/ajenti/config.yml
-    fi
-    if [ -f $webuietc/.installed ];
-        echo "Set default sophomorix webui rights"
-        /usr/sbin/sophomorix-ui
-    fi
-    # start webui
-    echo "Start linuxmuster-webui"
-    systemctl start linuxmuster-webui
-        echo "---------------------------------------------------------------"
-        echo "Updating linuxmuster-webui ..done"
-        echo "---------------------------------------------------------------"
-     fi
-        ;;
+    ;;
     upgrade|abort-upgrade)
-        ;;
-
+    ;;
+    
     *)
         echo "postinst called with unknown argument \`$1'" >&2
         exit 0
-        ;;
+    ;;
 esac
 
 #DEBHELPER#

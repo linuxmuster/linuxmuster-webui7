@@ -21,7 +21,6 @@ case "$1" in
             # 
             echo "Writing linuxmuster default ajenti config $ajcfg"
             cp -rf /usr/lib/linuxmuster-webui/etc/ajenti_default.yml $ajcfg
-            fi
             if [ ! -f $wucfg ]; then
                 # cp -n would be silent, but it's important to inform the user
                 cp /usr/lib/linuxmuster-webui/etc/webui_default.yml  $wucfg

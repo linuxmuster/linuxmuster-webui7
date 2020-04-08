@@ -63,8 +63,10 @@ case "$1" in
       echo "Add FQDN certificate parameter to /etc/ajenti/config.yml"
       sed -i '/^\s\{2,\}certificate:/p;0,/^\s\{2,\}certificate:/ s/certificate/fqdn_certificate/' /etc/ajenti/config.yml
     fi
-    echo "Set default sophomorix webui rights"
-    /usr/sbin/sophomorix-ui
+    if [ -f $webuietc/.installed ];
+        echo "Set default sophomorix webui rights"
+        /usr/sbin/sophomorix-ui
+    fi
     # start webui
     echo "Start linuxmuster-webui"
     systemctl start linuxmuster-webui

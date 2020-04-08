@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.120-1) lmn7-testing; urgency=medium 
+
+  * Current snapshot build ad4e15ff423851dc27508810236e72d4f9b6ef51
+   *     fixed some python3 related packages and split_config
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Apr  8 10:42:35 CEST 2020
+
 linuxmuster-webui7 (1.0.119-1) lmn7; urgency=medium 
 
   * Current snapshot build b0f54953c4b31512f4d8f891e41bb3c44cb27ab2

@@ -70,13 +70,14 @@ class Handler(HttpPlugin):
     def handle_api_provision(self, http_context):
         if http_context.method != 'POST':
             return
-        try:
-            subprocess.check_call(
-                'linuxmuster-setup -u -c /tmp/setup.ini >> /tmp/linuxmuster-setup.log & wait $! ',
-                shell=True
-            )
-        except Exception as e:
-            raise EndpointError(None, message=str(e))
+        if http_context.json_body()['start'] == 'setup':
+            try:
+                subprocess.check_call(
+                    'linuxmuster-setup -u -c /tmp/setup.ini >> /tmp/linuxmuster-setup.log & wait $! ',
+                    shell=True
+                )
+            except Exception as e:
+                raise EndpointError(None, message=str(e))
 
     @url(r'/api/lm/setup-wizard/restart') ## TODO : Handle maybe obsolet
     @endpoint(api=True, auth=True)

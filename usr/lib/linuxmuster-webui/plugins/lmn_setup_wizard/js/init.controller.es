@@ -199,7 +199,7 @@ angular.module('lm.setup_wizard').controller('InitSummaryController', function (
 angular.module('lm.setup_wizard').controller('InitSetupController', function ($location, $http, gettext, pageTitle, notify) {
     pageTitle.set(gettext('Setup Wizard'))
     this.isWorking = true
-    $http.post('/api/lm/setup-wizard/provision').then(() => {
+    $http.post('/api/lm/setup-wizard/provision', {start: 'setup'}).then(() => {
         this.isWorking = false
         notify.success(gettext('Setup complete'))
     }).catch(() => {

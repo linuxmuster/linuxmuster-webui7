@@ -230,7 +230,7 @@ angular.module('lm.setup_wizard').controller('InitSetupController', function ($l
 
     pageTitle.set(gettext('Setup Wizard'));
     this.isWorking = true;
-    $http.post('/api/lm/setup-wizard/provision').then(function () {
+    $http.post('/api/lm/setup-wizard/provision', { start: 'setup' }).then(function () {
         _this6.isWorking = false;
         notify.success(gettext('Setup complete'));
     }).catch(function () {

@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.126-1) lmn7-testing; urgency=medium 
+
+  * Current snapshot build 343c739580c435434ca1305ff891d0c5a6f7e500
+   *     fixed postinst fi leftover
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Apr  8 14:29:21 CEST 2020
+
 linuxmuster-webui7 (1.0.125-1) lmn7-testing; urgency=medium 
 
   * Current snapshot build b32e47960ddeccbc1471f1b46463b95766bf5514

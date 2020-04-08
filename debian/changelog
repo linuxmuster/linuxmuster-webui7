@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.125-1) lmn7-testing; urgency=medium 
+
+  * Current snapshot build b32e47960ddeccbc1471f1b46463b95766bf5514
+   *     overwrite ajenti config on initial setup
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Apr  8 13:55:46 CEST 2020
+
 linuxmuster-webui7 (1.0.124-1) lmn7-testing; urgency=medium 
 
   * Current snapshot build 26f44bf4b2bfcd0a7e44572428d05519e5f19f90

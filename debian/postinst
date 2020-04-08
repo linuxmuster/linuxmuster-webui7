@@ -13,16 +13,14 @@ case "$1" in
             echo "Installing linuxmuster-webui"
             echo "---------------------------------------------------------------"
             # do first install
-            /usr/bin/python3 -m pip install -U pip wheel setuptools distribute
+            /usr/bin/python3 -m pip install -U pip wheel setuptools #distribute
             hash -r
             /usr/bin/python3 -m pip install -r $webuietc/requirements.txt
             echo "Copy default config files for webui"
             mkdir -p /etc/linuxmuster/webui/
-            if [ ! -f $ajcfg ]; then
-                # cp -n would be silent, but it's important to inform the user
-                cp /usr/lib/linuxmuster-webui/etc/ajenti_default.yml $ajcfg
-            else
-                echo "$ajcfg already exists ... not overwriting with the default config file."
+            # 
+            echo "Writing linuxmuster default ajenti config $ajcfg"
+            cp -rf /usr/lib/linuxmuster-webui/etc/ajenti_default.yml $ajcfg
             fi
             if [ ! -f $wucfg ]; then
                 # cp -n would be silent, but it's important to inform the user

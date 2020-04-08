@@ -1,3 +1,31 @@
+linuxmuster-webui7 (1.0.124-1) lmn7-testing; urgency=medium 
+
+  * Current snapshot build 26f44bf4b2bfcd0a7e44572428d05519e5f19f90
+   *     Updateded postinst and rules so the installation
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Apr  8 13:20:49 CEST 2020
+
+linuxmuster-webui7 (1.0.123-1) lmn7-testing; urgency=medium 
+
+  * Current snapshot build c9491fc49826bb67f159de665d9c7fa64db87c02
+   *     fixed postinst sophomorix-ui command
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Apr  8 13:05:31 CEST 2020
+
+linuxmuster-webui7 (1.0.122-1) lmn7-testing; urgency=medium 
+
+  * Current snapshot build c9491fc49826bb67f159de665d9c7fa64db87c02
+   *     fixed postinst sophomorix-ui command
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Apr  8 12:15:13 CEST 2020
+
+linuxmuster-webui7 (1.0.121-1) lmn7-testing; urgency=medium 
+
+  * Current snapshot build c9491fc49826bb67f159de665d9c7fa64db87c02
+   *     fixed postinst sophomorix-ui command
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Apr  8 11:33:52 CEST 2020
+
 linuxmuster-webui7 (1.0.120-1) lmn7-testing; urgency=medium 
 
   * Current snapshot build ad4e15ff423851dc27508810236e72d4f9b6ef51

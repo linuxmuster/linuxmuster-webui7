@@ -146,7 +146,7 @@
     pageTitle.set(gettext('Session'));
     $scope.generateSessionMouseover = gettext('Regenerate this session');
     $scope.startGeneratedSessionMouseover = gettext('Start this session unchanged (may not be up to date)');
-    $scope.generateRoomsessionMouseover = gettext('Start session containing all users in this room)');
+    $scope.generateRoomsessionMouseover = gettext('Start session containing all users in this room');
     $scope.currentSession = {
       name: "",
       comment: ""

@@ -26,6 +26,9 @@ angular.module('lmn.session').controller 'LMNSessionFileSelectModalController', 
         angular.forEach $scope.files['TREE'], (file, id) ->
             if file['checked'] is true
                 filesToTrans.push(id)
+        if filesToTrans.length == 0
+            notify.info(gettext('Please select at least one file!'))
+            return
         $uibModalInstance.close(response: 'accept', files: filesToTrans, bulkMode: bulkMode)
 
     $scope.saveBulk = () ->

@@ -35,6 +35,10 @@
           return filesToTrans.push(id);
         }
       });
+      if (filesToTrans.length === 0) {
+        notify.info(gettext('Please select at least one file!'));
+        return;
+      }
       return $uibModalInstance.close({
         response: 'accept',
         files: filesToTrans,

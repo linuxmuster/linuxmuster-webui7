@@ -95,7 +95,7 @@
         </span>
     </div>
     <div class="modal-footer">
-        <span ng-if="action == 'share'">
+        <span ng-if="action == 'share'" ng-show="filesList.length > 0">
             <a class="btn btn-default btn-flat" ng:click="save()" translate>Share</a>
         </span>
         <span ng-if="action == 'collect'">

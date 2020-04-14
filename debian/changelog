@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.129-1) lmn7-testing; urgency=medium 
+
+  * Current snapshot build 1b952b92fa54d3ecf50d0cd67a7670b7c7c44d33
+   *     Cleanup and gitignore for vscode.
+
+ -- Andreas Till <andreas.till@netzint.de> Tue Apr 14 12:26:35 CEST 2020
+
 linuxmuster-webui7 (1.0.128-1) lmn7-testing; urgency=medium 
 
   * Current snapshot build a4eb24a96145381ebcbedfe049dfa8d4ff97a64e

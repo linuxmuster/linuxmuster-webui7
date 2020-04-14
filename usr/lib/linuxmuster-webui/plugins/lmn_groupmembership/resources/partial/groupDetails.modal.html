@@ -28,20 +28,54 @@
         <tr>
             <td><b translate>Joinable:</b></td>
             <td>
-                <input type="checkbox" ng:model="joinable" ng:disabled="!editMembersButton" ng:change="changeJoin(groupName, groupDetails['sophomorixType'])"> </input>
+                <input type="checkbox" ng:model="joinable" ng:disabled="!editGroup" ng:change="changeJoin(groupName, groupDetails['sophomorixType'])"> </input>
             </td>
         </tr>
         <tr>
             <td><b translate>Hidden:</b></td>
             <td>
-                <input type="checkbox" ng:model="hidden" ng:disabled="!editMembersButton" ng:change="changeHide(groupName, groupDetails['sophomorixType'])"> </input>
+                <input type="checkbox" ng:model="hidden" ng:disabled="!editGroup" ng:change="changeHide(groupName, groupDetails['sophomorixType'])"> </input>
             </td>
         </tr>
     </table>
+    <div class="panel panel-danger">
+        <div class="panel-heading">
+            <a href="#" class="btn btn-default btn-flat pull-right" ng-click="showAdminDetails = ! showAdminDetails">{{showMemberDetails ? hidetext : showtext}}</a>
+            <h4>
+                <span translate> Group Admins: </span>
+                {{admins.length}} <span translate>user(s) and </span>
+                {{groupadminlist.length}} <span translate>group(s).</span>
+            </h4>
+        </div>
+        <div ng-show="showAdminDetails" class="panel-body">
+            <h4 translate>Admins</h4>
+            <ul ng:if="admins.length > 0" class="list-unstyled" style="column-width:300px;padding:0;">
+                <li ng:repeat="admin in admins|orderBy :['sophomorixAdminClass','sn']" class="cardlist">
+                    {{admin.sn}} {{admin.givenName}}
+                    <span class="cardbtn">
+                        {{admin.sophomorixAdminClass}}
+                        <button class="cardbtn" ng:show="editGroup" title="{{text.removeFromAdmin}}"><i class="fas fa-level-down-alt" ng:click="demoteMember(admin)"></i></button>
+                        <button class="cardbtn" ng:show="editGroup" title="{{text.remove}}"><i class="fas fa-trash" ng:click="removeAdmin(admin)"></i></button>
+                    </span>
+                </li>
+            </ul>
+            <span ng:if="admins.length == 0" translate class="cardlist">No admin</span>
+            <h4 translate>Groups</h4>
+            <ul ng:if="groupadminlist.length > 0" class="list-unstyled" style="column-width:300px;padding:0;">
+                <li ng:repeat="group in groupadminlist" class="cardlist">
+                    {{group}}
+                   <span class="cardbtn" ng:show="editGroup">
+                        <button class="cardbtn" title="{{text.removeFromAdmin}}"><i class="fas fa-level-down-alt" ng:click="demoteGroup(group)"></i></button>
+                        <button class="cardbtn" title="{{text.remove}}"><i class="fas fa-trash" ng:click="removeAdminGroup(group)"></i></button>
+                   </span>
+                </li>
+            </ul>
+            <span ng:if="groupadminlist.length == 0" translate class="cardlist">No group</span>
+        </div>
+    </div>
     <div class="panel panel-info">
         <div class="panel-heading">
             <a href="#" class="btn btn-default btn-flat pull-right" ng-click="showMemberDetails = ! showMemberDetails">{{showMemberDetails ? hidetext : showtext}}</a>
-            <a class="btn btn-default btn-flat pull-right" ng:show="groupDetails['sophomorixType'] == 'project' && editMembersButton" href="#" ng-click="editGroupMembers(groupName, groupDetails, adminList, members)" translate >Edit members</a>
             <h4>
                 <span translate> Group Members: </span>
                 {{members.length}} <span translate>user(s) and </span>
@@ -51,44 +85,68 @@
         <div ng-show="showMemberDetails" class="panel-body">
             <h4 translate>Members</h4>
             <ul ng:if="members.length > 0" class="list-unstyled" style="column-width:300px;padding:0;">
-                <li ng:repeat="member in members|orderBy :['sophomorixAdminClass','sn']" class="cardlist">{{member.sn}} {{member.givenName}} <span style="position:absolute;right:10px;">{{member.sophomorixAdminClass}}</span></li>
+                <li ng:repeat="member in members|orderBy :['sophomorixAdminClass','sn']" class="cardlist">
+                    {{member.sn}} {{member.givenName}}
+                    <span class="cardbtn">
+                        {{member.sophomorixAdminClass}}
+                        <button class="cardbtn" ng:show="editGroup" title="{{text.addAsAdmin}}"><i class="fas fa-level-up-alt" ng:click="elevateMember(member)"></i></button>
+                        <button class="cardbtn" ng:show="editGroup" title="{{text.remove}}"><i class="fas fa-trash" ng:click="removeMember(member)"></i></button>
+                    </span>
+                </li>
             </ul>
             <span ng:if="members.length == 0" translate class="cardlist">No member</span>
             <h4 translate>Groups</h4>
             <ul ng:if="groupmemberlist.length > 0" class="list-unstyled" style="column-width:300px;padding:0;">
-                <li ng:repeat="group in groupmemberlist" class="cardlist">{{group}}</li>
+                <li ng:repeat="group in groupmemberlist" class="cardlist">
+                    {{group}}
+                    <span class="cardbtn" ng:show="editGroup">
+                        <button class="cardbtn" title="{{text.addAsAdmin}}"><i class="fas fa-level-up-alt " ng:click="elevateGroup(group)"></i></button>
+                        <button class="cardbtn" title="{{text.remove}}"><i class="fas fa-trash" ng:click="removeMemberGroup(group)"></i></button>
+                    </span>
+                </li>
             </ul>
             <span ng:if="groupmemberlist.length == 0" translate class="cardlist">No group</span>
         </div>
     </div>
-    <div class="panel panel-danger">
-        <div class="panel-heading">
-            <a href="#" class="btn btn-default btn-flat pull-right" ng-click="showAdminDetails = ! showAdminDetails">{{showMemberDetails ? hidetext : showtext}}</a>
-            <h4>
-                <span translate> Group Admins: </span>
-                {{admins.length}} <span translate>user(s) and </span>
-                {{groupadminlist.length}} <span translate>group(s).</span>
-            </h4> 
+    <dialog ng:show="UserSearchVisible">
+        <div class="modal-header">
+            <h3 class="modal-title" translate>Add members and/or groups</h3>
         </div>
-        <div ng-show="showAdminDetails" class="panel-body">
-            <h4 translate>Admins</h4>
-            <ul ng:if="admins.length > 0" class="list-unstyled" style="column-width:300px;padding:0;">
-                <li ng:repeat="admin in admins|orderBy :['sophomorixAdminClass','sn']" class="cardlist">{{admin.sn}} {{admin.givenName}} <span style="position:absolute;right:10px;">{{admin.sophomorixAdminClass}}</span></li>
-            </ul>
-            <span ng:if="admins.length == 0" translate class="cardlist">No admin</span>
-            <h4 translate>Groups</h4>
-            <ul ng:if="groupadminlist.length > 0" class="list-unstyled" style="column-width:300px;padding:0;">
-                <li ng:repeat="group in groupadminlist" class="cardlist">{{group}}</li>
-            </ul>
-            <span ng:if="groupadminlist.length == 0" translate class="cardlist">No group</span>
+        <div class="modal-body">
+            <div ng:if="$parent._.noResults" class="alert alert-warning" translate>
+                No results found ...
+            </div>
+            <h4>Search for user</h4>
+            <input type="text" placeholder="Search for student or teacher by name or login" ng:model="$parent._.addMember" typeahead-editable="false" typeahead-min-length="3" uib-typeahead="user as user.label for user in findUsers($viewValue)" typeahead-no-results="$parent._.noResults" class="form-control" autofocus />
+            <h4>Search for student in class</h4>
+            <input type="text" placeholder="Please write the complete classname" ng:model="$parent._.addMember" typeahead-editable="false" typeahead-min-length="2" uib-typeahead="user as user.label for user in findUsersGroup($viewValue)" typeahead-no-results="$parent._.noResults" class="form-control" autofocus />
+            <h4>Search for group</h4>
+            <input type="text" placeholder="Search for groupname" ng:model="$parent._.addGroup" typeahead-editable="false" typeahead-min-length="2" uib-typeahead="user for user in findGroups($viewValue)" typeahead-no-results="$parent._.noResults" class="form-control" autofocus />
+            <div ng:show="$parent._.newGroup.length + $parent._.newUser.length > 0">
+                <h3 translate>To add</h3>
+                <ul ng:show="$parent._.newGroup.length > 0">
+                    <li ng:repeat="group in $parent._.newGroup"><span translate>Group</span> {{group}}</li>
+                </ul>
+                <ul ng:show="$parent._.newUser.length > 0">
+                    <li ng:repeat="user in $parent._.newUser"><span translate>User</span> {{user.sn}} {{user.givenName}} {{user.sophomorixAdminClass}}</li>
+                </ul>
+            </div>
         </div>
-    </div>
+        <div class="modal-footer">
+            <input type="checkbox" ng:model="$parent._.addasadmin"> </input><span>Add as admin</span>
+            <a ng:click="$parent.addEntities()" ng:disabled="$parent._.newGroup.length + $parent._.newUser.length == 0" class="btn btn-default btn-flat" translate>
+                Apply
+            </a>
+            <a ng:click="$parent.UserSearchVisible = false" class="btn btn-default btn-flat" translate>
+                Cancel
+            </a>
+        </div>
+    </dialog>
     <br />
-    <br />
-
 
     <div class="modal-footer">
-        <a class="btn btn-default btn-flat pull-left" ng:show="groupDetails['sophomorixType'] == 'project' && editMembersButton" ng-click="killProject(groupName)" translate >Delete Project</a>
+        <a class="btn btn-default btn-flat pull-left" ng:show="editGroup" ng-click="killProject(groupName)" translate >Delete Project</a>
         <a class="btn btn-default btn-flat pull-right" ng:click="close()" translate>Close</a>
+        <a class="btn btn-default btn-flat pull-right" ng:show="editGroup" ng:click="UserSearchVisible = true" translate>Add user or group</a>
     </div>
 </div>

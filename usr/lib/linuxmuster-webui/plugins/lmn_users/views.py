@@ -228,11 +228,6 @@ class Handler(HttpPlugin):
                 with authorize('lm:users:teachers:read'):
                     # TODO: This could run with --user-basic but not all memberOf are filled. Needs verification
                     sophomorixCommand = ['sophomorix-query', '--teacher', '--schoolbase', schoolname, '--user-full', '-jj']
-            elif action == 'get-list':
-                with authorize('lm:users:teachers:list'):
-                    # TODO: This could run with --user-basic but not all memberOf are filled. Needs verification
-                    # Not so pretty to list teachers, --user-minimal with JSON output would be better
-                    sophomorixCommand = ['sophomorix-query', '--teacher', '--schoolbase', schoolname, '--user-full', '-jj']
             else:
                 with authorize('lm:users:teachers:read'):
                     user = http_context.json_body()['user']

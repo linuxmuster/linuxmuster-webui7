@@ -39,11 +39,25 @@
 }
 li.cardlist,
 span.cardlist {
-  padding: 0 10px;
-  margin: 0 15px 5px 15px;
+  padding: 0 0 0 10px;
+  margin: 0 15px 7px 15px;
   background: #EEEEEE;
   font-weight: bold;
   position: relative;
+  line-height: 1.5em;
+  display: flex;
+}
+li.cardlist span.cardbtn,
+span.cardlist span.cardbtn {
+  margin-left: auto;
+}
+li.cardlist span.cardbtn button.cardbtn,
+span.cardlist span.cardbtn button.cardbtn {
+  color: #233c4c;
+  margin-left: 5px;
+}
+.color-orange {
+  color: #ff8f00;
 }
 .dragdroparea {
   color: gray;

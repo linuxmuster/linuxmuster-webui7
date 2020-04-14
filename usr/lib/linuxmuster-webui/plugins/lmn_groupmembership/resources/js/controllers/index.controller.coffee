@@ -1,27 +1,140 @@
 angular.module('lmn.groupmembership').config ($routeProvider) ->
-    $routeProvider.when '/view/lmn/groupmembership',
-        controller: 'LMNGroupMembershipController'
-        templateUrl: '/lmn_groupmembership:resources/partial/index.html'
+  $routeProvider.when '/view/lmn/groupmembership',
+    controller: 'LMNGroupMembershipController'
+    templateUrl: '/lmn_groupmembership:resources/partial/index.html'
+
+angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController', ($scope, $http, identity, $uibModal, gettext, notify, pageTitle, messagebox, validation) ->
+
+  pageTitle.set(gettext('Enrolle'))
+  $scope.types = {
+    schoolclass:
+      typename: gettext('Schoolclass')
+      name: gettext('Groupname')
+      checkbox: true
+      type: 'schoolclass'
+
+    printergroup:
+      typename: gettext('Printer')
+      checkbox: true
+      type: 'printergroup'
+
+    project:
+      typename: gettext('Projects')
+      checkbox: true
+      type: 'project'
+  }
+
+  $scope.sorts = [
+    {
+      name: gettext('Groupname')
+      fx: (x) -> x.groupname
+    }
+    {
+      name: gettext('Membership')
+      fx: (x) -> x.membership
+    }
+  ]
+  $scope.sort = $scope.sorts[0]
+  $scope.sortReverse= false
+  $scope.paging =
+    page: 1
+    pageSize: 20
+
+  $scope.isActive = (group) ->
+    if  group.type is 'printergroup'
+      if $scope.types.printergroup.checkbox is true
+        return true
+    if  group.type is 'schoolclass'
+      if $scope.types.schoolclass.checkbox is true
+        return true
+    if  group.type is 'project'
+      if $scope.types.schoolclass.checkbox is true
+        return true
+    return false
+
+  $scope.checkInverse = (sort ,currentSort) ->
+    if sort == currentSort
+      $scope.sortReverse = !$scope.sortReverse
+    else
+      $scope.sortReverse = false
+
+  $scope.changeState = false
+
+  $scope.setMembership = (group) ->
+    $scope.changeState = true
+    console.log(group)
+    action = if group.membership then 'removeadmins' else 'addadmins'
+    if group.typename == 'Class'
+        type = 'class'
+    else if group.typename == 'Printer'
+        type = 'group'
+        action = if group.membership then 'removemembers' else 'addmembers'
+    else
+        type = 'project'
+    $http.post('/api/lmn/groupmembership/membership', {action: action, entity: $scope.identity.user, groupname: group.groupname, type: type}).then (resp) ->
+        if resp['data'][0] == 'ERROR'
+            notify.error (resp['data'][1])
+        if resp['data'][0] == 'LOG'
+            notify.success gettext(resp['data'][1])
+            group.membership = !group.membership
+            $scope.changeState = false
+
+  $scope.filterGroupType = (val) ->
+    return (dict) ->
+      dict['type'] == val
+
+  $scope.getGroups = (username) ->
+    $http.post('/api/lmn/groupmembership', {action: 'list-groups', username: username, profil: $scope.identity.profile}).then (resp) ->
+      $scope.groups = resp.data[0]
+      $scope.identity.isAdmin = resp.data[1]
+      $scope.classes = $scope.groups.filter($scope.filterGroupType('schoolclass'))
+      $scope.projects = $scope.groups.filter($scope.filterGroupType('project'))
+      $scope.printers = $scope.groups.filter($scope.filterGroupType('printergroup'))
+
+  $scope.createProject = () ->
+    messagebox.prompt(gettext('Project Name'), '').then (msg) ->
+      if not msg.value
+        return
+      test = validation.isValidProjectName(msg.value)
+      if test != true
+        notify.error gettext(test)
+        return
+      $http.post('/api/lmn/groupmembership', {action: 'create-project', username:$scope.identity.user, project: msg.value, profil: $scope.identity.profile}).then (resp) ->
+        notify.success gettext('Project Created')
+        $scope.getGroups ($scope.identity.user)
+
+  $scope.showGroupDetails = (index, groupType, groupName) ->
+    $uibModal.open(
+      templateUrl: '/lmn_groupmembership:resources/partial/groupDetails.modal.html'
+      controller:  'LMNGroupDetailsController'
+      size: 'lg'
+      resolve:
+        groupType: () -> groupType
+        groupName: () -> groupName
+    ).result.then (result)->
+      if result.response is 'refresh'
+        $scope.getGroups ($scope.identity.user)
+
+  $scope.projectIsJoinable = (project) ->
+    return project['joinable'] == 'TRUE' or project.admin or $scope.identity.isAdmin or $scope.identity.profile.memberOf.indexOf(project['DN']) > -1
+
+  $scope.$watch 'identity.user', ->
+    if $scope.identity.user is undefined
+      return
+    if $scope.identity.user is null
+      return
+    if $scope.identity.user is 'root'
+# $scope.identity.user = 'hulk'
+      return
+    $scope.getGroups($scope.identity.user)
+    return
 
 angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, groupType, groupName) ->
-
-        $scope.editGroupMembers = (groupName, groupDetails, admins, members) ->
-            $uibModal.open(
-                templateUrl: '/lmn_groupmembership:resources/partial/editMembers.modal.html'
-                controller:  'LMNGroupEditController'
-                size: 'lg'
-                resolve:
-                   groupName: () -> groupName
-                   groupDetails: () -> groupDetails
-                   admins: () -> admins
-                   members: () -> members
-            ).result.then (result)->
-                if result.response is 'refresh'
-                    $scope.getGroupDetails ([groupType, groupName])
 
         $scope.showAdminDetails = true
         $scope.showMemberDetails = true
         $scope.changeState = false
+        $scope.editGroup = false
 
         $scope.hidetext = gettext("Hide")
         $scope.showtext = gettext("Show")
@@ -58,7 +171,11 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
                 .finally () ->
                     msg.close()
 
-        $scope.nevertext = gettext('Never')
+        $scope.text = {
+                'addAsAdmin' : gettext('Move to admin group'),
+                'removeFromAdmin' : gettext('Remove from admin group'),
+                'remove' : gettext('Remove')
+        }
 
         $scope.formatDate = (date) ->
             if (date == "19700101000000.0Z")
@@ -93,7 +210,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
                 $scope.admins = []
                 for admin in $scope.adminList
                     member = resp.data['MEMBERS'][groupName][admin]
-                    $scope.admins.push({'sn':member.sn, 'givenName':member.givenName, 'sophomorixAdminClass':member.sophomorixAdminClass})
+                    $scope.admins.push({'sn':member.sn, 'givenName':member.givenName, 'sophomorixAdminClass':member.sophomorixAdminClass, 'login': member.sAMAccountName})
 
                 $scope.joinable = resp.data['GROUP'][groupName]['sophomorixJoinable'] == 'TRUE'
                 $scope.hidden = resp.data['GROUP'][groupName]['sophomorixHidden'] == 'TRUE'
@@ -101,296 +218,218 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
                 # Admin or admin of the project can edit members of a project
                 # Only admins can change hide and join option for a class
                 if $scope.identity.isAdmin
-                    $scope.editMembersButton = true
-                else if (groupType == "project") and ($scope.adminList.indexOf($scope.identity.user) != -1 or $scope.groupadminlist.indexOf($scope.identity.profile.sophomorixAdminClass) != -1)
-                    $scope.editMembersButton = true
-                else
-                    $scope.editMembersButton = false
+                    $scope.editGroup = true
+                else if (groupType == 'project') and ($scope.adminList.indexOf($scope.identity.user) >= 0)
+                    $scope.editGroup = true
+                else if (groupType == 'project') and ($scope.groupadminlist.indexOf($scope.identity.profile.sophomorixAdminClass) >= 0)
+                    $scope.editGroup = true
+                # List will not be updated later, avoir using it
+                $scope.adminList = []
+
+        $scope.filterLogin = (membersArray, login) ->
+            return membersArray.filter((u) -> u.login == login).length == 0
+
+        $scope.addMember = (user) ->
+            entity = ''
+            if Array.isArray(user)
+                for u in user
+                    if $scope.filterLogin($scope.members, user.login)
+                        entity += u.login + ","
+            else
+                if $scope.filterLogin($scope.members, user.login)
+                    entity = user.login
+            if not entity
+                return
+            $scope.changeState = true
+            $http.post('/api/lmn/groupmembership/membership', {action: 'addmembers', entity: entity, groupname: groupName}).then (resp) ->
+                if resp['data'][0] == 'ERROR'
+                    notify.error (resp['data'][1])
+                if resp['data'][0] == 'LOG'
+                    notify.success gettext(resp['data'][1])
+                    if Array.isArray(user)
+                        $scope.members = $scope.members.concat(user.filter((u) -> $scope.members.indexOf(u) < 0))
+                    else
+                        $scope.members.push(user)
+                $scope.changeState = false
+
+        $scope.removeMember = (user) ->
+            $scope.changeState = true
+            $http.post('/api/lmn/groupmembership/membership', {action: 'removemembers', entity: user.login, groupname: groupName}).then (resp) ->
+                if resp['data'][0] == 'ERROR'
+                    notify.error (resp['data'][1])
+                if resp['data'][0] == 'LOG'
+                    notify.success gettext(resp['data'][1])
+                    position = $scope.members.indexOf(user)
+                    $scope.members.splice(position, 1)
+                $scope.changeState = false
+
+        $scope.addAdmin = (user) ->
+            entity = ''
+            if Array.isArray(user)
+                for u in user
+                    if $scope.filterLogin($scope.admins, user.login)
+                        entity += u.login + ","
+            else
+                if $scope.filterLogin($scope.admins, user.login)
+                    entity = user.login
+            if not entity
+                return
+            $scope.changeState = true
+            $http.post('/api/lmn/groupmembership/membership', {action: 'addadmins', entity: entity, groupname: groupName}).then (resp) ->
+                if resp['data'][0] == 'ERROR'
+                    notify.error (resp['data'][1])
+                if resp['data'][0] == 'LOG'
+                    notify.success gettext(resp['data'][1])
+                   if Array.isArray(user)
+                        $scope.admins = $scope.admins.concat(user.filter((u) -> $scope.admins.indexOf(u) < 0))
+                    else
+                        $scope.admins.push(user)
+                $scope.changeState = false
+
+        $scope.removeAdmin = (user) ->
+            $scope.changeState = true
+            $http.post('/api/lmn/groupmembership/membership', {action: 'removeadmins', entity: user.login, groupname: groupName}).then (resp) ->
+                if resp['data'][0] == 'ERROR'
+                    notify.error (resp['data'][1])
+                if resp['data'][0] == 'LOG'
+                    notify.success gettext(resp['data'][1])
+                    position = $scope.admins.indexOf(user)
+                    $scope.admins.splice(position, 1)
+                $scope.changeState = false
+
+        $scope.addMemberGroup = (group) ->
+            entity = ''
+            if Array.isArray(group)
+                for g in group
+                    if $scope.groupmemberlist.indexOf(g) < 0
+                        entity += g + ","
+            else
+                if $scope.groupmemberlist.indexOf(group) < 0
+                    entity = group
+            if not entity
+                return
+            $scope.changeState = true
+            $http.post('/api/lmn/groupmembership/membership', {action: 'addmembergroups', entity: entity, groupname: groupName}).then (resp) ->
+                if resp['data'][0] == 'ERROR'
+                    notify.error (resp['data'][1])
+                if resp['data'][0] == 'LOG'
+                    notify.success gettext(resp['data'][1])
+                    if Array.isArray(group)
+                        $scope.groupmemberlist = $scope.groupmemberlist.concat(group.filter((g) -> $scope.groupmemberlist.indexOf(g) < 0))
+                    else
+                        $scope.groupmemberlist.push(group)
+                $scope.changeState = false
+
+        $scope.removeMemberGroup = (group) ->
+            $scope.changeState = true
+            $http.post('/api/lmn/groupmembership/membership', {action: 'removemembergroups', entity: group, groupname: groupName}).then (resp) ->
+                if resp['data'][0] == 'ERROR'
+                    notify.error (resp['data'][1])
+                if resp['data'][0] == 'LOG'
+                    notify.success gettext(resp['data'][1])
+                    position = $scope.groupmemberlist.indexOf(group)
+                    $scope.groupmemberlist.splice(position, 1)
+                $scope.changeState = false
+
+        $scope.addAdminGroup = (group) ->
+            entity = ''
+            if Array.isArray(group)
+                for g in group
+                    if $scope.groupadminlist.indexOf(g) < 0
+                        entity += g + ","
+            else
+                if $scope.groupadminlist.indexOf(group) < 0
+                    entity = group
+            if not entity
+                return
+            $scope.changeState = true
+            $http.post('/api/lmn/groupmembership/membership', {action: 'addadmingroups', entity: entity, groupname: groupName}).then (resp) ->
+                if resp['data'][0] == 'ERROR'
+                    notify.error (resp['data'][1])
+                if resp['data'][0] == 'LOG'
+                    notify.success gettext(resp['data'][1])
+                    if Array.isArray(group)
+                        $scope.groupadminlist = $scope.groupadminlist.concat(group.filter((g) -> $scope.groupadminlist.indexOf(g) < 0))
+                    else
+                        $scope.groupadminlist.push(group)
+                $scope.changeState = false
+
+        $scope.removeAdminGroup = (group) ->
+            $scope.changeState = true
+            $http.post('/api/lmn/groupmembership/membership', {action: 'removeadmingroups', entity: group, groupname: groupName}).then (resp) ->
+                if resp['data'][0] == 'ERROR'
+                    notify.error (resp['data'][1])
+                if resp['data'][0] == 'LOG'
+                    notify.success gettext(resp['data'][1])
+                    position = $scope.groupadminlist.indexOf(group)
+                    $scope.groupadminlist.splice(position, 1)
+                $scope.changeState = false
+
+        $scope.demoteGroup = (group) ->
+            $scope.removeAdminGroup(group)
+            $scope.addMemberGroup(group)
+            if (group == $scope.identity.profile.sophomorixAdminClass) and ($scope.filterLogin($scope.admins, $scope.identity.user))
+                $scope.editGroup = false
+
+        $scope.demoteMember = (user) ->
+            $scope.removeAdmin(user)
+            $scope.addMember(user)
+            if (user.login == $scope.identity.user) and ($scope.groupadminlist.indexOf($scope.identity.profile.sophomorixAdminClass) < 0)
+                $scope.editGroup = false
+
+        $scope.elevateGroup = (group) ->
+            $scope.removeMemberGroup(group)
+            $scope.addAdminGroup(group)
+
+        $scope.elevateMember = (user) ->
+            $scope.removeMember(user)
+            $scope.addAdmin(user)
+
+        $scope._ =
+            addMember: null
+            addGroup: null
+            addasadmin: false
+            newGroup: []
+            newUser: []
+            noResults : false
+
+        $scope.$watch '_.addMember', () ->
+            if $scope._.addMember
+                $scope._.newUser.push($scope._.addMember)
+                $scope._.addMember = null
+
+        $scope.$watch '_.addGroup', () ->
+            if $scope._.addGroup
+                $scope._.newGroup.push($scope._.addGroup)
+                $scope._.addGroup = null
+
+        $scope.addEntities = () ->
+            $scope.UserSearchVisible = false
+            if $scope._.addasadmin
+                $scope.addAdmin($scope._.newUser)
+                $scope.addAdminGroup($scope._.newGroup)
+            else
+                $scope.addMember($scope._.newUser)
+                $scope.addMemberGroup($scope._.newGroup)
+            $scope._.newUser = []
+            $scope._.newGroup = []
+            $scope._.addasadmin = false
+
+
+        $scope.findUsers = (q) ->
+            return $http.post("/api/lm/search-project", {login:q, type:'user'}).then (resp) ->
+                return resp.data
+        $scope.findGroups = (q) ->
+            return $http.post("/api/lm/search-project", {login:q, type:'group'}).then (resp) ->
+                return resp.data
+        $scope.findUsersGroup = (q) ->
+            return $http.post("/api/lm/search-project", {login:q, type:'usergroup'}).then (resp) ->
+                return resp.data
 
         $scope.groupType = groupType
         $scope.getGroupDetails ([groupType, groupName])
         $scope.close = () ->
             $uibModalInstance.dismiss()
 
-angular.module('lmn.groupmembership').controller 'LMNGroupEditController', ($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, groupName, groupDetails, admins, members) ->
-        $scope.sorts = [
-            {
-                name: gettext('Given name')
-                id: 'givenName'
-                fx: (x) -> x.givenName
-            }
-            {
-                name: gettext('Name')
-                id: 'sn'
-                fx: (x) -> x.sn
-            }
-            #{
-                #name: gettext('Membership')
-                #id: 'membership'
-                #fx: (x) -> x.membership
-            #}
-            #{
-            #    name: gettext('Class')
-            #    fx: (x) -> x.sophomorixAdminClass
-            #}
-        ]
-        $scope.sort = $scope.sorts[1]
-        $scope.groupName = groupName
-        $scope.admins = admins
-        $scope.members = members
-        $scope.sortReverse = false
-        groupDN = groupDetails['DN']
 
 
-        $scope.filter_placeholder = gettext('Search for lastname, firstname or class')
-        $scope.addgroupmembertext = gettext('Add/remove as member group')
-        $scope.addgroupadmintext = gettext('Add/remove as admin group')
-
-        $scope.admingroups = groupDetails['sophomorixAdminGroups']
-        $scope.membergroups = groupDetails['sophomorixMemberGroups']
-
-        $scope.expandAll = () ->
-            for cl in $scope.classes
-                cl['isVisible'] = 1
-
-        $scope.closeAll = () ->
-            for cl in $scope.classes
-                cl['isVisible'] = 0
-
-        $scope.checkInverse = (sort ,currentSort) ->
-            if sort == currentSort
-                $scope.sortReverse = !$scope.sortReverse
-            else
-                $scope.sortReverse = false
-
-        $scope.updateAdminList = (teacher) ->
-            idx = $scope.admins.indexOf(teacher.sAMAccountName)
-            if idx >= 0
-                $scope.admins.splice(idx, 1)
-            else
-                $scope.admins.push(teacher.sAMAccountName)
-
-        $scope.updateGroupAdminList = (cl) ->
-            idx = $scope.admingroups.indexOf(cl)
-            if idx >= 0
-                $scope.admingroups.splice(idx, 1)
-            else
-                $scope.admingroups.push(cl)
-                # If group teachers, remove each teacher from adminlist
-                if cl == 'teachers'
-                    newadmins = []
-                    for admin in $scope.admins
-                        if !(admin of $scope.teachersDict)
-                            newadmins.push(admin)
-                    $scope.admins = newadmins
-
-        $scope.updateGroupMemberList = (cl) ->
-            idx = $scope.membergroups.indexOf(cl)
-            if idx >= 0
-                $scope.membergroups.splice(idx, 1)
-            else
-                $scope.membergroups.push(cl)
-                for studentLogin, details of $scope.studentsDict
-                    if details['sophomorixAdminClass'] == cl
-                        details['membership'] = false
-                if cl == 'teachers'
-                    for teacherLogin, details of $scope.teachersDict
-                        details['membership'] = false
-
-        $scope.setMembers = (students, teachers) ->
-            msg = messagebox.show(progress: true)
-            membersDict = Object.assign(students, teachers)
-            $http.post('/api/lmn/groupmembership/details', 
-                        {
-                            action: 'set-members', 
-                            username:$scope.identity.user, 
-                            members: membersDict,
-                            groupName: groupName, 
-                            admins: $scope.admins, 
-                            membergroups: $scope.membergroups, 
-                            admingroups: $scope.admingroups
-                        }
-            ).then (resp) ->
-                if resp['data'][0] == 'ERROR'
-                    notify.error (resp['data'][1])
-                if resp['data'][0] == 'LOG'
-                    notify.success gettext(resp['data'][1])
-                    $uibModalInstance.close(response: 'refresh')
-                    #$scope.resetClass()
-            .finally () ->
-                msg.close()
-
-        $http.post('/api/lmn/groupmembership/details', {action: 'get-students', dn: groupDN}).then (resp) ->
-            $scope.students = resp.data[0]
-            $scope.classes = resp.data[1]
-            $scope.studentsDict = resp.data[2]
-
-            ## TODO : add other project members ?
-        $http.post('/api/lm/sophomorixUsers/teachers', {action: 'get-list'}).then (resp) ->
-            $scope.teachers = resp.data
-            $scope.teachersDict = {}
-            for teacher in $scope.teachers
-                teacher['membership'] = groupDN in teacher['memberOf']
-                $scope.teachersDict[teacher['sAMAccountName']] = teacher
-
-        $scope.close = () ->
-            $uibModalInstance.dismiss()
-
-        $scope.search = (item) ->
-            if $scope.query
-                $scope.expandAll()
-                return (item.sophomorixAdminClass.indexOf($scope.query) != -1) || (item.sn.indexOf($scope.query) != -1) || (item.givenName.indexOf($scope.query) != -1)
-            else
-                return true
-
-        $scope.isMemberOn = false
-        $scope.toggleMember = () ->
-            $scope.isMemberOn = !$scope.isMemberOn
-            if $scope.isMemberOn
-                $scope.expandAll()
-            else
-                $scope.closeAll()
-
-        $scope.isMember = (item) ->
-            if $scope.isMemberOn
-                if $scope.membergroups.indexOf(item.sophomorixAdminClass) >= 0
-                    return true
-                if item.sAMAccountName of $scope.teachersDict
-                    return $scope.teachersDict[item.sAMAccountName].membership
-                else
-                    return $scope.studentsDict[item.sAMAccountName].membership
-            return true
-
-
-angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController', ($scope, $http, identity, $uibModal, gettext, notify, pageTitle, messagebox, validation) ->
-
-    pageTitle.set(gettext('Enrolle'))
-    $scope.types = {
-        schoolclass:
-            typename: gettext('Schoolclass')
-            name: gettext('Groupname')
-            checkbox: true
-            type: 'schoolclass'
-
-        printergroup:
-            typename: gettext('Printer')
-            checkbox: true
-            type: 'printergroup'
-
-        project:
-            typename: gettext('Projects')
-            checkbox: true
-            type: 'project'
-    }
-
-    $scope.sorts = [
-        {
-            name: gettext('Groupname')
-            fx: (x) -> x.groupname
-        }
-        {
-            name: gettext('Membership')
-            fx: (x) -> x.membership
-        }
-    ]
-    $scope.sort = $scope.sorts[0]
-    $scope.sortReverse= false
-    $scope.paging =
-       page: 1
-       pageSize: 20
-
-    $scope.isActive = (group) ->
-        if  group.type is 'printergroup'
-            if $scope.types.printergroup.checkbox is true
-                return true
-        if  group.type is 'schoolclass'
-            if $scope.types.schoolclass.checkbox is true
-                return true
-        if  group.type is 'project'
-            if $scope.types.schoolclass.checkbox is true
-                return true
-        return false
-
-    $scope.checkInverse = (sort ,currentSort) ->
-        if sort == currentSort
-            $scope.sortReverse = !$scope.sortReverse
-        else
-            $scope.sortReverse = false
-
-    $scope.resetClass = () ->
-       # reset html class back (remove changed) so its not highlighted anymore
-       result = document.getElementsByClassName("changed")
-       while result.length
-          result[0].className = result[0].className.replace( /(?:^|\s)changed(?!\S)/g , '' )
-       # reset $scope.group attribute back not not changed so an additional enroll will not set these groups again
-       for group in $scope.groups
-           group['changed']= false
-       return
-
-
-    $scope.groupChanged = (item) ->
-        for group in $scope.groups
-            if group['groupname'] == item
-                group['changed'] = !group['changed']
-
-    $scope.filterGroupType = (val) ->
-        return (dict) ->
-            dict['type'] == val
-
-    $scope.getGroups = (username) ->
-        $http.post('/api/lmn/groupmembership', {action: 'list-groups', username: username, profil: $scope.identity.profile}).then (resp) ->
-            $scope.groups = resp.data[0]
-            $scope.identity.isAdmin = resp.data[1]
-            $scope.classes = $scope.groups.filter($scope.filterGroupType('schoolclass'))
-            $scope.projects = $scope.groups.filter($scope.filterGroupType('project'))
-            $scope.printers = $scope.groups.filter($scope.filterGroupType('printergroup'))
-
-    $scope.setGroups = (groups) ->
-        $http.post('/api/lmn/groupmembership', {action: 'set-groups', username:$scope.identity.user, groups: groups, profil: $scope.identity.profile}).then (resp) ->
-            if resp['data'][0] == 'ERROR'
-                notify.error (resp['data'][1])
-            if resp['data'][0] == 'LOG'
-                notify.success gettext(resp['data'][1])
-                $scope.resetClass()
-                identity.init().then () ->
-                  $scope.getGroups($scope.identity.user)
-            if resp.data == 0
-                notify.success gettext("Nothing changed")
-
-    $scope.createProject = () ->
-        messagebox.prompt(gettext('Project Name'), '').then (msg) ->
-            if not msg.value
-                return
-            test = validation.isValidProjectName(msg.value)
-            if test != true
-                notify.error gettext(test)
-                return
-            $http.post('/api/lmn/groupmembership', {action: 'create-project', username:$scope.identity.user, project: msg.value, profil: $scope.identity.profile}).then (resp) ->
-                notify.success gettext('Project Created')
-                $scope.getGroups ($scope.identity.user)
-
-    $scope.showGroupDetails = (index, groupType, groupName) ->
-        $uibModal.open(
-            templateUrl: '/lmn_groupmembership:resources/partial/groupDetails.modal.html'
-            controller:  'LMNGroupDetailsController'
-            size: 'lg'
-            resolve:
-               groupType: () -> groupType
-               groupName: () -> groupName
-        ).result.then (result)->
-            if result.response is 'refresh'
-                $scope.getGroups ($scope.identity.user)
-
-    $scope.projectIsJoinable = (project) ->
-        return project['joinable'] == 'TRUE' or project.admin or $scope.identity.isAdmin or $scope.identity.profile.memberOf.indexOf(project['DN']) > -1
-
-    $scope.$watch 'identity.user', ->
-        if $scope.identity.user is undefined
-           return
-        if $scope.identity.user is null
-           return
-        if $scope.identity.user is 'root'
-           # $scope.identity.user = 'hulk'
-           return
-        $scope.getGroups($scope.identity.user)
-        return

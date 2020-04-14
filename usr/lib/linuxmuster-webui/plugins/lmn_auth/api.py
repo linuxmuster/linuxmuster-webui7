@@ -134,10 +134,12 @@ class LMAuthenticationProvider(AuthenticationProvider):
             groups = subprocess.check_output(['groups', username]).decode('utf8')
         except subprocess.CalledProcessError as e:
             groups = e.output.decode('utf8')
-        for role_group in ['all-admins', 'all-teachers', 'all-students']:
+        for role_group in ['admins', 'teachers', 'students']:
             if role_group in groups:
+                ## Check if user in group admins, teachers or students,
+                ## and then let the webui run as all-admins, all-teachers or all-students
                 try:
-                    gid = grp.getgrnam(role_group).gr_gid
+                    gid = grp.getgrnam('all-'+role_group).gr_gid
                     logging.debug("Running Webui as %s", role_group)
                 except KeyError:
                     gid = grp.getgrnam('nogroup').gr_gid

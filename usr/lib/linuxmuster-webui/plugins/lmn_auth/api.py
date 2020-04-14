@@ -128,33 +128,32 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
     def get_isolation_gid(self, username):
         """Returns the gid of the group which will run each worker."""
-        # PREPARE FOR GROUP CONTEXT
-        # try:
-        #     groups = subprocess.check_output(['groups', username])
-        # except subprocess.CalledProcessError as e:
-        #     groups = e.output
-        # for role_group in ['all-admins', 'all-teachers', 'all-students']:
-        #     if role_group in groups:
-        #         try:
-        #             gid = grp.getgrnam(role_group).gr_gid
-        #             logging.debug("Running Webui as %s", role_group)
-        #         except KeyError:
-        #             gid = grp.getgrnam('nogroup').gr_gid
-        #             logging.debug("Context group not found, running Webui as %s", 'nogroup')
-        #         return gid
+        # GROUP CONTEXT
+        try:
+            groups = subprocess.check_output(['groups', username])
+        except subprocess.CalledProcessError as e:
+            groups = e.output
+        for role_group in ['all-admins', 'all-teachers', 'all-students']:
+            if role_group in groups:
+                try:
+                    gid = grp.getgrnam(role_group).gr_gid
+                    logging.debug("Running Webui as %s", role_group)
+                except KeyError:
+                    gid = grp.getgrnam('nogroup').gr_gid
+                    logging.debug("Context group not found, running Webui as %s", 'nogroup')
+                return gid
         return None
 
     def get_isolation_uid(self, username):
         """Returns the uid of the user which will run each worker."""
-        # PREPARE FOR USER CONTEXT
-        # try:
-        #     uid = pwd.getpwnam(username).pw_uid
-        #     logging.debug("Running Webui as %s", username)
-        # except KeyError:
-        #     uid = pwd.getpwnam('nobody').pw_uid
-        #     logging.debug("Context user not found, running Webui as %s", 'nobody')
-        # return uid
-        return 0
+        # USER CONTEXT
+        try:
+            uid = pwd.getpwnam(username).pw_uid
+            logging.debug("Running Webui as %s", username)
+        except KeyError:
+            uid = pwd.getpwnam('nobody').pw_uid
+            logging.debug("Context user not found, running Webui as %s", 'nobody')
+        return uid
 
     def get_profile(self, username):
         if username in ["root",None]:

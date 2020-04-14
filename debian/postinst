@@ -7,6 +7,12 @@ case "$1" in
         wucfg="/etc/linuxmuster/webui/config.yml"
         webuietc="/usr/lib/linuxmuster-webui/etc"
         python_version=$(basename $(readlink -f /usr/bin/python3))
+
+        # circumvent missing .installed files in package. Can be removed later
+        if [ -f /etc/linuxmuster/.secret/administrator ]; then
+            touch $webuietc/.installed
+        fi
+
         if [ ! -f $webuietc/.installed ];
         then
             echo "---------------------------------------------------------------"
@@ -19,6 +25,10 @@ case "$1" in
             echo "Copy default config files for webui"
             mkdir -p /etc/linuxmuster/webui/
             #
+            if [ -f $ajcfg];then
+                echo "Backing up config.yml"
+                cp -a $ajcfg $ajcfg.bak
+            fi
             echo "Writing linuxmuster default ajenti config $ajcfg"
             cp -rf /usr/lib/linuxmuster-webui/etc/ajenti_default.yml $ajcfg
             if [ ! -f $wucfg ]; then
@@ -31,7 +41,7 @@ case "$1" in
             echo "Configure systemctl.."
             systemctl daemon-reload
             systemctl enable linuxmuster-webui
-            systemctl start linuxmuster-webui
+            systemctl restart linuxmuster-webui
             touch $webuietc/.installed
             hostname=$(hostname --fqdn)
             ipaddress=$(hostname --ip-address)
@@ -48,7 +58,7 @@ case "$1" in
             
             # Always backup config file if things are going bad
             echo "Backing up config.yml"
-            cp -a /etc/ajenti/config.yml /etc/ajenti/config.yml.bak
+            cp -a $ajcfg $ajcfg.bak
             
             # Requirements must always be checked
             /usr/bin/python3 -m pip install -r $webuietc/requirements.txt
@@ -56,7 +66,7 @@ case "$1" in
             # For an upgrade Python2 --> Python3 the new installation of Ajenti will overwrite config.yml
             if ! /usr/bin/python3 -c "import aj" &> /dev/null ; then
                 # Module aj not present, so upgrade to Python3
-                cp -a /etc/ajenti/config.yml.bak /etc/ajenti/config.yml
+                cp -a $ajcfg.bak $ajcfg
             fi
             # Add fqdn_certificate in config.yml if not present - for update ajenti 2.1.33
             if [ "$(grep -e '^\s\{2,\}fqdn_certificate' /etc/ajenti/config.yml | wc -l)" -eq 0 ] ; then

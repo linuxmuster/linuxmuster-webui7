@@ -41,7 +41,7 @@ angular.module('lm.users').controller 'LMUsersPrintPasswordsController', ($scope
                 classes: () -> $scope.classes
                 user: () -> user
         )
-    
+
     $scope.filterGroupType = (val) ->
         return (dict) ->
             dict['type'] == val
@@ -66,6 +66,6 @@ angular.module('lm.users').controller 'LMUsersPrintPasswordsController', ($scope
             return
         if $scope.identity.user is 'root'
             return
-        
+
         $scope.getGroups($scope.identity.user)
         return

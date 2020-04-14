@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.130-1) lmn7-testing; urgency=medium 
+
+  * Current snapshot build 83d6d93cfb731aad46d3c25570fd4dc9647ba725
+   *     fixed postinst missing fi
+
+ -- Andreas Till <andreas.till@netzint.de> Tue Apr 14 12:54:29 CEST 2020
+
 linuxmuster-webui7 (1.0.129-1) lmn7-testing; urgency=medium 
 
   * Current snapshot build 1b952b92fa54d3ecf50d0cd67a7670b7c7c44d33

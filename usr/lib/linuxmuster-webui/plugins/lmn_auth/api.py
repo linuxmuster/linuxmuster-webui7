@@ -131,9 +131,9 @@ class LMAuthenticationProvider(AuthenticationProvider):
         """Returns the gid of the group which will run each worker."""
         # GROUP CONTEXT
         try:
-            groups = subprocess.check_output(['groups', username])
+            groups = subprocess.check_output(['groups', username]).decode('utf8')
         except subprocess.CalledProcessError as e:
-            groups = e.output
+            groups = e.output.decode('utf8')
         for role_group in ['all-admins', 'all-teachers', 'all-students']:
             if role_group in groups:
                 try:

@@ -137,6 +137,8 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
     def get_isolation_gid(self, username):
         """Returns the gid of the group which will run each worker."""
+        if username == 'root':
+            return 0
         # GROUP CONTEXT
         netbios_domain = self.get_netbios_domain()
         samba_user = netbios_domain + "\\" + username
@@ -154,6 +156,8 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
     def get_isolation_uid(self, username):
         """Returns the uid of the user which will run each worker."""
+        if username == 'root':
+            return 0
         # USER CONTEXT
         try:
             uid = pwd.getpwnam(username).pw_uid

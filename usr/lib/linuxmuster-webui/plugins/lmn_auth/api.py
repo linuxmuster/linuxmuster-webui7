@@ -127,19 +127,24 @@ class LMAuthenticationProvider(AuthenticationProvider):
         systemString = ['sophomorix-passwd', '--user', username, '--pass', new_password, '--hide', '--nofirstpassupdate', '--use-smbpasswd']
         subprocess.check_call(systemString, shell=False)
 
+    def get_netbios_domain(self):
+        tool = subprocess.Popen(['/usr/bin/samba-tool', 'domain', 'info', '127.0.0.1'], stdout=subprocess.PIPE)
+        netline = subprocess.Popen(['grep', 'Netbios'], stdin=tool.stdout,stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        out, err = netline.communicate()
+        if not err:
+            return out.decode('utf8').split(':')[-1].strip()
+        return ''
+
     def get_isolation_gid(self, username):
         """Returns the gid of the group which will run each worker."""
         # GROUP CONTEXT
-        try:
-            groups = subprocess.check_output(['groups', username]).decode('utf8')
-        except subprocess.CalledProcessError as e:
-            groups = e.output.decode('utf8')
-        for role_group in ['admins', 'teachers', 'students']:
-            if role_group in groups:
-                ## Check if user in group admins, teachers or students,
-                ## and then let the webui run as all-admins, all-teachers or all-students
+        netbios_domain = self.get_netbios_domain()
+        samba_user = netbios_domain + "\\" + username
+        for role_group in ['all-admins', 'all-teachers', 'all-students']:
+            members = subprocess.check_output(['getent', 'group', role_group]).decode('utf8)')
+            if samba_user in members:
                 try:
-                    gid = grp.getgrnam('all-'+role_group).gr_gid
+                    gid = grp.getgrnam(role_group).gr_gid
                     logging.debug("Running Webui as %s", role_group)
                 except KeyError:
                     gid = grp.getgrnam('nogroup').gr_gid

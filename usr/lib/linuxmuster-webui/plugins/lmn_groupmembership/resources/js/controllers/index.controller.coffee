@@ -3,7 +3,7 @@ angular.module('lmn.groupmembership').config ($routeProvider) ->
     controller: 'LMNGroupMembershipController'
     templateUrl: '/lmn_groupmembership:resources/partial/index.html'
 
-angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController', ($scope, $http, identity, $uibModal, gettext, notify, pageTitle, messagebox, validation) ->
+angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController', ($rootScope, $scope, $http, identity, $uibModal, gettext, notify, pageTitle, messagebox, validation) ->
 
   pageTitle.set(gettext('Enrolle'))
   $scope.types = {
@@ -78,6 +78,9 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
             notify.success gettext(resp['data'][1])
             group.membership = !group.membership
             $scope.changeState = false
+            $rootScope.identity = identity
+            identity.init().then () ->
+                console.log("Identity renewed !")
 
   $scope.filterGroupType = (val) ->
     return (dict) ->

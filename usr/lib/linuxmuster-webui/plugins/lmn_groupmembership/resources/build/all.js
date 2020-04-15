@@ -13,7 +13,7 @@
     });
   });
 
-  angular.module('lmn.groupmembership').controller('LMNGroupMembershipController', function($scope, $http, identity, $uibModal, gettext, notify, pageTitle, messagebox, validation) {
+  angular.module('lmn.groupmembership').controller('LMNGroupMembershipController', function($rootScope, $scope, $http, identity, $uibModal, gettext, notify, pageTitle, messagebox, validation) {
     pageTitle.set(gettext('Enrolle'));
     $scope.types = {
       schoolclass: {
@@ -104,7 +104,11 @@
         if (resp['data'][0] === 'LOG') {
           notify.success(gettext(resp['data'][1]));
           group.membership = !group.membership;
-          return $scope.changeState = false;
+          $scope.changeState = false;
+          $rootScope.identity = identity;
+          return identity.init().then(function() {
+            return console.log("Identity renewed !");
+          });
         }
       });
     };

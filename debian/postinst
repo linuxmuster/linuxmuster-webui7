@@ -79,6 +79,7 @@ case "$1" in
             
             # start webui
             echo "Start linuxmuster-webui"
+            systemctl daemon-reload
             systemctl start linuxmuster-webui
             echo "---------------------------------------------------------------"
             echo "Updating linuxmuster-webui ..done"

@@ -15,4 +15,5 @@ configparser==3.5.0
 dpath==1.4.2         # used for getSophomorixValue
 python-magic==0.4.15 # used to determine encoding in linbo files and csv uploads
 scrypt
+python-ldap
 simplejson==3.17.0

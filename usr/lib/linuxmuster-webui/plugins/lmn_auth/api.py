@@ -127,27 +127,24 @@ class LMAuthenticationProvider(AuthenticationProvider):
         systemString = ['sophomorix-passwd', '--user', username, '--pass', new_password, '--hide', '--nofirstpassupdate', '--use-smbpasswd']
         subprocess.check_call(systemString, shell=False)
 
-    def get_netbios_domain(self):
-        tool = subprocess.Popen(['/usr/bin/samba-tool', 'domain', 'info', '127.0.0.1'], stdout=subprocess.PIPE)
-        netline = subprocess.Popen(['grep', 'Netbios'], stdin=tool.stdout,stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        out, err = netline.communicate()
-        if not err:
-            return out.decode('utf8').split(':')[-1].strip()
-        return ''
-
     def get_isolation_gid(self, username):
         """Returns the gid of the group which will run each worker."""
         if username == 'root':
             return 0
         # GROUP CONTEXT
-        netbios_domain = self.get_netbios_domain()
-        samba_user = netbios_domain + "\\" + username
-        for role_group in ['all-admins', 'all-teachers', 'all-students']:
-            members = subprocess.check_output(['getent', 'group', role_group]).decode('utf8)')
-            if samba_user in members:
+        try:
+            groupmembership = b''.join(self._get_ldap_user(username)['memberOf']).decode('utf8')
+        except Exception as e:
+            groupmembership = ''
+        if 'role-globaladministrator' in groupmembership or 'role-schooladministrator' in groupmembership:
+            return None
+
+        roles = ['role-teacher', 'role-student']
+        for role in roles:
+            if role in groupmembership:
                 try:
-                    gid = grp.getgrnam(role_group).gr_gid
-                    logging.debug("Running Webui as %s", role_group)
+                    gid = grp.getgrnam(role).gr_gid
+                    logging.debug("Running Webui as %s", role)
                 except KeyError:
                     gid = grp.getgrnam('nogroup').gr_gid
                     logging.debug("Context group not found, running Webui as %s", 'nogroup')
@@ -159,6 +156,14 @@ class LMAuthenticationProvider(AuthenticationProvider):
         if username == 'root':
             return 0
         # USER CONTEXT
+        try:
+            groupmembership = b''.join(self._get_ldap_user(username)['memberOf']).decode('utf8')
+        except Exception as e:
+            groupmembership = ''
+
+        if 'role-globaladministrator' in groupmembership or 'role-schooladministrator' in groupmembership:
+            return 0
+
         try:
             uid = pwd.getpwnam(username).pw_uid
             logging.debug("Running Webui as %s", username)

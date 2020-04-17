@@ -28,7 +28,6 @@ class LMAuthenticationProvider(AuthenticationProvider):
                                 (sophomorixRole=globaladministrator)
                                 (sophomorixRole=schooladministrator)
                                 (sophomorixRole=teacher)
-                                (sophomorixRole=student)
                             )
                         )"""
 
@@ -129,48 +128,49 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
     def get_isolation_gid(self, username):
         """Returns the gid of the group which will run each worker."""
-        if username == 'root':
-            return 0
-        # GROUP CONTEXT
-        try:
-            groupmembership = b''.join(self._get_ldap_user(username)['memberOf']).decode('utf8')
-        except Exception as e:
-            groupmembership = ''
-        if 'role-globaladministrator' in groupmembership or 'role-schooladministrator' in groupmembership:
-            return None
-
-        roles = ['role-teacher', 'role-student']
-        for role in roles:
-            if role in groupmembership:
-                try:
-                    gid = grp.getgrnam(role).gr_gid
-                    logging.debug("Running Webui as %s", role)
-                except KeyError:
-                    gid = grp.getgrnam('nogroup').gr_gid
-                    logging.debug("Context group not found, running Webui as %s", 'nogroup')
-                return gid
+        # if username == 'root':
+        #     return 0
+        # # GROUP CONTEXT
+        # try:
+        #     groupmembership = b''.join(self._get_ldap_user(username)['memberOf']).decode('utf8')
+        # except Exception as e:
+        #     groupmembership = ''
+        # if 'role-globaladministrator' in groupmembership or 'role-schooladministrator' in groupmembership:
+        #     return None
+        #
+        # roles = ['role-teacher', 'role-student']
+        # for role in roles:
+        #     if role in groupmembership:
+        #         try:
+        #             gid = grp.getgrnam(role).gr_gid
+        #             logging.debug("Running Webui as %s", role)
+        #         except KeyError:
+        #             gid = grp.getgrnam('nogroup').gr_gid
+        #             logging.debug("Context group not found, running Webui as %s", 'nogroup')
+        #         return gid
         return None
 
     def get_isolation_uid(self, username):
         """Returns the uid of the user which will run each worker."""
-        if username == 'root':
-            return 0
-        # USER CONTEXT
-        try:
-            groupmembership = b''.join(self._get_ldap_user(username)['memberOf']).decode('utf8')
-        except Exception as e:
-            groupmembership = ''
-
-        if 'role-globaladministrator' in groupmembership or 'role-schooladministrator' in groupmembership:
-            return 0
-
-        try:
-            uid = pwd.getpwnam(username).pw_uid
-            logging.debug("Running Webui as %s", username)
-        except KeyError:
-            uid = pwd.getpwnam('nobody').pw_uid
-            logging.debug("Context user not found, running Webui as %s", 'nobody')
-        return uid
+        return 0
+        # if username == 'root':
+        #     return 0
+        # # USER CONTEXT
+        # try:
+        #     groupmembership = b''.join(self._get_ldap_user(username)['memberOf']).decode('utf8')
+        # except Exception as e:
+        #     groupmembership = ''
+        #
+        # if 'role-globaladministrator' in groupmembership or 'role-schooladministrator' in groupmembership:
+        #     return 0
+        #
+        # try:
+        #     uid = pwd.getpwnam(username).pw_uid
+        #     logging.debug("Running Webui as %s", username)
+        # except KeyError:
+        #     uid = pwd.getpwnam('nobody').pw_uid
+        #     logging.debug("Context user not found, running Webui as %s", 'nobody')
+        # return uid
 
     def get_profile(self, username):
         if username in ["root",None]:

@@ -600,7 +600,7 @@ class Handler(HttpPlugin):
         if not path.startswith(root):
             return http_context.respond_forbidden()
 
-        return http_context.file(path, inline=False, name=name)
+        return http_context.file(path, inline=False, name=name.encode())
 
     @url(r'/api/lm/users/test-first-password/(?P<name>.+)')
     @authorize('lm:users:passwords')

@@ -70,7 +70,7 @@
                         <input id={{classe.groupname}} type="checkbox" ng-click='setMembership(classe)' ng-checked="classe.membership"></input>
                         <i class="fa fa-users"></i>
                         <a href="#" ng-click='showGroupDetails($index, classe.type, classe.groupname)'>
-                            <span>{{classe.typename}}</span>
+                            <span translate>Class</span>
                             <b style="word-wrap: break-word; -ms-word-break: break-all">{{classe.groupname}}</b>
                         </a>
                     </div>
@@ -91,7 +91,7 @@
                         <input id={{printergroup.groupname}} type="checkbox" ng-click='setMembership(printergroup)' ng-checked="printergroup.membership"></input>
                         <i class="fa fa-fw fa-print"></i>
                         <a href="#" ng-click='showGroupDetails($index, printergroup.type, printergroup.groupname)'>
-                            <span>{{printergroup.typename}}</span>
+                            <span translate>Printer</span>
                             <b style="word-wrap: break-word; -ms-word-break: break-all">{{printergroup.groupname}}</b>
                         </a>
                         </a>
@@ -112,7 +112,7 @@
                         <input id={{project.groupname}} type="checkbox" ng:show="projectIsJoinable(project)" ng-click='setMembership(project)' ng-checked="project.membership"></input>
                         <i class="fa fa-flask"></i>
                         <a href="#" ng-click='showGroupDetails($index, project.type, project.groupname)'>
-                            <span>{{project.typename}}</span>
+                            <span translate>Project</span>
                             <b style="word-wrap: break-word; -ms-word-break: break-all">{{project.groupname}}</b>
                         </a>
                     </div>

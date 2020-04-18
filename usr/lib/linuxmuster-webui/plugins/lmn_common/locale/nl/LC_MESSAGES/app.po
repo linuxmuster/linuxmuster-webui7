@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-24 20:23+0100\n"
-"PO-Revision-Date: 2020-02-25 11:03\n"
+"POT-Creation-Date: 2020-04-18 22:06+0200\n"
+"PO-Revision-Date: 2020-04-18 20:20\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
@@ -39,10 +39,6 @@ msgstr "Download CSV"
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileEditor.modal.html:5
 msgid "Drop a CSV file here to import"
 msgstr "Sleep hier een CSV bestand om te importeren"
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:86
-msgid "Elevate"
-msgstr "Verheffen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:132
 msgid "Enter"
@@ -80,7 +76,7 @@ msgstr "School Console"
 msgid "Session time : {{ counter[0] }}:{{ counter[1] }}:{{ counter[2] }}"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/api.py:37
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/api.py:38
 msgid "Access refused."
 msgstr "Toegang geweigerd."
 

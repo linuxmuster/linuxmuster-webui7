@@ -4,7 +4,7 @@ angular.module('lm.users').config ($routeProvider) ->
         templateUrl: '/lmn_users:resources/partial/print-passwords.html'
 
 
-angular.module('lm.users').controller 'LMUsersPrintPasswordsOptionsModalController', ($scope, $uibModalInstance, $http, messagebox, gettext, schoolclass, classes, user) ->
+angular.module('lm.users').controller 'LMUsersPrintPasswordsOptionsModalController', ($scope, $uibModalInstance, $http, notify, messagebox, gettext, schoolclass, classes, user) ->
     $scope.options = {
         format: 'pdf'
         one_per_page: false
@@ -20,7 +20,11 @@ angular.module('lm.users').controller 'LMUsersPrintPasswordsOptionsModalControll
     $scope.print = () ->
         msg = messagebox.show(progress: true)
         $http.post('/api/lm/users/print', $scope.options).then (resp) ->
-            location.href = "/api/lm/users/print-download/#{if schoolclass != '' then schoolclass else 'add'}-#{$scope.options.user}.#{if $scope.options.format == 'pdf' then 'pdf' else 'csv'}"
+            if resp.data == 'success'
+                notify.success(gettext("Created password pdf"))
+                location.href = "/api/lm/users/print-download/#{if schoolclass != '' then schoolclass else 'add'}-#{$scope.options.user}.#{if $scope.options.format == 'pdf' then 'pdf' else 'csv'}"
+            else
+                notify.error(gettext("Could not create password pdf"))
             $uibModalInstance.close()
         .finally () ->
             msg.close()

@@ -1504,7 +1504,7 @@
     });
   });
 
-  angular.module('lm.users').controller('LMUsersPrintPasswordsOptionsModalController', function($scope, $uibModalInstance, $http, messagebox, gettext, schoolclass, classes, user) {
+  angular.module('lm.users').controller('LMUsersPrintPasswordsOptionsModalController', function($scope, $uibModalInstance, $http, notify, messagebox, gettext, schoolclass, classes, user) {
     $scope.options = {
       format: 'pdf',
       one_per_page: false,
@@ -1522,7 +1522,12 @@
         progress: true
       });
       return $http.post('/api/lm/users/print', $scope.options).then(function(resp) {
-        location.href = `/api/lm/users/print-download/${(schoolclass !== '' ? schoolclass : 'add')}-${$scope.options.user}.${($scope.options.format === 'pdf' ? 'pdf' : 'csv')}`;
+        if (resp.data === 'success') {
+          notify.success(gettext("Created password pdf"));
+          location.href = `/api/lm/users/print-download/${(schoolclass !== '' ? schoolclass : 'add')}-${$scope.options.user}.${($scope.options.format === 'pdf' ? 'pdf' : 'csv')}`;
+        } else {
+          notify.error(gettext("Could not create password pdf"));
+        }
         return $uibModalInstance.close();
       }).finally(function() {
         return msg.close();

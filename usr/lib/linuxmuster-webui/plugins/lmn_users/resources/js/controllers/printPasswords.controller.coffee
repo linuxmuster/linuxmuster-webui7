@@ -55,13 +55,17 @@ angular.module('lm.users').controller 'LMUsersPrintPasswordsController', ($scope
             dict['membership'] == val
 
     $scope.getGroups = (username) ->
-        $http.post('/api/lmn/groupmembership', {action: 'list-groups', username: username, profil: $scope.identity.profile}).then (resp) ->
-            $scope.groups = resp.data[0]
-            $scope.userclasses = $scope.groups.filter($scope.filterGroupType('schoolclass'))
-            $scope.userclasses = $scope.userclasses.filter($scope.filterGroupMembership(true))
-            $scope.classes = []
-            for item in $scope.userclasses
-                $scope.classes.push(item.groupname)
+        if $scope.identity.user == 'root' || $scope.identity.profile.sophomorixAdminClass == 'global-admins' || $scope.identity.profile.sophomorixAdminClass == 'school-admins'
+          $http.get('/api/lm/users/print').then (resp) ->
+            $scope.classes = resp.data
+        else
+          $http.post('/api/lmn/groupmembership', {action: 'list-groups', username: username, profil: $scope.identity.profile}).then (resp) ->
+              $scope.groups = resp.data[0]
+              $scope.userclasses = $scope.groups.filter($scope.filterGroupType('schoolclass'))
+              $scope.userclasses = $scope.userclasses.filter($scope.filterGroupMembership(true))
+              $scope.classes = []
+              for item in $scope.userclasses
+                  $scope.classes.push(item.groupname)
 
     $scope.$watch 'identity.user', ->
         if $scope.identity.user is undefined

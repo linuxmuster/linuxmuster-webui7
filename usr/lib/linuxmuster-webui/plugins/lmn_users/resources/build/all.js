@@ -1568,24 +1568,31 @@
       };
     };
     $scope.getGroups = function(username) {
-      return $http.post('/api/lmn/groupmembership', {
-        action: 'list-groups',
-        username: username,
-        profil: $scope.identity.profile
-      }).then(function(resp) {
-        var i, item, len, ref, results;
-        $scope.groups = resp.data[0];
-        $scope.userclasses = $scope.groups.filter($scope.filterGroupType('schoolclass'));
-        $scope.userclasses = $scope.userclasses.filter($scope.filterGroupMembership(true));
-        $scope.classes = [];
-        ref = $scope.userclasses;
-        results = [];
-        for (i = 0, len = ref.length; i < len; i++) {
-          item = ref[i];
-          results.push($scope.classes.push(item.groupname));
-        }
-        return results;
-      });
+      if ($scope.identity.user === 'root' || $scope.identity.profile.sophomorixAdminClass === 'global-admins' || $scope.identity.profile.sophomorixAdminClass === 'school-admins') {
+        return $http.get('/api/lm/users/print').then(function(resp) {
+          console.log(resp.data);
+          return $scope.classes = resp.data;
+        });
+      } else {
+        return $http.post('/api/lmn/groupmembership', {
+          action: 'list-groups',
+          username: username,
+          profil: $scope.identity.profile
+        }).then(function(resp) {
+          var i, item, len, ref, results;
+          $scope.groups = resp.data[0];
+          $scope.userclasses = $scope.groups.filter($scope.filterGroupType('schoolclass'));
+          $scope.userclasses = $scope.userclasses.filter($scope.filterGroupMembership(true));
+          $scope.classes = [];
+          ref = $scope.userclasses;
+          results = [];
+          for (i = 0, len = ref.length; i < len; i++) {
+            item = ref[i];
+            results.push($scope.classes.push(item.groupname));
+          }
+          return results;
+        });
+      }
     };
     return $scope.$watch('identity.user', function() {
       if ($scope.identity.user === void 0) {

@@ -228,7 +228,7 @@
                 <div>
                     <span style="float:right;width:50%;">
                         <div class="session_container">
-                            <span style="overflow:hidden;width:100%;" translate>This Room</span>
+                            <a href="#" ng-click='showRoomDetails(identity.user)'><span style="overflow:hidden;width:100%;" translate>This Room</span></a>
                             <div class="session_hr"></div>
                             <br>
                             <button class="btn btn-default fas fa-step-backward session_btn" disabled></button>
@@ -255,7 +255,7 @@
             <div>
                 <span style="float:right;width:50%;">
                     <div class="session_container">
-                        <span style="overflow:hidden;width:100%;">{{class.groupname}}</span>
+                        <a href="#" ng-click='showGroupDetails($index, class.type, class.groupname)'><span style="overflow:hidden;width:100%;">{{class.groupname}}</span></a>
                         <div class="session_hr"></div>
                         <br>
                         <button class="btn btn-default fas fa-step-backward session_btn" ng:click="loadGeneratedSession(class.groupname)" title="{{startGeneratedSessionMouseover}}"></button>

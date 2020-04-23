@@ -1570,7 +1570,6 @@
     $scope.getGroups = function(username) {
       if ($scope.identity.user === 'root' || $scope.identity.profile.sophomorixAdminClass === 'global-admins' || $scope.identity.profile.sophomorixAdminClass === 'school-admins') {
         return $http.get('/api/lm/users/print').then(function(resp) {
-          console.log(resp.data);
           return $scope.classes = resp.data;
         });
       } else {

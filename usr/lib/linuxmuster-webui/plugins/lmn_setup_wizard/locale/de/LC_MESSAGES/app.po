@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-27 14:30+0200\n"
-"PO-Revision-Date: 2020-04-27 12:35\n"
+"PO-Revision-Date: 2020-04-27 19:32\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -228,25 +228,25 @@ msgstr "z.B.: server"
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:188
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:200
 msgid "Setup Wizard"
-msgstr "Setup Wizard"
+msgstr "Einrichtungsassistent"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:215
 msgid "Setup Done"
-msgstr ""
+msgstr "Einrichtung erledigt"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:232
 msgid "Restarting"
-msgstr ""
+msgstr "Startet neu"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:236
 msgid "Restarted"
-msgstr ""
+msgstr "Neugestartet"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:236
 msgid "Please wait"
-msgstr ""
+msgstr "Bitte warten"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:246
 msgid "Could not restart"
-msgstr ""
+msgstr "Konnte nicht neu gestartet werden"
 

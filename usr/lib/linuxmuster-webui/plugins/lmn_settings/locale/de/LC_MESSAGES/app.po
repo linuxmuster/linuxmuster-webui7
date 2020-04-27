@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-27 14:30+0200\n"
-"PO-Revision-Date: 2020-04-27 12:35\n"
+"PO-Revision-Date: 2020-04-27 19:32\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -267,19 +267,19 @@ msgstr "Gespeichert"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:34
 msgid "Could not save config"
-msgstr ""
+msgstr "Konfiguration konnte nicht gespeichert werden"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:40
 msgid "Self-signed certificate"
-msgstr ""
+msgstr "Selbstsigniertes Zertifikat"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:41
 msgid "Generating a new certificate will void all existing client authentication certificates!"
-msgstr ""
+msgstr "Die Generierung eines neuen Zertifikats wird alle bestehenden Client-Authentifizierungszertifikate außer Kraft setzen!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:42
 msgid "Generate"
-msgstr ""
+msgstr "Generieren"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:43
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:72
@@ -288,19 +288,19 @@ msgstr "Abbrechen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:46
 msgid "Generating certificate"
-msgstr ""
+msgstr "Zertifikat wird erstellt"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:46
 msgid "Please wait"
-msgstr ""
+msgstr "Bitte warten"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:48
 msgid "Certificate successfully generated"
-msgstr ""
+msgstr "Zertifikat erfolgreich erstellt"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:54
 msgid "Certificate generation failed"
-msgstr ""
+msgstr "Zertifikatserstellung fehlgeschlagen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:8
 msgid "Settings"

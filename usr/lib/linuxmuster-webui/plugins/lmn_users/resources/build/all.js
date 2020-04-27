@@ -1504,7 +1504,7 @@
     });
   });
 
-  angular.module('lm.users').controller('LMUsersPrintPasswordsOptionsModalController', function($scope, $uibModalInstance, $http, messagebox, gettext, schoolclass, classes, user) {
+  angular.module('lm.users').controller('LMUsersPrintPasswordsOptionsModalController', function($scope, $uibModalInstance, $http, notify, messagebox, gettext, schoolclass, classes, user) {
     $scope.options = {
       format: 'pdf',
       one_per_page: false,
@@ -1522,7 +1522,12 @@
         progress: true
       });
       return $http.post('/api/lm/users/print', $scope.options).then(function(resp) {
-        location.href = `/api/lm/users/print-download/${(schoolclass !== '' ? schoolclass : 'add')}-${$scope.options.user}.${($scope.options.format === 'pdf' ? 'pdf' : 'csv')}`;
+        if (resp.data === 'success') {
+          notify.success(gettext("Created password pdf"));
+          location.href = `/api/lm/users/print-download/${(schoolclass !== '' ? schoolclass : 'add')}-${$scope.options.user}.${($scope.options.format === 'pdf' ? 'pdf' : 'csv')}`;
+        } else {
+          notify.error(gettext("Could not create password pdf"));
+        }
         return $uibModalInstance.close();
       }).finally(function() {
         return msg.close();
@@ -1563,24 +1568,30 @@
       };
     };
     $scope.getGroups = function(username) {
-      return $http.post('/api/lmn/groupmembership', {
-        action: 'list-groups',
-        username: username,
-        profil: $scope.identity.profile
-      }).then(function(resp) {
-        var i, item, len, ref, results;
-        $scope.groups = resp.data[0];
-        $scope.userclasses = $scope.groups.filter($scope.filterGroupType('schoolclass'));
-        $scope.userclasses = $scope.userclasses.filter($scope.filterGroupMembership(true));
-        $scope.classes = [];
-        ref = $scope.userclasses;
-        results = [];
-        for (i = 0, len = ref.length; i < len; i++) {
-          item = ref[i];
-          results.push($scope.classes.push(item.groupname));
-        }
-        return results;
-      });
+      if ($scope.identity.user === 'root' || $scope.identity.profile.sophomorixAdminClass === 'global-admins' || $scope.identity.profile.sophomorixAdminClass === 'school-admins') {
+        return $http.get('/api/lm/users/print').then(function(resp) {
+          return $scope.classes = resp.data;
+        });
+      } else {
+        return $http.post('/api/lmn/groupmembership', {
+          action: 'list-groups',
+          username: username,
+          profil: $scope.identity.profile
+        }).then(function(resp) {
+          var i, item, len, ref, results;
+          $scope.groups = resp.data[0];
+          $scope.userclasses = $scope.groups.filter($scope.filterGroupType('schoolclass'));
+          $scope.userclasses = $scope.userclasses.filter($scope.filterGroupMembership(true));
+          $scope.classes = [];
+          ref = $scope.userclasses;
+          results = [];
+          for (i = 0, len = ref.length; i < len; i++) {
+            item = ref[i];
+            results.push($scope.classes.push(item.groupname));
+          }
+          return results;
+        });
+      }
     };
     return $scope.$watch('identity.user', function() {
       if ($scope.identity.user === void 0) {

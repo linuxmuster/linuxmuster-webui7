@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.140-1) lmn7; urgency=medium 
+
+  * Current snapshot build df4b9a499edbdf17b2e783979058e49f5ef7c0b9
+   *     Temporary fix for linbo icon download.
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Apr 22 16:26:21 CEST 2020
+
 linuxmuster-webui7 (1.0.139-1) lmn7; urgency=medium 
 
   * Current snapshot build 782e871d0f3de28749eb00b939e55d3b570c8f89

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-24 20:23+0100\n"
-"PO-Revision-Date: 2020-02-25 11:02\n"
+"POT-Creation-Date: 2020-04-27 14:30+0200\n"
+"PO-Revision-Date: 2020-04-27 19:32\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -159,15 +159,19 @@ msgid "Samba domain for printing"
 msgstr "Domänen-Name"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:57
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:392
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:436
 msgid "Save"
 msgstr "Speichern"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:394
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:438
 msgid "Save &amp; Apply Quota"
 msgstr "Speichern &amp; Quota übernehmen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:393
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:439
+msgid "Save &amp; Apply Subnets"
+msgstr "Speichern &amp; Subnetze übernehmen"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:437
 msgid "Save &amp; check"
 msgstr "Speichern &amp; Prüfen"
 
@@ -187,6 +191,10 @@ msgstr "Schulname"
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:78
 msgid "Students"
 msgstr "Schüler"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:388
+msgid "Subnets"
+msgstr "Subnetze"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:98
 msgid "Surname Characters"
@@ -237,6 +245,7 @@ msgid "School Settings"
 msgstr "Schuleinstellungen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/main.py:23
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:2
 msgid "Global Settings"
 msgstr "Globale Einstellungen"
 
@@ -248,25 +257,76 @@ msgstr "Schuleinstellungen konfigurieren"
 msgid "Configure global settings"
 msgstr "Globale Einstellungen konfigurieren"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:32
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:81
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:91
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:95
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:104
+msgid "Saved"
+msgstr "Gespeichert"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:34
+msgid "Could not save config"
+msgstr "Konfiguration konnte nicht gespeichert werden"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:40
+msgid "Self-signed certificate"
+msgstr "Selbstsigniertes Zertifikat"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:41
+msgid "Generating a new certificate will void all existing client authentication certificates!"
+msgstr "Die Generierung eines neuen Zertifikats wird alle bestehenden Client-Authentifizierungszertifikate außer Kraft setzen!"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:42
+msgid "Generate"
+msgstr "Generieren"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:43
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:72
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:46
+msgid "Generating certificate"
+msgstr "Zertifikat wird erstellt"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:46
+msgid "Please wait"
+msgstr "Bitte warten"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:48
+msgid "Certificate successfully generated"
+msgstr "Zertifikat erfolgreich erstellt"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:54
+msgid "Certificate generation failed"
+msgstr "Zertifikatserstellung fehlgeschlagen"
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:8
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:19
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:11
+msgid "Remove"
+msgstr "Entfernen"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:23
 msgid "Minimal"
 msgstr "Minimal"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:20
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:24
 msgid "Average"
 msgstr "Durchschnittlich"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:21
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:25
 msgid "Maximal"
 msgstr "Maximal"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:62
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:72
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:77
-msgid "Saved"
-msgstr "Gespeichert"
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:70
+msgid "Are you sure you want to delete permanently this subnet ?"
+msgstr "Sind Sie sicher, dass Sie dieses Subnetz dauerhaft löschen möchten?"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:71
+msgid "Delete"
+msgstr "Löschen"
 

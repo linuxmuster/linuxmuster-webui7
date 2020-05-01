@@ -584,10 +584,12 @@ class Handler(HttpPlugin):
                 with authorize('lm:users:teachers:read'):
                     pass
             # generate real shell environment for sophomorix print
-            shell_env = {'TERM': 'xterm', 'SHELL': '/bin/bash',  'PATH': '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',  'HOME': '/root', '_': '/usr/bin/python2'}
-
-            subprocess.check_call(sophomorixCommand, shell=False, env=shell_env)
-            return
+            shell_env = {'TERM': 'xterm', 'SHELL': '/bin/bash',  'PATH': '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',  'HOME': '/root', '_': '/usr/bin/python3'}
+            try:
+                subprocess.check_call(sophomorixCommand, shell=False, env=shell_env)
+            except subprocess.CalledProcessError as e:
+                return 'Error '+str(e)
+            return 'success'
             # return lmn_getSophomorixValue(sophomorixCommand, 'JSONINFO')
 
     @url(r'/api/lm/users/print-download/(?P<name>.+)')
@@ -599,8 +601,7 @@ class Handler(HttpPlugin):
 
         if not path.startswith(root):
             return http_context.respond_forbidden()
-
-        return http_context.file(path, inline=False, name=name)
+        return http_context.file(path, inline=False, name=name.encode())
 
     @url(r'/api/lm/users/test-first-password/(?P<name>.+)')
     @authorize('lm:users:passwords')

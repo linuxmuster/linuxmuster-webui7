@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-24 20:23+0100\n"
-"PO-Revision-Date: 2020-02-25 11:03\n"
+"POT-Creation-Date: 2020-04-18 22:06+0200\n"
+"PO-Revision-Date: 2020-04-27 19:32\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -87,23 +87,23 @@ msgstr "verwenden Sie die Seitenleiste, um in den Einstellungen zu navigieren. S
 msgid "Home"
 msgstr "Hauptseite"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:25
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:22
 msgid "NO LIMIT"
 msgstr "UNBEGRENZT"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:48
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:58
 msgid "Class"
 msgstr "Klasse"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:50
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:60
 msgid "Teachers"
 msgstr "Lehrer"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:52
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:62
 msgid "Printers"
 msgstr "Drucker"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:54
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:64
 msgid "Project"
 msgstr "Projekt"
 

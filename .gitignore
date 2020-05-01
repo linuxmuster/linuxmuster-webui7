@@ -2,6 +2,7 @@
 .*.swp
 .idea*
 .installed
+app.po~
 .crowdin.key
 .vscode
 tests/e2e/authconfig.json

@@ -4,7 +4,7 @@ angular.module('lm.users').config ($routeProvider) ->
         templateUrl: '/lmn_users:resources/partial/print-passwords.html'
 
 
-angular.module('lm.users').controller 'LMUsersPrintPasswordsOptionsModalController', ($scope, $uibModalInstance, $http, messagebox, gettext, schoolclass, classes, user) ->
+angular.module('lm.users').controller 'LMUsersPrintPasswordsOptionsModalController', ($scope, $uibModalInstance, $http, notify, messagebox, gettext, schoolclass, classes, user) ->
     $scope.options = {
         format: 'pdf'
         one_per_page: false
@@ -20,7 +20,11 @@ angular.module('lm.users').controller 'LMUsersPrintPasswordsOptionsModalControll
     $scope.print = () ->
         msg = messagebox.show(progress: true)
         $http.post('/api/lm/users/print', $scope.options).then (resp) ->
-            location.href = "/api/lm/users/print-download/#{if schoolclass != '' then schoolclass else 'add'}-#{$scope.options.user}.#{if $scope.options.format == 'pdf' then 'pdf' else 'csv'}"
+            if resp.data == 'success'
+                notify.success(gettext("Created password pdf"))
+                location.href = "/api/lm/users/print-download/#{if schoolclass != '' then schoolclass else 'add'}-#{$scope.options.user}.#{if $scope.options.format == 'pdf' then 'pdf' else 'csv'}"
+            else
+                notify.error(gettext("Could not create password pdf"))
             $uibModalInstance.close()
         .finally () ->
             msg.close()
@@ -51,13 +55,17 @@ angular.module('lm.users').controller 'LMUsersPrintPasswordsController', ($scope
             dict['membership'] == val
 
     $scope.getGroups = (username) ->
-        $http.post('/api/lmn/groupmembership', {action: 'list-groups', username: username, profil: $scope.identity.profile}).then (resp) ->
-            $scope.groups = resp.data[0]
-            $scope.userclasses = $scope.groups.filter($scope.filterGroupType('schoolclass'))
-            $scope.userclasses = $scope.userclasses.filter($scope.filterGroupMembership(true))
-            $scope.classes = []
-            for item in $scope.userclasses
-                $scope.classes.push(item.groupname)
+        if $scope.identity.user == 'root' || $scope.identity.profile.sophomorixAdminClass == 'global-admins' || $scope.identity.profile.sophomorixAdminClass == 'school-admins'
+          $http.get('/api/lm/users/print').then (resp) ->
+            $scope.classes = resp.data
+        else
+          $http.post('/api/lmn/groupmembership', {action: 'list-groups', username: username, profil: $scope.identity.profile}).then (resp) ->
+              $scope.groups = resp.data[0]
+              $scope.userclasses = $scope.groups.filter($scope.filterGroupType('schoolclass'))
+              $scope.userclasses = $scope.userclasses.filter($scope.filterGroupMembership(true))
+              $scope.classes = []
+              for item in $scope.userclasses
+                  $scope.classes.push(item.groupname)
 
     $scope.$watch 'identity.user', ->
         if $scope.identity.user is undefined

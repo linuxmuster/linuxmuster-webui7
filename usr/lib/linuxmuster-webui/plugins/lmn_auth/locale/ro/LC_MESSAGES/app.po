@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-23 20:23+0100\n"
-"PO-Revision-Date: 2020-02-25 11:02\n"
+"POT-Creation-Date: 2020-04-18 22:06+0200\n"
+"PO-Revision-Date: 2020-04-27 12:35\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -39,7 +39,7 @@ msgstr ""
 msgid "Valid characters are: a-z A-Z 0-9 !§+-@#$%&amp;*( )[ ]{ }"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:15
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:17
 msgid "Linux Muster LDAP"
 msgstr ""
 

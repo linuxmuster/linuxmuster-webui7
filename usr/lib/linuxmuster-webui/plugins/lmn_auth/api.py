@@ -6,9 +6,11 @@ from jadi import component
 import pwd
 import grp
 import simplejson as json
+# import yaml
 
 import aj
 from aj.auth import AuthenticationProvider, OSAuthenticationProvider
+# from aj.config import UserConfigProvider
 from aj.plugins.lmn_common.api import lmconfig
 
 @component(AuthenticationProvider)
@@ -183,3 +185,36 @@ class LMAuthenticationProvider(AuthenticationProvider):
             logging.error(e)
             return {}
 
+# @component(UserConfigProvider)
+# class UserConfig(UserConfigProvider):
+#     id = 'lm'
+#     name = _('Linuxmuster LDAP user config')
+#
+#     def __init__(self, context):
+#         UserConfigProvider.__init__(self, context)
+#         try:
+#             self.user = context.identity
+#         except AttributeError as e:
+#             self.user = None
+#         if self.user:
+#             self.load()
+#         else:
+#             self.data = {}
+#
+#     def load(self):
+#         if self.user == 'root':
+#             self.data = yaml.load(open('/media/ajenti.yml'), Loader=yaml.Loader)
+#         else:
+#             ## Load ldap attribute webuidashboard
+#             pass
+#
+#     def save(self):
+#         if self.user == 'root':
+#             with open('/root/.config/ajenti.yml', 'w') as f:
+#                 f.write(yaml.safe_dump(
+#                     self.data, default_flow_style=False, encoding='utf-8', allow_unicode=True
+#                 ).decode('utf-8'))
+#             self.harden()
+#         else:
+#             ## Save ldap attribute webuidashboard
+#             pass

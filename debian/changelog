@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.142-1) lmn7; urgency=medium 
+
+  * Current snapshot build 79f22e2646abeb62e16a0c29279aa51bcd656b94
+   *     revert auth login mistake
+
+ -- Andreas Till <andreas.till@netzint.de> Thu May  7 10:38:48 CEST 2020
+
 linuxmuster-webui7 (1.0.141-1) lmn7; urgency=medium 
 
   * Current snapshot build 288a5969e9ec8f0ab1c01c41a0b8e2ca9dd3cc5f

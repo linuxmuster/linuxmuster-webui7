@@ -28,7 +28,6 @@ class LMAuthenticationProvider(AuthenticationProvider):
                                 (sophomorixRole=globaladministrator)
                                 (sophomorixRole=schooladministrator)
                                 (sophomorixRole=teacher)
-                                (sophomorixRole=student)
                             )
                         )"""
 

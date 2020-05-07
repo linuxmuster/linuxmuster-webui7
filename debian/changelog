@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.141-1) lmn7; urgency=medium 
+
+  * Current snapshot build 288a5969e9ec8f0ab1c01c41a0b8e2ca9dd3cc5f
+   *     Fix #133.
+
+ -- Andreas Till <andreas.till@netzint.de> Thu May  7 09:14:59 CEST 2020
+
 linuxmuster-webui7 (1.0.140-1) lmn7; urgency=medium 
 
   * Current snapshot build df4b9a499edbdf17b2e783979058e49f5ef7c0b9

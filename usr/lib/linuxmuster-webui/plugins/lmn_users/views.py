@@ -627,13 +627,24 @@ class Handler(HttpPlugin):
                 share = result[user]["SHARES"]['default-school']['smbcquotas']
                 if int(share['HARDLIMIT_MiB']) == share['HARDLIMIT_MiB']:
                     # Avoid strings for non set quotas
+                    used = int(float(share['USED_MiB']) / share['HARDLIMIT_MiB'] * 100)
+                    soft = int(float(share['SOFTLIMIT_MiB']) / share['HARDLIMIT_MiB'] * 100)
+                    if used >= 90:
+                        type = "danger"
+                    elif used > soft:
+                        type = "warning"
+                    else:
+                        type = "success"
+
                     quotaMap[user] = {
-                        "USED": int(float(share['USED_MiB']) / share['HARDLIMIT_MiB'] * 100),
-                        "SOFTLIMIT": int(float(share['SOFTLIMIT_MiB']) / share['HARDLIMIT_MiB'] * 100),
+                        "USED": used,
+                        "SOFTLIMIT": soft,
+                        "TYPE": type,
                     }
                 else:
                     quotaMap[user] = {
                         "USED": 0,
                         "SOFTLIMIT": 0,
+                        "TYPE": "success",
                     }
             return quotaMap

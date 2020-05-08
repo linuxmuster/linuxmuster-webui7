@@ -57,6 +57,7 @@ angular.module('lm.users').controller 'LMUsersTeachersController', ($scope, $htt
             console.log($scope.teachersQuota)
 
 
+
     $scope.setInitialPassword = (user) ->
        $http.post('/api/lm/users/password', {users: (x['sAMAccountName'] for x in user), action: 'set-initial'}).then (resp) ->
           notify.success gettext('Initial password set')

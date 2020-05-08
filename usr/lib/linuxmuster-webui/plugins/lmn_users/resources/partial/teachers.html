@@ -71,7 +71,7 @@
                     <b>{{teacher.givenName}}</b> <br> {{teacher.sn}}
                 </td>
                 <td ng:show="teachersQuota" width="200">
-                    <smart-progress type="{{teachersQuota[teacher.sAMAccountName].USED > teachersQuota[teacher.sAMAccountName].SOFTLIMIT ? 'danger' : 'warning' }}" value="teachersQuota[teacher.sAMAccountName].USED" max="100"></smart-progress>
+                    <smart-progress type="{{teachersQuota[teacher.sAMAccountName].TYPE}}" value="teachersQuota[teacher.sAMAccountName].USED" max="100"></smart-progress>
                 </td>
                 <td width="1">
                     <span  uib-dropdown class="dropup" >

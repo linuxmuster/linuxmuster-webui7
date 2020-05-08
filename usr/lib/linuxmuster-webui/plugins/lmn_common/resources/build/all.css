@@ -134,13 +134,14 @@ html body.customized *[checkbox].active i.on {
   color: #233c4c;
 }
 html body.customized smart-progress .progress .progress-bar-warning {
-  background: #DC6D1D;
+  background: #ffab40;
+  /*#DC6D1D;*/
 }
 html body.customized smart-progress .progress .progress-bar-danger {
   background: #d9534a;
 }
 html body.customized smart-progress .progress .progress-bar-success {
-  background: #ffab40;
+  background: #5cb85c;
 }
 html body.customized progress-spinner .one {
   border-left-color: #ffab40;

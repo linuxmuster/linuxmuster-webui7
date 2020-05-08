@@ -2,6 +2,7 @@ auth:
   allow_sudo: true
   emails: {}
   provider: lm
+  user_config: lm
   users:
 bind:
   host: 0.0.0.0

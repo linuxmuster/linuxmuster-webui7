@@ -1,8 +1,10 @@
 import logging
 import os
+import stat
 
 import ldap
 import ldap.filter
+import ldap.modlist as modlist
 import subprocess
 from jadi import component
 import pwd
@@ -209,17 +211,15 @@ class UserConfig(UserConfigProvider):
             self.data = {}
 
     def load(self):
-        if self.user in ['root', 'global-admin']:
+        if self.user == 'root':
             self.data = yaml.load(open('/root/.config/ajenti.yml'), Loader=yaml.Loader)
-            test = AuthenticationService.get(self.context).get_provider()._get_ldap_user(self.user, context="userconfig")
-            print("#"*50)
-            print(test)
         else:
             ## Load ldap attribute webuidashboard
-            self.data = AuthenticationService.get(self.context).get_provider()._get_ldap_user(self.user, context="userconfig")
+            userAttrs = AuthenticationService.get(self.context).get_provider()._get_ldap_user(self.user, context="userconfig")
+            self.data = json.loads(userAttrs['sophomorixWebuiDashboard'])
 
     def save(self):
-        if self.user in ['root', 'global-admin']:
+        if self.user == 'root':
             with open('/root/.config/ajenti.yml', 'w') as f:
                 f.write(yaml.safe_dump(
                     self.data, default_flow_style=False, encoding='utf-8', allow_unicode=True
@@ -227,7 +227,46 @@ class UserConfig(UserConfigProvider):
             self.harden()
         else:
             ## Save ldap attribute webuidashboard
-            pass
+            ldap_filter = """(&
+                            (cn=%s)
+                            (objectClass=user)
+                            (|
+                                (sophomorixRole=globaladministrator)
+                                (sophomorixRole=schooladministrator)
+                                (sophomorixRole=teacher)
+                                (sophomorixRole=student)
+                            )
+                        )"""
+            ldap_attrs = ['sophomorixWebuiDashboard']
+
+            searchFilter = ldap.filter.filter_format(ldap_filter, [self.user])
+            params = lmconfig.data['linuxmuster']['ldap']
+            with open('/etc/linuxmuster/.secret/administrator') as f:
+                admin_pw = f.read()
+
+            l = ldap.initialize('ldap://' + params['host'])
+            # Binduser bind to the  server
+            try:
+                l.set_option(ldap.OPT_REFERRALS, 0)
+                l.protocol_version = ldap.VERSION3
+                l.bind_s("CN=Administrator,CN=Users,"+params['searchdn'], admin_pw)
+            except Exception as e:
+                logging.error(str(e))
+                raise KeyError(e)
+            try:
+                res = l.search_s(params['searchdn'], ldap.SCOPE_SUBTREE, searchFilter, attrlist=ldap_attrs)
+                if res[0][0] is None:
+                    raise KeyError
+                dn = res[0][0]
+                userconfig_old = res[0][1]
+            except ldap.LDAPError as e:
+                print(e)
+
+            userconfig_new = {'sophomorixWebuiDashboard': [json.dumps(self.data).encode()]}
+
+            ldif = modlist.modifyModlist(userconfig_old,userconfig_new)
+            l.modify_s(dn,ldif)
+            l.unbind_s()
 
     def harden(self):
         os.chmod(self.path, stat.S_IRWXU)

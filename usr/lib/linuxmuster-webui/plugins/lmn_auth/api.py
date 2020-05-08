@@ -1,4 +1,6 @@
 import logging
+import os
+
 import ldap
 import ldap.filter
 import subprocess
@@ -6,11 +8,11 @@ from jadi import component
 import pwd
 import grp
 import simplejson as json
-# import yaml
+import yaml
 
 import aj
-from aj.auth import AuthenticationProvider, OSAuthenticationProvider
-# from aj.config import UserConfigProvider
+from aj.auth import AuthenticationProvider, OSAuthenticationProvider, AuthenticationService
+from aj.config import UserConfigProvider
 from aj.plugins.lmn_common.api import lmconfig
 
 @component(AuthenticationProvider)
@@ -21,7 +23,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
     def __init__(self, context):
         self.context = context
 
-    def _get_ldap_user(self, username, auth=False):
+    def _get_ldap_user(self, username, context=""):
         """Retrieve user's DN and attributes from LDAP."""
         ldap_filter = """(&
                             (cn=%s)
@@ -46,8 +48,12 @@ class LMAuthenticationProvider(AuthenticationProvider):
             'mail',
             'sophomorixSchoolname',
         ]
-        if auth:
+
+        if context == "auth":
             ldap_attrs.append('sophomorixWebuiPermissionsCalculated')
+
+        if context == "userconfig":
+            ldap_attrs = ['sophomorixWebuiDashboard']
 
         searchFilter = ldap.filter.filter_format(ldap_filter, [username])
         params = lmconfig.data['linuxmuster']['ldap']
@@ -84,7 +90,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
         # Does the user exist in LDAP ?
         try:
-            userAttrs = self._get_ldap_user(username, auth=True)
+            userAttrs = self._get_ldap_user(username, context="auth")
         except KeyError as e:
             return False
 
@@ -185,36 +191,43 @@ class LMAuthenticationProvider(AuthenticationProvider):
             logging.error(e)
             return {}
 
-# @component(UserConfigProvider)
-# class UserConfig(UserConfigProvider):
-#     id = 'lm'
-#     name = _('Linuxmuster LDAP user config')
-#
-#     def __init__(self, context):
-#         UserConfigProvider.__init__(self, context)
-#         try:
-#             self.user = context.identity
-#         except AttributeError as e:
-#             self.user = None
-#         if self.user:
-#             self.load()
-#         else:
-#             self.data = {}
-#
-#     def load(self):
-#         if self.user == 'root':
-#             self.data = yaml.load(open('/media/ajenti.yml'), Loader=yaml.Loader)
-#         else:
-#             ## Load ldap attribute webuidashboard
-#             pass
-#
-#     def save(self):
-#         if self.user == 'root':
-#             with open('/root/.config/ajenti.yml', 'w') as f:
-#                 f.write(yaml.safe_dump(
-#                     self.data, default_flow_style=False, encoding='utf-8', allow_unicode=True
-#                 ).decode('utf-8'))
-#             self.harden()
-#         else:
-#             ## Save ldap attribute webuidashboard
-#             pass
+@component(UserConfigProvider)
+class UserConfig(UserConfigProvider):
+    id = 'lm'
+    name = _('Linuxmuster LDAP user config')
+
+    def __init__(self, context):
+        UserConfigProvider.__init__(self, context)
+        self.context = context
+        try:
+            self.user = context.identity
+        except AttributeError as e:
+            self.user = None
+        if self.user:
+            self.load()
+        else:
+            self.data = {}
+
+    def load(self):
+        if self.user in ['root', 'global-admin']:
+            self.data = yaml.load(open('/root/.config/ajenti.yml'), Loader=yaml.Loader)
+            test = AuthenticationService.get(self.context).get_provider()._get_ldap_user(self.user, context="userconfig")
+            print("#"*50)
+            print(test)
+        else:
+            ## Load ldap attribute webuidashboard
+            self.data = AuthenticationService.get(self.context).get_provider()._get_ldap_user(self.user, context="userconfig")
+
+    def save(self):
+        if self.user in ['root', 'global-admin']:
+            with open('/root/.config/ajenti.yml', 'w') as f:
+                f.write(yaml.safe_dump(
+                    self.data, default_flow_style=False, encoding='utf-8', allow_unicode=True
+                ).decode('utf-8'))
+            self.harden()
+        else:
+            ## Save ldap attribute webuidashboard
+            pass
+
+    def harden(self):
+        os.chmod(self.path, stat.S_IRWXU)

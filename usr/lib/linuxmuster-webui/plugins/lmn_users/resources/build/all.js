@@ -1866,6 +1866,48 @@
       }
       return console.log($scope.userDetails);
     });
+    $http.get(`/api/lmn/quota/${id}`).then(function(resp) {
+      var ref, results, share, total, type, usage, used, values;
+      $scope.quotas = [];
+      ref = resp.data['QUOTA_USAGE_BY_SHARE'];
+      results = [];
+      for (share in ref) {
+        values = ref[share];
+        // default-school and linuxmuster-global both needed ?
+        // cloudquota and mailquota not in QUOTA_USAGE_BY_SHARE ?
+        used = values['USED_MiB'];
+        total = values['HARD_LIMIT_MiB'];
+        if (typeof total === 'string') {
+          if (total === 'NO LIMIT') {
+            total = gettext('NO LIMIT');
+          }
+          results.push($scope.quotas.push({
+            'share': share,
+            'total': gettext(total),
+            'used': used,
+            'usage': 0,
+            'type': "success"
+          }));
+        } else {
+          usage = Math.floor((100 * used) / total);
+          if (usage < 60) {
+            type = "success";
+          } else if (usage < 80) {
+            type = "warning";
+          } else {
+            type = "danger";
+          }
+          results.push($scope.quotas.push({
+            'share': share,
+            'total': total + " MiB",
+            'used': used,
+            'usage': usage,
+            'type': type
+          }));
+        }
+      }
+      return results;
+    });
     return $scope.close = function() {
       return $uibModalInstance.dismiss();
     };

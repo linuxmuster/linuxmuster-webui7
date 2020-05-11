@@ -51,6 +51,7 @@ angular.module('lm.users').controller 'LMNUserDetailsController', ($scope, $rout
     #notify.error gettext("You have to enter a username")
     $scope.id = id
     $scope.showGroupDetails = true
+    $scope.showQuotaDetails = true
     $scope.nevertext = gettext('Never')
 
     $scope.formatDate = (date) ->

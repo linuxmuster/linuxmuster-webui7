@@ -1827,6 +1827,7 @@
     //notify.error gettext("You have to enter a username")
     $scope.id = id;
     $scope.showGroupDetails = true;
+    $scope.showQuotaDetails = true;
     $scope.nevertext = gettext('Never');
     $scope.formatDate = function(date) {
       var day, hour, min, month, sec, year;

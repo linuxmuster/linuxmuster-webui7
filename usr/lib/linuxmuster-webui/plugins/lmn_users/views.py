@@ -564,7 +564,7 @@ class Handler(HttpPlugin):
             one_per_page = http_context.json_body()['one_per_page']
             pdflatex = http_context.json_body()['pdflatex']
             schoolclass = http_context.json_body()['schoolclass']
-            sophomorixCommand = ['sophomorix-print', '--school', school, '--caller', str(user)]
+            sophomorixCommand = ['sudo', 'sophomorix-print', '--school', school, '--caller', str(user)]
             if one_per_page:
                 sophomorixCommand.extend(['--one-per-page'])
             if pdflatex:
@@ -587,6 +587,8 @@ class Handler(HttpPlugin):
             shell_env = {'TERM': 'xterm', 'SHELL': '/bin/bash',  'PATH': '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',  'HOME': '/root', '_': '/usr/bin/python3'}
             try:
                 subprocess.check_call(sophomorixCommand, shell=False, env=shell_env)
+
+
             except subprocess.CalledProcessError as e:
                 return 'Error '+str(e)
             return 'success'

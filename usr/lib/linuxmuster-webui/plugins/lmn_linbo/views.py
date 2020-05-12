@@ -117,7 +117,7 @@ class Handler(HttpPlugin):
             data = http_context.json_body()
             if 'description' in data:
                 if data['description']:
-                    with open(desc_file, 'w') as f:
+                    with open(desc_file, 'wb') as f:
                         f.write(data['description'].encode('utf-8'))
                     os.chmod(desc_file, 0o664)
                 else:
@@ -125,7 +125,7 @@ class Handler(HttpPlugin):
                         os.unlink(desc_file)
             if 'info' in data:
                 if data['info']:
-                    with open(info_file, 'w') as f:
+                    with open(info_file, 'wb') as f:
                         f.write(data['info'].encode('utf-8'))
                     os.chmod(info_file, 0o664)
                 else:
@@ -133,7 +133,7 @@ class Handler(HttpPlugin):
                         os.unlink(info_file)
             if 'macct' in data:
                 if data['macct']:
-                    with open(macct_file, 'w') as f:
+                    with open(macct_file, 'wb') as f:
                         f.write(data['macct'].encode('utf-8'))
                     os.chmod(macct_file, 0o600)
                 else:
@@ -141,7 +141,7 @@ class Handler(HttpPlugin):
                         os.unlink(macct_file)
             if 'reg' in data:
                 if data['reg']:
-                    with open(reg_file, 'w') as f:
+                    with open(reg_file, 'wb') as f:
                         f.write(data['reg'].encode('utf-8'))
                     os.chmod(reg_file, 0o664)
                 else:
@@ -149,7 +149,7 @@ class Handler(HttpPlugin):
                         os.unlink(reg_file)
             if 'postsync' in data:
                 if data['postsync']:
-                    with open(postsync_file, 'w') as f:
+                    with open(postsync_file, 'wb') as f:
                         f.write(data['postsync'].encode('utf-8'))
                     os.chmod(postsync_file, 0o664)
                 else:

@@ -9,7 +9,6 @@ import dpath
 import string
 import random
 import re
-import six
 import yaml
 import threading
 import ast
@@ -37,7 +36,6 @@ def check_allowed_path(path):
     else:
         raise IOError(_("Access refused."))
 
-@six.python_2_unicode_compatible
 class LinuxmusterConfig():
     def __init__(self, path):
         self.data = None

@@ -1,13 +1,7 @@
 import os
 import time
-import ldap
-import aj
-import logging
 import subprocess
-import json
 import dpath
-import string
-import random
 import re
 import yaml
 import threading
@@ -15,7 +9,6 @@ import ast
 import unicodecsv as csv
 import filecmp
 
-from aj.auth import AuthenticationService
 
 ALLOWED_PATHS = [
                 '/etc/linuxmuster/sophomorix/',     # used for school.conf or *.csv in lmn_settings, lmn_devices and lmn_users
@@ -135,87 +128,6 @@ def lmn_write_configfile(path, data):
         else:
             os.rename(tmp, path)
 
-##### NOT USED YET
-# def lmn_list_backup_file(path):
-    # if not os.path.exists(path):
-        # return
-
-    # backups = []
-    # dir, name = os.path.split(path)
-    # for x in os.listdir(dir):
-        # if x.startswith('.%s.bak.' % name):
-            # epoch = time.gmtime(int(x.split(".")[-1]))
-            # date  = time.strftime("%d/%m/%Y %H:%M:%S", epoch)
-            # backups.append({'path': x, 'date': date})
-    # return backups
-
-# def lmn_restore_backup_file(path, backup):
-    # if not os.path.exists(path) or not os.path.exists(backup):
-        # return
-
-    # dir, name = os.path.split(path)
-    # os.unlink(path)
-    # os.rename(backup, path)
-
-def lmn_getLDAPGroupmembers(group, field):
-    params = lmconfig.data['linuxmuster']['ldap']
-    searchFilter = "(&(cn=%s)(objectClass=group))" % group
-    l = ldap.initialize('ldap://' + params['host'])
-    try:
-        l.set_option(ldap.OPT_REFERRALS, 0)
-        l.protocol_version = ldap.VERSION3
-        l.bind_s(params['binddn'],  params['bindpw'])
-    except Exception as e:
-        logging.error(str(e))
-        return False
-    try:
-        res = l.search_s(params['searchdn'], ldap.SCOPE_SUBTREE, searchFilter)
-        userDN = res[0][0]
-    except Exception as e:
-    # except ldap.LDAPError, e:
-        print(e)
-    soph = l.search_s(
-    userDN,
-    ldap.SCOPE_SUBTREE,
-    attrlist=[field],
-    )
-    try:
-        resultString = soph[0][1][field][0]
-    except Exception as e:
-        raise Exception('Field error. Either LDAP field does not exist or ajenti binduser does not have sufficient permissions:\n' 'Searched field was: ' + str(e) + ' received information for filter:  ' + str(soph))
-    l.unbind_s()
-    return resultString
-
-
-def lmn_getUserLdapValue(user, field):
-    params = lmconfig.data['linuxmuster']['ldap']
-    searchFilter = "(&(cn=%s)(objectClass=user))" % user
-    l = ldap.initialize('ldap://' + params['host'])
-    try:
-        l.set_option(ldap.OPT_REFERRALS, 0)
-        l.protocol_version = ldap.VERSION3
-        l.bind_s(params['binddn'],  params['bindpw'])
-    except Exception as e:
-        logging.error(str(e))
-        return False
-    try:
-        res = l.search_s(params['searchdn'], ldap.SCOPE_SUBTREE, searchFilter)
-        userDN = res[0][0]
-    except Exception as e:
-    # except ldap.LDAPError, e:
-        print(e)
-    soph = l.search_s(
-    userDN,
-    ldap.SCOPE_SUBTREE,
-    attrlist=[field],
-    )
-    try:
-        resultString = soph[0][1][field][0]
-    except Exception as e:
-        raise Exception('Field error. Either LDAP field does not exist or ajenti binduser does not have sufficient permissions:\n' 'Searched field was: ' + str(e) + ' received information for filter:  ' + str(soph))
-    l.unbind_s()
-    return resultString
-
 class SophomorixProcess(threading.Thread):
     """Worker for processing sophomorix commands"""
 
@@ -275,28 +187,3 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
         resultString = dpath.util.get(jsonDict, jsonpath)
     return resultString
 
-# check if the current user has a specific permissions
-def lmn_checkPermission(permission):
-    ## Permission needs to be a dict like {'id': 'lm:users:teachers:read', 'default': False}
-    username = aj.worker.context.identity
-    try:
-        return AuthenticationService.get(aj.worker.context).get_provider().authorize(username, permission)
-    except:
-        return False
-
-def lmn_genRandomPW():
-    regex = r"(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*()]|(?=.*\d)).{7,}"
-    s = "@#$%^&*()?+-_"
-    password = ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits + str(s)) for _ in range(10))
-    matches = re.search(regex, password)
-    if matches:
-        return password
-    else:
-        lmn_genRandomPW()
-
-def lmn_user_details(username):
-    """Get user details from sophomorix."""
-    if username == "root":
-        return "root"
-    sophomorixCommand = ['sophomorix-query', '--sam',  username,'-jj']
-    return lmn_getSophomorixValue(sophomorixCommand, 'USER/'+username)

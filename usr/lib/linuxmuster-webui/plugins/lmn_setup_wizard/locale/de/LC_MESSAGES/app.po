@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-27 14:30+0200\n"
-"PO-Revision-Date: 2020-04-27 19:32\n"
+"POT-Creation-Date: 2020-05-21 10:57+0200\n"
+"PO-Revision-Date: 2020-05-21 09:04\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -198,8 +198,8 @@ msgid "We got all information needed for the provisioning proccess.<br>Before pr
 msgstr "Wir haben alle notwendigen Informationen für den Bereitstellungsprozesses.<br>Bevor Sie fortfahren, überprüfen Sie bitte Ihre Daten <b>sorgfältig</b>!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-welcome.html:3
-msgid "Welcome to linuxmuster.net V7 (beta)"
-msgstr "Willkommen bei linuxmuster.net V7 (beta)"
+msgid "Welcome to linuxmuster.net V7"
+msgstr "Willkommen zu Linuxmuster.net V7"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:18
 msgid "e.g.: Baden-Wuerttemberg"

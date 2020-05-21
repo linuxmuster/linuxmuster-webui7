@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-18 22:06+0200\n"
-"PO-Revision-Date: 2020-04-27 12:35\n"
+"PO-Revision-Date: 2020-05-21 09:04\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -17,11 +17,11 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:91
 msgid "<a>Share</a>"
-msgstr ""
+msgstr "<a>Поделиться</a>"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/selectFile.modal.html:90
 msgid "All data are copied from the whole session"
-msgstr ""
+msgstr "Все данные копируются со всей сессии"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/selectFile.modal.html:93
 msgid "All data are moved from the whole session"
@@ -36,12 +36,12 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:77
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:194
 msgid "Cancel"
-msgstr ""
+msgstr "Отменить"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/roomDetails.modal.html:30
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:217
 msgid "Close"
-msgstr ""
+msgstr "Закрыть"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:207
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:94
@@ -107,11 +107,11 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:30
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:44
 msgid "New Session"
-msgstr ""
+msgstr "Новая сессия"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/roomDetails.modal.html:21
 msgid "No User"
-msgstr ""
+msgstr "Нет Пользователя"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/selectFile.modal.html:50
 msgid "No files or directories found in transfer"
@@ -119,7 +119,7 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:50
 msgid "Rename Session"
-msgstr ""
+msgstr "Переименовать сессию"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:156
 msgid "Restore initial password"

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-18 22:06+0200\n"
-"PO-Revision-Date: 2020-04-27 12:35\n"
+"POT-Creation-Date: 2020-05-21 10:57+0200\n"
+"PO-Revision-Date: 2020-05-21 09:04\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -873,7 +873,15 @@ msgstr "Administrateurs globaux"
 msgid "Delete global-administrator "
 msgstr "Supprimer l'administrateur global "
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/printPasswords.controller.coffee:33
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/printPasswords.controller.coffee:24
+msgid "Created password pdf"
+msgstr "Liste de pdf de mots de passe créés"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/printPasswords.controller.coffee:27
+msgid "Could not create password pdf"
+msgstr "N'a pas pu générer de mot de passe au format pdf"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/printPasswords.controller.coffee:37
 msgid "Print Passwords"
 msgstr "Imprimer les mots de passe"
 

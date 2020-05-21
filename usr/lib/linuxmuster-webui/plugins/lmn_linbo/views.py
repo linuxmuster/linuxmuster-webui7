@@ -5,7 +5,7 @@ from aj.auth import authorize
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint
 from aj.plugins.lmn_common.api import lmn_backup_file, lmn_write_configfile
-import magic
+from aj.plugins.lmn_common.lmnfile import LMNFile
 
 
 @component(HttpPlugin)
@@ -69,27 +69,25 @@ class Handler(HttpPlugin):
         r = []
         for file in os.listdir(self.LINBO_PATH):
             if file.endswith(('.cloop', '.rsync')):
-                desc_file = os.path.join(self.LINBO_PATH, file + '.desc')
-                info_file = os.path.join(self.LINBO_PATH, file + '.info')
-                macct_file = os.path.join(self.LINBO_PATH, file + '.macct')
-                reg_file = os.path.join(self.LINBO_PATH, file + '.reg')
-                postsync_file = os.path.join(self.LINBO_PATH, file + '.postsync')
-
-                # blob = open(desc_file).read()
-                mime = magic.Magic(mime_encoding=True)
-                # desc_encoding = mime.from_buffer(blob)
-                # 'macct': open(macct_file).read().decode('utf-8') if os.path.exists(macct_file) else None,
+                extra_dict = {}
+                for extra in ['desc', 'reg', 'postsync', 'info', 'macct']:
+                    extra_file = os.path.join(self.LINBO_PATH, file + '.' + extra)
+                    if os.path.isfile(extra_file):
+                        with LMNFile(extra_file, 'r') as f:
+                            extra_dict[extra] = f.read()
+                    else:
+                        extra_dict[extra] = None
 
                 r.append({
                     'name': file,
                     'cloop': file.endswith('.cloop'),
                     'rsync': file.endswith('.rsync'),
                     'size': os.stat(os.path.join(self.LINBO_PATH, file)).st_size,
-                    'description': open(desc_file, 'rb').read().decode(mime.from_buffer(open(desc_file).read())) if os.path.exists(desc_file) else None,
-                    'info': open(info_file, 'rb').read().decode('utf-8') if os.path.exists(info_file) else None,
-                    'macct': open(macct_file, 'rb').read().decode('utf-8') if os.path.exists(macct_file) else None,
-                    'reg': open(reg_file, 'rb').read().decode(mime.from_buffer(open(reg_file).read())) if os.path.exists(reg_file) else None,
-                    'postsync': open(postsync_file, 'rb').read().decode(mime.from_buffer(open(postsync_file).read())) if os.path.exists(postsync_file) else None,
+                    'description': extra_dict['desc'],
+                    'info': extra_dict['info'],
+                    'macct': extra_dict['macct'],
+                    'reg': extra_dict['reg'],
+                    'postsync': extra_dict['postsync'],
                 })
         return r
 
@@ -117,40 +115,40 @@ class Handler(HttpPlugin):
             data = http_context.json_body()
             if 'description' in data:
                 if data['description']:
-                    with open(desc_file, 'wb') as f:
-                        f.write(data['description'].encode('utf-8'))
+                    with LMNFile(desc_file, 'w') as f:
+                        f.write(data['description'])
                     os.chmod(desc_file, 0o664)
                 else:
                     if os.path.exists(desc_file):
                         os.unlink(desc_file)
             if 'info' in data:
                 if data['info']:
-                    with open(info_file, 'wb') as f:
-                        f.write(data['info'].encode('utf-8'))
+                    with LMNFile(info_file, 'w') as f:
+                        f.write(data['info'])
                     os.chmod(info_file, 0o664)
                 else:
                     if os.path.exists(info_file):
                         os.unlink(info_file)
             if 'macct' in data:
                 if data['macct']:
-                    with open(macct_file, 'wb') as f:
-                        f.write(data['macct'].encode('utf-8'))
+                    with LMNFile(macct_file, 'w') as f:
+                        f.write(data['macct'])
                     os.chmod(macct_file, 0o600)
                 else:
                     if os.path.exists(macct_file):
                         os.unlink(macct_file)
             if 'reg' in data:
                 if data['reg']:
-                    with open(reg_file, 'wb') as f:
-                        f.write(data['reg'].encode('utf-8'))
+                    with LMNFile(reg_file, 'w') as f:
+                        f.write(data['reg'])
                     os.chmod(reg_file, 0o664)
                 else:
                     if os.path.exists(reg_file):
                         os.unlink(reg_file)
             if 'postsync' in data:
                 if data['postsync']:
-                    with open(postsync_file, 'wb') as f:
-                        f.write(data['postsync'].encode('utf-8'))
+                    with LMNFile(postsync_file, 'w') as f:
+                        f.write(data['postsync'])
                     os.chmod(postsync_file, 0o664)
                 else:
                     if os.path.exists(postsync_file):

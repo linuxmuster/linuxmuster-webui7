@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-18 22:06+0200\n"
-"PO-Revision-Date: 2020-04-27 12:35\n"
+"PO-Revision-Date: 2020-05-21 09:04\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -17,45 +17,45 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:27
 msgid "Change password"
-msgstr ""
+msgstr "Изменить пароль"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:14
 msgid "Current password"
-msgstr ""
+msgstr "Текущий пароль"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:3
 msgid "Minimal length is 7 characters. Use upper, lower and special characters or numbers. (e.g. Muster!)"
-msgstr ""
+msgstr "Минимальная длина - 7 символов. Используйте верхние, нижние и специальные символы или цифры (например, Muster!)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:18
 msgid "New password"
-msgstr ""
+msgstr "Новый пароль"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:22
 msgid "Repeat password"
-msgstr ""
+msgstr "Повторите пароль"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:5
 msgid "Valid characters are: a-z A-Z 0-9 !§+-@#$%&amp;*( )[ ]{ }"
-msgstr ""
+msgstr "Допустимые символы: a-z A-Z 0-9 !§+-@#$%&amp;*( )[ ]{ }"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:17
 msgid "Linux Muster LDAP"
-msgstr ""
+msgstr "Linux Muster LDAP"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:7
 msgid "Change Password"
-msgstr ""
+msgstr "Сменить пароль"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:13
 msgid "Passwords do not match"
-msgstr ""
+msgstr "Пароль не подходит"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:23
 msgid "Password changed"
-msgstr ""
+msgstr "Пароль изменён"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:26
 msgid "Password change failed"
-msgstr ""
+msgstr "Не удалось изменить пароль"
 

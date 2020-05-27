@@ -9,7 +9,7 @@ from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
 from aj.plugins.lmn_common.api import CSVSpaceStripper
 from aj.auth import authorize
-from aj.plugins.lmn_common.api import lmn_checkPermission, lmn_write_csv, lmn_getSophomorixValue
+from aj.plugins.lmn_common.api import lmn_write_csv, lmn_getSophomorixValue
 
 
 @component(HttpPlugin)
@@ -552,7 +552,7 @@ class Handler(HttpPlugin):
                 for c, details in classes_raw.items():
                     if details["sophomorixHidden"] == "FALSE":
                         classes.append(c)
-                if lmn_checkPermission({'id': 'lm:users:teachers:read', 'default': False}):
+                with authorize('lm:users:teachers:read'):
                     # append empty element. This references to all users
                     classes.append('')
                     # add also teachers passwords

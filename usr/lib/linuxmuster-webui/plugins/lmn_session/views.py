@@ -1,7 +1,6 @@
 from jadi import component
 from aj.api.http import url, HttpPlugin
 from time import gmtime, strftime  # needed for timestamp in collect transfer
-import six  # used to determine if given variable is string
 from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue
@@ -314,7 +313,7 @@ class Handler(HttpPlugin):
     def handle_api_session_file_trans_list(self, http_context):
         user = http_context.json_body()['user']
         # check if user is a string(given by share option) or an object in an array (given by collect option)
-        if not isinstance(user, six.string_types):
+        if not isinstance(user, str):
             user = user[0]['sAMAccountName']
 
         subfolderPath = ''
@@ -346,7 +345,7 @@ class Handler(HttpPlugin):
                     for sender in senders:
                         # check if bulkmode (array of usernames) or single user (object containing username)
                         # if first element is not a string
-                        if not isinstance(receivers[0], six.string_types):
+                        if not isinstance(receivers[0], str):
                             receivers[0] = receivers[0]['sAMAccountName']
                         receiversCSV = ",".join(receivers)
                         for File in files:

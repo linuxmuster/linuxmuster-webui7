@@ -3,7 +3,7 @@ from jadi import component
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint
 from aj.auth import authorize
-from aj.plugins.lmn_common.api import lmn_getSophomorixValue, lmn_user_details
+from aj.plugins.lmn_common.api import lmn_getSophomorixValue
 
 
 @component(HttpPlugin)

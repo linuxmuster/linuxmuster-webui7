@@ -109,7 +109,7 @@ class Handler(HttpPlugin):
                             if k not in keys_found:
                                 k = k.strip()
                                 v = v.strip()
-                                content += "\t%s = %s\n" % (k.upper(), convert_value(data[section_name][k]))
+                                content += "\t%s=%s\n" % (k.upper(), convert_value(data[section_name][k]))
                     # start of with new section
                     set_control = 1
                     keys_found = []
@@ -121,8 +121,10 @@ class Handler(HttpPlugin):
                     if k in data[section_name]:
                         newValue = convert_value(data[section_name][k])
                         keys_found.append(k)
-
-                        originalLine = originalLine.replace(v, newValue)
+                        if v:
+                            originalLine = originalLine.replace(v, newValue)
+                        else:
+                            originalLine = "\t%s=%s\n" % (k.upper(), newValue)
                         if newValue not in v:
                             originalLine = originalLine.lstrip('#')
                 content += originalLine

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-18 22:06+0200\n"
-"PO-Revision-Date: 2020-04-27 12:35\n"
+"PO-Revision-Date: 2020-05-21 09:04\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -26,15 +26,15 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileEditor.modal.html:18
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileBackups.service.coffee:53
 msgid "Cancel"
-msgstr ""
+msgstr "Отмена"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileBackups.modal.html:23
 msgid "Close"
-msgstr ""
+msgstr "Закрыть"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileEditor.modal.html:17
 msgid "Download CSV"
-msgstr ""
+msgstr "Скачать CSV-файл"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileEditor.modal.html:5
 msgid "Drop a CSV file here to import"
@@ -46,15 +46,15 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:91
 msgid "Log out"
-msgstr ""
+msgstr "Выйти"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileBackups.modal.html:5
 msgid "No backups available"
-msgstr ""
+msgstr "Резервных копий нет"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:173
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:152
 msgid "Please see browser console"
@@ -66,7 +66,7 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileEditor.modal.html:16
 msgid "Save"
-msgstr ""
+msgstr "Сохранить"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:48
 msgid "School Console"
@@ -111,7 +111,7 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:4
 #, javascript-format
 msgid "Adding user %s."
-msgstr ""
+msgstr "Добавление пользователя %s."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:5
 #, javascript-format

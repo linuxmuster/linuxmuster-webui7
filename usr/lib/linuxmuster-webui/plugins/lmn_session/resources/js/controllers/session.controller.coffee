@@ -1,9 +1,10 @@
-angular.module('lmn.session').controller 'LMNSessionFileSelectModalController', ($scope, $uibModalInstance, gettext, notify, $http, bulkMode, senders, receivers, action, command, messagebox) ->
+angular.module('lmn.session').controller 'LMNSessionFileSelectModalController', ($scope, $uibModalInstance, gettext, notify, $http, bulkMode, senders, receivers, action, command, sessionComment, messagebox) ->
     $scope.bulkMode = bulkMode
     $scope.senders = senders
     $scope.receivers = receivers
     $scope.action = action
     $scope.command = command
+
 
     ## Test path for upload with drag and drop
     ## TODO : Fix path here or handle this with sophomorix-transfer ? --> Generic path (eg. /srv/upload, then use sophomorix-transfer)
@@ -44,7 +45,9 @@ angular.module('lmn.session').controller 'LMNSessionFileSelectModalController', 
 
     $scope.collect = () ->
         if bulkMode is 'false'
-            $http.post('/api/lmn/session/trans-list-files', {user: senders}).then (resp) ->
+            console.log (receivers[0])
+            console.log (sessionComment)
+            $http.post('/api/lmn/session/trans-list-files', {user: senders, subfolderPath: receivers[0]+'_'+sessionComment}).then (resp) ->
                 $scope.files = resp['data'][0]
                 $scope.filesList = resp['data'][1]
 
@@ -682,6 +685,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
               senders: () -> senders
               receivers: () -> receivers
               command: () -> command
+              sessionComment: () -> sessioncomment
         ).result.then (result) ->
            if result.response is 'accept'
                wait.modal(gettext('Sharing files...'), 'progressbar')
@@ -715,6 +719,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
               senders: () -> senders
               receivers: () -> receivers
               command: () -> command
+              sessionComment: () -> sessioncomment
         ).result.then (result) ->
             if result.response is 'accept'
                 #return

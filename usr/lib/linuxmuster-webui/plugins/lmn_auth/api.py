@@ -194,7 +194,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
             return {}
 
 @component(UserConfigProvider)
-class UserConfig(UserConfigProvider):
+class UserLdapConfig(UserConfigProvider):
     id = 'lm'
     name = _('Linuxmuster LDAP user config')
 
@@ -216,7 +216,10 @@ class UserConfig(UserConfigProvider):
         else:
             ## Load ldap attribute webuidashboard
             userAttrs = AuthenticationService.get(self.context).get_provider()._get_ldap_user(self.user, context="userconfig")
-            self.data = json.loads(userAttrs['sophomorixWebuiDashboard'])
+            if userAttrs['sophomorixWebuiDashboard'] == b'---':
+                self.data = {}
+            else:
+                self.data = json.loads(userAttrs['sophomorixWebuiDashboard'])
 
     def save(self):
         if self.user == 'root':

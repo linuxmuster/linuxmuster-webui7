@@ -3,7 +3,6 @@ angular.module('lm.linbo').config ($routeProvider) ->
         controller: 'LMLINBOController'
         templateUrl: '/lmn_linbo:resources/partial/index.html'
 
-
 angular.module('lm.linbo').controller 'LMLINBOAcceptModalController', ($scope, $uibModalInstance, $http, partition, disk) ->
     $scope.partition = partition
     $scope.disk = disk
@@ -562,3 +561,6 @@ angular.module('lm.linbo').controller 'LMLINBOController', ($scope, $http, $uibM
             angular.copy(result, image)
             $http.post("/api/lm/linbo/image/#{image.name}", result).then (resp) ->
                 notify.success gettext('Saved')
+
+    $scope.downloadIso = () ->
+        location.href = '/api/lm/linbo.iso'

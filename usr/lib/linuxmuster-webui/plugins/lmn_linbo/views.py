@@ -222,3 +222,8 @@ class Handler(HttpPlugin):
 
             lmn_write_configfile(path, content)
             os.chmod(path, 0o755)
+
+    @url(r'/api/lm/linbo.iso')
+    @endpoint(api=False, page=True)
+    def handle_linbo_iso(self, http_context):
+        return http_context.file('/srv/linbo/linbo.iso', inline=False, name=b'linbo.iso')

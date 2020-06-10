@@ -1,6 +1,6 @@
 from jadi import component
 from aj.api.http import url, HttpPlugin
-from time import gmtime, strftime  # needed for timestamp in collect transfer
+from time import localtime, strftime  # needed for timestamp in collect transfer
 import six  # used to determine if given variable is string
 from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize
@@ -113,7 +113,7 @@ class Handler(HttpPlugin):
             supervisor = http_context.json_body()['supervisor']
             participant = http_context.json_body()['participant']
             sessionName = http_context.json_body()['sessionName']
-            now = strftime("%Y%m%d_%H-%M-%S", gmtime())
+            now = strftime("%Y%m%d_%H-%M-%S", localtime())
             with authorize('lm:users:students:read'):
                 try:
                     sophomorixCommand = ['sophomorix-exam-mode', '--unset', '--subdir', 'transfer/collected/'+now+'-'+sessionName+'-ended-by-'+supervisor+'/exam', '-j', '--participants', participant]
@@ -139,7 +139,7 @@ class Handler(HttpPlugin):
             supervisor = http_context.json_body()['username']
             participants = http_context.json_body()['participants']
             participantsList = []
-            now = strftime("%Y%m%d_%H-%M-%S", gmtime())
+            now = strftime("%Y%m%d_%H-%M-%S", localtime())
 
             examModeList, noExamModeList, wifiList, noWifiList, internetList, noInternetList, intranetList, noIntranetList, webfilterList, noWebfilterList, printingList, noPrintingList = [], [], [], [], [], [], [], [], [], [], [], []
             # Remove -exam in username to keep username as it is insead of saving -exam usernames in session
@@ -338,7 +338,7 @@ class Handler(HttpPlugin):
         receivers = http_context.json_body()['receivers']
         files = http_context.json_body()['files']
         session = http_context.json_body()['session']
-        now = strftime("%Y%m%d_%H-%M-%S", gmtime())
+        now = strftime("%Y%m%d_%H-%M-%S", localtime())
 
         with authorize('lmn:session:trans'):
             if command == 'share':

@@ -227,6 +227,7 @@
         return;
       }
       $scope.show_errors = false;
+      $scope.devices_form.$setPristine();
       return $http.post('/api/lm/devices', $scope.devices).then(function() {
         return notify.success(gettext('Saved'));
       });

@@ -216,10 +216,11 @@ class UserLdapConfig(UserConfigProvider):
         else:
             ## Load ldap attribute webuidashboard
             userAttrs = AuthenticationService.get(self.context).get_provider()._get_ldap_user(self.user, context="userconfig")
-            if userAttrs['sophomorixWebuiDashboard'] == b'---':
-                self.data = {}
-            else:
+            try:
                 self.data = json.loads(userAttrs['sophomorixWebuiDashboard'])
+            except Exception as e:
+                logging.warning('Error retrieving userconfig from %s, value: %s. This will be overwritten', self.user, userAttrs['sophomorixWebuiDashboard'])
+                self.data = {}
 
     def save(self):
         if self.user == 'root':

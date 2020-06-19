@@ -34,6 +34,7 @@ class LMNFile(metaclass=abc.ABCMeta):
         self.mode  = mode
         self.encoding = self.detect_encoding()
         self.comments = []
+        self.check_allowed_path()
 
     def read(self):
         if not self.opened:

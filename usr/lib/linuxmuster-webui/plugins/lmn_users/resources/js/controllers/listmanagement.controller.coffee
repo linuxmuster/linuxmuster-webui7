@@ -394,8 +394,10 @@ angular.module('lm.users').controller 'LMUsersListManagementController', ($scope
 
         test = validation["isValid"+name](val)
 
+        # Ensure the login is not duplicated, but ignore empty login
         if filter == 'teachers'
-            test = test && ($scope.teachers.filter(validation.findval('login', val)).length < 2)
+            if val != ''
+                test = test && ($scope.teachers.filter(validation.findval('login', val)).length < 2)
         else if filter == 'extrastudents'
             test = test && ($scope.extrastudents.filter(validation.findval('login', val)).length < 2)
 

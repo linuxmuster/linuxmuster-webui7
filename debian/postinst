@@ -25,7 +25,7 @@ case "$1" in
             echo "Copy default config files for webui"
             mkdir -p /etc/linuxmuster/webui/
             #
-            if [ -f $ajcfg];then
+            if [ -f $ajcfg ];then
                 echo "Backing up config.yml"
                 cp -a $ajcfg $ajcfg.bak
             fi

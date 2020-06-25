@@ -381,7 +381,6 @@
           checkboxStatus: false
         }
       };
-      //console.log ($scope.translation)
       //get groups
       console.log($scope.identity.profile);
       $http.post('/api/lmn/groupmembership', {
@@ -399,7 +398,6 @@
         action: 'get-sessions',
         username: username
       }).then(function(resp) {
-        console.log(resp.data);
         if (resp.data.length === 0) {
           $scope.sessions = resp.data;
           $scope.info.message = gettext("There are no sessions yet. Create a session using the 'New Session' button at the top!");

@@ -304,7 +304,6 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                       checkboxAll: true
                       checkboxStatus: false
                 }
-                #console.log ($scope.translation)
                 #get groups
                 console.log ($scope.identity.profile)
                 $http.post('/api/lmn/groupmembership', {action: 'list-groups', username: username, profil: $scope.identity.profile}).then (resp) ->
@@ -314,9 +313,10 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                     $scope.classes = $scope.classes.filter($scope.filterMembership(true))
                 #get sessions
                 $http.post('/api/lmn/session/sessions', {action: 'get-sessions', username: username}).then (resp) ->
-                    if resp.data[0]['SESSIONCOUNT'] is 0
+                    if resp.data.length is 0
                         $scope.sessions = resp.data
                         $scope.info.message = gettext("There are no sessions yet. Create a session using the 'New Session' button at the top!")
+                        console.log (resp.data)
                         #console.log ('no sessions')
                     else
                         #console.log ('sessions found')

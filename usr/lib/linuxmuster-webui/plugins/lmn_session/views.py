@@ -28,9 +28,6 @@ class Handler(HttpPlugin):
                     return 0
             sessionsList = []
             if supervisor not in sessions['SUPERVISOR_LIST']:
-                sessionJson = {}
-                sessionJson['SESSIONCOUNT'] = 0
-                sessionsList.append(sessionJson)
                 return sessionsList
 
             for session in sessions['SUPERVISOR'][supervisor]['sophomorixSessions']:

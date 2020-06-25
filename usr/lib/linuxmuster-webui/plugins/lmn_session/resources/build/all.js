@@ -399,9 +399,11 @@
         action: 'get-sessions',
         username: username
       }).then(function(resp) {
-        if (resp.data[0]['SESSIONCOUNT'] === 0) {
+        console.log(resp.data);
+        if (resp.data.length === 0) {
           $scope.sessions = resp.data;
-          return $scope.info.message = gettext("There are no sessions yet. Create a session using the 'New Session' button at the top!");
+          $scope.info.message = gettext("There are no sessions yet. Create a session using the 'New Session' button at the top!");
+          return console.log(resp.data);
         } else {
           //console.log ('sessions found')
           //console.log ('no sessions')

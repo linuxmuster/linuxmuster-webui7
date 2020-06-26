@@ -1,8 +1,9 @@
 import os.path
 import logging
 import abc
-import unicodecsv as csv
+import csv
 import magic
+import filecmp
 
 ALLOWED_PATHS = [
                 # used for school.conf or *.csv in lmn_settings, lmn_devices and lmn_users
@@ -14,37 +15,30 @@ ALLOWED_PATHS = [
                 ]
 
 class LMNFile(metaclass=abc.ABCMeta):
-    def __new__(cls, file, mode):
+    def __new__(cls, file, mode, delimiter=';', fieldnames=[]):
         ext = os.path.splitext(file)[-1]
         for child in cls.__subclasses__():
             if child.hasExtension(ext):
                 obj = object.__new__(child)
-                obj.__init__(file, mode)
+                obj.__init__(file, mode, delimiter=';', fieldnames=[])
                 return obj
         else:
             if filename.startswith('start.conf.'):
                 # Linbo start.conf file
                 obj = object.__new__(StartConfLoader)
-                obj.__init__(file, mode)
+                obj.__init__(file, mode, delimiter=';', fieldnames=[])
                 return obj
 
-    def __init__(self, file, mode):
+    def __init__(self, file, mode, delimiter=';', fieldnames=[]):
         self.file = file
         self.opened = ''
+        self.data = ''
         self.mode  = mode
         self.encoding = self.detect_encoding()
         self.comments = []
         self.check_allowed_path()
-
-    def read(self):
-        if not self.opened:
-            self.__enter__()
-        return self.opened.read()
-
-    def write(self):
-        if not self.opened:
-            self.__enter__()
-        return self.opened.write()
+        self.delimiter = delimiter
+        self.fieldnames = fieldnames
 
     @classmethod
     def hasExtension(cls, ext):
@@ -108,31 +102,41 @@ class LinboLoader(LMNFile):
     def __exit__(self, *args):
         self.opened.close()
 
-"""LATER
 class CSVLoader(LMNFile):
     extensions = ['.csv']
 
     def __enter__(self):
-        self.opened = open(self.file, self.mode, encoding=self.encoding)
-        return self.opened
-
-    def __exit__(self, *args):
-        self.opened.close()
-
-    def __iter__(self):
+        if 'r' in self.mode:
+            self.opened = open(self.file, self.mode, encoding=self.encoding)
+            self.data = csv.DictReader(
+                (line for line in self.opened if not line.startswith('#')),
+                delimiter = self.delimiter,
+                fieldnames = self.fieldnames
+            )
         return self
 
-    def __next__(self):
-        # Store comments in self.comments
-        nextline = self.opened.readline()
-        if nextline == '':
-            raise StopIteration()
-        while nextline.startswith('#'):
-            self.comments.append(nextline)
-            nextline = self.opened.readline()
-        # Reader is unicodecsv, which needs bytes
-        return nextline.encode('utf-8').strip()
+    def read(self):
+        return list(self.data)
 
+    def write(self, data):
+        tmp = self.file + '_tmp'
+        with open(tmp, 'w', encoding=self.encoding) as f:
+            csv.DictWriter(
+                f,
+                delimiter=';',
+                fieldnames = self.fieldnames
+            ).writerows(data)
+        if not filecmp.cmp(tmp, self.file):
+            os.rename(tmp, self.file)
+        else:
+            os.unlink(tmp)
+
+    def __exit__(self, *args):
+        if self.opened:
+            self.opened.close()
+
+
+"""LATER
 class ConfigLoader(LMNFile):
     extensions = ['.ini', '.conf']
 

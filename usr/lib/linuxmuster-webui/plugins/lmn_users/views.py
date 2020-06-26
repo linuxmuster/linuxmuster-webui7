@@ -7,9 +7,9 @@ import io
 from jadi import component
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
-from aj.plugins.lmn_common.api import CSVSpaceStripper
 from aj.auth import authorize
-from aj.plugins.lmn_common.api import lmn_write_csv, lmn_getSophomorixValue
+from aj.plugins.lmn_common.api import lmn_getSophomorixValue
+from aj.plugins.lmn_common.lmnfile import LMNFile
 
 
 @component(HttpPlugin)
@@ -160,23 +160,17 @@ class Handler(HttpPlugin):
         ]
         if http_context.method == 'GET':
             with authorize('lm:users:students:read'):
-                return list(
-                    csv.DictReader(
-                        CSVSpaceStripper(
-                            open(path),
-                            encoding=http_context.query.get('encoding', 'utf-8')
-                        ),
-                        delimiter=';',
-                        fieldnames=fieldnames
-                    )
-                )
+                with LMNFile(path, 'r', fieldnames=fieldnames) as students:
+                    return students.read()
+
         if http_context.method == 'POST':
             with authorize('lm:users:students:write'):
                 data = http_context.json_body()
                 for item in data:
                     item.pop('_isNew', None)
                     item.pop('null', None)
-                lmn_write_csv(path, fieldnames, data, http_context.query.get('encoding', 'utf-8'))
+                with LMNFile(path, 'w', fieldnames=fieldnames) as f:
+                    f.write(data)
 
     @url(r'/api/lm/users/teachers-list')
     @endpoint(api=True)
@@ -199,22 +193,16 @@ class Handler(HttpPlugin):
         ]
         if http_context.method == 'GET':
             with authorize('lm:users:teachers:read'):
-                return list(
-                    csv.DictReader(
-                        CSVSpaceStripper(
-                            open(path),
-                            encoding=http_context.query.get('encoding', 'utf-8')
-                        ),
-                        delimiter=';',
-                        fieldnames=fieldnames
-                    )
-                )
+                with LMNFile(path, 'r', fieldnames=fieldnames) as teachers:
+                    return teachers.read()
+
         if http_context.method == 'POST':
             with authorize('lm:users:teachers:write'):
                 data = http_context.json_body()
                 for item in data:
                     item.pop('_isNew', None)
-                lmn_write_csv(path, fieldnames, data, http_context.query.get('encoding', 'utf-8'))
+                with LMNFile(path, 'w', fieldnames=fieldnames) as f:
+                    f.write(data)
 
     @url(r'/api/lm/sophomorixUsers/teachers')
     @endpoint(api=True)
@@ -339,22 +327,16 @@ class Handler(HttpPlugin):
         ]
         if http_context.method == 'GET':
             with authorize('lm:users:extra-students:read'):
-                return list(
-                    csv.DictReader(
-                        CSVSpaceStripper(
-                            open(path),
-                            encoding=http_context.query.get('encoding', 'utf-8')
-                        ),
-                        delimiter=';',
-                        fieldnames=fieldnames
-                    )
-                )
+                with LMNFile(path, 'r', fieldnames=fieldnames) as extra_students:
+                    return extra_students.read()
+
         if http_context.method == 'POST':
             with authorize('lm:users:extra-students:write'):
                 data = http_context.json_body()
                 for item in data:
                     item.pop('_isNew', None)
-                lmn_write_csv(path, fieldnames, data, http_context.query.get('encoding', 'utf-8'))
+                with LMNFile(path, 'w', fieldnames=fieldnames) as f:
+                    f.write(data)
 
     @url(r'/api/lm/users/extra-courses')
     @endpoint(api=True)
@@ -374,22 +356,16 @@ class Handler(HttpPlugin):
         ]
         if http_context.method == 'GET':
             with authorize('lm:users:extra-courses:read'):
-                return list(
-                    csv.DictReader(
-                        CSVSpaceStripper(
-                            open(path),
-                            encoding=http_context.query.get('encoding', 'utf-8')
-                        ),
-                        delimiter=';',
-                        fieldnames=fieldnames
-                    )
-                )
+                with LMNFile(path, 'r', fieldnames=fieldnames) as extra_courses:
+                    return extra_courses.read()
+
         if http_context.method == 'POST':
             with authorize('lm:users:extra-courses:write'):
                 data = http_context.json_body()
                 for item in data:
                     item.pop('_isNew', None)
-                lmn_write_csv(path, fieldnames, data, http_context.query.get('encoding', 'utf-8'))
+                with LMNFile(path, 'w', fieldnames=fieldnames) as f:
+                    f.write(data)
 
     @url(r'/api/lm/users/check')
     @authorize('lm:users:check')

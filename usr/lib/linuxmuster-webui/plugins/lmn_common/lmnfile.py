@@ -4,6 +4,7 @@ import abc
 import csv
 import magic
 import filecmp
+import time
 
 ALLOWED_PATHS = [
                 # used for school.conf or *.csv in lmn_settings, lmn_devices and lmn_users
@@ -54,10 +55,19 @@ class LMNFile(metaclass=abc.ABCMeta):
     def __exit__(self):
         raise NotImplementedError
 
-    # @abc.abstractmethod
-    # def backup(self):
-    #     raise NotImplementedError
-    #
+    def backup(self):
+        if not os.path.exists(self.file):
+            return
+
+        dir, name = os.path.split(self.file)
+        backups = sorted([x for x in os.listdir(dir) if x.startswith('.%s.bak.' % name)])
+        while len(backups) > 10:
+            os.unlink(os.path.join(dir, backups[0]))
+            backups.pop(0)
+
+        with open(dir + '/.' + name + '.bak.' + str(int(time.time())), 'w') as f:
+            f.write(self.opened.read())
+
     # @abc.abstractmethod
     # def __iter__(self):
     #     raise NotImplementedError
@@ -106,8 +116,8 @@ class CSVLoader(LMNFile):
     extensions = ['.csv']
 
     def __enter__(self):
+        self.opened = open(self.file, 'r', encoding=self.encoding)
         if 'r' in self.mode:
-            self.opened = open(self.file, self.mode, encoding=self.encoding)
             self.data = csv.DictReader(
                 (line for line in self.opened if not line.startswith('#')),
                 delimiter = self.delimiter,
@@ -127,6 +137,7 @@ class CSVLoader(LMNFile):
                 fieldnames = self.fieldnames
             ).writerows(data)
         if not filecmp.cmp(tmp, self.file):
+            self.backup()
             os.rename(tmp, self.file)
         else:
             os.unlink(tmp)

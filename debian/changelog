@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.144-1) lmn7-testing; urgency=medium
+
+  * Current snapshot build 89d7cbc1185b5bef0834b25f761cb3a11c82e4a0
+   *     LMNFile also for user management.
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Tue, 30 Jun 2020 09:01:27 +0200
+
 linuxmuster-webui7 (1.0.143-1) lmn7-testing; urgency=medium 
 
   * Current snapshot build ff3a123914595b61206a55b954e994c58afbebea

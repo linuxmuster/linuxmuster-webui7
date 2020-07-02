@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.147-1) lmn7; urgency=medium 
+
+  * Current snapshot build f80a31400ad4128a8c90f68846440f4a13a43ad2
+   *     added dependencie for sophomorix-samba version
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Jul  2 15:26:04 CEST 2020
+
 linuxmuster-webui7 (1.0.146-1) lmn7; urgency=medium 
 
   * Current snapshot build fe36fddfe2373bfb1df36c135b06ad6d5cd3c6f7

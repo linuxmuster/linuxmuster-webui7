@@ -685,7 +685,7 @@
         }
       });
     };
-    return $scope.editImage = function(image) {
+    $scope.editImage = function(image) {
       return $uibModal.open({
         templateUrl: '/lmn_linbo:resources/partial/image.modal.html',
         controller: 'LMLINBOImageModalController',
@@ -703,6 +703,9 @@
           return notify.success(gettext('Saved'));
         });
       });
+    };
+    return $scope.downloadIso = function() {
+      return location.href = '/api/lm/linbo.iso';
     };
   });
 

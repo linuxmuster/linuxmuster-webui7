@@ -7,9 +7,9 @@ import io
 from jadi import component
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
-from aj.plugins.lmn_common.api import CSVSpaceStripper
 from aj.auth import authorize
-from aj.plugins.lmn_common.api import lmn_checkPermission, lmn_write_csv, lmn_getSophomorixValue
+from aj.plugins.lmn_common.api import lmn_getSophomorixValue
+from aj.plugins.lmn_common.lmnfile import LMNFile
 
 
 @component(HttpPlugin)
@@ -119,7 +119,7 @@ class Handler(HttpPlugin):
             with io.open(importList, 'w', encoding='utf-8') as f:
                 f.write(text)
             f.close
-            f = open(importList, 'r')
+            f = open(importList, 'rb')
             reader = csv.reader(f, delimiter=';', encoding=http_context.query.get('encoding', 'utf-8'))
             # determine number of coloumns in csv
             ncol = len(next(reader))
@@ -160,23 +160,17 @@ class Handler(HttpPlugin):
         ]
         if http_context.method == 'GET':
             with authorize('lm:users:students:read'):
-                return list(
-                    csv.DictReader(
-                        CSVSpaceStripper(
-                            open(path),
-                            encoding=http_context.query.get('encoding', 'utf-8')
-                        ),
-                        delimiter=';',
-                        fieldnames=fieldnames
-                    )
-                )
+                with LMNFile(path, 'r', fieldnames=fieldnames) as students:
+                    return students.read()
+
         if http_context.method == 'POST':
             with authorize('lm:users:students:write'):
                 data = http_context.json_body()
                 for item in data:
                     item.pop('_isNew', None)
                     item.pop('null', None)
-                lmn_write_csv(path, fieldnames, data, http_context.query.get('encoding', 'utf-8'))
+                with LMNFile(path, 'w', fieldnames=fieldnames) as f:
+                    f.write(data)
 
     @url(r'/api/lm/users/teachers-list')
     @endpoint(api=True)
@@ -199,22 +193,16 @@ class Handler(HttpPlugin):
         ]
         if http_context.method == 'GET':
             with authorize('lm:users:teachers:read'):
-                return list(
-                    csv.DictReader(
-                        CSVSpaceStripper(
-                            open(path),
-                            encoding=http_context.query.get('encoding', 'utf-8')
-                        ),
-                        delimiter=';',
-                        fieldnames=fieldnames
-                    )
-                )
+                with LMNFile(path, 'r', fieldnames=fieldnames) as teachers:
+                    return teachers.read()
+
         if http_context.method == 'POST':
             with authorize('lm:users:teachers:write'):
                 data = http_context.json_body()
                 for item in data:
                     item.pop('_isNew', None)
-                lmn_write_csv(path, fieldnames, data, http_context.query.get('encoding', 'utf-8'))
+                with LMNFile(path, 'w', fieldnames=fieldnames) as f:
+                    f.write(data)
 
     @url(r'/api/lm/sophomorixUsers/teachers')
     @endpoint(api=True)
@@ -339,22 +327,16 @@ class Handler(HttpPlugin):
         ]
         if http_context.method == 'GET':
             with authorize('lm:users:extra-students:read'):
-                return list(
-                    csv.DictReader(
-                        CSVSpaceStripper(
-                            open(path),
-                            encoding=http_context.query.get('encoding', 'utf-8')
-                        ),
-                        delimiter=';',
-                        fieldnames=fieldnames
-                    )
-                )
+                with LMNFile(path, 'r', fieldnames=fieldnames) as extra_students:
+                    return extra_students.read()
+
         if http_context.method == 'POST':
             with authorize('lm:users:extra-students:write'):
                 data = http_context.json_body()
                 for item in data:
                     item.pop('_isNew', None)
-                lmn_write_csv(path, fieldnames, data, http_context.query.get('encoding', 'utf-8'))
+                with LMNFile(path, 'w', fieldnames=fieldnames) as f:
+                    f.write(data)
 
     @url(r'/api/lm/users/extra-courses')
     @endpoint(api=True)
@@ -374,22 +356,16 @@ class Handler(HttpPlugin):
         ]
         if http_context.method == 'GET':
             with authorize('lm:users:extra-courses:read'):
-                return list(
-                    csv.DictReader(
-                        CSVSpaceStripper(
-                            open(path),
-                            encoding=http_context.query.get('encoding', 'utf-8')
-                        ),
-                        delimiter=';',
-                        fieldnames=fieldnames
-                    )
-                )
+                with LMNFile(path, 'r', fieldnames=fieldnames) as extra_courses:
+                    return extra_courses.read()
+
         if http_context.method == 'POST':
             with authorize('lm:users:extra-courses:write'):
                 data = http_context.json_body()
                 for item in data:
                     item.pop('_isNew', None)
-                lmn_write_csv(path, fieldnames, data, http_context.query.get('encoding', 'utf-8'))
+                with LMNFile(path, 'w', fieldnames=fieldnames) as f:
+                    f.write(data)
 
     @url(r'/api/lm/users/check')
     @authorize('lm:users:check')
@@ -552,7 +528,7 @@ class Handler(HttpPlugin):
                 for c, details in classes_raw.items():
                     if details["sophomorixHidden"] == "FALSE":
                         classes.append(c)
-                if lmn_checkPermission({'id': 'lm:users:teachers:read', 'default': False}):
+                with authorize('lm:users:teachers:read'):
                     # append empty element. This references to all users
                     classes.append('')
                     # add also teachers passwords
@@ -564,7 +540,7 @@ class Handler(HttpPlugin):
             one_per_page = http_context.json_body()['one_per_page']
             pdflatex = http_context.json_body()['pdflatex']
             schoolclass = http_context.json_body()['schoolclass']
-            sophomorixCommand = ['sophomorix-print', '--school', school, '--caller', str(user)]
+            sophomorixCommand = ['sudo', 'sophomorix-print', '--school', school, '--caller', str(user)]
             if one_per_page:
                 sophomorixCommand.extend(['--one-per-page'])
             if pdflatex:
@@ -587,6 +563,8 @@ class Handler(HttpPlugin):
             shell_env = {'TERM': 'xterm', 'SHELL': '/bin/bash',  'PATH': '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',  'HOME': '/root', '_': '/usr/bin/python3'}
             try:
                 subprocess.check_call(sophomorixCommand, shell=False, env=shell_env)
+
+
             except subprocess.CalledProcessError as e:
                 return 'Error '+str(e)
             return 'success'
@@ -627,13 +605,24 @@ class Handler(HttpPlugin):
                 share = result[user]["SHARES"]['default-school']['smbcquotas']
                 if int(share['HARDLIMIT_MiB']) == share['HARDLIMIT_MiB']:
                     # Avoid strings for non set quotas
+                    used = int(float(share['USED_MiB']) / share['HARDLIMIT_MiB'] * 100)
+                    soft = int(float(share['SOFTLIMIT_MiB']) / share['HARDLIMIT_MiB'] * 100)
+                    if used >= 90:
+                        type = "danger"
+                    elif used > soft:
+                        type = "warning"
+                    else:
+                        type = "success"
+
                     quotaMap[user] = {
-                        "USED": int(float(share['USED_MiB']) / share['HARDLIMIT_MiB'] * 100),
-                        "SOFTLIMIT": int(float(share['SOFTLIMIT_MiB']) / share['HARDLIMIT_MiB'] * 100),
+                        "USED": used,
+                        "SOFTLIMIT": soft,
+                        "TYPE": type,
                     }
                 else:
                     quotaMap[user] = {
                         "USED": 0,
                         "SOFTLIMIT": 0,
+                        "TYPE": "success",
                     }
             return quotaMap

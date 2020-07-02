@@ -1,7 +1,6 @@
 from jadi import component
 from aj.api.http import url, HttpPlugin
 from time import localtime, strftime  # needed for timestamp in collect transfer
-import six  # used to determine if given variable is string
 from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue
@@ -311,13 +310,13 @@ class Handler(HttpPlugin):
     def handle_api_session_file_trans_list(self, http_context):
         user = http_context.json_body()['user']
         # check if user is a string(given by share option) or an object in an array (given by collect option)
-        if not isinstance(user, six.string_types):
+        if not isinstance(user, str):
             user = user[0]['sAMAccountName']
 
         subfolderPath = ''
         if 'subfolderPath' in http_context.json_body():
             subfolderPath = http_context.json_body()['subfolderPath']
-        sophomorixCommand = ['sophomorix-transfer', '-j', '--list-home-dir', user, '--subdir', '/transfer'+subfolderPath]
+        sophomorixCommand = ['sophomorix-transfer', '-j', '--list-home-dir', user, '--subdir', '/transfer/'+subfolderPath]
         availableFiles = lmn_getSophomorixValue(sophomorixCommand, 'sAMAccountName/'+user)
         #raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(availableFiles))
         availableFilesList = []
@@ -343,11 +342,11 @@ class Handler(HttpPlugin):
                     for sender in senders:
                         # check if bulkmode (array of usernames) or single user (object containing username)
                         # if first element is not a string
-                        if not isinstance(receivers[0], six.string_types):
+                        if not isinstance(receivers[0], str):
                             receivers[0] = receivers[0]['sAMAccountName']
                         receiversCSV = ",".join(receivers)
                         for File in files:
-                            sophomorixCommand = ['sophomorix-transfer', '-jj', '--scopy', '--from-user', sender, '--to-user', receiversCSV, '--from-path', 'transfer/'+File, '--to-path', 'transfer/']
+                            sophomorixCommand = ['sophomorix-transfer', '-jj', '--scopy', '--from-user', sender, '--to-user', receiversCSV, '--from-path', 'transfer/'+File, '--to-path', 'transfer/'+sender+'_'+session+'/']
                             returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
                 except Exception as e:
                     raise Exception('Something went wrong. Error:\n' + str(e))
@@ -360,11 +359,11 @@ class Handler(HttpPlugin):
                             sendersCSV += sender['sAMAccountName']+','
                         # if files is All we're automatically in bulk mode
                         if files == "All":
-                            sophomorixCommand = ['sophomorix-transfer', '-jj', '--scopy', '--from-user', sendersCSV, '--to-user', receiver, '--from-path', 'transfer', '--to-path', 'transfer/collected/'+now+'-'+session+'/', '--to-path-addon', 'fullinfo',  '--no-target-directory']
+                            sophomorixCommand = ['sophomorix-transfer', '-jj', '--scopy', '--from-user', sendersCSV, '--to-user', receiver, '--from-path', 'transfer/'+receiver+'_'+session, '--to-path', 'transfer/collected/'+now+'-'+session+'/', '--to-path-addon', 'fullinfo',  '--no-target-directory']
                             returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
                         else:
                             for File in files:
-                                sophomorixCommand = ['sophomorix-transfer', '-jj', '--scopy', '--from-user', sendersCSV, '--to-user', receiver, '--from-path', 'transfer/'+File, '--to-path', 'transfer/collected/'+now+'-'+session+'/', '--to-path-addon', 'fullinfo']
+                                sophomorixCommand = ['sophomorix-transfer', '-jj', '--scopy', '--from-user', sendersCSV, '--to-user', receiver, '--from-path', 'transfer/'+receiver+'_'+session+'/'+File, '--to-path', 'transfer/collected/'+now+'-'+session+'/', '--to-path-addon', 'fullinfo']
                                 returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
                 except Exception as e:
                     raise Exception('Something went wrong. Error:\n' + str(e))
@@ -376,11 +375,11 @@ class Handler(HttpPlugin):
                             sendersCSV += sender['sAMAccountName']+','
                         # if files is All we're automatically in bulk mode
                         if files == "All":
-                            sophomorixCommand = ['sophomorix-transfer', '-jj', '--move', '--keep-source-directory', '--from-user', sendersCSV, '--to-user', receiver, '--from-path', 'transfer', '--to-path', 'transfer/collected/'+now+'-'+session+'/', '--to-path-addon', 'fullinfo',  '--no-target-directory']
+                            sophomorixCommand = ['sophomorix-transfer', '-jj', '--move', '--keep-source-directory', '--from-user', sendersCSV, '--to-user', receiver, '--from-path', 'transfer/'+receiver+'_'+session, '--to-path', 'transfer/collected/'+now+'-'+session+'/', '--to-path-addon', 'fullinfo',  '--no-target-directory']
                             returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
                         else:
                             for File in files:
-                                sophomorixCommand = ['sophomorix-transfer', '-jj', '--move', '--from-user', sendersCSV, '--to-user', receiver, '--from-path', 'transfer/'+File, '--to-path', 'transfer/collected/'+now+'-'+session+'/', '--to-path-addon', 'fullinfo']
+                                sophomorixCommand = ['sophomorix-transfer', '-jj', '--move', '--from-user', sendersCSV, '--to-user', receiver, '--from-path', 'transfer/'+receiver+'_'+session+'/'+File, '--to-path', 'transfer/collected/'+now+'-'+session+'/', '--to-path-addon', 'fullinfo']
                                 returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
                 except Exception as e:
                     raise Exception('Something went wrong. Error:\n' + str(e))

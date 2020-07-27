@@ -87,7 +87,7 @@ angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $
         page: 1
         pageSize: 100
 
-    $scope.stripComments = (value) -> !value.room or value.room[0] != '#'
+    $scope.stripComments = (value) -> value.room and value.room[0] != '#'
 
     $scope.add = () ->
         if $scope.devices.length > 0

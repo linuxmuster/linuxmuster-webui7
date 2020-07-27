@@ -106,7 +106,7 @@
       pageSize: 100
     };
     $scope.stripComments = function(value) {
-      return !value.room || value.room[0] !== '#';
+      return value.room && value.room[0] !== '#';
     };
     $scope.add = function() {
       if ($scope.devices.length > 0) {

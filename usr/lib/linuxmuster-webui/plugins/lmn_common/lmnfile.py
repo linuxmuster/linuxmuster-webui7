@@ -15,6 +15,8 @@ ALLOWED_PATHS = [
                 '/etc/linuxmuster/subnets-dev.csv'
                 ]
 
+EMPTY_LINE_MARKER = '###EMPTY#LINE'
+
 class LMNFile(metaclass=abc.ABCMeta):
     def __new__(cls, file, mode, delimiter=';', fieldnames=[]):
         ext = os.path.splitext(file)[-1]
@@ -112,6 +114,7 @@ class LinboLoader(LMNFile):
     def __exit__(self, *args):
         self.opened.close()
 
+
 class CSVLoader(LMNFile):
     extensions = ['.csv']
 
@@ -119,7 +122,7 @@ class CSVLoader(LMNFile):
         self.opened = open(self.file, 'r', encoding=self.encoding)
         if 'r' in self.mode:
             self.data = csv.DictReader(
-                (line for line in self.opened if not line.startswith('#')),
+                (line if len(line) > 3 else EMPTY_LINE_MARKER for line in self.opened),
                 delimiter = self.delimiter,
                 fieldnames = self.fieldnames
             )
@@ -131,11 +134,18 @@ class CSVLoader(LMNFile):
     def write(self, data):
         tmp = self.file + '_tmp'
         with open(tmp, 'w', encoding=self.encoding) as f:
-            csv.DictWriter(
+            writer = csv.DictWriter(
                 f,
                 delimiter=';',
-                fieldnames = self.fieldnames
-            ).writerows(data)
+                fieldnames = self.fieldnames,
+                lineterminator = '\n'
+            )
+            for elt in data:
+                first_field = elt[self.fieldnames[0]]
+                if first_field == '' or first_field[0] == '#':
+                    f.write(first_field.replace(EMPTY_LINE_MARKER, '') + '\n')
+                else:
+                    writer.writerow(elt)
         if not filecmp.cmp(tmp, self.file):
             self.backup()
             os.rename(tmp, self.file)

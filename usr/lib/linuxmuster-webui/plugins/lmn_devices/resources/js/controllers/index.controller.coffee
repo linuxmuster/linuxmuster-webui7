@@ -23,7 +23,7 @@ angular.module('lm.devices').controller 'LMDevicesApplyModalController', ($scope
 
 
 
-angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $uibModal, $route, gettext, notify, pageTitle, lmFileEditor, lmFileBackups, validation) ->
+angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $uibModal, $route, $location, $anchorScroll, gettext, notify, pageTitle, lmFileEditor, lmFileBackups, validation) ->
     pageTitle.set(gettext('Devices'))
 
     $scope.error_msg = {}
@@ -123,6 +123,8 @@ angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $
             lmnReserved14: device.lmnReserved14,
             sophomorixComment: device.sophomorixComment,
         }
+        $location.hash('end_table');
+        $anchorScroll();
 
     $scope.fields = {
         room:

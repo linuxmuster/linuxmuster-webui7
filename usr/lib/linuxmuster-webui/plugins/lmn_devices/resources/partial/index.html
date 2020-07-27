@@ -59,7 +59,7 @@
                 <th ng:repeat="(id, field) in fields" ng:if="field.visible">{{field.name}}</th>
                 <th></th>
             </tr>
-            <tr ng:repeat="device in devices|filter:filter|filter:stripComments|orderBy:['-_isNew', sort.fx]|page:paging.page:paging.pageSize">
+            <tr ng:repeat="device in devices|filter:filter|filter:stripComments|orderBy:['-_isNew', sort.fx]|page:paging.page:paging.pageSize" ng:style="(device._isNew) && {'font-style': 'italic', 'font-weight' : 'bold'}">
                 <td width="80" ng:if="fields.room.visible" class="form-group" ng:class="validateField('Room', device.room, device._isNew, $index)">
                     <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.room" placeholder="Room" class="form-control" />
                 </td>
@@ -138,6 +138,7 @@
                 </td>
             </tr>
         </table>
+        <a href="#" id="end_table"></a>
     </form>
 
     <br/>

@@ -32,7 +32,7 @@
     };
   });
 
-  angular.module('lm.devices').controller('LMDevicesController', function($scope, $http, $uibModal, $route, gettext, notify, pageTitle, lmFileEditor, lmFileBackups, validation) {
+  angular.module('lm.devices').controller('LMDevicesController', function($scope, $http, $uibModal, $route, $location, $anchorScroll, gettext, notify, pageTitle, lmFileEditor, lmFileBackups, validation) {
     pageTitle.set(gettext('Devices'));
     $scope.error_msg = {};
     $scope.show_errors = false;
@@ -125,7 +125,7 @@
       });
     };
     $scope.duplicate = function(device) {
-      return $scope.devices.push({
+      $scope.devices.push({
         _isNew: true,
         room: device.room,
         hostname: device.hostname,
@@ -143,6 +143,8 @@
         lmnReserved14: device.lmnReserved14,
         sophomorixComment: device.sophomorixComment
       });
+      $location.hash('end_table');
+      return $anchorScroll();
     };
     $scope.fields = {
       room: {

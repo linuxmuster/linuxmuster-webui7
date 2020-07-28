@@ -213,7 +213,7 @@ div.legend-element {
 p.dotlist:before {
   content: '';
   position: absolute;
-  bottom: .4rem;
+  bottom: 0.4rem;
   width: 100%;
   height: 0;
   line-height: 0;
@@ -318,5 +318,8 @@ ul.leaders span + span {
   font-size: 10px;
   margin-right: -134px;
   margin-top: 40px;
+}
+dialog .modal {
+  z-index: 2000;
 }
 

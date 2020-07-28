@@ -6,7 +6,6 @@ Build-Depends: debhelper (>= 4.0.0), fakeroot
 
 Package: linuxmuster-webui7
 Architecture: all
-Depends: python3-pip, python3-dev, python3-lxml, libffi-dev, libssl-dev, libjpeg-dev, libpng-dev, uuid-dev, python3-dbus, python3-augeas, python3-apt, ntpdate, libldap2-dev, libsasl2-dev, python3-ldap
+Depends: python3-pip, python3-dev, python3-lxml, libffi-dev, libssl-dev, libjpeg-dev, libpng-dev, uuid-dev, python3-dbus, python3-augeas, python3-apt, ntpdate, libldap2-dev, libsasl2-dev, python3-ldap, sophomorix-samba (>=3.80.0-1)
 Homepage: www.linuxmuster.net
-Recommends: sophomorix-samba
 Description: next generation web-based management tool for linuxmuster.net v7.x

@@ -414,19 +414,19 @@ class Handler(HttpPlugin):
             sophomorixCommand = ['sophomorix-user', '--info', '-jj', '-u', user]
             return lmn_getSophomorixValue(sophomorixCommand, '/USERS/'+user+'/sophomorixFirstPassword')
         if action == 'set-initial':
-            sophomorixCommand = ['sophomorix-passwd', '--set-firstpassword', '-jj', '-u', user, '--use-smbpasswd']
+            sophomorixCommand = ['sudo', 'sophomorix-passwd', '--set-firstpassword', '-jj', '-u', user, '--use-smbpasswd']
             return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
         if action == 'set-random':
             # TODO: Password length should be read from school settings
-            sophomorixCommand = ['sophomorix-passwd', '-u', user, '--random', '8', '-jj', '--use-smbpasswd']
+            sophomorixCommand = ['sudo', 'sophomorix-passwd', '-u', user, '--random', '8', '-jj', '--use-smbpasswd']
             return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
         if action == 'set':
             password = http_context.json_body()['password']
-            sophomorixCommand = ['sophomorix-passwd', '-u', user, '--pass', password, '-jj', '--use-smbpasswd']
+            sophomorixCommand = ['sudo', 'sophomorix-passwd', '-u', user, '--pass', password, '-jj', '--use-smbpasswd']
             return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
         if action == 'set-actual':
             password = http_context.json_body()['password']
-            sophomorixCommand = ['sophomorix-passwd', '-u', user, '--pass', password, '--nofirstpassupdate', '--hide', '-jj', '--use-smbpasswd']
+            sophomorixCommand = ['sudo', 'sophomorix-passwd', '-u', user, '--pass', password, '--nofirstpassupdate', '--hide', '-jj', '--use-smbpasswd']
             return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
 
     @url(r'/api/lm/users/change-school-admin')
@@ -586,7 +586,7 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_users_test_password(self, http_context, name):
         """Check if first password is still set."""
-        line = subprocess.check_output(['sophomorix-passwd', '--test-firstpassword', '-u', name]).splitlines()[-4]
+        line = subprocess.check_output(['sudo', 'sophomorix-passwd', '--test-firstpassword', '-u', name]).splitlines()[-4]
         return b'1 OK' in line
 
     @url(r'/api/lm/users/get-group-quota')

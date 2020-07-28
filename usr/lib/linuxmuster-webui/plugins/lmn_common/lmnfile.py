@@ -97,7 +97,7 @@ class LMNFile(metaclass=abc.ABCMeta):
             return 'utf-8'
         loader = magic.Magic(mime_encoding=True)
         encoding = loader.from_file(self.file)
-        if 'ascii' in encoding:
+        if 'ascii' in encoding or encoding == "binary":
             logging.info('Detected encoding for %s : ascii, but using utf-8', self.file)
             return 'utf-8'
         else:

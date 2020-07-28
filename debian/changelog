@@ -1,3 +1,24 @@
+linuxmuster-webui7 (1.0.147-1) lmn7; urgency=medium 
+
+  * Current snapshot build f80a31400ad4128a8c90f68846440f4a13a43ad2
+   *     added dependencie for sophomorix-samba version
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Jul  2 15:26:04 CEST 2020
+
+linuxmuster-webui7 (1.0.146-1) lmn7; urgency=medium 
+
+  * Current snapshot build fe36fddfe2373bfb1df36c135b06ad6d5cd3c6f7
+   *     Handle empty config files.
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Jul  2 14:57:27 CEST 2020
+
+linuxmuster-webui7 (1.0.145-1) lmn7; urgency=medium 
+
+  * Current snapshot build 6ba624c7ddc91670a524ddd320e825660469a526
+   *     Merge branch 'testing' into release
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Jul  2 12:22:25 CEST 2020
+
 linuxmuster-webui7 (1.0.144-1) lmn7-testing; urgency=medium
 
   * Current snapshot build 89d7cbc1185b5bef0834b25f761cb3a11c82e4a0

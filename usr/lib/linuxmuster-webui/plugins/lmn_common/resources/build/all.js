@@ -98,7 +98,7 @@
         } else {
           target = attrs.target;
         }
-        return `<div> <div    flow-init="{target: ${target}, chunkSize: 1024 * 1024, singleFile: true}" flow-files-submitted="onUploadBegin($flow)" flow-drag-enter="class='dragdroparea-enter'" flow-drag-leave="class='dragdroparea'" ng-style="style"> <div class="dragdroparea" flow-drop  ng-class="class" translate> Drag And Drop your file here </div> </div> </div>`;
+        return `<div> <div    flow-init="{target: ${target}, chunkSize: 1024 * 1024, singleFile: true}" flow-files-submitted="onUploadBegin($flow)" flow-drag-enter="class='dragdroparea-enter'" flow-drag-leave="class='dragdroparea'" ng-style="style"> <div class="dragdroparea" flow-drop  ng-class="class"> <span class="btn btn-default" flow-btn translate>Upload file</span> <span translate> or drag And Drop your file here</span> </div> </div> </div>`;
       },
       link: function($scope, attrs) {
         return $scope.onUploadBegin = function($flow) {

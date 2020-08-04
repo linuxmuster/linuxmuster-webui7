@@ -2369,73 +2369,52 @@
     };
     $scope.getstudents = function() {
       if (!$scope.students) {
-        return $http.get('/api/lm/schoolsettings').then(function(resp) {
-          var school;
-          school = 'default-school';
-          $scope.students_encoding = resp.data["userfile.students.csv"].encoding;
-          if ($scope.students_encoding === 'auto') {
-            $http.post('/api/lmn/schoolsettings/determine-encoding', {
-              path: '/etc/linuxmuster/sophomorix/' + school + '/students.csv'
-            }).then(function(response) {
-              if (response.data === 'unknown') {
-                return $scope.students_encoding = 'utf-8';
-              } else {
-                return $scope.students_encoding = response.data;
-              }
-            });
-          }
-          return $http.get(`/api/lm/users/students-list?encoding=${$scope.students_encoding}`).then(function(resp) {
-            return $scope.students = resp.data;
-          });
+        return $http.get("/api/lm/users/students-list").then(function(resp) {
+          return $scope.students = resp.data;
         });
       }
     };
+    //           $http.get('/api/lm/schoolsettings').then (resp) ->
+    //               school = 'default-school'
+    //               $scope.students_encoding = resp.data["userfile.students.csv"].encoding
+    //               if $scope.students_encoding is 'auto'
+    //                   $http.post('/api/lmn/schoolsettings/determine-encoding', {path: '/etc/linuxmuster/sophomorix/'+school+'/students.csv'}).then (response) ->
+    //                     if response.data is 'unknown'
+    //                         $scope.students_encoding = 'utf-8'
+    //                     else
+    //                         $scope.students_encoding = response.data
     $scope.getteachers = function() {
       if (!$scope.teachers) {
-        return $http.get('/api/lm/schoolsettings').then(function(resp) {
-          var school;
-          school = 'default-school';
-          $scope.teachers_encoding = resp.data["userfile.teachers.csv"].encoding;
-          if ($scope.teachers_encoding === 'auto') {
-            $http.post('/api/lmn/schoolsettings/determine-encoding', {
-              path: '/etc/linuxmuster/sophomorix/' + school + '/teachers.csv'
-            }).then(function(response) {
-              if (response.data === 'unknown') {
-                return $scope.teachers_encoding = 'utf-8';
-              } else {
-                return $scope.teachers_encoding = response.data;
-              }
-            });
-          }
-          return $http.get(`/api/lm/users/teachers-list?encoding=${$scope.students_encoding}`).then(function(resp) {
-            return $scope.teachers = resp.data;
-          });
+        return $http.get("/api/lm/users/teachers-list").then(function(resp) {
+          return $scope.teachers = resp.data;
         });
       }
     };
+    //           $http.get('/api/lm/schoolsettings').then (resp) ->
+    //               school = 'default-school'
+    //               $scope.teachers_encoding = resp.data["userfile.teachers.csv"].encoding
+    //               if $scope.teachers_encoding is 'auto'
+    //                  $http.post('/api/lmn/schoolsettings/determine-encoding', {path: '/etc/linuxmuster/sophomorix/'+school+'/teachers.csv'}).then (response) ->
+    //                     if response.data is 'unknown'
+    //                        $scope.teachers_encoding = 'utf-8'
+    //                     else
+    //                        $scope.teachers_encoding = response.data
     $scope.getextrastudents = function() {
       if (!$scope.extrastudents) {
-        return $http.get('/api/lm/schoolsettings').then(function(resp) {
-          var school;
-          school = 'default-school';
-          $scope.extrastudents_encoding = resp.data["userfile.extrastudents.csv"].encoding;
-          if ($scope.extrastudents_encoding === 'auto') {
-            $http.post('/api/lmn/schoolsettings/determine-encoding', {
-              path: '/etc/linuxmuster/sophomorix/' + school + '/extrastudents.csv'
-            }).then(function(response) {
-              if (response.data === 'unknown') {
-                return $scope.extrastudents_encoding = 'utf-8';
-              } else {
-                return $scope.extrastudents_encoding = response.data;
-              }
-            });
-          }
-          return $http.get(`/api/lm/users/extra-students?encoding=${$scope.extrastudents_encoding}`).then(function(resp) {
-            return $scope.extrastudents = resp.data;
-          });
+        return $http.get("/api/lm/users/extra-students").then(function(resp) {
+          return $scope.extrastudents = resp.data;
         });
       }
     };
+    //            $http.get('/api/lm/schoolsettings').then (resp) ->
+    //                school = 'default-school'
+    //                $scope.extrastudents_encoding = resp.data["userfile.extrastudents.csv"].encoding
+    //                if $scope.extrastudents_encoding is 'auto'
+    //                   $http.post('/api/lmn/schoolsettings/determine-encoding', {path: '/etc/linuxmuster/sophomorix/'+school+'/extrastudents.csv'}).then (response) ->
+    //                      if response.data is 'unknown'
+    //                         $scope.extrastudents_encoding = 'utf-8'
+    //                      else
+    //                         $scope.extrastudents_encoding = response.data
     $scope.getcourses = function() {
       if (!$scope.courses) {
         return $http.get('/api/lm/schoolsettings').then(function(resp) {

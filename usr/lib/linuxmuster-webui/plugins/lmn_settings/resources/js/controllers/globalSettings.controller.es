@@ -1,4 +1,4 @@
-angular.module('lm.settings').controller('LMglobalSettingsController', ($scope, $http, $sce, notify, pageTitle, identity, messagebox, passwd, config, core, locale, gettext) => {
+angular.module('lm.settings').controller('LMglobalSettingsController', ($scope, $http, $sce, notify, pageTitle, identity, messagebox, config, core, locale, gettext) => {
     pageTitle.set(gettext('Global Settings'));
 
     $scope.config = config;
@@ -11,12 +11,12 @@ angular.module('lm.settings').controller('LMglobalSettingsController', ($scope, 
     };
 
     identity.promise.then(() => {
-       $scope.newClientCertificate.o = identity.machine.name;
-       passwd.list().then((data) => {
-          $scope.availableUsers = data;
-          $scope.$watch('newClientCertificate.user', () => $scope.newClientCertificate.cn = `${identity.user}@${identity.machine.hostname}`);
-          $scope.newClientCertificate.user = 'root';
-       });
+       // $scope.newClientCertificate.o = identity.machine.name;
+       // passwd.list().then((data) => {
+       //    $scope.availableUsers = data;
+       //    $scope.$watch('newClientCertificate.user', () => $scope.newClientCertificate.cn = `${identity.user}@${identity.machine.hostname}`);
+       //    $scope.newClientCertificate.user = 'root';
+       // });
        $http.get('/api/core/languages').then(rq => $scope.languages = rq.data);
     });
 

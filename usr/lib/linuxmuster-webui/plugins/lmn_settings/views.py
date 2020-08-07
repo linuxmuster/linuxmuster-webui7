@@ -9,6 +9,7 @@ from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint
 from aj.auth import authorize
 from aj.plugins.lmn_common.api import lmn_write_configfile, lmn_getSophomorixValue, CSVSpaceStripper, lmn_write_csv, lmn_backup_file
+from aj.plugins.lmn_common.lmnfile import LMNFile
 from configparser import ConfigParser
 
 class IniParser(ConfigParser):
@@ -44,9 +45,11 @@ class Handler(HttpPlugin):
         if os.path.isfile(fileToCheck) is False:
             os.mknod(fileToCheck)
         if os.path.isfile(fileToCheck):
-            sophomorixCommand = ['sophomorix-check', '--analyze-encoding', fileToCheck, '-jj']
-            encoding = lmn_getSophomorixValue(sophomorixCommand, 'SUMMARY/0/ANALYZE-ENCODING/ENCODING')
-            return encoding
+            with LMNFile(fileToCheck, 'r') as f:
+                return f.detect_encoding()
+        #     sophomorixCommand = ['sophomorix-check', '--analyze-encoding', fileToCheck, '-jj']
+        #     encoding = lmn_getSophomorixValue(sophomorixCommand, 'SUMMARY/0/ANALYZE-ENCODING/ENCODING')
+        #     return encoding
         else:
             return None
 

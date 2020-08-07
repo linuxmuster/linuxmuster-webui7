@@ -15,7 +15,7 @@ import yaml
 import aj
 from aj.auth import AuthenticationProvider, OSAuthenticationProvider, AuthenticationService
 from aj.config import UserConfigProvider
-from aj.plugins.lmn_common.api import lmconfig
+from aj.plugins.lmn_common.api import lmconfig, lmsetup_schoolname
 
 @component(AuthenticationProvider)
 class LMAuthenticationProvider(AuthenticationProvider):
@@ -186,6 +186,8 @@ class LMAuthenticationProvider(AuthenticationProvider):
         try:
             profil = self._get_ldap_user(username)
             profil['isAdmin'] = b"administrator" in profil['sophomorixRole']
+            if lmsetup_schoolname:
+                profil['pageTitle'] = lmsetup_schoolname
             return json.loads(json.dumps(profil))
         except Exception as e:
             logging.error(e)

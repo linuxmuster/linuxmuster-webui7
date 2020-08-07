@@ -8,6 +8,7 @@ import threading
 import ast
 import unicodecsv as csv
 import filecmp
+import configparser
 
 
 ALLOWED_PATHS = [
@@ -48,6 +49,18 @@ class LinuxmusterConfig():
 
 lmconfig = LinuxmusterConfig('/etc/linuxmuster/webui/config.yml')
 lmconfig.load()
+
+parser = configparser.ConfigParser()
+# Maybe not a good idea, see https://github.com/linuxmuster/linuxmuster-base7/issues/109
+# Eventually get the info from school.conf, but beware the multischool env.
+parser.read('/var/lib/linuxmuster/setup.ini')
+if 'setup' in parser.sections():
+    lmsetup_schoolname = parser['setup']['schoolname']
+    # For later : get the whole dict
+    # If necessary, will come in LMNFile
+    # lmsetup = {elmt:parser['setup'][elmt] for elmt in parser['setup']}
+else:
+    lmsetup_schoolname = None
 
 class CSVSpaceStripper:
     def __init__(self, file, encoding='utf-8'):

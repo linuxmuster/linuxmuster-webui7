@@ -5,6 +5,7 @@ import csv
 import magic
 import filecmp
 import time
+import configparser
 
 ALLOWED_PATHS = [
                 # used for school.conf or *.csv in lmn_settings, lmn_devices and lmn_users
@@ -157,11 +158,28 @@ class CSVLoader(LMNFile):
             self.opened.close()
 
 
-"""LATER
 class ConfigLoader(LMNFile):
     extensions = ['.ini', '.conf']
 
+    def __enter__(self):
+        self.opened = open(self.file, 'r', encoding=self.encoding)
+        if 'r' in self.mode:
+            self.data = configparser.ConfigParser().read(self.file)
+            # Filter:
+            # no -> False
+            # yes -> True
+            # '6'.isdigit -> int('6') = 6
+        return self
 
+    def write(self, data):
+        # Filter:
+        # int -> str
+        # bool -> yes/no
+        # key --> key.upper() not compatible with setup.ini
+        pass
+
+
+"""LATER
 class StartConfLoader(LMNFile):
     extensions = []
 """

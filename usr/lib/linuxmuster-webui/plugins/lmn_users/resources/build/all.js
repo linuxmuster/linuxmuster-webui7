@@ -52,10 +52,12 @@
       page: 1,
       pageSize: 50
     };
+    $scope.all_selected = false;
     $http.post('/api/lm/sophomorixUsers/teachers', {
       action: 'get-all'
     }).then(function(resp) {
-      return $scope.teachers = resp.data;
+      $scope.teachers = resp.data;
+      return console.log(resp.data);
     });
     $scope.showInitialPassword = function(users) {
       var type, user;
@@ -228,20 +230,20 @@
       results = [];
       for (i = 0, len = ref.length; i < len; i++) {
         teacher = ref[i];
-        if (filter === void 0) {
-          teacher.selected = true;
+        if (filter === void 0 || filter === '') {
+          teacher.selected = $scope.all_selected;
         }
         if (teacher.sn.toLowerCase().includes(filter.toLowerCase())) {
-          teacher.selected = true;
+          teacher.selected = $scope.all_selected;
         }
         if (teacher.givenName.toLowerCase().includes(filter.toLowerCase())) {
-          teacher.selected = true;
+          teacher.selected = $scope.all_selected;
         }
         if (teacher.sophomorixAdminClass.toLowerCase().includes(filter.toLowerCase())) {
-          teacher.selected = true;
+          teacher.selected = $scope.all_selected;
         }
         if (teacher.sAMAccountName.toLowerCase().includes(filter.toLowerCase())) {
-          results.push(teacher.selected = true);
+          results.push(teacher.selected = $scope.all_selected);
         } else {
           results.push(void 0);
         }
@@ -300,6 +302,7 @@
       page: 1,
       pageSize: 50
     };
+    $scope.all_selected = false;
     $http.post('/api/lm/sophomorixUsers/students', {
       action: 'get-all'
     }).then(function(resp) {
@@ -456,20 +459,20 @@
       results = [];
       for (i = 0, len = ref.length; i < len; i++) {
         student = ref[i];
-        if (filter === void 0) {
-          student.selected = true;
+        if (filter === void 0 || filter === '') {
+          student.selected = $scope.all_selected;
         }
         if (student.sn.toLowerCase().includes(filter.toLowerCase())) {
-          student.selected = true;
+          student.selected = $scope.all_selected;
         }
         if (student.givenName.toLowerCase().includes(filter.toLowerCase())) {
-          student.selected = true;
+          student.selected = $scope.all_selected;
         }
         if (student.sophomorixAdminClass.toLowerCase().includes(filter.toLowerCase())) {
-          student.selected = true;
+          student.selected = $scope.all_selected;
         }
         if (student.sAMAccountName.toLowerCase().includes(filter.toLowerCase())) {
-          results.push(student.selected = true);
+          results.push(student.selected = $scope.all_selected);
         } else {
           results.push(void 0);
         }
@@ -504,6 +507,7 @@
       page: 1,
       pageSize: 50
     };
+    $scope.all_selected = false;
     $http.post('/api/lm/sophomorixUsers/schooladmins', {
       action: 'get-all'
     }).then(function(resp) {
@@ -715,20 +719,20 @@
       results = [];
       for (i = 0, len = ref.length; i < len; i++) {
         schooladmin = ref[i];
-        if (filter === void 0) {
-          schooladmin.selected = true;
+        if (filter === void 0 || filter === '') {
+          schooladmin.selected = $scope.all_selected;
         }
         if (schooladmin.sn.toLowerCase().includes(filter.toLowerCase())) {
-          schooladmin.selected = true;
+          schooladmin.selected = $scope.all_selected;
         }
         if (schooladmin.givenName.toLowerCase().includes(filter.toLowerCase())) {
-          schooladmin.selected = true;
+          schooladmin.selected = $scope.all_selected;
         }
         if (schooladmin.sophomorixAdminClass.toLowerCase().includes(filter.toLowerCase())) {
-          schooladmin.selected = true;
+          schooladmin.selected = $scope.all_selected;
         }
         if (schooladmin.sAMAccountName.toLowerCase().includes(filter.toLowerCase())) {
-          results.push(schooladmin.selected = true);
+          results.push(schooladmin.selected = $scope.all_selected);
         } else {
           results.push(void 0);
         }
@@ -763,6 +767,7 @@
       page: 1,
       pageSize: 50
     };
+    $scope.all_selected = false;
     $http.post('/api/lm/sophomorixUsers/globaladmins', {
       action: 'get-all'
     }).then(function(resp) {
@@ -974,20 +979,20 @@
       results = [];
       for (i = 0, len = ref.length; i < len; i++) {
         globaladmin = ref[i];
-        if (filter === void 0) {
-          globaladmin.selected = true;
+        if (filter === void 0 || filter === '') {
+          globaladmin.selected = $scope.all_selected;
         }
         if (globaladmin.sn.toLowerCase().includes(filter.toLowerCase())) {
-          globaladmin.selected = true;
+          globaladmin.selected = $scope.all_selected;
         }
         if (globaladmin.givenName.toLowerCase().includes(filter.toLowerCase())) {
-          globaladmin.selected = true;
+          globaladmin.selected = $scope.all_selected;
         }
         if (globaladmin.sophomorixAdminClass.toLowerCase().includes(filter.toLowerCase())) {
-          globaladmin.selected = true;
+          globaladmin.selected = $scope.all_selected;
         }
         if (globaladmin.sAMAccountName.toLowerCase().includes(filter.toLowerCase())) {
-          results.push(globaladmin.selected = true);
+          results.push(globaladmin.selected = $scope.all_selected);
         } else {
           results.push(void 0);
         }
@@ -1295,10 +1300,12 @@
       page: 1,
       pageSize: 50
     };
+    $scope.all_selected = false;
     $http.post('/api/lm/sophomorixUsers/teachers', {
       action: 'get-all'
     }).then(function(resp) {
-      return $scope.teachers = resp.data;
+      $scope.teachers = resp.data;
+      return console.log(resp.data);
     });
     $scope.showInitialPassword = function(users) {
       var type, user;
@@ -1471,20 +1478,20 @@
       results = [];
       for (i = 0, len = ref.length; i < len; i++) {
         teacher = ref[i];
-        if (filter === void 0) {
-          teacher.selected = true;
+        if (filter === void 0 || filter === '') {
+          teacher.selected = $scope.all_selected;
         }
         if (teacher.sn.toLowerCase().includes(filter.toLowerCase())) {
-          teacher.selected = true;
+          teacher.selected = $scope.all_selected;
         }
         if (teacher.givenName.toLowerCase().includes(filter.toLowerCase())) {
-          teacher.selected = true;
+          teacher.selected = $scope.all_selected;
         }
         if (teacher.sophomorixAdminClass.toLowerCase().includes(filter.toLowerCase())) {
-          teacher.selected = true;
+          teacher.selected = $scope.all_selected;
         }
         if (teacher.sAMAccountName.toLowerCase().includes(filter.toLowerCase())) {
-          results.push(teacher.selected = true);
+          results.push(teacher.selected = $scope.all_selected);
         } else {
           results.push(void 0);
         }

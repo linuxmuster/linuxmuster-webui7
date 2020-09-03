@@ -33,9 +33,12 @@ angular.module('lm.users').controller 'LMUsersTeachersController', ($scope, $htt
       page: 1
       pageSize: 50
 
+    $scope.all_selected = false
+
 
     $http.post('/api/lm/sophomorixUsers/teachers',{action: 'get-all'}).then (resp) ->
         $scope.teachers = resp.data
+        console.log(resp.data)
 
     $scope.showInitialPassword = (users) ->
         user=[]
@@ -108,13 +111,13 @@ angular.module('lm.users').controller 'LMUsersTeachersController', ($scope, $htt
         if !filter?
             filter = ''
         for teacher in $scope.teachers
-           if filter is undefined
-              teacher.selected = true
+           if filter is undefined || filter == ''
+              teacher.selected = $scope.all_selected
            if teacher.sn.toLowerCase().includes filter.toLowerCase()
-              teacher.selected = true
+              teacher.selected = $scope.all_selected
            if teacher.givenName.toLowerCase().includes filter.toLowerCase()
-              teacher.selected = true
+              teacher.selected = $scope.all_selected
            if teacher.sophomorixAdminClass.toLowerCase().includes filter.toLowerCase()
-              teacher.selected = true
+              teacher.selected = $scope.all_selected
            if teacher.sAMAccountName.toLowerCase().includes filter.toLowerCase()
-              teacher.selected = true
+              teacher.selected = $scope.all_selected

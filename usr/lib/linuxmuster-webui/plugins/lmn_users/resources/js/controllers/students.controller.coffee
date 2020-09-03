@@ -33,6 +33,7 @@ angular.module('lm.users').controller 'LMUsersStudentsController', ($scope, $htt
        page: 1
        pageSize: 50
 
+    $scope.all_selected = false
 
     $http.post('/api/lm/sophomorixUsers/students', {action: 'get-all'}).then (resp) ->
         $scope.students = resp.data
@@ -101,15 +102,15 @@ angular.module('lm.users').controller 'LMUsersStudentsController', ($scope, $htt
         if !filter?
             filter = ''
         for student in $scope.students
-            if filter is undefined
-                student.selected = true
+            if filter is undefined || filter == ''
+                student.selected = $scope.all_selected
             if student.sn.toLowerCase().includes filter.toLowerCase()
-                student.selected = true
+                student.selected = $scope.all_selected
             if student.givenName.toLowerCase().includes filter.toLowerCase()
-                student.selected = true
+                student.selected = $scope.all_selected
             if student.sophomorixAdminClass.toLowerCase().includes filter.toLowerCase()
-                student.selected = true
+                student.selected = $scope.all_selected
             if student.sAMAccountName.toLowerCase().includes filter.toLowerCase()
-                student.selected = true
+                student.selected = $scope.all_selected
 
 

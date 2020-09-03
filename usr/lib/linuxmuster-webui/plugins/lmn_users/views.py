@@ -228,6 +228,7 @@ class Handler(HttpPlugin):
                         details['sophomorixStatus'] = self.userStatus[details['sophomorixStatus']]
                     else:
                         details['sophomorixStatus'] = {'tag': details['sophomorixStatus'], 'color': 'default'}
+                    details['selected'] = False
                     teachersList.append(details)
                 return teachersList
             else:
@@ -257,6 +258,7 @@ class Handler(HttpPlugin):
                             details['sophomorixStatus'] = self.userStatus[details['sophomorixStatus']]
                         else:
                             details['sophomorixStatus'] = {'tag': details['sophomorixStatus'], 'color': 'default'}
+                        details['selected'] = False
                         studentsList.append(details)
                     return studentsList
                 else:
@@ -277,8 +279,9 @@ class Handler(HttpPlugin):
                 result = lmn_getSophomorixValue(sophomorixCommand, '')
                 if 'USER' in result.keys():
                     schooladmins = result['USER']
-                    for schooladmin in schooladmins:
-                        schooladminsList.append(schooladmins[schooladmin])
+                    for schooladmin, details in schooladmins.items():
+                        details['selected'] = False
+                        schooladminsList.append(details)
                     return schooladminsList
                 else:
                     return ["none"]
@@ -301,8 +304,9 @@ class Handler(HttpPlugin):
                 result = lmn_getSophomorixValue(sophomorixCommand, '')
                 if 'USER' in result.keys():
                     globaladmins = result['USER']
-                    for globaladmin in globaladmins:
-                        globaladminsList.append(globaladmins[globaladmin])
+                    for globaladmin, details in globaladmins.items():
+                        details['selected'] = False
+                        globaladminsList.append(details)
                     return globaladminsList
                 else:
                     return ["none"]

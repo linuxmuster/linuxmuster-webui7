@@ -279,7 +279,7 @@ class Handler(HttpPlugin):
                 result = lmn_getSophomorixValue(sophomorixCommand, '')
                 if 'USER' in result.keys():
                     schooladmins = result['USER']
-                    for schooladmin, details in schooladmins.items():
+                    for _, details in schooladmins.items():
                         details['selected'] = False
                         schooladminsList.append(details)
                     return schooladminsList
@@ -304,7 +304,7 @@ class Handler(HttpPlugin):
                 result = lmn_getSophomorixValue(sophomorixCommand, '')
                 if 'USER' in result.keys():
                     globaladmins = result['USER']
-                    for globaladmin, details in globaladmins.items():
+                    for _, details in globaladmins.items():
                         details['selected'] = False
                         globaladminsList.append(details)
                     return globaladminsList

@@ -87,7 +87,7 @@ class Handler(HttpPlugin):
     def handle_api_chown(self, http_context):
         """Chown file with given path, owner and group."""
         if http_context.method == 'POST':
-            school = 'default-school'
+            # school = 'default-school'
             filepath = http_context.json_body()['filepath']
             owner = http_context.json_body()['owner']
             group = http_context.json_body()['group']

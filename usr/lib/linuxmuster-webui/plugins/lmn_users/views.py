@@ -223,7 +223,7 @@ class Handler(HttpPlugin):
             result = lmn_getSophomorixValue(sophomorixCommand, '')
             if 'USER' in result.keys():
                 teachers = result['USER']
-                for teacher, details in teachers.items():
+                for _, details in teachers.items():
                     if details['sophomorixStatus'] in self.userStatus.keys():
                         details['sophomorixStatus'] = self.userStatus[details['sophomorixStatus']]
                     else:
@@ -250,7 +250,7 @@ class Handler(HttpPlugin):
                 result = lmn_getSophomorixValue(sophomorixCommand, '')
                 if 'USER' in result.keys():
                     students = result['USER']
-                    for student, details in students.items():
+                    for _, details in students.items():
                         # TODO: get a better way to remove Birthay from user detail page
                         details['sophomorixBirthdate'] = 'hidden'
                         if details['sophomorixStatus'] in self.userStatus.keys():

@@ -34,8 +34,7 @@ class Handler(HttpPlugin):
             if not os.path.exists(filepath):
                 os.makedirs(filepath)
                 return True
-            else:
-                return
+            return
 
     ## TODO authorize
     ## Used in lmn_session/resources/js/controllers/session.controller.coffee:76
@@ -47,9 +46,8 @@ class Handler(HttpPlugin):
             filepath = http_context.json_body()['filepath']
             if not os.path.exists(filepath):
                 return
-            else:
-                shutil.rmtree(filepath, ignore_errors=True)
-                return True
+            shutil.rmtree(filepath, ignore_errors=True)
+            return True
 
     ## TODO authorize
     ## Used in directive upload, lmFileBackups and lmn_session/resources/js/controllers/session.controller.coffee:60
@@ -61,9 +59,8 @@ class Handler(HttpPlugin):
             filepath = http_context.json_body()['filepath']
             if not os.path.exists(filepath):
                 return
-            else:
-                os.unlink(filepath)
-                return True
+            os.unlink(filepath)
+            return True
 
     ## NOT USED YET
     # @url(r'/api/lm/remove-backup') ## TODO authorize
@@ -96,14 +93,13 @@ class Handler(HttpPlugin):
             group = http_context.json_body()['group']
             if not os.path.exists(filepath):
                 return
-            else:
-                try:
-                    user_id  = pwd.getpwnam(owner).pw_uid
-                    group_id = grp.getgrnam(group).gr_gid
-                    os.chown(filepath, user_id, group_id)
-                    return True
-                except:
-                    return
+            try:
+                user_id  = pwd.getpwnam(owner).pw_uid
+                group_id = grp.getgrnam(group).gr_gid
+                os.chown(filepath, user_id, group_id)
+                return True
+            except:
+                return
 
     ## TODO authorize : authorize possible with setup_wizard ?
     @url(r'/api/lm/read-config-setup')

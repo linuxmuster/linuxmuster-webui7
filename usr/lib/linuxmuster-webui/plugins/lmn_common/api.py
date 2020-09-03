@@ -27,8 +27,7 @@ def check_allowed_path(path):
 
     if allowed_path and '..' not in path:
         return True
-    else:
-        raise IOError(_("Access refused."))
+    raise IOError(_("Access refused."))
 
 class LinuxmusterConfig():
     def __init__(self, path):

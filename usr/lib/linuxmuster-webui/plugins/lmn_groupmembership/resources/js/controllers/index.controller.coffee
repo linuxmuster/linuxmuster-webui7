@@ -421,6 +421,12 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
             $scope._.addasadmin = false
 
 
+        $scope.placeholder_translate = {
+            "login" : gettext("Type a name or login"),
+            "class" : gettext("Type the class, e.g. 10a"),
+            "group" : gettext("Type the group name, e.g. p_wifi"),
+        }
+
         $scope.findUsers = (q) ->
             return $http.post("/api/lm/search-project", {login:q, type:'user'}).then (resp) ->
                 return resp.data

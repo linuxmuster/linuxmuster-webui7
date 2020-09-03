@@ -190,10 +190,12 @@ class Handler(HttpPlugin):
                         v = v == 'yes'
                     section[k.strip()] = v
             return config
-        elif http_context.method == 'DELETE':
+
+        if http_context.method == 'DELETE':
             lmn_backup_file(path)
             os.unlink(path)
-        elif http_context.method == 'POST':
+
+        if http_context.method == 'POST':
             content = ''
             data = http_context.json_body()
 

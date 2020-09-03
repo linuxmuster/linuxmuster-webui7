@@ -231,8 +231,7 @@ class Handler(HttpPlugin):
                     details['selected'] = False
                     teachersList.append(details)
                 return teachersList
-            else:
-                return ["none"]
+            return ["none"]
 
     @url(r'/api/lm/sophomorixUsers/students')
     @endpoint(api=True)
@@ -261,8 +260,7 @@ class Handler(HttpPlugin):
                         details['selected'] = False
                         studentsList.append(details)
                     return studentsList
-                else:
-                    return ["none"]
+                return ["none"]
 
     @url(r'/api/lm/sophomorixUsers/schooladmins')
     @endpoint(api=True)
@@ -283,8 +281,7 @@ class Handler(HttpPlugin):
                         details['selected'] = False
                         schooladminsList.append(details)
                     return schooladminsList
-                else:
-                    return ["none"]
+                return ["none"]
         if http_context.method == 'POST':
             with authorize('lm:users:schooladmins:write'):
                 return 0
@@ -308,8 +305,7 @@ class Handler(HttpPlugin):
                         details['selected'] = False
                         globaladminsList.append(details)
                     return globaladminsList
-                else:
-                    return ["none"]
+                return ["none"]
         if http_context.method == 'POST':
             with authorize('lm:users:globaladmins:write'):
                 return 0

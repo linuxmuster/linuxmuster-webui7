@@ -95,18 +95,15 @@ class Handler(HttpPlugin):
                     if result['TYPE'] == "ERROR":
                         return result['TYPE']['LOG']
                     # Try to return last result to frontend
-                    else:
-                        return result['TYPE'], result['LOG']
-                else:
-                    # TODO: This should be done by sophomorix
-                    return ['ERROR', 'Permission Denied']
+                    return result['TYPE'], result['LOG']
+                # TODO: This should be done by sophomorix
+                return ['ERROR', 'Permission Denied']
 
                 sophomorixCommand = ['sophomorix-project',  '--admins', username, '--create', '-p', project, '-jj']
                 result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
                 if result['TYPE'] == "ERROR":
                     return result['TYPE']['LOG']
-                else:
-                    return result['TYPE'], result['LOG']
+                return result['TYPE'], result['LOG']
 
             if action == 'create-project':
                 ## Projectname must be in lowercase to avoid conflicts
@@ -115,8 +112,7 @@ class Handler(HttpPlugin):
                 result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
                 if result['TYPE'] == "ERROR":
                     return result['TYPE']['LOG']
-                else:
-                    return result['TYPE'], result['LOG']
+                return result['TYPE'], result['LOG']
 
     @url(r'/api/lmn/changeGroup')
     @authorize('lmn:groupmembership')
@@ -135,8 +131,7 @@ class Handler(HttpPlugin):
             result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
             if result['TYPE'] == "ERROR":
                 return result['TYPE'], result['MESSAGE_EN']
-            else:
-                return result['TYPE'], result['LOG']
+            return result['TYPE'], result['LOG']
 
     @url(r'/api/lmn/groupmembership/membership')
     @authorize('lmn:groupmembership')
@@ -169,8 +164,7 @@ class Handler(HttpPlugin):
                 result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
                 if result['TYPE'] == "ERROR":
                     return result['TYPE'], result['MESSAGE_EN']
-                else:
-                    return result['TYPE'], result['LOG']
+                return result['TYPE'], result['LOG']
 
     @url(r'/api/lm/search-project')
     @authorize('lmn:groupmembership')
@@ -192,8 +186,7 @@ class Handler(HttpPlugin):
                     result = lmn_getSophomorixValue(sophomorixCommand, 'MEMBERS')
                     if len(result) != 1:
                         return []
-                    else:
-                        result = result[login]
+                    result = result[login]
                 elif type == 'group':
                     sophomorixCommand = ['sophomorix-query', '--anyname', login+'*', '-jj']
                     return lmn_getSophomorixValue(sophomorixCommand, 'LISTS/GROUP')

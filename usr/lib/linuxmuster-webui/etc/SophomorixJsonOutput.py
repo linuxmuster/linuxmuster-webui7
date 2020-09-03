@@ -71,8 +71,7 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
     if jsonpath is '':
         if not keys:
             return jsonDict
-        else:
-            return jsonDict.keys()
+        return jsonDict.keys()
 
     if ignoreErrors is False:
         try:
@@ -84,8 +83,7 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
         resultDict = dpath.util.get(jsonDict, jsonpath)
     if not keys:
         return resultDict
-    else:
-        return resultDict.keys()
+    return resultDict.keys()
 
 def main(argv):
     inputfile = ''

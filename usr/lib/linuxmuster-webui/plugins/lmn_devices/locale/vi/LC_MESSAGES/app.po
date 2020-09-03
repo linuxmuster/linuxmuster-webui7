@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-23 20:23+0100\n"
-"PO-Revision-Date: 2020-05-21 09:04\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2020-09-03 15:41+0200\n"
+"PO-Revision-Date: 2020-09-03 13:56\n"
+"Last-Translator: \n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
 "MIME-Version: 1.0\n"
@@ -12,8 +12,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Crowdin-Project: linuxmusternet\n"
+"X-Crowdin-Project-ID: 325271\n"
 "X-Crowdin-Language: vi\n"
 "X-Crowdin-File: /2.0/lmn_devices.po\n"
+"X-Crowdin-File-ID: 112\n"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:146
 msgid "Add a device"
@@ -234,11 +236,11 @@ msgid "Sophomorix-Comment"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:192
-#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:203
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:204
 msgid "Please check the errors."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:196
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:197
 msgid "Saved"
 msgstr ""
 

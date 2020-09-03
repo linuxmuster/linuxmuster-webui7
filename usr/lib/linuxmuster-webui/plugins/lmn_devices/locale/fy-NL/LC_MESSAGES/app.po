@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ajenti\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-23 20:23+0100\n"
+"POT-Creation-Date: 2020-09-03 15:41+0200\n"
 "PO-Revision-Date: 2016-05-21 17:18-0400\n"
 "Last-Translator: eugenepankov <john.pankov@gmail.com>\n"
 "Language-Team: Frisian\n"
@@ -235,10 +235,10 @@ msgid "Sophomorix-Comment"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:192
-#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:203
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:204
 msgid "Please check the errors."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:196
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:197
 msgid "Saved"
 msgstr ""

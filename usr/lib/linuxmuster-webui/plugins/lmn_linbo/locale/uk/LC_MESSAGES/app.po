@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-23 20:23+0100\n"
-"PO-Revision-Date: 2020-05-21 09:04\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2020-09-03 15:41+0200\n"
+"PO-Revision-Date: 2020-09-03 13:56\n"
+"Last-Translator: \n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
 "MIME-Version: 1.0\n"
@@ -12,8 +12,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
 "X-Crowdin-Project: linuxmusternet\n"
+"X-Crowdin-Project-ID: 325271\n"
 "X-Crowdin-Language: uk\n"
 "X-Crowdin-File: /2.0/lmn_linbo.po\n"
+"X-Crowdin-File-ID: 98\n"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:115
 msgid "Add <span class=\"caret\"></span>"
@@ -65,11 +67,11 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:51
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:54
 msgid "Comment: {{image.description}}"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:28
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:31
 msgid "Create"
 msgstr ""
 
@@ -89,6 +91,10 @@ msgstr ""
 msgid "Differential image"
 msgstr ""
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:26
+msgid "Download Linbo Boot"
+msgstr ""
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:90
 msgid "Download type"
 msgstr ""
@@ -97,7 +103,7 @@ msgstr ""
 msgid "EFI"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:31
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:34
 msgid "Empty"
 msgstr ""
 
@@ -134,11 +140,10 @@ msgstr ""
 msgid "Icon"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:37
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:40
 msgid "Images"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:222
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/image.modal.html:13
 msgid "Info"
 msgstr ""
@@ -250,7 +255,7 @@ msgid "Start options"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:196
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:240
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:239
 msgid "Swap"
 msgstr ""
 
@@ -271,7 +276,7 @@ msgid "Version"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/main.py:15
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:457
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:456
 msgid "LINBO"
 msgstr ""
 
@@ -291,16 +296,16 @@ msgstr ""
 msgid "Read/write icons"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:242
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:241
 msgid "LINBO Cache"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:477
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:476
 msgid "A config file with this name already exists!"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:523
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:564
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:522
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:563
 msgid "Saved"
 msgstr ""
 

@@ -104,7 +104,9 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
         return
       $http.post('/api/lmn/groupmembership', {action: 'create-project', username:$scope.identity.user, project: msg.value, profil: $scope.identity.profile}).then (resp) ->
         notify.success gettext('Project Created')
-        $scope.getGroups ($scope.identity.user)
+        identity.init().then () ->
+                console.log("Identity renewed !")
+                $scope.getGroups ($scope.identity.user)
 
   $scope.showGroupDetails = (index, groupType, groupName) ->
     $uibModal.open(

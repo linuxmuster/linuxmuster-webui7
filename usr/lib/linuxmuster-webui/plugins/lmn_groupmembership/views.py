@@ -17,7 +17,7 @@ class Handler(HttpPlugin):
     def handle_api_groupmembership_details(self, http_context):
         action = http_context.json_body()['action']
         if http_context.method == 'POST':
-            schoolname = 'default-school'
+            # schoolname = 'default-school'
             with authorize('lmn:groupmemberships:write'):
                 if action == 'get-specified':
                     groupName = http_context.json_body()['groupName']
@@ -191,7 +191,7 @@ class Handler(HttpPlugin):
                     sophomorixCommand = ['sophomorix-query', '--anyname', login+'*', '-jj']
                     return lmn_getSophomorixValue(sophomorixCommand, 'LISTS/GROUP')
 
-                for user, details in result.items():
+                for _, details in result.items():
                     resultArray.append({
                             'label':details['sophomorixAdminClass'] + " " + details['sn'] + " " + details['givenName'],
                             'sn': details['sn'],

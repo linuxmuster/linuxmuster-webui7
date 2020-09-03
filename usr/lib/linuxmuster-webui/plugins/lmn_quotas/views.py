@@ -131,7 +131,7 @@ class Handler(HttpPlugin):
         if http_context.method == 'POST':
             ## Update quota per user, but not applied yet
             ## Not possible to factorise the command for many users
-            for role, userDict in http_context.json_body()['users'].items():
+            for _, userDict in http_context.json_body()['users'].items():
                 for _,values in userDict.items():
                     if values['quota'] == 'mailquota_default':
                         sophomorixCommand = ['sophomorix-user', '--mailquota', '%s' % (values['value']), '-u', values['login'], '-jj']

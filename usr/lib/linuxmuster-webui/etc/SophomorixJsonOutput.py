@@ -86,10 +86,8 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
     return resultDict.keys()
 
 def main(argv):
-    inputfile = ''
-    outputfile = ''
     try:
-        opts, args = getopt.getopt(argv,"hc:j:",["command=","jsonpath="])
+        opts, _ = getopt.getopt(argv,"hc:j:",["command=","jsonpath="])
     except getopt.GetoptError:
         print('Get a JSON entry from a sophomorix output.')
         print('Soph.py -c <SophomorixCommand> -j <JSONPATH>')

@@ -17,6 +17,7 @@ angular.module('lm.users').controller 'LMUsersGloballadminsController', ($scope,
      page: 1
      pageSize: 50
 
+    $scope.all_selected = false
 
     $http.post('/api/lm/sophomorixUsers/globaladmins',{action: 'get-all'}).then (resp) ->
         $scope.globaladmins = resp.data
@@ -96,16 +97,16 @@ angular.module('lm.users').controller 'LMUsersGloballadminsController', ($scope,
         if !filter?
             filter = ''
         for globaladmin in $scope.globaladmins
-            if filter is undefined
-                globaladmin.selected = true
+            if filter is undefined || filter == ''
+                globaladmin.selected = $scope.all_selected
             if globaladmin.sn.toLowerCase().includes filter.toLowerCase()
-                globaladmin.selected = true
+                globaladmin.selected = $scope.all_selected
             if globaladmin.givenName.toLowerCase().includes filter.toLowerCase()
-                globaladmin.selected = true
+                globaladmin.selected = $scope.all_selected
             if globaladmin.sophomorixAdminClass.toLowerCase().includes filter.toLowerCase()
-                globaladmin.selected = true
+                globaladmin.selected = $scope.all_selected
             if globaladmin.sAMAccountName.toLowerCase().includes filter.toLowerCase()
-                globaladmin.selected = true
+                globaladmin.selected = $scope.all_selected
 
 
 

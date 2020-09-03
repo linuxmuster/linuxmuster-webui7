@@ -50,7 +50,7 @@
 
         <table class="table" style="width:100%">
             <tr>
-                <th> </th>
+                <th><span checkbox ng:model="all_selected" ng:change="selectAll(filter)"></span></th>
                 <th width="120"> Login</th>
                 <th> Name </th>
                 <th ng:show="teachersQuota"> </th>
@@ -133,7 +133,6 @@
         <div class="floating-toolbar-padder"></div>
 
         <floating-toolbar>
-            <button ng:click="selectAll(filter)" class="btn btn-default btn-flat pull-left"> <i class="fa fa-asterisk"></i> <span translate>Select all</span></button>
             <button ng:click="batchSetInitialPassword()" ng:show="haveSelection()" class="btn btn-default btn-flat pull-right" translate>Set initial password for selected</button>
             <button ng:click="batchSetRandomPassword()" ng:show="haveSelection()" class="btn btn-default btn-flat pull-right" translate>Set random password for selected</button>
             <button ng:click="batchSetCustomPassword()" ng:show="haveSelection()" class="btn btn-default btn-flat pull-right" translate>Set custom password for selected</button>

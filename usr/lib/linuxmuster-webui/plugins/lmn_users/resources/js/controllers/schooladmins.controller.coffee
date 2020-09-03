@@ -17,6 +17,7 @@ angular.module('lm.users').controller 'LMUsersSchooladminsController', ($scope, 
      page: 1
      pageSize: 50
 
+    $scope.all_selected = false
 
     $http.post('/api/lm/sophomorixUsers/schooladmins',{action: 'get-all'}).then (resp) ->
         $scope.schooladmins = resp.data
@@ -97,16 +98,16 @@ angular.module('lm.users').controller 'LMUsersSchooladminsController', ($scope, 
         if !filter?
             filter = ''
         for schooladmin in $scope.schooladmins
-            if filter is undefined
-                schooladmin.selected = true
+            if filter is undefined || filter == ''
+                schooladmin.selected = $scope.all_selected
             if schooladmin.sn.toLowerCase().includes filter.toLowerCase()
-                schooladmin.selected = true
+                schooladmin.selected = $scope.all_selected
             if schooladmin.givenName.toLowerCase().includes filter.toLowerCase()
-                schooladmin.selected = true
+                schooladmin.selected = $scope.all_selected
             if schooladmin.sophomorixAdminClass.toLowerCase().includes filter.toLowerCase()
-                schooladmin.selected = true
+                schooladmin.selected = $scope.all_selected
             if schooladmin.sAMAccountName.toLowerCase().includes filter.toLowerCase()
-                schooladmin.selected = true
+                schooladmin.selected = $scope.all_selected
 
 
 

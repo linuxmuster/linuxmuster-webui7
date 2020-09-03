@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-21 10:57+0200\n"
+"POT-Creation-Date: 2020-09-03 15:41+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -67,11 +67,11 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:51
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:54
 msgid "Comment: {{image.description}}"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:28
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:31
 msgid "Create"
 msgstr ""
 
@@ -91,6 +91,10 @@ msgstr ""
 msgid "Differential image"
 msgstr ""
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:26
+msgid "Download Linbo Boot"
+msgstr ""
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:90
 msgid "Download type"
 msgstr ""
@@ -99,7 +103,7 @@ msgstr ""
 msgid "EFI"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:31
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:34
 msgid "Empty"
 msgstr ""
 
@@ -136,11 +140,10 @@ msgstr ""
 msgid "Icon"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:37
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:40
 msgid "Images"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:222
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/image.modal.html:13
 msgid "Info"
 msgstr ""
@@ -252,7 +255,7 @@ msgid "Start options"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:196
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:240
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:239
 msgid "Swap"
 msgstr ""
 
@@ -273,7 +276,7 @@ msgid "Version"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/main.py:15
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:457
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:456
 msgid "LINBO"
 msgstr ""
 
@@ -293,15 +296,15 @@ msgstr ""
 msgid "Read/write icons"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:242
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:241
 msgid "LINBO Cache"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:477
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:476
 msgid "A config file with this name already exists!"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:523
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:564
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:522
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:563
 msgid "Saved"
 msgstr ""

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ajenti\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-18 22:06+0200\n"
+"POT-Creation-Date: 2020-09-03 15:41+0200\n"
 "PO-Revision-Date: 2016-05-21 17:19-0400\n"
 "Last-Translator: eugenepankov <john.pankov@gmail.com>\n"
 "Language-Team: Serbian (Latin)\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Crowdin-Language: sr-CS\n"
 "X-Crowdin-File: /2.0/lmn_common.po\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:149
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:150
 msgid "A bootstrap error has occured"
 msgstr ""
 
@@ -42,11 +42,11 @@ msgstr ""
 msgid "Drop a CSV file here to import"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:132
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:133
 msgid "Enter"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:91
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:92
 msgid "Log out"
 msgstr ""
 
@@ -54,15 +54,15 @@ msgstr ""
 msgid "No backups available"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:173
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:174
 msgid "OK"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:152
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:153
 msgid "Please see browser console"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:128
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:129
 msgid "Quick search"
 msgstr ""
 
@@ -70,15 +70,16 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:48
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:49
 msgid "School Console"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:101
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:102
 msgid "Session time : {{ counter[0] }}:{{ counter[1] }}:{{ counter[2] }}"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/api.py:38
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/lmnfile.py:90
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/api.py:30
 msgid "Access refused."
 msgstr ""
 
@@ -165,12 +166,12 @@ msgstr ""
 msgid "Copying files: %s."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:44
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:47
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:90
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:93
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:138
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:141
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:46
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:49
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:92
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:95
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:140
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:143
 msgid "Uploaded"
 msgstr ""
 

@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-23 20:23+0100\n"
-"PO-Revision-Date: 2020-05-21 09:04\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2020-09-03 15:41+0200\n"
+"PO-Revision-Date: 2020-09-03 13:56\n"
+"Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
@@ -12,8 +12,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Crowdin-Project: linuxmusternet\n"
+"X-Crowdin-Project-ID: 325271\n"
 "X-Crowdin-Language: de\n"
 "X-Crowdin-File: /2.0/lmn_linbo.po\n"
+"X-Crowdin-File-ID: 98\n"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:115
 msgid "Add <span class=\"caret\"></span>"
@@ -65,11 +67,11 @@ msgstr "Abbrechen"
 msgid "Close"
 msgstr "Schließen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:51
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:54
 msgid "Comment: {{image.description}}"
 msgstr "Kommentar: {{image.description}}"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:28
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:31
 msgid "Create"
 msgstr "Erstellen"
 
@@ -89,6 +91,10 @@ msgstr "Beschreibung"
 msgid "Differential image"
 msgstr "Differntieles Image"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:26
+msgid "Download Linbo Boot"
+msgstr "Linbo Boot herunterladen"
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:90
 msgid "Download type"
 msgstr "Download Typ"
@@ -97,7 +103,7 @@ msgstr "Download Typ"
 msgid "EFI"
 msgstr "EFI"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:31
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:34
 msgid "Empty"
 msgstr "Leer"
 
@@ -134,11 +140,10 @@ msgstr "Gruppen"
 msgid "Icon"
 msgstr "Symbol"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:37
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:40
 msgid "Images"
 msgstr "Abbilder"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:222
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/image.modal.html:13
 msgid "Info"
 msgstr "Info"
@@ -250,7 +255,7 @@ msgid "Start options"
 msgstr "Startoptionen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:196
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:240
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:239
 msgid "Swap"
 msgstr "Swap"
 
@@ -271,7 +276,7 @@ msgid "Version"
 msgstr "Version"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/main.py:15
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:457
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:456
 msgid "LINBO"
 msgstr "LINBO"
 
@@ -291,16 +296,16 @@ msgstr "Lese die Beispiele"
 msgid "Read/write icons"
 msgstr "Lese/Schreib-Symbole"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:242
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:241
 msgid "LINBO Cache"
 msgstr "LINBO Cache"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:477
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:476
 msgid "A config file with this name already exists!"
 msgstr "Es existiert bereits eine Konfigurationsdatei mit diesem Namen!"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:523
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:564
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:522
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:563
 msgid "Saved"
 msgstr "Gespeichert"
 

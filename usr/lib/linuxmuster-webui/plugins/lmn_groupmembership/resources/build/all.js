@@ -148,7 +148,10 @@
           profil: $scope.identity.profile
         }).then(function(resp) {
           notify.success(gettext('Project Created'));
-          return $scope.getGroups($scope.identity.user);
+          return identity.init().then(function() {
+            console.log("Identity renewed !");
+            return $scope.getGroups($scope.identity.user);
+          });
         });
       });
     };

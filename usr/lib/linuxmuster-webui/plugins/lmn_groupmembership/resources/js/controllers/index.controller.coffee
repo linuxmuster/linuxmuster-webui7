@@ -206,6 +206,8 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
                 $scope.adminList = resp.data['GROUP'][groupName]['sophomorixAdmins']
                 $scope.groupmemberlist = resp.data['GROUP'][groupName]['sophomorixMemberGroups']
                 $scope.groupadminlist = resp.data['GROUP'][groupName]['sophomorixAdminGroups']
+                $scope.type = $scope.groupDetails['sophomorixType']
+                $scope.type = if $scope.type == "adminclass" then "class" else $scope.type
 
                 $scope.members = []
                 for name,member of resp.data['MEMBERS'][groupName]
@@ -246,7 +248,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
             if not entity
                 return
             $scope.changeState = true
-            $http.post('/api/lmn/groupmembership/membership', {action: 'addmembers', entity: entity, groupname: groupName}).then (resp) ->
+            $http.post('/api/lmn/groupmembership/membership', {action: 'addmembers', entity: entity, groupname: groupName, type: $scope.type}).then (resp) ->
                 if resp['data'][0] == 'ERROR'
                     notify.error (resp['data'][1])
                 if resp['data'][0] == 'LOG'
@@ -259,7 +261,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
 
         $scope.removeMember = (user) ->
             $scope.changeState = true
-            $http.post('/api/lmn/groupmembership/membership', {action: 'removemembers', entity: user.login, groupname: groupName}).then (resp) ->
+            $http.post('/api/lmn/groupmembership/membership', {action: 'removemembers', entity: user.login, groupname: groupName, type: $scope.type}).then (resp) ->
                 if resp['data'][0] == 'ERROR'
                     notify.error (resp['data'][1])
                 if resp['data'][0] == 'LOG'
@@ -280,7 +282,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
             if not entity
                 return
             $scope.changeState = true
-            $http.post('/api/lmn/groupmembership/membership', {action: 'addadmins', entity: entity, groupname: groupName}).then (resp) ->
+            $http.post('/api/lmn/groupmembership/membership', {action: 'addadmins', entity: entity, groupname: groupName, type: $scope.type}).then (resp) ->
                 if resp['data'][0] == 'ERROR'
                     notify.error (resp['data'][1])
                 if resp['data'][0] == 'LOG'
@@ -293,7 +295,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
 
         $scope.removeAdmin = (user) ->
             $scope.changeState = true
-            $http.post('/api/lmn/groupmembership/membership', {action: 'removeadmins', entity: user.login, groupname: groupName}).then (resp) ->
+            $http.post('/api/lmn/groupmembership/membership', {action: 'removeadmins', entity: user.login, groupname: groupName, type: $scope.type}).then (resp) ->
                 if resp['data'][0] == 'ERROR'
                     notify.error (resp['data'][1])
                 if resp['data'][0] == 'LOG'
@@ -314,7 +316,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
             if not entity
                 return
             $scope.changeState = true
-            $http.post('/api/lmn/groupmembership/membership', {action: 'addmembergroups', entity: entity, groupname: groupName}).then (resp) ->
+            $http.post('/api/lmn/groupmembership/membership', {action: 'addmembergroups', entity: entity, groupname: groupName, type: $scope.type}).then (resp) ->
                 if resp['data'][0] == 'ERROR'
                     notify.error (resp['data'][1])
                 if resp['data'][0] == 'LOG'
@@ -327,7 +329,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
 
         $scope.removeMemberGroup = (group) ->
             $scope.changeState = true
-            $http.post('/api/lmn/groupmembership/membership', {action: 'removemembergroups', entity: group, groupname: groupName}).then (resp) ->
+            $http.post('/api/lmn/groupmembership/membership', {action: 'removemembergroups', entity: group, groupname: groupName, type: $scope.type}).then (resp) ->
                 if resp['data'][0] == 'ERROR'
                     notify.error (resp['data'][1])
                 if resp['data'][0] == 'LOG'
@@ -348,7 +350,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
             if not entity
                 return
             $scope.changeState = true
-            $http.post('/api/lmn/groupmembership/membership', {action: 'addadmingroups', entity: entity, groupname: groupName}).then (resp) ->
+            $http.post('/api/lmn/groupmembership/membership', {action: 'addadmingroups', entity: entity, groupname: groupName, type: $scope.type}).then (resp) ->
                 if resp['data'][0] == 'ERROR'
                     notify.error (resp['data'][1])
                 if resp['data'][0] == 'LOG'
@@ -361,7 +363,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
 
         $scope.removeAdminGroup = (group) ->
             $scope.changeState = true
-            $http.post('/api/lmn/groupmembership/membership', {action: 'removeadmingroups', entity: group, groupname: groupName}).then (resp) ->
+            $http.post('/api/lmn/groupmembership/membership', {action: 'removeadmingroups', entity: group, groupname: groupName, type: $scope.type}).then (resp) ->
                 if resp['data'][0] == 'ERROR'
                     notify.error (resp['data'][1])
                 if resp['data'][0] == 'LOG'

@@ -301,6 +301,8 @@
         $scope.adminList = resp.data['GROUP'][groupName]['sophomorixAdmins'];
         $scope.groupmemberlist = resp.data['GROUP'][groupName]['sophomorixMemberGroups'];
         $scope.groupadminlist = resp.data['GROUP'][groupName]['sophomorixAdminGroups'];
+        $scope.type = $scope.groupDetails['sophomorixType'];
+        $scope.type = $scope.type === "adminclass" ? "class" : $scope.type;
         $scope.members = [];
         ref = resp.data['MEMBERS'][groupName];
         for (name in ref) {
@@ -368,7 +370,8 @@
       return $http.post('/api/lmn/groupmembership/membership', {
         action: 'addmembers',
         entity: entity,
-        groupname: groupName
+        groupname: groupName,
+        type: $scope.type
       }).then(function(resp) {
         if (resp['data'][0] === 'ERROR') {
           notify.error(resp['data'][1]);
@@ -391,7 +394,8 @@
       return $http.post('/api/lmn/groupmembership/membership', {
         action: 'removemembers',
         entity: user.login,
-        groupname: groupName
+        groupname: groupName,
+        type: $scope.type
       }).then(function(resp) {
         var position;
         if (resp['data'][0] === 'ERROR') {
@@ -427,7 +431,8 @@
       return $http.post('/api/lmn/groupmembership/membership', {
         action: 'addadmins',
         entity: entity,
-        groupname: groupName
+        groupname: groupName,
+        type: $scope.type
       }).then(function(resp) {
         if (resp['data'][0] === 'ERROR') {
           notify.error(resp['data'][1]);
@@ -450,7 +455,8 @@
       return $http.post('/api/lmn/groupmembership/membership', {
         action: 'removeadmins',
         entity: user.login,
-        groupname: groupName
+        groupname: groupName,
+        type: $scope.type
       }).then(function(resp) {
         var position;
         if (resp['data'][0] === 'ERROR') {
@@ -486,7 +492,8 @@
       return $http.post('/api/lmn/groupmembership/membership', {
         action: 'addmembergroups',
         entity: entity,
-        groupname: groupName
+        groupname: groupName,
+        type: $scope.type
       }).then(function(resp) {
         if (resp['data'][0] === 'ERROR') {
           notify.error(resp['data'][1]);
@@ -509,7 +516,8 @@
       return $http.post('/api/lmn/groupmembership/membership', {
         action: 'removemembergroups',
         entity: group,
-        groupname: groupName
+        groupname: groupName,
+        type: $scope.type
       }).then(function(resp) {
         var position;
         if (resp['data'][0] === 'ERROR') {
@@ -545,7 +553,8 @@
       return $http.post('/api/lmn/groupmembership/membership', {
         action: 'addadmingroups',
         entity: entity,
-        groupname: groupName
+        groupname: groupName,
+        type: $scope.type
       }).then(function(resp) {
         if (resp['data'][0] === 'ERROR') {
           notify.error(resp['data'][1]);
@@ -568,7 +577,8 @@
       return $http.post('/api/lmn/groupmembership/membership', {
         action: 'removeadmingroups',
         entity: group,
-        groupname: groupName
+        groupname: groupName,
+        type: $scope.type
       }).then(function(resp) {
         var position;
         if (resp['data'][0] === 'ERROR') {

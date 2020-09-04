@@ -28,13 +28,13 @@
         <tr>
             <td><b translate>Joinable:</b></td>
             <td>
-                <input type="checkbox" ng:model="joinable" ng:disabled="!editGroup" ng:change="changeJoin(groupName, groupDetails['sophomorixType'])"> </input>
+                <input type="checkbox" ng:model="joinable" ng:disabled="!editGroup" ng:change="changeJoin()"> </input>
             </td>
         </tr>
         <tr>
             <td><b translate>Hidden:</b></td>
             <td>
-                <input type="checkbox" ng:model="hidden" ng:disabled="!editGroup" ng:change="changeHide(groupName, groupDetails['sophomorixType'])"> </input>
+                <input type="checkbox" ng:model="hidden" ng:disabled="!editGroup" ng:change="changeHide()"> </input>
             </td>
         </tr>
     </table>

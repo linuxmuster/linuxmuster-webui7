@@ -144,20 +144,20 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
         $scope.hidetext = gettext("Hide")
         $scope.showtext = gettext("Show")
 
-        $scope.changeJoin = (group, type) ->
+        $scope.changeJoin = () ->
             $scope.changeState = true
             option = if $scope.joinable then '--join' else '--nojoin'
-            $http.post('/api/lmn/changeGroup', {option: option, group: group, type: type}).then (resp) ->
+            $http.post('/api/lmn/changeGroup', {option: option, group: $scope.groupName, type: $scope.type}).then (resp) ->
                 if resp['data'][0] == 'ERROR'
                     notify.error (resp['data'][1])
                 if resp['data'][0] == 'LOG'
                     notify.success gettext(resp['data'][1])
                 $scope.changeState = false
 
-        $scope.changeHide = (group, type) ->
+        $scope.changeHide = () ->
             $scope.changeState = true
             option = if $scope.hidden then '--hide' else '--nohide'
-            $http.post('/api/lmn/changeGroup', {option: option, group: group, type: type}).then (resp) ->
+            $http.post('/api/lmn/changeGroup', {option: option, group: $scope.groupName, type: $scope.type}).then (resp) ->
                 if resp['data'][0] == 'ERROR'
                     notify.error (resp['data'][1])
                 if resp['data'][0] == 'LOG'

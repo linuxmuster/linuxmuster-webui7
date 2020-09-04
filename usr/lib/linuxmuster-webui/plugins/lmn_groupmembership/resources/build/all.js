@@ -199,14 +199,14 @@
     $scope.editGroup = false;
     $scope.hidetext = gettext("Hide");
     $scope.showtext = gettext("Show");
-    $scope.changeJoin = function(group, type) {
+    $scope.changeJoin = function() {
       var option;
       $scope.changeState = true;
       option = $scope.joinable ? '--join' : '--nojoin';
       return $http.post('/api/lmn/changeGroup', {
         option: option,
-        group: group,
-        type: type
+        group: $scope.groupName,
+        type: $scope.type
       }).then(function(resp) {
         if (resp['data'][0] === 'ERROR') {
           notify.error(resp['data'][1]);
@@ -217,14 +217,14 @@
         return $scope.changeState = false;
       });
     };
-    $scope.changeHide = function(group, type) {
+    $scope.changeHide = function() {
       var option;
       $scope.changeState = true;
       option = $scope.hidden ? '--hide' : '--nohide';
       return $http.post('/api/lmn/changeGroup', {
         option: option,
-        group: group,
-        type: type
+        group: $scope.groupName,
+        type: $scope.type
       }).then(function(resp) {
         if (resp['data'][0] === 'ERROR') {
           notify.error(resp['data'][1]);

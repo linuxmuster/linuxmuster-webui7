@@ -55,8 +55,7 @@
       for (i = 0, len = ref.length; i < len; i++) {
         file = ref[i];
         userfile = file.substring(file.indexOf('.') + 1);
-        if (resp.data[file]['encoding'] === 'auto') {
-          //console.log(userfile)
+        if (resp.data[file]['ENCODING'] === 'auto') {
           console.log('is auto');
           $http.post('/api/lmn/schoolsettings/determine-encoding', {
             path: '/etc/linuxmuster/sophomorix/' + school + '/' + userfile,

@@ -37,6 +37,7 @@ class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
 
+
     @url(r'/api/lmn/schoolsettings/determine-encoding')
     @authorize('lm:schoolsettings')
     @endpoint(api=True)
@@ -60,80 +61,71 @@ class Handler(HttpPlugin):
     def handle_api_settings(self, http_context):
         school = 'default-school'
         path = '/etc/linuxmuster/sophomorix/'+school+'/school.conf'
-        if http_context.method == 'GET':
-            # Parse csv config file
-            config = ConfigParser()
-            config.read(path)
-            settings = {}
-            for section in config.sections():
-                settings[section] = {}
-                for (key, val) in config.items(section):
-                   if val.isdigit():
-                      val = int(val)
-                      #settings[section][key] = val
-                   if val == 'no':
-                        val = False
-                   if val == 'yes':
-                        val = True
-                   settings[section][key] = val
-            return settings
+        # Update each time the config_obj because it may have changed
+        with LMNFile(path, 'r') as f:
+            self.config_obj = f
 
+        if http_context.method == 'GET':
+            # Just export ConfigObj as dict for angularjs
+            return dict(self.config_obj.data)
 
         if http_context.method == 'POST':
-            content = ''
             data = http_context.json_body()
             if 'admins_print' in data:
                 for k, v in self.EMAIL_MAPPING.items():
                     data['admins_print'] = data['admins_print'].replace(k, v)
 
-            def convert_value(v):
-                if type(v) is int:
-                    return str(v)
-                elif type(v) is bool:
-                    return 'yes' if v else 'no'
-                else:
-                    return '%s' % v
-            section_name = ''
-            set_control = 0
-            for line in open(path):
-                originalLine = line
-                # remove everything before comment
-                if '#' in line:
-                    line = line.split('#',1)[1]
-                    line = '#'+line
-                if line.startswith('#'):
-                    content += originalLine
-                    continue
-                # if new section found
-                if line.startswith('['):
-                    # check if last section contained all keys
-                    if set_control is 1:
-                        for k in data[section_name]:
-                            if k not in keys_found:
-                                k = k.strip()
-                                v = v.strip()
-                                content += "\t%s=%s\n" % (k.upper(), convert_value(data[section_name][k]))
-                    # start of with new section
-                    set_control = 1
-                    keys_found = []
-                    section_name = line.strip('[]\n')
-                else:
-                    k, v = line.split('=', 1)
-                    k = k.strip().lower()
-                    v = v.strip()
-                    if k in data[section_name]:
-                        newValue = convert_value(data[section_name][k])
-                        keys_found.append(k)
-                        if v:
-                            originalLine = originalLine.replace(v, newValue)
-                        else:
-                            originalLine = "\t%s=%s\n" % (k.upper(), newValue)
-                        if newValue not in v:
-                            originalLine = originalLine.lstrip('#')
-                content += originalLine
+            self.config_obj.write(data)
 
 
-            lmn_write_configfile(path, content)
+            # def convert_value(v):
+            #     if type(v) is int:
+            #         return str(v)
+            #     elif type(v) is bool:
+            #         return 'yes' if v else 'no'
+            #     else:
+            #         return '%s' % v
+            # section_name = ''
+            # set_control = 0
+            # for line in open(path):
+            #     originalLine = line
+            #     # remove everything before comment
+            #     if '#' in line:
+            #         line = line.split('#',1)[1]
+            #         line = '#'+line
+            #     if line.startswith('#'):
+            #         content += originalLine
+            #         continue
+            #     # if new section found
+            #     if line.startswith('['):
+            #         # check if last section contained all keys
+            #         if set_control is 1:
+            #             for k in data[section_name]:
+            #                 if k not in keys_found:
+            #                     k = k.strip()
+            #                     v = v.strip()
+            #                     content += "\t%s=%s\n" % (k.upper(), convert_value(data[section_name][k]))
+            #         # start of with new section
+            #         set_control = 1
+            #         keys_found = []
+            #         section_name = line.strip('[]\n')
+            #     else:
+            #         k, v = line.split('=', 1)
+            #         k = k.strip().lower()
+            #         v = v.strip()
+            #         if k in data[section_name]:
+            #             newValue = convert_value(data[section_name][k])
+            #             keys_found.append(k)
+            #             if v:
+            #                 originalLine = originalLine.replace(v, newValue)
+            #             else:
+            #                 originalLine = "\t%s=%s\n" % (k.upper(), newValue)
+            #             if newValue not in v:
+            #                 originalLine = originalLine.lstrip('#')
+            #     content += originalLine
+            #
+            #
+            # lmn_write_configfile(path, content)
 
     @url(r'/api/lm/schoolsettings/school-share')
     @authorize('lm:schoolsettings')

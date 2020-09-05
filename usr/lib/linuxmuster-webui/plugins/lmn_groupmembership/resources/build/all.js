@@ -126,8 +126,7 @@
         $scope.identity.isAdmin = resp.data[1];
         $scope.classes = $scope.groups.filter($scope.filterGroupType('schoolclass'));
         $scope.projects = $scope.groups.filter($scope.filterGroupType('project'));
-        $scope.printers = $scope.groups.filter($scope.filterGroupType('printergroup'));
-        return console.log($scope.identity.profile);
+        return $scope.printers = $scope.groups.filter($scope.filterGroupType('printergroup'));
       });
     };
     $scope.createProject = function() {

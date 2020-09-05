@@ -15,7 +15,7 @@
                 <label translate>Schoolname</label>
             </td>
             <td>
-                <input type="text" class="form-control" ng:model="settings.school.school_longname" />
+                <input type="text" class="form-control" ng:model="settings.school.SCHOOL_LONGNAME" />
             </td>
         </tr>
     </table>
@@ -27,7 +27,7 @@
                 <label translate>Role Students</label>
             </td>
             <td>
-                <input type="text" class="form-control" placeholder="{{'e.g.: linuxmuster.net'|translate}}" ng:model="settings['role.student']['maildomain']" />
+                <input type="text" class="form-control" placeholder="{{'e.g.: linuxmuster.net'|translate}}" ng:model="settings['role.student']['MAILDOMAIN']" />
             </td>
         </tr>
         <tr>
@@ -35,7 +35,7 @@
                 <label translate>Role Teachers</label>
             </td>
             <td>
-                <input type="text" class="form-control" placeholder="{{'e.g.: linuxmuster.net'|translate}}" ng:model="settings['role.teacher']['maildomain']" />
+                <input type="text" class="form-control" placeholder="{{'e.g.: linuxmuster.net'|translate}}" ng:model="settings['role.teacher']['MAILDOMAIN']" />
             </td>
         </tr>
         <tr>
@@ -43,7 +43,7 @@
                 <label translate>Primary Group Adminclass</label>
             </td>
             <td>
-                <input type="text" class="form-control" placeholder="{{'e.g.: linuxmuster.net'|translate}}" ng:model="settings['type.adminclass']['maildomain']" />
+                <input type="text" class="form-control" placeholder="{{'e.g.: linuxmuster.net'|translate}}" ng:model="settings['type.adminclass']['MAILDOMAIN']" />
             </td>
         </tr>
         <tr>
@@ -51,7 +51,7 @@
                 <label translate>Primary Group Teacherclass</label>
             </td>
             <td>
-                <input type="text" class="form-control" placeholder="{{'e.g.: linuxmuster.net'|translate}}" ng:model="settings['type.teacherclass']['maildomain']" />
+                <input type="text" class="form-control" placeholder="{{'e.g.: linuxmuster.net'|translate}}" ng:model="settings['type.teacherclass']['MAILDOMAIN']" />
             </td>
         </tr>
     </table>
@@ -62,7 +62,7 @@
                 <label translate>Printserver</label>
             </td>
             <td>
-                <input type="text" class="form-control" placeholder="{{'default: server'|translate}}" ng:model="settings.school.printserver" />
+                <input type="text" class="form-control" placeholder="{{'default: server'|translate}}" ng:model="settings.school.PRINTSERVER" />
             </td>
         </tr>
     </table>
@@ -84,13 +84,13 @@
                 <label translate>Reverse Surname and Firstname in username</label>
             </td>
             <td>
-                <span checkbox ng:model="settings['userfile.students.csv']['surname_firstname_reverse=boolean']" />
+                <span checkbox ng:model="settings['userfile.students.csv']['SURNAME_FIRSTNAME_REVERSE=boolean']" />
             </td>
             <td>
-                <span checkbox ng:model="settings['userfile.teachers.csv']['surname_firstname_reverse=boolean']" />
+                <span checkbox ng:model="settings['userfile.teachers.csv']['SURNAME_FIRSTNAME_REVERSE=boolean']" />
             </td>
             <td>
-                <span checkbox ng:model="settings['userfile.extrastudents.csv']['surname_firstname_reverse=boolean']" />
+                <span checkbox ng:model="settings['userfile.extrastudents.csv']['SURNAME_FIRSTNAME_REVERSE=boolean']" />
             </td>
         </tr>
         <tr>
@@ -98,13 +98,13 @@
                 <label translate>Surname Characters</label>
             </td>
             <td>
-                <input type="number" class="form-control" ng:model="settings['userfile.students.csv']['surname_chars']" />
+                <input type="number" class="form-control" ng:model="settings['userfile.students.csv']['SURNAME_CHARS']" />
             </td>
             <td>
-                <input type="number" class="form-control" ng:model="settings['userfile.teachers.csv']['surname_chars']" />
+                <input type="number" class="form-control" ng:model="settings['userfile.teachers.csv']['SURNAME_CHARS']" />
             </td>
             <td>
-                <input type="number" class="form-control" ng:model="settings['userfile.extrastudents.csv']['surname_chars']" />
+                <input type="number" class="form-control" ng:model="settings['userfile.extrastudents.csv']['SURNAME_CHARS']" />
             </td>
         </tr>
         <tr>
@@ -112,13 +112,13 @@
                 <label translate>Firstname Chars</label>
             </td>
             <td>
-                <input type="number" class="form-control" ng:model="settings['userfile.students.csv']['firstname_chars']" />
+                <input type="number" class="form-control" ng:model="settings['userfile.students.csv']['FIRSTNAME_CHARS']" />
             </td>
             <td>
-                <input type="number" class="form-control" ng:model="settings['userfile.teachers.csv']['firstname_chars']" />
+                <input type="number" class="form-control" ng:model="settings['userfile.teachers.csv']['FIRSTNAME_CHARS']" />
             </td>
             <td>
-                <input type="number" class="form-control" ng:model="settings['userfile.extrastudents.csv']['firstname_chars']" />
+                <input type="number" class="form-control" ng:model="settings['userfile.extrastudents.csv']['FIRSTNAME_CHARS']" />
             </td>
         </tr>
         <tr>
@@ -126,13 +126,13 @@
                 <label translate>Password Length</label>
             </td>
             <td>
-                <input type="number" class="form-control" ng:model="settings['userfile.students.csv']['pwd_length']" />
+                <input type="number" class="form-control" ng:model="settings['userfile.students.csv']['PWD_LENGTH']" />
             </td>
             <td>
-                <input type="number" class="form-control" ng:model="settings['userfile.teachers.csv']['pwd_length']" />
+                <input type="number" class="form-control" ng:model="settings['userfile.teachers.csv']['PWD_LENGTH']" />
             </td>
             <td>
-                <input type="number" class="form-control" ng:model="settings['userfile.extrastudents.csv']['pwd_length']" />
+                <input type="number" class="form-control" ng:model="settings['userfile.extrastudents.csv']['PWD_LENGTH']" />
             </td>
         </tr>
         <tr ng:show="settings.lehrer_zufall_passwort || settings.schueler_zufall_passwort" >
@@ -140,13 +140,13 @@
                 <label translate>Password length</label>
             </td>
             <td>
-                <input type="number" class="form-control" ng:model="settings['userfile.students.csv']['pwd_length']"  />
+                <input type="number" class="form-control" ng:model="settings['userfile.students.csv']['PWD_LENGTH']"  />
             </td>
             <td>
-                <input type="number" class="form-control" ng:model="settings['userfile.teachers.csv']['pwd_length']" ng:show="settings.schueler_zufall_passwort" />
+                <input type="number" class="form-control" ng:model="settings['userfile.teachers.csv']['PWD_LENGTH']" ng:show="settings.schueler_zufall_passwort" />
             </td>
             <td>
-                <input type="number" class="form-control" ng:model="settings['userfile.extrastudents.csv']['pwd_length']" ng:show="settings.schueler_zufall_passwort" />
+                <input type="number" class="form-control" ng:model="settings['userfile.extrastudents.csv']['PWD_LENGTH']" ng:show="settings.schueler_zufall_passwort" />
             </td>
         </tr>
         <tr>
@@ -154,13 +154,13 @@
                 <label translate>Random password</label>
             </td>
             <td>
-                <span checkbox ng:model="settings['userfile.students.csv']['random_pwd']" />
+                <span checkbox ng:model="settings['userfile.students.csv']['RANDOM_PWD']" />
             </td>
             <td>
-                <span checkbox ng:model="settings['userfile.teachers.csv']['random_pwd']" />
+                <span checkbox ng:model="settings['userfile.teachers.csv']['RANDOM_PWD']" />
             </td>
             <td>
-                <span checkbox ng:model="settings['userfile.extrastudents.csv']['random_pwd']" />
+                <span checkbox ng:model="settings['userfile.extrastudents.csv']['RANDOM_PWD']" />
             </td>
 
         </tr>
@@ -169,13 +169,13 @@
                 <label translate>Tolerance after departure (days)</label>
             </td>
             <td>
-                <input type="number" class="form-control" ng:model="settings['userfile.students.csv']['toleration_time']" />
+                <input type="number" class="form-control" ng:model="settings['userfile.students.csv']['TOLERATION_TIME']" />
             </td>
             <td>
-                <input type="number" class="form-control" ng:model="settings['userfile.teachers.csv']['toleration_time']">
+                <input type="number" class="form-control" ng:model="settings['userfile.teachers.csv']['TOLERATION_TIME']">
             </td>
             <td>
-                <input type="number" class="form-control" ng:model="settings['userfile.extrastudents.csv']['toleration_time']">
+                <input type="number" class="form-control" ng:model="settings['userfile.extrastudents.csv']['TOLERATION_TIME']">
             </td>
         </tr>
         <tr>
@@ -183,13 +183,13 @@
                 <label translate>Removal after departure (days)</label>
             </td>
             <td>
-                <input type="number" class="form-control" ng:model="settings['userfile.students.csv']['deactivation_time']" />
+                <input type="number" class="form-control" ng:model="settings['userfile.students.csv']['DEACTIVATION_TIME']" />
             </td>
             <td>
-                <input type="number" class="form-control" ng:model="settings['userfile.teachers.csv']['deactivation_time']" />
+                <input type="number" class="form-control" ng:model="settings['userfile.teachers.csv']['DEACTIVATION_TIME']" />
             </td>
             <td>
-                <input type="number" class="form-control" ng:model="settings['userfile.extrastudents.csv']['deactivation_time']" />
+                <input type="number" class="form-control" ng:model="settings['userfile.extrastudents.csv']['DEACTIVATION_TIME']" />
             </td>
         </tr>
         <tr>
@@ -219,16 +219,16 @@
                 <label translate>List encoding</label>
             </td>
             <td>
-                <select class="form-control" ng:model="settings['userfile.students.csv']['encoding']" ng:options="x for x in encodings" />
-                    <div ng:show="settings['userfile.students.csv']['encoding'] == 'auto'" >
+                <select class="form-control" ng:model="settings['userfile.students.csv']['ENCODING']" ng:options="x for x in encodings" />
+                    <div ng:show="settings['userfile.students.csv']['ENCODING'] == 'auto'" >
             </td>
             <td>
-                <select class="form-control" ng:model="settings['userfile.teachers.csv']['encoding']" ng:options="x for x in encodings" />
-                    <div ng:show="settings['userfile.teachers.csv']['encoding'] == 'auto'" >
+                <select class="form-control" ng:model="settings['userfile.teachers.csv']['ENCODING']" ng:options="x for x in encodings" />
+                    <div ng:show="settings['userfile.teachers.csv']['ENCODING'] == 'auto'" >
             </td>
             <td>
-                <select class="form-control" ng:model="settings['userfile.extrastudents.csv']['encoding']" ng:options="x for x in encodings" />
-                    <div ng:show="settings['userfile.extrastudents.csv']['encoding'] == 'auto'" >
+                <select class="form-control" ng:model="settings['userfile.extrastudents.csv']['ENCODING']" ng:options="x for x in encodings" />
+                    <div ng:show="settings['userfile.extrastudents.csv']['ENCODING'] == 'auto'" >
             </td>
             <!--<td>
                 <select class="form-control" ng:model="settings['userfile.extraclasses.csv']['encoding']" ng:options="x for x in encodings" />
@@ -273,13 +273,13 @@
                 <label translate>Quota Default Global in MiB</label>
             </td>
             <td>
-                <input type="number" class="form-control" ng:model="settings['role.student']['quota_default_global']" />
+                <input type="number" class="form-control" ng:model="settings['role.student']['QUOTA_DEFAULT_GLOBAL']" />
             </td>
             <td>
-                <input type="number" class="form-control" ng:model="settings['role.teacher']['quota_default_global']" />
+                <input type="number" class="form-control" ng:model="settings['role.teacher']['QUOTA_DEFAULT_GLOBAL']" />
             </td>
             <td>
-                <input type="number" class="form-control" ng:model="settings['role.schooladministrator']['quota_default_global']" />
+                <input type="number" class="form-control" ng:model="settings['role.schooladministrator']['QUOTA_DEFAULT_GLOBAL']" />
             </td>
         </tr>
         <tr>
@@ -287,13 +287,13 @@
                 <label translate>Quota Default School in MiB</label>
             </td>
             <td>
-                <input type="number" class="form-control" ng:model="settings['role.student']['quota_default_school']" />
+                <input type="number" class="form-control" ng:model="settings['role.student']['QUOTA_DEFAULT_SCHOOL']" />
             </td>
             <td>
-                <input type="number" class="form-control" ng:model="settings['role.teacher']['quota_default_school']" />
+                <input type="number" class="form-control" ng:model="settings['role.teacher']['QUOTA_DEFAULT_SCHOOL']" />
             </td>
             <td>
-                <input type="number" class="form-control" ng:model="settings['role.schooladministrator']['quota_default_school']" />
+                <input type="number" class="form-control" ng:model="settings['role.schooladministrator']['QUOTA_DEFAULT_SCHOOL']" />
             </td>
         </tr>
         <tr>
@@ -301,13 +301,13 @@
                 <label translate>Cloudquota Percentage</label>
             </td>
             <td>
-                <input type="number" class="form-control" ng:model="settings['role.student']['cloudquota_percentage']" />
+                <input type="number" class="form-control" ng:model="settings['role.student']['CLOUDQUOTA_PERCENTAGE']" />
             </td>
             <td>
-                <input type="number" class="form-control" ng:model="settings['role.teacher']['cloudquota_percentage']" />
+                <input type="number" class="form-control" ng:model="settings['role.teacher']['CLOUDQUOTA_PERCENTAGE']" />
             </td>
             <td>
-                <input type="number" class="form-control" ng:model="settings['role.schooladministrator']['cloudquota_percentage']" />
+                <input type="number" class="form-control" ng:model="settings['role.schooladministrator']['CLOUDQUOTA_PERCENTAGE']" />
             </td>
         </tr>
         <tr>
@@ -315,13 +315,13 @@
                 <label translate>Mailquota Default in MiB</label>
             </td>
             <td>
-                <input type="number" class="form-control" ng:model="settings['role.student']['mailquota_default']" />
+                <input type="number" class="form-control" ng:model="settings['role.student']['MAILQUOTA_DEFAULT']" />
             </td>
             <td>
-                <input type="number" class="form-control" ng:model="settings['role.teacher']['mailquota_default']" />
+                <input type="number" class="form-control" ng:model="settings['role.teacher']['MAILQUOTA_DEFAULT']" />
             </td>
             <td>
-                <input type="number" class="form-control" ng:model="settings['role.schooladministrator']['mailquota_default']" />
+                <input type="number" class="form-control" ng:model="settings['role.schooladministrator']['MAILQUOTA_DEFAULT']" />
             </td>
         </tr>
     </table>
@@ -339,7 +339,7 @@
                 <label translate>School name</label>
             </td>
             <td>
-                <input type="text" class="form-control" ng:model="settings.school.school_longname" disabled />
+                <input type="text" class="form-control" ng:model="settings.school.SCHOOL_LONGNAME" disabled />
             </td>
         </tr>
         <tr>

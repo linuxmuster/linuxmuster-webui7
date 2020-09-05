@@ -5,7 +5,7 @@ import csv
 import magic
 import filecmp
 import time
-import configparser
+from configobj import ConfigObj
 
 ALLOWED_PATHS = [
                 # used for school.conf or *.csv in lmn_settings, lmn_devices and lmn_users
@@ -164,20 +164,30 @@ class ConfigLoader(LMNFile):
     def __enter__(self):
         self.opened = open(self.file, 'r', encoding=self.encoding)
         if 'r' in self.mode:
-            self.data = configparser.ConfigParser().read(self.file)
-            # Filter:
-            # no -> False
-            # yes -> True
-            # '6'.isdigit -> int('6') = 6
+            self.data = ConfigObj(self.file, encoding='utf-8', write_empty_values=True, stringify=True)
+            for section, options in self.data.items():
+                for key, value in options.items():
+                    value = int(value) if value.isdigit() else value
+                    value = True if value == 'yes' else value
+                    value = False if value == 'no' else value
+                    self.data[section][key] = value
         return self
 
-    def write(self, data):
-        # Filter:
-        # int -> str
-        # bool -> yes/no
-        # key --> key.upper() not compatible with setup.ini
-        pass
+    def __exit__(self, *args):
+        if self.opened:
+            self.opened.close()
 
+    def write(self, data):
+        for section, options in data.items():
+                for key, value in options.items():
+                    value = 'yes' if value is True else value
+                    value = 'no' if value is False else value
+                    self.data[section][key] = value
+        if self.opened.closed:
+           self.opened = open(self.file, 'r', encoding=self.encoding)
+        self.backup()
+        self.opened.close()
+        self.data.write()
 
 """LATER
 class StartConfLoader(LMNFile):

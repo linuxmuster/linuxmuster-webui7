@@ -87,6 +87,11 @@ angular.module('lm.users').controller 'LMUsersCheckModalController', ($scope, $h
     $scope.isWorking = true
 
     $http.get('/api/lm/users/check').then (resp) ->
+        if not resp.data
+            notify.error gettext('Unknown error!'), gettext('Please run sophomorix-check manually to identity the reason.')
+            $uibModalInstance.close()
+            return
+
         if resp.data['OUTPUT'][0]['TYPE']  is 'ERROR'
             notify.error gettext('Check failed'), resp.data.message
             $scope.isWorking = false

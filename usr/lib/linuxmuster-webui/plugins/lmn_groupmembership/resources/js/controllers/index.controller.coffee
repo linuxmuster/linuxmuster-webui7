@@ -62,7 +62,6 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
 
   $scope.setMembership = (group) ->
     $scope.changeState = true
-    console.log(group)
     action = if group.membership then 'removeadmins' else 'addadmins'
     if group.typename == 'Class'
         type = 'class'
@@ -123,13 +122,30 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
   $scope.projectIsJoinable = (project) ->
     return project['joinable'] == 'TRUE' or project.admin or $scope.identity.isAdmin or $scope.identity.profile.memberOf.indexOf(project['DN']) > -1
 
+  $scope.resetAll = (type) ->
+      warning = gettext('Are you sure to reset all admin memberships for this? This is actually only necessary to start a new empty school year. This cannot be undone!')
+      messagebox.show(text: warning, positive: 'Delete', negative: 'Cancel').then () ->
+          msg = messagebox.show(progress: true)
+          all_groups = ''
+          if type == 'class'
+              for _class in $scope.classes
+                  all_groups += _class.groupname + ','
+
+          if type == 'project'
+              for project in $scope.projects
+                  all_groups += project.groupname + ','
+
+          $http.post('/api/lmn/groupmembership/reset', {type: type, all_groups: all_groups}).then (resp) ->
+              notify.success gettext('Admin membership reset')
+          .finally () ->
+              msg.close()
+
   $scope.$watch 'identity.user', ->
     if $scope.identity.user is undefined
       return
     if $scope.identity.user is null
       return
     if $scope.identity.user is 'root'
-# $scope.identity.user = 'hulk'
       return
     $scope.getGroups($scope.identity.user)
     return

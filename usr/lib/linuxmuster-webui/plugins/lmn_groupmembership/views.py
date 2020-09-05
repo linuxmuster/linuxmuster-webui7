@@ -137,7 +137,7 @@ class Handler(HttpPlugin):
     @authorize('lmn:groupmembership')
     @endpoint(api=True)
     def handle_api_set_members(self, http_context):
-        """Manages the members of a project"""
+        """Manages the members of a project/class."""
         if http_context.method == 'POST':
             action  = http_context.json_body()['action']
             groupname = http_context.json_body()['groupname']
@@ -165,6 +165,21 @@ class Handler(HttpPlugin):
                 if result['TYPE'] == "ERROR":
                     return result['TYPE'], result['MESSAGE_EN']
                 return result['TYPE'], result['LOG']
+
+    @url(r'/api/lmn/groupmembership/reset')
+    @authorize('lmn:groupmembership')
+    @endpoint(api=True)
+    def handle_api_reset(self, http_context):
+        """Reset the admins of all projects or classes."""
+        type = http_context.json_body()['type']
+        all_groups = http_context.json_body()['all_groups']
+        select = '-' + type[0] # -c for class and -p for project
+
+        sophomorixCommand = ['sophomorix-'+type,  select, all_groups, '--admins', '""', '-jj']
+        result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
+        if result['TYPE'] == "ERROR":
+            return result['TYPE'], result['MESSAGE_EN']
+        return result['TYPE'], result['LOG']
 
     @url(r'/api/lm/search-project')
     @authorize('lmn:groupmembership')

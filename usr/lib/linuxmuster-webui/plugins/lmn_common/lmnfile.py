@@ -117,7 +117,7 @@ class CSVLoader(LMNFile):
 
     def __enter__(self):
         self.opened = open(self.file, 'r', encoding=self.encoding)
-        if 'r' in self.mode:
+        if 'r' in self.mode or '+' in self.mode:
             self.data = csv.DictReader(
                 (line for line in self.opened if not line.startswith('#')),
                 delimiter = self.delimiter,

@@ -121,7 +121,7 @@ class CSVLoader(LMNFile):
 
     def __enter__(self):
         self.opened = open(self.file, 'r', encoding=self.encoding)
-        if 'r' in self.mode:
+        if 'r' in self.mode or '+' in self.mode:
             self.data = csv.DictReader(
                 (line if len(line) > 3 else EMPTY_LINE_MARKER for line in self.opened),
                 delimiter = self.delimiter,
@@ -163,7 +163,7 @@ class ConfigLoader(LMNFile):
 
     def __enter__(self):
         self.opened = open(self.file, 'r', encoding=self.encoding)
-        if 'r' in self.mode:
+        if 'r' in self.mode or '+' in self.mode:
             self.data = ConfigObj(self.file, encoding='utf-8', write_empty_values=True, stringify=True)
             for section, options in self.data.items():
                 for key, value in options.items():

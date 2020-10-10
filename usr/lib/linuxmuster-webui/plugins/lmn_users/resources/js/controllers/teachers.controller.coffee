@@ -34,6 +34,7 @@ angular.module('lmn.users').controller 'LMUsersTeachersController', ($scope, $ht
       pageSize: 50
 
     $scope.all_selected = false
+    $scope.query = ''
 
 
     $http.post('/api/lm/sophomorixUsers/teachers',{action: 'get-all'}).then (resp) ->
@@ -107,17 +108,24 @@ angular.module('lmn.users').controller 'LMUsersTeachersController', ($scope, $ht
     $scope.batchSetCustomPassword = () ->
         $scope.setCustomPassword((x for x in $scope.teachers when x.selected))
 
-    $scope.selectAll = (filter) ->
-        if !filter?
-            filter = ''
+    $scope.filter = (row) ->
+        # Only query sAMAccountName, givenName and sn
+        result = false
+        for value in ['sAMAccountName', 'givenName', 'sn']
+            result = result || row[value].toLowerCase().indexOf($scope.query.toLowerCase() || '') != -1
+        return result
+
+    $scope.selectAll = (query) ->
+        if !query?
+            query = ''
         for teacher in $scope.teachers
-           if filter is undefined || filter == ''
+           if query is undefined || query == ''
               teacher.selected = $scope.all_selected
-           if teacher.sn.toLowerCase().includes filter.toLowerCase()
+           if teacher.sn.toLowerCase().includes query.toLowerCase()
               teacher.selected = $scope.all_selected
-           if teacher.givenName.toLowerCase().includes filter.toLowerCase()
+           if teacher.givenName.toLowerCase().includes query.toLowerCase()
               teacher.selected = $scope.all_selected
-           if teacher.sophomorixAdminClass.toLowerCase().includes filter.toLowerCase()
+           if teacher.sophomorixAdminClass.toLowerCase().includes query.toLowerCase()
               teacher.selected = $scope.all_selected
-           if teacher.sAMAccountName.toLowerCase().includes filter.toLowerCase()
+           if teacher.sAMAccountName.toLowerCase().includes query.toLowerCase()
               teacher.selected = $scope.all_selected

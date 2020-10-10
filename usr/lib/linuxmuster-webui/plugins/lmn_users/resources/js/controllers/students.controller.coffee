@@ -34,6 +34,7 @@ angular.module('lmn.users').controller 'LMUsersStudentsController', ($scope, $ht
        pageSize: 50
 
     $scope.all_selected = false
+    $scope.query = ''
 
     $http.post('/api/lm/sophomorixUsers/students', {action: 'get-all'}).then (resp) ->
         $scope.students = resp.data
@@ -98,19 +99,26 @@ angular.module('lmn.users').controller 'LMUsersStudentsController', ($scope, $ht
     $scope.batchSetCustomPassword = () ->
         $scope.setCustomPassword((x for x in $scope.students when x.selected))
 
-    $scope.selectAll = (filter) ->
-        if !filter?
-            filter = ''
+    $scope.filter = (row) ->
+        # Only query sAMAccountName, givenName, sn and sophomorixAdminClass
+        result = false
+        for value in ['sAMAccountName', 'givenName', 'sn', 'sophomorixAdminClass']
+            result = result || row[value].toLowerCase().indexOf($scope.query.toLowerCase() || '') != -1
+        return result
+
+    $scope.selectAll = (query) ->
+        if !query?
+            query = ''
         for student in $scope.students
-            if filter is undefined || filter == ''
+            if query is undefined || query == ''
                 student.selected = $scope.all_selected
-            if student.sn.toLowerCase().includes filter.toLowerCase()
+            if student.sn.toLowerCase().includes query.toLowerCase()
                 student.selected = $scope.all_selected
-            if student.givenName.toLowerCase().includes filter.toLowerCase()
+            if student.givenName.toLowerCase().includes query.toLowerCase()
                 student.selected = $scope.all_selected
-            if student.sophomorixAdminClass.toLowerCase().includes filter.toLowerCase()
+            if student.sophomorixAdminClass.toLowerCase().includes query.toLowerCase()
                 student.selected = $scope.all_selected
-            if student.sAMAccountName.toLowerCase().includes filter.toLowerCase()
+            if student.sAMAccountName.toLowerCase().includes query.toLowerCase()
                 student.selected = $scope.all_selected
 
 

@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.149-1) lmn7; urgency=medium
+
+  * Current snapshot build e10a5bdbab262d5823ae441025bc468415c31e99
+   *     Fix filter properties to search for.
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 26 Oct 2020 17:54:16 +0100
+
 linuxmuster-webui7 (1.0.148-1) lmn7; urgency=medium 
 
   * Current snapshot build d16a5060d5e783f0ba8b77a3fcfd1f2b342693b1

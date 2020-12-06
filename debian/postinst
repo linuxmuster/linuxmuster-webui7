@@ -77,6 +77,14 @@ case "$1" in
             echo "Set default sophomorix webui rights"
             /usr/sbin/sophomorix-ui
             
+            echo "Create webuiUploadfolder"
+            workgroup=$(cat /etc/samba/smb.conf | grep workgroup | awk '{print $3}')
+            sed -i "s/LINUXMUSTER/$workgroup/" /usr/lib/linuxmuster-webui/etc/webuiUpload.ntacl
+            mkdir -p /srv/webuiUpload/
+            setfacl --set-file /usr/lib/linuxmuster-webui/etc/webuiUpload.ntacl /srv/webuiUpload
+
+
+            
             # start webui
             echo "Start linuxmuster-webui"
             systemctl daemon-reload

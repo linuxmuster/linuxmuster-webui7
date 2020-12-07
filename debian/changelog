@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.152-1) lmn7; urgency=medium 
+
+  * Current snapshot build b2c2df5d75a6964a7f3ad4ebdac0a160681aa2da
+   *     workaround for transfer sessionsubdolfer whole session
+
+ -- Andreas Till <andreas.till@netzint.de> Mon Dec  7 13:49:21 CET 2020
+
 linuxmuster-webui7 (1.0.151-1) lmn7; urgency=medium 
 
   * Current snapshot build 3e0e2c3010ba6ea6d957e95da271016552842510

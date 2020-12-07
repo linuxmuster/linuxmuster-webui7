@@ -4,6 +4,7 @@ from time import localtime, strftime  # needed for timestamp in collect transfer
 from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue
+import os
 
 
 @component(HttpPlugin)
@@ -316,7 +317,27 @@ class Handler(HttpPlugin):
         subfolderPath = ''
         if 'subfolderPath' in http_context.json_body():
             subfolderPath = http_context.json_body()['subfolderPath']
-        sophomorixCommand = ['sophomorix-transfer', '-j', '--list-home-dir', user, '--subdir', '/transfer/'+subfolderPath]
+
+        # TODO: Workaround until sophomorix can create this folder by its own
+        # This is slow and needs an update
+        # look if session subfolder exist in user transfer dir, if not create
+        sophomorixCommand = ['sophomorix-transfer', '-jj', '--list-home-dir', user, '--subdir', '/transfer/']
+        FilesInTransfer = lmn_getSophomorixValue(sophomorixCommand, 'sAMAccountName/'+user)
+        #raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(FilesInTransfer))
+        if 'TREE' not in FilesInTransfer or subfolderPath not in FilesInTransfer['TREE']:
+            try:
+                os.mkdir('/tmp/empty')
+            except OSError:
+                print ("Creation of the directory /tmp/empty failed")
+            sophomorixCommand = ['sophomorix-transfer', '--from-unix-path', '/tmp/empty/', '--to-user',  user, '--subdir', 'transfer/'+subfolderPath, '-jj']
+            lmn_getSophomorixValue(sophomorixCommand, '', True)
+            try:
+                os.rmdir('/tmp/empty')
+            except OSError:
+                print ("Creation of the directory /tmp/empty failed")
+
+
+        sophomorixCommand = ['sophomorix-transfer', '-jj', '--list-home-dir', user, '--subdir', '/transfer/'+subfolderPath]
         availableFiles = lmn_getSophomorixValue(sophomorixCommand, 'sAMAccountName/'+user)
         #raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(availableFiles))
         availableFilesList = []

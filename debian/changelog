@@ -1,3 +1,18 @@
+linuxmuster-webui7 (1.0.155-1) lmn7; urgency=medium 
+
+  * Current snapshot build 66422b02d79a6a569eec445006396380f10d20cc
+   *     fixed postinst before samba installation
+
+ -- Andreas Till <andreas.till@netzint.de> Tue Dec  8 18:39:35 CET 2020
+
+linuxmuster-webui7 (1.0.154-1) lmn7; urgency=medium~
+
+  * Current snapshot build b67e18ac87b21783adf9861b5445a3ac347cb7a7
+   *     Updated Changelog due to new package
+
+ -- Andreas Till <andreas.till@netzint.de> Tue Dec  8 18:34:11 CET 2020
+
+
 linuxmuster-webui7 (1.0.153-1) lmn7; urgency=medium 
 
   * Current snapshot build 2807d5c582c927d84ed76f411fcccd0d2d52b887

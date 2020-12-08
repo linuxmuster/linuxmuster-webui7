@@ -79,9 +79,13 @@ case "$1" in
             
             echo "Create webuiUploadfolder"
             workgroup=$(cat /etc/samba/smb.conf | grep workgroup | awk '{print $3}')
-            sed -i "s/LINUXMUSTER/$workgroup/" /usr/lib/linuxmuster-webui/etc/webuiUpload.ntacl
             mkdir -p /srv/webuiUpload/
-            setfacl --set-file /usr/lib/linuxmuster-webui/etc/webuiUpload.ntacl /srv/webuiUpload
+            if [ -z "$workgroup" ];then
+                setfacl --set-file /usr/lib/linuxmuster-webui/etc/webuiUpload.ntacl /srv/webuiUpload
+            else
+                sed -i "s/LINUXMUSTER/$workgroup/" /usr/lib/linuxmuster-webui/etc/webuiUpload.ntacl
+                setfacl --set-file /usr/lib/linuxmuster-webui/etc/webuiUpload.ntacl /srv/webuiUpload
+            fi
 
 
             

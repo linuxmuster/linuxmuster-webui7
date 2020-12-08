@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.153-1) lmn7; urgency=medium 
+
+  * Current snapshot build 2807d5c582c927d84ed76f411fcccd0d2d52b887
+   *     check if workgroup variable is empty before setting rights
+
+ -- Andreas Till <andreas.till@netzint.de> Tue Dec  8 17:41:59 CET 2020
+
 linuxmuster-webui7 (1.0.152-1) lmn7; urgency=medium 
 
   * Current snapshot build b2c2df5d75a6964a7f3ad4ebdac0a160681aa2da

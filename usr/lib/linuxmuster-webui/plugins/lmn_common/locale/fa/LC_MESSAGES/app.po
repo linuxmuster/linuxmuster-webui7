@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ajenti\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-03 15:41+0200\n"
+"POT-Creation-Date: 2020-12-22 19:32+0100\n"
 "PO-Revision-Date: 2016-05-21 17:19-0400\n"
 "Last-Translator: eugenepankov <john.pankov@gmail.com>\n"
 "Language-Team: Persian\n"
@@ -78,7 +78,7 @@ msgid "Session time : {{ counter[0] }}:{{ counter[1] }}:{{ counter[2] }}"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/lmnfile.py:90
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/api.py:30
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/api.py:29
 msgid "Access refused."
 msgstr ""
 

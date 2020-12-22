@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-03 15:41+0200\n"
-"PO-Revision-Date: 2020-09-03 13:56\n"
+"POT-Creation-Date: 2020-12-22 19:32+0100\n"
+"PO-Revision-Date: 2020-12-22 18:38\n"
 "Last-Translator: \n"
 "Language-Team: Hebrew\n"
 "Language: he_IL\n"
@@ -79,7 +79,7 @@ msgid "Session time : {{ counter[0] }}:{{ counter[1] }}:{{ counter[2] }}"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/lmnfile.py:90
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/api.py:30
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/api.py:29
 msgid "Access refused."
 msgstr ""
 

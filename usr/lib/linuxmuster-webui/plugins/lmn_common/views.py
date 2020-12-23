@@ -1,6 +1,7 @@
 import os
 import shutil
 import pwd, grp
+import subprocess
 
 from jadi import component
 from aj.api.http import url, HttpPlugin
@@ -122,6 +123,18 @@ class Handler(HttpPlugin):
                     v = v.strip()
                     section[k.strip()] = v
             return config
+
+
+    ## TODO authorize
+    ## Used in
+    @url(r'/api/lm/version')
+    @endpoint(api=True)
+    def handle_api_version(self, http_context):
+        """Get the versions of the installed LMN packages."""
+        if http_context.method == 'GET':
+            packages = subprocess.check_output("dpkg -l | grep linuxmuster- | awk 'BEGIN {OFS=\"=\";} {print $2,$3}'", shell=True).decode().split()
+            return dict([package.split('=') for package in packages])
+
 
     ## NOT USED YET
     # @url(r'/api/lm/all-users') ## TODO authorize

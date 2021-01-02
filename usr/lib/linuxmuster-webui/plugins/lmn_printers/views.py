@@ -1,3 +1,7 @@
+"""
+Initial module to handle printers. DEPRECATED.
+"""
+
 import psutil
 
 from jadi import component
@@ -16,6 +20,15 @@ class Handler(HttpPlugin):
     @authorize('lm:printers')
     @endpoint(api=True)
     def handle_api_printers(self, http_context):
+        """
+        MUST BE UPDATED IF THIS MODULE IS REACTIVED.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return:
+        :rtype:
+        """
+
         printers_path = '/etc/cups/printers.conf'
         if http_context.method == 'GET':
             result = []

@@ -1,3 +1,7 @@
+"""
+Module to handle school session.
+"""
+
 from jadi import component
 from aj.api.http import url, HttpPlugin
 from time import localtime, strftime  # needed for timestamp in collect transfer
@@ -14,6 +18,16 @@ class Handler(HttpPlugin):
     @url(r'/api/lmn/session/sessions')
     @endpoint(api=True)
     def handle_api_session_sessions(self, http_context):
+        """
+        Manage the sessions ( list of sessions, participants, ... ).
+        Method POST.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: List
+        :rtype: list
+        """
+
         action = http_context.json_body()['action']
         if action == 'get-sessions':
             supervisor = http_context.json_body()['username']
@@ -236,6 +250,16 @@ class Handler(HttpPlugin):
     @url(r'/api/lmn/session/getUserInRoom')
     @endpoint(api=True)
     def handle_api_get_user_in_room(self, http_context):
+        """
+        Get students in the same room as the teacher.
+        Method POST.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: Details of users in room
+        :rtype: dict
+        """
+
         if http_context.method == 'POST':
             school = 'default-school'
             action = http_context.json_body()['action']
@@ -261,6 +285,16 @@ class Handler(HttpPlugin):
     @url(r'/api/lmn/session/user-search')
     @endpoint(api=True)
     def handle_api_ldap_user_search(self, http_context):
+        """
+        User query for javascript filters.
+        Method POST.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: Users list with details
+        :rtype: list
+        """
+
         school = 'default-school'
         with authorize('lm:users:students:read'):
             try:
@@ -276,6 +310,16 @@ class Handler(HttpPlugin):
     @url(r'/api/lmn/session/schoolClass-search')
     @endpoint(api=True)
     def handle_api_ldap_group_search(self, http_context):
+        """
+        Class query for javascript filters.
+        Method POST.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: Classes list with details
+        :rtype: list
+        """
+
         school = 'default-school'
         with authorize('lm:users:students:read'):
             try:
@@ -294,7 +338,14 @@ class Handler(HttpPlugin):
     @url(r'/api/lmn/session/moveFileToHome')  ## TODO authorize
     @endpoint(api=True)
     def handle_api_create_dir(self, http_context):
-        """Create directory with given path, ignoring errors"""
+        """
+        Move file to user's home through `sophomorix-transfer`.
+        Method POST.
+
+        :param http_context:
+        :type http_context:
+        """
+
         if http_context.method == 'POST':
             user = http_context.json_body()['user']
             filepath = http_context.json_body()['filepath']
@@ -308,6 +359,16 @@ class Handler(HttpPlugin):
     @url(r'/api/lmn/session/trans-list-files')
     @endpoint(api=True)
     def handle_api_session_file_trans_list(self, http_context):
+        """
+        Move uploaded files into the user's transfer directory.
+        Method POST.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: List of files in transfer directory
+        :rtype: list
+        """
+
         user = http_context.json_body()['user']
         # check if user is a string(given by share option) or an object in an array (given by collect option)
         if not isinstance(user, str):
@@ -329,6 +390,16 @@ class Handler(HttpPlugin):
     @url(r'/api/lmn/session/trans')
     @endpoint(api=True)
     def handle_api_session_file_trans(self, http_context):
+        """
+        Handles files between teacher and students (share, copy, move).
+        Method POST.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: State of the action.
+        :rtype: string
+        """
+
         senders = http_context.json_body()['senders']
         command = http_context.json_body()['command']
         receivers = http_context.json_body()['receivers']

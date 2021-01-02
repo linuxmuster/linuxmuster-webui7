@@ -1,3 +1,7 @@
+"""
+Manage per user or group quota configuration.
+"""
+
 import ldap
 import subprocess
 
@@ -18,6 +22,16 @@ class Handler(HttpPlugin):
     @authorize('lm:quotas:configure')
     @endpoint(api=True)
     def handle_api_quotas(self, http_context):
+        """
+        Get all quotas informations from `school.conf` and LDAP tree.
+        Method GET.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: All quotas informations
+        :rtype: list of dict
+        """
+
         school = 'default-school'
         settings_path = '/etc/linuxmuster/sophomorix/'+school+'/school.conf'
 
@@ -82,7 +96,16 @@ class Handler(HttpPlugin):
     @authorize('lm:quotas:configure')
     @endpoint(api=True)
     def handle_api_class_quotas(self, http_context):
-        ## Get quotas for projects and classes
+        """
+        Get quotas for projects and classes.
+        Method GET.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: Dict with all quotas informations
+        :rtype: dict
+        """
+
         if http_context.method == 'GET':
             groups = {'adminclass':{}, 'project':{}}
             shares = ['linuxmuster-global', 'default-school']
@@ -122,6 +145,12 @@ class Handler(HttpPlugin):
     @authorize('lm:quotas:configure')
     @endpoint(api=True)
     def handle_api_save_quotas(self, http_context):
+        """
+        Register the new quota values through sophomorix.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        """
 
         quota_types = {
             'quota_default_global':'linuxmuster-global',
@@ -159,16 +188,32 @@ class Handler(HttpPlugin):
     @authorize('lm:quotas:configure')
     @endpoint(api=True)
     def handle_api_ldap_search(self, http_context):
+        """
+        Query usernames for filter in frontend.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: list of usernames with details, one user per dict
+        :rtype: list of dict
+        """
+
+        # TODO : url already exists in groupmembership, must be factorized ?
+
         if http_context.method == 'POST':
+
             # Problem with unicode In&egraves --> In\xe8s (py) --> In\ufffds (replace)
             # Should be In&egraves --> Ines ( sophomorix supports this )
             # login = http_context.json_body()['login'].decode('utf-8', 'replace')
+
             login = http_context.json_body()['login']
             role = http_context.json_body()['role']
+
             ## --teacher limit the query only to teachers
             if role:
                 role = '--' + role
+
             resultArray = []
+
             try:
                 sophomorixCommand = ['sophomorix-query', '--anyname', login+'*', role, '-jj']
                 result = lmn_getSophomorixValue(sophomorixCommand, 'USER')
@@ -189,6 +234,13 @@ class Handler(HttpPlugin):
     @authorize('lm:quotas:apply')
     @endpoint(api=True)
     def handle_api_apply(self, http_context):
+        """
+        Apply new quota configuration.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        """
+
         try:
             subprocess.check_call('sophomorix-quota > /tmp/apply-sophomorix.log', shell=True)
         except Exception as e:

@@ -1,3 +1,7 @@
+"""
+API to load device file and run importing.
+"""
+
 import subprocess
 from jadi import component
 from aj.api.http import url, HttpPlugin
@@ -15,6 +19,17 @@ class Handler(HttpPlugin):
     @authorize('lm:devices')
     @endpoint(api=True)
     def handle_api_devices(self, http_context):
+        """
+        Read and write the devices file.
+        Method GET.
+        Method POST.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: Content of config file in read mode.
+        :rtype: string
+        """
+
         path = '/etc/linuxmuster/sophomorix/default-school/devices.csv'
         fieldnames = [
             'room',
@@ -50,6 +65,13 @@ class Handler(HttpPlugin):
     @authorize('lm:devices:import')
     @endpoint(api=True)
     def handle_api_devices_import(self, http_context):
+        """
+        Launch the import of the devices in the system.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        """
+
         try:
             subprocess.check_call('linuxmuster-import-devices > /tmp/import_devices.log', shell=True)
         except Exception as e:

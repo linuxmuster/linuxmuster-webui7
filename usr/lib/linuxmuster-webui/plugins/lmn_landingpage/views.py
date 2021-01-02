@@ -1,3 +1,7 @@
+"""
+Module to display a welcome page for the user with useful informations.
+"""
+
 # coding=utf-8
 from jadi import component
 from aj.api.http import url, HttpPlugin
@@ -14,8 +18,18 @@ class Handler(HttpPlugin):
     @url(r'/api/lmn/quota/(?P<user>.+)')
     @endpoint(api=True)
     def handle_api_quota(self, http_context, user):
+        """
+        Get quota informations from user through sophomorix-query.
 
-       if http_context.method == 'GET':
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :param user: User login
+        :type user: string
+        :return: All quotas informations from user
+        :rtype: dict
+        """
+
+        if http_context.method == 'GET':
 
                 if user != 'root':
                     sophomorixCommand = ['sophomorix-query', '--sam', user, '--user-full', '--quota-usage', '-jj']

@@ -1,3 +1,7 @@
+"""
+Module to configure sophomorix.
+"""
+
 # coding=utf-8
 import os
 import unicodecsv as csv
@@ -42,6 +46,16 @@ class Handler(HttpPlugin):
     @authorize('lm:schoolsettings')
     @endpoint(api=True)
     def handle_api_session_sessions(self, http_context):
+        """
+        Determine encoding using sophomorix-check.
+        Method POST.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: Encoding type of the file, e.g. utf-8
+        :rtype: string
+        """
+
         fileToCheck = http_context.json_body()['path']
         if os.path.isfile(fileToCheck) is False:
             os.mknod(fileToCheck)
@@ -59,6 +73,17 @@ class Handler(HttpPlugin):
     @authorize('lm:schoolsettings')
     @endpoint(api=True)
     def handle_api_settings(self, http_context):
+        """
+        Read and write the config file `school.conf`.
+        Method GET: read the file.
+        Method POST: write the new content.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: Settings in read mode
+        :rtype: dict in read mode
+        """
+
         school = 'default-school'
         path = '/etc/linuxmuster/sophomorix/'+school+'/school.conf'
         # Update each time the config_obj because it may have changed
@@ -131,6 +156,14 @@ class Handler(HttpPlugin):
     @authorize('lm:schoolsettings')
     @endpoint(api=True)
     def handle_api_school_share(self, http_context):
+        """
+        DEPRECATED, not used anymore. Adapt owner and group rights
+        on a share directory.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        """
+
         school = 'default-school'
         path = '/srv/samba/schools/'+school+'/share'
         if http_context.method == 'GET':
@@ -146,6 +179,17 @@ class Handler(HttpPlugin):
     @authorize('lm:schoolsettings')
     @endpoint(api=True)
     def handle_api_subnet(self, http_context):
+        """
+        Manage `subnets.csv` config file for subnets.
+        Method GET: read content.
+        Method POST: write new content.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: Settings in read mode
+        :rtype: dict
+        """
+
         school = 'default-school'
         path = '/etc/linuxmuster/subnets.csv'
         fieldnames = [

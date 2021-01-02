@@ -1,3 +1,8 @@
+"""
+Tool to manage the groups (class, projects, printers ) in a linuxmuster
+environment.
+"""
+
 # coding=utf-8
 from jadi import component
 from aj.api.http import url, HttpPlugin
@@ -15,7 +20,18 @@ class Handler(HttpPlugin):
     @authorize('lmn:groupmemberships:write')
     @endpoint(api=True)
     def handle_api_groupmembership_details(self, http_context):
+        """
+        Get the group informations of a specified group.
+        Method POST.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: Group informations in LDAP ( name, owner, ... )
+        :rtype: dict
+        """
+
         action = http_context.json_body()['action']
+
         if http_context.method == 'POST':
             # schoolname = 'default-school'
             with authorize('lmn:groupmemberships:write'):
@@ -32,6 +48,18 @@ class Handler(HttpPlugin):
     @authorize('lmn:groupmembership')
     @endpoint(api=True)
     def handle_api_groups(self, http_context):
+        """
+        Performs diverses actions on groups, like list all groups, kill and create.
+        Method POST.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: List of groups or result for actions kill and create
+        :rtype: dict or tuple
+        """
+
+        # TODO : this need to be splitted into atomic functions/tasks.
+
         schoolname = 'default-school'
         username = http_context.json_body()['username']
         action = http_context.json_body()['action']
@@ -118,17 +146,29 @@ class Handler(HttpPlugin):
     @authorize('lmn:groupmembership')
     @endpoint(api=True)
     def handle_api_set_group(self, http_context):
-        """Handles join and hide options for a group."""
+        """
+        Handles join and hide options for a group.
+        Method POST.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: Results of the operation
+        :rtype: tuple
+        """
+
         if http_context.method == 'POST':
             option  = http_context.json_body()['option']
             group = http_context.json_body()['group']
             groupType = http_context.json_body()['type']
+
             if groupType == "project":
                 sophomorixCommand = ['sophomorix-project',  option, '--project', group, '-jj']
             else:
                 # Class
                 sophomorixCommand = ['sophomorix-class',  option, '--class', group, '-jj']
+
             result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
+
             if result['TYPE'] == "ERROR":
                 return result['TYPE'], result['MESSAGE_EN']
             return result['TYPE'], result['LOG']
@@ -137,7 +177,16 @@ class Handler(HttpPlugin):
     @authorize('lmn:groupmembership')
     @endpoint(api=True)
     def handle_api_set_members(self, http_context):
-        """Manages the members of a project/class."""
+        """
+        Manages the members of a project (add, remove, ...).
+        Method POST.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: Result of the operation
+        :rtype: tuple
+        """
+
         if http_context.method == 'POST':
             action  = http_context.json_body()['action']
             groupname = http_context.json_body()['groupname']
@@ -185,13 +234,27 @@ class Handler(HttpPlugin):
     @authorize('lmn:groupmembership')
     @endpoint(api=True)
     def handle_api_search_project(self, http_context):
+        """
+        Perform partial searchs in projects in the LDAP tree, per user or per
+        group.
+        Method POST.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: List of search results
+        :rtype: list
+        """
+
         if http_context.method == 'POST':
+
             # Problem with unicode In&egraves --> In\xe8s (py) --> In\ufffds (replace)
             # Should be In&egraves --> Ines ( sophomorix supports this )
             # login = http_context.json_body()['login'].decode('utf-8', 'replace')
+
             login = http_context.json_body()['login']
             type = http_context.json_body()['type']
             resultArray = []
+
             try:
                 if type == 'user':
                     sophomorixCommand = ['sophomorix-query', '--anyname', login+'*', '-jj']

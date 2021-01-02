@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-22 19:32+0100\n"
-"PO-Revision-Date: 2020-12-22 18:38\n"
+"POT-Creation-Date: 2021-01-02 14:57+0100\n"
+"PO-Revision-Date: 2021-01-02 14:01\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -78,8 +78,8 @@ msgstr ""
 msgid "Session time : {{ counter[0] }}:{{ counter[1] }}:{{ counter[2] }}"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/lmnfile.py:90
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/api.py:29
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/lmnfile.py:133
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/api.py:41
 msgid "Access refused."
 msgstr ""
 
@@ -166,8 +166,11 @@ msgstr ""
 msgid "Copying files: %s."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:46
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:49
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:48
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:50
+msgid " uploaded"
+msgstr ""
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:92
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:95
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:140

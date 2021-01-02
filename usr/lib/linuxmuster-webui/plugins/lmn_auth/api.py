@@ -1,3 +1,7 @@
+"""
+Authentication classes to communicate with LDAP tree and load user's informations.
+"""
+
 import logging
 import os
 import stat
@@ -19,6 +23,10 @@ from aj.plugins.lmn_common.api import lmconfig
 
 @component(AuthenticationProvider)
 class LMAuthenticationProvider(AuthenticationProvider):
+    """
+    LDAP Authentication provider for linuxmuster.net
+    """
+
     id = 'lm'
     name = _('Linux Muster LDAP')
 
@@ -26,7 +34,18 @@ class LMAuthenticationProvider(AuthenticationProvider):
         self.context = context
 
     def _get_ldap_user(self, username, context=""):
-        """Retrieve user's DN and attributes from LDAP."""
+        """
+        Get the user's informations to initialize his session.
+
+        :param username: Username
+        :type username: string
+        :param context: 'auth' to get permissions and 'userconfig' to get
+        user's personal config, e.g. for Dashboard
+        :type context: string
+        :return: Dict of values
+        :rtype: dict
+        """
+
         ldap_filter = """(&
                             (cn=%s)
                             (objectClass=user)
@@ -85,6 +104,17 @@ class LMAuthenticationProvider(AuthenticationProvider):
         return userAttrs
 
     def authenticate(self, username, password):
+        """
+        Test credentials against LDAP and parse permissions for the session.
+
+        :param username: Username
+        :type username: string
+        :param password: Password
+        :type password: string
+        :return: User's permissions
+        :rtype: dict
+        """
+
         if username == 'root':
             return OSAuthenticationProvider.get(self.context).authenticate(username, password)
 
@@ -125,18 +155,49 @@ class LMAuthenticationProvider(AuthenticationProvider):
             }
 
     def authorize(self, username, permission):
+        """
+        Get permissions from session, default false.
+
+        :param username: Username
+        :type username: string
+        :param permission: Permission as dict
+        :type permission: dict
+        :return: Bool
+        :rtype: bool
+        """
+
         if username == 'root':
             return True
         return self.context.session.auth_info['permissions'].get(permission['id'], False)
 
     def change_password(self, username, password, new_password):
+        """
+        Change user password through sophomorix-passwd.
+
+        :param username: Username
+        :type username: string
+        :param password: Old password
+        :type password: string
+        :param new_password: New password
+        :type new_password: string
+        """
+
         if not self.authenticate(username, password):
             raise Exception('Wrong password')
         systemString = ['sudo', 'sophomorix-passwd', '--user', username, '--pass', new_password, '--hide', '--nofirstpassupdate', '--use-smbpasswd']
         subprocess.check_call(systemString, shell=False)
 
     def get_isolation_gid(self, username):
-        """Returns the gid of the group which will run each worker."""
+        """
+        For each session there will be an isolated worker. This function returns
+        the right gid for the worker process.
+
+        :param username: Username
+        :type username: string
+        :return: GID of the user
+        :rtype: integer
+        """
+
         if username == 'root':
             return 0
         # GROUP CONTEXT
@@ -160,7 +221,16 @@ class LMAuthenticationProvider(AuthenticationProvider):
         return None
 
     def get_isolation_uid(self, username):
-        """Returns the uid of the user which will run each worker."""
+        """
+        For each session there will be an isolated worker. This function returns
+        the right uid for the worker process.
+
+        :param username: Username
+        :type username: string
+        :return: UID of the user
+        :rtype: integer
+        """
+
         if username == 'root':
             return 0
         # USER CONTEXT
@@ -181,6 +251,15 @@ class LMAuthenticationProvider(AuthenticationProvider):
         return uid
 
     def get_profile(self, username):
+        """
+        Prepare identity profile for angular.
+
+        :param username: Username
+        :type username: string
+        :return: User's informations from LDAP
+        :rtype: dict
+        """
+
         if username in ["root",None]:
             return {}
         try:
@@ -193,6 +272,10 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
 @component(UserConfigProvider)
 class UserLdapConfig(UserConfigProvider):
+    """
+    User config class compliant with linuxmuster.net LDAP config's scheme
+    """
+
     id = 'lm'
     name = _('Linuxmuster LDAP user config')
 
@@ -209,6 +292,13 @@ class UserLdapConfig(UserConfigProvider):
             self.data = {}
 
     def load(self):
+        """
+        Load attributes from LDAP.
+
+        :return: User's attributes
+        :rtype: yaml object if root or dict
+        """
+
         if self.user == 'root':
             self.data = yaml.load(open('/root/.config/ajenti.yml'), Loader=yaml.Loader)
         else:
@@ -221,6 +311,10 @@ class UserLdapConfig(UserConfigProvider):
                 self.data = {}
 
     def save(self):
+        """
+        Save user's config. If root, this goes in a file, otherwise in LDAP tree.
+        """
+
         if self.user == 'root':
             with open('/root/.config/ajenti.yml', 'w') as f:
                 f.write(yaml.safe_dump(
@@ -271,4 +365,9 @@ class UserLdapConfig(UserConfigProvider):
             l.unbind_s()
 
     def harden(self):
+        """
+        Change mode to "read, write, and execute by owner". Currently not used
+        (self.path is not defined) but keeped in compatibility mode.
+        """
+
         os.chmod(self.path, stat.S_IRWXU)

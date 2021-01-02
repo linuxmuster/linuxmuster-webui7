@@ -1,3 +1,7 @@
+"""
+Common tools to communicate with sophomorix and handle config files.
+"""
+
 import os
 import time
 import subprocess
@@ -18,7 +22,15 @@ ALLOWED_PATHS = [
                 ]
 
 def check_allowed_path(path):
-    """Check path before modifying file for security reasons."""
+    """
+    Check path before modifying files for security reasons.
+
+    :param path: File to modify
+    :type path: string
+    :return: File path in allowed paths.
+    :rtype: bool
+    """
+
     allowed_path = False
     for rootpath in ALLOWED_PATHS:
         if rootpath in path:
@@ -30,6 +42,10 @@ def check_allowed_path(path):
     raise IOError(_("Access refused."))
 
 class LinuxmusterConfig():
+    """
+    Basic class to handle linuxmuster webui's config file (yaml).
+    """
+
     def __init__(self, path):
         self.data = None
         self.path = os.path.abspath(path)
@@ -62,6 +78,10 @@ else:
     lmsetup_schoolname = None
 
 class CSVSpaceStripper:
+    """
+    CSV parser for linuxmuster's config files.
+    """
+
     def __init__(self, file, encoding='utf-8'):
         self.f = file
         self.encoding = encoding
@@ -92,6 +112,14 @@ class CSVSpaceStripper:
 
 
 def lmn_backup_file(path):
+    """
+    Create a backup of a file if in allowed paths, but on ly keeps 10 backups.
+    Backup files names scheme is `.<name>.bak.<timestamp>`
+
+    :param path: Path of the file
+    :type path: string
+    """
+
     if not os.path.exists(path):
         return
 
@@ -106,7 +134,20 @@ def lmn_backup_file(path):
             f.write(open(path).read())
 
 def lmn_write_csv(path, fieldnames, data, encoding='utf-8'):
-    """Write CSV and backup csv file only if there's no difference with the original. Delimiter is always ;"""
+    """
+    Write CSV and backup csv file only if there's no difference with the original.
+    Delimiter is always ';'
+    DEPRECATED
+
+    :param path: Path of the file
+    :type path: string
+    :param fieldnames: List of CSV fieldsnames
+    :type fieldnames: list
+    :param data: Data to write
+    :type data: list of string
+    :param encoding: Encoding, e.g. utf-8
+    :type encoding: string
+    """
 
     if check_allowed_path(path):
         tmp = path + '_tmp'
@@ -124,7 +165,14 @@ def lmn_write_csv(path, fieldnames, data, encoding='utf-8'):
             os.unlink(tmp)
 
 def lmn_write_configfile(path, data):
-    """Write config file it only if there's no difference with the original."""
+    """
+    Write config file it only if there's no difference with the original.
+
+    :param path: Path of the file
+    :type path: string
+    :param data: New content
+    :type data: string
+    """
 
     if check_allowed_path(path):
         tmp = path + '_tmp'
@@ -141,7 +189,9 @@ def lmn_write_configfile(path, data):
             os.rename(tmp, path)
 
 class SophomorixProcess(threading.Thread):
-    """Worker for processing sophomorix commands"""
+    """
+    Worker for processing sophomorix commands.
+    """
 
     def __init__(self, command):
         self.stdout = None
@@ -155,37 +205,49 @@ class SophomorixProcess(threading.Thread):
 
 
 def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
-    """Get the response dict or value for a key after running a sophomorix command"""
+    """
+    Connector to all sophomorix commands. Run a sophomorix command with -j
+    option (output as json) through a SophomorixProcess and parse the results.
+
+    :param sophomorixCommand: Command with options to run
+    :type sophomorixCommand: list
+    :param jsonpath: Key to search in the resulted dict, e.g. /USERS/doe
+    :type jsonpath: string
+    :param ignoreErrors: Quiet mode
+    :type ignoreErrors: bool
+    :return: Whole output or key if jsonpath is defined
+    :rtype: dict or value (list, dict, integer, string)
+    """
 
     uid = os.getuid()
     if uid != 0:
         sophomorixCommand = ['sudo'] + sophomorixCommand
 
-    ## New Thread for one process to avoid conflicts
+    # New Thread for one process to avoid conflicts
     t = SophomorixProcess(sophomorixCommand)
     t.daemon = True
     t.start()
     t.join()
 
-    ## Cleanup stderr output
-    #output = t.stderr.replace(':null,', ":\"null\",")
-    #TODO: Maybe sophomorix should provide the null value  in  a python usable format
+    # Cleanup stderr output
+    # output = t.stderr.replace(':null,', ":\"null\",")
+    # TODO: Maybe sophomorix should provide the null value  in  a python usable format
     output = t.stderr.decode("utf8").replace(':null', ":\"null\"")
     output = output.replace(':null}', ":\"null\"}")
     output = output.replace(':null]', ":\"null\"]")
 
 
-    ## Some comands get many dicts, we just want the first
+    # Some comands get many dicts, we just want the first
     output = output.replace('\n', '').split('# JSON-end')[0]
     output = output.split('# JSON-begin')[1]
     output = re.sub('# JSON-begin', '', output)
 
-    ## Convert str to dict
+    # Convert str to dict
     jsonDict = {}
     if output:
         jsonDict = ast.literal_eval(output)
 
-    ## Without key, simply return the dict
+    # Without key, simply return the dict
     if jsonpath is '':
         return jsonDict
 

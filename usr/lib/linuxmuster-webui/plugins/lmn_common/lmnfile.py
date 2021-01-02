@@ -1,3 +1,7 @@
+"""
+Classes definitions to read, parse and save config files.
+"""
+
 import os.path
 import logging
 import abc
@@ -19,7 +23,26 @@ ALLOWED_PATHS = [
 EMPTY_LINE_MARKER = '###EMPTY#LINE'
 
 class LMNFile(metaclass=abc.ABCMeta):
+    """
+    Meta class to handle all type of config file used in linuxmuster's project,
+    e.g. ini, csv, linbo config files.
+    """
+
     def __new__(cls, file, mode, delimiter=';', fieldnames=[]):
+        """
+        Parse the extension of the file and choose the right subclass to handle
+        the file.
+
+        :param file: File to open
+        :type file: string
+        :param mode: Read, write, e.g. 'r' or 'wb'
+        :type mode: string
+        :param delimiter: Useful for CSV files
+        :type delimiter: string
+        :param fieldnames: Useful for CSV files
+        :type fieldnames: list of strings
+        """
+
         ext = os.path.splitext(file)[-1]
         for child in cls.__subclasses__():
             if child.hasExtension(ext):
@@ -46,6 +69,15 @@ class LMNFile(metaclass=abc.ABCMeta):
 
     @classmethod
     def hasExtension(cls, ext):
+        """
+        Determine if file should be handled here.
+
+        :param ext: Extension of a file, e.g. ini
+        :type ext: string
+        :return: File handled or not
+        :rtype: bool
+        """
+
         if ext in cls.extensions:
             return True
         return False
@@ -59,6 +91,11 @@ class LMNFile(metaclass=abc.ABCMeta):
         raise NotImplementedError
 
     def backup(self):
+        """
+        Create a backup of a file if in allowed paths, but on ly keeps 10 backups.
+        Backup files names scheme is `.<name>.bak.<timestamp>`
+        """
+
         if not os.path.exists(self.file):
             return
 
@@ -80,7 +117,13 @@ class LMNFile(metaclass=abc.ABCMeta):
     #     raise NotImplementedError
 
     def check_allowed_path(self):
-        """Check path before modifying file for security reasons."""
+        """
+        Check path before modifying files for security reasons.
+
+        :return: File path in allowed paths.
+        :rtype: bool
+        """
+
         allowed_path = False
         for rootpath in ALLOWED_PATHS:
             if rootpath in self.file:
@@ -93,6 +136,13 @@ class LMNFile(metaclass=abc.ABCMeta):
             raise IOError(_("Access refused."))
 
     def detect_encoding(self):
+        """
+        Try to detect encoding of the file through magic numbers.
+
+        :return: Detected encoding
+        :rtype: string
+        """
+
         if not os.path.isfile(self.file):
             logging.info('Detected encoding for %s : no file, using utf-8', self.file)
             return 'utf-8'
@@ -106,6 +156,10 @@ class LMNFile(metaclass=abc.ABCMeta):
             return encoding
 
 class LinboLoader(LMNFile):
+    """
+    Handler for linbo's cloop informations files.
+    """
+
     extensions = ['.desc', '.reg', '.postsync', '.info', '.macct']
 
     def __enter__(self):
@@ -117,6 +171,10 @@ class LinboLoader(LMNFile):
 
 
 class CSVLoader(LMNFile):
+    """
+    Handler for csv files.
+    """
+
     extensions = ['.csv']
 
     def __enter__(self):

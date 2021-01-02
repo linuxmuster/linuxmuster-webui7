@@ -98,16 +98,32 @@
         </table>
     </div>
     <div class="form-group">
-        <label translate>Start options</label>
-        <br />
-        <span checkbox ng:model="config.config.LINBO.AutoPartition" text="{{'Auto partition recovery'|translate}}" />
-        <br />
-        <span checkbox ng:model="config.config.LINBO.AutoFormat" text="{{'Auto partition formatting'|translate}}" />
-        <br />
-        <span checkbox ng:model="config.config.LINBO.AutoInitCache" text="{{'Auto update cache'|translate}}" />
-        <br />
-        <span checkbox ng:model="config.config.LINBO.UseMinimalLayout" text="{{'Use minimal layout'|translate}}" />
-        <br />
+        <table width="100%">
+            <tr>
+                <td width="49%">
+                    <label translate>Start options</label>
+                    <br />
+                    <span checkbox ng:model="config.config.LINBO.AutoPartition" text="{{'Auto partition recovery'|translate}}" />
+                    <br />
+                    <span checkbox ng:model="config.config.LINBO.AutoFormat" text="{{'Auto partition formatting'|translate}}" />
+                    <br />
+                    <span checkbox ng:model="config.config.LINBO.AutoInitCache" text="{{'Auto update cache'|translate}}" />
+                    <br />
+                </td>
+                <td width="49%">
+                    <label translate>Linbo GUI customization</label>
+                    <br />
+                    <span checkbox ng:model="config.config.LINBO.UseMinimalLayout" text="{{'Use minimal layout'|translate}}" />
+                    <br /><br />
+                    <label translate>Language</label>
+                    <select ng:model="config.config.LINBO.Locale" class="form-control">
+                        <option value="de-DE" translate>German</option>
+                        <option value="en-GB" translate>English</option>
+                        <option value="fr-FR" translate>French</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
     </div>
     <div class="form-group">
         <label translate>Kernel options</label>

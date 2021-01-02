@@ -1,3 +1,8 @@
+"""
+APIs for user management in linuxmuster.net. Basically parse the output of
+sophomorix commands.
+"""
+
 import unicodecsv as csv
 import os
 import subprocess
@@ -35,7 +40,31 @@ class Handler(HttpPlugin):
     @url(r'/api/lmn/sophomorixUsers/import-list')
     @endpoint(api=True)
     def handle_api_filelistImport(self, http_context):
+        """
+        Import and save users's import lists (teachers, students, ...).
+        Method POST.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: Users lists in import mode, one dict per user
+        :rtype: list of dict in import mode
+        """
+
         def findIndex(lst, key, value):
+            """
+            Try catches if dic[key] exists, if it is an unused coloumn this is
+            not the case
+
+            :param lst: List to parse
+            :type lst: list
+            :param key: Key to search
+            :type key: string
+            :param value: Value to test
+            :type value: can be a dict, list or string
+            :return: Index of he key or -1
+            :rtype: integer
+            """
+
             for i, dic in enumerate(lst):
                 # try catches if dic[key] exists, if it is an unused coloumn this is not the case
                 try:
@@ -147,6 +176,17 @@ class Handler(HttpPlugin):
     @url(r'/api/lm/users/students-list')
     @endpoint(api=True)
     def handle_api_students(self, http_context):
+        """
+        Read and write students csv lists.
+        Method GET: read students list.
+        Method POST: write students list.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: List of students in read mode, one dict per student.
+        :rtype: list of dict
+        """
+
         school = 'default-school'
         path = '/etc/linuxmuster/sophomorix/'+school+'/students.csv'
         if os.path.isfile(path) is False:
@@ -175,6 +215,17 @@ class Handler(HttpPlugin):
     @url(r'/api/lm/users/teachers-list')
     @endpoint(api=True)
     def handle_api_teachers(self, http_context):
+        """
+        Read and write teachers csv lists.
+        Method GET: read teachers list.
+        Method POST: write teachers list.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: List of teachers in read mode, one dict per teacher.
+        :rtype: list of dict
+        """
+
         school = 'default-school'
         path = '/etc/linuxmuster/sophomorix/'+school+'/teachers.csv'
         if os.path.isfile(path) is False:
@@ -207,6 +258,16 @@ class Handler(HttpPlugin):
     @url(r'/api/lm/sophomorixUsers/teachers')
     @endpoint(api=True)
     def handle_api_sophomorix_teachers(self, http_context):
+        """
+        Get teachers list from LDAP tree.
+        Method POST.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: List of teachers with details, one teacher per dict.
+        :rtype: list of dict
+        """
+
         action = http_context.json_body()['action']
         if http_context.method == 'POST':
             schoolname = 'default-school'
@@ -236,6 +297,16 @@ class Handler(HttpPlugin):
     @url(r'/api/lm/sophomorixUsers/students')
     @endpoint(api=True)
     def handle_api_sophomorix_students(self, http_context):
+        """
+        Get students list from LDAP tree.
+        Method POST.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: List of students with details, one student per dict.
+        :rtype: list of dict
+        """
+
         action = http_context.json_body()['action']
         if http_context.method == 'POST':
             schoolname = 'default-school'
@@ -265,6 +336,16 @@ class Handler(HttpPlugin):
     @url(r'/api/lm/sophomorixUsers/schooladmins')
     @endpoint(api=True)
     def handle_api_sophomorix_schooladmins(self, http_context):
+        """
+        Get schooladmins list from LDAP tree.
+        Method POST.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: List of schooladminss with details, one schooladmin per dict.
+        :rtype: list of dict
+        """
+
         action = http_context.json_body()['action']
         if http_context.method == 'POST':
             schooladminsList = []
@@ -289,6 +370,16 @@ class Handler(HttpPlugin):
     @url(r'/api/lm/sophomorixUsers/globaladmins')
     @endpoint(api=True)
     def handle_api_sophomorix_globaladmins(self, http_context):
+        """
+        Get globaladmins list from LDAP tree.
+        Method POST.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: List of globaladminss with details, one globaladmin per dict.
+        :rtype: list of dict
+        """
+
         action = http_context.json_body()['action']
         if http_context.method == 'POST':
             globaladminsList = []
@@ -313,6 +404,17 @@ class Handler(HttpPlugin):
     @url(r'/api/lm/users/extra-students')
     @endpoint(api=True)
     def handle_api_extra_students(self, http_context):
+        """
+        Read and write extra-students csv lists.
+        Method GET: read extra-students list.
+        Method POST: write extra-students list.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: List of extra-students in read mode, one dict per extra-student.
+        :rtype: list of dict
+        """
+
         school = 'default-school'
         path = '/etc/linuxmuster/sophomorix/'+school+'/extrastudents.csv'
         if os.path.isfile(path) is False:
@@ -341,6 +443,17 @@ class Handler(HttpPlugin):
     @url(r'/api/lm/users/extra-courses')
     @endpoint(api=True)
     def handle_api_extra_courses(self, http_context):
+        """
+        Read and write extra-courses csv lists.
+        Method GET: read extra-courses list.
+        Method POST: write extra-courses list.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: List of extra-courses in read mode, one dict per extra-course.
+        :rtype: list of dict
+        """
+
         school = 'default-school'
         path = '/etc/linuxmuster/sophomorix/'+school+'/extraclasses.csv'
         if os.path.isfile(path) is False:
@@ -371,6 +484,16 @@ class Handler(HttpPlugin):
     @authorize('lm:users:check')
     @endpoint(api=True)
     def handle_api_users_check(self, http_context):
+        """
+        Launch `sophomorix-check` to find out if more actions are required to
+        save the changes to the sophomorix objects.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: Output of `sophomorix-check`
+        :rtype: dict
+        """
+
         sophomorixCommand = ['sophomorix-check', '-jj']
         results = lmn_getSophomorixValue(sophomorixCommand, '')
         ## Remove UPDATE entries which are also in KILL ( necessary to show it in KILL and UPDATE ? )
@@ -389,6 +512,15 @@ class Handler(HttpPlugin):
     @authorize('lm:users:apply')
     @endpoint(api=True)
     def handle_api_users_apply(self, http_context):
+        """
+        Performs an add, update or kill of sophomorix objects after a
+        `sophomorix-check` if necessary.
+        Method POST.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        """
+
         path = '/tmp/sophomorix.log'
         # TODO: Update this function for output
         # replace sophomorix-move by sophomorix-update
@@ -411,6 +543,16 @@ class Handler(HttpPlugin):
     @authorize('lm:users:passwords')
     @endpoint(api=True)
     def handle_api_users_password(self, http_context):
+        """
+        Update users passwords through `sophomorix-passwd`.
+        Method POST.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: Output of `sophomorix-passwd`
+        :rtype: dict
+        """
+
         action = http_context.json_body()['action']
         users = http_context.json_body()['users']
         user = ','.join([x.strip() for x in users])
@@ -438,6 +580,16 @@ class Handler(HttpPlugin):
     @authorize('lm:users:schooladmins:create')
     @endpoint(api=True)
     def handle_api_users_schooladmins_create(self, http_context):
+        """
+        Create or delete school admins.
+        Method POST.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: State of the command
+        :rtype: string
+        """
+
         school = 'default-school'
         action = http_context.json_body()['action']
         users = http_context.json_body()['users']
@@ -466,6 +618,16 @@ class Handler(HttpPlugin):
     @authorize('lm:users:globaladmins:create')
     @endpoint(api=True)
     def handle_api_users_globaladmins_create(self, http_context):
+        """
+        Create or delete global admins.
+        Method POST.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: State of the command
+        :rtype: string
+        """
+
         action = http_context.json_body()['action']
         users = http_context.json_body()['users']
         user = ','.join([x.strip() for x in users])
@@ -521,6 +683,17 @@ class Handler(HttpPlugin):
     @authorize('lm:users:passwords')
     @endpoint(api=True)
     def handle_api_users_print(self, http_context):
+        """
+        Print passwords as PDF.
+        Method GET: get all classes lists for teachers.
+        Method POST: all passwords.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: With GET, list of classes, one classe per dict
+        :rtype: With GET, list of dict
+        """
+
         school = 'default-school'
         if http_context.method == 'GET':
 
@@ -579,6 +752,15 @@ class Handler(HttpPlugin):
     @authorize('lm:users:passwords')
     @endpoint(api=False, page=True)
     def handle_api_users_print_download(self, http_context, name):
+        """
+        Changes header to deliver a downloadable PDF.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :param name: Name of the file
+        :type name: string
+        """
+
         root = '/var/lib/sophomorix/print-data/'
         path = os.path.abspath(os.path.join(root, name))
 
@@ -590,7 +772,17 @@ class Handler(HttpPlugin):
     @authorize('lm:users:passwords')
     @endpoint(api=True)
     def handle_api_users_test_password(self, http_context, name):
-        """Check if first password is still set."""
+        """
+        Check if first password is still set.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :param name: User's uid
+        :type name: string
+        :return: First password still set or not
+        :rtype: bool
+        """
+
         line = subprocess.check_output(['sudo', 'sophomorix-passwd', '--test-firstpassword', '-u', name]).splitlines()[-4]
         return b'1 OK' in line
 
@@ -598,7 +790,17 @@ class Handler(HttpPlugin):
     @authorize('lm:users:passwords')
     @endpoint(api=True)
     def handle_group_quota(self, http_context):
-        """Get samba share limits for a group list."""
+        """
+        Get samba share limits for a group list. Prepare type key for style
+        (danger, warning, success) to display status.
+        Method POST.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: All quotas for specified users
+        :rtype: dict
+        """
+
         if http_context.method == 'POST':
             groupList = http_context.json_body()['groupList']
             sophomorixCommand = ['sophomorix-quota', '--smbcquotas-only', '-i', '--user', ','.join(groupList), '-jj']

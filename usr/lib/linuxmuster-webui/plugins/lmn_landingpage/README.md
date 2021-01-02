@@ -1,3 +1,3 @@
-# Ajenti plugin template
+# Linuxmuster.net landingpage plugin
 
-This is the plugin template used by ajenti-dev-multitool
+Welcome page containing user's informations.

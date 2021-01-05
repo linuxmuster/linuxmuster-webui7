@@ -10,7 +10,6 @@ import subprocess
 from jadi import component
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint
-from aj.plugins.lmn_common.api import lmn_getSophomorixValue, check_allowed_path
 
 @component(HttpPlugin)
 class Handler(HttpPlugin):

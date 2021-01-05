@@ -16,7 +16,6 @@ import grp
 import simplejson as json
 import yaml
 
-import aj
 from aj.auth import AuthenticationProvider, OSAuthenticationProvider, AuthenticationService
 from aj.config import UserConfigProvider
 from aj.plugins.lmn_common.api import lmconfig
@@ -33,7 +32,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
     def __init__(self, context):
         self.context = context
 
-    def _get_ldap_user(self, username, context=""):
+    def get_ldap_user(self, username, context=""):
         """
         Get the user's informations to initialize his session.
 
@@ -122,7 +121,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
         # Does the user exist in LDAP ?
         try:
-            userAttrs = self._get_ldap_user(username, context="auth")
+            userAttrs = self.get_ldap_user(username, context="auth")
         except KeyError as e:
             return False
 
@@ -202,7 +201,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
             return 0
         # GROUP CONTEXT
         try:
-            groupmembership = b''.join(self._get_ldap_user(username)['memberOf']).decode('utf8')
+            groupmembership = b''.join(self.get_ldap_user(username)['memberOf']).decode('utf8')
         except Exception as e:
             groupmembership = ''
         if 'role-globaladministrator' in groupmembership or 'role-schooladministrator' in groupmembership:
@@ -235,7 +234,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
             return 0
         # USER CONTEXT
         try:
-            groupmembership = b''.join(self._get_ldap_user(username)['memberOf']).decode('utf8')
+            groupmembership = b''.join(self.get_ldap_user(username)['memberOf']).decode('utf8')
         except Exception as e:
             groupmembership = ''
 
@@ -263,7 +262,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
         if username in ["root",None]:
             return {}
         try:
-            profil = self._get_ldap_user(username)
+            profil = self.get_ldap_user(username)
             profil['isAdmin'] = b"administrator" in profil['sophomorixRole']
             return json.loads(json.dumps(profil))
         except Exception as e:
@@ -303,7 +302,7 @@ class UserLdapConfig(UserConfigProvider):
             self.data = yaml.load(open('/root/.config/ajenti.yml'), Loader=yaml.Loader)
         else:
             ## Load ldap attribute webuidashboard
-            userAttrs = AuthenticationService.get(self.context).get_provider()._get_ldap_user(self.user, context="userconfig")
+            userAttrs = AuthenticationService.get(self.context).get_provider().get_ldap_user(self.user, context="userconfig")
             try:
                 self.data = json.loads(userAttrs['sophomorixWebuiDashboard'])
             except Exception as e:

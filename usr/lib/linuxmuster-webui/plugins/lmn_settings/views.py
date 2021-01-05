@@ -12,7 +12,7 @@ from jadi import component
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint
 from aj.auth import authorize
-from aj.plugins.lmn_common.api import lmn_write_configfile, lmn_getSophomorixValue, CSVSpaceStripper, lmn_write_csv, lmn_backup_file
+from aj.plugins.lmn_common.api import lmn_write_configfile, lmn_getSophomorixValue, CSVSpaceStripper,  lmn_backup_file
 from configparser import ConfigParser
 
 class IniParser(ConfigParser):
@@ -110,7 +110,7 @@ class Handler(HttpPlugin):
             def convert_value(v):
                 if type(v) is int:
                     return str(v)
-                elif type(v) is bool:
+                if type(v) is bool:
                     return 'yes' if v else 'no'
                 return '%s' % v
 

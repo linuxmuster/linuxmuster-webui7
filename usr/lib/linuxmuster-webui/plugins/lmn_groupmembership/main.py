@@ -12,7 +12,7 @@ class ItemProvider(SidebarItemProvider):
         return [
             {
                 'attach': 'category:class',
-                'name': _('Enroll'),
+                'name': _('Enroll'), # skipcq: PYL-E0602
                 'icon': 'edit',
                 'url': '/view/lmn/groupmembership',
                 'children': [],
@@ -28,12 +28,12 @@ class Permissions (PermissionProvider):
         return [
             {
                 'id': 'lmn:groupmembership',
-                'name': _('Edit Groupmemberships'),
+                'name': _('Edit Groupmemberships'), # skipcq: PYL-E0602
                 'default': False,
             },
             {
                 'id': 'lmn:groupmemberships:write',
-                'name': _('Edit Groups'),
+                'name': _('Edit Groups'), # skipcq: PYL-E0602
                 'default': False,
             },
         ]

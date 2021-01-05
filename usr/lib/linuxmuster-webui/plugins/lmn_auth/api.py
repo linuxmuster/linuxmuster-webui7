@@ -27,7 +27,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
     """
 
     id = 'lm'
-    name = _('Linux Muster LDAP')
+    name = _('Linux Muster LDAP') # skipcq: PYL-E0602
 
     def __init__(self, context):
         self.context = context
@@ -276,7 +276,7 @@ class UserLdapConfig(UserConfigProvider):
     """
 
     id = 'lm'
-    name = _('Linuxmuster LDAP user config')
+    name = _('Linuxmuster LDAP user config') # skipcq: PYL-E0602
 
     def __init__(self, context):
         UserConfigProvider.__init__(self, context)

@@ -12,35 +12,35 @@ class ItemProvider(SidebarItemProvider):
         return [
             {
                 'attach': 'category:usermanagement',
-                'name': _('Teachers'),
+                'name': _('Teachers'), # skipcq: PYL-E0602
                 'icon': 'user-tie',
                 'url': '/view/lm/users/teachers',
                 'weight': 15,
             },
             {
                 'attach': 'category:usermanagement',
-                'name': _('Students'),
+                'name': _('Students'), # skipcq: PYL-E0602
                 'icon': 'user-graduate',
                 'url': '/view/lm/users/students',
                 'weight': 15,
             },
             {
                 'attach': 'category:usermanagement',
-                'name': _('School-Admins'),
+                'name': _('School-Admins'), # skipcq: PYL-E0602
                 'icon': 'user-ninja',
                 'url': '/view/lm/users/schooladmins',
                 'weight': 20,
             },
             {
                 'attach': 'category:usermanagement',
-                'name': _('Global-Admins'),
+                'name': _('Global-Admins'), # skipcq: PYL-E0602
                 'icon': 'user-astronaut',
                 'url': '/view/lm/users/globaladmins',
                 'weight': 21,
             },
             {
                 'attach': 'category:usermanagement',
-                'name': _('Listmanagement'),
+                'name': _('Listmanagement'), # skipcq: PYL-E0602
                 'icon': 'list',
                 'url': '/view/lm/users/listmanagement',
                 'weight': 21,
@@ -54,102 +54,102 @@ class Permissions (PermissionProvider):
         return [
             {
                 'id': 'lm:users:students:read',
-                'name': _('Read students'),
+                'name': _('Read students'), # skipcq: PYL-E0602
                 'default': False,
             },
             {
                 'id': 'lm:users:students:write',
-                'name': _('Write students'),
+                'name': _('Write students'), # skipcq: PYL-E0602
                 'default': False,
             },
             {
                 'id': 'lm:users:teachers:read',
-                'name': _('Read teachers'),
+                'name': _('Read teachers'), # skipcq: PYL-E0602
                 'default': False,
             },
             {
                 'id': 'lm:users:teachers:list',
-                'name': _('List teachers'),
+                'name': _('List teachers'), # skipcq: PYL-E0602
                 'default': False,
             },
             {
                 'id': 'lm:users:teachers:write',
-                'name': _('Write teachers'),
+                'name': _('Write teachers'), # skipcq: PYL-E0602
                 'default': False,
             },
             {
                 'id': 'lm:users:schooladmins:read',
-                'name': _('Read schooladmins'),
+                'name': _('Read schooladmins'), # skipcq: PYL-E0602
                 'default': False,
             },
             {
                 'id': 'lm:users:schooladmins:write',
-                'name': _('Write schooladmins'),
+                'name': _('Write schooladmins'), # skipcq: PYL-E0602
                 'default': False,
             },
             {
                 'id': 'lm:users:globaladmins:read',
-                'name': _('Read globaladmins'),
+                'name': _('Read globaladmins'), # skipcq: PYL-E0602
                 'default': False,
             },
             {
                 'id': 'lm:users:globaladmins:write',
-                'name': _('Write globaladmins'),
+                'name': _('Write globaladmins'), # skipcq: PYL-E0602
                 'default': False,
             },
             {
                 'id': 'lm:users:extra-students:read',
-                'name': _('Read extra students'),
+                'name': _('Read extra students'), # skipcq: PYL-E0602
                 'default': False,
             },
             {
                 'id': 'lm:users:extra-students:write',
-                'name': _('Write extra students'),
+                'name': _('Write extra students'), # skipcq: PYL-E0602
                 'default': False,
             },
             {
                 'id': 'lm:users:extra-courses:read',
-                'name': _('Read extra courses'),
+                'name': _('Read extra courses'), # skipcq: PYL-E0602
                 'default': False,
             },
             {
                 'id': 'lm:users:extra-courses:write',
-                'name': _('Write extra courses'),
+                'name': _('Write extra courses'), # skipcq: PYL-E0602
                 'default': False,
             },
             {
                 'id': 'lm:users:check',
-                'name': _('Check user changes'),
+                'name': _('Check user changes'), # skipcq: PYL-E0602
                 'default': False,
             },
             {
                 'id': 'lm:users:apply',
-                'name': _('Apply user changes'),
+                'name': _('Apply user changes'), # skipcq: PYL-E0602
                 'default': False,
             },
             {
                 'id': 'lm:users:passwords',
-                'name': _('Read/write passwords'),
+                'name': _('Read/write passwords'), # skipcq: PYL-E0602
                 'default': False,
             },
             {
                 'id': 'lm:users:schooladmins:create',
-                'name': _('Add school admins'),
+                'name': _('Add school admins'), # skipcq: PYL-E0602
                 'default': False,
             },
             {
                 'id': 'lm:users:globaladmins:create',
-                'name': _('Add global admins'),
+                'name': _('Add global admins'), # skipcq: PYL-E0602
                 'default': False,
             },
             {
                 'id': 'lm:users:schooladmins:delete',
-                'name': _('Delete school admins'),
+                'name': _('Delete school admins'), # skipcq: PYL-E0602
                 'default': False,
             },
             {
                 'id': 'lm:users:globaladmins:delete',
-                'name': _('Delete global admins'),
+                'name': _('Delete global admins'), # skipcq: PYL-E0602
                 'default': False,
             },
         ]

@@ -12,7 +12,7 @@ class ItemProvider(SidebarItemProvider):
         return [
             {
                 'attach': 'category:schoolsettingsdefaults',
-                'name': _('School Settings'),
+                'name': _('School Settings'), # skipcq: PYL-E0602
                 'icon': 'sliders-h',
                 'url': '/view/lm/schoolsettings',
                 'children': [],
@@ -20,7 +20,7 @@ class ItemProvider(SidebarItemProvider):
             },
             {
                 'attach': 'category:schoolsettingsdefaults',
-                'name': _('Global Settings'),
+                'name': _('Global Settings'), # skipcq: PYL-E0602
                 'icon': 'cogs',
                 'url': '/view/lm/globalsettings',
                 'children': [],
@@ -35,12 +35,12 @@ class Permissions (PermissionProvider):
         return [
             {
                 'id': 'lm:schoolsettings',
-                'name': _('Configure school settings'),
+                'name': _('Configure school settings'), # skipcq: PYL-E0602
                 'default': False,
             },
             {
                 'id': 'lm:globalsettings',
-                'name': _('Configure global settings'),
+                'name': _('Configure global settings'), # skipcq: PYL-E0602
                 'default': False,
             },
         ]

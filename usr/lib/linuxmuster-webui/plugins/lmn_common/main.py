@@ -12,49 +12,49 @@ class ItemProvider(SidebarItemProvider):
             {
                 'attach': None,
                 'id': 'category:usermanagement',
-                'name': _('User Management'),
+                'name': _('User Management'), # skipcq: PYL-E0602
                 'children': [
                 ]
             },
             {
                 'attach': None,
                 'id': 'category:listmanagement',
-                'name': _('List Management'),
+                'name': _('List Management'), # skipcq: PYL-E0602
                 'children': [
                 ]
             },
             {
                 'attach': None,
                 'id': 'category:quota',
-                'name': _('Quota'),
+                'name': _('Quota'), # skipcq: PYL-E0602
                 'children': [
                 ]
             },
             {
                 'attach': None,
                 'id': 'category:devicemanagement',
-                'name': _('Device Management'),
+                'name': _('Device Management'), # skipcq: PYL-E0602
                 'children': [
                 ]
             },
             {
                 'attach': None,
                 'id': 'category:class',
-                'name': _('Classroom'),
+                'name': _('Classroom'), # skipcq: PYL-E0602
                 'children': [
                 ]
             },
             {
                 'attach': None,
                 'id': 'category:schoolsettingsdefaults',
-                'name': _('Settings'),
+                'name': _('Settings'), # skipcq: PYL-E0602
                 'children': [
                 ]
             },
             {
                 'attach': None,
                 'id': 'category:globalsettingsdefaults',
-                'name': _('Global Settings'),
+                'name': _('Global Settings'), # skipcq: PYL-E0602
                 'children': [
                 ]
             },

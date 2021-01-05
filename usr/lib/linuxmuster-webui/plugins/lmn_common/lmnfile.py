@@ -124,7 +124,7 @@ class LMNFile(metaclass=abc.ABCMeta):
 
         if allowed_path and '..' not in self.file:
             return True
-        raise IOError(_("Access refused."))
+        raise IOError(_("Access refused."))  # skipcq: PYL-E0602
 
     def detect_encoding(self):
         """

@@ -79,7 +79,7 @@ class LMNFile(metaclass=abc.ABCMeta):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def __exit__(self):
+    def __exit__(self, exc_type, exc_val, exc_tb):
         raise NotImplementedError
 
     def backup(self):
@@ -156,7 +156,7 @@ class LinboLoader(LMNFile):
         self.opened = open(self.file, self.mode, encoding=self.encoding)
         return self.opened
 
-    def __exit__(self, *args):
+    def __exit__(self, exc_type, exc_val, exc_tb):
         self.opened.close()
 
 class CSVLoader(LMNFile):
@@ -193,16 +193,15 @@ class CSVLoader(LMNFile):
         else:
             os.unlink(tmp)
 
-    def __exit__(self, *args):
+    def __exit__(self, exc_type, exc_val, exc_tb):
         if self.opened:
             self.opened.close()
 
 
-"""LATER
-class ConfigLoader(LMNFile):
-    extensions = ['.ini', '.conf']
-
-
-class StartConfLoader(LMNFile):
-    extensions = []
-"""
+# LATER
+# class ConfigLoader(LMNFile):
+#     extensions = ['.ini', '.conf']
+#
+#
+# class StartConfLoader(LMNFile):
+#     extensions = []

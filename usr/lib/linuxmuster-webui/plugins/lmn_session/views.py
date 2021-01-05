@@ -38,7 +38,6 @@ class Handler(HttpPlugin):
                 # Most likeley key error 'cause no sessions for this user exist
                 except Exception as e:
                     raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(e))
-                    return 0
             sessionsList = []
             if supervisor not in sessions['SUPERVISOR_LIST']:
                 return sessionsList

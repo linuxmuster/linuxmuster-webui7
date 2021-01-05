@@ -127,8 +127,7 @@ class LMNFile(metaclass=abc.ABCMeta):
 
         if allowed_path and '..' not in self.file:
             return True
-        else:
-            raise IOError(_("Access refused."))
+        raise IOError(_("Access refused."))
 
     def detect_encoding(self):
         """
@@ -146,9 +145,8 @@ class LMNFile(metaclass=abc.ABCMeta):
         if 'ascii' in encoding or encoding == "binary":
             logging.info('Detected encoding for %s : ascii, but using utf-8', self.file)
             return 'utf-8'
-        else:
-            logging.info('Detected encoding for %s : %s', self.file, encoding)
-            return encoding
+        logging.info('Detected encoding for %s : %s', self.file, encoding)
+        return encoding
 
 class LinboLoader(LMNFile):
     """

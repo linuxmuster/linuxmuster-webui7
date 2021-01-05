@@ -65,8 +65,7 @@ class Handler(HttpPlugin):
         #     sophomorixCommand = ['sophomorix-check', '--analyze-encoding', fileToCheck, '-jj']
         #     encoding = lmn_getSophomorixValue(sophomorixCommand, 'SUMMARY/0/ANALYZE-ENCODING/ENCODING')
         #     return encoding
-        else:
-            return None
+        return None
 
 
     @url(r'/api/lm/schoolsettings')
@@ -103,55 +102,6 @@ class Handler(HttpPlugin):
             self.config_obj.write(data)
 
 
-            # def convert_value(v):
-            #     if type(v) is int:
-            #         return str(v)
-            #     elif type(v) is bool:
-            #         return 'yes' if v else 'no'
-            #     else:
-            #         return '%s' % v
-            # section_name = ''
-            # set_control = 0
-            # for line in open(path):
-            #     originalLine = line
-            #     # remove everything before comment
-            #     if '#' in line:
-            #         line = line.split('#',1)[1]
-            #         line = '#'+line
-            #     if line.startswith('#'):
-            #         content += originalLine
-            #         continue
-            #     # if new section found
-            #     if line.startswith('['):
-            #         # check if last section contained all keys
-            #         if set_control is 1:
-            #             for k in data[section_name]:
-            #                 if k not in keys_found:
-            #                     k = k.strip()
-            #                     v = v.strip()
-            #                     content += "\t%s=%s\n" % (k.upper(), convert_value(data[section_name][k]))
-            #         # start of with new section
-            #         set_control = 1
-            #         keys_found = []
-            #         section_name = line.strip('[]\n')
-            #     else:
-            #         k, v = line.split('=', 1)
-            #         k = k.strip().lower()
-            #         v = v.strip()
-            #         if k in data[section_name]:
-            #             newValue = convert_value(data[section_name][k])
-            #             keys_found.append(k)
-            #             if v:
-            #                 originalLine = originalLine.replace(v, newValue)
-            #             else:
-            #                 originalLine = "\t%s=%s\n" % (k.upper(), newValue)
-            #             if newValue not in v:
-            #                 originalLine = originalLine.lstrip('#')
-            #     content += originalLine
-            #
-            #
-            # lmn_write_configfile(path, content)
-
     @url(r'/api/lm/schoolsettings/school-share')
     @authorize('lm:schoolsettings')
     @endpoint(api=True)
@@ -169,11 +119,11 @@ class Handler(HttpPlugin):
         if http_context.method == 'GET':
             print(os.stat(path).st_mode)
             return os.stat(path).st_mode & 0o3777 == 0o3777
+
+        if http_context.json_body():
+            os.chmod(path, 0o3777)
         else:
-            if http_context.json_body():
-                os.chmod(path, 0o3777)
-            else:
-                os.chmod(path, 0o0700)
+            os.chmod(path, 0o0700)
 
     @url(r'/api/lm/subnets')
     @authorize('lm:schoolsettings')

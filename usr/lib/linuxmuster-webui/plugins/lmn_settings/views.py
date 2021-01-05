@@ -10,7 +10,7 @@ import filecmp
 from datetime import datetime
 from jadi import component
 from aj.api.http import url, HttpPlugin
-from aj.api.endpoint import endpoint
+from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize
 from aj.plugins.lmn_common.api import lmn_write_configfile, lmn_getSophomorixValue, CSVSpaceStripper,  lmn_backup_file
 from configparser import ConfigParser
@@ -33,9 +33,7 @@ class Handler(HttpPlugin):
         'ß': 'ss',
         '@': '\\@',
     }
-    EMAIL_REVERSE_MAPPING = dict(
-        (v, k) for (k, v) in EMAIL_MAPPING.items()
-    )
+    EMAIL_REVERSE_MAPPING = { v:k for (k, v) in EMAIL_MAPPING.items()}
 
     def __init__(self, context):
         self.context = context

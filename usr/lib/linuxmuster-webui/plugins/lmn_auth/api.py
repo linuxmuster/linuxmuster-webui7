@@ -144,8 +144,8 @@ class LMAuthenticationProvider(AuthenticationProvider):
             try:
                 permissions[module] = value == 'true'
             except Exception as e:
-                raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(e))
                 logging.error(str(e))
+                raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(e))
 
         return {
             'username': username,

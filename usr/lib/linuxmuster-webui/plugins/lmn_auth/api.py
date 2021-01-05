@@ -202,7 +202,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
         # GROUP CONTEXT
         try:
             groupmembership = b''.join(self.get_ldap_user(username)['memberOf']).decode('utf8')
-        except Exception as e:
+        except Exception:
             groupmembership = ''
         if 'role-globaladministrator' in groupmembership or 'role-schooladministrator' in groupmembership:
             return None
@@ -235,7 +235,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
         # USER CONTEXT
         try:
             groupmembership = b''.join(self.get_ldap_user(username)['memberOf']).decode('utf8')
-        except Exception as e:
+        except Exception:
             groupmembership = ''
 
         if 'role-globaladministrator' in groupmembership or 'role-schooladministrator' in groupmembership:
@@ -283,7 +283,7 @@ class UserLdapConfig(UserConfigProvider):
         self.context = context
         try:
             self.user = context.identity
-        except AttributeError as e:
+        except AttributeError:
             self.user = None
         if self.user:
             self.load()
@@ -305,7 +305,7 @@ class UserLdapConfig(UserConfigProvider):
             userAttrs = AuthenticationService.get(self.context).get_provider().get_ldap_user(self.user, context="userconfig")
             try:
                 self.data = json.loads(userAttrs['sophomorixWebuiDashboard'])
-            except Exception as e:
+            except Exception:
                 logging.warning('Error retrieving userconfig from %s, value: %s. This will be overwritten', self.user, userAttrs['sophomorixWebuiDashboard'])
                 self.data = {}
 

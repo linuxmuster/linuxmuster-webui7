@@ -194,7 +194,7 @@ class Handler(HttpPlugin):
         :rtype: dict
         """
 
-        school = 'default-school'
+        # TODO : school = 'default-school'
         path = '/etc/linuxmuster/subnets.csv'
         fieldnames = [
             'network',

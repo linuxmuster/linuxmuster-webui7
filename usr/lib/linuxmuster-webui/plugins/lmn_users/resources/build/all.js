@@ -2367,16 +2367,42 @@
         _isNew: true
       });
     };
-    $scope.students_remove = function(student) {
+    $scope.cleanupEmptyRow = function(index, tab) {
+      var key, results;
+      // Cleanup removed empty cells from $scope.emptyCells
+      index = ($scope.paging["page_" + tab] - 1) * $scope.paging.pageSize + 1 + parseInt(index, 10);
+      results = [];
+      for (key in $scope.emptyCells) {
+        if (key.endsWith('-' + index)) {
+          results.push(delete $scope.emptyCells[key]);
+        } else {
+          results.push(void 0);
+        }
+      }
+      return results;
+    };
+    $scope.students_remove = function(student, index) {
+      if (student._isNew) {
+        $scope.cleanupEmptyRow(index, "students");
+      }
       return $scope.students.remove(student);
     };
-    $scope.teachers_remove = function(teacher) {
+    $scope.teachers_remove = function(teacher, index) {
+      if (teacher._isNew) {
+        $scope.cleanupEmptyRow(index, "teachers");
+      }
       return $scope.teachers.remove(teacher);
     };
-    $scope.extrastudents_remove = function(student) {
+    $scope.extrastudents_remove = function(student, index) {
+      if (student._isNew) {
+        $scope.cleanupEmptyRow(index, "extrastudents");
+      }
       return $scope.extrastudents.remove(student);
     };
-    $scope.courses_remove = function(course) {
+    $scope.courses_remove = function(course, index) {
+      if (course._isNew) {
+        $scope.cleanupEmptyRow(index, "courses");
+      }
       return $scope.courses.remove(course);
     };
     $scope.getstudents = function() {

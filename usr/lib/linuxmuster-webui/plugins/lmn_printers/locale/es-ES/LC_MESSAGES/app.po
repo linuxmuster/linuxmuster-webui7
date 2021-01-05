@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-23 20:23+0100\n"
-"PO-Revision-Date: 2021-01-02 14:01\n"
+"PO-Revision-Date: 2021-01-05 08:17\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -19,38 +19,38 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_printers/resources/partial/printer.modal.html:25
 msgid "Add"
-msgstr ""
+msgstr "Añade"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_printers/resources/partial/printer.modal.html:33
 msgid "Close"
-msgstr ""
+msgstr "Cerrar"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_printers/resources/partial/printer.modal.html:16
 msgid "No filter is set. All devices can use this printer."
-msgstr ""
+msgstr "No hay ningún filtro establecido. Todos los dispositivos pueden usar esta impresora."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_printers/resources/partial/index.html:16
 #: usr/lib/linuxmuster-webui/plugins/lmn_printers/resources/partial/printer.modal.html:32
 msgid "Save"
-msgstr ""
+msgstr "Guardar"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_printers/resources/partial/printer.modal.html:23
 msgid "Type to search..."
-msgstr ""
+msgstr "Escriba para buscar..."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_printers/resources/partial/printer.modal.html:2
 msgid "{{printer.name}}"
-msgstr ""
+msgstr "{{printer.name}}"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_printers/main.py:22
 msgid "Configure printers"
-msgstr ""
+msgstr "Configurar las impresoras"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_printers/resources/js/controllers/index.controller.coffee:26
 msgid "Printers"
-msgstr ""
+msgstr "Impresoras"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_printers/resources/js/controllers/index.controller.coffee:90
 msgid "Saved"
-msgstr ""
+msgstr "Salvado"
 

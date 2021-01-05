@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-01-02 14:57+0100\n"
-"PO-Revision-Date: 2021-01-02 14:01\n"
+"PO-Revision-Date: 2021-01-05 08:17\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -19,49 +19,49 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:27
 msgid "Change password"
-msgstr ""
+msgstr "Cambiar Contraseña"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:14
 msgid "Current password"
-msgstr ""
+msgstr "Contraseña actual"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:3
 msgid "Minimal length is 7 characters. Use upper, lower and special characters or numbers. (e.g. Muster!)"
-msgstr ""
+msgstr "La longitud mínima es de 7 caracteres. Utilice caracteres o números superiores, inferiores y especiales. (por ejemplo, Muster!)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:18
 msgid "New password"
-msgstr ""
+msgstr "Nueva contraseña"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:22
 msgid "Repeat password"
-msgstr ""
+msgstr "Repite la contraseña"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:5
 msgid "Valid characters are: a-z A-Z 0-9 !§+-@#$%&amp;*( )[ ]{ }"
-msgstr ""
+msgstr "Los caracteres válidos son: a-z A-Z 0-9 !§+-@#$%&amp;*( )[ ]{ }"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:31
 msgid "Linux Muster LDAP"
-msgstr ""
+msgstr "Linux Muster LDAP"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:280
 msgid "Linuxmuster LDAP user config"
-msgstr ""
+msgstr "Configuración de usuario LDAP del Linuxmuster"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:7
 msgid "Change Password"
-msgstr ""
+msgstr "Cambiar Contraseña"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:13
 msgid "Passwords do not match"
-msgstr ""
+msgstr "Las contraseñas no coinciden"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:23
 msgid "Password changed"
-msgstr ""
+msgstr "Contraseña modificada"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:26
 msgid "Password change failed"
-msgstr ""
+msgstr "El cambio de la contraseña ha fallado"
 

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-01-02 14:57+0100\n"
-"PO-Revision-Date: 2021-01-02 14:01\n"
+"PO-Revision-Date: 2021-01-05 08:17\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -19,219 +19,219 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:150
 msgid "A bootstrap error has occured"
-msgstr ""
+msgstr "Se ha producido un error de arranque"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileBackups.modal.html:2
 msgid "Backups"
-msgstr ""
+msgstr "Copias de seguridad"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileEditor.modal.html:18
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileBackups.service.coffee:53
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileBackups.modal.html:23
 msgid "Close"
-msgstr ""
+msgstr "Cerrar"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileEditor.modal.html:17
 msgid "Download CSV"
-msgstr ""
+msgstr "Descargar CSV"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileEditor.modal.html:5
 msgid "Drop a CSV file here to import"
-msgstr ""
+msgstr "Deje caer un archivo CSV aquí para importar"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:133
 msgid "Enter"
-msgstr ""
+msgstr "Entra en"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:92
 msgid "Log out"
-msgstr ""
+msgstr "Desconecta"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileBackups.modal.html:5
 msgid "No backups available"
-msgstr ""
+msgstr "No hay copias de seguridad disponibles"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:174
 msgid "OK"
-msgstr ""
+msgstr "Ok"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:153
 msgid "Please see browser console"
-msgstr ""
+msgstr "Por favor, vea la consola del navegador"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:129
 msgid "Quick search"
-msgstr ""
+msgstr "Búsqueda rápida"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileEditor.modal.html:16
 msgid "Save"
-msgstr ""
+msgstr "Guardar"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:49
 msgid "School Console"
-msgstr ""
+msgstr "Consola escolar"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:102
 msgid "Session time : {{ counter[0] }}:{{ counter[1] }}:{{ counter[2] }}"
-msgstr ""
+msgstr "Hora de la sesión : {{ counter[0] }}:{{ counter[1] }}:{{ counter[2] }}"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/lmnfile.py:133
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/api.py:41
 msgid "Access refused."
-msgstr ""
+msgstr "Acceso denegado."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:15
 msgid "User Management"
-msgstr ""
+msgstr "Administración de usuarios"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:22
 msgid "List Management"
-msgstr ""
+msgstr "Gestión de la lista"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:29
 msgid "Quota"
-msgstr ""
+msgstr "Cuota"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:36
 msgid "Device Management"
-msgstr ""
+msgstr "Administración de dispositivos"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:43
 msgid "Classroom"
-msgstr ""
+msgstr "Sala de clases"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:50
 msgid "Settings"
-msgstr ""
+msgstr "Configuraciones"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:57
 msgid "Global Settings"
-msgstr ""
+msgstr "Configuraciones globales"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:4
 #, javascript-format
 msgid "Adding user %s."
-msgstr ""
+msgstr "Añadiendo %s de usuario."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:5
 #, javascript-format
 msgid "Updating user %s."
-msgstr ""
+msgstr "Actualizando los %s de usuario."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:6
 #, javascript-format
 msgid "Deleting user %s."
-msgstr ""
+msgstr "Borrando %s de usuario."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:7
 #, javascript-format
 msgid "Adding examuser %s."
-msgstr ""
+msgstr "Añadiendo %s de examinador."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:8
 #, javascript-format
 msgid "Deleting examuser %s."
-msgstr ""
+msgstr "Borrando los %s de los examinadores."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:9
 #, javascript-format
 msgid "Adding computer %s."
-msgstr ""
+msgstr "Añadiendo %s de computadora."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:10
 #, javascript-format
 msgid "Deleting computer %s."
-msgstr ""
+msgstr "Borrando los %s de la computadora."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:11
 #, javascript-format
 msgid "Collecting data (copy): %s."
-msgstr ""
+msgstr "Recopilación de datos (copia): %s."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:12
 #, javascript-format
 msgid "Collecting data (move): %s."
-msgstr ""
+msgstr "Recopilación de datos (movimiento): %s."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:13
 #, javascript-format
 msgid "Copying files to user %s."
-msgstr ""
+msgstr "Copiar archivos a los %s de usuarios."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:14
 #, javascript-format
 msgid "Copying files: %s."
-msgstr ""
+msgstr "Copia de archivos: %s."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:48
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:50
 msgid " uploaded"
-msgstr ""
+msgstr " uploadet"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:92
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:95
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:140
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:143
 msgid "Uploaded"
-msgstr ""
+msgstr "Uploadet"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:13
 msgid "Passwords must contain at least one lowercase, one uppercase, one special char or number, and at least 7 chars"
-msgstr ""
+msgstr "Las contraseñas deben contener al menos una minúscula, una mayúscula, un carácter o número especial y al menos 7 caracteres"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:22
 msgid "Password is not valid. Password can only contains a-zA-Z0-9!@#§+-$%&*{}()]["
-msgstr ""
+msgstr "La contraseña no es válida. La contraseña sólo puede contener a-zA-Z0-9!@#§+-$%&*{}()]["
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:42
 msgid " can only contain lowercase chars or numbers"
-msgstr ""
+msgstr " sólo puede contener caracteres o números en minúsculas"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:51
 msgid " can only contain alphanumeric chars or _+-"
-msgstr ""
+msgstr " sólo puede contener caracteres alfanuméricos o _+-"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:60
 msgid " can only contain alphanumeric chars or -"
-msgstr ""
+msgstr " sólo puede contener caracteres alfanuméricos o -"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:69
 msgid " can only contain alphanumeric chars or -, space and _"
-msgstr ""
+msgstr " sólo puede contener caracteres alfanuméricos o -, espacio y _"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:78
 msgid " can only contain alphanumeric chars"
-msgstr ""
+msgstr " sólo puede contener caracteres alfanuméricos"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:87
 msgid " is not a valid number"
-msgstr ""
+msgstr " no es un número válido"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:98
 msgid " is not a valid date"
-msgstr ""
+msgstr " no es una fecha válida"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:107
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:116
 msgid " is not valid or duplicated"
-msgstr ""
+msgstr " no es válido o duplicado"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:125
 msgid " does not contain valid chars or is duplicated"
-msgstr ""
+msgstr " no contiene caracteres válidos o está duplicada"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:138
 msgid " is not a valid role"
-msgstr ""
+msgstr " no es un rol válido"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileBackups.service.coffee:52
 msgid "Do you really want to delete"
-msgstr ""
+msgstr "¿Realmente quieres borrar"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileBackups.service.coffee:53
 msgid "Confirmation"
-msgstr ""
+msgstr "Confirmación"
 

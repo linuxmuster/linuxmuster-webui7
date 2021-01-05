@@ -61,8 +61,7 @@ class Handler(HttpPlugin):
             sophomorixCommand = ['sophomorix-check', '--analyze-encoding', fileToCheck, '-jj']
             encoding = lmn_getSophomorixValue(sophomorixCommand, 'SUMMARY/0/ANALYZE-ENCODING/ENCODING')
             return encoding
-        else:
-            return None
+        return None
 
 
     @url(r'/api/lm/schoolsettings')
@@ -113,8 +112,8 @@ class Handler(HttpPlugin):
                     return str(v)
                 elif type(v) is bool:
                     return 'yes' if v else 'no'
-                else:
-                    return '%s' % v
+                return '%s' % v
+
             section_name = ''
             set_control = 0
             for line in open(path):
@@ -133,7 +132,7 @@ class Handler(HttpPlugin):
                         for k in data[section_name]:
                             if k not in keys_found:
                                 k = k.strip()
-                                v = v.strip()
+                                # v = v.strip() # v not defined !
                                 content += "\t%s=%s\n" % (k.upper(), convert_value(data[section_name][k]))
                     # start of with new section
                     set_control = 1
@@ -174,11 +173,11 @@ class Handler(HttpPlugin):
         if http_context.method == 'GET':
             print(os.stat(path).st_mode)
             return os.stat(path).st_mode & 0o3777 == 0o3777
+
+        if http_context.json_body():
+            os.chmod(path, 0o3777)
         else:
-            if http_context.json_body():
-                os.chmod(path, 0o3777)
-            else:
-                os.chmod(path, 0o0700)
+            os.chmod(path, 0o0700)
 
     @url(r'/api/lm/subnets')
     @authorize('lm:schoolsettings')

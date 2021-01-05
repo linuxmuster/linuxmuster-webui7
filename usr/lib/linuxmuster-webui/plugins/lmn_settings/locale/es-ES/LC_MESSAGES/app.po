@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-27 14:30+0200\n"
-"PO-Revision-Date: 2021-01-02 14:01\n"
+"PO-Revision-Date: 2021-01-05 08:17\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -19,245 +19,245 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:378
 msgid "Admin e-mail"
-msgstr ""
+msgstr "Correo electrónico de la administración"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:301
 msgid "Cloudquota Percentage"
-msgstr ""
+msgstr "Cuota de nubes Porcentaje"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:240
 msgid "Detected encoding"
-msgstr ""
+msgstr "La codificación detectada"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:23
 msgid "Email Domain"
-msgstr ""
+msgstr "Dominio de correo electrónico"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:208
 msgid "Encoding"
-msgstr ""
+msgstr "Codificación"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:354
 msgid "External FQDN for printing"
-msgstr ""
+msgstr "FQDN externo para la impresión"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:36
 msgid "FQDN SSL certificate file"
-msgstr ""
+msgstr "FQDN Archivo de certificado SSL"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:112
 msgid "Firstname Chars"
-msgstr ""
+msgstr "Nombre Chars"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:11
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:8
 msgid "General"
-msgstr ""
+msgstr "General"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:347
 msgid "Internal FQDN for printing"
-msgstr ""
+msgstr "FQDN interno para la impresión"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:11
 msgid "Language"
-msgstr ""
+msgstr "Idioma"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:219
 msgid "List encoding"
-msgstr ""
+msgstr "Codificación de la lista"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:72
 msgid "Listimport"
-msgstr ""
+msgstr "Listimport"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:370
 msgid "MOODLE URL"
-msgstr ""
+msgstr "MOODLE URL"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:315
 msgid "Mailquota Default in MiB"
-msgstr ""
+msgstr "Cuota de correo por defecto en MIB"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:17
 msgid "Max session time"
-msgstr ""
+msgstr "Tiempo máximo de sesión"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:126
 msgid "Password Length"
-msgstr ""
+msgstr "Longitud de la contraseña"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:140
 msgid "Password length"
-msgstr ""
+msgstr "Longitud de la contraseña"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:333
 msgid "Password printing data"
-msgstr ""
+msgstr "Datos de impresión de la contraseña"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:43
 msgid "Primary Group Adminclass"
-msgstr ""
+msgstr "Clase de administración del grupo primario"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:51
 msgid "Primary Group Teacherclass"
-msgstr ""
+msgstr "Clase de maestros del grupo de ase de maestros del grupo de primariaprimaria"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:332
 msgid "Printing data"
-msgstr ""
+msgstr "Datos de impresión"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:58
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:62
 msgid "Printserver"
-msgstr ""
+msgstr "Servidor de impresión"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:261
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:263
 msgid "Quota"
-msgstr ""
+msgstr "Cuota"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:273
 msgid "Quota Default Global in MiB"
-msgstr ""
+msgstr "Cuota por defecto global en MIB"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:287
 msgid "Quota Default School in MiB"
-msgstr ""
+msgstr "Cuota por defecto de la escuela en MIB"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:154
 msgid "Random password"
-msgstr ""
+msgstr "Contraseña aleatoria"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:183
 msgid "Removal after departure (days)"
-msgstr ""
+msgstr "Traslado después de la salida (días)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:197
 msgid "Replace slash(/) in classname by hypen(-)"
-msgstr ""
+msgstr "Reemplazar la barra (/) en el nombre de la clase por hypen (-)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:58
 msgid "Restart WebUI"
-msgstr ""
+msgstr "Reiniciar WebUI"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:84
 msgid "Reverse Surname and Firstname in username"
-msgstr ""
+msgstr "Invertir el apellido y el nombre en el nombre de usuario"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:27
 msgid "Role Students"
-msgstr ""
+msgstr "Estudiantes de rol"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:35
 msgid "Role Teachers"
-msgstr ""
+msgstr "Maestros de rol"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:28
 msgid "SSL certificate file"
-msgstr ""
+msgstr "Archivo de certificado SSL"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:362
 msgid "Samba domain for printing"
-msgstr ""
+msgstr "El dominio de la samba para la impresión"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:57
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:436
 msgid "Save"
-msgstr ""
+msgstr "Guardar"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:438
 msgid "Save &amp; Apply Quota"
-msgstr ""
+msgstr "Guardar &amp; Aplicar la cuota"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:439
 msgid "Save &amp; Apply Subnets"
-msgstr ""
+msgstr "Guardar &amp; Aplicar subredes"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:437
 msgid "Save &amp; check"
-msgstr ""
+msgstr "Guardar &amp; comprobar"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:339
 msgid "School name"
-msgstr ""
+msgstr "Nombre de la escuela"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:269
 msgid "Schooladministrator"
-msgstr ""
+msgstr "Administradora de la escuela"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:15
 msgid "Schoolname"
-msgstr ""
+msgstr "Nombre de la escuela"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:267
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:78
 msgid "Students"
-msgstr ""
+msgstr "Estudiantes"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:388
 msgid "Subnets"
-msgstr ""
+msgstr "Subredes"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:98
 msgid "Surname Characters"
-msgstr ""
+msgstr "Personajes de apellido"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:268
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:79
 msgid "Teachers"
-msgstr ""
+msgstr "Maestros"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:169
 msgid "Tolerance after departure (days)"
-msgstr ""
+msgstr "Tolerancia después de la salida (días)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:74
 msgid "Username and Passwords"
-msgstr ""
+msgstr "Nombre de usuario y contraseñas"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:65
 msgid "default: server"
-msgstr ""
+msgstr "por defecto: servidor"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:30
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:38
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:46
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:54
 msgid "e.g.: linuxmuster.net"
-msgstr ""
+msgstr "por ejemplo: linuxmuster.net"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:80
 msgid "extrastudents"
-msgstr ""
+msgstr "estudiantes extras"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:214
 msgid "extrastudents.csv encoding"
-msgstr ""
+msgstr "extrastudents.csv codificación"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:212
 msgid "students.csv encoding"
-msgstr ""
+msgstr "codificación de students.csv"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:213
 msgid "teachers.csv encoding"
-msgstr ""
+msgstr "codificación de teachers.csv"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/main.py:15
 msgid "School Settings"
-msgstr ""
+msgstr "Configuración de la escuela"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/main.py:23
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:2
 msgid "Global Settings"
-msgstr ""
+msgstr "Ajustes globales"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/main.py:38
 msgid "Configure school settings"
-msgstr ""
+msgstr "Configurar los ajustes de la escuela"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/main.py:43
 msgid "Configure global settings"
-msgstr ""
+msgstr "Configurar los ajustes globales"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:32
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:81
@@ -265,70 +265,70 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:95
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:104
 msgid "Saved"
-msgstr ""
+msgstr "Salvado"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:34
 msgid "Could not save config"
-msgstr ""
+msgstr "No se pudo guardar la configuración"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:40
 msgid "Self-signed certificate"
-msgstr ""
+msgstr "Certificado autofirmado"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:41
 msgid "Generating a new certificate will void all existing client authentication certificates!"
-msgstr ""
+msgstr "¡Generar un nuevo certificado anulará todos los certificados de autentificación de clientes existentes!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:42
 msgid "Generate"
-msgstr ""
+msgstr "Generar"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:43
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:72
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:46
 msgid "Generating certificate"
-msgstr ""
+msgstr "Generando el certificado"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:46
 msgid "Please wait"
-msgstr ""
+msgstr "Por favor, espere"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:48
 msgid "Certificate successfully generated"
-msgstr ""
+msgstr "Certificado generado con éxito"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:54
 msgid "Certificate generation failed"
-msgstr ""
+msgstr "La generación del certificado falló"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:8
 msgid "Settings"
-msgstr ""
+msgstr "Ajustes"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:11
 msgid "Remove"
-msgstr ""
+msgstr "Retire"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:23
 msgid "Minimal"
-msgstr ""
+msgstr "Mínimo"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:24
 msgid "Average"
-msgstr ""
+msgstr "Promedio de"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:25
 msgid "Maximal"
-msgstr ""
+msgstr "Máximo"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:70
 msgid "Are you sure you want to delete permanently this subnet ?"
-msgstr ""
+msgstr "¿Estás seguro de que quieres borrar permanentemente esta subred?"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:71
 msgid "Delete"
-msgstr ""
+msgstr "Eliminar"
 

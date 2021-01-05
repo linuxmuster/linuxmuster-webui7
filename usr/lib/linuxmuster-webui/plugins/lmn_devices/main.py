@@ -14,7 +14,7 @@ class ItemProvider(SidebarItemProvider):
                 'attach': 'category:devicemanagement',
                 'name': _('Devices'),
                 'icon': 'laptop',
-                'url': '/view/lm/devices',
+                'url': '/view/lm/devices', # skipcq: PYL-E0602
                 'weight': 10,
                 'children': [],
             },
@@ -27,12 +27,12 @@ class Permissions (PermissionProvider):
         return [
             {
                 'id': 'lm:devices',
-                'name': _('Read/write devices'),
+                'name': _('Read/write devices'), # skipcq: PYL-E0602
                 'default': False,
             },
             {
                 'id': 'lm:devices:import',
-                'name': _('Import device'),
+                'name': _('Import device'), # skipcq: PYL-E0602
                 'default': False,
             },
         ]

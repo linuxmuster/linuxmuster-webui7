@@ -91,13 +91,13 @@ class LMNFile(metaclass=abc.ABCMeta):
         if not os.path.exists(self.file):
             return
 
-        dir, name = os.path.split(self.file)
-        backups = sorted([x for x in os.listdir(dir) if x.startswith('.%s.bak.' % name)])
+        folder, name = os.path.split(self.file)
+        backups = sorted([x for x in os.listdir(folder) if x.startswith('.%s.bak.' % name)])
         while len(backups) > 10:
-            os.unlink(os.path.join(dir, backups[0]))
+            os.unlink(os.path.join(folder, backups[0]))
             backups.pop(0)
 
-        with open(dir + '/.' + name + '.bak.' + str(int(time.time())), 'w') as f:
+        with open(folder + '/.' + name + '.bak.' + str(int(time.time())), 'w') as f:
             f.write(self.opened.read())
 
     # @abc.abstractmethod

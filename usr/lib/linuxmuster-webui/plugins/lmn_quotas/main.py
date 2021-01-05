@@ -12,7 +12,7 @@ class ItemProvider(SidebarItemProvider):
         return [
             {
                 'attach': 'category:schoolsettingsdefaults',
-                'name': _('Extra-Quotas'),
+                'name': _('Extra-Quotas'), # skipcq: PYL-E0602
                 'icon': 'chart-pie',
                 'url': '/view/lm/quotas',
                 'children': [],
@@ -27,17 +27,17 @@ class Permissions (PermissionProvider):
         return [
             {
                 'id': 'lm:quotas:ldap-search',
-                'name': _('Read LDAP'),
+                'name': _('Read LDAP'), # skipcq: PYL-E0602
                 'default': False,
             },
             {
                 'id': 'lm:quotas:configure',
-                'name': _('Configure quotas'),
+                'name': _('Configure quotas'), # skipcq: PYL-E0602
                 'default': False,
             },
             {
                 'id': 'lm:quotas:apply',
-                'name': _('Set quotas'),
+                'name': _('Set quotas'), # skipcq: PYL-E0602
                 'default': False,
             },
         ]

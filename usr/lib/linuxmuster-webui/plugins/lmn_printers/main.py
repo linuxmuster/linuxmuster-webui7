@@ -19,7 +19,7 @@ class Permissions (PermissionProvider):
         return [
             {
                 'id': 'lm:printers',
-                'name': _('Configure printers'),
+                'name': _('Configure printers'), # skipcq: PYL-E0602
                 'default': False,
             },
         ]

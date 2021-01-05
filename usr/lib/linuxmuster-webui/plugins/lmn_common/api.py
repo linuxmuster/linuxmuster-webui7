@@ -39,7 +39,7 @@ def check_allowed_path(path):
 
     if allowed_path and '..' not in path:
         return True
-    raise IOError(_("Access refused."))
+    raise IOError(_("Access refused."))  # skipcq: PYL-E0602
 
 class LinuxmusterConfig():
     """

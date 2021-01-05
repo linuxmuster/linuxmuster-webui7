@@ -12,9 +12,9 @@ class ItemProvider(SidebarItemProvider):
         return [
             {
                 'attach': 'category:devicemanagement',
-                'name': _('Devices'),
+                'name': _('Devices'), # skipcq: PYL-E0602
                 'icon': 'laptop',
-                'url': '/view/lm/devices', # skipcq: PYL-E0602
+                'url': '/view/lm/devices',
                 'weight': 10,
                 'children': [],
             },

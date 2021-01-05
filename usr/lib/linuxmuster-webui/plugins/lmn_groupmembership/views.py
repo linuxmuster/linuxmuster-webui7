@@ -192,9 +192,9 @@ class Handler(HttpPlugin):
             groupname = http_context.json_body()['groupname']
             entity = http_context.json_body()['entity']
             try:
-                type = http_context.json_body()['type']
+                objtype = http_context.json_body()['type']
             except KeyError:
-                type = 'project'
+                objtype = 'project'
 
             possible_actions = [
                 'removemembers',
@@ -209,7 +209,7 @@ class Handler(HttpPlugin):
             ]
 
             if action in possible_actions:
-                sophomorixCommand = ['sophomorix-'+type,  '--'+action, entity, '--'+type, groupname, '-jj']
+                sophomorixCommand = ['sophomorix-'+objtype,  '--'+action, entity, '--'+objtype, groupname, '-jj']
                 result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
                 if result['TYPE'] == "ERROR":
                     return result['TYPE'], result['MESSAGE_EN']
@@ -252,20 +252,20 @@ class Handler(HttpPlugin):
             # login = http_context.json_body()['login'].decode('utf-8', 'replace')
 
             login = http_context.json_body()['login']
-            type = http_context.json_body()['type']
+            objtype = http_context.json_body()['type']
             resultArray = []
 
             try:
-                if type == 'user':
+                if objtype == 'user':
                     sophomorixCommand = ['sophomorix-query', '--anyname', login+'*', '-jj']
                     result = lmn_getSophomorixValue(sophomorixCommand, 'USER')
-                elif type == 'usergroup':
+                elif objtype == 'usergroup':
                     sophomorixCommand = ['sophomorix-query', '--sam', login+'*', '--group-members', '-jj']
                     result = lmn_getSophomorixValue(sophomorixCommand, 'MEMBERS')
                     if len(result) != 1:
                         return []
                     result = result[login]
-                elif type == 'group':
+                elif objtype == 'group':
                     sophomorixCommand = ['sophomorix-query', '--anyname', login+'*', '-jj']
                     return lmn_getSophomorixValue(sophomorixCommand, 'LISTS/GROUP')
 

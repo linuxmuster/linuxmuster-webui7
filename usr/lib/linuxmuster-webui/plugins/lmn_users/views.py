@@ -815,16 +815,16 @@ class Handler(HttpPlugin):
                     used = int(float(share['USED_MiB']) / share['HARDLIMIT_MiB'] * 100)
                     soft = int(float(share['SOFTLIMIT_MiB']) / share['HARDLIMIT_MiB'] * 100)
                     if used >= 90:
-                        type = "danger"
+                        state = "danger"
                     elif used > soft:
-                        type = "warning"
+                        state = "warning"
                     else:
-                        type = "success"
+                        state = "success"
 
                     quotaMap[user] = {
                         "USED": used,
                         "SOFTLIMIT": soft,
-                        "TYPE": type,
+                        "TYPE": state,
                     }
                 else:
                     quotaMap[user] = {

@@ -87,7 +87,7 @@
                     <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="student.id" placeholder="Student ID (optional)" class="form-control" />
                 </td>
                     <td width="1">
-                        <button class="btn btn-default" ng:click="students_remove(student)" title="Remove">
+                        <button class="btn btn-default" ng:click="students_remove(student, $index)" title="Remove">
                             <i class="fa fa-trash-o"></i>
                         </button>
                     </td>
@@ -189,7 +189,7 @@
                     <input type="text" ng:model="teacher.login" ng:disabled="!teacher._isNew" placeholder="Login" class="form-control" />
                 </td>
                 <td width="1">
-                    <button class="btn btn-default" ng:click="teachers_remove(teacher)" title="Remove">
+                    <button class="btn btn-default" ng:click="teachers_remove(teacher, $index)" title="Remove">
                         <i class="fa fa-trash-o"></i>
                     </button>
                 </td>
@@ -298,7 +298,7 @@
                     <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="extrastudent.login" placeholder="Login" class="form-control" />
                 </td>
                 <td width="1">
-                    <button class="btn btn-default" ng:click="extrastudents_remove(extrastudent)" title="{{'Remove'|translate}}">
+                    <button class="btn btn-default" ng:click="extrastudents_remove(extrastudent, $index)" title="{{'Remove'|translate}}">
                         <i class="fa fa-trash-o"></i>
                     </button>
                 </td>

@@ -198,18 +198,32 @@ angular.module('lm.users').controller 'LMUsersListManagementController', ($scope
         $scope.courses_filter = ''
         $scope.courses.push {_isNew: true}
 
+    $scope.cleanupEmptyRow = (index, tab) ->
+        # Cleanup removed empty cells from $scope.emptyCells
+        index = ($scope.paging["page_"+tab]-1)*$scope.paging.pageSize+1+parseInt(index,10)
+        for key of $scope.emptyCells
+            if key.endsWith('-'+index)
+                delete $scope.emptyCells[key]
 
-    $scope.students_remove = (student) ->
+    $scope.students_remove = (student, index) ->
+        if student._isNew
+            $scope.cleanupEmptyRow(index, "students")
         $scope.students.remove(student)
 
-    $scope.teachers_remove= (teacher) ->
+    $scope.teachers_remove= (teacher, index) ->
+        if teacher._isNew
+            $scope.cleanupEmptyRow(index, "teachers")
         $scope.teachers.remove(teacher)
 
-    $scope.extrastudents_remove = (student) ->
-       $scope.extrastudents.remove(student)
+    $scope.extrastudents_remove = (student, index) ->
+        if student._isNew
+            $scope.cleanupEmptyRow(index, "extrastudents")
+        $scope.extrastudents.remove(student)
 
-    $scope.courses_remove = (course) ->
-       $scope.courses.remove(course)
+    $scope.courses_remove = (course, index) ->
+        if course._isNew
+            $scope.cleanupEmptyRow(index, "courses")
+        $scope.courses.remove(course)
 
     $scope.getstudents = () ->
         if !$scope.students

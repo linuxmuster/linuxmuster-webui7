@@ -28,7 +28,7 @@ class LMNFile(metaclass=abc.ABCMeta):
     e.g. ini, csv, linbo config files.
     """
 
-    def __new__(cls, file, mode, delimiter=';', fieldnames=[]):
+    def __new__(cls, file, mode, delimiter=';', fieldnames=None):
         """
         Parse the extension of the file and choose the right subclass to handle
         the file.
@@ -47,16 +47,11 @@ class LMNFile(metaclass=abc.ABCMeta):
         for child in cls.__subclasses__():
             if child.hasExtension(ext):
                 obj = object.__new__(child)
-                obj.__init__(file, mode, delimiter=';', fieldnames=[])
+                obj.__init__(file, mode, delimiter=delimiter, fieldnames=fieldnames)
                 return obj
-        else:
-            if filename.startswith('start.conf.'):
-                # Linbo start.conf file
-                obj = object.__new__(StartConfLoader)
-                obj.__init__(file, mode, delimiter=';', fieldnames=[])
-                return obj
+        # TODO : extra load for start.conf files
 
-    def __init__(self, file, mode, delimiter=';', fieldnames=[]):
+    def __init__(self, file, mode, delimiter=';', fieldnames=None):
         self.file = file
         self.opened = ''
         self.data = ''

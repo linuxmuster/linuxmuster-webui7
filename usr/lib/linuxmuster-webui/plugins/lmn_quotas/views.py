@@ -2,15 +2,13 @@
 Manage per user or group quota configuration.
 """
 
-import ldap
 import subprocess
 
 from jadi import component
-import aj
 from aj.api.http import url, HttpPlugin
 from aj.auth import authorize
 from aj.api.endpoint import endpoint, EndpointError
-from aj.plugins.lmn_common.api import lmn_backup_file, lmconfig, lmn_getSophomorixValue
+from aj.plugins.lmn_common.api import lmn_getSophomorixValue
 from configparser import ConfigParser
 
 @component(HttpPlugin)

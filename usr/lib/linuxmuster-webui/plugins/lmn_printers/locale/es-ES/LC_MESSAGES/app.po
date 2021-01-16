@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-23 20:23+0100\n"
-"PO-Revision-Date: 2021-01-05 08:17\n"
+"PO-Revision-Date: 2021-01-14 20:07\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -52,5 +52,5 @@ msgstr "Impresoras"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_printers/resources/js/controllers/index.controller.coffee:90
 msgid "Saved"
-msgstr "Salvado"
+msgstr "Guardado"
 

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-22 19:32+0100\n"
-"PO-Revision-Date: 2021-01-05 08:18\n"
+"PO-Revision-Date: 2021-01-14 20:07\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -239,7 +239,7 @@ msgstr "Usuario"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:7
 msgid "You should not use WebUI as root user! This module does not work for the root user. You can either use a administrative or teacher account."
-msgstr "¡No deberías usar WebUI como usuario root! Este módulo no funciona para el usuario root. Puede utilizar una cuenta administrativa o de profesor."
+msgstr "¡No deberías usar WebUI como usuario root! Este módulo no funciona para el usuario root. Puede utilizar una cuenta administrativa o una cuenta de profesores."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:47
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:82
@@ -257,7 +257,7 @@ msgstr "{{{nombre del grupo}} Miembros"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/main.py:15
 msgid "Enroll"
-msgstr "Inscríbase en"
+msgstr "Inscribirse en"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/main.py:31
 msgid "Edit Groupmemberships"

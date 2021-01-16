@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-22 19:32+0100\n"
-"PO-Revision-Date: 2021-01-05 08:17\n"
+"PO-Revision-Date: 2021-01-14 20:07\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -230,7 +230,7 @@ msgstr "Campos"
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/extraStudents.controller.coffee:16
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers.controller.coffee:11
 msgid "First name"
-msgstr "Nombre de pila"
+msgstr "Nombre"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.options.modal.html:6
 msgid "Format"
@@ -436,7 +436,7 @@ msgstr "Establecer una contraseña personalizada para los"
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students.html:123
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:136
 msgid "Set initial password for selected"
-msgstr "Establezca la contraseña inicial para los"
+msgstr "Establezca la contraseña inicial para seleccionados"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/globaladmins.html:83
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/schooladmins.html:82
@@ -498,7 +498,7 @@ msgstr "No hay estudiantes para manejar todavía. Puede añadir estudiantes usan
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:9
 msgid "There are no teachers to manage yet. You can add teachers using the list management module"
-msgstr "No hay maestros para manejar todavía. Puede añadir profesores usando el módulo de gestión de listas"
+msgstr "No hay profesores para manejar todavía. Puede añadir profesores usando el módulo de gestión de listas"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:5
 msgid "This modul cannot work as root user."
@@ -811,7 +811,7 @@ msgstr "Cargado"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:218
 msgid "Adding administrator..."
-msgstr "Añadiendo el administrador..."
+msgstr "Añadiendo administrador..."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/extraCourses.controller.coffee:8
 msgid "Extra Courses"

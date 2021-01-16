@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-21 10:57+0200\n"
-"PO-Revision-Date: 2021-01-05 08:17\n"
+"PO-Revision-Date: 2021-01-14 20:07\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -197,7 +197,7 @@ msgstr "Los caracteres válidos son: a-z"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:8
 msgid "We got all information needed for the provisioning proccess.<br>Before proceeding please check your data <b>carefully</b>!"
-msgstr "Tenemos toda la información necesaria para el proceso de aprovisionamiento. Antes de proceder, por favor, compruebe sus datos <b>carefully</b>!"
+msgstr "Tenemos toda la información necesaria para el proceso de aprovisionamiento. <br>Antes de proceder, por favor, compruebe sus datos <b>cuidosamente</b>!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-welcome.html:3
 msgid "Welcome to linuxmuster.net V7"

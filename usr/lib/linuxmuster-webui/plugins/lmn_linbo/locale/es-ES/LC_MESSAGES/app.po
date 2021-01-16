@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-01-02 14:57+0100\n"
-"PO-Revision-Date: 2021-01-05 08:17\n"
+"PO-Revision-Date: 2021-01-14 20:07\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -289,7 +289,7 @@ msgstr "Servidor TFTP"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:12
 msgid "Text color"
-msgstr "Color de Tex"
+msgstr "Color de texto"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:116
 msgid "Use minimal layout"

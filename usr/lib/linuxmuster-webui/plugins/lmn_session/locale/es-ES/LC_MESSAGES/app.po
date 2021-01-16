@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-03 15:41+0200\n"
-"PO-Revision-Date: 2021-01-05 08:17\n"
+"PO-Revision-Date: 2021-01-14 20:07\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -76,7 +76,7 @@ msgstr "Eliminar la sesión"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:38
 msgid "Edit Session"
-msgstr "Sesión de edición"
+msgstr "Editar sesión"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/roomDetails.modal.html:10
 msgid "Edit members"
@@ -271,7 +271,7 @@ msgstr "Iniciar sesión con todos los usuarios de esta sala"
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:195
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:365
 msgid "No Session selected"
-msgstr "No se ha seleccionado la sesión"
+msgstr "Ninguna sesión seleccionada"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:195
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:365
@@ -422,7 +422,7 @@ msgstr "Contraseña inicial establecida"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:622
 msgid "Random password set"
-msgstr "Conjunto de contraseñas aleatorias"
+msgstr "Contraseñas aleatorias generado"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:691
 msgid "Sharing files..."
@@ -430,7 +430,7 @@ msgstr "Compartir archivos..."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:726
 msgid "Collecting files..."
-msgstr "Recoger archivos..."
+msgstr "Recogiendo archivos..."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:738
 msgid "Not implemented"

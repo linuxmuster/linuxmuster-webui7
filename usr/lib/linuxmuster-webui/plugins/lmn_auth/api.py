@@ -301,7 +301,7 @@ class UserLdapConfig(UserConfigProvider):
         """
 
         if self.user == 'root':
-            self.data = yaml.load(open('/root/.config/ajenti.yml'), Loader=yaml.Loader)
+            self.data = yaml.load(open('/root/.config/ajenti.yml'), Loader=yaml.SafeLoader)
         else:
             ## Load ldap attribute webuidashboard
             userAttrs = AuthenticationService.get(self.context).get_provider().get_ldap_user(self.user, context="userconfig")

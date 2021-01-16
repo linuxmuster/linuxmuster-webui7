@@ -56,7 +56,7 @@ class LinuxmusterConfig():
     def load(self):
         if os.geteuid() == 0:
             os.chmod(self.path, 384)  # 0o600
-        self.data = yaml.load(open(self.path))
+        self.data = yaml.load(open(self.path), Loader=yaml.SafeLoader)
 
     def save(self):
         with open(self.path, 'w') as f:

@@ -370,5 +370,5 @@ class UserLdapConfig(UserConfigProvider):
         Change mode to "read, write, and execute by owner". Currently not used
         (self.path is not defined) but keeped in compatibility mode.
         """
-
+        
         os.chmod(self.path, stat.S_IRWXU)

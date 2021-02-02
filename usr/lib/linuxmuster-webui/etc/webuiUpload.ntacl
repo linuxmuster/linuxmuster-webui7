@@ -1,0 +1,30 @@
+# file: zwei
+# owner: 3000000
+# group: users
+user::rwx
+user:root:rwx
+user:3000000:rwx
+user:3000225:rwx
+user:3000226:rwx
+user:3000238:rwx
+user:3000496:rwx
+group::---
+group:users:---
+group:LINUXMUSTER\134admins:rwx
+group:LINUXMUSTER\134role-teacher:rwx
+mask::rwx
+other::---
+default:user::rwx
+default:user:root:rwx
+default:user:3000000:rwx
+default:user:3000225:rwx
+default:user:3000226:rwx
+default:user:3000238:rwx
+default:user:3000496:rwx
+default:group::---
+default:group:users:---
+default:group:LINUXMUSTER\134admins:rwx
+default:group:LINUXMUSTER\134role-teacher:rwx
+default:mask::rwx
+default:other::---
+

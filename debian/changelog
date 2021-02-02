@@ -1,3 +1,52 @@
+linuxmuster-webui7 (1.0.155-1) lmn7; urgency=medium 
+
+  * Current snapshot build 66422b02d79a6a569eec445006396380f10d20cc
+   *     fixed postinst before samba installation
+
+ -- Andreas Till <andreas.till@netzint.de> Tue Dec  8 18:39:35 CET 2020
+
+linuxmuster-webui7 (1.0.154-1) lmn7; urgency=medium~
+
+  * Current snapshot build b67e18ac87b21783adf9861b5445a3ac347cb7a7
+   *     Updated Changelog due to new package
+
+ -- Andreas Till <andreas.till@netzint.de> Tue Dec  8 18:34:11 CET 2020
+
+
+linuxmuster-webui7 (1.0.153-1) lmn7; urgency=medium 
+
+  * Current snapshot build 2807d5c582c927d84ed76f411fcccd0d2d52b887
+   *     check if workgroup variable is empty before setting rights
+
+ -- Andreas Till <andreas.till@netzint.de> Tue Dec  8 17:41:59 CET 2020
+
+linuxmuster-webui7 (1.0.152-1) lmn7; urgency=medium 
+
+  * Current snapshot build b2c2df5d75a6964a7f3ad4ebdac0a160681aa2da
+   *     workaround for transfer sessionsubdolfer whole session
+
+ -- Andreas Till <andreas.till@netzint.de> Mon Dec  7 13:49:21 CET 2020
+
+linuxmuster-webui7 (1.0.151-1) lmn7; urgency=medium 
+
+  * Current snapshot build 3e0e2c3010ba6ea6d957e95da271016552842510
+   *     temporary fix for 147
+
+ -- Andreas Till <andreas.till@netzint.de> Sun Dec  6 16:15:00 CET 2020
+
+linuxmuster-webui7 (1.0.150-1) lmn7; urgency=medium
+
+   * Fix filter properties to search for.
+
+ -- Andreas Till <andreas.till@netzint.de>  Sun, 06 Dec 2020 16:13:32 +0100
+
+linuxmuster-webui7 (1.0.149-1) lmn7; urgency=medium
+
+  * Current snapshot build e10a5bdbab262d5823ae441025bc468415c31e99
+   *     Fix filter properties to search for.
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 26 Oct 2020 17:54:16 +0100
+
 linuxmuster-webui7 (1.0.148-1) lmn7; urgency=medium 
 
   * Current snapshot build d16a5060d5e783f0ba8b77a3fcfd1f2b342693b1

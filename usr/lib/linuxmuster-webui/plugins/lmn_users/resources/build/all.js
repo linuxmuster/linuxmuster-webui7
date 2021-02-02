@@ -53,6 +53,7 @@
       pageSize: 50
     };
     $scope.all_selected = false;
+
     $http.post('/api/lm/sophomorixUsers/teachers', {
       action: 'get-all'
     }).then(function(resp) {
@@ -221,28 +222,27 @@
         return results;
       })());
     };
-    return $scope.selectAll = function(filter) {
+    $scope.filter = function(row) {
+      var i, len, ref, result, value;
+      // Only query sAMAccountName, givenName and sn
+      result = false;
+      ref = ['sAMAccountName', 'givenName', 'sn'];
+      for (i = 0, len = ref.length; i < len; i++) {
+        value = ref[i];
+        result = result || row[value].toLowerCase().indexOf($scope.query.toLowerCase() || '') !== -1;
+      }
+      return result;
+    };
+    return $scope.selectAll = function(query) {
       var i, len, ref, results, teacher;
-      if (filter == null) {
-        filter = '';
+      if (query == null) {
+        query = '';
       }
       ref = $scope.teachers;
       results = [];
       for (i = 0, len = ref.length; i < len; i++) {
         teacher = ref[i];
-        if (filter === void 0 || filter === '') {
-          teacher.selected = $scope.all_selected;
-        }
-        if (teacher.sn.toLowerCase().includes(filter.toLowerCase())) {
-          teacher.selected = $scope.all_selected;
-        }
-        if (teacher.givenName.toLowerCase().includes(filter.toLowerCase())) {
-          teacher.selected = $scope.all_selected;
-        }
-        if (teacher.sophomorixAdminClass.toLowerCase().includes(filter.toLowerCase())) {
-          teacher.selected = $scope.all_selected;
-        }
-        if (teacher.sAMAccountName.toLowerCase().includes(filter.toLowerCase())) {
+
           results.push(teacher.selected = $scope.all_selected);
         } else {
           results.push(void 0);
@@ -303,6 +303,7 @@
       pageSize: 50
     };
     $scope.all_selected = false;
+
     $http.post('/api/lm/sophomorixUsers/students', {
       action: 'get-all'
     }).then(function(resp) {
@@ -450,28 +451,27 @@
         return results;
       })());
     };
-    return $scope.selectAll = function(filter) {
+    $scope.filter = function(row) {
+      var i, len, ref, result, value;
+      // Only query sAMAccountName, givenName, sn and sophomorixAdminClass
+      result = false;
+      ref = ['sAMAccountName', 'givenName', 'sn', 'sophomorixAdminClass'];
+      for (i = 0, len = ref.length; i < len; i++) {
+        value = ref[i];
+        result = result || row[value].toLowerCase().indexOf($scope.query.toLowerCase() || '') !== -1;
+      }
+      return result;
+    };
+    return $scope.selectAll = function(query) {
       var i, len, ref, results, student;
-      if (filter == null) {
-        filter = '';
+      if (query == null) {
+        query = '';
       }
       ref = $scope.students;
       results = [];
       for (i = 0, len = ref.length; i < len; i++) {
         student = ref[i];
-        if (filter === void 0 || filter === '') {
-          student.selected = $scope.all_selected;
-        }
-        if (student.sn.toLowerCase().includes(filter.toLowerCase())) {
-          student.selected = $scope.all_selected;
-        }
-        if (student.givenName.toLowerCase().includes(filter.toLowerCase())) {
-          student.selected = $scope.all_selected;
-        }
-        if (student.sophomorixAdminClass.toLowerCase().includes(filter.toLowerCase())) {
-          student.selected = $scope.all_selected;
-        }
-        if (student.sAMAccountName.toLowerCase().includes(filter.toLowerCase())) {
+
           results.push(student.selected = $scope.all_selected);
         } else {
           results.push(void 0);
@@ -1301,6 +1301,7 @@
       pageSize: 50
     };
     $scope.all_selected = false;
+
     $http.post('/api/lm/sophomorixUsers/teachers', {
       action: 'get-all'
     }).then(function(resp) {
@@ -1469,28 +1470,27 @@
         return results;
       })());
     };
-    return $scope.selectAll = function(filter) {
+    $scope.filter = function(row) {
+      var i, len, ref, result, value;
+      // Only query sAMAccountName, givenName and sn
+      result = false;
+      ref = ['sAMAccountName', 'givenName', 'sn'];
+      for (i = 0, len = ref.length; i < len; i++) {
+        value = ref[i];
+        result = result || row[value].toLowerCase().indexOf($scope.query.toLowerCase() || '') !== -1;
+      }
+      return result;
+    };
+    return $scope.selectAll = function(query) {
       var i, len, ref, results, teacher;
-      if (filter == null) {
-        filter = '';
+      if (query == null) {
+        query = '';
       }
       ref = $scope.teachers;
       results = [];
       for (i = 0, len = ref.length; i < len; i++) {
         teacher = ref[i];
-        if (filter === void 0 || filter === '') {
-          teacher.selected = $scope.all_selected;
-        }
-        if (teacher.sn.toLowerCase().includes(filter.toLowerCase())) {
-          teacher.selected = $scope.all_selected;
-        }
-        if (teacher.givenName.toLowerCase().includes(filter.toLowerCase())) {
-          teacher.selected = $scope.all_selected;
-        }
-        if (teacher.sophomorixAdminClass.toLowerCase().includes(filter.toLowerCase())) {
-          teacher.selected = $scope.all_selected;
-        }
-        if (teacher.sAMAccountName.toLowerCase().includes(filter.toLowerCase())) {
+
           results.push(teacher.selected = $scope.all_selected);
         } else {
           results.push(void 0);

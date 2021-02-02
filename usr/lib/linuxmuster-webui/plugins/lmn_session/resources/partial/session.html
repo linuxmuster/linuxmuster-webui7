@@ -69,24 +69,6 @@
                 </li>
             </ul>
         </div>
-        <!-- WebSessions dropdown -->
-        <div ng-show="sessionLoaded && websessionEnabled" uib-dropdown class="input-group-btn" auto-close="outsideClick">
-            <button class="btn btn-default" uib-dropdown-toggle>
-                <i class="fa fa-globe" ng:show="websessionIsRunning" style="color:green;"></i>
-                <i class="fa fa-globe" ng:show="!websessionIsRunning"></i>
-                <span translate>Websession</span>
-                <span class="caret"></span>
-            </button>
-            <ul uib-dropdown-menu class="dropdown-menu-right dropdown-menu">
-                <li style="text-align:center;padding:5px;">
-                    <span ng:show="websessionIsRunning" style="background-color: green;color:white;" translate>Running</span>
-                    <span ng:show="!websessionIsRunning" style="background-color: red;color:white;"translate>Not running</span>
-                </li>
-                <li style="text-align:center;padding:5px;">
-                    <a href="#" ng:click="websessionToggle()">Start / Stop</a>
-                </li>
-            </ul>
-        </div>
     </div>
     <br ng-show="!sessionLoaded">
     <div id="expand-box-header" class="clearfix">

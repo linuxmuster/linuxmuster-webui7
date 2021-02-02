@@ -63,18 +63,8 @@ angular.module('lm.linbo').controller 'LMLINBOImageModalController', ($scope, $u
         $uibModalInstance.dismiss()
 
 
-angular.module('lm.linbo').controller 'LMLINBOConfigModalController', ($scope, $uibModal, $uibModalInstance, $timeout, $http, $log, gettext, messagebox, config, lmFileBackups, vdiconfig) ->
+angular.module('lm.linbo').controller 'LMLINBOConfigModalController', ($scope, $uibModal, $uibModalInstance, $timeout, $http, $log, gettext, messagebox, config, lmFileBackups) ->
     $scope.config = config
-    $scope.vdiconfig = vdiconfig
-    $scope.expert = false
-
-    console.log($scope.vdiconfig)
-
-    $scope.toggleExpert = () ->
-        if $scope.expert
-            $scope.expert = false
-        else
-            $scope.expert = true
 
     $scope.kernelOptions = [
         'quiet'
@@ -447,12 +437,11 @@ angular.module('lm.linbo').controller 'LMLINBOConfigModalController', ($scope, $
             $scope.rebuildDisks()
 
     $scope.save = () ->
-        console.log(vdiconfig)
         config.partitions = []
         for disk in $scope.disks
             for partition in disk.partitions
                 config.partitions.push partition
-        $uibModalInstance.close([config, vdiconfig])
+        $uibModalInstance.close(config)
 
     $scope.backups = () ->
         lmFileBackups.show('/srv/linbo/start.conf.' + $scope.config.config.LINBO.Group).then () ->
@@ -521,21 +510,16 @@ angular.module('lm.linbo').controller 'LMLINBOController', ($scope, $http, $uibM
     $scope.editConfig = (configName) ->
         $http.get("/api/lm/linbo/config/#{configName}").then (resp) ->
             config = resp.data
-            $http.get("/api/lm/linbo/vdi/#{configName}.vdi").then (resp) ->
-                vdiconfig = resp.data
 
-                $uibModal.open(
-                    templateUrl: '/lmn_linbo:resources/partial/config.modal.html'
-                    controller: 'LMLINBOConfigModalController'
-                    size: 'lg'
-                    resolve:
-                        config: () -> config
-                        vdiconfig:() -> vdiconfig
-                ).result.then (result) ->
-                    $http.post("/api/lm/linbo/config/#{configName}", result[0]).then (resp) ->
-                        notify.success gettext('Saved')
-                    $http.post("/api/lm/linbo/vdi/#{configName}.vdi", result[1]).then (resp) ->
-                        notify.success gettext('Saved')
+            $uibModal.open(
+                templateUrl: '/lmn_linbo:resources/partial/config.modal.html'
+                controller: 'LMLINBOConfigModalController'
+                size: 'lg'
+                resolve:
+                    config: () -> config
+            ).result.then (result) ->
+                $http.post("/api/lm/linbo/config/#{configName}", result).then (resp) ->
+                    notify.success gettext('Saved')
 
     $scope.deleteImage = (image) ->
         messagebox.show(text: "Delete '#{image.name}'?", positive: 'Delete', negative: 'Cancel').then () ->

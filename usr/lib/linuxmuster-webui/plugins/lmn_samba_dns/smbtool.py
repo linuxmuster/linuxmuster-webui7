@@ -1,0 +1,171 @@
+from aj.plugins.lmn_common.lmnfile import LMNFile
+import subprocess
+import re
+import configparser
+
+class SambaToolDNS():
+    """
+    Object to manage current samba dns entries on the system. 
+    """
+
+    def __init__(self):
+        self.zone = ''
+        self._get_zone()
+        if self.zone:
+            self._get_credentials()
+            self._get_ignore_list()
+
+    def _get_credentials(self):
+        """
+        Load the credentials to use with samba-tool and store it in self.credentials.
+        """
+
+        with open('/etc/linuxmuster/.secret/administrator', 'r') as f:
+            pw = f.readline().strip('\n')
+        self.credentials = ('-U', 'administrator%{}'.format(pw))
+
+    def _get_zone(self):
+        """
+        Parse setup.ini to get the current zone and store it in self.zone.
+        """
+
+        setup_path = '/var/lib/linuxmuster/setup.ini'
+        parser = configparser.ConfigParser()
+        parser.read(setup_path)
+        if 'setup' in parser.sections():
+            self.zone = parser['setup'].get('domainname', '')
+
+    def _get_ignore_list(self):
+        """
+        Get list of LMN devices to ignore them and store it in self.lmn_hosts,
+        because the list of DNS entries would be too long.
+        """
+
+        path = '/etc/linuxmuster/sophomorix/default-school/devices.csv'
+        fieldnames = [
+            'room',
+            'hostname',
+            'group',
+            'mac',
+            'ip',
+            'officeKey',
+            'windowsKey',
+            'dhcpOptions',
+            'sophomorixRole',
+            'lmnReserved10',
+            'pxeFlag',
+            'lmnReserved12',
+            'lmnReserved13',
+            'lmnReserved14',
+            'sophomorixComment',
+            'options',
+        ]
+
+        self.lmn_hosts = []
+        with LMNFile(path, 'r', fieldnames=fieldnames) as devices:
+            for device in devices.data:
+                # Ignore comment lines
+                if device['hostname'] is not None:
+                    self.lmn_hosts.append(device['hostname'])
+
+    def _samba_tool_process(self, action, options):
+        """
+        Execute samba-tool dns with parameter.
+
+        :param action: query, add, delete or update
+        :type action: string
+        :param options: Tuple of necessary options for the query
+        :type options: tuple
+        :return: List of lines as strings
+        :rtype: list
+        """
+
+        cmd = ['samba-tool', 'dns', action, 'localhost', self.zone, *options, *self.credentials]
+        result = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=False)
+        return result.stdout.read().decode().split('\n')
+
+    def get_list(self):
+        """
+        Query all dns entries and parse it to sort it in a dict, but removes the devices entries.
+
+        :return: Separate dns values from root and subdomains
+        :rtype: dict
+        """
+
+        result = self._samba_tool_process('query', ('@', 'ALL'))
+
+        # Filter results
+        entries = {'root': [], 'sub': []}
+        host = ''
+        tmp_dict = {}
+        types = ['AAAA', 'SOA', 'A', 'PTR', 'CNAME', 'NS', 'MX', 'TXT']
+        for line in result:
+
+            if "Name=," in line:
+                # First header
+                host = 'root'
+
+            elif "Name=" in line:
+                host = line.split("=")[1].split(',')[0].strip()
+                if host in self.lmn_hosts:
+                    host = ''
+
+            elif host:
+                for type in types:
+                    if ' '+type+':' in line:
+                        value = re.findall(': ([^(]*) \(', line)[0]
+                        details = re.findall('\(([^)]*)\)', line)
+                        if details[-1]:
+                            options = dict(o.strip().split("=") for o in details[-1].split(','))
+                        else:
+                            options = {}
+                        if type == "MX":
+                            options['priority'] = details[0]
+                        if host == 'root':
+                            entries['root'].append(dict({'host':'','type':type,'value':value}, **options))
+                        else:
+                            entries['sub'].append(dict({'host':host,'type':type,'value':value}, **options))
+
+        return entries
+
+    def add(self, sub):
+        """
+        Add subdomain entry to dns.
+
+        :param sub: Subdomain details
+        :type sub: dict
+        :return: Result of samba-tool
+        :rtype: string
+        """
+
+        return self._samba_tool_process('add', (sub['host'], sub['type'], sub['value']))
+
+    def update(self, old, new):
+        """
+        Update dns entry with new details.
+
+        :param old: Old subdomain details
+        :type old: dict
+        :param new: New subdomain details
+        :type new: dict
+        :return: Result of samba-tool
+        :rtype: string
+        """
+
+        return self._samba_tool_process('update', (old['host'], old['type'], old['value'], new['value']))
+
+    def delete(self, sub, type, entry):
+        """
+        Delete dns entry.
+
+        :param sub: Subdomain
+        :type sub: string
+        :param type: Type of entry
+        :type type: string
+        :param entry: Value of the entry
+        :type entry: string
+        :return: Result of samba-tool
+        :rtype: string
+        """
+
+        return self._samba_tool_process('delete', (sub, type, entry))

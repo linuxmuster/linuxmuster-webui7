@@ -1,0 +1,21 @@
+name: lmn_vdi_administration
+author: Andreas Till
+email: andreas.till@netzint.de
+url: http://linuxmuster.net
+version: '0.1'
+title: 'lmn_vdi_administration'
+icon: question
+dependencies:
+    - !!python/object:aj.plugins.PluginDependency {plugin_name: core }
+    - !!python/object:aj.plugins.PluginDependency { plugin_name: lmn_common }
+
+
+resources:
+    - 'resources/js/module.es'
+    - 'resources/js/routing.es'
+    - 'resources/js/controllers/index.controller.es'
+    - 'resources/partial/index.html'
+    - 'resources/partial/groupinfo.modal.html'
+    - 'resources/partial/masterinfo.modal.html'
+    - 'ng:lmn_vdi_administration'
+

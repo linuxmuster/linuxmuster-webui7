@@ -1,0 +1,15 @@
+<div ng:show="links.length == 0" class="alert alert-info" style="margin-top:15px;">
+    <i class="fa fa-info-circle"></i> <span translate>Currently no links defined!</span>
+</div>
+
+<div ng:repeat="link in links" ng:show="links.length != 0" style="margin-top:10px;" class="flex-container info-cards">
+    <div class="panel panel-info" style="width:100%;">
+        <div class="panel-heading" style="padding:10px;height:55px;">
+            <img src={{link.icon}} height="30px"><span style="font-size:18px;line-height:32px;padding-left:10px;">{{link.title}}</span>
+            <div style="float:right;">
+                <a href={{link.link}}><button class="btn btn-default"><i class="fas fa-globe"></i> <span translate>Open</span></button></a>
+            </div>
+        </div>
+        <div class="panel-body">{{link.description}}</div>
+    </div>
+</div>

@@ -1,0 +1,43 @@
+<h1 translate>VDI Desktops</h1>
+<progress-spinner ng:show="vdiClones == null"></progress-spinner>
+<div>
+    <div class=list-group ng:show="vdiClones != null">
+        <h4 translate>VDI Groups</h4>
+        <div class="flex-container lmn-container-list">
+            <div class="list-group-item" ng:repeat="(vdiClone, vdiCloneData) in vdiClones" style="margin-bottom:10px;width:250px;">
+                <div ng:click="startVdiSession()" ng:show="vdiCloneData.summary.available_vms != 0">
+                    <span style="float:right;width:50%;">
+                        <div class="session_container">
+                            <a href="#">
+                                <span style="overflow:hidden;width:100%;">
+                                    {{vdiClone}}<br>
+                                    <span translate>Available VMs:</span> {{vdiCloneData.summary.available_vms}}
+                                </span>
+                            </a>
+                        </div>
+                    </span>
+                    <span style="float:left;width:50%">
+                        <div class="session_image session_image_room">
+                            <span class="fas fa-play session_image_btn"></span>
+                        </div>
+                    </span>
+                </div>
+                <div ng:show="vdiCloneData.summary.available_vms == 0" title="{{'No VMs avaliable!'|translate}}">
+                    <span style="float:right;width:50%;">
+                        <div class="session_container">
+                            <span style="overflow:hidden;width:100%;">
+                                {{vdiClone}}<br>
+                                <span translate>Available VMs:</span> {{vdiCloneData.summary.available_vms}}
+                            </span>
+                        </div>
+                    </span>
+                    <span style="float:left;width:50%">
+                        <div class="session_image session_image_room disabled">
+                            <span class="fas fa-times-circle session_image_btn disabled"></span>
+                        </div>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

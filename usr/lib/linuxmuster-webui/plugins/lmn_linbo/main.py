@@ -12,7 +12,7 @@ class ItemProvider(SidebarItemProvider):
         return [
             {
                 'attach': 'category:devicemanagement',
-                'name': _('LINBO'),  # skipcq: PYL-E0602
+                'name': _('LINBO'),
                 'icon': 'laptop-medical',
                 'url': '/view/lm/linbo',
                 'weight': 15,
@@ -27,22 +27,22 @@ class Permissions (PermissionProvider):
         return [
             {
                 'id': 'lm:linbo:configs',
-                'name': _('Read/write start.conf'), # skipcq: PYL-E0602
+                'name': _('Read/write start.conf'),
                 'default': False,
             },
             {
                 'id': 'lm:linbo:images',
-                'name': _('Read/write images'), # skipcq: PYL-E0602
+                'name': _('Read/write images'),
                 'default': False,
             },
             {
                 'id': 'lm:linbo:examples',
-                'name': _('Read examples'), # skipcq: PYL-E0602
+                'name': _('Read examples'),
                 'default': False,
             },
             {
                 'id': 'lm:linbo:icons',
-                'name': _('Read/write icons'), # skipcq: PYL-E0602
+                'name': _('Read/write icons'),
                 'default': False,
             },
         ]

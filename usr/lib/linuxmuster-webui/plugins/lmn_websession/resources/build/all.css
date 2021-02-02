@@ -1,0 +1,17 @@
+.session_table td {
+  line-height: 33px !important;
+}
+.session_table:hover {
+  background-color: #EFEFEF;
+}
+.websession_btn {
+  border: 1px solid #eeeeee;
+  background-color: white;
+  font-size: 18px;
+  height: 30px;
+  width: 30px;
+  color: #233c4c;
+  padding: 3px;
+  margin-right: 2px;
+}
+

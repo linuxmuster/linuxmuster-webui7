@@ -12,14 +12,14 @@ class ItemProvider(SidebarItemProvider):
         return [
             {
             'attach': 'category:class',
-            'name': _('Session'), # skipcq: PYL-E0602
+            'name': _('Session'),
             'icon': 'chalkboard-teacher',
             'url': '/view/lmn/session',
             'weight': 20,
             },
             {
             'attach': 'category:class',
-            'name': _('Print Passwords'), # skipcq: PYL-E0602
+            'name': _('Print Passwords'),
             'icon': 'key',
             'url': '/view/lm/users/print-passwords',
             'weight': 40,
@@ -33,12 +33,12 @@ class Permissions (PermissionProvider):
         return [
             {
                 'id': 'lm:users:teachers:write',
-                'name': _('Write students'), # skipcq: PYL-E0602
+                'name': _('Write students'),
                 'default': False,
             },
             {
                 'id': 'lmn:session:trans',
-                'name': _('Transfer Files in Session'), # skipcq: PYL-E0602
+                'name': _('Transfer Files in Session'),
                 'default': False,
             },
         ]

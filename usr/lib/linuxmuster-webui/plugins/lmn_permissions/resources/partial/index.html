@@ -1,0 +1,108 @@
+<br/>
+
+<div class="form-group">
+    
+    <div>
+        <uib-tabset>
+            <uib-tab heading="Plugins">
+                <input ng:model="query.plugin" type="search" autofocus class="form-control" placeholder="Filter per plugin name or per role" />
+                <div ng-repeat="plugin in pluginList|filter:filter_plugin" ng-show="count_rows(plugin)">
+                    <span class="label label-{{label_color(pluginObj[plugin].provider)}} pull-right">{{pluginObj[plugin].provider}}</span>
+                    <h2>{{plugin}}</h2>
+                    <table style="width:100%" class="table" id="table_{{plugin}}">
+                        <tr>
+                            <th translate>URL</th>
+                            <th translate ng-click="switch('plugin','globaladministrator')">GlobalAdmin</th>
+                            <th translate ng-click="switch('plugin','schooladministrator')">SchoolAdmin</th>
+                            <th translate ng-click="switch('plugin','teacher')">Teacher</th>
+                            <th translate ng-click="switch('plugin','student')">Student</th>
+                            <th translate>Def.</th>
+                        </tr>
+                        <tr ng-repeat="(method,details) in pluginObj[plugin].methods" ng-if="filter_api(details)">
+                            <td style="width:300px;" title="{{details.doc}}">
+                                <b>{{details.url}}</b><br />
+                                <i>{{method}}</i><br />
+                                <span class="label label-danger">{{details.permission_id}}</span>
+                                <span ng-show="details.auth" class="label label-warning" translate>Auth</span>
+                                <span ng-show="details.api" class="label label-info" translate>Api</span>
+                                <span ng-show="details.page" class="label label-success" translate>Page</span>
+                                <span ng-show="details.post" class="label label-primary" translate>Post</span>
+                            </td>
+                            <td ng-init="g = apiPermissions[details.permission_id].globaladministrator">
+                                <i class="fas fa-{{iconify(g)}}" style="{{colorize(g)}}"></i>
+                            </td>
+                            <td ng-init="s = apiPermissions[details.permission_id].schooladministrator">
+                                <i class="fas fa-{{iconify(s)}}" style="{{colorize(s)}}"></i>
+                            </td>
+                            <td ng-init="t = apiPermissions[details.permission_id].teacher">
+                                <i class="fas fa-{{iconify(t)}}" style="{{colorize(t)}}"></i>
+                            </td>
+                            <td ng-init="e = apiPermissions[details.permission_id].student">
+                                <i class="fas fa-{{iconify(e)}}" style="{{colorize(e)}}"></i>
+                            </td>
+                            <td ng-init="d = apiPermissions[details.permission_id].default">
+                                <i class="fas fa-{{iconify(d)}}" style="{{colorize(d)}}"></i>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </uib-tab>
+            <uib-tab heading="Sidebar">
+                <input ng:model="query.sidebar" type="search" autofocus class="form-control" placeholder="Filter per URL or per role" />
+                <table style="width:100%" class="table">
+                    <tr>
+                        <th translate>URL</th>
+                        <th translate ng-click="switch('sidebar','globaladministrator')">GlobalAdmin</th>
+                        <th translate ng-click="switch('sidebar','schooladministrator')">SchoolAdmin</th>
+                        <th translate ng-click="switch('sidebar','teacher')">Teacher</th>
+                        <th translate ng-click="switch('sidebar','student')">Student</th>
+                        <th translate>Def.</th>
+                    </tr>
+                    <tr ng-repeat="url in sidebarPermissionsList|filter:filter_sidebar">
+                        <td style="width:300px;" ng-init="details = sidebarPermissions[url]">
+                            <span class="label label-{{label_color(get_provider(url))}} pull-right">{{get_provider(url)}}</span>
+                            <b>{{url}}</b><br />
+                            <i>Plugin {{details.plugin}}</i><br />
+                        </td>
+                        <td ng-init="g = details.globaladministrator">
+                            <i class="fas fa-{{iconify(g)}}" style="{{colorize(g)}}"></i>
+                        </td>
+                        <td ng-init="s = details.schooladministrator">
+                            <i class="fas fa-{{iconify(s)}}" style="{{colorize(s)}}"></i>
+                        </td>
+                        <td ng-init="t = details.teacher">
+                            <i class="fas fa-{{iconify(t)}}" style="{{colorize(t)}}"></i>
+                        </td>
+                        <td ng-init="e = details.student">
+                            <i class="fas fa-{{iconify(e)}}" style="{{colorize(e)}}"></i>
+                        </td>
+                        <td ng-init="d = details.default">
+                            <i class="fas fa-{{iconify(d)}}" style="{{colorize(d)}}"></i>
+                        </td>
+                    </tr>
+                </table>
+            </uib-tab>
+            <uib-tab heading="Orphan">
+                <h2 translate>Sidebar</h2>
+                <p>
+                    <span translate>Elements listed in default-ui-permissions.ini but not used :</span>
+                    <ul>
+                        <li ng-repeat="url in sidebarPermissionsList" ng-show="sidebarPermissions[url].plugin == 'NOT IMPLEMENTED'">
+                            {{url}}
+                        </li>
+                    </ul>
+                </p>
+
+                <h2 translate>Permissions</h2>
+                <p>
+                    <span translate>Elements listed in default-ui-permissions.ini but not used :</span>
+                <ul>
+                    <li ng-repeat="(url,details) in apiPermissions" ng-show="details.name == 'NO DESCRIPTION'">
+                        {{url}}
+                    </li>
+                </ul>
+                </p>
+            </uib-tab>
+        </uib-tabset>
+    </div>
+</div>

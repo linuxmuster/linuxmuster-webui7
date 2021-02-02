@@ -1,0 +1,36 @@
+<div class="modal-header">
+    <h4><span translate>Group:</span> {{masterGroupData.group}}</h4>
+</div>
+<div class="modal-body">
+    <table class="table table-hover" style="width:100%;">
+        <tr>
+            <th translate>Room</th>
+            <td>{{masterGroupData.room}}</td>
+        </tr>
+        <tr>
+            <th translate>Hostname</th>
+            <td>{{masterGroupData.hostname}}</td>
+        </tr>
+        <tr>
+            <th translate>MAC-Address</th>
+            <td>{{masterGroupData.mac}}</td>
+        </tr>
+        <tr>
+            <th translate>IP-Address</th>
+            <td>{{masterGroupData.ip}}</td>
+        </tr>
+        <tr>
+            <th translate>PXE-Boot</th>
+            <td ng:show="masterGroupData.pxe == 0" translate>No</td>
+            <td ng:show="masterGroupData.pxe == 1" translate>Yes</td>
+            <td ng:show="masterGroupData.pxe != 0 && masterGroupData.pxe != 1">{{masterGroupData.pxe}}</td>
+        </tr>
+        <tr>
+            <th translate>Image Size</th>
+            <td>{{masterGroupData.actual_imagesize}}</td>
+        </tr>
+    </table>
+</div>
+<div class="modal-footer">
+    <a class="btn btn-default btn-flat" ng:click="close()" translate>OK</a>
+</div>

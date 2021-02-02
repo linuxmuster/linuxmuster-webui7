@@ -1,14 +1,9 @@
-"""
-Module to handle school session.
-"""
-
 from jadi import component
 from aj.api.http import url, HttpPlugin
 from time import localtime, strftime  # needed for timestamp in collect transfer
-from aj.api.endpoint import endpoint
+from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue
-import os
 
 
 @component(HttpPlugin)
@@ -19,16 +14,6 @@ class Handler(HttpPlugin):
     @url(r'/api/lmn/session/sessions')
     @endpoint(api=True)
     def handle_api_session_sessions(self, http_context):
-        """
-        Manage the sessions ( list of sessions, participants, ... ).
-        Method POST.
-
-        :param http_context: HttpContext
-        :type http_context: HttpContext
-        :return: List
-        :rtype: list
-        """
-
         action = http_context.json_body()['action']
         if action == 'get-sessions':
             supervisor = http_context.json_body()['username']
@@ -39,6 +24,7 @@ class Handler(HttpPlugin):
                 # Most likeley key error 'cause no sessions for this user exist
                 except Exception as e:
                     raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(e))
+                    return 0
             sessionsList = []
             if supervisor not in sessions['SUPERVISOR_LIST']:
                 return sessionsList
@@ -250,16 +236,6 @@ class Handler(HttpPlugin):
     @url(r'/api/lmn/session/getUserInRoom')
     @endpoint(api=True)
     def handle_api_get_user_in_room(self, http_context):
-        """
-        Get students in the same room as the teacher.
-        Method POST.
-
-        :param http_context: HttpContext
-        :type http_context: HttpContext
-        :return: Details of users in room
-        :rtype: dict
-        """
-
         if http_context.method == 'POST':
             school = 'default-school'
             action = http_context.json_body()['action']
@@ -285,16 +261,6 @@ class Handler(HttpPlugin):
     @url(r'/api/lmn/session/user-search')
     @endpoint(api=True)
     def handle_api_ldap_user_search(self, http_context):
-        """
-        User query for javascript filters.
-        Method POST.
-
-        :param http_context: HttpContext
-        :type http_context: HttpContext
-        :return: Users list with details
-        :rtype: list
-        """
-
         school = 'default-school'
         with authorize('lm:users:students:read'):
             try:
@@ -310,16 +276,6 @@ class Handler(HttpPlugin):
     @url(r'/api/lmn/session/schoolClass-search')
     @endpoint(api=True)
     def handle_api_ldap_group_search(self, http_context):
-        """
-        Class query for javascript filters.
-        Method POST.
-
-        :param http_context: HttpContext
-        :type http_context: HttpContext
-        :return: Classes list with details
-        :rtype: list
-        """
-
         school = 'default-school'
         with authorize('lm:users:students:read'):
             try:
@@ -338,14 +294,7 @@ class Handler(HttpPlugin):
     @url(r'/api/lmn/session/moveFileToHome')  ## TODO authorize
     @endpoint(api=True)
     def handle_api_create_dir(self, http_context):
-        """
-        Move file to user's home through `sophomorix-transfer`.
-        Method POST.
-
-        :param http_context:
-        :type http_context:
-        """
-
+        """Create directory with given path, ignoring errors"""
         if http_context.method == 'POST':
             user = http_context.json_body()['user']
             filepath = http_context.json_body()['filepath']
@@ -359,16 +308,6 @@ class Handler(HttpPlugin):
     @url(r'/api/lmn/session/trans-list-files')
     @endpoint(api=True)
     def handle_api_session_file_trans_list(self, http_context):
-        """
-        Move uploaded files into the user's transfer directory.
-        Method POST.
-
-        :param http_context: HttpContext
-        :type http_context: HttpContext
-        :return: List of files in transfer directory
-        :rtype: list
-        """
-
         user = http_context.json_body()['user']
         # check if user is a string(given by share option) or an object in an array (given by collect option)
         if not isinstance(user, str):
@@ -377,27 +316,7 @@ class Handler(HttpPlugin):
         subfolderPath = ''
         if 'subfolderPath' in http_context.json_body():
             subfolderPath = http_context.json_body()['subfolderPath']
-
-        # TODO: Workaround until sophomorix can create this folder by its own
-        # This is slow and needs an update
-        # look if session subfolder exist in user transfer dir, if not create
-        sophomorixCommand = ['sophomorix-transfer', '-jj', '--list-home-dir', user, '--subdir', '/transfer/']
-        FilesInTransfer = lmn_getSophomorixValue(sophomorixCommand, 'sAMAccountName/'+user)
-        #raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(FilesInTransfer))
-        if 'TREE' not in FilesInTransfer or subfolderPath not in FilesInTransfer['TREE']:
-            try:
-                os.mkdir('/tmp/empty')
-            except OSError:
-                print ("Creation of the directory /tmp/empty failed")
-            sophomorixCommand = ['sophomorix-transfer', '--from-unix-path', '/tmp/empty/', '--to-user',  user, '--subdir', 'transfer/'+subfolderPath, '-jj']
-            lmn_getSophomorixValue(sophomorixCommand, '', True)
-            try:
-                os.rmdir('/tmp/empty')
-            except OSError:
-                print ("Creation of the directory /tmp/empty failed")
-
-
-        sophomorixCommand = ['sophomorix-transfer', '-jj', '--list-home-dir', user, '--subdir', '/transfer/'+subfolderPath]
+        sophomorixCommand = ['sophomorix-transfer', '-j', '--list-home-dir', user, '--subdir', '/transfer/'+subfolderPath]
         availableFiles = lmn_getSophomorixValue(sophomorixCommand, 'sAMAccountName/'+user)
         #raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(availableFiles))
         availableFilesList = []
@@ -410,16 +329,6 @@ class Handler(HttpPlugin):
     @url(r'/api/lmn/session/trans')
     @endpoint(api=True)
     def handle_api_session_file_trans(self, http_context):
-        """
-        Handles files between teacher and students (share, copy, move).
-        Method POST.
-
-        :param http_context: HttpContext
-        :type http_context: HttpContext
-        :return: State of the action.
-        :rtype: string
-        """
-
         senders = http_context.json_body()['senders']
         command = http_context.json_body()['command']
         receivers = http_context.json_body()['receivers']
@@ -448,26 +357,6 @@ class Handler(HttpPlugin):
                         sendersCSV = ''
                         for sender in senders:
                             sendersCSV += sender['sAMAccountName']+','
-
-                            # TODO: Workaround until sophomorix can create this folder by its own
-                            # This is slow and needs an update
-                            # look if session subfolder exist in user transfer dir, if not create
-                            sophomorixCommand = ['sophomorix-transfer', '-jj', '--list-home-dir', sender['sAMAccountName'], '--subdir', '/transfer/']
-                            FilesInTransfer = lmn_getSophomorixValue(sophomorixCommand, 'sAMAccountName/'+sender['sAMAccountName'])
-                            #raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(FilesInTransfer))
-                            subfolderPath=receiver+'_'+session
-                            if 'TREE' not in FilesInTransfer or subfolderPath not in FilesInTransfer['TREE']:
-                                try:
-                                    os.mkdir('/tmp/empty')
-                                except OSError:
-                                    print ("Creation of the directory /tmp/empty failed")
-                                sophomorixCommand = ['sophomorix-transfer', '--from-unix-path', '/tmp/empty/', '--to-user',  sender['sAMAccountName'], '--subdir', 'transfer/'+subfolderPath, '-jj']
-                                lmn_getSophomorixValue(sophomorixCommand, '', True)
-                                try:
-                                    os.rmdir('/tmp/empty')
-                                except OSError:
-                                    print ("Creation of the directory /tmp/empty failed")
-
                         # if files is All we're automatically in bulk mode
                         if files == "All":
                             sophomorixCommand = ['sophomorix-transfer', '-jj', '--scopy', '--from-user', sendersCSV, '--to-user', receiver, '--from-path', 'transfer/'+receiver+'_'+session, '--to-path', 'transfer/collected/'+now+'-'+session+'/', '--to-path-addon', 'fullinfo',  '--no-target-directory']
@@ -484,25 +373,6 @@ class Handler(HttpPlugin):
                         sendersCSV = ''
                         for sender in senders:
                             sendersCSV += sender['sAMAccountName']+','
-
-                            # TODO: Workaround until sophomorix can create this folder by its own
-                            # This is slow and needs an update
-                            # look if session subfolder exist in user transfer dir, if not create
-                            sophomorixCommand = ['sophomorix-transfer', '-jj', '--list-home-dir', sender['sAMAccountName'], '--subdir', '/transfer/']
-                            FilesInTransfer = lmn_getSophomorixValue(sophomorixCommand, 'sAMAccountName/'+sender['sAMAccountName'])
-                            #raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(FilesInTransfer))
-                            subfolderPath=receiver+'_'+session
-                            if 'TREE' not in FilesInTransfer or subfolderPath not in FilesInTransfer['TREE']:
-                                try:
-                                    os.mkdir('/tmp/empty')
-                                except OSError:
-                                    print ("Creation of the directory /tmp/empty failed")
-                                sophomorixCommand = ['sophomorix-transfer', '--from-unix-path', '/tmp/empty/', '--to-user',  sender['sAMAccountName'], '--subdir', 'transfer/'+subfolderPath, '-jj']
-                                lmn_getSophomorixValue(sophomorixCommand, '', True)
-                                try:
-                                    os.rmdir('/tmp/empty')
-                                except OSError:
-                                    print ("Creation of the directory /tmp/empty failed")
                         # if files is All we're automatically in bulk mode
                         if files == "All":
                             sophomorixCommand = ['sophomorix-transfer', '-jj', '--move', '--keep-source-directory', '--from-user', sendersCSV, '--to-user', receiver, '--from-path', 'transfer/'+receiver+'_'+session, '--to-path', 'transfer/collected/'+now+'-'+session+'/', '--to-path-addon', 'fullinfo',  '--no-target-directory']

@@ -1,0 +1,31 @@
+<br/>
+
+<div>
+    <h2 translate>DHCP Leases</h2>
+    <table class="table">
+        <tr>
+            <th translate>Mac address</th>
+            <th translate>IP</th>
+            <th translate>Start</th>
+            <th translate>End</th>
+            <th> </th>
+        </tr>
+        <tr ng:repeat="device in leases">
+            <td>
+                {{device.mac}}
+                <br />
+                <span style="color:red;" ng:show="alreadyIn(device.mac)" translate>
+                    Already registered!
+                </span>
+            </td>
+            <td>{{device.ip}}</td>
+            <td>{{device.starts}}</td>
+            <td>{{device.ends}}</td>
+            <td>
+                <button class="btn btn-default" ng:click="addDevice(device)" ng:show="!alreadyIn(device.mac)" >
+                    <i class="fas fa-plus"></i>
+                </button>
+            </td>
+        </tr>
+    </table>
+</div>

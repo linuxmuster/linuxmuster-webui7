@@ -97,55 +97,8 @@ class Handler(HttpPlugin):
                 for k, v in self.EMAIL_MAPPING.items():
                     data['admins_print'] = data['admins_print'].replace(k, v)
 
-            def convert_value(v):
-                if type(v) is int:
-                    return str(v)
-                if type(v) is bool:
-                    return 'yes' if v else 'no'
-                return '%s' % v
+            self.config_obj.write(data)
 
-            section_name = ''
-            set_control = 0
-            for line in open(path):
-                originalLine = line
-                # remove everything before comment
-                if '#' in line:
-                    line = line.split('#',1)[1]
-                    line = '#'+line
-                if line.startswith('#'):
-                    content += originalLine
-                    continue
-                # if new section found
-                if line.startswith('['):
-                    # check if last section contained all keys
-                    if set_control is 1:
-                        for k in data[section_name]:
-                            if k not in keys_found:
-                                k = k.strip()
-                                # v = v.strip() # v not defined !
-                                content += "\t%s=%s\n" % (k.upper(), convert_value(data[section_name][k]))
-                    # start of with new section
-                    set_control = 1
-                    keys_found = []
-                    section_name = line.strip('[]\n')
-                else:
-                    k, v = line.split('=', 1)
-                    k = k.strip().lower()
-                    v = v.strip()
-                    if k in data[section_name]:
-                        newValue = convert_value(data[section_name][k])
-                        keys_found.append(k)
-                        if v:
-                            originalLine = originalLine.replace(v, newValue)
-                        else:
-                            originalLine = "\t%s=%s\n" % (k.upper(), newValue)
-                        if newValue not in v:
-                            originalLine = originalLine.lstrip('#')
-                content += originalLine
-
-
-            lmn_write_configfile(path, content)
-            #self.config_obj.write(data)
 
     @url(r'/api/lm/schoolsettings/school-share')
     @authorize('lm:schoolsettings')

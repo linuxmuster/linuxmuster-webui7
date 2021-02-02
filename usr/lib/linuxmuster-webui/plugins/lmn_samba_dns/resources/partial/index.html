@@ -1,0 +1,83 @@
+<div>
+    <h3><span translate>Zone informations</span> ({{zone}})</h3>
+    <table class="table">
+        <tr>
+            <th translate>Type</th>
+            <th translate>TTL</th>
+            <th translate>Value</th>
+        </tr>
+        <tr ng:repeat="sub in entries['root']">
+            <td>{{sub.type}}</td>
+            <td>{{sub.ttl}}</td>
+            <td>{{sub.value}}</td>
+        </tr>
+    </table>
+    <h3 translate>Subdomains</h3>
+    <table class="table">
+        <tr>
+            <th translate>Host</th>
+            <th translate>Type</th>
+            <th translate>TTL</th>
+            <th translate>Value</th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr ng:repeat="sub in entries['sub']">
+            <td>{{sub.host}} <span ng:if="sub.type == 'MX'">({{sub.priority}})</span></td>
+            <td>{{sub.type}}</td>
+            <td>{{sub.ttl}}</td>
+            <td>{{sub.value}}</td>
+            <td width="1">
+                <button class="btn btn-default" ng:click="show_update(sub)" title={{trans.modify}}>
+                    <i class="fa fa-edit"></i>
+                </button>
+            </td>
+            <td width="1">
+                <button class="btn btn-default" ng:click="delete(sub)" title={{trans.delete}}>
+                    <i class="fa fa-trash-o"></i>
+                </button>
+            </td>
+        </tr>
+    </table>
+    <button class="btn btn-default" ng:click="add()">
+        <i class="fa fa-plus"></i> <span translate>Add an entry</span>
+    </button>
+    <dialog ng:show="showNew">
+        <div class="modal-header">
+            <h4 translate>New DNS entry</h4>
+        </div>
+        <div class="modal-body">
+            <form>
+                <span translate>Subdomain : </span>
+                <input type="text" ng:model="new.host" class="form-control" />
+                <span translate>Type : </span>
+                <select ng:model="new.type" ng:options="type for type in types" class="form-control" />
+                <span translate>Value : </span>
+                <input type="text" ng:model="new.value" class="form-control" />
+            </form>
+        </div>
+        <div class="modal-footer">
+            <a ng:click="save()" class="btn btn-default btn-flat" translate>Save</a>
+            <a ng:click="close()" class="btn btn-default btn-flat" translate>Close</a>
+        </div>
+    </dialog>
+    <dialog ng:show="showUpdate">
+        <div class="modal-header">
+            <h4 ng:show="updateDNS" translate>Modify DNS entry</h4>
+        </div>
+        <div class="modal-body">
+            <form>
+                <span translate>Subdomain : </span>
+                <input type="text" ng:model="sub.host" class="form-control" disabled />
+                <span translate>Type : </span>
+                <input type="text" ng:model="sub.type" class="form-control" disabled />
+                <span translate>Value : </span>
+                <input type="text" ng:model="sub.value" class="form-control" />
+            </form>
+        </div>
+        <div class="modal-footer">
+            <a ng:click="update()" class="btn btn-default btn-flat" translate>Update</a>
+            <a ng:click="close()" class="btn btn-default btn-flat" translate>Close</a>
+        </div>
+    </dialog>
+</div>

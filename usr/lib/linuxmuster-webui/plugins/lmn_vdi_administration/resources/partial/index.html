@@ -1,0 +1,121 @@
+</br>
+<div>
+
+    <uib:tabset>
+        <uib:tab heading="{{'Master VMs'|translate}}">
+            <progress-spinner ng:show="masterVmGroupStates == null"></progress-spinner>
+            <div>
+                <table ng:show="masterVmGroupStates != null" class="table table-hover" style="width:100%;margin-top:10px;">
+                    <tr>
+                        <th>Group</th>
+                        <th>Hostname</th>
+                        <th>IP-Address</th>
+                        <th>MAC-Address</th>
+                        <th>Master VMs</th>
+                    </tr>
+                    <tr ng:repeat="(masterGroup, masterGroupData) in masterVmGroupStates" ng:show="masterVmGroupStates != null">
+                        <td ng:click="showGroupInfo(masterGroupData)">
+                            {{masterGroup}}
+                        </td>
+                        <td ng:click="showGroupInfo(masterGroupData)">
+                            {{masterGroupData.hostname}}
+                        </td>
+                        <td ng:click="showGroupInfo(masterGroupData)">
+                            {{masterGroupData.ip}}
+                        </td>
+                        <td ng:click="showGroupInfo(masterGroupData)">
+                            {{masterGroupData.mac}}
+                        </td>
+                        <td>
+                            <div ng:repeat="(masterVM, masterVMData) in masterGroupData.master_vms">
+                                <button class="btn btn-primary" style="margin: 3px;float:left;" ng:show="masterVMData != null" ng:click="showMasterInfo(masterVM, masterVMData)">{{masterVM}}</button>
+                                <button class="btn btn-primary" style="margin: 3px;float:left;" ng:show="masterVMData == null" disabled>{{masterVM}}</button>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+
+
+        </uib:tab>
+
+        <uib:tab heading="{{'All VMs'|translate}}" ng-click="getClones()">
+            <progress-spinner ng:show="vdiClones == null"></progress-spinner>
+            <table ng:show="vdiClones != null" class="table table-hover" style="width:100%;margin-top:10px;">
+                <tr>
+                    <th>Master-Group</th>
+                    <th translate>VM ID</th>
+                    <th translate>Room</th>
+                    <th translate>Hostname</th>
+                    <th translate>IP-Address</th>
+                    <th translate>MAC-Address</th>
+                    <th translate>User</th>
+                </tr>
+                <tr ng:repeat="(vdiClone, vdiCloneData) in vdiClones" ng:show="vdiClones != null">
+                    <td>
+                        {{vdiCloneData.group}}
+                    </td>
+                    <td>
+                        {{vdiClone}}
+                    </td>
+                    <td>
+                        {{vdiCloneData.room}}
+                    </td>
+                    <td>
+                        {{vdiCloneData.hostname}}
+                    </td>
+                    <td>
+                        {{vdiCloneData.ip}}
+                    </td>
+                    <td>
+                        {{vdiCloneData.mac}}
+                    </td>
+                    <td>
+                        <div ng:show="vdiCloneData.user != ''">{{vdiCloneData.user}}</div>
+                        <div ng:show="vdiCloneData.user == ''" translate>No user</div>
+                    </td>
+                </tr>
+            </table>
+            
+                <!-- <table class="table table-hover">
+                    <tr>
+                        <th>VM ID</th>
+                        <th>Name</th>
+                        <th>cores</th>
+                        <th>memory</th>
+                        <th>ip</th>
+                        <th>status</th>
+                        <th>user</th>
+                        <th>hostname</th>
+                        <th>uptime</th>
+                        <th>cloop</th>
+                        <th>group</th>
+                        <th>room</th>
+                        <th>lastConnectionRequestUser</th>
+                        <th>lastConnectionRequestTime</th>
+                    </tr>
+
+                    <tr ng:repeat="(vdiClone, vdiCloneData) in vdiClones">
+                        <td>{{vdiClone}}</td>
+                        <td>{{vdiCloneData.name}}</td>
+                        <td>{{vdiCloneData.cores}}</td>
+                        <td>{{vdiCloneData.memory}}</td>
+                        <td>{{vdiCloneData.ip}}</td>
+                        <td>{{vdiCloneData.status}}</td>
+                        <td>{{vdiCloneData.user}}</td>
+                        <td>{{vdiCloneData.hostname}}</td>
+                        <td>{{vdiCloneData.uptime}}</td>
+                        <td>{{vdiCloneData.cloop}}</td>
+                        <td>{{vdiCloneData.group}}</td>
+                        <td>{{vdiCloneData.room}}</td>
+                        <td>{{vdiCloneData.lastConnectionRequestUser}}</td>
+                        <td>{{vdiCloneData.lastConnectionRequestTime}}</td>
+                    </tr>
+                </table> -->
+        </uib:tab>
+
+    </uib:tabset>
+
+
+</div>

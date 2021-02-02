@@ -1,0 +1,19 @@
+name: lmn_links
+author: Netzint GmbH
+email: lukas.spitznagel@netzint.de
+url: https://www.netzint.de
+version: '1.1'
+title: 'Links'
+icon: link
+dependencies:
+    - !!python/object:aj.plugins.PluginDependency { plugin_name: core }
+    - !!python/object:aj.plugins.PluginDependency { plugin_name: lmn_common }
+
+resources:
+    - 'resources/js/module.es'
+    - 'resources/js/routing.es'
+    - 'resources/js/controllers/index.controller.es'
+    - 'resources/partial/index.html'
+    - 'main.py'
+    - 'views.py'
+    - 'ng:lmn.links'

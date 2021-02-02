@@ -147,7 +147,7 @@ class Handler(HttpPlugin):
                 text = f.read()
             with io.open(importList, 'w', encoding='utf-8') as f:
                 f.write(text)
-            f.close()
+            f.close
             f = open(importList, 'rb')
             reader = csv.reader(f, delimiter=';', encoding=http_context.query.get('encoding', 'utf-8'))
             # determine number of coloumns in csv

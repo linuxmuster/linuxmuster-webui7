@@ -107,16 +107,9 @@ angular.module('lm.users').controller 'LMUsersTeachersController', ($scope, $htt
     $scope.batchSetCustomPassword = () ->
         $scope.setCustomPassword((x for x in $scope.teachers when x.selected))
 
-    $scope.filter = (row) ->
-        # Only query sAMAccountName, givenName and sn
-        result = false
-        for value in ['sAMAccountName', 'givenName', 'sn']
-            result = result || row[value].toLowerCase().indexOf($scope.query.toLowerCase() || '') != -1
-        return result
-
-    $scope.selectAll = (query) ->
-        if !query?
-            query = ''
+    $scope.selectAll = (filter) ->
+        if !filter?
+            filter = ''
         for teacher in $scope.teachers
            if filter is undefined || filter == ''
               teacher.selected = $scope.all_selected

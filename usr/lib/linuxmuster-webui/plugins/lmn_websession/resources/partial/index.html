@@ -1,0 +1,82 @@
+
+<div ng:show="identity.user == 'root'" class="alert alert-danger">
+    <i class="fa fa-info-circle"></i> <span translate>You should not use WebUI as root user! If this is your first time running WebUI, proceed through the setup wizard. Afterwards login using the global-admin account.</span>
+</div>
+
+
+<div ng:show="identity.user != 'root'">
+
+    <progress-spinner ng:show="user == null"></progress-spinner>
+
+    <div ng:show="user != null">
+    <div>
+        <div ng:show="!enabled" class="alert alert-info" style="margin-top:15px;">
+            <i class="fa fa-info-circle"></i> <span translate>Websession-Module not enabled! Please check Config-File!</span>
+        </div>
+        <div ng:show="!webSessionLoaded && enabled" style="margin-top:10px;" class="flex-container info-cards">
+
+            <div class="panel panel-info" style="width:100%">
+                <div class="panel-heading" style="padding:10px;height:50px;">
+                    <span style="font-size:18px;line-height:28px;" translate>Running Websession</span>
+                    <div style="float:right;">
+                        <button class="btn btn-default websession_btn" ng:click="createWebsession()" ng:show="identity.profile.sophomorixRole == 'teacher'"><i class="fas fa-plus"></i></button>
+                        <button class="btn btn-default websession_btn" ng:click="refreshSessionList()"><i class="fas fa-sync"></i></button>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div ng:show="myWebsessions.length == 0" class="alert alert-info" style="margin-top:15px;">
+                        <i class="fa fa-info-circle"></i> <span translate>Currently no websession is running!</span>
+                    </div>
+                    <table class="table" ng:show="myWebsessions.length != 0" style="margin-top:15px;">
+                        <tr>
+                            <th></th>
+                            <th translate>Sessionname</th>
+                            <th translate>Moderator</th>
+                            <th translate>Password</th>
+                            <th translate>Participants</th>
+                            <th translate>Status</th>
+                            <th translate></th>
+                        </tr>
+                        <tr ng:repeat="myWebsession in myWebsessions" class="session_table">
+                            <td style="text-align:center;">
+                                <i ng:show="myWebsession.moderator != identity.user" class="fas fa-lock" title="You can't edit this session because you aren't the owner" translate></i>
+                                <i ng:show="myWebsession.moderator == identity.user" class="fas fa-lock-open" title="This is your session" translate></i>
+                            </td>
+                            <td>{{myWebsession.sessionname}}</td>
+                            <td>{{myWebsession.moderator}}</td>
+                            <td>
+                                <span ng:if="myWebsession.sessionpassword">{{myWebsession.sessionpassword}}</span>
+                                <span ng:if="!myWebsession.sessionpassword" translate>no password</span>
+                            </td>
+                            <td ng:click="showParticipants(myWebsession.participants)">{{myWebsession.participants.length}}</td>
+                            <td>{{myWebsession.status}}</td>
+                            <td>
+                                <button class="btn btn-default" ng:show="myWebsession.status == 'stopped' && myWebsession.moderator == identity.user" ng:click="startWebsession(myWebsession.sessionname, myWebsession.id, myWebsession.attendeepw, myWebsession.moderatorpw)" title="{{'Start'|translate}}"><i class="fas fa-play"></i></button>
+                                <button class="btn btn-default" ng:show="myWebsession.status == 'stopped' && myWebsession.moderator != identity.user" disabled title="{{'Start'|translate}}"><i class="fas fa-play"></i></button>
+                                <button class="btn btn-default" ng:show="myWebsession.status == 'started' && myWebsession.moderator == identity.user" ng:click="joinWebsession(myWebsession.id, myWebsession.moderatorpw)" title="{{'Join as moderator'|translate}}"><i class="fas fa-play"></i></button>
+                                <button class="btn btn-default" ng:show="myWebsession.status == 'started' && myWebsession.moderator != identity.user" ng:click="joinWebsession(myWebsession.id, myWebsession.attendeepw)" title="{{'Join as attendee'|translate}}"><i class="fas fa-play"></i></button>
+                                <button class="btn btn-default" ng:show="myWebsession.status == 'started' && myWebsession.moderator == identity.user" ng:click="endWebsession(myWebsession.id, myWebsession.moderatorpw)" title="{{'Stop'|translate}}"><i class="fas fa-stop"></i></button>
+                                <button class="btn btn-default" ng:show="myWebsession.status == 'stopped' && myWebsession.moderator == identity.user" disabled title="{{'Stop'|translate}}"><i class="fas fa-stop"></i></button>
+                                <button class="btn btn-default" ng:show="myWebsession.moderator == identity.user" ng:click="deleteWebsession(myWebsession.id)" title="{{'Delete'|translate}}"><i class="fas fa-trash-alt"></i></button>
+                                <button class="btn btn-default" ng:show="myWebsession.moderator == identity.user" ng:click="showURL(myWebsession.id)" title="{{'Show URL'|translate}}"><i class="fas fa-eye"></i></button>
+                                <button class="btn btn-default" ng:show="myWebsession.moderator == identity.user" ng:click="copyURL(myWebsession.id)" title="{{'Copy URL'|translate}}"><i class="fas fa-clipboard"></i></button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<div ng:show="webSessionLoaded" style="width:auto;height:94vh;margin-left:-15px;margin-right:-15px;margin-top:0px;">
+    <iframe allow="camera *;microphone *" style="width:100%;height: calc(100% - 50px);border:0;" name=iframe_bbb allowfullscreen></iframe>
+  </div>
+
+
+  <floating-toolbar ng:show="webSessionLoaded">
+    <div class="button-group">
+        <button ng:click="closeWebsession(thisWebsession.meetingID, identity.user)" ng:show="currentSession.name != ''" class="btn btn-default btn-flat pull-right" translate>Close</button>
+    </div>
+</floating-toolbar>

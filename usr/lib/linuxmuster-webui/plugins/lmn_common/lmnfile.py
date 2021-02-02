@@ -239,3 +239,7 @@ class ConfigLoader(LMNFile):
         self.backup()
         self.opened.close()
         self.data.write()
+
+# LATER
+# class StartConfLoader(LMNFile):
+#     extensions = []

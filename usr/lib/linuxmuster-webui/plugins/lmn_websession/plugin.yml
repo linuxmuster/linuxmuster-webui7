@@ -1,0 +1,18 @@
+name: lmn_websession
+author: Netzint
+email: lukas.spitznagel@netzint.de
+url: http://netzint.de
+version: '2.0'
+title: 'ni_websession'
+icon: 'people-arrows'
+dependencies:
+    - !!python/object:aj.plugins.PluginDependency { plugin_name: core }
+    - !!python/object:aj.plugins.PluginDependency { plugin_name: lmn_common }
+resources:
+    - 'resources/js/module.coffee'
+    - 'resources/js/controllers/index.controller.coffee'
+    - 'resources/partial/index.html'
+    - 'resources/partial/public.html'
+    - 'resources/partial/createSession.modal.html'
+    - 'resources/styles.less'
+    - 'ng:lmn.websession'

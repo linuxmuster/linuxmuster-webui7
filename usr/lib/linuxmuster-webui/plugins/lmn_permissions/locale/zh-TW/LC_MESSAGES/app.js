@@ -1,1 +1,0 @@
-{"": "", "Api": "", "Auth": "", "Def.": "", "Elements listed in default-ui-permissions.ini but not used :": "", "GlobalAdmin": "", "Page": "", "Permissions": "", "Post": "", "SchoolAdmin": "", "Sidebar": "", "Student": "", "Teacher": "", "URL": "", "List all permissions": ""}

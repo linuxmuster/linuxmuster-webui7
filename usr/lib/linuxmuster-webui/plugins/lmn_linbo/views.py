@@ -1,5 +1,8 @@
+"""
+Module which provides some APIs to manage linbo config files and images.
+"""
+
 import os
-import json
 
 from jadi import component
 from aj.auth import authorize
@@ -7,7 +10,7 @@ from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint
 from aj.plugins.lmn_common.api import lmn_backup_file, lmn_write_configfile
 from aj.plugins.lmn_common.lmnfile import LMNFile
-from aj.plugins.lmn_common.api import LinuxmusterConfig
+
 
 @component(HttpPlugin)
 class Handler(HttpPlugin):
@@ -20,18 +23,35 @@ class Handler(HttpPlugin):
     @authorize('lm:linbo:configs')
     @endpoint(api=True)
     def handle_api_configs(self, http_context):
+        """
+        List all start.conf config files.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: List of config files
+        :rtype: list
+        """
+
         r = []
         for file in os.listdir(self.LINBO_PATH):
             if file.startswith('start.conf.'):
-                if not file.endswith('.vdi'):
-                    if not os.path.islink(os.path.join(self.LINBO_PATH, file)):
-                        r.append(file)
+                if not os.path.islink(os.path.join(self.LINBO_PATH, file)):
+                    r.append(file)
         return r
 
     @url(r'/api/lm/linbo/examples')
     @authorize('lm:linbo:examples')
     @endpoint(api=True)
     def handle_api_examples(self, http_context):
+        """
+        List all start.conf config examples files.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: List of examples files
+        :rtype: list
+        """
+
         r = []
         for file in os.listdir(os.path.join(self.LINBO_PATH, 'examples')):
             if file.startswith('start.conf.'):
@@ -42,6 +62,15 @@ class Handler(HttpPlugin):
     @authorize('lm:linbo:examples')
     @endpoint(api=True)
     def handle_api_examples_regs(self, http_context):
+        """
+        List all registry patch examples files.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: List of registry patch examples files
+        :rtype: list
+        """
+
         r = []
         for file in os.listdir(os.path.join(self.LINBO_PATH, 'examples')):
             if file.endswith('.reg'):
@@ -52,6 +81,15 @@ class Handler(HttpPlugin):
     @authorize('lm:linbo:examples')
     @endpoint(api=True)
     def handle_api_examples_postsyncs(self, http_context):
+        """
+        List all postsync examples files.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: List of postsync examples files
+        :rtype: list
+        """
+
         r = []
         for file in os.listdir(os.path.join(self.LINBO_PATH, 'examples')):
             if file.endswith('.postsync'):
@@ -62,17 +100,36 @@ class Handler(HttpPlugin):
     @authorize('lm:linbo:icons')
     @endpoint(api=True)
     def handle_api_icons(self, http_context):
+        """
+        List all OS icons.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: List of OS icons
+        :rtype: list
+        """
+
+
         return os.listdir(os.path.join(self.LINBO_PATH, 'icons'))
 
     @url(r'/api/lm/linbo/images')
     @authorize('lm:linbo:images')
     @endpoint(api=True)
     def handle_api_images(self, http_context):
+        """
+        Get the whole list of all images and informations about it.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: List of images with details, one dict per image
+        :rtype: list of dict
+        """
+
         r = []
         for file in os.listdir(self.LINBO_PATH):
             if file.endswith(('.cloop', '.rsync')):
                 extra_dict = {}
-                for extra in ['desc', 'reg', 'postsync', 'info', 'macct','vdi']:
+                for extra in ['desc', 'reg', 'postsync', 'info', 'macct']:
                     extra_file = os.path.join(self.LINBO_PATH, file + '.' + extra)
                     if os.path.isfile(extra_file):
                         with LMNFile(extra_file, 'r') as f:
@@ -90,13 +147,21 @@ class Handler(HttpPlugin):
                     'macct': extra_dict['macct'],
                     'reg': extra_dict['reg'],
                     'postsync': extra_dict['postsync'],
-                    'vdi': extra_dict['vdi'],
                 })
         return r
 
     @url(r'/api/lm/linbo/icons/read/(?P<name>.+)')
     @endpoint(api=False, page=True)
     def handle_api_icons_read(self, http_context, name):
+        """
+        Provides a direct link to download an OS icon.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: GZip compressed response with content of icon
+        :rtype: gzip
+        """
+
         root = '/srv/linbo/icons/'
         path = os.path.abspath(os.path.join(root, name))
 
@@ -104,45 +169,29 @@ class Handler(HttpPlugin):
             return http_context.respond_forbidden()
         return http_context.file(path, inline=False, name=name.encode())
 
-    
-    @url(r'/api/lm/linbo/vdi/(?P<name>.+)')
-    @authorize('lm:linbo:images')
-    @endpoint(api=True)
-    def handle_api_vdi_image(self, http_context, name=None):
-        path = os.path.join(self.LINBO_PATH, name)
-        if http_context.method == 'GET':
-            if os.path.exists(path):
-                settings = LinuxmusterConfig(path)
-                settings.load()
-                vdiSettings=settings.data
-                vdiSettings["cores"] = int(vdiSettings["cores"])
-                vdiSettings["memory"] = int(vdiSettings["memory"])
-                vdiSettings["tag"] = int(vdiSettings["tag"])
-                vdiSettings["minimum_vms"] = int(vdiSettings["minimum_vms"])
-                vdiSettings["maxmimum_vms"] = int(vdiSettings["maxmimum_vms"])
-                vdiSettings["prestarted_vms"] = int(vdiSettings["prestarted_vms"])
-                vdiSettings["timeout_building_master"] = int(vdiSettings["timeout_building_master"])
-                vdiSettings["timeout_building_clone"] = int(vdiSettings["timeout_building_clone"])
-            else:
-                vdiSettings = None
-            return vdiSettings
-        
-        if http_context.method == 'POST':
-            if os.path.exists(path):
-                data = http_context.json_body()
-                lmn_write_configfile(path, json.dumps(data, indent=4))
-                os.chmod(path, 0o755)
-
     @url(r'/api/lm/linbo/image/(?P<name>.+)')
     @authorize('lm:linbo:images')
     @endpoint(api=True)
     def handle_api_image(self, http_context, name=None):
+        """
+        Write or delete linbo helper files (reg, info, macct, ...) for one
+        specified image.
+        If the content is empty, removes the file.
+        Method POST.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :param name: Name of the image
+        :type name: string
+        """
+
         path = os.path.join(self.LINBO_PATH, name)
         desc_file = path + '.desc'
         info_file = path + '.info'
         macct_file = path + '.macct'
         reg_file = path + '.reg'
         postsync_file = path + '.postsync'
+
         if http_context.method == 'POST':
             data = http_context.json_body()
             if 'description' in data:
@@ -194,6 +243,20 @@ class Handler(HttpPlugin):
     @authorize('lm:linbo:configs')
     @endpoint(api=True)
     def handle_api_config(self, http_context, name=None):
+        """
+        Handles the start.conf.* config files.
+        Method GET: get the content.
+        Method POST: update the content
+        Method DELETE: delete the config file.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :param name: Name of the group
+        :type name: string
+        :return:
+        :rtype:
+        """
+
         path = os.path.join(self.LINBO_PATH, name)
 
         if http_context.method == 'GET':
@@ -232,6 +295,15 @@ class Handler(HttpPlugin):
             data = http_context.json_body()
 
             def convert(v):
+                """
+                Convert bool to compatible yes/no values for ini files.
+
+                :param v: bool
+                :type v: bool
+                :return: yes/no
+                :rtype: string
+                """
+
                 if type(v) is bool:
                     return 'yes' if v else 'no'
                 return v
@@ -260,4 +332,13 @@ class Handler(HttpPlugin):
     @url(r'/api/lm/linbo.iso')
     @endpoint(api=False, page=True)
     def handle_linbo_iso(self, http_context):
+        """
+        Provides a direct link to download linbo.iso image.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: GZip compressed response with content of file
+        :rtype: gzip
+        """
+
         return http_context.file('/srv/linbo/linbo.iso', inline=False, name=b'linbo.iso')

@@ -17,4 +17,3 @@ python-magic==0.4.15 # used to determine encoding in linbo files and csv uploads
 scrypt
 python-ldap
 simplejson==3.17.0
-isc_dhcp_leases

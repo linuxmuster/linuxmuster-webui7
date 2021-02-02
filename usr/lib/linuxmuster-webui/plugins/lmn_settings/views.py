@@ -12,6 +12,7 @@ from jadi import component
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize
+from aj.plugins.lmn_common.lmnfile import LMNFile
 from aj.plugins.lmn_common.api import lmn_write_configfile, lmn_getSophomorixValue, CSVSpaceStripper,  lmn_backup_file
 from configparser import ConfigParser
 
@@ -38,6 +39,7 @@ class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
 
+
     @url(r'/api/lmn/schoolsettings/determine-encoding')
     @authorize('lm:schoolsettings')
     @endpoint(api=True)
@@ -56,9 +58,11 @@ class Handler(HttpPlugin):
         if os.path.isfile(fileToCheck) is False:
             os.mknod(fileToCheck)
         if os.path.isfile(fileToCheck):
-            sophomorixCommand = ['sophomorix-check', '--analyze-encoding', fileToCheck, '-jj']
-            encoding = lmn_getSophomorixValue(sophomorixCommand, 'SUMMARY/0/ANALYZE-ENCODING/ENCODING')
-            return encoding
+            with LMNFile(fileToCheck, 'r') as f:
+                return f.detect_encoding()
+        #     sophomorixCommand = ['sophomorix-check', '--analyze-encoding', fileToCheck, '-jj']
+        #     encoding = lmn_getSophomorixValue(sophomorixCommand, 'SUMMARY/0/ANALYZE-ENCODING/ENCODING')
+        #     return encoding
         return None
 
 
@@ -79,27 +83,15 @@ class Handler(HttpPlugin):
 
         school = 'default-school'
         path = '/etc/linuxmuster/sophomorix/'+school+'/school.conf'
-        if http_context.method == 'GET':
-            # Parse csv config file
-            config = ConfigParser()
-            config.read(path)
-            settings = {}
-            for section in config.sections():
-                settings[section] = {}
-                for (key, val) in config.items(section):
-                   if val.isdigit():
-                      val = int(val)
-                      #settings[section][key] = val
-                   if val == 'no':
-                        val = False
-                   if val == 'yes':
-                        val = True
-                   settings[section][key] = val
-            return settings
+        # Update each time the config_obj because it may have changed
+        with LMNFile(path, 'r') as f:
+            self.config_obj = f
 
+        if http_context.method == 'GET':
+            # Just export ConfigObj as dict for angularjs
+            return dict(self.config_obj.data)
 
         if http_context.method == 'POST':
-            content = ''
             data = http_context.json_body()
             if 'admins_print' in data:
                 for k, v in self.EMAIL_MAPPING.items():
@@ -153,6 +145,7 @@ class Handler(HttpPlugin):
 
 
             lmn_write_configfile(path, content)
+            #self.config_obj.write(data)
 
     @url(r'/api/lm/schoolsettings/school-share')
     @authorize('lm:schoolsettings')

@@ -209,6 +209,7 @@ class Handler(HttpPlugin):
                     return result['TYPE'], result['MESSAGE_EN']
                 return result['TYPE'], result['LOG']
 
+
     @url(r'/api/lm/search-project')
     @authorize('lmn:groupmembership')
     @endpoint(api=True)

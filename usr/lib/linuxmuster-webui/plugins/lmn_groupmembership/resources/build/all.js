@@ -82,7 +82,6 @@
     $scope.setMembership = function(group) {
       var action, type;
       $scope.changeState = true;
-      console.log(group);
       action = group.membership ? 'removeadmins' : 'addadmins';
       if (group.typename === 'Class') {
         type = 'class';
@@ -177,6 +176,43 @@
     $scope.projectIsJoinable = function(project) {
       return project['joinable'] === 'TRUE' || project.admin || $scope.identity.isAdmin || $scope.identity.profile.memberOf.indexOf(project['DN']) > -1;
     };
+    $scope.resetAll = function(type) {
+      var warning;
+      warning = gettext('Are you sure to reset all admin memberships for this? This is actually only necessary to start a new empty school year. This cannot be undone!');
+      return messagebox.show({
+        text: warning,
+        positive: 'Delete',
+        negative: 'Cancel'
+      }).then(function() {
+        var _class, all_groups, i, j, len, len1, msg, project, ref, ref1;
+        msg = messagebox.show({
+          progress: true
+        });
+        all_groups = '';
+        if (type === 'class') {
+          ref = $scope.classes;
+          for (i = 0, len = ref.length; i < len; i++) {
+            _class = ref[i];
+            all_groups += _class.groupname + ',';
+          }
+        }
+        if (type === 'project') {
+          ref1 = $scope.projects;
+          for (j = 0, len1 = ref1.length; j < len1; j++) {
+            project = ref1[j];
+            all_groups += project.groupname + ',';
+          }
+        }
+        return $http.post('/api/lmn/groupmembership/reset', {
+          type: type,
+          all_groups: all_groups
+        }).then(function(resp) {
+          return notify.success(gettext('Admin membership reset'));
+        }).finally(function() {
+          return msg.close();
+        });
+      });
+    };
     return $scope.$watch('identity.user', function() {
       if ($scope.identity.user === void 0) {
         return;
@@ -187,7 +223,6 @@
       if ($scope.identity.user === 'root') {
         return;
       }
-      // $scope.identity.user = 'hulk'
       $scope.getGroups($scope.identity.user);
     });
   });

@@ -59,6 +59,7 @@
         <br>
 
         <div ng:show="types.schoolclass.checkbox">
+            <button class="btn btn-danger pull-right" ng:click="resetAll('class')" ng:show="identity.profile.isAdmin" translate><i class="fas fa-undo"></i></button>
             <h3 translate>Schoolclasses</h3>
             <div ng-if="classes.length== 0" class="alert alert-info">
                 <i class="fa fa-info-circle"></i>
@@ -101,6 +102,7 @@
         </div>
 
         <div ng:show="types.project.checkbox">
+            <button class="btn btn-danger pull-right" ng:click="resetAll('project')" ng:show="identity.profile.isAdmin" translate><i class="fas fa-undo"></i></button>
             <h3 translate>Projects</h3>
             <div ng-if="projects.length == 0" class="alert alert-info">
                 <i class="fa fa-info-circle"></i>

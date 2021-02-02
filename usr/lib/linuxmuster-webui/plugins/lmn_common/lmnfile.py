@@ -9,6 +9,7 @@ import csv
 import magic
 import filecmp
 import time
+from configobj import ConfigObj
 
 ALLOWED_PATHS = [
                 # used for school.conf or *.csv in lmn_settings, lmn_devices and lmn_users
@@ -18,6 +19,8 @@ ALLOWED_PATHS = [
                 # used in lmn_settings for subnets configuration
                 '/etc/linuxmuster/subnets-dev.csv'
                 ]
+
+EMPTY_LINE_MARKER = '###EMPTY#LINE'
 
 class LMNFile(metaclass=abc.ABCMeta):
     """
@@ -159,6 +162,7 @@ class LinboLoader(LMNFile):
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.opened.close()
 
+
 class CSVLoader(LMNFile):
     """
     Handler for csv files.
@@ -170,7 +174,7 @@ class CSVLoader(LMNFile):
         self.opened = open(self.file, 'r', encoding=self.encoding)
         if 'r' in self.mode or '+' in self.mode:
             self.data = csv.DictReader(
-                (line for line in self.opened if not line.startswith('#')),
+                (line if len(line) > 3 else EMPTY_LINE_MARKER for line in self.opened),
                 delimiter = self.delimiter,
                 fieldnames = self.fieldnames
             )
@@ -182,11 +186,18 @@ class CSVLoader(LMNFile):
     def write(self, data):
         tmp = self.file + '_tmp'
         with open(tmp, 'w', encoding=self.encoding) as f:
-            csv.DictWriter(
+            writer = csv.DictWriter(
                 f,
                 delimiter=';',
-                fieldnames = self.fieldnames
-            ).writerows(data)
+                fieldnames = self.fieldnames,
+                lineterminator = '\n'
+            )
+            for elt in data:
+                first_field = elt[self.fieldnames[0]]
+                if first_field == '' or first_field[0] == '#':
+                    f.write(first_field.replace(EMPTY_LINE_MARKER, '') + '\n')
+                else:
+                    writer.writerow(elt)
         if not filecmp.cmp(tmp, self.file):
             self.backup()
             os.rename(tmp, self.file)
@@ -198,10 +209,33 @@ class CSVLoader(LMNFile):
             self.opened.close()
 
 
-# LATER
-# class ConfigLoader(LMNFile):
-#     extensions = ['.ini', '.conf']
-#
-#
-# class StartConfLoader(LMNFile):
-#     extensions = []
+class ConfigLoader(LMNFile):
+    extensions = ['.ini', '.conf']
+
+    def __enter__(self):
+        self.opened = open(self.file, 'r', encoding=self.encoding)
+        if 'r' in self.mode or '+' in self.mode:
+            self.data = ConfigObj(self.file, encoding='utf-8', write_empty_values=True, stringify=True)
+            for section, options in self.data.items():
+                for key, value in options.items():
+                    value = int(value) if value.isdigit() else value
+                    value = True if value == 'yes' else value
+                    value = False if value == 'no' else value
+                    self.data[section][key] = value
+        return self
+
+    def __exit__(self, *args):
+        if self.opened:
+            self.opened.close()
+
+    def write(self, data):
+        for section, options in data.items():
+                for key, value in options.items():
+                    value = 'yes' if value is True else value
+                    value = 'no' if value is False else value
+                    self.data[section][key] = value
+        if self.opened.closed:
+           self.opened = open(self.file, 'r', encoding=self.encoding)
+        self.backup()
+        self.opened.close()
+        self.data.write()

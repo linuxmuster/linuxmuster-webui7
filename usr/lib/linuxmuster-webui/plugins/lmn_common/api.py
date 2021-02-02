@@ -12,6 +12,7 @@ import threading
 import ast
 import unicodecsv as csv
 import filecmp
+import configparser
 
 
 ALLOWED_PATHS = [
@@ -55,7 +56,7 @@ class LinuxmusterConfig():
     def load(self):
         if os.geteuid() == 0:
             os.chmod(self.path, 384)  # 0o600
-        self.data = yaml.load(open(self.path))
+        self.data = yaml.load(open(self.path), Loader=yaml.SafeLoader)
 
     def save(self):
         with open(self.path, 'w') as f:
@@ -63,6 +64,18 @@ class LinuxmusterConfig():
 
 lmconfig = LinuxmusterConfig('/etc/linuxmuster/webui/config.yml')
 lmconfig.load()
+
+parser = configparser.ConfigParser()
+# Maybe not a good idea, see https://github.com/linuxmuster/linuxmuster-base7/issues/109
+# Eventually get the info from school.conf, but beware the multischool env.
+parser.read('/var/lib/linuxmuster/setup.ini')
+if 'setup' in parser.sections():
+    lmsetup_schoolname = parser['setup']['schoolname']
+    # For later : get the whole dict
+    # If necessary, will come in LMNFile
+    # lmsetup = {elmt:parser['setup'][elmt] for elmt in parser['setup']}
+else:
+    lmsetup_schoolname = None
 
 class CSVSpaceStripper:
     """

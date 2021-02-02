@@ -18,7 +18,7 @@ import yaml
 
 from aj.auth import AuthenticationProvider, OSAuthenticationProvider, AuthenticationService
 from aj.config import UserConfigProvider
-from aj.plugins.lmn_common.api import lmconfig
+from aj.plugins.lmn_common.api import lmconfig, lmsetup_schoolname
 
 @component(AuthenticationProvider)
 class LMAuthenticationProvider(AuthenticationProvider):
@@ -264,6 +264,8 @@ class LMAuthenticationProvider(AuthenticationProvider):
         try:
             profil = self.get_ldap_user(username)
             profil['isAdmin'] = b"administrator" in profil['sophomorixRole']
+            if lmsetup_schoolname:
+                profil['pageTitle'] = lmsetup_schoolname
             return json.loads(json.dumps(profil))
         except Exception as e:
             logging.error(e)
@@ -299,7 +301,7 @@ class UserLdapConfig(UserConfigProvider):
         """
 
         if self.user == 'root':
-            self.data = yaml.load(open('/root/.config/ajenti.yml'), Loader=yaml.Loader)
+            self.data = yaml.load(open('/root/.config/ajenti.yml'), Loader=yaml.SafeLoader)
         else:
             ## Load ldap attribute webuidashboard
             userAttrs = AuthenticationService.get(self.context).get_provider().get_ldap_user(self.user, context="userconfig")
@@ -368,5 +370,5 @@ class UserLdapConfig(UserConfigProvider):
         Change mode to "read, write, and execute by owner". Currently not used
         (self.path is not defined) but keeped in compatibility mode.
         """
-
+        
         os.chmod(self.path, stat.S_IRWXU)

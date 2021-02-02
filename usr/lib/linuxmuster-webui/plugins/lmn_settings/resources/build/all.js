@@ -55,8 +55,7 @@
       for (i = 0, len = ref.length; i < len; i++) {
         file = ref[i];
         userfile = file.substring(file.indexOf('.') + 1);
-        if (resp.data[file]['encoding'] === 'auto') {
-          //console.log(userfile)
+        if (resp.data[file]['ENCODING'] === 'auto') {
           console.log('is auto');
           $http.post('/api/lmn/schoolsettings/determine-encoding', {
             path: '/etc/linuxmuster/sophomorix/' + school + '/' + userfile,
@@ -139,7 +138,7 @@
 
 'use strict';
 
-angular.module('lm.settings').controller('LMglobalSettingsController', function ($scope, $http, $sce, notify, pageTitle, identity, messagebox, passwd, config, core, locale, gettext) {
+angular.module('lm.settings').controller('LMglobalSettingsController', function ($scope, $http, $sce, notify, pageTitle, identity, messagebox, config, core, locale, gettext) {
    pageTitle.set(gettext('Global Settings'));
 
    $scope.config = config;
@@ -152,14 +151,12 @@ angular.module('lm.settings').controller('LMglobalSettingsController', function 
    };
 
    identity.promise.then(function () {
-      $scope.newClientCertificate.o = identity.machine.name;
-      passwd.list().then(function (data) {
-         $scope.availableUsers = data;
-         $scope.$watch('newClientCertificate.user', function () {
-            return $scope.newClientCertificate.cn = identity.user + '@' + identity.machine.hostname;
-         });
-         $scope.newClientCertificate.user = 'root';
-      });
+      // $scope.newClientCertificate.o = identity.machine.name;
+      // passwd.list().then((data) => {
+      //    $scope.availableUsers = data;
+      //    $scope.$watch('newClientCertificate.user', () => $scope.newClientCertificate.cn = `${identity.user}@${identity.machine.hostname}`);
+      //    $scope.newClientCertificate.user = 'root';
+      // });
       $http.get('/api/core/languages').then(function (rq) {
          return $scope.languages = rq.data;
       });

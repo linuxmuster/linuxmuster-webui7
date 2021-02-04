@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.157-1) lmn7-testing; urgency=medium
+
+  * Current snapshot build 5be14f0ba99a7c2c2f959834f8d58aa95a3688fd
+   *     Add many plugins and update permissions
+
+ -- Lukas Spitznagel <lukas.spitznagel@netzint.de>  Tue Feb 2 15:41:31 2021 +0000
+
 linuxmuster-webui7 (1.0.155-1) lmn7; urgency=medium 
 
   * Current snapshot build 66422b02d79a6a569eec445006396380f10d20cc
@@ -11,7 +18,6 @@ linuxmuster-webui7 (1.0.154-1) lmn7; urgency=medium~
    *     Updated Changelog due to new package
 
  -- Andreas Till <andreas.till@netzint.de> Tue Dec  8 18:34:11 CET 2020
-
 
 linuxmuster-webui7 (1.0.153-1) lmn7; urgency=medium 
 

@@ -18,3 +18,4 @@ scrypt
 python-ldap
 simplejson==3.17.0
 isc_dhcp_leases
+xmltodict

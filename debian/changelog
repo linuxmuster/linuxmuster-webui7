@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.158-1) lmn7-testing; urgency=medium
+
+  * Current snapshot build 840d43415eedad30b91eedfa1a6a300b375b2a99
+   *     Add all built js.
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 12 Feb 2021 22:10:27 +0100
+
 linuxmuster-webui7 (1.0.157-1) lmn7-testing; urgency=medium
 
   * Current snapshot build 5be14f0ba99a7c2c2f959834f8d58aa95a3688fd

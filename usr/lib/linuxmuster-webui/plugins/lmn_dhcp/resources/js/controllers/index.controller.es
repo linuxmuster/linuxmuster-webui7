@@ -41,7 +41,7 @@ angular.module('lmn.dhcp').controller('ExtraDhcpIndexController', function($scop
     }
 });
 
-angular.module('extra_dhcp').controller('ExtraDhcpAddController', function($scope, $http, pageTitle, gettext, notify, validation, $uibModalInstance, $uibModal) {
+angular.module('lmn.dhcp').controller('ExtraDhcpAddController', function($scope, $http, pageTitle, gettext, notify, validation, $uibModalInstance, $uibModal) {
 
     // Register devices in validation service to test for duplicate
     validation.set($scope.used, 'devices');

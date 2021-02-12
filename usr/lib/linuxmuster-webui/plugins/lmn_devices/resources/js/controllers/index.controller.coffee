@@ -87,7 +87,10 @@ angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $
         page: 1
         pageSize: 100
 
-    $scope.stripComments = (value) -> value.room and value.room[0] != '#'
+    $scope.stripComments = (value) ->
+        if value._isNew
+            return true
+        return value.room and value.room[0] != '#'
 
     $scope.add = () ->
         if $scope.devices.length > 0
@@ -103,10 +106,11 @@ angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $
             sophomorixRole: 'classroom-studentcomputer',
             pxeFlag: '1',
         }
+        console.log($scope.devices)
 
     $scope.duplicate = (device) ->
         $scope.devices.push {
-            _isNew: true
+            _isNew: true,
             room: device.room,
             hostname: device.hostname,
             group: device.group,

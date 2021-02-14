@@ -112,7 +112,6 @@
       return value.room && value.room[0] !== '#';
     };
     $scope.add = function() {
-      console.log("Called !");
       if ($scope.devices.length > 0) {
         $scope.paging.page = Math.floor(($scope.devices.length - 1) / $scope.paging.pageSize) + 1;
       }

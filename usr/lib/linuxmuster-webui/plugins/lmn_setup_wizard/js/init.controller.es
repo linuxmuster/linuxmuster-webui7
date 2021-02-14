@@ -187,8 +187,23 @@ angular.module('lm.setup_wizard').controller('InitExternalServicesController', f
 angular.module('lm.setup_wizard').controller('InitSummaryController', function ($location, $http, gettext, pageTitle, notify) {
     pageTitle.set(gettext('Setup Wizard'))
     this.ini = {}
+    this.checks = {}
+    this.checked = false
+    this.ok = false
     $http.get('/api/lm/setup-wizard/read-ini').then(response => this.ini = response.data)
 
+    this.check = () => {
+        notify.info(gettext("Checks launched, this may take some time"))
+        $http.post('/api/lm/setup-wizard/check-data', {setup: this.ini}).then((response) => {
+            this.checks = response.data
+            console.log(this.checks)
+            this.checked = true
+            this.ok = this.checks.bool
+            if (!this.ok) {
+                notify.error(gettext("Please verify the data again"))
+            }
+        })
+    }
     this.finish= () => {
         $http.post('/api/lm/setup-wizard/update-ini', this.ini).then(() => {
             return $location.path('/view/lm/init/setup')

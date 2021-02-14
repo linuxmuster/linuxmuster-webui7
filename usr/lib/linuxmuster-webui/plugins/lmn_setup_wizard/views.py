@@ -5,6 +5,7 @@ Handles `setup.ini` file and finish the install process.
 import configparser
 import os
 import subprocess
+import smtplib
 
 from jadi import component
 from aj.api.http import url, HttpPlugin
@@ -96,6 +97,77 @@ class Handler(HttpPlugin):
         """
 
         return os.path.exists('/var/lib/linuxmuster/setup.ini')
+
+    @url(r'/api/lm/setup-wizard/check-data')
+    @endpoint(api=True)
+    def handle_api_check_data(self, http_context):
+        """
+        Check data given in setup.ini and some connection stuff (ssh to docker,
+        smtp mail, etc ... ).
+        MEthod POST.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: Are all check ok
+        :rtype: bool
+
+        """
+
+        def test_ssh(ip):
+            try:
+                result = subprocess.check_call(['/usr/bin/ssh', ip, 'echo', '""'])
+                return True
+            except subprocess.CalledProcessError:
+                return False
+
+        def ping(ip):
+            try:
+                result = subprocess.check_call(['/bin/ping', '-c', '1', '-W', '1', ip])
+                return True
+            except subprocess.CalledProcessError:
+                return False
+
+        if http_context.method != 'POST':
+            return
+
+        setup = http_context.json_body()['setup']
+        checks = {'bool': True}
+
+        # Firewall reachable ?
+        # If the fw does not accept ping, this may cause some trouble
+        # test = ping(setup['firewallip'])
+        # checks['fw_ping'] = test
+        # checks['bool'] &= test
+
+        if 'dockerip' in setup.keys():
+            test = test_ssh(setup['dockerip'])
+            checks['docker_ssh'] = test
+            checks['bool'] &= test
+
+        if 'opsiip' in setup.keys():
+            test = test_ssh(setup['opsiip'])
+            checks['opsi_ssh'] = test
+            checks['bool'] &= test
+
+        if 'mailip' in setup.keys():
+            try:
+                server = smtplib.SMTP()
+                server.connect(setup['smtprelay'], 25)
+                server.ehlo()
+                # 235 2.7.0 Authentication successful
+                test = server.login(setup['smtpuser'], setup['smtppw'])[0] == 235
+                server.quit()
+            except:
+                test = False
+
+            checks['mail_relay'] = test
+            checks['bool'] &= test
+
+            test = test_ssh(setup['mailip'])
+            checks['mail_ssh'] = test
+            checks['bool'] &= test
+
+        return checks
 
     @url(r'/api/lm/setup-wizard/provision')
     @endpoint(api=True, auth=True)

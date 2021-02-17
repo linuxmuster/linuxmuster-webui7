@@ -219,23 +219,31 @@ p.dotlist:before {
   line-height: 0;
   border-bottom: 2px dotted #ddd;
 }
-ul.leaders {
-  max-width: 30em;
+tr.leaders {
+  max-width: 40em;
   padding: 0;
-  overflow-x: hidden;
   list-style: none;
 }
-ul.leaders li:before {
+tr.leaders td.summary:before {
   float: left;
   width: 0;
   white-space: nowrap;
   content: ". . . . . . . . . . . . . . . . . . . . " ". . . . . . . . . . . . . . . . . . . . " ". . . . . . . . . . . . . . . . . . . . " ". . . . . . . . . . . . . . . . . . . . ";
 }
-ul.leaders span:first-child {
+tr.leaders td.summary {
+  width: 30em;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+tr.leaders td.check {
+  padding-left: 30px;
+}
+tr.leaders td span:first-child {
   padding-right: 0.33em;
   background: white;
 }
-ul.leaders span + span {
+tr.leaders td span + span {
   float: right;
   padding-left: 0.33em;
   background: white;

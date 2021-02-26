@@ -6,7 +6,7 @@ angular.module('lmn.linbo_sync', ['core', 'lm.common']);
 'use strict';
 
 angular.module('lmn.linbo_sync').config(function ($routeProvider) {
-    $routeProvider.when('/view/lm/synclist', {
+    $routeProvider.when('/view/lmn/linbo_sync', {
         templateUrl: '/lmn_linbo_sync:resources/partial/index.html',
         controller: 'SyncIndexController'
     });

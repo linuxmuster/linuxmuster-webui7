@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.159-1) lmn7-testing; urgency=medium 
+
+  * Current snapshot build cb871ceaf6cfea435b8c2d0e574a75579e07af85
+   *     Removed lmn_printers fixed urls in lmn_linbo_sync
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Feb 26 12:51:03 CET 2021
+
 linuxmuster-webui7 (1.0.158-1) lmn7-testing; urgency=medium
 
   * Current snapshot build 840d43415eedad30b91eedfa1a6a300b375b2a99

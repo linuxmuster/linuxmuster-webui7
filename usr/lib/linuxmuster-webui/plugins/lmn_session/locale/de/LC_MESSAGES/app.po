@@ -23,11 +23,11 @@ msgstr "<a>Austeilen</a>"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/selectFile.modal.html:90
 msgid "All data are copied from the whole session"
-msgstr "Alle Daten der kompletten Kurse wurden kopiert"
+msgstr "Alle Daten des kompletten Kurses werden kopiert"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/selectFile.modal.html:93
 msgid "All data are moved from the whole session"
-msgstr "Alle Daten der kompletten Kurse wurden verschoben"
+msgstr "Alle Daten des kompletten Kurses werden verschoben"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/selectFile.modal.html:109
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:64

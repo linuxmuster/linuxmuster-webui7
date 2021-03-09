@@ -17,7 +17,7 @@ from aj.api.endpoint import endpoint, EndpointError
 from aj.plugins.lmn_linbo_sync import api
 
 ## TODO
-# Add initcache and partition 
+# Add initcache and partition
 # Add option -p
 # Delete option -w if timeout is 0
 # Better icons and design
@@ -30,7 +30,7 @@ class Handler(HttpPlugin):
 
     @url(r'/api/lm/linbo/SyncList')
     @endpoint(api=True)
-    def handle_api_linbo_synclist(self, http_context):
+    def handle_api_linbo_sync(self, http_context):
         """
         Get the last synchronisation date from all workstations.
         Method GET.

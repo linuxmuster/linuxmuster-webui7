@@ -11,34 +11,136 @@
         <div ng:show="$ctrl.ini.servername != null">
         <div class="form-group">
             <label translate>School Information</label>
-            <br>
-            <ul class=leaders>
-                    <li><div><span translate >School Name:</span> <span><b>{{$ctrl.ini.schoolname}} </b></span></div>
-                    <li><div><span translate >Location</span> <span><b>{{$ctrl.ini.location}} </b></span></div>
-                    <li><div><span translate >State</span> <span><b>{{$ctrl.ini.state}} </b></span></div>
-                    <li><div><span translate >Country</span> <span><b>{{$ctrl.ini.country}} </b></span></div>
-        </ul>
+            <br />
+            <table>
+                <tr class="leaders">
+                    <td class="summary">
+                        <span translate >School Name:</span>
+                        <span><b>{{$ctrl.ini.schoolname}} </b></span>
+                    </td>
+                    <td> </td>
+                </tr>
+                <tr class="leaders">
+                    <td class="summary">
+                        <span translate >Location</span>
+                        <span><b>{{$ctrl.ini.location}} </b></span>
+                    </td>
+                    <td> </td>
+                </tr>
+                <tr class="leaders">
+                    <td class="summary">
+                        <span translate >State</span>
+                        <span><b>{{$ctrl.ini.state}} </b></span>
+                    </td>
+                    <td> </td>
+                </tr>
+                <tr class="leaders">
+                    <td class="summary">
+                        <span translate >Country</span>
+                        <span><b>{{$ctrl.ini.country}} </b></span>
+                    </td>
+                    <td> </td>
+                </tr>
+            </table>
         </div>
         <div class="form-group">
             <label translate>Server &amp; Domain Information</label>
-            <br>
-            <ul class=leaders>
-                    <li><div><span translate >Server name</span> <span><b>{{$ctrl.ini.servername}} </b></span></div>
-                    <li><div><span translate >Domain name</span> <span><b>{{$ctrl.ini.domainname}} </b></span></div>
-                    <li><div><span translate >Server FQDN</span> <span><b>{{$ctrl.ini.servername}}.{{$ctrl.ini.domainname}} </b></span></div>
-        </ul>
+            <br />
+            <table>
+                <tr class="leaders">
+                    <td class="summary">
+                        <span translate >Server name</span>
+                        <span><b>{{$ctrl.ini.servername}} </b></span>
+                    </td>
+                    <td> </td>
+                </tr>
+                <tr class="leaders">
+                    <td class="summary">
+                        <span translate >Domain name</span>
+                        <span><b>{{$ctrl.ini.domainname}} </b></span>
+                    </td>
+                    <td> </td>
+                </tr>
+                <tr class="leaders">
+                    <td class="summary">
+                        <span translate >Server FQDN</span>
+                        <span><b>{{$ctrl.ini.servername}}.{{$ctrl.ini.domainname}} </b></span>
+                    </td>
+                    <td class="check">
+                        <span ng:if="$ctrl.checked">
+                            <i class="fas" ng:class="($ctrl.ini.servername.length + $ctrl.ini.domainname.length < 16) ? 'fa-check': 'fa-times'" ng:style="($ctrl.ini.servername.length + $ctrl.ini.domainname.length < 16) && {'color':'green'} || {'color':'red'}"></i>
+                        </span>
+                    </td>
+                </tr>
+            </table>
         </div>
         <div class="form-group">
             <label translate>External Services</label>
-            <br>
-            <ul class=leaders>
-                <li><span translate >Firewall</span> <span ng-if="$ctrl.ini.skipfw == true" translate> Configuration will be <b>skipped </b></span><span ng-if="$ctrl.ini.skipfw != true" translate> Firewall will be <b>configured!</b></span>
-                <li><span >OPSI</span> <span><b ng-if="$ctrl.ini.opsiip">{{$ctrl.ini.opsiip}}</b></span> <span ng-if="!$ctrl.ini.opsiip" translate> No opsi will be configured </span>
-                <li><span>Docker</span> <span><b ng-if="$ctrl.ini.dockerip">{{$ctrl.ini.dockerip}}</b></span><span ng-if="!$ctrl.ini.dockerip" translate> No docker host will be configured </span>
-                <li><span >Mail</span> <span><b ng-if="$ctrl.ini.mailip">{{$ctrl.ini.mailip}}</b></span><span ng-if="!$ctrl.ini.mailip" translate> No mailservice will be configured </span>
-                <li ng-if="$ctrl.ini.mailip"><div > <span translate >SMTP User</span> <span><b">{{$ctrl.ini.smtpuser}}</b></span></div>
-                <li ng-if="$ctrl.ini.mailip"><div > <span translate >SMTP Relay</span> <span><b">{{$ctrl.ini.smtprelay}}</b></span></div>
-            </ul>
+            <br />
+            <table>
+                <tr class="leaders">
+                    <td class="summary">
+                        <span translate >Firewall</span>
+                        <span ng-if="$ctrl.ini.skipfw == true" translate> Configuration will be <b>skipped </b></span>
+                        <span ng-if="$ctrl.ini.skipfw != true" translate> Firewall will be <b>configured!</b></span>
+                    </td>
+                    <td class="check"> </td>
+                </tr>
+                <tr class="leaders">
+                    <td class="summary">
+                        <span >OPSI</span>
+                        <span><b ng-if="$ctrl.ini.opsiip">{{$ctrl.ini.opsiip}}</b></span>
+                        <span ng-if="!$ctrl.ini.opsiip" translate> No opsi will be configured </span>
+                    </td>
+                    <td class="check">
+                        <span ng:if="$ctrl.checked && $ctrl.ini.opsiip">
+                            <i class="fas" ng:class="$ctrl.checks.opsi_ssh ? 'fa-check': 'fa-times'" ng:style="$ctrl.checks.opsi_ssh && {'color':'green'} || {'color':'red'}"></i>
+                        </span>
+                    </td>
+                </tr>
+                <tr class="leaders" ng:class="{checked: $ctrl.checked}">
+                    <td class="summary">
+                        <span>Docker</span>
+                        <span><b ng-if="$ctrl.ini.dockerip">{{$ctrl.ini.dockerip}}</b></span>
+                        <span ng-if="!$ctrl.ini.dockerip" translate> No docker host will be configured </span>
+                    </td>
+                    <td class="check">
+                        <span ng:if="$ctrl.checked && $ctrl.ini.dockerip">
+                            <i class="fas" ng:class="$ctrl.checks.docker_ssh ? 'fa-check': 'fa-times'" ng:style="$ctrl.checks.docker_ssh && {'color':'green'} || {'color':'red'}"></i>
+                        </span>
+                    </td>
+                </tr>
+                <tr class="leaders">
+                    <td class="summary">
+                        <span >Mail</span>
+                        <span><b ng-if="$ctrl.ini.mailip">{{$ctrl.ini.mailip}}</b></span>
+                        <span ng-if="!$ctrl.ini.mailip" translate> No mailservice will be configured </span>
+                    </td>
+                    <td class="check">
+                        <span ng:if="$ctrl.checked && $ctrl.ini.mailip">
+                                <i class="fas" ng:class="$ctrl.checks.mail_ssh ? 'fa-check': 'fa-times'" ng:style="$ctrl.checks.mail_ssh && {'color':'green'} || {'color':'red'}"></i>
+                        </span>
+                    </td>
+                </tr>
+                <tr class="leaders" ng-if="$ctrl.ini.mailip">
+                    <td class="summary">
+                        <span translate >SMTP User</span>
+                        <span><b>{{$ctrl.ini.smtpuser}}</b></span>
+                    </td>
+                    <td> </td>
+                </tr>
+                <tr class="leaders" ng-if="$ctrl.ini.mailip">
+                    <td class="summary">
+                        <span translate >SMTP Relay</span>
+                        <span><b>{{$ctrl.ini.smtprelay}}</b></span>
+                    </td>
+                    <td class="check">
+                        <span ng:if="$ctrl.checked">
+                            <i class="fas" ng:class="$ctrl.checks.mail_relay ? 'fa-check': 'fa-times'" ng:style="$ctrl.checks.mail_relay && {'color':'green'} || {'color':'red'}"></i>
+                        </span>
+                    </td>
+                </tr>
+            </table>
         </div>
 
         </div>
@@ -52,7 +154,8 @@
 
     <div class="modal-footer">
         <a href="/view/lm/init/externalservices" class="btn btn-default btn-flat pull-left" translate>Back</a>
-        <a href='#' ng:click="$ctrl.finish()" class="btn btn-default btn-flat" translate>Start provisioning</a>
+        <a href='#' ng:show="$ctrl.ok" ng:click="$ctrl.finish()" class="btn btn-default btn-flat" translate>Start provisioning</a>
+        <a href='#' ng:show="!$ctrl.ok" ng:click="$ctrl.check()" class="btn btn-default btn-flat" translate>Check setup data</a>
     </div>
 </div>
 

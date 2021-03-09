@@ -16,7 +16,7 @@ class ItemProvider(SidebarItemProvider):
                 'id': 'sync',
                 'name': _('Linbo synchronization'),
                 'icon': 'fas fa-sync-alt',
-                'url': '/view/lm/synclist',
+                'url': '/view/lmn/linbo_sync',
                 'children': [],
             }
         ]

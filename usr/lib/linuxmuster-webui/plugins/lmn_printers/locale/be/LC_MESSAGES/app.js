@@ -1,1 +1,0 @@
-{"": "", "Add": "", "Close": "", "No filter is set. All devices can use this printer.": "", "Save": "", "Type to search...": "", "{{printer.name}}": "", "Configure printers": "", "Printers": "", "Saved": ""}

@@ -282,28 +282,44 @@ p.dotlist:before {
 }
 
 
-// list with dots
-ul.leaders {
-    max-width: 30em;
+// tables filled with dots
+tr.leaders {
+    max-width: 40em;
     padding: 0;
-    overflow-x: hidden;
-    list-style: none}
-ul.leaders li:before {
-    float: left;
-    width: 0;
-    white-space: nowrap;
-    content:
- ". . . . . . . . . . . . . . . . . . . . "
- ". . . . . . . . . . . . . . . . . . . . "
- ". . . . . . . . . . . . . . . . . . . . "
- ". . . . . . . . . . . . . . . . . . . . "}
-ul.leaders span:first-child {
-    padding-right: 0.33em;
-    background: white}
-ul.leaders span + span {
-    float: right;
-    padding-left: 0.33em;
-    background: white}
+    list-style: none;
+
+    td.summary:before {
+        float: left;
+        width: 0;
+        white-space: nowrap;
+        content:
+                ". . . . . . . . . . . . . . . . . . . . "
+                ". . . . . . . . . . . . . . . . . . . . "
+                ". . . . . . . . . . . . . . . . . . . . "
+                ". . . . . . . . . . . . . . . . . . . . ";
+    }
+
+    td.summary {
+        width:30em;padding:0; margin:0;
+        overflow: hidden;
+    }
+
+    td.check {
+        padding-left:30px;
+    }
+
+    td span:first-child {
+        padding-right: 0.33em;
+        background: white;
+    }
+
+    td span + span {
+        float: right;
+        padding-left: 0.33em;
+        background: white;
+    }
+}
+
 
 // flexbox
 //

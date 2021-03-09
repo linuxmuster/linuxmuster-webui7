@@ -69,7 +69,7 @@ def last_sync(w, cloop):
     if last:
         ## Linbo locale is en_GB, not necessarily the server locale
         saved = locale.setlocale(locale.LC_ALL) 
-        locale.setlocale(locale.LC_ALL, 'en_GB.UTF-8')
+        locale.setlocale(locale.LC_ALL, 'C.UTF-8')
         last = datetime.strptime(last.split('## ')[1].split(' : ')[0], '%a %b %d %H:%M:%S %Z %Y')
         locale.setlocale(locale.LC_ALL, saved)
     

@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.158-1) lmn7-testing; urgency=medium
+
+  * Current snapshot build 9a012abdf75e5d9d9fc031fa5c9a1630f4e84997
+   *     Change default permissions and add requirements
+
+ -- Lukas Spitznagel <lukas.spitznagel@netzint.de>  Fri Feb 12 12:56:31 2021 +0000
+
 linuxmuster-webui7 (1.0.157-1) lmn7-testing; urgency=medium
 
   * Current snapshot build 5be14f0ba99a7c2c2f959834f8d58aa95a3688fd

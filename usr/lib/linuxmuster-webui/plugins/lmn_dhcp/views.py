@@ -65,11 +65,12 @@ class Handler(HttpPlugin):
             used = []
             with LMNFile(self.path, 'r', fieldnames=self.fieldnames) as devices:
                 for host in devices.read():
-                    used.append({
-                        'mac':host['mac'],
-                        'ip': host['ip'],
-                        'hostname': host['hostname'],
-                    })
+                    if host["hostname"] != None or host["mac"] != None:
+                        used.append({
+                            'mac':host['mac'],
+                            'ip': host['ip'],
+                            'hostname': host['hostname'],
+                        })
             return data, used
 
     @url(r'/api/register-dhcp')

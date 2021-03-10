@@ -169,6 +169,7 @@ class Handler(HttpPlugin):
             for i in range(len(filedata)):
                 if filedata[i]["id"] == id:
                     filedata.pop(i)
+                    break
             with open(path, "w") as file:
                 file.write(json.dumps(filedata, indent=4))
             return {"status": "SUCCESS"}
@@ -180,9 +181,12 @@ class Handler(HttpPlugin):
         if http_context.method == 'POST':
             id = http_context.json_body()["id"]
             sessionList = loadList()
-            for session in sessionList:
-                if session["id"] == id:
-                    return session["sessiontype"]
+            if sessionList["status"] == "success":
+                for session in sessionList["data"]:
+                    if session["id"] == id:
+                        return session["sessiontype"]
+            else:
+                return "error"
 
     @url(r'/api/lmn/websession/getSessionName')
     @endpoint(api=True, auth=False)
@@ -190,9 +194,13 @@ class Handler(HttpPlugin):
         if http_context.method == 'POST':
             id = http_context.json_body()["id"]
             sessionList = loadList()
-            for session in sessionList:
-                if session["id"] == id:
-                    return session["sessionname"]
+            if sessionList["status"] == "success":
+                for session in sessionList["data"]:
+                    print(session)
+                    if str(session["id"]) == str(id):
+                        return session["sessionname"]
+            else:
+                return "error"
 
     @url(r'/api/lmn/websession/checkPassword')
     @endpoint(api=True, auth=False)
@@ -201,11 +209,14 @@ class Handler(HttpPlugin):
             id = http_context.json_body()["id"]
             password = http_context.json_body()["password"]
             sessionList = loadList()
-            for session in sessionList:
-                if session["id"] == id:
-                    if session["sessionpassword"] == password:
-                        return session["attendeepw"]
-            return "error"
+            if sessionList["status"] == "success":
+                for session in sessionList["data"]:
+                    if session["id"] == id:
+                        if session["sessionpassword"] == password:
+                            return session["attendeepw"]
+                return "error"
+            else:
+                return "error"
 
     @url(r'/api/lmn/websession/isRunning')
     @endpoint(api=True, auth=False)

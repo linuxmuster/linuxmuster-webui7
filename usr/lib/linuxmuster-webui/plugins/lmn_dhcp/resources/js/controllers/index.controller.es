@@ -1,5 +1,5 @@
 angular.module('lmn.dhcp').controller('ExtraDhcpIndexController', function($scope, $http, pageTitle, gettext, notify, $uibModal) {
-    pageTitle.set(gettext('Dhcp'));
+    pageTitle.set(gettext('DHCP'));
 
     $http.get('/api/get-dhcp').then( (resp) => {
 	    $scope.leases = resp.data[0];

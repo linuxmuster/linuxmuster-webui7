@@ -12,9 +12,9 @@ class ItemProvider(SidebarItemProvider):
         return [
             {
                 'attach': 'category:software',
-                'name': 'Extra_dhcp',
+                'name': 'DHCP',
                 'icon': 'ethernet',
-                'url': '/view/extra_dhcp',
+                'url': '/view/dhcp',
                 'children': []
             }
         ]

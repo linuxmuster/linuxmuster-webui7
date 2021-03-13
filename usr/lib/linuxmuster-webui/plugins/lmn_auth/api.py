@@ -6,6 +6,7 @@ import logging
 import os
 import stat
 
+import pexpect
 import ldap
 import ldap.filter
 import ldap.modlist as modlist
@@ -102,6 +103,31 @@ class LMAuthenticationProvider(AuthenticationProvider):
         l.unbind_s()
         return userAttrs
 
+    def _get_krb_ticket(self, username, password):
+        """
+        Get a new Kerberos ticket for username stored in /tmp/krb5cc_UID
+
+        :param username: Username
+        :type username: string
+        :param password: Password
+        :type password: string
+        """
+
+        uid = self.get_isolation_uid(username)
+
+        logging.warning('Initializing kerberos ticket for %s', username)
+        child = pexpect.spawn('/usr/bin/kinit', ['-c', f'/tmp/krb5cc_{uid}', username])
+        child.expect('Password.*:')
+        child.sendline(password)
+        child.expect(pexpect.EOF)
+        # TODO : the following test may be depends on installed locales
+        fail = b"incorrect" in child.before
+        if fail:
+            logging.error("Was not able to initialize kerbros ticket for %s", username)
+        else:
+            logging.warning("Changing kerberos ticket rights for %s", username)
+            os.chown(f'/tmp/krb5cc_{uid}', uid, 100)
+
     def authenticate(self, username, password):
         """
         Test credentials against LDAP and parse permissions for the session.
@@ -146,6 +172,8 @@ class LMAuthenticationProvider(AuthenticationProvider):
             except Exception as e:
                 logging.error(str(e))
                 raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(e))
+
+        self._get_krb_ticket(username, password)
 
         return {
             'username': username,

@@ -80,6 +80,9 @@ class SambaToolDNS():
         :rtype: list
         """
 
+        if action not in ['query', 'add', 'delete', 'update']:
+            return
+
         cmd = ['samba-tool', 'dns', action, 'localhost', self.zone, *options, *self.credentials]
         result = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=False)
         return result.stdout.read().decode().split('\n')

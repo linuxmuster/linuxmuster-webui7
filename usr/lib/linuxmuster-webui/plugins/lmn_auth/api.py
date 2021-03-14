@@ -68,6 +68,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
             'sn',
             'mail',
             'sophomorixSchoolname',
+            'homeDirectory',
         ]
 
         if context == "auth":

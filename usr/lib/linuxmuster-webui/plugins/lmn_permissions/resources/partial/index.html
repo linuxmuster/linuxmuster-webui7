@@ -28,20 +28,11 @@
                                 <span ng-show="details.page" class="label label-success" translate>Page</span>
                                 <span ng-show="details.post" class="label label-primary" translate>Post</span>
                             </td>
-                            <td ng-init="g = apiPermissions[details.permission_id].globaladministrator">
-                                <i class="fas fa-{{iconify(g)}}" style="{{colorize(g)}}"></i>
+                            <td ng:repeat="role in columns" ng:click="changeApi(details, role)" style="text-align:center;" ng:show="details.permission_id">
+                                <i class="fas fa-{{iconify(apiPermissions[details.permission_id][role])}}" style="{{colorize(apiPermissions[details.permission_id][role])}}"></i>
                             </td>
-                            <td ng-init="s = apiPermissions[details.permission_id].schooladministrator">
-                                <i class="fas fa-{{iconify(s)}}" style="{{colorize(s)}}"></i>
-                            </td>
-                            <td ng-init="t = apiPermissions[details.permission_id].teacher">
-                                <i class="fas fa-{{iconify(t)}}" style="{{colorize(t)}}"></i>
-                            </td>
-                            <td ng-init="e = apiPermissions[details.permission_id].student">
-                                <i class="fas fa-{{iconify(e)}}" style="{{colorize(e)}}"></i>
-                            </td>
-                            <td ng-init="d = apiPermissions[details.permission_id].default">
-                                <i class="fas fa-{{iconify(d)}}" style="{{colorize(d)}}"></i>
+                            <td ng:show="!details.permission_id" colspan="5" style="text-align:center;" translate>
+                                No authorization set for this method.
                             </td>
                         </tr>
                     </table>
@@ -64,20 +55,8 @@
                             <b>{{url}}</b><br />
                             <i>Plugin {{details.plugin}}</i><br />
                         </td>
-                        <td ng-init="g = details.globaladministrator">
-                            <i class="fas fa-{{iconify(g)}}" style="{{colorize(g)}}"></i>
-                        </td>
-                        <td ng-init="s = details.schooladministrator">
-                            <i class="fas fa-{{iconify(s)}}" style="{{colorize(s)}}"></i>
-                        </td>
-                        <td ng-init="t = details.teacher">
-                            <i class="fas fa-{{iconify(t)}}" style="{{colorize(t)}}"></i>
-                        </td>
-                        <td ng-init="e = details.student">
-                            <i class="fas fa-{{iconify(e)}}" style="{{colorize(e)}}"></i>
-                        </td>
-                        <td ng-init="d = details.default">
-                            <i class="fas fa-{{iconify(d)}}" style="{{colorize(d)}}"></i>
+                        <td ng:repeat="role in columns" ng:click="changeSidebar(url, role)" style="text-align:center;">
+                            <i class="fas fa-{{iconify(details[role])}}" style="{{colorize(details[role])}}"></i>
                         </td>
                     </tr>
                 </table>

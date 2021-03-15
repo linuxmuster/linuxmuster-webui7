@@ -5,6 +5,8 @@ angular.module('permissions').controller 'PermissionListIndexController', ($scop
         'plugin': '',
         'sidebar': ''
     }
+    $scope.columns = ['globaladministrator', 'schooladministrator', 'teacher', 'student', 'default']
+
 
     $scope.roles = ['globaladministrator', 'schooladministrator', 'teacher', 'student']
     $http.get('/api/permissions').then (resp) ->
@@ -59,6 +61,18 @@ angular.module('permissions').controller 'PermissionListIndexController', ($scop
             $scope.query[obj] = ''
         else
             $scope.query[obj] = role
+
+    $scope.changeApi = (details, role) ->
+        state = $scope.apiPermissions[details.permission_id][role]
+        # Cycle undefined -> false -> true
+        states = [undefined, "false", "true"]
+        $scope.apiPermissions[details.permission_id][role] = states[(states.indexOf(state)+1) % 3]
+
+    $scope.changeSidebar = (url, role) ->
+        state = $scope.sidebarPermissions[url][role]
+        # Cycle undefined -> false -> true
+        states = [undefined, "false", "true"]
+        $scope.sidebarPermissions[url][role] = states[(states.indexOf(state)+1) % 3]
 
     $scope.filter_sidebar = (url) ->
         details = $scope.sidebarPermissions[url]

@@ -21,6 +21,7 @@ angular.module('permissions').config(function ($routeProvider) {
       'plugin': '',
       'sidebar': ''
     };
+    $scope.columns = ['globaladministrator', 'schooladministrator', 'teacher', 'student', 'default'];
     $scope.roles = ['globaladministrator', 'schooladministrator', 'teacher', 'student'];
     $http.get('/api/permissions').then(function(resp) {
       $scope.pluginObj = resp.data[0];
@@ -28,6 +29,7 @@ angular.module('permissions').config(function ($routeProvider) {
       $scope.pluginList = Object.keys($scope.pluginObj);
       $scope.pluginList.sort();
       $scope.apiPermissions = resp.data[1];
+      console.log($scope.apiPermissions);
       $scope.sidebarPermissions = resp.data[2];
       // To iterate in alphabetical order
       $scope.sidebarPermissionsList = Object.keys($scope.sidebarPermissions);
@@ -82,6 +84,21 @@ angular.module('permissions').config(function ($routeProvider) {
       } else {
         return $scope.query[obj] = role;
       }
+    };
+    $scope.changeApi = function(details, role) {
+      var state, states;
+      state = $scope.apiPermissions[details.permission_id][role];
+      // Cycle undefined -> false -> true
+      states = [void 0, "false", "true"];
+      return $scope.apiPermissions[details.permission_id][role] = states[(states.indexOf(state) + 1) % 3];
+    };
+    $scope.changeSidebar = function(url, role) {
+      var state, states;
+      console.log($scope.sidebarPermissions, url, role);
+      state = $scope.sidebarPermissions[url][role];
+      // Cycle undefined -> false -> true
+      states = [void 0, "false", "true"];
+      return $scope.sidebarPermissions[url][role] = states[(states.indexOf(state) + 1) % 3];
     };
     $scope.filter_sidebar = function(url) {
       var details;

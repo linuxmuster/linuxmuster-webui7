@@ -22,6 +22,7 @@ class Handler(HttpPlugin):
 
 ## Check rights
     @url(r'/api/permissions')
+    @authorize('lm:schoolsettings') # TODO : adapt
     @endpoint(api=True)
     def handle_api_get_permissions(self, http_context):
         """
@@ -175,6 +176,7 @@ class Handler(HttpPlugin):
             return PluginDict, apiPermissionDict, sidebarPermissionDict
 
     @url(r'/api/permissions/export')
+    @authorize('lm:schoolsettings') # TODO : adapt
     @endpoint(api=True)
     def handle_api_export_permissions(self, http_context):
         """
@@ -218,6 +220,7 @@ class Handler(HttpPlugin):
             return tmpfile
 
     @url(r'/api/permissions/download/(?P<tmpfile>.+)')
+    @authorize('lm:schoolsettings') # TODO : adapt
     @endpoint(api=False, page=True)
     def handle_api_download_permissions(self, http_context, tmpfile):
         """
@@ -228,6 +231,9 @@ class Handler(HttpPlugin):
         :param tmpfile: Path to default-ui-permissions tmp file
         :type tmpfile: string
         """
+
+        if not tmpfile.startswith('/tmp/default-ui-permissions_'):
+            return
 
         return http_context.file(tmpfile, inline=False, name=tmpfile.encode())
 

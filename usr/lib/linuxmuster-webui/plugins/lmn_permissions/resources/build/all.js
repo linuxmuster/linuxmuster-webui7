@@ -29,7 +29,6 @@ angular.module('permissions').config(function ($routeProvider) {
       $scope.pluginList = Object.keys($scope.pluginObj);
       $scope.pluginList.sort();
       $scope.apiPermissions = resp.data[1];
-      console.log($scope.apiPermissions);
       $scope.sidebarPermissions = resp.data[2];
       // To iterate in alphabetical order
       $scope.sidebarPermissionsList = Object.keys($scope.sidebarPermissions);
@@ -94,7 +93,6 @@ angular.module('permissions').config(function ($routeProvider) {
     };
     $scope.changeSidebar = function(url, role) {
       var state, states;
-      console.log($scope.sidebarPermissions, url, role);
       state = $scope.sidebarPermissions[url][role];
       // Cycle undefined -> false -> true
       states = [void 0, "false", "true"];
@@ -116,7 +114,7 @@ angular.module('permissions').config(function ($routeProvider) {
       }
       return plugin.includes($scope.query.plugin);
     };
-    return $scope.filter_api = function(details) {
+    $scope.filter_api = function(details) {
       if ($scope.roles.indexOf($scope.query.plugin) !== -1) {
         if (details.permission_id) {
           return $scope.apiPermissions[details.permission_id][$scope.query.plugin] === "true";
@@ -125,6 +123,14 @@ angular.module('permissions').config(function ($routeProvider) {
         }
       }
       return true;
+    };
+    return $scope.export = function() {
+      return $http.post('/api/permissions/export', {
+        'api': $scope.apiPermissions,
+        'sidebar': $scope.sidebarPermissions
+      }).then(function(resp) {
+        return location.href = '/api/permissions/download/' + resp.data;
+      });
     };
   });
 

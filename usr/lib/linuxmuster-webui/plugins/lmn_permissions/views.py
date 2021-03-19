@@ -4,6 +4,7 @@ Generate a matrix of permissions and api for all plugins and sidebar items.
 
 import logging
 import re
+from datetime import datetime
 from jadi import component
 
 
@@ -172,3 +173,62 @@ class Handler(HttpPlugin):
                                 logging.warning('%s not listed in PermissionProvider', cat_id)
                             apiPermissionDict[cat_id][role] = default
             return PluginDict, apiPermissionDict, sidebarPermissionDict
+
+    @url(r'/api/permissions/export')
+    @endpoint(api=True)
+    def handle_api_export_permissions(self, http_context):
+        """
+        Export api and sidebar permissions to default ui permissions format.
+        Method POST.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return:
+        :rtype:
+        """
+
+        if http_context.method == "POST":
+            api = http_context.json_body()['api']
+            sidebar = http_context.json_body()['sidebar']
+
+            roles = ['globaladministrator', 'schooladministrator', 'teacher', 'student']
+            permissions = {
+                'globaladministrator': [],
+                'schooladministrator': [],
+                'teacher': [],
+                'student': []
+            }
+
+            for perm, details in api.items():
+                for role in roles:
+                    if role in details.keys():
+                        permissions[role].append(f"    WEBUI_PERMISSIONS={perm}: {details[role]}")
+
+            for perm, details in sidebar.items():
+                for role in roles:
+                    if role in details.keys():
+                        permissions[role].append(f"    WEBUI_PERMISSIONS=sidebar:view:{perm}: {details[role]}")
+
+            tmpfile = f'/tmp/default-ui-permissions_{datetime.now().strftime("%Y-%m-%d-%H-%M-%S")}.ini'
+            with open(tmpfile, 'w') as f:
+                for role in roles:
+                    f.write(f"[{role}]\n")
+                    f.write("\n".join(permissions[role]) + "\n")
+
+            return tmpfile
+
+    @url(r'/api/permissions/download/(?P<tmpfile>.+)')
+    @endpoint(api=False, page=True)
+    def handle_api_download_permissions(self, http_context, tmpfile):
+        """
+        Expose default-ui-permissions to download.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :param tmpfile: Path to default-ui-permissions tmp file
+        :type tmpfile: string
+        """
+
+        return http_context.file(tmpfile, inline=False, name=tmpfile.encode())
+
+

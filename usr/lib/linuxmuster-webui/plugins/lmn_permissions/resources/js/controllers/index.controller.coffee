@@ -94,3 +94,6 @@ angular.module('permissions').controller 'PermissionListIndexController', ($scop
             else
                 return false
         return true
+
+    $scope.export = () ->
+        $http.post('/api/permissions/export', {'api':$scope.apiPermissions, 'sidebar':$scope.sidebarPermissions}).then (resp) -> location.href = '/api/permissions/download/' + resp.data

@@ -1,4 +1,4 @@
 angular.module 'lmn.groupmembership', [
     'core',
-    'lm.common',
+    'lmn.common',
 ]

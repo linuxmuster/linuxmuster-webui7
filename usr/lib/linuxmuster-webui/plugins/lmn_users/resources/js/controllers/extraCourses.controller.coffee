@@ -1,10 +1,10 @@
-angular.module('lm.users').config ($routeProvider) ->
+angular.module('lmn.users').config ($routeProvider) ->
     $routeProvider.when '/view/lm/users/extra-courses',
         controller: 'LMUsersExtraCoursesController'
         templateUrl: '/lmn_users:resources/partial/extra-courses.html'
 
 
-angular.module('lm.users').controller 'LMUsersExtraCoursesController', ($scope, $http, $uibModal, $route, notify, gettext, pageTitle, lmEncodingMap, lmFileEditor, lmFileBackups, validation) ->
+angular.module('lmn.users').controller 'LMUsersExtraCoursesController', ($scope, $http, $uibModal, $route, notify, gettext, pageTitle, lmEncodingMap, lmFileEditor, lmFileBackups, validation) ->
     pageTitle.set(gettext('Extra Courses'))
 
     $scope.sorts = [

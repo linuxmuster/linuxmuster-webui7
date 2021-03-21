@@ -1,4 +1,4 @@
-angular.module 'lm.wdatetime', [
+angular.module 'lmn.wdatetime', [
     'core',
     'ajenti.dashboard',
 ]

@@ -1,4 +1,4 @@
-angular.module('lm.settings').controller('LMglobalSettingsController', ($scope, $http, $sce, notify, pageTitle, identity, messagebox, config, core, locale, gettext) => {
+angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope, $http, $sce, notify, pageTitle, identity, messagebox, config, core, locale, gettext) => {
     pageTitle.set(gettext('Global Settings'));
 
     $scope.config = config;

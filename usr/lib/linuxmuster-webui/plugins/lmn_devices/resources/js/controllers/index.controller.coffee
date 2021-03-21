@@ -1,10 +1,10 @@
-angular.module('lm.devices').config ($routeProvider) ->
+angular.module('lmn.devices').config ($routeProvider) ->
     $routeProvider.when '/view/lm/devices',
         controller: 'LMDevicesController'
         templateUrl: '/lmn_devices:resources/partial/index.html'
 
 
-angular.module('lm.devices').controller 'LMDevicesApplyModalController', ($scope, $http, $uibModalInstance, gettext, notify) ->
+angular.module('lmn.devices').controller 'LMDevicesApplyModalController', ($scope, $http, $uibModalInstance, gettext, notify) ->
     $scope.logVisible = true
     $scope.isWorking = true
     $scope.showLog = () ->
@@ -23,7 +23,7 @@ angular.module('lm.devices').controller 'LMDevicesApplyModalController', ($scope
 
 
 
-angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $uibModal, $route, $location, $anchorScroll, gettext, notify, pageTitle, lmFileEditor, lmFileBackups, validation) ->
+angular.module('lmn.devices').controller 'LMDevicesController', ($scope, $http, $uibModal, $route, $location, $anchorScroll, gettext, notify, pageTitle, lmFileEditor, lmFileBackups, validation) ->
     pageTitle.set(gettext('Devices'))
 
     $scope.error_msg = {}

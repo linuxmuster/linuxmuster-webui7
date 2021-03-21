@@ -1,6 +1,6 @@
 name: lmn_linbo
-author: linuxmuster
-email: e@ajenti.org
+author: Linuxmuster.net
+email: arnaud@linuxmuster.net
 url: https://linuxmuster.net
 version: '1.0'
 title: 'LINBO'
@@ -17,4 +17,4 @@ resources:
     - 'resources/partial/config.modal.html'
     - 'resources/partial/partition.modal.html'
     - 'resources/partial/accept.modal.html'
-    - 'ng:lm.linbo'
+    - 'ng:lmn.linbo'

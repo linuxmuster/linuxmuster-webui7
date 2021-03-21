@@ -1,4 +1,4 @@
-angular.module('samba_dns').controller('SambaDnsIndexController', function($scope, $http, pageTitle, gettext, notify, messagebox) {
+angular.module('lmn.samba_dns').controller('SambaDnsIndexController', function($scope, $http, pageTitle, gettext, notify, messagebox) {
     pageTitle.set(gettext('Samba_dns'));
 
     $scope.trans = {

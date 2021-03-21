@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('lmn.linbo_sync', ['core', 'lm.common']);
+angular.module('lmn.linbo_sync', ['core', 'lmn.common']);
 
 
 'use strict';

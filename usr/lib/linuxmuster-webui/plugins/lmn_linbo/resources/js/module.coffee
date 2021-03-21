@@ -1,5 +1,5 @@
-angular.module 'lm.linbo', [
+angular.module 'lmn.linbo', [
     'core',
-    'lm.common',
+    'lmn.common',
     'angular-sortable-view',
 ]

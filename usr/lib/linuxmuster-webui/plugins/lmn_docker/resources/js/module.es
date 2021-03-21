@@ -1,4 +1,4 @@
-angular.module('ajenti.docker', [
+angular.module('lmn.docker', [
     'core',
 ]);
 

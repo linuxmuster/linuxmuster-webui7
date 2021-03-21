@@ -1,4 +1,4 @@
-angular.module('lm.common').service 'sophComment', (gettext) ->
+angular.module('lmn.common').service 'sophComment', (gettext) ->
 
     this.sophomorixCommentsKeys = {
             "ADDUSER" : gettext("Adding user %s."),

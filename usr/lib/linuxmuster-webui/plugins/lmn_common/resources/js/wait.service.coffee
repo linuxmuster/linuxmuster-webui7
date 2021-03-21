@@ -1,4 +1,4 @@
-angular.module('lm.common').controller 'lmWaitController', ($scope, $rootScope, $uibModalInstance, status, style) ->
+angular.module('lmn.common').controller 'lmWaitController', ($scope, $rootScope, $uibModalInstance, status, style) ->
     $scope.status = status
     $scope.style = style
 
@@ -6,7 +6,7 @@ angular.module('lm.common').controller 'lmWaitController', ($scope, $rootScope, 
         if data == 'done'
             $uibModalInstance.dismiss()
 
-angular.module('lm.common').service 'wait', ($uibModal) ->
+angular.module('lmn.common').service 'wait', ($uibModal) ->
 
     this.modal = (status, style) ->
         $uibModal.open(

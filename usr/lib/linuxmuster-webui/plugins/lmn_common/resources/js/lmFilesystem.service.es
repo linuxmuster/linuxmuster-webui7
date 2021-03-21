@@ -1,4 +1,4 @@
-angular.module('lm.common').service('lmfilesystem', function($rootScope, $http, $q) {
+angular.module('lmn.common').service('lmfilesystem', function($rootScope, $http, $q) {
     this.startFlowUpload = ($flow, path) => {
        q = $q.defer()
        $flow.on('fileProgress', (file, chunk) => {

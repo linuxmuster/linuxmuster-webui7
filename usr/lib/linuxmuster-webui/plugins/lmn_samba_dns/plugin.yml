@@ -1,5 +1,5 @@
 name: lmn_samba_dns
-author: Arnaud Kientz
+author: Linuxmuster.net
 email: arnaud@linuxmuster.net
 url: https://linuxmuster.net
 version: '0.1'
@@ -17,4 +17,4 @@ resources:
     - 'resources/js/routing.es'
     - 'resources/js/controllers/index.controller.es'
     - 'resources/partial/index.html'
-    - 'ng:samba_dns'
+    - 'ng:lmn.samba_dns'

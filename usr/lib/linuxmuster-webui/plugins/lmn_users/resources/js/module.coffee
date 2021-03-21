@@ -1,4 +1,4 @@
-angular.module 'lm.users', [
+angular.module 'lmn.users', [
     'core',
-    'lm.common',
+    'lmn.common',
 ]

@@ -1,4 +1,4 @@
-angular.module('permissions').controller 'PermissionListIndexController', ($scope, $http, $interval, $timeout, notify, pageTitle, messagebox, gettext, config) ->
+angular.module('lmn.permissions').controller 'PermissionListIndexController', ($scope, $http, $interval, $timeout, notify, pageTitle, messagebox, gettext, config) ->
     pageTitle.set(gettext('List all permissions'))
 
     $scope.query = {

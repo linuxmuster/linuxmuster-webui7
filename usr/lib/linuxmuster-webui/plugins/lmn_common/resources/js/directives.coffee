@@ -1,4 +1,4 @@
-angular.module('lm.common').directive 'lmLog', ($http, $interval, $timeout) ->
+angular.module('lmn.common').directive 'lmLog', ($http, $interval, $timeout) ->
     return {
         restrict: 'E'
         scope: {

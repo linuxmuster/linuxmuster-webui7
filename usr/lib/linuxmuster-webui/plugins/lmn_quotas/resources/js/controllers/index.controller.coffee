@@ -1,4 +1,4 @@
-angular.module('lm.quotas').config ($routeProvider) ->
+angular.module('lmn.quotas').config ($routeProvider) ->
     $routeProvider.when '/view/lm/quotas',
         controller: 'LMQuotasController'
         templateUrl: '/lmn_quotas:resources/partial/index.html'
@@ -6,7 +6,7 @@ angular.module('lm.quotas').config ($routeProvider) ->
         templateUrl: '/lmn_quotas:resources/partial/disabled.html'
 
 
-angular.module('lm.quotas').controller 'LMQuotasApplyModalController', ($scope, $http, $uibModalInstance, $window, gettext, notify) ->
+angular.module('lmn.quotas').controller 'LMQuotasApplyModalController', ($scope, $http, $uibModalInstance, $window, gettext, notify) ->
     $scope.logVisible = true
     $scope.isWorking = true
 
@@ -23,7 +23,7 @@ angular.module('lm.quotas').controller 'LMQuotasApplyModalController', ($scope, 
         $window.location.reload()
 
 
-angular.module('lm.quotas').controller 'LMQuotasController', ($scope, $http, $uibModal, $location, $q, gettext, lmEncodingMap, notify, pageTitle, lmFileBackups, $rootScope, wait) ->
+angular.module('lmn.quotas').controller 'LMQuotasController', ($scope, $http, $uibModal, $location, $q, gettext, lmEncodingMap, notify, pageTitle, lmFileBackups, $rootScope, wait) ->
     pageTitle.set(gettext('Quotas'))
 
     $scope.UserSearchVisible = false

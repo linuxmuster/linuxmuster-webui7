@@ -1,4 +1,4 @@
-angular.module('lmn_vdi_administration').controller('Lmn_vdi_administrationIndexController', function ($scope, $uibModal, $http, pageTitle, gettext, notify) {
+angular.module('lmn.vdi_administration').controller('Lmn_vdi_administrationIndexController', function ($scope, $uibModal, $http, pageTitle, gettext, notify) {
     pageTitle.set(gettext('Lmn_vdi_administration'));
 
     $http.post('/api/lmn_vdi_administration', {action: 'get-masterVMs'}).then((resp) => {
@@ -57,7 +57,7 @@ angular.module('lmn_vdi_administration').controller('Lmn_vdi_administrationIndex
 
 });
 
-angular.module('lmn_vdi_administration').controller('LMGroupInfoModalController', function ($scope, $uibModalInstance, $http, masterGroupData) {
+angular.module('lmn.vdi_administration').controller('LMGroupInfoModalController', function ($scope, $uibModalInstance, $http, masterGroupData) {
     $scope.masterGroupData = masterGroupData;
 
     $scope.close = () => {
@@ -65,7 +65,7 @@ angular.module('lmn_vdi_administration').controller('LMGroupInfoModalController'
     }
 });
 
-angular.module('lmn_vdi_administration').controller('LMMasterInfoModalController', function ($scope, $uibModalInstance, $http, masterVM, masterVMData) {
+angular.module('lmn.vdi_administration').controller('LMMasterInfoModalController', function ($scope, $uibModalInstance, $http, masterVM, masterVMData) {
     $scope.masterVM = masterVM;
     $scope.masterVMData = masterVMData;
 

@@ -17,4 +17,4 @@ resources:
     - 'resources/js/controllers/widget.controller.coffee'
     - 'resources/partial/widget.html'
     - 'resources/partial/widget.config.html'
-    - 'ng:lm.wdatetime'
+    - 'ng:lmn.wdatetime'

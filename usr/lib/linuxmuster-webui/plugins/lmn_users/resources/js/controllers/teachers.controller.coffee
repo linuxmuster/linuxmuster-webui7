@@ -1,9 +1,9 @@
-angular.module('lm.users').config ($routeProvider) ->
+angular.module('lmn.users').config ($routeProvider) ->
     $routeProvider.when '/view/lm/users/teachers',
         controller: 'LMUsersTeachersController'
         templateUrl: '/lmn_users:resources/partial/teachers.html'
 
-angular.module('lm.users').controller 'LMUsersTeachersController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) ->
+angular.module('lmn.users').controller 'LMUsersTeachersController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) ->
     pageTitle.set(gettext('Teachers'))
 
     $scope.sorts = [

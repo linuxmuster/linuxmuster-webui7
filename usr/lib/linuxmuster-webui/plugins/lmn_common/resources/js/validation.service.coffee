@@ -1,4 +1,4 @@
-angular.module('lm.common').service 'validation', (gettext) ->
+angular.module('lmn.common').service 'validation', (gettext) ->
 
     this.externVar = {}
 

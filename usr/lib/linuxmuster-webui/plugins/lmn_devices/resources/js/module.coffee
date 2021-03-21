@@ -1,4 +1,4 @@
-angular.module 'lm.devices', [
+angular.module 'lmn.devices', [
     'core',
-    'lm.common',
+    'lmn.common',
 ]

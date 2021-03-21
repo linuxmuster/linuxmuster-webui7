@@ -1,4 +1,4 @@
-angular.module 'lm.settings', [
+angular.module 'lmn.settings', [
     'core',
-    'lm.common',
+    'lmn.common',
 ]

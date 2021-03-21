@@ -1,6 +1,6 @@
 name: lmn_settings
-author: linuxmuster
-email: e@ajenti.org
+author: Linuxmuster.net
+email: arnaud@linuxmuster.net
 url: https://linuxmuster.net
 version: '1.0'
 title: 'Settings'
@@ -15,4 +15,4 @@ resources:
     - 'resources/js/routing.es'
     - 'resources/partial/index.html'
     - 'resources/partial/globalSettings.html'
-    - 'ng:lm.settings'
+    - 'ng:lmn.settings'

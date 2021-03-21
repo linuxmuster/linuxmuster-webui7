@@ -1,10 +1,10 @@
-angular.module('lm.settings').config ($routeProvider) ->
+angular.module('lmn.settings').config ($routeProvider) ->
     $routeProvider.when '/view/lm/schoolsettings',
         controller: 'LMSettingsController'
         templateUrl: '/lmn_settings:resources/partial/index.html'
 
 
-angular.module('lm.settings').controller 'LMSettingsController', ($scope, $location, $http, $uibModal, messagebox, gettext, notify, pageTitle, lmFileBackups) ->
+angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $location, $http, $uibModal, messagebox, gettext, notify, pageTitle, lmFileBackups) ->
     pageTitle.set(gettext('Settings'))
 
     $scope.trans = {

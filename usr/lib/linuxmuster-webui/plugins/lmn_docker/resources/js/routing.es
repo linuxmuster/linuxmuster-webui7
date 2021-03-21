@@ -1,6 +1,6 @@
-angular.module('ajenti.docker').config(($routeProvider) => {
+angular.module('lmn.docker').config(($routeProvider) => {
     $routeProvider.when('/view/docker', {
-        templateUrl: '/docker:resources/partial/index.html',
+        templateUrl: '/lmn_docker:resources/partial/index.html',
         controller: 'DockerIndexController',
     });
 });

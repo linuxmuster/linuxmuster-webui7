@@ -1,9 +1,9 @@
-angular.module('lm.linbo').config ($routeProvider) ->
+angular.module('lmn.linbo').config ($routeProvider) ->
     $routeProvider.when '/view/lm/linbo',
         controller: 'LMLINBOController'
         templateUrl: '/lmn_linbo:resources/partial/index.html'
 
-angular.module('lm.linbo').controller 'LMLINBOAcceptModalController', ($scope, $uibModalInstance, $http, partition, disk) ->
+angular.module('lmn.linbo').controller 'LMLINBOAcceptModalController', ($scope, $uibModalInstance, $http, partition, disk) ->
     $scope.partition = partition
     $scope.disk = disk
 
@@ -13,7 +13,7 @@ angular.module('lm.linbo').controller 'LMLINBOAcceptModalController', ($scope, $
     $scope.close = () ->
         $uibModalInstance.dismiss()
 
-angular.module('lm.linbo').controller 'LMLINBOPartitionModalController', ($scope, $uibModalInstance, $http, partition, os) ->
+angular.module('lmn.linbo').controller 'LMLINBOPartitionModalController', ($scope, $uibModalInstance, $http, partition, os) ->
     $scope.partition = partition
     $scope.os = os
 
@@ -37,7 +37,7 @@ angular.module('lm.linbo').controller 'LMLINBOPartitionModalController', ($scope
         $uibModalInstance.dismiss()
 
 
-angular.module('lm.linbo').controller 'LMLINBOImageModalController', ($scope, $uibModal, $uibModalInstance, $http, gettext, filesystem, messagebox, image, images) ->
+angular.module('lmn.linbo').controller 'LMLINBOImageModalController', ($scope, $uibModal, $uibModalInstance, $http, gettext, filesystem, messagebox, image, images) ->
     $scope.image = image
     $scope.imagesWithReg = (x for x in images when x.reg)
     $scope.imagesWithPostsync = (x for x in images when x.postsync)
@@ -63,7 +63,7 @@ angular.module('lm.linbo').controller 'LMLINBOImageModalController', ($scope, $u
         $uibModalInstance.dismiss()
 
 
-angular.module('lm.linbo').controller 'LMLINBOConfigModalController', ($scope, $uibModal, $uibModalInstance, $timeout, $http, $log, gettext, messagebox, config, lmFileBackups, vdiconfig) ->
+angular.module('lmn.linbo').controller 'LMLINBOConfigModalController', ($scope, $uibModal, $uibModalInstance, $timeout, $http, $log, gettext, messagebox, config, lmFileBackups, vdiconfig) ->
     $scope.config = config
     $scope.vdiconfig = vdiconfig
     $scope.expert = false
@@ -463,7 +463,7 @@ angular.module('lm.linbo').controller 'LMLINBOConfigModalController', ($scope, $
 
 
 
-angular.module('lm.linbo').controller 'LMLINBOController', ($scope, $http, $uibModal, $log, $route, gettext, notify, pageTitle, tasks, messagebox, validation) ->
+angular.module('lmn.linbo').controller 'LMLINBOController', ($scope, $http, $uibModal, $log, $route, gettext, notify, pageTitle, tasks, messagebox, validation) ->
     pageTitle.set(gettext('LINBO'))
 
     $http.get('/api/lm/linbo/configs').then (resp) ->

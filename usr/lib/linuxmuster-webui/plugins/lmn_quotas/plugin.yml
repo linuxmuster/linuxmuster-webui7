@@ -1,6 +1,6 @@
 name: lmn_quotas
-author: linuxmuster
-email: e@ajenti.org
+author: Linuxmuster.net
+email: arnaud@linuxmuster.net
 url: https://linuxmuster.net
 version: '1.0'
 title: 'Quotas'
@@ -15,4 +15,4 @@ resources:
     - 'resources/partial/index.html'
     - 'resources/partial/disabled.html'
     - 'resources/partial/apply.modal.html'
-    - 'ng:lm.quotas'
+    - 'ng:lmn.quotas'

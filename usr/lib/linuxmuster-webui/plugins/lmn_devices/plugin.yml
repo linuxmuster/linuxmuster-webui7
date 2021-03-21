@@ -1,6 +1,6 @@
 name: lmn_devices
-author: linuxmuster
-email: e@ajenti.org
+author: Linuxmuster.net
+email: arnaud@linuxmuster.net
 url: https://linuxmuster.net
 version: '1.0'
 title: 'Devices'
@@ -13,4 +13,4 @@ resources:
     - 'resources/js/controllers/index.controller.coffee'
     - 'resources/partial/index.html'
     - 'resources/partial/apply.modal.html'
-    - 'ng:lm.devices'
+    - 'ng:lmn.devices'

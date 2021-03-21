@@ -1,4 +1,4 @@
-angular.module 'lm.quotas', [
+angular.module 'lmn.quotas', [
     'core',
-    'lm.common',
+    'lmn.common',
 ]

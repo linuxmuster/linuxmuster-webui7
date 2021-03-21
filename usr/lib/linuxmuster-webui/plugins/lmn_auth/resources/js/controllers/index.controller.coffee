@@ -1,9 +1,9 @@
-angular.module('lm.auth').config ($routeProvider) ->
+angular.module('lmn.auth').config ($routeProvider) ->
     $routeProvider.when '/view/lmn/change-password',
         controller: 'LMNPasswordChangeCtrl'
         templateUrl: '/lmn_auth:resources/partial/index.html'
 
-angular.module('lm.auth').controller 'LMNPasswordChangeCtrl', ($scope, $http, pageTitle, gettext, notify, validation) ->
+angular.module('lmn.auth').controller 'LMNPasswordChangeCtrl', ($scope, $http, pageTitle, gettext, notify, validation) ->
     pageTitle.set(gettext('Change Password'))
 
     $scope.change = () ->

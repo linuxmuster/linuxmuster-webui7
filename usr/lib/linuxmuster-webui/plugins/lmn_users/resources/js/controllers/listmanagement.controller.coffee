@@ -1,10 +1,10 @@
-angular.module('lm.users').config ($routeProvider) ->
+angular.module('lmn.users').config ($routeProvider) ->
     $routeProvider.when '/view/lm/users/listmanagement',
        controller: 'LMUsersListManagementController'
        templateUrl: '/lmn_users:resources/partial/listmanagement.html'
 
 
-angular.module('lm.users').controller 'LMUsersListManagementController', ($scope, $http, $location, $route, $uibModal, gettext, notify, lmEncodingMap, messagebox, pageTitle, lmFileEditor, lmFileBackups, filesystem, validation) ->
+angular.module('lmn.users').controller 'LMUsersListManagementController', ($scope, $http, $location, $route, $uibModal, gettext, notify, lmEncodingMap, messagebox, pageTitle, lmFileEditor, lmFileBackups, filesystem, validation) ->
     pageTitle.set(gettext('Listmanagement'))
 
     $scope.students_sorts = [

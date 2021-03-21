@@ -1,5 +1,5 @@
 name: lmn_users
-author: Linux Muster
+author: Linuxmuster.net
 email: andreas.till@netzint.de
 url: https://linuxmuster.net
 version: '1.0'
@@ -39,4 +39,4 @@ resources:
     - 'resources/partial/showPassword.modal.html'
     - 'resources/partial/userDetails.modal.html'
     - 'resources/partial/addAdmin.modal.html'
-    - 'ng:lm.users'
+    - 'ng:lmn.users'

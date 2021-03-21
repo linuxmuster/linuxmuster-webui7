@@ -1,5 +1,5 @@
 name: lmn_permissions
-author: Arnaud Kientz
+author: Linuxmuster.net
 email: arnaud@linuxmuster.net
 url: https://linuxmuster.net
 version: '0.2'
@@ -12,4 +12,4 @@ resources:
     - resources/js/routing.es
     - resources/js/controllers/index.controller.coffee
     - resources/partial/index.html
-    - ng:permissions
+    - ng:lmn.permissions

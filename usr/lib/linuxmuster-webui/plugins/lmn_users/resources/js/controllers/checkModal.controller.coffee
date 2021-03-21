@@ -1,4 +1,4 @@
-angular.module('lm.users').controller 'LMUsersCheckResultsModalController', ($scope, $uibModalInstance, $uibModal, data, gettext) ->
+angular.module('lmn.users').controller 'LMUsersCheckResultsModalController', ($scope, $uibModalInstance, $uibModal, data, gettext) ->
     $scope.data = data
     $scope._ = {
         doAdd: data['SUMMARY'][1]['ADD']['RESULT'] > 0
@@ -63,7 +63,7 @@ angular.module('lm.users').controller 'LMUsersCheckResultsModalController', ($sc
         $uibModalInstance.dismiss()
 
 
-angular.module('lm.users').controller 'LMUsersApplyModalController', ($scope, $uibModalInstance, $http, $route, gettext, notify, params) ->
+angular.module('lmn.users').controller 'LMUsersApplyModalController', ($scope, $uibModalInstance, $http, $route, gettext, notify, params) ->
     $scope.options = {
        autoscroll: true
     }
@@ -83,7 +83,7 @@ angular.module('lm.users').controller 'LMUsersApplyModalController', ($scope, $u
 
 
 
-angular.module('lm.users').controller 'LMUsersCheckModalController', ($scope, $http, notify, $uibModalInstance, $uibModal, gettext) ->
+angular.module('lmn.users').controller 'LMUsersCheckModalController', ($scope, $http, notify, $uibModalInstance, $uibModal, gettext) ->
     $scope.isWorking = true
 
     $http.get('/api/lm/users/check').then (resp) ->

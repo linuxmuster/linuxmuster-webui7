@@ -1,6 +1,6 @@
 name: lmn_common
-author: Linux Muster
-email: e@ajenti.org
+author: Linuxmuster.net
+email: arnaud@linuxmuster.net
 url: https://linuxmuster.net
 version: '1.0'
 title: 'LM Common'
@@ -23,4 +23,4 @@ resources:
     - 'resources/styles.less'
     - 'resources/partial/index.html'
     - 'resources/js/messageboxContainer.es'
-    - 'ng:lm.common'
+    - 'ng:lmn.common'

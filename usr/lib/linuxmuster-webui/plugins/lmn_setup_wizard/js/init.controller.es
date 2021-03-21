@@ -1,4 +1,4 @@
-angular.module('lm.setup_wizard').config(function($routeProvider) {
+angular.module('lmn.setup_wizard').config(function($routeProvider) {
     $routeProvider.when('/view/lm/init/welcome', {
         templateUrl: '/lmn_setup_wizard:partial/init-welcome.html',
         controller: 'InitWelcomeController',
@@ -43,7 +43,7 @@ angular.module('lm.setup_wizard').config(function($routeProvider) {
 })
 
 
-angular.module('lm.setup_wizard').controller('InitWelcomeController', function (gettext, pageTitle, $http, $route, locale, config, $location, notify) {
+angular.module('lmn.setup_wizard').controller('InitWelcomeController', function (gettext, pageTitle, $http, $route, locale, config, $location, notify) {
     pageTitle.set(gettext('Setup Wizard'))
     this.config = config
     console.log (config)
@@ -66,7 +66,7 @@ angular.module('lm.setup_wizard').controller('InitWelcomeController', function (
 
 
 
-angular.module('lm.setup_wizard').controller('InitSchoolController', function ($location, $http, gettext, pageTitle, notify) {
+angular.module('lmn.setup_wizard').controller('InitSchoolController', function ($location, $http, gettext, pageTitle, notify) {
     pageTitle.set(gettext('Setup Wizard'))
     $http.get('/api/core/languages').then(response => this.languages = response.data)
 
@@ -127,7 +127,7 @@ angular.module('lm.setup_wizard').controller('InitSchoolController', function ($
 
 
 
-angular.module('lm.setup_wizard').controller('InitAccountController', function ($scope, $location, $http, gettext, pageTitle, notify) {
+angular.module('lmn.setup_wizard').controller('InitAccountController', function ($scope, $location, $http, gettext, pageTitle, notify) {
     pageTitle.set(gettext('Setup Wizard'))
     this.ini = {}
     this.apply = () => {
@@ -149,7 +149,7 @@ angular.module('lm.setup_wizard').controller('InitAccountController', function (
     }
 })
 
-angular.module('lm.setup_wizard').controller('InitExternalServicesController', function ($location, $http, gettext, pageTitle, notify) {
+angular.module('lmn.setup_wizard').controller('InitExternalServicesController', function ($location, $http, gettext, pageTitle, notify) {
     pageTitle.set(gettext('Setup Wizard'))
     this.ini = {}
     $http.get('/api/lm/setup-wizard/read-ini').then(response => this.ini = response.data)
@@ -184,7 +184,7 @@ angular.module('lm.setup_wizard').controller('InitExternalServicesController', f
     }
 })
 
-angular.module('lm.setup_wizard').controller('InitSummaryController', function ($location, $http, gettext, pageTitle, notify) {
+angular.module('lmn.setup_wizard').controller('InitSummaryController', function ($location, $http, gettext, pageTitle, notify) {
     pageTitle.set(gettext('Setup Wizard'))
     this.ini = {}
     this.checks = {}
@@ -211,7 +211,7 @@ angular.module('lm.setup_wizard').controller('InitSummaryController', function (
     }
 })
 
-angular.module('lm.setup_wizard').controller('InitSetupController', function ($location, $http, gettext, pageTitle, notify) {
+angular.module('lmn.setup_wizard').controller('InitSetupController', function ($location, $http, gettext, pageTitle, notify) {
     pageTitle.set(gettext('Setup Wizard'))
     this.isWorking = true
     $http.post('/api/lm/setup-wizard/provision', {start: 'setup'}).then(() => {
@@ -226,7 +226,7 @@ angular.module('lm.setup_wizard').controller('InitSetupController', function ($l
     }
 })
 
-angular.module('lm.setup_wizard').controller('InitDoneController', function ($window, $http, gettext, pageTitle, core, notify, $timeout, messagebox) {
+angular.module('lmn.setup_wizard').controller('InitDoneController', function ($window, $http, gettext, pageTitle, core, notify, $timeout, messagebox) {
     pageTitle.set(gettext('Setup Done'))
 
     $http.get('/api/lm/read-config-setup').then( (resp) => {

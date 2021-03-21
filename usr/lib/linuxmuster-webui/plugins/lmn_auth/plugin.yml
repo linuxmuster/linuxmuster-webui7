@@ -1,6 +1,6 @@
 name: lmn_auth
-author: Linux Muster
-email: e@ajenti.org
+author: Linuxmuster.net
+email: arnaud@linuxmuster.net
 url: https://linuxmuster.net
 version: '1.0'
 title: 'Authentication'
@@ -12,4 +12,4 @@ resources:
   - resources/js/module.coffee
   - resources/js/controllers/index.controller.coffee
   - resources/partial/index.html
-  - 'ng:lm.auth'
+  - 'ng:lmn.auth'

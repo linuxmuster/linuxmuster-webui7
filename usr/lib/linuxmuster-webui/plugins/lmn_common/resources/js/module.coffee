@@ -1,10 +1,10 @@
-angular.module 'lm.common', [
+angular.module 'lmn.common', [
     'core',
     'ajenti.ace',
     'ajenti.filesystem',
 ]
 
-angular.module('lm.common').run (customization) ->
+angular.module('lmn.common').run (customization) ->
     customization.plugins.core.startupURL = '/view/lmn/landingpage'
     customization.plugins.core.loginredir = '/'
     # customization.plugins.core.bodyClass = 'customized'
@@ -15,7 +15,7 @@ angular.module('lm.common').run (customization) ->
     customization.plugins.core.hidePersonaLogin = true
     customization.plugins.core.enableMixpanel = false
 
-angular.module('lm.common').constant 'lmEncodingMap', {
+angular.module('lmn.common').constant 'lmEncodingMap', {
     '': 'utf-8'
     'ascii': 'ascii'
     'utf8': 'utf-8'

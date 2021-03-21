@@ -1,6 +1,6 @@
 name: lmn_setup_wizard
-author: Linux Muster
-email: e@ajenti.org
+author: Linuxmuster.net
+email: arnaud@linuxmuster.net
 url: https://linuxmuster.net
 version: '1.0'
 title: 'LM Setup Wizard'
@@ -17,4 +17,4 @@ resources:
     - 'partial/init-setup.html'
     - 'partial/init-summary.html'
     - 'partial/init-done.html'
-    - 'ng:lm.setup_wizard'
+    - 'ng:lmn.setup_wizard'

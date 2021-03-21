@@ -1,4 +1,4 @@
-angular.module('lm.common').directive 'lmDragUpload', ($http, notify, messagebox, filesystem, gettext) ->
+angular.module('lmn.common').directive 'lmDragUpload', ($http, notify, messagebox, filesystem, gettext) ->
     return {
         restrict: 'E'
         scope: {
@@ -53,7 +53,7 @@ angular.module('lm.common').directive 'lmDragUpload', ($http, notify, messagebox
                     msg.messagebox.title = 'Uploading: ' + Math.floor(100 * progress) + ' %'
     }
 
-angular.module('lm.common').directive 'lmSelectUpload', ($http, notify, messagebox, filesystem, gettext) ->
+angular.module('lmn.common').directive 'lmSelectUpload', ($http, notify, messagebox, filesystem, gettext) ->
     return {
         restrict: 'E'
         scope: {
@@ -99,7 +99,7 @@ angular.module('lm.common').directive 'lmSelectUpload', ($http, notify, messageb
                     msg.messagebox.title = 'Uploading: ' + Math.floor(100 * progress) + ' %'
     }
 
-angular.module('lm.common').directive 'lmButtonUpload', ($http, notify, messagebox, filesystem, gettext) ->
+angular.module('lmn.common').directive 'lmButtonUpload', ($http, notify, messagebox, filesystem, gettext) ->
     return {
         restrict: 'E'
         scope: {

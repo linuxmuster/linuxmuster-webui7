@@ -17,5 +17,5 @@ resources:
     - 'resources/partial/index.html'
     - 'resources/partial/groupinfo.modal.html'
     - 'resources/partial/masterinfo.modal.html'
-    - 'ng:lmn_vdi_administration'
+    - 'ng:lmn.vdi_administration'
 

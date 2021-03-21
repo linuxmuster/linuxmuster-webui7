@@ -1,4 +1,4 @@
-angular.module('lmn_vdi_dashboard').controller('Lmn_vdi_dashboardIndexController', function ($scope, $http, pageTitle, gettext, notify) {
+angular.module('lmn.vdi_dashboard').controller('Lmn_vdi_dashboardIndexController', function ($scope, $http, pageTitle, gettext, notify) {
     pageTitle.set(gettext('Lmn_vdi_dashboard'));
 
     $http.post('/api/lmn_vdi_administration', { action: 'get-clones' }).then((resp) => {

@@ -15,5 +15,5 @@ resources:
     - 'resources/js/controllers/index.controller.es'
     - 'resources/partial/index.html'
     - 'resources/styles.less'
-    - 'ng:lmn_vdi_dashboard'
+    - 'ng:lmn.vdi_dashboard'
 

@@ -1,4 +1,4 @@
-angular.module('ajenti.docker').controller('DockerIndexController', function($scope, $http, $interval, messagebox, pageTitle, gettext, notify) {
+angular.module('lmn.docker').controller('DockerIndexController', function($scope, $http, $interval, messagebox, pageTitle, gettext, notify) {
     pageTitle.set('Docker');
     $scope.container_stats = [];
     $scope.images= [];

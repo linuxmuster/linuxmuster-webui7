@@ -1,8 +1,8 @@
-angular.module 'lm.auth', [
+angular.module 'lmn.auth', [
     'core',
 ]
 
-angular.module('lm.auth').run (customization, $http, identity, gettextCatalog, config) ->
+angular.module('lmn.auth').run (customization, $http, identity, gettextCatalog, config) ->
     lang = config.data.language || 'en'
     $http.get("/resources/all.locale.js?lang=#{lang}").then (rq) ->
             gettextCatalog.setStrings(lang, rq.data)

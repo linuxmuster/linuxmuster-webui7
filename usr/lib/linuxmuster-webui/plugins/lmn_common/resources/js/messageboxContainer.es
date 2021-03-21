@@ -1,4 +1,4 @@
-angular.module('lm.common').directive('messageboxContainer2', (messagebox) =>
+angular.module('lmn.common').directive('messageboxContainer2', (messagebox) =>
     ({
         restrict: 'E',
         template: `

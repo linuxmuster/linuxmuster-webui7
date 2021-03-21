@@ -1,4 +1,4 @@
-angular.module('lm.common').service 'lmFileBackups', ($uibModal) ->
+angular.module('lmn.common').service 'lmFileBackups', ($uibModal) ->
     @show = (path, encoding) ->
         return $uibModal.open(
             templateUrl: '/lmn_common:resources/js/lmFileBackups.modal.html'
@@ -11,7 +11,7 @@ angular.module('lm.common').service 'lmFileBackups', ($uibModal) ->
     return this
 
 
-angular.module('lm.common').controller 'lmFileBackupsModalController', ($scope, $uibModalInstance, $route, $http, gettext, notify, filesystem, path, encoding, messagebox, lmFileBackups) ->
+angular.module('lmn.common').controller 'lmFileBackupsModalController', ($scope, $uibModalInstance, $route, $http, gettext, notify, filesystem, path, encoding, messagebox, lmFileBackups) ->
     $scope.path = path
 
     dir = path.substring(0, path.lastIndexOf('/'))

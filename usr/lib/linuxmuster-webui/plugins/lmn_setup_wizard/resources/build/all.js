@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('lm.setup_wizard', ['core']);
+angular.module('lmn.setup_wizard', ['core']);
 
-angular.module('lm.setup_wizard').run(function ($http, $location, identity) {
+angular.module('lmn.setup_wizard').run(function ($http, $location, identity) {
   identity.promise.then(function () {
     if (identity.user) {
       $http.get('/api/lm/setup-wizard/is-configured').then(function (response) {
@@ -17,7 +17,7 @@ angular.module('lm.setup_wizard').run(function ($http, $location, identity) {
 
 'use strict';
 
-angular.module('lm.setup_wizard').config(function ($routeProvider) {
+angular.module('lmn.setup_wizard').config(function ($routeProvider) {
     $routeProvider.when('/view/lm/init/welcome', {
         templateUrl: '/lmn_setup_wizard:partial/init-welcome.html',
         controller: 'InitWelcomeController',
@@ -61,7 +61,7 @@ angular.module('lm.setup_wizard').config(function ($routeProvider) {
     });
 });
 
-angular.module('lm.setup_wizard').controller('InitWelcomeController', function (gettext, pageTitle, $http, $route, locale, config, $location, notify) {
+angular.module('lmn.setup_wizard').controller('InitWelcomeController', function (gettext, pageTitle, $http, $route, locale, config, $location, notify) {
     var _this = this;
 
     pageTitle.set(gettext('Setup Wizard'));
@@ -86,7 +86,7 @@ angular.module('lm.setup_wizard').controller('InitWelcomeController', function (
     };
 });
 
-angular.module('lm.setup_wizard').controller('InitSchoolController', function ($location, $http, gettext, pageTitle, notify) {
+angular.module('lmn.setup_wizard').controller('InitSchoolController', function ($location, $http, gettext, pageTitle, notify) {
     var _this2 = this;
 
     pageTitle.set(gettext('Setup Wizard'));
@@ -147,7 +147,7 @@ angular.module('lm.setup_wizard').controller('InitSchoolController', function ($
     };
 });
 
-angular.module('lm.setup_wizard').controller('InitAccountController', function ($scope, $location, $http, gettext, pageTitle, notify) {
+angular.module('lmn.setup_wizard').controller('InitAccountController', function ($scope, $location, $http, gettext, pageTitle, notify) {
     var _this3 = this;
 
     pageTitle.set(gettext('Setup Wizard'));
@@ -171,7 +171,7 @@ angular.module('lm.setup_wizard').controller('InitAccountController', function (
     };
 });
 
-angular.module('lm.setup_wizard').controller('InitExternalServicesController', function ($location, $http, gettext, pageTitle, notify) {
+angular.module('lmn.setup_wizard').controller('InitExternalServicesController', function ($location, $http, gettext, pageTitle, notify) {
     var _this4 = this;
 
     pageTitle.set(gettext('Setup Wizard'));
@@ -209,7 +209,7 @@ angular.module('lm.setup_wizard').controller('InitExternalServicesController', f
     };
 });
 
-angular.module('lm.setup_wizard').controller('InitSummaryController', function ($location, $http, gettext, pageTitle, notify) {
+angular.module('lmn.setup_wizard').controller('InitSummaryController', function ($location, $http, gettext, pageTitle, notify) {
     var _this5 = this;
 
     pageTitle.set(gettext('Setup Wizard'));
@@ -240,7 +240,7 @@ angular.module('lm.setup_wizard').controller('InitSummaryController', function (
     };
 });
 
-angular.module('lm.setup_wizard').controller('InitSetupController', function ($location, $http, gettext, pageTitle, notify) {
+angular.module('lmn.setup_wizard').controller('InitSetupController', function ($location, $http, gettext, pageTitle, notify) {
     var _this6 = this;
 
     pageTitle.set(gettext('Setup Wizard'));
@@ -256,7 +256,7 @@ angular.module('lm.setup_wizard').controller('InitSetupController', function ($l
     };
 });
 
-angular.module('lm.setup_wizard').controller('InitDoneController', function ($window, $http, gettext, pageTitle, core, notify, $timeout, messagebox) {
+angular.module('lmn.setup_wizard').controller('InitDoneController', function ($window, $http, gettext, pageTitle, core, notify, $timeout, messagebox) {
     var _this7 = this;
 
     pageTitle.set(gettext('Setup Done'));

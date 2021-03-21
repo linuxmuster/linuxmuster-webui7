@@ -1,10 +1,10 @@
-angular.module('lm.users').config ($routeProvider) ->
+angular.module('lmn.users').config ($routeProvider) ->
     $routeProvider.when '/view/lm/users/print-passwords',
         controller: 'LMUsersPrintPasswordsController'
         templateUrl: '/lmn_users:resources/partial/print-passwords.html'
 
 
-angular.module('lm.users').controller 'LMUsersPrintPasswordsOptionsModalController', ($scope, $uibModalInstance, $http, notify, messagebox, gettext, schoolclass, classes, user) ->
+angular.module('lmn.users').controller 'LMUsersPrintPasswordsOptionsModalController', ($scope, $uibModalInstance, $http, notify, messagebox, gettext, schoolclass, classes, user) ->
     $scope.options = {
         format: 'pdf'
         one_per_page: false
@@ -33,7 +33,7 @@ angular.module('lm.users').controller 'LMUsersPrintPasswordsOptionsModalControll
         $uibModalInstance.dismiss()
 
 
-angular.module('lm.users').controller 'LMUsersPrintPasswordsController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor) ->
+angular.module('lmn.users').controller 'LMUsersPrintPasswordsController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor) ->
     pageTitle.set(gettext('Print Passwords'))
 
     $scope.select = (schoolclass,user) ->

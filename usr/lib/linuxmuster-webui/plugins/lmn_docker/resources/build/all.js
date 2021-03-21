@@ -1,13 +1,13 @@
 'use strict';
 
-angular.module('ajenti.docker', ['core']);
+angular.module('lmn.docker', ['core']);
 
 
 'use strict';
 
-angular.module('ajenti.docker').config(function ($routeProvider) {
+angular.module('lmn.docker').config(function ($routeProvider) {
     $routeProvider.when('/view/docker', {
-        templateUrl: '/docker:resources/partial/index.html',
+        templateUrl: '/lmn_docker:resources/partial/index.html',
         controller: 'DockerIndexController'
     });
 });
@@ -15,7 +15,7 @@ angular.module('ajenti.docker').config(function ($routeProvider) {
 
 'use strict';
 
-angular.module('ajenti.docker').controller('DockerIndexController', function ($scope, $http, $interval, messagebox, pageTitle, gettext, notify) {
+angular.module('lmn.docker').controller('DockerIndexController', function ($scope, $http, $interval, messagebox, pageTitle, gettext, notify) {
     pageTitle.set('Docker');
     $scope.container_stats = [];
     $scope.images = [];

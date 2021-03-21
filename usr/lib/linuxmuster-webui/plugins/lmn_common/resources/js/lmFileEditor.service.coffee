@@ -1,4 +1,4 @@
-angular.module('lm.common').service 'lmFileEditor', ($uibModal) ->
+angular.module('lmn.common').service 'lmFileEditor', ($uibModal) ->
     @show = (path, encoding) ->
         return $uibModal.open(
             templateUrl: '/lmn_common:resources/js/lmFileEditor.modal.html'
@@ -12,7 +12,7 @@ angular.module('lm.common').service 'lmFileEditor', ($uibModal) ->
     return this
 
 
-angular.module('lm.common').controller 'lmFileEditorModalController', ($scope, $uibModalInstance, $timeout, filesystem, path, encoding) ->
+angular.module('lmn.common').controller 'lmFileEditorModalController', ($scope, $uibModalInstance, $timeout, filesystem, path, encoding) ->
     $scope.path = path
 
     filesystem.read(path, encoding).then (data) ->

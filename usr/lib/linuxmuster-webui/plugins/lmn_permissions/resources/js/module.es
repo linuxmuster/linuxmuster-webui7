@@ -1,3 +1,3 @@
-angular.module('permissions', [
+angular.module('lmn.permissions', [
     'core',
 ]);

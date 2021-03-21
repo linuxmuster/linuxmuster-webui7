@@ -1,4 +1,4 @@
-angular.module('lm.users').controller 'LMNUsersShowPasswordController', ($scope, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, user, type) ->
+angular.module('lmn.users').controller 'LMNUsersShowPasswordController', ($scope, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, user, type) ->
     $scope.username = user[0]
     $scope.type = type
 
@@ -17,7 +17,7 @@ angular.module('lm.users').controller 'LMNUsersShowPasswordController', ($scope,
     $scope.close = () ->
         $uibModalInstance.dismiss()
 
-angular.module('lm.users').controller 'LMNUsersCustomPasswordController', ($scope, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, users, type, validation) ->
+angular.module('lmn.users').controller 'LMNUsersCustomPasswordController', ($scope, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, users, type, validation) ->
     $scope.username = users
     $scope.action = type
 
@@ -46,7 +46,7 @@ angular.module('lm.users').controller 'LMNUsersCustomPasswordController', ($scop
     $scope.close = () ->
         $uibModalInstance.dismiss()
 
-angular.module('lm.users').controller 'LMNUserDetailsController', ($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, id, role) ->
+angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, id, role) ->
 
     #notify.error gettext("You have to enter a username")
     $scope.id = id
@@ -109,7 +109,7 @@ angular.module('lm.users').controller 'LMNUserDetailsController', ($scope, $rout
 
 
 
-angular.module('lm.users').controller 'LMUsersSortListModalController', ($scope, $window, $http, $uibModalInstance, messagebox, notify, $uibModal, gettext, filesystem, userlist, userListCSV) ->
+angular.module('lmn.users').controller 'LMUsersSortListModalController', ($scope, $window, $http, $uibModalInstance, messagebox, notify, $uibModal, gettext, filesystem, userlist, userListCSV) ->
 
 
     $scope.userListCSV = userListCSV
@@ -167,7 +167,7 @@ angular.module('lm.users').controller 'LMUsersSortListModalController', ($scope,
 
     $scope.rebuildCSV()
 
-angular.module('lm.users').controller 'LMUsersUploadModalController', ($scope, $window, $http, $uibModalInstance, messagebox, notify, $uibModal, gettext, filesystem, userlist) ->
+angular.module('lmn.users').controller 'LMUsersUploadModalController', ($scope, $window, $http, $uibModalInstance, messagebox, notify, $uibModal, gettext, filesystem, userlist) ->
     $scope.path = "/tmp/"
     $scope.onUploadBegin = ($flow) ->
         $uibModalInstance.close()
@@ -207,7 +207,7 @@ angular.module('lm.users').controller 'LMUsersUploadModalController', ($scope, $
     $scope.close = () ->
         $uibModalInstance.close()
 
-angular.module('lm.users').controller 'LMNUsersAddAdminController', ($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, role) ->
+angular.module('lmn.users').controller 'LMNUsersAddAdminController', ($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, role) ->
 
     $scope.role = role
     $scope.save = (username) ->

@@ -1,7 +1,7 @@
 name: docker
 author: Arnaud Kientz
-email: arnaud@unpeud.info
-url: https://ajenti.org
+email: arnaud@linuxmuster.net
+url: https://linuxmuster.net
 version: '0.1'
 title: 'docker'
 icon: docker

@@ -1,7 +1,7 @@
 name: lmn_permissions
 author: Arnaud Kientz
-email: arnaud@unpeud.info
-url: https://github.com/kiarn/ajenti-plugins
+email: arnaud@linuxmuster.net
+url: https://linuxmuster.net
 version: '0.2'
 title: 'Permission list'
 icon: user-lock

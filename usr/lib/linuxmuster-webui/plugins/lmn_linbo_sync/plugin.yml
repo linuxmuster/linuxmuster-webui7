@@ -1,7 +1,7 @@
 name: lmn_linbo_sync
 author: Arnaud Kientz
-email: arnaud@unpeud.info
-url: http://www.unpeud.info
+email: arnaud@linuxmuster.net
+url: https://linuxmuster.net
 version: '0.35'
 title: 'Linbo synchronization'
 icon: clock-o

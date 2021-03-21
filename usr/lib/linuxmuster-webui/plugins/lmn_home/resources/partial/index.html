@@ -1,0 +1,32 @@
+<div>
+    <div class="row">
+        <progress-spinner ng:show="loading"></progress-spinner>
+        <div class="alert alert-danger" ng:show="root" translate>
+            This plugin can not work as root.
+        </div>
+        <div class="list-group" ng:hide="loading && root" keyboard-focus test-bind="fileList">
+            <div ng:show="parent" class="list-group-item list-group-item-small">
+                <a ng:click="load_path(parent)" class="list-group-main" test-bind="up">
+                    <i class="fa fa-fw fa-level-up"></i> <span translate>Up one level</span>
+                </a>
+            </div>
+            <div ng:repeat="item in items|orderBy:['-isDir', 'name']" class="list-group-item list-group-item-small" test-bind-item="{{item.name}}">
+                <a ng:click="load_path(item.path)" class="list-group-btn subtle" title="Properties">
+                    <i class="fa fa-cog"></i>
+                </a>
+                <div class="list-group-addon pull-left">
+                    <span class="subtle" checkbox ng:model="item.selected"></span>
+                </div>
+                <a ng:click="load_path(item.path)" class="list-group-main">
+                    &nbsp;
+                    <i class="fa fa-fw fa-folder-o" ng:if="item.isDir"></i>
+                    <i class="fa fa-fw fa-file-o" ng:if="item.isFile"></i>
+                    &nbsp;
+                    {{item.name}}
+                    &nbsp;
+                    <span class="subtle" ng:show="item.isFile">{{item.size|bytes}}</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

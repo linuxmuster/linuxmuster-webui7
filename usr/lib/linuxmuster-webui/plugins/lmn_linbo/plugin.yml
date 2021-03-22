@@ -6,9 +6,9 @@ version: '1.0'
 title: 'LINBO'
 icon: th-large
 dependencies:
-    - !!python/object:aj.plugins.PluginDependency { plugin_name: core }
-    - !!python/object:aj.plugins.PluginDependency { plugin_name: filesystem }
-    - !!python/object:aj.plugins.PluginDependency { plugin_name: lmn_common }
+    - !PluginDependency { plugin_name: core }
+    - !PluginDependency { plugin_name: filesystem }
+    - !PluginDependency { plugin_name: lmn_common }
 resources:
     - 'resources/js/module.coffee'
     - 'resources/js/controllers/index.controller.coffee'

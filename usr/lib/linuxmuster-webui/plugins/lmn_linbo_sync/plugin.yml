@@ -6,9 +6,9 @@ version: '0.35'
 title: 'Linbo synchronization'
 icon: clock-o
 dependencies:
-    - !!python/object:aj.plugins.PluginDependency { plugin_name: core }
-    - !!python/object:aj.plugins.PluginDependency { plugin_name: lmn_common }
-    - !!python/object:aj.plugins.PluginDependency { plugin_name: lmn_linbo }
+    - !PluginDependency { plugin_name: core }
+    - !PluginDependency { plugin_name: lmn_common }
+    - !PluginDependency { plugin_name: lmn_linbo }
 resources:
     - resources/js/module.es
     - resources/js/routing.es

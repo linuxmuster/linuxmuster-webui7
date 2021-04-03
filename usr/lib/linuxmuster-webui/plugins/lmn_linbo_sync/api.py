@@ -92,9 +92,13 @@ def group_os(workstations):
         config = read_config(group)
         if config is not None:
             workstations[group]['power'] = {
-                                            'run_halt':0,
-                                            'timeout':0
+                'run_halt': 0,
+                'timeout': 0
                 }
+            workstations[group]['auto'] = {
+                'disable_gui': 0,
+                'bypass': 0
+            }
             for osConfig in config:
                 if osConfig['SyncEnabled']:
                     tmpDict = {

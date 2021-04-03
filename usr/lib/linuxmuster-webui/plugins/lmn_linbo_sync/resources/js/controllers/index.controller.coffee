@@ -43,7 +43,7 @@ angular.module('lmn.linbo_sync').controller 'SyncIndexController', ($scope, $htt
         $scope.refresh_cmd(group)
             
     $scope.handle_sync = (group, os, value) ->
-        ## Possible values : new, sync or 0
+        # Possible values : new, sync or 0
         if value == 'new'
             os.run_format = !os.run_format
         else
@@ -55,7 +55,7 @@ angular.module('lmn.linbo_sync').controller 'SyncIndexController', ($scope, $htt
         $scope.refresh_cmd(group)
 
     $scope.handle_format = (group, os, value) ->
-        ## Possible values : 1 or 0
+        # Possible values : 1 or 0
         if os.run_format == value
             os.run_format = 0
         else
@@ -63,23 +63,34 @@ angular.module('lmn.linbo_sync').controller 'SyncIndexController', ($scope, $htt
         $scope.refresh_cmd(group)
 
     $scope.handle_start = (group, os, value) ->
-        ## Possible values : start or 0
+        # Possible values : start or 0
         if os.run_start == value
             os.run_start = 0
         else
             os.run_start = value
-        ## Only one start possible
+        # Only one start possible
         for osloop in $scope.groups[group]['os']
             if osloop.baseimage != os.baseimage
                 osloop.run_start = 0
         $scope.refresh_cmd(group)
 
     $scope.handle_power = (group, value) ->
-        ## Possible values : halt, reboot or 0
+        # Possible values : halt, reboot or 0
         if $scope.groups[group]['power']['halt'] == value
             $scope.groups[group]['power']['halt'] = 0
         else
             $scope.groups[group]['power']['halt'] = value
+        $scope.refresh_cmd(group)
+
+    $scope.handle_bypass = (group) ->
+        # Possible values : 0 or 1
+        # Bypass start.conf
+        $scope.groups[group]['auto']['bypass'] = 1 - $scope.groups[group]['auto']['bypass']
+        $scope.refresh_cmd(group)
+
+    $scope.handle_disable_gui = (group) ->
+        # Possible values : 0 or 1
+        $scope.groups[group]['auto']['disable_gui'] = 1 - $scope.groups[group]['auto']['disable_gui']
         $scope.refresh_cmd(group)
 
     $scope.refresh_cmd = (group) ->
@@ -88,15 +99,15 @@ angular.module('lmn.linbo_sync').controller 'SyncIndexController', ($scope, $htt
         sync = []
         start = []
         for os in $scope.groups[group]['os']
-            ## First format
+            # First format
             if os.run_format
                 format.push('format:'+os.partition)
 
-            ## Then sync or new ( not both )
+            # Then sync or new ( not both )
             if os.run_sync
                 sync.push('sync:' + os.partition)
 
-            ## A little start, but only one
+            # A little start, but only one
             if os.run_start
                 start.push('start:'+os.partition)
 
@@ -106,7 +117,7 @@ angular.module('lmn.linbo_sync').controller 'SyncIndexController', ($scope, $htt
         if start.length > 0
             cmd += if cmd.length > 4 then ','+start.join() else start.join()
 
-        ## Power is the key, but without start ...
+        # Power is the key, but without start ...
         if $scope.groups[group]['power']['halt']
             cmd += if cmd.length > 4 then ','+$scope.groups[group]['power']['halt'] else $scope.groups[group]['power']['halt']
 
@@ -114,14 +125,20 @@ angular.module('lmn.linbo_sync').controller 'SyncIndexController', ($scope, $htt
         if $scope.groups[group]['power']['timeout'] > 0
             timeout = ' -w ' + $scope.groups[group]['power']['timeout']
 
+        autostart = ''
+        if $scope.groups[group]['auto']['disable_gui'] > 0
+            autostart += ' -d '
+        if $scope.groups[group]['auto']['bypass'] > 0 and timeout
+            autostart += ' -n '
+
         if cmd.length > 4 and $scope.linbo_command[group]['host'].length > 0
             if $scope.linbo_command[group]['target'] == 'group' or $scope.linbo_command[group]['host'].length == $scope.groups[group].hosts.length
                 $scope.linbo_command[group]['target'] = 'group'
-                $scope.linbo_command[group]['cmd'] = ['/usr/sbin/linbo-remote -g ' + group + timeout + cmd]
+                $scope.linbo_command[group]['cmd'] = ['/usr/sbin/linbo-remote -g ' + group + timeout + autostart + cmd]
             else
                 $scope.linbo_command[group]['cmd'] = []
                 for ip in $scope.linbo_command[group]['host']
-                    $scope.linbo_command[group]['cmd'].push('/usr/sbin/linbo-remote -i ' + ip + timeout + cmd)
+                    $scope.linbo_command[group]['cmd'].push('/usr/sbin/linbo-remote -i ' + ip + timeout + autostart + cmd)
 
             $scope.linbo_command[group]['show'] = true
         else

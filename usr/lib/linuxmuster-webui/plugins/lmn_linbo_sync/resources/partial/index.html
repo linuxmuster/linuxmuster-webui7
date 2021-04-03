@@ -71,7 +71,7 @@
                         <button class="btn btn-default" style="margin-left:10px;" translate>
                             <i class="fas fa-clock"></i>  Boot timeout (in seconds):
                         </button>
-                        <input ng:model="details.power.timeout" style="width:50px;text-align:center;" type="number" ng:change="refresh_cmd(group)">
+                        <input ng:model="details.power.timeout" style="width:50px;text-align:center;" type="number" ng:change="refresh_cmd(group)" min="0">
                     </td>
                 </tr>
                 <tr>

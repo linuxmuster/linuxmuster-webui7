@@ -121,10 +121,11 @@ class LMAuthenticationProvider(AuthenticationProvider):
         child.expect('Password.*:')
         child.sendline(password)
         child.expect(pexpect.EOF)
-        # TODO : the following test may be depends on installed locales
-        fail = b"incorrect" in child.before
-        if fail:
+        child.close()
+        exit_code = child.exitstatus
+        if exit_code:
             logging.error("Was not able to initialize kerbros ticket for %s", username)
+            logging.error("%s", child.before.decode().strip())
         else:
             logging.warning("Changing kerberos ticket rights for %s", username)
             os.chown(f'/tmp/krb5cc_{uid}', uid, 100)

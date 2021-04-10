@@ -27,7 +27,7 @@ class Handler(HttpPlugin):
         :return: Cron jobs
         :rtype: dict
         """
-        print(http_context)
+
         if http_context.method == 'GET':
             prepend_holiday = 'TestHolidays && '
             user = self.context.identity

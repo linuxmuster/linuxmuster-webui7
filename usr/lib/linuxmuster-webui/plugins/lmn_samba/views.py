@@ -2,29 +2,37 @@
 Tools to handle files, directories and uploads.
 """
 
-import errno
-import grp
-import json
 import os
-import psutil
-import pwd
-import shutil
 import smbclient
 import logging
+from smbprotocol.exceptions import SMBOSError
 from jadi import component
 
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
 from aj.auth import authorize
 
+# TODO
+# - HomeService
+# - Handle end of ticket
+# - Better error management (file already exists, directory not emty, ... )
+# - Test encoding Windows
+# - chmod
+# - mknod
+# - upload
+# - read/write/create file
+# - symlink ?
+# - permissions ?
+# - download selected resources as zip
+# - Method DELETE ?
 
 @component(HttpPlugin)
 class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
 
-    @url(r'/api/samba/list')
-    # @authorize('filesystem:read')
+    @url(r'/api/lmn/samba/list')
+    # @authorize('samba:read')
     @endpoint(api=True)
     def handle_api_smb_list(self, http_context):
         """
@@ -39,6 +47,7 @@ class Handler(HttpPlugin):
         if http_context.method == 'POST':
             path = http_context.json_body()['path']
             user = self.context.identity
+            # Must be done with HomeService to keep trace of status
             client = smbclient.ClientConfig(username=user, auth_protocol='kerberos')
 
             try:
@@ -63,7 +72,7 @@ class Handler(HttpPlugin):
                             'gid': stat.st_gid,
                             'size': stat.st_size,
                         })
-                    except OSError as e:
+                    except SMBOSError as e:
                         data['accessError'] = str(e)
                         # if e.errno == errno.ENOENT and os.path.islink(item_path):
                         #     data['brokenLink'] = True
@@ -77,8 +86,158 @@ class Handler(HttpPlugin):
                 'items': items
             }
 
-    # @url(r'/api/home/read/(?P<path>.+)')
-    # @authorize('filesystem:read')
+    @url(r'/api/lmn/samba/create-directory')
+    # @authorize('samba:write')
+    @endpoint(api=True)
+    def handle_api_smb_create_directory(self, http_context):
+        """
+        Create empty directory on specified path.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :param path: Path of directory
+        :type path: string
+        """
+
+        if http_context.method == 'POST':
+            path = http_context.json_body()['path']
+            try:
+                smbclient.makedirs(path)
+            except (ValueError, SMBOSError) as e:
+                raise EndpointError(e)
+
+    @url(r'/api/lmn/samba/move')
+    # @authorize('samba:write')
+    @endpoint(api=True)
+    def handle_api_smb_move(self, http_context):
+        """
+        Move src to dst, work with files and directories.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :param path: Path of directory
+        :type path: string
+        """
+
+        if http_context.method == 'POST':
+            src = http_context.json_body()['src']
+            dst = http_context.json_body()['dst']
+
+            try:
+                smbclient.rename(src, dst)
+            except (ValueError, SMBOSError) as e:
+                raise EndpointError(e)
+
+    @url(r'/api/lmn/samba/copy')
+    # @authorize('samba:write')
+    @endpoint(api=True)
+    def handle_api_smb_copy(self, http_context):
+        """
+        Make a copy of file src to dst.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :param path: Path of directory
+        :type path: string
+        """
+
+        if http_context.method == 'POST':
+            src = http_context.json_body()['src']
+            dst = http_context.json_body()['dst']
+
+            try:
+                smbclient.copyfile(src, dst)
+            except (ValueError, SMBOSError) as e:
+                raise EndpointError(e)
+
+    @url(r'/api/lmn/samba/rmdir')
+    # @authorize('samba:write')
+    @endpoint(api=True)
+    def handle_api_smb_rmdir(self, http_context):
+        """
+        Delete an empty directory. Throw an SMBOSError if the directory is
+        not empty.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :param path: Path of directory
+        :type path: string
+        """
+
+        # DELETE ?
+        if http_context.method == 'POST':
+            folder = http_context.json_body()['folder']
+
+            try:
+                smbclient.rmdir(folder)
+            except (ValueError, SMBOSError) as e:
+                raise EndpointError(e)
+
+    @url(r'/api/lmn/samba/unlink')
+    # @authorize('samba:write')
+    @endpoint(api=True)
+    def handle_api_smb_unlink(self, http_context):
+        """
+        Delete a file.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :param path: Path of directory
+        :type path: string
+        """
+
+        # DELETE ?
+        if http_context.method == 'POST':
+            file = http_context.json_body()['file']
+
+            try:
+                smbclient.unlink(file)
+            except (ValueError, SMBOSError) as e:
+                raise EndpointError(e)
+
+    @url(r'/api/lmn/samba/stat')
+    # @authorize('samba:read')
+    @endpoint(api=True)
+    def handle_api_smb_stat(self, http_context):
+        """
+        Get all informations from a specific path.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :param path: Path of file/directory
+        :type path: string
+        :return: POSIX permissions, size, type, ...
+        :rtype: dict
+        """
+
+        if http_context.method == 'POST':
+            path = http_context.json_body()['path']
+            smb_file = smbclient._os.SMBDirEntry.from_path(path)
+            data = {
+                        'name': smb_file.name,
+                        'path': path, # TODO
+                        'isDir': smb_file.is_dir(),
+                        'isFile': smb_file.is_file(),
+                        'isLink': smb_file.is_symlink(),
+                    }
+            # unix permissions ?
+
+            try:
+                stat = smb_file.stat()
+                data.update({
+                    'mode': stat.st_mode,
+                    'mtime': stat.st_mtime,
+                    'uid': stat.st_uid,
+                    'gid': stat.st_gid,
+                    'size': stat.st_size,
+                })
+            except SMBOSError as e:
+                data['accessError'] = str(e)
+
+        return data
+
+    # @url(r'/api/lmn/samba/read/(?P<path>.+)')
+    # @authorize('samba:read')
     # @endpoint(api=True)
     # def handle_api_fs_read(self, http_context, path=None):
     #     """
@@ -106,8 +265,8 @@ class Handler(HttpPlugin):
     #         http_context.respond_server_error()
     #         return json.dumps({'error': str(e)})
     #
-    # @url(r'/api/home/write/(?P<path>.+)')
-    # @authorize('filesystem:write')
+    # @url(r'/api/lmn/samba/write/(?P<path>.+)')
+    # @authorize('samba:write')
     # @endpoint(api=True)
     # def handle_api_fs_write(self, http_context, path=None):
     #     """
@@ -130,9 +289,52 @@ class Handler(HttpPlugin):
     #             f.write(content)
     #     except OSError as e:
     #         raise EndpointError(e)
+
+
+
     #
-    # @url(r'/api/home/upload')
-    # @authorize('filesystem:write')
+    # @url(r'/api/lmn/samba/chmod/(?P<path>.+)')
+    # @authorize('samba:write')
+    # @endpoint(api=True)
+    # def handle_api_fs_chmod(self, http_context, path=None):
+    #     """
+    #     Change mode for a specific file.
+    #
+    #     :param http_context: HttpContext
+    #     :type http_context: HttpContext
+    #     :param path: Path of file
+    #     :type path: string
+    #     """
+    #
+    #     if not os.path.exists(path):
+    #         raise EndpointReturn(404)
+    #     data = json.loads(http_context.body.decode())
+    #     try:
+    #         os.chmod(path, data['mode'])
+    #     except OSError as e:
+    #         raise EndpointError(e)
+    #
+    # @url(r'/api/lmn/samba/create-file/(?P<path>.+)')
+    # @authorize('samba:write')
+    # @endpoint(api=True)
+    # def handle_api_fs_create_file(self, http_context, path=None):
+    #     """
+    #     Create empty file on specified path.
+    #
+    #     :param http_context: HttpContext
+    #     :type http_context: HttpContext
+    #     :param path: Path of file
+    #     :type path: string
+    #     """
+    #
+    #     try:
+    #         os.mknod(path, int('644', 8))
+    #     except OSError as e:
+    #         raise EndpointError(e)
+    #
+    #
+    # @url(r'/api/lmn/samba/upload')
+    # @authorize('samba:write')
     # @endpoint(page=True)
     # def handle_api_fs_upload_chunk(self, http_context):
     #     """
@@ -164,8 +366,8 @@ class Handler(HttpPlugin):
     #         http_context.respond('200 OK')
     #     return ''
     #
-    # @url(r'/api/home/finish-upload')
-    # @authorize('filesystem:write')
+    # @url(r'/api/lmn/samba/finish-upload')
+    # @authorize('samba:write')
     # @endpoint(api=True)
     # def handle_api_fs_finish_upload(self, http_context):
     #     """
@@ -197,116 +399,3 @@ class Handler(HttpPlugin):
     #         shutil.rmtree(chunk_dir)
     #         targets.append(target)
     #     return targets
-
-
-
-    # @url(r'/api/home/stat/(?P<path>.+)')
-    # # @authorize('filesystem:read')
-    # @endpoint(api=True)
-    # def handle_api_fs_stat(self, http_context, path=None):
-    #     """
-    #     Get all informations from a specific path.
-    #
-    #     :param http_context: HttpContext
-    #     :type http_context: HttpContext
-    #     :param path: Path of file/directory
-    #     :type path: string
-    #     :return: POSIX permissions, size, type, ...
-    #     :rtype: dict
-    #     """
-    #
-    #     if not os.path.exists(path):
-    #         raise EndpointReturn(404)
-    #     data = {
-    #         'name': os.path.split(path)[1],
-    #         'path': path,
-    #         'isDir': os.path.isdir(path),
-    #         'isFile': os.path.isfile(path),
-    #         'isLink': os.path.islink(path),
-    #         'readAccess': os.access(path, os.R_OK),
-    #         'writeAccess': os.access(path, os.W_OK),
-    #         'executeAccess': os.access(path, os.X_OK),
-    #     }
-    #
-    #     try:
-    #         stat = os.stat(path)
-    #         data.update({
-    #             'mode': stat.st_mode,
-    #             'mtime': stat.st_mtime,
-    #             'uid': stat.st_uid,
-    #             'gid': stat.st_gid,
-    #             'size': stat.st_size,
-    #         })
-    #
-    #         try:
-    #             data['user'] = pwd.getpwuid(stat.st_uid).pw_name
-    #         except KeyError:
-    #             pass
-    #
-    #         try:
-    #             data['group'] = grp.getgrgid(stat.st_gid).gr_name
-    #         except KeyError:
-    #             pass
-    #     except OSError as e:
-    #         data['accessError'] = str(e)
-    #         if e.errno == errno.ENOENT and os.path.islink(path):
-    #             data['brokenLink'] = True
-    #
-    #     return data
-    #
-    # @url(r'/api/home/chmod/(?P<path>.+)')
-    # @authorize('filesystem:write')
-    # @endpoint(api=True)
-    # def handle_api_fs_chmod(self, http_context, path=None):
-    #     """
-    #     Change mode for a specific file.
-    #
-    #     :param http_context: HttpContext
-    #     :type http_context: HttpContext
-    #     :param path: Path of file
-    #     :type path: string
-    #     """
-    #
-    #     if not os.path.exists(path):
-    #         raise EndpointReturn(404)
-    #     data = json.loads(http_context.body.decode())
-    #     try:
-    #         os.chmod(path, data['mode'])
-    #     except OSError as e:
-    #         raise EndpointError(e)
-    #
-    # @url(r'/api/home/create-file/(?P<path>.+)')
-    # @authorize('filesystem:write')
-    # @endpoint(api=True)
-    # def handle_api_fs_create_file(self, http_context, path=None):
-    #     """
-    #     Create empty file on specified path.
-    #
-    #     :param http_context: HttpContext
-    #     :type http_context: HttpContext
-    #     :param path: Path of file
-    #     :type path: string
-    #     """
-    #
-    #     try:
-    #         os.mknod(path, int('644', 8))
-    #     except OSError as e:
-    #         raise EndpointError(e)
-    #
-    # @url(r'/api/home/create-directory/(?P<path>.+)')
-    # @authorize('filesystem:write')
-    # @endpoint(api=True)
-    # def handle_api_fs_create_directory(self, http_context, path=None):
-    #     """
-    #     Create empty directory on specified path.
-    #
-    #     :param http_context: HttpContext
-    #     :type http_context: HttpContext
-    #     :param path: Path of directory
-    #     :type path: string
-    #     """
-    #
-    #     try:
-    #         os.makedirs(path)
-    #     except OSError as e:
-    #         raise EndpointError(e)

@@ -7,47 +7,47 @@ angular.module('lmn.samba', ['core', 'flow']);
 
 angular.module('lmn.samba').service('samba', function ($rootScope, $http, $q) {
     this.shares = function () {
-        return $http.get("/api/samba/shares").then(function (response) {
+        return $http.get("/api/lmn/samba/shares").then(function (response) {
             return response.data;
         });
     };
 
     this.read = function (path, encoding) {
-        return $http.get('/api/samba/read/' + path + '?encoding=' + (encoding || 'utf-8')).then(function (response) {
+        return $http.get('/api/lmn/samba/read/' + path + '?encoding=' + (encoding || 'utf-8')).then(function (response) {
             return response.data;
         });
     };
 
     this.write = function (path, content, encoding) {
-        return $http.post('/api/samba/write/' + path + '?encoding=' + (encoding || 'utf-8'), content).then(function (response) {
+        return $http.post('/api/lmn/samba/write/' + path + '?encoding=' + (encoding || 'utf-8'), content).then(function (response) {
             return response.data;
         });
     };
 
     this.list = function (path) {
-        return $http.post('/api/samba/list', { 'path': path }).then(function (response) {
+        return $http.post('/api/lmn/samba/list', { 'path': path }).then(function (response) {
             return response.data;
         });
     };
 
     this.stat = function (path) {
-        return $http.get('/api/samba/stat/' + path).then(function (response) {
+        return $http.get('/api/lmn/samba/stat/' + path).then(function (response) {
             return response.data;
         });
     };
 
     this.chmod = function (path, mode) {
-        return $http.post('/api/samba/chmod/' + path, { mode: mode }).then(function (response) {
+        return $http.post('/api/lmn/samba/chmod/' + path, { mode: mode }).then(function (response) {
             return response.data;
         });
     };
 
     this.createFile = function (path) {
-        return $http.post('/api/samba/create-file/' + path);
+        return $http.post('/api/lmn/samba/create-file/' + path);
     };
 
     this.createDirectory = function (path) {
-        return $http.post('/api/samba/create-directory/' + path);
+        return $http.post('/api/lmn/samba/create-directory/' + path);
     };
 
     this.downloadBlob = function (content, mime, name) {
@@ -129,7 +129,7 @@ angular.module('lmn.samba').service('samba', function ($rootScope, $http, $q) {
                 }
             }
 
-            var response = await $http.post('/api/samba/finish-upload', filesToFinish);
+            var response = await $http.post('/api/lmn/samba/finish-upload', filesToFinish);
             $rootScope.$apply(function () {
                 q.resolve(response.data);
             });

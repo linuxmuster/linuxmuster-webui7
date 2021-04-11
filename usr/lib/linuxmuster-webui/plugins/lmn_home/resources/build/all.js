@@ -1,12 +1,12 @@
 'use strict';
 
-angular.module('lmn.home', ['core', 'flow']);
+angular.module('lmn.home', ['core', 'flow', 'lmn.samba']);
 
 
 'use strict';
 
 angular.module('lmn.home').config(function ($routeProvider) {
-    $routeProvider.when('/view/home', {
+    $routeProvider.when('/view/lmn/home', {
         templateUrl: '/lmn_home:resources/partial/index.html',
         controller: 'HomeIndexController'
     });

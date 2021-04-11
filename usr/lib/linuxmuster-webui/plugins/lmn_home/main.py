@@ -15,7 +15,7 @@ class ItemProvider(SidebarItemProvider):
                 'attach': 'category:general',
                 'name': 'My files',
                 'icon': 'fas fa-folder-open',
-                'url': '/view/home',
+                'url': '/view/lmn/home',
                 'children': []
             }
         ]

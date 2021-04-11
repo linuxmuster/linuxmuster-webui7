@@ -1,27 +1,27 @@
 angular.module('lmn.samba').service('samba', function($rootScope, $http, $q) {
     this.shares = () =>
-      $http.get("/api/samba/shares").then(response => response.data)
+      $http.get("/api/lmn/samba/shares").then(response => response.data)
 
     this.read = (path, encoding) =>
-      $http.get(`/api/samba/read/${path}?encoding=${encoding || 'utf-8'}`).then(response => response.data)
+      $http.get(`/api/lmn/samba/read/${path}?encoding=${encoding || 'utf-8'}`).then(response => response.data)
 
     this.write = (path, content, encoding) =>
-      $http.post(`/api/samba/write/${path}?encoding=${encoding || 'utf-8'}`, content).then(response => response.data)
+      $http.post(`/api/lmn/samba/write/${path}?encoding=${encoding || 'utf-8'}`, content).then(response => response.data)
 
     this.list = (path) =>
-      $http.post(`/api/samba/list`, {'path': path}).then(response => response.data)
+      $http.post(`/api/lmn/samba/list`, {'path': path}).then(response => response.data)
 
     this.stat = (path) =>
-      $http.get(`/api/samba/stat/${path}`).then(response => response.data)
+      $http.get(`/api/lmn/samba/stat/${path}`).then(response => response.data)
 
     this.chmod = (path, mode) =>
-      $http.post(`/api/samba/chmod/${path}`, {mode}).then(response => response.data)
+      $http.post(`/api/lmn/samba/chmod/${path}`, {mode}).then(response => response.data)
 
     this.createFile = (path) =>
-      $http.post(`/api/samba/create-file/${path}`)
+      $http.post(`/api/lmn/samba/create-file/${path}`)
 
     this.createDirectory = (path) =>
-      $http.post(`/api/samba/create-directory/${path}`)
+      $http.post(`/api/lmn/samba/create-directory/${path}`)
 
     this.downloadBlob = (content, mime, name) =>
         setTimeout(() => {
@@ -57,7 +57,7 @@ angular.module('lmn.samba').service('samba', function($rootScope, $http, $q) {
                     id: file.uniqueIdentifier, path, name: file.name
                 })
             }
-            let response = await $http.post(`/api/samba/finish-upload`, filesToFinish)
+            let response = await $http.post(`/api/lmn/samba/finish-upload`, filesToFinish)
             $rootScope.$apply(() => {
                 q.resolve(response.data)
             })

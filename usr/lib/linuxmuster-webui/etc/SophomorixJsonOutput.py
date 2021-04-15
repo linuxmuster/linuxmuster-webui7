@@ -26,6 +26,7 @@ import subprocess
 import re
 import sys
 import getopt
+import time
 
 class SophomorixProcess(threading.Thread):
     """Worker for processing sophomorix commands"""
@@ -121,4 +122,8 @@ def main(argv):
             print(result)
     
 if __name__ == "__main__":
+    start = time.time()
     main(sys.argv[1:])
+    end = time.time()
+    duration = end - start
+    print(f"Duration : {duration:.3f}")

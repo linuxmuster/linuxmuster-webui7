@@ -1,4 +1,4 @@
-#! /usr/bin/python
+#! /usr/bin/python3
 
 """
 Utility script to simply get an entry from a json output from sophomorix and pretty print if it's a dictionary.
@@ -50,7 +50,7 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
     t.join()
 
     ## Cleanup stderr output
-    output = t.stderr.replace("null", "\"null\"")
+    output = t.stderr.decode('utf-8').replace("null", "\"null\"")
 
     ## Some comands get many dicts, we just want the first
     output = output.replace('\n', '').split('# JSON-end')[0]

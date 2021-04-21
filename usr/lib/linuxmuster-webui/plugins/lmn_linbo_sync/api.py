@@ -52,27 +52,22 @@ def last_sync(w, cloop):
     :rtype: datetime
     """
 
-    logfile = '/var/log/linuxmuster/linbo/%s_image.log' % w
+    statusfile = '/var/log/linuxmuster/linbo/%s_image.status' % w
     last = False
-    
-    if os.path.isfile(logfile) and os.stat(logfile).st_size != 0:
-        for line in reversed(open(logfile, 'r').readlines()):
-            if cloop in line and 'Synchronisation' in line:
+
+    if os.path.isfile(statusfile) and os.stat(statusfile).st_size != 0:
+        for line in open(statusfile, 'r').readlines():
+            if cloop in line:
                 last = line.rstrip()
                 break
-    elif os.path.isfile(logfile) and os.stat(logfile).st_size == 0:
-        for line in reversed(gzip.open(logfile + '.1.gz', 'rb').readlines()):
-            if cloop in line.decode('utf-8') and 'Synchronisation' in line.decode('utf-8'):
-                last = line.decode('utf-8').rstrip()
-                break
-                
+
     if last:
         ## Linbo locale is en_GB, not necessarily the server locale
-        saved = locale.setlocale(locale.LC_ALL) 
+        saved = locale.setlocale(locale.LC_ALL)
         locale.setlocale(locale.LC_ALL, 'C.UTF-8')
-        last = datetime.strptime(last.split('## ')[1].split(' : ')[0], '%a %b %d %H:%M:%S %Z %Y')
+        last = datetime.strptime(last.split(' ')[0], '%Y%m%d%H%M')
         locale.setlocale(locale.LC_ALL, saved)
-    
+
         last = time.mktime(last.timetuple())
     return last
 
@@ -100,7 +95,7 @@ def group_os(workstations):
                 'bypass': 0
             }
             for osConfig in config:
-                if osConfig['SyncEnabled']:
+                if osConfig['SyncEnabled'] or osConfig['NewEnabled']:
                     tmpDict = {
                                 'baseimage': osConfig['BaseImage'],
                                 'partition': osConfig['Root'][-1],
@@ -126,7 +121,7 @@ def list_workstations():
     workstations_file = '/etc/linuxmuster/sophomorix/' + school + '/devices.csv'
 
     workstations = {}
-    
+
     with open(workstations_file, 'r') as w:
         buffer = csv.reader(w, delimiter=";")
         for row in buffer:
@@ -139,12 +134,15 @@ def list_workstations():
                     host  = row[1]
                     mac   = row[3]
                     ip    = row[4]
+                    pxe   = row[10]
 
-                    if group not in workstations.keys():
+                    if pxe != "1" and pxe != "2":
+                        continue
+                    elif group not in workstations.keys():
                         workstations[group] = {'grp': group, 'hosts': [{'host' : host, 'room' : room, 'mac' : mac, 'ip' : ip}]}
                     else:
                         workstations[group]['hosts'].append({'host' : host, 'room' : room, 'mac' : mac, 'ip' : ip})
-        
+
     return group_os(workstations)
 
 def last_sync_all(workstations):
@@ -159,7 +157,7 @@ def last_sync_all(workstations):
     """
 
     today = time.mktime(datetime.now().timetuple())
-    
+
     for group, grpDict in sorted(workstations.items()):
             for host in grpDict['hosts']:
                 host['cloop'] = []

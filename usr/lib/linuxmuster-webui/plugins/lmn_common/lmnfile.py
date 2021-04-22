@@ -150,7 +150,7 @@ class LinboLoader(LMNFile):
     Handler for linbo's cloop informations files.
     """
 
-    extensions = ['.desc', '.reg', '.postsync', '.info', '.macct']
+    extensions = ['.desc', '.reg', '.postsync', '.info', '.macct', '.prestart']
 
     def __enter__(self):
         self.opened = open(self.file, self.mode, encoding=self.encoding)

@@ -41,6 +41,7 @@ angular.module('lm.linbo').controller 'LMLINBOImageModalController', ($scope, $u
     $scope.image = image
     $scope.imagesWithReg = (x for x in images when x.reg)
     $scope.imagesWithPostsync = (x for x in images when x.postsync)
+    $scope.imagesWithPrestart = (x for x in images when x.prestart)
 
     $http.get('/api/lm/linbo/examples-regs').then (resp) ->
         $scope.exampleRegs = resp.data
@@ -52,9 +53,16 @@ angular.module('lm.linbo').controller 'LMLINBOImageModalController', ($scope, $u
     $http.get('/api/lm/linbo/examples-postsyncs').then (resp) ->
         $scope.examplePostsyncs = resp.data
 
+    $http.get('/api/lm/linbo/examples-prestart').then (resp) ->
+        $scope.examplePrestarts = resp.data
+
     $scope.setExamplePostsync = (name) ->
         filesystem.read("/srv/linbo/examples/#{name}").then (content) ->
             $scope.image.postsync = content
+
+    $scope.setExamplePrestart = (name) ->
+        filesystem.read("/srv/linbo/examples/#{name}").then (content) ->
+            $scope.image.prestart = content
 
     $scope.save = () ->
         $uibModalInstance.close(image)

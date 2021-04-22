@@ -119,6 +119,7 @@ class Handler(HttpPlugin):
                     'postsync': extra_dict['postsync'],
                     'vdi': extra_dict['vdi'],
                     'prestart': extra_dict['prestart'],
+                    'selected': False,
                 })
         return r
 

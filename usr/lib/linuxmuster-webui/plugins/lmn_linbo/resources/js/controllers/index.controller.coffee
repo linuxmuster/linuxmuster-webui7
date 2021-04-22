@@ -471,7 +471,7 @@ angular.module('lmn.linbo').controller 'LMLINBOConfigModalController', ($scope, 
 
 
 
-angular.module('lmn.linbo').controller 'LMLINBOController', ($scope, $http, $uibModal, $log, $route, $location, gettext, notify, pageTitle, tasks, messagebox, validation) ->
+angular.module('lmn.linbo').controller 'LMLINBOController', ($q, $scope, $http, $uibModal, $log, $route, $location, gettext, notify, pageTitle, tasks, messagebox, validation) ->
     pageTitle.set(gettext('LINBO'))
 
     $scope.tabs = ['groups', 'images']
@@ -481,6 +481,8 @@ angular.module('lmn.linbo').controller 'LMLINBOController', ($scope, $http, $uib
         $scope.activetab = $scope.tabs.indexOf(tag)
     else
         $scope.activetab = 0
+
+    $scope.images_selected = []
 
     $http.get('/api/lm/linbo/configs').then (resp) ->
         $scope.configs = resp.data
@@ -558,6 +560,23 @@ angular.module('lmn.linbo').controller 'LMLINBOController', ($scope, $http, $uib
             $http.delete("/api/lm/linbo/image/#{image.name}").then () ->
                 $location.hash("images")
                 $route.reload()
+
+    $scope.deleteImages = () ->
+        name_list = (image.name for image in $scope.images_selected).toString()
+        messagebox.show(text: "Delete '#{name_list}'?", positive: 'Delete', negative: 'Cancel').then () ->
+            promises = []
+            for image in $scope.images_selected
+                promises.push($http.delete("/api/lm/linbo/image/#{image.name}"))
+            $q.all(promises).then () ->
+                $location.hash("images")
+                $route.reload()
+
+    $scope.toggleSelected = (image) ->
+        position = $scope.images_selected.indexOf(image)
+        if position > -1
+            $scope.images_selected.splice(position, 1)
+        else
+            $scope.images_selected.push(image)
 
     $scope.duplicateImage = (image) ->
         messagebox.prompt('New name', image.name).then (msg) ->

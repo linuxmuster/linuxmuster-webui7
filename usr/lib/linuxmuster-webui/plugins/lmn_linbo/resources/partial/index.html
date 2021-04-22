@@ -48,12 +48,18 @@
                         <i class="fa fa-copy"></i>
                     </a>
                     <div class="list-group-btn" style="font-weight:bold;margin-right:20px;">{{image.size|bytes}}</div>
+                    <span checkbox class="pull-left list-group-main" ng:model="image.selected" ng:click="toggleSelected(image)" />
                     <a class="list-group-main" style="font-weight:bold;" ng:click="editImage(image)">
                         {{image.name}}
                     </a>
                     <div style="margin-left:30px;white-space:normal;" translate>Comment: {{image.description}}</div>
                 </div>
             </div>
+            <floating-toolbar ng:show="images_selected.length > 0">
+                <button ng:click="deleteImages()" class="btn btn-default btn-flat pull-right" translate>
+                    Delete selected images
+                </button>
+            </floating-toolbar>
         </uib:tab>
     </uib:tabset>
 </div>

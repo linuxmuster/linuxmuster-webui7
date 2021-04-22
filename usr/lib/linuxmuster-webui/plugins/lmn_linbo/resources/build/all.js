@@ -578,7 +578,7 @@
     };
   });
 
-  angular.module('lmn.linbo').controller('LMLINBOController', function($scope, $http, $uibModal, $log, $route, $location, gettext, notify, pageTitle, tasks, messagebox, validation) {
+  angular.module('lmn.linbo').controller('LMLINBOController', function($q, $scope, $http, $uibModal, $log, $route, $location, gettext, notify, pageTitle, tasks, messagebox, validation) {
     var tag;
     pageTitle.set(gettext('LINBO'));
     $scope.tabs = ['groups', 'images'];
@@ -588,6 +588,7 @@
     } else {
       $scope.activetab = 0;
     }
+    $scope.images_selected = [];
     $http.get('/api/lm/linbo/configs').then(function(resp) {
       return $scope.configs = resp.data;
     });
@@ -704,6 +705,45 @@
           return $route.reload();
         });
       });
+    };
+    $scope.deleteImages = function() {
+      var image, name_list;
+      name_list = ((function() {
+        var i, len, ref, results;
+        ref = $scope.images_selected;
+        results = [];
+        for (i = 0, len = ref.length; i < len; i++) {
+          image = ref[i];
+          results.push(image.name);
+        }
+        return results;
+      })()).toString();
+      return messagebox.show({
+        text: `Delete '${name_list}'?`,
+        positive: 'Delete',
+        negative: 'Cancel'
+      }).then(function() {
+        var i, len, promises, ref;
+        promises = [];
+        ref = $scope.images_selected;
+        for (i = 0, len = ref.length; i < len; i++) {
+          image = ref[i];
+          promises.push($http.delete(`/api/lm/linbo/image/${image.name}`));
+        }
+        return $q.all(promises).then(function() {
+          $location.hash("images");
+          return $route.reload();
+        });
+      });
+    };
+    $scope.toggleSelected = function(image) {
+      var position;
+      position = $scope.images_selected.indexOf(image);
+      if (position > -1) {
+        return $scope.images_selected.splice(position, 1);
+      } else {
+        return $scope.images_selected.push(image);
+      }
     };
     $scope.duplicateImage = function(image) {
       return messagebox.prompt('New name', image.name).then(function(msg) {

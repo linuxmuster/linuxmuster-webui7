@@ -557,6 +557,7 @@ angular.module('lmn.linbo').controller 'LMLINBOController', ($scope, $http, $uib
         messagebox.show(text: "Delete '#{image.name}'?", positive: 'Delete', negative: 'Cancel').then () ->
             $http.delete("/api/lm/linbo/image/#{image.name}").then () ->
                 $location.hash("images")
+                $route.reload()
 
     $scope.duplicateImage = (image) ->
         messagebox.prompt('New name', image.name).then (msg) ->

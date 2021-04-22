@@ -175,6 +175,7 @@ class Handler(HttpPlugin):
                     'reg': extra_dict['reg'],
                     'postsync': extra_dict['postsync'],
                     'prestart': extra_dict['prestart'],
+                    'selected': False,
                 })
         return r
 

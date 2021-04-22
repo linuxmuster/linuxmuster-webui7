@@ -471,8 +471,16 @@ angular.module('lmn.linbo').controller 'LMLINBOConfigModalController', ($scope, 
 
 
 
-angular.module('lmn.linbo').controller 'LMLINBOController', ($scope, $http, $uibModal, $log, $route, gettext, notify, pageTitle, tasks, messagebox, validation) ->
+angular.module('lmn.linbo').controller 'LMLINBOController', ($scope, $http, $uibModal, $log, $route, $location, gettext, notify, pageTitle, tasks, messagebox, validation) ->
     pageTitle.set(gettext('LINBO'))
+
+    $scope.tabs = ['groups', 'images']
+
+    tag = $location.$$url.split("#")[1]
+    if tag and tag in $scope.tabs
+        $scope.activetab = $scope.tabs.indexOf(tag)
+    else
+        $scope.activetab = 0
 
     $http.get('/api/lm/linbo/configs').then (resp) ->
         $scope.configs = resp.data
@@ -548,7 +556,7 @@ angular.module('lmn.linbo').controller 'LMLINBOController', ($scope, $http, $uib
     $scope.deleteImage = (image) ->
         messagebox.show(text: "Delete '#{image.name}'?", positive: 'Delete', negative: 'Cancel').then () ->
             $http.delete("/api/lm/linbo/image/#{image.name}").then () ->
-                $route.reload()
+                $location.hash("images")
 
     $scope.duplicateImage = (image) ->
         messagebox.prompt('New name', image.name).then (msg) ->

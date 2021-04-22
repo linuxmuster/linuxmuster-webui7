@@ -578,8 +578,16 @@
     };
   });
 
-  angular.module('lmn.linbo').controller('LMLINBOController', function($scope, $http, $uibModal, $log, $route, gettext, notify, pageTitle, tasks, messagebox, validation) {
+  angular.module('lmn.linbo').controller('LMLINBOController', function($scope, $http, $uibModal, $log, $route, $location, gettext, notify, pageTitle, tasks, messagebox, validation) {
+    var tag;
     pageTitle.set(gettext('LINBO'));
+    $scope.tabs = ['groups', 'images'];
+    tag = $location.$$url.split("#")[1];
+    if (tag && indexOf.call($scope.tabs, tag) >= 0) {
+      $scope.activetab = $scope.tabs.indexOf(tag);
+    } else {
+      $scope.activetab = 0;
+    }
     $http.get('/api/lm/linbo/configs').then(function(resp) {
       return $scope.configs = resp.data;
     });
@@ -692,7 +700,7 @@
         negative: 'Cancel'
       }).then(function() {
         return $http.delete(`/api/lm/linbo/image/${image.name}`).then(function() {
-          return $route.reload();
+          return $location.hash("images");
         });
       });
     };

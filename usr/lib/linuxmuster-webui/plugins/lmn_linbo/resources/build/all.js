@@ -89,6 +89,17 @@
       }
       return results;
     })();
+    $scope.imagesWithPrestart = (function() {
+      var i, len, results;
+      results = [];
+      for (i = 0, len = images.length; i < len; i++) {
+        x = images[i];
+        if (x.prestart) {
+          results.push(x);
+        }
+      }
+      return results;
+    })();
     $http.get('/api/lm/linbo/examples-regs').then(function(resp) {
       return $scope.exampleRegs = resp.data;
     });
@@ -100,9 +111,17 @@
     $http.get('/api/lm/linbo/examples-postsyncs').then(function(resp) {
       return $scope.examplePostsyncs = resp.data;
     });
+    $http.get('/api/lm/linbo/examples-prestart').then(function(resp) {
+      return $scope.examplePrestarts = resp.data;
+    });
     $scope.setExamplePostsync = function(name) {
       return filesystem.read(`/srv/linbo/examples/${name}`).then(function(content) {
         return $scope.image.postsync = content;
+      });
+    };
+    $scope.setExamplePrestart = function(name) {
+      return filesystem.read(`/srv/linbo/examples/${name}`).then(function(content) {
+        return $scope.image.prestart = content;
       });
     };
     $scope.save = function() {

@@ -114,13 +114,30 @@
                     <label translate>Linbo GUI customization</label>
                     <br />
                     <span checkbox ng:model="config.config.LINBO.UseMinimalLayout" text="{{'Use minimal layout'|translate}}" />
-                    <br /><br />
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="form-group">
+        <table width="100%">
+            <tr>
+                <td width="49%">
                     <label translate>Language</label>
+                    <br />
+                    <br />
                     <select ng:model="config.config.LINBO.Locale" class="form-control">
                         <option value="de-DE" translate>German</option>
                         <option value="en-GB" translate>English</option>
                         <option value="fr-FR" translate>French</option>
                     </select>
+                </td>
+                <td>
+                </td>
+                <td width="49%">
+                    <label translate>Background color</label>
+                    <br />
+                    <span translate>The color of the foreground will be adjusted automatically</span>
+                    <input colorpicker="hex" colorpicker-position="right" ng:model="config.config.LINBO.BackgroundColor" type="text" pattern="#[a-fA-F\d]+" class="form-control" />
                 </td>
             </tr>
         </table>

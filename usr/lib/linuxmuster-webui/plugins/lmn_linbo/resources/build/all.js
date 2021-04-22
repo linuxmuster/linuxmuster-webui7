@@ -679,7 +679,8 @@
         negative: 'Cancel'
       }).then(function() {
         return $http.delete(`/api/lm/linbo/image/${image.name}`).then(function() {
-          return $location.hash("images");
+          $location.hash("images");
+          return $route.reload();
         });
       });
     };

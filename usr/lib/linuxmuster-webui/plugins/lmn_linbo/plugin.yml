@@ -10,6 +10,8 @@ dependencies:
     - !PluginDependency { plugin_name: filesystem }
     - !PluginDependency { plugin_name: lmn_common }
 resources:
+    - 'resources/vendor/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.min.js'
+    - 'resources/vendor/angular-bootstrap-colorpicker/css/colorpicker.min.css'
     - 'resources/js/module.coffee'
     - 'resources/js/controllers/index.controller.coffee'
     - 'resources/partial/index.html'

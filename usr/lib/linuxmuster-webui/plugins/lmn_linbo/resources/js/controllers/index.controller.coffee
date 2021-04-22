@@ -84,6 +84,9 @@ angular.module('lmn.linbo').controller 'LMLINBOConfigModalController', ($scope, 
         else
             $scope.expert = true
 
+    if $scope.config.config.LINBO.BackgroundColor
+       $scope.config.config.LINBO.BackgroundColor = '#' + $scope.config.config.LINBO.BackgroundColor
+
     $scope.kernelOptions = [
         'quiet'
         'splash'
@@ -461,6 +464,11 @@ angular.module('lmn.linbo').controller 'LMLINBOConfigModalController', ($scope, 
             for partition in disk.partitions
                 config.partitions.push partition
         $uibModalInstance.close([config, vdiconfig])
+        
+	# Remove # from background color
+        if $scope.config.config.LINBO.BackgroundColor
+            $scope.config.config.LINBO.BackgroundColor = $scope.config.config.LINBO.BackgroundColor.substring(1)
+        $uibModalInstance.close(config)
 
     $scope.backups = () ->
         lmFileBackups.show('/srv/linbo/start.conf.' + $scope.config.config.LINBO.Group).then () ->

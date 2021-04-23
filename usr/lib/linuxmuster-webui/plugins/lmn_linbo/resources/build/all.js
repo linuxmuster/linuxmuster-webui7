@@ -560,7 +560,6 @@
       }
       // Remove # from background color
       if ($scope.config.config.LINBO.BackgroundColor) {
-        console.log("PRE" + $scope.config.config.LINBO.BackgroundColor + "BLA");
         $scope.config.config.LINBO.BackgroundColor = $scope.config.config.LINBO.BackgroundColor.substring(1);
       }
       return $uibModalInstance.close(config);

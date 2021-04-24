@@ -12,6 +12,8 @@ import threading
 import ast
 import unicodecsv as csv
 import filecmp
+import logging
+from pprint import pformat
 
 
 ALLOWED_PATHS = [
@@ -206,6 +208,8 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
     :rtype: dict or value (list, dict, integer, string)
     """
 
+    debug = lmconfig.data['linuxmuster'].get("sophomorix-debug", False)
+
     uid = os.getuid()
     if uid != 0:
         sophomorixCommand = ['sudo'] + sophomorixCommand
@@ -233,6 +237,10 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
     jsonDict = {}
     if output:
         jsonDict = ast.literal_eval(output)
+
+    if debug:
+        logging.debug("Sophomorix stdout :\n %s", t.stdout.decode('utf-8'))
+        logging.debug("Sophomorix sdterr :\n %s", pformat(jsonDict))
 
     # Without key, simply return the dict
     if jsonpath is '':

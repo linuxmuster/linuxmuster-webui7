@@ -19,6 +19,13 @@ angular.module('lm.linbo').controller 'LMLINBOPartitionModalController', ($scope
 
     $http.get('/api/lm/linbo/icons').then (resp) ->
         $scope.icons = resp.data
+        $scope.image_extension = 'svg'
+        # Test if common svg picture is there, and fallback to png if not
+        if resp.data.indexOf('ubuntu.svg') < 0
+            $scope.image_extension = 'png'
+        $scope.show_png_warning = false
+        if $scope.image_extension == 'svg' && os.IconName.endsWith('png')
+            $scope.show_png_warning = true
 
     $http.get('/api/lm/linbo/images').then (resp) ->
         $scope.images = []
@@ -332,7 +339,7 @@ angular.module('lm.linbo').controller 'LMLINBOConfigModalController', ($scope, $
             Name: 'Windows 10'
             Version: ''
             Description: 'Windows 10'
-            IconName: 'win10.png'
+            IconName: 'win10.' + $scope.image_extension
             Image: ''
             BaseImage: ''
             Root: partition.Dev
@@ -363,7 +370,7 @@ angular.module('lm.linbo').controller 'LMLINBOConfigModalController', ($scope, $
             Name: 'Ubuntu'
             Version: ''
             Description: 'Ubuntu 16.04'
-            IconName: 'ubuntu.png'
+            IconName: 'ubuntu.' + $scope.image_extension
             Image: ''
             BaseImage: ''
             Root: partition.Dev

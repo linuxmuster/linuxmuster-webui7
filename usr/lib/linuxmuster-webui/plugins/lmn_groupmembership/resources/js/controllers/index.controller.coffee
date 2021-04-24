@@ -206,8 +206,13 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
                 $scope.adminList = resp.data['GROUP'][groupName]['sophomorixAdmins']
                 $scope.groupmemberlist = resp.data['GROUP'][groupName]['sophomorixMemberGroups']
                 $scope.groupadminlist = resp.data['GROUP'][groupName]['sophomorixAdminGroups']
-                $scope.type = $scope.groupDetails['sophomorixType']
-                $scope.type = if $scope.type == "adminclass" then "class" else $scope.type
+
+                $scope.typeMap = {
+                    'adminclass': 'class',
+                    'project': 'project',
+                    'printer': 'group',
+                }
+                $scope.type = $scope.typeMap[$scope.groupDetails['sophomorixType']]
 
                 $scope.members = []
                 for name,member of resp.data['MEMBERS'][groupName]
@@ -287,7 +292,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
                     notify.error (resp['data'][1])
                 if resp['data'][0] == 'LOG'
                     notify.success gettext(resp['data'][1])
-                   if Array.isArray(user)
+                    if Array.isArray(user)
                         $scope.admins = $scope.admins.concat(user.filter((u) -> $scope.admins.indexOf(u) < 0))
                     else
                         $scope.admins.push(user)

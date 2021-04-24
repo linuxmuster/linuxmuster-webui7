@@ -38,7 +38,7 @@
             </td>
         </tr>
     </table>
-    <div class="panel panel-danger">
+    <div class="panel panel-danger" ng:show="type != 'group'">
         <div class="panel-heading">
             <a href="#" class="btn btn-default btn-flat pull-right" ng-click="showAdminDetails = ! showAdminDetails">{{showMemberDetails ? hidetext : showtext}}</a>
             <h4>
@@ -135,7 +135,10 @@
             </div>
         </div>
         <div class="modal-footer">
-            <input type="checkbox" ng:model="$parent._.addasadmin"> </input><span>Add as admin</span>
+            <span ng:show="type != 'group'">
+                <input type="checkbox" ng:model="$parent._.addasadmin">
+                Add as admin
+            </span>
             <a ng:click="$parent.addEntities()" ng:disabled="$parent._.newGroup.length + $parent._.newUser.length == 0" class="btn btn-default btn-flat" translate>
                 Apply
             </a>

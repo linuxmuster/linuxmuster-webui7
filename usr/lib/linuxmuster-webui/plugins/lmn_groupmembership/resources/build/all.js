@@ -336,8 +336,12 @@
         $scope.adminList = resp.data['GROUP'][groupName]['sophomorixAdmins'];
         $scope.groupmemberlist = resp.data['GROUP'][groupName]['sophomorixMemberGroups'];
         $scope.groupadminlist = resp.data['GROUP'][groupName]['sophomorixAdminGroups'];
-        $scope.type = $scope.groupDetails['sophomorixType'];
-        $scope.type = $scope.type === "adminclass" ? "class" : $scope.type;
+        $scope.typeMap = {
+          'adminclass': 'class',
+          'project': 'project',
+          'printer': 'group'
+        };
+        $scope.type = $scope.typeMap[$scope.groupDetails['sophomorixType']];
         $scope.members = [];
         ref = resp.data['MEMBERS'][groupName];
         for (name in ref) {
@@ -474,13 +478,13 @@
         }
         if (resp['data'][0] === 'LOG') {
           notify.success(gettext(resp['data'][1]));
-        }
-        if (Array.isArray(user)) {
-          $scope.admins = $scope.admins.concat(user.filter(function(u) {
-            return $scope.admins.indexOf(u) < 0;
-          }));
-        } else {
-          $scope.admins.push(user);
+          if (Array.isArray(user)) {
+            $scope.admins = $scope.admins.concat(user.filter(function(u) {
+              return $scope.admins.indexOf(u) < 0;
+            }));
+          } else {
+            $scope.admins.push(user);
+          }
         }
         return $scope.changeState = false;
       });

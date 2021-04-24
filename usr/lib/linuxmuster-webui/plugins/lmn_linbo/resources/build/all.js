@@ -32,7 +32,16 @@
     $scope.partition = partition;
     $scope.os = os;
     $http.get('/api/lm/linbo/icons').then(function(resp) {
-      return $scope.icons = resp.data;
+      $scope.icons = resp.data;
+      $scope.image_extension = 'svg';
+      // Test if common svg picture is there, and fallback to png if not
+      if (resp.data.indexOf('ubuntu.svg') < 0) {
+        $scope.image_extension = 'png';
+      }
+      $scope.show_png_warning = false;
+      if ($scope.image_extension === 'svg' && os.IconName.endsWith('png')) {
+        return $scope.show_png_warning = true;
+      }
     });
     $http.get('/api/lm/linbo/images').then(function(resp) {
       var i, len, oses, results;
@@ -408,7 +417,7 @@
         Name: 'Windows 10',
         Version: '',
         Description: 'Windows 10',
-        IconName: 'win10.png',
+        IconName: 'win10.' + $scope.image_extension,
         Image: '',
         BaseImage: '',
         Root: partition.Dev,
@@ -440,7 +449,7 @@
         Name: 'Ubuntu',
         Version: '',
         Description: 'Ubuntu 16.04',
-        IconName: 'ubuntu.png',
+        IconName: 'ubuntu.' + $scope.image_extension,
         Image: '',
         BaseImage: '',
         Root: partition.Dev,

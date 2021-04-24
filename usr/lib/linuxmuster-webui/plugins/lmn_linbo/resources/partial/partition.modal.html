@@ -45,6 +45,9 @@
         <uib:tab heading="{{'OS'|translate}}" ng:if="os">
             <br/>
             <div class="form-group">
+                <div class="alert alert-warning" ng:show="show_png_warning" translate>
+                    The icon format used here is png and you should change this to svg.
+                </div>
                 <table width="100%">
                     <tr>
                         <td width="49%">
@@ -81,7 +84,7 @@
                                     <i class="fa fa-caret-down"></i>
                                 </button>
                                 <ul uib-dropdown-menu class="dropdown-menu-right" style="width: 150px !important; min-width: 0;">
-                                    <li ng:repeat="icon in icons" ng:show="icon.substring(0, 6) != 'linbo_' && icon.includes('png')">
+                                    <li ng:repeat="icon in icons" ng:show="icon.substring(0, 6) != 'linbo_' && icon.includes(image_extension)">
                                         <a ng:click="os.IconName = icon">
                                             <img src="/api/lm/linbo/icons/read/{{icon}}" style="max-width: 32px;" />&emsp; {{icon}}
                                         </a>

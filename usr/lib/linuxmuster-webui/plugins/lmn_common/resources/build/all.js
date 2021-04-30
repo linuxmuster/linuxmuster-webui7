@@ -492,11 +492,28 @@
       return true;
     };
     // Regexp for mac address, and tests if no duplicate
-    this.isValidMac = function(mac) {
-      var error_msg, regExp, validMac;
+    this.isValidMac = function(mac, idx) {
+      var error_msg, regExp, regExp2, regExp3, validMac;
+      // idx is the position of the mac address in devices
       error_msg = mac + gettext(' is not valid or duplicated');
+      // Allow ':', '-' or nothing as separator
       regExp = /^([0-9A-Fa-f]{2}[:]){5}([0-9A-Fa-f]{2})$/;
-      validMac = regExp.test(mac) && (this.externVar['devices'].filter(this.findval('mac', mac)).length < 2);
+      regExp2 = /^([0-9A-Fa-f]{2}[-]){5}([0-9A-Fa-f]{2})$/;
+      regExp3 = /^[0-9A-Fa-f]{12}$/;
+      validMac = false;
+      // Convert mac address if necessary
+      if (regExp.test(mac)) {
+        validMac = true;
+      } else if (regExp2.test(mac)) {
+        validMac = true;
+        mac = mac.replaceAll('-', ':');
+        this.externVar['devices'][idx]['mac'] = mac;
+      } else if (regExp3.test(mac)) {
+        validMac = true;
+        mac = mac.match(/.{1,2}/g).join(':');
+        this.externVar['devices'][idx]['mac'] = mac;
+      }
+      validMac = validMac && (this.externVar['devices'].filter(this.findval('mac', mac)).length < 2);
       if (!validMac) {
         return error_msg;
       }

@@ -44,7 +44,11 @@ angular.module('lm.devices').controller 'LMDevicesController', ($scope, $http, $
         return Object.keys(d).length
 
     $scope.validateField = (name, val, isnew, ev) ->
-        test = validation["isValid"+name](val)
+        if name == "Mac"
+            # Index necessary to convert mac adress in $scope.devices
+            test = validation["isValidMac"](val, ev)
+        else
+            test = validation["isValid"+name](val)
 
         if test == true && (val || name == "Comment")
             delete $scope.error_msg[name+"-"+ev]

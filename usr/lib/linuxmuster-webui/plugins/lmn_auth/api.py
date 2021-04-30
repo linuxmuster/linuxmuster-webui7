@@ -10,7 +10,7 @@ import ldap
 import ldap.filter
 import ldap.modlist as modlist
 import subprocess
-from jadi import component
+from jadi import component, service
 import pwd
 import grp
 import simplejson as json
@@ -19,6 +19,7 @@ import yaml
 from aj.auth import AuthenticationProvider, OSAuthenticationProvider, AuthenticationService
 from aj.config import UserConfigProvider
 from aj.plugins.lmn_common.api import lmconfig, lmsetup_schoolname
+import logging
 
 @component(AuthenticationProvider)
 class LMAuthenticationProvider(AuthenticationProvider):
@@ -264,12 +265,31 @@ class LMAuthenticationProvider(AuthenticationProvider):
         try:
             profil = self.get_ldap_user(username)
             profil['isAdmin'] = b"administrator" in profil['sophomorixRole']
+            # Test purpose for multischool
+            if username == 'global-admin':
+                profil['activeSchool'] = "default-school"
+            else:
+                profil['activeSchool'] = profil['sophomorixSchoolname']
+
             if lmsetup_schoolname:
                 profil['pageTitle'] = lmsetup_schoolname
             return json.loads(json.dumps(profil))
         except Exception as e:
             logging.error(e)
             return {}
+
+@service
+class School():
+    def __init__(self, context):
+        self.context = context
+        username = AuthenticationService.get(self.context).get_identity()
+        profil = LMAuthenticationProvider.get(self.context).get_profile(username)
+        self.school = profil['activeSchool']
+
+    def switch(self, school):
+        # Switch to another school
+        self.school = school
+        # Do stuff to effectively change the school
 
 @component(UserConfigProvider)
 class UserLdapConfig(UserConfigProvider):

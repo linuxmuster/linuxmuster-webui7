@@ -15,6 +15,9 @@ from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue
 from aj.plugins.lmn_common.lmnfile import LMNFile
+from aj.plugins.lmn_auth.api import School
+import logging
+
 
 
 @component(HttpPlugin)
@@ -187,8 +190,12 @@ class Handler(HttpPlugin):
         :rtype: list of dict
         """
 
-        school = 'default-school'
-        path = '/etc/linuxmuster/sophomorix/'+school+'/students.csv'
+        school = School.get(self.context).school
+        if school == "default-school":
+            path = '/etc/linuxmuster/sophomorix/'+school+'/students.csv'
+        else:
+            path = '/etc/linuxmuster/sophomorix/'+school+'/'+school+'.students.csv'
+
         if os.path.isfile(path) is False:
             os.mknod(path)
         fieldnames = [
@@ -226,8 +233,12 @@ class Handler(HttpPlugin):
         :rtype: list of dict
         """
 
-        school = 'default-school'
-        path = '/etc/linuxmuster/sophomorix/'+school+'/teachers.csv'
+        school = School.get(self.context).school
+        if school == "default-school":
+            path = '/etc/linuxmuster/sophomorix/'+school+'/teachers.csv'
+        else:
+            path = '/etc/linuxmuster/sophomorix/'+school+'/'+school+'.teachers.csv'
+            
         if os.path.isfile(path) is False:
             os.mknod(path)
         fieldnames = [
@@ -270,7 +281,7 @@ class Handler(HttpPlugin):
 
         action = http_context.json_body()['action']
         if http_context.method == 'POST':
-            schoolname = 'default-school'
+            schoolname = School.get(self.context).school
             teachersList = []
 
             if action == 'get-all':
@@ -309,7 +320,8 @@ class Handler(HttpPlugin):
 
         action = http_context.json_body()['action']
         if http_context.method == 'POST':
-            schoolname = 'default-school'
+            schoolname = School.get(self.context).school
+
             studentsList = []
             with authorize('lm:users:students:read'):
                 if action == 'get-all':
@@ -415,8 +427,11 @@ class Handler(HttpPlugin):
         :rtype: list of dict
         """
 
-        school = 'default-school'
-        path = '/etc/linuxmuster/sophomorix/'+school+'/extrastudents.csv'
+        school = School.get(self.context).school
+        if school == "default-school":
+            path = '/etc/linuxmuster/sophomorix/'+school+'/extrastudents.csv'
+        else:
+            path = '/etc/linuxmuster/sophomorix/'+school+'/'+school+'.extrastudents.csv'
         if os.path.isfile(path) is False:
             os.mknod(path)
         fieldnames = [
@@ -454,8 +469,11 @@ class Handler(HttpPlugin):
         :rtype: list of dict
         """
 
-        school = 'default-school'
-        path = '/etc/linuxmuster/sophomorix/'+school+'/extraclasses.csv'
+        school = School.get(self.context).school
+        if school == "default-school":
+            path = '/etc/linuxmuster/sophomorix/'+school+'/extraclasses.csv'
+        else:
+            path = '/etc/linuxmuster/sophomorix/'+school+'/'+school+'.extraclasses.csv'
         if os.path.isfile(path) is False:
             os.mknod(path)
         fieldnames = [
@@ -589,8 +607,7 @@ class Handler(HttpPlugin):
         :return: State of the command
         :rtype: string
         """
-
-        school = 'default-school'
+        school = School.get(self.context).school
         action = http_context.json_body()['action']
         users = http_context.json_body()['users']
         user = ','.join([x.strip() for x in users])
@@ -694,7 +711,7 @@ class Handler(HttpPlugin):
         :rtype: With GET, list of dict
         """
 
-        school = 'default-school'
+        school = School.get(self.context).school
         if http_context.method == 'GET':
 
             sophomorixCommand = ['sophomorix-query', '--class', '--group-full', '-jj']
@@ -807,9 +824,10 @@ class Handler(HttpPlugin):
             result = lmn_getSophomorixValue(sophomorixCommand, 'QUOTA/USERS')
 
             quotaMap = {}
+            school = School.get(self.context).school
             # Only read default-school for the moment, must be maybe adapted later
             for user in groupList:
-                share = result[user]["SHARES"]['default-school']['smbcquotas']
+                share = result[user]["SHARES"][school]['smbcquotas']
                 if int(share['HARDLIMIT_MiB']) == share['HARDLIMIT_MiB']:
                     # Avoid strings for non set quotas
                     used = int(float(share['USED_MiB']) / share['HARDLIMIT_MiB'] * 100)

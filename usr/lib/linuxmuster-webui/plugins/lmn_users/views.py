@@ -15,6 +15,8 @@ from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue
 from aj.plugins.lmn_common.lmnfile import LMNFile
+from aj.plugins.lmn_common.api import lmn_get_school_configpath
+
 from aj.plugins.lmn_auth.api import School
 import logging
 
@@ -112,10 +114,13 @@ class Handler(HttpPlugin):
                             fileToWrite.write(csvDict[findIndex(csvDict, 'coloumn', 'id')]['data'][i]+';')
                         fileToWrite.write('\n')
                         i += 1
-
+            school = School.get(self.context).school 
             if userlist == 'teachers.csv':
                 with authorize('lm:users:teachers:write'):
-                    sophomorixCommand = ['sophomorix-newfile', sortedCSV, '--name', userlist, '-jj']
+                    if school == 'default-school':
+                        sophomorixCommand = ['sophomorix-newfile', sortedCSV, '--name', userlist, '-jj']
+                    else:
+                        sophomorixCommand = ['sophomorix-newfile', sortedCSV, '--name', school+'.'+userlist, '-jj']
                     result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
                     if result['TYPE'] == "ERROR":
                         return ["ERROR", result['MESSAGE_EN']]
@@ -124,7 +129,10 @@ class Handler(HttpPlugin):
 
             if userlist == 'students.csv':
                 with authorize('lm:users:students:write'):
-                    sophomorixCommand = ['sophomorix-newfile', sortedCSV, '--name', userlist, '-jj']
+                    if school == 'default-school':
+                        sophomorixCommand = ['sophomorix-newfile', sortedCSV, '--name', userlist, '-jj']
+                    else:
+                        sophomorixCommand = ['sophomorix-newfile', sortedCSV, '--name', school+'.'+userlist, '-jj']
                     result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
                     if result['TYPE'] == "ERROR":
                         return ["ERROR", result['MESSAGE_EN']]
@@ -191,10 +199,8 @@ class Handler(HttpPlugin):
         """
 
         school = School.get(self.context).school
-        if school == "default-school":
-            path = '/etc/linuxmuster/sophomorix/'+school+'/students.csv'
-        else:
-            path = '/etc/linuxmuster/sophomorix/'+school+'/'+school+'.students.csv'
+        path = lmn_get_school_configpath(school)+'students.csv'
+
 
         if os.path.isfile(path) is False:
             os.mknod(path)
@@ -234,10 +240,8 @@ class Handler(HttpPlugin):
         """
 
         school = School.get(self.context).school
-        if school == "default-school":
-            path = '/etc/linuxmuster/sophomorix/'+school+'/teachers.csv'
-        else:
-            path = '/etc/linuxmuster/sophomorix/'+school+'/'+school+'.teachers.csv'
+        path = lmn_get_school_configpath(school)+'teachers.csv'
+
             
         if os.path.isfile(path) is False:
             os.mknod(path)
@@ -428,10 +432,8 @@ class Handler(HttpPlugin):
         """
 
         school = School.get(self.context).school
-        if school == "default-school":
-            path = '/etc/linuxmuster/sophomorix/'+school+'/extrastudents.csv'
-        else:
-            path = '/etc/linuxmuster/sophomorix/'+school+'/'+school+'.extrastudents.csv'
+        path = lmn_get_school_configpath(school)+'extrastudents.csv'
+
         if os.path.isfile(path) is False:
             os.mknod(path)
         fieldnames = [
@@ -470,10 +472,8 @@ class Handler(HttpPlugin):
         """
 
         school = School.get(self.context).school
-        if school == "default-school":
-            path = '/etc/linuxmuster/sophomorix/'+school+'/extraclasses.csv'
-        else:
-            path = '/etc/linuxmuster/sophomorix/'+school+'/'+school+'.extraclasses.csv'
+        path = lmn_get_school_configpath(school)+'extraclasses.csv'
+
         if os.path.isfile(path) is False:
             os.mknod(path)
         fieldnames = [

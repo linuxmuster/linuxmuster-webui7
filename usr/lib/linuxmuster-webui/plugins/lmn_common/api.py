@@ -133,6 +133,18 @@ def lmn_backup_file(path):
         with open(folder + '/.' + name + '.bak.' + str(int(time.time())), 'w') as f:
             f.write(open(path).read())
 
+def lmn_get_school_configpath(school):
+    """
+    Write CSV and backup csv file only if there's no difference with the original.
+
+    :param school: school shortname
+
+    """
+    if school == "default-school":
+        return '/etc/linuxmuster/sophomorix/default-school/'
+    else:
+        return '/etc/linuxmuster/sophomorix/'+school+'/'+school+'.'
+
 def lmn_write_csv(path, fieldnames, data, encoding='utf-8'):
     """
     Write CSV and backup csv file only if there's no difference with the original.

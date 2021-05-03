@@ -2155,7 +2155,17 @@
   });
 
   angular.module('lmn.users').controller('LMUsersListManagementController', function($scope, $http, $location, $route, $uibModal, gettext, notify, lmEncodingMap, messagebox, pageTitle, lmFileEditor, lmFileBackups, filesystem, validation) {
+    var lmn_get_school_configpath;
     pageTitle.set(gettext('Listmanagement'));
+    lmn_get_school_configpath = function(school) {
+      
+      //"This is an example of a function"
+      if (school === "default-school") {
+        return '/etc/linuxmuster/sophomorix/default-school/';
+      } else {
+        return '/etc/linuxmuster/sophomorix/' + school + '/' + school + '.';
+      }
+    };
     $scope.students_sorts = [
       {
         name: gettext('Class'),
@@ -2500,22 +2510,30 @@
       }
     };
     $scope.students_editCSV = function() {
-      return lmFileEditor.show('/etc/linuxmuster/sophomorix/default-school/students.csv', $scope.students_encoding).then(function() {
+      var path;
+      path = lmn_get_school_configpath($scope.identity.profile.activeSchool) + 'students.csv';
+      return lmFileEditor.show(path, $scope.students_encoding).then(function() {
         return $route.reload();
       });
     };
     $scope.teachers_editCSV = function() {
-      return lmFileEditor.show('/etc/linuxmuster/sophomorix/default-school/teachers.csv', $scope.students_encoding).then(function() {
+      var path;
+      path = lmn_get_school_configpath($scope.identity.profile.activeSchool) + 'teachers.csv';
+      return lmFileEditor.show(path, $scope.teachers_encoding).then(function() {
         return $route.reload();
       });
     };
     $scope.extrastudents_editCSV = function() {
-      return lmFileEditor.show('/etc/linuxmuster/sophomorix/default-school/extrastudents.csv', $scope.extrastudents_encoding).then(function() {
+      var path;
+      path = lmn_get_school_configpath($scope.identity.profile.activeSchool) + 'extrastudents.csv';
+      return lmFileEditor.show(path, $scope.extrastudents_encoding).then(function() {
         return $route.reload();
       });
     };
     $scope.courses_editCSV = function() {
-      return lmFileEditor.show('/etc/linuxmuster/sophomorix/default-school/extraclasses.csv', $scope.courses_encoding).then(function() {
+      var path;
+      path = lmn_get_school_configpath($scope.identity.profile.activeSchool) + 'extraclasses.csv';
+      return lmFileEditor.show(path, $scope.courses_encoding).then(function() {
         return $route.reload();
       });
     };
@@ -2600,16 +2618,24 @@
       });
     };
     $scope.students_backups = function() {
-      return lmFileBackups.show('/etc/linuxmuster/sophomorix/default-school/students.csv', $scope.students_encoding);
+      var path;
+      path = lmn_get_school_configpath($scope.identity.profile.activeSchool) + 'students.csv';
+      return lmFileBackups.show(path, $scope.students_encoding);
     };
     $scope.teachers_backups = function() {
-      return lmFileBackups.show('/etc/linuxmuster/sophomorix/default-school/teachers.csv', $scope.teachers_encoding);
+      var path;
+      path = lmn_get_school_configpath($scope.identity.profile.activeSchool) + 'teachers.csv';
+      return lmFileBackups.show(path, $scope.teachers_encoding);
     };
     $scope.extrastudents_backups = function() {
-      return lmFileBackups.show('/etc/linuxmuster/sophomorix/default-school/extrastudents.csv', $scope.extrastudents_encoding);
+      var path;
+      path = lmn_get_school_configpath($scope.identity.profile.activeSchool) + 'extrastudents.csv';
+      return lmFileBackups.show(path, $scope.extrastudents_encoding);
     };
     $scope.courses_backups = function() {
-      return lmFileBackups.show('/etc/linuxmuster/sophomorix/default-school/extraclasses.csv', $scope.courses_encoding);
+      var path;
+      path = lmn_get_school_configpath($scope.identity.profile.activeSchool) + 'extraclasses.csv';
+      return lmFileBackups.show(path, $scope.courses_encoding);
     };
     // general functions
     $scope.error_msg = {};

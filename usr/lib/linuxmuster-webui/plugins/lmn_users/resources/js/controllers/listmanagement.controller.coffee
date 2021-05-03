@@ -4,8 +4,16 @@ angular.module('lmn.users').config ($routeProvider) ->
        templateUrl: '/lmn_users:resources/partial/listmanagement.html'
 
 
+
 angular.module('lmn.users').controller 'LMUsersListManagementController', ($scope, $http, $location, $route, $uibModal, gettext, notify, lmEncodingMap, messagebox, pageTitle, lmFileEditor, lmFileBackups, filesystem, validation) ->
     pageTitle.set(gettext('Listmanagement'))
+
+    lmn_get_school_configpath = (school) -> 
+        #"This is an example of a function"
+        if school == "default-school"
+            return '/etc/linuxmuster/sophomorix/default-school/'
+        else
+            return '/etc/linuxmuster/sophomorix/'+school+'/'+school+'.'
 
     $scope.students_sorts = [
         {
@@ -277,19 +285,24 @@ angular.module('lmn.users').controller 'LMUsersListManagementController', ($scop
 
 
     $scope.students_editCSV = () ->
-        lmFileEditor.show('/etc/linuxmuster/sophomorix/default-school/students.csv', $scope.students_encoding).then () ->
+        path = lmn_get_school_configpath($scope.identity.profile.activeSchool)+'students.csv'
+        lmFileEditor.show(path, $scope.students_encoding).then () ->
             $route.reload()
 
     $scope.teachers_editCSV = () ->
-        lmFileEditor.show('/etc/linuxmuster/sophomorix/default-school/teachers.csv', $scope.students_encoding).then () ->
+        path = lmn_get_school_configpath($scope.identity.profile.activeSchool)+'teachers.csv'
+        lmFileEditor.show(path, $scope.teachers_encoding).then () ->
             $route.reload()
 
+
     $scope.extrastudents_editCSV = () ->
-        lmFileEditor.show('/etc/linuxmuster/sophomorix/default-school/extrastudents.csv', $scope.extrastudents_encoding).then () ->
+        path = lmn_get_school_configpath($scope.identity.profile.activeSchool)+'extrastudents.csv'
+        lmFileEditor.show(path, $scope.extrastudents_encoding).then () ->
             $route.reload()
 
     $scope.courses_editCSV = () ->
-        lmFileEditor.show('/etc/linuxmuster/sophomorix/default-school/extraclasses.csv', $scope.courses_encoding).then () ->
+        path = lmn_get_school_configpath($scope.identity.profile.activeSchool)+'extraclasses.csv'
+        lmFileEditor.show(path, $scope.courses_encoding).then () ->
             $route.reload()
 
 
@@ -364,16 +377,20 @@ angular.module('lmn.users').controller 'LMUsersListManagementController', ($scop
 
 
     $scope.students_backups = () ->
-        lmFileBackups.show('/etc/linuxmuster/sophomorix/default-school/students.csv', $scope.students_encoding)
+        path = lmn_get_school_configpath($scope.identity.profile.activeSchool)+'students.csv'
+        lmFileBackups.show(path, $scope.students_encoding)
 
     $scope.teachers_backups = () ->
-        lmFileBackups.show('/etc/linuxmuster/sophomorix/default-school/teachers.csv', $scope.teachers_encoding)
+        path = lmn_get_school_configpath($scope.identity.profile.activeSchool)+'teachers.csv'
+        lmFileBackups.show(path, $scope.teachers_encoding)
 
     $scope.extrastudents_backups = () ->
-       lmFileBackups.show('/etc/linuxmuster/sophomorix/default-school/extrastudents.csv', $scope.extrastudents_encoding)
+        path = lmn_get_school_configpath($scope.identity.profile.activeSchool)+'extrastudents.csv'
+        lmFileBackups.show(path, $scope.extrastudents_encoding)
 
     $scope.courses_backups = () ->
-       lmFileBackups.show('/etc/linuxmuster/sophomorix/default-school/extraclasses.csv', $scope.courses_encoding)
+        path = lmn_get_school_configpath($scope.identity.profile.activeSchool)+'extraclasses.csv'
+        lmFileBackups.show(path, $scope.courses_encoding)
 
     # general functions
 

@@ -6,6 +6,7 @@ from jadi import component
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import AuthenticationService
+from aj.plugins.lmn_auth.api import School
 
 
 @component(HttpPlugin)
@@ -33,3 +34,19 @@ class Handler(HttpPlugin):
             )
         except Exception as e:
             raise EndpointError(None, str(e))
+
+    @url(r'/api/lmn/activeschool')
+    @endpoint(api=True)
+    def handle_get_activeSchool(self, http_context):
+        """
+        Get  activeSchool.
+        Method GET: gets active school
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: String containing active school
+        :rtype: string 
+        """
+        if http_context.method == 'GET':
+            school = School.get(self.context).school     
+            return school

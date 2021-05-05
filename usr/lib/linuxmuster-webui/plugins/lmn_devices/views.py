@@ -4,11 +4,13 @@ API to load device file and run importing.
 
 import subprocess
 from jadi import component
+import os
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
 from aj.plugins.lmn_common.lmnfile import LMNFile
 from aj.auth import authorize
-
+from aj.plugins.lmn_common.api import lmn_get_school_configpath
+from aj.plugins.lmn_auth.api import School
 
 @component(HttpPlugin)
 class Handler(HttpPlugin):
@@ -29,8 +31,14 @@ class Handler(HttpPlugin):
         :return: Content of config file in read mode.
         :rtype: string
         """
-
-        path = '/etc/linuxmuster/sophomorix/default-school/devices.csv'
+        
+        
+        school = School.get(self.context).school
+        path = lmn_get_school_configpath(school)+'devices.csv'
+        
+        if os.path.isfile(path) is False:
+            os.mknod(path)
+        #path = '/etc/linuxmuster/sophomorix/default-school/devices.csv'
         fieldnames = [
             'room',
             'hostname',

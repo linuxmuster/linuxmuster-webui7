@@ -212,10 +212,6 @@
         name: gettext('Sophomorix-Comment')
       }
     };
-    $http.get('/api/lm/devices').then(function(resp) {
-      $scope.devices = resp.data;
-      return validation.set($scope.devices, 'devices');
-    });
     $scope.remove = function(device) {
       return $scope.devices.remove(device);
     };
@@ -256,15 +252,39 @@
         });
       });
     };
-    $scope.path = '/etc/linuxmuster/sophomorix/default-school/devices.csv';
     $scope.editCSV = function() {
       return lmFileEditor.show($scope.path).then(function() {
         return $route.reload();
       });
     };
-    return $scope.backups = function() {
+    $scope.backups = function() {
       return lmFileBackups.show($scope.path);
     };
+    return $scope.$watch('identity.user', function() {
+      if ($scope.identity.user === void 0) {
+        return;
+      }
+      if ($scope.identity.user === null) {
+        return;
+      }
+      if ($scope.identity.user === 'root') {
+        return;
+      }
+      $http.get("/api/lmn/activeschool").then(function(resp) {
+        var school;
+        $scope.identity.profile.activeSchool = resp.data;
+        school = $scope.identity.profile.activeSchool;
+        if (school === "default-school") {
+          return $scope.path = '/etc/linuxmuster/sophomorix/default-school/devices.csv';
+        } else {
+          return $scope.path = '/etc/linuxmuster/sophomorix/' + school + '/' + school + '.devices.csv';
+        }
+      });
+      return $http.get('/api/lm/devices').then(function(resp) {
+        $scope.devices = resp.data;
+        return validation.set($scope.devices, 'devices');
+      });
+    });
   });
 
 }).call(this);

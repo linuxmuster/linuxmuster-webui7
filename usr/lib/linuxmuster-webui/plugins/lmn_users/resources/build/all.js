@@ -2718,6 +2718,21 @@
         });
       });
     };
+    // pulling active school from backend
+    $scope.$watch('identity.user', function() {
+      if ($scope.identity.user === void 0) {
+        return;
+      }
+      if ($scope.identity.user === null) {
+        return;
+      }
+      if ($scope.identity.user === 'root') {
+        return;
+      }
+      return $http.get("/api/lmn/activeschool").then(function(resp) {
+        return $scope.identity.profile.activeSchool = resp.data;
+      });
+    });
     // Loading first tab
     return $scope.getstudents();
   });

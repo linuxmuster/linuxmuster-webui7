@@ -13,9 +13,8 @@ from jadi import component
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize
-from aj.plugins.lmn_common.api import lmn_getSophomorixValue
+from aj.plugins.lmn_common.api import lmn_getSophomorixValue, lmn_get_school_configpath
 from aj.plugins.lmn_common.lmnfile import LMNFile
-from aj.plugins.lmn_common.api import lmn_get_school_configpath
 
 from aj.plugins.lmn_auth.api import School
 import logging

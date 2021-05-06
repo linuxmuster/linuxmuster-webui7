@@ -1,6 +1,6 @@
-echo "Create webuiUploadfolder"
 # check if samba already installed
 installed=$(cat /etc/samba/smb.conf | grep active\ directory\ domain\ controller)
+rm -R /srv/webuiUpload/
 mkdir -p /srv/webuiUpload/
 if [ -z "$installed" ];then
     echo "not installed skip setting acl on webuiUpload"

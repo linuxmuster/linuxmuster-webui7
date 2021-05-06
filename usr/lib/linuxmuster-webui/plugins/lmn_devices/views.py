@@ -79,8 +79,8 @@ class Handler(HttpPlugin):
         :param http_context: HttpContext
         :type http_context: HttpContext
         """
-
+        school = School.get(self.context).school
         try:
-            subprocess.check_call('linuxmuster-import-devices > /tmp/import_devices.log', shell=True)
+            subprocess.check_call('linuxmuster-import-devices -s '+ school +' > /tmp/import_devices.log', shell=True)
         except Exception as e:
             raise EndpointError(None, message=str(e))

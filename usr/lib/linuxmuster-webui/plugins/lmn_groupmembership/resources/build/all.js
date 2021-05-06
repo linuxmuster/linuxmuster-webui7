@@ -146,11 +146,19 @@
           project: msg.value,
           profil: $scope.identity.profile
         }).then(function(resp) {
-          notify.success(gettext('Project Created'));
-          return identity.init().then(function() {
-            console.log("Identity renewed !");
-            return $scope.getGroups($scope.identity.user);
-          });
+          if (resp.data[0] === 'ERROR') {
+            return notify.error(gettext(resp.data[1]));
+          } else {
+            if (resp.data[0] === 'LOG') {
+              notify.success(gettext('Project Created'));
+              return identity.init().then(function() {
+                console.log("Identity renewed !");
+                return $scope.getGroups($scope.identity.user);
+              });
+            } else {
+              return notify.info(gettext('Something unusual happened'));
+            }
+          }
         });
       });
     };

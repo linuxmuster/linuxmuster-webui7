@@ -34,7 +34,6 @@ class Handler(HttpPlugin):
         action = http_context.json_body()['action']
 
         if http_context.method == 'POST':
-            # schoolname = 'default-school'
             with authorize('lmn:groupmemberships:write'):
                 if action == 'get-specified':
                     groupName = http_context.json_body()['groupName']

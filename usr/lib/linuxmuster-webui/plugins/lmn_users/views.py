@@ -712,7 +712,7 @@ class Handler(HttpPlugin):
         school = School.get(self.context).school
         if http_context.method == 'GET':
 
-            sophomorixCommand = ['sophomorix-query', '--class', '--group-full', '-jj']
+            sophomorixCommand = ['sophomorix-query', '--class', '--schoolbase', school, '--group-full', '-jj']
 
             with authorize('lm:users:students:read'):
                 # Check if there are any classes if not return empty list
@@ -725,7 +725,10 @@ class Handler(HttpPlugin):
                     # append empty element. This references to all users
                     classes.append('')
                     # add also teachers passwords
-                    classes.append('teachers')
+                    if school == 'default-school':
+                        classes.append('teachers')
+                    else:
+                        classes.append(school+'-teachers')
                 return classes
 
         if http_context.method == 'POST':

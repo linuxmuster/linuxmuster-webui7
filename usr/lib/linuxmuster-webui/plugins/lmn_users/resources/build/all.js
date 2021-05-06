@@ -1558,7 +1558,7 @@
     if ($scope.options.user === 'root') {
       $scope.options.user = 'global-admin';
     }
-    $scope.title = schoolclass !== '' ? gettext("Class") + `: ${schoolclass}` : gettext('All users');
+    $scope.title = schoolclass !== '' ? gettext("Class") + `: ${schoolclass}` : gettext('All users ' + $scope.identity.profile.activeSchool);
     $scope.print = function() {
       var msg;
       msg = messagebox.show({
@@ -1611,7 +1611,7 @@
       };
     };
     $scope.getGroups = function(username) {
-      if ($scope.identity.user === 'root' || $scope.identity.profile.sophomorixAdminClass === 'global-admins' || $scope.identity.profile.sophomorixAdminClass === 'school-admins') {
+      if ($scope.identity.user === 'root' || $scope.identity.profile.sophomorixRole === 'globaladministrator' || $scope.identity.profile.sophomorixRole === 'schooladministrator') {
         return $http.get('/api/lm/users/print').then(function(resp) {
           return $scope.classes = resp.data;
         });
@@ -1646,7 +1646,10 @@
       if ($scope.identity.user === 'root') {
         return;
       }
-      $scope.getGroups($scope.identity.user);
+      return $http.get("/api/lmn/activeschool").then(function(resp) {
+        $scope.identity.profile.activeSchool = resp.data;
+        $scope.getGroups($scope.identity.user);
+      });
     });
   });
 

@@ -8,7 +8,6 @@ icon: wrench
 dependencies:
     - !PluginDependency { plugin_name: core }
     - !PluginDependency { plugin_name: lmn_common }
-    - !PluginDependency { plugin_name: lmn_auth }
 resources:
     - 'resources/js/module.coffee'
     - 'resources/js/controllers/index.controller.coffee'

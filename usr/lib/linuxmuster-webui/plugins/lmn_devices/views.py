@@ -10,7 +10,7 @@ from aj.api.endpoint import endpoint, EndpointError
 from aj.plugins.lmn_common.lmnfile import LMNFile
 from aj.auth import authorize
 from aj.plugins.lmn_common.api import lmn_get_school_configpath
-from aj.plugins.lmn_auth.api import School
+from aj.plugins.lmn_common.multischool import School
 
 @component(HttpPlugin)
 class Handler(HttpPlugin):

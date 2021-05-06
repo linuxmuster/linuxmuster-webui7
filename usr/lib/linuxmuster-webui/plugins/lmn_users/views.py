@@ -15,8 +15,7 @@ from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue, lmn_get_school_configpath
 from aj.plugins.lmn_common.lmnfile import LMNFile
-
-from aj.plugins.lmn_auth.api import School
+from aj.plugins.lmn_common.multischool import School
 import logging
 
 

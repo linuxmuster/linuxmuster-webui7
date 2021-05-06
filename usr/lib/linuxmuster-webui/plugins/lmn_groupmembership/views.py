@@ -9,6 +9,7 @@ from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint
 from aj.auth import authorize
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue
+from aj.plugins.lmn_common.multischool import School
 
 
 @component(HttpPlugin)
@@ -60,7 +61,7 @@ class Handler(HttpPlugin):
 
         # TODO : this need to be splitted into atomic functions/tasks.
 
-        schoolname = 'default-school'
+        schoolname = School.get(self.context).school 
         username = http_context.json_body()['username']
         action = http_context.json_body()['action']
         user_details = http_context.json_body()['profil']
@@ -130,10 +131,10 @@ class Handler(HttpPlugin):
             if action == 'create-project':
                 ## Projectname must be in lowercase to avoid conflicts
                 project = http_context.json_body()['project'].lower()
-                sophomorixCommand = ['sophomorix-project',  '--admins', username, '--create', '-p', project, '-jj']
+                sophomorixCommand = ['sophomorix-project',  '--admins', username, '--create', '-p', project, '--school', schoolname, '-jj']
                 result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
                 if result['TYPE'] == "ERROR":
-                    return result['TYPE']['LOG']
+                    return result['TYPE'],result['MESSAGE_EN']
                 return result['TYPE'], result['LOG']
 
     @url(r'/api/lmn/changeGroup')

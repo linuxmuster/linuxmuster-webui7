@@ -265,7 +265,7 @@ class Handler(HttpPlugin):
         schoolname = School.get(self.context).school 
         with authorize('lm:users:students:read'):
             try:
-                sophomorixCommand = ['sophomorix-query', '-jj', '--schoolbase', school, '--student', '--user-basic', '--anyname', '*'+http_context.json_body()['q']+'*']
+                sophomorixCommand = ['sophomorix-query', '-jj', '--schoolbase', schoolname, '--student', '--user-basic', '--anyname', '*'+http_context.json_body()['q']+'*']
                 users = lmn_getSophomorixValue(sophomorixCommand, 'USER', True)
             except Exception:
                 return 0
@@ -280,7 +280,7 @@ class Handler(HttpPlugin):
         schoolname = School.get(self.context).school 
         with authorize('lm:users:students:read'):
             try:
-                sophomorixCommand = ['sophomorix-query', '-jj', '--schoolbase', school, '--class', '--group-members', '--user-full', '--sam', '*'+http_context.query['q']+'*']
+                sophomorixCommand = ['sophomorix-query', '-jj', '--schoolbase', schoolname, '--class', '--group-members', '--user-full', '--sam', '*'+http_context.query['q']+'*']
                 schoolClasses = lmn_getSophomorixValue(sophomorixCommand, 'MEMBERS', True)
             except Exception:
                 return 0

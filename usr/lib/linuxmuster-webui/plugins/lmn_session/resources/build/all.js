@@ -12,16 +12,10 @@
     $scope.receivers = receivers;
     $scope.action = action;
     $scope.command = command;
-    //# Test path for upload with drag and drop
-    //# TODO : Fix path here or handle this with sophomorix-transfer ? --> Generic path (eg. /srv/upload, then use sophomorix-transfer)
-    //# TODO : chown with custom api or with sophomorix-transfer ? --> should be handled by sophomorix-transfer
-    //# TODO : reload modal after upload -- Done
-    //# TODO : possibility to remove file from transfer directory -- Done
     $scope.setTransferPath = function(username) {
       var role, school;
-      // TODO: Way more generic
-      role = 'teachers';
-      school = 'default-school';
+      role = $scope.identity.profile.sophomorixRole;
+      school = $scope.identity.profile.activeSchool;
       $scope.transferPath = '/srv/webuiUpload/' + school + '/' + role + '/' + username + '/';
       // create tmp dir for upload
       $scope.createDir($scope.transferPath);
@@ -83,8 +77,8 @@
     };
     $scope.removeFile = function(file) {
       var path, role, school;
-      role = 'teachers';
-      school = 'default-school';
+      role = $scope.identity.profile.sophomorixRole;
+      school = $scope.identity.profile.activeSchool;
       path = '/srv/samba/schools/' + school + '/' + role + '/' + $scope.identity.user + '/transfer/' + file;
       return messagebox.show({
         text: gettext('Are you sure you want to delete permanently the file ' + file + '?'),
@@ -105,8 +99,8 @@
     };
     $scope.removeDir = function(file) {
       var path, role, school;
-      role = 'teachers';
-      school = 'default-school';
+      role = $scope.identity.profile.sophomorixRole;
+      school = $scope.identity.profile.activeSchool;
       path = '/srv/samba/schools/' + school + '/' + role + '/' + $scope.identity.user + '/transfer/' + file;
       return messagebox.show({
         text: gettext('Are you sure you want to delete permanently this directory and its content: ' + file + '?'),
@@ -719,7 +713,7 @@
         participantsArray = [];
         for (participant in participants) {
           data = participants[participant];
-          if (participants[participant]['sophomorixAdminClass'] !== 'teachers') {
+          if (participants[participant]['sophomorixRole'] !== 'teacher') {
             participantsArray.push(participant);
           }
         }

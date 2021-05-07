@@ -1,5 +1,12 @@
 linuxmuster-webui7 (1.0.161) lmn7-testing; urgency=medium
 
+  * Current snapshot build f51eb9572828b954100544e7d6823e518a099c40
+  * Fixed schooladministrator permissions
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri 07 May 13:49:07 CET 2021
+
+linuxmuster-webui7 (1.0.161) lmn7-testing; urgency=medium
+
   * Current snapshot build 169bc01d9d0ba6569a02b17393a276a2d57d7494
   * Added multischool support to all modules
 

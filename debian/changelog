@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.163) lmn7-testing; urgency=medium
+
+  * Current snapshot build f51eb9572828b954100544e7d6823e518a099c40
+  * Fixed lmp permissions
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri 07 May 16:52:23 CET 2021
+
 linuxmuster-webui7 (1.0.162) lmn7-testing; urgency=medium
 
   * Current snapshot build f51eb9572828b954100544e7d6823e518a099c40

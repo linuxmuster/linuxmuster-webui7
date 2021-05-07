@@ -416,7 +416,7 @@
     this.isValidProjectName = function(name) {
       var error_msg, regExp, validName;
       error_msg = name + gettext(' can only contain lowercase chars or numbers');
-      regExp = /^[a-z0-9]*$/;
+      regExp = /^[a-z0-9_\-]*$/;
       validName = regExp.test(name);
       if (!validName) {
         return error_msg;

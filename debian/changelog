@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.161) lmn7-testing; urgency=medium
+
+  * Current snapshot build 169bc01d9d0ba6569a02b17393a276a2d57d7494
+  * Added multischool support to all modules
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri 07 May 12:59:57 CET 2021
+
 linuxmuster-webui7 (1.0.160) lmn7-testing; urgency=medium
 
   * Current snapshot build 3efd640bf0f3999e77911358d9a0650ddd044425

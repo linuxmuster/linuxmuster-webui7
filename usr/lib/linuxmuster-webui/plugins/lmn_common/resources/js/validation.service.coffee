@@ -40,7 +40,7 @@ angular.module('lmn.common').service 'validation', (gettext) ->
     # Project names can only have lowercase and digits
     this.isValidProjectName = (name) ->
         error_msg = name + gettext(' can only contain lowercase chars or numbers')
-        regExp =  /^[a-z0-9]*$/
+        regExp =  /^[a-z0-9_\-]*$/
         validName = regExp.test(name)
         if !validName
             return error_msg

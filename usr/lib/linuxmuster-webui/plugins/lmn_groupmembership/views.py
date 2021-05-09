@@ -209,7 +209,7 @@ class Handler(HttpPlugin):
                     return result['TYPE'], result['MESSAGE_EN']
                 return result['TYPE'], result['LOG']
 
-    @url(r'/api/lm/search-project')
+    @url(r'/api/lm/find-users')
     @authorize('lmn:groupmembership')
     @endpoint(api=True)
     def handle_api_search_project(self, http_context):
@@ -238,6 +238,11 @@ class Handler(HttpPlugin):
                 if objtype == 'user':
                     sophomorixCommand = ['sophomorix-query', '--anyname', login+'*', '-jj']
                     result = lmn_getSophomorixValue(sophomorixCommand, 'USER')
+                elif objtype == 'teacher':
+                    sophomorixCommand = ['sophomorix-query', '--anyname',
+                                         login + '*', '--teacher', '-jj']
+                    result = lmn_getSophomorixValue(sophomorixCommand,
+                                                    'USER')
                 elif objtype == 'usergroup':
                     sophomorixCommand = ['sophomorix-query', '--sam', login+'*', '--group-members', '-jj']
                     result = lmn_getSophomorixValue(sophomorixCommand, 'MEMBERS')

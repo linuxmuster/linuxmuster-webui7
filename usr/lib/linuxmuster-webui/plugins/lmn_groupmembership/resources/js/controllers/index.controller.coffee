@@ -435,13 +435,16 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
         }
 
         $scope.findUsers = (q) ->
-            return $http.post("/api/lm/search-project", {login:q, type:'user'}).then (resp) ->
+            return $http.post("/api/lm/find-users", {login:q, type:'user'}).then (resp) ->
+                return resp.data
+        $scope.findTeachers = (q) ->
+            return $http.post("/api/lm/find-users", {login:q, type:'teacher'}).then (resp) ->
                 return resp.data
         $scope.findGroups = (q) ->
-            return $http.post("/api/lm/search-project", {login:q, type:'group'}).then (resp) ->
+            return $http.post("/api/lm/find-users", {login:q, type:'group'}).then (resp) ->
                 return resp.data
         $scope.findUsersGroup = (q) ->
-            return $http.post("/api/lm/search-project", {login:q, type:'usergroup'}).then (resp) ->
+            return $http.post("/api/lm/find-users", {login:q, type:'usergroup'}).then (resp) ->
                 return resp.data
 
         $scope.groupType = groupType

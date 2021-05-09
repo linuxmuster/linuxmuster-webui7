@@ -692,15 +692,23 @@
       "group": gettext("Type the group name, e.g. p_wifi")
     };
     $scope.findUsers = function(q) {
-      return $http.post("/api/lm/search-project", {
+      return $http.post("/api/lm/find-users", {
         login: q,
         type: 'user'
       }).then(function(resp) {
         return resp.data;
       });
     };
+    $scope.findTeachers = function(q) {
+      return $http.post("/api/lm/find-users", {
+        login: q,
+        type: 'teacher'
+      }).then(function(resp) {
+        return resp.data;
+      });
+    };
     $scope.findGroups = function(q) {
-      return $http.post("/api/lm/search-project", {
+      return $http.post("/api/lm/find-users", {
         login: q,
         type: 'group'
       }).then(function(resp) {
@@ -708,7 +716,7 @@
       });
     };
     $scope.findUsersGroup = function(q) {
-      return $http.post("/api/lm/search-project", {
+      return $http.post("/api/lm/find-users", {
         login: q,
         type: 'usergroup'
       }).then(function(resp) {

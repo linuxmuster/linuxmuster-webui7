@@ -13,7 +13,8 @@ from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize
 from aj.plugins.lmn_common.lmnfile import LMNFile
-from aj.plugins.lmn_common.api import lmn_write_configfile, lmn_getSophomorixValue, CSVSpaceStripper,  lmn_backup_file
+from aj.plugins.lmn_common.api import lmn_write_configfile, lmn_getSophomorixValue, CSVSpaceStripper,  lmn_backup_file, lmn_get_school_configpath
+from aj.plugins.lmn_common.multischool import School
 from configparser import ConfigParser
 
 class IniParser(ConfigParser):
@@ -81,8 +82,8 @@ class Handler(HttpPlugin):
         :rtype: dict in read mode
         """
 
-        school = 'default-school'
-        path = '/etc/linuxmuster/sophomorix/'+school+'/school.conf'
+        school = School.get(self.context).school
+        path = lmn_get_school_configpath(school)+'school.conf'
         # Update each time the config_obj because it may have changed
         with LMNFile(path, 'r') as f:
             self.config_obj = f

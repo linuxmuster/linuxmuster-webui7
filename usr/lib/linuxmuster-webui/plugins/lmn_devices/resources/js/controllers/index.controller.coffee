@@ -182,9 +182,7 @@ angular.module('lmn.devices').controller 'LMDevicesController', ($scope, $http, 
             name: gettext('Sophomorix-Comment')
     }
 
-    $http.get('/api/lm/devices').then (resp) ->
-        $scope.devices = resp.data
-        validation.set($scope.devices, 'devices')
+
 
     $scope.remove = (device) ->
         $scope.devices.remove(device)
@@ -223,11 +221,31 @@ angular.module('lmn.devices').controller 'LMDevicesController', ($scope, $http, 
                 backdrop: 'static'
             )
 
-    $scope.path = '/etc/linuxmuster/sophomorix/default-school/devices.csv'
-
     $scope.editCSV = () ->
         lmFileEditor.show($scope.path).then () ->
             $route.reload()
 
     $scope.backups = () ->
         lmFileBackups.show($scope.path)        
+
+    $scope.$watch 'identity.user', ->
+        if $scope.identity.user is undefined
+           return
+        if $scope.identity.user is null
+           return
+        if $scope.identity.user is 'root'
+           return
+        
+        $http.get("/api/lmn/activeschool").then (resp) ->
+            $scope.identity.profile.activeSchool = resp.data
+            school = $scope.identity.profile.activeSchool
+
+            if school == "default-school"
+                $scope.path = '/etc/linuxmuster/sophomorix/default-school/devices.csv'
+            else
+                $scope.path =  '/etc/linuxmuster/sophomorix/'+school+'/'+school+'.devices.csv'
+
+        $http.get('/api/lm/devices').then (resp) ->
+            $scope.devices = resp.data
+            validation.set($scope.devices, 'devices')
+

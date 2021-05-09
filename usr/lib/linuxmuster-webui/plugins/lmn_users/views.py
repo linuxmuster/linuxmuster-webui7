@@ -13,8 +13,11 @@ from jadi import component
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize
-from aj.plugins.lmn_common.api import lmn_getSophomorixValue
+from aj.plugins.lmn_common.api import lmn_getSophomorixValue, lmn_get_school_configpath
 from aj.plugins.lmn_common.lmnfile import LMNFile
+from aj.plugins.lmn_common.multischool import School
+import logging
+
 
 
 @component(HttpPlugin)
@@ -109,10 +112,13 @@ class Handler(HttpPlugin):
                             fileToWrite.write(csvDict[findIndex(csvDict, 'coloumn', 'id')]['data'][i]+';')
                         fileToWrite.write('\n')
                         i += 1
-
+            school = School.get(self.context).school 
             if userlist == 'teachers.csv':
                 with authorize('lm:users:teachers:write'):
-                    sophomorixCommand = ['sophomorix-newfile', sortedCSV, '--name', userlist, '-jj']
+                    if school == 'default-school':
+                        sophomorixCommand = ['sophomorix-newfile', sortedCSV, '--name', userlist, '-jj']
+                    else:
+                        sophomorixCommand = ['sophomorix-newfile', sortedCSV, '--name', school+'.'+userlist, '-jj']
                     result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
                     if result['TYPE'] == "ERROR":
                         return ["ERROR", result['MESSAGE_EN']]
@@ -121,7 +127,10 @@ class Handler(HttpPlugin):
 
             if userlist == 'students.csv':
                 with authorize('lm:users:students:write'):
-                    sophomorixCommand = ['sophomorix-newfile', sortedCSV, '--name', userlist, '-jj']
+                    if school == 'default-school':
+                        sophomorixCommand = ['sophomorix-newfile', sortedCSV, '--name', userlist, '-jj']
+                    else:
+                        sophomorixCommand = ['sophomorix-newfile', sortedCSV, '--name', school+'.'+userlist, '-jj']
                     result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
                     if result['TYPE'] == "ERROR":
                         return ["ERROR", result['MESSAGE_EN']]
@@ -187,8 +196,10 @@ class Handler(HttpPlugin):
         :rtype: list of dict
         """
 
-        school = 'default-school'
-        path = '/etc/linuxmuster/sophomorix/'+school+'/students.csv'
+        school = School.get(self.context).school
+        path = lmn_get_school_configpath(school)+'students.csv'
+
+
         if os.path.isfile(path) is False:
             os.mknod(path)
         fieldnames = [
@@ -226,8 +237,10 @@ class Handler(HttpPlugin):
         :rtype: list of dict
         """
 
-        school = 'default-school'
-        path = '/etc/linuxmuster/sophomorix/'+school+'/teachers.csv'
+        school = School.get(self.context).school
+        path = lmn_get_school_configpath(school)+'teachers.csv'
+
+            
         if os.path.isfile(path) is False:
             os.mknod(path)
         fieldnames = [
@@ -270,7 +283,7 @@ class Handler(HttpPlugin):
 
         action = http_context.json_body()['action']
         if http_context.method == 'POST':
-            schoolname = 'default-school'
+            schoolname = School.get(self.context).school
             teachersList = []
 
             if action == 'get-all':
@@ -309,7 +322,8 @@ class Handler(HttpPlugin):
 
         action = http_context.json_body()['action']
         if http_context.method == 'POST':
-            schoolname = 'default-school'
+            schoolname = School.get(self.context).school
+
             studentsList = []
             with authorize('lm:users:students:read'):
                 if action == 'get-all':
@@ -415,8 +429,9 @@ class Handler(HttpPlugin):
         :rtype: list of dict
         """
 
-        school = 'default-school'
-        path = '/etc/linuxmuster/sophomorix/'+school+'/extrastudents.csv'
+        school = School.get(self.context).school
+        path = lmn_get_school_configpath(school)+'extrastudents.csv'
+
         if os.path.isfile(path) is False:
             os.mknod(path)
         fieldnames = [
@@ -454,8 +469,9 @@ class Handler(HttpPlugin):
         :rtype: list of dict
         """
 
-        school = 'default-school'
-        path = '/etc/linuxmuster/sophomorix/'+school+'/extraclasses.csv'
+        school = School.get(self.context).school
+        path = lmn_get_school_configpath(school)+'extraclasses.csv'
+
         if os.path.isfile(path) is False:
             os.mknod(path)
         fieldnames = [
@@ -589,8 +605,7 @@ class Handler(HttpPlugin):
         :return: State of the command
         :rtype: string
         """
-
-        school = 'default-school'
+        school = School.get(self.context).school
         action = http_context.json_body()['action']
         users = http_context.json_body()['users']
         user = ','.join([x.strip() for x in users])
@@ -694,10 +709,10 @@ class Handler(HttpPlugin):
         :rtype: With GET, list of dict
         """
 
-        school = 'default-school'
+        school = School.get(self.context).school
         if http_context.method == 'GET':
 
-            sophomorixCommand = ['sophomorix-query', '--class', '--group-full', '-jj']
+            sophomorixCommand = ['sophomorix-query', '--class', '--schoolbase', school, '--group-full', '-jj']
 
             with authorize('lm:users:students:read'):
                 # Check if there are any classes if not return empty list
@@ -710,7 +725,10 @@ class Handler(HttpPlugin):
                     # append empty element. This references to all users
                     classes.append('')
                     # add also teachers passwords
-                    classes.append('teachers')
+                    if school == 'default-school':
+                        classes.append('teachers')
+                    else:
+                        classes.append(school+'-teachers')
                 return classes
 
         if http_context.method == 'POST':
@@ -807,9 +825,10 @@ class Handler(HttpPlugin):
             result = lmn_getSophomorixValue(sophomorixCommand, 'QUOTA/USERS')
 
             quotaMap = {}
+            school = School.get(self.context).school
             # Only read default-school for the moment, must be maybe adapted later
             for user in groupList:
-                share = result[user]["SHARES"]['default-school']['smbcquotas']
+                share = result[user]["SHARES"][school]['smbcquotas']
                 if int(share['HARDLIMIT_MiB']) == share['HARDLIMIT_MiB']:
                     # Avoid strings for non set quotas
                     used = int(float(share['USED_MiB']) / share['HARDLIMIT_MiB'] * 100)

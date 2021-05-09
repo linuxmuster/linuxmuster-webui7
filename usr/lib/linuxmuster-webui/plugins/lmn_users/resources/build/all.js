@@ -1558,7 +1558,7 @@
     if ($scope.options.user === 'root') {
       $scope.options.user = 'global-admin';
     }
-    $scope.title = schoolclass !== '' ? gettext("Class") + `: ${schoolclass}` : gettext('All users');
+    $scope.title = schoolclass !== '' ? gettext("Class") + `: ${schoolclass}` : gettext('All users ' + $scope.identity.profile.activeSchool);
     $scope.print = function() {
       var msg;
       msg = messagebox.show({
@@ -1611,7 +1611,7 @@
       };
     };
     $scope.getGroups = function(username) {
-      if ($scope.identity.user === 'root' || $scope.identity.profile.sophomorixAdminClass === 'global-admins' || $scope.identity.profile.sophomorixAdminClass === 'school-admins') {
+      if ($scope.identity.user === 'root' || $scope.identity.profile.sophomorixRole === 'globaladministrator' || $scope.identity.profile.sophomorixRole === 'schooladministrator') {
         return $http.get('/api/lm/users/print').then(function(resp) {
           return $scope.classes = resp.data;
         });
@@ -1646,7 +1646,10 @@
       if ($scope.identity.user === 'root') {
         return;
       }
-      $scope.getGroups($scope.identity.user);
+      return $http.get("/api/lmn/activeschool").then(function(resp) {
+        $scope.identity.profile.activeSchool = resp.data;
+        $scope.getGroups($scope.identity.user);
+      });
     });
   });
 
@@ -2155,7 +2158,17 @@
   });
 
   angular.module('lmn.users').controller('LMUsersListManagementController', function($scope, $http, $location, $route, $uibModal, gettext, notify, lmEncodingMap, messagebox, pageTitle, lmFileEditor, lmFileBackups, filesystem, validation) {
+    var lmn_get_school_configpath;
     pageTitle.set(gettext('Listmanagement'));
+    lmn_get_school_configpath = function(school) {
+      
+      //"This is an example of a function"
+      if (school === "default-school") {
+        return '/etc/linuxmuster/sophomorix/default-school/';
+      } else {
+        return '/etc/linuxmuster/sophomorix/' + school + '/' + school + '.';
+      }
+    };
     $scope.students_sorts = [
       {
         name: gettext('Class'),
@@ -2448,15 +2461,6 @@
         });
       }
     };
-    //           $http.get('/api/lm/schoolsettings').then (resp) ->
-    //               school = 'default-school'
-    //               $scope.students_encoding = resp.data["userfile.students.csv"].encoding
-    //               if $scope.students_encoding is 'auto'
-    //                   $http.post('/api/lmn/schoolsettings/determine-encoding', {path: '/etc/linuxmuster/sophomorix/'+school+'/students.csv'}).then (response) ->
-    //                     if response.data is 'unknown'
-    //                         $scope.students_encoding = 'utf-8'
-    //                     else
-    //                         $scope.students_encoding = response.data
     $scope.getteachers = function() {
       if (!$scope.teachers) {
         return $http.get("/api/lm/users/teachers-list").then(function(resp) {
@@ -2464,15 +2468,6 @@
         });
       }
     };
-    //           $http.get('/api/lm/schoolsettings').then (resp) ->
-    //               school = 'default-school'
-    //               $scope.teachers_encoding = resp.data["userfile.teachers.csv"].encoding
-    //               if $scope.teachers_encoding is 'auto'
-    //                  $http.post('/api/lmn/schoolsettings/determine-encoding', {path: '/etc/linuxmuster/sophomorix/'+school+'/teachers.csv'}).then (response) ->
-    //                     if response.data is 'unknown'
-    //                        $scope.teachers_encoding = 'utf-8'
-    //                     else
-    //                        $scope.teachers_encoding = response.data
     $scope.getextrastudents = function() {
       if (!$scope.extrastudents) {
         return $http.get("/api/lm/users/extra-students").then(function(resp) {
@@ -2480,15 +2475,6 @@
         });
       }
     };
-    //            $http.get('/api/lm/schoolsettings').then (resp) ->
-    //                school = 'default-school'
-    //                $scope.extrastudents_encoding = resp.data["userfile.extrastudents.csv"].encoding
-    //                if $scope.extrastudents_encoding is 'auto'
-    //                   $http.post('/api/lmn/schoolsettings/determine-encoding', {path: '/etc/linuxmuster/sophomorix/'+school+'/extrastudents.csv'}).then (response) ->
-    //                      if response.data is 'unknown'
-    //                         $scope.extrastudents_encoding = 'utf-8'
-    //                      else
-    //                         $scope.extrastudents_encoding = response.data
     $scope.getcourses = function() {
       if (!$scope.courses) {
         return $http.get('/api/lm/schoolsettings').then(function(resp) {
@@ -2500,22 +2486,30 @@
       }
     };
     $scope.students_editCSV = function() {
-      return lmFileEditor.show('/etc/linuxmuster/sophomorix/default-school/students.csv', $scope.students_encoding).then(function() {
+      var path;
+      path = lmn_get_school_configpath($scope.identity.profile.activeSchool) + 'students.csv';
+      return lmFileEditor.show(path, $scope.students_encoding).then(function() {
         return $route.reload();
       });
     };
     $scope.teachers_editCSV = function() {
-      return lmFileEditor.show('/etc/linuxmuster/sophomorix/default-school/teachers.csv', $scope.students_encoding).then(function() {
+      var path;
+      path = lmn_get_school_configpath($scope.identity.profile.activeSchool) + 'teachers.csv';
+      return lmFileEditor.show(path, $scope.teachers_encoding).then(function() {
         return $route.reload();
       });
     };
     $scope.extrastudents_editCSV = function() {
-      return lmFileEditor.show('/etc/linuxmuster/sophomorix/default-school/extrastudents.csv', $scope.extrastudents_encoding).then(function() {
+      var path;
+      path = lmn_get_school_configpath($scope.identity.profile.activeSchool) + 'extrastudents.csv';
+      return lmFileEditor.show(path, $scope.extrastudents_encoding).then(function() {
         return $route.reload();
       });
     };
     $scope.courses_editCSV = function() {
-      return lmFileEditor.show('/etc/linuxmuster/sophomorix/default-school/extraclasses.csv', $scope.courses_encoding).then(function() {
+      var path;
+      path = lmn_get_school_configpath($scope.identity.profile.activeSchool) + 'extraclasses.csv';
+      return lmFileEditor.show(path, $scope.courses_encoding).then(function() {
         return $route.reload();
       });
     };
@@ -2600,16 +2594,24 @@
       });
     };
     $scope.students_backups = function() {
-      return lmFileBackups.show('/etc/linuxmuster/sophomorix/default-school/students.csv', $scope.students_encoding);
+      var path;
+      path = lmn_get_school_configpath($scope.identity.profile.activeSchool) + 'students.csv';
+      return lmFileBackups.show(path, $scope.students_encoding);
     };
     $scope.teachers_backups = function() {
-      return lmFileBackups.show('/etc/linuxmuster/sophomorix/default-school/teachers.csv', $scope.teachers_encoding);
+      var path;
+      path = lmn_get_school_configpath($scope.identity.profile.activeSchool) + 'teachers.csv';
+      return lmFileBackups.show(path, $scope.teachers_encoding);
     };
     $scope.extrastudents_backups = function() {
-      return lmFileBackups.show('/etc/linuxmuster/sophomorix/default-school/extrastudents.csv', $scope.extrastudents_encoding);
+      var path;
+      path = lmn_get_school_configpath($scope.identity.profile.activeSchool) + 'extrastudents.csv';
+      return lmFileBackups.show(path, $scope.extrastudents_encoding);
     };
     $scope.courses_backups = function() {
-      return lmFileBackups.show('/etc/linuxmuster/sophomorix/default-school/extraclasses.csv', $scope.courses_encoding);
+      var path;
+      path = lmn_get_school_configpath($scope.identity.profile.activeSchool) + 'extraclasses.csv';
+      return lmFileBackups.show(path, $scope.courses_encoding);
     };
     // general functions
     $scope.error_msg = {};
@@ -2692,6 +2694,21 @@
         });
       });
     };
+    // pulling active school from backend
+    $scope.$watch('identity.user', function() {
+      if ($scope.identity.user === void 0) {
+        return;
+      }
+      if ($scope.identity.user === null) {
+        return;
+      }
+      if ($scope.identity.user === 'root') {
+        return;
+      }
+      return $http.get("/api/lmn/activeschool").then(function(resp) {
+        return $scope.identity.profile.activeSchool = resp.data;
+      });
+    });
     // Loading first tab
     return $scope.getstudents();
   });

@@ -4,6 +4,7 @@ from time import localtime, strftime  # needed for timestamp in collect transfer
 from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue
+from aj.plugins.lmn_common.multischool import School
 
 
 @component(HttpPlugin)
@@ -237,7 +238,7 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_get_user_in_room(self, http_context):
         if http_context.method == 'POST':
-            school = 'default-school'
+            schoolname = School.get(self.context).school 
             action = http_context.json_body()['action']
             username = http_context.json_body()['username']
             with authorize('lm:users:students:read'):
@@ -261,10 +262,10 @@ class Handler(HttpPlugin):
     @url(r'/api/lmn/session/user-search')
     @endpoint(api=True)
     def handle_api_ldap_user_search(self, http_context):
-        school = 'default-school'
+        schoolname = School.get(self.context).school 
         with authorize('lm:users:students:read'):
             try:
-                sophomorixCommand = ['sophomorix-query', '-jj', '--schoolbase', school, '--student', '--user-basic', '--anyname', '*'+http_context.json_body()['q']+'*']
+                sophomorixCommand = ['sophomorix-query', '-jj', '--schoolbase', schoolname, '--student', '--user-basic', '--anyname', '*'+http_context.json_body()['q']+'*']
                 users = lmn_getSophomorixValue(sophomorixCommand, 'USER', True)
             except Exception:
                 return 0
@@ -276,10 +277,10 @@ class Handler(HttpPlugin):
     @url(r'/api/lmn/session/schoolClass-search')
     @endpoint(api=True)
     def handle_api_ldap_group_search(self, http_context):
-        school = 'default-school'
+        schoolname = School.get(self.context).school 
         with authorize('lm:users:students:read'):
             try:
-                sophomorixCommand = ['sophomorix-query', '-jj', '--schoolbase', school, '--class', '--group-members', '--user-full', '--sam', '*'+http_context.query['q']+'*']
+                sophomorixCommand = ['sophomorix-query', '-jj', '--schoolbase', schoolname, '--class', '--group-members', '--user-full', '--sam', '*'+http_context.query['q']+'*']
                 schoolClasses = lmn_getSophomorixValue(sophomorixCommand, 'MEMBERS', True)
             except Exception:
                 return 0

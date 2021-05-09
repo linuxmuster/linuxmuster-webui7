@@ -102,10 +102,17 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
         notify.error gettext(test)
         return
       $http.post('/api/lmn/groupmembership', {action: 'create-project', username:$scope.identity.user, project: msg.value, profil: $scope.identity.profile}).then (resp) ->
-        notify.success gettext('Project Created')
-        identity.init().then () ->
-                console.log("Identity renewed !")
-                $scope.getGroups ($scope.identity.user)
+        if resp.data[0] is 'ERROR'
+            notify.error gettext(resp.data[1])
+        else
+            if resp.data[0] is 'LOG' 
+                notify.success gettext('Project Created')
+                identity.init().then () ->
+                        console.log("Identity renewed !")
+                        $scope.getGroups ($scope.identity.user)
+            else
+                notify.info gettext('Something unusual happened')
+        
 
   $scope.showGroupDetails = (index, groupType, groupName) ->
     $uibModal.open(

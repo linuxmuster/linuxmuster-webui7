@@ -15,7 +15,7 @@ angular.module('lmn.users').controller 'LMUsersPrintPasswordsOptionsModalControl
     if $scope.options.user is 'root'
         $scope.options.user = 'global-admin'
 
-    $scope.title = if schoolclass != '' then gettext("Class") + ": #{schoolclass}" else gettext('All users')
+    $scope.title = if schoolclass != '' then gettext("Class") + ": #{schoolclass}" else gettext('All users '+$scope.identity.profile.activeSchool)
 
     $scope.print = () ->
         msg = messagebox.show(progress: true)
@@ -55,7 +55,7 @@ angular.module('lmn.users').controller 'LMUsersPrintPasswordsController', ($scop
             dict['membership'] == val
 
     $scope.getGroups = (username) ->
-        if $scope.identity.user == 'root' || $scope.identity.profile.sophomorixAdminClass == 'global-admins' || $scope.identity.profile.sophomorixAdminClass == 'school-admins'
+        if $scope.identity.user == 'root' || $scope.identity.profile.sophomorixRole == 'globaladministrator' || $scope.identity.profile.sophomorixRole == 'schooladministrator'
           $http.get('/api/lm/users/print').then (resp) ->
             $scope.classes = resp.data
         else
@@ -74,6 +74,8 @@ angular.module('lmn.users').controller 'LMUsersPrintPasswordsController', ($scop
             return
         if $scope.identity.user is 'root'
             return
-
-        $scope.getGroups($scope.identity.user)
-        return
+        
+        $http.get("/api/lmn/activeschool").then (resp) ->
+            $scope.identity.profile.activeSchool = resp.data
+            $scope.getGroups($scope.identity.user)
+            return

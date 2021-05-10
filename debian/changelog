@@ -1,3 +1,17 @@
+linuxmuster-webui7 (1.0.163-rc) bionic-testing; urgency=medium
+
+  * Current snapshot build f51eb9572828b954100544e7d6823e518a099c40
+  * Changed package method to install
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri 10 May 14:16:41 CET 2021
+
+linuxmuster-webui7 (1.0.163-rc) bionic-testing; urgency=medium
+
+  * Current snapshot build f51eb9572828b954100544e7d6823e518a099c40
+  * Fixed release Name
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri 10 May 11:48:25 CET 2021
+
 linuxmuster-webui7 (1.0.163) lmn7-testing; urgency=medium
 
   * Current snapshot build f51eb9572828b954100544e7d6823e518a099c40

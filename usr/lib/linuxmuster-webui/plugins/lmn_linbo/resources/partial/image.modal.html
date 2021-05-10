@@ -39,7 +39,6 @@
         <uib:tab heading="{{'Postsync Script'|translate}}">
             <br/>
             <ace-editor ng:model="image.postsync"></ace-editor>
-
             <div uib-dropdown>
                 <button uib-dropdown-toggle class="btn btn-default">
                     <i class="fa fa-copy"></i> Copy from <i class="fa fa-caret-down"></i>
@@ -49,10 +48,29 @@
                     <li ng:repeat="x in examplePostsyncs">
                         <a ng:click="setExamplePostsync(x)">
                             {{x}} <small><i>Example</i></small>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </uib:tab>
+        <uib:tab heading="{{'Prestart Script'|translate}}">
+            <br/>
+            <ace-editor ng:model="image.prestart"></ace-editor>
 
+            <div uib-dropdown>
+                <button uib-dropdown-toggle class="btn btn-default">
+                    <i class="fa fa-copy"></i> Copy from <i class="fa fa-caret-down"></i>
+                </button>
+                <ul uib-dropdown-menu>
+                    <li ng:repeat="x in imagesWithPrestart"><a ng:click="image.prestart = x.prestart">{{x.name}}</a></li>
+                    <li ng:repeat="x in examplePrestarts">
+                        <a ng:click="setExamplePrestart(x)">
+                            {{x}} <small><i>Example</i></small>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </uib:tab>
     </uib:tabset>
 </div>
 

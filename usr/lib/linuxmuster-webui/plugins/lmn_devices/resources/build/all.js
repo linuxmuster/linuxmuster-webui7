@@ -52,7 +52,12 @@
     };
     $scope.validateField = function(name, val, isnew, ev) {
       var test;
-      test = validation["isValid" + name](val);
+      if (name === "Mac") {
+        // Index necessary to convert mac adress in $scope.devices
+        test = validation["isValidMac"](val, ev);
+      } else {
+        test = validation["isValid" + name](val);
+      }
       if (test === true && (val || name === "Comment")) {
         delete $scope.error_msg[name + "-" + ev];
         delete $scope.emptyCells[name + "-" + ev];

@@ -58,6 +58,25 @@ class Handler(HttpPlugin):
                 r.append(file)
         return r
 
+    @url(r'/api/lm/linbo/examples-prestart')
+    @authorize('lm:linbo:examples')
+    @endpoint(api=True)
+    def handle_api_examples_prestart(self, http_context):
+        """
+        List all prestart examples files.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: List of postsync examples files
+        :rtype: list
+        """
+
+        r = []
+        for file in os.listdir(os.path.join(self.LINBO_PATH, 'examples')):
+            if file.endswith('.prestart'):
+                r.append(file)
+        return r
+
     @url(r'/api/lm/linbo/icons')
     @authorize('lm:linbo:icons')
     @endpoint(api=True)
@@ -80,6 +99,14 @@ class Handler(HttpPlugin):
                     else:
                         extra_dict[extra] = None
 
+                # New convention name without cloop
+                prestart_file = os.path.join(self.LINBO_PATH, file[:-6] + '.prestart')
+                if os.path.isfile(prestart_file):
+                    with LMNFile(prestart_file, 'r') as f:
+                        extra_dict['prestart'] = f.read()
+                else:
+                    extra_dict['prestart'] = None
+
                 r.append({
                     'name': file,
                     'cloop': file.endswith('.cloop'),
@@ -91,6 +118,8 @@ class Handler(HttpPlugin):
                     'reg': extra_dict['reg'],
                     'postsync': extra_dict['postsync'],
                     'vdi': extra_dict['vdi'],
+                    'prestart': extra_dict['prestart'],
+                    'selected': False,
                 })
         return r
 
@@ -143,6 +172,10 @@ class Handler(HttpPlugin):
         macct_file = path + '.macct'
         reg_file = path + '.reg'
         postsync_file = path + '.postsync'
+
+        # New generation names without .cloop
+        prestart_file = path[:-6] + '.prestart'
+
         if http_context.method == 'POST':
             data = http_context.json_body()
             if 'description' in data:
@@ -181,6 +214,14 @@ class Handler(HttpPlugin):
                 if data['postsync']:
                     with LMNFile(postsync_file, 'w') as f:
                         f.write(data['postsync'])
+                    os.chmod(postsync_file, 0o664)
+                else:
+                    if os.path.exists(postsync_file):
+                        os.unlink(postsync_file)
+            if 'prestart' in data:
+                if data['prestart']:
+                    with LMNFile(prestart_file, 'w') as f:
+                        f.write(data['prestart'])
                     os.chmod(postsync_file, 0o664)
                 else:
                     if os.path.exists(postsync_file):

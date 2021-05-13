@@ -17,7 +17,9 @@ ALLOWED_PATHS = [
                 # used in lmn_linbo for start.conf
                 '/srv/linbo',
                 # used in lmn_settings for subnets configuration
-                '/etc/linuxmuster/subnets-dev.csv'
+                '/etc/linuxmuster/subnets-dev.csv',
+                # used in lmn_settings
+                '/var/lib/linuxmuster/setup.ini',
                 ]
 
 EMPTY_LINE_MARKER = '###EMPTY#LINE'
@@ -215,7 +217,12 @@ class ConfigLoader(LMNFile):
     def __enter__(self):
         self.opened = open(self.file, 'r', encoding=self.encoding)
         if 'r' in self.mode or '+' in self.mode:
-            self.data = ConfigObj(self.file, encoding='utf-8', write_empty_values=True, stringify=True)
+            self.data = ConfigObj(
+                self.file, encoding='utf-8',
+                write_empty_values=True,
+                stringify=True,
+                list_values=False
+            )
             for section, options in self.data.items():
                 for key, value in options.items():
                     value = int(value) if value.isdigit() else value

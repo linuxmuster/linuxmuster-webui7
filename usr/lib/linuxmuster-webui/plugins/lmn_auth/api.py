@@ -261,7 +261,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
         """
 
         if username in ["root",None]:
-            return {}
+            return {'activeSchool': 'default-school'}
         try:
             profil = self.get_ldap_user(username)
             profil['isAdmin'] = b"administrator" in profil['sophomorixRole']

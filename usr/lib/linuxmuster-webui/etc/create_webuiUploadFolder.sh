@@ -1,3 +1,4 @@
+#!/bin/bash
 # check if samba already installed
 installed=$(cat /etc/samba/smb.conf | grep active\ directory\ domain\ controller)
 

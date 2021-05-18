@@ -150,6 +150,9 @@ class Handler(HttpPlugin):
             m = magic.Magic(mime_encoding=True)
             f = open(importList, 'r')
             encoding = m.from_file(importList)
+            if encoding == "binary":
+                # Probably empty file, does it have sense to continue ?
+                encoding = 'utf-8'
 
             # Convert this encoding to utf-8
             with io.open(importList, 'r', encoding=encoding) as f:

@@ -100,6 +100,11 @@ class Handler(HttpPlugin):
 
             self.config_obj.write(data)
 
+            # Update setup.ini with new schoolname
+            with LMNFile('/var/lib/linuxmuster/setup.ini', 'r') as s:
+                s.data['setup']['schoolname'] = data['school']['SCHOOL_LONGNAME']
+                s.write(s.data)
+
 
     @url(r'/api/lm/schoolsettings/school-share')
     @authorize('lm:schoolsettings')

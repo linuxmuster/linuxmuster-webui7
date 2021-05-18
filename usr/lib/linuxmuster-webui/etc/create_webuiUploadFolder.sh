@@ -1,6 +1,10 @@
 # check if samba already installed
 installed=$(cat /etc/samba/smb.conf | grep active\ directory\ domain\ controller)
-rm -R /srv/webuiUpload/
+
+if [ -d "/srv/webuiUpload/" ];then
+    rm -R /srv/webuiUpload/
+fi
+
 mkdir -p /srv/webuiUpload/
 if [ -z "$installed" ];then
     echo "not installed skip setting acl on webuiUpload"

@@ -47,7 +47,7 @@ class Handler(HttpPlugin):
 
             with authorize('lm:users:students:read'):
                     try:
-                        sophomorixCommand = ['sophomorix-session', '-i', '-jj']
+                        sophomorixCommand = ['sophomorix-session', '-i', '-jj', '--session', session]
                         participants = lmn_getSophomorixValue(sophomorixCommand, 'ID/'+session+'/PARTICIPANTS', True)
                         i = 0
                         for participant in participants:

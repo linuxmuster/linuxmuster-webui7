@@ -354,12 +354,13 @@
         ref = resp.data['MEMBERS'][groupName];
         for (name in ref) {
           member = ref[name];
-          if (member.sn !== "null") { // group member 
+          if (member.sn !== "null") { // group member
             $scope.members.push({
               'sn': member.sn,
               'givenName': member.givenName,
               'login': member.sAMAccountName,
-              'sophomorixAdminClass': member.sophomorixAdminClass
+              'sophomorixAdminClass': member.sophomorixAdminClass,
+              'sophomorixRole': member.sophomorixRole
             });
           }
         }
@@ -372,6 +373,7 @@
             'sn': member.sn,
             'givenName': member.givenName,
             'sophomorixAdminClass': member.sophomorixAdminClass,
+            'sophomorixRole': member.sophomorixRole,
             'login': member.sAMAccountName
           });
         }

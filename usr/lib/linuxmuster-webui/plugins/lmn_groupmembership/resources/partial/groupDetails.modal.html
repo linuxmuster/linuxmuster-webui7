@@ -87,11 +87,13 @@
             <ul ng:if="members.length > 0" class="list-unstyled" style="column-width:300px;padding:0;">
                 <li ng:repeat="member in members|orderBy :['sophomorixAdminClass','sn']" class="cardlist">
                     {{member.sn}} {{member.givenName}}
-                    <span class="cardbtn" ng:show="editGroup">
+                    <div class="cardbtn">
                         {{member.sophomorixAdminClass}}
-                        <button class="cardbtn" ng:show="type == 'project'" title="{{text.addAsAdmin}}"><i class="fas fa-level-up-alt" ng:click="elevateMember(member)"></i></button>
-                        <button class="cardbtn" ng:show="type == 'project' || (type == 'class' && member.sophomorixRole == 'teacher')" title="{{text.remove}}"><i class="fas fa-trash" ng:click="removeMember(member)"></i></button>
-                    </span>
+                        <span ng:show="editGroup">
+                            <button class="cardbtn" ng:show="type == 'project'" title="{{text.addAsAdmin}}"><i class="fas fa-level-up-alt" ng:click="elevateMember(member)"></i></button>
+                            <button class="cardbtn" ng:show="type == 'project' || (type == 'class' && member.sophomorixRole == 'teacher')" title="{{text.remove}}"><i class="fas fa-trash" ng:click="removeMember(member)"></i></button>
+                        </span>
+                    </div>
                 </li>
             </ul>
             <span ng:if="members.length == 0" translate class="cardlist">No member</span>

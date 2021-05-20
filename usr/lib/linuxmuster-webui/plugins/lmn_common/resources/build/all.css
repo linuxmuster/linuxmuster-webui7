@@ -48,11 +48,15 @@ span.cardlist {
   display: flex;
 }
 li.cardlist span.cardbtn,
-span.cardlist span.cardbtn {
+span.cardlist span.cardbtn,
+li.cardlist div.cardbtn,
+span.cardlist div.cardbtn {
   margin-left: auto;
 }
 li.cardlist span.cardbtn button.cardbtn,
-span.cardlist span.cardbtn button.cardbtn {
+span.cardlist span.cardbtn button.cardbtn,
+li.cardlist div.cardbtn button.cardbtn,
+span.cardlist div.cardbtn button.cardbtn {
   color: #233c4c;
   margin-left: 5px;
 }

@@ -33,7 +33,6 @@ class Handler(HttpPlugin):
                         output_new += line + "\n"
                 vmStates = json.loads(output_new)
                 return { "status": "success", "data": vmStates }
-                #return vmStates
             
             if action == 'get-clones':
                 getClonesCommand=['/usr/lib/linuxmuster-linbo-vdi/getVmStates.py', '-clones']
@@ -41,11 +40,8 @@ class Handler(HttpPlugin):
                 output_new = ""
                 for line in output.decode().splitlines():
                     if line.find("*") == -1:
-                        if line.find("[") == -1:
-                            if line != "{}":
-                                output_new += line + "\n"
+                        output_new += line + "\n"
                 clones = json.loads(output_new)
                 return { "status": "success", "data": clones }
-                #return clones
  
 

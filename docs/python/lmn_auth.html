@@ -1,0 +1,424 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en-GB" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>API: aj.plugins.lmn_auth &mdash; linuxmuster-webui7 1.0.159-1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="API: aj.plugins.lmn_common" href="lmn_common.html" />
+    <link rel="prev" title="Linuxmuster-webui7’s developer documentation" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> linuxmuster-webui7
+          
+
+          
+            
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.159-1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Python API</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API: aj.plugins.lmn_auth</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-aj.plugins.lmn_auth.api">LMN Auth API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-aj.plugins.lmn_auth.views">LMN Auth Views</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_common.html">API: aj.plugins.lmn_common</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_devices.html">API: aj.plugins.lmn_devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_groupmembership.html">API: aj.plugins.lmn_groupmembership</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_landingpage.html">API: aj.plugins.lmn_landingpage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_linbo.html">API: aj.plugins.lmn_linbo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_quotas.html">API: aj.plugins.lmn_quotas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_session.html">API: aj.plugins.lmn_session</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_settings.html">API: aj.plugins.lmn_settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_setup_wizard.html">API: aj.plugins.lmn_setup_wizard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_users.html">API: aj.plugins.lmn_users</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">linuxmuster-webui7</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>API: aj.plugins.lmn_auth</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/python/lmn_auth.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="api-aj-plugins-lmn-auth">
+<h1>API: aj.plugins.lmn_auth<a class="headerlink" href="#api-aj-plugins-lmn-auth" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-aj.plugins.lmn_auth.api">
+<span id="lmn-auth-api"></span><h2>LMN Auth API<a class="headerlink" href="#module-aj.plugins.lmn_auth.api" title="Permalink to this headline">¶</a></h2>
+<p>Authentication classes to communicate with LDAP tree and load user’s informations.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="aj.plugins.lmn_auth.api.LMAuthenticationProvider">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">aj.plugins.lmn_auth.api.</span></span><span class="sig-name descname"><span class="pre">LMAuthenticationProvider</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_auth/api.html#LMAuthenticationProvider"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_auth.api.LMAuthenticationProvider" title="Permalink to this definition">¶</a></dt>
+<dd><p>LDAP Authentication provider for linuxmuster.net</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aj.plugins.lmn_auth.api.LMAuthenticationProvider.authenticate">
+<span class="sig-name descname"><span class="pre">authenticate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_auth/api.html#LMAuthenticationProvider.authenticate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_auth.api.LMAuthenticationProvider.authenticate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test credentials against LDAP and parse permissions for the session.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>string</em>) – Username</p></li>
+<li><p><strong>password</strong> (<em>string</em>) – Password</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>User’s permissions</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aj.plugins.lmn_auth.api.LMAuthenticationProvider.authorize">
+<span class="sig-name descname"><span class="pre">authorize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permission</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_auth/api.html#LMAuthenticationProvider.authorize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_auth.api.LMAuthenticationProvider.authorize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get permissions from session, default false.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>string</em>) – Username</p></li>
+<li><p><strong>permission</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><em>dict</em></a>) – Permission as dict</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Bool</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aj.plugins.lmn_auth.api.LMAuthenticationProvider.change_password">
+<span class="sig-name descname"><span class="pre">change_password</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_password</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_auth/api.html#LMAuthenticationProvider.change_password"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_auth.api.LMAuthenticationProvider.change_password" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change user password through sophomorix-passwd.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>string</em>) – Username</p></li>
+<li><p><strong>password</strong> (<em>string</em>) – Old password</p></li>
+<li><p><strong>new_password</strong> (<em>string</em>) – New password</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aj.plugins.lmn_auth.api.LMAuthenticationProvider.get_isolation_gid">
+<span class="sig-name descname"><span class="pre">get_isolation_gid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_auth/api.html#LMAuthenticationProvider.get_isolation_gid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_auth.api.LMAuthenticationProvider.get_isolation_gid" title="Permalink to this definition">¶</a></dt>
+<dd><p>For each session there will be an isolated worker. This function returns
+the right gid for the worker process.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>username</strong> (<em>string</em>) – Username</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>GID of the user</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>integer</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aj.plugins.lmn_auth.api.LMAuthenticationProvider.get_isolation_uid">
+<span class="sig-name descname"><span class="pre">get_isolation_uid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_auth/api.html#LMAuthenticationProvider.get_isolation_uid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_auth.api.LMAuthenticationProvider.get_isolation_uid" title="Permalink to this definition">¶</a></dt>
+<dd><p>For each session there will be an isolated worker. This function returns
+the right uid for the worker process.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>username</strong> (<em>string</em>) – Username</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>UID of the user</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>integer</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aj.plugins.lmn_auth.api.LMAuthenticationProvider.get_ldap_user">
+<span class="sig-name descname"><span class="pre">get_ldap_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_auth/api.html#LMAuthenticationProvider.get_ldap_user"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_auth.api.LMAuthenticationProvider.get_ldap_user" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the user’s informations to initialize his session.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>string</em>) – Username</p></li>
+<li><p><strong>context</strong> – ‘auth’ to get permissions and ‘userconfig’ to get</p></li>
+</ul>
+</dd>
+</dl>
+<p>user’s personal config, e.g. for Dashboard
+:type context: string
+:return: Dict of values
+:rtype: dict</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aj.plugins.lmn_auth.api.LMAuthenticationProvider.get_profile">
+<span class="sig-name descname"><span class="pre">get_profile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_auth/api.html#LMAuthenticationProvider.get_profile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_auth.api.LMAuthenticationProvider.get_profile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepare identity profile for angular.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>username</strong> (<em>string</em>) – Username</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>User’s informations from LDAP</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aj.plugins.lmn_auth.api.UserLdapConfig">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">aj.plugins.lmn_auth.api.</span></span><span class="sig-name descname"><span class="pre">UserLdapConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_auth/api.html#UserLdapConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_auth.api.UserLdapConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>User config class compliant with linuxmuster.net LDAP config’s scheme</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aj.plugins.lmn_auth.api.UserLdapConfig.harden">
+<span class="sig-name descname"><span class="pre">harden</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_auth/api.html#UserLdapConfig.harden"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_auth.api.UserLdapConfig.harden" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change mode to “read, write, and execute by owner”. Currently not used
+(self.path is not defined) but keeped in compatibility mode.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aj.plugins.lmn_auth.api.UserLdapConfig.load">
+<span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_auth/api.html#UserLdapConfig.load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_auth.api.UserLdapConfig.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load attributes from LDAP.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>User’s attributes</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>yaml object if root or <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aj.plugins.lmn_auth.api.UserLdapConfig.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_auth/api.html#UserLdapConfig.save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_auth.api.UserLdapConfig.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save user’s config. If root, this goes in a file, otherwise in LDAP tree.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-aj.plugins.lmn_auth.views">
+<span id="lmn-auth-views"></span><h2>LMN Auth Views<a class="headerlink" href="#module-aj.plugins.lmn_auth.views" title="Permalink to this headline">¶</a></h2>
+<p>Authentication module for linuxmuster.net that enable and manage LDAP auth.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="aj.plugins.lmn_auth.views.Handler">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">aj.plugins.lmn_auth.views.</span></span><span class="sig-name descname"><span class="pre">Handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_auth/views.html#Handler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_auth.views.Handler" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="aj.plugins.lmn_auth.views.Handler.handle_api_change_password">
+<span class="sig-name descname"><span class="pre">handle_api_change_password</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">http_context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_auth/views.html#Handler.handle_api_change_password"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_auth.views.Handler.handle_api_change_password" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change user password through authentication provider.
+Method POST.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="lmn_common.html" class="btn btn-neutral float-right" title="API: aj.plugins.lmn_common" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../index.html" class="btn btn-neutral float-left" title="Linuxmuster-webui7’s developer documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, Andreas Till &amp; Arnaud Kientz.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

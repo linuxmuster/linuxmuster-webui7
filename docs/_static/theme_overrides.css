@@ -1,0 +1,25 @@
+.wy-nav-side, .wy-side-nav-search, .wy-nav-top  {
+	background-color: #233c4c;
+}
+
+div.rtd-pro.wy-menu, div.rst-pro.wy-menu {
+  display: none;
+}
+
+.wy-side-nav-search > div.version {
+  color: #f49e00;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.wy-menu-vertical p.caption {
+  color: #f49e00;
+}
+
+.wy-menu-vertical a {
+  color: #ffffff
+}
+
+.wy-menu-vertical a:hover {
+  background-color: #f49e00
+}

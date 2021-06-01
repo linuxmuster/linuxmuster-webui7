@@ -3,166 +3,62 @@
 </div>
 <div class="modal-body">
     <uib:tabset>
-    <uib:tab heading="{{'General'|translate}}">
-    <br/>
-<!--    <div class="form-group">-->
-<!--        <table>-->
-<!--            <tr>-->
-<!--                <td width="120">-->
-<!--                    <label translate>Text color</label>-->
-<!--                    <div uib-dropdown>-->
-<!--                        <button class="btn btn-default btn-block" ng:style="{background: config.config.LINBO.BackgroundFontColor}" uib-dropdown-toggle translate>-->
-<!--                            Select color-->
-<!--                        </button>-->
-<!--                        <ul uib-dropdown-menu class="dropdown-menu-right scrollable">-->
-<!--                            <li ng:repeat="color in colors">-->
-<!--                                <a ng:click="config.config.LINBO.BackgroundFontColor = color" ng:style="{background: color}">-->
-<!--                                    &nbsp;-->
-<!--                                </a>-->
-<!--                            </li>-->
-<!--                        </ul>-->
-<!--                    </div>-->
-<!--                </td>-->
-<!--                <td width="120">-->
-<!--                    <label translate>Output color</label>-->
-<!--                    <div uib-dropdown>-->
-<!--                        <button class="btn btn-default btn-block" ng:style="{background: config.config.LINBO.ConsoleFontColorStdout}" uib-dropdown-toggle translate>-->
-<!--                            Select color-->
-<!--                        </button>-->
-<!--                        <ul uib-dropdown-menu class="dropdown-menu-right scrollable">-->
-<!--                            <li ng:repeat="color in colors">-->
-<!--                                <a ng:click="config.config.LINBO.ConsoleFontColorStdout = color" ng:style="{background: color}">-->
-<!--                                    &nbsp;-->
-<!--                                </a>-->
-<!--                            </li>-->
-<!--                        </ul>-->
-<!--                    </div>-->
-<!--                </td>-->
-<!--                <td width="120">-->
-<!--                    <label translate>Error color</label>-->
-<!--                    <div uib-dropdown>-->
-<!--                        <button class="btn btn-default btn-block" ng:style="{background: config.config.LINBO.ConsoleFontColorStderr}" uib-dropdown-toggle translate>-->
-<!--                            Select color-->
-<!--                        </button>-->
-<!--                        <ul uib-dropdown-menu class="dropdown-menu-right scrollable">-->
-<!--                            <li ng:repeat="color in colors">-->
-<!--                                <a ng:click="config.config.LINBO.ConsoleFontColorStderr = color" ng:style="{background: color}">-->
-<!--                                    &nbsp;-->
-<!--                                </a>-->
-<!--                            </li>-->
-<!--                        </ul>-->
-<!--                    </div>-->
-<!--                </td>-->
-<!--            </tr>-->
-<!--        </table>-->
-<!--    </div>-->
-    <div class="form-group">
-        <table width="100%">
-            <tr>
-                <td width="49%">
-                    <label translate>TFTP server</label>
-                    <input ng:model="config.config.LINBO.Server" type="text" class="form-control" />
-                </td>
-                <td>
-                </td>
-                <td width="49%">
-                    <label translate>Root logout timeout</label>
-                    <input ng:model="config.config.LINBO.RootTimeout" type="text" class="form-control" />
-                </td>
-            </tr>
-        </table>
-    </div>
-    <div class="form-group">
-        <table width="100%">
-            <tr>
-                <td width="49%">
-                    <label translate>System type</label>
-                    <select ng:model="config.config.LINBO.SystemType" class="form-control">
-                        <option value="bios">BIOS</option>
-                        <option value="bios64">BIOS 64Bit</option>
-                        <option value="efi32">UEFI</option>
-                        <option value="efi64">UEFI 64Bit</option>
-                    </select>
-                </td>
-                <td>
-                </td>
-                <td width="49%">
-                    <label translate>Download type</label>
-                    <select ng:model="config.config.LINBO.DownloadType" class="form-control">
-                        <option>rsync</option>
-                        <option>multicast</option>
-                        <option>torrent</option>
-                    </select>
-                </td>
-            </tr>
-        </table>
-    </div>
-    <div class="form-group">
-        <table width="100%">
-            <tr>
-                <td width="49%">
-                    <label translate>Start options</label>
-                    <br />
-                    <span checkbox ng:model="config.config.LINBO.AutoPartition" text="{{'Auto partition recovery'|translate}}" />
-                    <br />
-                    <span checkbox ng:model="config.config.LINBO.AutoFormat" text="{{'Auto partition formatting'|translate}}" />
-                    <br />
-                    <span checkbox ng:model="config.config.LINBO.AutoInitCache" text="{{'Auto update cache'|translate}}" />
-                    <br />
-                </td>
-                <td width="49%">
-                    <label translate>Linbo GUI customization</label>
-                    <br />
-                    <span checkbox ng:model="config.config.LINBO.UseMinimalLayout" text="{{'Use minimal layout'|translate}}" />
-                    <span checkbox ng:model="config.config.LINBO.clientDetailsVisibleByDefault" text="{{'Display client details by default'|translate}}" />
-                </td>
-            </tr>
-        </table>
-    </div>
-    <div class="form-group">
-        <table width="100%">
-            <tr>
-                <td width="49%">
-                    <label translate>Language</label>
-                    <br />
-                    <br />
-                    <select ng:model="config.config.LINBO.Locale" class="form-control">
-                        <option value="de-DE" translate>German</option>
-                        <option value="en-GB" translate>English</option>
-                        <option value="fr-FR" translate>French</option>
-                    </select>
-                </td>
-                <td>
-                </td>
-                <td width="49%">
-                    <label translate>Background color</label>
-                    <br />
-                    <span translate>The color of the foreground will be adjusted automatically</span>
-                    <input colorpicker="hex" colorpicker-position="right" ng:model="config.config.LINBO.BackgroundColor" type="text" pattern="#[a-fA-F\d]+" class="form-control" />
-                </td>
-            </tr>
-        </table>
-    </div>
-    <div class="form-group">
-        <label translate>Kernel options</label>
-        <div class="input-group">
-            <input ng:model="config.config.LINBO.KernelOptions" type="text" class="form-control" />
-            <div uib-dropdown class="input-group-btn">
-                <button class="btn btn-default" uib-dropdown-toggle translate>
-                    Add <span class="caret"></span>
-                </button>
-                <ul uib-dropdown-menu class="dropdown-menu-right">
-                    <li ng:repeat="option in kernelOptions">
-                        <a ng:click="addKernelOption(option)">
-                            {{option}}
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+        <uib:tab heading="{{'General'|translate}}">
+            <br />
+            <!--    <div class="form-group">-->
+            <!--        <table>-->
+            <!--            <tr>-->
+            <!--                <td width="120">-->
+            <!--                    <label translate>Text color</label>-->
+            <!--                    <div uib-dropdown>-->
+            <!--                        <button class="btn btn-default btn-block" ng:style="{background: config.config.LINBO.BackgroundFontColor}" uib-dropdown-toggle translate>-->
+            <!--                            Select color-->
+            <!--                        </button>-->
+            <!--                        <ul uib-dropdown-menu class="dropdown-menu-right scrollable">-->
+            <!--                            <li ng:repeat="color in colors">-->
+            <!--                                <a ng:click="config.config.LINBO.BackgroundFontColor = color" ng:style="{background: color}">-->
+            <!--                                    &nbsp;-->
+            <!--                                </a>-->
+            <!--                            </li>-->
+            <!--                        </ul>-->
+            <!--                    </div>-->
+            <!--                </td>-->
+            <!--                <td width="120">-->
+            <!--                    <label translate>Output color</label>-->
+            <!--                    <div uib-dropdown>-->
+            <!--                        <button class="btn btn-default btn-block" ng:style="{background: config.config.LINBO.ConsoleFontColorStdout}" uib-dropdown-toggle translate>-->
+            <!--                            Select color-->
+            <!--                        </button>-->
+            <!--                        <ul uib-dropdown-menu class="dropdown-menu-right scrollable">-->
+            <!--                            <li ng:repeat="color in colors">-->
+            <!--                                <a ng:click="config.config.LINBO.ConsoleFontColorStdout = color" ng:style="{background: color}">-->
+            <!--                                    &nbsp;-->
+            <!--                                </a>-->
+            <!--                            </li>-->
+            <!--                        </ul>-->
+            <!--                    </div>-->
+            <!--                </td>-->
+            <!--                <td width="120">-->
+            <!--                    <label translate>Error color</label>-->
+            <!--                    <div uib-dropdown>-->
+            <!--                        <button class="btn btn-default btn-block" ng:style="{background: config.config.LINBO.ConsoleFontColorStderr}" uib-dropdown-toggle translate>-->
+            <!--                            Select color-->
+            <!--                        </button>-->
+            <!--                        <ul uib-dropdown-menu class="dropdown-menu-right scrollable">-->
+            <!--                            <li ng:repeat="color in colors">-->
+            <!--                                <a ng:click="config.config.LINBO.ConsoleFontColorStderr = color" ng:style="{background: color}">-->
+            <!--                                    &nbsp;-->
+            <!--                                </a>-->
+            <!--                            </li>-->
+            <!--                        </ul>-->
+            <!--                    </div>-->
+            <!--                </td>-->
+            <!--            </tr>-->
+            <!--        </table>-->
+            <!--    </div>-->
             <div class="form-group">
                 <table width="100%">
-                    <tr style="height: 80px;">
+                    <tr>
                         <td width="49%">
                             <label translate>TFTP server</label>
                             <input ng:model="config.config.LINBO.Server" type="text" class="form-control" />
@@ -178,7 +74,7 @@
             </div>
             <div class="form-group">
                 <table width="100%">
-                    <tr style="height: 80px;">
+                    <tr>
                         <td width="49%">
                             <label translate>System type</label>
                             <select ng:model="config.config.LINBO.SystemType" class="form-control">
@@ -202,16 +98,58 @@
                 </table>
             </div>
             <div class="form-group">
-                <label translate>Start options</label>
-                <br>
-                <span checkbox ng:model="config.config.LINBO.AutoPartition"
-                    text="{{'Auto partition recovery'|translate}}" />
-                <br>
-                <span checkbox ng:model="config.config.LINBO.AutoFormat"
-                    text="{{'Auto partition formatting'|translate}}" />
-                <br>
-                <span checkbox ng:model="config.config.LINBO.AutoInitCache" text="{{'Auto update cache'|translate}}" />
-                <br>
+                <table width="100%">
+                    <tr>
+                        <td width="49%">
+                            <label translate>Start options</label>
+                            <br />
+                            <span checkbox ng:model="config.config.LINBO.AutoPartition"
+                                text="{{'Auto partition recovery'|translate}}" />
+                            <br />
+                            <span checkbox ng:model="config.config.LINBO.AutoFormat"
+                                text="{{'Auto partition formatting'|translate}}" />
+                            <br />
+                            <span checkbox ng:model="config.config.LINBO.AutoInitCache"
+                                text="{{'Auto update cache'|translate}}" />
+                            <br />
+                        </td>
+                        <td width="49%">
+                            <label translate>Linbo GUI customization</label>
+                            <br />
+                            <span checkbox ng:model="config.config.LINBO.UseMinimalLayout"
+                                text="{{'Use minimal layout'|translate}}" />
+                            <br />
+                            <span checkbox ng:model="config.config.LINBO.clientDetailsVisibleByDefault"
+                                text="{{'Display client details by default'|translate}}" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="form-group">
+                <table width="100%">
+                    <tr>
+                        <td width="49%">
+                            <label translate>Language</label>
+                            <br />
+                            <br />
+                            <select ng:model="config.config.LINBO.Locale" class="form-control">
+                                <option value="de-DE" translate>German</option>
+                                <option value="en-GB" translate>English</option>
+                                <option value="fr-FR" translate>French</option>
+                            </select>
+                        </td>
+                        <td>
+                        </td>
+                        <td width="49%">
+                            <label translate>Background color</label>
+                            <br />
+                            <span translate>The color of the foreground will be adjusted automatically</span>
+                            <input colorpicker="hex" colorpicker-position="right"
+                                ng:model="config.config.LINBO.BackgroundColor" type="text" pattern="#[a-fA-F\d]+"
+                                class="form-control" />
+                        </td>
+                    </tr>
+                </table>
             </div>
             <div class="form-group">
                 <label translate>Kernel options</label>
@@ -231,7 +169,6 @@
                     </div>
                 </div>
             </div>
-        </div>
         </uib:tab>
         <uib:tab heading="{{'Partitions'|translate}}">
             <div sv:root has-relative-parent=".modal-content" sv:on-sort="rebuildDisks()">
@@ -333,7 +270,7 @@
                 <span checkbox ng:model="vdiconfig.activated" text="{{'Activated'|translate}}" />
                 <br>
             </div>
-            
+
             <div class="form-group" ng:if="vdiconfig.activated">
                 <div class="panel panel-default">
                     <div class="panel-heading"><span translate>VM Template Settings</span></div>
@@ -409,7 +346,7 @@
                                 </td>
                                 <td style="width:10px"></td>
                                 <td style="width:49%">
-                                    
+
                                 </td>
                             </tr>
                         </table>
@@ -486,8 +423,10 @@
                                     <label translate>Spice enhancements</label><span> (Expert)</span>
                                     <select ng:model="vdiconfig.spice_enhancements" class="form-control">
                                         <option value="foldersharing=1">Foldersharing</option>
-                                        <option value="foldersharing=1,videostreaming=all">Foldersharing and Videostreaming</option>
-                                        <option value="foldersharing=1,videostreaming=filter">Foldersharing and Videostreaming (Filter)</option>
+                                        <option value="foldersharing=1,videostreaming=all">Foldersharing and
+                                            Videostreaming</option>
+                                        <option value="foldersharing=1,videostreaming=filter">Foldersharing and
+                                            Videostreaming (Filter)</option>
                                         <option value="videostreaming=all">Videostreaming</option>
                                         <option value="videostreaming=filter">Videostreaming (Filter)</option>
                                     </select>
@@ -509,7 +448,7 @@
                                 </td>
                                 <td style="width:10px"></td>
                                 <td style="width:49%">
-                                    
+
                                 </td>
                             </tr>
                         </table>
@@ -537,7 +476,7 @@
                                 </td>
                                 <td style="width:10px"></td>
                                 <td style="width:49%">
-                                    
+
                                 </td>
                             </tr>
                         </table>
@@ -551,12 +490,14 @@
                             <tr style="height: 80px;">
                                 <td style="width:49%">
                                     <label translate>Timeout building clone</label><span> (Expert)</span>
-                                    <input ng:model="vdiconfig.timeout_building_clone" type="number" class="form-control" />
+                                    <input ng:model="vdiconfig.timeout_building_clone" type="number"
+                                        class="form-control" />
                                 </td>
                                 <td style="width:10px"></td>
                                 <td style="width:49%">
                                     <label translate>Timeout building master</label><span> (Expert)</span>
-                                    <input ng:model="vdiconfig.timeout_building_master" type="number" class="form-control" />
+                                    <input ng:model="vdiconfig.timeout_building_master" type="number"
+                                        class="form-control" />
                                 </td>
                             </tr>
                         </table>

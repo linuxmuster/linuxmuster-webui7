@@ -83,7 +83,7 @@
         <span style="padding-left: 10px;" translate>Students</span>
         <div class="flex-container lmn-container-list">
             <div ng:repeat="student in members|filter:search|orderBy:['sn']">
-                <div ng-if="student.sophomorixAdminClass != 'teachers'">
+                <div ng-if="student.sophomorixRole != 'teacher'">
                     <span id={{student.sAMAccountName}} checkbox ng:model="studentsDict[student.login].membership"></span>
                     <i class="fa fa-user"></i>
                     <a href="#">{{student.givenName}} <b>{{student.sn}}</b> {{student.sophomorixAdminClass}}</a>

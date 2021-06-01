@@ -239,13 +239,25 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
 
                 $scope.members = []
                 for name,member of resp.data['MEMBERS'][groupName]
-                    if member.sn != "null" # group member 
-                        $scope.members.push({'sn':member.sn, 'givenName':member.givenName, 'login': member.sAMAccountName, 'sophomorixAdminClass':member.sophomorixAdminClass})
+                    if member.sn != "null" # group member
+                        $scope.members.push({
+                            'sn':member.sn,
+                            'givenName':member.givenName,
+                            'login': member.sAMAccountName,
+                            'sophomorixAdminClass':member.sophomorixAdminClass,
+                            'sophomorixRole':member.sophomorixRole
+                        })
 
                 $scope.admins = []
                 for admin in $scope.adminList
                     member = resp.data['MEMBERS'][groupName][admin]
-                    $scope.admins.push({'sn':member.sn, 'givenName':member.givenName, 'sophomorixAdminClass':member.sophomorixAdminClass, 'login': member.sAMAccountName})
+                    $scope.admins.push({
+                        'sn':member.sn,
+                        'givenName':member.givenName,
+                        'sophomorixAdminClass':member.sophomorixAdminClass,
+                        'sophomorixRole':member.sophomorixRole,
+                        'login': member.sAMAccountName
+                    })
 
                 $scope.joinable = resp.data['GROUP'][groupName]['sophomorixJoinable'] == 'TRUE'
                 $scope.hidden = resp.data['GROUP'][groupName]['sophomorixHidden'] == 'TRUE'

@@ -45,25 +45,25 @@ Primary maintainer | arnaud@linuxmuster.net  / andreas.till@netzint.de
 <table align="center">
     <tr>
         <td align="center">
-            <a href="https://raw.githubusercontent.com/linuxmuster-webui7/release/docs_src/_static/webui-login.png">
-                <img src="https://raw.githubusercontent.com/linuxmuster-webui7/release/docs_src/_static/webui-login.png" alt="Screenshot Webui Login" width="500px" />
+            <a href="https://raw.githubusercontent.com/linuxmuster/linuxmuster-webui7/release/docs_src/_static/webui-login.png">
+                <img src="https://raw.githubusercontent.com/linuxmuster/linuxmuster-webui7/release/docs_src/_static/webui-login.png" alt="Screenshot Webui Login" width="500px" />
             </a>
         </td>
         <td align="center">
-            <a href="https://raw.githubusercontent.com/linuxmuster-webui7/release/docs_src/_static/webui-class.png">
-                <img src="https://raw.githubusercontent.com/linuxmuster-webui7/release/docs_src/_static/webui-class.png" alt="Screenshot Webui Session" width="500px" />
+            <a href="https://raw.githubusercontent.com/linuxmuster/linuxmuster-webui7/release/docs_src/_static/webui-class.png">
+                <img src="https://raw.githubusercontent.com/linuxmuster/linuxmuster-webui7/release/docs_src/_static/webui-class.png" alt="Screenshot Webui Session" width="500px" />
             </a>
         </td>
     </tr>
     <tr>
         <td align="center">
-            <a href="https://raw.githubusercontent.com/linuxmuster-webui7/release/docs_src/_static/webui-linbo.png">
-                <img src="https://raw.githubusercontent.com/linuxmuster-webui7/release/docs_src/_static/webui-linbo.png" alt="Screenshot Webui Linbo" width="500px" />
+            <a href="https://raw.githubusercontent.com/linuxmuster/linuxmuster-webui7/release/docs_src/_static/webui-linbo.png">
+                <img src="https://raw.githubusercontent.com/linuxmuster/linuxmuster-webui7/release/docs_src/_static/webui-linbo.png" alt="Screenshot Webui Linbo" width="500px" />
             </a>
         </td>
         <td align="center">
-            <a href="https://raw.githubusercontent.com/linuxmuster-webui7/release/docs_src/_static/webui-user.png">
-                <img src="https://raw.githubusercontent.com/linuxmuster-webui7/release/docs_src/_static/webui-user.png" alt="Screenshot Webui User" width="500px" />
+            <a href="https://raw.githubusercontent.com/linuxmuster/linuxmuster-webui7/release/docs_src/_static/webui-user.png">
+                <img src="https://raw.githubusercontent.com/linuxmuster/linuxmuster-webui7/release/docs_src/_static/webui-user.png" alt="Screenshot Webui User" width="500px" />
             </a>
         </td>
     </tr>

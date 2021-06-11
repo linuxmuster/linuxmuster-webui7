@@ -28,10 +28,11 @@ angular.module('lmn.vdi_dashboard').controller('Lmn_vdi_dashboardIndexController
         }
     });
 
-    $scope.startVdiSession = function () {
-        $http.post('/api/lmn_vdi_dashboard', { action: 'get-session', username: $scope.identity.user }).then(function (resp) {
-            $scope.returnValue = resp.data;
-            console.log($scope.returnValue);
+    $scope.startVdiSession = function (group) {
+        $http.post('/api/lmn_vdi_dashboard', { action: 'get-vdiSession', username: $scope.identity.user, group: group }).then(function (resp) {
+            console.log(resp.data);
+            $scope.filename = resp.data;
+            location.href = "/api/lmn_vdi_dashboard/download/" + $scope.filename;
         });
     };
 });

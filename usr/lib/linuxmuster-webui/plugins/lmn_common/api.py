@@ -5,7 +5,7 @@ Common tools to communicate with sophomorix and handle config files.
 import os
 import time
 import subprocess
-import dpath
+import dpath.util
 import re
 import yaml
 import threading

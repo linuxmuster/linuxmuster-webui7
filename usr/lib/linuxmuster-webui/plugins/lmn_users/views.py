@@ -836,9 +836,9 @@ class Handler(HttpPlugin):
                     # Avoid strings for non set quotas
                     used = int(float(share['USED_MiB']) / share['HARDLIMIT_MiB'] * 100)
                     soft = int(float(share['SOFTLIMIT_MiB']) / share['HARDLIMIT_MiB'] * 100)
-                    if used >= 90:
+                    if used >= 80:
                         state = "danger"
-                    elif used > soft:
+                    elif used >= 60:
                         state = "warning"
                     else:
                         state = "success"

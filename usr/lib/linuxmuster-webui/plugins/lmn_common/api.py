@@ -137,7 +137,7 @@ def lmn_backup_file(path):
 
 def lmn_get_school_configpath(school):
     """
-    Write CSV and backup csv file only if there's no difference with the original.
+    Return the default absolute path for config files in multischool env.
 
     :param school: school shortname
 
@@ -147,36 +147,36 @@ def lmn_get_school_configpath(school):
     else:
         return '/etc/linuxmuster/sophomorix/'+school+'/'+school+'.'
 
-def lmn_write_csv(path, fieldnames, data, encoding='utf-8'):
-    """
-    Write CSV and backup csv file only if there's no difference with the original.
-    Delimiter is always ';'
-    DEPRECATED
-
-    :param path: Path of the file
-    :type path: string
-    :param fieldnames: List of CSV fieldsnames
-    :type fieldnames: list
-    :param data: Data to write
-    :type data: list of string
-    :param encoding: Encoding, e.g. utf-8
-    :type encoding: string
-    """
-
-    if check_allowed_path(path):
-        tmp = path + '_tmp'
-        with open(tmp, 'wb') as f:
-            csv.DictWriter(
-                f,
-                delimiter=';',
-                fieldnames=fieldnames,
-                encoding=encoding
-            ).writerows(data)
-        if not filecmp.cmp(tmp, path):
-            lmn_backup_file(path)
-            os.rename(tmp, path)
-        else:
-            os.unlink(tmp)
+# def lmn_write_csv(path, fieldnames, data, encoding='utf-8'):
+#     """
+#     Write CSV and backup csv file only if there's no difference with the original.
+#     Delimiter is always ';'
+#     DEPRECATED
+#
+#     :param path: Path of the file
+#     :type path: string
+#     :param fieldnames: List of CSV fieldsnames
+#     :type fieldnames: list
+#     :param data: Data to write
+#     :type data: list of string
+#     :param encoding: Encoding, e.g. utf-8
+#     :type encoding: string
+#     """
+#
+#     if check_allowed_path(path):
+#         tmp = path + '_tmp'
+#         with open(tmp, 'wb') as f:
+#             csv.DictWriter(
+#                 f,
+#                 delimiter=';',
+#                 fieldnames=fieldnames,
+#                 encoding=encoding
+#             ).writerows(data)
+#         if not filecmp.cmp(tmp, path):
+#             lmn_backup_file(path)
+#             os.rename(tmp, path)
+#         else:
+#             os.unlink(tmp)
 
 def lmn_write_configfile(path, data):
     """

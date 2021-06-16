@@ -15,6 +15,7 @@ import filecmp
 import configparser
 import logging
 from pprint import pformat
+from .lmnfile import LMNFile
 
 
 ALLOWED_PATHS = [
@@ -67,17 +68,12 @@ class LinuxmusterConfig():
 lmconfig = LinuxmusterConfig('/etc/linuxmuster/webui/config.yml')
 lmconfig.load()
 
-parser = configparser.ConfigParser()
-# Maybe not a good idea, see https://github.com/linuxmuster/linuxmuster-base7/issues/109
-# Eventually get the info from school.conf, but beware the multischool env.
-parser.read('/var/lib/linuxmuster/setup.ini')
-if 'setup' in parser.sections():
-    lmsetup_schoolname = parser['setup']['schoolname']
-    # For later : get the whole dict
-    # If necessary, will come in LMNFile
-    # lmsetup = {elmt:parser['setup'][elmt] for elmt in parser['setup']}
-else:
-    lmsetup_schoolname = None
+# Used for pageTitle, see lmn_auth.api
+with LMNFile('/var/lib/linuxmuster/setup.ini', 'r') as s:
+    try:
+        lmsetup_schoolname = s.data['setup']['schoolname']
+    except KeyError:
+        lmsetup_schoolname = None
 
 class CSVSpaceStripper:
     """

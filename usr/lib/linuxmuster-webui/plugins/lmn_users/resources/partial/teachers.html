@@ -51,11 +51,12 @@
         <table class="table" style="width:100%">
             <tr>
                 <th><span checkbox ng:model="all_selected" ng:change="selectAll(query)"></span></th>
-                <th width="120"> Login</th>
-                <th> Name </th>
-                <th ng:show="teachersQuota"> </th>
+                <th width="120">Login</th>
+                <th>Name</th>
+                <th ng:show="teachersQuota" translate>Quota</th>
                 <th> </th>
                 <th> </th>
+                <th>Status </th>
             </tr>
 
             <tr ng:repeat="teacher in teachers|filter:filter|orderBy:['-_isNew', sort.fx]|page:paging.page:paging.pageSize" ng:show="teacher.class[0] != '#'">
@@ -65,12 +66,15 @@
                     <span checkbox ng:model="teacher.selected"></span>
                 </td>
                 <td width="1" style="text-align:left;">
-                    <i> {{teacher.sAMAccountName}}</i> <br> 
+                    <i>{{teacher.sAMAccountName}}</i> <br />
                 </td>
                 <td>
-                    <b>{{teacher.givenName}}</b> <br> {{teacher.sn}}
+                    <b>{{teacher.givenName}}</b> <br /> {{teacher.sn}}
                 </td>
-                <td ng:show="teachersQuota" width="200">
+                <td ng:show="teachersQuota" width="150">
+                    <span class="label label-{{teachersQuota[teacher.sAMAccountName].TYPE}} ">
+                        {{teachersQuota[teacher.sAMAccountName].USED}} %
+                    </span>
                     <smart-progress type="{{teachersQuota[teacher.sAMAccountName].TYPE}}" value="teachersQuota[teacher.sAMAccountName].USED" max="100"></smart-progress>
                 </td>
                 <td width="1">
@@ -109,18 +113,9 @@
                     </span>
                 </td>
                 <td width="1">
-                    <span uib-dropdown>
-                        <button class="btn btn-default" uib-dropdown-toggle>
-                            <i class="fa fa-cog"></i> <span translate> User Settings</span>
-                        </button>
-                        <ul uib-dropdown-menu class="dropdown-menu-right" style="width:200px">
-                            <li>
-                                <a ng:click="userInfo([teacher])" translate>
-                                    User information
-                                </a>
-                            </li>
-                        </ul>
-                    </span>
+                    <button class="btn btn-default" ng:click="userInfo([teacher])">
+                        <i class="fa fa-cog"></i>
+                    </button>
                 </td>
                 <td width="1">
                     <span class="label label-{{teacher.sophomorixStatus.color}}">{{teacher.sophomorixStatus.tag}}</span>

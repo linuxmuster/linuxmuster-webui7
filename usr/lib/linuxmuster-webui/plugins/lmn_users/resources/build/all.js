@@ -13,7 +13,7 @@
     });
   });
 
-  angular.module('lmn.users').controller('LMUsersTeachersController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) {
+  angular.module('lmn.users').controller('LMUsersTeachersController', function($q, $scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) {
     pageTitle.set(gettext('Teachers'));
     $scope.sorts = [
       {
@@ -81,7 +81,7 @@
     };
     $scope.teachersQuota = false;
     $scope.getQuotas = function() {
-      var t, teacherList;
+      var i, len, promises, t, teacher, teacherList;
       teacherList = (function() {
         var i, len, ref, results;
         ref = $scope.teachers;
@@ -92,11 +92,23 @@
         }
         return results;
       })();
-      return $http.post('/api/lm/users/get-group-quota', {
-        groupList: teacherList
-      }).then(function(resp) {
-        $scope.teachersQuota = resp.data;
-        return console.log($scope.teachersQuota);
+      promises = [];
+      for (i = 0, len = teacherList.length; i < len; i++) {
+        teacher = teacherList[i];
+        promises.push($http.post('/api/lm/users/get-group-quota', {
+          groupList: [teacher]
+        }));
+      }
+      return $q.all(promises).then(function(resp) {
+        var j, len1, login, results;
+        $scope.teachersQuota = {};
+        results = [];
+        for (j = 0, len1 = resp.length; j < len1; j++) {
+          teacher = resp[j];
+          login = Object.keys(teacher.data)[0];
+          results.push($scope.teachersQuota[login] = teacher.data[login]);
+        }
+        return results;
       });
     };
     $scope.setInitialPassword = function(user) {
@@ -1285,7 +1297,7 @@
     });
   });
 
-  angular.module('lmn.users').controller('LMUsersTeachersController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) {
+  angular.module('lmn.users').controller('LMUsersTeachersController', function($q, $scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) {
     pageTitle.set(gettext('Teachers'));
     $scope.sorts = [
       {
@@ -1353,7 +1365,7 @@
     };
     $scope.teachersQuota = false;
     $scope.getQuotas = function() {
-      var t, teacherList;
+      var i, len, promises, t, teacher, teacherList;
       teacherList = (function() {
         var i, len, ref, results;
         ref = $scope.teachers;
@@ -1364,11 +1376,23 @@
         }
         return results;
       })();
-      return $http.post('/api/lm/users/get-group-quota', {
-        groupList: teacherList
-      }).then(function(resp) {
-        $scope.teachersQuota = resp.data;
-        return console.log($scope.teachersQuota);
+      promises = [];
+      for (i = 0, len = teacherList.length; i < len; i++) {
+        teacher = teacherList[i];
+        promises.push($http.post('/api/lm/users/get-group-quota', {
+          groupList: [teacher]
+        }));
+      }
+      return $q.all(promises).then(function(resp) {
+        var j, len1, login, results;
+        $scope.teachersQuota = {};
+        results = [];
+        for (j = 0, len1 = resp.length; j < len1; j++) {
+          teacher = resp[j];
+          login = Object.keys(teacher.data)[0];
+          results.push($scope.teachersQuota[login] = teacher.data[login]);
+        }
+        return results;
       });
     };
     $scope.setInitialPassword = function(user) {

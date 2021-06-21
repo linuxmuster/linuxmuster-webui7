@@ -72,17 +72,13 @@
         </div>
         <div style="padding: 15px;padding-left: 30px; padding-right: 30px;">
             <div ng:repeat="quota in quotas" style="margin-bottom: 15px;">
-                <div class="widget-header">{{quota.share}}</div>
-                <smart-progress type="{{quota.type}}" value="quota.usage" max="100"></smart-progress>
-
-                <div class="widget-value">
-                    {{quota.used}} MiB / {{quota.total}}
-                    <sup ng:show="quota.usage > 80">
-                        <span class="label label-danger">
-                            <i class="fa fa-warning"></i>
-                        </span>
-                    </sup>
+                <div class="widget-header">
+                    <b>{{quota.share}}</b>
+                    <span class="label label-{{quota.type}} pull-right">
+                        {{quota.used}} MiB / {{quota.total}} - {{quota.usage}}%
+                    </span>
                 </div>
+                <smart-progress type="{{quota.type}}" value="quota.usage" max="100"></smart-progress>
             </div>
             <br><b translate>Cloudquota Calculated in MiB:</b> {{userDetails[0]['sophomorixCloudQuotaCalculated']}}
             <br><b translate>Mailquota Calculated in MiB:</b> {{userDetails[0]['sophomorixMailQuotaCalculated']}}

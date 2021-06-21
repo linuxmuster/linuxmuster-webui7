@@ -3,7 +3,7 @@ angular.module('lmn.users').config ($routeProvider) ->
         controller: 'LMUsersTeachersController'
         templateUrl: '/lmn_users:resources/partial/teachers.html'
 
-angular.module('lmn.users').controller 'LMUsersTeachersController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) ->
+angular.module('lmn.users').controller 'LMUsersTeachersController', ($q, $scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) ->
     pageTitle.set(gettext('Teachers'))
 
     $scope.sorts = [
@@ -56,11 +56,14 @@ angular.module('lmn.users').controller 'LMUsersTeachersController', ($scope, $ht
     $scope.teachersQuota = false
     $scope.getQuotas = () ->
         teacherList = (t.sAMAccountName for t in $scope.teachers)
-        $http.post('/api/lm/users/get-group-quota',{groupList: teacherList}).then (resp) ->
-            $scope.teachersQuota = resp.data
-            console.log($scope.teachersQuota)
-
-
+        promises = []
+        for teacher in teacherList
+            promises.push($http.post('/api/lm/users/get-group-quota',{groupList: [teacher]}))
+        $q.all(promises).then (resp) ->
+            $scope.teachersQuota = {}
+            for teacher in resp
+                login = Object.keys(teacher.data)[0]
+                $scope.teachersQuota[login] = teacher.data[login]
 
     $scope.setInitialPassword = (user) ->
        $http.post('/api/lm/users/password', {users: (x['sAMAccountName'] for x in user), action: 'set-initial'}).then (resp) ->

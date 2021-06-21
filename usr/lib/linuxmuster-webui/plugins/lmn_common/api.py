@@ -5,7 +5,7 @@ Common tools to communicate with sophomorix and handle config files.
 import os
 import time
 import subprocess
-import dpath
+import dpath.util
 import re
 import yaml
 import threading
@@ -15,6 +15,7 @@ import filecmp
 import configparser
 import logging
 from pprint import pformat
+from .lmnfile import LMNFile
 
 
 ALLOWED_PATHS = [
@@ -67,17 +68,12 @@ class LinuxmusterConfig():
 lmconfig = LinuxmusterConfig('/etc/linuxmuster/webui/config.yml')
 lmconfig.load()
 
-parser = configparser.ConfigParser()
-# Maybe not a good idea, see https://github.com/linuxmuster/linuxmuster-base7/issues/109
-# Eventually get the info from school.conf, but beware the multischool env.
-parser.read('/var/lib/linuxmuster/setup.ini')
-if 'setup' in parser.sections():
-    lmsetup_schoolname = parser['setup']['schoolname']
-    # For later : get the whole dict
-    # If necessary, will come in LMNFile
-    # lmsetup = {elmt:parser['setup'][elmt] for elmt in parser['setup']}
-else:
-    lmsetup_schoolname = None
+# Used for pageTitle, see lmn_auth.api
+with LMNFile('/var/lib/linuxmuster/setup.ini', 'r') as s:
+    try:
+        lmsetup_schoolname = s.data['setup']['schoolname']
+    except KeyError:
+        lmsetup_schoolname = None
 
 class CSVSpaceStripper:
     """
@@ -137,7 +133,7 @@ def lmn_backup_file(path):
 
 def lmn_get_school_configpath(school):
     """
-    Write CSV and backup csv file only if there's no difference with the original.
+    Return the default absolute path for config files in multischool env.
 
     :param school: school shortname
 
@@ -147,36 +143,36 @@ def lmn_get_school_configpath(school):
     else:
         return '/etc/linuxmuster/sophomorix/'+school+'/'+school+'.'
 
-def lmn_write_csv(path, fieldnames, data, encoding='utf-8'):
-    """
-    Write CSV and backup csv file only if there's no difference with the original.
-    Delimiter is always ';'
-    DEPRECATED
-
-    :param path: Path of the file
-    :type path: string
-    :param fieldnames: List of CSV fieldsnames
-    :type fieldnames: list
-    :param data: Data to write
-    :type data: list of string
-    :param encoding: Encoding, e.g. utf-8
-    :type encoding: string
-    """
-
-    if check_allowed_path(path):
-        tmp = path + '_tmp'
-        with open(tmp, 'wb') as f:
-            csv.DictWriter(
-                f,
-                delimiter=';',
-                fieldnames=fieldnames,
-                encoding=encoding
-            ).writerows(data)
-        if not filecmp.cmp(tmp, path):
-            lmn_backup_file(path)
-            os.rename(tmp, path)
-        else:
-            os.unlink(tmp)
+# def lmn_write_csv(path, fieldnames, data, encoding='utf-8'):
+#     """
+#     Write CSV and backup csv file only if there's no difference with the original.
+#     Delimiter is always ';'
+#     DEPRECATED
+#
+#     :param path: Path of the file
+#     :type path: string
+#     :param fieldnames: List of CSV fieldsnames
+#     :type fieldnames: list
+#     :param data: Data to write
+#     :type data: list of string
+#     :param encoding: Encoding, e.g. utf-8
+#     :type encoding: string
+#     """
+#
+#     if check_allowed_path(path):
+#         tmp = path + '_tmp'
+#         with open(tmp, 'wb') as f:
+#             csv.DictWriter(
+#                 f,
+#                 delimiter=';',
+#                 fieldnames=fieldnames,
+#                 encoding=encoding
+#             ).writerows(data)
+#         if not filecmp.cmp(tmp, path):
+#             lmn_backup_file(path)
+#             os.rename(tmp, path)
+#         else:
+#             os.unlink(tmp)
 
 def lmn_write_configfile(path, data):
     """

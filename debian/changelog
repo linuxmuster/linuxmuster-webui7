@@ -1,3 +1,9 @@
+linuxmuster-webui7 (1.0.164-release) bionic; urgency=medium
+
+  * move to release
+
+ -- Dorian Zedler <dorian@itsblue.de>  Mon 21 Jun 16:07:38 CET 2021
+
 linuxmuster-webui7 (1.0.164-rc06) bionic-testing; urgency=medium
 
   * Current snapshot build 47f9c71c8d2b534c18a238bbb6ddb988f0749cc3

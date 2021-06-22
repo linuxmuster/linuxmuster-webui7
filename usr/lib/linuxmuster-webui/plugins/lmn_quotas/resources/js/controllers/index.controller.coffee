@@ -48,10 +48,10 @@ angular.module('lmn.quotas').controller 'LMQuotasController', ($scope, $http, $u
 
     # Need an array to keep the order ...
     $scope.quota_types = [
-        {'type' : 'quota_default_global', 'name' : gettext('Quota default global (MiB)')},
-        {'type' : 'quota_default_school', 'name' : gettext('Quota default school (MiB)')},
-        {'type' : 'cloudquota_percentage', 'name' : gettext('Cloudquota (%)')},
-        {'type' : 'mailquota_default', 'name' : gettext('Mailquota default (MiB)')},
+        {'type' : 'QUOTA_DEFAULT_GLOBAL', 'name' : gettext('Quota default global (MiB)')},
+        {'type' : 'QUOTA_DEFAULT_SCHOOL', 'name' : gettext('Quota default school (MiB)')},
+        {'type' : 'CLOUDQUOTA_PERCENTAGE', 'name' : gettext('Cloudquota (%)')},
+        {'type' : 'MAILQUOTA_DEFAULT', 'name' : gettext('Mailquota default (MiB)')},
     ]
     $scope.groupquota_types = [
         {
@@ -142,9 +142,9 @@ angular.module('lmn.quotas').controller 'LMQuotasController', ($scope, $http, $u
     $scope.remove = (role, user) ->
         ## Reset all 3 quotas to default
         $scope.non_default[role][user.login]['QUOTA'] = angular.copy($scope.settings['role.'+role])
-        $scope.changeUser(role, user.login, 'quota_default_global')
-        $scope.changeUser(role, user.login, 'quota_default_school')
-        $scope.changeUser(role, user.login, 'mailquota_default')
+        $scope.changeUser(role, user.login, 'QUOTA_DEFAULT_GLOBAL')
+        $scope.changeUser(role, user.login, 'QUOTA_DEFAULT_SCHOOL')
+        $scope.changeUser(role, user.login, 'MAILQUOTA_DEFAULT')
         delete $scope.non_default[role][user.login]
         $scope.non_default[role].list.splice($scope.non_default[role].list.indexOf(user),1)
 

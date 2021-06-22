@@ -22,7 +22,7 @@
                         {{non_default.teacher[teacher.login].displayName}}
                     </td>
                     <td ng:repeat="qt in quota_types">
-                        <input type="number" ng:model="non_default.teacher[teacher.login].QUOTA[qt.type]" class="form-control"  ng:class="{'nondefault': isDefaultQuota('role.teacher', qt.type, non_default.teacher[teacher.login].QUOTA[qt.type])}" ng:disabled="qt.type == 'cloudquota_percentage'" ng:change="changeUser('teacher', teacher.login, qt.type)" />
+                        <input type="number" ng:model="non_default.teacher[teacher.login].QUOTA[qt.type]" class="form-control"  ng:class="{'nondefault': isDefaultQuota('role.teacher', qt.type, non_default.teacher[teacher.login].QUOTA[qt.type])}" ng:disabled="qt.type == 'CLOUDQUOTA_PERCENTAGE'" ng:change="changeUser('teacher', teacher.login, qt.type)" />
                     </td>
                     <td>
                         <button class="btn btn-default" ng:click="remove('teacher', teacher)" title="Remove">
@@ -50,7 +50,7 @@
                         {{non_default.student[student.login].displayName}} ({{student.login}})
                     </td>
                     <td ng:repeat="qt in quota_types">
-                        <input type="number" ng:model="non_default.student[student.login].QUOTA[qt.type]" class="form-control"  ng:class="{'nondefault': isDefaultQuota('role.student', qt.type, non_default.student[student.login].QUOTA[qt.type])}" ng:disabled="qt.type == 'cloudquota_percentage'" ng:change="changeUser('student', student.login, qt.type)" />
+                        <input type="number" ng:model="non_default.student[student.login].QUOTA[qt.type]" class="form-control"  ng:class="{'nondefault': isDefaultQuota('role.student', qt.type, non_default.student[student.login].QUOTA[qt.type])}" ng:disabled="qt.type == 'CLOUDQUOTA_PERCENTAGE'" ng:change="changeUser('student', student.login, qt.type)" />
                     </td>
                     <td>
                         <button class="btn btn-default" ng:click="remove('student', student)" title="Remove">
@@ -78,7 +78,7 @@
                         {{non_default.schooladministrator[schooladministrator.login].displayName}}
                     </td>
                     <td ng:repeat="qt in quota_types">
-                        <input type="number" ng:model="non_default.schooladministrator[schooladministrator.login].QUOTA[qt.type]" class="form-control"  ng:class="{'nondefault': isDefaultQuota('role.schooladministrator', qt.type, non_default.schooladministrator[schooladministrator.login].QUOTA[qt.type])}" ng:disabled="qt.type == 'cloudquota_percentage'" ng:change="changeUser('schooladministrator', schooladministrator.login, qt.type)" />
+                        <input type="number" ng:model="non_default.schooladministrator[schooladministrator.login].QUOTA[qt.type]" class="form-control"  ng:class="{'nondefault': isDefaultQuota('role.schooladministrator', qt.type, non_default.schooladministrator[schooladministrator.login].QUOTA[qt.type])}" ng:disabled="qt.type == 'CLOUDQUOTA_PERCENTAGE'" ng:change="changeUser('schooladministrator', schooladministrator.login, qt.type)" />
                     </td>
                     <td>
                         <button class="btn btn-default" ng:click="remove('schooladministrator', schooladministrator)" title="Remove">

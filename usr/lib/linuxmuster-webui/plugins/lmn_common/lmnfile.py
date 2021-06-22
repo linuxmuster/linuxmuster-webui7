@@ -20,6 +20,8 @@ ALLOWED_PATHS = [
                 '/etc/linuxmuster/subnets-dev.csv',
                 # used in lmn_settings
                 '/var/lib/linuxmuster/setup.ini',
+                # user in setup wizard during install
+                '/tmp/setup.ini',
                 ]
 
 EMPTY_LINE_MARKER = '###EMPTY#LINE'

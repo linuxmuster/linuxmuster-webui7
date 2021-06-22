@@ -10,6 +10,7 @@ import smtplib
 from jadi import component
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
+from aj.plugins.lmn_common.lmnfile import LMNFile
 
 
 @component(HttpPlugin)
@@ -30,27 +31,10 @@ class Handler(HttpPlugin):
         :rtype: dict
         """
 
-        config = configparser.RawConfigParser()
         if http_context.method == 'GET':
             if os.path.exists('/tmp/setup.ini'):
-                config.read('/tmp/setup.ini')
-                settings = {}
-                # iterate all sections
-                for section in config.sections():
-                    for (key, val) in config.items(section):
-                        # Translate types
-                        if val.isdigit():
-                            val = int(val)
-                        if val == 'no':
-                            val = False
-                        if val == 'yes':
-                            val = True
-                        if val == 'True':
-                            val = True
-                        if val == 'False':
-                            val = False
-                        settings[key] = val
-                return settings
+                with LMNFile('/tmp/setup.ini', 'r') as setup:
+                    return setup.data['setup']
 
     @url(r'/api/lm/setup-wizard/update-ini')
     @endpoint(api=True, auth=True)

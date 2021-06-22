@@ -11,6 +11,7 @@ from jadi import component
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint
 from aj.plugins.lmn_common.multischool import School
+from aj.plugins.lmn_common.lmnfile import LMNFile
 
 
 @component(HttpPlugin)
@@ -172,21 +173,8 @@ class Handler(HttpPlugin):
 
         path = '/var/lib/linuxmuster/setup.ini'
         if http_context.method == 'GET':
-            config = {}
-            for line in open(path, 'rb'):
-                line = line.decode('utf-8', errors='ignore')
-                line = line.split('#')[0].strip()
-
-                if line.startswith('['):
-                    section = {}
-                    section_name = line.strip('[]')
-                    if section_name == 'setup':
-                        config['setup'] = section
-                elif '=' in line:
-                    k, v = line.split('=', 1)
-                    v = v.strip()
-                    section[k.strip()] = v
-            return config
+            with LMNFile(path, 'r') as setup:
+                return setup.data
 
 
     ## TODO authorize

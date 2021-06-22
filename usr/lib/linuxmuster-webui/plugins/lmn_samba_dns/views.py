@@ -13,7 +13,10 @@ from aj.plugins.lmn_samba_dns.smbtool import SambaToolDNS
 class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
-        self.dns = SambaToolDNS() # Context !
+        try:
+            self.dns = SambaToolDNS() # Context !
+        except PermissionError:
+            self.dns = None
 
     @url(r'/api/dns/get')
     #@authorize('samba_dns:show')

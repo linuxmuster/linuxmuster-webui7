@@ -9,7 +9,7 @@ class SambaToolDNS():
     """
 
     def __init__(self):
-        self.zone = ''
+        self.credentials = ''
         self._get_zone()
         if self.zone:
             self._get_credentials()
@@ -22,18 +22,19 @@ class SambaToolDNS():
 
         with open('/etc/linuxmuster/.secret/administrator', 'r') as f:
             pw = f.readline().strip('\n')
-        self.credentials = ('-U', 'administrator%{}'.format(pw))
+        self.credentials = ('-U', f'administrator%{pw}')
 
     def _get_zone(self):
         """
         Parse setup.ini to get the current zone and store it in self.zone.
         """
 
-        setup_path = '/var/lib/linuxmuster/setup.ini'
-        parser = configparser.ConfigParser()
-        parser.read(setup_path)
-        if 'setup' in parser.sections():
-            self.zone = parser['setup'].get('domainname', '')
+        # Used for pageTitle, see lmn_auth.api
+        with LMNFile('/var/lib/linuxmuster/setup.ini', 'r') as setup:
+            try:
+                self.zone = setup.data['setup']['domainname']
+            except KeyError:
+                self.zone = ''
 
     def _get_ignore_list(self):
         """
@@ -79,6 +80,9 @@ class SambaToolDNS():
         :return: List of lines as strings
         :rtype: list
         """
+
+        if not self.credentials:
+            return ''
 
         if action not in ['query', 'add', 'delete', 'update']:
             return

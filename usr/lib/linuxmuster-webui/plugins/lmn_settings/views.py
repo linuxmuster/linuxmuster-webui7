@@ -17,14 +17,6 @@ from aj.plugins.lmn_common.api import lmn_write_configfile, lmn_getSophomorixVal
 from aj.plugins.lmn_common.multischool import School
 from configparser import ConfigParser
 
-class IniParser(ConfigParser):
-    def as_dict(self):
-        d = dict(self._sections)
-        for k in d:
-            d[k] = dict(self._defaults, **d[k])
-            d[k].pop('__name__', None)
-        return d
-
 
 @component(HttpPlugin)
 class Handler(HttpPlugin):

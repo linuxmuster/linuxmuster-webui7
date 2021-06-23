@@ -399,7 +399,7 @@
                 <th translate>End lease range</th>
                 <th translate>Setup flag</th>
             </tr>
-            <tr ng:repeat="subnet in subnets">
+            <tr ng:repeat="subnet in subnets" ng:if="subnet.network.charAt(0) != '#'">
                 <td>
                     <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="subnet.network" placeholder="Network" class="form-control" />
                 </td>

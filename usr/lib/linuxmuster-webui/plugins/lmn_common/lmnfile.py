@@ -17,7 +17,7 @@ ALLOWED_PATHS = [
                 # used in lmn_linbo for start.conf
                 '/srv/linbo',
                 # used in lmn_settings for subnets configuration
-                '/etc/linuxmuster/subnets-dev.csv',
+                '/etc/linuxmuster/subnets.csv',
                 # used in lmn_settings
                 '/var/lib/linuxmuster/setup.ini',
                 # user in setup wizard during install

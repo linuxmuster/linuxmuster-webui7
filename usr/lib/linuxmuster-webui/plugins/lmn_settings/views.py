@@ -13,7 +13,7 @@ from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize
 from aj.plugins.lmn_common.lmnfile import LMNFile
-from aj.plugins.lmn_common.api import lmn_write_configfile, lmn_getSophomorixValue, CSVSpaceStripper,  lmn_backup_file, lmn_get_school_configpath
+from aj.plugins.lmn_common.api import lmn_get_school_configpath
 from aj.plugins.lmn_common.multischool import School
 from configparser import ConfigParser
 
@@ -53,9 +53,6 @@ class Handler(HttpPlugin):
         if os.path.isfile(fileToCheck):
             with LMNFile(fileToCheck, 'r') as f:
                 return f.detect_encoding()
-        #     sophomorixCommand = ['sophomorix-check', '--analyze-encoding', fileToCheck, '-jj']
-        #     encoding = lmn_getSophomorixValue(sophomorixCommand, 'SUMMARY/0/ANALYZE-ENCODING/ENCODING')
-        #     return encoding
         return None
 
 
@@ -146,48 +143,15 @@ class Handler(HttpPlugin):
             'setupFlag',
         ]
         if http_context.method == 'GET':
-            return list(
-                csv.DictReader(CSVSpaceStripper(open(path)), delimiter=';', fieldnames=fieldnames)
-            )
+            with LMNFile(path, 'r', fieldnames=fieldnames) as s:
+                subnets = list(s.data)
+            return subnets
+
         if http_context.method == 'POST':
             data = http_context.json_body()
-            header = """
-# modified by Webui at %s
-# /etc/linuxmuster/subnets.csv
-#
-# thomas@linuxmuster.net
-#
-# Network/Prefix ; Router-IP (last available IP in network) ; 1. Range-IP ; Last-Range-IP ; SETUP-Flag
-#
-# server subnet definition
-""" % (datetime.now().strftime("%Y%m%d%H%M%S"))
-            separator = """
-# add your subnets below
-#
-"""
-            tmp = path + '_tmp'
-            with open(tmp, 'w') as f:
-                f.write(header)
-                # Write setup subnet : Sure that data[0] contains the setup subnet ?
-                csv.DictWriter(
-                    f,
-                    delimiter=';',
-                    fieldnames=fieldnames,
-                    #encoding='utf-8'
-                ).writerows([data[0]])
-                # Write custom subnets
-                f.write(separator)
-                csv.DictWriter(
-                    f,
-                    delimiter=';',
-                    fieldnames=fieldnames,
-                    #encoding='utf-8'
-                ).writerows(data[1:])
-            if not filecmp.cmp(tmp, path):
-                lmn_backup_file(path)
-                os.rename(tmp, path)
-            else:
-                os.unlink(tmp)
+            with LMNFile(path, 'w', fieldnames=fieldnames) as f:
+                f.write(data)
+
             try:
                 subprocess.check_call('linuxmuster-import-subnets > /tmp/import_devices.log', shell=True)
             except Exception as e:

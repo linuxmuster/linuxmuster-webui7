@@ -75,44 +75,11 @@ with LMNFile('/var/lib/linuxmuster/setup.ini', 'r') as s:
     except KeyError:
         lmsetup_schoolname = None
 
-class CSVSpaceStripper:
-    """
-    CSV parser for linuxmuster's config files.
-    """
-
-    def __init__(self, file, encoding='utf-8'):
-        self.f = file
-        self.encoding = encoding
-        # TODO : use self.comments to write the comments again in the file after modification
-        self.comments = ""
-
-    def close(self):
-        self.f.close()
-
-    def __iter__(self):
-        return self
-
-    def next(self):
-        """For compatibility with PY2"""
-        return self.__next__()
-
-    def __next__(self):
-        ## Store comments in self.comments
-        nextline = self.f.readline()
-        if nextline == '':
-            raise StopIteration()
-        while nextline.startswith('#'):
-            self.comments += nextline
-            nextline = self.f.readline()
-        # Reader is unicodecsv, which needs bytes
-        return nextline.encode('utf-8').strip()
-        # return self.f.next().decode(self.encoding, errors='ignore').strip()
-
-
 def lmn_backup_file(path):
     """
     Create a backup of a file if in allowed paths, but on ly keeps 10 backups.
     Backup files names scheme is `.<name>.bak.<timestamp>`
+    DEPRECATED, only used in Linbo plugin.
 
     :param path: Path of the file
     :type path: string
@@ -143,40 +110,10 @@ def lmn_get_school_configpath(school):
     else:
         return '/etc/linuxmuster/sophomorix/'+school+'/'+school+'.'
 
-# def lmn_write_csv(path, fieldnames, data, encoding='utf-8'):
-#     """
-#     Write CSV and backup csv file only if there's no difference with the original.
-#     Delimiter is always ';'
-#     DEPRECATED
-#
-#     :param path: Path of the file
-#     :type path: string
-#     :param fieldnames: List of CSV fieldsnames
-#     :type fieldnames: list
-#     :param data: Data to write
-#     :type data: list of string
-#     :param encoding: Encoding, e.g. utf-8
-#     :type encoding: string
-#     """
-#
-#     if check_allowed_path(path):
-#         tmp = path + '_tmp'
-#         with open(tmp, 'wb') as f:
-#             csv.DictWriter(
-#                 f,
-#                 delimiter=';',
-#                 fieldnames=fieldnames,
-#                 encoding=encoding
-#             ).writerows(data)
-#         if not filecmp.cmp(tmp, path):
-#             lmn_backup_file(path)
-#             os.rename(tmp, path)
-#         else:
-#             os.unlink(tmp)
-
 def lmn_write_configfile(path, data):
     """
     Write config file it only if there's no difference with the original.
+    DEPRECATED. Must be remplaced with LMNFile in linbo plugin.
 
     :param path: Path of the file
     :type path: string

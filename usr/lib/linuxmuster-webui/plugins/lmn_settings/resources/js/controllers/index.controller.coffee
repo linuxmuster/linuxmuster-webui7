@@ -57,7 +57,7 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
     $http.get('/api/lm/subnets').then (resp) ->
         $scope.subnets = resp.data
 
-    $http.get('/api/lm/custom_config').then (resp) ->
+    $http.get('/api/lm/read_custom_config').then (resp) ->
         $scope.custom = resp.data.custom
         $scope.customMulti = resp.data.customMulti
         $scope.customDisplay = resp.data.customDisplay
@@ -111,4 +111,13 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
         school = "default-school"
         lmFileBackups.show('/etc/linuxmuster/sophomorix/' + school + '/school.conf')
 
+    $scope.saveCustom = () ->
+        config = {
+            'custom': $scope.custom,
+            'customMulti': $scope.customMulti,
+            'customDisplay': $scope.customDisplay,
+        }
+        $http.post('/api/lm/save_custom_config', {config: config}).then () ->
+            notify.success(gettext('Saved'))
+            # RESTART
 

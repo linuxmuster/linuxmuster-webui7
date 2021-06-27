@@ -158,12 +158,12 @@ class Handler(HttpPlugin):
             except Exception as e:
                 raise EndpointError(None, message=str(e))
 
-    @url(r'/api/lm/custom_config')
+    @url(r'/api/lm/read_custom_config')
     @authorize('lm:schoolsettings')
     @endpoint(api=True)
-    def handle_api_subnet(self, http_context):
+    def handle_api_read_custom_config(self, http_context):
         """
-        Read webui yaml config and return the settings for cutom fields.
+        Read webui yaml config and return the settings for custom fields.
         Method GET: read content.
 
         :param http_context: HttpContext
@@ -178,3 +178,26 @@ class Handler(HttpPlugin):
                     'customMulti': lmconfig.data.get('customMulti', {}),
                     'customDisplay': lmconfig.data.get('customDisplay', {}),
                 }
+
+
+    @url(r'/api/lm/save_custom_config')
+    @authorize('lm:schoolsettings')
+    @endpoint(api=True)
+    def handle_api_save_custom_config(self, http_context):
+        """
+        Save customs sophomorix fields settings in the webui yaml config.
+        Method POST.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return:
+        :rtype:
+        """
+
+        if http_context.method == 'POST':
+            custom_config = http_context.json_body()['config']
+            lmconfig.data['custom'] = custom_config['custom']
+            lmconfig.data['customMulti'] = custom_config['customMulti']
+            lmconfig.data['customDisplay'] = custom_config['customDisplay']
+            lmconfig.save()
+            # RESTART

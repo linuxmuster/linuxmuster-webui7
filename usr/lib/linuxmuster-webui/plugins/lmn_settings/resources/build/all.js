@@ -73,7 +73,7 @@
     $http.get('/api/lm/subnets').then(function(resp) {
       return $scope.subnets = resp.data;
     });
-    $http.get('/api/lm/custom_config').then(function(resp) {
+    $http.get('/api/lm/read_custom_config').then(function(resp) {
       $scope.custom = resp.data.custom;
       $scope.customMulti = resp.data.customMulti;
       return $scope.customDisplay = resp.data.customDisplay;
@@ -132,12 +132,27 @@
         return notify.success(gettext('Saved'));
       });
     };
-    return $scope.backups = function() {
+    $scope.backups = function() {
       var school;
       school = "default-school";
       return lmFileBackups.show('/etc/linuxmuster/sophomorix/' + school + '/school.conf');
     };
+    return $scope.saveCustom = function() {
+      var config;
+      config = {
+        'custom': $scope.custom,
+        'customMulti': $scope.customMulti,
+        'customDisplay': $scope.customDisplay
+      };
+      return $http.post('/api/lm/save_custom_config', {
+        config: config
+      }).then(function() {
+        return notify.success(gettext('Saved'));
+      });
+    };
   });
+
+  // RESTART
 
 }).call(this);
 

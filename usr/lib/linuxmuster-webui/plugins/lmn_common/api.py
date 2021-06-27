@@ -44,37 +44,9 @@ def check_allowed_path(path):
         return True
     raise IOError(_("Access refused."))  # skipcq: PYL-E0602
 
-class LinuxmusterConfig():
-    """
-    Basic class to handle linuxmuster webui's config file (yaml).
-    """
-
-    def __init__(self, path):
-        self.data = None
-        self.path = os.path.abspath(path)
-
-    def __str__(self):
-        return self.path
-
-    def load(self):
-        if os.geteuid() == 0:
-            os.chmod(self.path, 384)  # 0o600
-        self.data = yaml.load(open(self.path), Loader=yaml.SafeLoader)
-
-    def save(self):
-        # TODO Backup
-        with open(self.path, 'w') as f:
-            f.write(
-                yaml.safe_dump(
-                    self.data,
-                    default_flow_style=False,
-                    encoding='utf-8',
-                    allow_unicode=True
-                ).decode('utf-8')
-            )
-
-lmconfig = LinuxmusterConfig('/etc/linuxmuster/webui/config.yml')
-lmconfig.load()
+# Load Webui settings
+with LMNFile('/etc/linuxmuster/webui/config.yml', 'r') as webui:
+    lmconfig = webui.read()
 
 # Used for pageTitle, see lmn_auth.api
 with LMNFile('/var/lib/linuxmuster/setup.ini', 'r') as s:
@@ -174,7 +146,7 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
     :rtype: dict or value (list, dict, integer, string)
     """
 
-    debug = lmconfig.data['linuxmuster'].get("sophomorix-debug", False)
+    debug = lmconfig['linuxmuster'].get("sophomorix-debug", False)
 
     uid = os.getuid()
     if uid != 0:

@@ -173,11 +173,11 @@ class Handler(HttpPlugin):
         """
 
         if http_context.method == 'GET':
-                return {
-                    'custom': lmconfig.data.get('custom', {}),
-                    'customMulti': lmconfig.data.get('customMulti', {}),
-                    'customDisplay': lmconfig.data.get('customDisplay', {}),
-                }
+            return {
+                'custom': lmconfig.get('custom', {}),
+                'customMulti': lmconfig.get('customMulti', {}),
+                'customDisplay': lmconfig.get('customDisplay', {}),
+            }
 
 
     @url(r'/api/lm/save_custom_config')
@@ -196,8 +196,9 @@ class Handler(HttpPlugin):
 
         if http_context.method == 'POST':
             custom_config = http_context.json_body()['config']
-            lmconfig.data['custom'] = custom_config['custom']
-            lmconfig.data['customMulti'] = custom_config['customMulti']
-            lmconfig.data['customDisplay'] = custom_config['customDisplay']
-            lmconfig.save()
+            lmconfig['custom'] = custom_config['custom']
+            lmconfig['customMulti'] = custom_config['customMulti']
+            lmconfig['customDisplay'] = custom_config['customDisplay']
+            with LMNFile('/etc/linuxmuster/webui/config.yml', 'w') as webui:
+                webui.write(lmconfig)
             # RESTART

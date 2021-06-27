@@ -15,6 +15,7 @@ from aj.auth import authorize
 from aj.plugins.lmn_common.lmnfile import LMNFile
 from aj.plugins.lmn_common.api import lmn_get_school_configpath
 from aj.plugins.lmn_common.multischool import School
+from aj.plugins.lmn_common.api import lmconfig
 from configparser import ConfigParser
 
 
@@ -156,3 +157,24 @@ class Handler(HttpPlugin):
                 subprocess.check_call('linuxmuster-import-subnets > /tmp/import_devices.log', shell=True)
             except Exception as e:
                 raise EndpointError(None, message=str(e))
+
+    @url(r'/api/lm/custom_config')
+    @authorize('lm:schoolsettings')
+    @endpoint(api=True)
+    def handle_api_subnet(self, http_context):
+        """
+        Read webui yaml config and return the settings for cutom fields.
+        Method GET: read content.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: Settings in read mode
+        :rtype: dict
+        """
+
+        if http_context.method == 'GET':
+                return {
+                    'custom': lmconfig.data.get('custom', {}),
+                    'customMulti': lmconfig.data.get('customMulti', {}),
+                    'customDisplay': lmconfig.data.get('customDisplay', {}),
+                }

@@ -428,6 +428,87 @@
         </button>
     </uib:tab>
     -->
+    <uib:tab heading="{{'Custom fields'|translate}}">
+        <h2 translate>Custom values</h2>
+        <table class="table">
+            <tr>
+                <th> </th>
+                <th colspan="2" translate class="text-center">Teachers</th>
+                <th colspan="2" translate class="text-center">Students</th>
+            </tr>
+            <tr>
+                <th> </th>
+                <th translate class="text-center">Show</th>
+                <th translate class="text-center">Title</th>
+                <th translate class="text-center">Show</th>
+                <th translate class="text-center">Title</th>
+            </tr>
+            <tr ng:repeat="n in [1,2,3,4,5]">
+                <td>Custom {{n}}</td>
+                <td class="text-center">
+                    <span checkbox ng:model="custom['teachers'][n]['show']" />
+                </td>
+                <td class="text-center">
+                    <input type="text" ng:model="custom['teachers'][n]['title']" placeholder="Title" class="form-control" />
+                </td>
+                <td class="text-center">
+                    <span checkbox ng:model="custom['students'][n]['show']" />
+                </td>
+                <td class="text-center">
+                    <input type="text" ng:model="custom['students'][n]['title']" placeholder="Title" class="form-control" />
+                </td>
+            </tr>
+        </table>
+
+        <h2 translate>Custom lists</h2>
+        <table class="table">
+            <tr>
+                <th> </th>
+                <th colspan="2" translate class="text-center">Teachers</th>
+                <th colspan="2" translate class="text-center">Students</th>
+            </tr>
+            <tr>
+                <th> </th>
+                <th translate class="text-center">Show</th>
+                <th translate class="text-center">Title</th>
+                <th translate class="text-center">Show</th>
+                <th translate class="text-center">Title</th>
+            </tr>
+            <tr ng:repeat="m in [1,2,3,4,5]">
+                <td>Custom Multi {{m}}</td>
+                <td class="text-center">
+                    <span checkbox ng:model="customMulti['teachers'][m]['show']" />
+                </td>
+                <td class="text-center">
+                    <input type="text" ng:model="customMulti['teachers'][m]['title']" placeholder="Title" class="form-control" />
+                </td>
+                <td class="text-center">
+                    <span checkbox ng:model="customMulti['students'][m]['show']" />
+                </td>
+                <td class="text-center">
+                    <input type="text" ng:model="customMulti['students'][m]['title']" placeholder="Title" class="form-control" />
+                </td>
+            </tr>
+        </table>
+
+        <h2 translate>Which custom values display on user's lists ?</h2>
+        <table class="table">
+            <tr>
+                <th> </th>
+                <th translate class="text-center">Teachers</th>
+                <th translate class="text-center">Students</th>
+            </tr>
+            <tr ng:repeat="d in [1,2,3]">
+                <td>Custom Display {{d}}</td>
+                <td class="text-center">
+                    <input type="text" ng:model="customDisplay['teachers'][d]" placeholder="Field" class="form-control" />
+                </td>
+                <td class="text-center">
+                    <input type="text" ng:model="customDisplay['students'][d]" placeholder="Field" class="form-control" />
+                </td>
+            </tr>
+        </table>
+    </uib:tab>
     </uib:tabset>
 
     <div class="floating-toolbar-padder"></div>

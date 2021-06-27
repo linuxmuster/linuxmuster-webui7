@@ -73,6 +73,11 @@
     $http.get('/api/lm/subnets').then(function(resp) {
       return $scope.subnets = resp.data;
     });
+    $http.get('/api/lm/custom_config').then(function(resp) {
+      $scope.custom = resp.data.custom;
+      $scope.customMulti = resp.data.customMulti;
+      return $scope.customDisplay = resp.data.customDisplay;
+    });
     // $http.get('/api/lm/schoolsettings/school-share').then (resp) ->
     //     $scope.schoolShareEnabled = resp.data
 

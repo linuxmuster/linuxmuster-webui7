@@ -2,6 +2,7 @@
 Classes definitions to read, parse and save config files.
 """
 
+import os
 import os.path
 import logging
 import abc
@@ -9,9 +10,13 @@ import csv
 import magic
 import filecmp
 import time
+import yaml
 from configobj import ConfigObj
 
+
 ALLOWED_PATHS = [
+                # Webui settings
+                '/etc/linuxmuster/webui/config.yml',
                 # used for school.conf or *.csv in lmn_settings, lmn_devices and lmn_users
                 '/etc/linuxmuster/sophomorix/',
                 # used in lmn_linbo for start.conf
@@ -25,6 +30,7 @@ ALLOWED_PATHS = [
                 ]
 
 EMPTY_LINE_MARKER = '###EMPTY#LINE'
+
 
 class LMNFile(metaclass=abc.ABCMeta):
     """
@@ -166,6 +172,44 @@ class LinboLoader(LMNFile):
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.opened.close()
 
+
+class YAMLLoader(LMNFile):
+    """
+    Handler for yaml files.
+    """
+
+    extensions = ['.yml']
+
+    def __enter__(self):
+        if os.geteuid() == 0:
+            os.chmod(self.file, 384)  # 0o600
+        self.opened = open(self.file, 'r')
+        if 'r' in self.mode or '+' in self.mode:
+            self.data = yaml.load(self.opened, Loader=yaml.SafeLoader)
+        return self
+
+    def read(self):
+        return self.data
+
+    def write(self, data):
+        tmp = self.file + '_tmp'
+        with open(tmp, 'w', encoding=self.encoding) as f:
+            f.write(
+                yaml.safe_dump(
+                    data,
+                    default_flow_style=False,
+                    encoding='utf-8',
+                    allow_unicode=True
+                ).decode('utf-8')
+            )
+        if not filecmp.cmp(tmp, self.file):
+            self.backup()
+            os.rename(tmp, self.file)
+        else:
+            os.unlink(tmp)
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.opened.close()
 
 class CSVLoader(LMNFile):
     """

@@ -104,6 +104,16 @@ angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $rou
                     type = "danger"
                 $scope.quotas.push({'share':share, 'total':total + " MiB", 'used':used, 'usage':usage, 'type':type})
 
+    $scope.editCustom = (n) ->
+        value = $scope.userDetails[0]['sophomorixCustom'+n]
+        messagebox.prompt('New value', value).then (msg) ->
+            $http.post("/api/lm/custom", {index: n, value: msg.value, user: id}).then () ->
+                if msg.value
+                    $scope.userDetails[0]['sophomorixCustom'+n] = msg.value
+                else
+                    $scope.userDetails[0]['sophomorixCustom'+n] = 'null'
+                notify.success("Value updated !")
+
     $scope.close = () ->
         $uibModalInstance.dismiss()
 

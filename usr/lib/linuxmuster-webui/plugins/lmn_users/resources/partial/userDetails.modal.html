@@ -10,6 +10,7 @@
 <div style="padding: 0 20px;" ng:show="userDetails != null">
     <br />
     <h4 translate> Properties</h4>
+    <div style="display:flex;align-items:flex-start;">
     <table class="table">
         <tr>
             <td><b translate>Loginname:</b></td>
@@ -50,6 +51,18 @@
             <td>{{formatDate(userDetails[0]['sophomorixCreationDate']) | date:'dd MMM yyyy - HH:mm:ss' }}</td>
         </tr>
     </table>
+    <table class="table">
+        <tr ng:repeat="n in [1,2,3,4,5]" ng:show="userDetails[0]['sophomorixCustom'+n] != 'null'">
+            <td><b>Custom {{n}}</b></td>
+            <td>{{userDetails[0]['sophomorixCustom'+n]}}</td>
+            <td>
+                <a ng:click="editCustom(n)">
+                    <i class="fa fa-pencil"></i>
+                </a>
+            </td>
+        </tr>
+    </table>
+    </div>
 
     <div class="panel panel-info">
         <div class="panel-heading">

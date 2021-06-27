@@ -1984,6 +1984,24 @@
       }
       return results;
     });
+    $scope.editCustom = function(n) {
+      var value;
+      value = $scope.userDetails[0]['sophomorixCustom' + n];
+      return messagebox.prompt('New value', value).then(function(msg) {
+        return $http.post("/api/lm/custom", {
+          index: n,
+          value: msg.value,
+          user: id
+        }).then(function() {
+          if (msg.value) {
+            $scope.userDetails[0]['sophomorixCustom' + n] = msg.value;
+          } else {
+            $scope.userDetails[0]['sophomorixCustom' + n] = 'null';
+          }
+          return notify.success("Value updated !");
+        });
+      });
+    };
     return $scope.close = function() {
       return $uibModalInstance.dismiss();
     };

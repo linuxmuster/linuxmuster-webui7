@@ -855,3 +855,25 @@ class Handler(HttpPlugin):
                         "TYPE": "success",
                     }
             return quotaMap
+
+    @url(r'/api/lm/custom')
+    @authorize('lm:users:passwords')
+    @endpoint(api=True)
+    def handle_group_quota(self, http_context):
+        """
+        Update a custom sophomorix field.
+        Method POST.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: All quotas for specified users
+        :rtype: dict
+        """
+
+        if http_context.method == 'POST':
+            n = http_context.json_body()['index']
+            user = http_context.json_body()['user']
+            value = http_context.json_body()['value']
+
+            command = ['sophomorix-user', '-u', user, f'--custom{n}', value, '-jj']
+            result = lmn_getSophomorixValue(command, '')

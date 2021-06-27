@@ -6,7 +6,6 @@ from aj.auth import authorize
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue
 from aj.plugins.lmn_websession.api import loadList, bbbApiCall, getURL, replaceSpecialChars
 from aj.plugins import PluginManager
-from aj.plugins.lmn_common.api import LinuxmusterConfig, lmn_write_configfile
 
 import aj
 import json

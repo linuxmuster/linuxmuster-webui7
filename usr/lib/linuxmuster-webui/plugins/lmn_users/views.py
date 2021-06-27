@@ -859,7 +859,7 @@ class Handler(HttpPlugin):
     @url(r'/api/lm/custom')
     @authorize('lm:users:passwords')
     @endpoint(api=True)
-    def handle_group_quota(self, http_context):
+    def handle_custom(self, http_context):
         """
         Update a custom sophomorix field.
         Method POST.
@@ -876,4 +876,49 @@ class Handler(HttpPlugin):
             value = http_context.json_body()['value']
 
             command = ['sophomorix-user', '-u', user, f'--custom{n}', value, '-jj']
+            result = lmn_getSophomorixValue(command, '')
+
+
+    @url(r'/api/lm/custommulti/add')
+    @authorize('lm:users:passwords')
+    @endpoint(api=True)
+    def handle_custom_mutli_add(self, http_context):
+        """
+        Add a sophomorix field in custom multi.
+        Method POST.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: All quotas for specified users
+        :rtype: dict
+        """
+
+        if http_context.method == 'POST':
+            n = http_context.json_body()['index']
+            user = http_context.json_body()['user']
+            value = http_context.json_body()['value']
+
+            command = ['sophomorix-user', '-u', user, f'--add-custom-multi{n}', value, '-jj']
+            result = lmn_getSophomorixValue(command, '')
+
+    @url(r'/api/lm/custommulti/remove')
+    @authorize('lm:users:passwords')
+    @endpoint(api=True)
+    def handle_custom_multi_remove(self, http_context):
+        """
+        Remove a sophomorix field in custom multi.
+        Method POST.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: All quotas for specified users
+        :rtype: dict
+        """
+
+        if http_context.method == 'POST':
+            n = http_context.json_body()['index']
+            user = http_context.json_body()['user']
+            value = http_context.json_body()['value']
+
+            command = ['sophomorix-user', '-u', user, f'--remove-custom-multi{n}', value, '-jj']
             result = lmn_getSophomorixValue(command, '')

@@ -1987,7 +1987,7 @@
     $scope.editCustom = function(n) {
       var value;
       value = $scope.userDetails[0]['sophomorixCustom' + n];
-      return messagebox.prompt('New value', value).then(function(msg) {
+      return messagebox.prompt(gettext('New value'), value).then(function(msg) {
         return $http.post("/api/lm/custom", {
           index: n,
           value: msg.value,
@@ -1999,6 +1999,39 @@
             $scope.userDetails[0]['sophomorixCustom' + n] = 'null';
           }
           return notify.success("Value updated !");
+        });
+      });
+    };
+    $scope.removeCustomMulti = function(n, value) {
+      return messagebox.show({
+        title: gettext('Remove custom field value'),
+        text: gettext('Do you really want to remove ') + value + ' ?',
+        positive: 'OK',
+        negative: gettext('Cancel')
+      }).then(function(msg) {
+        return $http.post("/api/lm/custommulti/remove", {
+          index: n,
+          value: value,
+          user: id
+        }).then(function() {
+          var position;
+          position = $scope.userDetails[0]['sophomorixCustomMulti' + n].indexOf(msg.value);
+          $scope.userDetails[0]['sophomorixCustomMulti' + n].splice(position, 1);
+          return notify.success("Value removed !");
+        });
+      });
+    };
+    $scope.addCustomMulti = function(n) {
+      return messagebox.prompt(gettext('New value')).then(function(msg) {
+        return $http.post("/api/lm/custommulti/add", {
+          index: n,
+          value: msg.value,
+          user: id
+        }).then(function() {
+          if (msg.value) {
+            $scope.userDetails[0]['sophomorixCustomMulti' + n].push(msg.value);
+          }
+          return notify.success("Value added !");
         });
       });
     };

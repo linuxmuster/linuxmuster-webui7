@@ -106,13 +106,32 @@ angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $rou
 
     $scope.editCustom = (n) ->
         value = $scope.userDetails[0]['sophomorixCustom'+n]
-        messagebox.prompt('New value', value).then (msg) ->
+        messagebox.prompt(gettext('New value'), value).then (msg) ->
             $http.post("/api/lm/custom", {index: n, value: msg.value, user: id}).then () ->
                 if msg.value
                     $scope.userDetails[0]['sophomorixCustom'+n] = msg.value
                 else
                     $scope.userDetails[0]['sophomorixCustom'+n] = 'null'
                 notify.success("Value updated !")
+
+    $scope.removeCustomMulti = (n, value) ->
+        messagebox.show(
+            title: gettext('Remove custom field value'),
+            text: gettext('Do you really want to remove ') + value + ' ?',
+            positive: 'OK',
+            negative: gettext('Cancel')
+        ).then (msg) ->
+            $http.post("/api/lm/custommulti/remove", {index: n, value: value, user: id}).then () ->
+                position = $scope.userDetails[0]['sophomorixCustomMulti'+n].indexOf(msg.value)
+                $scope.userDetails[0]['sophomorixCustomMulti'+n].splice(position, 1)
+                notify.success("Value removed !")
+
+    $scope.addCustomMulti = (n) ->
+        messagebox.prompt(gettext('New value')).then (msg) ->
+            $http.post("/api/lm/custommulti/add", {index: n, value: msg.value, user: id}).then () ->
+                if msg.value
+                    $scope.userDetails[0]['sophomorixCustomMulti'+n].push(msg.value)
+                notify.success("Value added !")
 
     $scope.close = () ->
         $uibModalInstance.dismiss()

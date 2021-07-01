@@ -875,9 +875,12 @@ class Handler(HttpPlugin):
             user = http_context.json_body()['user']
             value = http_context.json_body()['value']
 
-            command = ['sophomorix-user', '-u', user, f'--custom{n}', value, '-jj']
-            result = lmn_getSophomorixValue(command, '')
-
+            try:
+                command = ['sophomorix-user', '-u', user, f'--custom{n}', value, '-jj']
+                result = lmn_getSophomorixValue(command, '')
+            except IndexError:
+                # No error output from sophomorix yet
+                raise EndpointError(None)
 
     @url(r'/api/lm/custommulti/add')
     @authorize('lm:users:passwords')
@@ -898,8 +901,12 @@ class Handler(HttpPlugin):
             user = http_context.json_body()['user']
             value = http_context.json_body()['value']
 
-            command = ['sophomorix-user', '-u', user, f'--add-custom-multi{n}', value, '-jj']
-            result = lmn_getSophomorixValue(command, '')
+            try:
+                command = ['sophomorix-user', '-u', user, f'--add-custom-multi{n}', value, '-jj']
+                result = lmn_getSophomorixValue(command, '')
+            except IndexError:
+                # No error output from sophomorix yet
+                raise EndpointError(None)
 
     @url(r'/api/lm/custommulti/remove')
     @authorize('lm:users:passwords')
@@ -920,5 +927,10 @@ class Handler(HttpPlugin):
             user = http_context.json_body()['user']
             value = http_context.json_body()['value']
 
-            command = ['sophomorix-user', '-u', user, f'--remove-custom-multi{n}', value, '-jj']
-            result = lmn_getSophomorixValue(command, '')
+            try:
+                command = ['sophomorix-user', '-u', user, f'--remove-custom-multi{n}', value, '-jj']
+                result = lmn_getSophomorixValue(command, '')
+            except IndexError:
+                # No error output from sophomorix yet
+                raise EndpointError(None)
+

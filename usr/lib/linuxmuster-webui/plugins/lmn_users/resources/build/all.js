@@ -2033,7 +2033,9 @@
           } else {
             $scope.userDetails['sophomorixCustom' + n] = 'null';
           }
-          return notify.success("Value updated !");
+          return notify.success(gettext("Value updated !"));
+        }, function() {
+          return notify.error(gettext("Error, please verify the user and/or your values."));
         });
       });
     };
@@ -2041,7 +2043,7 @@
       return messagebox.show({
         title: gettext('Remove custom field value'),
         text: gettext('Do you really want to remove ') + value + ' ?',
-        positive: 'OK',
+        positive: gettext('OK'),
         negative: gettext('Cancel')
       }).then(function(msg) {
         return $http.post("/api/lm/custommulti/remove", {
@@ -2052,7 +2054,9 @@
           var position;
           position = $scope.userDetails['sophomorixCustomMulti' + n].indexOf(msg.value);
           $scope.userDetails[0]['sophomorixCustomMulti' + n].splice(position, 1);
-          return notify.success("Value removed !");
+          return notify.success(gettext("Value removed !"));
+        }, function() {
+          return notify.error(gettext("Error, please verify the user and/or your values."));
         });
       });
     };
@@ -2066,7 +2070,9 @@
           if (msg.value) {
             $scope.userDetails['sophomorixCustomMulti' + n].push(msg.value);
           }
-          return notify.success("Value added !");
+          return notify.success(gettext("Value added !"));
+        }, function() {
+          return notify.error(gettext("Error, please verify the user and/or your values."));
         });
       });
     };

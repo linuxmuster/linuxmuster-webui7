@@ -36,6 +36,12 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
         'UTF8',
     ]
 
+    $scope.customDisplayOptions = ['']
+    for n in [1,2,3,4,5]
+        $scope.customDisplayOptions.push('sophomorixCustom' + n)
+    for n in [1,2,3,4,5]
+        $scope.customDisplayOptions.push('sophomorixCustomMulti' + n)
+
     $http.get('/api/lm/schoolsettings').then (resp) ->
         school = 'default-school'
         console.log(resp.data)

@@ -16,7 +16,7 @@
   });
 
   angular.module('lmn.settings').controller('LMSettingsController', function($scope, $location, $http, $uibModal, messagebox, gettext, notify, pageTitle, core, lmFileBackups) {
-    var tag;
+    var i, j, len, len1, n, ref, ref1, tag;
     pageTitle.set(gettext('Settings'));
     $scope.trans = {
       remove: gettext('Remove')
@@ -44,16 +44,27 @@
     ];
     $scope.unit = 'MiB';
     $scope.encodings = ['auto', 'ASCII', 'ISO_8859-1', 'ISO_8859-15', 'WIN-1252', 'UTF8'];
+    $scope.customDisplayOptions = [''];
+    ref = [1, 2, 3, 4, 5];
+    for (i = 0, len = ref.length; i < len; i++) {
+      n = ref[i];
+      $scope.customDisplayOptions.push('sophomorixCustom' + n);
+    }
+    ref1 = [1, 2, 3, 4, 5];
+    for (j = 0, len1 = ref1.length; j < len1; j++) {
+      n = ref1[j];
+      $scope.customDisplayOptions.push('sophomorixCustomMulti' + n);
+    }
     $http.get('/api/lm/schoolsettings').then(function(resp) {
-      var encoding, file, i, len, ref, school, userfile;
+      var encoding, file, k, len2, ref2, school, userfile;
       school = 'default-school';
       console.log(resp.data);
       encoding = {};
-      ref = ['userfile.students.csv', 'userfile.extrastudents.csv', 'userfile.teachers.csv', 'userfile.extrastudents.csv'];
+      ref2 = ['userfile.students.csv', 'userfile.extrastudents.csv', 'userfile.teachers.csv', 'userfile.extrastudents.csv'];
       //TODO: Remove comments
       //for file in ['userfile.students.csv', 'userfile.teachers.csv', 'userfile.extrastudents.csv', 'classfile.extraclasses.csv', ]
-      for (i = 0, len = ref.length; i < len; i++) {
-        file = ref[i];
+      for (k = 0, len2 = ref2.length; k < len2; k++) {
+        file = ref2[k];
         userfile = file.substring(file.indexOf('.') + 1);
         if (resp.data[file]['ENCODING'] === 'auto') {
           console.log('is auto');

@@ -1927,20 +1927,21 @@
       action: 'get-specified',
       user: id
     }).then(function(resp) {
-      var category, cn, dn, j, len, ref;
-      $scope.userDetails = resp.data;
+      var category, cn, dn, j, len, ref, results;
+      $scope.userDetails = resp.data[0];
       $scope.groups = [];
-      ref = $scope.userDetails[0]['memberOf'];
+      ref = $scope.userDetails['memberOf'];
+      results = [];
       for (j = 0, len = ref.length; j < len; j++) {
         dn = ref[j];
         cn = dn.split(',')[0].split('=')[1];
         category = dn.split(',')[1].split('=')[1];
-        $scope.groups.push({
+        results.push($scope.groups.push({
           'cn': cn,
           'category': category
-        });
+        }));
       }
-      return console.log($scope.userDetails);
+      return results;
     });
     $http.get(`/api/lmn/quota/${id}`).then(function(resp) {
       var ref, results, share, total, type, usage, used, values;
@@ -1986,7 +1987,7 @@
     });
     $scope.editCustom = function(n) {
       var value;
-      value = $scope.userDetails[0]['sophomorixCustom' + n];
+      value = $scope.userDetails['sophomorixCustom' + n];
       return messagebox.prompt(gettext('New value'), value).then(function(msg) {
         return $http.post("/api/lm/custom", {
           index: n,
@@ -1994,9 +1995,9 @@
           user: id
         }).then(function() {
           if (msg.value) {
-            $scope.userDetails[0]['sophomorixCustom' + n] = msg.value;
+            $scope.userDetails['sophomorixCustom' + n] = msg.value;
           } else {
-            $scope.userDetails[0]['sophomorixCustom' + n] = 'null';
+            $scope.userDetails['sophomorixCustom' + n] = 'null';
           }
           return notify.success("Value updated !");
         });
@@ -2015,7 +2016,7 @@
           user: id
         }).then(function() {
           var position;
-          position = $scope.userDetails[0]['sophomorixCustomMulti' + n].indexOf(msg.value);
+          position = $scope.userDetails['sophomorixCustomMulti' + n].indexOf(msg.value);
           $scope.userDetails[0]['sophomorixCustomMulti' + n].splice(position, 1);
           return notify.success("Value removed !");
         });
@@ -2029,7 +2030,7 @@
           user: id
         }).then(function() {
           if (msg.value) {
-            $scope.userDetails[0]['sophomorixCustomMulti' + n].push(msg.value);
+            $scope.userDetails['sophomorixCustomMulti' + n].push(msg.value);
           }
           return notify.success("Value added !");
         });

@@ -73,14 +73,12 @@ angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $rou
     $scope.showtext = gettext("Show")
 
     $http.post('/api/lm/sophomorixUsers/'+role, {action: 'get-specified', user: id}).then (resp) ->
-        $scope.userDetails = resp.data
+        $scope.userDetails = resp.data[0]
         $scope.groups = []
-        for dn in $scope.userDetails[0]['memberOf']
+        for dn in $scope.userDetails['memberOf']
             cn       = dn.split(',')[0].split('=')[1]
             category = dn.split(',')[1].split('=')[1]
             $scope.groups.push({'cn':cn, 'category':category})
-
-        console.log ($scope.userDetails)
 
     $http.get("/api/lmn/quota/#{id}").then (resp) ->
         $scope.quotas = []
@@ -105,13 +103,13 @@ angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $rou
                 $scope.quotas.push({'share':share, 'total':total + " MiB", 'used':used, 'usage':usage, 'type':type})
 
     $scope.editCustom = (n) ->
-        value = $scope.userDetails[0]['sophomorixCustom'+n]
+        value = $scope.userDetails['sophomorixCustom'+n]
         messagebox.prompt(gettext('New value'), value).then (msg) ->
             $http.post("/api/lm/custom", {index: n, value: msg.value, user: id}).then () ->
                 if msg.value
-                    $scope.userDetails[0]['sophomorixCustom'+n] = msg.value
+                    $scope.userDetails['sophomorixCustom'+n] = msg.value
                 else
-                    $scope.userDetails[0]['sophomorixCustom'+n] = 'null'
+                    $scope.userDetails['sophomorixCustom'+n] = 'null'
                 notify.success("Value updated !")
 
     $scope.removeCustomMulti = (n, value) ->
@@ -122,7 +120,7 @@ angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $rou
             negative: gettext('Cancel')
         ).then (msg) ->
             $http.post("/api/lm/custommulti/remove", {index: n, value: value, user: id}).then () ->
-                position = $scope.userDetails[0]['sophomorixCustomMulti'+n].indexOf(msg.value)
+                position = $scope.userDetails['sophomorixCustomMulti'+n].indexOf(msg.value)
                 $scope.userDetails[0]['sophomorixCustomMulti'+n].splice(position, 1)
                 notify.success("Value removed !")
 
@@ -130,7 +128,7 @@ angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $rou
         messagebox.prompt(gettext('New value')).then (msg) ->
             $http.post("/api/lm/custommulti/add", {index: n, value: msg.value, user: id}).then () ->
                 if msg.value
-                    $scope.userDetails[0]['sophomorixCustomMulti'+n].push(msg.value)
+                    $scope.userDetails['sophomorixCustomMulti'+n].push(msg.value)
                 notify.success("Value added !")
 
     $scope.close = () ->

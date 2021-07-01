@@ -151,7 +151,7 @@
       }).then(function() {
         notify.success(gettext('Saved'));
         return messagebox.show({
-          text: gettext("In order for changes to take effect, it's  necessary to restart the Webui.\r\nRestart now ?"),
+          text: gettext("In order for changes to take effect, it's  necessary to restart the Webui. Restart now ?"),
           positive: gettext('Restart'),
           negative: gettext('Later')
         }).then(function() {

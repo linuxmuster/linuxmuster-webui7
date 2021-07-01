@@ -57,10 +57,11 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
     $http.get('/api/lm/subnets').then (resp) ->
         $scope.subnets = resp.data
 
-    $http.get('/api/lm/read_custom_config').then (resp) ->
-        $scope.custom = resp.data.custom
-        $scope.customMulti = resp.data.customMulti
-        $scope.customDisplay = resp.data.customDisplay
+    $scope.load_custom_config = () ->
+        $http.get('/api/lm/read_custom_config').then (resp) ->
+            $scope.custom = resp.data.custom
+            $scope.customMulti = resp.data.customMulti
+            $scope.customDisplay = resp.data.customDisplay
 
     # $http.get('/api/lm/schoolsettings/school-share').then (resp) ->
     #     $scope.schoolShareEnabled = resp.data

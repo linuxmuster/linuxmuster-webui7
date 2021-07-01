@@ -201,4 +201,3 @@ class Handler(HttpPlugin):
             lmconfig['customDisplay'] = custom_config['customDisplay']
             with LMNFile('/etc/linuxmuster/webui/config.yml', 'w') as webui:
                 webui.write(lmconfig)
-            # RESTART

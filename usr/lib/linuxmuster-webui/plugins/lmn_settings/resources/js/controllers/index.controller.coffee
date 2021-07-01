@@ -4,7 +4,7 @@ angular.module('lmn.settings').config ($routeProvider) ->
         templateUrl: '/lmn_settings:resources/partial/index.html'
 
 
-angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $location, $http, $uibModal, messagebox, gettext, notify, pageTitle, lmFileBackups) ->
+angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $location, $http, $uibModal, messagebox, gettext, notify, pageTitle, core, lmFileBackups) ->
     pageTitle.set(gettext('Settings'))
 
     $scope.trans = {
@@ -119,5 +119,10 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
         }
         $http.post('/api/lm/save_custom_config', {config: config}).then () ->
             notify.success(gettext('Saved'))
-            # RESTART
+            messagebox.show({
+                text: gettext("In order for changes to take effect, it's  necessary to restart the Webui. Restart now ?"),
+                positive: gettext('Restart'),
+                negative: gettext('Later')
+            }).then () ->
+                core.forceRestart()
 

@@ -15,7 +15,7 @@
     });
   });
 
-  angular.module('lmn.settings').controller('LMSettingsController', function($scope, $location, $http, $uibModal, messagebox, gettext, notify, pageTitle, lmFileBackups) {
+  angular.module('lmn.settings').controller('LMSettingsController', function($scope, $location, $http, $uibModal, messagebox, gettext, notify, pageTitle, core, lmFileBackups) {
     var tag;
     pageTitle.set(gettext('Settings'));
     $scope.trans = {
@@ -73,11 +73,13 @@
     $http.get('/api/lm/subnets').then(function(resp) {
       return $scope.subnets = resp.data;
     });
-    $http.get('/api/lm/read_custom_config').then(function(resp) {
-      $scope.custom = resp.data.custom;
-      $scope.customMulti = resp.data.customMulti;
-      return $scope.customDisplay = resp.data.customDisplay;
-    });
+    $scope.load_custom_config = function() {
+      return $http.get('/api/lm/read_custom_config').then(function(resp) {
+        $scope.custom = resp.data.custom;
+        $scope.customMulti = resp.data.customMulti;
+        return $scope.customDisplay = resp.data.customDisplay;
+      });
+    };
     // $http.get('/api/lm/schoolsettings/school-share').then (resp) ->
     //     $scope.schoolShareEnabled = resp.data
 
@@ -147,12 +149,17 @@
       return $http.post('/api/lm/save_custom_config', {
         config: config
       }).then(function() {
-        return notify.success(gettext('Saved'));
+        notify.success(gettext('Saved'));
+        return messagebox.show({
+          text: gettext("In order for changes to take effect, it's  necessary to restart the Webui.\r\nRestart now ?"),
+          positive: gettext('Restart'),
+          negative: gettext('Later')
+        }).then(function() {
+          return core.forceRestart();
+        });
       });
     };
   });
-
-  // RESTART
 
 }).call(this);
 

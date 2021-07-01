@@ -53,6 +53,28 @@ angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $rou
     $scope.showGroupDetails = true
     $scope.showQuotaDetails = true
     $scope.nevertext = gettext('Never')
+    $scope.custom_column = false
+
+    if role == 'students' or role == 'teachers'
+        $http.get('/api/lm/read_custom_config').then (resp) ->
+            $scope.custom = resp.data.custom[role]
+            $scope.customMulti = resp.data.customMulti[role]
+            $scope.customDisplay = resp.data.customDisplay[role]
+
+            # Is there a custom field to show ?
+            for custom, values of $scope.custom
+                if values.show
+                    console.log(custom, values)
+                    $scope.custom_column = true
+                    break
+
+            if not $scope.custom_column
+                for custom, values of $scope.customMulti
+                    if values.show
+                        console.log(custom, values)
+                        $scope.custom_column = true
+                        break
+
 
     $scope.formatDate = (date) ->
         if (date == "19700101000000.0Z")

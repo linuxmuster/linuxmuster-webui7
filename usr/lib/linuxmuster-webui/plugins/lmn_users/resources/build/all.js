@@ -1904,6 +1904,40 @@
     $scope.showGroupDetails = true;
     $scope.showQuotaDetails = true;
     $scope.nevertext = gettext('Never');
+    $scope.custom_column = false;
+    if (role === 'students' || role === 'teachers') {
+      $http.get('/api/lm/read_custom_config').then(function(resp) {
+        var custom, ref, ref1, results, values;
+        $scope.custom = resp.data.custom[role];
+        $scope.customMulti = resp.data.customMulti[role];
+        $scope.customDisplay = resp.data.customDisplay[role];
+        ref = $scope.custom;
+        // Is there a custom field to show ?
+        for (custom in ref) {
+          values = ref[custom];
+          if (values.show) {
+            console.log(custom, values);
+            $scope.custom_column = true;
+            break;
+          }
+        }
+        if (!$scope.custom_column) {
+          ref1 = $scope.customMulti;
+          results = [];
+          for (custom in ref1) {
+            values = ref1[custom];
+            if (values.show) {
+              console.log(custom, values);
+              $scope.custom_column = true;
+              break;
+            } else {
+              results.push(void 0);
+            }
+          }
+          return results;
+        }
+      });
+    }
     $scope.formatDate = function(date) {
       var day, hour, min, month, sec, year;
       if (date === "19700101000000.0Z") {

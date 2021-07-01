@@ -51,9 +51,12 @@
             <td>{{formatDate(userDetails['sophomorixCreationDate']) | date:'dd MMM yyyy - HH:mm:ss' }}</td>
         </tr>
     </table>
-    <table class="table">
-        <tr ng:repeat="n in [1,2,3,4,5]" ng:show="userDetails['sophomorixCustom'+n] != 'null'">
-            <td><b>Custom {{n}}</b></td>
+    <table class="table" ng:show="custom_column">
+        <tr ng:repeat="n in [1,2,3,4,5]" ng:show="custom[n].show">
+            <td>
+                <b ng:show="custom[n].title">{{custom[n].title}}</b>
+                <b ng:show="!custom[n].title">Custom {{n}}</b>
+            </td>
             <td>{{userDetails['sophomorixCustom'+n]}}</td>
             <td>
                 <a ng:click="editCustom(n)">
@@ -61,8 +64,11 @@
                 </a>
             </td>
         </tr>
-        <tr ng:repeat="n in [1,2,3,4,5]" ng:show="userDetails['sophomorixCustomMulti'+n].length > 0">
-            <td><b>Multi Custom {{n}}</b></td>
+        <tr ng:repeat="n in [1,2,3,4,5]" ng:show="customMulti[n].show">
+            <td>
+                <b ng:show="customMulti[n].title">{{customMulti[n].title}}</b>
+                <b ng:show="!customMulti[n].title">Multi Custom {{n}}</b>
+            </td>
             <td>
                 <span ng:repeat="value in userDetails['sophomorixCustomMulti'+n]" class="label label-info" ng:click="removeCustomMulti(n, value)">
                     {{value}}

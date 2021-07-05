@@ -13,7 +13,7 @@
     });
   });
 
-  angular.module('lmn.users').controller('LMUsersTeachersController', function($q, $scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) {
+  angular.module('lmn.users').controller('LMUsersTeachersController', function($q, $scope, $http, $location, $route, $uibModal, $sce, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) {
     pageTitle.set(gettext('Teachers'));
     $scope.sorts = [
       {
@@ -57,9 +57,35 @@
     $http.post('/api/lm/sophomorixUsers/teachers', {
       action: 'get-all'
     }).then(function(resp) {
-      $scope.teachers = resp.data;
-      return console.log(resp.data);
+      return $scope.teachers = resp.data;
     });
+    $http.get('/api/lm/read_custom_config').then(function(resp) {
+      return $scope.customDisplay = resp.data.customDisplay.teachers;
+    });
+    $scope.format_custom = function(teacher, n) {
+      var custom, entry, html, i, len, value;
+      // n representes 1,2,3 for customDisplay1 ... customDisplay3
+      custom = $scope.customDisplay[n];
+      value = teacher[custom];
+      if (custom.includes('Multi')) { // List
+        if (value.length > 0) {
+          html = '';
+// Render html here is a bad thing
+          for (i = 0, len = value.length; i < len; i++) {
+            entry = value[i];
+            html = html + `<span class='label label-info'>${entry}</span>`;
+          }
+          return $sce.trustAsHtml(html);
+        } else {
+          return ''; // string
+        }
+      } else {
+        if (value !== 'null') {
+          return value;
+        }
+        return '';
+      }
+    };
     $scope.showInitialPassword = function(users) {
       var type, user;
       user = [];
@@ -1297,7 +1323,7 @@
     });
   });
 
-  angular.module('lmn.users').controller('LMUsersTeachersController', function($q, $scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) {
+  angular.module('lmn.users').controller('LMUsersTeachersController', function($q, $scope, $http, $location, $route, $uibModal, $sce, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) {
     pageTitle.set(gettext('Teachers'));
     $scope.sorts = [
       {
@@ -1341,9 +1367,35 @@
     $http.post('/api/lm/sophomorixUsers/teachers', {
       action: 'get-all'
     }).then(function(resp) {
-      $scope.teachers = resp.data;
-      return console.log(resp.data);
+      return $scope.teachers = resp.data;
     });
+    $http.get('/api/lm/read_custom_config').then(function(resp) {
+      return $scope.customDisplay = resp.data.customDisplay.teachers;
+    });
+    $scope.format_custom = function(teacher, n) {
+      var custom, entry, html, i, len, value;
+      // n representes 1,2,3 for customDisplay1 ... customDisplay3
+      custom = $scope.customDisplay[n];
+      value = teacher[custom];
+      if (custom.includes('Multi')) { // List
+        if (value.length > 0) {
+          html = '';
+// Render html here is a bad thing
+          for (i = 0, len = value.length; i < len; i++) {
+            entry = value[i];
+            html = html + `<span class='label label-info'>${entry}</span>`;
+          }
+          return $sce.trustAsHtml(html);
+        } else {
+          return ''; // string
+        }
+      } else {
+        if (value !== 'null') {
+          return value;
+        }
+        return '';
+      }
+    };
     $scope.showInitialPassword = function(users) {
       var type, user;
       user = [];
@@ -1910,7 +1962,6 @@
         var custom, ref, ref1, results, values;
         $scope.custom = resp.data.custom[role];
         $scope.customMulti = resp.data.customMulti[role];
-        $scope.customDisplay = resp.data.customDisplay[role];
         ref = $scope.custom;
         // Is there a custom field to show ?
         for (custom in ref) {

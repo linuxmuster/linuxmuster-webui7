@@ -59,7 +59,6 @@ angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $rou
         $http.get('/api/lm/read_custom_config').then (resp) ->
             $scope.custom = resp.data.custom[role]
             $scope.customMulti = resp.data.customMulti[role]
-            $scope.customDisplay = resp.data.customDisplay[role]
 
             # Is there a custom field to show ?
             for custom, values of $scope.custom

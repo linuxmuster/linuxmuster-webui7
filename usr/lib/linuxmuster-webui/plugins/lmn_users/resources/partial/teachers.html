@@ -66,10 +66,38 @@
                     <span checkbox ng:model="teacher.selected"></span>
                 </td>
                 <td width="1" style="text-align:left;">
-                    <i>{{teacher.sAMAccountName}}</i> <br />
+                    <i>{{teacher.sAMAccountName}}</i>
+                    <br />
+                    <div ng:show="customDisplay[1].includes('Multi')">
+                        <span ng:repeat="custom1 in teacher[customDisplay[1]] track by $index" class="label label-info">
+                            {{custom1}}
+                        </span>
+                    </div>
+                    <span ng:show="!customDisplay[1].includes('Multi') && teacher[customDisplay[1]] != 'null'">
+                        {{teacher[customDisplay[1]]}}
+                    </span>
                 </td>
                 <td>
-                    <b>{{teacher.givenName}}</b> <br /> {{teacher.sn}}
+                    <b>
+                        {{teacher.sn}} {{teacher.givenName}}
+                        <div ng:show="customDisplay[3].includes('Multi')">
+                            <span ng:repeat="custom3 in teacher[customDisplay[3]] track by $index" class="label label-info">
+                                {{custom3}}
+                            </span>
+                        </div>
+                        <span ng:show="!customDisplay[3].includes('Multi') && teacher[customDisplay[3]] != 'null'">
+                            ( {{teacher[customDisplay[3]]}} )
+                        </span>
+                    </b>
+                    <br />
+                    <div ng:show="customDisplay[2].includes('Multi')">
+                            <span ng:repeat="custom2 in teacher[customDisplay[2]] track by $index" class="label label-info">
+                                {{custom2}}
+                            </span>
+                    </div>
+                    <span ng:show="!customDisplay[2].includes('Multi') && teacher[customDisplay[2]] != 'null'">
+                            ( {{teacher[customDisplay[2]]}} )
+                        </span>
                 </td>
                 <td ng:show="teachersQuota" width="150">
                     <span class="label label-{{teachersQuota[teacher.sAMAccountName].TYPE}} ">

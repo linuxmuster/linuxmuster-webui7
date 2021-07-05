@@ -3,7 +3,7 @@ angular.module('lmn.users').config ($routeProvider) ->
         controller: 'LMUsersTeachersController'
         templateUrl: '/lmn_users:resources/partial/teachers.html'
 
-angular.module('lmn.users').controller 'LMUsersTeachersController', ($q, $scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) ->
+angular.module('lmn.users').controller 'LMUsersTeachersController', ($q, $scope, $http, $location, $route, $uibModal, $sce, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) ->
     pageTitle.set(gettext('Teachers'))
 
     $scope.sorts = [
@@ -39,7 +39,27 @@ angular.module('lmn.users').controller 'LMUsersTeachersController', ($q, $scope,
 
     $http.post('/api/lm/sophomorixUsers/teachers',{action: 'get-all'}).then (resp) ->
         $scope.teachers = resp.data
-        console.log(resp.data)
+
+    $http.get('/api/lm/read_custom_config').then (resp) ->
+        $scope.customDisplay = resp.data.customDisplay.teachers
+
+    $scope.format_custom = (teacher, n) ->
+        # n representes 1,2,3 for customDisplay1 ... customDisplay3
+        custom = $scope.customDisplay[n]
+        value = teacher[custom]
+        if custom.includes('Multi') # List
+            if value.length > 0
+                html = ''
+                # Render html here is a bad thing
+                for entry in value
+                    html = html + "<span class='label label-info'>#{entry}</span>"
+                return $sce.trustAsHtml(html)
+            else
+                return ''
+        else # string
+            if value != 'null'
+                return value
+            return ''
 
     $scope.showInitialPassword = (users) ->
         user=[]

@@ -200,6 +200,8 @@
             return 'teachers';
           }
         }
+      }).closed.then(function() {
+        return $route.reload();
       });
     };
     $scope.haveSelection = function() {
@@ -1510,6 +1512,8 @@
             return 'teachers';
           }
         }
+      }).closed.then(function() {
+        return $route.reload();
       });
     };
     $scope.haveSelection = function() {

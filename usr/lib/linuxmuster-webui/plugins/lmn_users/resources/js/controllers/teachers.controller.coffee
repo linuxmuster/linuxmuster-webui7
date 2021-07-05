@@ -111,7 +111,8 @@ angular.module('lmn.users').controller 'LMUsersTeachersController', ($q, $scope,
           resolve:
              id: () -> user[0]['sAMAccountName']
              role: () -> 'teachers'
-             )
+             ).closed.then () ->
+                $route.reload()
 
 
 

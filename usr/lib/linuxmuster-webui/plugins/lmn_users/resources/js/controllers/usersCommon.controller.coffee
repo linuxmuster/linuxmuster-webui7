@@ -144,7 +144,7 @@ angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $rou
         ).then (msg) ->
             $http.post("/api/lm/custommulti/remove", {index: n, value: value, user: id}).then () ->
                 position = $scope.userDetails['sophomorixCustomMulti'+n].indexOf(msg.value)
-                $scope.userDetails[0]['sophomorixCustomMulti'+n].splice(position, 1)
+                $scope.userDetails['sophomorixCustomMulti'+n].splice(position, 1)
                 notify.success(gettext("Value removed !"))
             , () ->
                 notify.error(gettext("Error, please verify the user and/or your values."))

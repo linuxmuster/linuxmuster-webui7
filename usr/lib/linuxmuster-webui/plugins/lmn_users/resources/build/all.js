@@ -2108,7 +2108,7 @@
         }).then(function() {
           var position;
           position = $scope.userDetails['sophomorixCustomMulti' + n].indexOf(msg.value);
-          $scope.userDetails[0]['sophomorixCustomMulti' + n].splice(position, 1);
+          $scope.userDetails['sophomorixCustomMulti' + n].splice(position, 1);
           return notify.success(gettext("Value removed !"));
         }, function() {
           return notify.error(gettext("Error, please verify the user and/or your values."));

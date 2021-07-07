@@ -144,6 +144,16 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
         $scope.hidetext = gettext("Hide")
         $scope.showtext = gettext("Show")
 
+        $scope.changeMaillist = () ->
+            $scope.changeState = true
+            option = if $scope.maillist then '--maillist' else '--nomaillist'
+            $http.post('/api/lmn/changeGroup', {option: option, group: $scope.groupName, type: $scope.type}).then (resp) ->
+                if resp['data'][0] == 'ERROR'
+                    notify.error (resp['data'][1])
+                if resp['data'][0] == 'LOG'
+                    notify.success gettext(resp['data'][1])
+                $scope.changeState = false
+
         $scope.changeJoin = () ->
             $scope.changeState = true
             option = if $scope.joinable then '--join' else '--nojoin'
@@ -238,6 +248,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
 
                 $scope.joinable = resp.data['GROUP'][groupName]['sophomorixJoinable'] == 'TRUE'
                 $scope.hidden = resp.data['GROUP'][groupName]['sophomorixHidden'] == 'TRUE'
+                $scope.maillist = resp.data['GROUP'][groupName]['sophomorixMailList'] == 'TRUE'
 
                 # Admin or admin of the project can edit members of a project
                 # Only admins can change hide and join option for a class

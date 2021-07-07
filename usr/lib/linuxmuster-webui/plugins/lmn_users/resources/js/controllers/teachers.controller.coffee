@@ -44,7 +44,7 @@ angular.module('lmn.users').controller 'LMUsersTeachersController', ($q, $scope,
         $scope.customDisplay = resp.data.customDisplay.teachers
 
     $scope.format_custom = (teacher, n) ->
-        # n representes 1,2,3 for customDisplay1 ... customDisplay3
+        # n can be 1,2,3 for customDisplay1 ... customDisplay3
         custom = $scope.customDisplay[n]
         value = teacher[custom]
         if custom.includes('Multi') # List

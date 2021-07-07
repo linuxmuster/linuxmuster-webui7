@@ -64,7 +64,7 @@
     });
     $scope.format_custom = function(teacher, n) {
       var custom, entry, html, i, len, value;
-      // n representes 1,2,3 for customDisplay1 ... customDisplay3
+      // n can be 1,2,3 for customDisplay1 ... customDisplay3
       custom = $scope.customDisplay[n];
       value = teacher[custom];
       if (custom.includes('Multi')) { // List
@@ -1376,7 +1376,7 @@
     });
     $scope.format_custom = function(teacher, n) {
       var custom, entry, html, i, len, value;
-      // n representes 1,2,3 for customDisplay1 ... customDisplay3
+      // n can be 1,2,3 for customDisplay1 ... customDisplay3
       custom = $scope.customDisplay[n];
       value = teacher[custom];
       if (custom.includes('Multi')) { // List

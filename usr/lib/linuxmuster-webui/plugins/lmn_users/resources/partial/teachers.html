@@ -54,6 +54,7 @@
                 <th width="120">Login</th>
                 <th>Name</th>
                 <th ng:show="teachersQuota" translate>Quota</th>
+                <th ng:show="!teachersQuota"> </th>
                 <th> </th>
                 <th> </th>
                 <th>Status </th>
@@ -85,7 +86,7 @@
                                 {{custom3}}
                             </span>
                         </div>
-                        <span ng:show="!customDisplay[3].includes('Multi') && teacher[customDisplay[3]] != 'null'">
+                        <span ng:show="!customDisplay[3].includes('Multi') && teacher[customDisplay[3]] != 'null'" class="label label-default pull-right">
                             {{teacher[customDisplay[3]]}}
                         </span>
                     </b>
@@ -105,6 +106,7 @@
                     </span>
                     <smart-progress type="{{teachersQuota[teacher.sAMAccountName].TYPE}}" value="teachersQuota[teacher.sAMAccountName].USED" max="100"></smart-progress>
                 </td>
+                <td ng:show="!teachersQuota" width="150"> </td>
                 <td width="1">
                     <span  uib-dropdown class="dropup" >
                         <button class="btn btn-default" uib-dropdown-toggle>

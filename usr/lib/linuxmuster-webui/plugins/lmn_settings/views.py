@@ -177,6 +177,7 @@ class Handler(HttpPlugin):
                 'custom': lmconfig.get('custom', {}),
                 'customMulti': lmconfig.get('customMulti', {}),
                 'customDisplay': lmconfig.get('customDisplay', {}),
+                'proxyAddresses': lmconfig.get('proxyAddresses', {}),
             }
 
 
@@ -199,5 +200,6 @@ class Handler(HttpPlugin):
             lmconfig['custom'] = custom_config['custom']
             lmconfig['customMulti'] = custom_config['customMulti']
             lmconfig['customDisplay'] = custom_config['customDisplay']
+            lmconfig['proxyAddresses'] = custom_config['proxyAddresses']
             with LMNFile('/etc/linuxmuster/webui/config.yml', 'w') as webui:
                 webui.write(lmconfig)

@@ -37,6 +37,7 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
     ]
 
     $scope.customDisplayOptions = ['']
+    $scope.customDisplayOptions.push('proxyAddresses')
     for n in [1,2,3,4,5]
         $scope.customDisplayOptions.push('sophomorixCustom' + n)
     for n in [1,2,3,4,5]
@@ -68,6 +69,7 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
             $scope.custom = resp.data.custom
             $scope.customMulti = resp.data.customMulti
             $scope.customDisplay = resp.data.customDisplay
+            $scope.proxyAddresses = resp.data.proxyAddresses
 
     # $http.get('/api/lm/schoolsettings/school-share').then (resp) ->
     #     $scope.schoolShareEnabled = resp.data
@@ -123,6 +125,7 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
             'custom': $scope.custom,
             'customMulti': $scope.customMulti,
             'customDisplay': $scope.customDisplay,
+            'proxyAddresses': $scope.proxyAddresses,
         }
         $http.post('/api/lm/save_custom_config', {config: config}).then () ->
             notify.success(gettext('Saved'))

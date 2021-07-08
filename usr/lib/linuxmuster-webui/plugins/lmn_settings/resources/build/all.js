@@ -45,6 +45,7 @@
     $scope.unit = 'MiB';
     $scope.encodings = ['auto', 'ASCII', 'ISO_8859-1', 'ISO_8859-15', 'WIN-1252', 'UTF8'];
     $scope.customDisplayOptions = [''];
+    $scope.customDisplayOptions.push('proxyAddresses');
     ref = [1, 2, 3, 4, 5];
     for (i = 0, len = ref.length; i < len; i++) {
       n = ref[i];
@@ -88,7 +89,8 @@
       return $http.get('/api/lm/read_custom_config').then(function(resp) {
         $scope.custom = resp.data.custom;
         $scope.customMulti = resp.data.customMulti;
-        return $scope.customDisplay = resp.data.customDisplay;
+        $scope.customDisplay = resp.data.customDisplay;
+        return $scope.proxyAddresses = resp.data.proxyAddresses;
       });
     };
     // $http.get('/api/lm/schoolsettings/school-share').then (resp) ->
@@ -155,7 +157,8 @@
       config = {
         'custom': $scope.custom,
         'customMulti': $scope.customMulti,
-        'customDisplay': $scope.customDisplay
+        'customDisplay': $scope.customDisplay,
+        'proxyAddresses': $scope.proxyAddresses
       };
       return $http.post('/api/lm/save_custom_config', {
         config: config

@@ -36,6 +36,9 @@ angular.module('lmn.users').controller 'LMUsersTeachersController', ($q, $scope,
     $scope.all_selected = false
     $scope.query = ''
 
+    $scope.list_attr_enabled = ['proxyAddresses']
+    for n in [1,2,3,4,5]
+        $scope.list_attr_enabled.push('sophomorixCustomMulti' + n)
 
     $http.post('/api/lm/sophomorixUsers/teachers',{action: 'get-all'}).then (resp) ->
         $scope.teachers = resp.data
@@ -43,23 +46,8 @@ angular.module('lmn.users').controller 'LMUsersTeachersController', ($q, $scope,
     $http.get('/api/lm/read_custom_config').then (resp) ->
         $scope.customDisplay = resp.data.customDisplay.teachers
 
-    $scope.format_custom = (teacher, n) ->
-        # n can be 1,2,3 for customDisplay1 ... customDisplay3
-        custom = $scope.customDisplay[n]
-        value = teacher[custom]
-        if custom.includes('Multi') # List
-            if value.length > 0
-                html = ''
-                # Render html here is a bad thing
-                for entry in value
-                    html = html + "<span class='label label-info'>#{entry}</span>"
-                return $sce.trustAsHtml(html)
-            else
-                return ''
-        else # string
-            if value != 'null'
-                return value
-            return ''
+    $scope.isListAttr = (attr_name) ->
+        return $scope.list_attr_enabled.includes(attr_name)
 
     $scope.showInitialPassword = (users) ->
         user=[]

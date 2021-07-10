@@ -52,6 +52,23 @@
         </tr>
     </table>
     <table class="table" ng:show="custom_column">
+        <tr ng:show="proxyAddresses.show">
+            <td>
+                <b ng:show="proxyAddresses.title">{{proxyAddresses.title}}</b>
+                <b ng:show="!proxyAddresses.title">Proxy addresses</b>
+            </td>
+            <td>
+                <span ng:repeat="value in userDetails['proxyAddresses']" class="label label-info" ng:click="removeProxyAddresses(value)">
+                    {{value}}
+                    <i class="far fa-times-circle"></i>
+                </span>
+            </td>
+            <td>
+                <a ng:click="addProxyAddresses()">
+                    <i class="fa fa-plus"></i>
+                </a>
+            </td>
+        </tr>
         <tr ng:repeat="n in [1,2,3,4,5]" ng:show="custom[n].show">
             <td>
                 <b ng:show="custom[n].title">{{custom[n].title}}</b>

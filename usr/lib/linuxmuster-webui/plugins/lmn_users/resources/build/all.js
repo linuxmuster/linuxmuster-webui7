@@ -1966,14 +1966,19 @@
         var custom, ref, ref1, results, values;
         $scope.custom = resp.data.custom[role];
         $scope.customMulti = resp.data.customMulti[role];
-        ref = $scope.custom;
+        $scope.proxyAddresses = resp.data.proxyAddresses[role];
         // Is there a custom field to show ?
-        for (custom in ref) {
-          values = ref[custom];
-          if (values.show) {
-            console.log(custom, values);
-            $scope.custom_column = true;
-            break;
+        if ($scope.proxyAddresses.show) {
+          $scope.custom_column = true;
+        }
+        if (!$scope.custom_column) {
+          ref = $scope.custom;
+          for (custom in ref) {
+            values = ref[custom];
+            if (values.show) {
+              $scope.custom_column = true;
+              break;
+            }
           }
         }
         if (!$scope.custom_column) {
@@ -1982,7 +1987,6 @@
           for (custom in ref1) {
             values = ref1[custom];
             if (values.show) {
-              console.log(custom, values);
               $scope.custom_column = true;
               break;
             } else {
@@ -2126,6 +2130,43 @@
             $scope.userDetails['sophomorixCustomMulti' + n].push(msg.value);
           }
           return notify.success(gettext("Value added !"));
+        }, function() {
+          return notify.error(gettext("Error, please verify the user and/or your values."));
+        });
+      });
+    };
+    $scope.removeProxyAddresses = function(value) {
+      return messagebox.show({
+        title: gettext('Remove proxy address'),
+        text: gettext('Do you really want to remove ') + value + ' ?',
+        positive: gettext('OK'),
+        negative: gettext('Cancel')
+      }).then(function(msg) {
+        return $http.post("/api/lm/changeProxyAddresses", {
+          action: 'remove',
+          address: value,
+          user: id
+        }).then(function() {
+          var position;
+          position = $scope.userDetails['proxyAddresses'].indexOf(msg.value);
+          $scope.userDetails['proxyAddresses'].splice(position, 1);
+          return notify.success(gettext("Value removed !"));
+        }, function() {
+          return notify.error(gettext("Error, please verify the user and/or your values."));
+        });
+      });
+    };
+    $scope.addProxyAddresses = function(n) {
+      return messagebox.prompt(gettext('New address')).then(function(msg) {
+        return $http.post("/api/lm/changeProxyAddresses", {
+          action: 'add',
+          address: msg.value,
+          user: id
+        }).then(function() {
+          if (msg.value) {
+            $scope.userDetails['proxyAddresses'].push(msg.value);
+          }
+          return notify.success(gettext("Address added !"));
         }, function() {
           return notify.error(gettext("Error, please verify the user and/or your values."));
         });

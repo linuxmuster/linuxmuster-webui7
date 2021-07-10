@@ -934,3 +934,57 @@ class Handler(HttpPlugin):
                 # No error output from sophomorix yet
                 raise EndpointError(None)
 
+    @url(r'/api/lm/setProxyAddresses')
+    @authorize('lm:users:passwords')
+    @endpoint(api=True)
+    def handle_set_proxy_addresses(self, http_context):
+        """
+        Set proxyAddresses, e.g. emails, for an user.
+        Method POST.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: All quotas for specified users
+        :rtype: dict
+        """
+
+        if http_context.method == 'POST':
+            user = http_context.json_body()['user']
+            addresses = ','.join(http_context.json_body()['addresses'])
+
+            try:
+                command = ['sophomorix-user', '-u', user, '--set-proxy-addresses', addresses, '-jj']
+                result = lmn_getSophomorixValue(command, '')
+            except IndexError:
+                # No error output from sophomorix yet
+                raise EndpointError(None)
+
+    @url(r'/api/lm/changeProxyAddresses')
+    @authorize('lm:users:passwords')
+    @endpoint(api=True)
+    def handle_set_proxy_addresses(self, http_context):
+        """
+        Add or remove an email in proxyAddresses, e.g. emails, for an user.
+        Method POST.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: All quotas for specified users
+        :rtype: dict
+        """
+
+        if http_context.method == 'POST':
+            action = http_context.json_body()['action']
+
+            if action not in ['add', 'remove']:
+                raise EndpointError(None)
+
+            user = http_context.json_body()['user']
+            address = http_context.json_body()['address']
+
+            try:
+                command = ['sophomorix-user', '-u', user, f'--{action}-proxy-addresses', address, '-jj']
+                result = lmn_getSophomorixValue(command, '')
+            except IndexError:
+                # No error output from sophomorix yet
+                raise EndpointError(None)

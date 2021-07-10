@@ -59,21 +59,23 @@ angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $rou
         $http.get('/api/lm/read_custom_config').then (resp) ->
             $scope.custom = resp.data.custom[role]
             $scope.customMulti = resp.data.customMulti[role]
+            $scope.proxyAddresses = resp.data.proxyAddresses[role]
 
             # Is there a custom field to show ?
-            for custom, values of $scope.custom
-                if values.show
-                    console.log(custom, values)
-                    $scope.custom_column = true
-                    break
+            if $scope.proxyAddresses.show
+                $scope.custom_column = true
+
+            if not $scope.custom_column
+                for custom, values of $scope.custom
+                    if values.show
+                        $scope.custom_column = true
+                        break
 
             if not $scope.custom_column
                 for custom, values of $scope.customMulti
                     if values.show
-                        console.log(custom, values)
                         $scope.custom_column = true
                         break
-
 
     $scope.formatDate = (date) ->
         if (date == "19700101000000.0Z")
@@ -155,6 +157,29 @@ angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $rou
                 if msg.value
                     $scope.userDetails['sophomorixCustomMulti'+n].push(msg.value)
                 notify.success(gettext("Value added !"))
+            , () ->
+                notify.error(gettext("Error, please verify the user and/or your values."))
+
+    $scope.removeProxyAddresses = (value) ->
+        messagebox.show(
+            title: gettext('Remove proxy address'),
+            text: gettext('Do you really want to remove ') + value + ' ?',
+            positive: gettext('OK'),
+            negative: gettext('Cancel')
+        ).then (msg) ->
+            $http.post("/api/lm/changeProxyAddresses", {action: 'remove', address: value, user: id}).then () ->
+                position = $scope.userDetails['proxyAddresses'].indexOf(msg.value)
+                $scope.userDetails['proxyAddresses'].splice(position, 1)
+                notify.success(gettext("Value removed !"))
+            , () ->
+                notify.error(gettext("Error, please verify the user and/or your values."))
+
+    $scope.addProxyAddresses = (n) ->
+        messagebox.prompt(gettext('New address')).then (msg) ->
+            $http.post("/api/lm/changeProxyAddresses", {action: 'add', address: msg.value, user: id}).then () ->
+                if msg.value
+                    $scope.userDetails['proxyAddresses'].push(msg.value)
+                notify.success(gettext("Address added !"))
             , () ->
                 notify.error(gettext("Error, please verify the user and/or your values."))
 

@@ -257,8 +257,6 @@
 
     </uib:tab>
 
-
-    </uib:tab>
     <uib:tab heading="{{'Quota'|translate}}">
         <br/>
         <h3 translate>Quota </h3>
@@ -342,44 +340,132 @@
                 </td>
             </tr>
             <tr>
+                <td width=25%>
+                    <label translate>Admin description</label>
+                </td>
                 <td>
-                    <label translate>Internal FQDN for printing</label>
+                    <input type="text" class="form-control" ng:model="settings.school.ADMINS_PRINT" />
+                </td>
+            </tr>
+        </table>
+
+        <h3 translate>School landing page</h3>
+        <table class="lm-table lm-table-padded">
+            <tr>
+                <td width=25%>
+                    <label translate>URL</label>
+                </td>
                 <td>
-                    <input type="text" class="form-control" ng:model="settings.server_fqdn_internal_print" disabled />
+                    <input type="text" class="form-control" ng:model="settings.school.URLSTART_PRINT" />
                 </td>
             </tr>
             <tr>
-                <td>
-                    <label translate>External FQDN for printing</label>
+                <td width=25%>
+                    <label translate>Comment</label>
                 </td>
                 <td>
-                    <input type="text" class="form-control" ng:model="settings.server_fqdn_external_print" disabled />
+                    <input type="text" class="form-control" ng:model="settings.school.URLSTART_COMMENT_PRINT" />
+                </td>
+            </tr>
+        </table>
+
+        <h3 translate>Webui</h3>
+        <table class="lm-table lm-table-padded">
+            <tr>
+                <td width=25%>
+                    <label translate>URL</label>
+                </td>
+                <td>
+                    <input type="text" class="form-control" ng:model="settings.school.URLSCHUKO_PRINT" />
                 </td>
             </tr>
             <tr>
-                <td>
-                    <label translate>Samba domain for printing</label>
+                <td width=25%>
+                    <label translate>Comment</label>
                 </td>
                 <td>
-                    <input type="text" class="form-control" ng:model="settings.smb_domain_print" disabled />
+                    <input type="text" class="form-control" ng:model="settings.school.URLSCHUKO_COMMENT_PRINT" />
+                </td>
+            </tr>
+        </table>
+
+        <h3 translate>Moodle</h3>
+        <table class="lm-table lm-table-padded">
+            <tr>
+                <td width=25%>
+                    <label translate>URL</label>
+                </td>
+                <td>
+                    <input type="text" class="form-control" ng:model="settings.school.URLMOODLE_PRINT" />
                 </td>
             </tr>
             <tr>
-                <td>
-                    <label translate>MOODLE URL</label>
+                <td width=25%>
+                    <label translate>Comment</label>
                 </td>
                 <td>
-                    <input type="text" class="form-control" ng:model="settings.moodle_url" disabled />
+                    <input type="text" class="form-control" ng:model="settings.school.URLMOODLE_COMMENT_PRINT" />
+                </td>
+            </tr>
+        </table>
+
+        <h3 translate>Webmail</h3>
+        <table class="lm-table lm-table-padded">
+            <tr>
+                <td width=25%>
+                    <label translate>URL</label>
+                </td>
+                <td>
+                    <input type="text" class="form-control" ng:model="settings.school.URLMAIL_PRINT" />
                 </td>
             </tr>
             <tr>
-                <td>
-                    <label translate>Admin e-mail</label>
+                <td width=25%>
+                    <label translate>Comment</label>
                 </td>
                 <td>
-                    <input type="text" class="form-control" ng:model="settings.admins_print" disabled />
+                    <input type="text" class="form-control" ng:model="settings.school.URLMAIL_COMMENT_PRINT" />
                 </td>
             </tr>
+<!--            <tr>-->
+<!--                <td>-->
+<!--                    <label translate>Internal FQDN for printing</label>-->
+<!--                <td>-->
+<!--                    <input type="text" class="form-control" ng:model="settings.server_fqdn_internal_print" disabled />-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td>-->
+<!--                    <label translate>External FQDN for printing</label>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <input type="text" class="form-control" ng:model="settings.server_fqdn_external_print" disabled />-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td>-->
+<!--                    <label translate>Samba domain for printing</label>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <input type="text" class="form-control" ng:model="settings.smb_domain_print" disabled />-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td>-->
+<!--                    <label translate>MOODLE URL</label>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <input type="text" class="form-control" ng:model="settings.moodle_url" disabled />-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td>-->
+<!--                    <label translate>Admin e-mail</label>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <input type="text" class="form-control" ng:model="settings.admins_print" disabled />-->
+<!--                </td>-->
+<!--            </tr>-->
         </table>
     </uib:tab>
 

@@ -60,6 +60,10 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
         $scope.encoding = encoding
         $scope.settings = resp.data
 
+    $http.get('/api/lm/schoolsettings/latex-templates').then (resp) ->
+        $scope.templates_individual = resp.data[0]
+        $scope.templates_multiple = resp.data[1]
+
 
     $http.get('/api/lm/subnets').then (resp) ->
         $scope.subnets = resp.data
@@ -70,6 +74,19 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
             $scope.customMulti = resp.data.customMulti
             $scope.customDisplay = resp.data.customDisplay
             $scope.proxyAddresses = resp.data.proxyAddresses
+
+            $scope.templates = {'multiple': '', 'individual': ''}
+            $scope.passwordTemplates = resp.data.passwordTemplates
+
+            for template in $scope.templates_individual
+                if template.path == $scope.passwordTemplates.individual
+                    $scope.templates.individual = template
+                    break
+
+            for template in $scope.templates_multiple
+                if template.path == $scope.passwordTemplates.multiple
+                    $scope.templates.multiple = template
+                    break
 
     # $http.get('/api/lm/schoolsettings/school-share').then (resp) ->
     #     $scope.schoolShareEnabled = resp.data
@@ -126,6 +143,10 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
             'customMulti': $scope.customMulti,
             'customDisplay': $scope.customDisplay,
             'proxyAddresses': $scope.proxyAddresses,
+            'passwordTemplates': {
+                'multiple': $scope.templates.multiple.path,
+                'individual': $scope.templates.individual.path,
+            },
         }
         $http.post('/api/lm/save_custom_config', {config: config}).then () ->
             notify.success(gettext('Saved'))

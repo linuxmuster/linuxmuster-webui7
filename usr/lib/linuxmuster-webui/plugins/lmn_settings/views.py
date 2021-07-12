@@ -9,6 +9,10 @@ import subprocess
 import filecmp
 from datetime import datetime
 from jadi import component
+import re
+from glob import glob
+from configparser import ConfigParser
+
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize
@@ -16,7 +20,6 @@ from aj.plugins.lmn_common.lmnfile import LMNFile
 from aj.plugins.lmn_common.api import lmn_get_school_configpath
 from aj.plugins.lmn_common.multischool import School
 from aj.plugins.lmn_common.api import lmconfig
-from configparser import ConfigParser
 
 
 @component(HttpPlugin)
@@ -95,6 +98,74 @@ class Handler(HttpPlugin):
                 s.data['setup']['schoolname'] = data['school']['SCHOOL_LONGNAME']
                 s.write(s.data)
 
+    def _filter_templates(self, filename, school=''):
+        """
+        Test if the name respects the sophomorix scheme for latex templates.
+        See https://github.com/linuxmuster/sophomorix4/blob/bionic/sophomorix-samba/lang/latex/README.latextemplates.
+
+        :param school: school
+        :type school: string
+        :param file: name of the file
+        :type file: string
+        :return: result of the test
+        :rtype: dict with groups values
+        """
+
+        pattern = re.compile(
+            school + r'\.?([^-]*)-([A-Z]+)-(\d+)-template\.tex')
+        m = re.match(pattern, filename)
+        if m is None:
+            return None
+        data = m.groups()
+        template = {
+            'filename': filename,
+            'name': data[0],
+            'lang': data[1],
+            'numberPerPage': int(data[2])
+        }
+        return template
+
+    @url(r'/api/lm/schoolsettings/latex-templates')
+    @authorize('lm:schoolsettings')
+    @endpoint(api=True)
+    def handle_api_latex_template(self, http_context):
+        """
+        Get list of latex templates for printing with sophomorix.
+        Method GET.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        """
+
+        templates_multiple = []
+        templates_individual = []
+        sophomorix_default_path = '/usr/share/sophomorix/lang/latex/templates/'
+
+        for path in glob(sophomorix_default_path + "*tex"):
+            filename = path.split('/')[-1]
+            template = self._filter_templates(filename)
+            if template:
+                template['path'] = path
+                if template['numberPerPage'] > 1:
+                    templates_multiple.append(template)
+                else:
+                    templates_individual.append(template)
+
+        # School defined templates
+        school = School.get(self.context).school
+        custom_templates_path = f'/etc/linuxmuster/sophomorix/{school}/latex-templates/'
+        if os.path.isdir(custom_templates_path):
+            for path in glob(custom_templates_path + "*tex"):
+                filename = path.split('/')[-1]
+                template = self._filter_templates(filename, school)
+                if template:
+                    template['path'] = os.path.join(custom_templates_path, filename)
+                    if template['numberPerPage'] > 1:
+                        templates_multiple.append(template)
+                    else:
+                        templates_individual.append(template)
+
+        return templates_individual, templates_multiple
 
     @url(r'/api/lm/schoolsettings/school-share')
     @authorize('lm:schoolsettings')
@@ -178,6 +249,7 @@ class Handler(HttpPlugin):
                 'customMulti': lmconfig.get('customMulti', {}),
                 'customDisplay': lmconfig.get('customDisplay', {}),
                 'proxyAddresses': lmconfig.get('proxyAddresses', {}),
+                'passwordTemplates': lmconfig.get('passwordTemplates', {'multiple': {}, 'individual': {}}),
             }
 
 
@@ -201,5 +273,6 @@ class Handler(HttpPlugin):
             lmconfig['customMulti'] = custom_config['customMulti']
             lmconfig['customDisplay'] = custom_config['customDisplay']
             lmconfig['proxyAddresses'] = custom_config['proxyAddresses']
+            lmconfig['passwordTemplates'] = custom_config['passwordTemplates']
             with LMNFile('/etc/linuxmuster/webui/config.yml', 'w') as webui:
                 webui.write(lmconfig)

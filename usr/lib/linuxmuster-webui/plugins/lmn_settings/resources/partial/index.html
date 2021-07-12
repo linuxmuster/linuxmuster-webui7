@@ -326,7 +326,7 @@
         </table>
     </uib:tab>
 
-    <uib:tab heading="{{'Printing data'|translate}}">
+    <uib:tab heading="{{'Printing data'|translate}}" ng:click="load_custom_config()">
         <br />
         <h3 translate>Password printing data</h3>
 
@@ -466,6 +466,24 @@
 <!--                    <input type="text" class="form-control" ng:model="settings.admins_print" disabled />-->
 <!--                </td>-->
 <!--            </tr>-->
+        </table>
+
+        <h3 translate>Latex templates</h3>
+        <p class="alert alert-info" translate>If you want to use your own latex template, please store it in the directory /etc/linuxmuster/sophomorix/SCHOOL/latex-templates/. More informations about it <a href="https://github.com/linuxmuster/sophomorix4/blob/bionic/sophomorix-samba/lang/latex/README.latextemplates">in sophomorix's wiki</a>.</p>
+
+        <table class="table">
+            <tr>
+                <td translate><b>Template for multiple passwords entries on one page:</b></td>
+                <td>
+                    <select class="form-control" ng:model="templates.multiple" ng:options="t.filename for t in templates_multiple"></select>
+                </td>
+            </tr>
+            <tr>
+                <td translate><b>Template for one password entry per page:</b></td>
+                <td>
+                    <select class="form-control" ng:model="templates.individual" ng:options="t.filename for t in templates_individual"></select>
+                </td>
+            </tr>
         </table>
     </uib:tab>
 
@@ -634,7 +652,7 @@
         <button ng-show="activetab != 4" ng:click="backups()" class="btn btn-default btn-flat pull-right"><i class="fa fa-history"></i></button>
         <button ng-show="activetab == 0" ng:click="saveAndCheck()" class="btn btn-default btn-flat" translate>Save &amp; check</button>
         <button ng-show="activetab == 2" ng:click="saveApplyQuota()" class="btn btn-default btn-flat" translate>Save &amp; Apply Quota</button>
-        <button ng-show="activetab <= 3" ng:click="save()" class="btn btn-default btn-flat" translate>Save</button>
+        <button ng-show="activetab <= 3" ng:click="save() && saveCustom()" class="btn btn-default btn-flat" translate>Save</button>
         <button ng-show="activetab == 4" ng:click="saveCustom()" class="btn btn-default btn-flat" translate>Save</button>
         <button ng-show="activetab == 5" ng:click="saveApplySubnets()" class="btn btn-default btn-flat" translate>Save &amp; Apply Subnets</button>
     </floating-toolbar>

@@ -82,15 +82,45 @@
       $scope.encoding = encoding;
       return $scope.settings = resp.data;
     });
+    $http.get('/api/lm/schoolsettings/latex-templates').then(function(resp) {
+      $scope.templates_individual = resp.data[0];
+      return $scope.templates_multiple = resp.data[1];
+    });
     $http.get('/api/lm/subnets').then(function(resp) {
       return $scope.subnets = resp.data;
     });
     $scope.load_custom_config = function() {
       return $http.get('/api/lm/read_custom_config').then(function(resp) {
+        var k, l, len2, len3, ref2, ref3, results, template;
         $scope.custom = resp.data.custom;
         $scope.customMulti = resp.data.customMulti;
         $scope.customDisplay = resp.data.customDisplay;
-        return $scope.proxyAddresses = resp.data.proxyAddresses;
+        $scope.proxyAddresses = resp.data.proxyAddresses;
+        $scope.templates = {
+          'multiple': '',
+          'individual': ''
+        };
+        $scope.passwordTemplates = resp.data.passwordTemplates;
+        ref2 = $scope.templates_individual;
+        for (k = 0, len2 = ref2.length; k < len2; k++) {
+          template = ref2[k];
+          if (template.path === $scope.passwordTemplates.individual) {
+            $scope.templates.individual = template;
+            break;
+          }
+        }
+        ref3 = $scope.templates_multiple;
+        results = [];
+        for (l = 0, len3 = ref3.length; l < len3; l++) {
+          template = ref3[l];
+          if (template.path === $scope.passwordTemplates.multiple) {
+            $scope.templates.multiple = template;
+            break;
+          } else {
+            results.push(void 0);
+          }
+        }
+        return results;
       });
     };
     // $http.get('/api/lm/schoolsettings/school-share').then (resp) ->
@@ -158,7 +188,11 @@
         'custom': $scope.custom,
         'customMulti': $scope.customMulti,
         'customDisplay': $scope.customDisplay,
-        'proxyAddresses': $scope.proxyAddresses
+        'proxyAddresses': $scope.proxyAddresses,
+        'passwordTemplates': {
+          'multiple': $scope.templates.multiple.path,
+          'individual': $scope.templates.individual.path
+        }
       };
       return $http.post('/api/lm/save_custom_config', {
         config: config

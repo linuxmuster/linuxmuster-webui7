@@ -1,6 +1,7 @@
 angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope, $http, $sce, notify, pageTitle, identity, messagebox, config, core, locale, gettext) => {
     pageTitle.set(gettext('Global Settings'));
 
+    config.load();
     $scope.config = config;
 
     $scope.newClientCertificate = {

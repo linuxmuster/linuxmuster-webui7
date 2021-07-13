@@ -697,7 +697,7 @@ class Handler(HttpPlugin):
     #                if result['TYPE'] == "LOG":
     #                    return ["LOG", result['LOG']]
 
-    @url(r'/api/lm/users/print')
+    @url(r'/api/lm/users/get-classes')
     @authorize('lm:users:passwords')
     @endpoint(api=True)
     def handle_api_users_print(self, http_context):
@@ -746,7 +746,7 @@ class Handler(HttpPlugin):
                 sophomorixCommand.extend(['--command'])
                 sophomorixCommand.extend(['pdflatex'])
             if schoolclass:
-                sophomorixCommand.extend(['--class', schoolclass])
+                sophomorixCommand.extend(['--class', ','.join(schoolclass)])
             # sophomorix-print needs the json parameter at the very end
             sophomorixCommand.extend(['-jj'])
             # check permissions

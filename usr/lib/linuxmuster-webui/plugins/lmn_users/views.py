@@ -700,11 +700,10 @@ class Handler(HttpPlugin):
     @url(r'/api/lm/users/get-classes')
     @authorize('lm:users:passwords')
     @endpoint(api=True)
-    def handle_api_users_print(self, http_context):
+    def handle_api_users_get_classes(self, http_context):
         """
-        Print passwords as PDF.
+        Get list of all classes.
         Method GET: get all classes lists for teachers.
-        Method POST: all passwords.
 
         :param http_context: HttpContext
         :type http_context: HttpContext
@@ -733,6 +732,20 @@ class Handler(HttpPlugin):
                     else:
                         classes.append(school+'-teachers')
                 return classes
+
+    @url(r'/api/lm/users/print')
+    @authorize('lm:users:passwords')
+    @endpoint(api=True)
+    def handle_api_users_print(self, http_context):
+        """
+        Print passwords as PDF
+        Method POST: all passwords.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        """
+
+        school = School.get(self.context).school
 
         if http_context.method == 'POST':
             user = http_context.json_body()['user']

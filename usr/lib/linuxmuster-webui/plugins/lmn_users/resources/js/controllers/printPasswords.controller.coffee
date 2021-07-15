@@ -11,10 +11,29 @@ angular.module('lmn.users').controller 'LMUsersPrintPasswordsOptionsModalControl
         pdflatex: false
         schoolclass: schoolclass
         user: user
+        template_one_per_page: ''
+        template_multiple: ''
     }
 
     if $scope.options.user is 'root'
         $scope.options.user = 'global-admin'
+
+    $http.get('/api/lm/schoolsettings/latex-templates').then (resp) ->
+        $scope.templates_individual = resp.data[0]
+        $scope.templates_multiple = resp.data[1]
+        $http.get('/api/lm/read_custom_config').then (resp) ->
+            $scope.templates = {'multiple': '', 'individual': ''}
+            $scope.passwordTemplates = resp.data.passwordTemplates
+            console.log($scope.templates_multiple)
+            for template in $scope.templates_individual
+                if template.path == $scope.passwordTemplates.individual
+                    $scope.options['template_one_per_page'] = template
+                    break
+
+            for template in $scope.templates_multiple
+                if template.path == $scope.passwordTemplates.multiple
+                    $scope.options['template_multiple'] = template
+                    break
 
     $scope.title = if schoolclass != '' then gettext("Class") + ": #{schoolclass.join(',')}" else gettext('All users '+$scope.identity.profile.activeSchool)
 

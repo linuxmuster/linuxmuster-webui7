@@ -752,9 +752,16 @@ class Handler(HttpPlugin):
             one_per_page = http_context.json_body()['one_per_page']
             pdflatex = http_context.json_body()['pdflatex']
             schoolclass = http_context.json_body()['schoolclass']
+            template = ''
             sophomorixCommand = ['sudo', 'sophomorix-print', '--school', school, '--caller', str(user)]
             if one_per_page:
-                sophomorixCommand.extend(['--one-per-page'])
+                template = http_context.json_body()['template_one_per_page']
+                if not template:
+                    sophomorixCommand.extend(['--one-per-page'])
+            else:
+                template = http_context.json_body()['template_multiple']
+            if template:
+                sophomorixCommand.extend(['--template', template['path']])
             if pdflatex:
                 sophomorixCommand.extend(['--command'])
                 sophomorixCommand.extend(['pdflatex'])

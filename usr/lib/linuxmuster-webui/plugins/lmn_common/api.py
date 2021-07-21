@@ -49,11 +49,16 @@ with LMNFile('/etc/linuxmuster/webui/config.yml', 'r') as webui:
     lmconfig = webui.read()
 
 # Used for pageTitle, see lmn_auth.api
-with LMNFile('/var/lib/linuxmuster/setup.ini', 'r') as s:
-    try:
-        lmsetup_schoolname = s.data['setup']['schoolname']
-    except KeyError:
-        lmsetup_schoolname = None
+try:
+    with LMNFile('/var/lib/linuxmuster/setup.ini', 'r') as s:
+        try:
+            lmsetup_schoolname = s.data['setup']['schoolname']
+        except KeyError:
+            lmsetup_schoolname = None
+except FileNotFoundError:
+    lmsetup_schoolname = None
+    pass
+
 
 def lmn_backup_file(path):
     """

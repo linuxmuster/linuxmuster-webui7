@@ -11,6 +11,7 @@ from jadi import component
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
 from aj.plugins.lmn_common.lmnfile import LMNFile
+from aj.plugins.lmn_common.tools import testSSH
 
 
 @component(HttpPlugin)
@@ -124,12 +125,12 @@ class Handler(HttpPlugin):
         # checks['bool'] &= test
 
         if 'dockerip' in setup.keys():
-            test = test_ssh(setup['dockerip'])
+            test, err = testSSH(setup['dockerip'])
             checks['docker_ssh'] = test
             checks['bool'] &= test
 
         if 'opsiip' in setup.keys():
-            test = test_ssh(setup['opsiip'])
+            test, err = testSSH(setup['opsiip'])
             checks['opsi_ssh'] = test
             checks['bool'] &= test
 
@@ -147,7 +148,7 @@ class Handler(HttpPlugin):
             checks['mail_relay'] = test
             checks['bool'] &= test
 
-            test = test_ssh(setup['mailip'])
+            test, err = testSSH(setup['mailip'])
             checks['mail_ssh'] = test
             checks['bool'] &= test
 

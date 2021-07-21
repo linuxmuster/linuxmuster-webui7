@@ -63,7 +63,7 @@
                 <td width="1">
                     <span  uib-dropdown class="dropup" >
                         <button class="btn btn-default" uib-dropdown-toggle>
-                            <i class="fa fa-key"></i> <span translate>Password</span>
+                            <i class="fa fa-key"></i>
                             <span class="caret"></span>
                         </button>
                         <ul uib-dropdown-menu class="dropdown-menu-right" style=" margin-bottom: -30px; margin-right: 40px; z-index: 4000;">
@@ -96,18 +96,9 @@
                     </span>
                 </td>
                 <td width="1">
-                    <span uib-dropdown>
-                        <button class="btn btn-default" uib-dropdown-toggle>
-                            <i class="fa fa-cog"></i> <span translate> User Settings</span>
-                        </button>
-                        <ul uib-dropdown-menu class="dropdown-menu-right" style="width:200px">
-                            <li>
-                                <a ng:click="userInfo([student])" translate>
-                                    User information
-                                </a>
-                            </li>
-                        </ul>
-                    </span>
+                    <button class="btn btn-default" ng:click="userInfo([student])">
+                        <i class="fa fa-cog"></i>
+                    </button>
                 </td>
                 <td width="1">
                     <span class="label label-{{student.sophomorixStatus.color}}">{{student.sophomorixStatus.tag}}</span>

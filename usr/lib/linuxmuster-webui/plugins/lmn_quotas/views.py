@@ -9,6 +9,7 @@ from aj.api.http import url, HttpPlugin
 from aj.auth import authorize
 from aj.api.endpoint import endpoint, EndpointError
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue
+from aj.plugins.lmn_common.lmnfile import LMNFile
 from configparser import ConfigParser
 
 @component(HttpPlugin)
@@ -34,26 +35,14 @@ class Handler(HttpPlugin):
         settings_path = '/etc/linuxmuster/sophomorix/'+school+'/school.conf'
 
         quota_types = {
-            'quota_default_global':'linuxmuster-global',
-            'quota_default_school':'default-school',
+            'QUOTA_DEFAULT_GLOBAL':'linuxmuster-global',
+            'QUOTA_DEFAULT_SCHOOL':'default-school',
         }
 
         if http_context.method == 'GET':
             ## Parse csv config file
-            config = ConfigParser()
-            config.read(settings_path)
-            settings = {}
-            for section in config.sections():
-                settings[section] = {}
-                for (key, val) in config.items(section):
-                    if 'quota' in key:
-                        if val.isdigit():
-                            val = int(val)
-                        if val == 'no':
-                            val = False
-                        if val == 'yes':
-                            val = True
-                        settings[section][key] = val
+            with LMNFile(settings_path, 'r') as set:
+                settings = set.data
 
             ## Get list of non default quota user, others get the default value
             ## Teachers and students are mixed in the same dict
@@ -81,12 +70,12 @@ class Handler(HttpPlugin):
 
                 # Mailquota
                 if 'MAILQUOTA' in values.keys():
-                    values['QUOTA']['mailquota_default'] = int(values['MAILQUOTA']['VALUE'])
+                    values['QUOTA']['MAILQUOTA_DEFAULT'] = int(values['MAILQUOTA']['VALUE'])
                 else:
-                    values['QUOTA']['mailquota_default'] = settings['role.'+role]['mailquota_default']
+                    values['QUOTA']['MAILQUOTA_DEFAULT'] = settings['role.'+role]['MAILQUOTA_DEFAULT']
 
                 # Cloudquota
-                values['QUOTA']['cloudquota_percentage'] = settings['role.'+role]['cloudquota_percentage']
+                values['QUOTA']['CLOUDQUOTA_PERCENTAGE'] = settings['role.'+role]['CLOUDQUOTA_PERCENTAGE']
 
             return [non_default, settings]
 
@@ -151,8 +140,8 @@ class Handler(HttpPlugin):
         """
 
         quota_types = {
-            'quota_default_global':'linuxmuster-global',
-            'quota_default_school':'default-school',
+            'QUOTA_DEFAULT_GLOBAL':'linuxmuster-global',
+            'QUOTA_DEFAULT_SCHOOL':'default-school',
         }
 
         if http_context.method == 'POST':
@@ -160,7 +149,7 @@ class Handler(HttpPlugin):
             ## Not possible to factorise the command for many users
             for _, userDict in http_context.json_body()['users'].items():
                 for _,values in userDict.items():
-                    if values['quota'] == 'mailquota_default':
+                    if values['quota'] == 'MAILQUOTA_DEFAULT':
                         sophomorixCommand = ['sophomorix-user', '--mailquota', '%s' % (values['value']), '-u', values['login'], '-jj']
                     else:
                         sophomorixCommand = ['sophomorix-user', '--quota', '%s:%s:---' % (quota_types[values['quota']], values['value']), '-u', values['login'], '-jj']

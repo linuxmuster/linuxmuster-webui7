@@ -54,6 +54,7 @@
                 <th width="120">Login</th>
                 <th>Name</th>
                 <th ng:show="teachersQuota" translate>Quota</th>
+                <th ng:show="!teachersQuota"> </th>
                 <th> </th>
                 <th> </th>
                 <th>Status </th>
@@ -66,10 +67,38 @@
                     <span checkbox ng:model="teacher.selected"></span>
                 </td>
                 <td width="1" style="text-align:left;">
-                    <i>{{teacher.sAMAccountName}}</i> <br />
+                    <i>{{teacher.sAMAccountName}}</i>
+                    <br />
+                    <div ng:show="isListAttr(customDisplay[1])">
+                        <span ng:repeat="custom1 in teacher[customDisplay[1]] track by $index" class="label label-info">
+                            {{custom1}}
+                        </span>
+                    </div>
+                    <span ng:show="!isListAttr(customDisplay[1]) && teacher[customDisplay[1]] != 'null'">
+                        {{teacher[customDisplay[1]]}}
+                    </span>
                 </td>
                 <td>
-                    <b>{{teacher.givenName}}</b> <br /> {{teacher.sn}}
+                    <b>
+                        {{teacher.sn}} {{teacher.givenName}}
+                        <div ng:show="isListAttr(customDisplay[3])">
+                            <span ng:repeat="custom3 in teacher[customDisplay[3]] track by $index" class="label label-info">
+                                {{custom3}}
+                            </span>
+                        </div>
+                        <span ng:show="!isListAttr(customDisplay[3]) && teacher[customDisplay[3]] != 'null'" class="label label-default pull-right">
+                            {{teacher[customDisplay[3]]}}
+                        </span>
+                    </b>
+                    <br />
+                    <div ng:show="isListAttr(customDisplay[2])">
+                            <span ng:repeat="custom2 in teacher[customDisplay[2]] track by $index" class="label label-info">
+                                {{custom2}}
+                            </span>
+                    </div>
+                    <span ng:show="!isListAttr(customDisplay[2]) && teacher[customDisplay[2]] != 'null'">
+                            {{teacher[customDisplay[2]]}}
+                        </span>
                 </td>
                 <td ng:show="teachersQuota" width="150">
                     <span class="label label-{{teachersQuota[teacher.sAMAccountName].TYPE}} ">
@@ -77,10 +106,11 @@
                     </span>
                     <smart-progress type="{{teachersQuota[teacher.sAMAccountName].TYPE}}" value="teachersQuota[teacher.sAMAccountName].USED" max="100"></smart-progress>
                 </td>
+                <td ng:show="!teachersQuota" width="150"> </td>
                 <td width="1">
                     <span  uib-dropdown class="dropup" >
                         <button class="btn btn-default" uib-dropdown-toggle>
-                            <i class="fa fa-key"></i> <span translate>Password</span>
+                            <i class="fa fa-key"></i>
                             <span class="caret"></span>
                         </button>
                         <ul uib-dropdown-menu class="dropdown-menu-right" style=" margin-bottom: -30px; margin-right: 40px; z-index: 4000;">

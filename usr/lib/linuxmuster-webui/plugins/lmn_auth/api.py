@@ -77,7 +77,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
             ldap_attrs = ['sophomorixWebuiDashboard']
 
         searchFilter = ldap.filter.filter_format(ldap_filter, [username])
-        params = lmconfig.data['linuxmuster']['ldap']
+        params = lmconfig['linuxmuster']['ldap']
 
         l = ldap.initialize('ldap://' + params['host'])
         # Binduser bind to the  server
@@ -128,7 +128,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
         # Is the password right ?
         try:
-            params = lmconfig.data['linuxmuster']['ldap']
+            params = lmconfig['linuxmuster']['ldap']
             l = ldap.initialize('ldap://' + params['host'])
             l.set_option(ldap.OPT_REFERRALS, 0)
             l.protocol_version = ldap.VERSION3
@@ -346,7 +346,7 @@ class UserLdapConfig(UserConfigProvider):
             ldap_attrs = ['sophomorixWebuiDashboard']
 
             searchFilter = ldap.filter.filter_format(ldap_filter, [self.user])
-            params = lmconfig.data['linuxmuster']['ldap']
+            params = lmconfig['linuxmuster']['ldap']
             with open('/etc/linuxmuster/.secret/administrator') as f:
                 admin_pw = f.read()
 

@@ -53,6 +53,29 @@ angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $rou
     $scope.showGroupDetails = true
     $scope.showQuotaDetails = true
     $scope.nevertext = gettext('Never')
+    $scope.custom_column = false
+
+    if role == 'students' or role == 'teachers'
+        $http.get('/api/lm/read_custom_config').then (resp) ->
+            $scope.custom = resp.data.custom[role]
+            $scope.customMulti = resp.data.customMulti[role]
+            $scope.proxyAddresses = resp.data.proxyAddresses[role]
+
+            # Is there a custom field to show ?
+            if $scope.proxyAddresses.show
+                $scope.custom_column = true
+
+            if not $scope.custom_column
+                for custom, values of $scope.custom
+                    if values.show
+                        $scope.custom_column = true
+                        break
+
+            if not $scope.custom_column
+                for custom, values of $scope.customMulti
+                    if values.show
+                        $scope.custom_column = true
+                        break
 
     $scope.formatDate = (date) ->
         if (date == "19700101000000.0Z")
@@ -73,14 +96,12 @@ angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $rou
     $scope.showtext = gettext("Show")
 
     $http.post('/api/lm/sophomorixUsers/'+role, {action: 'get-specified', user: id}).then (resp) ->
-        $scope.userDetails = resp.data
+        $scope.userDetails = resp.data[0]
         $scope.groups = []
-        for dn in $scope.userDetails[0]['memberOf']
+        for dn in $scope.userDetails['memberOf']
             cn       = dn.split(',')[0].split('=')[1]
             category = dn.split(',')[1].split('=')[1]
             $scope.groups.push({'cn':cn, 'category':category})
-
-        console.log ($scope.userDetails)
 
     $http.get("/api/lmn/quota/#{id}").then (resp) ->
         $scope.quotas = []
@@ -103,6 +124,64 @@ angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $rou
                 else
                     type = "danger"
                 $scope.quotas.push({'share':share, 'total':total + " MiB", 'used':used, 'usage':usage, 'type':type})
+
+    $scope.editCustom = (n) ->
+        value = $scope.userDetails['sophomorixCustom'+n]
+        messagebox.prompt(gettext('New value'), value).then (msg) ->
+            $http.post("/api/lm/custom", {index: n, value: msg.value, user: id}).then () ->
+                if msg.value
+                    $scope.userDetails['sophomorixCustom'+n] = msg.value
+                else
+                    $scope.userDetails['sophomorixCustom'+n] = 'null'
+                notify.success(gettext("Value updated !"))
+            , () ->
+                notify.error(gettext("Error, please verify the user and/or your values."))
+
+    $scope.removeCustomMulti = (n, value) ->
+        messagebox.show(
+            title: gettext('Remove custom field value'),
+            text: gettext('Do you really want to remove ') + value + ' ?',
+            positive: gettext('OK'),
+            negative: gettext('Cancel')
+        ).then (msg) ->
+            $http.post("/api/lm/custommulti/remove", {index: n, value: value, user: id}).then () ->
+                position = $scope.userDetails['sophomorixCustomMulti'+n].indexOf(msg.value)
+                $scope.userDetails['sophomorixCustomMulti'+n].splice(position, 1)
+                notify.success(gettext("Value removed !"))
+            , () ->
+                notify.error(gettext("Error, please verify the user and/or your values."))
+
+    $scope.addCustomMulti = (n) ->
+        messagebox.prompt(gettext('New value')).then (msg) ->
+            $http.post("/api/lm/custommulti/add", {index: n, value: msg.value, user: id}).then () ->
+                if msg.value
+                    $scope.userDetails['sophomorixCustomMulti'+n].push(msg.value)
+                notify.success(gettext("Value added !"))
+            , () ->
+                notify.error(gettext("Error, please verify the user and/or your values."))
+
+    $scope.removeProxyAddresses = (value) ->
+        messagebox.show(
+            title: gettext('Remove proxy address'),
+            text: gettext('Do you really want to remove ') + value + ' ?',
+            positive: gettext('OK'),
+            negative: gettext('Cancel')
+        ).then (msg) ->
+            $http.post("/api/lm/changeProxyAddresses", {action: 'remove', address: value, user: id}).then () ->
+                position = $scope.userDetails['proxyAddresses'].indexOf(msg.value)
+                $scope.userDetails['proxyAddresses'].splice(position, 1)
+                notify.success(gettext("Value removed !"))
+            , () ->
+                notify.error(gettext("Error, please verify the user and/or your values."))
+
+    $scope.addProxyAddresses = (n) ->
+        messagebox.prompt(gettext('New address')).then (msg) ->
+            $http.post("/api/lm/changeProxyAddresses", {action: 'add', address: msg.value, user: id}).then () ->
+                if msg.value
+                    $scope.userDetails['proxyAddresses'].push(msg.value)
+                notify.success(gettext("Address added !"))
+            , () ->
+                notify.error(gettext("Error, please verify the user and/or your values."))
 
     $scope.close = () ->
         $uibModalInstance.dismiss()

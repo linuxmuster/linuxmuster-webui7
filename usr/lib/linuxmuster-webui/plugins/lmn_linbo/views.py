@@ -7,7 +7,6 @@ from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint
 from aj.plugins.lmn_common.api import lmn_backup_file, lmn_write_configfile
 from aj.plugins.lmn_common.lmnfile import LMNFile
-from aj.plugins.lmn_common.api import LinuxmusterConfig
 
 @component(HttpPlugin)
 class Handler(HttpPlugin):
@@ -141,9 +140,9 @@ class Handler(HttpPlugin):
         path = os.path.join(self.LINBO_PATH, name)
         if http_context.method == 'GET':
             if os.path.exists(path):
-                settings = LinuxmusterConfig(path)
-                settings.load()
-                vdiSettings=settings.data
+                with LMNFile(path, 'r') as settings:
+                    vdiSettings = settings.read()
+
                 vdiSettings["cores"] = int(vdiSettings["cores"])
                 vdiSettings["memory"] = int(vdiSettings["memory"])
                 vdiSettings["tag"] = int(vdiSettings["tag"])
@@ -159,7 +158,8 @@ class Handler(HttpPlugin):
         if http_context.method == 'POST':
             if os.path.exists(path):
                 data = http_context.json_body()
-                lmn_write_configfile(path, json.dumps(data, indent=4))
+                with LMNFile(path, 'w') as settings:
+                    settings.write(json.dumps(data, indent=4))
                 os.chmod(path, 0o755)
 
     @url(r'/api/lm/linbo/image/(?P<name>.+)')

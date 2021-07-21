@@ -37,6 +37,12 @@
                 <input type="checkbox" ng:model="hidden" ng:disabled="!editGroup" ng:change="changeHide()"> </input>
             </td>
         </tr>
+        <tr ng:show="type != 'group'">
+            <td><b translate>Maillist:</b></td>
+            <td>
+                <input type="checkbox" ng:model="maillist" ng:disabled="!editGroup" ng:change="changeMaillist()"> </input>
+            </td>
+        </tr>
     </table>
     <div class="panel panel-danger" ng:show="type == 'project'">
         <div class="panel-heading">

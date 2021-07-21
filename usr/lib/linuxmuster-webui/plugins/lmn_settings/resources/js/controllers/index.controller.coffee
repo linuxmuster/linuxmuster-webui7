@@ -4,7 +4,7 @@ angular.module('lmn.settings').config ($routeProvider) ->
         templateUrl: '/lmn_settings:resources/partial/index.html'
 
 
-angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $location, $http, $uibModal, messagebox, gettext, notify, pageTitle, lmFileBackups) ->
+angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $location, $http, $uibModal, messagebox, gettext, notify, pageTitle, core, lmFileBackups) ->
     pageTitle.set(gettext('Settings'))
 
     $scope.trans = {
@@ -36,6 +36,13 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
         'UTF8',
     ]
 
+    $scope.customDisplayOptions = ['']
+    $scope.customDisplayOptions.push('proxyAddresses')
+    for n in [1,2,3,4,5]
+        $scope.customDisplayOptions.push('sophomorixCustom' + n)
+    for n in [1,2,3,4,5]
+        $scope.customDisplayOptions.push('sophomorixCustomMulti' + n)
+
     $http.get('/api/lm/schoolsettings').then (resp) ->
         school = 'default-school'
         console.log(resp.data)
@@ -53,9 +60,33 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
         $scope.encoding = encoding
         $scope.settings = resp.data
 
+    $http.get('/api/lm/schoolsettings/latex-templates').then (resp) ->
+        $scope.templates_individual = resp.data[0]
+        $scope.templates_multiple = resp.data[1]
+
 
     $http.get('/api/lm/subnets').then (resp) ->
         $scope.subnets = resp.data
+
+    $scope.load_custom_config = () ->
+        $http.get('/api/lm/read_custom_config').then (resp) ->
+            $scope.custom = resp.data.custom
+            $scope.customMulti = resp.data.customMulti
+            $scope.customDisplay = resp.data.customDisplay
+            $scope.proxyAddresses = resp.data.proxyAddresses
+
+            $scope.templates = {'multiple': '', 'individual': ''}
+            $scope.passwordTemplates = resp.data.passwordTemplates
+
+            for template in $scope.templates_individual
+                if template.path == $scope.passwordTemplates.individual
+                    $scope.templates.individual = template
+                    break
+
+            for template in $scope.templates_multiple
+                if template.path == $scope.passwordTemplates.multiple
+                    $scope.templates.multiple = template
+                    break
 
     # $http.get('/api/lm/schoolsettings/school-share').then (resp) ->
     #     $scope.schoolShareEnabled = resp.data
@@ -105,3 +136,24 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
     $scope.backups = () ->
         school = "default-school"
         lmFileBackups.show('/etc/linuxmuster/sophomorix/' + school + '/school.conf')
+
+    $scope.saveCustom = () ->
+        config = {
+            'custom': $scope.custom,
+            'customMulti': $scope.customMulti,
+            'customDisplay': $scope.customDisplay,
+            'proxyAddresses': $scope.proxyAddresses,
+            'passwordTemplates': {
+                'multiple': $scope.templates.multiple.path,
+                'individual': $scope.templates.individual.path,
+            },
+        }
+        $http.post('/api/lm/save_custom_config', {config: config}).then () ->
+            notify.success(gettext('Saved'))
+            messagebox.show({
+                text: gettext("In order for changes to take effect, it's  necessary to restart the Webui. Restart now ?"),
+                positive: gettext('Restart'),
+                negative: gettext('Later')
+            }).then () ->
+                core.forceRestart()
+

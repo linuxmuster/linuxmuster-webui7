@@ -44,29 +44,9 @@ def check_allowed_path(path):
         return True
     raise IOError(_("Access refused."))  # skipcq: PYL-E0602
 
-class LinuxmusterConfig():
-    """
-    Basic class to handle linuxmuster webui's config file (yaml).
-    """
-
-    def __init__(self, path):
-        self.data = None
-        self.path = os.path.abspath(path)
-
-    def __str__(self):
-        return self.path
-
-    def load(self):
-        if os.geteuid() == 0:
-            os.chmod(self.path, 384)  # 0o600
-        self.data = yaml.load(open(self.path), Loader=yaml.SafeLoader)
-
-    def save(self):
-        with open(self.path, 'w') as f:
-            f.write(yaml.safe_dump(self.data, default_flow_style=False, encoding='utf-8', allow_unicode=True))
-
-lmconfig = LinuxmusterConfig('/etc/linuxmuster/webui/config.yml')
-lmconfig.load()
+# Load Webui settings
+with LMNFile('/etc/linuxmuster/webui/config.yml', 'r') as webui:
+    lmconfig = webui.read()
 
 # Used for pageTitle, see lmn_auth.api
 with LMNFile('/var/lib/linuxmuster/setup.ini', 'r') as s:
@@ -75,44 +55,11 @@ with LMNFile('/var/lib/linuxmuster/setup.ini', 'r') as s:
     except KeyError:
         lmsetup_schoolname = None
 
-class CSVSpaceStripper:
-    """
-    CSV parser for linuxmuster's config files.
-    """
-
-    def __init__(self, file, encoding='utf-8'):
-        self.f = file
-        self.encoding = encoding
-        # TODO : use self.comments to write the comments again in the file after modification
-        self.comments = ""
-
-    def close(self):
-        self.f.close()
-
-    def __iter__(self):
-        return self
-
-    def next(self):
-        """For compatibility with PY2"""
-        return self.__next__()
-
-    def __next__(self):
-        ## Store comments in self.comments
-        nextline = self.f.readline()
-        if nextline == '':
-            raise StopIteration()
-        while nextline.startswith('#'):
-            self.comments += nextline
-            nextline = self.f.readline()
-        # Reader is unicodecsv, which needs bytes
-        return nextline.encode('utf-8').strip()
-        # return self.f.next().decode(self.encoding, errors='ignore').strip()
-
-
 def lmn_backup_file(path):
     """
     Create a backup of a file if in allowed paths, but on ly keeps 10 backups.
     Backup files names scheme is `.<name>.bak.<timestamp>`
+    DEPRECATED, only used in Linbo plugin.
 
     :param path: Path of the file
     :type path: string
@@ -143,40 +90,10 @@ def lmn_get_school_configpath(school):
     else:
         return '/etc/linuxmuster/sophomorix/'+school+'/'+school+'.'
 
-# def lmn_write_csv(path, fieldnames, data, encoding='utf-8'):
-#     """
-#     Write CSV and backup csv file only if there's no difference with the original.
-#     Delimiter is always ';'
-#     DEPRECATED
-#
-#     :param path: Path of the file
-#     :type path: string
-#     :param fieldnames: List of CSV fieldsnames
-#     :type fieldnames: list
-#     :param data: Data to write
-#     :type data: list of string
-#     :param encoding: Encoding, e.g. utf-8
-#     :type encoding: string
-#     """
-#
-#     if check_allowed_path(path):
-#         tmp = path + '_tmp'
-#         with open(tmp, 'wb') as f:
-#             csv.DictWriter(
-#                 f,
-#                 delimiter=';',
-#                 fieldnames=fieldnames,
-#                 encoding=encoding
-#             ).writerows(data)
-#         if not filecmp.cmp(tmp, path):
-#             lmn_backup_file(path)
-#             os.rename(tmp, path)
-#         else:
-#             os.unlink(tmp)
-
 def lmn_write_configfile(path, data):
     """
     Write config file it only if there's no difference with the original.
+    DEPRECATED. Must be remplaced with LMNFile in linbo plugin.
 
     :param path: Path of the file
     :type path: string
@@ -229,7 +146,7 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
     :rtype: dict or value (list, dict, integer, string)
     """
 
-    debug = lmconfig.data['linuxmuster'].get("sophomorix-debug", False)
+    debug = lmconfig['linuxmuster'].get("sophomorix-debug", False)
 
     uid = os.getuid()
     if uid != 0:

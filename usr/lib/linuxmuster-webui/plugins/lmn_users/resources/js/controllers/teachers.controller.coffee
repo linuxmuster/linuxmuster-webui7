@@ -3,7 +3,7 @@ angular.module('lmn.users').config ($routeProvider) ->
         controller: 'LMUsersTeachersController'
         templateUrl: '/lmn_users:resources/partial/teachers.html'
 
-angular.module('lmn.users').controller 'LMUsersTeachersController', ($q, $scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) ->
+angular.module('lmn.users').controller 'LMUsersTeachersController', ($q, $scope, $http, $location, $route, $uibModal, $sce, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) ->
     pageTitle.set(gettext('Teachers'))
 
     $scope.sorts = [
@@ -36,10 +36,18 @@ angular.module('lmn.users').controller 'LMUsersTeachersController', ($q, $scope,
     $scope.all_selected = false
     $scope.query = ''
 
+    $scope.list_attr_enabled = ['proxyAddresses']
+    for n in [1,2,3,4,5]
+        $scope.list_attr_enabled.push('sophomorixCustomMulti' + n)
 
     $http.post('/api/lm/sophomorixUsers/teachers',{action: 'get-all'}).then (resp) ->
         $scope.teachers = resp.data
-        console.log(resp.data)
+
+    $http.get('/api/lm/read_custom_config').then (resp) ->
+        $scope.customDisplay = resp.data.customDisplay.teachers
+
+    $scope.isListAttr = (attr_name) ->
+        return $scope.list_attr_enabled.includes(attr_name)
 
     $scope.showInitialPassword = (users) ->
         user=[]
@@ -91,7 +99,8 @@ angular.module('lmn.users').controller 'LMUsersTeachersController', ($q, $scope,
           resolve:
              id: () -> user[0]['sAMAccountName']
              role: () -> 'teachers'
-             )
+             ).closed.then () ->
+                $route.reload()
 
 
 

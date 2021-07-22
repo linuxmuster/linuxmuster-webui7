@@ -1,4 +1,4 @@
-linuxmuster-webui7 (1.0.165-rc01) bionic; urgency=medium
+linuxmuster-webui7 (1.0.165-rc01) bionic-testing; urgency=medium
 
   * GUI enhancements
   * Maildomain for project fix

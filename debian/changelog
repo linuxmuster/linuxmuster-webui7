@@ -1,3 +1,12 @@
+linuxmuster-webui7 (1.0.165-rc01) bionic; urgency=medium
+
+  * GUI enhancements
+  * Maildomain for project fix
+  * Differenciate save and saveCustom.
+  *  Add basic ssh test with paramiko. See linuxmuster#186. 
+
+ -- Andreas Till <andreas.till@netzint.de>  Thu 22 Jul 11:31:27 CET 2021
+
 linuxmuster-webui7 (1.0.164-release) bionic; urgency=medium
 
   * move to release

@@ -76,6 +76,25 @@ class Handler(HttpPlugin):
                 r.append(file)
         return r
 
+    @url(r'/api/lm/linbo/examples-prestart')
+    @authorize('lm:linbo:examples')
+    @endpoint(api=True)
+    def handle_api_examples_prestart(self, http_context):
+        """
+        List all prestart examples files.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: List of postsync examples files
+        :rtype: list
+        """
+
+        r = []
+        for file in os.listdir(os.path.join(self.LINBO_PATH, 'examples')):
+            if file.endswith('.prestart'):
+                r.append(file)
+        return r
+
     @url(r'/api/lm/linbo/icons')
     @authorize('lm:linbo:icons')
     @endpoint(api=True)

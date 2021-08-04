@@ -3,7 +3,6 @@
 
 import os
 import sys
-sys.path.insert(0, os.path.abspath('/srv/dev/ajenti/ajenti-core'))
 import aj
 import aj.api
 import aj.config
@@ -18,9 +17,15 @@ import sphinx_rtd_theme
 # Fix gettext syntax
 builtins._ = lambda x:x
 
+aj_plugin_path = aj.__path__[0][:-3]
+lm_plugin_path = '../usr/lib/linuxmuster-webui/plugins' # Path relative to docs sources
+
 aj.context = aj.api.Context()
 aj.init()
-aj.plugins.PluginManager.get(aj.context).load_all_from([aj.plugins.DirectoryPluginProvider('/srv/dev/ajenti/plugins'), aj.plugins.DirectoryPluginProvider('../../usr/lib/linuxmuster-webui/plugins')])
+aj.plugins.PluginManager.get(aj.context).load_all_from([
+        aj.plugins.DirectoryPluginProvider(aj_plugin_path), 
+        aj.plugins.DirectoryPluginProvider(lm_plugin_path)
+])
 
 extensions = ['sphinx.ext.autodoc',
     'sphinx.ext.intersphinx',

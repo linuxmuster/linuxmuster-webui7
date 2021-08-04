@@ -31,7 +31,7 @@ pull-crowdin:
 	ajenti-dev-multitool --msgfmt
 
 doc:
-	sphinx-build -b html -d docs/build/doctrees  docs/source docs/build/html
+	sphinx-build -b html -d docs/doctrees  docs_src docs
 
 ##################################################
 ## Will be later activated

@@ -1,0 +1,122 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: linuxmusternet\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-08-26 21:41+0200\n"
+"PO-Revision-Date: 2021-08-26 20:33\n"
+"Last-Translator: \n"
+"Language-Team: Catalan\n"
+"Language: ca_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Crowdin-Project: linuxmusternet\n"
+"X-Crowdin-Project-ID: 325271\n"
+"X-Crowdin-Language: ca\n"
+"X-Crowdin-File: /2.0/lmn_docker.po\n"
+"X-Crowdin-File-ID: 211\n"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:65
+msgid "Close"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:14
+msgid "Cpu usage"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:74
+msgid "Created"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:47
+msgid "Created at"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:6
+msgid "Docker is not installed on this host."
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:43
+msgid "Full id"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:51
+msgid "IP"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:13
+msgid "Memory usage"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:12
+msgid "Name (Hash)"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:15
+msgid "Network used"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:9
+msgid "No container on this host."
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:70
+msgid "No docker images on this host."
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:55
+msgid "Ports"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:73
+msgid "Repository"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:76
+msgid "Size"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:75
+msgid "Tag"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:59
+msgid "Volumes"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_docker/views.py:35
+msgid "Docker is not installed on this host"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/js/controllers/index.controller.es:41
+msgid "Stop command successfully sent."
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/js/controllers/index.controller.es:46
+msgid "Start command successfully sent."
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/js/controllers/index.controller.es:51
+msgid "Really remove this container?"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/js/controllers/index.controller.es:52
+#: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/js/controllers/index.controller.es:72
+msgid "Remove"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/js/controllers/index.controller.es:53
+#: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/js/controllers/index.controller.es:73
+msgid "Cancel"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/js/controllers/index.controller.es:56
+#: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/js/controllers/index.controller.es:76
+msgid "Remove command successfully sent."
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/js/controllers/index.controller.es:71
+msgid "Really remove this image?"
+msgstr ""
+

@@ -1,0 +1,1 @@
+{"": "", "Available VMs:": "VM disponibles:", "No VMs avaliable!": "Aucune VM disponible !", "VDI Desktops": "VDI Desktops", "VDI Groups": "Groupes VDI", "VDI Dashboard permission": "Autorisation du tableau de bord VDI", "Lmn_vdi_dashboard": "Lmn_vdi_dashboard"}

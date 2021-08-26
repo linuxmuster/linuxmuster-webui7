@@ -1,0 +1,31 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: linuxmusternet\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-08-26 21:41+0200\n"
+"PO-Revision-Date: 2021-08-26 20:34\n"
+"Last-Translator: \n"
+"Language-Team: Swedish\n"
+"Language: sv_SE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Crowdin-Project: linuxmusternet\n"
+"X-Crowdin-Project-ID: 325271\n"
+"X-Crowdin-Language: sv-SE\n"
+"X-Crowdin-File: /2.0/lmn_links.po\n"
+"X-Crowdin-File-ID: 221\n"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_links/resources/partial/index.html:2
+msgid "Currently no links defined!"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_links/resources/partial/index.html:10
+msgid "Open"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_links/resources/js/controllers/index.controller.es:2
+msgid "Links"
+msgstr ""
+

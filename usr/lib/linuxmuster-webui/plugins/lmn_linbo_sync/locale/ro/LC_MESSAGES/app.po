@@ -1,118 +1,129 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: webui\n"
+"Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-03 15:37+0200\n"
-"PO-Revision-Date: 2016-11-01 18:53-0400\n"
-"Last-Translator: eugenepankov <john.pankov@gmail.com>\n"
+"POT-Creation-Date: 2021-08-26 21:41+0200\n"
+"PO-Revision-Date: 2021-08-26 20:34\n"
+"Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100>0 && n"
-"%100<20)) ? 1 : 2);\n"
-"X-Generator: crowdin.com\n"
-"X-Crowdin-Project: webui\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100>0 && n%100<20)) ? 1 : 2);\n"
+"X-Crowdin-Project: linuxmusternet\n"
+"X-Crowdin-Project-ID: 325271\n"
 "X-Crowdin-Language: ro\n"
-"X-Crowdin-File: /2.0/datetime.po\n"
+"X-Crowdin-File: /2.0/lmn_linbo_sync.po\n"
+"X-Crowdin-File-ID: 207\n"
 
-#: usr/lib/linuxmuster-webui/plugins/extra_linbo_sync/resources/partial/index.html:71
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:71
 msgid "<i class=\"fas fa-clock\"></i>  Boot timeout (in seconds):"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/extra_linbo_sync/resources/partial/index.html:42
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:84
+msgid "<i class=\"fas fa-directions\"></i>  Bypass autostart"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:42
 msgid "<i class=\"fas fa-eraser\"></i>  Format"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/extra_linbo_sync/resources/partial/index.html:54
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:54
 msgid "<i class=\"fas fa-exclamation-triangle\"></i>  New"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/extra_linbo_sync/resources/partial/index.html:78
-msgid ""
-"<i class=\"fas fa-info-circle\"></i>\n"
-"                To apply a linbo-remote command, you have to select at least "
-"one client and one command."
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:91
+msgid "<i class=\"fas fa-info-circle\"></i>\n"
+"                To apply a linbo-remote command, you have to select at least one client and one command."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/extra_linbo_sync/resources/partial/index.html:50
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:50
 msgid "<i class=\"fas fa-play\"></i>  Start"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/extra_linbo_sync/resources/partial/index.html:63
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:63
 msgid "<i class=\"fas fa-power-off\"></i>  Halt"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/extra_linbo_sync/resources/partial/index.html:67
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:67
 msgid "<i class=\"fas fa-sync\"></i>  Reboot"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/extra_linbo_sync/resources/partial/index.html:46
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:46
 msgid "<i class=\"fas fa-sync-alt\"></i>  Sync"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/extra_linbo_sync/resources/partial/index.html:88
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:80
+msgid "<i class=\"fas fa-terminal\"></i>  Disable GUI"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:101
 msgid "Apply"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/extra_linbo_sync/resources/partial/index.html:87
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:79
+msgid "Autostart"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:100
 msgid "Check online"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/extra_linbo_sync/resources/partial/index.html:12
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:12
 msgid "Hostname"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/extra_linbo_sync/resources/partial/index.html:13
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:13
 msgid "IP"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/extra_linbo_sync/resources/partial/index.html:15
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:15
 msgid "Last sync"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/extra_linbo_sync/resources/partial/index.html:14
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:14
 msgid "Mac address"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/extra_linbo_sync/resources/partial/index.html:27
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:27
 msgid "No date found."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/extra_linbo_sync/resources/partial/index.html:16
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:16
 msgid "Online ?"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/extra_linbo_sync/resources/partial/index.html:62
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:62
 msgid "Power management"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/extra_linbo_sync/resources/partial/index.html:83
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:96
 msgid "Result command"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/extra_linbo_sync/resources/partial/index.html:37
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:37
 msgid "Run linbo-remote command"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/extra_linbo_sync/main.py:17
-#: usr/lib/linuxmuster-webui/plugins/extra_linbo_sync/resources/js/controllers/index.controller.coffee:2
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/main.py:17
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/js/controllers/index.controller.coffee:2
 msgid "Linbo synchronization"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/extra_linbo_sync/main.py:31
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/main.py:31
 msgid "List of last sync workstations"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/extra_linbo_sync/main.py:36
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/main.py:36
 msgid "Test if workstation is up"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/extra_linbo_sync/main.py:41
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/main.py:41
 msgid "Synchronize first OS from workstation"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/extra_linbo_sync/resources/js/controllers/index.controller.coffee:137
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/js/controllers/index.controller.coffee:154
 msgid "Command successfully sent : "
 msgstr ""
+

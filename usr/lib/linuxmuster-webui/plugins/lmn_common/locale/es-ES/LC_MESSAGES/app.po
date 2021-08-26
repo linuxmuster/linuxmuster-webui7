@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-02 14:57+0100\n"
-"PO-Revision-Date: 2021-01-14 20:07\n"
+"POT-Creation-Date: 2021-08-26 21:41+0200\n"
+"PO-Revision-Date: 2021-08-26 20:34\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Crowdin-File: /2.0/lmn_common.po\n"
 "X-Crowdin-File-ID: 96\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:150
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:151
 msgid "A bootstrap error has occured"
 msgstr "Se ha producido un error de arranque"
 
@@ -42,7 +42,7 @@ msgstr "Descargar CSV"
 msgid "Drop a CSV file here to import"
 msgstr "Deje caer un archivo CSV aquí para importar"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:133
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:134
 msgid "Enter"
 msgstr "Entra en"
 
@@ -54,15 +54,15 @@ msgstr "Desconecta"
 msgid "No backups available"
 msgstr "No hay copias de seguridad disponibles"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:174
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:175
 msgid "OK"
 msgstr "Ok"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:153
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:154
 msgid "Please see browser console"
 msgstr "Por favor, vea la consola del navegador"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:129
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:130
 msgid "Quick search"
 msgstr "Búsqueda rápida"
 
@@ -78,8 +78,8 @@ msgstr "Consola escolar"
 msgid "Session time : {{ counter[0] }}:{{ counter[1] }}:{{ counter[2] }}"
 msgstr "Hora de la sesión : {{ counter[0] }}:{{ counter[1] }}:{{ counter[2] }}"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/lmnfile.py:133
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/api.py:41
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/lmnfile.py:140
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/api.py:45
 msgid "Access refused."
 msgstr "Acceso denegado."
 
@@ -166,11 +166,8 @@ msgstr "Copiar archivos a los %s de usuarios."
 msgid "Copying files: %s."
 msgstr "Copia de archivos: %s."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:48
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:50
-msgid " uploaded"
-msgstr " uploadet"
-
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:46
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:49
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:92
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:95
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:140
@@ -214,16 +211,16 @@ msgstr " no es un número válido"
 msgid " is not a valid date"
 msgstr " no es una fecha válida"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:107
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:116
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:108
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:136
 msgid " is not valid or duplicated"
 msgstr " no es válido o duplicado"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:125
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:145
 msgid " does not contain valid chars or is duplicated"
 msgstr " no contiene caracteres válidos o está duplicada"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:138
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:158
 msgid " is not a valid role"
 msgstr " no es un rol válido"
 

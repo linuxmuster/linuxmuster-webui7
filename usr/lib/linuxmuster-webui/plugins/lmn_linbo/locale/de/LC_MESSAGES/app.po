@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-26 21:41+0200\n"
-"PO-Revision-Date: 2021-08-26 20:34\n"
+"PO-Revision-Date: 2021-08-27 13:46\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -19,7 +19,7 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:270
 msgid "Activated"
-msgstr ""
+msgstr "Aktiviert"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:159
 msgid "Add <span class=\"caret\"></span>"
@@ -35,7 +35,7 @@ msgstr "Erweitert"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:400
 msgid "Audio"
-msgstr ""
+msgstr "Audio"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:110
 msgid "Auto partition formatting"
@@ -63,11 +63,11 @@ msgstr "Basisimage"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:287
 msgid "Bios Type"
-msgstr ""
+msgstr "BIOS Typ"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:312
 msgid "Boot"
-msgstr ""
+msgstr "Systemstart"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/partition.modal.html:119
 msgid "Boot buttons"
@@ -93,7 +93,7 @@ msgstr "Kommentar: {{image.description}}"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:358
 msgid "Cores"
-msgstr ""
+msgstr "Kerne"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:31
 msgid "Create"
@@ -121,7 +121,7 @@ msgstr "Differntieles Image"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:409
 msgid "Display"
-msgstr ""
+msgstr "Bildschirm"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:123
 msgid "Display client details by default"
@@ -149,7 +149,7 @@ msgstr "Englisch"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:511
 msgid "Expert options"
-msgstr ""
+msgstr "Expertenoptionen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:249
 msgid "Extended"
@@ -186,15 +186,15 @@ msgstr "Gruppen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:354
 msgid "Hardware"
-msgstr ""
+msgstr "Hardware"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:322
 msgid "Hostname"
-msgstr ""
+msgstr "Hostname"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:327
 msgid "IP-Address"
-msgstr ""
+msgstr "IP-Adresse"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/partition.modal.html:80
 msgid "Icon"
@@ -235,7 +235,7 @@ msgstr "Linbo GUI Anpassung"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:333
 msgid "MAC-Address"
-msgstr ""
+msgstr "MAC-Adresse"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:234
 msgid "MSR"
@@ -243,15 +243,15 @@ msgstr "MSR"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:474
 msgid "Maxmimum VMs"
-msgstr ""
+msgstr "Maximale Anzahl an VMs"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:363
 msgid "Memory"
-msgstr ""
+msgstr "Arbeitsspeicher"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:463
 msgid "Minimum VMs"
-msgstr ""
+msgstr "Minimale Anzahl an VMs"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/partition.modal.html:54
 msgid "Name"
@@ -259,11 +259,11 @@ msgstr "Name"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:318
 msgid "Network"
-msgstr ""
+msgstr "Netzwerk"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:338
 msgid "Network-Bridge"
-msgstr ""
+msgstr "Netzwerk-Brücke"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:262
 msgid "New disk"
@@ -275,7 +275,7 @@ msgstr "OS"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:296
 msgid "OS-Type"
-msgstr ""
+msgstr "Betriebssystem-Typ"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/partition.modal.html:163
 msgid "Options"
@@ -303,7 +303,7 @@ msgstr "Prestart Skript"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:468
 msgid "Prestarted VMs"
-msgstr ""
+msgstr "Vorgestartete VMs"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/image.modal.html:21
 msgid "Registry patch"
@@ -327,7 +327,7 @@ msgstr "Festplatte entfernen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:441
 msgid "Reserved VM-IDs"
-msgstr ""
+msgstr "Reservierte VM-IDs"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/partition.modal.html:154
 msgid "Restore Opsi state"
@@ -339,11 +339,11 @@ msgstr "Administrator wegen Zeitlimit ausgeloggt"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:369
 msgid "SCSI 0"
-msgstr ""
+msgstr "SCSI 0"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:374
 msgid "SCSI Hardware"
-msgstr ""
+msgstr "SCSI-Hardware"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:522
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/image.modal.html:78
@@ -353,7 +353,7 @@ msgstr "Speichern"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:278
 msgid "Settings"
-msgstr ""
+msgstr "Einstellungen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/image.modal.html:17
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/partition.modal.html:13
@@ -362,7 +362,7 @@ msgstr "Größe"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:423
 msgid "Spice enhancements"
-msgstr ""
+msgstr "Spice Erweiterungen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:104
 msgid "Start options"
@@ -370,7 +370,7 @@ msgstr "Startoptionen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:387
 msgid "Storage"
-msgstr ""
+msgstr "Speicher"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:243
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:267
@@ -395,19 +395,19 @@ msgstr "Das hier verwendete Symbolformat ist png und Sie sollten dies in svg än
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:492
 msgid "Timeout building clone"
-msgstr ""
+msgstr "Zeitüberschreitung beim Erstellen des Klons"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:498
 msgid "Timeout building master"
-msgstr ""
+msgstr "Zeitüberschreitung beim Erstellen des Masters"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:487
 msgid "Timeouts"
-msgstr ""
+msgstr "Zeitüberschreitungen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:392
 msgid "USB 0"
-msgstr ""
+msgstr "USB 0"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:120
 msgid "Use minimal layout"
@@ -415,27 +415,27 @@ msgstr "Minimales Layout verwenden"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:268
 msgid "VDI"
-msgstr ""
+msgstr "VDI"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:458
 msgid "VDI Konfiguration"
-msgstr ""
+msgstr "VDI Konfiguration"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:344
 msgid "VLAN-Tag"
-msgstr ""
+msgstr "VLAN-Tag"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:446
 msgid "VM IDs"
-msgstr ""
+msgstr "VM IDs"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:276
 msgid "VM Template Settings"
-msgstr ""
+msgstr "VM Vorlagen-Einstellungen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:282
 msgid "VM-Name"
-msgstr ""
+msgstr "VM-Name"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/partition.modal.html:60
 msgid "Version"
@@ -443,7 +443,7 @@ msgstr "Version"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:265
 msgid "Virtual Desktop (VDI)"
-msgstr ""
+msgstr "Virtueller Desktop (VDI)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/main.py:15
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:490

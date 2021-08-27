@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-26 21:42+0200\n"
-"PO-Revision-Date: 2021-08-26 20:33\n"
+"PO-Revision-Date: 2021-08-27 13:46\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -19,154 +19,154 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_vdi_administration/resources/partial/index.html:43
 msgid "All VMs"
-msgstr ""
+msgstr "Alle VMs"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_vdi_administration/resources/partial/masterinfo.modal.html:60
 msgid "Audio"
-msgstr ""
+msgstr "Ton"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_vdi_administration/resources/partial/masterinfo.modal.html:48
 msgid "BIOS"
-msgstr ""
+msgstr "BIOS"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_vdi_administration/resources/partial/masterinfo.modal.html:20
 msgid "Build state"
-msgstr ""
+msgstr "Build-Status"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_vdi_administration/resources/partial/masterinfo.modal.html:16
 msgid "Cloop"
-msgstr ""
+msgstr "Cloop"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_vdi_administration/resources/partial/masterinfo.modal.html:44
 msgid "Cores"
-msgstr ""
+msgstr "Kerne"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_vdi_administration/resources/partial/masterinfo.modal.html:32
 msgid "Creation date"
-msgstr ""
+msgstr "Erstelldatum"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_vdi_administration/resources/partial/groupinfo.modal.html:2
 msgid "Group:"
-msgstr ""
+msgstr "Gruppe:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_vdi_administration/resources/partial/masterinfo.modal.html:37
 msgid "Hardware"
-msgstr ""
+msgstr "Hardware"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_vdi_administration/resources/partial/groupinfo.modal.html:11
 #: usr/lib/linuxmuster-webui/plugins/lmn_vdi_administration/resources/partial/index.html:50
 msgid "Hostname"
-msgstr ""
+msgstr "Rechnername"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_vdi_administration/resources/partial/groupinfo.modal.html:19
 #: usr/lib/linuxmuster-webui/plugins/lmn_vdi_administration/resources/partial/index.html:51
 msgid "IP-Address"
-msgstr ""
+msgstr "IP-Adresse"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_vdi_administration/resources/partial/groupinfo.modal.html:29
 msgid "Image Size"
-msgstr ""
+msgstr "Image Größe"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_vdi_administration/resources/partial/masterinfo.modal.html:28
 msgid "Image size"
-msgstr ""
+msgstr "Image Größe"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_vdi_administration/resources/partial/groupinfo.modal.html:15
 #: usr/lib/linuxmuster-webui/plugins/lmn_vdi_administration/resources/partial/index.html:52
 msgid "MAC-Address"
-msgstr ""
+msgstr "MAC-Adresse"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_vdi_administration/resources/partial/index.html:5
 msgid "Master VMs"
-msgstr ""
+msgstr "Master VMs"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_vdi_administration/resources/partial/masterinfo.modal.html:40
 msgid "Memory"
-msgstr ""
+msgstr "Arbeitsspeicher"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_vdi_administration/resources/partial/masterinfo.modal.html:8
 msgid "Name"
-msgstr ""
+msgstr "Name"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_vdi_administration/resources/partial/masterinfo.modal.html:68
 msgid "Network"
-msgstr ""
+msgstr "Netzwerk"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_vdi_administration/resources/partial/groupinfo.modal.html:24
 msgid "No"
-msgstr ""
+msgstr "Nein"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_vdi_administration/resources/partial/index.html:76
 msgid "No user"
-msgstr ""
+msgstr "Kein Benutzer"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_vdi_administration/resources/partial/groupinfo.modal.html:35
 #: usr/lib/linuxmuster-webui/plugins/lmn_vdi_administration/resources/partial/masterinfo.modal.html:83
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_vdi_administration/resources/partial/masterinfo.modal.html:24
 msgid "OS Type"
-msgstr ""
+msgstr "Betriebssystem-Typ"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_vdi_administration/resources/partial/groupinfo.modal.html:23
 msgid "PXE-Boot"
-msgstr ""
+msgstr "PXE-Boot"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_vdi_administration/resources/partial/groupinfo.modal.html:7
 #: usr/lib/linuxmuster-webui/plugins/lmn_vdi_administration/resources/partial/index.html:49
 msgid "Room"
-msgstr ""
+msgstr "Raum"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_vdi_administration/resources/partial/masterinfo.modal.html:52
 msgid "SCSI 0"
-msgstr ""
+msgstr "SCSI 0"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_vdi_administration/resources/partial/masterinfo.modal.html:56
 msgid "SCSI Hardware"
-msgstr ""
+msgstr "SCSI-Hardware"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_vdi_administration/resources/partial/masterinfo.modal.html:76
 msgid "Spice enhancements"
-msgstr ""
+msgstr "Spice Erweiterungen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_vdi_administration/resources/partial/masterinfo.modal.html:12
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_vdi_administration/resources/partial/masterinfo.modal.html:5
 msgid "Summary"
-msgstr ""
+msgstr "Zusammenfassung"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_vdi_administration/resources/partial/masterinfo.modal.html:72
 msgid "USB"
-msgstr ""
+msgstr "USB"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_vdi_administration/resources/partial/index.html:53
 msgid "User"
-msgstr ""
+msgstr "Benutzer"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_vdi_administration/resources/partial/masterinfo.modal.html:64
 msgid "VGA"
-msgstr ""
+msgstr "VGA"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_vdi_administration/resources/partial/index.html:48
 msgid "VM ID"
-msgstr ""
+msgstr "VM ID"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_vdi_administration/resources/partial/masterinfo.modal.html:2
 msgid "VM-Number:"
-msgstr ""
+msgstr "VM-Nummer:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_vdi_administration/resources/partial/groupinfo.modal.html:25
 msgid "Yes"
-msgstr ""
+msgstr "Ja"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_vdi_administration/main.py:30
 msgid "VDI administrator permissions"
-msgstr ""
+msgstr "VDI Administratorrechte"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_vdi_administration/resources/js/controllers/index.controller.es:2
 msgid "Lmn_vdi_administration"
-msgstr ""
+msgstr "Lmn_vdi_administration"
 

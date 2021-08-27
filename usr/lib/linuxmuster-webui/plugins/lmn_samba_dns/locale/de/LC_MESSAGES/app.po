@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-26 21:41+0200\n"
-"PO-Revision-Date: 2021-08-26 20:33\n"
+"PO-Revision-Date: 2021-08-27 13:46\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -19,92 +19,92 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:43
 msgid "Add an entry"
-msgstr ""
+msgstr "Eintrag hinzufügen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:61
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:80
 msgid "Close"
-msgstr ""
+msgstr "Schließen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:18
 msgid "Host"
-msgstr ""
+msgstr "Rechner"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:66
 msgid "Modify DNS entry"
-msgstr ""
+msgstr "DNS-Eintrag ändern"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:47
 msgid "New DNS entry"
-msgstr ""
+msgstr "Neuer DNS-Eintrag"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:60
 msgid "Save"
-msgstr ""
+msgstr "Speichern"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:51
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:70
 msgid "Subdomain :"
-msgstr ""
+msgstr "Subdomain:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:15
 msgid "Subdomains"
-msgstr ""
+msgstr "Subdomains"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:20
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:6
 msgid "TTL"
-msgstr ""
+msgstr "TTL"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:19
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:5
 msgid "Type"
-msgstr ""
+msgstr "Typ"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:53
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:72
 msgid "Type :"
-msgstr ""
+msgstr "Typ:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:79
 msgid "Update"
-msgstr ""
+msgstr "Aktualisieren"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:21
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:7
 msgid "Value"
-msgstr ""
+msgstr "Wert"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:55
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:74
 msgid "Value :"
-msgstr ""
+msgstr "Wert:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:2
 msgid "Zone informations"
-msgstr ""
+msgstr "Zoneninformationen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/js/controllers/index.controller.es:2
 msgid "Samba_dns"
-msgstr ""
+msgstr "Samba_dns"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/js/controllers/index.controller.es:5
 msgid "Modify this entry"
-msgstr ""
+msgstr "Diesen Eintrag bearbeiten"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/js/controllers/index.controller.es:6
 msgid "Delete this entry"
-msgstr ""
+msgstr "Diesen Eintrag löschen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/js/controllers/index.controller.es:25
 msgid "Entry deleted !"
-msgstr ""
+msgstr "Eintrag gelöscht!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/js/controllers/index.controller.es:46
 msgid "Entry updated !"
-msgstr ""
+msgstr "Eintrag aktualisiert!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/js/controllers/index.controller.es:58
 msgid "Entry saved !"
-msgstr ""
+msgstr "Eintrag gespeichert!"
 

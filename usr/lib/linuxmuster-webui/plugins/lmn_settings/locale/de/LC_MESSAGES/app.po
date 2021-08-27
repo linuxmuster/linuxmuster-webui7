@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-26 21:41+0200\n"
-"PO-Revision-Date: 2021-08-26 20:33\n"
+"PO-Revision-Date: 2021-08-27 13:46\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -19,15 +19,15 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:483
 msgid "<b>Template for multiple passwords entries on one page:</b>"
-msgstr ""
+msgstr "<b>Vorlage für mehrere Passworteinträge auf einer Seite:</b>"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:489
 msgid "<b>Template for one password entry per page:</b>"
-msgstr ""
+msgstr "<b>Vorlage für einen Passwort-Eintrag pro Seite:</b>"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:351
 msgid "Admin description"
-msgstr ""
+msgstr "Admin-Beschreibung"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:307
 msgid "Cloudquota Percentage"
@@ -38,19 +38,19 @@ msgstr "Cloudquota in Prozent"
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:411
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:431
 msgid "Comment"
-msgstr ""
+msgstr "Bemerkung"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:497
 msgid "Custom fields"
-msgstr ""
+msgstr "Benutzerdefinierte Felder"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:561
 msgid "Custom lists"
-msgstr ""
+msgstr "Eigene Listen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:530
 msgid "Custom values"
-msgstr ""
+msgstr "Benutzerdefinierte Werte"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:248
 msgid "Detected encoding"
@@ -79,7 +79,7 @@ msgstr "Allgemein"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:479
 msgid "If you want to use your own latex template, please store it in the directory /etc/linuxmuster/sophomorix/SCHOOL/latex-templates/. More informations about it <a href=\"https://github.com/linuxmuster/sophomorix4/blob/bionic/sophomorix-samba/lang/latex/README.latextemplates\">in sophomorix's wiki</a>."
-msgstr ""
+msgstr "Wenn Sie Ihr eigenes Latex-Template verwenden möchten, speichern Sie es bitte im Verzeichnis /etc/linuxmuster/sophomorix/SCHOOL/latex-templates/. Mehr Informationen dazu <a href=\"https://github.com/linuxmuster/sophomorix4/blob/bionic/sophomorix-samba/lang/latex/README.latextemplates\">im sophomorix Wiki</a>."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:11
 msgid "Language"
@@ -87,7 +87,7 @@ msgstr "Sprache"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:478
 msgid "Latex templates"
-msgstr ""
+msgstr "Latex-Templates"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:227
 msgid "List encoding"
@@ -107,7 +107,7 @@ msgstr "Maximale Sitzungsdauer"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:399
 msgid "Moodle"
-msgstr ""
+msgstr "Moodle"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:134
 msgid "Password Length"
@@ -127,7 +127,7 @@ msgstr "Primäre Gruppe Adminclass"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:59
 msgid "Primary Group Project"
-msgstr ""
+msgstr "Primäres Gruppen-Projekt"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:51
 msgid "Primary Group Teacherclass"
@@ -144,7 +144,7 @@ msgstr "Druckserver"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:499
 msgid "Proxy addresses"
-msgstr ""
+msgstr "Proxy-Adressen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:267
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:269
@@ -212,7 +212,7 @@ msgstr "Speichern &amp; Prüfen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:359
 msgid "School landing page"
-msgstr ""
+msgstr "Startseite der Schule"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:343
 msgid "School name"
@@ -233,7 +233,7 @@ msgstr "Schulname"
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:570
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:572
 msgid "Show"
-msgstr ""
+msgstr "Anzeigen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:273
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:504
@@ -268,7 +268,7 @@ msgstr "Lehrer"
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:571
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:573
 msgid "Title"
-msgstr ""
+msgstr "Titel"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:176
 msgid "Tolerance after departure (days)"
@@ -279,7 +279,7 @@ msgstr "Tage bis zum Deaktivieren nach Austreten"
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:403
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:423
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:82
 msgid "Username and Passwords"
@@ -287,15 +287,15 @@ msgstr "Benutzername und Passwörter"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:419
 msgid "Webmail"
-msgstr ""
+msgstr "Webmail"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:379
 msgid "Webui"
-msgstr ""
+msgstr "Webui"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:592
 msgid "Which custom values display on user's lists ?"
-msgstr ""
+msgstr "Welche benutzerdefinierten Werte werden auf Benutzerlisten angezeigt?"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:73
 msgid "default: server"
@@ -418,13 +418,13 @@ msgstr "Löschen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:154
 msgid "In order for changes to take effect, it's  necessary to restart the Webui. Restart now ?"
-msgstr ""
+msgstr "Um die Änderungen wirksam werden zu lassen, muss die Webui neu gestartet werden. Jetzt neu starten ?"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:155
 msgid "Restart"
-msgstr ""
+msgstr "Neustart"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:156
 msgid "Later"
-msgstr ""
+msgstr "Später"
 

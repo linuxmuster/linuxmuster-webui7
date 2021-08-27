@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-26 21:41+0200\n"
-"PO-Revision-Date: 2021-08-26 20:33\n"
+"PO-Revision-Date: 2021-08-27 13:46\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -19,104 +19,104 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:65
 msgid "Close"
-msgstr ""
+msgstr "Schließen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:14
 msgid "Cpu usage"
-msgstr ""
+msgstr "CPU-Auslastung"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:74
 msgid "Created"
-msgstr ""
+msgstr "Erstellt"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:47
 msgid "Created at"
-msgstr ""
+msgstr "Erstellt am"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:6
 msgid "Docker is not installed on this host."
-msgstr ""
+msgstr "Docker ist auf diesem Host nicht installiert."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:43
 msgid "Full id"
-msgstr ""
+msgstr "Volle ID"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:51
 msgid "IP"
-msgstr ""
+msgstr "IP"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:13
 msgid "Memory usage"
-msgstr ""
+msgstr "Arbeitsspeicherauslastung"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:12
 msgid "Name (Hash)"
-msgstr ""
+msgstr "Name (Hash)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:15
 msgid "Network used"
-msgstr ""
+msgstr "Netzwerk verwendet"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:9
 msgid "No container on this host."
-msgstr ""
+msgstr "Kein Container auf diesem Host."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:70
 msgid "No docker images on this host."
-msgstr ""
+msgstr "Keine Docker Images auf diesem Host."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:55
 msgid "Ports"
-msgstr ""
+msgstr "Ports"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:73
 msgid "Repository"
-msgstr ""
+msgstr "Repository"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:76
 msgid "Size"
-msgstr ""
+msgstr "Größe"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:75
 msgid "Tag"
-msgstr ""
+msgstr "Tag"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:59
 msgid "Volumes"
-msgstr ""
+msgstr "Volumen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/views.py:35
 msgid "Docker is not installed on this host"
-msgstr ""
+msgstr "Docker ist auf diesem Host nicht installiert"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/js/controllers/index.controller.es:41
 msgid "Stop command successfully sent."
-msgstr ""
+msgstr "Stopp-Befehl erfolgreich gesendet."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/js/controllers/index.controller.es:46
 msgid "Start command successfully sent."
-msgstr ""
+msgstr "Startbefehl erfolgreich gesendet."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/js/controllers/index.controller.es:51
 msgid "Really remove this container?"
-msgstr ""
+msgstr "Diesen Container wirklich entfernen?"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/js/controllers/index.controller.es:52
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/js/controllers/index.controller.es:72
 msgid "Remove"
-msgstr ""
+msgstr "Entfernen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/js/controllers/index.controller.es:53
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/js/controllers/index.controller.es:73
 msgid "Cancel"
-msgstr ""
+msgstr "Abbrechen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/js/controllers/index.controller.es:56
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/js/controllers/index.controller.es:76
 msgid "Remove command successfully sent."
-msgstr ""
+msgstr "Löschbefehl erfolgreich gesendet."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/js/controllers/index.controller.es:71
 msgid "Really remove this image?"
-msgstr ""
+msgstr "Dieses Image wirklich entfernen?"
 

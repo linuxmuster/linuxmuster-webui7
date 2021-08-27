@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-26 21:41+0200\n"
-"PO-Revision-Date: 2021-08-26 20:33\n"
+"PO-Revision-Date: 2021-08-27 13:46\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -117,7 +117,7 @@ msgstr "Keine Dateien oder Verzeichnisse in Übertragung gefunden"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:83
 msgid "Not running"
-msgstr ""
+msgstr "Läuft nicht"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:50
 msgid "Rename Session"
@@ -129,7 +129,7 @@ msgstr "Erstpasswort wiederherstellen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:82
 msgid "Running"
-msgstr ""
+msgstr "Wird ausgeführt"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:234
 msgid "Save &amp; apply"
@@ -219,7 +219,7 @@ msgstr "Benutzer in Ihrem Raum angemeldet:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/session.html:77
 msgid "Websession"
-msgstr ""
+msgstr "Websitzung"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/roomDetails.modal.html:13
 msgid "user(s)"
@@ -282,19 +282,19 @@ msgstr "Unterricht mit allen Benutzern in diesem Raum starten"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:175
 msgid "Successfully stopped!"
-msgstr ""
+msgstr "Erfolgreich gestoppt!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:178
 msgid "Cannot stop entry!"
-msgstr ""
+msgstr "Eintrag kann nicht beendet werden!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:196
 msgid "Cannot start websession! Try to reload page!"
-msgstr ""
+msgstr "Web-Sitzung kann nicht gestartet werden! Seite neu laden!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:199
 msgid "Create session failed! Try again later!"
-msgstr ""
+msgstr "Sitzung konnte nicht erstellt werden! Versuchen Sie es später erneut!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:250
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:420

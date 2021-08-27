@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-26 21:41+0200\n"
-"PO-Revision-Date: 2021-08-26 20:33\n"
+"PO-Revision-Date: 2021-08-27 13:46\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -19,73 +19,73 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:26
 msgid "Api"
-msgstr ""
+msgstr "API"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:25
 msgid "Auth"
-msgstr ""
+msgstr "Auth"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:18
 #: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:49
 msgid "Def."
-msgstr ""
+msgstr "Std."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:66
 #: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:76
 msgid "Elements listed in default-ui-permissions.ini but not used :"
-msgstr ""
+msgstr "Elemente in default-ui-permissions.ini aufgelistet, aber nicht verwendet:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:86
 msgid "Export permissions file"
-msgstr ""
+msgstr "Berechtigungsdatei exportieren"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:14
 #: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:45
 msgid "GlobalAdmin"
-msgstr ""
+msgstr "GlobalAdmin"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:33
 msgid "No authorization set for this method."
-msgstr ""
+msgstr "Keine Autorisierung für diese Methode gesetzt."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:27
 msgid "Page"
-msgstr ""
+msgstr "Seite"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:74
 #: usr/lib/linuxmuster-webui/plugins/lmn_permissions/main.py:18
 msgid "Permissions"
-msgstr ""
+msgstr "Berechtigungen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:28
 msgid "Post"
-msgstr ""
+msgstr "Post"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:15
 #: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:46
 msgid "SchoolAdmin"
-msgstr ""
+msgstr "Schul-Administrator"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:64
 msgid "Sidebar"
-msgstr ""
+msgstr "Seitenleiste"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:17
 #: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:48
 msgid "Student"
-msgstr ""
+msgstr "Schüler"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:16
 #: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:47
 msgid "Teacher"
-msgstr ""
+msgstr "Lehrkraft"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:13
 #: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:44
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/js/controllers/index.controller.coffee:2
 msgid "List all permissions"
-msgstr ""
+msgstr "Alle Berechtigungen auflisten"
 

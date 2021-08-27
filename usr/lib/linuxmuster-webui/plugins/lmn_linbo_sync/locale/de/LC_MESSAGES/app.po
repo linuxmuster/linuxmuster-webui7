@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-26 21:41+0200\n"
-"PO-Revision-Date: 2021-08-26 20:33\n"
+"PO-Revision-Date: 2021-08-27 13:46\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -19,111 +19,112 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:71
 msgid "<i class=\"fas fa-clock\"></i>  Boot timeout (in seconds):"
-msgstr ""
+msgstr "<i class=\"fas fa-clock\"></i>  Boot-Timeout (in Sekunden):"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:84
 msgid "<i class=\"fas fa-directions\"></i>  Bypass autostart"
-msgstr ""
+msgstr "<i class=\"fas fa-directions\"></i>  Autostart umgehen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:42
 msgid "<i class=\"fas fa-eraser\"></i>  Format"
-msgstr ""
+msgstr "<i class=\"fas fa-eraser\"></i>  Formatieren"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:54
 msgid "<i class=\"fas fa-exclamation-triangle\"></i>  New"
-msgstr ""
+msgstr "<i class=\"fas fa-exclamation-triangle\"></i>  Neu"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:91
 msgid "<i class=\"fas fa-info-circle\"></i>\n"
 "                To apply a linbo-remote command, you have to select at least one client and one command."
-msgstr ""
+msgstr "<i class=\"fas fa-info-circle\"></i>\n"
+"                Um einen linbo-remote Befehl anzuwenden, müssen Sie mindestens einen Client und einen Befehl auswählen."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:50
 msgid "<i class=\"fas fa-play\"></i>  Start"
-msgstr ""
+msgstr "<i class=\"fas fa-play\"></i>  Start"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:63
 msgid "<i class=\"fas fa-power-off\"></i>  Halt"
-msgstr ""
+msgstr "<i class=\"fas fa-power-off\"></i>  Herunterfahren"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:67
 msgid "<i class=\"fas fa-sync\"></i>  Reboot"
-msgstr ""
+msgstr "<i class=\"fas fa-sync\"></i>  Neustart"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:46
 msgid "<i class=\"fas fa-sync-alt\"></i>  Sync"
-msgstr ""
+msgstr "<i class=\"fas fa-sync-alt\"></i>  Synchronisieren"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:80
 msgid "<i class=\"fas fa-terminal\"></i>  Disable GUI"
-msgstr ""
+msgstr "<i class=\"fas fa-terminal\"></i>  GUI deaktivieren"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:101
 msgid "Apply"
-msgstr ""
+msgstr "Übernehmen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:79
 msgid "Autostart"
-msgstr ""
+msgstr "Autostart"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:100
 msgid "Check online"
-msgstr ""
+msgstr "Online prüfen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:12
 msgid "Hostname"
-msgstr ""
+msgstr "Rechnername"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:13
 msgid "IP"
-msgstr ""
+msgstr "IP"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:15
 msgid "Last sync"
-msgstr ""
+msgstr "Letzte Synchronisierung"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:14
 msgid "Mac address"
-msgstr ""
+msgstr "MAC-Adresse"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:27
 msgid "No date found."
-msgstr ""
+msgstr "Kein Datum gefunden."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:16
 msgid "Online ?"
-msgstr ""
+msgstr "Online ?"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:62
 msgid "Power management"
-msgstr ""
+msgstr "Energieverwaltung"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:96
 msgid "Result command"
-msgstr ""
+msgstr "Befehl"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:37
 msgid "Run linbo-remote command"
-msgstr ""
+msgstr "linbo-remote Befehl ausführen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/main.py:17
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/js/controllers/index.controller.coffee:2
 msgid "Linbo synchronization"
-msgstr ""
+msgstr "Linbo-Synchronisierung"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/main.py:31
 msgid "List of last sync workstations"
-msgstr ""
+msgstr "Liste der zuletzt synchronisierten Rechnern"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/main.py:36
 msgid "Test if workstation is up"
-msgstr ""
+msgstr "Testen, ob Rechner online ist"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/main.py:41
 msgid "Synchronize first OS from workstation"
-msgstr ""
+msgstr "Das erste Betriebssystem des Rechners synchronisieren"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/js/controllers/index.controller.coffee:154
 msgid "Command successfully sent : "
-msgstr ""
+msgstr "Befehl erfolgreich versendet: "
 

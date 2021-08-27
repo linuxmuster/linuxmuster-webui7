@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-26 21:41+0200\n"
-"PO-Revision-Date: 2021-08-26 20:34\n"
+"PO-Revision-Date: 2021-08-27 13:46\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -20,7 +20,7 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:105
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:62
 msgid "<i class=\"fas fa-undo\"></i>"
-msgstr ""
+msgstr "<i class=\"fa fa-undo\"></i>"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:147
 msgid "Add a whole group"
@@ -310,15 +310,15 @@ msgstr "Projekt erstellt"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:114
 msgid "Something unusual happened"
-msgstr ""
+msgstr "Es ist ein Problem aufgetreten"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:133
 msgid "Are you sure to reset all admin memberships for this? This is actually only necessary to start a new empty school year. This cannot be undone!"
-msgstr ""
+msgstr "Sind Sie sicher, dass Sie alle Administrator-Mitgliedschaften zurücksetzen wollen? Dies ist eigentlich nur notwendig, um ein neues leeres Schuljahr zu starten. Das kann nicht rückgängig gemacht werden!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:146
 msgid "Admin membership reset"
-msgstr ""
+msgstr "Administratormitgliedschaft zurücksetzen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:167
 msgid "Hide"

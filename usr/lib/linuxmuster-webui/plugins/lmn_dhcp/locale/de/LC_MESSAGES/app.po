@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-26 21:41+0200\n"
-"PO-Revision-Date: 2021-08-26 20:33\n"
+"PO-Revision-Date: 2021-08-27 13:46\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -19,157 +19,157 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:23
 msgid "(Already used)"
-msgstr ""
+msgstr "(Bereits verwendet)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:2
 msgid "Add device"
-msgstr ""
+msgstr "Gerät hinzufügen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/index.html:17
 msgid "Already registered!"
-msgstr ""
+msgstr "Bereits registriert!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:33
 msgid "Already used"
-msgstr ""
+msgstr "Bereits verwendet"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:69
 msgid "BYOD"
-msgstr ""
+msgstr "BYOD"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:84
 msgid "Cancel"
-msgstr ""
+msgstr "Abbrechen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/index.html:4
 msgid "DHCP Leases"
-msgstr ""
+msgstr "DHCP-Leases"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:74
 msgid "Domain-Controller"
-msgstr ""
+msgstr "Domänencontroller"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/index.html:10
 msgid "End"
-msgstr ""
+msgstr "Ende"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:63
 msgid "Faculty-Teachercomputer"
-msgstr ""
+msgstr "Fakultät-Lehrercomputer"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:41
 msgid "Group:"
-msgstr ""
+msgstr "Gruppe:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:32
 msgid "Hostname"
-msgstr ""
+msgstr "Hostname"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/index.html:8
 msgid "IP"
-msgstr ""
+msgstr "IP"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:72
 msgid "IP-Only"
-msgstr ""
+msgstr "Nur IP"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:50
 msgid "Linbo-PXE"
-msgstr ""
+msgstr "Linbo-PXE"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:51
 msgid "Linbo-PXE + OPSI-MGMT"
-msgstr ""
+msgstr "Linbo-PXE + OPSI-MGMT"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/index.html:7
 msgid "Mac address"
-msgstr ""
+msgstr "MAC-Adresse"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:15
 msgid "Mac:"
-msgstr ""
+msgstr "MAC:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:73
 msgid "Mobile"
-msgstr ""
+msgstr "Handy"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:49
 msgid "No PXE"
-msgstr ""
+msgstr "Kein PXE"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:52
 msgid "OPSI-PXE"
-msgstr ""
+msgstr "OPSI-PXE"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:47
 msgid "PXE Boot:"
-msgstr ""
+msgstr "PXE-Boot:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:67
 msgid "Printer"
-msgstr ""
+msgstr "Drucker"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:9
 msgid "Room:"
-msgstr ""
+msgstr "Raum:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:82
 msgid "Save"
-msgstr ""
+msgstr "Speichern"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:83
 msgid "Save & import"
-msgstr ""
+msgstr "Speichern & importieren"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:64
 msgid "Server"
-msgstr ""
+msgstr "Server"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:58
 msgid "Sophomorix role:"
-msgstr ""
+msgstr "Sophomorix-Rolle:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:62
 msgid "Staffcomputer"
-msgstr ""
+msgstr "Lehrer-PC"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/index.html:9
 msgid "Start"
-msgstr ""
+msgstr "Start"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:66
 msgid "Switch"
-msgstr ""
+msgstr "Switch"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:68
 msgid "Thinclient"
-msgstr ""
+msgstr "ThinClient"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:70
 msgid "VOIP"
-msgstr ""
+msgstr "VoIP"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:71
 msgid "WLan"
-msgstr ""
+msgstr "WLAN"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:60
 msgid "classroom-studentcomputer"
-msgstr ""
+msgstr "Schüler-PC im Klassenzimmer"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:61
 msgid "classroom-teachercomputer"
-msgstr ""
+msgstr "Lehrer-PC im Klassenzimmer"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:65
 msgid "router"
-msgstr ""
+msgstr "Router"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/js/controllers/index.controller.es:2
 msgid "DHCP"
-msgstr ""
+msgstr "DHCP"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/js/controllers/index.controller.es:78
 msgid "Device successfully saved in devices.csv!"
-msgstr ""
+msgstr "Gerät erfolgreich in devices.csv gespeichert!"
 

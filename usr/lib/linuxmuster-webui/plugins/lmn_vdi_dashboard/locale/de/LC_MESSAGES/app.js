@@ -1,1 +1,1 @@
-{"": "", "Available VMs:": "", "No VMs avaliable!": "", "VDI Desktops": "", "VDI Groups": "", "VDI Dashboard permission": "", "Lmn_vdi_dashboard": ""}
+{"": "", "Available VMs:": "Verf\u00fcgbare VMs:", "No VMs avaliable!": "Keine VMs verf\u00fcgbar!", "VDI Desktops": "VDI Desktops", "VDI Groups": "VDI-Gruppen", "VDI Dashboard permission": "VDI Dashboard-Berechtigung", "Lmn_vdi_dashboard": "Lmn_vdi_Dashboard"}

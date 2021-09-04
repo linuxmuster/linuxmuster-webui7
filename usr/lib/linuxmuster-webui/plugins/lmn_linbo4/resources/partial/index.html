@@ -1,0 +1,65 @@
+<br/>
+
+<progress-spinner ng:show="configs == null"></progress-spinner>
+
+<div ng:show="configs != null">
+    <uib:tabset active=activetab>
+        <uib:tab heading="{{'Groups'|translate}}">
+            <br/>
+            <div class="list-group">
+                <div class="list-group-item list-group-item-small" ng:repeat="config in configs|orderBy:'toString()'">
+                    <a class="list-group-btn" ng:click="deleteConfig(config)">
+                        <i class="fa fa-trash-o"></i>
+                    </a>
+                    <a class="list-group-btn" ng:click="duplicateConfig(config)">
+                        <i class="fa fa-copy"></i>
+                    </a>
+                    <a class="list-group-main" ng:click="editConfig(config)">
+                        {{config.substring('start.conf.'.length)}}
+                    </a>
+                </div>
+            </div>
+
+            <div class="floating-toolbar-padder"></div>
+
+            <floating-toolbar>
+                <button ng:click="downloadIso()" class="btn btn-lmn pull-right" translate>
+                    Download Linbo Boot
+                </button>
+                <div uib-dropdown class="dropup" style="width:50%;">
+                    <button class="btn btn-lmn" uib-dropdown-toggle>
+                        <i class="fa fa-plus"></i> <span translate>Create</span> <i class="fa fa-caret-up"></i>
+                    </button>
+                    <ul uib-dropdown-menu class="scrollable">
+                        <li><a translate ng:click="createConfig()">Empty</a></li>
+                        <li ng:repeat="example in examples"><a ng:click="createConfig(example)">{{example}}</a></li>
+                    </ul>
+                </div>
+            </floating-toolbar>
+        </uib:tab>
+        <uib:tab heading="{{'Images'|translate}}">
+            <br/>
+            <div class="list-group">
+                <div class="list-group-item list-group-item-small" ng:repeat="image in images|orderBy:'name'">
+                    <a class="list-group-btn" ng:click="deleteImage(image)">
+                        <i class="fa fa-trash-o"></i>
+                    </a>
+                    <a class="list-group-btn" ng:click="duplicateImage(image)">
+                        <i class="fa fa-copy"></i>
+                    </a>
+                    <div class="list-group-btn" style="font-weight:bold;margin-right:20px;">{{image.size|bytes}}</div>
+                    <span checkbox class="pull-left list-group-main" ng:model="image.selected" ng:click="toggleSelected(image)" />
+                    <a class="list-group-main" style="font-weight:bold;" ng:click="editImage(image)">
+                        {{image.name}}
+                    </a>
+                    <div style="margin-left:30px;white-space:normal;" translate>Comment: {{image.description}}</div>
+                </div>
+            </div>
+            <floating-toolbar ng:show="images_selected.length > 0">
+                <button ng:click="deleteImages()" class="btn btn-lmn pull-right" translate>
+                    Delete selected images
+                </button>
+            </floating-toolbar>
+        </uib:tab>
+    </uib:tabset>
+</div>

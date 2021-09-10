@@ -4,7 +4,8 @@ from aj.plugins.lmn_common.lmnfile import LMNFile
 
 class LinboImage:
     LINBO_PATH = '/srv/linbo/images'
-    EXTRA_FILES = ['desc', 'reg', 'postsync', 'info', 'macct', 'vdi']
+    EXTRA_IMAGE_FILES = ['desc', 'info', 'macct', 'vdi']
+    EXTRA_COMMON_FILES = ['reg', 'postsync', 'prestart']
 
     def __init__(self, name, backup=False, timestamp=None):
         self.name = name
@@ -13,7 +14,7 @@ class LinboImage:
         self.load_info()
 
     def load_info(self):
-        self.image = self.name + ".qcow2"
+        self.image = f"{self.name}.qcow2"
 
         if self.backup:
             self.path = os.path.join(self.LINBO_PATH, self.name, 'backups', self.timestamp)
@@ -32,20 +33,21 @@ class LinboImage:
         :rtype:
         """
 
-        for extra in self.EXTRA_FILES:
-            extra_file = os.path.join(self.path, self.image + '.' + extra)
+        for extra in self.EXTRA_IMAGE_FILES:
+            extra_file = os.path.join(self.path, f"{self.image}.{extra}")
             if os.path.isfile(extra_file):
                 with LMNFile(extra_file, 'r') as f:
                     self.extras[extra] = f.read()
             else:
                 self.extras[extra] = None
 
-        prestart_file = os.path.join(self.path, self.name + '.prestart')
-        if os.path.isfile(prestart_file):
-            with LMNFile(prestart_file, 'r') as f:
-                self.extras['prestart'] = f.read()
-        else:
-            self.extras['prestart'] = None
+        for extra in self.EXTRA_COMMON_FILES:
+            extra_file = os.path.join(self.path, f"{self.name}.{extra}")
+            if os.path.isfile(extra_file):
+                with LMNFile(extra_file, 'r') as f:
+                    self.extras[extra] = f.read()
+            else:
+                self.extras[extra] = None
 
     def delete(self):
         """
@@ -59,14 +61,15 @@ class LinboImage:
         os.unlink(os.path.join(self.path, self.image))
 
         # Remove extra files
-        for extra in self.EXTRA_FILES:
-            path = os.path.join(self.path, self.image + "." + extra)
+        for extra in self.EXTRA_IMAGE_FILES:
+            path = os.path.join(self.path, f"{self.image}.{extra}")
             if os.path.exists(path):
                 os.unlink(path)
 
-        prestart = os.path.join(self.path, self.name + '.prestart')
-        if os.path.exists(prestart):
-            os.unlink(prestart)
+        for extra in self.EXTRA_COMMON_FILES:
+            path = os.path.join(self.path, f"{self.name}.{extra}")
+            if os.path.exists(path):
+                os.unlink(path)
 
         # Remove directory
         os.unlink(self.path)
@@ -79,21 +82,22 @@ class LinboImage:
         :rtype:
         """
 
-        new_image_name = new_name + ".qcow2"
+        new_image_name = f"{new_name}.qcow2"
 
         # Rename image
         os.rename(os.path.join(self.path, self.image),
                   os.path.join(self.path, new_image_name))
 
         # Rename extra files
-        for extra in ['.desc', '.reg', '.postsync', '.info', '.macct', '.vdi']:
-            actual = os.path.join(self.path, self.image + extra)
+        for extra in EXTRA_IMAGE_FILES:
+            actual = os.path.join(self.path, f"{self.image}.{extra}")
             if os.path.exists(actual):
-                os.rename(actual, os.path.join(self.path, new_image_name + extra))
+                os.rename(actual, os.path.join(self.path, f"{new_image_name}.{extra}"))
 
-        prestart =os.path.join(self.path, self.name + '.prestart')
-        if os.path.exists(prestart):
-            os.rename(prestart, os.path.join(self.path, new_name + '.prestart'))
+        for extra in EXTRA_COMMON_FILES:
+            actual = os.path.join(self.path, f"{self.name}.{extra}")
+            if os.path.exists(actual):
+                os.rename(actual, os.path.join(self.path, f"{new_name}.{extra}"))
 
         # Move directory
         if not self.backup:

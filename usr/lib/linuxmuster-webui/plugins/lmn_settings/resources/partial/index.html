@@ -278,13 +278,13 @@
                     <label translate>List encoding</label>
                 </td>
                 <td class="text-center">
-                    <input type="text" class="form-control" ng:model="settings['userfile.students.csv']['FILTERSCRIPT']">
+                    <input type="text" class="form-control" ng:model="settings['userfile.students.csv']['FILTERSCRIPT']" ng:blur="filterscriptNotEmpty()">
                 </td>
                 <td class="text-center">
-                    <input type="text" class="form-control" ng:model="settings['userfile.teachers.csv']['FILTERSCRIPT']">
+                    <input type="text" class="form-control" ng:model="settings['userfile.teachers.csv']['FILTERSCRIPT']" ng:blur="filterscriptNotEmpty()">
                 </td>
                 <td class="text-center">
-                    <input type="text" class="form-control" ng:model="settings['userfile.extrastudents.csv']['FILTERSCRIPT']">
+                    <input type="text" class="form-control" ng:model="settings['userfile.extrastudents.csv']['FILTERSCRIPT']" ng:blur="filterscriptNotEmpty()">
                 </td>
             </tr>
         </table>

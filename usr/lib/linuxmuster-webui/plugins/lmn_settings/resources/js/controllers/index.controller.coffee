@@ -45,7 +45,6 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
 
     $http.get('/api/lm/schoolsettings').then (resp) ->
         school = 'default-school'
-        console.log(resp.data)
         encoding = {}
         #TODO: Remove comments
         #for file in ['userfile.students.csv', 'userfile.teachers.csv', 'userfile.extrastudents.csv', 'classfile.extraclasses.csv', ]
@@ -67,6 +66,12 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
 
     $http.get('/api/lm/subnets').then (resp) ->
         $scope.subnets = resp.data
+
+    $scope.filterscriptNotEmpty = () ->
+        # A filterscript option should not be empty but "---"
+        for role in ['students', 'teachers', 'extrastudents']
+            if $scope.settings['userfile.' + role + '.csv']['FILTERSCRIPT'] == ""
+               $scope.settings['userfile.' + role + '.csv']['FILTERSCRIPT'] = "---"
 
     $scope.load_custom_config = () ->
         $http.get('/api/lm/read_custom_config').then (resp) ->

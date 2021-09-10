@@ -59,7 +59,6 @@
     $http.get('/api/lm/schoolsettings').then(function(resp) {
       var encoding, file, k, len2, ref2, school, userfile;
       school = 'default-school';
-      console.log(resp.data);
       encoding = {};
       ref2 = ['userfile.students.csv', 'userfile.extrastudents.csv', 'userfile.teachers.csv', 'userfile.extrastudents.csv'];
       //TODO: Remove comments
@@ -89,6 +88,21 @@
     $http.get('/api/lm/subnets').then(function(resp) {
       return $scope.subnets = resp.data;
     });
+    $scope.filterscriptNotEmpty = function() {
+      var k, len2, ref2, results, role;
+      ref2 = ['students', 'teachers', 'extrastudents'];
+      // A filterscript option should not be empty but "---"
+      results = [];
+      for (k = 0, len2 = ref2.length; k < len2; k++) {
+        role = ref2[k];
+        if ($scope.settings['userfile.' + role + '.csv']['FILTERSCRIPT'] === "") {
+          results.push($scope.settings['userfile.' + role + '.csv']['FILTERSCRIPT'] = "---");
+        } else {
+          results.push(void 0);
+        }
+      }
+      return results;
+    };
     $scope.load_custom_config = function() {
       return $http.get('/api/lm/read_custom_config').then(function(resp) {
         var k, l, len2, len3, ref2, ref3, results, template;

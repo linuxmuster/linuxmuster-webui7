@@ -262,6 +262,33 @@
             </tr>
         </table>
 
+        <h3 translate>Customs filters</h3>
+
+        <div class="alert alert-info" translate>It's possible to apply a filter script to your newly exported csv file. You must give here the absolute path of the script and the script must be executable.<br />Please read the full documentation in <a href="https://github.com/linuxmuster/sophomorix4/wiki/Export-and-Filters#filters">sophomorix's wiki</a> about it.</div>
+        <table class="lm-table lm-table-padded">
+            <tr>
+                <th width="40%"></th>
+                <th translate class="text-center">students.csv</th>
+                <th translate class="text-center">teachers.csv</th>
+                <th translate class="text-center">extrastudents.csv</th>
+                <!--<th translate>extraclasses.csv encoding</th>-->
+            </tr>
+            <tr>
+                <td>
+                    <label translate>List encoding</label>
+                </td>
+                <td class="text-center">
+                    <input type="text" class="form-control" ng:model="settings['userfile.students.csv']['FILTERSCRIPT']">
+                </td>
+                <td class="text-center">
+                    <input type="text" class="form-control" ng:model="settings['userfile.teachers.csv']['FILTERSCRIPT']">
+                </td>
+                <td class="text-center">
+                    <input type="text" class="form-control" ng:model="settings['userfile.extrastudents.csv']['FILTERSCRIPT']">
+                </td>
+            </tr>
+        </table>
+
     </uib:tab>
 
     <uib:tab heading="{{'Quota'|translate}}">

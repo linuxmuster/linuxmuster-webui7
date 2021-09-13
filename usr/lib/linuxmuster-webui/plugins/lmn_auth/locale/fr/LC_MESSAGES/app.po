@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-02 14:57+0100\n"
-"PO-Revision-Date: 2021-01-02 14:01\n"
+"POT-Creation-Date: 2021-08-26 21:41+0200\n"
+"PO-Revision-Date: 2021-08-26 20:33\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -45,7 +45,7 @@ msgstr "Les caractères valables sont: a-z A-Z 0-9 !§+-@#$%&amp;*( )[ ]{ }"
 msgid "Linux Muster LDAP"
 msgstr "Linux Muster LDAP"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:280
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:290
 msgid "Linuxmuster LDAP user config"
 msgstr "Configuration utilisateur Linuxmuster LDAP"
 

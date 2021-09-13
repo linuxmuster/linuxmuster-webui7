@@ -105,11 +105,29 @@
 
         <div class="floating-toolbar-padder"></div>
         <floating-toolbar>
-            <button ng:click="students_backups()" class="btn btn-default btn-flat pull-right"><i class="fa fa-history"></i></button>
-            <button ng:click="students_save()" class="btn btn-default btn-flat" translate>Save</button>
-            <button ng:click="saveAndCheck('students')" class="btn btn-default btn-flat" translate>Save &amp; check</button>
-            <button ng:click="students_editCSV()" class="btn btn-default btn-flat" translate>Edit CSV</button>
-            <button ng:click="students_confirmUpload()" class="btn btn-default btn-flat" translate>Upload CSV</button>
+            <button ng:click="students_backups()" class="btn btn-lmn pull-right">
+                <i class="fa fa-history"></i>
+            </button>
+            <button ng:click="students_save()" class="btn btn-lmn" translate>Save</button>
+            <button ng:click="saveAndCheck('students')" class="btn btn-lmn" translate>Save &amp; check</button>
+            <div uib-dropdown class="btn-group dropup">
+                <button uib-dropdown-toggle class="btn btn-lmn" translate>
+                    CSV
+                    <span class="caret"></span>
+                </button>
+                <ul uib-dropdown-menu class="dropdown-menu-left">
+                    <li>
+                        <a ng:click="students_editCSV()" translate>Edit CSV</a>
+                    </li>
+                    <li>
+                        <a ng:click="confirmUpload('normal', 'students')" translate>Upload CSV</a>
+                    </li>
+                    <li>
+                        <a ng:click="confirmUpload('custom', 'students')" translate>Upload custom CSV</a>
+                    </li>
+                </ul>
+                <br />
+            </div>
         </floating-toolbar>
     </div>
 
@@ -208,12 +226,29 @@
         <div class="floating-toolbar-padder"></div>
 
         <floating-toolbar>
-            <button ng:click="teachers_backups()" class="btn btn-default btn-flat pull-right"><i class="fa fa-history"></i></button>
-            <button ng:click="teachers_save()" class="btn btn-default btn-flat" translate>Save</button>
-            <button ng:click="saveAndCheck('teachers')" class="btn btn-default btn-flat" translate>Save &amp; check</button>
-            <button ng:click="teachers_editCSV()" class="btn btn-default btn-flat" translate>Edit CSV</button>
-            <button ng:click="teachers_confirmUpload()" class="btn btn-default btn-flat" translate>Upload CSV</button>
-
+            <button ng:click="teachers_backups()" class="btn btn-lmn pull-right">
+                <i class="fa fa-history"></i>
+            </button>
+            <button ng:click="teachers_save()" class="btn btn-lmn" translate>Save</button>
+            <button ng:click="saveAndCheck('teachers')" class="btn btn-lmn" translate>Save &amp; check</button>
+            <div uib-dropdown class="btn-group dropup">
+                <button uib-dropdown-toggle class="btn btn-lmn" translate>
+                    CSV
+                    <span class="caret"></span>
+                </button>
+                <ul uib-dropdown-menu class="dropdown-menu-left">
+                    <li>
+                        <a ng:click="teachers_editCSV()" translate>Edit CSV</a>
+                    </li>
+                    <li>
+                        <a ng:click="confirmUpload('normal', 'teachers')" translate>Upload CSV</a>
+                    </li>
+                    <li>
+                        <a ng:click="confirmUpload('custom', 'teachers')" translate>Upload custom CSV</a>
+                    </li>
+                </ul>
+                <br />
+            </div>
         </floating-toolbar>
     </div>
 
@@ -316,14 +351,14 @@
         <div class="floating-toolbar-padder"></div>
 
         <floating-toolbar>
-            <button ng:click="extrastudents_backups()" class="btn btn-default btn-flat pull-right"><i class="fa fa-history"></i></button>
-            <button ng:click="extrastudents_save()" class="btn btn-default btn-flat" translate>Save</button>
-            <button ng:click="saveAndCheck('extrastudents')" class="btn btn-default btn-flat" translate>Save &amp; check</button>
-            <button ng:click="extrastudents_editCSV()" class="btn btn-default btn-flat" translate>Edit CSV</button>
+            <button ng:click="extrastudents_backups()" class="btn btn-lmn pull-right">
+                <i class="fa fa-history"></i>
+            </button>
+            <button ng:click="extrastudents_save()" class="btn btn-lmn" translate>Save</button>
+            <button ng:click="saveAndCheck('extrastudents')" class="btn btn-lmn" translate>Save &amp; check</button>
+            <button ng:click="extrastudents_editCSV()" class="btn btn-lmn" translate>Edit CSV</button>
         </floating-toolbar>
     </div>
-
-
     </uib:tab>
 <!-- TODO: Removed extra courses till this function is properly implemented in backend
     <uib:tab heading="{{'Extra-Courses'|translate}}" ng-click="getcourses()">
@@ -406,10 +441,12 @@
         <div class="floating-toolbar-padder"></div>
 
         <floating-toolbar>
-            <button ng:click="courses_backups()" class="btn btn-default btn-flat pull-right"><i class="fa fa-history"></i></button>
-            <button ng:click="courses_save()" class="btn btn-default btn-flat" translate>Save</button>
-            <button ng:click="saveAndCheck('courses')" class="btn btn-default btn-flat" translate>Save &amp; check</button>
-            <button ng:click="courses_editCSV()" class="btn btn-default btn-flat" translate>Edit CSV</button>
+            <button ng:click="courses_backups()" class="btn btn-lmn pull-right">
+                <i class="fa fa-history"></i>
+            </button>
+            <button ng:click="courses_save()" class="btn btn-lmn" translate>Save</button>
+            <button ng:click="saveAndCheck('courses')" class="btn btn-lmn" translate>Save &amp; check</button>
+            <button ng:click="courses_editCSV()" class="btn btn-lmn" translate>Edit CSV</button>
         </floating-toolbar>
     </div>
 

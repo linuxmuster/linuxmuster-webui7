@@ -1023,7 +1023,6 @@ class Handler(HttpPlugin):
         """
         Add or remove an email in proxyAddresses, e.g. emails, for an user.
         Method POST.
-
         :param http_context: HttpContext
         :type http_context: HttpContext
         :return: All quotas for specified users
@@ -1045,3 +1044,31 @@ class Handler(HttpPlugin):
             except IndexError:
                 # No error output from sophomorix yet
                 raise EndpointError(None)
+
+    @url(r'/api/lm/filterCustomCSV')
+    @authorize('lm:users:passwords')
+    @endpoint(api=True)
+    def handle_custom_csv(self, http_context):
+        """
+        Run sophomorix-newfile in order to apply a custom script for a newly custom csv file.
+        Method POST.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: All quotas for specified users
+        :rtype: dict
+        """
+
+        if http_context.method == 'POST':
+            # E.g. /tmp/students.csv
+            tmp_path = http_context.json_body()['tmp_path']
+            # E.g. students.csv
+            target = http_context.json_body()['userlist']
+
+            command = ['sophomorix-newfile', tmp_path, '--name', target, '-jj']
+            result = lmn_getSophomorixValue(command, 'OUTPUT/0')
+
+            if result['TYPE'] == "ERROR":
+                    return ["ERROR", result['MESSAGE_EN']]
+            if result['TYPE'] == "LOG":
+                    return ["LOG", result['LOG']]

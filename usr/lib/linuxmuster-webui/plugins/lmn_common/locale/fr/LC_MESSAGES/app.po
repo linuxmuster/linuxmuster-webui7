@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-02 14:57+0100\n"
-"PO-Revision-Date: 2021-01-02 14:01\n"
+"POT-Creation-Date: 2021-08-26 21:41+0200\n"
+"PO-Revision-Date: 2021-08-26 20:33\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Crowdin-File: /2.0/lmn_common.po\n"
 "X-Crowdin-File-ID: 96\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:150
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:151
 msgid "A bootstrap error has occured"
 msgstr "Une erreur « bootstrap » est survenue"
 
@@ -42,7 +42,7 @@ msgstr "Télécharger le CSV"
 msgid "Drop a CSV file here to import"
 msgstr "Dépose un fichier CSV ici pour l'importer"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:133
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:134
 msgid "Enter"
 msgstr "Entrer"
 
@@ -54,15 +54,15 @@ msgstr "Déconnexion"
 msgid "No backups available"
 msgstr "Aucune copie de sauvegarde existante"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:174
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:175
 msgid "OK"
 msgstr "OK"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:153
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:154
 msgid "Please see browser console"
 msgstr "Veuillez consulter la console JavaScript du navigateur"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:129
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:130
 msgid "Quick search"
 msgstr "Recherche rapide"
 
@@ -78,8 +78,8 @@ msgstr "Webconsole"
 msgid "Session time : {{ counter[0] }}:{{ counter[1] }}:{{ counter[2] }}"
 msgstr "Durée de la session : {{ counter[0] }}:{{ counter[1] }}:{{ counter[2] }}"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/lmnfile.py:133
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/api.py:41
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/lmnfile.py:140
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/api.py:45
 msgid "Access refused."
 msgstr "Accès refusé."
 
@@ -166,11 +166,8 @@ msgstr "Copie des fichiers vers l'utilisateur %s."
 msgid "Copying files: %s."
 msgstr "Copie des fichiers : %s."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:48
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:50
-msgid " uploaded"
-msgstr " téléversé"
-
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:46
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:49
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:92
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:95
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:140
@@ -214,16 +211,16 @@ msgstr " n'est pas un nombre valide"
 msgid " is not a valid date"
 msgstr " n'est pas une date valide"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:107
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:116
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:108
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:136
 msgid " is not valid or duplicated"
 msgstr " n'est pas valide ou en double"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:125
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:145
 msgid " does not contain valid chars or is duplicated"
 msgstr " ne contient pas de caractères valides ou est en double"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:138
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:158
 msgid " is not a valid role"
 msgstr " n'est pas un rôle valide"
 

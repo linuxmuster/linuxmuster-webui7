@@ -1,0 +1,110 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: linuxmusternet\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-08-26 21:41+0200\n"
+"PO-Revision-Date: 2021-08-26 20:34\n"
+"Last-Translator: \n"
+"Language-Team: Turkish\n"
+"Language: tr_TR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Crowdin-Project: linuxmusternet\n"
+"X-Crowdin-Project-ID: 325271\n"
+"X-Crowdin-Language: tr\n"
+"X-Crowdin-File: /2.0/lmn_samba_dns.po\n"
+"X-Crowdin-File-ID: 219\n"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:43
+msgid "Add an entry"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:61
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:80
+msgid "Close"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:18
+msgid "Host"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:66
+msgid "Modify DNS entry"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:47
+msgid "New DNS entry"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:60
+msgid "Save"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:51
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:70
+msgid "Subdomain :"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:15
+msgid "Subdomains"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:20
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:6
+msgid "TTL"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:19
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:5
+msgid "Type"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:53
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:72
+msgid "Type :"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:79
+msgid "Update"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:21
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:7
+msgid "Value"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:55
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:74
+msgid "Value :"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:2
+msgid "Zone informations"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/js/controllers/index.controller.es:2
+msgid "Samba_dns"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/js/controllers/index.controller.es:5
+msgid "Modify this entry"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/js/controllers/index.controller.es:6
+msgid "Delete this entry"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/js/controllers/index.controller.es:25
+msgid "Entry deleted !"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/js/controllers/index.controller.es:46
+msgid "Entry updated !"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/js/controllers/index.controller.es:58
+msgid "Entry saved !"
+msgstr ""
+

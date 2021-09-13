@@ -265,7 +265,7 @@
     $scope.backups = function() {
       return lmFileBackups.show($scope.path);
     };
-    return $scope.$watch('identity.user', function() {
+    $scope.$watch('identity.user', function() {
       if ($scope.identity.user === void 0) {
         return;
       }
@@ -273,22 +273,22 @@
         return;
       }
       if ($scope.identity.user === 'root') {
-        return;
+
       }
-      $http.get("/api/lmn/activeschool").then(function(resp) {
-        var school;
-        $scope.identity.profile.activeSchool = resp.data;
-        school = $scope.identity.profile.activeSchool;
-        if (school === "default-school") {
-          return $scope.path = '/etc/linuxmuster/sophomorix/default-school/devices.csv';
-        } else {
-          return $scope.path = '/etc/linuxmuster/sophomorix/' + school + '/' + school + '.devices.csv';
-        }
-      });
-      return $http.get('/api/lm/devices').then(function(resp) {
-        $scope.devices = resp.data;
-        return validation.set($scope.devices, 'devices');
-      });
+    });
+    $http.get("/api/lmn/activeschool").then(function(resp) {
+      var school;
+      $scope.identity.profile.activeSchool = resp.data;
+      school = $scope.identity.profile.activeSchool;
+      if (school === "default-school") {
+        return $scope.path = '/etc/linuxmuster/sophomorix/default-school/devices.csv';
+      } else {
+        return $scope.path = '/etc/linuxmuster/sophomorix/' + school + '/' + school + '.devices.csv';
+      }
+    });
+    return $http.get('/api/lm/devices').then(function(resp) {
+      $scope.devices = resp.data;
+      return validation.set($scope.devices, 'devices');
     });
   });
 

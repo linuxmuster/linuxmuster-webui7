@@ -2,6 +2,7 @@ from aj.plugins.lmn_common.lmnfile import LMNFile
 import subprocess
 import re
 import configparser
+import pexpect
 
 class SambaToolDNS():
     """
@@ -9,7 +10,6 @@ class SambaToolDNS():
     """
 
     def __init__(self):
-        self.credentials = ''
         self._get_zone()
         if self.zone:
             self._get_credentials()
@@ -21,8 +21,7 @@ class SambaToolDNS():
         """
 
         with open('/etc/linuxmuster/.secret/administrator', 'r') as f:
-            pw = f.readline().strip('\n')
-        self.credentials = ('-U', f'administrator%{pw}')
+            self.password = f.readline().strip('\n')
 
     def _get_zone(self):
         """
@@ -81,15 +80,16 @@ class SambaToolDNS():
         :rtype: list
         """
 
-        if not self.credentials:
-            return ''
-
         if action not in ['query', 'add', 'delete', 'update']:
             return
 
-        cmd = ['samba-tool', 'dns', action, 'localhost', self.zone, *options, *self.credentials]
-        result = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=False)
-        return result.stdout.read().decode().split('\n')
+        cmd = ['samba-tool', 'dns', action, 'localhost', self.zone, *options, '-U', 'administrator']
+
+        child = pexpect.spawn(' '.join(cmd))
+        child.expect("Password for .*:")
+        child.sendline(self.password)
+
+        return child.read().decode().split('\r\n')
 
     def get_list(self):
         """

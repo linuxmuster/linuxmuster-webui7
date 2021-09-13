@@ -19,7 +19,7 @@ class Handler(HttpPlugin):
             self.dns = None
 
     @url(r'/api/dns/get')
-    #@authorize('samba_dns:show')
+    @authorize('lm:samba_dns:read')
     @endpoint(api=True)
     def handle_api_dns_get(self, http_context):
         """
@@ -35,7 +35,7 @@ class Handler(HttpPlugin):
             return [self.dns.get_list(), self.dns.zone]
 
     @url(r'/api/dns/delete')
-    # @authorize('samba_dns:show')
+    @authorize('lm:samba_dns:write')
     @endpoint(api=True)
     def handle_api_dns_delete(self, http_context):
         """
@@ -55,7 +55,7 @@ class Handler(HttpPlugin):
             return self.dns.delete(sub, t, value)
 
     @url(r'/api/dns/add')
-    # @authorize('samba_dns:show')
+    @authorize('lm:samba_dns:write')
     @endpoint(api=True)
     def handle_api_dns_add(self, http_context):
         """
@@ -73,7 +73,7 @@ class Handler(HttpPlugin):
             return self.dns.add(sub)
 
     @url(r'/api/dns/update')
-    # @authorize('samba_dns:show')
+    @authorize('lm:samba_dns:write')
     @endpoint(api=True)
     def handle_api_dns_update(self, http_context):
         """

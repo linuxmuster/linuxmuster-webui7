@@ -92,13 +92,13 @@
                     <label translate>Reverse Surname and Firstname in username</label>
                 </td>
                 <td class="text-center">
-                    <span checkbox ng:model="settings['userfile.students.csv']['surname_firstname_reverse']"></span>
+                    <span checkbox ng:model="settings['userfile.students.csv']['SURNAME_FIRSTNAME_REVERSE']"></span>
                 </td>
                 <td class="text-center">
-                    <span checkbox ng:model="settings['userfile.teachers.csv']['surname_firstname_reverse']"></span>
+                    <span checkbox ng:model="settings['userfile.teachers.csv']['SURNAME_FIRSTNAME_REVERSE']"></span>
                 </td>
                 <td class="text-center">
-                    <span checkbox ng:model="settings['userfile.extrastudents.csv']['surname_firstname_reverse']"></span>
+                    <span checkbox ng:model="settings['userfile.extrastudents.csv']['SURNAME_FIRSTNAME_REVERSE']"></span>
                 </td>
             </tr>
             <tr>
@@ -170,7 +170,6 @@
                 <td class="text-center">
                     <span checkbox ng:model="settings['userfile.extrastudents.csv']['RANDOM_PWD']"></span>
                 </td>
-
             </tr>
             <tr>
                 <td>
@@ -260,6 +259,33 @@
                 <!--<td>
                     {{encoding['userfile.extraclasses.csv']}}
                 </td>-->
+            </tr>
+        </table>
+
+        <h3 translate>Customs filters</h3>
+
+        <div class="alert alert-info" translate>It's possible to apply a filter script to your newly exported csv file. You must give here the absolute path of the script and the script must be executable.<br />Please read the full documentation in <a href="https://github.com/linuxmuster/sophomorix4/wiki/Export-and-Filters#filters">sophomorix's wiki</a> about it.</div>
+        <table class="lm-table lm-table-padded">
+            <tr>
+                <th width="40%"></th>
+                <th translate class="text-center">students.csv</th>
+                <th translate class="text-center">teachers.csv</th>
+                <th translate class="text-center">extrastudents.csv</th>
+                <!--<th translate>extraclasses.csv encoding</th>-->
+            </tr>
+            <tr>
+                <td>
+                    <label translate>Path to filter script</label>
+                </td>
+                <td class="text-center">
+                    <input type="text" class="form-control" ng:model="settings['userfile.students.csv']['FILTERSCRIPT']" ng:blur="filterscriptNotEmpty()">
+                </td>
+                <td class="text-center">
+                    <input type="text" class="form-control" ng:model="settings['userfile.teachers.csv']['FILTERSCRIPT']" ng:blur="filterscriptNotEmpty()">
+                </td>
+                <td class="text-center">
+                    <input type="text" class="form-control" ng:model="settings['userfile.extrastudents.csv']['FILTERSCRIPT']" ng:blur="filterscriptNotEmpty()">
+                </td>
             </tr>
         </table>
 
@@ -657,12 +683,12 @@
 
     <div class="floating-toolbar-padder"></div>
     <floating-toolbar>
-        <button ng-show="activetab != 4" ng:click="backups()" class="btn btn-default btn-flat pull-right"><i class="fa fa-history"></i></button>
-        <button ng-show="activetab == 0" ng:click="saveAndCheck()" class="btn btn-default btn-flat" translate>Save &amp; check</button>
-        <button ng-show="activetab == 2" ng:click="saveApplyQuota()" class="btn btn-default btn-flat" translate>Save &amp; Apply Quota</button>
-        <button ng-show="activetab < 3" ng:click="save()" class="btn btn-default btn-flat" translate>Save</button>
-        <button ng-show="activetab == 3" ng:click="save() && saveCustom()" class="btn btn-default btn-flat" translate>Save</button>
-        <button ng-show="activetab == 4" ng:click="saveCustom()" class="btn btn-default btn-flat" translate>Save</button>
-        <button ng-show="activetab == 5" ng:click="saveApplySubnets()" class="btn btn-default btn-flat" translate>Save &amp; Apply Subnets</button>
+        <button ng-show="activetab != 4" ng:click="backups()" class="btn btn-lmn pull-right"><i class="fa fa-history"></i></button>
+        <button ng-show="activetab == 0" ng:click="saveAndCheck()" class="btn btn-lmn" translate>Save &amp; check</button>
+        <button ng-show="activetab == 2" ng:click="saveApplyQuota()" class="btn btn-lmn" translate>Save &amp; Apply Quota</button>
+        <button ng-show="activetab < 3" ng:click="save()" class="btn btn-lmn" translate>Save</button>
+        <button ng-show="activetab == 3" ng:click="save() && saveCustom()" class="btn btn-lmn" translate>Save</button>
+        <button ng-show="activetab == 4" ng:click="saveCustom()" class="btn btn-lmn" translate>Save</button>
+        <button ng-show="activetab == 5" ng:click="saveApplySubnets()" class="btn btn-lmn" translate>Save &amp; Apply Subnets</button>
     </floating-toolbar>
 </div>

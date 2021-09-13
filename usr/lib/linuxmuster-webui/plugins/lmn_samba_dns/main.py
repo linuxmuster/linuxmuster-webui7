@@ -1,6 +1,7 @@
 from jadi import component
 
 from aj.plugins.core.api.sidebar import SidebarItemProvider
+from aj.auth import PermissionProvider
 
 
 @component(SidebarItemProvider)
@@ -19,15 +20,18 @@ class ItemProvider(SidebarItemProvider):
             }
         ]
 
-# Uncomment the following lines to set a new permission
-# from aj.auth import PermissionProvider
-# @component(PermissionProvider)
-# class Permissions (PermissionProvider):
-#     def provide(self):
-#         return [
-#             {
-#                 'id': 'extra_samba_dns:show',
-#                 'name': _('Show the Python binding example'),
-#                 'default': False,
-#             },
-#         ]
+@component(PermissionProvider)
+class Permissions (PermissionProvider):
+    def provide(self):
+        return [
+            {
+                'id': 'lm:samba_dns:read',
+                'name': _('Show the DNS in Samba'), # skipcq: PYL-E0602
+                'default': False,
+            },
+            {
+                'id': 'lm:samba_dns:write',
+                'name': _('Change the DNS in Samba'), # skipcq: PYL-E0602
+                'default': False,
+            },
+        ]

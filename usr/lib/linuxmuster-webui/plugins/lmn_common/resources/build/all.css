@@ -340,6 +340,8 @@ dialog .modal {
   color: #233c4c;
   background-color: #fff;
   border-color: #233c4c;
+  border-width: 2px;
+  font-weight: bold;
   margin: 0 3px;
   border-radius: 5px;
 }

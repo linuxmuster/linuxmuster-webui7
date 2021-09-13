@@ -76,6 +76,25 @@ class Handler(HttpPlugin):
                 r.append(file)
         return r
 
+    @url(r'/api/lm/linbo/examples-prestart')
+    @authorize('lm:linbo:examples')
+    @endpoint(api=True)
+    def handle_api_examples_prestart(self, http_context):
+        """
+        List all prestart examples files.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: List of postsync examples files
+        :rtype: list
+        """
+
+        r = []
+        for file in os.listdir(os.path.join(self.LINBO_PATH, 'examples')):
+            if file.endswith('.prestart'):
+                r.append(file)
+        return r
+
     @url(r'/api/lm/linbo/icons')
     @authorize('lm:linbo:icons')
     @endpoint(api=True)
@@ -178,6 +197,7 @@ class Handler(HttpPlugin):
 
         if http_context.method == 'POST':
             data = http_context.json_body()
+            print(data)
             if 'description' in data:
                 if data['description']:
                     with LMNFile(desc_file, 'w') as f:
@@ -222,10 +242,10 @@ class Handler(HttpPlugin):
                 if data['prestart']:
                     with LMNFile(prestart_file, 'w') as f:
                         f.write(data['prestart'])
-                    os.chmod(postsync_file, 0o664)
+                    os.chmod(prestart_file, 0o664)
                 else:
-                    if os.path.exists(postsync_file):
-                        os.unlink(postsync_file)
+                    if os.path.exists(prestart_file):
+                        os.unlink(prestart_file)
         else:
             for p in [path, desc_file, info_file, macct_file, reg_file, postsync_file]:
                 if os.path.exists(p):

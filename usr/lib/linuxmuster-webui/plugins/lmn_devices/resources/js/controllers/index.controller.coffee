@@ -236,16 +236,16 @@ angular.module('lmn.devices').controller 'LMDevicesController', ($scope, $http, 
         if $scope.identity.user is 'root'
            return
         
-        $http.get("/api/lmn/activeschool").then (resp) ->
-            $scope.identity.profile.activeSchool = resp.data
-            school = $scope.identity.profile.activeSchool
+    $http.get("/api/lmn/activeschool").then (resp) ->
+        $scope.identity.profile.activeSchool = resp.data
+        school = $scope.identity.profile.activeSchool
 
-            if school == "default-school"
-                $scope.path = '/etc/linuxmuster/sophomorix/default-school/devices.csv'
-            else
-                $scope.path =  '/etc/linuxmuster/sophomorix/'+school+'/'+school+'.devices.csv'
+        if school == "default-school"
+            $scope.path = '/etc/linuxmuster/sophomorix/default-school/devices.csv'
+        else
+            $scope.path =  '/etc/linuxmuster/sophomorix/'+school+'/'+school+'.devices.csv'
 
-        $http.get('/api/lm/devices').then (resp) ->
-            $scope.devices = resp.data
-            validation.set($scope.devices, 'devices')
+    $http.get('/api/lm/devices').then (resp) ->
+        $scope.devices = resp.data
+        validation.set($scope.devices, 'devices')
 

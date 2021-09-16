@@ -96,7 +96,7 @@ angular.module('lm.common').service 'validation', (gettext) ->
     # Does not test if student birthday is in correct range
     this.isValidDate = (date) ->
         error_msg = date + gettext(' is not a valid date')
-        regExp = /^(0[1-9]|[12][0-9]|3[01])[.](0[1-9]|1[012])[.](19|20)\d\d$/
+        regExp = /^([1-9]|0[1-9]|[12][0-9]|3[01])[.]([1-9]|0[1-9]|1[012])[.](19|20)\d\d$/
         validDate = regExp.test(date)
         if !validDate
             return error_msg

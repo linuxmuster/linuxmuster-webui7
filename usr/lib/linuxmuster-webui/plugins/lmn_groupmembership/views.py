@@ -184,7 +184,7 @@ class Handler(HttpPlugin):
         if http_context.method == 'POST':
             action  = http_context.json_body()['action']
             groupname = http_context.json_body()['groupname']
-            entity = http_context.json_body()['entity']
+            entity = http_context.json_body()['entity'].strip(",")
             try:
                 objtype = http_context.json_body()['type']
             except KeyError:

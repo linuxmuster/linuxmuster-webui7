@@ -266,7 +266,8 @@ class Handler(HttpPlugin):
                     result = result[login]
                 elif objtype == 'group':
                     sophomorixCommand = ['sophomorix-query', '--anyname', login+'*', '-jj']
-                    return lmn_getSophomorixValue(sophomorixCommand, 'LISTS/GROUP')
+                    result = lmn_getSophomorixValue(sophomorixCommand, 'LISTS')
+                    return result['GROUP'] + result['ROOM']
 
                 for _, details in result.items():
                     resultArray.append({

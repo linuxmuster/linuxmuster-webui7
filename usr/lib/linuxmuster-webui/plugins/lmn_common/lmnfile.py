@@ -32,6 +32,12 @@ ALLOWED_PATHS = [
 EMPTY_LINE_MARKER = '###EMPTY#LINE'
 
 
+def convertBool(boolean):
+    if type(boolean) is bool:
+        return 'yes' if boolean else 'no'
+    return boolean
+
+
 class LMNFile(metaclass=abc.ABCMeta):
     """
     Meta class to handle all type of config file used in linuxmuster's project,
@@ -53,13 +59,18 @@ class LMNFile(metaclass=abc.ABCMeta):
         :type fieldnames: list of strings
         """
 
+        # Cannot filter start.conf with extension
+        if file.split('/')[-1].startswith('start.conf'):
+            obj = object.__new__(StartConfLoader)
+            obj.__init__(file, mode, delimiter=delimiter, fieldnames=fieldnames)
+            return obj
+
         ext = os.path.splitext(file)[-1]
         for child in cls.__subclasses__():
             if child.hasExtension(ext):
                 obj = object.__new__(child)
                 obj.__init__(file, mode, delimiter=delimiter, fieldnames=fieldnames)
                 return obj
-        # TODO : extra load for start.conf files
 
     def __init__(self, file, mode, delimiter=';', fieldnames=None):
         self.file = file
@@ -94,6 +105,9 @@ class LMNFile(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def __exit__(self, exc_type, exc_val, exc_tb):
         raise NotImplementedError
+
+    def read(self):
+        return self.data
 
     def backup(self):
         """
@@ -158,6 +172,7 @@ class LMNFile(metaclass=abc.ABCMeta):
         logging.info('Detected encoding for %s : %s', self.file, encoding)
         return encoding
 
+
 class LinboLoader(LMNFile):
     """
     Handler for linbo's cloop informations files.
@@ -187,9 +202,6 @@ class YAMLLoader(LMNFile):
         if 'r' in self.mode or '+' in self.mode:
             self.data = yaml.load(self.opened, Loader=yaml.SafeLoader)
         return self
-
-    def read(self):
-        return self.data
 
     def write(self, data):
         tmp = self.file + '_tmp'
@@ -299,6 +311,75 @@ class ConfigLoader(LMNFile):
         self.opened.close()
         self.data.write()
 
-# LATER
-# class StartConfLoader(LMNFile):
-#     extensions = []
+class StartConfLoader(LMNFile):
+
+    def __enter__(self):
+        if os.path.isfile(self.file):
+            self.opened = open(self.file, 'r', encoding=self.encoding)
+            if 'r' in self.mode or '+' in self.mode:
+                self.data = {
+                    'config': {},
+                    'partitions': [],
+                    'os': [],
+                }
+                for line in self.opened:
+                    line = line.split('#')[0].strip()
+
+                    if line.startswith('['):
+                        section = {}
+                        section_name = line.strip('[]')
+                        if section_name == 'Partition':
+                            self.data['partitions'].append(section)
+                        elif section_name == 'OS':
+                            self.data['os'].append(section)
+                        else:
+                            self.data['config'][section_name] = section
+                    elif '=' in line:
+                        k, v = line.split('=', 1)
+                        v = v.strip()
+                        if v in ['yes', 'no']:
+                            v = v == 'yes'
+                        section[k.strip()] = v
+        return self
+
+    def __exit__(self, *args):
+        if self.opened:
+            self.opened.close()
+
+    def write(self, data):
+        content = ''
+
+        for section_name, section in data['config'].items():
+            content += '[%s]\n' % section_name
+            for k, v in section.items():
+                content += '%s = %s\n' % (k, convertBool(v))
+            content += '\n'
+
+        for partition in data['partitions']:
+            content += '[Partition]\n'
+            for k, v in partition.items():
+                if k[0] == '_':
+                    continue
+                content += '%s = %s\n' % (k, convertBool(v))
+            content += '\n'
+
+        for partition in data['os']:
+            content += '[OS]\n'
+            for k, v in partition.items():
+                content += '%s = %s\n' % (k, convertBool(v))
+            content += '\n'
+
+        tmp = self.file + '_tmp'
+        with open(tmp, 'w') as f:
+            f.write(content)
+
+        if os.path.isfile(self.file):
+            if not filecmp.cmp(tmp, self.file):
+                self.backup()
+                os.rename(tmp, self.file)
+            else:
+                os.unlink(tmp)
+        else:
+            os.rename(tmp, self.file)
+
+        os.chmod(self.file, 0o755)

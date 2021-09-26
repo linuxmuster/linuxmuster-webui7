@@ -5,7 +5,6 @@ from jadi import component
 from aj.auth import authorize
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint
-from aj.plugins.lmn_common.api import lmn_backup_file, lmn_write_configfile
 from aj.plugins.lmn_common.lmnfile import LMNFile
 
 @component(HttpPlugin)

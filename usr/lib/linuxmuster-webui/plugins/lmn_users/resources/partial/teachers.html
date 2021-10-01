@@ -51,8 +51,15 @@
         <table class="table" style="width:100%">
             <tr>
                 <th><span checkbox ng:model="all_selected" ng:change="selectAll(query)"></span></th>
-                <th width="120">Login</th>
-                <th>Name</th>
+                <th width="120">
+                    Login
+                    <span ng:show="customTitle[1]"> / {{customTitle[1]}}</span>
+                </th>
+                <th>
+                    Name
+                    <span ng:show="customTitle[2]"> / {{customTitle[2]}}</span>
+                </th>
+                <th><span ng:show="customTitle[3]">{{customTitle[3]}}</span></th>
                 <th ng:show="teachersQuota" translate>Quota</th>
                 <th ng:show="!teachersQuota"> </th>
                 <th> </th>
@@ -78,25 +85,25 @@
                     </div>
                 </td>
                 <td>
-                    <b>
-                        {{teacher.sn}} {{teacher.givenName}}
-                        <div ng:show="isListAttr(customDisplay[3])">
-                            <span ng:repeat="custom3 in teacher[customDisplay[3]] track by $index" class="label label-info">
-                                {{custom3}}
-                            </span>
-                        </div>
-                        <div ng:show="!isListAttr(customDisplay[3]) && teacher[customDisplay[3]] != 'null' && customDisplay[3]" class="label label-default pull-right">
-                            {{teacher[customDisplay[3]]}}
-                        </div>
-                    </b>
+                    <b>{{teacher.sn}} {{teacher.givenName}}</b>
                     <br />
                     <div ng:show="isListAttr(customDisplay[2])">
-                            <span ng:repeat="custom2 in teacher[customDisplay[2]] track by $index" class="label label-info">
-                                {{custom2}}
-                            </span>
+                        <span ng:repeat="custom2 in teacher[customDisplay[2]] track by $index" class="label label-info">
+                            {{custom2}}
+                        </span>
                     </div>
-                    <div ng:show="!isListAttr(customDisplay[2]) && teacher[customDisplay[2]] != 'null'">
-                            {{teacher[customDisplay[2]]}}
+                    <div ng:show="!isListAttr(customDisplay[2]) && teacher[customDisplay[2]] != 'null' && customDisplay[3]">
+                        {{teacher[customDisplay[2]]}}
+                    </div>
+                </td>
+                <td>
+                    <div ng:show="isListAttr(customDisplay[3])">
+                        <span ng:repeat="custom3 in teacher[customDisplay[3]] track by $index" class="label label-info">
+                            {{custom3}}
+                        </span>
+                    </div>
+                    <div ng:show="!isListAttr(customDisplay[3]) && teacher[customDisplay[3]] != 'null' && customDisplay[3]">
+                        {{teacher[customDisplay[3]]}}
                     </div>
                 </td>
                 <td ng:show="teachersQuota" width="150">

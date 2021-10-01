@@ -44,7 +44,20 @@ angular.module('lmn.users').controller 'LMUsersTeachersController', ($q, $scope,
         $scope.teachers = resp.data
 
     $http.get('/api/lm/read_custom_config').then (resp) ->
+        $scope.custom = resp.data.custom.teachers
+        $scope.customMulti = resp.data.customMulti.teachers
+        $scope.proxyAddresses = resp.data.proxyAddresses.teachers
         $scope.customDisplay = resp.data.customDisplay.teachers
+        $scope.customTitle = ['',]
+        for idx in [1,2,3]
+            if $scope.customDisplay[idx] == 'proxyAddresses'
+                $scope.customTitle.push(resp.data.proxyAddresses.teachers.title)
+            else
+                index = $scope.customDisplay[idx].slice(-1)
+                if $scope.isListAttr($scope.customDisplay[idx])
+                    $scope.customTitle.push(resp.data.customMulti.teachers[index].title || '')
+                else
+                    $scope.customTitle.push(resp.data.custom.teachers[index].title || '')
 
     $scope.isListAttr = (attr_name) ->
         return $scope.list_attr_enabled.includes(attr_name)

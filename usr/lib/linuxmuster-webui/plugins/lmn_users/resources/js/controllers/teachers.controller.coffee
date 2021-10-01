@@ -44,9 +44,6 @@ angular.module('lmn.users').controller 'LMUsersTeachersController', ($q, $scope,
         $scope.teachers = resp.data
 
     $http.get('/api/lm/read_custom_config').then (resp) ->
-        $scope.custom = resp.data.custom.teachers
-        $scope.customMulti = resp.data.customMulti.teachers
-        $scope.proxyAddresses = resp.data.proxyAddresses.teachers
         $scope.customDisplay = resp.data.customDisplay.teachers
         $scope.customTitle = ['',]
         for idx in [1,2,3]

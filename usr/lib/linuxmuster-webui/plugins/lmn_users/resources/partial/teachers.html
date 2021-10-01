@@ -62,7 +62,6 @@
 
             <tr ng:repeat="teacher in teachers|filter:filter|orderBy:['-_isNew', sort.fx]|page:paging.page:paging.pageSize" ng:show="teacher.class[0] != '#'">
 
-
                 <td width="30" style="text-align:center;">
                     <span checkbox ng:model="teacher.selected"></span>
                 </td>
@@ -74,9 +73,9 @@
                             {{custom1}}
                         </span>
                     </div>
-                    <span ng:show="!isListAttr(customDisplay[1]) && teacher[customDisplay[1]] != 'null'">
+                    <div ng:show="!isListAttr(customDisplay[1]) && teacher[customDisplay[1]] != 'null'">
                         {{teacher[customDisplay[1]]}}
-                    </span>
+                    </div>
                 </td>
                 <td>
                     <b>
@@ -86,9 +85,9 @@
                                 {{custom3}}
                             </span>
                         </div>
-                        <span ng:show="!isListAttr(customDisplay[3]) && teacher[customDisplay[3]] != 'null' && customDisplay[3]" class="label label-default pull-right">
+                        <div ng:show="!isListAttr(customDisplay[3]) && teacher[customDisplay[3]] != 'null' && customDisplay[3]" class="label label-default pull-right">
                             {{teacher[customDisplay[3]]}}
-                        </span>
+                        </div>
                     </b>
                     <br />
                     <div ng:show="isListAttr(customDisplay[2])">
@@ -96,9 +95,9 @@
                                 {{custom2}}
                             </span>
                     </div>
-                    <span ng:show="!isListAttr(customDisplay[2]) && teacher[customDisplay[2]] != 'null'">
+                    <div ng:show="!isListAttr(customDisplay[2]) && teacher[customDisplay[2]] != 'null'">
                             {{teacher[customDisplay[2]]}}
-                        </span>
+                    </div>
                 </td>
                 <td ng:show="teachersQuota" width="150">
                     <span class="label label-{{teachersQuota[teacher.sAMAccountName].TYPE}} ">

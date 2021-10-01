@@ -334,6 +334,7 @@
   });
 
   angular.module('lmn.users').controller('LMUsersStudentsController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) {
+    var i, len, n, ref;
     pageTitle.set(gettext('Students'));
     $scope.sorts = [
       {
@@ -374,6 +375,18 @@
     };
     $scope.all_selected = false;
     $scope.query = '';
+    $scope.list_attr_enabled = ['proxyAddresses'];
+    ref = [1, 2, 3, 4, 5];
+    for (i = 0, len = ref.length; i < len; i++) {
+      n = ref[i];
+      $scope.list_attr_enabled.push('sophomorixCustomMulti' + n);
+    }
+    $http.get('/api/lm/read_custom_config').then(function(resp) {
+      return $scope.customDisplay = resp.data.customDisplay.students;
+    });
+    $scope.isListAttr = function(attr_name) {
+      return $scope.list_attr_enabled.includes(attr_name);
+    };
     $http.post('/api/lm/sophomorixUsers/students', {
       action: 'get-all'
     }).then(function(resp) {
@@ -403,10 +416,10 @@
       var x;
       return $http.post('/api/lm/users/password', {
         users: (function() {
-          var i, len, results;
+          var j, len1, results;
           results = [];
-          for (i = 0, len = user.length; i < len; i++) {
-            x = user[i];
+          for (j = 0, len1 = user.length; j < len1; j++) {
+            x = user[j];
             results.push(x['sAMAccountName']);
           }
           return results;
@@ -420,10 +433,10 @@
       var x;
       return $http.post('/api/lm/users/password', {
         users: (function() {
-          var i, len, results;
+          var j, len1, results;
           results = [];
-          for (i = 0, len = user.length; i < len; i++) {
-            x = user[i];
+          for (j = 0, len1 = user.length; j < len1; j++) {
+            x = user[j];
             results.push(x['sAMAccountName']);
           }
           return results;
@@ -464,11 +477,11 @@
       });
     };
     $scope.haveSelection = function() {
-      var i, len, ref, x;
+      var j, len1, ref1, x;
       if ($scope.students) {
-        ref = $scope.students;
-        for (i = 0, len = ref.length; i < len; i++) {
-          x = ref[i];
+        ref1 = $scope.students;
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          x = ref1[j];
           if (x.selected) {
             return true;
           }
@@ -479,11 +492,11 @@
     $scope.batchSetInitialPassword = function() {
       var x;
       return $scope.setInitialPassword((function() {
-        var i, len, ref, results;
-        ref = $scope.students;
+        var j, len1, ref1, results;
+        ref1 = $scope.students;
         results = [];
-        for (i = 0, len = ref.length; i < len; i++) {
-          x = ref[i];
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          x = ref1[j];
           if (x.selected) {
             results.push(x);
           }
@@ -494,11 +507,11 @@
     $scope.batchSetRandomPassword = function() {
       var x;
       return $scope.setRandomPassword((function() {
-        var i, len, ref, results;
-        ref = $scope.students;
+        var j, len1, ref1, results;
+        ref1 = $scope.students;
         results = [];
-        for (i = 0, len = ref.length; i < len; i++) {
-          x = ref[i];
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          x = ref1[j];
           if (x.selected) {
             results.push(x);
           }
@@ -509,11 +522,11 @@
     $scope.batchSetCustomPassword = function() {
       var x;
       return $scope.setCustomPassword((function() {
-        var i, len, ref, results;
-        ref = $scope.students;
+        var j, len1, ref1, results;
+        ref1 = $scope.students;
         results = [];
-        for (i = 0, len = ref.length; i < len; i++) {
-          x = ref[i];
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          x = ref1[j];
           if (x.selected) {
             results.push(x);
           }
@@ -522,25 +535,25 @@
       })());
     };
     $scope.filter = function(row) {
-      var i, len, ref, result, value;
+      var j, len1, ref1, result, value;
       // Only query sAMAccountName, givenName, sn and sophomorixAdminClass
       result = false;
-      ref = ['sAMAccountName', 'givenName', 'sn', 'sophomorixAdminClass'];
-      for (i = 0, len = ref.length; i < len; i++) {
-        value = ref[i];
+      ref1 = ['sAMAccountName', 'givenName', 'sn', 'sophomorixAdminClass'];
+      for (j = 0, len1 = ref1.length; j < len1; j++) {
+        value = ref1[j];
         result = result || row[value].toLowerCase().indexOf($scope.query.toLowerCase() || '') !== -1;
       }
       return result;
     };
     return $scope.selectAll = function(query) {
-      var i, len, ref, results, student;
+      var j, len1, ref1, results, student;
       if (query == null) {
         query = '';
       }
-      ref = $scope.students;
+      ref1 = $scope.students;
       results = [];
-      for (i = 0, len = ref.length; i < len; i++) {
-        student = ref[i];
+      for (j = 0, len1 = ref1.length; j < len1; j++) {
+        student = ref1[j];
         if (query === void 0 || query === '') {
           student.selected = $scope.all_selected;
         }

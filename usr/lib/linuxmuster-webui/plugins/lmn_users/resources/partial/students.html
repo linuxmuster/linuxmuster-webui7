@@ -58,7 +58,35 @@
                     <i>{{student.sAMAccountName}}</i> <br> {{student.sophomorixAdminClass}}
                 </td>
                 <td>
-                    <b>{{student.givenName}}</b> <br> {{student.sn}}
+                    <b>{{student.sn}} {{student.givenName}}</b>
+                    <br />
+                    <div ng:show="isListAttr(customDisplay[1])">
+
+                        <span ng:repeat="custom1 in student[customDisplay[1]] track by $index" class="label label-info">
+                            {{custom1}}
+                        </span>
+                    </div>
+                    <div ng:show="!isListAttr(customDisplay[1]) && student[customDisplay[1]] != 'null'">
+                        {{student[customDisplay[1]]}}
+                    </div>
+                </td>
+                <td>
+                    <div ng:show="isListAttr(customDisplay[2])">
+                        <span ng:repeat="custom1 in student[customDisplay[2]] track by $index" class="label label-info">
+                            {{custom1}}
+                        </span>
+                    </div>
+                    <div ng:show="!isListAttr(customDisplay[2]) && student[customDisplay[2]] != 'null'">
+                        {{student[customDisplay[2]]}}
+                    </div>
+                    <div ng:show="isListAttr(customDisplay[3])">
+                        <span ng:repeat="custom1 in student[customDisplay[3]] track by $index" class="label label-info">
+                            {{custom1}}
+                        </span>
+                    </div>
+                    <div ng:show="!isListAttr(customDisplay[3]) && student[customDisplay[3]] != 'null'">
+                        {{student[customDisplay[3]]}}
+                    </div>
                 </td>
                 <td width="1">
                     <span  uib-dropdown class="dropup" >

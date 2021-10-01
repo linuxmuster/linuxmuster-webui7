@@ -36,6 +36,16 @@ angular.module('lmn.users').controller 'LMUsersStudentsController', ($scope, $ht
     $scope.all_selected = false
     $scope.query = ''
 
+    $scope.list_attr_enabled = ['proxyAddresses']
+    for n in [1,2,3,4,5]
+        $scope.list_attr_enabled.push('sophomorixCustomMulti' + n)
+
+    $http.get('/api/lm/read_custom_config').then (resp) ->
+        $scope.customDisplay = resp.data.customDisplay.students
+
+    $scope.isListAttr = (attr_name) ->
+        return $scope.list_attr_enabled.includes(attr_name)
+
     $http.post('/api/lm/sophomorixUsers/students', {action: 'get-all'}).then (resp) ->
         $scope.students = resp.data
 

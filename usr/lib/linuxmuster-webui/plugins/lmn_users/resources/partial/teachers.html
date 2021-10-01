@@ -64,7 +64,7 @@
                 <th ng:show="!teachersQuota"> </th>
                 <th> </th>
                 <th> </th>
-                <th>Status </th>
+                <th translate>Status </th>
             </tr>
 
             <tr ng:repeat="teacher in teachers|filter:filter|orderBy:['-_isNew', sort.fx]|page:paging.page:paging.pageSize" ng:show="teacher.class[0] != '#'">

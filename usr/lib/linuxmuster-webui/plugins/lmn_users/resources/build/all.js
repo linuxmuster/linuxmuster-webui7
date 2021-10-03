@@ -74,7 +74,9 @@
       results = [];
       for (j = 0, len1 = ref1.length; j < len1; j++) {
         idx = ref1[j];
-        if ($scope.customDisplay[idx] === 'proxyAddresses') {
+        if ($scope.customDisplay[idx] === void 0 || $scope.customDisplay[idx] === '') {
+          results.push($scope.customTitle.push(''));
+        } else if ($scope.customDisplay[idx] === 'proxyAddresses') {
           results.push($scope.customTitle.push(resp.data.proxyAddresses.teachers.title));
         } else {
           index = $scope.customDisplay[idx].slice(-1);
@@ -407,7 +409,9 @@
       results = [];
       for (j = 0, len1 = ref1.length; j < len1; j++) {
         idx = ref1[j];
-        if ($scope.customDisplay[idx] === 'proxyAddresses') {
+        if ($scope.customDisplay[idx] === void 0 || $scope.customDisplay[idx] === '') {
+          results.push($scope.customTitle.push(''));
+        } else if ($scope.customDisplay[idx] === 'proxyAddresses') {
           results.push($scope.customTitle.push(resp.data.proxyAddresses.students.title));
         } else {
           index = $scope.customDisplay[idx].slice(-1);
@@ -1453,7 +1457,9 @@
       results = [];
       for (j = 0, len1 = ref1.length; j < len1; j++) {
         idx = ref1[j];
-        if ($scope.customDisplay[idx] === 'proxyAddresses') {
+        if ($scope.customDisplay[idx] === void 0 || $scope.customDisplay[idx] === '') {
+          results.push($scope.customTitle.push(''));
+        } else if ($scope.customDisplay[idx] === 'proxyAddresses') {
           results.push($scope.customTitle.push(resp.data.proxyAddresses.teachers.title));
         } else {
           index = $scope.customDisplay[idx].slice(-1);

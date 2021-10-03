@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('lmn.home', ['core', 'flow', 'lmn.samba']);
+angular.module('lmn.home', ['core', 'flow', 'lmn.samba_share']);
 
 
 'use strict';
@@ -15,7 +15,7 @@ angular.module('lmn.home').config(function ($routeProvider) {
 
 'use strict';
 
-angular.module('lmn.home').controller('HomeIndexController', function ($scope, $routeParams, $location, $localStorage, $timeout, notify, identity, samba, pageTitle, urlPrefix, tasks, messagebox, gettext) {
+angular.module('lmn.home').controller('HomeIndexController', function ($scope, $routeParams, $location, $localStorage, $timeout, notify, identity, samba_share, pageTitle, urlPrefix, tasks, messagebox, gettext) {
     pageTitle.set('path', $scope);
 
     $scope.loading = true;
@@ -32,7 +32,7 @@ angular.module('lmn.home').controller('HomeIndexController', function ($scope, $
     });
 
     $scope.load_path = function (path) {
-        samba.list(path).then(function (data) {
+        samba_share.list(path).then(function (data) {
             $scope.items = data.items;
             if (path == $scope.home) {
                 $scope.parent = '';

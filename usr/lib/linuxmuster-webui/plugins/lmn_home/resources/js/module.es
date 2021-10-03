@@ -1,5 +1,5 @@
 angular.module('lmn.home', [
     'core',
     'flow',
-    'lmn.samba'
+    'lmn.samba_share'
 ]);

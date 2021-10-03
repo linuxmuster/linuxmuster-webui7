@@ -213,7 +213,7 @@
     <floating-toolbar >
         <div class="button-group">
             <div style="display:{{visible.participanttable}};" uib-dropdown ng:show="currentSession.name != ''" class="dropup">
-                <button class="btn btn-default btn-flat pull-left" uib-dropdown-toggle>
+                <button class="btn btn-lmn pull-left" uib-dropdown-toggle>
                     <i class="fa fa-file"></i> <span translate>Share</span><i class="fa fa-caret-up"></i>
                 </button>
                 <ul uib-dropdown-menu class="scrollable">
@@ -221,7 +221,7 @@
                 </ul>
             </div>
             <div style="display:{{visible.participanttable}};" uib-dropdown ng:show="currentSession.name != ''" class="dropup">
-                <button class="btn btn-default btn-flat pull-left" uib-dropdown-toggle>
+                <button class="btn btn-lmn pull-left" uib-dropdown-toggle>
                     <i class="fa fa-file"></i><span style="padding-left: 2px;" translate> Collect</span><i class="fa fa-caret-down"></i>
                 </button>
                 <ul uib-dropdown-menu class="scrollable">
@@ -231,8 +231,8 @@
                     <!--   <li ng:repeat="example in examples"><a ng:click="createConfig(example)">{{example}}</a></li>-->
                 </ul>
             </div>
-            <button style="display:{{visible.participanttable}};" ng:click="saveApply(identity.user,participants,currentSession.name,currentSession.comment)" ng:show="currentSession.name != ''" class="btn btn-default btn-flat pull-right" translate>Save &amp; apply</button>
-            <button ng:click="cancel(identity.user,currentSession.name)" ng:show="currentSession.name != ''" class="btn btn-default btn-flat pull-right" translate>Close</button>
+            <button style="display:{{visible.participanttable}};" ng:click="saveApply(identity.user,participants,currentSession.name,currentSession.comment)" ng:show="currentSession.name != ''" class="btn btn-lmn pull-right" translate>Save &amp; apply</button>
+            <button ng:click="cancel(identity.user,currentSession.name)" ng:show="currentSession.name != ''" class="btn btn-lmn pull-right" translate>Close</button>
         </div>
     </floating-toolbar>
 
@@ -249,8 +249,7 @@
                             <a href="#" ng-click='showRoomDetails(identity.user)'><span style="overflow:hidden;width:100%;" translate>This Room</span></a>
                             <div class="session_hr"></div>
                             <br>
-                            <button class="btn btn-default fas fa-step-backward session_btn" disabled></button>
-                            <button class="btn btn-default fas fa-history session_btn" ng:click="generateRoomSession(identity.user)" title="{{generateRoomsessionMouseover}}"></button>
+
                         </div>
                     </span>
                     <span style="float:left;width:50%">
@@ -276,8 +275,6 @@
                         <a href="#" ng-click='showGroupDetails($index, class.type, class.groupname)'><span style="overflow:hidden;width:100%;">{{class.groupname}}</span></a>
                         <div class="session_hr"></div>
                         <br>
-                        <button class="btn btn-default fas fa-step-backward session_btn" ng:click="loadGeneratedSession(class.groupname)" title="{{startGeneratedSessionMouseover}}"></button>
-                        <button class="btn btn-default fas fa-history session_btn" ng:click="regenerateSession(class.groupname)" title="{{generateSessionMouseover}}"></button>
                     </div>
                 </span>
                 <span style="float:left;width:50%">
@@ -308,13 +305,11 @@
                                 <i class="fa fa-users"></i>
                                 <span>{{session.PARTICIPANT_COUNT}}</span>
                                 <br>
-                                <button class="btn btn-default fas fa-step-backward session_btn" disabled></button>
-                                <button class="btn btn-default fas fa-history session_btn" ng:click="getParticipants(identity.user,session.ID); currentSession.name=session.ID; currentSession.comment=session.COMMENT" title="{{generateSessionMouseover}}"></button>
                             </div>
                         </span>
                         <span style="float:left;width:50%">
-                            <div class="session_image session_image_sessions" ng:click="getParticipants(identity.user,session.ID); currentSession.name=session.ID; currentSession.comment=session.COMMENT" title="{{generateSessionMouseover}}">
-                                <span class="fas fa-history session_image_btn"></span>
+                            <div class="session_image session_image_sessions" ng:click="getParticipants(identity.user,session.ID); currentSession.name=session.ID; currentSession.comment=session.COMMENT" title="{{startGeneratedSessionMouseover}}">
+                                <span class="btn btn-default fas fa-step-backward session_image_btn"></span>
                             </div>
                         </span>
                     </div>

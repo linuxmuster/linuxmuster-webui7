@@ -48,11 +48,15 @@ span.cardlist {
   display: flex;
 }
 li.cardlist span.cardbtn,
-span.cardlist span.cardbtn {
+span.cardlist span.cardbtn,
+li.cardlist div.cardbtn,
+span.cardlist div.cardbtn {
   margin-left: auto;
 }
 li.cardlist span.cardbtn button.cardbtn,
-span.cardlist span.cardbtn button.cardbtn {
+span.cardlist span.cardbtn button.cardbtn,
+li.cardlist div.cardbtn button.cardbtn,
+span.cardlist div.cardbtn button.cardbtn {
   color: #233c4c;
   margin-left: 5px;
 }
@@ -329,5 +333,31 @@ tr.leaders td span + span {
 }
 dialog .modal {
   z-index: 2000;
+}
+/* Button LMN
+---------------------------- */
+.btn-lmn {
+  color: #233c4c;
+  background-color: #fff;
+  border-color: #233c4c;
+  border-width: 2px;
+  font-weight: bold;
+  margin: 0 3px;
+  border-radius: 5px;
+}
+.btn-lmn:focus {
+  color: #233c4c;
+  background-color: #ffc876;
+  border-color: #1b272f;
+}
+.btn-lmn:hover {
+  color: #233c4c;
+  background-color: #ffc876;
+  border-color: #1b272f;
+}
+.btn-lmn:active {
+  color: #333;
+  background-color: #ffc876;
+  border-color: #1b272f;
 }
 

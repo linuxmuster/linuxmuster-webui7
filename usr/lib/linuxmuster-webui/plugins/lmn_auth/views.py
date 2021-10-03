@@ -33,3 +33,4 @@ class Handler(HttpPlugin):
             )
         except Exception as e:
             raise EndpointError(None, str(e))
+

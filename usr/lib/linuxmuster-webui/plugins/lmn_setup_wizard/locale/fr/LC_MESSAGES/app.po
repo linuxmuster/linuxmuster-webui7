@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-21 10:57+0200\n"
-"PO-Revision-Date: 2021-01-02 14:01\n"
+"POT-Creation-Date: 2021-08-26 21:41+0200\n"
+"PO-Revision-Date: 2021-08-26 20:33\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -32,30 +32,33 @@ msgstr "Presque terminé..."
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-account.html:21
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-externalServices.html:36
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:51
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:54
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:156
 msgid "Back"
 msgstr "Précédent"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:158
+msgid "Check setup data"
+msgstr "Vérifier les données de configuration"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-done.html:17
 msgid "Close"
 msgstr "Fermer"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:35
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:84
 msgid "Configuration will be <b>skipped </b>"
 msgstr "La configuration sera <b>ignorée </b>"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:21
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:19
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:39
 msgid "Country"
 msgstr "Pays"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:34
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:27
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:59
 msgid "Domain name"
 msgstr "Nom de domaine"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-externalServices.html:3
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:32
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:78
 msgid "External Services"
 msgstr "Services externes"
 
@@ -63,11 +66,11 @@ msgstr "Services externes"
 msgid "Finish"
 msgstr "Terminé"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:35
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:83
 msgid "Firewall"
 msgstr "Pare-feu"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:35
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:85
 msgid "Firewall will be <b>configured!</b>"
 msgstr "Le pare-feu sera <b>configuré !</b>"
 
@@ -81,8 +84,12 @@ msgstr "Si vous appuyez sur le bouton de fermeture, vous serez transféré vers 
 msgid "Information"
 msgstr "Information"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:21
+msgid "Language"
+msgstr "Langue"
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:13
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:17
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:25
 msgid "Location"
 msgstr "Lieu"
 
@@ -93,15 +100,15 @@ msgstr "Lieu"
 msgid "Next"
 msgstr "Suivant"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:37
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:105
 msgid "No docker host will be configured"
 msgstr "Aucun hôte docker ne sera configuré"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:38
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:117
 msgid "No mailservice will be configured"
 msgstr "Aucun service service mail ne sera configuré"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:36
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:93
 msgid "No opsi will be configured"
 msgstr "Aucune opsi ne sera configurée"
 
@@ -117,11 +124,11 @@ msgstr "Note : La première partie du nom de domaine ( avant le point ) sera uti
 msgid "Please follow the next few steps to quickly configure your system"
 msgstr "Veuillez suivre les prochaines étapes pour configurer rapidement votre système"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:40
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:134
 msgid "SMTP Relay"
 msgstr "Relais SMTP"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:39
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:127
 msgid "SMTP User"
 msgstr "Utilisateur SMTP"
 
@@ -130,7 +137,7 @@ msgstr "Utilisateur SMTP"
 msgid "School Information"
 msgstr "Informations sur l'école"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:16
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:18
 msgid "School Name:"
 msgstr "Nom de l'école :"
 
@@ -139,17 +146,17 @@ msgid "School name"
 msgstr "Nom de l'école"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:26
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:23
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:47
 msgid "Server &amp; Domain Information"
 msgstr "Serveur &amp; information de domaine"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:46
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:28
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:66
 msgid "Server FQDN"
 msgstr "Serveur FQDN"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:30
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:26
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:52
 msgid "Server name"
 msgstr "Nom du serveur"
 
@@ -158,7 +165,7 @@ msgid "Setup"
 msgstr "Configurer"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-done.html:3
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:204
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:219
 msgid "Setup complete"
 msgstr "Configuration terminée"
 
@@ -166,12 +173,12 @@ msgstr "Configuration terminée"
 msgid "Skip Firewall Configuration"
 msgstr "Ignorer la configuration du pare-feu"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:55
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:157
 msgid "Start provisioning"
 msgstr "Commencer à approvisionner"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:17
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:18
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:32
 msgid "State"
 msgstr "Région"
 
@@ -228,27 +235,35 @@ msgstr "ex: serveur"
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:131
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:153
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:188
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:200
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:215
 msgid "Setup Wizard"
 msgstr "Assistant d'installation"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:215
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:196
+msgid "Checks launched, this may take some time"
+msgstr "Vérifications lancées, cela peut prendre un certain temps"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:203
+msgid "Please verify the data again"
+msgstr "Veuillez vérifier les données à nouveau"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:230
 msgid "Setup Done"
 msgstr "Installation terminée"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:232
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:247
 msgid "Restarting"
 msgstr "Redémarrage"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:236
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:251
 msgid "Restarted"
 msgstr "Redémarré"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:236
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:251
 msgid "Please wait"
 msgstr "Veuillez patienter"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:246
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:261
 msgid "Could not restart"
 msgstr "Impossible de redémarrer"
 

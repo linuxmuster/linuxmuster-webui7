@@ -5,9 +5,7 @@ from jadi import component
 from aj.auth import authorize
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint
-from aj.plugins.lmn_common.api import lmn_backup_file, lmn_write_configfile
 from aj.plugins.lmn_common.lmnfile import LMNFile
-from aj.plugins.lmn_common.api import LinuxmusterConfig
 
 @component(HttpPlugin)
 class Handler(HttpPlugin):
@@ -58,6 +56,44 @@ class Handler(HttpPlugin):
                 r.append(file)
         return r
 
+    @url(r'/api/lm/linbo/examples-prestart')
+    @authorize('lm:linbo:examples')
+    @endpoint(api=True)
+    def handle_api_examples_prestart(self, http_context):
+        """
+        List all prestart examples files.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: List of postsync examples files
+        :rtype: list
+        """
+
+        r = []
+        for file in os.listdir(os.path.join(self.LINBO_PATH, 'examples')):
+            if file.endswith('.prestart'):
+                r.append(file)
+        return r
+
+    @url(r'/api/lm/linbo/examples-prestart')
+    @authorize('lm:linbo:examples')
+    @endpoint(api=True)
+    def handle_api_examples_prestart(self, http_context):
+        """
+        List all prestart examples files.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: List of postsync examples files
+        :rtype: list
+        """
+
+        r = []
+        for file in os.listdir(os.path.join(self.LINBO_PATH, 'examples')):
+            if file.endswith('.prestart'):
+                r.append(file)
+        return r
+
     @url(r'/api/lm/linbo/icons')
     @authorize('lm:linbo:icons')
     @endpoint(api=True)
@@ -80,6 +116,14 @@ class Handler(HttpPlugin):
                     else:
                         extra_dict[extra] = None
 
+                # New convention name without cloop
+                prestart_file = os.path.join(self.LINBO_PATH, file[:-6] + '.prestart')
+                if os.path.isfile(prestart_file):
+                    with LMNFile(prestart_file, 'r') as f:
+                        extra_dict['prestart'] = f.read()
+                else:
+                    extra_dict['prestart'] = None
+
                 r.append({
                     'name': file,
                     'cloop': file.endswith('.cloop'),
@@ -91,6 +135,8 @@ class Handler(HttpPlugin):
                     'reg': extra_dict['reg'],
                     'postsync': extra_dict['postsync'],
                     'vdi': extra_dict['vdi'],
+                    'prestart': extra_dict['prestart'],
+                    'selected': False,
                 })
         return r
 
@@ -112,9 +158,9 @@ class Handler(HttpPlugin):
         path = os.path.join(self.LINBO_PATH, name)
         if http_context.method == 'GET':
             if os.path.exists(path):
-                settings = LinuxmusterConfig(path)
-                settings.load()
-                vdiSettings=settings.data
+                with LMNFile(path, 'r') as settings:
+                    vdiSettings = settings.read()
+
                 vdiSettings["cores"] = int(vdiSettings["cores"])
                 vdiSettings["memory"] = int(vdiSettings["memory"])
                 vdiSettings["tag"] = int(vdiSettings["tag"])
@@ -130,7 +176,8 @@ class Handler(HttpPlugin):
         if http_context.method == 'POST':
             if os.path.exists(path):
                 data = http_context.json_body()
-                lmn_write_configfile(path, json.dumps(data, indent=4))
+                with LMNFile(path, 'w') as settings:
+                    settings.write(json.dumps(data, indent=4))
                 os.chmod(path, 0o755)
 
     @url(r'/api/lm/linbo/image/(?P<name>.+)')
@@ -143,8 +190,13 @@ class Handler(HttpPlugin):
         macct_file = path + '.macct'
         reg_file = path + '.reg'
         postsync_file = path + '.postsync'
+
+        # New generation names without .cloop
+        prestart_file = path[:-6] + '.prestart'
+
         if http_context.method == 'POST':
             data = http_context.json_body()
+            print(data)
             if 'description' in data:
                 if data['description']:
                     with LMNFile(desc_file, 'w') as f:
@@ -185,6 +237,14 @@ class Handler(HttpPlugin):
                 else:
                     if os.path.exists(postsync_file):
                         os.unlink(postsync_file)
+            if 'prestart' in data:
+                if data['prestart']:
+                    with LMNFile(prestart_file, 'w') as f:
+                        f.write(data['prestart'])
+                    os.chmod(prestart_file, 0o664)
+                else:
+                    if os.path.exists(prestart_file):
+                        os.unlink(prestart_file)
         else:
             for p in [path, desc_file, info_file, macct_file, reg_file, postsync_file]:
                 if os.path.exists(p):
@@ -197,65 +257,20 @@ class Handler(HttpPlugin):
         path = os.path.join(self.LINBO_PATH, name)
 
         if http_context.method == 'GET':
-            config = {
-                'config': {},
-                'partitions': [],
-                'os': [],
-            }
-            for line in open(path, 'rb'):
-                line = line.decode('utf-8', errors='ignore')
-                line = line.split('#')[0].strip()
-
-                if line.startswith('['):
-                    section = {}
-                    section_name = line.strip('[]')
-                    if section_name == 'Partition':
-                        config['partitions'].append(section)
-                    elif section_name == 'OS':
-                        config['os'].append(section)
-                    else:
-                        config['config'][section_name] = section
-                elif '=' in line:
-                    k, v = line.split('=', 1)
-                    v = v.strip()
-                    if v in ['yes', 'no']:
-                        v = v == 'yes'
-                    section[k.strip()] = v
+            with LMNFile(path, 'r') as f:
+                config = f.read()
             return config
 
         if http_context.method == 'DELETE':
-            lmn_backup_file(path)
+            with LMNFile(path, 'r') as f:
+                f.backup()
             os.unlink(path)
 
         if http_context.method == 'POST':
-            content = ''
             data = http_context.json_body()
 
-            def convert(v):
-                if type(v) is bool:
-                    return 'yes' if v else 'no'
-                return v
-
-            for section_name, section in data['config'].items():
-                content += '[%s]\n' % section_name
-                for k, v in section.items():
-                    content += '%s = %s\n' % (k, convert(v))
-                content += '\n'
-            for partition in data['partitions']:
-                content += '[Partition]\n'
-                for k, v in partition.items():
-                    if k[0] == '_':
-                        continue
-                    content += '%s = %s\n' % (k, convert(v))
-                content += '\n'
-            for partition in data['os']:
-                content += '[OS]\n'
-                for k, v in partition.items():
-                    content += '%s = %s\n' % (k, convert(v))
-                content += '\n'
-
-            lmn_write_configfile(path, content)
-            os.chmod(path, 0o755)
+            with LMNFile(path, 'w') as f:
+                f.write(data)
 
     @url(r'/api/lm/linbo.iso')
     @endpoint(api=False, page=True)

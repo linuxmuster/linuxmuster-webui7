@@ -34,6 +34,29 @@ angular.module('lmn.users').controller 'LMUsersStudentsController', ($scope, $ht
        pageSize: 50
 
     $scope.all_selected = false
+    $scope.query = ''
+
+    $scope.list_attr_enabled = ['proxyAddresses']
+    for n in [1,2,3,4,5]
+        $scope.list_attr_enabled.push('sophomorixCustomMulti' + n)
+
+    $http.get('/api/lm/read_custom_config').then (resp) ->
+        $scope.customDisplay = resp.data.customDisplay.students
+        $scope.customTitle = ['',]
+        for idx in [1,2,3]
+            if $scope.customDisplay[idx] == undefined or $scope.customDisplay[idx] == ''
+                $scope.customTitle.push('')
+            else if $scope.customDisplay[idx] == 'proxyAddresses'
+                $scope.customTitle.push(resp.data.proxyAddresses.students.title)
+            else
+                index = $scope.customDisplay[idx].slice(-1)
+                if $scope.isListAttr($scope.customDisplay[idx])
+                    $scope.customTitle.push(resp.data.customMulti.students[index].title || '')
+                else
+                    $scope.customTitle.push(resp.data.custom.students[index].title || '')
+
+    $scope.isListAttr = (attr_name) ->
+        return $scope.list_attr_enabled.includes(attr_name)
 
     $http.post('/api/lm/sophomorixUsers/students', {action: 'get-all'}).then (resp) ->
         $scope.students = resp.data
@@ -98,19 +121,26 @@ angular.module('lmn.users').controller 'LMUsersStudentsController', ($scope, $ht
     $scope.batchSetCustomPassword = () ->
         $scope.setCustomPassword((x for x in $scope.students when x.selected))
 
-    $scope.selectAll = (filter) ->
-        if !filter?
-            filter = ''
+    $scope.filter = (row) ->
+        # Only query sAMAccountName, givenName, sn and sophomorixAdminClass
+        result = false
+        for value in ['sAMAccountName', 'givenName', 'sn', 'sophomorixAdminClass']
+            result = result || row[value].toLowerCase().indexOf($scope.query.toLowerCase() || '') != -1
+        return result
+
+    $scope.selectAll = (query) ->
+        if !query?
+            query = ''
         for student in $scope.students
-            if filter is undefined || filter == ''
+            if query is undefined || query == ''
                 student.selected = $scope.all_selected
-            if student.sn.toLowerCase().includes filter.toLowerCase()
+            if student.sn.toLowerCase().includes query.toLowerCase()
                 student.selected = $scope.all_selected
-            if student.givenName.toLowerCase().includes filter.toLowerCase()
+            if student.givenName.toLowerCase().includes query.toLowerCase()
                 student.selected = $scope.all_selected
-            if student.sophomorixAdminClass.toLowerCase().includes filter.toLowerCase()
+            if student.sophomorixAdminClass.toLowerCase().includes query.toLowerCase()
                 student.selected = $scope.all_selected
-            if student.sAMAccountName.toLowerCase().includes filter.toLowerCase()
+            if student.sAMAccountName.toLowerCase().includes query.toLowerCase()
                 student.selected = $scope.all_selected
 
 

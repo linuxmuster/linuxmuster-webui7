@@ -11,7 +11,7 @@ import ldap
 import ldap.filter
 import ldap.modlist as modlist
 import subprocess
-from jadi import component
+from jadi import component, service
 import pwd
 import grp
 import simplejson as json
@@ -20,6 +20,7 @@ import yaml
 from aj.auth import AuthenticationProvider, OSAuthenticationProvider, AuthenticationService
 from aj.config import UserConfigProvider
 from aj.plugins.lmn_common.api import lmconfig, lmsetup_schoolname
+import logging
 
 @component(AuthenticationProvider)
 class LMAuthenticationProvider(AuthenticationProvider):
@@ -78,7 +79,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
             ldap_attrs = ['sophomorixWebuiDashboard']
 
         searchFilter = ldap.filter.filter_format(ldap_filter, [username])
-        params = lmconfig.data['linuxmuster']['ldap']
+        params = lmconfig['linuxmuster']['ldap']
 
         l = ldap.initialize('ldap://' + params['host'])
         # Binduser bind to the  server
@@ -155,7 +156,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
         # Is the password right ?
         try:
-            params = lmconfig.data['linuxmuster']['ldap']
+            params = lmconfig['linuxmuster']['ldap']
             l = ldap.initialize('ldap://' + params['host'])
             l.set_option(ldap.OPT_REFERRALS, 0)
             l.protocol_version = ldap.VERSION3
@@ -290,16 +291,24 @@ class LMAuthenticationProvider(AuthenticationProvider):
         """
 
         if username in ["root",None]:
-            return {}
+            return {'activeSchool': 'default-school'}
         try:
             profil = self.get_ldap_user(username)
             profil['isAdmin'] = b"administrator" in profil['sophomorixRole']
+            # Test purpose for multischool
+            if profil['sophomorixSchoolname'] == b'global':
+                profil['activeSchool'] = "default-school"
+            else:
+                profil['activeSchool'] = profil['sophomorixSchoolname']
+
             if lmsetup_schoolname:
                 profil['pageTitle'] = lmsetup_schoolname
             return json.loads(json.dumps(profil))
         except Exception as e:
             logging.error(e)
             return {}
+
+
 
 @component(UserConfigProvider)
 class UserLdapConfig(UserConfigProvider):
@@ -367,7 +376,7 @@ class UserLdapConfig(UserConfigProvider):
             ldap_attrs = ['sophomorixWebuiDashboard']
 
             searchFilter = ldap.filter.filter_format(ldap_filter, [self.user])
-            params = lmconfig.data['linuxmuster']['ldap']
+            params = lmconfig['linuxmuster']['ldap']
             with open('/etc/linuxmuster/.secret/administrator') as f:
                 admin_pw = f.read()
 

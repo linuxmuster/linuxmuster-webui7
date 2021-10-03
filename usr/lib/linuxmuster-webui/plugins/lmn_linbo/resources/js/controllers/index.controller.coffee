@@ -19,6 +19,13 @@ angular.module('lmn.linbo').controller 'LMLINBOPartitionModalController', ($scop
 
     $http.get('/api/lm/linbo/icons').then (resp) ->
         $scope.icons = resp.data
+        $scope.image_extension = 'svg'
+        # Test if common svg picture is there, and fallback to png if not
+        if resp.data.indexOf('ubuntu.svg') < 0
+            $scope.image_extension = 'png'
+        $scope.show_png_warning = false
+        if $scope.image_extension == 'svg' && os.IconName.endsWith('png')
+            $scope.show_png_warning = true
 
     $http.get('/api/lm/linbo/images').then (resp) ->
         $scope.images = []
@@ -41,6 +48,7 @@ angular.module('lmn.linbo').controller 'LMLINBOImageModalController', ($scope, $
     $scope.image = image
     $scope.imagesWithReg = (x for x in images when x.reg)
     $scope.imagesWithPostsync = (x for x in images when x.postsync)
+    $scope.imagesWithPrestart = (x for x in images when x.prestart)
 
     $http.get('/api/lm/linbo/examples-regs').then (resp) ->
         $scope.exampleRegs = resp.data
@@ -52,9 +60,16 @@ angular.module('lmn.linbo').controller 'LMLINBOImageModalController', ($scope, $
     $http.get('/api/lm/linbo/examples-postsyncs').then (resp) ->
         $scope.examplePostsyncs = resp.data
 
+    $http.get('/api/lm/linbo/examples-prestart').then (resp) ->
+        $scope.examplePrestarts = resp.data
+
     $scope.setExamplePostsync = (name) ->
         filesystem.read("/srv/linbo/examples/#{name}").then (content) ->
             $scope.image.postsync = content
+
+    $scope.setExamplePrestart = (name) ->
+        filesystem.read("/srv/linbo/examples/#{name}").then (content) ->
+            $scope.image.prestart = content
 
     $scope.save = () ->
         $uibModalInstance.close(image)
@@ -75,6 +90,9 @@ angular.module('lmn.linbo').controller 'LMLINBOConfigModalController', ($scope, 
             $scope.expert = false
         else
             $scope.expert = true
+
+    if $scope.config.config.LINBO.BackgroundColor
+       $scope.config.config.LINBO.BackgroundColor = '#' + $scope.config.config.LINBO.BackgroundColor
 
     $scope.kernelOptions = [
         'quiet'
@@ -332,7 +350,7 @@ angular.module('lmn.linbo').controller 'LMLINBOConfigModalController', ($scope, 
             Name: 'Windows 10'
             Version: ''
             Description: 'Windows 10'
-            IconName: 'win10.png'
+            IconName: 'win10.' + $scope.image_extension
             Image: ''
             BaseImage: ''
             Root: partition.Dev
@@ -363,7 +381,7 @@ angular.module('lmn.linbo').controller 'LMLINBOConfigModalController', ($scope, 
             Name: 'Ubuntu'
             Version: ''
             Description: 'Ubuntu 16.04'
-            IconName: 'ubuntu.png'
+            IconName: 'ubuntu.' + $scope.image_extension
             Image: ''
             BaseImage: ''
             Root: partition.Dev
@@ -453,6 +471,11 @@ angular.module('lmn.linbo').controller 'LMLINBOConfigModalController', ($scope, 
             for partition in disk.partitions
                 config.partitions.push partition
         $uibModalInstance.close([config, vdiconfig])
+        
+	# Remove # from background color
+        if $scope.config.config.LINBO.BackgroundColor
+            $scope.config.config.LINBO.BackgroundColor = $scope.config.config.LINBO.BackgroundColor.substring(1)
+        $uibModalInstance.close(config)
 
     $scope.backups = () ->
         lmFileBackups.show('/srv/linbo/start.conf.' + $scope.config.config.LINBO.Group).then () ->
@@ -463,8 +486,18 @@ angular.module('lmn.linbo').controller 'LMLINBOConfigModalController', ($scope, 
 
 
 
-angular.module('lmn.linbo').controller 'LMLINBOController', ($scope, $http, $uibModal, $log, $route, gettext, notify, pageTitle, tasks, messagebox, validation) ->
+angular.module('lmn.linbo').controller 'LMLINBOController', ($q, $scope, $http, $uibModal, $log, $route, $location, gettext, notify, pageTitle, tasks, messagebox, validation) ->
     pageTitle.set(gettext('LINBO'))
+
+    $scope.tabs = ['groups', 'images']
+
+    tag = $location.$$url.split("#")[1]
+    if tag and tag in $scope.tabs
+        $scope.activetab = $scope.tabs.indexOf(tag)
+    else
+        $scope.activetab = 0
+
+    $scope.images_selected = []
 
     $http.get('/api/lm/linbo/configs').then (resp) ->
         $scope.configs = resp.data
@@ -540,7 +573,25 @@ angular.module('lmn.linbo').controller 'LMLINBOController', ($scope, $http, $uib
     $scope.deleteImage = (image) ->
         messagebox.show(text: "Delete '#{image.name}'?", positive: 'Delete', negative: 'Cancel').then () ->
             $http.delete("/api/lm/linbo/image/#{image.name}").then () ->
+                $location.hash("images")
                 $route.reload()
+
+    $scope.deleteImages = () ->
+        name_list = (image.name for image in $scope.images_selected).toString()
+        messagebox.show(text: "Delete '#{name_list}'?", positive: 'Delete', negative: 'Cancel').then () ->
+            promises = []
+            for image in $scope.images_selected
+                promises.push($http.delete("/api/lm/linbo/image/#{image.name}"))
+            $q.all(promises).then () ->
+                $location.hash("images")
+                $route.reload()
+
+    $scope.toggleSelected = (image) ->
+        position = $scope.images_selected.indexOf(image)
+        if position > -1
+            $scope.images_selected.splice(position, 1)
+        else
+            $scope.images_selected.push(image)
 
     $scope.duplicateImage = (image) ->
         messagebox.prompt('New name', image.name).then (msg) ->

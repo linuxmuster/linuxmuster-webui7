@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-02 14:57+0100\n"
-"PO-Revision-Date: 2021-01-02 14:01\n"
+"POT-Creation-Date: 2021-08-26 21:41+0200\n"
+"PO-Revision-Date: 2021-08-26 20:34\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -19,49 +19,49 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:27
 msgid "Change password"
-msgstr ""
+msgstr "Şifreyi değiştir"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:14
 msgid "Current password"
-msgstr ""
+msgstr "Mevcut şifre"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:3
 msgid "Minimal length is 7 characters. Use upper, lower and special characters or numbers. (e.g. Muster!)"
-msgstr ""
+msgstr "Minimum uzunluk 7 karakterdir. Büyük, küçük ve özel karakterler veya sayılar kullanın. (örneğin; Muster!)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:18
 msgid "New password"
-msgstr ""
+msgstr "Yeni şifre"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:22
 msgid "Repeat password"
-msgstr ""
+msgstr "Şifreyi tekrar girin"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:5
 msgid "Valid characters are: a-z A-Z 0-9 !§+-@#$%&amp;*( )[ ]{ }"
-msgstr ""
+msgstr "Geçerli karakterler: a-z A-Z 0-9 !§+-@#$%&amp;*( )[ ]{ }"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:31
 msgid "Linux Muster LDAP"
-msgstr ""
+msgstr "Linux Muster LDAP"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:280
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:290
 msgid "Linuxmuster LDAP user config"
-msgstr ""
+msgstr "Linux Muster LDAP kullanıcı yapılandırması"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:7
 msgid "Change Password"
-msgstr ""
+msgstr "Şifreyi Değiştir"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:13
 msgid "Passwords do not match"
-msgstr ""
+msgstr "Şifreler eşleşmiyor"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:23
 msgid "Password changed"
-msgstr ""
+msgstr "Şifre başarıyla değiştirildi"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:26
 msgid "Password change failed"
-msgstr ""
+msgstr "Şifre değiştirme başarısız oldu"
 

@@ -40,7 +40,7 @@ angular.module('lmn.common').service 'validation', (gettext) ->
     # Project names can only have lowercase and digits
     this.isValidProjectName = (name) ->
         error_msg = name + gettext(' can only contain lowercase chars or numbers')
-        regExp =  /^[a-z0-9]*$/
+        regExp =  /^[a-z0-9_\-]*$/
         validName = regExp.test(name)
         if !validName
             return error_msg
@@ -96,17 +96,37 @@ angular.module('lmn.common').service 'validation', (gettext) ->
     # Does not test if student birthday is in correct range
     this.isValidDate = (date) ->
         error_msg = date + gettext(' is not a valid date')
-        regExp = /^(0[1-9]|[12][0-9]|3[01])[.](0[1-9]|1[012])[.](19|20)\d\d$/
+        regExp = /^([1-9]|0[1-9]|[12][0-9]|3[01])[.]([1-9]|0[1-9]|1[012])[.](19|20)\d\d$/
         validDate = regExp.test(date)
         if !validDate
             return error_msg
         return true
 
     # Regexp for mac address, and tests if no duplicate
-    this.isValidMac = (mac) ->
+    this.isValidMac = (mac, idx) ->
+        # idx is the position of the mac address in devices
         error_msg = mac + gettext(' is not valid or duplicated')
-        regExp = /^([0-9A-Fa-f]{2}[:]){5}([0-9A-Fa-f]{2})$/
-        validMac = regExp.test(mac) && (this.externVar['devices'].filter(this.findval('mac', mac)).length < 2)
+        # Allow ':', '-' or nothing as separator
+        regExp  = /^([0-9A-Fa-f]{2}[:]){5}([0-9A-Fa-f]{2})$/
+        regExp2 = /^([0-9A-Fa-f]{2}[-]){5}([0-9A-Fa-f]{2})$/
+        regExp3 = /^[0-9A-Fa-f]{12}$/
+
+        validMac = false
+
+        # Convert mac address if necessary
+        if regExp.test(mac)
+            validMac = true
+        else if regExp2.test(mac)
+            validMac = true
+            mac = mac.replaceAll('-', ':')
+            this.externVar['devices'][idx]['mac'] = mac
+        else if regExp3.test(mac)
+            validMac = true
+            mac = mac.match(/.{1,2}/g).join(':')
+            this.externVar['devices'][idx]['mac'] = mac
+
+        validMac = validMac && (this.externVar['devices'].filter(this.findval('mac', mac)).length < 2)
+
         if !validMac
             return error_msg
         return true

@@ -12,7 +12,7 @@ class ItemProvider(SidebarItemProvider):
         return [
             {
                 'attach': 'category:devicemanagement',
-                'name': 'VDI Administraion',
+                'name': 'VDI Administration',
                 'icon': 'fas fa-database',
                 'url': '/view/lmn_vdi_administration',
                 'children': []

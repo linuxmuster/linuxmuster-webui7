@@ -1,0 +1,1 @@
+{"": "", "Currently no links defined!": "Aucun lien d\u00e9fini pour le moment!", "Open": "Ouvrir", "Links": "Liens"}

@@ -146,11 +146,19 @@
           project: msg.value,
           profil: $scope.identity.profile
         }).then(function(resp) {
-          notify.success(gettext('Project Created'));
-          return identity.init().then(function() {
-            console.log("Identity renewed !");
-            return $scope.getGroups($scope.identity.user);
-          });
+          if (resp.data[0] === 'ERROR') {
+            return notify.error(gettext(resp.data[1]));
+          } else {
+            if (resp.data[0] === 'LOG') {
+              notify.success(gettext('Project Created'));
+              return identity.init().then(function() {
+                console.log("Identity renewed !");
+                return $scope.getGroups($scope.identity.user);
+              });
+            } else {
+              return notify.info(gettext('Something unusual happened'));
+            }
+          }
         });
       });
     };
@@ -234,6 +242,24 @@
     $scope.editGroup = false;
     $scope.hidetext = gettext("Hide");
     $scope.showtext = gettext("Show");
+    $scope.changeMaillist = function() {
+      var option;
+      $scope.changeState = true;
+      option = $scope.maillist ? '--maillist' : '--nomaillist';
+      return $http.post('/api/lmn/changeGroup', {
+        option: option,
+        group: $scope.groupName,
+        type: $scope.type
+      }).then(function(resp) {
+        if (resp['data'][0] === 'ERROR') {
+          notify.error(resp['data'][1]);
+        }
+        if (resp['data'][0] === 'LOG') {
+          notify.success(gettext(resp['data'][1]));
+        }
+        return $scope.changeState = false;
+      });
+    };
     $scope.changeJoin = function() {
       var option;
       $scope.changeState = true;
@@ -334,21 +360,32 @@
         $scope.groupName = groupName;
         $scope.groupDetails = resp.data['GROUP'][groupName];
         $scope.adminList = resp.data['GROUP'][groupName]['sophomorixAdmins'];
-        $scope.groupmemberlist = resp.data['GROUP'][groupName]['sophomorixMemberGroups'];
+        if (groupType === 'printergroup') {
+          $scope.groupmemberlist = [];
+        } else {
+          $scope.groupmemberlist = resp.data['GROUP'][groupName]['sophomorixMemberGroups'];
+        }
         $scope.groupadminlist = resp.data['GROUP'][groupName]['sophomorixAdminGroups'];
-        $scope.type = $scope.groupDetails['sophomorixType'];
-        $scope.type = $scope.type === "adminclass" ? "class" : $scope.type;
+        $scope.typeMap = {
+          'adminclass': 'class',
+          'project': 'project',
+          'printer': 'group'
+        };
+        $scope.type = $scope.typeMap[$scope.groupDetails['sophomorixType']];
         $scope.members = [];
         ref = resp.data['MEMBERS'][groupName];
         for (name in ref) {
           member = ref[name];
-          if (member.sn !== "null") { // group member 
+          if (member.sn !== "null") { // group member
             $scope.members.push({
               'sn': member.sn,
               'givenName': member.givenName,
               'login': member.sAMAccountName,
-              'sophomorixAdminClass': member.sophomorixAdminClass
+              'sophomorixAdminClass': member.sophomorixAdminClass,
+              'sophomorixRole': member.sophomorixRole
             });
+          } else if (groupType === 'printergroup') {
+            $scope.groupmemberlist.push(member.sAMAccountName);
           }
         }
         $scope.admins = [];
@@ -360,11 +397,13 @@
             'sn': member.sn,
             'givenName': member.givenName,
             'sophomorixAdminClass': member.sophomorixAdminClass,
+            'sophomorixRole': member.sophomorixRole,
             'login': member.sAMAccountName
           });
         }
         $scope.joinable = resp.data['GROUP'][groupName]['sophomorixJoinable'] === 'TRUE';
         $scope.hidden = resp.data['GROUP'][groupName]['sophomorixHidden'] === 'TRUE';
+        $scope.maillist = resp.data['GROUP'][groupName]['sophomorixMailList'] === 'TRUE';
         // Admin or admin of the project can edit members of a project
         // Only admins can change hide and join option for a class
         if ($scope.identity.isAdmin) {
@@ -474,13 +513,13 @@
         }
         if (resp['data'][0] === 'LOG') {
           notify.success(gettext(resp['data'][1]));
-        }
-        if (Array.isArray(user)) {
-          $scope.admins = $scope.admins.concat(user.filter(function(u) {
-            return $scope.admins.indexOf(u) < 0;
-          }));
-        } else {
-          $scope.admins.push(user);
+          if (Array.isArray(user)) {
+            $scope.admins = $scope.admins.concat(user.filter(function(u) {
+              return $scope.admins.indexOf(u) < 0;
+            }));
+          } else {
+            $scope.admins.push(user);
+          }
         }
         return $scope.changeState = false;
       });
@@ -688,15 +727,23 @@
       "group": gettext("Type the group name, e.g. p_wifi")
     };
     $scope.findUsers = function(q) {
-      return $http.post("/api/lm/search-project", {
+      return $http.post("/api/lm/find-users", {
         login: q,
         type: 'user'
       }).then(function(resp) {
         return resp.data;
       });
     };
+    $scope.findTeachers = function(q) {
+      return $http.post("/api/lm/find-users", {
+        login: q,
+        type: 'teacher'
+      }).then(function(resp) {
+        return resp.data;
+      });
+    };
     $scope.findGroups = function(q) {
-      return $http.post("/api/lm/search-project", {
+      return $http.post("/api/lm/find-users", {
         login: q,
         type: 'group'
       }).then(function(resp) {
@@ -704,7 +751,7 @@
       });
     };
     $scope.findUsersGroup = function(q) {
-      return $http.post("/api/lm/search-project", {
+      return $http.post("/api/lm/find-users", {
         login: q,
         type: 'usergroup'
       }).then(function(resp) {

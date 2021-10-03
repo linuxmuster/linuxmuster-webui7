@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-02 14:57+0100\n"
-"PO-Revision-Date: 2021-01-02 14:01\n"
+"POT-Creation-Date: 2021-08-26 21:41+0200\n"
+"PO-Revision-Date: 2021-08-26 20:34\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -17,221 +17,218 @@ msgstr ""
 "X-Crowdin-File: /2.0/lmn_common.po\n"
 "X-Crowdin-File-ID: 96\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:150
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:151
 msgid "A bootstrap error has occured"
-msgstr ""
+msgstr "Bir önyükleme hatası oluştu"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileBackups.modal.html:2
 msgid "Backups"
-msgstr ""
+msgstr "Yedeklemeler"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileEditor.modal.html:18
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileBackups.service.coffee:53
 msgid "Cancel"
-msgstr ""
+msgstr "İptal et"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileBackups.modal.html:23
 msgid "Close"
-msgstr ""
+msgstr "Kapat"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileEditor.modal.html:17
 msgid "Download CSV"
-msgstr ""
+msgstr "CSV Dosyasını İndir"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileEditor.modal.html:5
 msgid "Drop a CSV file here to import"
-msgstr ""
+msgstr "CSV dosyasını içe aktarmak için dosyayı sürükleyip bırakın"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:133
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:134
 msgid "Enter"
-msgstr ""
+msgstr "Girin"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:92
 msgid "Log out"
-msgstr ""
+msgstr "Çıkış yap"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileBackups.modal.html:5
 msgid "No backups available"
-msgstr ""
+msgstr "Mevcut yedekleme bulunamadı"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:174
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:175
 msgid "OK"
-msgstr ""
+msgstr "Tamamdır"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:153
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:154
 msgid "Please see browser console"
-msgstr ""
+msgstr "Lütfen tarayıcı konsoluna bakınız"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:129
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:130
 msgid "Quick search"
-msgstr ""
+msgstr "Hızlı arama"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileEditor.modal.html:16
 msgid "Save"
-msgstr ""
+msgstr "Kaydet"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:49
 msgid "School Console"
-msgstr ""
+msgstr "Okul Konsolu"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:102
 msgid "Session time : {{ counter[0] }}:{{ counter[1] }}:{{ counter[2] }}"
-msgstr ""
+msgstr "Oturum süresi : {{ counter[0] }}:{{ counter[1] }}:{{ counter[2] }}"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/lmnfile.py:133
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/api.py:41
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/lmnfile.py:140
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/api.py:45
 msgid "Access refused."
-msgstr ""
+msgstr "Erişim reddedildi."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:15
 msgid "User Management"
-msgstr ""
+msgstr "Kullanıcı Yönetimi"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:22
 msgid "List Management"
-msgstr ""
+msgstr "Liste Yönetimi"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:29
 msgid "Quota"
-msgstr ""
+msgstr "Kota"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:36
 msgid "Device Management"
-msgstr ""
+msgstr "Aygıt Yönetimi"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:43
 msgid "Classroom"
-msgstr ""
+msgstr "Sınıf"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:50
 msgid "Settings"
-msgstr ""
+msgstr "Ayarlar"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:57
 msgid "Global Settings"
-msgstr ""
+msgstr "Genel Ayarlar"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:4
 #, javascript-format
 msgid "Adding user %s."
-msgstr ""
+msgstr "%s kullanıcısı ekleniyor."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:5
 #, javascript-format
 msgid "Updating user %s."
-msgstr ""
+msgstr "%s kullanıcısı güncelleniyor."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:6
 #, javascript-format
 msgid "Deleting user %s."
-msgstr ""
+msgstr "%s kullanıcısı siliniyor."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:7
 #, javascript-format
 msgid "Adding examuser %s."
-msgstr ""
+msgstr "%s sınav-kullanıcısı ekleniyor."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:8
 #, javascript-format
 msgid "Deleting examuser %s."
-msgstr ""
+msgstr "%s sınav-kullanıcısı siliniyor."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:9
 #, javascript-format
 msgid "Adding computer %s."
-msgstr ""
+msgstr "%s bilgisayarı ekleniyor."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:10
 #, javascript-format
 msgid "Deleting computer %s."
-msgstr ""
+msgstr "%s bilgisayarı siliniyor."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:11
 #, javascript-format
 msgid "Collecting data (copy): %s."
-msgstr ""
+msgstr "Dosyalar toplanılıyor (kopyalama): %s."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:12
 #, javascript-format
 msgid "Collecting data (move): %s."
-msgstr ""
+msgstr "Dosyalar toplanılıyor (taşıma): %s."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:13
 #, javascript-format
 msgid "Copying files to user %s."
-msgstr ""
+msgstr "Dosyalar %s kullanıcısına kopyalanıyor."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/sophComment.service.coffee:14
 #, javascript-format
 msgid "Copying files: %s."
-msgstr ""
+msgstr "Şu dosyalar kopyalanıyor: %s."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:48
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:50
-msgid " uploaded"
-msgstr ""
-
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:46
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:49
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:92
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:95
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:140
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/upload.directives.coffee:143
 msgid "Uploaded"
-msgstr ""
+msgstr "Yükleme Başarılı"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:13
 msgid "Passwords must contain at least one lowercase, one uppercase, one special char or number, and at least 7 chars"
-msgstr ""
+msgstr "Şifreler en az bir küçük harf, bir büyük harf, bir özel karakter veya sayı ve en az 7 karakter içermelidir"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:22
 msgid "Password is not valid. Password can only contains a-zA-Z0-9!@#§+-$%&*{}()]["
-msgstr ""
+msgstr "Şifre geçersiz. Şifreler sadece şunları içerebilir: a-zA-Z0-9!@#§+-$%&*{}()]["
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:42
 msgid " can only contain lowercase chars or numbers"
-msgstr ""
+msgstr " sadece sayıları ve küçük harf karakterleri içerebilir"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:51
 msgid " can only contain alphanumeric chars or _+-"
-msgstr ""
+msgstr " sadece alfanümerik karakterleri veya _+- sembollerini içerebilir"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:60
 msgid " can only contain alphanumeric chars or -"
-msgstr ""
+msgstr " sadece alfanümerik karakterleri veya - sembolünü içerebilir"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:69
 msgid " can only contain alphanumeric chars or -, space and _"
-msgstr ""
+msgstr " sadece alfanümerik karakterleri veya -, boşluk ve _ sembollerini içerebilir"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:78
 msgid " can only contain alphanumeric chars"
-msgstr ""
+msgstr " sadece alfanümerik karakterleri içerebilir"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:87
 msgid " is not a valid number"
-msgstr ""
+msgstr " geçerli bir sayı değil"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:98
 msgid " is not a valid date"
-msgstr ""
+msgstr " geçerli bir tarih değil"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:107
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:116
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:108
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:136
 msgid " is not valid or duplicated"
-msgstr ""
+msgstr " geçerli değil veya da daha önce kullanılmış"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:125
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:145
 msgid " does not contain valid chars or is duplicated"
-msgstr ""
+msgstr " geçerli karakterler içermiyor veya da daha önce kullanılmış"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:138
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/validation.service.coffee:158
 msgid " is not a valid role"
-msgstr ""
+msgstr " geçerli bir rol değil"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileBackups.service.coffee:52
 msgid "Do you really want to delete"
-msgstr ""
+msgstr "Silmek istediğinize emin misiniz"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/lmFileBackups.service.coffee:53
 msgid "Confirmation"
-msgstr ""
+msgstr "Doğrulama"
 

@@ -102,10 +102,17 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
         notify.error gettext(test)
         return
       $http.post('/api/lmn/groupmembership', {action: 'create-project', username:$scope.identity.user, project: msg.value, profil: $scope.identity.profile}).then (resp) ->
-        notify.success gettext('Project Created')
-        identity.init().then () ->
-                console.log("Identity renewed !")
-                $scope.getGroups ($scope.identity.user)
+        if resp.data[0] is 'ERROR'
+            notify.error gettext(resp.data[1])
+        else
+            if resp.data[0] is 'LOG' 
+                notify.success gettext('Project Created')
+                identity.init().then () ->
+                        console.log("Identity renewed !")
+                        $scope.getGroups ($scope.identity.user)
+            else
+                notify.info gettext('Something unusual happened')
+        
 
   $scope.showGroupDetails = (index, groupType, groupName) ->
     $uibModal.open(
@@ -159,6 +166,16 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
 
         $scope.hidetext = gettext("Hide")
         $scope.showtext = gettext("Show")
+
+        $scope.changeMaillist = () ->
+            $scope.changeState = true
+            option = if $scope.maillist then '--maillist' else '--nomaillist'
+            $http.post('/api/lmn/changeGroup', {option: option, group: $scope.groupName, type: $scope.type}).then (resp) ->
+                if resp['data'][0] == 'ERROR'
+                    notify.error (resp['data'][1])
+                if resp['data'][0] == 'LOG'
+                    notify.success gettext(resp['data'][1])
+                $scope.changeState = false
 
         $scope.changeJoin = () ->
             $scope.changeState = true
@@ -220,23 +237,46 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
                 $scope.groupName    = groupName
                 $scope.groupDetails = resp.data['GROUP'][groupName]
                 $scope.adminList = resp.data['GROUP'][groupName]['sophomorixAdmins']
-                $scope.groupmemberlist = resp.data['GROUP'][groupName]['sophomorixMemberGroups']
+                if groupType == 'printergroup'
+                    $scope.groupmemberlist = []
+                else
+                    $scope.groupmemberlist = resp.data['GROUP'][groupName]['sophomorixMemberGroups']
                 $scope.groupadminlist = resp.data['GROUP'][groupName]['sophomorixAdminGroups']
-                $scope.type = $scope.groupDetails['sophomorixType']
-                $scope.type = if $scope.type == "adminclass" then "class" else $scope.type
 
+                $scope.typeMap = {
+                    'adminclass': 'class',
+                    'project': 'project',
+                    'printer': 'group',
+                }
+                $scope.type = $scope.typeMap[$scope.groupDetails['sophomorixType']]
+                
                 $scope.members = []
                 for name,member of resp.data['MEMBERS'][groupName]
-                    if member.sn != "null" # group member 
-                        $scope.members.push({'sn':member.sn, 'givenName':member.givenName, 'login': member.sAMAccountName, 'sophomorixAdminClass':member.sophomorixAdminClass})
+                    if member.sn != "null" # group member
+                        $scope.members.push({
+                            'sn':member.sn,
+                            'givenName':member.givenName,
+                            'login': member.sAMAccountName,
+                            'sophomorixAdminClass':member.sophomorixAdminClass,
+                            'sophomorixRole':member.sophomorixRole
+                        })
+                    else if groupType == 'printergroup'
+                        $scope.groupmemberlist.push(member.sAMAccountName)
 
                 $scope.admins = []
                 for admin in $scope.adminList
                     member = resp.data['MEMBERS'][groupName][admin]
-                    $scope.admins.push({'sn':member.sn, 'givenName':member.givenName, 'sophomorixAdminClass':member.sophomorixAdminClass, 'login': member.sAMAccountName})
+                    $scope.admins.push({
+                        'sn':member.sn,
+                        'givenName':member.givenName,
+                        'sophomorixAdminClass':member.sophomorixAdminClass,
+                        'sophomorixRole':member.sophomorixRole,
+                        'login': member.sAMAccountName
+                    })
 
                 $scope.joinable = resp.data['GROUP'][groupName]['sophomorixJoinable'] == 'TRUE'
                 $scope.hidden = resp.data['GROUP'][groupName]['sophomorixHidden'] == 'TRUE'
+                $scope.maillist = resp.data['GROUP'][groupName]['sophomorixMailList'] == 'TRUE'
 
                 # Admin or admin of the project can edit members of a project
                 # Only admins can change hide and join option for a class
@@ -303,7 +343,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
                     notify.error (resp['data'][1])
                 if resp['data'][0] == 'LOG'
                     notify.success gettext(resp['data'][1])
-                   if Array.isArray(user)
+                    if Array.isArray(user)
                         $scope.admins = $scope.admins.concat(user.filter((u) -> $scope.admins.indexOf(u) < 0))
                     else
                         $scope.admins.push(user)
@@ -446,13 +486,16 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
         }
 
         $scope.findUsers = (q) ->
-            return $http.post("/api/lm/search-project", {login:q, type:'user'}).then (resp) ->
+            return $http.post("/api/lm/find-users", {login:q, type:'user'}).then (resp) ->
+                return resp.data
+        $scope.findTeachers = (q) ->
+            return $http.post("/api/lm/find-users", {login:q, type:'teacher'}).then (resp) ->
                 return resp.data
         $scope.findGroups = (q) ->
-            return $http.post("/api/lm/search-project", {login:q, type:'group'}).then (resp) ->
+            return $http.post("/api/lm/find-users", {login:q, type:'group'}).then (resp) ->
                 return resp.data
         $scope.findUsersGroup = (q) ->
-            return $http.post("/api/lm/search-project", {login:q, type:'usergroup'}).then (resp) ->
+            return $http.post("/api/lm/find-users", {login:q, type:'usergroup'}).then (resp) ->
                 return resp.data
 
         $scope.groupType = groupType

@@ -9,6 +9,7 @@ from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint
 from aj.auth import authorize
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue
+from aj.plugins.lmn_common.multischool import School
 
 
 @component(HttpPlugin)
@@ -33,7 +34,6 @@ class Handler(HttpPlugin):
         action = http_context.json_body()['action']
 
         if http_context.method == 'POST':
-            # schoolname = 'default-school'
             with authorize('lmn:groupmemberships:write'):
                 if action == 'get-specified':
                     groupName = http_context.json_body()['groupName']
@@ -60,7 +60,7 @@ class Handler(HttpPlugin):
 
         # TODO : this need to be splitted into atomic functions/tasks.
 
-        schoolname = 'default-school'
+        schoolname = School.get(self.context).school 
         username = http_context.json_body()['username']
         action = http_context.json_body()['action']
         user_details = http_context.json_body()['profil']
@@ -130,10 +130,10 @@ class Handler(HttpPlugin):
             if action == 'create-project':
                 ## Projectname must be in lowercase to avoid conflicts
                 project = http_context.json_body()['project'].lower()
-                sophomorixCommand = ['sophomorix-project',  '--admins', username, '--create', '-p', project, '-jj']
+                sophomorixCommand = ['sophomorix-project',  '--admins', username, '--create', '-p', project, '--school', schoolname, '-jj']
                 result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
                 if result['TYPE'] == "ERROR":
-                    return result['TYPE']['LOG']
+                    return result['TYPE'],result['MESSAGE_EN']
                 return result['TYPE'], result['LOG']
 
     @url(r'/api/lmn/changeGroup')
@@ -184,7 +184,7 @@ class Handler(HttpPlugin):
         if http_context.method == 'POST':
             action  = http_context.json_body()['action']
             groupname = http_context.json_body()['groupname']
-            entity = http_context.json_body()['entity']
+            entity = http_context.json_body()['entity'].strip(",")
             try:
                 objtype = http_context.json_body()['type']
             except KeyError:
@@ -224,7 +224,7 @@ class Handler(HttpPlugin):
             return result['TYPE'], result['MESSAGE_EN']
         return result['TYPE'], result['LOG']
 
-    @url(r'/api/lm/search-project')
+    @url(r'/api/lm/find-users')
     @authorize('lmn:groupmembership')
     @endpoint(api=True)
     def handle_api_search_project(self, http_context):
@@ -253,6 +253,11 @@ class Handler(HttpPlugin):
                 if objtype == 'user':
                     sophomorixCommand = ['sophomorix-query', '--anyname', login+'*', '-jj']
                     result = lmn_getSophomorixValue(sophomorixCommand, 'USER')
+                elif objtype == 'teacher':
+                    sophomorixCommand = ['sophomorix-query', '--anyname',
+                                         login + '*', '--teacher', '-jj']
+                    result = lmn_getSophomorixValue(sophomorixCommand,
+                                                    'USER')
                 elif objtype == 'usergroup':
                     sophomorixCommand = ['sophomorix-query', '--sam', login+'*', '--group-members', '-jj']
                     result = lmn_getSophomorixValue(sophomorixCommand, 'MEMBERS')
@@ -261,7 +266,8 @@ class Handler(HttpPlugin):
                     result = result[login]
                 elif objtype == 'group':
                     sophomorixCommand = ['sophomorix-query', '--anyname', login+'*', '-jj']
-                    return lmn_getSophomorixValue(sophomorixCommand, 'LISTS/GROUP')
+                    result = lmn_getSophomorixValue(sophomorixCommand, 'LISTS')
+                    return result['GROUP'] + result['ROOM']
 
                 for _, details in result.items():
                     resultArray.append({

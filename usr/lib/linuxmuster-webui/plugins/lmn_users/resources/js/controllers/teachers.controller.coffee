@@ -3,7 +3,7 @@ angular.module('lmn.users').config ($routeProvider) ->
         controller: 'LMUsersTeachersController'
         templateUrl: '/lmn_users:resources/partial/teachers.html'
 
-angular.module('lmn.users').controller 'LMUsersTeachersController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) ->
+angular.module('lmn.users').controller 'LMUsersTeachersController', ($q, $scope, $http, $location, $route, $uibModal, $sce, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) ->
     pageTitle.set(gettext('Teachers'))
 
     $scope.sorts = [
@@ -34,11 +34,32 @@ angular.module('lmn.users').controller 'LMUsersTeachersController', ($scope, $ht
       pageSize: 50
 
     $scope.all_selected = false
+    $scope.query = ''
 
+    $scope.list_attr_enabled = ['proxyAddresses']
+    for n in [1,2,3,4,5]
+        $scope.list_attr_enabled.push('sophomorixCustomMulti' + n)
 
     $http.post('/api/lm/sophomorixUsers/teachers',{action: 'get-all'}).then (resp) ->
         $scope.teachers = resp.data
-        console.log(resp.data)
+
+    $http.get('/api/lm/read_custom_config').then (resp) ->
+        $scope.customDisplay = resp.data.customDisplay.teachers
+        $scope.customTitle = ['',]
+        for idx in [1,2,3]
+            if $scope.customDisplay[idx] == undefined or $scope.customDisplay[idx] == ''
+                $scope.customTitle.push('')
+            else if $scope.customDisplay[idx] == 'proxyAddresses'
+                $scope.customTitle.push(resp.data.proxyAddresses.teachers.title)
+            else
+                index = $scope.customDisplay[idx].slice(-1)
+                if $scope.isListAttr($scope.customDisplay[idx])
+                    $scope.customTitle.push(resp.data.customMulti.teachers[index].title || '')
+                else
+                    $scope.customTitle.push(resp.data.custom.teachers[index].title || '')
+
+    $scope.isListAttr = (attr_name) ->
+        return $scope.list_attr_enabled.includes(attr_name)
 
     $scope.showInitialPassword = (users) ->
         user=[]
@@ -55,11 +76,14 @@ angular.module('lmn.users').controller 'LMUsersTeachersController', ($scope, $ht
     $scope.teachersQuota = false
     $scope.getQuotas = () ->
         teacherList = (t.sAMAccountName for t in $scope.teachers)
-        $http.post('/api/lm/users/get-group-quota',{groupList: teacherList}).then (resp) ->
-            $scope.teachersQuota = resp.data
-            console.log($scope.teachersQuota)
-
-
+        promises = []
+        for teacher in teacherList
+            promises.push($http.post('/api/lm/users/get-group-quota',{groupList: [teacher]}))
+        $q.all(promises).then (resp) ->
+            $scope.teachersQuota = {}
+            for teacher in resp
+                login = Object.keys(teacher.data)[0]
+                $scope.teachersQuota[login] = teacher.data[login]
 
     $scope.setInitialPassword = (user) ->
        $http.post('/api/lm/users/password', {users: (x['sAMAccountName'] for x in user), action: 'set-initial'}).then (resp) ->
@@ -87,7 +111,8 @@ angular.module('lmn.users').controller 'LMUsersTeachersController', ($scope, $ht
           resolve:
              id: () -> user[0]['sAMAccountName']
              role: () -> 'teachers'
-             )
+             ).closed.then () ->
+                $route.reload()
 
 
 
@@ -98,6 +123,19 @@ angular.module('lmn.users').controller 'LMUsersTeachersController', ($scope, $ht
                     return true
         return false
 
+    $scope.printSelectedPasswords = () ->
+        msg = messagebox.show(progress: true)
+        user_list = (x.sAMAccountName for x in $scope.teachers when x.selected)
+        $http.post('/api/lm/users/print-individual', {user: $scope.identity.user, user_list: user_list}).then (resp) ->
+            console.log(resp.data)
+            if resp.data == 'success'
+                notify.success(gettext("Created password pdf"))
+                location.href = "/api/lm/users/print-download/user-#{$scope.identity.user}.pdf"
+            else
+                notify.error(gettext("Could not create password pdf"))
+        .finally () ->
+            msg.close()
+
     $scope.batchSetInitialPassword = () ->
         $scope.setInitialPassword((x for x in $scope.teachers when x.selected))
 
@@ -107,17 +145,24 @@ angular.module('lmn.users').controller 'LMUsersTeachersController', ($scope, $ht
     $scope.batchSetCustomPassword = () ->
         $scope.setCustomPassword((x for x in $scope.teachers when x.selected))
 
-    $scope.selectAll = (filter) ->
-        if !filter?
-            filter = ''
+    $scope.filter = (row) ->
+        # Only query sAMAccountName, givenName and sn
+        result = false
+        for value in ['sAMAccountName', 'givenName', 'sn']
+            result = result || row[value].toLowerCase().indexOf($scope.query.toLowerCase() || '') != -1
+        return result
+
+    $scope.selectAll = (query) ->
+        if !query?
+            query = ''
         for teacher in $scope.teachers
-           if filter is undefined || filter == ''
+           if query is undefined || query == ''
               teacher.selected = $scope.all_selected
-           if teacher.sn.toLowerCase().includes filter.toLowerCase()
+           if teacher.sn.toLowerCase().includes query.toLowerCase()
               teacher.selected = $scope.all_selected
-           if teacher.givenName.toLowerCase().includes filter.toLowerCase()
+           if teacher.givenName.toLowerCase().includes query.toLowerCase()
               teacher.selected = $scope.all_selected
-           if teacher.sophomorixAdminClass.toLowerCase().includes filter.toLowerCase()
+           if teacher.sophomorixAdminClass.toLowerCase().includes query.toLowerCase()
               teacher.selected = $scope.all_selected
-           if teacher.sAMAccountName.toLowerCase().includes filter.toLowerCase()
+           if teacher.sAMAccountName.toLowerCase().includes query.toLowerCase()
               teacher.selected = $scope.all_selected

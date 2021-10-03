@@ -12,7 +12,7 @@
 
     <div ng:show="teachers[0] != 'none'">
         <div class="input-group">
-            <input ng:model="filter" type="search" autofocus class="form-control" placeholder="Filter" />
+            <input ng:model="query" type="search" autofocus class="form-control" placeholder="Filter" />
             <div uib-dropdown class="input-group-btn">
                 <button class="btn btn-default" uib-dropdown-toggle>
                     <i class="fa fa-sort-amount-asc"></i> {{sort.name}}
@@ -50,33 +50,73 @@
 
         <table class="table" style="width:100%">
             <tr>
-                <th><span checkbox ng:model="all_selected" ng:change="selectAll(filter)"></span></th>
-                <th width="120"> Login</th>
-                <th> Name </th>
-                <th ng:show="teachersQuota"> </th>
+                <th><span checkbox ng:model="all_selected" ng:change="selectAll(query)"></span></th>
+                <th width="120">
+                    Login
+                    <span ng:show="customTitle[1]"> / {{customTitle[1]}}</span>
+                </th>
+                <th>
+                    Name
+                    <span ng:show="customTitle[2]"> / {{customTitle[2]}}</span>
+                </th>
+                <th><span ng:show="customTitle[3]">{{customTitle[3]}}</span></th>
+                <th ng:show="teachersQuota" translate>Quota</th>
+                <th ng:show="!teachersQuota"> </th>
                 <th> </th>
                 <th> </th>
+                <th translate>Status </th>
             </tr>
 
             <tr ng:repeat="teacher in teachers|filter:filter|orderBy:['-_isNew', sort.fx]|page:paging.page:paging.pageSize" ng:show="teacher.class[0] != '#'">
-
 
                 <td width="30" style="text-align:center;">
                     <span checkbox ng:model="teacher.selected"></span>
                 </td>
                 <td width="1" style="text-align:left;">
-                    <i> {{teacher.sAMAccountName}}</i> <br> 
+                    <i>{{teacher.sAMAccountName}}</i>
+                    <br />
+                    <div ng:show="isListAttr(customDisplay[1])">
+                        <span ng:repeat="custom1 in teacher[customDisplay[1]] track by $index" class="label label-info">
+                            {{custom1}}
+                        </span>
+                    </div>
+                    <div ng:show="!isListAttr(customDisplay[1]) && teacher[customDisplay[1]] != 'null'">
+                        {{teacher[customDisplay[1]]}}
+                    </div>
                 </td>
                 <td>
-                    <b>{{teacher.givenName}}</b> <br> {{teacher.sn}}
+                    <b>{{teacher.sn}} {{teacher.givenName}}</b>
+                    <br />
+                    <div ng:show="isListAttr(customDisplay[2])">
+                        <span ng:repeat="custom2 in teacher[customDisplay[2]] track by $index" class="label label-info">
+                            {{custom2}}
+                        </span>
+                    </div>
+                    <div ng:show="!isListAttr(customDisplay[2]) && teacher[customDisplay[2]] != 'null'">
+                        {{teacher[customDisplay[2]]}}
+                    </div>
                 </td>
-                <td ng:show="teachersQuota" width="200">
+                <td>
+                    <div ng:show="isListAttr(customDisplay[3])">
+                        <span ng:repeat="custom3 in teacher[customDisplay[3]] track by $index" class="label label-info">
+                            {{custom3}}
+                        </span>
+                    </div>
+                    <div ng:show="!isListAttr(customDisplay[3]) && teacher[customDisplay[3]] != 'null'">
+                        {{teacher[customDisplay[3]]}}
+                    </div>
+                </td>
+                <td ng:show="teachersQuota" width="150">
+                    <span class="label label-{{teachersQuota[teacher.sAMAccountName].TYPE}} ">
+                        {{teachersQuota[teacher.sAMAccountName].USED}} %
+                    </span>
                     <smart-progress type="{{teachersQuota[teacher.sAMAccountName].TYPE}}" value="teachersQuota[teacher.sAMAccountName].USED" max="100"></smart-progress>
                 </td>
+                <td ng:show="!teachersQuota" width="150"> </td>
                 <td width="1">
                     <span  uib-dropdown class="dropup" >
                         <button class="btn btn-default" uib-dropdown-toggle>
-                            <i class="fa fa-key"></i> <span translate>Password</span>
+                            <i class="fa fa-key"></i>
                             <span class="caret"></span>
                         </button>
                         <ul uib-dropdown-menu class="dropdown-menu-right" style=" margin-bottom: -30px; margin-right: 40px; z-index: 4000;">
@@ -109,18 +149,9 @@
                     </span>
                 </td>
                 <td width="1">
-                    <span uib-dropdown>
-                        <button class="btn btn-default" uib-dropdown-toggle>
-                            <i class="fa fa-cog"></i> <span translate> User Settings</span>
-                        </button>
-                        <ul uib-dropdown-menu class="dropdown-menu-right" style="width:200px">
-                            <li>
-                                <a ng:click="userInfo([teacher])" translate>
-                                    User information
-                                </a>
-                            </li>
-                        </ul>
-                    </span>
+                    <button class="btn btn-default" ng:click="userInfo([teacher])">
+                        <i class="fa fa-cog"></i>
+                    </button>
                 </td>
                 <td width="1">
                     <span class="label label-{{teacher.sophomorixStatus.color}}">{{teacher.sophomorixStatus.tag}}</span>
@@ -133,9 +164,27 @@
         <div class="floating-toolbar-padder"></div>
 
         <floating-toolbar>
-            <button ng:click="batchSetInitialPassword()" ng:show="haveSelection()" class="btn btn-default btn-flat pull-right" translate>Set initial password for selected</button>
-            <button ng:click="batchSetRandomPassword()" ng:show="haveSelection()" class="btn btn-default btn-flat pull-right" translate>Set random password for selected</button>
-            <button ng:click="batchSetCustomPassword()" ng:show="haveSelection()" class="btn btn-default btn-flat pull-right" translate>Set custom password for selected</button>
-            <button ng:click="getQuotas()" class="btn btn-default btn-flat pull-right" translate>Show quota</button>
-            <br>
+            <button ng:click="getQuotas()" class="btn btn-lmn pull-right" translate>Show quota</button>
+            <div uib-dropdown ng:show="haveSelection()" class="btn-group dropup">
+                <button uib-dropdown-toggle class="btn btn-lmn" translate>
+                    For selected
+                    <span class="caret"></span>
+                </button>
+                <ul uib-dropdown-menu class="dropdown-menu-left">
+                    <li>
+                        <a ng:click="batchSetInitialPassword()" translate>Set initial password</a>
+                    </li>
+                    <li>
+                        <a ng:click="batchSetRandomPassword()" translate>Set random password</a>
+                    </li>
+                    <li>
+                        <a ng:click="batchSetCustomPassword()" translate>Set custom password</a>
+                    </li>
+                    <li>
+                        <a ng:click="printSelectedPasswords()" translate>Print passwords</a>
+                    </li>
+                </ul>
+                <br />
+            </div>
+        </floating-toolbar>
     </div>

@@ -9,20 +9,17 @@ import subprocess
 import filecmp
 from datetime import datetime
 from jadi import component
+import re
+from glob import glob
+from configparser import ConfigParser
+
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize
 from aj.plugins.lmn_common.lmnfile import LMNFile
-from aj.plugins.lmn_common.api import lmn_write_configfile, lmn_getSophomorixValue, CSVSpaceStripper,  lmn_backup_file
-from configparser import ConfigParser
-
-class IniParser(ConfigParser):
-    def as_dict(self):
-        d = dict(self._sections)
-        for k in d:
-            d[k] = dict(self._defaults, **d[k])
-            d[k].pop('__name__', None)
-        return d
+from aj.plugins.lmn_common.api import lmn_get_school_configpath
+from aj.plugins.lmn_common.multischool import School
+from aj.plugins.lmn_common.api import lmconfig
 
 
 @component(HttpPlugin)
@@ -60,9 +57,6 @@ class Handler(HttpPlugin):
         if os.path.isfile(fileToCheck):
             with LMNFile(fileToCheck, 'r') as f:
                 return f.detect_encoding()
-        #     sophomorixCommand = ['sophomorix-check', '--analyze-encoding', fileToCheck, '-jj']
-        #     encoding = lmn_getSophomorixValue(sophomorixCommand, 'SUMMARY/0/ANALYZE-ENCODING/ENCODING')
-        #     return encoding
         return None
 
 
@@ -81,8 +75,8 @@ class Handler(HttpPlugin):
         :rtype: dict in read mode
         """
 
-        school = 'default-school'
-        path = '/etc/linuxmuster/sophomorix/'+school+'/school.conf'
+        school = School.get(self.context).school
+        path = lmn_get_school_configpath(school)+'school.conf'
         # Update each time the config_obj because it may have changed
         with LMNFile(path, 'r') as f:
             self.config_obj = f
@@ -99,6 +93,79 @@ class Handler(HttpPlugin):
 
             self.config_obj.write(data)
 
+            # Update setup.ini with new schoolname
+            with LMNFile('/var/lib/linuxmuster/setup.ini', 'r') as s:
+                s.data['setup']['schoolname'] = data['school']['SCHOOL_LONGNAME']
+                s.write(s.data)
+
+    def _filter_templates(self, filename, school=''):
+        """
+        Test if the name respects the sophomorix scheme for latex templates.
+        See https://github.com/linuxmuster/sophomorix4/blob/bionic/sophomorix-samba/lang/latex/README.latextemplates.
+
+        :param school: school
+        :type school: string
+        :param file: name of the file
+        :type file: string
+        :return: result of the test
+        :rtype: dict with groups values
+        """
+
+        pattern = re.compile(
+            school + r'\.?([^-]*)-([A-Z]+)-(\d+)-template\.tex')
+        m = re.match(pattern, filename)
+        if m is None:
+            return None
+        data = m.groups()
+        template = {
+            'filename': filename,
+            'name': data[0],
+            'lang': data[1],
+            'numberPerPage': int(data[2])
+        }
+        return template
+
+    @url(r'/api/lm/schoolsettings/latex-templates')
+    @authorize('lm:schoolsettings')
+    @endpoint(api=True)
+    def handle_api_latex_template(self, http_context):
+        """
+        Get list of latex templates for printing with sophomorix.
+        Method GET.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        """
+
+        templates_multiple = []
+        templates_individual = []
+        sophomorix_default_path = '/usr/share/sophomorix/lang/latex/templates/'
+
+        for path in glob(sophomorix_default_path + "*tex"):
+            filename = path.split('/')[-1]
+            template = self._filter_templates(filename)
+            if template:
+                template['path'] = path
+                if template['numberPerPage'] > 1:
+                    templates_multiple.append(template)
+                else:
+                    templates_individual.append(template)
+
+        # School defined templates
+        school = School.get(self.context).school
+        custom_templates_path = f'/etc/linuxmuster/sophomorix/{school}/latex-templates/'
+        if os.path.isdir(custom_templates_path):
+            for path in glob(custom_templates_path + "*tex"):
+                filename = path.split('/')[-1]
+                template = self._filter_templates(filename, school)
+                if template:
+                    template['path'] = os.path.join(custom_templates_path, filename)
+                    if template['numberPerPage'] > 1:
+                        templates_multiple.append(template)
+                    else:
+                        templates_individual.append(template)
+
+        return templates_individual, templates_multiple
 
     @url(r'/api/lm/schoolsettings/school-share')
     @authorize('lm:schoolsettings')
@@ -148,49 +215,64 @@ class Handler(HttpPlugin):
             'setupFlag',
         ]
         if http_context.method == 'GET':
-            return list(
-                csv.DictReader(CSVSpaceStripper(open(path)), delimiter=';', fieldnames=fieldnames)
-            )
+            with LMNFile(path, 'r', fieldnames=fieldnames) as s:
+                subnets = list(s.data)
+            return subnets
+
         if http_context.method == 'POST':
             data = http_context.json_body()
-            header = """
-# modified by Webui at %s
-# /etc/linuxmuster/subnets.csv
-#
-# thomas@linuxmuster.net
-#
-# Network/Prefix ; Router-IP (last available IP in network) ; 1. Range-IP ; Last-Range-IP ; SETUP-Flag
-#
-# server subnet definition
-""" % (datetime.now().strftime("%Y%m%d%H%M%S"))
-            separator = """
-# add your subnets below
-#
-"""
-            tmp = path + '_tmp'
-            with open(tmp, 'w') as f:
-                f.write(header)
-                # Write setup subnet : Sure that data[0] contains the setup subnet ?
-                csv.DictWriter(
-                    f,
-                    delimiter=';',
-                    fieldnames=fieldnames,
-                    #encoding='utf-8'
-                ).writerows([data[0]])
-                # Write custom subnets
-                f.write(separator)
-                csv.DictWriter(
-                    f,
-                    delimiter=';',
-                    fieldnames=fieldnames,
-                    #encoding='utf-8'
-                ).writerows(data[1:])
-            if not filecmp.cmp(tmp, path):
-                lmn_backup_file(path)
-                os.rename(tmp, path)
-            else:
-                os.unlink(tmp)
+            with LMNFile(path, 'w', fieldnames=fieldnames) as f:
+                f.write(data)
+
             try:
                 subprocess.check_call('linuxmuster-import-subnets > /tmp/import_devices.log', shell=True)
             except Exception as e:
                 raise EndpointError(None, message=str(e))
+
+    @url(r'/api/lm/read_custom_config')
+    @authorize('lm:schoolsettings')
+    @endpoint(api=True)
+    def handle_api_read_custom_config(self, http_context):
+        """
+        Read webui yaml config and return the settings for custom fields.
+        Method GET: read content.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: Settings in read mode
+        :rtype: dict
+        """
+
+        if http_context.method == 'GET':
+            return {
+                'custom': lmconfig.get('custom', {}),
+                'customMulti': lmconfig.get('customMulti', {}),
+                'customDisplay': lmconfig.get('customDisplay', {}),
+                'proxyAddresses': lmconfig.get('proxyAddresses', {}),
+                'passwordTemplates': lmconfig.get('passwordTemplates', {'multiple': {}, 'individual': {}}),
+            }
+
+
+    @url(r'/api/lm/save_custom_config')
+    @authorize('lm:schoolsettings')
+    @endpoint(api=True)
+    def handle_api_save_custom_config(self, http_context):
+        """
+        Save customs sophomorix fields settings in the webui yaml config.
+        Method POST.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return:
+        :rtype:
+        """
+
+        if http_context.method == 'POST':
+            custom_config = http_context.json_body()['config']
+            lmconfig['custom'] = custom_config['custom']
+            lmconfig['customMulti'] = custom_config['customMulti']
+            lmconfig['customDisplay'] = custom_config['customDisplay']
+            lmconfig['proxyAddresses'] = custom_config['proxyAddresses']
+            lmconfig['passwordTemplates'] = custom_config['passwordTemplates']
+            with LMNFile('/etc/linuxmuster/webui/config.yml', 'w') as webui:
+                webui.write(lmconfig)

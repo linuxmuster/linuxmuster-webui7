@@ -13,7 +13,8 @@
     });
   });
 
-  angular.module('lmn.users').controller('LMUsersTeachersController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) {
+  angular.module('lmn.users').controller('LMUsersTeachersController', function($q, $scope, $http, $location, $route, $uibModal, $sce, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) {
+    var i, len, n, ref;
     pageTitle.set(gettext('Teachers'));
     $scope.sorts = [
       {
@@ -53,12 +54,44 @@
       pageSize: 50
     };
     $scope.all_selected = false;
+    $scope.query = '';
+    $scope.list_attr_enabled = ['proxyAddresses'];
+    ref = [1, 2, 3, 4, 5];
+    for (i = 0, len = ref.length; i < len; i++) {
+      n = ref[i];
+      $scope.list_attr_enabled.push('sophomorixCustomMulti' + n);
+    }
     $http.post('/api/lm/sophomorixUsers/teachers', {
       action: 'get-all'
     }).then(function(resp) {
-      $scope.teachers = resp.data;
-      return console.log(resp.data);
+      return $scope.teachers = resp.data;
     });
+    $http.get('/api/lm/read_custom_config').then(function(resp) {
+      var idx, index, j, len1, ref1, results;
+      $scope.customDisplay = resp.data.customDisplay.teachers;
+      $scope.customTitle = [''];
+      ref1 = [1, 2, 3];
+      results = [];
+      for (j = 0, len1 = ref1.length; j < len1; j++) {
+        idx = ref1[j];
+        if ($scope.customDisplay[idx] === void 0 || $scope.customDisplay[idx] === '') {
+          results.push($scope.customTitle.push(''));
+        } else if ($scope.customDisplay[idx] === 'proxyAddresses') {
+          results.push($scope.customTitle.push(resp.data.proxyAddresses.teachers.title));
+        } else {
+          index = $scope.customDisplay[idx].slice(-1);
+          if ($scope.isListAttr($scope.customDisplay[idx])) {
+            results.push($scope.customTitle.push(resp.data.customMulti.teachers[index].title || ''));
+          } else {
+            results.push($scope.customTitle.push(resp.data.custom.teachers[index].title || ''));
+          }
+        }
+      }
+      return results;
+    });
+    $scope.isListAttr = function(attr_name) {
+      return $scope.list_attr_enabled.includes(attr_name);
+    };
     $scope.showInitialPassword = function(users) {
       var type, user;
       user = [];
@@ -80,32 +113,44 @@
     };
     $scope.teachersQuota = false;
     $scope.getQuotas = function() {
-      var t, teacherList;
+      var j, len1, promises, t, teacher, teacherList;
       teacherList = (function() {
-        var i, len, ref, results;
-        ref = $scope.teachers;
+        var j, len1, ref1, results;
+        ref1 = $scope.teachers;
         results = [];
-        for (i = 0, len = ref.length; i < len; i++) {
-          t = ref[i];
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          t = ref1[j];
           results.push(t.sAMAccountName);
         }
         return results;
       })();
-      return $http.post('/api/lm/users/get-group-quota', {
-        groupList: teacherList
-      }).then(function(resp) {
-        $scope.teachersQuota = resp.data;
-        return console.log($scope.teachersQuota);
+      promises = [];
+      for (j = 0, len1 = teacherList.length; j < len1; j++) {
+        teacher = teacherList[j];
+        promises.push($http.post('/api/lm/users/get-group-quota', {
+          groupList: [teacher]
+        }));
+      }
+      return $q.all(promises).then(function(resp) {
+        var k, len2, login, results;
+        $scope.teachersQuota = {};
+        results = [];
+        for (k = 0, len2 = resp.length; k < len2; k++) {
+          teacher = resp[k];
+          login = Object.keys(teacher.data)[0];
+          results.push($scope.teachersQuota[login] = teacher.data[login]);
+        }
+        return results;
       });
     };
     $scope.setInitialPassword = function(user) {
       var x;
       return $http.post('/api/lm/users/password', {
         users: (function() {
-          var i, len, results;
+          var j, len1, results;
           results = [];
-          for (i = 0, len = user.length; i < len; i++) {
-            x = user[i];
+          for (j = 0, len1 = user.length; j < len1; j++) {
+            x = user[j];
             results.push(x['sAMAccountName']);
           }
           return results;
@@ -119,10 +164,10 @@
       var x;
       return $http.post('/api/lm/users/password', {
         users: (function() {
-          var i, len, results;
+          var j, len1, results;
           results = [];
-          for (i = 0, len = user.length; i < len; i++) {
-            x = user[i];
+          for (j = 0, len1 = user.length; j < len1; j++) {
+            x = user[j];
             results.push(x['sAMAccountName']);
           }
           return results;
@@ -161,14 +206,16 @@
             return 'teachers';
           }
         }
+      }).closed.then(function() {
+        return $route.reload();
       });
     };
     $scope.haveSelection = function() {
-      var i, len, ref, x;
+      var j, len1, ref1, x;
       if ($scope.teachers) {
-        ref = $scope.teachers;
-        for (i = 0, len = ref.length; i < len; i++) {
-          x = ref[i];
+        ref1 = $scope.teachers;
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          x = ref1[j];
           if (x.selected) {
             return true;
           }
@@ -176,14 +223,46 @@
       }
       return false;
     };
+    $scope.printSelectedPasswords = function() {
+      var msg, user_list, x;
+      msg = messagebox.show({
+        progress: true
+      });
+      user_list = (function() {
+        var j, len1, ref1, results;
+        ref1 = $scope.teachers;
+        results = [];
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          x = ref1[j];
+          if (x.selected) {
+            results.push(x.sAMAccountName);
+          }
+        }
+        return results;
+      })();
+      return $http.post('/api/lm/users/print-individual', {
+        user: $scope.identity.user,
+        user_list: user_list
+      }).then(function(resp) {
+        console.log(resp.data);
+        if (resp.data === 'success') {
+          notify.success(gettext("Created password pdf"));
+          return location.href = `/api/lm/users/print-download/user-${$scope.identity.user}.pdf`;
+        } else {
+          return notify.error(gettext("Could not create password pdf"));
+        }
+      }).finally(function() {
+        return msg.close();
+      });
+    };
     $scope.batchSetInitialPassword = function() {
       var x;
       return $scope.setInitialPassword((function() {
-        var i, len, ref, results;
-        ref = $scope.teachers;
+        var j, len1, ref1, results;
+        ref1 = $scope.teachers;
         results = [];
-        for (i = 0, len = ref.length; i < len; i++) {
-          x = ref[i];
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          x = ref1[j];
           if (x.selected) {
             results.push(x);
           }
@@ -194,11 +273,11 @@
     $scope.batchSetRandomPassword = function() {
       var x;
       return $scope.setRandomPassword((function() {
-        var i, len, ref, results;
-        ref = $scope.teachers;
+        var j, len1, ref1, results;
+        ref1 = $scope.teachers;
         results = [];
-        for (i = 0, len = ref.length; i < len; i++) {
-          x = ref[i];
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          x = ref1[j];
           if (x.selected) {
             results.push(x);
           }
@@ -209,11 +288,11 @@
     $scope.batchSetCustomPassword = function() {
       var x;
       return $scope.setCustomPassword((function() {
-        var i, len, ref, results;
-        ref = $scope.teachers;
+        var j, len1, ref1, results;
+        ref1 = $scope.teachers;
         results = [];
-        for (i = 0, len = ref.length; i < len; i++) {
-          x = ref[i];
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          x = ref1[j];
           if (x.selected) {
             results.push(x);
           }
@@ -221,28 +300,39 @@
         return results;
       })());
     };
-    return $scope.selectAll = function(filter) {
-      var i, len, ref, results, teacher;
-      if (filter == null) {
-        filter = '';
+    $scope.filter = function(row) {
+      var j, len1, ref1, result, value;
+      // Only query sAMAccountName, givenName and sn
+      result = false;
+      ref1 = ['sAMAccountName', 'givenName', 'sn'];
+      for (j = 0, len1 = ref1.length; j < len1; j++) {
+        value = ref1[j];
+        result = result || row[value].toLowerCase().indexOf($scope.query.toLowerCase() || '') !== -1;
       }
-      ref = $scope.teachers;
+      return result;
+    };
+    return $scope.selectAll = function(query) {
+      var j, len1, ref1, results, teacher;
+      if (query == null) {
+        query = '';
+      }
+      ref1 = $scope.teachers;
       results = [];
-      for (i = 0, len = ref.length; i < len; i++) {
-        teacher = ref[i];
-        if (filter === void 0 || filter === '') {
+      for (j = 0, len1 = ref1.length; j < len1; j++) {
+        teacher = ref1[j];
+        if (query === void 0 || query === '') {
           teacher.selected = $scope.all_selected;
         }
-        if (teacher.sn.toLowerCase().includes(filter.toLowerCase())) {
+        if (teacher.sn.toLowerCase().includes(query.toLowerCase())) {
           teacher.selected = $scope.all_selected;
         }
-        if (teacher.givenName.toLowerCase().includes(filter.toLowerCase())) {
+        if (teacher.givenName.toLowerCase().includes(query.toLowerCase())) {
           teacher.selected = $scope.all_selected;
         }
-        if (teacher.sophomorixAdminClass.toLowerCase().includes(filter.toLowerCase())) {
+        if (teacher.sophomorixAdminClass.toLowerCase().includes(query.toLowerCase())) {
           teacher.selected = $scope.all_selected;
         }
-        if (teacher.sAMAccountName.toLowerCase().includes(filter.toLowerCase())) {
+        if (teacher.sAMAccountName.toLowerCase().includes(query.toLowerCase())) {
           results.push(teacher.selected = $scope.all_selected);
         } else {
           results.push(void 0);
@@ -264,6 +354,7 @@
   });
 
   angular.module('lmn.users').controller('LMUsersStudentsController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) {
+    var i, len, n, ref;
     pageTitle.set(gettext('Students'));
     $scope.sorts = [
       {
@@ -303,6 +394,39 @@
       pageSize: 50
     };
     $scope.all_selected = false;
+    $scope.query = '';
+    $scope.list_attr_enabled = ['proxyAddresses'];
+    ref = [1, 2, 3, 4, 5];
+    for (i = 0, len = ref.length; i < len; i++) {
+      n = ref[i];
+      $scope.list_attr_enabled.push('sophomorixCustomMulti' + n);
+    }
+    $http.get('/api/lm/read_custom_config').then(function(resp) {
+      var idx, index, j, len1, ref1, results;
+      $scope.customDisplay = resp.data.customDisplay.students;
+      $scope.customTitle = [''];
+      ref1 = [1, 2, 3];
+      results = [];
+      for (j = 0, len1 = ref1.length; j < len1; j++) {
+        idx = ref1[j];
+        if ($scope.customDisplay[idx] === void 0 || $scope.customDisplay[idx] === '') {
+          results.push($scope.customTitle.push(''));
+        } else if ($scope.customDisplay[idx] === 'proxyAddresses') {
+          results.push($scope.customTitle.push(resp.data.proxyAddresses.students.title));
+        } else {
+          index = $scope.customDisplay[idx].slice(-1);
+          if ($scope.isListAttr($scope.customDisplay[idx])) {
+            results.push($scope.customTitle.push(resp.data.customMulti.students[index].title || ''));
+          } else {
+            results.push($scope.customTitle.push(resp.data.custom.students[index].title || ''));
+          }
+        }
+      }
+      return results;
+    });
+    $scope.isListAttr = function(attr_name) {
+      return $scope.list_attr_enabled.includes(attr_name);
+    };
     $http.post('/api/lm/sophomorixUsers/students', {
       action: 'get-all'
     }).then(function(resp) {
@@ -332,10 +456,10 @@
       var x;
       return $http.post('/api/lm/users/password', {
         users: (function() {
-          var i, len, results;
+          var j, len1, results;
           results = [];
-          for (i = 0, len = user.length; i < len; i++) {
-            x = user[i];
+          for (j = 0, len1 = user.length; j < len1; j++) {
+            x = user[j];
             results.push(x['sAMAccountName']);
           }
           return results;
@@ -349,10 +473,10 @@
       var x;
       return $http.post('/api/lm/users/password', {
         users: (function() {
-          var i, len, results;
+          var j, len1, results;
           results = [];
-          for (i = 0, len = user.length; i < len; i++) {
-            x = user[i];
+          for (j = 0, len1 = user.length; j < len1; j++) {
+            x = user[j];
             results.push(x['sAMAccountName']);
           }
           return results;
@@ -393,11 +517,11 @@
       });
     };
     $scope.haveSelection = function() {
-      var i, len, ref, x;
+      var j, len1, ref1, x;
       if ($scope.students) {
-        ref = $scope.students;
-        for (i = 0, len = ref.length; i < len; i++) {
-          x = ref[i];
+        ref1 = $scope.students;
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          x = ref1[j];
           if (x.selected) {
             return true;
           }
@@ -408,11 +532,11 @@
     $scope.batchSetInitialPassword = function() {
       var x;
       return $scope.setInitialPassword((function() {
-        var i, len, ref, results;
-        ref = $scope.students;
+        var j, len1, ref1, results;
+        ref1 = $scope.students;
         results = [];
-        for (i = 0, len = ref.length; i < len; i++) {
-          x = ref[i];
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          x = ref1[j];
           if (x.selected) {
             results.push(x);
           }
@@ -423,11 +547,11 @@
     $scope.batchSetRandomPassword = function() {
       var x;
       return $scope.setRandomPassword((function() {
-        var i, len, ref, results;
-        ref = $scope.students;
+        var j, len1, ref1, results;
+        ref1 = $scope.students;
         results = [];
-        for (i = 0, len = ref.length; i < len; i++) {
-          x = ref[i];
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          x = ref1[j];
           if (x.selected) {
             results.push(x);
           }
@@ -438,11 +562,11 @@
     $scope.batchSetCustomPassword = function() {
       var x;
       return $scope.setCustomPassword((function() {
-        var i, len, ref, results;
-        ref = $scope.students;
+        var j, len1, ref1, results;
+        ref1 = $scope.students;
         results = [];
-        for (i = 0, len = ref.length; i < len; i++) {
-          x = ref[i];
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          x = ref1[j];
           if (x.selected) {
             results.push(x);
           }
@@ -450,28 +574,39 @@
         return results;
       })());
     };
-    return $scope.selectAll = function(filter) {
-      var i, len, ref, results, student;
-      if (filter == null) {
-        filter = '';
+    $scope.filter = function(row) {
+      var j, len1, ref1, result, value;
+      // Only query sAMAccountName, givenName, sn and sophomorixAdminClass
+      result = false;
+      ref1 = ['sAMAccountName', 'givenName', 'sn', 'sophomorixAdminClass'];
+      for (j = 0, len1 = ref1.length; j < len1; j++) {
+        value = ref1[j];
+        result = result || row[value].toLowerCase().indexOf($scope.query.toLowerCase() || '') !== -1;
       }
-      ref = $scope.students;
+      return result;
+    };
+    return $scope.selectAll = function(query) {
+      var j, len1, ref1, results, student;
+      if (query == null) {
+        query = '';
+      }
+      ref1 = $scope.students;
       results = [];
-      for (i = 0, len = ref.length; i < len; i++) {
-        student = ref[i];
-        if (filter === void 0 || filter === '') {
+      for (j = 0, len1 = ref1.length; j < len1; j++) {
+        student = ref1[j];
+        if (query === void 0 || query === '') {
           student.selected = $scope.all_selected;
         }
-        if (student.sn.toLowerCase().includes(filter.toLowerCase())) {
+        if (student.sn.toLowerCase().includes(query.toLowerCase())) {
           student.selected = $scope.all_selected;
         }
-        if (student.givenName.toLowerCase().includes(filter.toLowerCase())) {
+        if (student.givenName.toLowerCase().includes(query.toLowerCase())) {
           student.selected = $scope.all_selected;
         }
-        if (student.sophomorixAdminClass.toLowerCase().includes(filter.toLowerCase())) {
+        if (student.sophomorixAdminClass.toLowerCase().includes(query.toLowerCase())) {
           student.selected = $scope.all_selected;
         }
-        if (student.sAMAccountName.toLowerCase().includes(filter.toLowerCase())) {
+        if (student.sAMAccountName.toLowerCase().includes(query.toLowerCase())) {
           results.push(student.selected = $scope.all_selected);
         } else {
           results.push(void 0);
@@ -1261,7 +1396,8 @@
     });
   });
 
-  angular.module('lmn.users').controller('LMUsersTeachersController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) {
+  angular.module('lmn.users').controller('LMUsersTeachersController', function($q, $scope, $http, $location, $route, $uibModal, $sce, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) {
+    var i, len, n, ref;
     pageTitle.set(gettext('Teachers'));
     $scope.sorts = [
       {
@@ -1301,12 +1437,44 @@
       pageSize: 50
     };
     $scope.all_selected = false;
+    $scope.query = '';
+    $scope.list_attr_enabled = ['proxyAddresses'];
+    ref = [1, 2, 3, 4, 5];
+    for (i = 0, len = ref.length; i < len; i++) {
+      n = ref[i];
+      $scope.list_attr_enabled.push('sophomorixCustomMulti' + n);
+    }
     $http.post('/api/lm/sophomorixUsers/teachers', {
       action: 'get-all'
     }).then(function(resp) {
-      $scope.teachers = resp.data;
-      return console.log(resp.data);
+      return $scope.teachers = resp.data;
     });
+    $http.get('/api/lm/read_custom_config').then(function(resp) {
+      var idx, index, j, len1, ref1, results;
+      $scope.customDisplay = resp.data.customDisplay.teachers;
+      $scope.customTitle = [''];
+      ref1 = [1, 2, 3];
+      results = [];
+      for (j = 0, len1 = ref1.length; j < len1; j++) {
+        idx = ref1[j];
+        if ($scope.customDisplay[idx] === void 0 || $scope.customDisplay[idx] === '') {
+          results.push($scope.customTitle.push(''));
+        } else if ($scope.customDisplay[idx] === 'proxyAddresses') {
+          results.push($scope.customTitle.push(resp.data.proxyAddresses.teachers.title));
+        } else {
+          index = $scope.customDisplay[idx].slice(-1);
+          if ($scope.isListAttr($scope.customDisplay[idx])) {
+            results.push($scope.customTitle.push(resp.data.customMulti.teachers[index].title || ''));
+          } else {
+            results.push($scope.customTitle.push(resp.data.custom.teachers[index].title || ''));
+          }
+        }
+      }
+      return results;
+    });
+    $scope.isListAttr = function(attr_name) {
+      return $scope.list_attr_enabled.includes(attr_name);
+    };
     $scope.showInitialPassword = function(users) {
       var type, user;
       user = [];
@@ -1328,32 +1496,44 @@
     };
     $scope.teachersQuota = false;
     $scope.getQuotas = function() {
-      var t, teacherList;
+      var j, len1, promises, t, teacher, teacherList;
       teacherList = (function() {
-        var i, len, ref, results;
-        ref = $scope.teachers;
+        var j, len1, ref1, results;
+        ref1 = $scope.teachers;
         results = [];
-        for (i = 0, len = ref.length; i < len; i++) {
-          t = ref[i];
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          t = ref1[j];
           results.push(t.sAMAccountName);
         }
         return results;
       })();
-      return $http.post('/api/lm/users/get-group-quota', {
-        groupList: teacherList
-      }).then(function(resp) {
-        $scope.teachersQuota = resp.data;
-        return console.log($scope.teachersQuota);
+      promises = [];
+      for (j = 0, len1 = teacherList.length; j < len1; j++) {
+        teacher = teacherList[j];
+        promises.push($http.post('/api/lm/users/get-group-quota', {
+          groupList: [teacher]
+        }));
+      }
+      return $q.all(promises).then(function(resp) {
+        var k, len2, login, results;
+        $scope.teachersQuota = {};
+        results = [];
+        for (k = 0, len2 = resp.length; k < len2; k++) {
+          teacher = resp[k];
+          login = Object.keys(teacher.data)[0];
+          results.push($scope.teachersQuota[login] = teacher.data[login]);
+        }
+        return results;
       });
     };
     $scope.setInitialPassword = function(user) {
       var x;
       return $http.post('/api/lm/users/password', {
         users: (function() {
-          var i, len, results;
+          var j, len1, results;
           results = [];
-          for (i = 0, len = user.length; i < len; i++) {
-            x = user[i];
+          for (j = 0, len1 = user.length; j < len1; j++) {
+            x = user[j];
             results.push(x['sAMAccountName']);
           }
           return results;
@@ -1367,10 +1547,10 @@
       var x;
       return $http.post('/api/lm/users/password', {
         users: (function() {
-          var i, len, results;
+          var j, len1, results;
           results = [];
-          for (i = 0, len = user.length; i < len; i++) {
-            x = user[i];
+          for (j = 0, len1 = user.length; j < len1; j++) {
+            x = user[j];
             results.push(x['sAMAccountName']);
           }
           return results;
@@ -1409,14 +1589,16 @@
             return 'teachers';
           }
         }
+      }).closed.then(function() {
+        return $route.reload();
       });
     };
     $scope.haveSelection = function() {
-      var i, len, ref, x;
+      var j, len1, ref1, x;
       if ($scope.teachers) {
-        ref = $scope.teachers;
-        for (i = 0, len = ref.length; i < len; i++) {
-          x = ref[i];
+        ref1 = $scope.teachers;
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          x = ref1[j];
           if (x.selected) {
             return true;
           }
@@ -1424,14 +1606,46 @@
       }
       return false;
     };
+    $scope.printSelectedPasswords = function() {
+      var msg, user_list, x;
+      msg = messagebox.show({
+        progress: true
+      });
+      user_list = (function() {
+        var j, len1, ref1, results;
+        ref1 = $scope.teachers;
+        results = [];
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          x = ref1[j];
+          if (x.selected) {
+            results.push(x.sAMAccountName);
+          }
+        }
+        return results;
+      })();
+      return $http.post('/api/lm/users/print-individual', {
+        user: $scope.identity.user,
+        user_list: user_list
+      }).then(function(resp) {
+        console.log(resp.data);
+        if (resp.data === 'success') {
+          notify.success(gettext("Created password pdf"));
+          return location.href = `/api/lm/users/print-download/user-${$scope.identity.user}.pdf`;
+        } else {
+          return notify.error(gettext("Could not create password pdf"));
+        }
+      }).finally(function() {
+        return msg.close();
+      });
+    };
     $scope.batchSetInitialPassword = function() {
       var x;
       return $scope.setInitialPassword((function() {
-        var i, len, ref, results;
-        ref = $scope.teachers;
+        var j, len1, ref1, results;
+        ref1 = $scope.teachers;
         results = [];
-        for (i = 0, len = ref.length; i < len; i++) {
-          x = ref[i];
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          x = ref1[j];
           if (x.selected) {
             results.push(x);
           }
@@ -1442,11 +1656,11 @@
     $scope.batchSetRandomPassword = function() {
       var x;
       return $scope.setRandomPassword((function() {
-        var i, len, ref, results;
-        ref = $scope.teachers;
+        var j, len1, ref1, results;
+        ref1 = $scope.teachers;
         results = [];
-        for (i = 0, len = ref.length; i < len; i++) {
-          x = ref[i];
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          x = ref1[j];
           if (x.selected) {
             results.push(x);
           }
@@ -1457,11 +1671,11 @@
     $scope.batchSetCustomPassword = function() {
       var x;
       return $scope.setCustomPassword((function() {
-        var i, len, ref, results;
-        ref = $scope.teachers;
+        var j, len1, ref1, results;
+        ref1 = $scope.teachers;
         results = [];
-        for (i = 0, len = ref.length; i < len; i++) {
-          x = ref[i];
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          x = ref1[j];
           if (x.selected) {
             results.push(x);
           }
@@ -1469,28 +1683,39 @@
         return results;
       })());
     };
-    return $scope.selectAll = function(filter) {
-      var i, len, ref, results, teacher;
-      if (filter == null) {
-        filter = '';
+    $scope.filter = function(row) {
+      var j, len1, ref1, result, value;
+      // Only query sAMAccountName, givenName and sn
+      result = false;
+      ref1 = ['sAMAccountName', 'givenName', 'sn'];
+      for (j = 0, len1 = ref1.length; j < len1; j++) {
+        value = ref1[j];
+        result = result || row[value].toLowerCase().indexOf($scope.query.toLowerCase() || '') !== -1;
       }
-      ref = $scope.teachers;
+      return result;
+    };
+    return $scope.selectAll = function(query) {
+      var j, len1, ref1, results, teacher;
+      if (query == null) {
+        query = '';
+      }
+      ref1 = $scope.teachers;
       results = [];
-      for (i = 0, len = ref.length; i < len; i++) {
-        teacher = ref[i];
-        if (filter === void 0 || filter === '') {
+      for (j = 0, len1 = ref1.length; j < len1; j++) {
+        teacher = ref1[j];
+        if (query === void 0 || query === '') {
           teacher.selected = $scope.all_selected;
         }
-        if (teacher.sn.toLowerCase().includes(filter.toLowerCase())) {
+        if (teacher.sn.toLowerCase().includes(query.toLowerCase())) {
           teacher.selected = $scope.all_selected;
         }
-        if (teacher.givenName.toLowerCase().includes(filter.toLowerCase())) {
+        if (teacher.givenName.toLowerCase().includes(query.toLowerCase())) {
           teacher.selected = $scope.all_selected;
         }
-        if (teacher.sophomorixAdminClass.toLowerCase().includes(filter.toLowerCase())) {
+        if (teacher.sophomorixAdminClass.toLowerCase().includes(query.toLowerCase())) {
           teacher.selected = $scope.all_selected;
         }
-        if (teacher.sAMAccountName.toLowerCase().includes(filter.toLowerCase())) {
+        if (teacher.sAMAccountName.toLowerCase().includes(query.toLowerCase())) {
           results.push(teacher.selected = $scope.all_selected);
         } else {
           results.push(void 0);
@@ -1504,6 +1729,8 @@
 
 // Generated by CoffeeScript 2.5.1
 (function() {
+  var indexOf = [].indexOf;
+
   angular.module('lmn.users').config(function($routeProvider) {
     return $routeProvider.when('/view/lm/users/print-passwords', {
       controller: 'LMUsersPrintPasswordsController',
@@ -1511,27 +1738,71 @@
     });
   });
 
-  angular.module('lmn.users').controller('LMUsersPrintPasswordsOptionsModalController', function($scope, $uibModalInstance, $http, notify, messagebox, gettext, schoolclass, classes, user) {
+  angular.module('lmn.users').controller('LMUsersPrintPasswordsOptionsModalController', function($scope, $uibModalInstance, $http, notify, messagebox, gettext, schoolclass, user) {
     $scope.options = {
       format: 'pdf',
       one_per_page: false,
       pdflatex: false,
       schoolclass: schoolclass,
-      user: user
+      user: user,
+      template_one_per_page: '',
+      template_multiple: ''
     };
     if ($scope.options.user === 'root') {
       $scope.options.user = 'global-admin';
     }
-    $scope.title = schoolclass !== '' ? gettext("Class") + `: ${schoolclass}` : gettext('All users');
+    $http.get('/api/lm/schoolsettings/latex-templates').then(function(resp) {
+      $scope.templates_individual = resp.data[0];
+      $scope.templates_multiple = resp.data[1];
+      return $http.get('/api/lm/read_custom_config').then(function(resp) {
+        var i, j, len, len1, ref, ref1, results, template;
+        $scope.templates = {
+          'multiple': '',
+          'individual': ''
+        };
+        $scope.passwordTemplates = resp.data.passwordTemplates;
+        console.log($scope.templates_multiple);
+        ref = $scope.templates_individual;
+        for (i = 0, len = ref.length; i < len; i++) {
+          template = ref[i];
+          if (template.path === $scope.passwordTemplates.individual) {
+            $scope.options['template_one_per_page'] = template;
+            break;
+          }
+        }
+        ref1 = $scope.templates_multiple;
+        results = [];
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          template = ref1[j];
+          if (template.path === $scope.passwordTemplates.multiple) {
+            $scope.options['template_multiple'] = template;
+            break;
+          } else {
+            results.push(void 0);
+          }
+        }
+        return results;
+      });
+    });
+    $scope.title = schoolclass !== '' ? gettext("Class") + `: ${schoolclass.join(',')}` : gettext('All users ' + $scope.identity.profile.activeSchool);
     $scope.print = function() {
       var msg;
       msg = messagebox.show({
         progress: true
       });
       return $http.post('/api/lm/users/print', $scope.options).then(function(resp) {
+        var prefix;
         if (resp.data === 'success') {
           notify.success(gettext("Created password pdf"));
-          location.href = `/api/lm/users/print-download/${schoolclass !== '' ? schoolclass : 'add'}-${$scope.options.user}.${$scope.options.format === 'pdf' ? 'pdf' : 'csv'}`;
+          if (schoolclass.length === 1) {
+            prefix = 'add';
+            if (schoolclass[0]) {
+              prefix = schoolclass[0];
+            }
+          } else {
+            prefix = 'multiclass';
+          }
+          location.href = `/api/lm/users/print-download/${prefix}-${$scope.options.user}.${$scope.options.format}`;
         } else {
           notify.error(gettext("Could not create password pdf"));
         }
@@ -1547,7 +1818,11 @@
 
   angular.module('lmn.users').controller('LMUsersPrintPasswordsController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor) {
     pageTitle.set(gettext('Print Passwords'));
-    $scope.select = function(schoolclass, user) {
+    $scope.launch_print_modal = function(schoolclass) {
+      if (indexOf.call($scope.selection, "") >= 0 && $scope.selection.length > 1) {
+        notify.warning(gettext("It's not possible to print all users and a class at the same time."));
+        return;
+      }
       return $uibModal.open({
         templateUrl: '/lmn_users:resources/partial/print-passwords.options.modal.html',
         controller: 'LMUsersPrintPasswordsOptionsModalController',
@@ -1555,49 +1830,46 @@
           schoolclass: function() {
             return schoolclass;
           },
-          classes: function() {
-            return $scope.classes;
-          },
           user: function() {
-            return user;
+            return $scope.identity.user;
           }
         }
       });
     };
-    $scope.filterGroupType = function(val) {
-      return function(dict) {
-        return dict['type'] === val;
-      };
-    };
-    $scope.filterGroupMembership = function(val) {
-      return function(dict) {
-        return dict['membership'] === val;
-      };
+    $scope.selection = [];
+    $scope.select = function(schoolclass) {
+      var position;
+      position = $scope.selection.indexOf(schoolclass);
+      if (position > -1) {
+        $scope.selection.splice(position, 1);
+      } else {
+        $scope.selection.push(schoolclass);
+      }
+      if (indexOf.call($scope.selection, "") >= 0 && $scope.selection.length > 1) {
+        return notify.warning(gettext("It's not possible to print all users and a class at the same time."));
+      }
     };
     $scope.getGroups = function(username) {
-      if ($scope.identity.user === 'root' || $scope.identity.profile.sophomorixAdminClass === 'global-admins' || $scope.identity.profile.sophomorixAdminClass === 'school-admins') {
-        return $http.get('/api/lm/users/print').then(function(resp) {
+      var classname, i, len, membership, ref, results;
+      if ($scope.identity.user === 'root' || $scope.identity.profile.sophomorixRole === 'globaladministrator' || $scope.identity.profile.sophomorixRole === 'schooladministrator') {
+        return $http.get('/api/lm/users/get-classes').then(function(resp) {
           return $scope.classes = resp.data;
         });
       } else {
-        return $http.post('/api/lmn/groupmembership', {
-          action: 'list-groups',
-          username: username,
-          profil: $scope.identity.profile
-        }).then(function(resp) {
-          var i, item, len, ref, results;
-          $scope.groups = resp.data[0];
-          $scope.userclasses = $scope.groups.filter($scope.filterGroupType('schoolclass'));
-          $scope.userclasses = $scope.userclasses.filter($scope.filterGroupMembership(true));
-          $scope.classes = [];
-          ref = $scope.userclasses;
-          results = [];
-          for (i = 0, len = ref.length; i < len; i++) {
-            item = ref[i];
-            results.push($scope.classes.push(item.groupname));
+        $scope.classes = [];
+        ref = $scope.identity.profile.memberOf;
+        results = [];
+        for (i = 0, len = ref.length; i < len; i++) {
+          membership = ref[i];
+          if (membership.indexOf("OU=Students") > -1) {
+            // Split "CN=10b,OU=10b,OU=Students,..."
+            classname = membership.split(',')[0].split('=')[1];
+            results.push($scope.classes.push(classname));
+          } else {
+            results.push(void 0);
           }
-          return results;
-        });
+        }
+        return results;
       }
     };
     return $scope.$watch('identity.user', function() {
@@ -1610,7 +1882,10 @@
       if ($scope.identity.user === 'root') {
         return;
       }
-      $scope.getGroups($scope.identity.user);
+      return $http.get("/api/lmn/activeschool").then(function(resp) {
+        $scope.identity.profile.activeSchool = resp.data;
+        $scope.getGroups($scope.identity.user);
+      });
     });
   });
 
@@ -1841,6 +2116,43 @@
     $scope.showGroupDetails = true;
     $scope.showQuotaDetails = true;
     $scope.nevertext = gettext('Never');
+    $scope.custom_column = false;
+    if (role === 'students' || role === 'teachers') {
+      $http.get('/api/lm/read_custom_config').then(function(resp) {
+        var custom, ref, ref1, results, values;
+        $scope.custom = resp.data.custom[role];
+        $scope.customMulti = resp.data.customMulti[role];
+        $scope.proxyAddresses = resp.data.proxyAddresses[role];
+        // Is there a custom field to show ?
+        if ($scope.proxyAddresses.show) {
+          $scope.custom_column = true;
+        }
+        if (!$scope.custom_column) {
+          ref = $scope.custom;
+          for (custom in ref) {
+            values = ref[custom];
+            if (values.show) {
+              $scope.custom_column = true;
+              break;
+            }
+          }
+        }
+        if (!$scope.custom_column) {
+          ref1 = $scope.customMulti;
+          results = [];
+          for (custom in ref1) {
+            values = ref1[custom];
+            if (values.show) {
+              $scope.custom_column = true;
+              break;
+            } else {
+              results.push(void 0);
+            }
+          }
+          return results;
+        }
+      });
+    }
     $scope.formatDate = function(date) {
       var day, hour, min, month, sec, year;
       if (date === "19700101000000.0Z") {
@@ -1864,20 +2176,21 @@
       action: 'get-specified',
       user: id
     }).then(function(resp) {
-      var category, cn, dn, j, len, ref;
-      $scope.userDetails = resp.data;
+      var category, cn, dn, j, len, ref, results;
+      $scope.userDetails = resp.data[0];
       $scope.groups = [];
-      ref = $scope.userDetails[0]['memberOf'];
+      ref = $scope.userDetails['memberOf'];
+      results = [];
       for (j = 0, len = ref.length; j < len; j++) {
         dn = ref[j];
         cn = dn.split(',')[0].split('=')[1];
         category = dn.split(',')[1].split('=')[1];
-        $scope.groups.push({
+        results.push($scope.groups.push({
           'cn': cn,
           'category': category
-        });
+        }));
       }
-      return console.log($scope.userDetails);
+      return results;
     });
     $http.get(`/api/lmn/quota/${id}`).then(function(resp) {
       var ref, results, share, total, type, usage, used, values;
@@ -1921,6 +2234,100 @@
       }
       return results;
     });
+    $scope.editCustom = function(n) {
+      var value;
+      value = $scope.userDetails['sophomorixCustom' + n];
+      return messagebox.prompt(gettext('New value'), value).then(function(msg) {
+        return $http.post("/api/lm/custom", {
+          index: n,
+          value: msg.value,
+          user: id
+        }).then(function() {
+          if (msg.value) {
+            $scope.userDetails['sophomorixCustom' + n] = msg.value;
+          } else {
+            $scope.userDetails['sophomorixCustom' + n] = 'null';
+          }
+          return notify.success(gettext("Value updated !"));
+        }, function() {
+          return notify.error(gettext("Error, please verify the user and/or your values."));
+        });
+      });
+    };
+    $scope.removeCustomMulti = function(n, value) {
+      return messagebox.show({
+        title: gettext('Remove custom field value'),
+        text: gettext('Do you really want to remove ') + value + ' ?',
+        positive: gettext('OK'),
+        negative: gettext('Cancel')
+      }).then(function(msg) {
+        return $http.post("/api/lm/custommulti/remove", {
+          index: n,
+          value: value,
+          user: id
+        }).then(function() {
+          var position;
+          position = $scope.userDetails['sophomorixCustomMulti' + n].indexOf(msg.value);
+          $scope.userDetails['sophomorixCustomMulti' + n].splice(position, 1);
+          return notify.success(gettext("Value removed !"));
+        }, function() {
+          return notify.error(gettext("Error, please verify the user and/or your values."));
+        });
+      });
+    };
+    $scope.addCustomMulti = function(n) {
+      return messagebox.prompt(gettext('New value')).then(function(msg) {
+        return $http.post("/api/lm/custommulti/add", {
+          index: n,
+          value: msg.value,
+          user: id
+        }).then(function() {
+          if (msg.value) {
+            $scope.userDetails['sophomorixCustomMulti' + n].push(msg.value);
+            return notify.success(gettext("Value added !"));
+          }
+        }, function() {
+          return notify.error(gettext("Error, please verify the user and/or your values."));
+        });
+      });
+    };
+    $scope.removeProxyAddresses = function(value) {
+      return messagebox.show({
+        title: gettext('Remove proxy address'),
+        text: gettext('Do you really want to remove ') + value + ' ?',
+        positive: gettext('OK'),
+        negative: gettext('Cancel')
+      }).then(function(msg) {
+        return $http.post("/api/lm/changeProxyAddresses", {
+          action: 'remove',
+          address: value,
+          user: id
+        }).then(function() {
+          var position;
+          position = $scope.userDetails['proxyAddresses'].indexOf(msg.value);
+          $scope.userDetails['proxyAddresses'].splice(position, 1);
+          return notify.success(gettext("Value removed !"));
+        }, function() {
+          return notify.error(gettext("Error, please verify the user and/or your values."));
+        });
+      });
+    };
+    $scope.addProxyAddresses = function(n) {
+      return messagebox.prompt(gettext('New address')).then(function(msg) {
+        return $http.post("/api/lm/changeProxyAddresses", {
+          action: 'add',
+          address: msg.value,
+          user: id
+        }).then(function() {
+          if (msg.value) {
+            $scope.userDetails['proxyAddresses'].push(msg.value);
+          }
+          return notify.success(gettext("Address added !"));
+        }, function() {
+          return notify.error(gettext("Error, please verify the user and/or your values."));
+        });
+      });
+    };
     return $scope.close = function() {
       return $uibModalInstance.dismiss();
     };
@@ -1931,7 +2338,7 @@
     $scope.userlist = userlist;
     $scope.rebuildCSV = function() {
       var element, i, j, len, ref, results;
-      // add empty 'not used' fields if CSV contains more coloumns than fields
+      // add empty 'not used' fields if CSV contains more columns than fields
       while ($scope['userListCSV'].length > $scope['coloumnTitles'].length) {
         $scope['coloumnTitles'].push({
           name: gettext('not used')
@@ -1950,7 +2357,7 @@
     //console.log ($scope['userListCSV'])
     $scope.togglecustomField = function(field) {
       var pos;
-      // get index of field in coloumnTitles (-1 if not presend)
+      // get index of field in columnTitles (-1 if not present)
       pos = $scope.coloumnTitles.map(function(e) {
         return e.name;
       }).indexOf(field);
@@ -2079,6 +2486,41 @@
     };
   });
 
+  angular.module('lmn.users').controller('LMUsersUploadCustomModalController', function($scope, $window, $http, $uibModalInstance, messagebox, notify, $uibModal, gettext, filesystem, userlist) {
+    $scope.path = "/tmp/";
+    $scope.onUploadBegin = function($flow) {
+      var msg;
+      $uibModalInstance.close();
+      msg = messagebox.show({
+        progress: true
+      });
+      return filesystem.startFlowUpload($flow, $scope.path).then(function() {
+        var filename;
+        notify.success(gettext('Uploaded'));
+        filename = $flow["files"][0]["name"];
+        return $http.post('/api/lm/filterCustomCSV', {
+          tmp_path: $scope.path + filename,
+          userlist: userlist
+        }).then(function(resp) {
+          if (resp['data'][0] === 'ERROR') {
+            notify.error(resp['data'][1]);
+          }
+          if (resp['data'][0] === 'LOG') {
+            notify.success(gettext(resp['data'][1]));
+          }
+          $window.location.reload();
+          msg.close();
+          return notify.success(gettext('Saved'));
+        });
+      }, null, function(progress) {
+        return msg.messagebox.title = `Uploading: ${Math.floor(100 * progress)}%`;
+      });
+    };
+    return $scope.close = function() {
+      return $uibModalInstance.close();
+    };
+  });
+
   angular.module('lmn.users').controller('LMNUsersAddAdminController', function($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, role) {
     $scope.role = role;
     $scope.save = function(username) {
@@ -2119,7 +2561,17 @@
   });
 
   angular.module('lmn.users').controller('LMUsersListManagementController', function($scope, $http, $location, $route, $uibModal, gettext, notify, lmEncodingMap, messagebox, pageTitle, lmFileEditor, lmFileBackups, filesystem, validation) {
+    var lmn_get_school_configpath;
     pageTitle.set(gettext('Listmanagement'));
+    lmn_get_school_configpath = function(school) {
+      
+      //"This is an example of a function"
+      if (school === "default-school") {
+        return '/etc/linuxmuster/sophomorix/default-school/';
+      } else {
+        return '/etc/linuxmuster/sophomorix/' + school + '/' + school + '.';
+      }
+    };
     $scope.students_sorts = [
       {
         name: gettext('Class'),
@@ -2412,15 +2864,6 @@
         });
       }
     };
-    //           $http.get('/api/lm/schoolsettings').then (resp) ->
-    //               school = 'default-school'
-    //               $scope.students_encoding = resp.data["userfile.students.csv"].encoding
-    //               if $scope.students_encoding is 'auto'
-    //                   $http.post('/api/lmn/schoolsettings/determine-encoding', {path: '/etc/linuxmuster/sophomorix/'+school+'/students.csv'}).then (response) ->
-    //                     if response.data is 'unknown'
-    //                         $scope.students_encoding = 'utf-8'
-    //                     else
-    //                         $scope.students_encoding = response.data
     $scope.getteachers = function() {
       if (!$scope.teachers) {
         return $http.get("/api/lm/users/teachers-list").then(function(resp) {
@@ -2428,15 +2871,6 @@
         });
       }
     };
-    //           $http.get('/api/lm/schoolsettings').then (resp) ->
-    //               school = 'default-school'
-    //               $scope.teachers_encoding = resp.data["userfile.teachers.csv"].encoding
-    //               if $scope.teachers_encoding is 'auto'
-    //                  $http.post('/api/lmn/schoolsettings/determine-encoding', {path: '/etc/linuxmuster/sophomorix/'+school+'/teachers.csv'}).then (response) ->
-    //                     if response.data is 'unknown'
-    //                        $scope.teachers_encoding = 'utf-8'
-    //                     else
-    //                        $scope.teachers_encoding = response.data
     $scope.getextrastudents = function() {
       if (!$scope.extrastudents) {
         return $http.get("/api/lm/users/extra-students").then(function(resp) {
@@ -2444,15 +2878,6 @@
         });
       }
     };
-    //            $http.get('/api/lm/schoolsettings').then (resp) ->
-    //                school = 'default-school'
-    //                $scope.extrastudents_encoding = resp.data["userfile.extrastudents.csv"].encoding
-    //                if $scope.extrastudents_encoding is 'auto'
-    //                   $http.post('/api/lmn/schoolsettings/determine-encoding', {path: '/etc/linuxmuster/sophomorix/'+school+'/extrastudents.csv'}).then (response) ->
-    //                      if response.data is 'unknown'
-    //                         $scope.extrastudents_encoding = 'utf-8'
-    //                      else
-    //                         $scope.extrastudents_encoding = response.data
     $scope.getcourses = function() {
       if (!$scope.courses) {
         return $http.get('/api/lm/schoolsettings').then(function(resp) {
@@ -2464,22 +2889,30 @@
       }
     };
     $scope.students_editCSV = function() {
-      return lmFileEditor.show('/etc/linuxmuster/sophomorix/default-school/students.csv', $scope.students_encoding).then(function() {
+      var path;
+      path = lmn_get_school_configpath($scope.identity.profile.activeSchool) + 'students.csv';
+      return lmFileEditor.show(path, $scope.students_encoding).then(function() {
         return $route.reload();
       });
     };
     $scope.teachers_editCSV = function() {
-      return lmFileEditor.show('/etc/linuxmuster/sophomorix/default-school/teachers.csv', $scope.students_encoding).then(function() {
+      var path;
+      path = lmn_get_school_configpath($scope.identity.profile.activeSchool) + 'teachers.csv';
+      return lmFileEditor.show(path, $scope.teachers_encoding).then(function() {
         return $route.reload();
       });
     };
     $scope.extrastudents_editCSV = function() {
-      return lmFileEditor.show('/etc/linuxmuster/sophomorix/default-school/extrastudents.csv', $scope.extrastudents_encoding).then(function() {
+      var path;
+      path = lmn_get_school_configpath($scope.identity.profile.activeSchool) + 'extrastudents.csv';
+      return lmFileEditor.show(path, $scope.extrastudents_encoding).then(function() {
         return $route.reload();
       });
     };
     $scope.courses_editCSV = function() {
-      return lmFileEditor.show('/etc/linuxmuster/sophomorix/default-school/extraclasses.csv', $scope.courses_encoding).then(function() {
+      var path;
+      path = lmn_get_school_configpath($scope.identity.profile.activeSchool) + 'extraclasses.csv';
+      return lmFileEditor.show(path, $scope.courses_encoding).then(function() {
         return $route.reload();
       });
     };
@@ -2539,41 +2972,45 @@
         return notify.success(gettext('Saved'));
       });
     };
-    $scope.students_confirmUpload = function() {
+    $scope.confirmUpload = function(type, role) {
+      var controller, templateUrl;
+      if (type === "custom") {
+        templateUrl = '/lmn_users:resources/partial/uploadcustom.modal.html';
+        controller = 'LMUsersUploadCustomModalController';
+      } else {
+        templateUrl = '/lmn_users:resources/partial/upload.modal.html';
+        controller = 'LMUsersUploadModalController';
+      }
       return $uibModal.open({
-        templateUrl: '/lmn_users:resources/partial/upload.modal.html',
-        controller: 'LMUsersUploadModalController',
+        templateUrl: templateUrl,
+        controller: controller,
         backdrop: 'static',
         resolve: {
           userlist: function() {
-            return 'students.csv';
-          }
-        }
-      });
-    };
-    $scope.teachers_confirmUpload = function() {
-      return $uibModal.open({
-        templateUrl: '/lmn_users:resources/partial/upload.modal.html',
-        controller: 'LMUsersUploadModalController',
-        backdrop: 'static',
-        resolve: {
-          userlist: function() {
-            return 'teachers.csv';
+            return role + '.csv';
           }
         }
       });
     };
     $scope.students_backups = function() {
-      return lmFileBackups.show('/etc/linuxmuster/sophomorix/default-school/students.csv', $scope.students_encoding);
+      var path;
+      path = lmn_get_school_configpath($scope.identity.profile.activeSchool) + 'students.csv';
+      return lmFileBackups.show(path, $scope.students_encoding);
     };
     $scope.teachers_backups = function() {
-      return lmFileBackups.show('/etc/linuxmuster/sophomorix/default-school/teachers.csv', $scope.teachers_encoding);
+      var path;
+      path = lmn_get_school_configpath($scope.identity.profile.activeSchool) + 'teachers.csv';
+      return lmFileBackups.show(path, $scope.teachers_encoding);
     };
     $scope.extrastudents_backups = function() {
-      return lmFileBackups.show('/etc/linuxmuster/sophomorix/default-school/extrastudents.csv', $scope.extrastudents_encoding);
+      var path;
+      path = lmn_get_school_configpath($scope.identity.profile.activeSchool) + 'extrastudents.csv';
+      return lmFileBackups.show(path, $scope.extrastudents_encoding);
     };
     $scope.courses_backups = function() {
-      return lmFileBackups.show('/etc/linuxmuster/sophomorix/default-school/extraclasses.csv', $scope.courses_encoding);
+      var path;
+      path = lmn_get_school_configpath($scope.identity.profile.activeSchool) + 'extraclasses.csv';
+      return lmFileBackups.show(path, $scope.courses_encoding);
     };
     // general functions
     $scope.error_msg = {};
@@ -2656,6 +3093,21 @@
         });
       });
     };
+    // pulling active school from backend
+    $scope.$watch('identity.user', function() {
+      if ($scope.identity.user === void 0) {
+        return;
+      }
+      if ($scope.identity.user === null) {
+        return;
+      }
+      if ($scope.identity.user === 'root') {
+        return;
+      }
+      return $http.get("/api/lmn/activeschool").then(function(resp) {
+        return $scope.identity.profile.activeSchool = resp.data;
+      });
+    });
     // Loading first tab
     return $scope.getstudents();
   });

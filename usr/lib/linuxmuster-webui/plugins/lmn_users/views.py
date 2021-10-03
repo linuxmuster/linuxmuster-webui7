@@ -13,8 +13,11 @@ from jadi import component
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize
-from aj.plugins.lmn_common.api import lmn_getSophomorixValue
+from aj.plugins.lmn_common.api import lmn_getSophomorixValue, lmn_get_school_configpath
 from aj.plugins.lmn_common.lmnfile import LMNFile
+from aj.plugins.lmn_common.multischool import School
+import logging
+
 
 
 @component(HttpPlugin)
@@ -109,10 +112,13 @@ class Handler(HttpPlugin):
                             fileToWrite.write(csvDict[findIndex(csvDict, 'coloumn', 'id')]['data'][i]+';')
                         fileToWrite.write('\n')
                         i += 1
-
+            school = School.get(self.context).school 
             if userlist == 'teachers.csv':
                 with authorize('lm:users:teachers:write'):
-                    sophomorixCommand = ['sophomorix-newfile', sortedCSV, '--name', userlist, '-jj']
+                    if school == 'default-school':
+                        sophomorixCommand = ['sophomorix-newfile', sortedCSV, '--name', userlist, '-jj']
+                    else:
+                        sophomorixCommand = ['sophomorix-newfile', sortedCSV, '--name', school+'.'+userlist, '-jj']
                     result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
                     if result['TYPE'] == "ERROR":
                         return ["ERROR", result['MESSAGE_EN']]
@@ -121,7 +127,10 @@ class Handler(HttpPlugin):
 
             if userlist == 'students.csv':
                 with authorize('lm:users:students:write'):
-                    sophomorixCommand = ['sophomorix-newfile', sortedCSV, '--name', userlist, '-jj']
+                    if school == 'default-school':
+                        sophomorixCommand = ['sophomorix-newfile', sortedCSV, '--name', userlist, '-jj']
+                    else:
+                        sophomorixCommand = ['sophomorix-newfile', sortedCSV, '--name', school+'.'+userlist, '-jj']
                     result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
                     if result['TYPE'] == "ERROR":
                         return ["ERROR", result['MESSAGE_EN']]
@@ -141,6 +150,9 @@ class Handler(HttpPlugin):
             m = magic.Magic(mime_encoding=True)
             f = open(importList, 'r')
             encoding = m.from_file(importList)
+            if encoding == "binary":
+                # Probably empty file, does it have sense to continue ?
+                encoding = 'utf-8'
 
             # Convert this encoding to utf-8
             with io.open(importList, 'r', encoding=encoding) as f:
@@ -187,8 +199,10 @@ class Handler(HttpPlugin):
         :rtype: list of dict
         """
 
-        school = 'default-school'
-        path = '/etc/linuxmuster/sophomorix/'+school+'/students.csv'
+        school = School.get(self.context).school
+        path = lmn_get_school_configpath(school)+'students.csv'
+
+
         if os.path.isfile(path) is False:
             os.mknod(path)
         fieldnames = [
@@ -226,8 +240,10 @@ class Handler(HttpPlugin):
         :rtype: list of dict
         """
 
-        school = 'default-school'
-        path = '/etc/linuxmuster/sophomorix/'+school+'/teachers.csv'
+        school = School.get(self.context).school
+        path = lmn_get_school_configpath(school)+'teachers.csv'
+
+            
         if os.path.isfile(path) is False:
             os.mknod(path)
         fieldnames = [
@@ -270,7 +286,7 @@ class Handler(HttpPlugin):
 
         action = http_context.json_body()['action']
         if http_context.method == 'POST':
-            schoolname = 'default-school'
+            schoolname = School.get(self.context).school
             teachersList = []
 
             if action == 'get-all':
@@ -309,7 +325,8 @@ class Handler(HttpPlugin):
 
         action = http_context.json_body()['action']
         if http_context.method == 'POST':
-            schoolname = 'default-school'
+            schoolname = School.get(self.context).school
+
             studentsList = []
             with authorize('lm:users:students:read'):
                 if action == 'get-all':
@@ -415,8 +432,9 @@ class Handler(HttpPlugin):
         :rtype: list of dict
         """
 
-        school = 'default-school'
-        path = '/etc/linuxmuster/sophomorix/'+school+'/extrastudents.csv'
+        school = School.get(self.context).school
+        path = lmn_get_school_configpath(school)+'extrastudents.csv'
+
         if os.path.isfile(path) is False:
             os.mknod(path)
         fieldnames = [
@@ -454,8 +472,9 @@ class Handler(HttpPlugin):
         :rtype: list of dict
         """
 
-        school = 'default-school'
-        path = '/etc/linuxmuster/sophomorix/'+school+'/extraclasses.csv'
+        school = School.get(self.context).school
+        path = lmn_get_school_configpath(school)+'extraclasses.csv'
+
         if os.path.isfile(path) is False:
             os.mknod(path)
         fieldnames = [
@@ -589,8 +608,7 @@ class Handler(HttpPlugin):
         :return: State of the command
         :rtype: string
         """
-
-        school = 'default-school'
+        school = School.get(self.context).school
         action = http_context.json_body()['action']
         users = http_context.json_body()['users']
         user = ','.join([x.strip() for x in users])
@@ -679,14 +697,13 @@ class Handler(HttpPlugin):
     #                if result['TYPE'] == "LOG":
     #                    return ["LOG", result['LOG']]
 
-    @url(r'/api/lm/users/print')
+    @url(r'/api/lm/users/get-classes')
     @authorize('lm:users:passwords')
     @endpoint(api=True)
-    def handle_api_users_print(self, http_context):
+    def handle_api_users_get_classes(self, http_context):
         """
-        Print passwords as PDF.
+        Get list of all classes.
         Method GET: get all classes lists for teachers.
-        Method POST: all passwords.
 
         :param http_context: HttpContext
         :type http_context: HttpContext
@@ -694,10 +711,10 @@ class Handler(HttpPlugin):
         :rtype: With GET, list of dict
         """
 
-        school = 'default-school'
+        school = School.get(self.context).school
         if http_context.method == 'GET':
 
-            sophomorixCommand = ['sophomorix-query', '--class', '--group-full', '-jj']
+            sophomorixCommand = ['sophomorix-query', '--class', '--schoolbase', school, '--group-full', '-jj']
 
             with authorize('lm:users:students:read'):
                 # Check if there are any classes if not return empty list
@@ -710,22 +727,83 @@ class Handler(HttpPlugin):
                     # append empty element. This references to all users
                     classes.append('')
                     # add also teachers passwords
-                    classes.append('teachers')
+                    if school == 'default-school':
+                        classes.append('teachers')
+                    else:
+                        classes.append(school+'-teachers')
                 return classes
+
+    @url(r'/api/lm/users/print-individual')
+    @authorize('lm:users:teachers:read') #TODO
+    @endpoint(api=True)
+    def handle_api_users_print_individual(self, http_context):
+        """
+        Print individual passwords for selected users as PDF, one per page.
+        Method POST.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        """
+
+        school = School.get(self.context).school
+
+        if http_context.method == 'POST':
+            user = http_context.json_body()['user']
+            user_list = http_context.json_body()['user_list']
+
+            sophomorixCommand = [
+                'sudo', 'sophomorix-print',
+                '--school', school,
+                '--caller', str(user),
+                '--user', ','.join(user_list),
+                '--one-per-page',
+            ]
+
+            # sophomorix-print needs the json parameter at the very end
+            sophomorixCommand.extend(['-jj'])
+
+            # generate real shell environment for sophomorix print
+            shell_env = {'TERM': 'xterm', 'SHELL': '/bin/bash',  'PATH': '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',  'HOME': '/root', '_': '/usr/bin/python3'}
+            try:
+                subprocess.check_call(sophomorixCommand, shell=False, env=shell_env)
+            except subprocess.CalledProcessError as e:
+                return 'Error '+str(e)
+            return 'success'
+
+    @url(r'/api/lm/users/print')
+    @authorize('lm:users:passwords')
+    @endpoint(api=True)
+    def handle_api_users_print(self, http_context):
+        """
+        Print passwords as PDF
+        Method POST: all passwords.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        """
+
+        school = School.get(self.context).school
 
         if http_context.method == 'POST':
             user = http_context.json_body()['user']
             one_per_page = http_context.json_body()['one_per_page']
             pdflatex = http_context.json_body()['pdflatex']
             schoolclass = http_context.json_body()['schoolclass']
+            template = ''
             sophomorixCommand = ['sudo', 'sophomorix-print', '--school', school, '--caller', str(user)]
             if one_per_page:
-                sophomorixCommand.extend(['--one-per-page'])
+                template = http_context.json_body()['template_one_per_page']
+                if not template:
+                    sophomorixCommand.extend(['--one-per-page'])
+            else:
+                template = http_context.json_body()['template_multiple']
+            if template:
+                sophomorixCommand.extend(['--template', template['path']])
             if pdflatex:
                 sophomorixCommand.extend(['--command'])
                 sophomorixCommand.extend(['pdflatex'])
             if schoolclass:
-                sophomorixCommand.extend(['--class', schoolclass])
+                sophomorixCommand.extend(['--class', ','.join(schoolclass)])
             # sophomorix-print needs the json parameter at the very end
             sophomorixCommand.extend(['-jj'])
             # check permissions
@@ -807,16 +885,17 @@ class Handler(HttpPlugin):
             result = lmn_getSophomorixValue(sophomorixCommand, 'QUOTA/USERS')
 
             quotaMap = {}
+            school = School.get(self.context).school
             # Only read default-school for the moment, must be maybe adapted later
             for user in groupList:
-                share = result[user]["SHARES"]['default-school']['smbcquotas']
+                share = result[user]["SHARES"][school]['smbcquotas']
                 if int(share['HARDLIMIT_MiB']) == share['HARDLIMIT_MiB']:
                     # Avoid strings for non set quotas
                     used = int(float(share['USED_MiB']) / share['HARDLIMIT_MiB'] * 100)
                     soft = int(float(share['SOFTLIMIT_MiB']) / share['HARDLIMIT_MiB'] * 100)
-                    if used >= 90:
+                    if used >= 80:
                         state = "danger"
-                    elif used > soft:
+                    elif used >= 60:
                         state = "warning"
                     else:
                         state = "success"
@@ -833,3 +912,163 @@ class Handler(HttpPlugin):
                         "TYPE": "success",
                     }
             return quotaMap
+
+    @url(r'/api/lm/custom')
+    @authorize('lm:users:passwords')
+    @endpoint(api=True)
+    def handle_custom(self, http_context):
+        """
+        Update a custom sophomorix field.
+        Method POST.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: All quotas for specified users
+        :rtype: dict
+        """
+
+        if http_context.method == 'POST':
+            n = http_context.json_body()['index']
+            user = http_context.json_body()['user']
+            value = http_context.json_body()['value']
+
+            try:
+                command = ['sophomorix-user', '-u', user, f'--custom{n}', value, '-jj']
+                result = lmn_getSophomorixValue(command, '')
+            except IndexError:
+                # No error output from sophomorix yet
+                raise EndpointError(None)
+
+    @url(r'/api/lm/custommulti/add')
+    @authorize('lm:users:passwords')
+    @endpoint(api=True)
+    def handle_custom_mutli_add(self, http_context):
+        """
+        Add a sophomorix field in custom multi.
+        Method POST.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: All quotas for specified users
+        :rtype: dict
+        """
+
+        if http_context.method == 'POST':
+            n = http_context.json_body()['index']
+            user = http_context.json_body()['user']
+            value = http_context.json_body()['value']
+
+            try:
+                command = ['sophomorix-user', '-u', user, f'--add-custom-multi{n}', value, '-jj']
+                result = lmn_getSophomorixValue(command, '')
+            except IndexError:
+                # No error output from sophomorix yet
+                raise EndpointError(None)
+
+    @url(r'/api/lm/custommulti/remove')
+    @authorize('lm:users:passwords')
+    @endpoint(api=True)
+    def handle_custom_multi_remove(self, http_context):
+        """
+        Remove a sophomorix field in custom multi.
+        Method POST.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: All quotas for specified users
+        :rtype: dict
+        """
+
+        if http_context.method == 'POST':
+            n = http_context.json_body()['index']
+            user = http_context.json_body()['user']
+            value = http_context.json_body()['value']
+
+            try:
+                command = ['sophomorix-user', '-u', user, f'--remove-custom-multi{n}', value, '-jj']
+                result = lmn_getSophomorixValue(command, '')
+            except IndexError:
+                # No error output from sophomorix yet
+                raise EndpointError(None)
+
+    @url(r'/api/lm/setProxyAddresses')
+    @authorize('lm:users:passwords')
+    @endpoint(api=True)
+    def handle_set_proxy_addresses(self, http_context):
+        """
+        Set proxyAddresses, e.g. emails, for an user.
+        Method POST.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: All quotas for specified users
+        :rtype: dict
+        """
+
+        if http_context.method == 'POST':
+            user = http_context.json_body()['user']
+            addresses = ','.join(http_context.json_body()['addresses'])
+
+            try:
+                command = ['sophomorix-user', '-u', user, '--set-proxy-addresses', addresses, '-jj']
+                result = lmn_getSophomorixValue(command, '')
+            except IndexError:
+                # No error output from sophomorix yet
+                raise EndpointError(None)
+
+    @url(r'/api/lm/changeProxyAddresses')
+    @authorize('lm:users:passwords')
+    @endpoint(api=True)
+    def handle_set_proxy_addresses(self, http_context):
+        """
+        Add or remove an email in proxyAddresses, e.g. emails, for an user.
+        Method POST.
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: All quotas for specified users
+        :rtype: dict
+        """
+
+        if http_context.method == 'POST':
+            action = http_context.json_body()['action']
+
+            if action not in ['add', 'remove']:
+                raise EndpointError(None)
+
+            user = http_context.json_body()['user']
+            address = http_context.json_body()['address']
+
+            try:
+                command = ['sophomorix-user', '-u', user, f'--{action}-proxy-addresses', address, '-jj']
+                result = lmn_getSophomorixValue(command, '')
+            except IndexError:
+                # No error output from sophomorix yet
+                raise EndpointError(None)
+
+    @url(r'/api/lm/filterCustomCSV')
+    @authorize('lm:users:passwords')
+    @endpoint(api=True)
+    def handle_custom_csv(self, http_context):
+        """
+        Run sophomorix-newfile in order to apply a custom script for a newly custom csv file.
+        Method POST.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: All quotas for specified users
+        :rtype: dict
+        """
+
+        if http_context.method == 'POST':
+            # E.g. /tmp/students.csv
+            tmp_path = http_context.json_body()['tmp_path']
+            # E.g. students.csv
+            target = http_context.json_body()['userlist']
+
+            command = ['sophomorix-newfile', tmp_path, '--name', target, '-jj']
+            result = lmn_getSophomorixValue(command, 'OUTPUT/0')
+
+            if result['TYPE'] == "ERROR":
+                    return ["ERROR", result['MESSAGE_EN']]
+            if result['TYPE'] == "LOG":
+                    return ["LOG", result['LOG']]

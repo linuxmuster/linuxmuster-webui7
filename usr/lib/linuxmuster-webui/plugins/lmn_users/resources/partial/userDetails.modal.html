@@ -2,7 +2,7 @@
     <h3>
         <span translate>User Details</span>
         <span ng:show="userDetails == null"> ...</span>
-        <span ng:show="userDetails != null"> - {{userDetails[0]['givenName']}} {{userDetails[0]['sn']}}</span></h3>
+        <span ng:show="userDetails != null"> - {{userDetails['givenName']}} {{userDetails['sn']}}</span></h3>
 </div>
 
 <progress-spinner ng:show="userDetails == null"></progress-spinner>
@@ -10,46 +10,96 @@
 <div style="padding: 0 20px;" ng:show="userDetails != null">
     <br />
     <h4 translate> Properties</h4>
+    <div style="display:flex;align-items:flex-start;">
     <table class="table">
         <tr>
             <td><b translate>Loginname:</b></td>
-            <td>{{userDetails[0]['sAMAccountName']}}</td>
+            <td>{{userDetails['sAMAccountName']}}</td>
         </tr>
         <tr>
             <td><b translate>Class:</b></td>
-            <td>{{userDetails[0]['sophomorixAdminClass']}}</td>
+            <td>{{userDetails['sophomorixAdminClass']}}</td>
         </tr>
-        <tr ng:if="userDetails[0]['sophomorixBirthdate'] != 'hidden'">
+        <tr ng:if="userDetails['sophomorixBirthdate'] != 'hidden'">
             <td><b translate>Birthday:</b></td>
-            <td>{{userDetails[0]['sophomorixBirthdate']}}</td>
+            <td>{{userDetails['sophomorixBirthdate']}}</td>
         </tr>
         <tr>
             <td><b translate>Sophomorix Status:</b></td>
             <td><span
-                    class="label label-{{userDetails[0].sophomorixStatus.color}}">{{userDetails[0].sophomorixStatus.tag}}</span>
+                    class="label label-{{userDetails.sophomorixStatus.color}}">{{userDetails.sophomorixStatus.tag}}</span>
             </td>
         </tr>
         <tr>
             <td><b translate>Role:</b></td>
-            <td>{{userDetails[0]['sophomorixRole']}}</td>
+            <td>{{userDetails['sophomorixRole']}}</td>
         </tr>
         <tr>
             <td><b translate>Schoolname:</b></td>
-            <td>{{userDetails[0]['sophomorixSchoolname']}}</td>
+            <td>{{userDetails['sophomorixSchoolname']}}</td>
         </tr>
         <tr>
             <td><b translate>DeactivationDate:</b></td>
-            <td>{{formatDate(userDetails[0]['sophomorixDeactivationDate']) | date:'dd MMM yyyy - HH:mm:ss' }}</td>
+            <td>{{formatDate(userDetails['sophomorixDeactivationDate']) | date:'dd MMM yyyy - HH:mm:ss' }}</td>
         </tr>
         <tr>
             <td><b translate>TolerationDate:</b></td>
-            <td>{{formatDate(userDetails[0]['sophomorixTolerationDate']) | date:'dd MMM yyyy - HH:mm:ss' }}</td>
+            <td>{{formatDate(userDetails['sophomorixTolerationDate']) | date:'dd MMM yyyy - HH:mm:ss' }}</td>
         </tr>
         <tr>
             <td><b translate>CreationDate:</b></td>
-            <td>{{formatDate(userDetails[0]['sophomorixCreationDate']) | date:'dd MMM yyyy - HH:mm:ss' }}</td>
+            <td>{{formatDate(userDetails['sophomorixCreationDate']) | date:'dd MMM yyyy - HH:mm:ss' }}</td>
         </tr>
     </table>
+    <table class="table" ng:show="custom_column">
+        <tr ng:show="proxyAddresses.show">
+            <td>
+                <b ng:show="proxyAddresses.title">{{proxyAddresses.title}}</b>
+                <b ng:show="!proxyAddresses.title">Proxy addresses</b>
+            </td>
+            <td>
+                <span ng:repeat="value in userDetails['proxyAddresses']" class="label label-info" ng:click="removeProxyAddresses(value)">
+                    {{value}}
+                    <i class="far fa-times-circle"></i>
+                </span>
+            </td>
+            <td>
+                <a ng:click="addProxyAddresses()">
+                    <i class="fa fa-plus"></i>
+                </a>
+            </td>
+        </tr>
+        <tr ng:repeat="n in [1,2,3,4,5]" ng:show="custom[n].show">
+            <td>
+                <b ng:show="custom[n].title">{{custom[n].title}}</b>
+                <b ng:show="!custom[n].title">Custom {{n}}</b>
+            </td>
+            <td>{{userDetails['sophomorixCustom'+n]}}</td>
+            <td>
+                <a ng:click="editCustom(n)">
+                    <i class="fa fa-pencil"></i>
+                </a>
+            </td>
+        </tr>
+        <tr ng:repeat="n in [1,2,3,4,5]" ng:show="customMulti[n].show">
+            <td>
+                <b ng:show="customMulti[n].title">{{customMulti[n].title}}</b>
+                <b ng:show="!customMulti[n].title">Multi Custom {{n}}</b>
+            </td>
+            <td>
+                <span ng:repeat="value in userDetails['sophomorixCustomMulti'+n]" class="label label-info" ng:click="removeCustomMulti(n, value)">
+                    {{value}}
+                    <i class="far fa-times-circle"></i>
+                </span>
+            </td>
+            <td>
+                <a ng:click="addCustomMulti(n)">
+                    <i class="fa fa-plus"></i>
+                </a>
+            </td>
+        </tr>
+    </table>
+    </div>
 
     <div class="panel panel-info">
         <div class="panel-heading">
@@ -70,22 +120,18 @@
                 ng-click="showQuotaDetails = ! showQuotaDetails">{{showQuotaDetails ? hidetext : showtext}}</a>
             <h4 translate> Quota: </h4>
         </div>
-        <div style="padding: 15px;padding-left: 30px; padding-right: 30px;">
+        <div ng-show="showQuotaDetails" class="panel-body" style="padding: 15px;padding-left: 30px; padding-right: 30px;">
             <div ng:repeat="quota in quotas" style="margin-bottom: 15px;">
-                <div class="widget-header">{{quota.share}}</div>
-                <smart-progress type="{{quota.type}}" value="quota.usage" max="100"></smart-progress>
-
-                <div class="widget-value">
-                    {{quota.used}} MiB / {{quota.total}}
-                    <sup ng:show="quota.usage > 80">
-                        <span class="label label-danger">
-                            <i class="fa fa-warning"></i>
-                        </span>
-                    </sup>
+                <div class="widget-header">
+                    <b>{{quota.share}}</b>
+                    <span class="label label-{{quota.type}} pull-right">
+                        {{quota.used}} MiB / {{quota.total}} - {{quota.usage}}%
+                    </span>
                 </div>
+                <smart-progress type="{{quota.type}}" value="quota.usage" max="100"></smart-progress>
             </div>
-            <br><b translate>Cloudquota Calculated in MiB:</b> {{userDetails[0]['sophomorixCloudQuotaCalculated']}}
-            <br><b translate>Mailquota Calculated in MiB:</b> {{userDetails[0]['sophomorixMailQuotaCalculated']}}
+            <br><b translate>Cloudquota Calculated in MiB:</b> {{userDetails['sophomorixCloudQuotaCalculated']}}
+            <br><b translate>Mailquota Calculated in MiB:</b> {{userDetails['sophomorixMailQuotaCalculated']}}
         </div>
     </div>
     <div class="modal-footer">

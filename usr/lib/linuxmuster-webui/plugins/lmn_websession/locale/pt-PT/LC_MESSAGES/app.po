@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-18 22:06+0200\n"
-"PO-Revision-Date: 2020-04-18 20:20\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2021-08-26 21:42+0200\n"
+"PO-Revision-Date: 2021-08-26 20:34\n"
+"Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
 "MIME-Version: 1.0\n"
@@ -12,98 +12,161 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Crowdin-Project: linuxmusternet\n"
+"X-Crowdin-Project-ID: 325271\n"
 "X-Crowdin-Language: pt-PT\n"
-"X-Crowdin-File: /2.0/lmn_landingpage.po\n"
+"X-Crowdin-File: /2.0/lmn_websession.po\n"
+"X-Crowdin-File-ID: 215\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:29
-msgid "Account Information"
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/createSession.modal.html:34
+msgid "Add Class"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:20
-msgid "But keep in mind:"
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/createSession.modal.html:29
+msgid "Add User"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:37
-msgid "Change password"
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/createSession.modal.html:78
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:80
+msgid "Close"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:62
-msgid "Cloudquota Calculated in MB:"
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:62
+msgid "Copy URL"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:69
-msgid "Groups"
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/createSession.modal.html:77
+msgid "Create"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:13
-msgid "Hello {{user.givenName}} {{user.sn}},"
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/createSession.modal.html:3
+msgid "Create new session"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:33
-msgid "Mail:"
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:28
+msgid "Currently no websession is running!"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:63
-msgid "Mailquota Calculated in MB:"
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:60
+msgid "Delete"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:32
-msgid "Name:"
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:57
+msgid "Join as attendee"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:45
-msgid "Quotas"
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:56
+msgid "Join as moderator"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:35
-msgid "Role:"
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:34
+msgid "Moderator"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:34
-msgid "School:"
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/createSession.modal.html:9
+msgid "Name"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:19
-msgid "Use the sidebar to navigate through the options."
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/createSession.modal.html:53
+msgid "No users selected!"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:1
-msgid "Welcome to Linuxmuster.net version 7!"
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:36
+msgid "Participants"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:21
-msgid "With great power comes great responsibility!"
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/createSession.modal.html:23
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:35
+msgid "Password"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:5
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/createSession.modal.html:17
+msgid "Public"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:20
+msgid "Running Websession"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:33
+msgid "Sessionname"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:61
+msgid "Show URL"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:54
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:55
+msgid "Start"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:37
+msgid "Status"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:58
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:59
+msgid "Stop"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/createSession.modal.html:15
+msgid "Type"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/createSession.modal.html:49
+msgid "Users"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:14
+msgid "Websession-Module not enabled! Please check Config-File!"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:3
 msgid "You should not use WebUI as root user! If this is your first time running WebUI, proceed through the setup wizard. Afterwards login using the global-admin account."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:16
-msgid "use the sidebar to navigate through the options. You can start by using the Enroll module to subscribe to your classes."
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:49
+msgid "no password"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:7
-msgid "Home"
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:8
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:110
+msgid "Websession"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:22
-msgid "NO LIMIT"
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:30
+msgid "Created successfully!"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:58
-msgid "Class"
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:39
+msgid "Cannot start websession! Try to reload page!"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:60
-msgid "Teachers"
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:51
+msgid "Stopped successfully!"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:62
-msgid "Printers"
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:53
+msgid "Cannot stop websession! Try to reload page!"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:64
-msgid "Project"
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:61
+msgid "Successfully removed!"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:63
+msgid "Cannot delete entry!"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:75
+msgid "Copied!"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:125
+msgid "You have to enter a name!"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:134
+msgid "Create session failed! Try again later!"
 msgstr ""
 

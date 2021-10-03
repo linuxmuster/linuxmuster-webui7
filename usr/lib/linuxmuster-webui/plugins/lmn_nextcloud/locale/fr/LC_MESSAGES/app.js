@@ -1,0 +1,1 @@
+{"": "", "URL not found or not valid! Please check config file.": "URL non trouv\u00e9e ou non valide! Veuillez v\u00e9rifier le fichier de configuration.", "Nextcloud": "Nextcloud"}

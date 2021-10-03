@@ -1,0 +1,570 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en-GB" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>API: aj.plugins.lmn_common &mdash; linuxmuster-webui7 1.0.159-1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="API: aj.plugins.lmn_devices" href="lmn_devices.html" />
+    <link rel="prev" title="API: aj.plugins.lmn_auth" href="lmn_auth.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> linuxmuster-webui7
+          
+
+          
+            
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.159-1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Python API</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="lmn_auth.html">API: aj.plugins.lmn_auth</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API: aj.plugins.lmn_common</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-aj.plugins.lmn_common.api">LMN Common API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-aj.plugins.lmn_common.views">LMN Common Views</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-aj.plugins.lmn_common.lmnfile">LMN Common Lmnfile</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_devices.html">API: aj.plugins.lmn_devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_groupmembership.html">API: aj.plugins.lmn_groupmembership</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_landingpage.html">API: aj.plugins.lmn_landingpage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_linbo.html">API: aj.plugins.lmn_linbo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_quotas.html">API: aj.plugins.lmn_quotas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_session.html">API: aj.plugins.lmn_session</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_settings.html">API: aj.plugins.lmn_settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_setup_wizard.html">API: aj.plugins.lmn_setup_wizard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_users.html">API: aj.plugins.lmn_users</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">linuxmuster-webui7</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>API: aj.plugins.lmn_common</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/python/lmn_common.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="api-aj-plugins-lmn-common">
+<h1>API: aj.plugins.lmn_common<a class="headerlink" href="#api-aj-plugins-lmn-common" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-aj.plugins.lmn_common.api">
+<span id="lmn-common-api"></span><h2>LMN Common API<a class="headerlink" href="#module-aj.plugins.lmn_common.api" title="Permalink to this headline">¶</a></h2>
+<p>Common tools to communicate with sophomorix and handle config files.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="aj.plugins.lmn_common.api.CSVSpaceStripper">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">aj.plugins.lmn_common.api.</span></span><span class="sig-name descname"><span class="pre">CSVSpaceStripper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'utf-8'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_common/api.html#CSVSpaceStripper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_common.api.CSVSpaceStripper" title="Permalink to this definition">¶</a></dt>
+<dd><p>CSV parser for linuxmuster’s config files.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aj.plugins.lmn_common.api.CSVSpaceStripper.next">
+<span class="sig-name descname"><span class="pre">next</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_common/api.html#CSVSpaceStripper.next"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_common.api.CSVSpaceStripper.next" title="Permalink to this definition">¶</a></dt>
+<dd><p>For compatibility with PY2</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aj.plugins.lmn_common.api.LinuxmusterConfig">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">aj.plugins.lmn_common.api.</span></span><span class="sig-name descname"><span class="pre">LinuxmusterConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_common/api.html#LinuxmusterConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_common.api.LinuxmusterConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Basic class to handle linuxmuster webui’s config file (yaml).</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aj.plugins.lmn_common.api.SophomorixProcess">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">aj.plugins.lmn_common.api.</span></span><span class="sig-name descname"><span class="pre">SophomorixProcess</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_common/api.html#SophomorixProcess"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_common.api.SophomorixProcess" title="Permalink to this definition">¶</a></dt>
+<dd><p>Worker for processing sophomorix commands.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aj.plugins.lmn_common.api.SophomorixProcess.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_common/api.html#SophomorixProcess.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_common.api.SophomorixProcess.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method representing the thread’s activity.</p>
+<p>You may override this method in a subclass. The standard run() method
+invokes the callable object passed to the object’s constructor as the
+target argument, if any, with sequential and keyword arguments taken
+from the args and kwargs arguments, respectively.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="aj.plugins.lmn_common.api.check_allowed_path">
+<span class="sig-prename descclassname"><span class="pre">aj.plugins.lmn_common.api.</span></span><span class="sig-name descname"><span class="pre">check_allowed_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_common/api.html#check_allowed_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_common.api.check_allowed_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check path before modifying files for security reasons.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>string</em>) – File to modify</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>File path in allowed paths.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="aj.plugins.lmn_common.api.lmn_backup_file">
+<span class="sig-prename descclassname"><span class="pre">aj.plugins.lmn_common.api.</span></span><span class="sig-name descname"><span class="pre">lmn_backup_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_common/api.html#lmn_backup_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_common.api.lmn_backup_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a backup of a file if in allowed paths, but on ly keeps 10 backups.
+Backup files names scheme is <cite>.&lt;name&gt;.bak.&lt;timestamp&gt;</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>string</em>) – Path of the file</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="aj.plugins.lmn_common.api.lmn_getSophomorixValue">
+<span class="sig-prename descclassname"><span class="pre">aj.plugins.lmn_common.api.</span></span><span class="sig-name descname"><span class="pre">lmn_getSophomorixValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sophomorixCommand</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jsonpath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignoreErrors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_common/api.html#lmn_getSophomorixValue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_common.api.lmn_getSophomorixValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connector to all sophomorix commands. Run a sophomorix command with -j
+option (output as json) through a SophomorixProcess and parse the results.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sophomorixCommand</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a>) – Command with options to run</p></li>
+<li><p><strong>jsonpath</strong> (<em>string</em>) – Key to search in the resulted dict, e.g. /USERS/doe</p></li>
+<li><p><strong>ignoreErrors</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – Quiet mode</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Whole output or key if jsonpath is defined</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)">dict</a> or value (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)">list</a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)">dict</a>, integer, string)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="aj.plugins.lmn_common.api.lmn_write_configfile">
+<span class="sig-prename descclassname"><span class="pre">aj.plugins.lmn_common.api.</span></span><span class="sig-name descname"><span class="pre">lmn_write_configfile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_common/api.html#lmn_write_configfile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_common.api.lmn_write_configfile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write config file it only if there’s no difference with the original.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>string</em>) – Path of the file</p></li>
+<li><p><strong>data</strong> (<em>string</em>) – New content</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="aj.plugins.lmn_common.api.lmn_write_csv">
+<span class="sig-prename descclassname"><span class="pre">aj.plugins.lmn_common.api.</span></span><span class="sig-name descname"><span class="pre">lmn_write_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fieldnames</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'utf-8'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_common/api.html#lmn_write_csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_common.api.lmn_write_csv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write CSV and backup csv file only if there’s no difference with the original.
+Delimiter is always ‘;’
+DEPRECATED</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>string</em>) – Path of the file</p></li>
+<li><p><strong>fieldnames</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a>) – List of CSV fieldsnames</p></li>
+<li><p><strong>data</strong> (<em>list of string</em>) – Data to write</p></li>
+<li><p><strong>encoding</strong> (<em>string</em>) – Encoding, e.g. utf-8</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-aj.plugins.lmn_common.views">
+<span id="lmn-common-views"></span><h2>LMN Common Views<a class="headerlink" href="#module-aj.plugins.lmn_common.views" title="Permalink to this headline">¶</a></h2>
+<p>Common tools to manipulate user’s files and config files on the OS.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="aj.plugins.lmn_common.views.Handler">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">aj.plugins.lmn_common.views.</span></span><span class="sig-name descname"><span class="pre">Handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_common/views.html#Handler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_common.views.Handler" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="aj.plugins.lmn_common.views.Handler.handle_api_chown">
+<span class="sig-name descname"><span class="pre">handle_api_chown</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">http_context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_common/views.html#Handler.handle_api_chown"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_common.views.Handler.handle_api_chown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Chown file with given path, owner and group.
+Method POST.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if success</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)">bool</a> or <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aj.plugins.lmn_common.views.Handler.handle_api_create_dir">
+<span class="sig-name descname"><span class="pre">handle_api_create_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">http_context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_common/views.html#Handler.handle_api_create_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_common.views.Handler.handle_api_create_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create directory with given path, ignoring errors.
+Method POST.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if success</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)">bool</a> or <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aj.plugins.lmn_common.views.Handler.handle_api_log">
+<span class="sig-name descname"><span class="pre">handle_api_log</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">http_context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_common/views.html#Handler.handle_api_log"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_common.views.Handler.handle_api_log" title="Permalink to this definition">¶</a></dt>
+<dd><p>Query a part of a log file to simulate a continuously flow on the
+frontend.
+Method GET.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p></li>
+<li><p><strong>path</strong> (<em>string</em>) – Path of the log file</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Part of the log at offset <cite>offset</cite></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aj.plugins.lmn_common.views.Handler.handle_api_read_setup_ini">
+<span class="sig-name descname"><span class="pre">handle_api_read_setup_ini</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">http_context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_common/views.html#Handler.handle_api_read_setup_ini"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_common.views.Handler.handle_api_read_setup_ini" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read linuxmuster setup file for linbo and setup wizard.
+Method GET.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Config content</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aj.plugins.lmn_common.views.Handler.handle_api_remove_dir">
+<span class="sig-name descname"><span class="pre">handle_api_remove_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">http_context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_common/views.html#Handler.handle_api_remove_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_common.views.Handler.handle_api_remove_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove directory and its content with given path, ignoring errors.
+Method POST.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if success</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)">bool</a> or <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aj.plugins.lmn_common.views.Handler.handle_api_remove_file">
+<span class="sig-name descname"><span class="pre">handle_api_remove_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">http_context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_common/views.html#Handler.handle_api_remove_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_common.views.Handler.handle_api_remove_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove file with given path.
+Method POST.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if success</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)">bool</a> or <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aj.plugins.lmn_common.views.Handler.handle_api_version">
+<span class="sig-name descname"><span class="pre">handle_api_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">http_context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_common/views.html#Handler.handle_api_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_common.views.Handler.handle_api_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the versions of the installed LMN packages using dpkg.
+Method GET.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of packages with informations</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-aj.plugins.lmn_common.lmnfile">
+<span id="lmn-common-lmnfile"></span><h2>LMN Common Lmnfile<a class="headerlink" href="#module-aj.plugins.lmn_common.lmnfile" title="Permalink to this headline">¶</a></h2>
+<p>Classes definitions to read, parse and save config files.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="aj.plugins.lmn_common.lmnfile.CSVLoader">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">aj.plugins.lmn_common.lmnfile.</span></span><span class="sig-name descname"><span class="pre">CSVLoader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delimiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">';'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fieldnames</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_common/lmnfile.html#CSVLoader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_common.lmnfile.CSVLoader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handler for csv files.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aj.plugins.lmn_common.lmnfile.LMNFile">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">aj.plugins.lmn_common.lmnfile.</span></span><span class="sig-name descname"><span class="pre">LMNFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delimiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">';'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fieldnames</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_common/lmnfile.html#LMNFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_common.lmnfile.LMNFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Meta class to handle all type of config file used in linuxmuster’s project,
+e.g. ini, csv, linbo config files.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aj.plugins.lmn_common.lmnfile.LMNFile.backup">
+<span class="sig-name descname"><span class="pre">backup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_common/lmnfile.html#LMNFile.backup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_common.lmnfile.LMNFile.backup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a backup of a file if in allowed paths, but on ly keeps 10 backups.
+Backup files names scheme is <cite>.&lt;name&gt;.bak.&lt;timestamp&gt;</cite></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aj.plugins.lmn_common.lmnfile.LMNFile.check_allowed_path">
+<span class="sig-name descname"><span class="pre">check_allowed_path</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_common/lmnfile.html#LMNFile.check_allowed_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_common.lmnfile.LMNFile.check_allowed_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check path before modifying files for security reasons.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>File path in allowed paths.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aj.plugins.lmn_common.lmnfile.LMNFile.detect_encoding">
+<span class="sig-name descname"><span class="pre">detect_encoding</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_common/lmnfile.html#LMNFile.detect_encoding"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_common.lmnfile.LMNFile.detect_encoding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Try to detect encoding of the file through magic numbers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Detected encoding</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>string</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aj.plugins.lmn_common.lmnfile.LMNFile.hasExtension">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">hasExtension</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ext</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_common/lmnfile.html#LMNFile.hasExtension"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_common.lmnfile.LMNFile.hasExtension" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine if file should be handled here.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>ext</strong> (<em>string</em>) – Extension of a file, e.g. ini</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>File handled or not</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aj.plugins.lmn_common.lmnfile.LinboLoader">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">aj.plugins.lmn_common.lmnfile.</span></span><span class="sig-name descname"><span class="pre">LinboLoader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delimiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">';'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fieldnames</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_common/lmnfile.html#LinboLoader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_common.lmnfile.LinboLoader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handler for linbo’s cloop informations files.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="lmn_devices.html" class="btn btn-neutral float-right" title="API: aj.plugins.lmn_devices" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="lmn_auth.html" class="btn btn-neutral float-left" title="API: aj.plugins.lmn_auth" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, Andreas Till &amp; Arnaud Kientz.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -5,7 +5,7 @@
         <h4 translate>VDI Groups</h4>
         <div class="flex-container lmn-container-list">
             <div class="list-group-item" ng:repeat="(vdiClone, vdiCloneData) in vdiClones" style="margin-bottom:10px;width:250px;">
-                <div ng:click="startVdiSession()" ng:show="vdiCloneData.summary.available_vms != 0">
+                <div ng:click="startVdiSession(vdiClone)" ng:show="vdiCloneData.summary.available_vms != 0">
                     <span style="float:right;width:50%;">
                         <div class="session_container">
                             <a href="#">

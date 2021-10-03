@@ -5,17 +5,9 @@ angular.module('lmn.session').controller 'LMNSessionFileSelectModalController', 
     $scope.action = action
     $scope.command = command
 
-
-    ## Test path for upload with drag and drop
-    ## TODO : Fix path here or handle this with sophomorix-transfer ? --> Generic path (eg. /srv/upload, then use sophomorix-transfer)
-    ## TODO : chown with custom api or with sophomorix-transfer ? --> should be handled by sophomorix-transfer
-    ## TODO : reload modal after upload -- Done
-    ## TODO : possibility to remove file from transfer directory -- Done
-
     $scope.setTransferPath = (username) ->
-        # TODO: Way more generic
-        role = 'teachers'
-        school = 'default-school'
+        role = $scope.identity.profile.sophomorixRole
+        school = $scope.identity.profile.activeSchool
         $scope.transferPath = '/srv/webuiUpload/'+school+'/'+role+'/'+username+'/'
         # create tmp dir for upload
         $scope.createDir($scope.transferPath)
@@ -55,8 +47,8 @@ angular.module('lmn.session').controller 'LMNSessionFileSelectModalController', 
         $http.post('/api/lm/create-dir', {filepath: path})
 
     $scope.removeFile = (file) ->
-        role = 'teachers'
-        school = 'default-school'
+        role = $scope.identity.profile.sophomorixRole
+        school = $scope.identity.profile.activeSchool
         path = '/srv/samba/schools/'+school+'/'+role+'/'+$scope.identity.user+'/transfer/'+file
         messagebox.show({
             text: gettext('Are you sure you want to delete permanently the file ' + file + '?'),
@@ -71,8 +63,8 @@ angular.module('lmn.session').controller 'LMNSessionFileSelectModalController', 
                 $scope.filesList.splice(pos, 1)
 
     $scope.removeDir = (file) ->
-        role = 'teachers'
-        school = 'default-school'
+        role = $scope.identity.profile.sophomorixRole
+        school = $scope.identity.profile.activeSchool
         path = '/srv/samba/schools/'+school+'/'+role+'/'+$scope.identity.user+'/transfer/'+file
         messagebox.show({
             text: gettext('Are you sure you want to delete permanently this directory and its content: ' + file + '?'),
@@ -523,7 +515,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
             participants = resp.data['MEMBERS'][classname]
             participantsArray = []
             for participant,data of participants
-                if participants[participant]['sophomorixAdminClass'] != 'teachers'
+                if participants[participant]['sophomorixRole'] != 'teacher'
                     participantsArray.push participant
             #$rootScope.$emit('updateWaiting', 'done')
             generateSession(participantsArray, sessionID, sessionComment, sessionExist)

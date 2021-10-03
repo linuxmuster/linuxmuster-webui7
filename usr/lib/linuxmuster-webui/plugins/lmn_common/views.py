@@ -10,6 +10,9 @@ import subprocess
 from jadi import component
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint
+from aj.plugins.lmn_common.multischool import School
+from aj.plugins.lmn_common.lmnfile import LMNFile
+
 
 @component(HttpPlugin)
 class Handler(HttpPlugin):
@@ -170,21 +173,8 @@ class Handler(HttpPlugin):
 
         path = '/var/lib/linuxmuster/setup.ini'
         if http_context.method == 'GET':
-            config = {}
-            for line in open(path, 'rb'):
-                line = line.decode('utf-8', errors='ignore')
-                line = line.split('#')[0].strip()
-
-                if line.startswith('['):
-                    section = {}
-                    section_name = line.strip('[]')
-                    if section_name == 'setup':
-                        config['setup'] = section
-                elif '=' in line:
-                    k, v = line.split('=', 1)
-                    v = v.strip()
-                    section[k.strip()] = v
-            return config
+            with LMNFile(path, 'r') as setup:
+                return setup.data
 
 
     ## TODO authorize
@@ -215,3 +205,19 @@ class Handler(HttpPlugin):
             # sophomorixCommand = ['sophomorix-query', '--student', '--teacher', '--schooladministrator', '--globaladministrator', '-jj']
             # all_users = lmn_getSophomorixValue(sophomorixCommand, 'USER')
             # return all_users
+
+    @url(r'/api/lmn/activeschool')
+    @endpoint(api=True)
+    def handle_get_activeSchool(self, http_context):
+        """
+        Get  activeSchool.
+        Method GET: gets active school
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: String containing active school
+        :rtype: string 
+        """
+        if http_context.method == 'GET':
+            school = School.get(self.context).school     
+            return school

@@ -11,12 +11,13 @@ angular.module('lmn.vdi_dashboard').controller('Lmn_vdi_dashboardIndexController
         }
     });
 
-    $scope.startVdiSession = () => {
-        $http.post('/api/lmn_vdi_dashboard', { action: 'get-session', username: $scope.identity.user }).then((resp) => {
-            $scope.returnValue = resp.data;
-            console.log($scope.returnValue);
+    $scope.startVdiSession = (group) => {
+        $http.post('/api/lmn_vdi_dashboard', { action: 'get-vdiSession', username: $scope.identity.user, group: group }).then((resp) => {
+            console.log(resp.data);
+            $scope.filename = resp.data;
+            location.href = "/api/lmn_vdi_dashboard/download/" + $scope.filename
         });
-
     };
+    
 });
 

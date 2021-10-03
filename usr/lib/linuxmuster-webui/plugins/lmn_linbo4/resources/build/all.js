@@ -73,6 +73,13 @@
     };
   });
 
+  angular.module('lmn.linbo4').controller('LMLINBO4BackupsModalController', function($scope, $uibModal, $uibModalInstance, $http, gettext, messagebox, image) {
+    $scope.image = image;
+    return $scope.close = function() {
+      return $uibModalInstance.dismiss();
+    };
+  });
+
   angular.module('lmn.linbo4').controller('LMLINBO4ImageModalController', function($scope, $uibModal, $uibModalInstance, $http, gettext, filesystem, messagebox, image, images) {
     var x;
     $scope.image = image;
@@ -680,6 +687,19 @@
               return $route.reload();
             });
           });
+        }
+      });
+    };
+    $scope.showBackups = function(image) {
+      return $uibModal.open({
+        templateUrl: '/lmn_linbo4:resources/partial/image.backups.modal.html',
+        controller: 'LMLINBO4BackupsModalController',
+        scope: $scope,
+        size: 'lg',
+        resolve: {
+          image: function() {
+            return image;
+          }
         }
       });
     };

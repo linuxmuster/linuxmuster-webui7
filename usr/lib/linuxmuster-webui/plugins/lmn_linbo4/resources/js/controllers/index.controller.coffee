@@ -44,6 +44,12 @@ angular.module('lmn.linbo4').controller 'LMLINBO4PartitionModalController', ($sc
         $uibModalInstance.dismiss()
 
 
+angular.module('lmn.linbo4').controller 'LMLINBO4BackupsModalController', ($scope, $uibModal, $uibModalInstance, $http, gettext, messagebox, image) ->
+    $scope.image = image
+
+    $scope.close = () ->
+        $uibModalInstance.dismiss()
+
 angular.module('lmn.linbo4').controller 'LMLINBO4ImageModalController', ($scope, $uibModal, $uibModalInstance, $http, gettext, filesystem, messagebox, image, images) ->
     $scope.image = image
     $scope.imagesWithReg = (x for x in images when x.reg)
@@ -551,6 +557,16 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
                     resp.data.config.LINBO.Group = newName
                     $http.post("/api/lm/linbo4/config/start.conf.#{newName}", resp.data).then () ->
                         $route.reload()
+
+    $scope.showBackups = (image) ->
+        $uibModal.open(
+            templateUrl: '/lmn_linbo4:resources/partial/image.backups.modal.html'
+            controller: 'LMLINBO4BackupsModalController'
+            scope: $scope
+            size: 'lg'
+            resolve:
+                image: () -> image
+        )
 
     $scope.editConfig = (configName) ->
         $http.get("/api/lm/linbo4/config/#{configName}").then (resp) ->

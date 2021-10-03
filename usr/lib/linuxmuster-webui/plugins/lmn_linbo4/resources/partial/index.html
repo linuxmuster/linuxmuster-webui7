@@ -38,25 +38,44 @@
             </floating-toolbar>
         </uib:tab>
         <uib:tab heading="{{'Images'|translate}}">
+            <table class="table">
+                <tr>
+                    <th> </th>
+                    <th style="min-width:100px" translate>Name / Size</th>
+                    <th translate>Comment</th>
+                    <th style="min-width:150px" translate>Actions</th>
+                </tr>
+                <tr ng:repeat="image in images|orderBy:'name'">
+                    <td>
+                        <input type="checkbox" ng:model="image.selected" ng:click="toggleSelected(image)" />
+                    </td>
+                    <td>
+                        <b>{{image.name}}</b>
+                        <br />
+                        <i>{{image.size|bytes}}</i>
+                    </td>
+                    <td>
+                        {{image.desc}}
+                    </td>
+                    <td>
+                        <button class="btn btn-default" ng:click="editImage(image)">
+                            <i class="fa fa-cog"></i>
+                        </button>
+                        <button class="btn btn-default" ng:click="showBackups(image)">
+                            <i class="fa fa-history"></i>
+                        </button>
+                        <button class="btn btn-default" ng:click="deleteImage(image)">
+                            <i class="fa fa-trash-o"></i>
+                        </button>
+                    </td>
+                </tr>
+            </table>
             <br/>
-            <div class="list-group">
-                <div class="list-group-item list-group-item-small" ng:repeat="image in images|orderBy:'name'">
-                    <a class="list-group-btn" ng:click="deleteImage(image)">
-                        <i class="fa fa-trash-o"></i>
-                    </a>
-                    <a class="list-group-btn" ng:click="duplicateImage(image)">
-                        <i class="fa fa-copy"></i>
-                    </a>
-                    <div class="list-group-btn" style="font-weight:bold;margin-right:20px;">{{image.size|bytes}}</div>
-                    <span checkbox class="pull-left list-group-main" ng:model="image.selected" ng:click="toggleSelected(image)" />
-                    <a class="list-group-main" style="font-weight:bold;" ng:click="editImage(image)">
-                        {{image.name}}
-                    </a>
-                    <div style="margin-left:30px;white-space:normal;" translate>Comment: {{image.description}}</div>
-                </div>
-            </div>
             <floating-toolbar ng:show="images_selected.length > 0">
-                <button ng:click="deleteImages()" class="btn btn-lmn pull-right" translate>
+                <button ng:click="duplicateImages()" class="btn btn-lmn" translate>
+                    Duplicate selected images
+                </button>
+                <button ng:click="deleteImages()" class="btn btn-lmn" translate>
                     Delete selected images
                 </button>
             </floating-toolbar>

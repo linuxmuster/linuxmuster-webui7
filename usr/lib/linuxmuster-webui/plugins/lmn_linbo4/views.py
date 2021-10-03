@@ -6,7 +6,7 @@ from aj.auth import authorize
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint
 from aj.plugins.lmn_common.lmnfile import LMNFile
-from aj.plugins.lmn_linbo4.images import LinboGroupImage
+from aj.plugins.lmn_linbo4.images import LinboImageManager
 
 @component(HttpPlugin)
 class Handler(HttpPlugin):
@@ -14,6 +14,7 @@ class Handler(HttpPlugin):
 
     def __init__(self, context):
         self.context = context
+        self.mgr = LinboImageManager.get(self.context)
 
     @url(r'/api/lm/linbo4/configs')
     @authorize('lm:linbo:configs')
@@ -101,19 +102,6 @@ class Handler(HttpPlugin):
     def handle_api_icons(self, http_context):
         return os.listdir(os.path.join(self.LINBO_PATH, 'icons'))
 
-    @url(r'/api/lm/linbo4/images')
-    @authorize('lm:linbo:images')
-    @endpoint(api=True)
-    def handle_api_images(self, http_context):
-        r = []
-        for dir in os.listdir(os.path.join(self.LINBO_PATH, 'images')):
-            for file in os.listdir(os.path.join(self.LINBO_PATH, 'images', dir)):
-                if file.endswith(('.qcow2')):
-                    image_dict = LinboGroupImage(dir).to_dict()
-                    image_dict['selected'] = False
-                    r.append(image_dict)
-        return r
-
     @url(r'/api/lm/linbo4/icons/read/(?P<name>.+)')
     @endpoint(api=False, page=True)
     def handle_api_icons_read(self, http_context, name):
@@ -154,74 +142,6 @@ class Handler(HttpPlugin):
                     settings.write(json.dumps(data, indent=4))
                 os.chmod(path, 0o755)
 
-    @url(r'/api/lm/linbo4/image/(?P<name>.+)')
-    @authorize('lm:linbo:images')
-    @endpoint(api=True)
-    def handle_api_image(self, http_context, name=None):
-        path = os.path.join(self.LINBO_PATH, 'images', name)
-        desc_file = path + '.desc'
-        info_file = path + '.info'
-        macct_file = path + '.macct'
-        reg_file = path + '.reg'
-        postsync_file = path + '.postsync'
-
-        prestart_file = path[:-5] + '.prestart'
-
-        if http_context.method == 'POST':
-            data = http_context.json_body()
-            if 'description' in data:
-                if data['description']:
-                    with LMNFile(desc_file, 'w') as f:
-                        f.write(data['description'])
-                    os.chmod(desc_file, 0o664)
-                else:
-                    if os.path.exists(desc_file):
-                        os.unlink(desc_file)
-            if 'info' in data:
-                if data['info']:
-                    with LMNFile(info_file, 'w') as f:
-                        f.write(data['info'])
-                    os.chmod(info_file, 0o664)
-                else:
-                    if os.path.exists(info_file):
-                        os.unlink(info_file)
-            if 'macct' in data:
-                if data['macct']:
-                    with LMNFile(macct_file, 'w') as f:
-                        f.write(data['macct'])
-                    os.chmod(macct_file, 0o600)
-                else:
-                    if os.path.exists(macct_file):
-                        os.unlink(macct_file)
-            if 'reg' in data:
-                if data['reg']:
-                    with LMNFile(reg_file, 'w') as f:
-                        f.write(data['reg'])
-                    os.chmod(reg_file, 0o664)
-                else:
-                    if os.path.exists(reg_file):
-                        os.unlink(reg_file)
-            if 'postsync' in data:
-                if data['postsync']:
-                    with LMNFile(postsync_file, 'w') as f:
-                        f.write(data['postsync'])
-                    os.chmod(postsync_file, 0o664)
-                else:
-                    if os.path.exists(postsync_file):
-                        os.unlink(postsync_file)
-            if 'prestart' in data:
-                if data['prestart']:
-                    with LMNFile(prestart_file, 'w') as f:
-                        f.write(data['prestart'])
-                    os.chmod(prestart_file, 0o664)
-                else:
-                    if os.path.exists(prestart_file):
-                        os.unlink(prestart_file)
-        else:
-            for p in [path, desc_file, info_file, macct_file, reg_file, postsync_file]:
-                if os.path.exists(p):
-                    os.unlink(p)
-
     @url(r'/api/lm/linbo4/config/(?P<name>.+)')
     @authorize('lm:linbo:configs')
     @endpoint(api=True)
@@ -248,3 +168,55 @@ class Handler(HttpPlugin):
     @endpoint(api=False, page=True)
     def handle_linbo_iso(self, http_context):
         return http_context.file('/srv/linbo/linbo.iso', inline=False, name=b'linbo.iso')
+
+    @url(r'/api/lm/linbo4/images')
+    @authorize('lm:linbo:images')
+    @endpoint(api=True)
+    def handle_api_images(self, http_context):
+        # Update list of images
+        self.mgr.list()
+        return [imageGroup.to_dict()
+                for name,imageGroup in self.mgr.linboImageGroups.items()
+                ]
+
+    @url(r'/api/lm/linbo4/image/(?P<image>.+)')
+    @authorize('lm:linbo:images')
+    @endpoint(api=True)
+    def handle_api_image(self, http_context, image=None):
+
+        if http_context.method == 'POST':
+            data = http_context.json_body()
+            self.mgr.save_extras(image, data)
+
+        if http_context.method == 'DELETE':
+            self.mgr.delete(image)
+
+    @url(r'/api/lm/linbo4/image/duplicate/(?P<image>.+)')
+    @authorize('lm:linbo:images')
+    @endpoint(api=True)
+    def handle_api_duplicate_image(self, http_context, image=None):
+        pass
+
+    @url(r'/api/lm/linbo4/image/rename/(?P<image>.+)')
+    @authorize('lm:linbo:images')
+    @endpoint(api=True)
+    def handle_api_rename_image(self, http_context, image=None):
+        pass
+
+    @url(r'/api/lm/linbo4/image/restoreBackup/(?P<image>.+)/(?P<timestamp>.+)')
+    @authorize('lm:linbo:images')
+    @endpoint(api=True)
+    def handle_api_restore_image(self, http_context, image=None, timestamp=None):
+        pass
+
+    @url(r'/api/lm/linbo4/image/deleteBackup/(?P<image>.+)/(?P<timestamp>.+)')
+    @authorize('lm:linbo:images')
+    @endpoint(api=True)
+    def handle_api_delete_backup(self, http_context, image=None, timestamp=None):
+        pass
+
+    @url(r'/api/lm/linbo4/image/saveBackup/(?P<image>.+)/(?P<timestamp>.+)')
+    @authorize('lm:linbo:images')
+    @endpoint(api=True)
+    def handle_api_save_backup(self, http_context, image=None, timestamp=None):
+        pass

@@ -16,6 +16,7 @@ resources:
     - 'resources/js/controllers/index.controller.coffee'
     - 'resources/partial/index.html'
     - 'resources/partial/image.modal.html'
+    - 'resources/partial/image.backups.modal.html'
     - 'resources/partial/config.modal.html'
     - 'resources/partial/partition.modal.html'
     - 'resources/partial/accept.modal.html'

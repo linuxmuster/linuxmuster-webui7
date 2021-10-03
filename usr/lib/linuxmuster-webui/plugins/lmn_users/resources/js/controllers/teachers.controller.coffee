@@ -47,7 +47,9 @@ angular.module('lmn.users').controller 'LMUsersTeachersController', ($q, $scope,
         $scope.customDisplay = resp.data.customDisplay.teachers
         $scope.customTitle = ['',]
         for idx in [1,2,3]
-            if $scope.customDisplay[idx] == 'proxyAddresses'
+            if $scope.customDisplay[idx] == undefined or $scope.customDisplay[idx] == ''
+                $scope.customTitle.push('')
+            else if $scope.customDisplay[idx] == 'proxyAddresses'
                 $scope.customTitle.push(resp.data.proxyAddresses.teachers.title)
             else
                 index = $scope.customDisplay[idx].slice(-1)

@@ -156,7 +156,7 @@ angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $rou
             $http.post("/api/lm/custommulti/add", {index: n, value: msg.value, user: id}).then () ->
                 if msg.value
                     $scope.userDetails['sophomorixCustomMulti'+n].push(msg.value)
-                notify.success(gettext("Value added !"))
+                    notify.success(gettext("Value added !"))
             , () ->
                 notify.error(gettext("Error, please verify the user and/or your values."))
 
@@ -195,7 +195,7 @@ angular.module('lmn.users').controller 'LMUsersSortListModalController', ($scope
     $scope.userlist = userlist
 
     $scope.rebuildCSV = () ->
-        # add empty 'not used' fields if CSV contains more coloumns than fields
+        # add empty 'not used' fields if CSV contains more columns than fields
         while $scope['userListCSV'].length > $scope['coloumnTitles'].length
             $scope['coloumnTitles'].push({name: gettext('not used')})
 
@@ -207,7 +207,7 @@ angular.module('lmn.users').controller 'LMUsersSortListModalController', ($scope
 
 
     $scope.togglecustomField = (field) ->
-        # get index of field in coloumnTitles (-1 if not presend)
+        # get index of field in columnTitles (-1 if not present)
         pos = $scope.coloumnTitles.map((e) ->
               e.name
         ).indexOf(field)

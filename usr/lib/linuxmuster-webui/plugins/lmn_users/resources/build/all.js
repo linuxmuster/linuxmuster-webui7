@@ -2284,8 +2284,8 @@
         }).then(function() {
           if (msg.value) {
             $scope.userDetails['sophomorixCustomMulti' + n].push(msg.value);
+            return notify.success(gettext("Value added !"));
           }
-          return notify.success(gettext("Value added !"));
         }, function() {
           return notify.error(gettext("Error, please verify the user and/or your values."));
         });
@@ -2338,7 +2338,7 @@
     $scope.userlist = userlist;
     $scope.rebuildCSV = function() {
       var element, i, j, len, ref, results;
-      // add empty 'not used' fields if CSV contains more coloumns than fields
+      // add empty 'not used' fields if CSV contains more columns than fields
       while ($scope['userListCSV'].length > $scope['coloumnTitles'].length) {
         $scope['coloumnTitles'].push({
           name: gettext('not used')
@@ -2357,7 +2357,7 @@
     //console.log ($scope['userListCSV'])
     $scope.togglecustomField = function(field) {
       var pos;
-      // get index of field in coloumnTitles (-1 if not presend)
+      // get index of field in columnTitles (-1 if not present)
       pos = $scope.coloumnTitles.map(function(e) {
         return e.name;
       }).indexOf(field);

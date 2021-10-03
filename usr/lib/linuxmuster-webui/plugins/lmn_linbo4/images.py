@@ -1,11 +1,25 @@
 import os
+import shutil
+from datetime import datetime
 
+from jadi import service
 from aj.plugins.lmn_common.lmnfile import LMNFile
 
+LINBO_PATH = '/srv/linbo/images'
+EXTRA_IMAGE_FILES = ['desc', 'info', 'macct', 'vdi']
+EXTRA_COMMON_FILES = ['reg', 'postsync', 'prestart']
+EXTRA_PERMISSIONS_MAPPING = {
+    'desc': 0o664,
+    'info': 0o664,
+    'macct': 0o600,
+    'vdi': 0o664,
+    'reg': 0o664,
+    'postsync': 0o664,
+    'prestart': 0o664,
+}
+IMAGE = "qcow2"
+
 class LinboImage:
-    LINBO_PATH = '/srv/linbo/images'
-    EXTRA_IMAGE_FILES = ['desc', 'info', 'macct', 'vdi']
-    EXTRA_COMMON_FILES = ['reg', 'postsync', 'prestart']
 
     def __init__(self, name, backup=False, timestamp=None):
         self.name = name
@@ -14,12 +28,12 @@ class LinboImage:
         self.load_info()
 
     def load_info(self):
-        self.image = f"{self.name}.qcow2"
+        self.image = f"{self.name}.{IMAGE}"
 
         if self.backup:
-            self.path = os.path.join(self.LINBO_PATH, self.name, 'backups', self.timestamp)
+            self.path = os.path.join(LINBO_PATH, self.name, 'backups', self.timestamp)
         else:
-            self.path = os.path.join(self.LINBO_PATH, self.name)
+            self.path = os.path.join(LINBO_PATH, self.name)
 
         self.size = os.stat(os.path.join(self.path, self.image)).st_size
         self.extras = {}
@@ -33,7 +47,7 @@ class LinboImage:
         :rtype:
         """
 
-        for extra in self.EXTRA_IMAGE_FILES:
+        for extra in EXTRA_IMAGE_FILES:
             extra_file = os.path.join(self.path, f"{self.image}.{extra}")
             if os.path.isfile(extra_file):
                 with LMNFile(extra_file, 'r') as f:
@@ -41,7 +55,7 @@ class LinboImage:
             else:
                 self.extras[extra] = None
 
-        for extra in self.EXTRA_COMMON_FILES:
+        for extra in EXTRA_COMMON_FILES:
             extra_file = os.path.join(self.path, f"{self.name}.{extra}")
             if os.path.isfile(extra_file):
                 with LMNFile(extra_file, 'r') as f:
@@ -49,7 +63,7 @@ class LinboImage:
             else:
                 self.extras[extra] = None
 
-    def delete(self):
+    def delete_files(self):
         """
         Delete all files from a LinboImage.
 
@@ -61,15 +75,25 @@ class LinboImage:
         os.unlink(os.path.join(self.path, self.image))
 
         # Remove extra files
-        for extra in self.EXTRA_IMAGE_FILES:
+        for extra in EXTRA_IMAGE_FILES:
             path = os.path.join(self.path, f"{self.image}.{extra}")
             if os.path.exists(path):
                 os.unlink(path)
 
-        for extra in self.EXTRA_COMMON_FILES:
+        for extra in EXTRA_COMMON_FILES:
             path = os.path.join(self.path, f"{self.name}.{extra}")
             if os.path.exists(path):
                 os.unlink(path)
+
+    def delete(self):
+        """
+        Completely remove an image an its directory.
+
+        :return:
+        :rtype:
+        """
+
+        self.delete_files()
 
         # Remove directory
         os.unlink(self.path)
@@ -82,7 +106,7 @@ class LinboImage:
         :rtype:
         """
 
-        new_image_name = f"{new_name}.qcow2"
+        new_image_name = f"{new_name}.{IMAGE}"
 
         # Rename image
         os.rename(os.path.join(self.path, self.image),
@@ -101,17 +125,39 @@ class LinboImage:
 
         # Move directory
         if not self.backup:
-            os.rename(self.path, os.path.join(self.LINBO_PATH, new_name))
+            os.rename(self.path, os.path.join(LINBO_PATH, new_name))
 
         # Refresh informations
         self.name = new_name
         self.load_info()
 
+    def save_extras(self, data):
+
+        for extra in EXTRA_IMAGE_FILES:
+            path = os.path.join(self.path, f"{self.image}.{extra}")
+            if extra in data and data[extra]:
+                with LMNFile(path, 'w') as f:
+                    f.write(data[extra])
+                os.chmod(path, EXTRA_PERMISSIONS_MAPPING[extra])
+            else:
+                if os.path.exists(path):
+                    os.unlink(path)
+
+        for extra in EXTRA_COMMON_FILES:
+            path = os.path.join(self.path, f"{self.image}.{extra}")
+            if extra in data and data[extra]:
+                with LMNFile(path, 'w') as f:
+                    f.write(data[extra])
+                os.chmod(path, EXTRA_PERMISSIONS_MAPPING[extra])
+            else:
+                if os.path.exists(path):
+                    os.unlink(path)
+
     def to_dict(self):
         return {
             'name': self.name,
             'size': self.size,
-            'description': self.extras['desc'],
+            'desc': self.extras['desc'],
             'info': self.extras['info'],
             'macct': self.extras['macct'],
             'reg': self.extras['reg'],
@@ -120,13 +166,12 @@ class LinboImage:
             'prestart': self.extras['prestart'],
         }
 
-class LinboGroupImage:
-    LINBO_PATH = '/srv/linbo/images'
+class LinboImageGroup:
 
     def __init__(self, name):
         self.name = name
-        self.path = os.path.join(self.LINBO_PATH, self.name)
-        self.backup_path = os.path.join(self.LINBO_PATH, self.name, 'backups')
+        self.path = os.path.join(LINBO_PATH, self.name)
+        self.backup_path = os.path.join(LINBO_PATH, self.name, 'backups')
         self.backups = {}
         self.base = LinboImage(self.name)
         self.get_backups()
@@ -141,8 +186,9 @@ class LinboGroupImage:
         if os.path.exists(self.backup_path):
             for timestamp in os.listdir(self.backup_path):
                 for file in os.listdir(os.path.join(self.backup_path, timestamp)):
-                    if file.endswith(".qcow2"):
-                        self.backups[timestamp] = LinboImage(
+                    if file.endswith(f".{IMAGE}"):
+                        date = datetime.strptime(timestamp, '%Y%m%d%H%M').strftime('%d/%m/%Y %H:%M')
+                        self.backups[date] = LinboImage(
                             self.name,
                             backup=True,
                             timestamp=timestamp
@@ -161,8 +207,20 @@ class LinboGroupImage:
 
         self.base.rename(new_name)
         self.name = new_name
-        self.path = os.path.join(self.LINBO_PATH, self.name)
+        self.path = os.path.join(LINBO_PATH, self.name)
 
+    def delete(self):
+        """
+        Delete image, all backups and all config files
+
+        :return:
+        :rtype:
+        """
+
+        for backup in self.backups:
+            backup.delete()
+
+        self.base.delete()
 
     def to_dict(self):
         result = self.base.to_dict()
@@ -170,7 +228,40 @@ class LinboGroupImage:
             timestamp: backup.to_dict()
             for timestamp, backup in self.backups.items()
         }
+        result['selected'] = False
         return result
 
+@service
 class LinboImageManager:
-    pass
+
+    def __init__(self, context):
+        self.linboImageGroups = {}
+
+    def list(self):
+        for dir in os.listdir(LINBO_PATH):
+            for file in os.listdir(os.path.join(LINBO_PATH, dir)):
+                if file.endswith((f'.{IMAGE}')):
+                    self.linboImageGroups[dir] = LinboImageGroup(dir)
+
+    def delete(self, group, timestamp=0):
+        if group in self.linboImageGroups:
+            if timestamp in self.linboImageGroups[group].backups:
+                # The object to delete is a backup
+                self.linboImageGroups[group].backups[timestamp].delete()
+            else:
+                self.linboImageGroups[group].delete()
+
+    def rename(self, group, new_name):
+        if group in self.linboImageGroups:
+            self.linboImageGroups[group].rename(new_name)
+
+    def restore(self, group, timestamp):
+        if group in self.linboImageGroups:
+            imageGroup = self.linboImageGroups[group]
+            if timestamp in imageGroup.backups:
+                imageGroup.base.delete_files()
+                for file in os.listdir(imageGroup.backups[timestamp].path):
+                    shutil.move(os.path.join(imageGroup.backups[timestamp].path, file),
+                                imageGroup.base.path)
+                imageGroup.backups[timestamp].delete()
+

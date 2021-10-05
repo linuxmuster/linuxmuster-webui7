@@ -1,0 +1,92 @@
+<br/>
+
+<progress-spinner ng:show="deviceList == null"></progress-spinner>
+
+<div ng:show="deviceList != null">
+    <div ng:show="deviceList.length == 0">
+        <br>
+        <div class="alert alert-info">
+            <i class="fa fa-info-circle"></i> <span translate="">There are no APs to manage!</span>.
+        </div>
+    </div>
+    <div ng:show="deviceList.length != 0">
+        <div class="input-group">
+            <input ng:model="query" type="search" autofocus class="form-control" placeholder="Filter" typeahead-min-length="1" />
+            <div uib-dropdown class="input-group-btn" auto-close="outsideClick">
+                <button class="btn btn-default" uib-dropdown-toggle>
+                    <i class="fa fa-list-ol"></i> {{'Rows'|translate}}
+                    <span class="caret"></span>
+                </button>
+                <ul uib-dropdown-menu class="dropdown-menu-right" style="width:200px">
+                    <li ng:repeat="size in [10, 20, 40, 100, 500]">
+                        <a ng:click="paging.pageSize = size"><i class="fa fa-list-ol"></i> {{size}} <span translate >devices</span></a>
+                    </li>
+                    <li>
+                        <div class="input-group" style="display: table">
+                            <div class="input-group-addon">
+                                Other:
+                            </div>
+                            <input ng:model="paging.pageSize" type="number" autofocus class="form-control" />
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <table class="table" style="width:100%">
+            <tr>
+                <th><span checkbox ng:model="all_selected" ng:change="selectAll()"></span></th>
+                <th width="35"></th>
+                <th width="200"> <span translate> Name </span> </th>
+                <th width="200"> <span translate> IP-Address </span> </th>
+                <th width="100"> <span translate> State </span> </th>
+                <th> <span translate> Clients </span> </th>
+                <th width="150"></th>
+            </tr>
+            <tr ng:repeat="device in deviceList|filter:filter|page:paging.page:paging.pageSize">
+                <td width="30" style="text-align:center;">
+                    <span checkbox ng:model="device.selected"></span>
+                </td>
+                <td>
+                    <i class="fas fa-circle" style="color:green;" ng:show="device.STATE == 1"></i>
+                    <i class="fas fa-circle" style="color:red;" ng:show="device.STATE == 0"></i>
+                    <i class="fas fa-circle" style="color:orange;" ng:show="device.STATE == 5"></i>
+                </td>
+                <td width="1" style="text-align:left;">
+                    <b>{{device.DEVICE_NAME}}</b> <br> <i>{{device.DEVICE_MAC}}</i>
+                </td>
+                <td>
+                    {{device.DEVICE_IP}}
+                </td>
+                <td>
+                    <span class="label label-success" ng:show="device.DISABLED == 0" translate>Enabled</span>
+                    <span class="label label-danger" ng:show="device.DISABLED == 1" translate>Disabled</span>
+                </td>
+                <td>
+                    {{device.CLIENTS}} <span translate>Clients</span>
+                </td>
+                <td style="text-align: right;">
+                    <button class="btn btn-default" ng:click="rebootAP(device)">
+                        <i class="fa fa-redo"></i>
+                    </button>
+                    <button class="btn btn-default" ng:click="toggleAPState(device)">
+                        <i class="fa fa-wifi"></i>
+                    </button>
+                </td>
+            </tr>
+        </table>
+
+        <br/>
+        <ul uib-pagination ng:show="deviceList.length > paging.pageSize"  ng-model="paging.page" total-items="deviceList.length" items-per-page="paging.pageSize" max-size="10" rotate="true" boundary-links="true"></ul>
+
+        <div class="floating-toolbar-padder"></div>
+        <floating-toolbar>
+            <button ng:click="batchRebootAP()" ng:show="haveSelection()" class="btn btn-default btn-flat pull-right" translate>Reboot selected</button>
+            <button ng:click="batchDisableAP()" ng:show="haveSelection()" class="btn btn-default btn-flat pull-right" translate>Disable selected</button>
+            <button ng:click="batchEnableAP()" ng:show="haveSelection()" class="btn btn-default btn-flat pull-right" translate>Enable selected</button>
+        </floating-toolbar>
+            
+    </div>
+
+
+</div>
+

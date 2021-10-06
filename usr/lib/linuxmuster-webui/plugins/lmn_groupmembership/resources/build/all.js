@@ -360,7 +360,11 @@
         $scope.groupName = groupName;
         $scope.groupDetails = resp.data['GROUP'][groupName];
         $scope.adminList = resp.data['GROUP'][groupName]['sophomorixAdmins'];
-        $scope.groupmemberlist = resp.data['GROUP'][groupName]['sophomorixMemberGroups'];
+        if (groupType === 'printergroup') {
+          $scope.groupmemberlist = [];
+        } else {
+          $scope.groupmemberlist = resp.data['GROUP'][groupName]['sophomorixMemberGroups'];
+        }
         $scope.groupadminlist = resp.data['GROUP'][groupName]['sophomorixAdminGroups'];
         $scope.typeMap = {
           'adminclass': 'class',
@@ -380,6 +384,8 @@
               'sophomorixAdminClass': member.sophomorixAdminClass,
               'sophomorixRole': member.sophomorixRole
             });
+          } else if (groupType === 'printergroup') {
+            $scope.groupmemberlist.push(member.sAMAccountName);
           }
         }
         $scope.admins = [];

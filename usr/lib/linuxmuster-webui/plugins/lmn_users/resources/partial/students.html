@@ -49,7 +49,16 @@
         <table class="table" style="width:100%">
             <tr><th><span checkbox ng:model="all_selected" ng:change="selectAll(query)"></span></th>
                 <th width="120"> <span translate> Login / Class </span> </th>
-                <th> Name </th></tr>
+                <th>
+                    Name
+                    <span ng:show="customTitle[1]"> / {{customTitle[1]}}</span>
+                </th>
+                <th><span ng:show="customTitle[2]">{{customTitle[2]}}</span></th>
+                <th><span ng:show="customTitle[3]">{{customTitle[3]}}</span></th>
+                <th> </th>
+                <th> </th>
+                <th translate>Status </th>
+            </tr>
             <tr ng:repeat="student in students|filter:filter|orderBy:['-_isNew', sort.fx]|page:paging.page:paging.pageSize" ng:show="student.class[0] != '#'">
                 <td width="30" style="text-align:center;">
                     <span checkbox ng:model="student.selected"></span>
@@ -58,7 +67,37 @@
                     <i>{{student.sAMAccountName}}</i> <br> {{student.sophomorixAdminClass}}
                 </td>
                 <td>
-                    <b>{{student.givenName}}</b> <br> {{student.sn}}
+                    <b>{{student.sn}} {{student.givenName}}</b>
+                    <br />
+                    <div ng:show="isListAttr(customDisplay[1])">
+
+                        <span ng:repeat="custom1 in student[customDisplay[1]] track by $index" class="label label-info">
+                            {{custom1}}
+                        </span>
+                    </div>
+                    <div ng:show="!isListAttr(customDisplay[1]) && student[customDisplay[1]] != 'null'">
+                        {{student[customDisplay[1]]}}
+                    </div>
+                </td>
+                <td>
+                    <div ng:show="isListAttr(customDisplay[2])">
+                        <span ng:repeat="custom1 in student[customDisplay[2]] track by $index" class="label label-info">
+                            {{custom1}}
+                        </span>
+                    </div>
+                    <div ng:show="!isListAttr(customDisplay[2]) && student[customDisplay[2]] != 'null'">
+                        {{student[customDisplay[2]]}}
+                    </div>
+                </td>
+                <td>
+                    <div ng:show="isListAttr(customDisplay[3])">
+                        <span ng:repeat="custom1 in student[customDisplay[3]] track by $index" class="label label-info">
+                            {{custom1}}
+                        </span>
+                    </div>
+                    <div ng:show="!isListAttr(customDisplay[3]) && student[customDisplay[3]] != 'null'">
+                        {{student[customDisplay[3]]}}
+                    </div>
                 </td>
                 <td width="1">
                     <span  uib-dropdown class="dropup" >

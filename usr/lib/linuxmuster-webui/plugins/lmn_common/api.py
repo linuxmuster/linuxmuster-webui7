@@ -60,29 +60,6 @@ except FileNotFoundError:
     pass
 
 
-def lmn_backup_file(path):
-    """
-    Create a backup of a file if in allowed paths, but on ly keeps 10 backups.
-    Backup files names scheme is `.<name>.bak.<timestamp>`
-    DEPRECATED, only used in Linbo plugin.
-
-    :param path: Path of the file
-    :type path: string
-    """
-
-    if not os.path.exists(path):
-        return
-
-    if check_allowed_path(path):
-        folder, name = os.path.split(path)
-        backups = sorted([x for x in os.listdir(folder) if x.startswith('.%s.bak.' % name)])
-        while len(backups) > 10:
-            os.unlink(os.path.join(folder, backups[0]))
-            backups.pop(0)
-
-        with open(folder + '/.' + name + '.bak.' + str(int(time.time())), 'w') as f:
-            f.write(open(path).read())
-
 def lmn_get_school_configpath(school):
     """
     Return the default absolute path for config files in multischool env.
@@ -94,31 +71,6 @@ def lmn_get_school_configpath(school):
         return '/etc/linuxmuster/sophomorix/default-school/'
     else:
         return '/etc/linuxmuster/sophomorix/'+school+'/'+school+'.'
-
-def lmn_write_configfile(path, data):
-    """
-    Write config file it only if there's no difference with the original.
-    DEPRECATED. Must be remplaced with LMNFile in linbo plugin.
-
-    :param path: Path of the file
-    :type path: string
-    :param data: New content
-    :type data: string
-    """
-
-    if check_allowed_path(path):
-        tmp = path + '_tmp'
-        with open(tmp, 'w') as f:
-            f.write(data)
-        # check if file already exist before comparing
-        if os.path.isfile(path):
-            if not filecmp.cmp(tmp, path):
-                lmn_backup_file(path)
-                os.rename(tmp, path)
-            else:
-                os.unlink(tmp)
-        else:
-            os.rename(tmp, path)
 
 class SophomorixProcess(threading.Thread):
     """

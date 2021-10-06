@@ -67,7 +67,27 @@
       return $scope.teachers = resp.data;
     });
     $http.get('/api/lm/read_custom_config').then(function(resp) {
-      return $scope.customDisplay = resp.data.customDisplay.teachers;
+      var idx, index, j, len1, ref1, results;
+      $scope.customDisplay = resp.data.customDisplay.teachers;
+      $scope.customTitle = [''];
+      ref1 = [1, 2, 3];
+      results = [];
+      for (j = 0, len1 = ref1.length; j < len1; j++) {
+        idx = ref1[j];
+        if ($scope.customDisplay[idx] === void 0 || $scope.customDisplay[idx] === '') {
+          results.push($scope.customTitle.push(''));
+        } else if ($scope.customDisplay[idx] === 'proxyAddresses') {
+          results.push($scope.customTitle.push(resp.data.proxyAddresses.teachers.title));
+        } else {
+          index = $scope.customDisplay[idx].slice(-1);
+          if ($scope.isListAttr($scope.customDisplay[idx])) {
+            results.push($scope.customTitle.push(resp.data.customMulti.teachers[index].title || ''));
+          } else {
+            results.push($scope.customTitle.push(resp.data.custom.teachers[index].title || ''));
+          }
+        }
+      }
+      return results;
     });
     $scope.isListAttr = function(attr_name) {
       return $scope.list_attr_enabled.includes(attr_name);
@@ -334,6 +354,7 @@
   });
 
   angular.module('lmn.users').controller('LMUsersStudentsController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) {
+    var i, len, n, ref;
     pageTitle.set(gettext('Students'));
     $scope.sorts = [
       {
@@ -374,6 +395,38 @@
     };
     $scope.all_selected = false;
     $scope.query = '';
+    $scope.list_attr_enabled = ['proxyAddresses'];
+    ref = [1, 2, 3, 4, 5];
+    for (i = 0, len = ref.length; i < len; i++) {
+      n = ref[i];
+      $scope.list_attr_enabled.push('sophomorixCustomMulti' + n);
+    }
+    $http.get('/api/lm/read_custom_config').then(function(resp) {
+      var idx, index, j, len1, ref1, results;
+      $scope.customDisplay = resp.data.customDisplay.students;
+      $scope.customTitle = [''];
+      ref1 = [1, 2, 3];
+      results = [];
+      for (j = 0, len1 = ref1.length; j < len1; j++) {
+        idx = ref1[j];
+        if ($scope.customDisplay[idx] === void 0 || $scope.customDisplay[idx] === '') {
+          results.push($scope.customTitle.push(''));
+        } else if ($scope.customDisplay[idx] === 'proxyAddresses') {
+          results.push($scope.customTitle.push(resp.data.proxyAddresses.students.title));
+        } else {
+          index = $scope.customDisplay[idx].slice(-1);
+          if ($scope.isListAttr($scope.customDisplay[idx])) {
+            results.push($scope.customTitle.push(resp.data.customMulti.students[index].title || ''));
+          } else {
+            results.push($scope.customTitle.push(resp.data.custom.students[index].title || ''));
+          }
+        }
+      }
+      return results;
+    });
+    $scope.isListAttr = function(attr_name) {
+      return $scope.list_attr_enabled.includes(attr_name);
+    };
     $http.post('/api/lm/sophomorixUsers/students', {
       action: 'get-all'
     }).then(function(resp) {
@@ -403,10 +456,10 @@
       var x;
       return $http.post('/api/lm/users/password', {
         users: (function() {
-          var i, len, results;
+          var j, len1, results;
           results = [];
-          for (i = 0, len = user.length; i < len; i++) {
-            x = user[i];
+          for (j = 0, len1 = user.length; j < len1; j++) {
+            x = user[j];
             results.push(x['sAMAccountName']);
           }
           return results;
@@ -420,10 +473,10 @@
       var x;
       return $http.post('/api/lm/users/password', {
         users: (function() {
-          var i, len, results;
+          var j, len1, results;
           results = [];
-          for (i = 0, len = user.length; i < len; i++) {
-            x = user[i];
+          for (j = 0, len1 = user.length; j < len1; j++) {
+            x = user[j];
             results.push(x['sAMAccountName']);
           }
           return results;
@@ -464,11 +517,11 @@
       });
     };
     $scope.haveSelection = function() {
-      var i, len, ref, x;
+      var j, len1, ref1, x;
       if ($scope.students) {
-        ref = $scope.students;
-        for (i = 0, len = ref.length; i < len; i++) {
-          x = ref[i];
+        ref1 = $scope.students;
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          x = ref1[j];
           if (x.selected) {
             return true;
           }
@@ -479,11 +532,11 @@
     $scope.batchSetInitialPassword = function() {
       var x;
       return $scope.setInitialPassword((function() {
-        var i, len, ref, results;
-        ref = $scope.students;
+        var j, len1, ref1, results;
+        ref1 = $scope.students;
         results = [];
-        for (i = 0, len = ref.length; i < len; i++) {
-          x = ref[i];
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          x = ref1[j];
           if (x.selected) {
             results.push(x);
           }
@@ -494,11 +547,11 @@
     $scope.batchSetRandomPassword = function() {
       var x;
       return $scope.setRandomPassword((function() {
-        var i, len, ref, results;
-        ref = $scope.students;
+        var j, len1, ref1, results;
+        ref1 = $scope.students;
         results = [];
-        for (i = 0, len = ref.length; i < len; i++) {
-          x = ref[i];
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          x = ref1[j];
           if (x.selected) {
             results.push(x);
           }
@@ -509,11 +562,11 @@
     $scope.batchSetCustomPassword = function() {
       var x;
       return $scope.setCustomPassword((function() {
-        var i, len, ref, results;
-        ref = $scope.students;
+        var j, len1, ref1, results;
+        ref1 = $scope.students;
         results = [];
-        for (i = 0, len = ref.length; i < len; i++) {
-          x = ref[i];
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          x = ref1[j];
           if (x.selected) {
             results.push(x);
           }
@@ -522,25 +575,25 @@
       })());
     };
     $scope.filter = function(row) {
-      var i, len, ref, result, value;
+      var j, len1, ref1, result, value;
       // Only query sAMAccountName, givenName, sn and sophomorixAdminClass
       result = false;
-      ref = ['sAMAccountName', 'givenName', 'sn', 'sophomorixAdminClass'];
-      for (i = 0, len = ref.length; i < len; i++) {
-        value = ref[i];
+      ref1 = ['sAMAccountName', 'givenName', 'sn', 'sophomorixAdminClass'];
+      for (j = 0, len1 = ref1.length; j < len1; j++) {
+        value = ref1[j];
         result = result || row[value].toLowerCase().indexOf($scope.query.toLowerCase() || '') !== -1;
       }
       return result;
     };
     return $scope.selectAll = function(query) {
-      var i, len, ref, results, student;
+      var j, len1, ref1, results, student;
       if (query == null) {
         query = '';
       }
-      ref = $scope.students;
+      ref1 = $scope.students;
       results = [];
-      for (i = 0, len = ref.length; i < len; i++) {
-        student = ref[i];
+      for (j = 0, len1 = ref1.length; j < len1; j++) {
+        student = ref1[j];
         if (query === void 0 || query === '') {
           student.selected = $scope.all_selected;
         }
@@ -1397,7 +1450,27 @@
       return $scope.teachers = resp.data;
     });
     $http.get('/api/lm/read_custom_config').then(function(resp) {
-      return $scope.customDisplay = resp.data.customDisplay.teachers;
+      var idx, index, j, len1, ref1, results;
+      $scope.customDisplay = resp.data.customDisplay.teachers;
+      $scope.customTitle = [''];
+      ref1 = [1, 2, 3];
+      results = [];
+      for (j = 0, len1 = ref1.length; j < len1; j++) {
+        idx = ref1[j];
+        if ($scope.customDisplay[idx] === void 0 || $scope.customDisplay[idx] === '') {
+          results.push($scope.customTitle.push(''));
+        } else if ($scope.customDisplay[idx] === 'proxyAddresses') {
+          results.push($scope.customTitle.push(resp.data.proxyAddresses.teachers.title));
+        } else {
+          index = $scope.customDisplay[idx].slice(-1);
+          if ($scope.isListAttr($scope.customDisplay[idx])) {
+            results.push($scope.customTitle.push(resp.data.customMulti.teachers[index].title || ''));
+          } else {
+            results.push($scope.customTitle.push(resp.data.custom.teachers[index].title || ''));
+          }
+        }
+      }
+      return results;
     });
     $scope.isListAttr = function(attr_name) {
       return $scope.list_attr_enabled.includes(attr_name);
@@ -2211,8 +2284,8 @@
         }).then(function() {
           if (msg.value) {
             $scope.userDetails['sophomorixCustomMulti' + n].push(msg.value);
+            return notify.success(gettext("Value added !"));
           }
-          return notify.success(gettext("Value added !"));
         }, function() {
           return notify.error(gettext("Error, please verify the user and/or your values."));
         });
@@ -2265,7 +2338,7 @@
     $scope.userlist = userlist;
     $scope.rebuildCSV = function() {
       var element, i, j, len, ref, results;
-      // add empty 'not used' fields if CSV contains more coloumns than fields
+      // add empty 'not used' fields if CSV contains more columns than fields
       while ($scope['userListCSV'].length > $scope['coloumnTitles'].length) {
         $scope['coloumnTitles'].push({
           name: gettext('not used')
@@ -2284,7 +2357,7 @@
     //console.log ($scope['userListCSV'])
     $scope.togglecustomField = function(field) {
       var pos;
-      // get index of field in coloumnTitles (-1 if not presend)
+      // get index of field in columnTitles (-1 if not present)
       pos = $scope.coloumnTitles.map(function(e) {
         return e.name;
       }).indexOf(field);

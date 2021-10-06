@@ -120,7 +120,7 @@
                 ng-click="showQuotaDetails = ! showQuotaDetails">{{showQuotaDetails ? hidetext : showtext}}</a>
             <h4 translate> Quota: </h4>
         </div>
-        <div style="padding: 15px;padding-left: 30px; padding-right: 30px;">
+        <div ng-show="showQuotaDetails" class="panel-body" style="padding: 15px;padding-left: 30px; padding-right: 30px;">
             <div ng:repeat="quota in quotas" style="margin-bottom: 15px;">
                 <div class="widget-header">
                     <b>{{quota.share}}</b>

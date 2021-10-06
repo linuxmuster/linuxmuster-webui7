@@ -5,7 +5,6 @@ from jadi import component
 from aj.auth import authorize
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint
-from aj.plugins.lmn_common.api import lmn_backup_file, lmn_write_configfile
 from aj.plugins.lmn_common.lmnfile import LMNFile
 
 @component(HttpPlugin)
@@ -258,65 +257,20 @@ class Handler(HttpPlugin):
         path = os.path.join(self.LINBO_PATH, name)
 
         if http_context.method == 'GET':
-            config = {
-                'config': {},
-                'partitions': [],
-                'os': [],
-            }
-            for line in open(path, 'rb'):
-                line = line.decode('utf-8', errors='ignore')
-                line = line.split('#')[0].strip()
-
-                if line.startswith('['):
-                    section = {}
-                    section_name = line.strip('[]')
-                    if section_name == 'Partition':
-                        config['partitions'].append(section)
-                    elif section_name == 'OS':
-                        config['os'].append(section)
-                    else:
-                        config['config'][section_name] = section
-                elif '=' in line:
-                    k, v = line.split('=', 1)
-                    v = v.strip()
-                    if v in ['yes', 'no']:
-                        v = v == 'yes'
-                    section[k.strip()] = v
+            with LMNFile(path, 'r') as f:
+                config = f.read()
             return config
 
         if http_context.method == 'DELETE':
-            lmn_backup_file(path)
+            with LMNFile(path, 'r') as f:
+                f.backup()
             os.unlink(path)
 
         if http_context.method == 'POST':
-            content = ''
             data = http_context.json_body()
 
-            def convert(v):
-                if type(v) is bool:
-                    return 'yes' if v else 'no'
-                return v
-
-            for section_name, section in data['config'].items():
-                content += '[%s]\n' % section_name
-                for k, v in section.items():
-                    content += '%s = %s\n' % (k, convert(v))
-                content += '\n'
-            for partition in data['partitions']:
-                content += '[Partition]\n'
-                for k, v in partition.items():
-                    if k[0] == '_':
-                        continue
-                    content += '%s = %s\n' % (k, convert(v))
-                content += '\n'
-            for partition in data['os']:
-                content += '[OS]\n'
-                for k, v in partition.items():
-                    content += '%s = %s\n' % (k, convert(v))
-                content += '\n'
-
-            lmn_write_configfile(path, content)
-            os.chmod(path, 0o755)
+            with LMNFile(path, 'w') as f:
+                f.write(data)
 
     @url(r'/api/lm/linbo.iso')
     @endpoint(api=False, page=True)

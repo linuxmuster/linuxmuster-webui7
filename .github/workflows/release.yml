@@ -46,7 +46,9 @@ jobs:
         run: cat *.changes | sed '0,/^Changes:$/d' | sed '/Checksums.*/Q' | sed '1,2d' | tail >> ./current-changes
 
       - name: Define distribution variable
-        run: echo "DISTRIBUTION=$(grep -i ^Distribution *.changes | awk -F\: '{ print $2 }' | awk '{ print $1 }')" >> $GITHUB_ENV
+        run: |
+          export DISTRIBUTION=$(grep -i ^Distribution *.changes | awk -F\: '{ print $2 }' | awk '{ print $1 }')
+          echo "DISTRIBUTION=$DISTRIBUTION" >> $GITHUB_ENV
 
       - name: Create Release
         id: create_release

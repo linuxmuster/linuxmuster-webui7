@@ -50,9 +50,10 @@ jobs:
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DISTRIBUTION: grep -i ^Distribution *.changes | awk -F\: '{ print $2 }' | awk '{ print $1 }'
         with:
           tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          release_name: Release ${{ github.ref }} ($DISTRIBUTION)
           draft: false
           prerelease: false
           body_path: ./current-changes

@@ -1,3 +1,47 @@
+linuxmuster-webui7 (1.0.161~1) lmn7-testing; urgency=medium
+
+  - Multischool support
+  - Add custom fields
+  - Select template to print data, print data page improved
+  - Quota display on teacher view
+  - Update on Ajenti 2.1.43
+  - New plugins : samba DNS / vdi / dhcp / crontab
+  - Complete LMNFile actions
+  - More options for printer group management
+  - Manage filter script from sophomorix
+  - New footer style
+  - A lot of bug fixes and even more
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 08 Oct 2021 10:18:41 +0200
+
+linuxmuster-webui7 (1.0.160) lmn7-testing; urgency=medium
+
+  * Current snapshot build 3efd640bf0f3999e77911358d9a0650ddd044425
+   * Issue with Websession and DHCP Plugin
+
+ -- Lukas Spitznagel <lukas.spitznagel@netzint.de>  Wed, 10 Mar 2021 19:26:33 +0000
+
+linuxmuster-webui7 (1.0.159-1) lmn7-testing; urgency=medium 
+
+  * Current snapshot build cb871ceaf6cfea435b8c2d0e574a75579e07af85
+   *     Removed lmn_printers fixed urls in lmn_linbo_sync
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Feb 26 12:51:03 CET 2021
+
+linuxmuster-webui7 (1.0.158-1) lmn7-testing; urgency=medium
+
+  * Current snapshot build 840d43415eedad30b91eedfa1a6a300b375b2a99
+   *     Add all built js.
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 12 Feb 2021 22:10:27 +0100
+
+linuxmuster-webui7 (1.0.157-1) lmn7-testing; urgency=medium
+
+  * Current snapshot build 5be14f0ba99a7c2c2f959834f8d58aa95a3688fd
+   *     Add many plugins and update permissions
+
+ -- Lukas Spitznagel <lukas.spitznagel@netzint.de>  Tue Feb 2 15:41:31 2021 +0000
+
 linuxmuster-webui7 (1.0.155-1) lmn7; urgency=medium 
 
   * Current snapshot build 66422b02d79a6a569eec445006396380f10d20cc

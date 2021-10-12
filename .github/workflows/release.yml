@@ -50,6 +50,14 @@ jobs:
           export DISTRIBUTION=$(grep -i ^Distribution *.changes | awk -F\: '{ print $2 }' | awk '{ print $1 }')
           echo "DISTRIBUTION=$DISTRIBUTION" >> $GITHUB_ENV
 
+      - name: Test if it's a testing prerelease
+        id: check_prerelease
+        uses: haya14busa/action-cond@v1
+        with:
+          cond: ${{ DISTRIBUTION == 'lmn7-testing' }}
+          if_true: "true"
+          if_false: "false"
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -59,7 +67,7 @@ jobs:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }} (${{ DISTRIBUTION }})
           draft: false
-          prerelease: false
+          prerelease: ${{ steps.check_prerelease.outputs.value }}
           body_path: ./current-changes
 
       - name: Delete current changes file

@@ -45,10 +45,13 @@ jobs:
       - name: Extract current changes
         run: cat *.changes | sed '0,/^Changes:$/d' | sed '/Checksums.*/Q' | sed '1,2d' | tail >> ./current-changes
 
-      - name: Define distribution variable
+      - name: Define distribution variables
         run: |
           export DISTRIBUTION=$(grep -i ^Distribution *.changes | awk -F\: '{ print $2 }' | awk '{ print $1 }')
           echo "DISTRIBUTION=$DISTRIBUTION" >> $GITHUB_ENV
+
+          export VERSION=$(grep -i ^Version package/*.changes | awk -F\: '{ print $2 }' | awk '{ print $1 }')
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Test if it's a testing prerelease
         id: check_prerelease
@@ -65,7 +68,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }} (${{ env.DISTRIBUTION }})
+          release_name: Release ${{ env.VERSION }} (${{ env.DISTRIBUTION }})
           draft: false
           prerelease: ${{ steps.check_prerelease.outputs.value }}
           body_path: ./current-changes
@@ -74,6 +77,7 @@ jobs:
         run: rm ./current-changes
 
       - name: Upload Release Assets
+        if: env.DISTRIBUTION == 'lmn7'
         id: upload-release-assets
         uses: dwenegar/upload-release-assets@v1
         env:

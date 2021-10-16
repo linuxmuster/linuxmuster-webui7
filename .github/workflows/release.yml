@@ -50,7 +50,7 @@ jobs:
           export DISTRIBUTION=$(grep -i ^Distribution *.changes | awk -F\: '{ print $2 }' | awk '{ print $1 }')
           echo "DISTRIBUTION=$DISTRIBUTION" >> $GITHUB_ENV
 
-          export VERSION=$(grep -i ^Version package/*.changes | awk -F\: '{ print $2 }' | awk '{ print $1 }')
+          export VERSION=$(grep -i ^Version *.changes | awk -F\: '{ print $2 }' | awk '{ print $1 }')
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Test if it's a testing prerelease

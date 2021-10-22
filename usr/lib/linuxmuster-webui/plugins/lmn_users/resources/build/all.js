@@ -2486,6 +2486,41 @@
     };
   });
 
+  angular.module('lmn.users').controller('LMUsersUploadCustomModalController', function($scope, $window, $http, $uibModalInstance, messagebox, notify, $uibModal, gettext, filesystem, userlist) {
+    $scope.path = "/tmp/";
+    $scope.onUploadBegin = function($flow) {
+      var msg;
+      $uibModalInstance.close();
+      msg = messagebox.show({
+        progress: true
+      });
+      return filesystem.startFlowUpload($flow, $scope.path).then(function() {
+        var filename;
+        notify.success(gettext('Uploaded'));
+        filename = $flow["files"][0]["name"];
+        return $http.post('/api/lm/filterCustomCSV', {
+          tmp_path: $scope.path + filename,
+          userlist: userlist
+        }).then(function(resp) {
+          if (resp['data'][0] === 'ERROR') {
+            notify.error(resp['data'][1]);
+          }
+          if (resp['data'][0] === 'LOG') {
+            notify.success(gettext(resp['data'][1]));
+          }
+          $window.location.reload();
+          msg.close();
+          return notify.success(gettext('Saved'));
+        });
+      }, null, function(progress) {
+        return msg.messagebox.title = `Uploading: ${Math.floor(100 * progress)}%`;
+      });
+    };
+    return $scope.close = function() {
+      return $uibModalInstance.close();
+    };
+  });
+
   angular.module('lmn.users').controller('LMNUsersAddAdminController', function($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, role) {
     $scope.role = role;
     $scope.save = function(username) {
@@ -2937,26 +2972,22 @@
         return notify.success(gettext('Saved'));
       });
     };
-    $scope.students_confirmUpload = function() {
+    $scope.confirmUpload = function(type, role) {
+      var controller, templateUrl;
+      if (type === "custom") {
+        templateUrl = '/lmn_users:resources/partial/uploadcustom.modal.html';
+        controller = 'LMUsersUploadCustomModalController';
+      } else {
+        templateUrl = '/lmn_users:resources/partial/upload.modal.html';
+        controller = 'LMUsersUploadModalController';
+      }
       return $uibModal.open({
-        templateUrl: '/lmn_users:resources/partial/upload.modal.html',
-        controller: 'LMUsersUploadModalController',
+        templateUrl: templateUrl,
+        controller: controller,
         backdrop: 'static',
         resolve: {
           userlist: function() {
-            return 'students.csv';
-          }
-        }
-      });
-    };
-    $scope.teachers_confirmUpload = function() {
-      return $uibModal.open({
-        templateUrl: '/lmn_users:resources/partial/upload.modal.html',
-        controller: 'LMUsersUploadModalController',
-        backdrop: 'static',
-        resolve: {
-          userlist: function() {
-            return 'teachers.csv';
+            return role + '.csv';
           }
         }
       });

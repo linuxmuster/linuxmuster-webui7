@@ -286,6 +286,30 @@ angular.module('lmn.users').controller 'LMUsersUploadModalController', ($scope, 
     $scope.close = () ->
         $uibModalInstance.close()
 
+angular.module('lmn.users').controller 'LMUsersUploadCustomModalController', ($scope, $window, $http, $uibModalInstance, messagebox, notify, $uibModal, gettext, filesystem, userlist) ->
+    $scope.path = "/tmp/"
+    $scope.onUploadBegin = ($flow) ->
+        $uibModalInstance.close()
+        msg = messagebox.show({progress: true})
+        filesystem.startFlowUpload($flow, $scope.path).then(() ->
+            notify.success(gettext('Uploaded'))
+            filename = $flow["files"][0]["name"]
+            $http.post('/api/lm/filterCustomCSV', {tmp_path: $scope.path + filename, userlist: userlist}).then (resp) ->
+                if resp['data'][0] == 'ERROR'
+                    notify.error (resp['data'][1])
+                if resp['data'][0] == 'LOG'
+                    notify.success gettext(resp['data'][1])
+                $window.location.reload()
+                msg.close()
+                notify.success gettext('Saved')
+        , null, (progress) ->
+            msg.messagebox.title = "Uploading: #{Math.floor(100 * progress)}%"
+        )
+
+
+    $scope.close = () ->
+        $uibModalInstance.close()
+
 angular.module('lmn.users').controller 'LMNUsersAddAdminController', ($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, role) ->
 
     $scope.role = role

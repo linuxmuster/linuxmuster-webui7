@@ -237,7 +237,10 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
                 $scope.groupName    = groupName
                 $scope.groupDetails = resp.data['GROUP'][groupName]
                 $scope.adminList = resp.data['GROUP'][groupName]['sophomorixAdmins']
-                $scope.groupmemberlist = resp.data['GROUP'][groupName]['sophomorixMemberGroups']
+                if groupType == 'printergroup'
+                    $scope.groupmemberlist = []
+                else
+                    $scope.groupmemberlist = resp.data['GROUP'][groupName]['sophomorixMemberGroups']
                 $scope.groupadminlist = resp.data['GROUP'][groupName]['sophomorixAdminGroups']
 
                 $scope.typeMap = {
@@ -246,7 +249,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
                     'printer': 'group',
                 }
                 $scope.type = $scope.typeMap[$scope.groupDetails['sophomorixType']]
-
+                
                 $scope.members = []
                 for name,member of resp.data['MEMBERS'][groupName]
                     if member.sn != "null" # group member
@@ -257,6 +260,8 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
                             'sophomorixAdminClass':member.sophomorixAdminClass,
                             'sophomorixRole':member.sophomorixRole
                         })
+                    else if groupType == 'printergroup'
+                        $scope.groupmemberlist.push(member.sAMAccountName)
 
                 $scope.admins = []
                 for admin in $scope.adminList

@@ -1,3 +1,19 @@
+linuxmuster-webui7 (1.0.161~1) lmn7-testing; urgency=medium
+
+  - Multischool support
+  - Add custom fields
+  - Select template to print data, print data page improved
+  - Quota display on teacher view
+  - Update on Ajenti 2.1.43
+  - New plugins : samba DNS / vdi / dhcp / crontab
+  - Complete LMNFile actions
+  - More options for printer group management
+  - Manage filter script from sophomorix
+  - New footer style
+  - A lot of bug fixes and even more
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 08 Oct 2021 10:18:41 +0200
+
 linuxmuster-webui7 (1.0.160) lmn7-testing; urgency=medium
 
   * Current snapshot build 3efd640bf0f3999e77911358d9a0650ddd044425

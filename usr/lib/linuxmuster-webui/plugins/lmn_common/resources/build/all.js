@@ -484,7 +484,7 @@
     this.isValidDate = function(date) {
       var error_msg, regExp, validDate;
       error_msg = date + gettext(' is not a valid date');
-      regExp = /^(0[1-9]|[12][0-9]|3[01])[.](0[1-9]|1[012])[.](19|20)\d\d$/;
+      regExp = /^([1-9]|0[1-9]|[12][0-9]|3[01])[.]([1-9]|0[1-9]|1[012])[.](19|20)\d\d$/;
       validDate = regExp.test(date);
       if (!validDate) {
         return error_msg;
@@ -551,6 +551,16 @@
       error_msg = role + gettext(' is not a valid role');
       validRole = ['switch', 'addc', 'wlan', 'staffcomputer', 'mobile', 'printer', 'classroom-teachercomputer', 'server', 'iponly', 'faculty-teachercomputer', 'voip', 'byod', 'classroom-studentcomputer', 'thinclient', 'router'];
       if (validRole.indexOf(role) === -1) {
+        return error_msg;
+      }
+      return true;
+    };
+    this.isValidDomain = function(domain) {
+      var error_msg, regExp, validDomain;
+      error_msg = domain + gettext(' is not a valid domain');
+      regExp = /^[a-zA-Z0-9\-.]*$/;
+      validDomain = regExp.test(domain);
+      if (!validDomain) {
         return error_msg;
       }
       return true;

@@ -233,8 +233,14 @@ class CSVLoader(LMNFile):
     def __enter__(self):
         self.opened = open(self.file, 'r', encoding=self.encoding)
         if 'r' in self.mode or '+' in self.mode:
+            # Removing leading and trailing spaces for all fields
+            trim = []
+            for line in self.opened:
+                trim.append(self.delimiter.join(
+                    [field.strip() for field in line.split(self.delimiter)]
+                ))
             self.data = csv.DictReader(
-                (line if len(line) > 3 else EMPTY_LINE_MARKER for line in self.opened),
+                (line if len(line) > 3 else EMPTY_LINE_MARKER for line in trim),
                 delimiter = self.delimiter,
                 fieldnames = self.fieldnames
             )

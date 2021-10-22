@@ -329,27 +329,21 @@ angular.module('lmn.users').controller 'LMUsersListManagementController', ($scop
         return $http.post("/api/lm/users/extra-courses?encoding=#{$scope.courses_encoding}", $scope.courses).then () ->
            notify.success gettext('Saved')
 
+    $scope.confirmUpload = (type, role) ->
+        if (type == "custom")
+            templateUrl = '/lmn_users:resources/partial/uploadcustom.modal.html'
+            controller = 'LMUsersUploadCustomModalController'
+        else
+            templateUrl = '/lmn_users:resources/partial/upload.modal.html'
+            controller = 'LMUsersUploadModalController'
 
-    $scope.students_confirmUpload = () ->
-            $uibModal.open(
-                templateUrl: '/lmn_users:resources/partial/upload.modal.html'
-                controller: 'LMUsersUploadModalController'
-                backdrop: 'static'
-                resolve:
-                    userlist: () -> 'students.csv'
-            )
-
-    $scope.teachers_confirmUpload = () ->
-            $uibModal.open(
-               templateUrl: '/lmn_users:resources/partial/upload.modal.html'
-               controller: 'LMUsersUploadModalController'
-               backdrop: 'static'
-               resolve:
-                    userlist: () -> 'teachers.csv'
-            )
-
-
-
+        $uibModal.open(
+            templateUrl: templateUrl
+            controller: controller
+            backdrop: 'static'
+            resolve:
+                userlist: () -> role + '.csv'
+        )
 
     $scope.students_backups = () ->
         path = lmn_get_school_configpath($scope.identity.profile.activeSchool)+'students.csv'

@@ -555,6 +555,16 @@
       }
       return true;
     };
+    this.isValidDomain = function(domain) {
+      var error_msg, regExp, validDomain;
+      error_msg = domain + gettext(' is not a valid domain');
+      regExp = /^[a-zA-Z0-9\-.]*$/;
+      validDomain = regExp.test(domain);
+      if (!validDomain) {
+        return error_msg;
+      }
+      return true;
+    };
     // Get local $scope var from controller
     this.set = function(data, name) {
       return this.externVar[name] = data;

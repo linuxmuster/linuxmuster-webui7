@@ -212,8 +212,8 @@ class Handler(HttpPlugin):
     def handle_api_restore_image(self, http_context, image=None):
 
         if http_context.method == 'POST':
-            timestamp = http_context.json_body()['timestamp']
-            self.mgr.restore(image, timestamp)
+            date = http_context.json_body()['date']
+            self.mgr.restore(image, date)
 
     @url(r'/api/lm/linbo4/deleteBackupImage/(?P<image>.+)')
     @authorize('lm:linbo:images')
@@ -221,11 +221,15 @@ class Handler(HttpPlugin):
     def handle_api_delete_backup(self, http_context, image=None):
 
         if http_context.method == 'POST':
-            timestamp = http_context.json_body()['timestamp']
-            self.mgr.delete(image, timestamp)
+            date = http_context.json_body()['date']
+            self.mgr.delete(image, date)
 
-    @url(r'/api/lm/linbo4/saveBackupImage/(?P<image>.+)/(?P<timestamp>.+)')
+    @url(r'/api/lm/linbo4/saveBackupImage/(?P<image>.+)')
     @authorize('lm:linbo:images')
     @endpoint(api=True)
-    def handle_api_save_backup(self, http_context, image=None, timestamp=None):
-        pass
+    def handle_api_save_backup(self, http_context, image=None):
+
+        if http_context.method == 'POST':
+            data = http_context.json_body()['data']
+            timestamp = http_context.json_body()['timestamp']
+            self.mgr.save_extras(image, data, timestamp)

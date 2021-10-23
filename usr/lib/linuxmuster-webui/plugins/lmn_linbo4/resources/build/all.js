@@ -745,14 +745,14 @@
         });
       });
     };
-    $scope.deleteBackupImage = function(image, timestamp) {
+    $scope.deleteBackupImage = function(image, date) {
       return messagebox.show({
         text: `Delete '${image.name}'?`,
         positive: 'Delete',
         negative: 'Cancel'
       }).then(function() {
         return $http.post(`/api/lm/linbo4/deleteBackupImage/${image.name}`, {
-          timestamp: timestamp
+          date: date
         }).then(function() {
           $location.hash("images");
           return $route.reload();
@@ -841,9 +841,9 @@
         }
       });
     };
-    $scope.restoreBackup = function(image, timestamp) {
+    $scope.restoreBackup = function(image, date) {
       return $http.post(`/api/lm/linbo4/restoreBackupImage/${image.name}`, {
-        timestamp: timestamp
+        date: date
       }).then(function(resp) {
         $location.hash("images");
         return $route.reload();
@@ -863,9 +863,18 @@
         }
       }).result.then(function(result) {
         angular.copy(result, image);
-        return $http.post(`/api/lm/linbo4/image/${image.name}`, result).then(function(resp) {
-          return notify.success(gettext('Saved'));
-        });
+        if (image.backup) {
+          return $http.post(`/api/lm/linbo4/saveBackupImage/${image.name}`, {
+            data: result,
+            timestamp: image.timestamp
+          }).then(function(resp) {
+            return notify.success(gettext('Backup saved'));
+          });
+        } else {
+          return $http.post(`/api/lm/linbo4/image/${image.name}`, result).then(function(resp) {
+            return notify.success(gettext('Saved'));
+          });
+        }
       });
     };
     return $scope.downloadIso = function() {

@@ -593,9 +593,9 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
                 $location.hash("images")
                 $route.reload()
 
-    $scope.deleteBackupImage = (image, timestamp) ->
+    $scope.deleteBackupImage = (image, date) ->
         messagebox.show(text: "Delete '#{image.name}'?", positive: 'Delete', negative: 'Cancel').then () ->
-            $http.post("/api/lm/linbo4/deleteBackupImage/#{image.name}", {timestamp: timestamp}).then () ->
+            $http.post("/api/lm/linbo4/deleteBackupImage/#{image.name}", {date: date}).then () ->
                 $location.hash("images")
                 $route.reload()
 
@@ -648,8 +648,8 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
                     $location.hash("images")
                     $route.reload()
 
-    $scope.restoreBackup = (image, timestamp) ->
-        $http.post("/api/lm/linbo4/restoreBackupImage/#{image.name}", {timestamp: timestamp}).then (resp) ->
+    $scope.restoreBackup = (image, date) ->
+        $http.post("/api/lm/linbo4/restoreBackupImage/#{image.name}", {date: date}).then (resp) ->
             $location.hash("images")
             $route.reload()
 
@@ -662,8 +662,12 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
                 images: () -> $scope.images
         ).result.then (result) ->
             angular.copy(result, image)
-            $http.post("/api/lm/linbo4/image/#{image.name}", result).then (resp) ->
-                notify.success gettext('Saved')
+            if image.backup
+                $http.post("/api/lm/linbo4/saveBackupImage/#{image.name}", {data: result, timestamp:image.timestamp}).then (resp) ->
+                    notify.success gettext('Backup saved')
+            else
+                $http.post("/api/lm/linbo4/image/#{image.name}", result).then (resp) ->
+                    notify.success gettext('Saved')
 
     $scope.downloadIso = () ->
         location.href = '/api/lm/linbo.iso'

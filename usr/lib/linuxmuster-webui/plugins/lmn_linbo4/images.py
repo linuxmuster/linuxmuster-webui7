@@ -20,6 +20,12 @@ EXTRA_PERMISSIONS_MAPPING = {
 }
 IMAGE = "qcow2"
 
+def date2timestamp(date):
+    return datetime.strptime(date, '%d/%m/%Y %H:%M').strftime('%Y%m%d%H%M')
+
+def timestamp2date(timestamp):
+    return datetime.strptime(timestamp, '%Y%m%d%H%M').strftime('%d/%m/%Y %H:%M')
+
 class LinboImage:
 
     def __init__(self, name, backup=False, timestamp=None):
@@ -132,7 +138,6 @@ class LinboImage:
 
         # Refresh informations
         self.name = new_name
-        self.load_info()
 
     def save_extras(self, data):
 
@@ -167,6 +172,8 @@ class LinboImage:
             'postsync': self.extras['postsync'],
             'vdi': self.extras['vdi'],
             'prestart': self.extras['prestart'],
+            'backup': self.backup,
+            'timestamp': self.timestamp,
         }
 
 class LinboImageGroup:
@@ -193,8 +200,7 @@ class LinboImageGroup:
             for timestamp in os.listdir(self.backup_path):
                 for file in os.listdir(os.path.join(self.backup_path, timestamp)):
                     if file.endswith(f".{IMAGE}"):
-                        date = datetime.strptime(timestamp, '%Y%m%d%H%M').strftime('%d/%m/%Y %H:%M')
-                        self.backups[date] = LinboImage(
+                        self.backups[timestamp2date(timestamp)] = LinboImage(
                             self.name,
                             backup=True,
                             timestamp=timestamp
@@ -212,8 +218,16 @@ class LinboImageGroup:
             backup.rename(new_name)
 
         self.base.rename(new_name)
+
+        # Refresh informations
+        self.base.load_info()
+
+        for timestamp, backup in self.backups.items():
+            backup.load_info()
+
         self.name = new_name
         self.path = os.path.join(LINBO_PATH, self.name)
+        self.backup_path = os.path.join(LINBO_PATH, self.name, 'backups')
 
     def delete(self):
         """
@@ -250,11 +264,11 @@ class LinboImageManager:
                 if file.endswith((f'.{IMAGE}')):
                     self.linboImageGroups[dir] = LinboImageGroup(dir)
 
-    def delete(self, group, timestamp=0):
+    def delete(self, group, date=0):
         if group in self.linboImageGroups:
-            if timestamp in self.linboImageGroups[group].backups:
+            if date in self.linboImageGroups[group].backups:
                 # The object to delete is a backup
-                self.linboImageGroups[group].backups[timestamp].delete()
+                self.linboImageGroups[group].backups[date].delete()
                 self.linboImageGroups[group].load()
             else:
                 self.linboImageGroups[group].delete()
@@ -266,14 +280,26 @@ class LinboImageManager:
             self.linboImageGroups[new_name] = LinboImageGroup(new_name)
             del self.linboImageGroups[group]
 
-    def restore(self, group, timestamp):
+    def restore(self, group, date):
         if group in self.linboImageGroups:
             imageGroup = self.linboImageGroups[group]
-            if timestamp in imageGroup.backups:
+            if date in imageGroup.backups:
                 imageGroup.base.delete_files()
-                for file in os.listdir(imageGroup.backups[timestamp].path):
-                    shutil.move(os.path.join(imageGroup.backups[timestamp].path, file),
+                for file in os.listdir(imageGroup.backups[date].path):
+                    shutil.move(os.path.join(imageGroup.backups[date].path, file),
                                 imageGroup.base.path)
-                imageGroup.backups[timestamp].delete()
+                imageGroup.backups[date].delete()
                 self.linboImageGroups[group].load()
+
+    def save_extras(self, group, data, timestamp=None):
+        if timestamp:
+            date = timestamp2date(timestamp)
+        else:
+            date = 0
+        if group in self.linboImageGroups:
+            imageGroup = self.linboImageGroups[group]
+            if date in imageGroup.backups:
+                imageGroup.backups[date].save_extras(data)
+            else:
+                imageGroup.base.save_extras(data)
 

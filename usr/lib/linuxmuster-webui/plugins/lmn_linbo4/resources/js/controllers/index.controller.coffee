@@ -634,6 +634,13 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
                 $http.post("/api/lm/linbo4/image/#{image.name}", image).then () ->
                     $scope.images.push image
 
+    $scope.renameImage = (image) ->
+       messagebox.prompt('New name', image.name).then (msg) ->
+            new_name = msg.value
+            if new_name
+                $http.post("/api/lm/linbo4/renameImage/#{image.name}", {new_name:new_name}).then (resp) ->
+                    $route.reload()
+
     $scope.editImage = (image) ->
         $uibModal.open(
             templateUrl: '/lmn_linbo4:resources/partial/image.modal.html'

@@ -191,31 +191,36 @@ class Handler(HttpPlugin):
         if http_context.method == 'DELETE':
             self.mgr.delete(image)
 
-    @url(r'/api/lm/linbo4/image/duplicate/(?P<image>.+)')
+    @url(r'/api/lm/linbo4/duplicateImage/(?P<image>.+)')
     @authorize('lm:linbo:images')
     @endpoint(api=True)
     def handle_api_duplicate_image(self, http_context, image=None):
         pass
 
-    @url(r'/api/lm/linbo4/image/rename/(?P<image>.+)')
+    @url(r'/api/lm/linbo4/renameImage/(?P<image>.+)')
     @authorize('lm:linbo:images')
     @endpoint(api=True)
     def handle_api_rename_image(self, http_context, image=None):
-        pass
 
-    @url(r'/api/lm/linbo4/image/restoreBackup/(?P<image>.+)/(?P<timestamp>.+)')
+       if http_context.method == 'POST':
+            new_name = http_context.json_body()['new_name']
+            self.mgr.rename(image, new_name)
+
+
+
+    @url(r'/api/lm/linbo4/restoreBackupImage/(?P<image>.+)/(?P<timestamp>.+)')
     @authorize('lm:linbo:images')
     @endpoint(api=True)
     def handle_api_restore_image(self, http_context, image=None, timestamp=None):
         pass
 
-    @url(r'/api/lm/linbo4/image/deleteBackup/(?P<image>.+)/(?P<timestamp>.+)')
+    @url(r'/api/lm/linbo4/deleteBackupImage/(?P<image>.+)/(?P<timestamp>.+)')
     @authorize('lm:linbo:images')
     @endpoint(api=True)
     def handle_api_delete_backup(self, http_context, image=None, timestamp=None):
         pass
 
-    @url(r'/api/lm/linbo4/image/saveBackup/(?P<image>.+)/(?P<timestamp>.+)')
+    @url(r'/api/lm/linbo4/saveBackupImage/(?P<image>.+)/(?P<timestamp>.+)')
     @authorize('lm:linbo:images')
     @endpoint(api=True)
     def handle_api_save_backup(self, http_context, image=None, timestamp=None):

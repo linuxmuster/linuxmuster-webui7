@@ -7,6 +7,7 @@ from aj.plugins.lmn_common.lmnfile import LMNFile
 
 LINBO_PATH = '/srv/linbo/images'
 EXTRA_IMAGE_FILES = ['desc', 'info', 'macct', 'vdi']
+EXTRA_NONEDITABLE_IMAGE_FILES = ['torrent']
 EXTRA_COMMON_FILES = ['reg', 'postsync', 'prestart']
 EXTRA_PERMISSIONS_MAPPING = {
     'desc': 0o664,
@@ -41,7 +42,7 @@ class LinboImage:
 
     def get_extra(self):
         """
-        Search extra config files for the image.
+        Search extra editables config files for the image.
 
         :return:
         :rtype:
@@ -75,7 +76,7 @@ class LinboImage:
         os.unlink(os.path.join(self.path, self.image))
 
         # Remove extra files
-        for extra in EXTRA_IMAGE_FILES:
+        for extra in EXTRA_IMAGE_FILES + EXTRA_NONEDITABLE_IMAGE_FILES:
             path = os.path.join(self.path, f"{self.image}.{extra}")
             if os.path.exists(path):
                 os.unlink(path)
@@ -113,7 +114,7 @@ class LinboImage:
                   os.path.join(self.path, new_image_name))
 
         # Rename extra files
-        for extra in EXTRA_IMAGE_FILES:
+        for extra in EXTRA_IMAGE_FILES + EXTRA_NONEDITABLE_IMAGE_FILES:
             actual = os.path.join(self.path, f"{self.image}.{extra}")
             if os.path.exists(actual):
                 os.rename(actual, os.path.join(self.path, f"{new_image_name}.{extra}"))
@@ -254,6 +255,8 @@ class LinboImageManager:
     def rename(self, group, new_name):
         if group in self.linboImageGroups:
             self.linboImageGroups[group].rename(new_name)
+            self.linboImageGroups[new_name] = self.linboImageGroups[group]
+            del self.linboImageGroups[group]
 
     def restore(self, group, timestamp):
         if group in self.linboImageGroups:

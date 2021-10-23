@@ -813,6 +813,19 @@
         }
       });
     };
+    $scope.renameImage = function(image) {
+      return messagebox.prompt('New name', image.name).then(function(msg) {
+        var new_name;
+        new_name = msg.value;
+        if (new_name) {
+          return $http.post(`/api/lm/linbo4/renameImage/${image.name}`, {
+            new_name: new_name
+          }).then(function(resp) {
+            return $route.reload();
+          });
+        }
+      });
+    };
     $scope.editImage = function(image) {
       return $uibModal.open({
         templateUrl: '/lmn_linbo4:resources/partial/image.modal.html',

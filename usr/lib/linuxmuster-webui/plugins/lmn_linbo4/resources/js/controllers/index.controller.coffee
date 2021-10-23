@@ -548,7 +548,7 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
             $http.delete("/api/lm/linbo4/config/#{configName}").then () ->
                 $route.reload()
 
-    $scope.duplicateConfig = (configName) ->
+    $scope.duplicateConfig = (configName, deleteOriginal=false) ->
         newName = configName.substring('start.conf.'.length)
         messagebox.prompt('New name', newName).then (msg) ->
             newName = msg.value
@@ -556,7 +556,11 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
                 $http.get("/api/lm/linbo4/config/#{configName}").then (resp) ->
                     resp.data.config.LINBO.Group = newName
                     $http.post("/api/lm/linbo4/config/start.conf.#{newName}", resp.data).then () ->
-                        $route.reload()
+                        if deleteOriginal
+                            $http.delete("/api/lm/linbo4/config/#{configName}").then () ->
+                                $route.reload()
+                        else
+                            $route.reload()
 
     $scope.showBackups = (image) ->
         $uibModal.open(

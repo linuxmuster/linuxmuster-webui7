@@ -14,6 +14,9 @@
                     <a class="list-group-btn" ng:click="duplicateConfig(config)">
                         <i class="fa fa-copy"></i>
                     </a>
+                    <a class="list-group-btn" ng:click="duplicateConfig(config, true)">
+                        <i class="fa fa-pencil"></i>
+                    </a>
                     <a class="list-group-main" ng:click="editConfig(config)">
                         {{config.substring('start.conf.'.length)}}
                     </a>

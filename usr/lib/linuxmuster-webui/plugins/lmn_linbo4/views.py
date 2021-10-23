@@ -191,11 +191,12 @@ class Handler(HttpPlugin):
         if http_context.method == 'DELETE':
             self.mgr.delete(image)
 
-    @url(r'/api/lm/linbo4/duplicateImage/(?P<image>.+)')
-    @authorize('lm:linbo:images')
-    @endpoint(api=True)
-    def handle_api_duplicate_image(self, http_context, image=None):
-        pass
+    # TODO : is duplicate necessary ?
+    # @url(r'/api/lm/linbo4/duplicateImage/(?P<image>.+)')
+    # @authorize('lm:linbo:images')
+    # @endpoint(api=True)
+    # def handle_api_duplicate_image(self, http_context, image=None):
+    #     pass
 
     @url(r'/api/lm/linbo4/renameImage/(?P<image>.+)')
     @authorize('lm:linbo:images')

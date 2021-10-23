@@ -859,6 +859,7 @@
       return $uibModal.open({
         templateUrl: '/lmn_linbo4:resources/partial/image.modal.html',
         controller: 'LMLINBO4ImageModalController',
+        scope: $scope,
         resolve: {
           image: function() {
             return angular.copy(image);

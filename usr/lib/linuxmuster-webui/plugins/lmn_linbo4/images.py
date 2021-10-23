@@ -39,8 +39,10 @@ class LinboImage:
 
         if self.backup:
             self.path = os.path.join(LINBO_PATH, self.name, 'backups', self.timestamp)
+            self.date = timestamp2date(self.timestamp)
         else:
             self.path = os.path.join(LINBO_PATH, self.name)
+            self.date = None
 
         self.size = os.stat(os.path.join(self.path, self.image)).st_size
         self.extras = {}
@@ -174,6 +176,7 @@ class LinboImage:
             'prestart': self.extras['prestart'],
             'backup': self.backup,
             'timestamp': self.timestamp,
+            'date': self.date,
         }
 
 class LinboImageGroup:

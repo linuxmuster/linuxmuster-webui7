@@ -1,5 +1,9 @@
 <div class="modal-header">
-    <h4>{{image.name}}</h4>
+    <button class="btn btn-default pull-right" ng:click="$parent.renameImage(image)" ng:show="!image.backup">
+        <i class="fa fa-pencil"></i>
+    </button>
+    <h4 ng:show="!image.backup">{{image.name}}</h4>
+    <h4 ng:show="image.backup">{{image.name}} - Backup {{image.date}}</h4>
 </div>
 <div class="modal-body">
     <uib:tabset>

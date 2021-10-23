@@ -842,11 +842,17 @@
       });
     };
     $scope.restoreBackup = function(image, date) {
-      return $http.post(`/api/lm/linbo4/restoreBackupImage/${image.name}`, {
-        date: date
-      }).then(function(resp) {
-        $location.hash("images");
-        return $route.reload();
+      return messagebox.show({
+        text: `Do you really want to restore the backup at '${date}'? This will erase the actual image.`,
+        positive: 'Restore',
+        negative: 'Cancel'
+      }).then(function() {
+        return $http.post(`/api/lm/linbo4/restoreBackupImage/${image.name}`, {
+          date: date
+        }).then(function(resp) {
+          $location.hash("images");
+          return $route.reload();
+        });
       });
     };
     $scope.editImage = function(image) {

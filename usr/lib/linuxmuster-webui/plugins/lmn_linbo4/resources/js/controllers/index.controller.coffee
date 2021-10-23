@@ -649,9 +649,10 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
                     $route.reload()
 
     $scope.restoreBackup = (image, date) ->
-        $http.post("/api/lm/linbo4/restoreBackupImage/#{image.name}", {date: date}).then (resp) ->
-            $location.hash("images")
-            $route.reload()
+        messagebox.show(text: "Do you really want to restore the backup at '#{date}'? This will erase the actual image.", positive: 'Restore', negative: 'Cancel').then () ->
+            $http.post("/api/lm/linbo4/restoreBackupImage/#{image.name}", {date: date}).then (resp) ->
+                $location.hash("images")
+                $route.reload()
 
     $scope.editImage = (image) ->
         $uibModal.open(

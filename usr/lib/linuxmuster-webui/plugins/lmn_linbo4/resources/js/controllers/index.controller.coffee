@@ -593,6 +593,12 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
                 $location.hash("images")
                 $route.reload()
 
+    $scope.deleteBackupImage = (image, timestamp) ->
+        messagebox.show(text: "Delete '#{image.name}'?", positive: 'Delete', negative: 'Cancel').then () ->
+            $http.post("/api/lm/linbo4/deleteBackupImage/#{image.name}", {timestamp: timestamp}).then () ->
+                $location.hash("images")
+                $route.reload()
+
     $scope.deleteImages = () ->
         name_list = (image.name for image in $scope.images_selected).toString()
         messagebox.show(text: "Delete '#{name_list}'?", positive: 'Delete', negative: 'Cancel').then () ->
@@ -639,7 +645,13 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
             new_name = msg.value
             if new_name
                 $http.post("/api/lm/linbo4/renameImage/#{image.name}", {new_name:new_name}).then (resp) ->
+                    $location.hash("images")
                     $route.reload()
+
+    $scope.restoreBackup = (image, timestamp) ->
+        $http.post("/api/lm/linbo4/restoreBackupImage/#{image.name}", {timestamp: timestamp}).then (resp) ->
+            $location.hash("images")
+            $route.reload()
 
     $scope.editImage = (image) ->
         $uibModal.open(

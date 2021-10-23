@@ -745,6 +745,20 @@
         });
       });
     };
+    $scope.deleteBackupImage = function(image, timestamp) {
+      return messagebox.show({
+        text: `Delete '${image.name}'?`,
+        positive: 'Delete',
+        negative: 'Cancel'
+      }).then(function() {
+        return $http.post(`/api/lm/linbo4/deleteBackupImage/${image.name}`, {
+          timestamp: timestamp
+        }).then(function() {
+          $location.hash("images");
+          return $route.reload();
+        });
+      });
+    };
     $scope.deleteImages = function() {
       var image, name_list;
       name_list = ((function() {
@@ -821,9 +835,18 @@
           return $http.post(`/api/lm/linbo4/renameImage/${image.name}`, {
             new_name: new_name
           }).then(function(resp) {
+            $location.hash("images");
             return $route.reload();
           });
         }
+      });
+    };
+    $scope.restoreBackup = function(image, timestamp) {
+      return $http.post(`/api/lm/linbo4/restoreBackupImage/${image.name}`, {
+        timestamp: timestamp
+      }).then(function(resp) {
+        $location.hash("images");
+        return $route.reload();
       });
     };
     $scope.editImage = function(image) {

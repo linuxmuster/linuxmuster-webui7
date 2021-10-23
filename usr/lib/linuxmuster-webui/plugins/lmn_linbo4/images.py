@@ -73,7 +73,9 @@ class LinboImage:
         """
 
         # Remove image
-        os.unlink(os.path.join(self.path, self.image))
+        image_path = os.path.join(self.path, self.image)
+        if os.path.exists(image_path):
+            os.unlink(os.path.join(self.path, self.image))
 
         # Remove extra files
         for extra in EXTRA_IMAGE_FILES + EXTRA_NONEDITABLE_IMAGE_FILES:
@@ -97,7 +99,7 @@ class LinboImage:
         self.delete_files()
 
         # Remove directory
-        os.unlink(self.path)
+        os.rmdir(self.path)
 
     def rename(self, new_name):
         """
@@ -173,6 +175,9 @@ class LinboImageGroup:
         self.name = name
         self.path = os.path.join(LINBO_PATH, self.name)
         self.backup_path = os.path.join(LINBO_PATH, self.name, 'backups')
+        self.load()
+
+    def load(self):
         self.backups = {}
         self.base = LinboImage(self.name)
         self.get_backups()
@@ -218,9 +223,10 @@ class LinboImageGroup:
         :rtype:
         """
 
-        for backup in self.backups:
+        for timestamp, backup in self.backups.items():
             backup.delete()
 
+        os.rmdir(self.backup_path)
         self.base.delete()
 
     def to_dict(self):
@@ -249,13 +255,15 @@ class LinboImageManager:
             if timestamp in self.linboImageGroups[group].backups:
                 # The object to delete is a backup
                 self.linboImageGroups[group].backups[timestamp].delete()
+                self.linboImageGroups[group].load()
             else:
                 self.linboImageGroups[group].delete()
+                del self.linboImageGroups[group]
 
     def rename(self, group, new_name):
         if group in self.linboImageGroups:
             self.linboImageGroups[group].rename(new_name)
-            self.linboImageGroups[new_name] = self.linboImageGroups[group]
+            self.linboImageGroups[new_name] = LinboImageGroup(new_name)
             del self.linboImageGroups[group]
 
     def restore(self, group, timestamp):
@@ -267,4 +275,5 @@ class LinboImageManager:
                     shutil.move(os.path.join(imageGroup.backups[timestamp].path, file),
                                 imageGroup.base.path)
                 imageGroup.backups[timestamp].delete()
+                self.linboImageGroups[group].load()
 

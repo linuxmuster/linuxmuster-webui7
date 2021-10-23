@@ -256,9 +256,10 @@ class LinboImageGroup:
 class LinboImageManager:
 
     def __init__(self, context):
-        self.linboImageGroups = {}
+        self.list()
 
     def list(self):
+        self.linboImageGroups = {}
         for dir in os.listdir(LINBO_PATH):
             for file in os.listdir(os.path.join(LINBO_PATH, dir)):
                 if file.endswith((f'.{IMAGE}')):

@@ -6,9 +6,14 @@ from jadi import service
 from aj.plugins.lmn_common.lmnfile import LMNFile
 
 LINBO_PATH = '/srv/linbo/images'
+
+# Filenames like ubuntu.qcow2.desc
 EXTRA_IMAGE_FILES = ['desc', 'info', 'macct', 'vdi']
 EXTRA_NONEDITABLE_IMAGE_FILES = ['torrent']
+
+# Filenames like ubuntu.reg
 EXTRA_COMMON_FILES = ['reg', 'postsync', 'prestart']
+
 EXTRA_PERMISSIONS_MAPPING = {
     'desc': 0o664,
     'info': 0o664,
@@ -154,7 +159,7 @@ class LinboImage:
                     os.unlink(path)
 
         for extra in EXTRA_COMMON_FILES:
-            path = os.path.join(self.path, f"{self.image}.{extra}")
+            path = os.path.join(self.path, f"{self.name}.{extra}")
             if extra in data and data[extra]:
                 with LMNFile(path, 'w') as f:
                     f.write(data[extra])

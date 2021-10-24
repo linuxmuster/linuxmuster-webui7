@@ -1,0 +1,23 @@
+name: lmn_linbo4
+author: Linuxmuster.net
+email: arnaud@linuxmuster.net
+url: https://linuxmuster.net
+version: '1.0'
+title: 'LINBO 4'
+icon: th-large
+dependencies:
+    - !PluginDependency { plugin_name: core }
+    - !PluginDependency { plugin_name: filesystem }
+    - !PluginDependency { plugin_name: lmn_common }
+resources:
+    - 'resources/vendor/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.min.js'
+    - 'resources/vendor/angular-bootstrap-colorpicker/css/colorpicker.min.css'
+    - 'resources/js/module.coffee'
+    - 'resources/js/controllers/index.controller.coffee'
+    - 'resources/partial/index.html'
+    - 'resources/partial/image.modal.html'
+    - 'resources/partial/image.backups.modal.html'
+    - 'resources/partial/config.modal.html'
+    - 'resources/partial/partition.modal.html'
+    - 'resources/partial/accept.modal.html'
+    - 'ng:lmn.linbo4'

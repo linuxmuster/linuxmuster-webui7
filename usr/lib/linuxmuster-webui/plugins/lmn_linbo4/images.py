@@ -8,8 +8,8 @@ from aj.plugins.lmn_common.lmnfile import LMNFile
 LINBO_PATH = '/srv/linbo/images'
 
 # Filenames like ubuntu.qcow2.desc
-EXTRA_IMAGE_FILES = ['desc', 'info', 'macct', 'vdi']
-EXTRA_NONEDITABLE_IMAGE_FILES = ['torrent']
+EXTRA_IMAGE_FILES = ['desc', 'info',  'vdi']
+EXTRA_NONEDITABLE_IMAGE_FILES = ['torrent', 'macct']
 
 # Filenames like ubuntu.reg
 EXTRA_COMMON_FILES = ['reg', 'postsync', 'prestart']
@@ -174,7 +174,6 @@ class LinboImage:
             'size': self.size,
             'desc': self.extras['desc'],
             'info': self.extras['info'],
-            'macct': self.extras['macct'],
             'reg': self.extras['reg'],
             'postsync': self.extras['postsync'],
             'vdi': self.extras['vdi'],

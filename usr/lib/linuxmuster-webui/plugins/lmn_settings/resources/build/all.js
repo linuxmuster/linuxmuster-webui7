@@ -15,7 +15,7 @@
     });
   });
 
-  angular.module('lmn.settings').controller('LMSettingsController', function($scope, $location, $http, $uibModal, messagebox, gettext, notify, pageTitle, core, lmFileBackups) {
+  angular.module('lmn.settings').controller('LMSettingsController', function($scope, $location, $http, $uibModal, messagebox, gettext, notify, pageTitle, core, lmFileBackups, validation) {
     var i, j, len, len1, n, ref, ref1, tag;
     pageTitle.set(gettext('Settings'));
     $scope.trans = {
@@ -162,11 +162,23 @@
       });
     };
     $scope.save = function() {
+      var validPrintserver;
+      validPrintserver = validation.isValidDomain($scope.settings.school.PRINTSERVER);
+      if (validPrintserver !== true) {
+        notify.error(validPrintserver);
+        return;
+      }
       return $http.post('/api/lm/schoolsettings', $scope.settings).then(function() {
         return notify.success(gettext('Saved'));
       });
     };
     $scope.saveAndCheck = function() {
+      var validPrintserver;
+      validPrintserver = validation.isValidDomain($scope.settings.school.PRINTSERVER);
+      if (validPrintserver !== true) {
+        notify.error(validPrintserver);
+        return;
+      }
       return $http.post('/api/lm/schoolsettings', $scope.settings).then(function() {
         $uibModal.open({
           templateUrl: '/lmn_users:resources/partial/check.modal.html',

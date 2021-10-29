@@ -4,7 +4,7 @@ angular.module('lmn.settings').config ($routeProvider) ->
         templateUrl: '/lmn_settings:resources/partial/index.html'
 
 
-angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $location, $http, $uibModal, messagebox, gettext, notify, pageTitle, core, lmFileBackups) ->
+angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $location, $http, $uibModal, messagebox, gettext, notify, pageTitle, core, lmFileBackups, validation) ->
     pageTitle.set(gettext('Settings'))
 
     $scope.trans = {
@@ -112,10 +112,18 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
         $scope.subnets.push({'routerIp':'', 'network':'', 'beginRange':'', 'endRange':'', 'setupFlag':''})
 
     $scope.save = () ->
+        validPrintserver = validation.isValidDomain($scope.settings.school.PRINTSERVER)
+        if validPrintserver != true
+            notify.error(validPrintserver)
+            return
         $http.post('/api/lm/schoolsettings', $scope.settings).then () ->
             notify.success gettext('Saved')
 
     $scope.saveAndCheck = () ->
+        validPrintserver = validation.isValidDomain($scope.settings.school.PRINTSERVER)
+        if validPrintserver != true
+            notify.error(validPrintserver)
+            return
         $http.post('/api/lm/schoolsettings', $scope.settings).then () ->
             $uibModal.open(
                 templateUrl: '/lmn_users:resources/partial/check.modal.html'

@@ -170,6 +170,7 @@ class Handler(HttpPlugin):
         :return: Config content
         :rtype: dict
         """
+
         try:
             path = '/var/lib/linuxmuster/setup.ini'
             if http_context.method == 'GET':

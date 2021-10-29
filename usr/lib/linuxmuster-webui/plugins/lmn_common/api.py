@@ -57,7 +57,6 @@ try:
             lmsetup_schoolname = None
 except FileNotFoundError:
     lmsetup_schoolname = None
-    pass
 
 
 def lmn_get_school_configpath(school):

@@ -58,6 +58,7 @@ try:
 except FileNotFoundError:
     lmsetup_schoolname = None
 
+
 def lmn_get_school_configpath(school):
     """
     Return the default absolute path for config files in multischool env.

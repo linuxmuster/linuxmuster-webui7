@@ -667,7 +667,7 @@
         });
       });
     };
-    $scope.duplicateConfig = function(configName) {
+    $scope.duplicateConfig = function(configName, deleteOriginal = false) {
       var newName;
       newName = configName.substring('start.conf.'.length);
       return messagebox.prompt('New name', newName).then(function(msg) {
@@ -676,7 +676,13 @@
           return $http.get(`/api/lm/linbo/config/${configName}`).then(function(resp) {
             resp.data.config.LINBO.Group = newName;
             return $http.post(`/api/lm/linbo/config/start.conf.${newName}`, resp.data).then(function() {
-              return $route.reload();
+              if (deleteOriginal) {
+                return $http.delete(`/api/lm/linbo/config/${configName}`).then(function() {
+                  return $route.reload();
+                });
+              } else {
+                return $route.reload();
+              }
             });
           });
         }

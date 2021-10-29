@@ -33,4 +33,3 @@ jobs:
           key: ${{ secrets.REPO_SSH_KEY }}
           port: 22
           script: /usr/local/bin/publish-debs
-

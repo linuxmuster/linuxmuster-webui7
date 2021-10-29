@@ -1,0 +1,19 @@
+name: lmn_unifi
+author: Netzint GmbH
+email: lukas.spitznagel@netzint.de
+url: https://www.netzint.de
+version: '1.0'
+title: 'Unifi'
+icon: wifi
+dependencies:
+    - !PluginDependency { plugin_name: core }
+    - !PluginDependency { plugin_name: lmn_common }
+
+resources:
+    - 'resources/js/module.es'
+    - 'resources/js/routing.es'
+    - 'resources/js/controllers/index.controller.es'
+    - 'resources/partial/index.html'
+    - 'main.py'
+    - 'views.py'
+    - 'ng:lmn.unifi'

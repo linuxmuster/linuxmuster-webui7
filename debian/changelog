@@ -1,3 +1,4 @@
+
 linuxmuster-webui7 (1.0.166-2) bionic; urgency=medium
 
   * Current snapshot build 4e848cb279af77b34ba6b10209ae9b3edef2e9bc
@@ -16,6 +17,109 @@ linuxmuster-webui7 (1.0.160) lmn7-testing; urgency=medium
    * Issue with Websession and DHCP Plugin
 
  -- Lukas Spitznagel <lukas.spitznagel@netzint.de>  Wed, 10 Mar 2021 19:26:33 +0000
+
+linuxmuster-webui7 (1.0.165-rc01) bionic-testing; urgency=medium
+
+  * GUI enhancements
+  * Maildomain for project fix
+  * Differenciate save and saveCustom.
+  *  Add basic ssh test with paramiko. See linuxmuster#186. 
+
+ -- Andreas Till <andreas.till@netzint.de>  Thu 22 Jul 11:31:27 CET 2021
+
+linuxmuster-webui7 (1.0.164-release) bionic; urgency=medium
+
+  * move to release
+
+ -- Dorian Zedler <dorian@itsblue.de>  Mon 21 Jun 16:07:38 CET 2021
+
+linuxmuster-webui7 (1.0.164-rc06) bionic-testing; urgency=medium
+
+  * Current snapshot build 47f9c71c8d2b534c18a238bbb6ddb988f0749cc3
+
+ -- Andreas Till <andreas.till@netzint.de>  Mon 1 Jun 16:07:38 CET 2021
+
+linuxmuster-webui7 (1.0.164-rc05) bionic-testing; urgency=medium
+
+  * Current snapshot build 558899528ef78257a25b2cf178d66d3323430b40
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri 19 May 13:03:33 CET 2021
+
+linuxmuster-webui7 (1.0.164-rc04) bionic-testing; urgency=medium
+
+  * Current snapshot build c11c81f6a2bb3ee9394cf8a0fa3880aa01e29872
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri 18 May 19:03:18 CET 2021
+
+linuxmuster-webui7 (1.0.164-rc03) bionic-testing; urgency=medium
+
+  * Current snapshot build 099eb10deab2c2ebad31c2ab1a8a776af88edea3
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri 18 May 17:38:41 CET 2021
+
+linuxmuster-webui7 (1.0.164-rc02) bionic-testing; urgency=medium
+
+  * Current snapshot build 8d5fd7112cbc477a5b31df9a93b0fa25e60bab16
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri 18 May 13:13:43 CET 2021
+
+linuxmuster-webui7 (1.0.164-rc01) bionic-testing; urgency=medium
+
+  * Current snapshot build 3083684829a3df25eb7cf667116e6d26d85803ea
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri 18 May 12:24:52 CET 2021
+
+linuxmuster-webui7 (1.0.164-rc) bionic-testing; urgency=medium
+
+  * Current snapshot build f51eb9572828b954100544e7d6823e518a099c40
+  * Changed package method to install
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri 10 May 12:16:41 CET 2021
+
+linuxmuster-webui7 (1.0.163-rc) bionic-testing; urgency=medium
+
+  * Current snapshot build f51eb9572828b954100544e7d6823e518a099c40
+  * Fixed release Name
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri 10 May 11:48:25 CET 2021
+
+linuxmuster-webui7 (1.0.163) lmn7-testing; urgency=medium
+
+  * Current snapshot build f51eb9572828b954100544e7d6823e518a099c40
+  * Fixed lmp permissions
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri 07 May 16:52:23 CET 2021
+
+linuxmuster-webui7 (1.0.162) lmn7-testing; urgency=medium
+
+  * Current snapshot build f51eb9572828b954100544e7d6823e518a099c40
+  * Fixed schooladministrator permissions
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri 07 May 13:49:07 CET 2021
+
+linuxmuster-webui7 (1.0.161) lmn7-testing; urgency=medium
+
+  * Current snapshot build 169bc01d9d0ba6569a02b17393a276a2d57d7494
+  * Added multischool support to all modules
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri 07 May 12:59:57 CET 2021
+
+linuxmuster-webui7 (1.0.161~1) lmn7-testing; urgency=medium
+
+  - Multischool support
+  - Add custom fields
+  - Select template to print data, print data page improved
+  - Quota display on teacher view
+  - Update on Ajenti 2.1.43
+  - New plugins : samba DNS / vdi / dhcp / crontab
+  - Complete LMNFile actions
+  - More options for printer group management
+  - Manage filter script from sophomorix
+  - New footer style
+  - A lot of bug fixes and even more
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 08 Oct 2021 10:18:41 +0200
+
 
 linuxmuster-webui7 (1.0.160) lmn7-testing; urgency=medium
 

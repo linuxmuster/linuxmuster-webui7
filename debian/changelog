@@ -1,3 +1,9 @@
+linuxmuster-webui7 (1.0.166-1) bionic; urgency=medium
+
+  * Current snapshot build 4e848cb279af77b34ba6b10209ae9b3edef2e9bc
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri, 29 Oct 2021 18:31:33 +0000
+
 linuxmuster-webui7 (1.0.166) bionic; urgency=medium
 
   * Current snapshot build 973adcb9da529122217b498456253f47ef2c736e

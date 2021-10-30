@@ -1,0 +1,15 @@
+globaladministrator:
+    - 'lm:linbo4:configs: true'
+    - 'lm:linbo4:examples: true'
+    - 'lm:linbo4:icons: true'
+    - 'lm:linbo4:images: true'
+    - 'sidebar:view:/view/lm/linbo4: true'
+    - 'sidebar:view:/view/lmn/linbo4_sync: false'
+
+schooladministrator:
+    - 'lm:linbo4:configs: true'
+    - 'lm:linbo4:examples: true'
+    - 'lm:linbo4:icons: true'
+    - 'lm:linbo4:images: true'
+    - 'sidebar:view:/view/lm/linbo4: true'
+

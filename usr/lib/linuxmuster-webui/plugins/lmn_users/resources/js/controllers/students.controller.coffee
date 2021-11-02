@@ -123,11 +123,12 @@ angular.module('lmn.users').controller 'LMUsersStudentsController', ($scope, $ht
         $scope.setCustomPassword((x for x in $scope.students when x.selected))
 
     $scope.filter = (row) ->
-        # Only query sAMAccountName, givenName, sn and sophomorixAdminClass
-        result = false
-        for value in ['sAMAccountName', 'givenName', 'sn', 'sophomorixAdminClass']
-            result = result || row[value].toLowerCase().indexOf($scope.query.toLowerCase() || '') != -1
-        return result
+        if row isnt 'none'
+            # Only query sAMAccountName, givenName, sn and sophomorixAdminClass
+            result = false
+            for value in ['sAMAccountName', 'givenName', 'sn', 'sophomorixAdminClass']
+                result = result || row[value].toLowerCase().indexOf($scope.query.toLowerCase() || '') != -1
+            return result
 
     $scope.selectAll = (query) ->
         if !query?

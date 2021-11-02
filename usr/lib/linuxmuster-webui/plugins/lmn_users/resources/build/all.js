@@ -304,14 +304,16 @@
     };
     $scope.filter = function(row) {
       var j, len1, ref1, result, value;
-      // Only query sAMAccountName, givenName and sn
-      result = false;
-      ref1 = ['sAMAccountName', 'givenName', 'sn'];
-      for (j = 0, len1 = ref1.length; j < len1; j++) {
-        value = ref1[j];
-        result = result || row[value].toLowerCase().indexOf($scope.query.toLowerCase() || '') !== -1;
+      if (row !== 'none') {
+        // Only query sAMAccountName, givenName and sn
+        result = false;
+        ref1 = ['sAMAccountName', 'givenName', 'sn'];
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          value = ref1[j];
+          result = result || row[value].toLowerCase().indexOf($scope.query.toLowerCase() || '') !== -1;
+        }
+        return result;
       }
-      return result;
     };
     return $scope.selectAll = function(query) {
       var j, len1, ref1, results, teacher;
@@ -580,14 +582,16 @@
     };
     $scope.filter = function(row) {
       var j, len1, ref1, result, value;
-      // Only query sAMAccountName, givenName, sn and sophomorixAdminClass
-      result = false;
-      ref1 = ['sAMAccountName', 'givenName', 'sn', 'sophomorixAdminClass'];
-      for (j = 0, len1 = ref1.length; j < len1; j++) {
-        value = ref1[j];
-        result = result || row[value].toLowerCase().indexOf($scope.query.toLowerCase() || '') !== -1;
+      if (row !== 'none') {
+        // Only query sAMAccountName, givenName, sn and sophomorixAdminClass
+        result = false;
+        ref1 = ['sAMAccountName', 'givenName', 'sn', 'sophomorixAdminClass'];
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          value = ref1[j];
+          result = result || row[value].toLowerCase().indexOf($scope.query.toLowerCase() || '') !== -1;
+        }
+        return result;
       }
-      return result;
     };
     return $scope.selectAll = function(query) {
       var j, len1, ref1, results, student;
@@ -1691,14 +1695,16 @@
     };
     $scope.filter = function(row) {
       var j, len1, ref1, result, value;
-      // Only query sAMAccountName, givenName and sn
-      result = false;
-      ref1 = ['sAMAccountName', 'givenName', 'sn'];
-      for (j = 0, len1 = ref1.length; j < len1; j++) {
-        value = ref1[j];
-        result = result || row[value].toLowerCase().indexOf($scope.query.toLowerCase() || '') !== -1;
+      if (row !== 'none') {
+        // Only query sAMAccountName, givenName and sn
+        result = false;
+        ref1 = ['sAMAccountName', 'givenName', 'sn'];
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          value = ref1[j];
+          result = result || row[value].toLowerCase().indexOf($scope.query.toLowerCase() || '') !== -1;
+        }
+        return result;
       }
-      return result;
     };
     return $scope.selectAll = function(query) {
       var j, len1, ref1, results, teacher;

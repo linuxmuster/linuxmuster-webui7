@@ -69,25 +69,27 @@
     $http.get('/api/lm/read_custom_config').then(function(resp) {
       var idx, index, j, len1, ref1, results;
       $scope.customDisplay = resp.data.customDisplay.teachers;
-      $scope.customTitle = [''];
-      ref1 = [1, 2, 3];
-      results = [];
-      for (j = 0, len1 = ref1.length; j < len1; j++) {
-        idx = ref1[j];
-        if ($scope.customDisplay[idx] === void 0 || $scope.customDisplay[idx] === '') {
-          results.push($scope.customTitle.push(''));
-        } else if ($scope.customDisplay[idx] === 'proxyAddresses') {
-          results.push($scope.customTitle.push(resp.data.proxyAddresses.teachers.title));
-        } else {
-          index = $scope.customDisplay[idx].slice(-1);
-          if ($scope.isListAttr($scope.customDisplay[idx])) {
-            results.push($scope.customTitle.push(resp.data.customMulti.teachers[index].title || ''));
+      if (($scope.customDisplay != null)) {
+        $scope.customTitle = [''];
+        ref1 = [1, 2, 3];
+        results = [];
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          idx = ref1[j];
+          if ($scope.customDisplay[idx] === void 0 || $scope.customDisplay[idx] === '') {
+            results.push($scope.customTitle.push(''));
+          } else if ($scope.customDisplay[idx] === 'proxyAddresses') {
+            results.push($scope.customTitle.push(resp.data.proxyAddresses.teachers.title));
           } else {
-            results.push($scope.customTitle.push(resp.data.custom.teachers[index].title || ''));
+            index = $scope.customDisplay[idx].slice(-1);
+            if ($scope.isListAttr($scope.customDisplay[idx])) {
+              results.push($scope.customTitle.push(resp.data.customMulti.teachers[index].title || ''));
+            } else {
+              results.push($scope.customTitle.push(resp.data.custom.teachers[index].title || ''));
+            }
           }
         }
+        return results;
       }
-      return results;
     });
     $scope.isListAttr = function(attr_name) {
       return $scope.list_attr_enabled.includes(attr_name);
@@ -404,25 +406,27 @@
     $http.get('/api/lm/read_custom_config').then(function(resp) {
       var idx, index, j, len1, ref1, results;
       $scope.customDisplay = resp.data.customDisplay.students;
-      $scope.customTitle = [''];
-      ref1 = [1, 2, 3];
-      results = [];
-      for (j = 0, len1 = ref1.length; j < len1; j++) {
-        idx = ref1[j];
-        if ($scope.customDisplay[idx] === void 0 || $scope.customDisplay[idx] === '') {
-          results.push($scope.customTitle.push(''));
-        } else if ($scope.customDisplay[idx] === 'proxyAddresses') {
-          results.push($scope.customTitle.push(resp.data.proxyAddresses.students.title));
-        } else {
-          index = $scope.customDisplay[idx].slice(-1);
-          if ($scope.isListAttr($scope.customDisplay[idx])) {
-            results.push($scope.customTitle.push(resp.data.customMulti.students[index].title || ''));
+      if (($scope.customDisplay != null)) {
+        $scope.customTitle = [''];
+        ref1 = [1, 2, 3];
+        results = [];
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          idx = ref1[j];
+          if ($scope.customDisplay[idx] === void 0 || $scope.customDisplay[idx] === '') {
+            results.push($scope.customTitle.push(''));
+          } else if ($scope.customDisplay[idx] === 'proxyAddresses') {
+            results.push($scope.customTitle.push(resp.data.proxyAddresses.students.title));
           } else {
-            results.push($scope.customTitle.push(resp.data.custom.students[index].title || ''));
+            index = $scope.customDisplay[idx].slice(-1);
+            if ($scope.isListAttr($scope.customDisplay[idx])) {
+              results.push($scope.customTitle.push(resp.data.customMulti.students[index].title || ''));
+            } else {
+              results.push($scope.customTitle.push(resp.data.custom.students[index].title || ''));
+            }
           }
         }
+        return results;
       }
-      return results;
     });
     $scope.isListAttr = function(attr_name) {
       return $scope.list_attr_enabled.includes(attr_name);
@@ -1452,25 +1456,27 @@
     $http.get('/api/lm/read_custom_config').then(function(resp) {
       var idx, index, j, len1, ref1, results;
       $scope.customDisplay = resp.data.customDisplay.teachers;
-      $scope.customTitle = [''];
-      ref1 = [1, 2, 3];
-      results = [];
-      for (j = 0, len1 = ref1.length; j < len1; j++) {
-        idx = ref1[j];
-        if ($scope.customDisplay[idx] === void 0 || $scope.customDisplay[idx] === '') {
-          results.push($scope.customTitle.push(''));
-        } else if ($scope.customDisplay[idx] === 'proxyAddresses') {
-          results.push($scope.customTitle.push(resp.data.proxyAddresses.teachers.title));
-        } else {
-          index = $scope.customDisplay[idx].slice(-1);
-          if ($scope.isListAttr($scope.customDisplay[idx])) {
-            results.push($scope.customTitle.push(resp.data.customMulti.teachers[index].title || ''));
+      if (($scope.customDisplay != null)) {
+        $scope.customTitle = [''];
+        ref1 = [1, 2, 3];
+        results = [];
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          idx = ref1[j];
+          if ($scope.customDisplay[idx] === void 0 || $scope.customDisplay[idx] === '') {
+            results.push($scope.customTitle.push(''));
+          } else if ($scope.customDisplay[idx] === 'proxyAddresses') {
+            results.push($scope.customTitle.push(resp.data.proxyAddresses.teachers.title));
           } else {
-            results.push($scope.customTitle.push(resp.data.custom.teachers[index].title || ''));
+            index = $scope.customDisplay[idx].slice(-1);
+            if ($scope.isListAttr($scope.customDisplay[idx])) {
+              results.push($scope.customTitle.push(resp.data.customMulti.teachers[index].title || ''));
+            } else {
+              results.push($scope.customTitle.push(resp.data.custom.teachers[index].title || ''));
+            }
           }
         }
+        return results;
       }
-      return results;
     });
     $scope.isListAttr = function(attr_name) {
       return $scope.list_attr_enabled.includes(attr_name);

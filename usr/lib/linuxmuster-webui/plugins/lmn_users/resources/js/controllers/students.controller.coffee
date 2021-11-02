@@ -42,18 +42,19 @@ angular.module('lmn.users').controller 'LMUsersStudentsController', ($scope, $ht
 
     $http.get('/api/lm/read_custom_config').then (resp) ->
         $scope.customDisplay = resp.data.customDisplay.students
-        $scope.customTitle = ['',]
-        for idx in [1,2,3]
-            if $scope.customDisplay[idx] == undefined or $scope.customDisplay[idx] == ''
-                $scope.customTitle.push('')
-            else if $scope.customDisplay[idx] == 'proxyAddresses'
-                $scope.customTitle.push(resp.data.proxyAddresses.students.title)
-            else
-                index = $scope.customDisplay[idx].slice(-1)
-                if $scope.isListAttr($scope.customDisplay[idx])
-                    $scope.customTitle.push(resp.data.customMulti.students[index].title || '')
+        if ($scope.customDisplay?)
+            $scope.customTitle = ['',]
+            for idx in [1,2,3]
+                if $scope.customDisplay[idx] == undefined or $scope.customDisplay[idx] == ''
+                    $scope.customTitle.push('')
+                else if $scope.customDisplay[idx] == 'proxyAddresses'
+                    $scope.customTitle.push(resp.data.proxyAddresses.students.title)
                 else
-                    $scope.customTitle.push(resp.data.custom.students[index].title || '')
+                    index = $scope.customDisplay[idx].slice(-1)
+                    if $scope.isListAttr($scope.customDisplay[idx])
+                        $scope.customTitle.push(resp.data.customMulti.students[index].title || '')
+                    else
+                        $scope.customTitle.push(resp.data.custom.students[index].title || '')
 
     $scope.isListAttr = (attr_name) ->
         return $scope.list_attr_enabled.includes(attr_name)

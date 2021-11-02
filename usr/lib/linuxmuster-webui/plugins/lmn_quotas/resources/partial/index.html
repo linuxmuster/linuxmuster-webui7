@@ -1,8 +1,12 @@
 <br/>
-
+<div ng:show="settings == 'none'">
+    <br>
+    <div class="alert alert-info">
+        <i class="fa fa-info-circle"></i> <span translate="">There are no user to manage yet. You can add user using the list management module</span>.
+    </div>
+</div>
 <progress-spinner ng:show="settings == null"></progress-spinner>
-
-<div ng:show="settings != null">
+<div ng:show="settings != null && settings != 'none'">
     <uib:tabset active="activeTab">
         <uib:tab heading="{{'Teachers'|translate}}">
             <br/>

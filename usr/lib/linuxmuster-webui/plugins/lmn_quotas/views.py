@@ -49,7 +49,11 @@ class Handler(HttpPlugin):
             non_default = {'teacher':{'list':[]}, 'student':{'list':[]}, 'schooladministrator':{'list':[]}}
 
             sophomorixCommand = ['sophomorix-quota', '-i', '-jj']
-            result = lmn_getSophomorixValue(sophomorixCommand, 'NONDEFAULT_QUOTA/' + school + '/USER')
+            try:
+                result = lmn_getSophomorixValue(sophomorixCommand, 'NONDEFAULT_QUOTA/' + school + '/USER',ignoreErrors=True)
+            except KeyError:
+                return ['','none']
+
             for login, values in result.items():
                 role = values['sophomorixRole']
                 non_default[role][login] = values

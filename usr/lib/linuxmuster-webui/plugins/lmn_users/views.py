@@ -718,7 +718,10 @@ class Handler(HttpPlugin):
 
             with authorize('lm:users:students:read'):
                 # Check if there are any classes if not return empty list
-                classes_raw = lmn_getSophomorixValue(sophomorixCommand, 'GROUP')
+                try:
+                    classes_raw = lmn_getSophomorixValue(sophomorixCommand, 'GROUP', ignoreErrors=True)
+                except KeyError:
+                    return []
                 classes = []
                 for c, details in classes_raw.items():
                     if details["sophomorixHidden"] == "FALSE":

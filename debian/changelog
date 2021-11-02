@@ -1,9 +1,16 @@
+linuxmuster-webui7 (1.0.168-1) bionic; urgency=medium
+
+  * Current snapshot build fac37af4df344c4b64dc71474778bedf7ce2dbbc
+  * fixed issues in printing password with no users
+
+ -- Andreas Till <andreas.till@netzint.de>  Tue, 02 Nov 2021 19:58:32 +0000
+
 linuxmuster-webui7 (1.0.167-1) bionic; urgency=medium
 
   * Current snapshot build 04e8c018c663a74968af7149ad8e059fa4d0256f
   * fixed issues in several moduls which occur when no user exist
 
- -- Andreas Till <andreas.till@netzint.de>  Fri, 02 Nov 2021 14:47:19 +0000
+ -- Andreas Till <andreas.till@netzint.de>  Tue, 02 Nov 2021 14:47:19 +0000
 
 linuxmuster-webui7 (1.0.166-2) bionic; urgency=medium
 

@@ -3,7 +3,7 @@ angular.module('lmn.linbo4').config ($routeProvider) ->
         controller: 'LMLINBO4Controller'
         templateUrl: '/lmn_linbo4:resources/partial/index.html'
 
-angular.module('lmn.linbo').controller 'LMImportDevicesApplyModalController', ($scope, $http, $uibModalInstance, $route, gettext, notify) ->
+angular.module('lmn.linbo4').controller 'LMImportDevicesApplyModalController', ($scope, $http, $uibModalInstance, $route, gettext, notify) ->
     $scope.logVisible = true
     $scope.isWorking = true
     $scope.showLog = () ->
@@ -510,7 +510,7 @@ angular.module('lmn.linbo4').controller 'LMLINBO4ConfigModalController', ($scope
 
 
 
-angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http, $uibModal, $log, $route, $location, gettext, notify, pageTitle, tasks, messagebox, validation) ->
+angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http, $uibModal, $log, $route, $location, gettext, notify, pageTitle, tasks, messagebox, validation, toaster) ->
     pageTitle.set(gettext('LINBO 4'))
 
     $scope.tabs = ['groups', 'images']
@@ -619,17 +619,25 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
                         notify.success gettext('Saved')
                         $scope.importDevices()
 
+    $scope.restartServices = () ->
+        # Restart torrent and multicast services and redirect to images tab
+        toaster.pop('info', gettext("Restarting multicast and torrent services, please wait ..."), '', 7000)
+        $http.get('/api/lm/linbo4/restart-services').then (resp) ->
+            notify.success(gettext('Multicast and torrent services restarted'))
+            $location.hash("images")
+            $route.reload()
+        .catch (err) ->
+            notify.error(gettext("Failed to restart multicast and torrent services. Please see the log files"))
+
     $scope.deleteImage = (image) ->
         messagebox.show(text: "Delete '#{image.name}'?", positive: 'Delete', negative: 'Cancel').then () ->
             $http.delete("/api/lm/linbo4/image/#{image.name}").then () ->
-                $location.hash("images")
-                $route.reload()
+                $scope.restartServices()
 
     $scope.deleteBackupImage = (image, date) ->
         messagebox.show(text: "Delete '#{image.name}'?", positive: 'Delete', negative: 'Cancel').then () ->
             $http.post("/api/lm/linbo4/deleteBackupImage/#{image.name}", {date: date}).then () ->
-                $location.hash("images")
-                $route.reload()
+                $scope.restartServices()
 
     $scope.deleteImages = () ->
         name_list = (image.name for image in $scope.images_selected).toString()
@@ -638,8 +646,7 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
             for image in $scope.images_selected
                 promises.push($http.delete("/api/lm/linbo4/image/#{image.name}"))
             $q.all(promises).then () ->
-                $location.hash("images")
-                $route.reload()
+                $scope.restartServices()
 
     $scope.toggleSelected = (image) ->
         position = $scope.images_selected.indexOf(image)
@@ -677,14 +684,12 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
             new_name = msg.value
             if new_name
                 $http.post("/api/lm/linbo4/renameImage/#{image.name}", {new_name:new_name}).then (resp) ->
-                    $location.hash("images")
-                    $route.reload()
+                    $scope.restartServices()
 
     $scope.restoreBackup = (image, date) ->
         messagebox.show(text: "Do you really want to restore the backup at '#{date}'? This will erase the actual image.", positive: 'Restore', negative: 'Cancel').then () ->
             $http.post("/api/lm/linbo4/restoreBackupImage/#{image.name}", {date: date}).then (resp) ->
-                $location.hash("images")
-                $route.reload()
+                $scope.restartServices()
 
     $scope.editImage = (image) ->
         $uibModal.open(
@@ -699,9 +704,11 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
             if image.backup
                 $http.post("/api/lm/linbo4/saveBackupImage/#{image.name}", {data: result, timestamp:image.timestamp}).then (resp) ->
                     notify.success gettext('Backup saved')
+                    $scope.restartServices()
             else
                 $http.post("/api/lm/linbo4/image/#{image.name}", result).then (resp) ->
                     notify.success gettext('Saved')
+                    $scope.restartServices()
 
     $scope.downloadIso = () ->
         location.href = '/api/lm/linbo.iso'

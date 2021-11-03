@@ -15,6 +15,26 @@
     });
   });
 
+  angular.module('lmn.linbo').controller('LMImportDevicesApplyModalController', function($scope, $http, $uibModalInstance, $route, gettext, notify) {
+    $scope.logVisible = true;
+    $scope.isWorking = true;
+    $scope.showLog = function() {
+      return $scope.logVisible = !$scope.logVisible;
+    };
+    $http.get('/api/lm/devices/import').then(function(resp) {
+      $scope.isWorking = false;
+      return notify.success(gettext('Import complete'));
+    }).catch(function(resp) {
+      notify.error(gettext('Import failed'), resp.data.message);
+      $scope.isWorking = false;
+      return $scope.showLog();
+    });
+    return $scope.close = function() {
+      $uibModalInstance.close();
+      return $route.reload();
+    };
+  });
+
   angular.module('lmn.linbo').controller('LMLINBOAcceptModalController', function($scope, $uibModalInstance, $http, partition, disk) {
     $scope.partition = partition;
     $scope.disk = disk;
@@ -616,6 +636,14 @@
     $http.get('/api/lm/linbo/images').then(function(resp) {
       return $scope.images = resp.data;
     });
+    $scope.importDevices = function() {
+      return $uibModal.open({
+        templateUrl: '/lmn_linbo:resources/partial/apply.modal.html',
+        controller: 'LMImportDevicesApplyModalController',
+        size: 'lg',
+        backdrop: 'static'
+      });
+    };
     $scope.createConfig = function(example) {
       return messagebox.prompt('New name', '').then(function(msg) {
         var newName, ref, test;
@@ -636,7 +664,7 @@
               return $http.get("/api/lm/read-config-setup").then(function(setup) {
                 resp.data['config']['LINBO']['Server'] = setup.data['setup']['serverip'];
                 return $http.post(`/api/lm/linbo/config/start.conf.${newName}`, resp.data).then(function() {
-                  return $route.reload();
+                  return $scope.importDevices();
                 });
               });
             });
@@ -650,7 +678,7 @@
               os: [],
               partitions: []
             }).then(function() {
-              return $route.reload();
+              return $scope.importDevices();
             });
           }
         }
@@ -663,7 +691,7 @@
         negative: 'Cancel'
       }).then(function() {
         return $http.delete(`/api/lm/linbo/config/${configName}`).then(function() {
-          return $route.reload();
+          return $scope.importDevices();
         });
       });
     };
@@ -678,10 +706,10 @@
             return $http.post(`/api/lm/linbo/config/start.conf.${newName}`, resp.data).then(function() {
               if (deleteOriginal) {
                 return $http.delete(`/api/lm/linbo/config/${configName}`).then(function() {
-                  return $route.reload();
+                  return $scope.importDevices();
                 });
               } else {
-                return $route.reload();
+                return $scope.importDevices();
               }
             });
           });
@@ -712,7 +740,8 @@
               return notify.success(gettext('Saved'));
             });
             return $http.post(`/api/lm/linbo/vdi/${configName}.vdi`, result[1]).then(function(resp) {
-              return notify.success(gettext('Saved'));
+              notify.success(gettext('Saved'));
+              return $scope.importDevices();
             });
           });
         });

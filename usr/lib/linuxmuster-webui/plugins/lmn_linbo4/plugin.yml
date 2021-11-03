@@ -9,6 +9,7 @@ dependencies:
     - !PluginDependency { plugin_name: core }
     - !PluginDependency { plugin_name: filesystem }
     - !PluginDependency { plugin_name: lmn_common }
+    - !PluginDependency { plugin_name: lmn_devices }
 resources:
     - 'resources/vendor/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.min.js'
     - 'resources/vendor/angular-bootstrap-colorpicker/css/colorpicker.min.css'
@@ -18,6 +19,7 @@ resources:
     - 'resources/partial/image.modal.html'
     - 'resources/partial/image.backups.modal.html'
     - 'resources/partial/config.modal.html'
+    - 'resources/partial/apply.modal.html'
     - 'resources/partial/partition.modal.html'
     - 'resources/partial/accept.modal.html'
     - 'ng:lmn.linbo4'

@@ -3,6 +3,24 @@ angular.module('lmn.linbo4').config ($routeProvider) ->
         controller: 'LMLINBO4Controller'
         templateUrl: '/lmn_linbo4:resources/partial/index.html'
 
+angular.module('lmn.linbo').controller 'LMImportDevicesApplyModalController', ($scope, $http, $uibModalInstance, $route, gettext, notify) ->
+    $scope.logVisible = true
+    $scope.isWorking = true
+    $scope.showLog = () ->
+        $scope.logVisible = !$scope.logVisible
+
+    $http.get('/api/lm/devices/import').then (resp) ->
+        $scope.isWorking = false
+        notify.success gettext('Import complete')
+    .catch (resp) ->
+        notify.error gettext('Import failed'), resp.data.message
+        $scope.isWorking = false
+        $scope.showLog()
+
+    $scope.close = () ->
+        $uibModalInstance.close()
+        $route.reload()
+
 angular.module('lmn.linbo4').controller 'LMLINBO4AcceptModalController', ($scope, $uibModalInstance, $http, partition, disk) ->
     $scope.partition = partition
     $scope.disk = disk
@@ -515,6 +533,15 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
         $scope.images = resp.data
         console.log($scope.images)
 
+    $scope.importDevices = () ->
+        $uibModal.open(
+            templateUrl: '/lmn_linbo:resources/partial/apply.modal.html'
+            controller: 'LMImportDevicesApplyModalController'
+            size: 'lg'
+
+            backdrop: 'static'
+        )
+
     $scope.createConfig = (example) ->
         messagebox.prompt('New name', '').then (msg) ->
             newName = msg.value
@@ -532,7 +559,7 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
                         $http.get("/api/lm/read-config-setup").then (setup) ->
                             resp.data['config']['LINBO']['Server'] = setup.data['setup']['serverip']
                             $http.post("/api/lm/linbo4/config/start.conf.#{newName}", resp.data).then () ->
-                                $route.reload()
+                                $scope.importDevices()
                 else
                     $http.post("/api/lm/linbo4/config/start.conf.#{newName}", {
                         config:
@@ -541,12 +568,12 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
                         os: []
                         partitions: []
                     }).then () ->
-                        $route.reload()
+                        $scope.importDevices()
 
     $scope.deleteConfig = (configName) ->
         messagebox.show(text: "Delete '#{configName}'?", positive: 'Delete', negative: 'Cancel').then () ->
             $http.delete("/api/lm/linbo4/config/#{configName}").then () ->
-                $route.reload()
+                $scope.importDevices()
 
     $scope.duplicateConfig = (configName, deleteOriginal=false) ->
         newName = configName.substring('start.conf.'.length)
@@ -558,9 +585,9 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
                     $http.post("/api/lm/linbo4/config/start.conf.#{newName}", resp.data).then () ->
                         if deleteOriginal
                             $http.delete("/api/lm/linbo4/config/#{configName}").then () ->
-                                $route.reload()
+                                $scope.importDevices()
                         else
-                            $route.reload()
+                            $scope.importDevices()
 
     $scope.showBackups = (image) ->
         $uibModal.open(
@@ -590,6 +617,7 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
                         notify.success gettext('Saved')
                     $http.post("/api/lm/linbo4/vdi/#{configName}.vdi", result[1]).then (resp) ->
                         notify.success gettext('Saved')
+                        $scope.importDevices()
 
     $scope.deleteImage = (image) ->
         messagebox.show(text: "Delete '#{image.name}'?", positive: 'Delete', negative: 'Cancel').then () ->

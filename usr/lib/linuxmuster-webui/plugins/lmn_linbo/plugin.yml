@@ -9,6 +9,7 @@ dependencies:
     - !!python/object:aj.plugins.PluginDependency { plugin_name: core }
     - !!python/object:aj.plugins.PluginDependency { plugin_name: filesystem }
     - !!python/object:aj.plugins.PluginDependency { plugin_name: lmn_common }
+    - !!python/object:aj.plugins.PluginDependency { plugin_name: lmn_devices }
 resources:
     - 'resources/vendor/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.min.js'
     - 'resources/vendor/angular-bootstrap-colorpicker/css/colorpicker.min.css'
@@ -17,6 +18,7 @@ resources:
     - 'resources/partial/index.html'
     - 'resources/partial/image.modal.html'
     - 'resources/partial/config.modal.html'
+    - 'resources/partial/apply.modal.html'
     - 'resources/partial/partition.modal.html'
     - 'resources/partial/accept.modal.html'
     - 'ng:lm.linbo'

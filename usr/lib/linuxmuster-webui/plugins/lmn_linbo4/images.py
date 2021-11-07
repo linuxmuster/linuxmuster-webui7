@@ -275,10 +275,11 @@ class LinboImageManager:
     def delete(self, group, date=0):
         if group in self.linboImageGroups:
             if date in self.linboImageGroups[group].backups:
-                # The object to delete is a backup
+                # The object to delete is only a backup
                 self.linboImageGroups[group].backups[date].delete()
                 self.linboImageGroups[group].load()
             else:
+                # Then delete the whole group
                 self.linboImageGroups[group].delete()
                 del self.linboImageGroups[group]
 

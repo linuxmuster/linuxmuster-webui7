@@ -776,7 +776,7 @@
         $location.hash("images");
         return $route.reload();
       }).catch(function(err) {
-        return notify.error(gettext("Failed to restart multicast and torrent services"));
+        return notify.error(gettext("Failed to restart multicast and torrent services. Please see the log files"));
       });
     };
     $scope.deleteImage = function(image) {

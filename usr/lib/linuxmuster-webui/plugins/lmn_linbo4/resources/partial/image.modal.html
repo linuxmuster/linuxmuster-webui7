@@ -6,6 +6,11 @@
     <h4 ng:show="image.backup">{{image.name}} - Backup {{image.date}}</h4>
 </div>
 <div class="modal-body">
+    <div class="alert alert-warning">
+        <i class="fa fa-warning"></i>
+        Caution ! This feature is still under heavy test.<br />
+        Renaming image or restoring backups do not work properly yet and is only published for test purpose.
+    </div>
     <uib:tabset>
         <uib:tab heading="{{'General'|translate}}">
             <br/>

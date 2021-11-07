@@ -132,6 +132,13 @@ class LinboImage:
         for extra in EXTRA_IMAGE_FILES + EXTRA_NONEDITABLE_IMAGE_FILES:
             actual = os.path.join(self.path, f"{self.image}.{extra}")
             if os.path.exists(actual):
+                # Replace image name in .info file
+                if extra == "info":
+                    with LMNFile(actual, 'r') as info:
+                        data = info.read().replace(self.image, new_image_name)
+                    with LMNFile(actual, 'w') as info:
+                        info.write(data)
+
                 os.rename(actual, os.path.join(self.path, f"{new_image_name}.{extra}"))
 
         for extra in EXTRA_COMMON_FILES:

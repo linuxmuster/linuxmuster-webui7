@@ -1,3 +1,11 @@
+linuxmuster-webui7 (1.0.162~1) lmn71; urgency=medium
+
+  * New linbo 4 plugin ( still under developpment )
+  * Rename start.conf
+  * Prepare script to change permissions management
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 07 Nov 2021 17:12:20 +0100
+
 linuxmuster-webui7 (1.0.161~1) lmn7-testing; urgency=medium
 
   - Multischool support

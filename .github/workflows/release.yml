@@ -57,7 +57,7 @@ jobs:
         id: check_prerelease
         uses: haya14busa/action-cond@v1
         with:
-          cond: ${{ env.DISTRIBUTION == 'lmn7-testing' }}
+          cond: ${{ env.DISTRIBUTION == 'lmn71' }}
           if_true: "true"
           if_false: "false"
 
@@ -77,7 +77,7 @@ jobs:
         run: rm ./current-changes
 
       - name: Upload Release Assets
-        if: env.DISTRIBUTION == 'lmn7'
+        if: env.DISTRIBUTION == 'lmn70'
         id: upload-release-assets
         uses: dwenegar/upload-release-assets@v1
         env:

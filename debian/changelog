@@ -1,3 +1,14 @@
+linuxmuster-webui7 (1.0.162) lmn70; urgency=medium
+
+  * Change start.conf name
+  * Sanitize spaces in CSV
+  * Accepting birthday without leading 0
+  * Fix permissions of config backups
+  * Add schoolsettings permissions for schooladmins
+  * Fix postsync file being deleted
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 07 Nov 2021 15:04:34 +0100
+
 linuxmuster-webui7 (1.0.161~1) lmn7-testing; urgency=medium
 
   - Multischool support

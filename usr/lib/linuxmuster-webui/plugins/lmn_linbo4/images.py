@@ -274,6 +274,8 @@ class LinboImageManager:
 
     def list(self):
         self.linboImageGroups = {}
+        if not os.path.isdir(LINBO_PATH):
+            return
         for dir in os.listdir(LINBO_PATH):
             for file in os.listdir(os.path.join(LINBO_PATH, dir)):
                 if file.endswith((f'.{IMAGE}')):

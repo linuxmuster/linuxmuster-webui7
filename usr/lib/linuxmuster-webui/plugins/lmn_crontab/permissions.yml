@@ -1,0 +1,2 @@
+globaladministrator:
+    - 'sidebar:view:/view/cron: false'

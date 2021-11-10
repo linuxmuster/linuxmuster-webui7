@@ -172,7 +172,7 @@ class Handler(HttpPlugin):
                 lmn_getSophomorixValue(sophomorixCommand, '')
 
     @url(r'/api/lm/ldap-search')
-    @authorize('lm:quotas:configure')
+    @authorize('lm:quotas:ldap-search')
     @endpoint(api=True)
     def handle_api_ldap_search(self, http_context):
         """

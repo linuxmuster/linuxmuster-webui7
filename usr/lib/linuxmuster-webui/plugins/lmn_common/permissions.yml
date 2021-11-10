@@ -1,0 +1,37 @@
+globaladministrator:
+    - 'sidebar:view:/view/auth-users: false'
+    - 'sidebar:view:/view/dashboard: true'
+    - 'sidebar:view:/view/network: true'
+    - 'sidebar:view:/view/plugins: false'
+    - 'sidebar:view:/view/settings: false'
+    - 'core:config:read: true'
+    - 'core:config:write: true'
+    - 'filesystem:read: true'
+    - 'filesystem:write: true'
+    - 'network:configure: true'
+    - 'network:updown: true'
+
+schooladministrator:
+    - 'sidebar:view:/view/auth-users: false'
+    - 'sidebar:view:/view/dashboard: false'
+    - 'sidebar:view:/view/network: true'
+    - 'sidebar:view:/view/plugins: false'
+    - 'sidebar:view:/view/settings: false'
+    - 'core:config:read: true'
+    - 'core:config:write: true'
+    - 'filesystem:read: true'
+    - 'filesystem:write: true'
+    - 'network:configure: false'
+    - 'network:updown: false'
+ 
+teacher:
+    - 'core:config:read: true'
+    - 'core:config:write: true'
+    - 'sidebar:view:/view/dashboard: false'
+    - 'filesystem:read: false'
+    - 'filesystem:write: true'
+
+student:
+    - 'sidebar:view:/view/dashboard: false'
+
+

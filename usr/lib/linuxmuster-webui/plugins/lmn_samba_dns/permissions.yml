@@ -1,0 +1,12 @@
+globaladministrator:
+    - 'lm:samba_dns:read: true'
+    - 'lm:samba_dns:write: true'
+    - 'sidebar:view:/view/samba_dns: true'
+
+schooladministrator:
+    - 'lm:samba_dns:read: true'
+    - 'lm:samba_dns:write: false'
+    - 'sidebar:view:/view/samba_dns: true'
+
+
+

@@ -19,7 +19,8 @@ for plugin in os.listdir(PLUGIN_PATH):
         with open(permissions_path) as tmp_data:
             tmp_permissions = yaml.load(tmp_data, Loader=yaml.SafeLoader)
         for role in tmp_permissions:
-            permissions[role].extend(tmp_permissions[role])
+            if role in tmp_permissions and tmp_permissions[role]:
+                permissions[role].extend(tmp_permissions[role])
 
 with open(PERMISSIONS_TARGET, 'w') as target:
     for role in permissions.keys():

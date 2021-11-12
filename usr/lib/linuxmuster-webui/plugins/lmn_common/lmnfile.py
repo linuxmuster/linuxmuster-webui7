@@ -60,7 +60,7 @@ class LMNFile(metaclass=abc.ABCMeta):
         """
 
         # Cannot filter start.conf with extension
-        if file.split('/')[-1].startswith('start.conf'):
+        if file.split('/')[-1].startswith('start.conf') and os.path.splitext(file)[-1] != '.vdi':
             obj = object.__new__(StartConfLoader)
             obj.__init__(file, mode, delimiter=delimiter, fieldnames=fieldnames)
             return obj
@@ -198,7 +198,7 @@ class YAMLLoader(LMNFile):
     Handler for yaml files.
     """
 
-    extensions = ['.yml']
+    extensions = ['.yml', '.vdi']
 
     def __enter__(self):
         if os.geteuid() == 0:

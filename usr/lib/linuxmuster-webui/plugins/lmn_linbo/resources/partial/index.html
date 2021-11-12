@@ -59,6 +59,9 @@
                 </div>
             </div>
             <floating-toolbar ng:show="images_selected.length > 0">
+                <button ng:click="convertImages()" class="btn btn-lmn pull-right" translate>
+                    Convert to qcow2
+                </button>
                 <button ng:click="deleteImages()" class="btn btn-lmn pull-right" translate>
                     Delete selected images
                 </button>

@@ -517,6 +517,12 @@ angular.module('lmn.linbo').controller 'LMLINBOController', ($q, $scope, $http, 
 
     $scope.images_selected = []
 
+    $scope.$on('push:lmn_linbo', ($event, msg) ->
+        if msg == 'refresh'
+            $location.hash("images")
+            $route.reload()
+    )
+
     $http.get('/api/lm/linbo/configs').then (resp) ->
         $scope.configs = resp.data
 
@@ -617,6 +623,15 @@ angular.module('lmn.linbo').controller 'LMLINBOController', ($q, $scope, $http, 
             $q.all(promises).then () ->
                 $location.hash("images")
                 $route.reload()
+
+    $scope.convertImages = () ->
+        name_list = (image.name for image in $scope.images_selected).toString()
+        items = []
+        for image in $scope.images_selected
+            items.push(image.name);
+        messagebox.show(text: "Convert '#{name_list}' to qcow2 ? This action can take several minutes !", positive: 'Convert', negative: 'Cancel').then () ->
+            tasks.start('aj.plugins.lmn_linbo.tasks.Cloop2Qcow2', [items])
+            $scope.images_selected = []
 
     $scope.toggleSelected = (image) ->
         position = $scope.images_selected.indexOf(image)

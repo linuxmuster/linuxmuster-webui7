@@ -627,6 +627,12 @@
       $scope.activetab = 0;
     }
     $scope.images_selected = [];
+    $scope.$on('push:lmn_linbo', function($event, msg) {
+      if (msg === 'refresh') {
+        $location.hash("images");
+        return $route.reload();
+      }
+    });
     $http.get('/api/lm/linbo/configs').then(function(resp) {
       return $scope.configs = resp.data;
     });
@@ -787,6 +793,33 @@
           $location.hash("images");
           return $route.reload();
         });
+      });
+    };
+    $scope.convertImages = function() {
+      var i, image, items, len, name_list, ref;
+      name_list = ((function() {
+        var i, len, ref, results;
+        ref = $scope.images_selected;
+        results = [];
+        for (i = 0, len = ref.length; i < len; i++) {
+          image = ref[i];
+          results.push(image.name);
+        }
+        return results;
+      })()).toString();
+      items = [];
+      ref = $scope.images_selected;
+      for (i = 0, len = ref.length; i < len; i++) {
+        image = ref[i];
+        items.push(image.name);
+      }
+      return messagebox.show({
+        text: `Convert '${name_list}' to qcow2 ? This action can take several minutes !`,
+        positive: 'Convert',
+        negative: 'Cancel'
+      }).then(function() {
+        tasks.start('aj.plugins.lmn_linbo.tasks.Cloop2Qcow2', [items]);
+        return $scope.images_selected = [];
       });
     };
     $scope.toggleSelected = function(image) {

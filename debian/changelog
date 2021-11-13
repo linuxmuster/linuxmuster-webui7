@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.163~1) lmn71; urgency=medium
+
+  * New permissions system, per plugin configurable
+  * Cloop to qcow2 conversion
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 13 Nov 2021 11:12:59 +0100
+
 linuxmuster-webui7 (1.0.162~1) lmn71; urgency=medium
 
   * New linbo 4 plugin ( still under developpment )

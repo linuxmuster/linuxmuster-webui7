@@ -132,6 +132,8 @@ jobs:
       - name: Copy packages
         run: |
           mkdir -p deb/packages/$PACKAGE/$DISTRIBUTION
+          rm -rf deb/packages/$PACKAGE/$DISTRIBUTION/* 
+
           cp package/* deb/packages/$PACKAGE/$DISTRIBUTION
           
       - name: Push to repo

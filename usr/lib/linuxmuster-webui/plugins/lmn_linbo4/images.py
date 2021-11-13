@@ -139,6 +139,11 @@ class LinboImage:
                     with LMNFile(actual, 'w') as info:
                         info.write(data)
 
+                # Need to generate a new torrent file
+                if extra == "torrent":
+                    os.unlink(actual)
+                    continue
+
                 os.rename(actual, os.path.join(self.path, f"{new_image_name}.{extra}"))
 
         for extra in EXTRA_COMMON_FILES:

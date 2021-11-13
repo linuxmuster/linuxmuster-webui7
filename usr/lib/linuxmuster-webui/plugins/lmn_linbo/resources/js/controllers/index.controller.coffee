@@ -508,6 +508,7 @@ angular.module('lmn.linbo').controller 'LMLINBOController', ($q, $scope, $http, 
     pageTitle.set(gettext('LINBO'))
 
     $scope.tabs = ['groups', 'images']
+    $scope.showConvertDialog = false
 
     tag = $location.$$url.split("#")[1]
     if tag and tag in $scope.tabs
@@ -624,14 +625,20 @@ angular.module('lmn.linbo').controller 'LMLINBOController', ($q, $scope, $http, 
                 $location.hash("images")
                 $route.reload()
 
+    $scope.openConvertDialog = () ->
+        $scope.toConvert_list = (image.name for image in $scope.images_selected).toString()
+        $scope.showConvertDialog = true
+
+    $scope.closeConvertDialog = () ->
+        $scope.showConvertDialog = false
+
     $scope.convertImages = () ->
-        name_list = (image.name for image in $scope.images_selected).toString()
+        $scope.showConvertDialog = false
         items = []
         for image in $scope.images_selected
             items.push(image.name);
-        messagebox.show(text: "Convert '#{name_list}' to qcow2 ? This action can take several minutes !", positive: 'Convert', negative: 'Cancel').then () ->
-            tasks.start('aj.plugins.lmn_linbo.tasks.Cloop2Qcow2', [items])
-            $scope.images_selected = []
+        tasks.start('aj.plugins.lmn_linbo.tasks.Cloop2Qcow2', [items])
+        $scope.images_selected = []
 
     $scope.toggleSelected = (image) ->
         position = $scope.images_selected.indexOf(image)

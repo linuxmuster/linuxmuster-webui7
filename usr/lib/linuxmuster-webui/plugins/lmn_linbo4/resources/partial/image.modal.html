@@ -16,11 +16,11 @@
             <br/>
             <div class="form-group">
                 <label translate>Description</label>
-                <textarea ng:model="image.desc" class="form-control"></textarea>
+                <textarea ng:model="image.desc" ng-attr-rows="{{desc_textarea_rows}}" class="form-control"></textarea>
             </div>
             <div class="form-group">
                 <label translate>Info</label>
-                <textarea ng:model="image.info" class="form-control"></textarea>
+                <textarea ng:model="image.info" ng-attr-rows="{{info_textarea_rows}}"  class="form-control"></textarea>
             </div>
             <div class="form-group">
                 <label translate>Size</label>

@@ -103,6 +103,8 @@
   angular.module('lmn.linbo4').controller('LMLINBO4ImageModalController', function($scope, $uibModal, $uibModalInstance, $http, gettext, filesystem, messagebox, image, images) {
     var x;
     $scope.image = image;
+    $scope.desc_textarea_rows = $scope.image.desc.split(/\r\n|\r|\n/).length + 1;
+    $scope.info_textarea_rows = $scope.image.info.split(/\r\n|\r|\n/).length + 1;
     $scope.imagesWithReg = (function() {
       var i, len, results;
       results = [];

@@ -1,3 +1,11 @@
+linuxmuster-webui7 (1.0.163~2) lmn71; urgency=medium
+
+  * Update translations
+  * Fix torrent problem by renaming or deleting image
+  * Security fix when renaming an image 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 14 Nov 2021 17:10:03 +0100
+
 linuxmuster-webui7 (1.0.163~1) lmn71; urgency=medium
 
   * New permissions system, per plugin configurable

@@ -1,5 +1,7 @@
 import os
 import shutil
+import subprocess
+import logging
 from datetime import datetime
 
 from jadi import service
@@ -38,6 +40,20 @@ class LinboImage:
         self.backup = backup
         self.timestamp = timestamp
         self.load_info()
+
+    def _torrent_stop(self):
+        try:
+            subprocess.check_call(['/usr/sbin/linbo-torrent', 'stop', f'{self.image}.torrent'])
+        except Exception as e:
+            logging.error(f'Unable to stop torrent service for {self.image} : {e}')
+
+    def _torrent_create(self, image=None):
+        if not image:
+            image = self.image
+        try:
+            subprocess.check_call(['/usr/sbin/linbo-torrent', 'create', image])
+        except Exception as e:
+            logging.error(f'Unable to create torrent file for {image} : {e}')
 
     def load_info(self):
         self.image = f"{self.name}.{IMAGE}"
@@ -110,6 +126,7 @@ class LinboImage:
         """
 
         self.delete_files()
+        self._torrent_stop()
 
         # Remove directory
         os.rmdir(self.path)
@@ -128,6 +145,8 @@ class LinboImage:
         os.rename(os.path.join(self.path, self.image),
                   os.path.join(self.path, new_image_name))
 
+        self._torrent_stop()
+
         # Rename extra files
         for extra in EXTRA_IMAGE_FILES + EXTRA_NONEDITABLE_IMAGE_FILES:
             actual = os.path.join(self.path, f"{self.image}.{extra}")
@@ -142,6 +161,7 @@ class LinboImage:
                 # Need to generate a new torrent file
                 if extra == "torrent":
                     os.unlink(actual)
+                    self._torrent_create(new_image_name)
                     continue
 
                 os.rename(actual, os.path.join(self.path, f"{new_image_name}.{extra}"))
@@ -313,6 +333,7 @@ class LinboImageManager:
                                 imageGroup.base.path)
                 imageGroup.backups[date].delete()
                 self.linboImageGroups[group].load()
+                imageGroup.base._torrent_create()
 
     def save_extras(self, group, data, timestamp=None):
         if timestamp:

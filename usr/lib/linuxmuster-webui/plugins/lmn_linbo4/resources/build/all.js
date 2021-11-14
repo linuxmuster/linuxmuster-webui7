@@ -874,14 +874,17 @@
     };
     $scope.renameImage = function(image) {
       return messagebox.prompt('New name', image.name).then(function(msg) {
-        var new_name;
+        var new_name, validName;
         new_name = msg.value;
-        if (new_name) {
+        validName = validation.isValidImage(new_name);
+        if (validName === true) {
           return $http.post(`/api/lm/linbo4/renameImage/${image.name}`, {
             new_name: new_name
           }).then(function(resp) {
             return $scope.restartServices();
           });
+        } else {
+          return notify.error(gettext(new_name + " is not a valid name for a linbo image."));
         }
       });
     };

@@ -149,6 +149,15 @@ angular.module('lmn.common').service 'validation', (gettext) ->
             return error_msg
         return true
 
+    # Image names for linbo not empty, only with alphanumeric chars and "-" or "_"
+    this.isValidImage = (name) ->
+        error_msg = name + gettext(' does not contain valid chars or is duplicated')
+        regExp = /^[a-zA-Z0-9_\-]+$/
+        validImageName = regExp.test(name)
+        if !validImageName
+            return error_msg
+        return true
+
     # Roomnames same as hostnames
     this.isValidRoom =(room) ->
         return this.isValidHost(room);

@@ -541,6 +541,17 @@
       }
       return true;
     };
+    // Image names for linbo not empty, only with alphanumeric chars and "-" or "_"
+    this.isValidImage = function(name) {
+      var error_msg, regExp, validImageName;
+      error_msg = name + gettext(' does not contain valid chars or is duplicated');
+      regExp = /^[a-zA-Z0-9_\-]+$/;
+      validImageName = regExp.test(name);
+      if (!validImageName) {
+        return error_msg;
+      }
+      return true;
+    };
     // Roomnames same as hostnames
     this.isValidRoom = function(room) {
       return this.isValidHost(room);

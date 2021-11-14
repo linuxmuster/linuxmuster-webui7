@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-26 21:41+0200\n"
-"PO-Revision-Date: 2021-08-26 20:33\n"
+"POT-Creation-Date: 2021-11-14 15:53+0100\n"
+"PO-Revision-Date: 2021-11-14 16:07\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -16,6 +16,10 @@ msgstr ""
 "X-Crowdin-Language: fr\n"
 "X-Crowdin-File: /2.0/lmn_linbo.po\n"
 "X-Crowdin-File-ID: 98\n"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:72
+msgid "<h3>Convert to qcow2</h3>"
+msgstr "<h3>Convertir en qcow2</h3>"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:270
 msgid "Activated"
@@ -78,24 +82,32 @@ msgid "Cache"
 msgstr "Cache"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/accept.modal.html:9
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:88
 msgid "Cancel"
 msgstr "Annuler"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/apply.modal.html:11
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:524
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/image.modal.html:79
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/partition.modal.html:176
 msgid "Close"
 msgstr "Fermer"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:55
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:58
 msgid "Comment: {{image.description}}"
 msgstr "Commentaire : {{image.description}}"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:62
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:85
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/tasks.py:10
+msgid "Convert to qcow2"
+msgstr "Convertir en qcow2"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:358
 msgid "Cores"
 msgstr "Cœurs"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:31
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:34
 msgid "Create"
 msgstr "Créer"
 
@@ -107,13 +119,17 @@ msgstr "Données"
 msgid "Default"
 msgstr "Défaut"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:59
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:65
 msgid "Delete selected images"
 msgstr "Supprimer les images sélectionnées"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/image.modal.html:9
 msgid "Description"
 msgstr "Description"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/apply.modal.html:10
+msgid "Details"
+msgstr "Détails"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/partition.modal.html:110
 msgid "Differential image"
@@ -127,7 +143,7 @@ msgstr "Affichage"
 msgid "Display client details by default"
 msgstr "Afficher les détails du client par défaut"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:26
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:29
 msgid "Download Linbo Boot"
 msgstr "Télécharger Linbo Boot"
 
@@ -139,7 +155,7 @@ msgstr "Type de téléchargement"
 msgid "EFI"
 msgstr "EFI"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:34
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:37
 msgid "Empty"
 msgstr "Vide"
 
@@ -188,6 +204,10 @@ msgstr "Groupes"
 msgid "Hardware"
 msgstr "Matériel"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/apply.modal.html:9
+msgid "Hide details"
+msgstr "Masquer les détails"
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:322
 msgid "Hostname"
 msgstr "Nom d'hôte"
@@ -200,9 +220,13 @@ msgstr "Adresse IP"
 msgid "Icon"
 msgstr "Icone"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:40
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:43
 msgid "Images"
 msgstr "Images"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/apply.modal.html:2
+msgid "Importing device"
+msgstr "Importation des appareils"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/image.modal.html:13
 msgid "Info"
@@ -373,7 +397,7 @@ msgid "Storage"
 msgstr "Stockage"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:243
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:267
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:285
 msgid "Swap"
 msgstr "Swap"
 
@@ -446,7 +470,7 @@ msgid "Virtual Desktop (VDI)"
 msgstr "Bureau virtuel (VDI)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/main.py:15
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:490
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:508
 msgid "LINBO"
 msgstr "LINBO"
 
@@ -466,17 +490,25 @@ msgstr "Voir des exemples"
 msgid "Read/write icons"
 msgstr "Lire/Ecrire les icônes"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:269
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:14
+msgid "Import complete"
+msgstr "Importation terminée"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:16
+msgid "Import failed"
+msgstr "Échec lors de l'importation"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:287
 msgid "LINBO Cache"
 msgstr "Cache LINBO"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:520
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:554
 msgid "A config file with this name already exists!"
 msgstr "Un fichier portant ce nom existe déjà !"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:569
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:571
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:630
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:607
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:609
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:684
 msgid "Saved"
 msgstr "Sauvegardé"
 

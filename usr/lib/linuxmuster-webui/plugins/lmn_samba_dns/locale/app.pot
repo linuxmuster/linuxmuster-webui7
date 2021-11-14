@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-26 21:41+0200\n"
+"POT-Creation-Date: 2021-11-14 16:08+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -82,6 +82,14 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:2
 msgid "Zone informations"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/main.py:29
+msgid "Show the DNS in Samba"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/main.py:34
+msgid "Change the DNS in Samba"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/js/controllers/index.controller.es:2

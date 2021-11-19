@@ -84,6 +84,12 @@ class LinboImage:
                     self.extras[extra] = f.read()
             else:
                 self.extras[extra] = None
+                # Create empty desc in any case
+                if extra == 'desc':
+                    with LMNFile(extra_file, 'w') as f:
+                        pass
+                    os.chmod(extra_file, EXTRA_PERMISSIONS_MAPPING[extra])
+
 
         for extra in EXTRA_COMMON_FILES:
             extra_file = os.path.join(self.path, f"{self.name}.{extra}")
@@ -182,7 +188,7 @@ class LinboImage:
 
         for extra in EXTRA_IMAGE_FILES:
             path = os.path.join(self.path, f"{self.image}.{extra}")
-            if extra in data and data[extra]:
+            if extra in data and ( data[extra] or extra == 'desc' ):
                 with LMNFile(path, 'w') as f:
                     f.write(data[extra])
                 os.chmod(path, EXTRA_PERMISSIONS_MAPPING[extra])

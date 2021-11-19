@@ -30,15 +30,14 @@ Next generation web interface for linuxmuster.net v7, which provides:
 
 ## Maintenance Details
 
-Linuxmuster.net official | ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+)  YES*
+Linuxmuster.net official | ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+)  YES
 :---: | :---: 
-[Community support](https://ask.linuxmuster.net) | ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+)  YES**
+[Community support](https://ask.linuxmuster.net) | ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+)  YES*
 Actively developed | ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+)  YES
 Maintainer organisation |  Linuxmuster.net
 Primary maintainer | arnaud@linuxmuster.net  / andreas.till@netzint.de  
     
-\* Event though this is not an official package, pull requests and issues are being looked at.  
-** The linuxmuster community consits of people who are nice and happy to help. They are not directly involved in the development though, and might not be able to help in any case.
+\* The linuxmuster community consits of people who are nice and happy to help. They are not directly involved in the development though, and might not be able to help in all cases.
 
 ## Screenshots
 

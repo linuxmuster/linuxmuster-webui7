@@ -67,3 +67,31 @@ Primary maintainer | arnaud@linuxmuster.net  / andreas.till@netzint.de
         </td>
     </tr>
 </table>
+
+## Installation
+
+### 1. Import key:
+
+```bash
+wget -qO - "https://deb.linuxmuster.net/pub.gpg" | sudo apt-key add -
+```
+
+### 2. Add repo:
+
+##### Linuxmuster 7.1 ( testing )
+
+```bash
+sudo sh -c 'echo "deb https://deb.linuxmuster.net/ lmn71 main" > /etc/apt/sources.list.d/lmn7.list'
+```
+
+##### Linuxmuster 7.0 ( stable )
+
+```bash
+sudo sh -c 'echo "deb https://deb.linuxmuster.net/ lmn70 main" > /etc/apt/sources.list.d/lmn7.list'
+```
+
+## 3. Apt update
+
+```bash
+sudo apt update && sudo apt install linuxmuster-webui7
+```

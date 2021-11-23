@@ -141,12 +141,24 @@
     };
   });
 
-  angular.module('lmn.linbo').controller('LMLINBOConfigModalController', function($scope, $uibModal, $uibModalInstance, $timeout, $http, $log, gettext, messagebox, config, lmFileBackups, vdiconfig) {
+  angular.module('lmn.linbo').controller('LMLINBOConfigModalController', function($scope, $uibModal, $uibModalInstance, $timeout, $http, $log, gettext, messagebox, config, lmFileBackups, identity, vdiconfig) {
     var DiskType, _device, _partition, disk, diskMap, i, j, len, len1, ref, ref1;
     $scope.config = config;
     $scope.vdiconfig = vdiconfig;
     $scope.expert = false;
-    console.log($scope.vdiconfig);
+    $scope.privateConf = false;
+    if (config.config.LINBO.School !== 'default-school') {
+      $scope.privateConf = true;
+    }
+    $scope.togglePrivateConf = function() {
+      if ($scope.privateConf) {
+        $scope.privateConf = false;
+        return config.config.LINBO.School = 'default-school';
+      } else {
+        $scope.privateConf = true;
+        return config.config.LINBO.School = $scope.identity.profile.activeSchool;
+      }
+    };
     $scope.toggleExpert = function() {
       if ($scope.expert) {
         return $scope.expert = false;
@@ -596,7 +608,7 @@
     };
   });
 
-  angular.module('lmn.linbo').controller('LMLINBOController', function($q, $scope, $http, $uibModal, $log, $route, $location, gettext, notify, pageTitle, tasks, messagebox, validation) {
+  angular.module('lmn.linbo').controller('LMLINBOController', function($q, $scope, $http, $uibModal, $log, $route, $location, gettext, notify, pageTitle, tasks, messagebox, validation, identity) {
     var tag;
     pageTitle.set(gettext('LINBO'));
     $scope.tabs = ['groups', 'images'];
@@ -608,7 +620,25 @@
     }
     $scope.images_selected = [];
     $http.get('/api/lm/linbo/configs').then(function(resp) {
-      return $scope.configs = resp.data;
+      var allConfigNames, configName, i, len, results;
+      $scope.configs = [];
+      // TODO: Better rework to work in backend
+      allConfigNames = resp.data;
+      results = [];
+      for (i = 0, len = allConfigNames.length; i < len; i++) {
+        configName = allConfigNames[i];
+        results.push($http.get(`/api/lm/linbo/config/${configName}`).then(function(resp) {
+          var ref;
+          if (!('School' in resp.data['config']['LINBO'])) {
+            return $scope.configs.push('start.conf.' + resp.data['config']['LINBO']['Group']);
+          } else {
+            if ((ref = resp.data['config']['LINBO']['School']) === identity.profile.activeSchool || ref === 'default-school') {
+              return $scope.configs.push('start.conf.' + resp.data['config']['LINBO']['Group']);
+            }
+          }
+        }));
+      }
+      return results;
     });
     $http.get('/api/lm/linbo/examples').then(function(resp) {
       return $scope.examples = resp.data;
@@ -811,9 +841,25 @@
         });
       });
     };
-    return $scope.downloadIso = function() {
+    $scope.downloadIso = function() {
       return location.href = '/api/lm/linbo.iso';
     };
+    $scope.$watch('identity.user', function() {
+      if ($scope.identity.user === void 0) {
+        return;
+      }
+      if ($scope.identity.user === null) {
+        return;
+      }
+      if ($scope.identity.user === 'root') {
+
+      }
+    });
+    return $http.get("/api/lmn/activeschool").then(function(resp) {
+      var school;
+      $scope.identity.profile.activeSchool = resp.data;
+      return school = $scope.identity.profile.activeSchool;
+    });
   });
 
 }).call(this);

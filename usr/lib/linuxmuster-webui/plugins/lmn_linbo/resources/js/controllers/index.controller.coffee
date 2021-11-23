@@ -78,12 +78,23 @@ angular.module('lmn.linbo').controller 'LMLINBOImageModalController', ($scope, $
         $uibModalInstance.dismiss()
 
 
-angular.module('lmn.linbo').controller 'LMLINBOConfigModalController', ($scope, $uibModal, $uibModalInstance, $timeout, $http, $log, gettext, messagebox, config, lmFileBackups, vdiconfig) ->
+angular.module('lmn.linbo').controller 'LMLINBOConfigModalController', ($scope, $uibModal, $uibModalInstance, $timeout, $http, $log, gettext, messagebox, config, lmFileBackups, identity, vdiconfig) ->
     $scope.config = config
     $scope.vdiconfig = vdiconfig
     $scope.expert = false
+    $scope.privateConf = false
 
-    console.log($scope.vdiconfig)
+
+    if config.config.LINBO.School != 'default-school'
+        $scope.privateConf = true
+
+    $scope.togglePrivateConf = () ->
+        if $scope.privateConf
+            $scope.privateConf = false
+            config.config.LINBO.School = 'default-school'
+        else
+            $scope.privateConf = true
+            config.config.LINBO.School = $scope.identity.profile.activeSchool 
 
     $scope.toggleExpert = () ->
         if $scope.expert
@@ -486,7 +497,7 @@ angular.module('lmn.linbo').controller 'LMLINBOConfigModalController', ($scope, 
 
 
 
-angular.module('lmn.linbo').controller 'LMLINBOController', ($q, $scope, $http, $uibModal, $log, $route, $location, gettext, notify, pageTitle, tasks, messagebox, validation) ->
+angular.module('lmn.linbo').controller 'LMLINBOController', ($q, $scope, $http, $uibModal, $log, $route, $location, gettext, notify, pageTitle, tasks, messagebox, validation, identity) ->
     pageTitle.set(gettext('LINBO'))
 
     $scope.tabs = ['groups', 'images']
@@ -500,13 +511,25 @@ angular.module('lmn.linbo').controller 'LMLINBOController', ($q, $scope, $http, 
     $scope.images_selected = []
 
     $http.get('/api/lm/linbo/configs').then (resp) ->
-        $scope.configs = resp.data
+        $scope.configs = []
+        # TODO: Better rework to work in backend
+        allConfigNames = resp.data
+        for configName in allConfigNames
+            $http.get("/api/lm/linbo/config/#{configName}").then (resp) ->
+                if  'School' not of resp.data['config']['LINBO']
+                    $scope.configs.push 'start.conf.'+resp.data['config']['LINBO']['Group']
+                else
+                    if  resp.data['config']['LINBO']['School'] in [identity.profile.activeSchool, 'default-school']
+                        $scope.configs.push 'start.conf.'+resp.data['config']['LINBO']['Group']
+
+
 
     $http.get('/api/lm/linbo/examples').then (resp) ->
         $scope.examples = resp.data
 
     $http.get('/api/lm/linbo/images').then (resp) ->
         $scope.images = resp.data
+
 
     $scope.createConfig = (example) ->
         messagebox.prompt('New name', '').then (msg) ->
@@ -631,3 +654,15 @@ angular.module('lmn.linbo').controller 'LMLINBOController', ($q, $scope, $http, 
 
     $scope.downloadIso = () ->
         location.href = '/api/lm/linbo.iso'
+
+    $scope.$watch 'identity.user', ->
+        if $scope.identity.user is undefined
+           return
+        if $scope.identity.user is null
+           return
+        if $scope.identity.user is 'root'
+           return
+        
+    $http.get("/api/lmn/activeschool").then (resp) ->
+        $scope.identity.profile.activeSchool = resp.data
+        school = $scope.identity.profile.activeSchool

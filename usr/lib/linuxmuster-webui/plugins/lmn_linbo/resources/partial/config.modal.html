@@ -5,57 +5,6 @@
     <uib:tabset>
         <uib:tab heading="{{'General'|translate}}">
             <br />
-            <!--    <div class="form-group">-->
-            <!--        <table>-->
-            <!--            <tr>-->
-            <!--                <td width="120">-->
-            <!--                    <label translate>Text color</label>-->
-            <!--                    <div uib-dropdown>-->
-            <!--                        <button class="btn btn-default btn-block" ng:style="{background: config.config.LINBO.BackgroundFontColor}" uib-dropdown-toggle translate>-->
-            <!--                            Select color-->
-            <!--                        </button>-->
-            <!--                        <ul uib-dropdown-menu class="dropdown-menu-right scrollable">-->
-            <!--                            <li ng:repeat="color in colors">-->
-            <!--                                <a ng:click="config.config.LINBO.BackgroundFontColor = color" ng:style="{background: color}">-->
-            <!--                                    &nbsp;-->
-            <!--                                </a>-->
-            <!--                            </li>-->
-            <!--                        </ul>-->
-            <!--                    </div>-->
-            <!--                </td>-->
-            <!--                <td width="120">-->
-            <!--                    <label translate>Output color</label>-->
-            <!--                    <div uib-dropdown>-->
-            <!--                        <button class="btn btn-default btn-block" ng:style="{background: config.config.LINBO.ConsoleFontColorStdout}" uib-dropdown-toggle translate>-->
-            <!--                            Select color-->
-            <!--                        </button>-->
-            <!--                        <ul uib-dropdown-menu class="dropdown-menu-right scrollable">-->
-            <!--                            <li ng:repeat="color in colors">-->
-            <!--                                <a ng:click="config.config.LINBO.ConsoleFontColorStdout = color" ng:style="{background: color}">-->
-            <!--                                    &nbsp;-->
-            <!--                                </a>-->
-            <!--                            </li>-->
-            <!--                        </ul>-->
-            <!--                    </div>-->
-            <!--                </td>-->
-            <!--                <td width="120">-->
-            <!--                    <label translate>Error color</label>-->
-            <!--                    <div uib-dropdown>-->
-            <!--                        <button class="btn btn-default btn-block" ng:style="{background: config.config.LINBO.ConsoleFontColorStderr}" uib-dropdown-toggle translate>-->
-            <!--                            Select color-->
-            <!--                        </button>-->
-            <!--                        <ul uib-dropdown-menu class="dropdown-menu-right scrollable">-->
-            <!--                            <li ng:repeat="color in colors">-->
-            <!--                                <a ng:click="config.config.LINBO.ConsoleFontColorStderr = color" ng:style="{background: color}">-->
-            <!--                                    &nbsp;-->
-            <!--                                </a>-->
-            <!--                            </li>-->
-            <!--                        </ul>-->
-            <!--                    </div>-->
-            <!--                </td>-->
-            <!--            </tr>-->
-            <!--        </table>-->
-            <!--    </div>-->
             <div class="form-group">
                 <table width="100%">
                     <tr>
@@ -111,6 +60,9 @@
                             <br />
                             <span checkbox ng:model="config.config.LINBO.AutoInitCache"
                                 text="{{'Auto update cache'|translate}}" />
+                            <br />
+                            <span checkbox ng:model="privateConf" ng:change="togglePrivateConf()"
+                            text="{{'Only available for this school'|translate}} ({{identity.profile.activeSchool}})" />
                             <br />
                         </td>
                         <td width="49%">

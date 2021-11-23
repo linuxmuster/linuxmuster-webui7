@@ -84,9 +84,9 @@ angular.module('lmn.linbo').controller 'LMLINBOConfigModalController', ($scope, 
     $scope.expert = false
     $scope.privateConf = false
 
-
-    if config.config.LINBO.School != 'default-school'
-        $scope.privateConf = true
+    if  'School' of config['config']['LINBO']
+        if config.config.LINBO.School != 'default-school'
+            $scope.privateConf = true
 
     $scope.togglePrivateConf = () ->
         if $scope.privateConf

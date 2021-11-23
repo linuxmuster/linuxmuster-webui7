@@ -147,8 +147,10 @@
     $scope.vdiconfig = vdiconfig;
     $scope.expert = false;
     $scope.privateConf = false;
-    if (config.config.LINBO.School !== 'default-school') {
-      $scope.privateConf = true;
+    if ('School' in config['config']['LINBO']) {
+      if (config.config.LINBO.School !== 'default-school') {
+        $scope.privateConf = true;
+      }
     }
     $scope.togglePrivateConf = function() {
       if ($scope.privateConf) {

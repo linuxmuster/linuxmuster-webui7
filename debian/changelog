@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.169rc2) bionic; urgency=medium
+
+  * Current snapshot build 7747169edabe829b3484dced243ff3cbbb6dc785
+  * Added possibility for private start.confs per school
+
+ -- Andreas Till <andreas.till@netzint.de>  Tue, 23 Nov 2021 09:05:32 +0000
+
 linuxmuster-webui7 (1.0.169~1) bionic; urgency=medium
 
   * Current snapshot build 7747169edabe829b3484dced243ff3cbbb6dc785

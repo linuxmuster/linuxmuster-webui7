@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.169rc5) bionic; urgency=medium
+
+  * Current snapshot build dc886580c367399f4d1837655df98ee553f998d0
+  *     added vdi basic permissions
+
+ -- Andreas Till <andreas.till@netzint.de>  Tue, 23 Nov 2021 10:38:32 +0000
+
 linuxmuster-webui7 (1.0.169rc4) bionic; urgency=medium
 
   * Current snapshot build 651de861f11b9c8f5ab4f61ba2a2e61fbfba546d

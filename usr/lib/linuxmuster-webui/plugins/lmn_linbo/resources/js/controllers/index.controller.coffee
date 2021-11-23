@@ -511,17 +511,7 @@ angular.module('lmn.linbo').controller 'LMLINBOController', ($q, $scope, $http, 
     $scope.images_selected = []
 
     $http.get('/api/lm/linbo/configs').then (resp) ->
-        $scope.configs = []
-        # TODO: Better rework to work in backend
-        allConfigNames = resp.data
-        for configName in allConfigNames
-            $http.get("/api/lm/linbo/config/#{configName}").then (resp) ->
-                if  'School' not of resp.data['config']['LINBO']
-                    $scope.configs.push 'start.conf.'+resp.data['config']['LINBO']['Group']
-                else
-                    if  resp.data['config']['LINBO']['School'] in [identity.profile.activeSchool, 'default-school']
-                        $scope.configs.push 'start.conf.'+resp.data['config']['LINBO']['Group']
-
+        $scope.configs = resp.data
 
 
     $http.get('/api/lm/linbo/examples').then (resp) ->

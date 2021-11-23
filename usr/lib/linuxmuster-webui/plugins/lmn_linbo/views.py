@@ -6,6 +6,7 @@ from aj.auth import authorize
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint
 from aj.plugins.lmn_common.lmnfile import LMNFile
+from aj.plugins.lmn_common.multischool import School
 
 @component(HttpPlugin)
 class Handler(HttpPlugin):
@@ -23,7 +24,16 @@ class Handler(HttpPlugin):
             if file.startswith('start.conf.'):
                 if not file.endswith('.vdi'):
                     if not os.path.islink(os.path.join(self.LINBO_PATH, file)):
-                        r.append(file)
+                            path = os.path.join(self.LINBO_PATH, file)
+                            # check if School Parameter is configured in start conf and only allow if matches active school or is defaultschool 
+                            with LMNFile(path, 'r') as f:
+                                config = f.read()
+                                if 'School' not in config['config']['LINBO']:
+                                    r.append(file)
+                                else:
+                                    if config['config']['LINBO']['School'] == School.get(self.context).school or config['config']['LINBO']['School'] == 'default-school':
+                                        r.append(file)
+                                                                
         return r
 
     @url(r'/api/lm/linbo/examples')

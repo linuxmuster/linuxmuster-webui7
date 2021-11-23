@@ -620,25 +620,7 @@
     }
     $scope.images_selected = [];
     $http.get('/api/lm/linbo/configs').then(function(resp) {
-      var allConfigNames, configName, i, len, results;
-      $scope.configs = [];
-      // TODO: Better rework to work in backend
-      allConfigNames = resp.data;
-      results = [];
-      for (i = 0, len = allConfigNames.length; i < len; i++) {
-        configName = allConfigNames[i];
-        results.push($http.get(`/api/lm/linbo/config/${configName}`).then(function(resp) {
-          var ref;
-          if (!('School' in resp.data['config']['LINBO'])) {
-            return $scope.configs.push('start.conf.' + resp.data['config']['LINBO']['Group']);
-          } else {
-            if ((ref = resp.data['config']['LINBO']['School']) === identity.profile.activeSchool || ref === 'default-school') {
-              return $scope.configs.push('start.conf.' + resp.data['config']['LINBO']['Group']);
-            }
-          }
-        }));
-      }
-      return results;
+      return $scope.configs = resp.data;
     });
     $http.get('/api/lm/linbo/examples').then(function(resp) {
       return $scope.examples = resp.data;

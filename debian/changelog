@@ -1,3 +1,13 @@
+linuxmuster-webui7 (1.0.163~3) lmn71; urgency=medium
+
+  * Properly restart torrent service after changing image
+  * Disable too long hostnames
+  * Publish cron plugin
+  * Publish dhcp plugin
+  * Publish samba dns plugin 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 26 Nov 2021 15:08:50 +0100
+
 linuxmuster-webui7 (1.0.163~2) lmn71; urgency=medium
 
   * Update translations

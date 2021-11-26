@@ -7,7 +7,7 @@ angular.module('lmn.dhcp', ['core', 'lmn.common', 'lmn.devices']);
 'use strict';
 
 angular.module('lmn.dhcp').config(function ($routeProvider) {
-    $routeProvider.when('/view/dhcp', {
+    $routeProvider.when('/view/lm/dhcp', {
         templateUrl: '/lmn_dhcp:resources/partial/index.html',
         controller: 'ExtraDhcpIndexController'
     });

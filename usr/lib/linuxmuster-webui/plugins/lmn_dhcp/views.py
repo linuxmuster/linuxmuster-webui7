@@ -36,7 +36,7 @@ class Handler(HttpPlugin):
         ]
 
     @url(r'/api/get-dhcp')
-    #@authorize('extra_dhcp:show')
+    @authorize('lm:devices')
     @endpoint(api=True)
     def handle_api_get_dhcp(self, http_context):
         """
@@ -74,7 +74,7 @@ class Handler(HttpPlugin):
             return data, used
 
     @url(r'/api/register-dhcp')
-    #@authorize('extra_dhcp:show')
+    @authorize('lm:devices:import')
     @endpoint(api=True)
     def handle_api_register_dhcp(self, http_context):
         """

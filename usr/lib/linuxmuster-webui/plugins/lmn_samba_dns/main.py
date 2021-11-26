@@ -15,7 +15,7 @@ class ItemProvider(SidebarItemProvider):
                 'attach': 'category:system',
                 'name': 'Samba DNS',
                 'icon': 'exchange-alt',
-                'url': '/view/samba_dns',
+                'url': '/view/lm/samba_dns',
                 'children': []
             }
         ]

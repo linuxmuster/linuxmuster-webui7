@@ -1611,7 +1611,7 @@
       };
     };
     $scope.getGroups = function(username) {
-      if ($scope.identity.user === 'root' || $scope.identity.profile.sophomorixAdminClass === 'global-admins' || $scope.identity.profile.sophomorixAdminClass === 'school-admins') {
+      if ($scope.identity.user === 'root' || $scope.identity.profile.sophomorixAdminClass.includes('admins')) {
         return $http.get('/api/lm/users/print').then(function(resp) {
           return $scope.classes = resp.data;
         });

@@ -55,7 +55,7 @@ angular.module('lm.users').controller 'LMUsersPrintPasswordsController', ($scope
             dict['membership'] == val
 
     $scope.getGroups = (username) ->
-        if $scope.identity.user == 'root' || $scope.identity.profile.sophomorixAdminClass == 'global-admins' || $scope.identity.profile.sophomorixAdminClass == 'school-admins'
+        if $scope.identity.user == 'root' || $scope.identity.profile.sophomorixAdminClass.includes('admins')
           $http.get('/api/lm/users/print').then (resp) ->
             $scope.classes = resp.data
         else

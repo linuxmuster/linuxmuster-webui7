@@ -4,13 +4,14 @@ angular.module('lmn.users').config ($routeProvider) ->
         templateUrl: '/lmn_users:resources/partial/print-passwords.html'
 
 
-angular.module('lmn.users').controller 'LMUsersPrintPasswordsOptionsModalController', ($scope, $uibModalInstance, $http, notify, messagebox, gettext, schoolclass, user) ->
+angular.module('lmn.users').controller 'LMUsersPrintPasswordsOptionsModalController', ($scope, $uibModalInstance, $http, notify, messagebox, gettext, schoolclass, user, adminClass) ->
     $scope.options = {
         format: 'pdf'
         one_per_page: false
         pdflatex: false
         schoolclass: schoolclass
         user: user
+        adminClass: adminClass
         template_one_per_page: ''
         template_multiple: ''
     }
@@ -18,22 +19,23 @@ angular.module('lmn.users').controller 'LMUsersPrintPasswordsOptionsModalControl
     if $scope.options.user is 'root'
         $scope.options.user = 'global-admin'
 
-    $http.get('/api/lm/schoolsettings/latex-templates').then (resp) ->
-        $scope.templates_individual = resp.data[0]
-        $scope.templates_multiple = resp.data[1]
-        $http.get('/api/lm/read_custom_config').then (resp) ->
-            $scope.templates = {'multiple': '', 'individual': ''}
-            $scope.passwordTemplates = resp.data.passwordTemplates
-            console.log($scope.templates_multiple)
-            for template in $scope.templates_individual
-                if template.path == $scope.passwordTemplates.individual
-                    $scope.options['template_one_per_page'] = template
-                    break
+    if $scope.options.adminClass.includes('admins')
+        $http.get('/api/lm/schoolsettings/latex-templates').then (resp) ->
+            $scope.templates_individual = resp.data[0]
+            $scope.templates_multiple = resp.data[1]
+            $http.get('/api/lm/read_custom_config').then (resp) ->
+                $scope.templates = {'multiple': '', 'individual': ''}
+                $scope.passwordTemplates = resp.data.passwordTemplates
+                console.log($scope.templates_multiple)
+                for template in $scope.templates_individual
+                    if template.path == $scope.passwordTemplates.individual
+                        $scope.options['template_one_per_page'] = template
+                        break
 
-            for template in $scope.templates_multiple
-                if template.path == $scope.passwordTemplates.multiple
-                    $scope.options['template_multiple'] = template
-                    break
+                for template in $scope.templates_multiple
+                    if template.path == $scope.passwordTemplates.multiple
+                        $scope.options['template_multiple'] = template
+                        break
 
     $scope.title = if schoolclass != '' then gettext("Class") + ": #{schoolclass.join(',')}" else gettext('All users '+$scope.identity.profile.activeSchool)
 
@@ -73,6 +75,7 @@ angular.module('lmn.users').controller 'LMUsersPrintPasswordsController', ($scop
             resolve:
                 schoolclass: () -> schoolclass
                 user: () -> $scope.identity.user
+                adminClass: () -> $scope.adminClass
         )
 
     $scope.selection = []
@@ -105,7 +108,8 @@ angular.module('lmn.users').controller 'LMUsersPrintPasswordsController', ($scop
             return
         if $scope.identity.user is 'root'
             return
-        
+
+        $scope.adminClass = $scope.identity.profile.sophomorixAdminClass
         $http.get("/api/lmn/activeschool").then (resp) ->
             $scope.identity.profile.activeSchool = resp.data
             $scope.getGroups($scope.identity.user)

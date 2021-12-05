@@ -1,3 +1,9 @@
+linuxmuster-webui7 (1.0.162-1) lmn70; urgency=medium
+
+  * Fix password list under schooladmin
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 05 Dec 2021 16:55:22 +0100
+
 linuxmuster-webui7 (1.0.162) lmn70; urgency=medium
 
   * Change start.conf name

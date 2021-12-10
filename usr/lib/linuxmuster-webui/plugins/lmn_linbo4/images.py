@@ -316,9 +316,10 @@ class LinboImageManager:
         if not os.path.isdir(LINBO_PATH):
             return
         for dir in os.listdir(LINBO_PATH):
-            for file in os.listdir(os.path.join(LINBO_PATH, dir)):
-                if file.endswith((f'.{IMAGE}')):
-                    self.linboImageGroups[dir] = LinboImageGroup(dir)
+            if os.path.isdir(dir):
+                for file in os.listdir(os.path.join(LINBO_PATH, dir)):
+                    if file.endswith((f'.{IMAGE}')):
+                        self.linboImageGroups[dir] = LinboImageGroup(dir)
 
     def delete(self, group, date=0):
         """

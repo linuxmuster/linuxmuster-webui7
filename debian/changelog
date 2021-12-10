@@ -1,3 +1,9 @@
+linuxmuster-webui7 (1.0.163~4) lmn71; urgency=medium
+
+  * Fix scan of files in /srv/linbo/images 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 10 Dec 2021 13:20:05 +0100
+
 linuxmuster-webui7 (1.0.163~3) lmn71; urgency=medium
 
   * Properly restart torrent service after changing image

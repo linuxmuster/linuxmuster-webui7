@@ -1,5 +1,7 @@
 import os
 import shutil
+import subprocess
+import logging
 from datetime import datetime
 
 from jadi import service
@@ -32,6 +34,9 @@ def timestamp2date(timestamp):
     return datetime.strptime(timestamp, '%Y%m%d%H%M').strftime('%d/%m/%Y %H:%M')
 
 class LinboImage:
+    """
+    A class to manage a linbo image or a backup image
+    """
 
     def __init__(self, name, backup=False, timestamp=None):
         self.name = name
@@ -39,7 +44,25 @@ class LinboImage:
         self.timestamp = timestamp
         self.load_info()
 
+    def _torrent_stop(self):
+        try:
+            subprocess.check_call(['/usr/sbin/linbo-torrent', 'stop', f'{self.image}.torrent'])
+        except Exception as e:
+            logging.error(f'Unable to stop torrent service for {self.image} : {e}')
+
+    def _torrent_create(self, image=None):
+        if not image:
+            image = self.image
+        try:
+            subprocess.check_call(['/usr/sbin/linbo-torrent', 'create', image])
+        except Exception as e:
+            logging.error(f'Unable to create torrent file for {image} : {e}')
+
     def load_info(self):
+        """
+        Prepare all variables to manage the image object ( path, name, extra files )
+        """
+
         self.image = f"{self.name}.{IMAGE}"
 
         if self.backup:
@@ -55,10 +78,7 @@ class LinboImage:
 
     def get_extra(self):
         """
-        Search extra editables config files for the image.
-
-        :return:
-        :rtype:
+        Load extra editables config files for the image.
         """
 
         for extra in EXTRA_IMAGE_FILES:
@@ -68,6 +88,12 @@ class LinboImage:
                     self.extras[extra] = f.read()
             else:
                 self.extras[extra] = None
+                # Create empty desc in any case
+                if extra == 'desc':
+                    with LMNFile(extra_file, 'w') as f:
+                        pass
+                    os.chmod(extra_file, EXTRA_PERMISSIONS_MAPPING[extra])
+
 
         for extra in EXTRA_COMMON_FILES:
             extra_file = os.path.join(self.path, f"{self.name}.{extra}")
@@ -80,9 +106,6 @@ class LinboImage:
     def delete_files(self):
         """
         Delete all files from a LinboImage.
-
-        :return:
-        :rtype:
         """
 
         # Remove image
@@ -104,22 +127,17 @@ class LinboImage:
     def delete(self):
         """
         Completely remove an image an its directory.
-
-        :return:
-        :rtype:
         """
 
         self.delete_files()
+        self._torrent_stop()
 
         # Remove directory
         os.rmdir(self.path)
 
     def rename(self, new_name):
         """
-        Rename a LinboImage.
-
-        :return:
-        :rtype:
+        Rename a LinboImage and all its files.
         """
 
         new_image_name = f"{new_name}.{IMAGE}"
@@ -128,10 +146,25 @@ class LinboImage:
         os.rename(os.path.join(self.path, self.image),
                   os.path.join(self.path, new_image_name))
 
+        self._torrent_stop()
+
         # Rename extra files
         for extra in EXTRA_IMAGE_FILES + EXTRA_NONEDITABLE_IMAGE_FILES:
             actual = os.path.join(self.path, f"{self.image}.{extra}")
             if os.path.exists(actual):
+                # Replace image name in .info file
+                if extra == "info":
+                    with LMNFile(actual, 'r') as info:
+                        data = info.read().replace(self.image, new_image_name)
+                    with LMNFile(actual, 'w') as info:
+                        info.write(data)
+
+                # Need to generate a new torrent file
+                if extra == "torrent":
+                    os.unlink(actual)
+                    self._torrent_create(new_image_name)
+                    continue
+
                 os.rename(actual, os.path.join(self.path, f"{new_image_name}.{extra}"))
 
         for extra in EXTRA_COMMON_FILES:
@@ -147,10 +180,16 @@ class LinboImage:
         self.name = new_name
 
     def save_extras(self, data):
+        """
+        Save all extra files content.
+
+        :param data: Data to save
+        :type data: dict
+        """
 
         for extra in EXTRA_IMAGE_FILES:
             path = os.path.join(self.path, f"{self.image}.{extra}")
-            if extra in data and data[extra]:
+            if extra in data and ( data[extra] or extra == 'desc' ):
                 with LMNFile(path, 'w') as f:
                     f.write(data[extra])
                 os.chmod(path, EXTRA_PERMISSIONS_MAPPING[extra])
@@ -169,6 +208,10 @@ class LinboImage:
                     os.unlink(path)
 
     def to_dict(self):
+        """
+        Convert all necessary infos into a dict for angular.
+        """
+
         return {
             'name': self.name,
             'size': self.size,
@@ -184,6 +227,9 @@ class LinboImage:
         }
 
 class LinboImageGroup:
+    """
+    Class to handle a basic LinboImage and all his backups.
+    """
 
     def __init__(self, name):
         self.name = name
@@ -198,9 +244,7 @@ class LinboImageGroup:
 
     def get_backups(self):
         """
-
-        :return:
-        :rtype:
+        Browse current tree to find all backups image.
         """
 
         if os.path.exists(self.backup_path):
@@ -216,9 +260,6 @@ class LinboImageGroup:
     def rename(self, new_name):
         """
         Rename an image and all his backups.
-
-        :return:
-        :rtype:
         """
 
         for timestamp, backup in self.backups.items():
@@ -238,10 +279,7 @@ class LinboImageGroup:
 
     def delete(self):
         """
-        Delete image, all backups and all config files
-
-        :return:
-        :rtype:
+        Delete basic image, all backups and all config files.
         """
 
         for timestamp, backup in self.backups.items():
@@ -261,34 +299,73 @@ class LinboImageGroup:
 
 @service
 class LinboImageManager:
+    """
+    Manager for all Linbo Images.
+    """
+
 
     def __init__(self, context):
         self.list()
 
     def list(self):
+        """
+        Browse LINBO_PATH to discover all linbo images.
+        """
+
         self.linboImageGroups = {}
+        if not os.path.isdir(LINBO_PATH):
+            return
         for dir in os.listdir(LINBO_PATH):
             for file in os.listdir(os.path.join(LINBO_PATH, dir)):
                 if file.endswith((f'.{IMAGE}')):
                     self.linboImageGroups[dir] = LinboImageGroup(dir)
 
     def delete(self, group, date=0):
+        """
+        Delete a whole image and its backups. If date is given, only delete an
+        associated backup.
+
+        :param group: Name of the linbo image
+        :type group: str
+        :param date: timestamp of a backup
+        :type date: str
+        """
+
         if group in self.linboImageGroups:
             if date in self.linboImageGroups[group].backups:
-                # The object to delete is a backup
+                # The object to delete is only a backup
                 self.linboImageGroups[group].backups[date].delete()
                 self.linboImageGroups[group].load()
             else:
+                # Then delete the whole group
                 self.linboImageGroups[group].delete()
                 del self.linboImageGroups[group]
 
     def rename(self, group, new_name):
+        """
+        Rename a whole linbo image and its backups recursiverly.
+
+        :param group: Name of the linbo image
+        :type group: str
+        :param new_name: New name for the linbo image
+        :type new_name: str
+        """
+
         if group in self.linboImageGroups:
             self.linboImageGroups[group].rename(new_name)
             self.linboImageGroups[new_name] = LinboImageGroup(new_name)
             del self.linboImageGroups[group]
 
     def restore(self, group, date):
+        """
+        Delete a basic linbo image and restore a backup.
+
+        :param group: Name of the linbo image
+        :type group: str
+        :param date: timestamp of a backup
+        :type date: str
+        """
+
         if group in self.linboImageGroups:
             imageGroup = self.linboImageGroups[group]
             if date in imageGroup.backups:
@@ -298,8 +375,19 @@ class LinboImageManager:
                                 imageGroup.base.path)
                 imageGroup.backups[date].delete()
                 self.linboImageGroups[group].load()
+                imageGroup.base._torrent_create()
 
     def save_extras(self, group, data, timestamp=None):
+        """
+
+        :param group: Name of the linbo image
+        :type group: str
+        :param data: Content of the extra files
+        :type data: dict
+        :param timestamp: timestamp of a backup
+        :type timestamp: str
+        """
+
         if timestamp:
             date = timestamp2date(timestamp)
         else:

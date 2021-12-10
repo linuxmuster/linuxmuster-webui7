@@ -60,7 +60,7 @@ class LMNFile(metaclass=abc.ABCMeta):
         """
 
         # Cannot filter start.conf with extension
-        if file.split('/')[-1].startswith('start.conf'):
+        if file.split('/')[-1].startswith('start.conf') and os.path.splitext(file)[-1] != '.vdi':
             obj = object.__new__(StartConfLoader)
             obj.__init__(file, mode, delimiter=delimiter, fieldnames=fieldnames)
             return obj
@@ -124,8 +124,13 @@ class LMNFile(metaclass=abc.ABCMeta):
             os.unlink(os.path.join(folder, backups[0]))
             backups.pop(0)
 
-        with open(folder + '/.' + name + '.bak.' + str(int(time.time())), 'w') as f:
+        backup_path = folder + '/.' + name + '.bak.' + str(int(time.time()))
+        with open(backup_path, 'w') as f:
             f.write(self.opened.read())
+
+        # Set same permissions as original file
+        perms = os.stat(self.file).st_mode
+        os.chmod(backup_path, perms)
 
     # @abc.abstractmethod
     # def __iter__(self):
@@ -193,7 +198,7 @@ class YAMLLoader(LMNFile):
     Handler for yaml files.
     """
 
-    extensions = ['.yml']
+    extensions = ['.yml', '.vdi']
 
     def __enter__(self):
         if os.geteuid() == 0:

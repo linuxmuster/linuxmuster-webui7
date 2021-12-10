@@ -15,6 +15,26 @@
     });
   });
 
+  angular.module('lmn.linbo4').controller('LMImportDevicesApplyModalController', function($scope, $http, $uibModalInstance, $route, gettext, notify) {
+    $scope.logVisible = true;
+    $scope.isWorking = true;
+    $scope.showLog = function() {
+      return $scope.logVisible = !$scope.logVisible;
+    };
+    $http.get('/api/lm/devices/import').then(function(resp) {
+      $scope.isWorking = false;
+      return notify.success(gettext('Import complete'));
+    }).catch(function(resp) {
+      notify.error(gettext('Import failed'), resp.data.message);
+      $scope.isWorking = false;
+      return $scope.showLog();
+    });
+    return $scope.close = function() {
+      $uibModalInstance.close();
+      return $route.reload();
+    };
+  });
+
   angular.module('lmn.linbo4').controller('LMLINBO4AcceptModalController', function($scope, $uibModalInstance, $http, partition, disk) {
     $scope.partition = partition;
     $scope.disk = disk;
@@ -83,6 +103,8 @@
   angular.module('lmn.linbo4').controller('LMLINBO4ImageModalController', function($scope, $uibModal, $uibModalInstance, $http, gettext, filesystem, messagebox, image, images) {
     var x;
     $scope.image = image;
+    $scope.desc_textarea_rows = $scope.image.desc ? $scope.image.desc.split(/\r\n|\r|\n/).length + 1 : 1;
+    $scope.info_textarea_rows = $scope.image.info ? $scope.image.info.split(/\r\n|\r|\n/).length + 1 : 1;
     $scope.imagesWithReg = (function() {
       var i, len, results;
       results = [];
@@ -603,7 +625,7 @@
     };
   });
 
-  angular.module('lmn.linbo4').controller('LMLINBO4Controller', function($q, $scope, $http, $uibModal, $log, $route, $location, gettext, notify, pageTitle, tasks, messagebox, validation) {
+  angular.module('lmn.linbo4').controller('LMLINBO4Controller', function($q, $scope, $http, $uibModal, $log, $route, $location, gettext, notify, pageTitle, tasks, messagebox, validation, toaster) {
     var tag;
     pageTitle.set(gettext('LINBO 4'));
     $scope.tabs = ['groups', 'images'];
@@ -624,6 +646,14 @@
       $scope.images = resp.data;
       return console.log($scope.images);
     });
+    $scope.importDevices = function() {
+      return $uibModal.open({
+        templateUrl: '/lmn_linbo:resources/partial/apply.modal.html',
+        controller: 'LMImportDevicesApplyModalController',
+        size: 'lg',
+        backdrop: 'static'
+      });
+    };
     $scope.createConfig = function(example) {
       return messagebox.prompt('New name', '').then(function(msg) {
         var newName, ref, test;
@@ -644,7 +674,7 @@
               return $http.get("/api/lm/read-config-setup").then(function(setup) {
                 resp.data['config']['LINBO']['Server'] = setup.data['setup']['serverip'];
                 return $http.post(`/api/lm/linbo4/config/start.conf.${newName}`, resp.data).then(function() {
-                  return $route.reload();
+                  return $scope.importDevices();
                 });
               });
             });
@@ -658,7 +688,7 @@
               os: [],
               partitions: []
             }).then(function() {
-              return $route.reload();
+              return $scope.importDevices();
             });
           }
         }
@@ -671,7 +701,7 @@
         negative: 'Cancel'
       }).then(function() {
         return $http.delete(`/api/lm/linbo4/config/${configName}`).then(function() {
-          return $route.reload();
+          return $scope.importDevices();
         });
       });
     };
@@ -686,10 +716,10 @@
             return $http.post(`/api/lm/linbo4/config/start.conf.${newName}`, resp.data).then(function() {
               if (deleteOriginal) {
                 return $http.delete(`/api/lm/linbo4/config/${configName}`).then(function() {
-                  return $route.reload();
+                  return $scope.importDevices();
                 });
               } else {
-                return $route.reload();
+                return $scope.importDevices();
               }
             });
           });
@@ -733,10 +763,22 @@
               return notify.success(gettext('Saved'));
             });
             return $http.post(`/api/lm/linbo4/vdi/${configName}.vdi`, result[1]).then(function(resp) {
-              return notify.success(gettext('Saved'));
+              notify.success(gettext('Saved'));
+              return $scope.importDevices();
             });
           });
         });
+      });
+    };
+    $scope.restartServices = function() {
+      // Restart torrent and multicast services and redirect to images tab
+      toaster.pop('info', gettext("Restarting multicast and torrent services, please wait ..."), '', 7000);
+      return $http.get('/api/lm/linbo4/restart-services').then(function(resp) {
+        notify.success(gettext('Multicast and torrent services restarted'));
+        $location.hash("images");
+        return $route.reload();
+      }).catch(function(err) {
+        return notify.error(gettext("Failed to restart multicast and torrent services. Please see the log files"));
       });
     };
     $scope.deleteImage = function(image) {
@@ -746,8 +788,7 @@
         negative: 'Cancel'
       }).then(function() {
         return $http.delete(`/api/lm/linbo4/image/${image.name}`).then(function() {
-          $location.hash("images");
-          return $route.reload();
+          return $scope.restartServices();
         });
       });
     };
@@ -760,8 +801,7 @@
         return $http.post(`/api/lm/linbo4/deleteBackupImage/${image.name}`, {
           date: date
         }).then(function() {
-          $location.hash("images");
-          return $route.reload();
+          return $scope.restartServices();
         });
       });
     };
@@ -790,8 +830,7 @@
           promises.push($http.delete(`/api/lm/linbo4/image/${image.name}`));
         }
         return $q.all(promises).then(function() {
-          $location.hash("images");
-          return $route.reload();
+          return $scope.restartServices();
         });
       });
     };
@@ -835,15 +874,17 @@
     };
     $scope.renameImage = function(image) {
       return messagebox.prompt('New name', image.name).then(function(msg) {
-        var new_name;
+        var new_name, validName;
         new_name = msg.value;
-        if (new_name) {
+        validName = validation.isValidImage(new_name);
+        if (validName === true) {
           return $http.post(`/api/lm/linbo4/renameImage/${image.name}`, {
             new_name: new_name
           }).then(function(resp) {
-            $location.hash("images");
-            return $route.reload();
+            return $scope.restartServices();
           });
+        } else {
+          return notify.error(gettext(new_name + " is not a valid name for a linbo image."));
         }
       });
     };
@@ -856,8 +897,7 @@
         return $http.post(`/api/lm/linbo4/restoreBackupImage/${image.name}`, {
           date: date
         }).then(function(resp) {
-          $location.hash("images");
-          return $route.reload();
+          return $scope.restartServices();
         });
       });
     };
@@ -881,11 +921,13 @@
             data: result,
             timestamp: image.timestamp
           }).then(function(resp) {
-            return notify.success(gettext('Backup saved'));
+            notify.success(gettext('Backup saved'));
+            return $scope.restartServices();
           });
         } else {
           return $http.post(`/api/lm/linbo4/image/${image.name}`, result).then(function(resp) {
-            return notify.success(gettext('Saved'));
+            notify.success(gettext('Saved'));
+            return $scope.restartServices();
           });
         }
       });

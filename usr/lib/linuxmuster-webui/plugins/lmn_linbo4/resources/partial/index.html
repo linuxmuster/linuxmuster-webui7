@@ -41,7 +41,11 @@
             </floating-toolbar>
         </uib:tab>
         <uib:tab heading="{{'Images'|translate}}">
-            <table class="table">
+            <br />
+            <div class="alert alert-info" ng:show="images.length == 0" translate>
+                There's no image on the server yet.
+            </div>
+            <table class="table" ng:show="images.length > 0">
                 <tr>
                     <th> </th>
                     <th style="min-width:100px" translate>Name / Size</th>

@@ -533,10 +533,21 @@
     // Hostnames not empty, only with alphanumeric chars and "-", and tests if no duplicate
     this.isValidHost = function(hostname) {
       var error_msg, regExp, validHostname;
-      error_msg = hostname + gettext(' does not contain valid chars or is duplicated');
+      error_msg = hostname + gettext(' does not contain valid chars, is duplicated or too long (>15 chars)');
       regExp = /^[a-zA-Z0-9\-]+$/;
-      validHostname = regExp.test(hostname) && (this.externVar['devices'].filter(this.findval('hostname', hostname)).length < 2);
+      validHostname = regExp.test(hostname) && (this.externVar['devices'].filter(this.findval('hostname', hostname)).length < 2) && hostname.length < 16;
       if (!validHostname) {
+        return error_msg;
+      }
+      return true;
+    };
+    // Image names for linbo not empty, only with alphanumeric chars and "-" or "_"
+    this.isValidImage = function(name) {
+      var error_msg, regExp, validImageName;
+      error_msg = name + gettext(' does not contain valid chars or is duplicated');
+      regExp = /^[a-zA-Z0-9_\-]+$/;
+      validImageName = regExp.test(name);
+      if (!validImageName) {
         return error_msg;
       }
       return true;

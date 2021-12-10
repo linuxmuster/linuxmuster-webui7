@@ -7,7 +7,7 @@ angular.module('lmn.cron', ['core']);
 'use strict';
 
 angular.module('lmn.cron').config(function ($routeProvider) {
-    $routeProvider.when('/view/cron', {
+    $routeProvider.when('/view/lm/cron', {
         templateUrl: '/lmn_cron:resources/partial/index.html',
         controller: 'CronIndexController'
     });

@@ -1,4 +1,3 @@
-
 linuxmuster-webui7 (1.0.166-2) bionic; urgency=medium
 
   * Current snapshot build 4e848cb279af77b34ba6b10209ae9b3edef2e9bc
@@ -10,13 +9,6 @@ linuxmuster-webui7 (1.0.166) bionic; urgency=medium
   * Current snapshot build 973adcb9da529122217b498456253f47ef2c736e
 
  -- Andreas Till <andreas.till@netzint.de>  Fri, 29 Oct 2021 17:59:33 +0000
-
-linuxmuster-webui7 (1.0.160) lmn7-testing; urgency=medium
-
-  * Current snapshot build 3efd640bf0f3999e77911358d9a0650ddd044425
-   * Issue with Websession and DHCP Plugin
-
- -- Lukas Spitznagel <lukas.spitznagel@netzint.de>  Wed, 10 Mar 2021 19:26:33 +0000
 
 linuxmuster-webui7 (1.0.165-rc01) bionic-testing; urgency=medium
 
@@ -89,6 +81,39 @@ linuxmuster-webui7 (1.0.163) lmn7-testing; urgency=medium
   * Fixed lmp permissions
 
  -- Andreas Till <andreas.till@netzint.de>  Fri 07 May 16:52:23 CET 2021
+
+linuxmuster-webui7 (1.0.163~3) lmn71; urgency=medium
+
+  * Properly restart torrent service after changing image
+  * Disable too long hostnames
+  * Publish cron plugin
+  * Publish dhcp plugin
+  * Publish samba dns plugin 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 26 Nov 2021 15:08:50 +0100
+
+linuxmuster-webui7 (1.0.163~2) lmn71; urgency=medium
+
+  * Update translations
+  * Fix torrent problem by renaming or deleting image
+  * Security fix when renaming an image 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 14 Nov 2021 17:10:03 +0100
+
+linuxmuster-webui7 (1.0.163~1) lmn71; urgency=medium
+
+  * New permissions system, per plugin configurable
+  * Cloop to qcow2 conversion
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 13 Nov 2021 11:12:59 +0100
+
+linuxmuster-webui7 (1.0.162~1) lmn71; urgency=medium
+
+  * New linbo 4 plugin ( still under developpment )
+  * Rename start.conf
+  * Prepare script to change permissions management
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 07 Nov 2021 17:12:20 +0100
 
 linuxmuster-webui7 (1.0.162) lmn7-testing; urgency=medium
 

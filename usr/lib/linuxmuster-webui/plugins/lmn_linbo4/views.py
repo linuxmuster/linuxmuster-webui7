@@ -1,10 +1,11 @@
 import os
 import json
+import subprocess
 
 from jadi import component
 from aj.auth import authorize
 from aj.api.http import url, HttpPlugin
-from aj.api.endpoint import endpoint
+from aj.api.endpoint import endpoint, EndpointError
 from aj.plugins.lmn_common.lmnfile import LMNFile
 from aj.plugins.lmn_linbo4.images import LinboImageManager
 
@@ -234,3 +235,21 @@ class Handler(HttpPlugin):
             data = http_context.json_body()['data']
             timestamp = http_context.json_body()['timestamp']
             self.mgr.save_extras(image, data, timestamp)
+
+    @url(r'/api/lm/linbo4/restart-services')
+    @authorize('lm:linbo:configs')
+    @endpoint(api=True)
+    def handle_api_linbo_restart_services(self, http_context):
+        """
+        Restart the torrent and multicast services.
+        Needed if there was some changes on a image.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        """
+
+        try:
+            subprocess.check_call(['systemctl', 'restart', 'linbo-multicast.service', 'linbo-torrent.service'])
+            return True
+        except Exception as e:
+            raise EndpointError(None, message=str(e))

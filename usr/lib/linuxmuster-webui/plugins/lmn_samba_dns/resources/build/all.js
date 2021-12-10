@@ -7,7 +7,7 @@ angular.module('lmn.samba_dns', ['core']);
 'use strict';
 
 angular.module('lmn.samba_dns').config(function ($routeProvider) {
-    $routeProvider.when('/view/samba_dns', {
+    $routeProvider.when('/view/lm/samba_dns', {
         templateUrl: '/lmn_samba_dns:resources/partial/index.html',
         controller: 'SambaDnsIndexController'
     });

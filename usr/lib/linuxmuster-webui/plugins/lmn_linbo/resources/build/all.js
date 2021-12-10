@@ -15,6 +15,26 @@
     });
   });
 
+  angular.module('lmn.linbo').controller('LMImportDevicesApplyModalController', function($scope, $http, $uibModalInstance, $route, gettext, notify) {
+    $scope.logVisible = true;
+    $scope.isWorking = true;
+    $scope.showLog = function() {
+      return $scope.logVisible = !$scope.logVisible;
+    };
+    $http.get('/api/lm/devices/import').then(function(resp) {
+      $scope.isWorking = false;
+      return notify.success(gettext('Import complete'));
+    }).catch(function(resp) {
+      notify.error(gettext('Import failed'), resp.data.message);
+      $scope.isWorking = false;
+      return $scope.showLog();
+    });
+    return $scope.close = function() {
+      $uibModalInstance.close();
+      return $route.reload();
+    };
+  });
+
   angular.module('lmn.linbo').controller('LMLINBOAcceptModalController', function($scope, $uibModalInstance, $http, partition, disk) {
     $scope.partition = partition;
     $scope.disk = disk;
@@ -600,6 +620,7 @@
     var tag;
     pageTitle.set(gettext('LINBO'));
     $scope.tabs = ['groups', 'images'];
+    $scope.showConvertDialog = false;
     tag = $location.$$url.split("#")[1];
     if (tag && indexOf.call($scope.tabs, tag) >= 0) {
       $scope.activetab = $scope.tabs.indexOf(tag);
@@ -607,6 +628,12 @@
       $scope.activetab = 0;
     }
     $scope.images_selected = [];
+    $scope.$on('push:lmn_linbo', function($event, msg) {
+      if (msg === 'refresh') {
+        $location.hash("images");
+        return $route.reload();
+      }
+    });
     $http.get('/api/lm/linbo/configs').then(function(resp) {
       return $scope.configs = resp.data;
     });
@@ -616,6 +643,14 @@
     $http.get('/api/lm/linbo/images').then(function(resp) {
       return $scope.images = resp.data;
     });
+    $scope.importDevices = function() {
+      return $uibModal.open({
+        templateUrl: '/lmn_linbo:resources/partial/apply.modal.html',
+        controller: 'LMImportDevicesApplyModalController',
+        size: 'lg',
+        backdrop: 'static'
+      });
+    };
     $scope.createConfig = function(example) {
       return messagebox.prompt('New name', '').then(function(msg) {
         var newName, ref, test;
@@ -636,7 +671,7 @@
               return $http.get("/api/lm/read-config-setup").then(function(setup) {
                 resp.data['config']['LINBO']['Server'] = setup.data['setup']['serverip'];
                 return $http.post(`/api/lm/linbo/config/start.conf.${newName}`, resp.data).then(function() {
-                  return $route.reload();
+                  return $scope.importDevices();
                 });
               });
             });
@@ -650,7 +685,7 @@
               os: [],
               partitions: []
             }).then(function() {
-              return $route.reload();
+              return $scope.importDevices();
             });
           }
         }
@@ -663,7 +698,7 @@
         negative: 'Cancel'
       }).then(function() {
         return $http.delete(`/api/lm/linbo/config/${configName}`).then(function() {
-          return $route.reload();
+          return $scope.importDevices();
         });
       });
     };
@@ -678,10 +713,10 @@
             return $http.post(`/api/lm/linbo/config/start.conf.${newName}`, resp.data).then(function() {
               if (deleteOriginal) {
                 return $http.delete(`/api/lm/linbo/config/${configName}`).then(function() {
-                  return $route.reload();
+                  return $scope.importDevices();
                 });
               } else {
-                return $route.reload();
+                return $scope.importDevices();
               }
             });
           });
@@ -712,7 +747,8 @@
               return notify.success(gettext('Saved'));
             });
             return $http.post(`/api/lm/linbo/vdi/${configName}.vdi`, result[1]).then(function(resp) {
-              return notify.success(gettext('Saved'));
+              notify.success(gettext('Saved'));
+              return $scope.importDevices();
             });
           });
         });
@@ -759,6 +795,35 @@
           return $route.reload();
         });
       });
+    };
+    $scope.openConvertDialog = function() {
+      var image;
+      $scope.toConvert_list = ((function() {
+        var i, len, ref, results;
+        ref = $scope.images_selected;
+        results = [];
+        for (i = 0, len = ref.length; i < len; i++) {
+          image = ref[i];
+          results.push(image.name);
+        }
+        return results;
+      })()).toString();
+      return $scope.showConvertDialog = true;
+    };
+    $scope.closeConvertDialog = function() {
+      return $scope.showConvertDialog = false;
+    };
+    $scope.convertImages = function() {
+      var i, image, items, len, ref;
+      $scope.showConvertDialog = false;
+      items = [];
+      ref = $scope.images_selected;
+      for (i = 0, len = ref.length; i < len; i++) {
+        image = ref[i];
+        items.push(image.name);
+      }
+      tasks.start('aj.plugins.lmn_linbo.tasks.Cloop2Qcow2', [items]);
+      return $scope.images_selected = [];
     };
     $scope.toggleSelected = function(image) {
       var position;

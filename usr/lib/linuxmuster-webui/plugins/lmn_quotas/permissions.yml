@@ -1,0 +1,13 @@
+globaladministrator:
+    - 'lm:quotas:apply: true'
+    - 'lm:quotas:configure: true'
+    - 'lm:quotas:ldap-search: true'
+    - 'sidebar:view:/view/lm/quotas: true'
+
+schooladministrator:
+    - 'lm:quotas:apply: true'
+    - 'lm:quotas:configure: true'
+    - 'lm:quotas:ldap-search: true'
+    - 'sidebar:view:/view/lm/quotas: true'
+
+

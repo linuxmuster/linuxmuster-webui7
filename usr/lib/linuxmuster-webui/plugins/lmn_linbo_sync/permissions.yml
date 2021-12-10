@@ -1,0 +1,3 @@
+globaladministrator:
+    - 'sidebar:view:/view/lmn/linbo_sync: false'
+

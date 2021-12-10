@@ -59,10 +59,35 @@
                 </div>
             </div>
             <floating-toolbar ng:show="images_selected.length > 0">
+                <button ng:click="openConvertDialog()" class="btn btn-lmn pull-right" translate>
+                    Convert to qcow2
+                </button>
                 <button ng:click="deleteImages()" class="btn btn-lmn pull-right" translate>
                     Delete selected images
                 </button>
             </floating-toolbar>
         </uib:tab>
     </uib:tabset>
+    <dialog ng:show="showConvertDialog">
+        <div class="modal-header" translate>
+            <h3>Convert to qcow2</h3>
+        </div>
+        <div class="modal-body">
+            <div>Do you really want to convert <b>{{ toConvert_list }}</b> to qcow2 ?</div>
+            <br />
+            <div class="alert alert-warning">
+                <i class="fa fa-warning"></i>
+                This action can take several minutes !
+                Do not logout during the process !
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button ng:click="convertImages()" class="btn btn-default btn-flat" translate>
+                Convert to qcow2
+            </button>
+            <button ng:click="closeConvertDialog()" class="btn btn-default btn-flat" translate>
+                Cancel
+            </button>
+        </div>
+    </dialog>
 </div>

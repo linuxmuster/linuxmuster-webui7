@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-26 21:41+0200\n"
-"PO-Revision-Date: 2021-08-26 20:33\n"
+"POT-Creation-Date: 2021-11-14 15:53+0100\n"
+"PO-Revision-Date: 2021-11-14 16:06\n"
 "Last-Translator: \n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
@@ -16,6 +16,10 @@ msgstr ""
 "X-Crowdin-Language: nl\n"
 "X-Crowdin-File: /2.0/lmn_linbo.po\n"
 "X-Crowdin-File-ID: 98\n"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:72
+msgid "<h3>Convert to qcow2</h3>"
+msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:270
 msgid "Activated"
@@ -78,24 +82,32 @@ msgid "Cache"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/accept.modal.html:9
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:88
 msgid "Cancel"
 msgstr ""
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/apply.modal.html:11
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:524
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/image.modal.html:79
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/partition.modal.html:176
 msgid "Close"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:55
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:58
 msgid "Comment: {{image.description}}"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:62
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:85
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/tasks.py:10
+msgid "Convert to qcow2"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:358
 msgid "Cores"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:31
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:34
 msgid "Create"
 msgstr ""
 
@@ -107,12 +119,16 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:59
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:65
 msgid "Delete selected images"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/image.modal.html:9
 msgid "Description"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/apply.modal.html:10
+msgid "Details"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/partition.modal.html:110
@@ -127,7 +143,7 @@ msgstr ""
 msgid "Display client details by default"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:26
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:29
 msgid "Download Linbo Boot"
 msgstr ""
 
@@ -139,7 +155,7 @@ msgstr ""
 msgid "EFI"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:34
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:37
 msgid "Empty"
 msgstr ""
 
@@ -188,6 +204,10 @@ msgstr ""
 msgid "Hardware"
 msgstr ""
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/apply.modal.html:9
+msgid "Hide details"
+msgstr ""
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:322
 msgid "Hostname"
 msgstr ""
@@ -200,8 +220,12 @@ msgstr ""
 msgid "Icon"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:40
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:43
 msgid "Images"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/apply.modal.html:2
+msgid "Importing device"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/image.modal.html:13
@@ -373,7 +397,7 @@ msgid "Storage"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:243
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:267
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:285
 msgid "Swap"
 msgstr ""
 
@@ -446,7 +470,7 @@ msgid "Virtual Desktop (VDI)"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/main.py:15
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:490
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:508
 msgid "LINBO"
 msgstr ""
 
@@ -466,17 +490,25 @@ msgstr ""
 msgid "Read/write icons"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:269
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:14
+msgid "Import complete"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:16
+msgid "Import failed"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:287
 msgid "LINBO Cache"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:520
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:554
 msgid "A config file with this name already exists!"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:569
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:571
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:630
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:607
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:609
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:684
 msgid "Saved"
 msgstr ""
 

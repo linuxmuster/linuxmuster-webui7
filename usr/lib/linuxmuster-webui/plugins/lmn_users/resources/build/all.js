@@ -1738,52 +1738,55 @@
     });
   });
 
-  angular.module('lmn.users').controller('LMUsersPrintPasswordsOptionsModalController', function($scope, $uibModalInstance, $http, notify, messagebox, gettext, schoolclass, user) {
+  angular.module('lmn.users').controller('LMUsersPrintPasswordsOptionsModalController', function($scope, $uibModalInstance, $http, notify, messagebox, gettext, schoolclass, user, adminClass) {
     $scope.options = {
       format: 'pdf',
       one_per_page: false,
       pdflatex: false,
       schoolclass: schoolclass,
       user: user,
+      adminClass: adminClass,
       template_one_per_page: '',
       template_multiple: ''
     };
     if ($scope.options.user === 'root') {
       $scope.options.user = 'global-admin';
     }
-    $http.get('/api/lm/schoolsettings/latex-templates').then(function(resp) {
-      $scope.templates_individual = resp.data[0];
-      $scope.templates_multiple = resp.data[1];
-      return $http.get('/api/lm/read_custom_config').then(function(resp) {
-        var i, j, len, len1, ref, ref1, results, template;
-        $scope.templates = {
-          'multiple': '',
-          'individual': ''
-        };
-        $scope.passwordTemplates = resp.data.passwordTemplates;
-        console.log($scope.templates_multiple);
-        ref = $scope.templates_individual;
-        for (i = 0, len = ref.length; i < len; i++) {
-          template = ref[i];
-          if (template.path === $scope.passwordTemplates.individual) {
-            $scope.options['template_one_per_page'] = template;
-            break;
+    if ($scope.options.adminClass.includes('admins')) {
+      $http.get('/api/lm/schoolsettings/latex-templates').then(function(resp) {
+        $scope.templates_individual = resp.data[0];
+        $scope.templates_multiple = resp.data[1];
+        return $http.get('/api/lm/read_custom_config').then(function(resp) {
+          var i, j, len, len1, ref, ref1, results, template;
+          $scope.templates = {
+            'multiple': '',
+            'individual': ''
+          };
+          $scope.passwordTemplates = resp.data.passwordTemplates;
+          console.log($scope.templates_multiple);
+          ref = $scope.templates_individual;
+          for (i = 0, len = ref.length; i < len; i++) {
+            template = ref[i];
+            if (template.path === $scope.passwordTemplates.individual) {
+              $scope.options['template_one_per_page'] = template;
+              break;
+            }
           }
-        }
-        ref1 = $scope.templates_multiple;
-        results = [];
-        for (j = 0, len1 = ref1.length; j < len1; j++) {
-          template = ref1[j];
-          if (template.path === $scope.passwordTemplates.multiple) {
-            $scope.options['template_multiple'] = template;
-            break;
-          } else {
-            results.push(void 0);
+          ref1 = $scope.templates_multiple;
+          results = [];
+          for (j = 0, len1 = ref1.length; j < len1; j++) {
+            template = ref1[j];
+            if (template.path === $scope.passwordTemplates.multiple) {
+              $scope.options['template_multiple'] = template;
+              break;
+            } else {
+              results.push(void 0);
+            }
           }
-        }
-        return results;
+          return results;
+        });
       });
-    });
+    }
     $scope.title = schoolclass !== '' ? gettext("Class") + `: ${schoolclass.join(',')}` : gettext('All users ' + $scope.identity.profile.activeSchool);
     $scope.print = function() {
       var msg;
@@ -1832,6 +1835,9 @@
           },
           user: function() {
             return $scope.identity.user;
+          },
+          adminClass: function() {
+            return $scope.adminClass;
           }
         }
       });
@@ -1882,6 +1888,7 @@
       if ($scope.identity.user === 'root') {
         return;
       }
+      $scope.adminClass = $scope.identity.profile.sophomorixAdminClass;
       return $http.get("/api/lmn/activeschool").then(function(resp) {
         $scope.identity.profile.activeSchool = resp.data;
         $scope.getGroups($scope.identity.user);

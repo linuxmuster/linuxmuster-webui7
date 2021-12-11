@@ -836,35 +836,6 @@
         return $scope.images_selected.push(image);
       }
     };
-    $scope.duplicateImage = function(image) {
-      return messagebox.prompt('New name', image.name).then(function(msg) {
-        var newFileName, newName;
-        newName = msg.value;
-        if (newName) {
-          newFileName = newName;
-          if (!newFileName.endsWith('.cloop') && !newFileName.endsWith('.rsync')) {
-            newFileName += image.cloop ? '.cloop' : '.rsync';
-          }
-          tasks.start('aj.plugins.filesystem.tasks.Transfer', [], {
-            destination: `/srv/linbo/${newFileName}`,
-            items: [
-              {
-                mode: 'copy',
-                item: {
-                  name: image.name,
-                  path: `/srv/linbo4/${image.name}`
-                }
-              }
-            ]
-          });
-          image = angular.copy(image);
-          image.name = newFileName;
-          return $http.post(`/api/lm/linbo4/image/${image.name}`, image).then(function() {
-            return $scope.images.push(image);
-          });
-        }
-      });
-    };
     $scope.renameImage = function(image) {
       return messagebox.prompt('New name', image.name).then(function(msg) {
         var new_name, validName;

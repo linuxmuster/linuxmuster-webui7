@@ -654,30 +654,6 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
         else
             $scope.images_selected.push(image)
 
-    $scope.duplicateImage = (image) ->
-        messagebox.prompt('New name', image.name).then (msg) ->
-            newName = msg.value
-            if newName
-                newFileName = newName
-                if not newFileName.endsWith('.cloop') and not newFileName.endsWith('.rsync')
-                    newFileName += if image.cloop then '.cloop' else '.rsync'
-                tasks.start(
-                    'aj.plugins.filesystem.tasks.Transfer',
-                    [],
-                    destination: "/srv/linbo/#{newFileName}",
-                    items: [{
-                        mode: 'copy'
-                        item:
-                            name: image.name
-                            path: "/srv/linbo4/#{image.name}"
-                    }]
-                )
-
-                image = angular.copy(image)
-                image.name = newFileName
-                $http.post("/api/lm/linbo4/image/#{image.name}", image).then () ->
-                    $scope.images.push image
-
     $scope.renameImage = (image) ->
        messagebox.prompt('New name', image.name).then (msg) ->
             new_name = msg.value

@@ -36,7 +36,7 @@ class Handler(HttpPlugin):
                 append = False
                 for OS in os_list:
                     image = OS.get('BaseImage', None)
-                    if 'qcow2' in image or image is None:
+                    if '.qcow2' in image or image is None:
                         images.append(image)
                         append = True
 

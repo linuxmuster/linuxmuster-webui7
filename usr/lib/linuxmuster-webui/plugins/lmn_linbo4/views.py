@@ -23,10 +23,29 @@ class Handler(HttpPlugin):
     def handle_api_configs(self, http_context):
         r = []
         for file in os.listdir(self.LINBO_PATH):
-            if file.startswith('start.conf.'):
-                if not file.endswith('.vdi'):
-                    if not os.path.islink(os.path.join(self.LINBO_PATH, file)):
-                        r.append(file)
+            path = os.path.join(self.LINBO_PATH, file)
+            if (
+                file.startswith('start.conf.')
+                and not file.endswith('.vdi')
+                and not os.path.islink(path)
+            ):
+                with LMNFile(path, 'r') as f:
+                    os_list = f.read().get('os', [])
+
+                images = []
+                append = False
+                for OS in os_list:
+                    image = OS.get('BaseImage', None)
+                    if 'qcow2' in image or image is None:
+                        images.append(image)
+                        append = True
+
+                # Append file even if there's no partition
+                if append or os_list == []:
+                    r.append({
+                        'file': file,
+                        'images': images,
+                    })
         return r
 
     @url(r'/api/lm/linbo4/examples')

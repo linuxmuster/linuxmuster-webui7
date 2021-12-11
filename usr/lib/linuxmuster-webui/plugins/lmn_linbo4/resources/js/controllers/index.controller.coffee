@@ -47,7 +47,6 @@ angular.module('lmn.linbo4').controller 'LMLINBO4PartitionModalController', ($sc
 
     $http.get('/api/lm/linbo4/images').then (resp) ->
         $scope.images = []
-        $scope.diffImages = []
         oses = resp.data
         for os in oses
             $scope.images.push os.name + '.qcow2'

@@ -6,22 +6,33 @@
     <uib:tabset active=activetab>
         <uib:tab heading="{{'Groups'|translate}}">
             <br/>
-            <div class="list-group">
-                <div class="list-group-item list-group-item-small" ng:repeat="config in configs|orderBy:'toString()'">
-                    <a class="list-group-btn" ng:click="deleteConfig(config)">
-                        <i class="fa fa-trash-o"></i>
-                    </a>
-                    <a class="list-group-btn" ng:click="duplicateConfig(config)">
-                        <i class="fa fa-copy"></i>
-                    </a>
-                    <a class="list-group-btn" ng:click="duplicateConfig(config, true)">
-                        <i class="fa fa-pencil"></i>
-                    </a>
-                    <a class="list-group-main" ng:click="editConfig(config)">
-                        {{config.substring('start.conf.'.length)}}
-                    </a>
-                </div>
-            </div>
+            <table class="table">
+                <tr ng:repeat="config in configs|orderBy:'toString()'">
+                    <td ng:click="editConfig(config.file)" style="cursor:pointer;">
+                        <b>{{config.file.substring('start.conf.'.length)}}</b>
+                    </td>
+                    <td ng:click="editConfig(config.file)" style="cursor:pointer;">
+                        <span ng:repeat="image in config.images" class="label label-info">
+                            {{image}}
+                        </span>
+                    </td>
+                    <td width="1">
+                        <button class="btn btn-default" ng:click="editConfig(config.file, true)">
+                            <i class="fa fa-pencil"></i>
+                        </button>
+                    </td>
+                    <td width="1">
+                        <button class="btn btn-default" ng:click="duplicateConfig(config.file)">
+                            <i class="fa fa-copy"></i>
+                        </button>
+                    </td>
+                    <td width="1">
+                        <button class="btn btn-default" ng:click="deleteConfig(config.file)">
+                            <i class="fa fa-trash-o"></i>
+                        </button>
+                    </td>
+                </tr>
+            </table>
 
             <div class="floating-toolbar-padder"></div>
 

@@ -66,7 +66,6 @@
     $http.get('/api/lm/linbo4/images').then(function(resp) {
       var i, len, oses, results;
       $scope.images = [];
-      $scope.diffImages = [];
       oses = resp.data;
       results = [];
       for (i = 0, len = oses.length; i < len; i++) {

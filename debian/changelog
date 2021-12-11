@@ -1,3 +1,11 @@
+linuxmuster-webui7 (1.0.163~5) lmn71; urgency=medium
+
+  * Fixs in linbo4 plugin
+  * Add subnet settings
+  * Add linbo sync plugin 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 11 Dec 2021 16:16:51 +0100
+
 linuxmuster-webui7 (1.0.163~4) lmn71; urgency=medium
 
   * Fix scan of files in /srv/linbo/images 

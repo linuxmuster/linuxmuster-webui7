@@ -59,8 +59,10 @@
         $scope.image_extension = 'png';
       }
       $scope.show_png_warning = false;
-      if ($scope.image_extension === 'svg' && os.IconName.endsWith('png')) {
-        return $scope.show_png_warning = true;
+      if ($scope.os !== null) {
+        if ($scope.image_extension === 'svg' && $scope.os.IconName.endsWith('png')) {
+          return $scope.show_png_warning = true;
+        }
       }
     });
     $http.get('/api/lm/linbo/images').then(function(resp) {

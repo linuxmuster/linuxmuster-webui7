@@ -42,8 +42,9 @@ angular.module('lmn.linbo').controller 'LMLINBOPartitionModalController', ($scop
         if resp.data.indexOf('ubuntu.svg') < 0
             $scope.image_extension = 'png'
         $scope.show_png_warning = false
-        if $scope.image_extension == 'svg' && os.IconName.endsWith('png')
-            $scope.show_png_warning = true
+        if $scope.os != null
+            if $scope.image_extension == 'svg' && $scope.os.IconName.endsWith('png')
+                $scope.show_png_warning = true
 
     $http.get('/api/lm/linbo/images').then (resp) ->
         $scope.images = []

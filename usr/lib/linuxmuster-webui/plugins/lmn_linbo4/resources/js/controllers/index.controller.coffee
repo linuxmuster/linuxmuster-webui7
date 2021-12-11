@@ -50,10 +50,7 @@ angular.module('lmn.linbo4').controller 'LMLINBO4PartitionModalController', ($sc
         $scope.diffImages = []
         oses = resp.data
         for os in oses
-            if os.cloop
-                $scope.images.push os.name
-            if os.rsync
-                $scope.diffImages.push os.name
+            $scope.images.push os.name
 
     $scope.save = () ->
         $uibModalInstance.close(partition: $scope.partition, os: $scope.os)

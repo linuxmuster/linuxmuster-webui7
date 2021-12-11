@@ -71,14 +71,7 @@
       results = [];
       for (i = 0, len = oses.length; i < len; i++) {
         os = oses[i];
-        if (os.cloop) {
-          $scope.images.push(os.name);
-        }
-        if (os.rsync) {
-          results.push($scope.diffImages.push(os.name));
-        } else {
-          results.push(void 0);
-        }
+        results.push($scope.images.push(os.name));
       }
       return results;
     });

@@ -316,7 +316,7 @@ class LinboImageManager:
         if not os.path.isdir(LINBO_PATH):
             return
         for dir in os.listdir(LINBO_PATH):
-            if os.path.isdir(dir):
+            if os.path.isdir(os.path.join(LINBO_PATH, dir)):
                 for file in os.listdir(os.path.join(LINBO_PATH, dir)):
                     if file.endswith((f'.{IMAGE}')):
                         self.linboImageGroups[dir] = LinboImageGroup(dir)

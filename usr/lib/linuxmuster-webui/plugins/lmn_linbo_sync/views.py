@@ -29,6 +29,7 @@ class Handler(HttpPlugin):
         self.context = context
 
     @url(r'/api/lm/linbo/SyncList')
+    @authorize('lm:sync:list')
     @endpoint(api=True)
     def handle_api_linbo_sync(self, http_context):
         """
@@ -42,17 +43,17 @@ class Handler(HttpPlugin):
         """
 
         if http_context.method == 'GET':
-            with authorize('lm:linbo:configs'):#('lm:sync:list'):
-                workstations = api.list_workstations()
-                api.last_sync_all(workstations)
+            workstations = api.list_workstations()
+            api.last_sync_all(workstations)
 
-                if len(workstations) != 0:
-                    return workstations
-                else:
-                    return ["none"]
+            if len(workstations) != 0:
+                return workstations
+            else:
+                return ["none"]
 
     @url(r'/api/lm/linbo/isOnline/(?P<host>\w+)')
     @endpoint(api=True)
+    @authorize('lm:sync:online')
     def handle_api_workstations_online(self, http_context, host):
         """
         Connector to test if a host is online.
@@ -67,11 +68,11 @@ class Handler(HttpPlugin):
         """
 
         if http_context.method == 'GET':
-            with authorize('lm:linbo:configs'):#('lm:sync:online'):
-                return api.test_online(host)
+            return api.test_online(host)
 
     @url(r'/api/lm/linbo/run')
     @endpoint(api=True)
+    @authorize('lm:sync:sync')
     def handle_api_sync_workstation(self, http_context):
         """
         Connector to launch a linbo command.
@@ -86,7 +87,6 @@ class Handler(HttpPlugin):
         action = http_context.json_body()['action']
 
         if http_context.method == 'POST':
-            with authorize('lm:linbo:configs'):#('lm:sync:sync'):
-                if action == 'run-linbo':
-                    cmd = http_context.json_body()['cmd']
-                    return api.run(cmd.split())
+            if action == 'run-linbo':
+                cmd = http_context.json_body()['cmd']
+                return api.run(cmd.split())

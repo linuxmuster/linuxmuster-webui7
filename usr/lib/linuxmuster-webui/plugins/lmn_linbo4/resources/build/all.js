@@ -71,7 +71,7 @@
       results = [];
       for (i = 0, len = oses.length; i < len; i++) {
         os = oses[i];
-        results.push($scope.images.push(os.name));
+        results.push($scope.images.push(os.name + '.qcow2'));
       }
       return results;
     });

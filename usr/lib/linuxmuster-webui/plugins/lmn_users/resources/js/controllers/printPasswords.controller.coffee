@@ -93,7 +93,9 @@ angular.module('lmn.users').controller 'LMUsersPrintPasswordsController', ($scop
         if $scope.identity.user == 'root' || $scope.identity.profile.sophomorixRole == 'globaladministrator' || $scope.identity.profile.sophomorixRole == 'schooladministrator'
             $http.get('/api/lm/users/get-classes').then (resp) ->
                 $scope.classes = resp.data
+                $scope.admin_warning = true
         else
+            $scope.admin_warning = false
             $scope.classes = []
             for membership in $scope.identity.profile.memberOf
                 if membership.indexOf("OU=Students") > -1

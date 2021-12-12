@@ -1859,9 +1859,11 @@
       var classname, i, len, membership, ref, results;
       if ($scope.identity.user === 'root' || $scope.identity.profile.sophomorixRole === 'globaladministrator' || $scope.identity.profile.sophomorixRole === 'schooladministrator') {
         return $http.get('/api/lm/users/get-classes').then(function(resp) {
-          return $scope.classes = resp.data;
+          $scope.classes = resp.data;
+          return $scope.admin_warning = true;
         });
       } else {
+        $scope.admin_warning = false;
         $scope.classes = [];
         ref = $scope.identity.profile.memberOf;
         results = [];

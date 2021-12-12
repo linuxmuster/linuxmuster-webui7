@@ -637,13 +637,36 @@
       }
     });
     $http.get('/api/lm/linbo/configs').then(function(resp) {
-      return $scope.configs = resp.data;
+      $scope.configs = resp.data;
+      return $http.get('/api/lm/linbo/images').then(function(resp) {
+        var config, i, image, len, ref, results;
+        $scope.images = resp.data;
+        ref = $scope.images;
+        results = [];
+        for (i = 0, len = ref.length; i < len; i++) {
+          image = ref[i];
+          image.used_in = [];
+          results.push((function() {
+            var j, len1, ref1, results1;
+            ref1 = $scope.configs;
+            results1 = [];
+            for (j = 0, len1 = ref1.length; j < len1; j++) {
+              config = ref1[j];
+              console.log(config, image);
+              if (config.images.indexOf(image.name) > -1) {
+                results1.push(image.used_in.push(config.file.split('.').slice(-1)[0]));
+              } else {
+                results1.push(void 0);
+              }
+            }
+            return results1;
+          })());
+        }
+        return results;
+      });
     });
     $http.get('/api/lm/linbo/examples').then(function(resp) {
       return $scope.examples = resp.data;
-    });
-    $http.get('/api/lm/linbo/images').then(function(resp) {
-      return $scope.images = resp.data;
     });
     $scope.importDevices = function() {
       return $uibModal.open({

@@ -527,12 +527,16 @@ angular.module('lmn.linbo').controller 'LMLINBOController', ($q, $scope, $http, 
 
     $http.get('/api/lm/linbo/configs').then (resp) ->
         $scope.configs = resp.data
+        $http.get('/api/lm/linbo/images').then (resp) ->
+            $scope.images = resp.data
+            for image in $scope.images
+                image.used_in = []
+                for config in $scope.configs
+                    if config.images.indexOf(image.name) > -1
+                        image.used_in.push(config.file.split('.').slice(-1)[0])
 
     $http.get('/api/lm/linbo/examples').then (resp) ->
         $scope.examples = resp.data
-
-    $http.get('/api/lm/linbo/images').then (resp) ->
-        $scope.images = resp.data
 
     $scope.importDevices = () ->
         $uibModal.open(

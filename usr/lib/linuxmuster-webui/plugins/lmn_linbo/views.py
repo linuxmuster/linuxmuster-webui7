@@ -117,7 +117,12 @@ class Handler(HttpPlugin):
     @authorize('lm:linbo:icons')
     @endpoint(api=True)
     def handle_api_icons(self, http_context):
-        return os.listdir(os.path.join(self.LINBO_PATH, 'icons'))
+        icons = []
+        available_ext = ['.png', '.svg']
+        for f in os.listdir(os.path.join(self.LINBO_PATH, 'icons')) :
+            if f[-4:] in available_ext:
+                icons.append(f)
+        return icons
 
     @url(r'/api/lm/linbo/images')
     @authorize('lm:linbo:images')
@@ -167,7 +172,7 @@ class Handler(HttpPlugin):
 
         if not path.startswith(root):
             return http_context.respond_forbidden()
-        return http_context.file(path, inline=False, name=name.encode())
+        return http_context.file(path, inline=True, name=name.encode())
 
     
     @url(r'/api/lm/linbo/vdi/(?P<name>.+)')

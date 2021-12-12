@@ -7,6 +7,13 @@
         <uib:tab heading="{{'Groups'|translate}}">
             <br/>
             <table class="table">
+                <tr>
+                    <th translate>Group name</th>
+                    <th translate>Used images</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
                 <tr ng:repeat="config in configs|orderBy:'toString()'">
                     <td ng:click="editConfig(config.file)" style="cursor:pointer;">
                         <b>{{config.file.substring('start.conf.'.length)}}</b>

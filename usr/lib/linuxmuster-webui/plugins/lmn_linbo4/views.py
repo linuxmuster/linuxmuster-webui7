@@ -130,7 +130,7 @@ class Handler(HttpPlugin):
 
         if not path.startswith(root):
             return http_context.respond_forbidden()
-        return http_context.file(path, inline=False, name=name.encode())
+        return http_context.file(path, inline=True, name=name.encode())
 
     
     @url(r'/api/lm/linbo4/vdi/(?P<name>.+)')

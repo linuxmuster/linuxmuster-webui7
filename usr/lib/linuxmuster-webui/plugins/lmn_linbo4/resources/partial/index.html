@@ -10,9 +10,7 @@
                 <tr>
                     <th translate>Group name</th>
                     <th translate>Used images</th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
+                    <th colspan="3" translate>Actions</th>
                 </tr>
                 <tr ng:repeat="config in configs|orderBy:'toString()'">
                     <td ng:click="editConfig(config.file)" style="cursor:pointer;">
@@ -67,8 +65,8 @@
                 <tr>
                     <th> </th>
                     <th style="min-width:100px" translate>Name / Size</th>
-                    <th translate>Comment</th>
-                    <th style="min-width:150px" translate>Actions</th>
+                    <th translate>Used in group ...</th>
+                    <th colspan="3" translate>Actions</th>
                 </tr>
                 <tr ng:repeat="image in images|orderBy:'name'">
                     <td>
@@ -80,15 +78,19 @@
                         <i>{{image.size|bytes}}</i>
                     </td>
                     <td>
-                        {{image.desc}}
+                        <span ng:repeat="conf in image.used_in" class="label label-success">{{conf}}</span>
                     </td>
-                    <td>
+                    <td width="1">
                         <button class="btn btn-default" ng:click="editImage(image)">
                             <i class="fa fa-cog"></i>
                         </button>
+                    </td>
+                    <td width="1">
                         <button class="btn btn-default" ng:click="showBackups(image)">
                             <i class="fa fa-history"></i>
                         </button>
+                    </td>
+                    <td width="1">
                         <button class="btn btn-default" ng:click="deleteImage(image)">
                             <i class="fa fa-trash-o"></i>
                         </button>

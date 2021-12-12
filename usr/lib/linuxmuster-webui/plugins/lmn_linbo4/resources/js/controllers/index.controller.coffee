@@ -524,13 +524,16 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
 
     $http.get('/api/lm/linbo4/configs').then (resp) ->
         $scope.configs = resp.data
+        $http.get('/api/lm/linbo4/images').then (resp) ->
+            $scope.images = resp.data
+            for image in $scope.images
+                image.used_in = []
+                for config in $scope.configs
+                    if config.images.indexOf(image.name + '.qcow2') > -1
+                        image.used_in.push(config.file.split('.').slice(-1)[0])
 
     $http.get('/api/lm/linbo4/examples').then (resp) ->
         $scope.examples = resp.data
-
-    $http.get('/api/lm/linbo4/images').then (resp) ->
-        $scope.images = resp.data
-        console.log($scope.images)
 
     $scope.importDevices = () ->
         $uibModal.open(

@@ -54,13 +54,9 @@
     $http.get('/api/lm/linbo4/icons').then(function(resp) {
       $scope.icons = resp.data;
       $scope.image_extension = 'svg';
-      // Test if common svg picture is there, and fallback to png if not
-      if (resp.data.indexOf('ubuntu.svg') < 0) {
-        $scope.image_extension = 'png';
-      }
       $scope.show_png_warning = false;
       if ($scope.os !== null) {
-        if ($scope.image_extension === 'svg' && $scope.os.IconName.endsWith('png')) {
+        if ($scope.os.IconName.endsWith('png')) {
           return $scope.show_png_warning = true;
         }
       }

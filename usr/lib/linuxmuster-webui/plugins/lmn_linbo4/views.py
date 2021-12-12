@@ -121,7 +121,7 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_icons(self, http_context):
         icons = []
-        available_ext = ['.png', '.svg']
+        available_ext = ['.svg']
         for f in os.listdir(os.path.join(self.LINBO_PATH, 'icons')) :
             if f[-4:] in available_ext:
                 icons.append(f)

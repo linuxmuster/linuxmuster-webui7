@@ -652,7 +652,6 @@
             results1 = [];
             for (j = 0, len1 = ref1.length; j < len1; j++) {
               config = ref1[j];
-              console.log(config, image);
               if (config.images.indexOf(image.name) > -1) {
                 results1.push(image.used_in.push(config.file.split('.').slice(-1)[0]));
               } else {

@@ -120,7 +120,12 @@ class Handler(HttpPlugin):
     @authorize('lm:linbo:icons')
     @endpoint(api=True)
     def handle_api_icons(self, http_context):
-        return os.listdir(os.path.join(self.LINBO_PATH, 'icons'))
+        icons = []
+        available_ext = ['.png', '.svg']
+        for f in os.listdir(os.path.join(self.LINBO_PATH, 'icons')) :
+            if f[-4:] in available_ext:
+                icons.append(f)
+        return icons
 
     @url(r'/api/lm/linbo4/icons/read/(?P<name>.+)')
     @endpoint(api=False, page=True)

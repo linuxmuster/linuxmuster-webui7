@@ -1753,17 +1753,14 @@
       $scope.options.user = 'global-admin';
     }
     if ($scope.options.adminClass.includes('admins')) {
-      $http.get('/api/lm/schoolsettings/latex-templates').then(function(resp) {
-        $scope.templates_individual = resp.data[0];
-        $scope.templates_multiple = resp.data[1];
+      $http.get('/api/lm/schoolsettings/latex-templates').then(function(rp) {
+        $scope.templates_individual = rp.data[0];
+        $scope.templates_multiple = rp.data[1];
+        $scope.options['template_one_per_page'] = $scope.templates_individual[0];
+        $scope.options['template_multiple'] = $scope.templates_multiple[0];
         return $http.get('/api/lm/read_custom_config').then(function(resp) {
           var i, j, len, len1, ref, ref1, results, template;
-          $scope.templates = {
-            'multiple': '',
-            'individual': ''
-          };
           $scope.passwordTemplates = resp.data.passwordTemplates;
-          console.log($scope.templates_multiple);
           ref = $scope.templates_individual;
           for (i = 0, len = ref.length; i < len; i++) {
             template = ref[i];

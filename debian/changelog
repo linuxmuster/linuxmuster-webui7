@@ -1,3 +1,12 @@
+linuxmuster-webui7 (1.0.163~6) lmn71; urgency=medium
+
+  * Display used images in start.conf and vice versa
+  * Fix template selection for admin and teachers
+  * Fix warning for empty classes in print password list
+  * Fix icons problems and remove png support in linbo plugin 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 13 Dec 2021 20:55:34 +0100
+
 linuxmuster-webui7 (1.0.163~5) lmn71; urgency=medium
 
   * Fixs in linbo4 plugin

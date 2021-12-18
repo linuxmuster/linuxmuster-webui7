@@ -144,6 +144,9 @@ class SambaToolDNS():
         :rtype: string
         """
 
+        if sub['type'] == "MX":
+            sub['value'] = sub['value'] + "\\ " + sub['priority']
+
         return self._samba_tool_process('add', (sub['host'], sub['type'], sub['value']))
 
     def update(self, old, new):
@@ -157,6 +160,10 @@ class SambaToolDNS():
         :return: Result of samba-tool
         :rtype: string
         """
+
+        if old['type'] == "MX":
+            old['value'] = old['value'] + "\\ " + old['priority']
+            new['value'] = new['value'] + "\\ " + new['priority']
 
         return self._samba_tool_process('update', (old['host'], old['type'], old['value'], new['value']))
 

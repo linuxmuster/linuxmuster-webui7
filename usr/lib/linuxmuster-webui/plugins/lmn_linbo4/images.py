@@ -11,10 +11,11 @@ LINBO_PATH = '/srv/linbo/images'
 
 # Filenames like ubuntu.qcow2.desc
 EXTRA_IMAGE_FILES = ['desc', 'info',  'vdi']
-EXTRA_NONEDITABLE_IMAGE_FILES = ['torrent', 'macct']
+EXTRA_NONEDITABLE_IMAGE_FILES = ['torrent']
 
 # Filenames like ubuntu.reg
 EXTRA_COMMON_FILES = ['reg', 'postsync', 'prestart']
+EXTRA_NONEDITABLE_COMMON_FILES = ['macct']
 
 EXTRA_PERMISSIONS_MAPPING = {
     'desc': 0o664,
@@ -119,7 +120,7 @@ class LinboImage:
             if os.path.exists(path):
                 os.unlink(path)
 
-        for extra in EXTRA_COMMON_FILES:
+        for extra in EXTRA_COMMON_FILES + EXTRA_NONEDITABLE_COMMON_FILES:
             path = os.path.join(self.path, f"{self.name}.{extra}")
             if os.path.exists(path):
                 os.unlink(path)
@@ -167,7 +168,7 @@ class LinboImage:
 
                 os.rename(actual, os.path.join(self.path, f"{new_image_name}.{extra}"))
 
-        for extra in EXTRA_COMMON_FILES:
+        for extra in EXTRA_COMMON_FILES + EXTRA_NONEDITABLE_COMMON_FILES:
             actual = os.path.join(self.path, f"{self.name}.{extra}")
             if os.path.exists(actual):
                 os.rename(actual, os.path.join(self.path, f"{new_name}.{extra}"))
@@ -285,7 +286,9 @@ class LinboImageGroup:
         for timestamp, backup in self.backups.items():
             backup.delete()
 
-        os.rmdir(self.backup_path)
+        if os.path.isdir(self.backup_path):
+            os.rmdir(self.backup_path)
+
         self.base.delete()
 
     def to_dict(self):

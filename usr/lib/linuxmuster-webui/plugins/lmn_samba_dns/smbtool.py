@@ -84,7 +84,6 @@ class SambaToolDNS():
             return
 
         cmd = ['samba-tool', 'dns', action, 'localhost', self.zone, *options, '-U', 'administrator']
-
         child = pexpect.spawn(' '.join(cmd))
         child.expect("Password for .*:")
         child.sendline(self.password)

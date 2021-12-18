@@ -51,7 +51,7 @@ class Handler(HttpPlugin):
             else:
                 return ["none"]
 
-    @url(r'/api/lm/linbo/isOnline/(?P<host>\w+)')
+    @url(r'/api/lm/linbo/isOnline/(?P<host>[\w\-]+)')
     @endpoint(api=True)
     @authorize('lm:sync:online')
     def handle_api_workstations_online(self, http_context, host):

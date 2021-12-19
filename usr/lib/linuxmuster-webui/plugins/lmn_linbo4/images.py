@@ -90,7 +90,7 @@ class LinboImage:
             else:
                 self.extras[extra] = None
                 # Create empty desc in any case
-                if extra == 'desc':
+                if extra == 'desc' and os.getuid() == 0:
                     with LMNFile(extra_file, 'w') as f:
                         pass
                     os.chmod(extra_file, EXTRA_PERMISSIONS_MAPPING[extra])

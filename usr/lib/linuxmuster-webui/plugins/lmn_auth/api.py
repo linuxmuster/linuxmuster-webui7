@@ -29,6 +29,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
     id = 'lm'
     name = _('Linux Muster LDAP') # skipcq: PYL-E0602
+    pw_reset = True
 
     def __init__(self, context):
         self.context = context
@@ -278,7 +279,47 @@ class LMAuthenticationProvider(AuthenticationProvider):
             logging.error(e)
             return {}
 
+    def check_mail(self, mail):
+        # Search in the mail field, this must be discuted with others devs
+        ldap_filter = """(&
+                            (objectClass=user)
+                            (|
+                                (sophomorixRole=globaladministrator)
+                                (sophomorixRole=schooladministrator)
+                                (sophomorixRole=teacher)
+                                (sophomorixRole=student)
+                            )
+                            (mail=%s)
+                        )"""
 
+        searchFilter = ldap.filter.filter_format(ldap_filter, [mail])
+        params = lmconfig['linuxmuster']['ldap']
+
+        l = ldap.initialize('ldap://' + params['host'])
+        # Binduser bind to the  server
+        try:
+            l.set_option(ldap.OPT_REFERRALS, 0)
+            l.protocol_version = ldap.VERSION3
+            l.bind_s(params['binddn'], params['bindpw'])
+        except Exception as e:
+            logging.error(str(e))
+            raise KeyError(e)
+        try:
+            res = l.search_s(params['searchdn'], ldap.SCOPE_SUBTREE, searchFilter, attrlist=['sAMAccountName'])
+            if res[0][0] is None:
+                raise KeyError
+            # What to do if email is not unique ?
+            return res[0][1]['sAMAccountName']
+        except ldap.LDAPError as e:
+            print(e)
+
+        l.unbind_s()
+        return False
+
+    def update_password(self, username, password):
+        systemString = ['sudo', 'sophomorix-passwd', '--user', username, '--pass', password, '--hide', '--nofirstpassupdate', '--use-smbpasswd']
+        subprocess.check_call(systemString, shell=False)
+        return True
 
 @component(UserConfigProvider)
 class UserLdapConfig(UserConfigProvider):

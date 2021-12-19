@@ -1,3 +1,14 @@
+linuxmuster-webui7 (1.0.163~7) lmn71; urgency=medium
+
+  * Add docker plugin
+  * Fix MX handling in samba dns plugin
+  * Fix desc permission in linbo plugin
+  * Security fix in samba dns plugin
+  * Fix backups and macct handling in linbo4 plugin
+  * Add hyphen to image name in linbo 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 19 Dec 2021 11:02:40 +0100
+
 linuxmuster-webui7 (1.0.163~6) lmn71; urgency=medium
 
   * Display used images in start.conf and vice versa

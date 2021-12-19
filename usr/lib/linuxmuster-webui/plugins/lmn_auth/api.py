@@ -18,7 +18,7 @@ import yaml
 
 from aj.auth import AuthenticationProvider, OSAuthenticationProvider, AuthenticationService
 from aj.config import UserConfigProvider
-from aj.plugins.lmn_common.api import lmconfig, lmsetup_schoolname
+from aj.plugins.lmn_common.api import ldap_config as params, lmsetup_schoolname
 import logging
 
 @component(AuthenticationProvider)
@@ -78,7 +78,6 @@ class LMAuthenticationProvider(AuthenticationProvider):
             ldap_attrs = ['sophomorixWebuiDashboard']
 
         searchFilter = ldap.filter.filter_format(ldap_filter, [username])
-        params = lmconfig['linuxmuster']['ldap']
 
         l = ldap.initialize('ldap://' + params['host'])
         # Binduser bind to the  server
@@ -129,7 +128,6 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
         # Is the password right ?
         try:
-            params = lmconfig['linuxmuster']['ldap']
             l = ldap.initialize('ldap://' + params['host'])
             l.set_option(ldap.OPT_REFERRALS, 0)
             l.protocol_version = ldap.VERSION3
@@ -293,7 +291,6 @@ class LMAuthenticationProvider(AuthenticationProvider):
                         )"""
 
         searchFilter = ldap.filter.filter_format(ldap_filter, [mail])
-        params = lmconfig['linuxmuster']['ldap']
 
         l = ldap.initialize('ldap://' + params['host'])
         # Binduser bind to the  server
@@ -387,7 +384,6 @@ class UserLdapConfig(UserConfigProvider):
             ldap_attrs = ['sophomorixWebuiDashboard']
 
             searchFilter = ldap.filter.filter_format(ldap_filter, [self.user])
-            params = lmconfig['linuxmuster']['ldap']
             with open('/etc/linuxmuster/.secret/administrator') as f:
                 admin_pw = f.read()
 

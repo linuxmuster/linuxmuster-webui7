@@ -3,16 +3,11 @@ Common tools to communicate with sophomorix and handle config files.
 """
 
 import os
-import time
 import subprocess
 import dpath.util
 import re
-import yaml
 import threading
 import ast
-import unicodecsv as csv
-import filecmp
-import configparser
 import logging
 from pprint import pformat
 from .lmnfile import LMNFile
@@ -45,8 +40,17 @@ def check_allowed_path(path):
     raise IOError(_("Access refused."))  # skipcq: PYL-E0602
 
 # Load Webui settings
-with LMNFile('/etc/linuxmuster/webui/config.yml', 'r') as webui:
-    lmconfig = webui.read()
+config_path = '/etc/linuxmuster/webui/config.yml'
+if os.path.isfile(config_path):
+    with LMNFile(config_path, 'r') as webui:
+        lmconfig = webui.read()
+        ldap_config = lmconfig['linuxmuster']['ldap']
+        # Hide sensitive values for other plugins
+        lmconfig['linuxmuster']['ldap'] = {}
+else:
+    lmconfig = {}
+    ldap_config = {}
+    logging.error("Without config.yml the users will not be able to login.")
 
 # Used for pageTitle, see lmn_auth.api
 with LMNFile('/var/lib/linuxmuster/setup.ini', 'r') as s:

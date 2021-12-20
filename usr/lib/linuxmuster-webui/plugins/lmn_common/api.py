@@ -45,8 +45,6 @@ if os.path.isfile(config_path):
     with LMNFile(config_path, 'r') as webui:
         lmconfig = webui.read()
         ldap_config = lmconfig['linuxmuster']['ldap']
-        # Hide sensitive values for other plugins
-        lmconfig['linuxmuster']['ldap'] = {}
 else:
     lmconfig = {}
     ldap_config = {}

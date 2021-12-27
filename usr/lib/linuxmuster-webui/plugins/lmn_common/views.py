@@ -171,10 +171,13 @@ class Handler(HttpPlugin):
         :rtype: dict
         """
 
-        path = '/var/lib/linuxmuster/setup.ini'
-        if http_context.method == 'GET':
-            with LMNFile(path, 'r') as setup:
-                return setup.data
+        try:
+            path = '/var/lib/linuxmuster/setup.ini'
+            if http_context.method == 'GET':
+                with LMNFile(path, 'r') as setup:
+                    return setup.data
+        except FileNotFoundError:
+            return
 
 
     ## TODO authorize

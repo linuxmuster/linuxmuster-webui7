@@ -20,11 +20,14 @@ class SambaToolDNS():
         """
 
         # Used for pageTitle, see lmn_auth.api
-        with LMNFile('/var/lib/linuxmuster/setup.ini', 'r') as setup:
-            try:
-                self.zone = setup.data['setup']['domainname']
-            except KeyError:
-                self.zone = ''
+        try:
+            with LMNFile('/var/lib/linuxmuster/setup.ini', 'r') as setup:
+                try:
+                    self.zone = setup.data['setup']['domainname']
+                except KeyError:
+                    self.zone = ''
+        except FileNotFoundError:
+            self.zone = ''
 
     def _get_ignore_list(self):
         """

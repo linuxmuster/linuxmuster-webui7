@@ -51,11 +51,14 @@ else:
     logging.error("Without config.yml the users will not be able to login.")
 
 # Used for pageTitle, see lmn_auth.api
-with LMNFile('/var/lib/linuxmuster/setup.ini', 'r') as s:
-    try:
-        lmsetup_schoolname = s.data['setup']['schoolname']
-    except KeyError:
-        lmsetup_schoolname = None
+try:
+    with LMNFile('/var/lib/linuxmuster/setup.ini', 'r') as s:
+        try:
+            lmsetup_schoolname = s.data['setup']['schoolname']
+        except KeyError:
+            lmsetup_schoolname = None
+except FileNotFoundError:
+    lmsetup_schoolname = None
 
 def lmn_get_school_configpath(school):
     """

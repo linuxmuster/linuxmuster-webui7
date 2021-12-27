@@ -13,32 +13,6 @@ from pprint import pformat
 from .lmnfile import LMNFile
 
 
-ALLOWED_PATHS = [
-                '/etc/linuxmuster/sophomorix/',     # used for school.conf or *.csv in lmn_settings, lmn_devices and lmn_users
-                '/srv/linbo',                       # used in lmn_linbo for start.conf
-                '/etc/linuxmuster/subnets-dev.csv'  # used in lmn_settings for subnets configuration
-                ]
-
-def check_allowed_path(path):
-    """
-    Check path before modifying files for security reasons.
-
-    :param path: File to modify
-    :type path: string
-    :return: File path in allowed paths.
-    :rtype: bool
-    """
-
-    allowed_path = False
-    for rootpath in ALLOWED_PATHS:
-        if rootpath in path:
-            allowed_path = True
-            break
-
-    if allowed_path and '..' not in path:
-        return True
-    raise IOError(_("Access refused."))  # skipcq: PYL-E0602
-
 # Load Webui settings
 config_path = '/etc/linuxmuster/webui/config.yml'
 if os.path.isfile(config_path):

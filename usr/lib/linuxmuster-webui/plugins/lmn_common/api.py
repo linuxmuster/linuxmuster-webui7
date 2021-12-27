@@ -44,7 +44,7 @@ def lmn_get_school_configpath(school):
     if school == "default-school":
         return '/etc/linuxmuster/sophomorix/default-school/'
     else:
-        return '/etc/linuxmuster/sophomorix/'+school+'/'+school+'.'
+        return f'/etc/linuxmuster/sophomorix/{school}/{school}.'
 
 class SophomorixProcess(threading.Thread):
     """
@@ -119,8 +119,13 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
         try:
             resultString = dpath.util.get(jsonDict, jsonpath)
         except Exception as e:
-            raise Exception('getSophomorix Value error. Either sophomorix field does not exist or ajenti binduser does not have sufficient permissions:\n' +
-                            'Error Message: ' + str(e) + '\n Dictionary we looked for information:\n' + str(jsonDict))
+            raise Exception(
+                'Sophomorix Value error !\n\n'
+                f'Either sophomorix field does not exist or user does not have sufficient permissions:\n'
+                f'Error Message: {e}\n'
+                f'Dictionary we looked for information:\n'
+                f'{jsonDict}'
+            )
     else:
         resultString = dpath.util.get(jsonDict, jsonpath)
     return resultString

@@ -3,26 +3,21 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en-GB" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8">
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>aj.plugins.lmn_devices.views &mdash; linuxmuster-webui7 1.0.159-1 documentation</title>
+  <title>aj.plugins.lmn_devices.views &mdash; linuxmuster-webui7 7.1.0 documentation</title>
   
 
   
   <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/theme_overrides.css" type="text/css" />
 
   
   
-
   
-  
-
   
 
   
@@ -32,7 +27,6 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
-        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
         <script src="../../../../_static/doctools.js"></script>
@@ -55,7 +49,7 @@
           
 
           
-            <a href="../../../../index.html" class="icon icon-home"> linuxmuster-webui7
+            <a href="../../../../index.html" class="icon icon-home" alt="Documentation Home"> linuxmuster-webui7
           
 
           
@@ -68,7 +62,7 @@
             
             
               <div class="version">
-                1.0.159-1
+                7.1.0
               </div>
             
           
@@ -146,8 +140,6 @@
 
 
 
-
-
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -178,18 +170,20 @@
 
 <span class="kn">import</span> <span class="nn">subprocess</span>
 <span class="kn">from</span> <span class="nn">jadi</span> <span class="kn">import</span> <span class="n">component</span>
+<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">aj.api.http</span> <span class="kn">import</span> <span class="n">url</span><span class="p">,</span> <span class="n">HttpPlugin</span>
 <span class="kn">from</span> <span class="nn">aj.api.endpoint</span> <span class="kn">import</span> <span class="n">endpoint</span><span class="p">,</span> <span class="n">EndpointError</span>
 <span class="kn">from</span> <span class="nn">aj.plugins.lmn_common.lmnfile</span> <span class="kn">import</span> <span class="n">LMNFile</span>
 <span class="kn">from</span> <span class="nn">aj.auth</span> <span class="kn">import</span> <span class="n">authorize</span>
-
+<span class="kn">from</span> <span class="nn">aj.plugins.lmn_common.api</span> <span class="kn">import</span> <span class="n">lmn_get_school_configpath</span>
+<span class="kn">from</span> <span class="nn">aj.plugins.lmn_common.multischool</span> <span class="kn">import</span> <span class="n">School</span>
 
 <div class="viewcode-block" id="Handler"><a class="viewcode-back" href="../../../../python/lmn_devices.html#aj.plugins.lmn_devices.views.Handler">[docs]</a><span class="nd">@component</span><span class="p">(</span><span class="n">HttpPlugin</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">Handler</span><span class="p">(</span><span class="n">HttpPlugin</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">context</span>
 
-    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lm/devices&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_devices"><a class="viewcode-back" href="../../../../python/lmn_devices.html#aj.plugins.lmn_devices.views.Handler.handle_api_devices">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lm/devices&#39;</span><span class="p">)</span>
     <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:devices&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_devices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
@@ -203,8 +197,14 @@
 <span class="sd">        :return: Content of config file in read mode.</span>
 <span class="sd">        :rtype: string</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;/etc/linuxmuster/sophomorix/default-school/devices.csv&#39;</span>
+        
+        
+        <span class="n">school</span> <span class="o">=</span> <span class="n">School</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span><span class="o">.</span><span class="n">school</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">lmn_get_school_configpath</span><span class="p">(</span><span class="n">school</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;devices.csv&#39;</span>
+        
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">mknod</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="c1">#path = &#39;/etc/linuxmuster/sophomorix/default-school/devices.csv&#39;</span>
         <span class="n">fieldnames</span> <span class="o">=</span> <span class="p">[</span>
             <span class="s1">&#39;room&#39;</span><span class="p">,</span>
             <span class="s1">&#39;hostname&#39;</span><span class="p">,</span>
@@ -233,9 +233,9 @@
                 <span class="n">item</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;_isNew&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
                 <span class="n">item</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;null&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
             <span class="k">with</span> <span class="n">LMNFile</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">fieldnames</span><span class="o">=</span><span class="n">fieldnames</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
 
-    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lm/devices/import&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_devices_import"><a class="viewcode-back" href="../../../../python/lmn_devices.html#aj.plugins.lmn_devices.views.Handler.handle_api_devices_import">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lm/devices/import&#39;</span><span class="p">)</span>
     <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:devices:import&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_devices_import</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
@@ -245,36 +245,39 @@
 <span class="sd">        :param http_context: HttpContext</span>
 <span class="sd">        :type http_context: HttpContext</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
+        <span class="n">school</span> <span class="o">=</span> <span class="n">School</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span><span class="o">.</span><span class="n">school</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">subprocess</span><span class="o">.</span><span class="n">check_call</span><span class="p">(</span><span class="s1">&#39;linuxmuster-import-devices &gt; /tmp/import_devices.log&#39;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">subprocess</span><span class="o">.</span><span class="n">check_call</span><span class="p">(</span><span class="s1">&#39;linuxmuster-import-devices -s &#39;</span><span class="o">+</span> <span class="n">school</span> <span class="o">+</span><span class="s1">&#39; &gt; /tmp/import_devices.log&#39;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">EndpointError</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span></div>
+            <span class="k">raise</span> <span class="n">EndpointError</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span></div></div>
 </pre></div>
 
            </div>
            
           </div>
           <footer>
+  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &#169; Copyright 2020, Andreas Till &amp; Arnaud Kientz.
+        
+        &copy; Copyright Andreas Till &amp; Arnaud Kientz - 2021
 
     </p>
   </div>
     
     
     
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
+
         </div>
       </div>
 

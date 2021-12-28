@@ -3,26 +3,21 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en-GB" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8">
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>aj.plugins.lmn_common.api &mdash; linuxmuster-webui7 1.0.159-1 documentation</title>
+  <title>aj.plugins.lmn_common.api &mdash; linuxmuster-webui7 7.1.0 documentation</title>
   
 
   
   <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/theme_overrides.css" type="text/css" />
 
   
   
-
   
-  
-
   
 
   
@@ -32,7 +27,6 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
-        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
         <script src="../../../../_static/doctools.js"></script>
@@ -55,7 +49,7 @@
           
 
           
-            <a href="../../../../index.html" class="icon icon-home"> linuxmuster-webui7
+            <a href="../../../../index.html" class="icon icon-home" alt="Documentation Home"> linuxmuster-webui7
           
 
           
@@ -68,7 +62,7 @@
             
             
               <div class="version">
-                1.0.159-1
+                7.1.0
               </div>
             
           
@@ -146,8 +140,6 @@
 
 
 
-
-
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -177,179 +169,75 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">subprocess</span>
-<span class="kn">import</span> <span class="nn">dpath</span>
+<span class="kn">import</span> <span class="nn">dpath.util</span>
 <span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">import</span> <span class="nn">yaml</span>
 <span class="kn">import</span> <span class="nn">threading</span>
 <span class="kn">import</span> <span class="nn">ast</span>
-<span class="kn">import</span> <span class="nn">unicodecsv</span> <span class="k">as</span> <span class="nn">csv</span>
-<span class="kn">import</span> <span class="nn">filecmp</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pformat</span>
+<span class="kn">from</span> <span class="nn">.lmnfile</span> <span class="kn">import</span> <span class="n">LMNFile</span>
 
 
-<span class="n">ALLOWED_PATHS</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="s1">&#39;/etc/linuxmuster/sophomorix/&#39;</span><span class="p">,</span>     <span class="c1"># used for school.conf or *.csv in lmn_settings, lmn_devices and lmn_users</span>
-                <span class="s1">&#39;/srv/linbo&#39;</span><span class="p">,</span>                       <span class="c1"># used in lmn_linbo for start.conf</span>
-                <span class="s1">&#39;/etc/linuxmuster/subnets-dev.csv&#39;</span>  <span class="c1"># used in lmn_settings for subnets configuration</span>
-                <span class="p">]</span>
+<span class="c1"># Load Webui settings</span>
+<span class="n">config_path</span> <span class="o">=</span> <span class="s1">&#39;/etc/linuxmuster/webui/config.yml&#39;</span>
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">config_path</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">LMNFile</span><span class="p">(</span><span class="n">config_path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">webui</span><span class="p">:</span>
+        <span class="n">lmconfig</span> <span class="o">=</span> <span class="n">webui</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">ldap_config</span> <span class="o">=</span> <span class="n">lmconfig</span><span class="p">[</span><span class="s1">&#39;linuxmuster&#39;</span><span class="p">][</span><span class="s1">&#39;ldap&#39;</span><span class="p">]</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">lmconfig</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">ldap_config</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Without config.yml the users will not be able to login.&quot;</span><span class="p">)</span>
 
-<div class="viewcode-block" id="check_allowed_path"><a class="viewcode-back" href="../../../../python/lmn_common.html#aj.plugins.lmn_common.api.check_allowed_path">[docs]</a><span class="k">def</span> <span class="nf">check_allowed_path</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+<span class="c1"># Fix missing entries in the lmconfig. Should be later refactored</span>
+<span class="c1"># and the config file should be splitted</span>
+<span class="c1"># Main linuxmuster config entry</span>
+<span class="n">lmconfig</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;linuxmuster&#39;</span><span class="p">,</span> <span class="p">{})</span>
+<span class="n">lmconfig</span><span class="p">[</span><span class="s1">&#39;linuxmuster&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;initialized&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+<span class="n">lmconfig</span><span class="p">[</span><span class="s1">&#39;linuxmuster&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;is-configured&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+<span class="n">lmconfig</span><span class="p">[</span><span class="s1">&#39;linuxmuster&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;provision&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+<span class="n">lmconfig</span><span class="p">[</span><span class="s1">&#39;linuxmuster&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;ldap&#39;</span><span class="p">,</span> <span class="p">{})</span>
+<span class="c1"># Proxyaddresses, e.g. multivalue emails</span>
+<span class="n">lmconfig</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;proxyAddresses&#39;</span><span class="p">,</span> <span class="p">{})</span>
+<span class="n">lmconfig</span><span class="p">[</span><span class="s1">&#39;proxyAddresses&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;students&#39;</span><span class="p">,</span> <span class="p">{})</span>
+<span class="n">lmconfig</span><span class="p">[</span><span class="s1">&#39;proxyAddresses&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;teachers&#39;</span><span class="p">,</span> <span class="p">{})</span>
+<span class="c1"># Custom fields with individual values</span>
+<span class="n">lmconfig</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;custom&#39;</span><span class="p">,</span> <span class="p">{})</span>
+<span class="n">lmconfig</span><span class="p">[</span><span class="s1">&#39;custom&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;students&#39;</span><span class="p">,</span> <span class="p">{})</span>
+<span class="n">lmconfig</span><span class="p">[</span><span class="s1">&#39;custom&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;teachers&#39;</span><span class="p">,</span> <span class="p">{})</span>
+<span class="c1"># Custom fields with multi values</span>
+<span class="n">lmconfig</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;customMulti&#39;</span><span class="p">,</span> <span class="p">{})</span>
+<span class="n">lmconfig</span><span class="p">[</span><span class="s1">&#39;customMulti&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;students&#39;</span><span class="p">,</span> <span class="p">{})</span>
+<span class="n">lmconfig</span><span class="p">[</span><span class="s1">&#39;customMulti&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;teachers&#39;</span><span class="p">,</span> <span class="p">{})</span>
+<span class="c1"># Choice of custom fields to display on user page</span>
+<span class="n">lmconfig</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;customDisplay&#39;</span><span class="p">,</span> <span class="p">{})</span>
+<span class="n">lmconfig</span><span class="p">[</span><span class="s1">&#39;customDisplay&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;students&#39;</span><span class="p">,</span> <span class="p">{})</span>
+<span class="n">lmconfig</span><span class="p">[</span><span class="s1">&#39;customDisplay&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;teachers&#39;</span><span class="p">,</span> <span class="p">{})</span>
+<span class="c1"># Templates for password printing</span>
+<span class="n">lmconfig</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;passwordTemplates&#39;</span><span class="p">,</span> <span class="p">{})</span>
+
+<span class="c1"># Used for pageTitle, see lmn_auth.api</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">LMNFile</span><span class="p">(</span><span class="s1">&#39;/var/lib/linuxmuster/setup.ini&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">s</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">lmsetup_schoolname</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;setup&#39;</span><span class="p">][</span><span class="s1">&#39;schoolname&#39;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="n">lmsetup_schoolname</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+    <span class="n">lmsetup_schoolname</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="lmn_get_school_configpath"><a class="viewcode-back" href="../../../../python/lmn_common.html#aj.plugins.lmn_common.api.lmn_get_school_configpath">[docs]</a><span class="k">def</span> <span class="nf">lmn_get_school_configpath</span><span class="p">(</span><span class="n">school</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Check path before modifying files for security reasons.</span>
+<span class="sd">    Return the default absolute path for config files in multischool env.</span>
 
-<span class="sd">    :param path: File to modify</span>
-<span class="sd">    :type path: string</span>
-<span class="sd">    :return: File path in allowed paths.</span>
-<span class="sd">    :rtype: bool</span>
+<span class="sd">    :param school: school shortname</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">allowed_path</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="k">for</span> <span class="n">rootpath</span> <span class="ow">in</span> <span class="n">ALLOWED_PATHS</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">rootpath</span> <span class="ow">in</span> <span class="n">path</span><span class="p">:</span>
-            <span class="n">allowed_path</span> <span class="o">=</span> <span class="kc">True</span>
-            <span class="k">break</span>
-
-    <span class="k">if</span> <span class="n">allowed_path</span> <span class="ow">and</span> <span class="s1">&#39;..&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">path</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">True</span>
-    <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Access refused.&quot;</span><span class="p">))</span>  <span class="c1"># skipcq: PYL-E0602</span></div>
-
-<div class="viewcode-block" id="LinuxmusterConfig"><a class="viewcode-back" href="../../../../python/lmn_common.html#aj.plugins.lmn_common.api.LinuxmusterConfig">[docs]</a><span class="k">class</span> <span class="nc">LinuxmusterConfig</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Basic class to handle linuxmuster webui&#39;s config file (yaml).</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span>
-
-    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">geteuid</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">chmod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="mi">384</span><span class="p">)</span>  <span class="c1"># 0o600</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">))</span>
-
-    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">yaml</span><span class="o">.</span><span class="n">safe_dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">default_flow_style</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="n">allow_unicode</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span></div>
-
-<span class="n">lmconfig</span> <span class="o">=</span> <span class="n">LinuxmusterConfig</span><span class="p">(</span><span class="s1">&#39;/etc/linuxmuster/webui/config.yml&#39;</span><span class="p">)</span>
-<span class="n">lmconfig</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
-
-<div class="viewcode-block" id="CSVSpaceStripper"><a class="viewcode-back" href="../../../../python/lmn_common.html#aj.plugins.lmn_common.api.CSVSpaceStripper">[docs]</a><span class="k">class</span> <span class="nc">CSVSpaceStripper</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    CSV parser for linuxmuster&#39;s config files.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">f</span> <span class="o">=</span> <span class="n">file</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">encoding</span> <span class="o">=</span> <span class="n">encoding</span>
-        <span class="c1"># TODO : use self.comments to write the comments again in the file after modification</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">comments</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-
-    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span>
-
-<div class="viewcode-block" id="CSVSpaceStripper.next"><a class="viewcode-back" href="../../../../python/lmn_common.html#aj.plugins.lmn_common.api.CSVSpaceStripper.next">[docs]</a>    <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;For compatibility with PY2&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__next__</span><span class="p">()</span></div>
-
-    <span class="k">def</span> <span class="fm">__next__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1">## Store comments in self.comments</span>
-        <span class="n">nextline</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">nextline</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">StopIteration</span><span class="p">()</span>
-        <span class="k">while</span> <span class="n">nextline</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">comments</span> <span class="o">+=</span> <span class="n">nextline</span>
-            <span class="n">nextline</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
-        <span class="c1"># Reader is unicodecsv, which needs bytes</span>
-        <span class="k">return</span> <span class="n">nextline</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span></div>
-        <span class="c1"># return self.f.next().decode(self.encoding, errors=&#39;ignore&#39;).strip()</span>
-
-
-<div class="viewcode-block" id="lmn_backup_file"><a class="viewcode-back" href="../../../../python/lmn_common.html#aj.plugins.lmn_common.api.lmn_backup_file">[docs]</a><span class="k">def</span> <span class="nf">lmn_backup_file</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Create a backup of a file if in allowed paths, but on ly keeps 10 backups.</span>
-<span class="sd">    Backup files names scheme is `.&lt;name&gt;.bak.&lt;timestamp&gt;`</span>
-
-<span class="sd">    :param path: Path of the file</span>
-<span class="sd">    :type path: string</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-        <span class="k">return</span>
-
-    <span class="k">if</span> <span class="n">check_allowed_path</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-        <span class="n">folder</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-        <span class="n">backups</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;.</span><span class="si">%s</span><span class="s1">.bak.&#39;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)])</span>
-        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">backups</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">backups</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-            <span class="n">backups</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">folder</span> <span class="o">+</span> <span class="s1">&#39;/.&#39;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;.bak.&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())),</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span></div>
-
-<div class="viewcode-block" id="lmn_write_csv"><a class="viewcode-back" href="../../../../python/lmn_common.html#aj.plugins.lmn_common.api.lmn_write_csv">[docs]</a><span class="k">def</span> <span class="nf">lmn_write_csv</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">fieldnames</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Write CSV and backup csv file only if there&#39;s no difference with the original.</span>
-<span class="sd">    Delimiter is always &#39;;&#39;</span>
-<span class="sd">    DEPRECATED</span>
-
-<span class="sd">    :param path: Path of the file</span>
-<span class="sd">    :type path: string</span>
-<span class="sd">    :param fieldnames: List of CSV fieldsnames</span>
-<span class="sd">    :type fieldnames: list</span>
-<span class="sd">    :param data: Data to write</span>
-<span class="sd">    :type data: list of string</span>
-<span class="sd">    :param encoding: Encoding, e.g. utf-8</span>
-<span class="sd">    :type encoding: string</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">if</span> <span class="n">check_allowed_path</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-        <span class="n">tmp</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s1">&#39;_tmp&#39;</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">tmp</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">csv</span><span class="o">.</span><span class="n">DictWriter</span><span class="p">(</span>
-                <span class="n">f</span><span class="p">,</span>
-                <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;;&#39;</span><span class="p">,</span>
-                <span class="n">fieldnames</span><span class="o">=</span><span class="n">fieldnames</span><span class="p">,</span>
-                <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span>
-            <span class="p">)</span><span class="o">.</span><span class="n">writerows</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">filecmp</span><span class="o">.</span><span class="n">cmp</span><span class="p">(</span><span class="n">tmp</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
-            <span class="n">lmn_backup_file</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">tmp</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="lmn_write_configfile"><a class="viewcode-back" href="../../../../python/lmn_common.html#aj.plugins.lmn_common.api.lmn_write_configfile">[docs]</a><span class="k">def</span> <span class="nf">lmn_write_configfile</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Write config file it only if there&#39;s no difference with the original.</span>
-
-<span class="sd">    :param path: Path of the file</span>
-<span class="sd">    :type path: string</span>
-<span class="sd">    :param data: New content</span>
-<span class="sd">    :type data: string</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">if</span> <span class="n">check_allowed_path</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-        <span class="n">tmp</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s1">&#39;_tmp&#39;</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">tmp</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-        <span class="c1"># check if file already exist before comparing</span>
-        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">filecmp</span><span class="o">.</span><span class="n">cmp</span><span class="p">(</span><span class="n">tmp</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
-                <span class="n">lmn_backup_file</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-                <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">tmp</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">tmp</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span></div>
+    <span class="k">if</span> <span class="n">school</span> <span class="o">==</span> <span class="s2">&quot;default-school&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;/etc/linuxmuster/sophomorix/default-school/&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;/etc/linuxmuster/sophomorix/</span><span class="si">{</span><span class="n">school</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">school</span><span class="si">}</span><span class="s1">.&#39;</span></div>
 
 <div class="viewcode-block" id="SophomorixProcess"><a class="viewcode-back" href="../../../../python/lmn_common.html#aj.plugins.lmn_common.api.SophomorixProcess">[docs]</a><span class="k">class</span> <span class="nc">SophomorixProcess</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -382,7 +270,7 @@
 <span class="sd">    :rtype: dict or value (list, dict, integer, string)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">debug</span> <span class="o">=</span> <span class="n">lmconfig</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;linuxmuster&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;sophomorix-debug&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="n">debug</span> <span class="o">=</span> <span class="n">lmconfig</span><span class="p">[</span><span class="s1">&#39;linuxmuster&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;sophomorix-debug&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
 
     <span class="n">uid</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getuid</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">uid</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
@@ -413,8 +301,10 @@
         <span class="n">jsonDict</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Sophomorix stdout :</span><span class="se">\n</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Sophomorix sdterr :</span><span class="se">\n</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">pformat</span><span class="p">(</span><span class="n">jsonDict</span><span class="p">))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Sophomorix stdout :</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">t</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Sophomorix sdterr :</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">pformat</span><span class="p">(</span><span class="n">jsonDict</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
 
     <span class="c1"># Without key, simply return the dict</span>
     <span class="k">if</span> <span class="n">jsonpath</span> <span class="ow">is</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
@@ -424,8 +314,13 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="n">resultString</span> <span class="o">=</span> <span class="n">dpath</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">jsonDict</span><span class="p">,</span> <span class="n">jsonpath</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;getSophomorix Value error. Either sophomorix field does not exist or ajenti binduser does not have sufficient permissions:</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span>
-                            <span class="s1">&#39;Error Message: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1"> Dictionary we looked for information:</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">jsonDict</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s1">&#39;Sophomorix Value error !</span><span class="se">\n\n</span><span class="s1">&#39;</span>
+                <span class="sa">f</span><span class="s1">&#39;Either sophomorix field does not exist or user does not have sufficient permissions:</span><span class="se">\n</span><span class="s1">&#39;</span>
+                <span class="sa">f</span><span class="s1">&#39;Error Message: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span>
+                <span class="sa">f</span><span class="s1">&#39;Dictionary we looked for information:</span><span class="se">\n</span><span class="s1">&#39;</span>
+                <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">jsonDict</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">resultString</span> <span class="o">=</span> <span class="n">dpath</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">jsonDict</span><span class="p">,</span> <span class="n">jsonpath</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">resultString</span></div>
@@ -436,25 +331,28 @@
            
           </div>
           <footer>
+  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &#169; Copyright 2020, Andreas Till &amp; Arnaud Kientz.
+        
+        &copy; Copyright Andreas Till &amp; Arnaud Kientz - 2021
 
     </p>
   </div>
     
     
     
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
+
         </div>
       </div>
 

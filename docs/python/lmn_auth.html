@@ -3,26 +3,21 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en-GB" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8">
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>API: aj.plugins.lmn_auth &mdash; linuxmuster-webui7 1.0.159-1 documentation</title>
+  <title>API: aj.plugins.lmn_auth &mdash; linuxmuster-webui7 7.1.0 documentation</title>
   
 
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
 
   
   
-
   
-  
-
   
 
   
@@ -32,7 +27,6 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
@@ -57,7 +51,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> linuxmuster-webui7
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> linuxmuster-webui7
           
 
           
@@ -70,7 +64,7 @@
             
             
               <div class="version">
-                1.0.159-1
+                7.1.0
               </div>
             
           
@@ -152,8 +146,6 @@
 
 
 
-
-
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -165,7 +157,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-          
+            
             <a href="../_sources/python/lmn_auth.rst.txt" rel="nofollow"> View page source</a>
           
         
@@ -185,12 +177,12 @@
 <span id="lmn-auth-api"></span><h2>LMN Auth API<a class="headerlink" href="#module-aj.plugins.lmn_auth.api" title="Permalink to this headline">¶</a></h2>
 <p>Authentication classes to communicate with LDAP tree and load user’s informations.</p>
 <dl class="py class">
-<dt class="sig sig-object py" id="aj.plugins.lmn_auth.api.LMAuthenticationProvider">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">aj.plugins.lmn_auth.api.</span></span><span class="sig-name descname"><span class="pre">LMAuthenticationProvider</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_auth/api.html#LMAuthenticationProvider"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_auth.api.LMAuthenticationProvider" title="Permalink to this definition">¶</a></dt>
+<dt id="aj.plugins.lmn_auth.api.LMAuthenticationProvider">
+<em class="property">class </em><code class="sig-prename descclassname">aj.plugins.lmn_auth.api.</code><code class="sig-name descname">LMAuthenticationProvider</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_auth/api.html#LMAuthenticationProvider"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_auth.api.LMAuthenticationProvider" title="Permalink to this definition">¶</a></dt>
 <dd><p>LDAP Authentication provider for linuxmuster.net</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="aj.plugins.lmn_auth.api.LMAuthenticationProvider.authenticate">
-<span class="sig-name descname"><span class="pre">authenticate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_auth/api.html#LMAuthenticationProvider.authenticate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_auth.api.LMAuthenticationProvider.authenticate" title="Permalink to this definition">¶</a></dt>
+<dt id="aj.plugins.lmn_auth.api.LMAuthenticationProvider.authenticate">
+<code class="sig-name descname">authenticate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">username</span></em>, <em class="sig-param"><span class="n">password</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_auth/api.html#LMAuthenticationProvider.authenticate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_auth.api.LMAuthenticationProvider.authenticate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Test credentials against LDAP and parse permissions for the session.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -203,34 +195,34 @@
 <dd class="field-even"><p>User’s permissions</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)">dict</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="aj.plugins.lmn_auth.api.LMAuthenticationProvider.authorize">
-<span class="sig-name descname"><span class="pre">authorize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permission</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_auth/api.html#LMAuthenticationProvider.authorize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_auth.api.LMAuthenticationProvider.authorize" title="Permalink to this definition">¶</a></dt>
+<dt id="aj.plugins.lmn_auth.api.LMAuthenticationProvider.authorize">
+<code class="sig-name descname">authorize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">username</span></em>, <em class="sig-param"><span class="n">permission</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_auth/api.html#LMAuthenticationProvider.authorize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_auth.api.LMAuthenticationProvider.authorize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get permissions from session, default false.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>username</strong> (<em>string</em>) – Username</p></li>
-<li><p><strong>permission</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><em>dict</em></a>) – Permission as dict</p></li>
+<li><p><strong>permission</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Permission as dict</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Bool</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)">bool</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="aj.plugins.lmn_auth.api.LMAuthenticationProvider.change_password">
-<span class="sig-name descname"><span class="pre">change_password</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_password</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_auth/api.html#LMAuthenticationProvider.change_password"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_auth.api.LMAuthenticationProvider.change_password" title="Permalink to this definition">¶</a></dt>
+<dt id="aj.plugins.lmn_auth.api.LMAuthenticationProvider.change_password">
+<code class="sig-name descname">change_password</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">username</span></em>, <em class="sig-param"><span class="n">password</span></em>, <em class="sig-param"><span class="n">new_password</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_auth/api.html#LMAuthenticationProvider.change_password"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_auth.api.LMAuthenticationProvider.change_password" title="Permalink to this definition">¶</a></dt>
 <dd><p>Change user password through sophomorix-passwd.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -244,8 +236,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="aj.plugins.lmn_auth.api.LMAuthenticationProvider.get_isolation_gid">
-<span class="sig-name descname"><span class="pre">get_isolation_gid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_auth/api.html#LMAuthenticationProvider.get_isolation_gid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_auth.api.LMAuthenticationProvider.get_isolation_gid" title="Permalink to this definition">¶</a></dt>
+<dt id="aj.plugins.lmn_auth.api.LMAuthenticationProvider.get_isolation_gid">
+<code class="sig-name descname">get_isolation_gid</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">username</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_auth/api.html#LMAuthenticationProvider.get_isolation_gid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_auth.api.LMAuthenticationProvider.get_isolation_gid" title="Permalink to this definition">¶</a></dt>
 <dd><p>For each session there will be an isolated worker. This function returns
 the right gid for the worker process.</p>
 <dl class="field-list simple">
@@ -262,8 +254,8 @@ the right gid for the worker process.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="aj.plugins.lmn_auth.api.LMAuthenticationProvider.get_isolation_uid">
-<span class="sig-name descname"><span class="pre">get_isolation_uid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_auth/api.html#LMAuthenticationProvider.get_isolation_uid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_auth.api.LMAuthenticationProvider.get_isolation_uid" title="Permalink to this definition">¶</a></dt>
+<dt id="aj.plugins.lmn_auth.api.LMAuthenticationProvider.get_isolation_uid">
+<code class="sig-name descname">get_isolation_uid</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">username</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_auth/api.html#LMAuthenticationProvider.get_isolation_uid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_auth.api.LMAuthenticationProvider.get_isolation_uid" title="Permalink to this definition">¶</a></dt>
 <dd><p>For each session there will be an isolated worker. This function returns
 the right uid for the worker process.</p>
 <dl class="field-list simple">
@@ -280,8 +272,8 @@ the right uid for the worker process.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="aj.plugins.lmn_auth.api.LMAuthenticationProvider.get_ldap_user">
-<span class="sig-name descname"><span class="pre">get_ldap_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_auth/api.html#LMAuthenticationProvider.get_ldap_user"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_auth.api.LMAuthenticationProvider.get_ldap_user" title="Permalink to this definition">¶</a></dt>
+<dt id="aj.plugins.lmn_auth.api.LMAuthenticationProvider.get_ldap_user">
+<code class="sig-name descname">get_ldap_user</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">username</span></em>, <em class="sig-param"><span class="n">context</span><span class="o">=</span><span class="default_value">''</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_auth/api.html#LMAuthenticationProvider.get_ldap_user"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_auth.api.LMAuthenticationProvider.get_ldap_user" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the user’s informations to initialize his session.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -298,8 +290,8 @@ the right uid for the worker process.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="aj.plugins.lmn_auth.api.LMAuthenticationProvider.get_profile">
-<span class="sig-name descname"><span class="pre">get_profile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_auth/api.html#LMAuthenticationProvider.get_profile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_auth.api.LMAuthenticationProvider.get_profile" title="Permalink to this definition">¶</a></dt>
+<dt id="aj.plugins.lmn_auth.api.LMAuthenticationProvider.get_profile">
+<code class="sig-name descname">get_profile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">username</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_auth/api.html#LMAuthenticationProvider.get_profile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_auth.api.LMAuthenticationProvider.get_profile" title="Permalink to this definition">¶</a></dt>
 <dd><p>Prepare identity profile for angular.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -309,7 +301,7 @@ the right uid for the worker process.</p>
 <dd class="field-even"><p>User’s informations from LDAP</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)">dict</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -317,33 +309,33 @@ the right uid for the worker process.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="aj.plugins.lmn_auth.api.UserLdapConfig">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">aj.plugins.lmn_auth.api.</span></span><span class="sig-name descname"><span class="pre">UserLdapConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_auth/api.html#UserLdapConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_auth.api.UserLdapConfig" title="Permalink to this definition">¶</a></dt>
+<dt id="aj.plugins.lmn_auth.api.UserLdapConfig">
+<em class="property">class </em><code class="sig-prename descclassname">aj.plugins.lmn_auth.api.</code><code class="sig-name descname">UserLdapConfig</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_auth/api.html#UserLdapConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_auth.api.UserLdapConfig" title="Permalink to this definition">¶</a></dt>
 <dd><p>User config class compliant with linuxmuster.net LDAP config’s scheme</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="aj.plugins.lmn_auth.api.UserLdapConfig.harden">
-<span class="sig-name descname"><span class="pre">harden</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_auth/api.html#UserLdapConfig.harden"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_auth.api.UserLdapConfig.harden" title="Permalink to this definition">¶</a></dt>
+<dt id="aj.plugins.lmn_auth.api.UserLdapConfig.harden">
+<code class="sig-name descname">harden</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_auth/api.html#UserLdapConfig.harden"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_auth.api.UserLdapConfig.harden" title="Permalink to this definition">¶</a></dt>
 <dd><p>Change mode to “read, write, and execute by owner”. Currently not used
 (self.path is not defined) but keeped in compatibility mode.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="aj.plugins.lmn_auth.api.UserLdapConfig.load">
-<span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_auth/api.html#UserLdapConfig.load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_auth.api.UserLdapConfig.load" title="Permalink to this definition">¶</a></dt>
+<dt id="aj.plugins.lmn_auth.api.UserLdapConfig.load">
+<code class="sig-name descname">load</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_auth/api.html#UserLdapConfig.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_auth.api.UserLdapConfig.load" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load attributes from LDAP.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>User’s attributes</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>yaml object if root or <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)">dict</a></p>
+<dd class="field-even"><p>yaml object if root or <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="aj.plugins.lmn_auth.api.UserLdapConfig.save">
-<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_auth/api.html#UserLdapConfig.save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_auth.api.UserLdapConfig.save" title="Permalink to this definition">¶</a></dt>
+<dt id="aj.plugins.lmn_auth.api.UserLdapConfig.save">
+<code class="sig-name descname">save</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_auth/api.html#UserLdapConfig.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_auth.api.UserLdapConfig.save" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save user’s config. If root, this goes in a file, otherwise in LDAP tree.</p>
 </dd></dl>
 
@@ -354,11 +346,11 @@ the right uid for the worker process.</p>
 <span id="lmn-auth-views"></span><h2>LMN Auth Views<a class="headerlink" href="#module-aj.plugins.lmn_auth.views" title="Permalink to this headline">¶</a></h2>
 <p>Authentication module for linuxmuster.net that enable and manage LDAP auth.</p>
 <dl class="py class">
-<dt class="sig sig-object py" id="aj.plugins.lmn_auth.views.Handler">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">aj.plugins.lmn_auth.views.</span></span><span class="sig-name descname"><span class="pre">Handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_auth/views.html#Handler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_auth.views.Handler" title="Permalink to this definition">¶</a></dt>
+<dt id="aj.plugins.lmn_auth.views.Handler">
+<em class="property">class </em><code class="sig-prename descclassname">aj.plugins.lmn_auth.views.</code><code class="sig-name descname">Handler</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_auth/views.html#Handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_auth.views.Handler" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="py method">
-<dt class="sig sig-object py" id="aj.plugins.lmn_auth.views.Handler.handle_api_change_password">
-<span class="sig-name descname"><span class="pre">handle_api_change_password</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">http_context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_auth/views.html#Handler.handle_api_change_password"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_auth.views.Handler.handle_api_change_password" title="Permalink to this definition">¶</a></dt>
+<dt id="aj.plugins.lmn_auth.views.Handler.handle_api_change_password">
+<code class="sig-name descname">handle_api_change_password</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">http_context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_auth/views.html#Handler.handle_api_change_password"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_auth.views.Handler.handle_api_change_password" title="Permalink to this definition">¶</a></dt>
 <dd><p>Change user password through authentication provider.
 Method POST.</p>
 <dl class="field-list simple">
@@ -378,29 +370,37 @@ Method POST.</p>
            
           </div>
           <footer>
+  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="lmn_common.html" class="btn btn-neutral float-right" title="API: aj.plugins.lmn_common" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="../index.html" class="btn btn-neutral float-left" title="Linuxmuster-webui7’s developer documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+      
+        <a href="lmn_common.html" class="btn btn-neutral float-right" title="API: aj.plugins.lmn_common" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../index.html" class="btn btn-neutral float-left" title="Linuxmuster-webui7’s developer documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
     </div>
+  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &#169; Copyright 2020, Andreas Till &amp; Arnaud Kientz.
+        
+        &copy; Copyright Andreas Till &amp; Arnaud Kientz - 2021
 
     </p>
   </div>
     
     
     
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
+
         </div>
       </div>
 

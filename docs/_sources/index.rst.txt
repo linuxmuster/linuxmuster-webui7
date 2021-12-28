@@ -11,7 +11,7 @@ Linuxmuster-webui7's developer documentation
 About
 -----
 
-Welcome in this API reference docmentation !
+Welcome in this API reference documentation !
 
 Linuxmuster-webui7 is a part of the `linuxmuster.net <https://www.linuxmuster.net/de/home/>`_'s project which provides a complete environment for school network management.
 

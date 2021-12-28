@@ -3,26 +3,21 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en-GB" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8">
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>aj.plugins.lmn_users.views &mdash; linuxmuster-webui7 1.0.159-1 documentation</title>
+  <title>aj.plugins.lmn_users.views &mdash; linuxmuster-webui7 7.1.0 documentation</title>
   
 
   
   <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/theme_overrides.css" type="text/css" />
 
   
   
-
   
-  
-
   
 
   
@@ -32,7 +27,6 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
-        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
         <script src="../../../../_static/doctools.js"></script>
@@ -55,7 +49,7 @@
           
 
           
-            <a href="../../../../index.html" class="icon icon-home"> linuxmuster-webui7
+            <a href="../../../../index.html" class="icon icon-home" alt="Documentation Home"> linuxmuster-webui7
           
 
           
@@ -68,7 +62,7 @@
             
             
               <div class="version">
-                1.0.159-1
+                7.1.0
               </div>
             
           
@@ -146,8 +140,6 @@
 
 
 
-
-
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -187,8 +179,11 @@
 <span class="kn">from</span> <span class="nn">aj.api.http</span> <span class="kn">import</span> <span class="n">url</span><span class="p">,</span> <span class="n">HttpPlugin</span>
 <span class="kn">from</span> <span class="nn">aj.api.endpoint</span> <span class="kn">import</span> <span class="n">endpoint</span><span class="p">,</span> <span class="n">EndpointError</span>
 <span class="kn">from</span> <span class="nn">aj.auth</span> <span class="kn">import</span> <span class="n">authorize</span>
-<span class="kn">from</span> <span class="nn">aj.plugins.lmn_common.api</span> <span class="kn">import</span> <span class="n">lmn_getSophomorixValue</span>
+<span class="kn">from</span> <span class="nn">aj.plugins.lmn_common.api</span> <span class="kn">import</span> <span class="n">lmn_getSophomorixValue</span><span class="p">,</span> <span class="n">lmn_get_school_configpath</span><span class="p">,</span> <span class="n">lmconfig</span>
 <span class="kn">from</span> <span class="nn">aj.plugins.lmn_common.lmnfile</span> <span class="kn">import</span> <span class="n">LMNFile</span>
+<span class="kn">from</span> <span class="nn">aj.plugins.lmn_common.multischool</span> <span class="kn">import</span> <span class="n">School</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
 
 
 <div class="viewcode-block" id="Handler"><a class="viewcode-back" href="../../../../python/lmn_users.html#aj.plugins.lmn_users.views.Handler">[docs]</a><span class="nd">@component</span><span class="p">(</span><span class="n">HttpPlugin</span><span class="p">)</span>
@@ -283,10 +278,13 @@
                             <span class="n">fileToWrite</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">csvDict</span><span class="p">[</span><span class="n">findIndex</span><span class="p">(</span><span class="n">csvDict</span><span class="p">,</span> <span class="s1">&#39;coloumn&#39;</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">)][</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;;&#39;</span><span class="p">)</span>
                         <span class="n">fileToWrite</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
                         <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
-
+            <span class="n">school</span> <span class="o">=</span> <span class="n">School</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span><span class="o">.</span><span class="n">school</span> 
             <span class="k">if</span> <span class="n">userlist</span> <span class="o">==</span> <span class="s1">&#39;teachers.csv&#39;</span><span class="p">:</span>
                 <span class="k">with</span> <span class="n">authorize</span><span class="p">(</span><span class="s1">&#39;lm:users:teachers:write&#39;</span><span class="p">):</span>
-                    <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-newfile&#39;</span><span class="p">,</span> <span class="n">sortedCSV</span><span class="p">,</span> <span class="s1">&#39;--name&#39;</span><span class="p">,</span> <span class="n">userlist</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">school</span> <span class="o">==</span> <span class="s1">&#39;default-school&#39;</span><span class="p">:</span>
+                        <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-newfile&#39;</span><span class="p">,</span> <span class="n">sortedCSV</span><span class="p">,</span> <span class="s1">&#39;--name&#39;</span><span class="p">,</span> <span class="n">userlist</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-newfile&#39;</span><span class="p">,</span> <span class="n">sortedCSV</span><span class="p">,</span> <span class="s1">&#39;--name&#39;</span><span class="p">,</span> <span class="n">school</span><span class="o">+</span><span class="s1">&#39;.&#39;</span><span class="o">+</span><span class="n">userlist</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
                     <span class="n">result</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;OUTPUT/0&#39;</span><span class="p">)</span>
                     <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;TYPE&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;ERROR&quot;</span><span class="p">:</span>
                         <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;ERROR&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;MESSAGE_EN&#39;</span><span class="p">]]</span>
@@ -295,7 +293,10 @@
 
             <span class="k">if</span> <span class="n">userlist</span> <span class="o">==</span> <span class="s1">&#39;students.csv&#39;</span><span class="p">:</span>
                 <span class="k">with</span> <span class="n">authorize</span><span class="p">(</span><span class="s1">&#39;lm:users:students:write&#39;</span><span class="p">):</span>
-                    <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-newfile&#39;</span><span class="p">,</span> <span class="n">sortedCSV</span><span class="p">,</span> <span class="s1">&#39;--name&#39;</span><span class="p">,</span> <span class="n">userlist</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">school</span> <span class="o">==</span> <span class="s1">&#39;default-school&#39;</span><span class="p">:</span>
+                        <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-newfile&#39;</span><span class="p">,</span> <span class="n">sortedCSV</span><span class="p">,</span> <span class="s1">&#39;--name&#39;</span><span class="p">,</span> <span class="n">userlist</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-newfile&#39;</span><span class="p">,</span> <span class="n">sortedCSV</span><span class="p">,</span> <span class="s1">&#39;--name&#39;</span><span class="p">,</span> <span class="n">school</span><span class="o">+</span><span class="s1">&#39;.&#39;</span><span class="o">+</span><span class="n">userlist</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
                     <span class="n">result</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;OUTPUT/0&#39;</span><span class="p">)</span>
                     <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;TYPE&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;ERROR&quot;</span><span class="p">:</span>
                         <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;ERROR&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;MESSAGE_EN&#39;</span><span class="p">]]</span>
@@ -315,13 +316,16 @@
             <span class="n">m</span> <span class="o">=</span> <span class="n">magic</span><span class="o">.</span><span class="n">Magic</span><span class="p">(</span><span class="n">mime_encoding</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">importList</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
             <span class="n">encoding</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">importList</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">encoding</span> <span class="o">==</span> <span class="s2">&quot;binary&quot;</span><span class="p">:</span>
+                <span class="c1"># Probably empty file, does it have sense to continue ?</span>
+                <span class="n">encoding</span> <span class="o">=</span> <span class="s1">&#39;utf-8&#39;</span>
 
             <span class="c1"># Convert this encoding to utf-8</span>
             <span class="k">with</span> <span class="n">io</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">importList</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
                 <span class="n">text</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
             <span class="k">with</span> <span class="n">io</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">importList</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
                 <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
-            <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">close</span>
             <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">importList</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span>
             <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;;&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">http_context</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;encoding&#39;</span><span class="p">,</span> <span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
             <span class="c1"># determine number of coloumns in csv</span>
@@ -361,8 +365,10 @@
 <span class="sd">        :rtype: list of dict</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">school</span> <span class="o">=</span> <span class="s1">&#39;default-school&#39;</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;/etc/linuxmuster/sophomorix/&#39;</span><span class="o">+</span><span class="n">school</span><span class="o">+</span><span class="s1">&#39;/students.csv&#39;</span>
+        <span class="n">school</span> <span class="o">=</span> <span class="n">School</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span><span class="o">.</span><span class="n">school</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">lmn_get_school_configpath</span><span class="p">(</span><span class="n">school</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;students.csv&#39;</span>
+
+
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="n">os</span><span class="o">.</span><span class="n">mknod</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
         <span class="n">fieldnames</span> <span class="o">=</span> <span class="p">[</span>
@@ -400,8 +406,10 @@
 <span class="sd">        :rtype: list of dict</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">school</span> <span class="o">=</span> <span class="s1">&#39;default-school&#39;</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;/etc/linuxmuster/sophomorix/&#39;</span><span class="o">+</span><span class="n">school</span><span class="o">+</span><span class="s1">&#39;/teachers.csv&#39;</span>
+        <span class="n">school</span> <span class="o">=</span> <span class="n">School</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span><span class="o">.</span><span class="n">school</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">lmn_get_school_configpath</span><span class="p">(</span><span class="n">school</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;teachers.csv&#39;</span>
+
+            
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="n">os</span><span class="o">.</span><span class="n">mknod</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
         <span class="n">fieldnames</span> <span class="o">=</span> <span class="p">[</span>
@@ -444,7 +452,7 @@
 
         <span class="n">action</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;action&#39;</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">http_context</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
-            <span class="n">schoolname</span> <span class="o">=</span> <span class="s1">&#39;default-school&#39;</span>
+            <span class="n">schoolname</span> <span class="o">=</span> <span class="n">School</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span><span class="o">.</span><span class="n">school</span>
             <span class="n">teachersList</span> <span class="o">=</span> <span class="p">[]</span>
 
             <span class="k">if</span> <span class="n">action</span> <span class="o">==</span> <span class="s1">&#39;get-all&#39;</span><span class="p">:</span>
@@ -483,7 +491,8 @@
 
         <span class="n">action</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;action&#39;</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">http_context</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
-            <span class="n">schoolname</span> <span class="o">=</span> <span class="s1">&#39;default-school&#39;</span>
+            <span class="n">schoolname</span> <span class="o">=</span> <span class="n">School</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span><span class="o">.</span><span class="n">school</span>
+
             <span class="n">studentsList</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="k">with</span> <span class="n">authorize</span><span class="p">(</span><span class="s1">&#39;lm:users:students:read&#39;</span><span class="p">):</span>
                 <span class="k">if</span> <span class="n">action</span> <span class="o">==</span> <span class="s1">&#39;get-all&#39;</span><span class="p">:</span>
@@ -589,8 +598,9 @@
 <span class="sd">        :rtype: list of dict</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">school</span> <span class="o">=</span> <span class="s1">&#39;default-school&#39;</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;/etc/linuxmuster/sophomorix/&#39;</span><span class="o">+</span><span class="n">school</span><span class="o">+</span><span class="s1">&#39;/extrastudents.csv&#39;</span>
+        <span class="n">school</span> <span class="o">=</span> <span class="n">School</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span><span class="o">.</span><span class="n">school</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">lmn_get_school_configpath</span><span class="p">(</span><span class="n">school</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;extrastudents.csv&#39;</span>
+
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="n">os</span><span class="o">.</span><span class="n">mknod</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
         <span class="n">fieldnames</span> <span class="o">=</span> <span class="p">[</span>
@@ -628,8 +638,9 @@
 <span class="sd">        :rtype: list of dict</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">school</span> <span class="o">=</span> <span class="s1">&#39;default-school&#39;</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;/etc/linuxmuster/sophomorix/&#39;</span><span class="o">+</span><span class="n">school</span><span class="o">+</span><span class="s1">&#39;/extraclasses.csv&#39;</span>
+        <span class="n">school</span> <span class="o">=</span> <span class="n">School</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span><span class="o">.</span><span class="n">school</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">lmn_get_school_configpath</span><span class="p">(</span><span class="n">school</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;extraclasses.csv&#39;</span>
+
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="n">os</span><span class="o">.</span><span class="n">mknod</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
         <span class="n">fieldnames</span> <span class="o">=</span> <span class="p">[</span>
@@ -654,7 +665,7 @@
                 <span class="k">with</span> <span class="n">LMNFile</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">fieldnames</span><span class="o">=</span><span class="n">fieldnames</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
                     <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
 
-    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lm/users/check&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_users_check"><a class="viewcode-back" href="../../../../python/lmn_users.html#aj.plugins.lmn_users.views.Handler.handle_api_users_check">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lm/users/check&#39;</span><span class="p">)</span>
     <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:users:check&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_users_check</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
@@ -680,9 +691,9 @@
             <span class="k">for</span> <span class="n">user_update</span> <span class="ow">in</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s2">&quot;CHECK_RESULT&quot;</span><span class="p">][</span><span class="s2">&quot;UPDATE&quot;</span><span class="p">]):</span>
                 <span class="k">if</span> <span class="n">user_update</span> <span class="ow">in</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;CHECK_RESULT&quot;</span><span class="p">][</span><span class="s2">&quot;KILL&quot;</span><span class="p">]:</span>
                     <span class="k">del</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;CHECK_RESULT&quot;</span><span class="p">][</span><span class="s2">&quot;UPDATE&quot;</span><span class="p">][</span><span class="n">user_update</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">results</span>
+        <span class="k">return</span> <span class="n">results</span></div>
 
-    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lm/users/apply&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_users_apply"><a class="viewcode-back" href="../../../../python/lmn_users.html#aj.plugins.lmn_users.views.Handler.handle_api_users_apply">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lm/users/apply&#39;</span><span class="p">)</span>
     <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:users:apply&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_users_apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
@@ -702,18 +713,18 @@
 
         <span class="n">script</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
         <span class="k">if</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;doAdd&#39;</span><span class="p">]:</span>
-            <span class="n">script</span> <span class="o">+=</span> <span class="s1">&#39;sophomorix-add &gt;&gt; </span><span class="si">%s</span><span class="s1">;&#39;</span> <span class="o">%</span> <span class="n">path</span>
+            <span class="n">script</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;sophomorix-add &gt;&gt; </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s1">;&#39;</span>
         <span class="k">if</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;doMove&#39;</span><span class="p">]:</span>
-            <span class="n">script</span> <span class="o">+=</span> <span class="s1">&#39;sophomorix-update &gt;&gt; </span><span class="si">%s</span><span class="s1">;&#39;</span> <span class="o">%</span> <span class="n">path</span>
+            <span class="n">script</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;sophomorix-update &gt;&gt; </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s1">;&#39;</span>
         <span class="k">if</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;doKill&#39;</span><span class="p">]:</span>
-            <span class="n">script</span> <span class="o">+=</span> <span class="s1">&#39;sophomorix-kill &gt;&gt; </span><span class="si">%s</span><span class="s1">;&#39;</span> <span class="o">%</span> <span class="n">path</span>
+            <span class="n">script</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;sophomorix-kill &gt;&gt; </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s1">;&#39;</span>
 
         <span class="k">try</span><span class="p">:</span>
             <span class="n">subprocess</span><span class="o">.</span><span class="n">check_call</span><span class="p">(</span><span class="n">script</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;LC_ALL&#39;</span><span class="p">:</span> <span class="s1">&#39;C&#39;</span><span class="p">})</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">EndpointError</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="n">EndpointError</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span></div>
 
-    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lm/users/password&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_users_password"><a class="viewcode-back" href="../../../../python/lmn_users.html#aj.plugins.lmn_users.views.Handler.handle_api_users_password">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lm/users/password&#39;</span><span class="p">)</span>
     <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:users:passwords&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_users_password</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
@@ -748,9 +759,9 @@
         <span class="k">if</span> <span class="n">action</span> <span class="o">==</span> <span class="s1">&#39;set-actual&#39;</span><span class="p">:</span>
             <span class="n">password</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;password&#39;</span><span class="p">]</span>
             <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sudo&#39;</span><span class="p">,</span> <span class="s1">&#39;sophomorix-passwd&#39;</span><span class="p">,</span> <span class="s1">&#39;-u&#39;</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="s1">&#39;--pass&#39;</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="s1">&#39;--nofirstpassupdate&#39;</span><span class="p">,</span> <span class="s1">&#39;--hide&#39;</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">,</span> <span class="s1">&#39;--use-smbpasswd&#39;</span><span class="p">]</span>
-            <span class="k">return</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;COMMENT_EN&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;COMMENT_EN&#39;</span><span class="p">)</span></div>
 
-    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lm/users/change-school-admin&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_users_schooladmins_create"><a class="viewcode-back" href="../../../../python/lmn_users.html#aj.plugins.lmn_users.views.Handler.handle_api_users_schooladmins_create">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lm/users/change-school-admin&#39;</span><span class="p">)</span>
     <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:users:schooladmins:create&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_users_schooladmins_create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
@@ -763,8 +774,7 @@
 <span class="sd">        :return: State of the command</span>
 <span class="sd">        :rtype: string</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="n">school</span> <span class="o">=</span> <span class="s1">&#39;default-school&#39;</span>
+        <span class="n">school</span> <span class="o">=</span> <span class="n">School</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span><span class="o">.</span><span class="n">school</span>
         <span class="n">action</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;action&#39;</span><span class="p">]</span>
         <span class="n">users</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;users&#39;</span><span class="p">]</span>
         <span class="n">user</span> <span class="o">=</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">x</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">users</span><span class="p">])</span>
@@ -786,9 +796,9 @@
                 <span class="c1">#    return [&quot;ERROR&quot;, result[&#39;MESSAGE_EN&#39;]]</span>
                 <span class="c1">#if result[&#39;TYPE&#39;] == &quot;LOG&quot;:</span>
                 <span class="c1">#    return [&quot;LOG&quot;, result[&#39;LOG&#39;]]</span>
-                <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;COMMENT_EN&#39;</span><span class="p">]</span>
+                <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;COMMENT_EN&#39;</span><span class="p">]</span></div>
 
-    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lm/users/change-global-admin&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_users_globaladmins_create"><a class="viewcode-back" href="../../../../python/lmn_users.html#aj.plugins.lmn_users.views.Handler.handle_api_users_globaladmins_create">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lm/users/change-global-admin&#39;</span><span class="p">)</span>
     <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:users:globaladmins:create&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_users_globaladmins_create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
@@ -823,7 +833,7 @@
                 <span class="c1">#    return result[&#39;MESSAGE_EN&#39;]</span>
                 <span class="c1">#if result[&#39;TYPE&#39;] == &quot;LOG&quot;:</span>
                 <span class="c1">#    return result[&#39;LOG&#39;]</span>
-                <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;COMMENT_EN&#39;</span><span class="p">]</span>
+                <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;COMMENT_EN&#39;</span><span class="p">]</span></div>
                 <span class="c1"># return lmn_getSophomorixValue(sophomorixCommand, &#39;COMMENT_EN&#39;)</span>
 
     <span class="c1">#@url(r&#39;/api/lmn/sophomorixUsers/new-file&#39;)</span>
@@ -853,14 +863,13 @@
     <span class="c1">#                if result[&#39;TYPE&#39;] == &quot;LOG&quot;:</span>
     <span class="c1">#                    return [&quot;LOG&quot;, result[&#39;LOG&#39;]]</span>
 
-    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lm/users/print&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_users_get_classes"><a class="viewcode-back" href="../../../../python/lmn_users.html#aj.plugins.lmn_users.views.Handler.handle_api_users_get_classes">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lm/users/get-classes&#39;</span><span class="p">)</span>
     <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:users:passwords&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">handle_api_users_print</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">handle_api_users_get_classes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Print passwords as PDF.</span>
+<span class="sd">        Get list of all classes.</span>
 <span class="sd">        Method GET: get all classes lists for teachers.</span>
-<span class="sd">        Method POST: all passwords.</span>
 
 <span class="sd">        :param http_context: HttpContext</span>
 <span class="sd">        :type http_context: HttpContext</span>
@@ -868,10 +877,10 @@
 <span class="sd">        :rtype: With GET, list of dict</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">school</span> <span class="o">=</span> <span class="s1">&#39;default-school&#39;</span>
+        <span class="n">school</span> <span class="o">=</span> <span class="n">School</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span><span class="o">.</span><span class="n">school</span>
         <span class="k">if</span> <span class="n">http_context</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;GET&#39;</span><span class="p">:</span>
 
-            <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-query&#39;</span><span class="p">,</span> <span class="s1">&#39;--class&#39;</span><span class="p">,</span> <span class="s1">&#39;--group-full&#39;</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
+            <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-query&#39;</span><span class="p">,</span> <span class="s1">&#39;--class&#39;</span><span class="p">,</span> <span class="s1">&#39;--schoolbase&#39;</span><span class="p">,</span> <span class="n">school</span><span class="p">,</span> <span class="s1">&#39;--group-full&#39;</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
 
             <span class="k">with</span> <span class="n">authorize</span><span class="p">(</span><span class="s1">&#39;lm:users:students:read&#39;</span><span class="p">):</span>
                 <span class="c1"># Check if there are any classes if not return empty list</span>
@@ -884,22 +893,92 @@
                     <span class="c1"># append empty element. This references to all users</span>
                     <span class="n">classes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
                     <span class="c1"># add also teachers passwords</span>
-                    <span class="n">classes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;teachers&#39;</span><span class="p">)</span>
-                <span class="k">return</span> <span class="n">classes</span>
+                    <span class="k">if</span> <span class="n">school</span> <span class="o">==</span> <span class="s1">&#39;default-school&#39;</span><span class="p">:</span>
+                        <span class="n">classes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;teachers&#39;</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">classes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">school</span><span class="o">+</span><span class="s1">&#39;-teachers&#39;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">classes</span></div>
+
+<div class="viewcode-block" id="Handler.handle_api_users_print_individual"><a class="viewcode-back" href="../../../../python/lmn_users.html#aj.plugins.lmn_users.views.Handler.handle_api_users_print_individual">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lm/users/print-individual&#39;</span><span class="p">)</span>
+    <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:users:teachers:read&#39;</span><span class="p">)</span> <span class="c1">#TODO</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">handle_api_users_print_individual</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Print individual passwords for selected users as PDF, one per page.</span>
+<span class="sd">        Method POST.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">school</span> <span class="o">=</span> <span class="n">School</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span><span class="o">.</span><span class="n">school</span>
+
+        <span class="k">if</span> <span class="n">http_context</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
+            <span class="n">user</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;user&#39;</span><span class="p">]</span>
+            <span class="n">user_list</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;user_list&#39;</span><span class="p">]</span>
+
+            <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="s1">&#39;sudo&#39;</span><span class="p">,</span> <span class="s1">&#39;sophomorix-print&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;--school&#39;</span><span class="p">,</span> <span class="n">school</span><span class="p">,</span>
+                <span class="s1">&#39;--caller&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">user</span><span class="p">),</span>
+                <span class="s1">&#39;--user&#39;</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">user_list</span><span class="p">),</span>
+                <span class="s1">&#39;--one-per-page&#39;</span><span class="p">,</span>
+            <span class="p">]</span>
+
+            <span class="c1"># sophomorix-print needs the json parameter at the very end</span>
+            <span class="n">sophomorixCommand</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s1">&#39;-jj&#39;</span><span class="p">])</span>
+
+            <span class="c1"># generate real shell environment for sophomorix print</span>
+            <span class="n">shell_env</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;TERM&#39;</span><span class="p">:</span> <span class="s1">&#39;xterm&#39;</span><span class="p">,</span> <span class="s1">&#39;SHELL&#39;</span><span class="p">:</span> <span class="s1">&#39;/bin/bash&#39;</span><span class="p">,</span>  <span class="s1">&#39;PATH&#39;</span><span class="p">:</span> <span class="s1">&#39;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&#39;</span><span class="p">,</span>  <span class="s1">&#39;HOME&#39;</span><span class="p">:</span> <span class="s1">&#39;/root&#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">:</span> <span class="s1">&#39;/usr/bin/python3&#39;</span><span class="p">}</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">subprocess</span><span class="o">.</span><span class="n">check_call</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="n">shell_env</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">CalledProcessError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s1">&#39;Error &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="k">return</span> <span class="s1">&#39;success&#39;</span></div>
+
+<div class="viewcode-block" id="Handler.handle_api_users_print"><a class="viewcode-back" href="../../../../python/lmn_users.html#aj.plugins.lmn_users.views.Handler.handle_api_users_print">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lm/users/print&#39;</span><span class="p">)</span>
+    <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:users:passwords&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">handle_api_users_print</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Print passwords as PDF</span>
+<span class="sd">        Method POST: all passwords.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">school</span> <span class="o">=</span> <span class="n">School</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span><span class="o">.</span><span class="n">school</span>
+        <span class="n">config_template</span> <span class="o">=</span> <span class="n">lmconfig</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;passwordTemplates&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;multiple&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;individual&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">})</span>
+        <span class="n">config_template_individual</span> <span class="o">=</span> <span class="n">config_template</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;individual&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">config_template_multiple</span> <span class="o">=</span> <span class="n">config_template</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;multiple&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">http_context</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
             <span class="n">user</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;user&#39;</span><span class="p">]</span>
             <span class="n">one_per_page</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;one_per_page&#39;</span><span class="p">]</span>
             <span class="n">pdflatex</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;pdflatex&#39;</span><span class="p">]</span>
             <span class="n">schoolclass</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;schoolclass&#39;</span><span class="p">]</span>
+            <span class="n">template</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
             <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sudo&#39;</span><span class="p">,</span> <span class="s1">&#39;sophomorix-print&#39;</span><span class="p">,</span> <span class="s1">&#39;--school&#39;</span><span class="p">,</span> <span class="n">school</span><span class="p">,</span> <span class="s1">&#39;--caller&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">user</span><span class="p">)]</span>
             <span class="k">if</span> <span class="n">one_per_page</span><span class="p">:</span>
-                <span class="n">sophomorixCommand</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s1">&#39;--one-per-page&#39;</span><span class="p">])</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">template</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;template_one_per_page&#39;</span><span class="p">][</span><span class="s1">&#39;path&#39;</span><span class="p">]</span>
+                <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+                    <span class="n">template</span> <span class="o">=</span> <span class="n">config_template_individual</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">template</span><span class="p">:</span>
+                        <span class="n">sophomorixCommand</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s1">&#39;--one-per-page&#39;</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">template</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;template_multiple&#39;</span><span class="p">][</span><span class="s1">&#39;path&#39;</span><span class="p">]</span>
+                <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+                    <span class="n">template</span> <span class="o">=</span> <span class="n">config_template_multiple</span>
+            <span class="k">if</span> <span class="n">template</span><span class="p">:</span>
+                <span class="n">sophomorixCommand</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s1">&#39;--template&#39;</span><span class="p">,</span> <span class="n">template</span><span class="p">])</span>
             <span class="k">if</span> <span class="n">pdflatex</span><span class="p">:</span>
                 <span class="n">sophomorixCommand</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s1">&#39;--command&#39;</span><span class="p">])</span>
                 <span class="n">sophomorixCommand</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s1">&#39;pdflatex&#39;</span><span class="p">])</span>
             <span class="k">if</span> <span class="n">schoolclass</span><span class="p">:</span>
-                <span class="n">sophomorixCommand</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s1">&#39;--class&#39;</span><span class="p">,</span> <span class="n">schoolclass</span><span class="p">])</span>
+                <span class="n">sophomorixCommand</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s1">&#39;--class&#39;</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">schoolclass</span><span class="p">)])</span>
             <span class="c1"># sophomorix-print needs the json parameter at the very end</span>
             <span class="n">sophomorixCommand</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s1">&#39;-jj&#39;</span><span class="p">])</span>
             <span class="c1"># check permissions</span>
@@ -919,10 +998,10 @@
 
             <span class="k">except</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">CalledProcessError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="k">return</span> <span class="s1">&#39;Error &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-            <span class="k">return</span> <span class="s1">&#39;success&#39;</span>
+            <span class="k">return</span> <span class="s1">&#39;success&#39;</span></div>
             <span class="c1"># return lmn_getSophomorixValue(sophomorixCommand, &#39;JSONINFO&#39;)</span>
 
-    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lm/users/print-download/(?P&lt;name&gt;.+)&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_users_print_download"><a class="viewcode-back" href="../../../../python/lmn_users.html#aj.plugins.lmn_users.views.Handler.handle_api_users_print_download">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lm/users/print-download/(?P&lt;name&gt;.+)&#39;</span><span class="p">)</span>
     <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:users:passwords&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_users_print_download</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
@@ -940,9 +1019,9 @@
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">root</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">http_context</span><span class="o">.</span><span class="n">respond_forbidden</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">http_context</span><span class="o">.</span><span class="n">file</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">inline</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">http_context</span><span class="o">.</span><span class="n">file</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">inline</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span></div>
 
-    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lm/users/test-first-password/(?P&lt;name&gt;.+)&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_users_test_password"><a class="viewcode-back" href="../../../../python/lmn_users.html#aj.plugins.lmn_users.views.Handler.handle_api_users_test_password">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lm/users/test-first-password/(?P&lt;name&gt;.+)&#39;</span><span class="p">)</span>
     <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:users:passwords&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_users_test_password</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
@@ -958,9 +1037,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">line</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">([</span><span class="s1">&#39;sudo&#39;</span><span class="p">,</span> <span class="s1">&#39;sophomorix-passwd&#39;</span><span class="p">,</span> <span class="s1">&#39;--test-firstpassword&#39;</span><span class="p">,</span> <span class="s1">&#39;-u&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">])</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()[</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span>
-        <span class="k">return</span> <span class="sa">b</span><span class="s1">&#39;1 OK&#39;</span> <span class="ow">in</span> <span class="n">line</span>
+        <span class="k">return</span> <span class="sa">b</span><span class="s1">&#39;1 OK&#39;</span> <span class="ow">in</span> <span class="n">line</span></div>
 
-    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lm/users/get-group-quota&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_group_quota"><a class="viewcode-back" href="../../../../python/lmn_users.html#aj.plugins.lmn_users.views.Handler.handle_group_quota">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lm/users/get-group-quota&#39;</span><span class="p">)</span>
     <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:users:passwords&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_group_quota</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
@@ -981,16 +1060,17 @@
             <span class="n">result</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;QUOTA/USERS&#39;</span><span class="p">)</span>
 
             <span class="n">quotaMap</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">school</span> <span class="o">=</span> <span class="n">School</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span><span class="o">.</span><span class="n">school</span>
             <span class="c1"># Only read default-school for the moment, must be maybe adapted later</span>
             <span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">groupList</span><span class="p">:</span>
-                <span class="n">share</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="n">user</span><span class="p">][</span><span class="s2">&quot;SHARES&quot;</span><span class="p">][</span><span class="s1">&#39;default-school&#39;</span><span class="p">][</span><span class="s1">&#39;smbcquotas&#39;</span><span class="p">]</span>
+                <span class="n">share</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="n">user</span><span class="p">][</span><span class="s2">&quot;SHARES&quot;</span><span class="p">][</span><span class="n">school</span><span class="p">][</span><span class="s1">&#39;smbcquotas&#39;</span><span class="p">]</span>
                 <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">share</span><span class="p">[</span><span class="s1">&#39;HARDLIMIT_MiB&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="n">share</span><span class="p">[</span><span class="s1">&#39;HARDLIMIT_MiB&#39;</span><span class="p">]:</span>
                     <span class="c1"># Avoid strings for non set quotas</span>
                     <span class="n">used</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">share</span><span class="p">[</span><span class="s1">&#39;USED_MiB&#39;</span><span class="p">])</span> <span class="o">/</span> <span class="n">share</span><span class="p">[</span><span class="s1">&#39;HARDLIMIT_MiB&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
                     <span class="n">soft</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">share</span><span class="p">[</span><span class="s1">&#39;SOFTLIMIT_MiB&#39;</span><span class="p">])</span> <span class="o">/</span> <span class="n">share</span><span class="p">[</span><span class="s1">&#39;HARDLIMIT_MiB&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
-                    <span class="k">if</span> <span class="n">used</span> <span class="o">&gt;=</span> <span class="mi">90</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">used</span> <span class="o">&gt;=</span> <span class="mi">80</span><span class="p">:</span>
                         <span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;danger&quot;</span>
-                    <span class="k">elif</span> <span class="n">used</span> <span class="o">&gt;</span> <span class="n">soft</span><span class="p">:</span>
+                    <span class="k">elif</span> <span class="n">used</span> <span class="o">&gt;=</span> <span class="mi">60</span><span class="p">:</span>
                         <span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;warning&quot;</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;success&quot;</span>
@@ -1007,31 +1087,194 @@
                         <span class="s2">&quot;TYPE&quot;</span><span class="p">:</span> <span class="s2">&quot;success&quot;</span><span class="p">,</span>
                     <span class="p">}</span>
             <span class="k">return</span> <span class="n">quotaMap</span></div>
+
+<div class="viewcode-block" id="Handler.handle_custom"><a class="viewcode-back" href="../../../../python/lmn_users.html#aj.plugins.lmn_users.views.Handler.handle_custom">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lm/custom&#39;</span><span class="p">)</span>
+    <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:users:passwords&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">handle_custom</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update a custom sophomorix field.</span>
+<span class="sd">        Method POST.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :return: All quotas for specified users</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">http_context</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;index&#39;</span><span class="p">]</span>
+            <span class="n">user</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;user&#39;</span><span class="p">]</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">command</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-user&#39;</span><span class="p">,</span> <span class="s1">&#39;-u&#39;</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;--custom</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                <span class="c1"># No error output from sophomorix yet</span>
+                <span class="k">raise</span> <span class="n">EndpointError</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Handler.handle_custom_mutli_add"><a class="viewcode-back" href="../../../../python/lmn_users.html#aj.plugins.lmn_users.views.Handler.handle_custom_mutli_add">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lm/custommulti/add&#39;</span><span class="p">)</span>
+    <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:users:passwords&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">handle_custom_mutli_add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a sophomorix field in custom multi.</span>
+<span class="sd">        Method POST.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :return: All quotas for specified users</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">http_context</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;index&#39;</span><span class="p">]</span>
+            <span class="n">user</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;user&#39;</span><span class="p">]</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">command</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-user&#39;</span><span class="p">,</span> <span class="s1">&#39;-u&#39;</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;--add-custom-multi</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                <span class="c1"># No error output from sophomorix yet</span>
+                <span class="k">raise</span> <span class="n">EndpointError</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Handler.handle_custom_multi_remove"><a class="viewcode-back" href="../../../../python/lmn_users.html#aj.plugins.lmn_users.views.Handler.handle_custom_multi_remove">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lm/custommulti/remove&#39;</span><span class="p">)</span>
+    <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:users:passwords&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">handle_custom_multi_remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Remove a sophomorix field in custom multi.</span>
+<span class="sd">        Method POST.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :return: All quotas for specified users</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">http_context</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;index&#39;</span><span class="p">]</span>
+            <span class="n">user</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;user&#39;</span><span class="p">]</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">command</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-user&#39;</span><span class="p">,</span> <span class="s1">&#39;-u&#39;</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;--remove-custom-multi</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                <span class="c1"># No error output from sophomorix yet</span>
+                <span class="k">raise</span> <span class="n">EndpointError</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span></div>
+
+    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lm/setProxyAddresses&#39;</span><span class="p">)</span>
+    <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:users:passwords&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">handle_set_proxy_addresses</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set proxyAddresses, e.g. emails, for an user.</span>
+<span class="sd">        Method POST.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :return: All quotas for specified users</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">http_context</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
+            <span class="n">user</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;user&#39;</span><span class="p">]</span>
+            <span class="n">addresses</span> <span class="o">=</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;addresses&#39;</span><span class="p">])</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">command</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-user&#39;</span><span class="p">,</span> <span class="s1">&#39;-u&#39;</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="s1">&#39;--set-proxy-addresses&#39;</span><span class="p">,</span> <span class="n">addresses</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                <span class="c1"># No error output from sophomorix yet</span>
+                <span class="k">raise</span> <span class="n">EndpointError</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Handler.handle_set_proxy_addresses"><a class="viewcode-back" href="../../../../python/lmn_users.html#aj.plugins.lmn_users.views.Handler.handle_set_proxy_addresses">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lm/changeProxyAddresses&#39;</span><span class="p">)</span>
+    <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:users:passwords&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">handle_set_proxy_addresses</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add or remove an email in proxyAddresses, e.g. emails, for an user.</span>
+<span class="sd">        Method POST.</span>
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :return: All quotas for specified users</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">http_context</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
+            <span class="n">action</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;action&#39;</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">action</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;add&#39;</span><span class="p">,</span> <span class="s1">&#39;remove&#39;</span><span class="p">]:</span>
+                <span class="k">raise</span> <span class="n">EndpointError</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+
+            <span class="n">user</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;user&#39;</span><span class="p">]</span>
+            <span class="n">address</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;address&#39;</span><span class="p">]</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">command</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-user&#39;</span><span class="p">,</span> <span class="s1">&#39;-u&#39;</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;--</span><span class="si">{</span><span class="n">action</span><span class="si">}</span><span class="s1">-proxy-addresses&#39;</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                <span class="c1"># No error output from sophomorix yet</span>
+                <span class="k">raise</span> <span class="n">EndpointError</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Handler.handle_custom_csv"><a class="viewcode-back" href="../../../../python/lmn_users.html#aj.plugins.lmn_users.views.Handler.handle_custom_csv">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lm/filterCustomCSV&#39;</span><span class="p">)</span>
+    <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:users:passwords&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">handle_custom_csv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run sophomorix-newfile in order to apply a custom script for a newly custom csv file.</span>
+<span class="sd">        Method POST.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :return: All quotas for specified users</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">http_context</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
+            <span class="c1"># E.g. /tmp/students.csv</span>
+            <span class="n">tmp_path</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;tmp_path&#39;</span><span class="p">]</span>
+            <span class="c1"># E.g. students.csv</span>
+            <span class="n">target</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;userlist&#39;</span><span class="p">]</span>
+
+            <span class="n">command</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-newfile&#39;</span><span class="p">,</span> <span class="n">tmp_path</span><span class="p">,</span> <span class="s1">&#39;--name&#39;</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="s1">&#39;OUTPUT/0&#39;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;TYPE&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;ERROR&quot;</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;ERROR&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;MESSAGE_EN&#39;</span><span class="p">]]</span>
+            <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;TYPE&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;LOG&quot;</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;LOG&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;LOG&#39;</span><span class="p">]]</span></div></div>
 </pre></div>
 
            </div>
            
           </div>
           <footer>
+  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &#169; Copyright 2020, Andreas Till &amp; Arnaud Kientz.
+        
+        &copy; Copyright Andreas Till &amp; Arnaud Kientz - 2021
 
     </p>
   </div>
     
     
     
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
+
         </div>
       </div>
 

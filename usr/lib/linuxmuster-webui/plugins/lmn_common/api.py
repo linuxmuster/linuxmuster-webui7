@@ -135,8 +135,10 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
         jsonDict = ast.literal_eval(output)
 
     if debug:
-        logging.debug("Sophomorix stdout :\n %s", t.stdout.decode('utf-8'))
-        logging.debug("Sophomorix sdterr :\n %s", pformat(jsonDict))
+        logging.debug(
+            f"Sophomorix stdout :\n {t.stdout.decode('utf-8')}"
+            f"Sophomorix sdterr :\n {pformat(jsonDict)}"
+        )
 
     # Without key, simply return the dict
     if jsonpath is '':

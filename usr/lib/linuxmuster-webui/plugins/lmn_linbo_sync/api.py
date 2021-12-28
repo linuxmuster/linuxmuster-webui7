@@ -40,24 +40,24 @@ def read_config(group):
         return osConfig
     return None
 
-def last_sync(w, cloop):
+def last_sync(workstation, image):
     """
     Get the date of the last sync date for a workstation w.
 
     :param w: Workstation
     :type w: string
-    :param cloop: Name of the cloop file
-    :type cloop: string
+    :param image: Name of the image file
+    :type image: string
     :return: Last synchronisation time
     :rtype: datetime
     """
 
-    statusfile = '/var/log/linuxmuster/linbo/%s_image.status' % w
+    statusfile = f'/var/log/linuxmuster/linbo/{workstation}_image.status'
     last = False
 
     if os.path.isfile(statusfile) and os.stat(statusfile).st_size != 0:
         for line in open(statusfile, 'r').readlines():
-            if cloop in line:
+            if image in line:
                 last = line.rstrip()
                 break
 
@@ -160,13 +160,13 @@ def last_sync_all(workstations):
 
     for group, grpDict in sorted(workstations.items()):
             for host in grpDict['hosts']:
-                host['cloop'] = []
-                for cloop in workstations[group]['os']:
-                    last = last_sync(host['host'], cloop['baseimage'])
+                host['image'] = []
+                for image in workstations[group]['os']:
+                    last = last_sync(host['host'], image['baseimage'])
                     date = last if last else "Never"
                     tmpDict = {
                             'date': date,
-                            'cloop': cloop['baseimage']
+                            'image': image['baseimage']
                     }
                     if date == "Never" or (today - date > 30*24*3600):
                         tmpDict['status'] = "danger"
@@ -174,7 +174,7 @@ def last_sync_all(workstations):
                         tmpDict['status'] = "warning"
                     else:
                         tmpDict['status'] = "success"
-                    host['cloop'].append(tmpDict)
+                    host['image'].append(tmpDict)
 
 
 def test_online(host):

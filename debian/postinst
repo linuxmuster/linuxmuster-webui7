@@ -6,7 +6,6 @@ case "$1" in
         ajcfg="/etc/ajenti/config.yml"
         wucfg="/etc/linuxmuster/webui/config.yml"
         webuietc="/usr/lib/linuxmuster-webui/etc"
-        python_version=$(basename $(readlink -f /usr/bin/python3))
 
         # circumvent missing .installed files in package. Can be removed later
         if [ -f /etc/linuxmuster/.secret/administrator ]; then
@@ -30,20 +29,24 @@ case "$1" in
                 cp -a $ajcfg $ajcfg.bak
             fi
             echo "Writing linuxmuster default ajenti config $ajcfg"
-            cp -rf /usr/lib/linuxmuster-webui/etc/ajenti_default.yml $ajcfg
+            cp -rf $webuietc/ajenti_default.yml $ajcfg
             if [ ! -f $wucfg ]; then
                 # cp -n would be silent, but it's important to inform the user
-                cp /usr/lib/linuxmuster-webui/etc/webui_default.yml  $wucfg
+                cp $webuietc/webui_default.yml  $wucfg
             else
                 echo "$wucfg already exists ... not overwriting with the default config file."
             fi
-            # systemctl einrichten und starten
+
+            # enable systemctl service
             echo "Configure systemctl.."
             systemctl daemon-reload
             systemctl enable linuxmuster-webui
             systemctl restart linuxmuster-webui
+
+            # generate permissions file
+            /usr/bin/python3 $webuietc/merge-permissions.py
+
             touch $webuietc/.installed
-            hostname=$(hostname --fqdn)
             ipaddress=$(hostname --ip-address)
             echo "---------------------------------------------------------------"
             echo "linuxmuster-webui is now installed but not initialised!  http://$ipaddress"
@@ -75,6 +78,7 @@ case "$1" in
             fi
             
             echo "Set default sophomorix webui rights"
+            /usr/bin/python3 $webuietc/merge-permissions.py
             /usr/sbin/sophomorix-ui
             
             # start webui

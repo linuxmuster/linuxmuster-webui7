@@ -7,7 +7,7 @@ angular.module('lmn.samba_dns', ['core']);
 'use strict';
 
 angular.module('lmn.samba_dns').config(function ($routeProvider) {
-    $routeProvider.when('/view/samba_dns', {
+    $routeProvider.when('/view/lm/samba_dns', {
         templateUrl: '/lmn_samba_dns:resources/partial/index.html',
         controller: 'SambaDnsIndexController'
     });
@@ -39,7 +39,8 @@ angular.module('lmn.samba_dns').controller('SambaDnsIndexController', function (
             positive: 'Delete',
             negative: 'Cancel'
         }).then(function () {
-            $http.post('/api/dns/delete', { sub: sub.host, type: sub.type, value: sub.value }).then(function (resp) {
+            if (sub.type == 'MX') value = sub.value + '\\ ' + sub.priority;else value = sub.value;
+            $http.post('/api/dns/delete', { sub: sub.host, type: sub.type, value: value }).then(function (resp) {
                 notify.success(gettext('Entry deleted !'));
                 position = $scope.entries.sub.indexOf(sub);
                 $scope.entries.sub.splice(position, 1);

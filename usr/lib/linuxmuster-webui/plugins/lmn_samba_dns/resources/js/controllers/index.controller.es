@@ -21,7 +21,11 @@ angular.module('lmn.samba_dns').controller('SambaDnsIndexController', function($
             positive: 'Delete',
             negative: 'Cancel'
         }).then( () => {
-            $http.post('/api/dns/delete', {sub: sub.host, type: sub.type, value: sub.value}).then((resp) => {
+            if (sub.type == 'MX')
+                value = `${sub.value}\\ ${sub.priority}`;
+            else
+                value = sub.value;
+            $http.post('/api/dns/delete', {sub: sub.host, type: sub.type, value: value}).then((resp) => {
                 notify.success(gettext('Entry deleted !'));
                 position = $scope.entries.sub.indexOf(sub);
                 $scope.entries.sub.splice(position, 1);

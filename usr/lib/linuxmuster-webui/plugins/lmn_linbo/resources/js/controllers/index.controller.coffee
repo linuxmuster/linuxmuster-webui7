@@ -3,6 +3,24 @@ angular.module('lmn.linbo').config ($routeProvider) ->
         controller: 'LMLINBOController'
         templateUrl: '/lmn_linbo:resources/partial/index.html'
 
+angular.module('lmn.linbo').controller 'LMImportDevicesApplyModalController', ($scope, $http, $uibModalInstance, $route, gettext, notify) ->
+    $scope.logVisible = true
+    $scope.isWorking = true
+    $scope.showLog = () ->
+        $scope.logVisible = !$scope.logVisible
+
+    $http.get('/api/lm/devices/import').then (resp) ->
+        $scope.isWorking = false
+        notify.success gettext('Import complete')
+    .catch (resp) ->
+        notify.error gettext('Import failed'), resp.data.message
+        $scope.isWorking = false
+        $scope.showLog()
+
+    $scope.close = () ->
+        $uibModalInstance.close()
+        $route.reload()
+
 angular.module('lmn.linbo').controller 'LMLINBOAcceptModalController', ($scope, $uibModalInstance, $http, partition, disk) ->
     $scope.partition = partition
     $scope.disk = disk
@@ -24,8 +42,9 @@ angular.module('lmn.linbo').controller 'LMLINBOPartitionModalController', ($scop
         if resp.data.indexOf('ubuntu.svg') < 0
             $scope.image_extension = 'png'
         $scope.show_png_warning = false
-        if $scope.image_extension == 'svg' && os.IconName.endsWith('png')
-            $scope.show_png_warning = true
+        if $scope.os != null
+            if $scope.image_extension == 'svg' && $scope.os.IconName.endsWith('png')
+                $scope.show_png_warning = true
 
     $http.get('/api/lm/linbo/images').then (resp) ->
         $scope.images = []
@@ -490,6 +509,7 @@ angular.module('lmn.linbo').controller 'LMLINBOController', ($q, $scope, $http, 
     pageTitle.set(gettext('LINBO'))
 
     $scope.tabs = ['groups', 'images']
+    $scope.showConvertDialog = false
 
     tag = $location.$$url.split("#")[1]
     if tag and tag in $scope.tabs
@@ -499,14 +519,33 @@ angular.module('lmn.linbo').controller 'LMLINBOController', ($q, $scope, $http, 
 
     $scope.images_selected = []
 
+    $scope.$on('push:lmn_linbo', ($event, msg) ->
+        if msg == 'refresh'
+            $location.hash("images")
+            $route.reload()
+    )
+
     $http.get('/api/lm/linbo/configs').then (resp) ->
         $scope.configs = resp.data
+        $http.get('/api/lm/linbo/images').then (resp) ->
+            $scope.images = resp.data
+            for image in $scope.images
+                image.used_in = []
+                for config in $scope.configs
+                    if config.images.indexOf(image.name) > -1
+                        image.used_in.push(config.file.split('.').slice(-1)[0])
 
     $http.get('/api/lm/linbo/examples').then (resp) ->
         $scope.examples = resp.data
 
-    $http.get('/api/lm/linbo/images').then (resp) ->
-        $scope.images = resp.data
+    $scope.importDevices = () ->
+        $uibModal.open(
+            templateUrl: '/lmn_linbo:resources/partial/apply.modal.html'
+            controller: 'LMImportDevicesApplyModalController'
+            size: 'lg'
+
+            backdrop: 'static'
+        )
 
     $scope.createConfig = (example) ->
         messagebox.prompt('New name', '').then (msg) ->
@@ -525,7 +564,7 @@ angular.module('lmn.linbo').controller 'LMLINBOController', ($q, $scope, $http, 
                         $http.get("/api/lm/read-config-setup").then (setup) ->
                             resp.data['config']['LINBO']['Server'] = setup.data['setup']['serverip']
                             $http.post("/api/lm/linbo/config/start.conf.#{newName}", resp.data).then () ->
-                                $route.reload()
+                                $scope.importDevices()
                 else
                     $http.post("/api/lm/linbo/config/start.conf.#{newName}", {
                         config:
@@ -534,14 +573,14 @@ angular.module('lmn.linbo').controller 'LMLINBOController', ($q, $scope, $http, 
                         os: []
                         partitions: []
                     }).then () ->
-                        $route.reload()
+                        $scope.importDevices()
 
     $scope.deleteConfig = (configName) ->
         messagebox.show(text: "Delete '#{configName}'?", positive: 'Delete', negative: 'Cancel').then () ->
             $http.delete("/api/lm/linbo/config/#{configName}").then () ->
-                $route.reload()
+                $scope.importDevices()
 
-    $scope.duplicateConfig = (configName) ->
+    $scope.duplicateConfig = (configName, deleteOriginal=false) ->
         newName = configName.substring('start.conf.'.length)
         messagebox.prompt('New name', newName).then (msg) ->
             newName = msg.value
@@ -549,7 +588,11 @@ angular.module('lmn.linbo').controller 'LMLINBOController', ($q, $scope, $http, 
                 $http.get("/api/lm/linbo/config/#{configName}").then (resp) ->
                     resp.data.config.LINBO.Group = newName
                     $http.post("/api/lm/linbo/config/start.conf.#{newName}", resp.data).then () ->
-                        $route.reload()
+                        if deleteOriginal
+                            $http.delete("/api/lm/linbo/config/#{configName}").then () ->
+                                $scope.importDevices()
+                        else
+                            $scope.importDevices()
 
     $scope.editConfig = (configName) ->
         $http.get("/api/lm/linbo/config/#{configName}").then (resp) ->
@@ -569,6 +612,7 @@ angular.module('lmn.linbo').controller 'LMLINBOController', ($q, $scope, $http, 
                         notify.success gettext('Saved')
                     $http.post("/api/lm/linbo/vdi/#{configName}.vdi", result[1]).then (resp) ->
                         notify.success gettext('Saved')
+                        $scope.importDevices()
 
     $scope.deleteImage = (image) ->
         messagebox.show(text: "Delete '#{image.name}'?", positive: 'Delete', negative: 'Cancel').then () ->
@@ -585,6 +629,21 @@ angular.module('lmn.linbo').controller 'LMLINBOController', ($q, $scope, $http, 
             $q.all(promises).then () ->
                 $location.hash("images")
                 $route.reload()
+
+    $scope.openConvertDialog = () ->
+        $scope.toConvert_list = (image.name for image in $scope.images_selected).toString()
+        $scope.showConvertDialog = true
+
+    $scope.closeConvertDialog = () ->
+        $scope.showConvertDialog = false
+
+    $scope.convertImages = () ->
+        $scope.showConvertDialog = false
+        items = []
+        for image in $scope.images_selected
+            items.push(image.name);
+        tasks.start('aj.plugins.lmn_linbo.tasks.Cloop2Qcow2', [items])
+        $scope.images_selected = []
 
     $scope.toggleSelected = (image) ->
         position = $scope.images_selected.indexOf(image)

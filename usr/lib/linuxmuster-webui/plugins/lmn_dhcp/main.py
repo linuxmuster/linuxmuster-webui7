@@ -14,7 +14,7 @@ class ItemProvider(SidebarItemProvider):
                 'attach': 'category:software',
                 'name': 'DHCP',
                 'icon': 'ethernet',
-                'url': '/view/dhcp',
+                'url': '/view/lm/dhcp',
                 'children': []
             }
         ]

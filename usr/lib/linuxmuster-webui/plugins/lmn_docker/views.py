@@ -17,7 +17,8 @@ class Handler(HttpPlugin):
         # TODO : read config /var/lib/linuxmuster/setup.ini to get docker host ip
         self.docker = ['ssh', '10.0.0.3', 'docker']
 
-    @url(r'/api/docker/which')
+    @url(r'/api/lm/docker/which')
+    @authorize('lm:docker:list')
     @endpoint(api=True)
     def handle_api_which_docker(self, http_context):
         """
@@ -34,7 +35,8 @@ class Handler(HttpPlugin):
         except subprocess.CalledProcessError as e:
             raise EndpointError(_('Docker is not installed on this host'))
 
-    @url(r'/api/docker/get_resources')
+    @url(r'/api/lm/docker/get_resources')
+    @authorize('lm:docker:list')
     @endpoint(api=True)
     def handle_api_resources_docker(self, http_context):
         """
@@ -49,7 +51,8 @@ class Handler(HttpPlugin):
         command = self.docker + ['stats', '--format', '\'{{json .}}\'', '--no-stream', '-a']
         return [json.loads(line) for line in subprocess.check_output(command).decode().splitlines()]
 
-    @url(r'/api/docker/get_details')
+    @url(r'/api/lm/docker/get_details')
+    @authorize('lm:docker:list')
     @endpoint(api=True)
     def handle_api_details_container(self, http_context):
         """
@@ -67,7 +70,8 @@ class Handler(HttpPlugin):
             command = self.docker + ['inspect', container, '--format', '\'{{json .}}\'']
             return json.loads(subprocess.check_output(command).decode())
 
-    @url(r'/api/docker/container_command')
+    @url(r'/api/lm/docker/container_command')
+    @authorize('lm:docker:change')
     @endpoint(api=True)
     def handle_api_container_stop(self, http_context):
         """
@@ -87,7 +91,8 @@ class Handler(HttpPlugin):
             except subprocess.CalledProcessError as e:
                 raise EndpointError(e.output.decode().strip())
 
-    @url(r'/api/docker/list_images')
+    @url(r'/api/lm/docker/list_images')
+    @authorize('lm:docker:list')
     @endpoint(api=True)
     def handle_api_list_images(self, http_context):
         """
@@ -107,7 +112,8 @@ class Handler(HttpPlugin):
             images.append(image)
         return images
 
-    @url(r'/api/docker/remove_image')
+    @url(r'/api/lm/docker/remove_image')
+    @authorize('lm:docker:change')
     @endpoint(api=True)
     def handle_api_remove_image(self, http_context):
         """

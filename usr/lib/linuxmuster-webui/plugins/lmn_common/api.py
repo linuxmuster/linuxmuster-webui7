@@ -3,57 +3,63 @@ Common tools to communicate with sophomorix and handle config files.
 """
 
 import os
-import time
 import subprocess
 import dpath.util
 import re
-import yaml
 import threading
 import ast
-import unicodecsv as csv
-import filecmp
-import configparser
 import logging
 from pprint import pformat
 from .lmnfile import LMNFile
 
 
-ALLOWED_PATHS = [
-                '/etc/linuxmuster/sophomorix/',     # used for school.conf or *.csv in lmn_settings, lmn_devices and lmn_users
-                '/srv/linbo',                       # used in lmn_linbo for start.conf
-                '/etc/linuxmuster/subnets-dev.csv'  # used in lmn_settings for subnets configuration
-                ]
-
-def check_allowed_path(path):
-    """
-    Check path before modifying files for security reasons.
-
-    :param path: File to modify
-    :type path: string
-    :return: File path in allowed paths.
-    :rtype: bool
-    """
-
-    allowed_path = False
-    for rootpath in ALLOWED_PATHS:
-        if rootpath in path:
-            allowed_path = True
-            break
-
-    if allowed_path and '..' not in path:
-        return True
-    raise IOError(_("Access refused."))  # skipcq: PYL-E0602
-
 # Load Webui settings
-with LMNFile('/etc/linuxmuster/webui/config.yml', 'r') as webui:
-    lmconfig = webui.read()
+config_path = '/etc/linuxmuster/webui/config.yml'
+if os.path.isfile(config_path):
+    with LMNFile(config_path, 'r') as webui:
+        lmconfig = webui.read()
+        ldap_config = lmconfig['linuxmuster']['ldap']
+else:
+    lmconfig = {}
+    ldap_config = {}
+    logging.error("Without config.yml the users will not be able to login.")
+
+# Fix missing entries in the lmconfig. Should be later refactored
+# and the config file should be splitted
+# Main linuxmuster config entry
+lmconfig.setdefault('linuxmuster', {})
+lmconfig['linuxmuster'].setdefault('initialized', False)
+lmconfig['linuxmuster'].setdefault('is-configured', False)
+lmconfig['linuxmuster'].setdefault('provision', False)
+lmconfig['linuxmuster'].setdefault('ldap', {})
+# Proxyaddresses, e.g. multivalue emails
+lmconfig.setdefault('proxyAddresses', {})
+lmconfig['proxyAddresses'].setdefault('students', {})
+lmconfig['proxyAddresses'].setdefault('teachers', {})
+# Custom fields with individual values
+lmconfig.setdefault('custom', {})
+lmconfig['custom'].setdefault('students', {})
+lmconfig['custom'].setdefault('teachers', {})
+# Custom fields with multi values
+lmconfig.setdefault('customMulti', {})
+lmconfig['customMulti'].setdefault('students', {})
+lmconfig['customMulti'].setdefault('teachers', {})
+# Choice of custom fields to display on user page
+lmconfig.setdefault('customDisplay', {})
+lmconfig['customDisplay'].setdefault('students', {})
+lmconfig['customDisplay'].setdefault('teachers', {})
+# Templates for password printing
+lmconfig.setdefault('passwordTemplates', {})
 
 # Used for pageTitle, see lmn_auth.api
-with LMNFile('/var/lib/linuxmuster/setup.ini', 'r') as s:
-    try:
-        lmsetup_schoolname = s.data['setup']['schoolname']
-    except KeyError:
-        lmsetup_schoolname = None
+try:
+    with LMNFile('/var/lib/linuxmuster/setup.ini', 'r') as s:
+        try:
+            lmsetup_schoolname = s.data['setup']['schoolname']
+        except KeyError:
+            lmsetup_schoolname = None
+except FileNotFoundError:
+    lmsetup_schoolname = None
 
 def lmn_get_school_configpath(school):
     """
@@ -65,7 +71,7 @@ def lmn_get_school_configpath(school):
     if school == "default-school":
         return '/etc/linuxmuster/sophomorix/default-school/'
     else:
-        return '/etc/linuxmuster/sophomorix/'+school+'/'+school+'.'
+        return f'/etc/linuxmuster/sophomorix/{school}/{school}.'
 
 class SophomorixProcess(threading.Thread):
     """
@@ -129,8 +135,10 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
         jsonDict = ast.literal_eval(output)
 
     if debug:
-        logging.debug("Sophomorix stdout :\n %s", t.stdout.decode('utf-8'))
-        logging.debug("Sophomorix sdterr :\n %s", pformat(jsonDict))
+        logging.debug(
+            f"Sophomorix stdout :\n {t.stdout.decode('utf-8')}"
+            f"Sophomorix sdterr :\n {pformat(jsonDict)}"
+        )
 
     # Without key, simply return the dict
     if jsonpath is '':
@@ -140,8 +148,13 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
         try:
             resultString = dpath.util.get(jsonDict, jsonpath)
         except Exception as e:
-            raise Exception('getSophomorix Value error. Either sophomorix field does not exist or ajenti binduser does not have sufficient permissions:\n' +
-                            'Error Message: ' + str(e) + '\n Dictionary we looked for information:\n' + str(jsonDict))
+            raise Exception(
+                'Sophomorix Value error !\n\n'
+                f'Either sophomorix field does not exist or user does not have sufficient permissions:\n'
+                f'Error Message: {e}\n'
+                f'Dictionary we looked for information:\n'
+                f'{jsonDict}'
+            )
     else:
         resultString = dpath.util.get(jsonDict, jsonpath)
     return resultString

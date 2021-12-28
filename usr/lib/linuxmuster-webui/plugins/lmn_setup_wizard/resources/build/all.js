@@ -214,25 +214,10 @@ angular.module('lmn.setup_wizard').controller('InitSummaryController', function 
 
     pageTitle.set(gettext('Setup Wizard'));
     this.ini = {};
-    this.checks = {};
-    this.checked = false;
-    this.ok = false;
     $http.get('/api/lm/setup-wizard/read-ini').then(function (response) {
         return _this5.ini = response.data;
     });
 
-    this.check = function () {
-        notify.info(gettext("Checks launched, this may take some time"));
-        $http.post('/api/lm/setup-wizard/check-data', { setup: _this5.ini }).then(function (response) {
-            _this5.checks = response.data;
-            console.log(_this5.checks);
-            _this5.checked = true;
-            _this5.ok = _this5.checks.bool;
-            if (!_this5.ok) {
-                notify.error(gettext("Please verify the data again"));
-            }
-        });
-    };
     this.finish = function () {
         $http.post('/api/lm/setup-wizard/update-ini', _this5.ini).then(function () {
             return $location.path('/view/lm/init/setup');

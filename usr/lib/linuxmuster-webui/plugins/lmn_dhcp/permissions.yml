@@ -1,0 +1,5 @@
+globaladministrator:
+    - 'sidebar:view:/view/lm/dhcp: true'
+
+schooladministrator:
+    - 'sidebar:view:/view/lm/dhcp: true'

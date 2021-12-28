@@ -144,25 +144,26 @@ angular.module('lmn.linbo_sync').config(function ($routeProvider) {
       return $scope.refresh_cmd(group);
     };
     $scope.refresh_cmd = function(group) {
-      var autostart, cmd, format, i, ip, j, len, len1, os, ref, ref1, start, sync, timeout;
+      var autostart, cmd, format, i, index, ip, j, len, len1, os, ref, ref1, start, sync, timeout;
       cmd = ' -c ';
       format = [];
       sync = [];
       start = [];
       ref = $scope.groups[group]['os'];
-      for (i = 0, len = ref.length; i < len; i++) {
-        os = ref[i];
+      for (index = i = 0, len = ref.length; i < len; index = ++i) {
+        os = ref[index];
+        os.position = index + 1;
         // First format
         if (os.run_format) {
           format.push('format:' + os.partition);
         }
         // Then sync or new ( not both )
         if (os.run_sync) {
-          sync.push('sync:' + os.partition);
+          sync.push('sync:' + os.position);
         }
         // A little start, but only one
         if (os.run_start) {
-          start.push('start:' + os.partition);
+          start.push('start:' + os.position);
         }
       }
       cmd += format.join();

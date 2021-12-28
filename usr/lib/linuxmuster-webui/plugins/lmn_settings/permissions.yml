@@ -1,0 +1,11 @@
+globaladministrator:
+    - 'lm:schoolsettings: true'
+    - 'sidebar:view:/view/lm/schoolsettings: true'
+    - 'sidebar:view:/view/lm/globalsettings: true'
+
+schooladministrator:
+    - 'lm:schoolsettings: true'
+    - 'sidebar:view:/view/lm/schoolsettings: true'
+
+teacher:
+    - 'lm:schoolsettings: false'

@@ -98,18 +98,19 @@ angular.module('lmn.linbo_sync').controller 'SyncIndexController', ($scope, $htt
         format = []
         sync = []
         start = []
-        for os in $scope.groups[group]['os']
+        for os, index in $scope.groups[group]['os']
+            os.position = index + 1
             # First format
             if os.run_format
                 format.push('format:'+os.partition)
 
             # Then sync or new ( not both )
             if os.run_sync
-                sync.push('sync:' + os.partition)
+                sync.push('sync:' + os.position)
 
             # A little start, but only one
             if os.run_start
-                start.push('start:'+os.partition)
+                start.push('start:' + os.position)
 
         cmd += format.join()
         if sync.length > 0

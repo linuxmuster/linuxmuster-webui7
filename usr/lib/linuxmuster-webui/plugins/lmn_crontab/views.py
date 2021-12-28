@@ -16,7 +16,7 @@ class Handler(HttpPlugin):
         self.context = context
 
     @url(r'/api/get_crontab')
-    # @authorize('crontab:show')
+    @authorize('lm:crontab:read')
     @endpoint(api=True)
     def handle_api_get_crontab(self, http_context):
         """
@@ -48,7 +48,7 @@ class Handler(HttpPlugin):
             return crontab_dict
 
     @url(r'/api/save_crontab')
-    # @authorize('crontab:show')
+    @authorize('lm:crontab:write')
     @endpoint(api=True)
     def handle_api_save_crontab(self, http_context):
         """

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ajenti\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-26 21:40+0200\n"
+"POT-Creation-Date: 2021-11-14 15:53+0100\n"
 "PO-Revision-Date: 2016-05-21 17:18-0400\n"
 "Last-Translator: eugenepankov <john.pankov@gmail.com>\n"
 "Language-Team: Belarusian\n"
@@ -17,8 +17,8 @@ msgstr ""
 "X-Crowdin-Language: be\n"
 "X-Crowdin-File: /2.0/lmn_users.po\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:25
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:42
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:26
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:45
 msgid ""
 "<i class=\"fa fa-asterisk\"></i> All users {{identity.profile.activeSchool}}"
 msgstr ""
@@ -46,11 +46,11 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-students.html:61
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:100
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:314
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:346
 msgid "Add a student"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:204
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:220
 msgid "Add a teacher"
 msgstr ""
 
@@ -97,6 +97,13 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:24
 msgid "Birthday:"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:114
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:235
+msgid ""
+"CSV\n"
+"                    <span class=\"caret\"></span>"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/sortList.modal.html:32
@@ -150,6 +157,7 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/check.modal.html:14
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/showPassword.modal.html:34
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/upload.modal.html:14
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/uploadcustom.modal.html:14
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:138
 msgid "Close"
 msgstr ""
@@ -194,9 +202,9 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-courses.html:80
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-students.html:73
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:113
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:218
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:327
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:120
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:241
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:359
 msgid "Edit CSV"
 msgstr ""
 
@@ -216,16 +224,16 @@ msgstr ""
 msgid "Errors found"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:332
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:364
 msgid "Extra-Courses"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:225
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:257
 msgid "Extra-Students"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:147
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:247
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:163
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:279
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:37
 msgid "Fields"
 msgstr ""
@@ -240,7 +248,7 @@ msgstr ""
 msgid "First name"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:163
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:169
 msgid ""
 "For selected\n"
 "                    <span class=\"caret\"></span>"
@@ -372,12 +380,12 @@ msgstr ""
 msgid "Passwords per page:"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:53
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:57
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.options.modal.html:80
 msgid "Print"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:178
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:184
 msgid "Print passwords"
 msgstr ""
 
@@ -385,7 +393,7 @@ msgstr ""
 msgid "Properties"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:56
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:63
 msgid "Quota"
 msgstr ""
 
@@ -399,8 +407,8 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-courses.html:59
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-students.html:51
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:304
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:394
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:336
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:426
 msgid "Remove"
 msgstr ""
 
@@ -410,8 +418,8 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/globaladmins.html:78
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/schooladmins.html:77
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students.html:76
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:123
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students.html:115
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:129
 msgid "Restore initial password"
 msgstr ""
 
@@ -420,8 +428,8 @@ msgid "Role:"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/globaladmins.html:31
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:157
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:258
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:173
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:290
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:48
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/schooladmins.html:30
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students.html:31
@@ -432,16 +440,16 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-courses.html:78
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-students.html:71
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:111
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:216
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:325
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:232
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:357
 msgid "Save"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-courses.html:79
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-students.html:72
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:112
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:217
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:326
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:233
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:358
 msgid "Save &amp; check"
 msgstr ""
 
@@ -451,63 +459,63 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/globaladmins.html:93
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/schooladmins.html:92
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students.html:91
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:138
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students.html:130
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:144
 msgid "Set actual user password"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/globaladmins.html:88
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/schooladmins.html:87
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students.html:86
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:133
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students.html:125
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:139
 msgid "Set custom initial password"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:175
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:181
 msgid "Set custom password"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/globaladmins.html:126
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/schooladmins.html:123
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students.html:116
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students.html:155
 msgid "Set custom password for selected"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:169
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:175
 msgid "Set initial password"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/globaladmins.html:124
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/schooladmins.html:121
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students.html:114
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students.html:153
 msgid "Set initial password for selected"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/globaladmins.html:83
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/schooladmins.html:82
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students.html:81
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:128
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students.html:120
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:134
 msgid "Set random initial password"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:172
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:178
 msgid "Set random password"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/globaladmins.html:125
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/schooladmins.html:122
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students.html:115
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students.html:154
 msgid "Set random password for selected"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/globaladmins.html:73
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/schooladmins.html:72
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students.html:71
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:118
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students.html:110
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:124
 msgid "Show initial password"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:161
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:167
 msgid "Show quota"
 msgstr ""
 
@@ -517,6 +525,13 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/sortList.modal.html:17
 msgid "Sort List"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students.html:60
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:67
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students.controller.coffee:27
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers.controller.coffee:27
+msgid "Status"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:12
@@ -529,7 +544,7 @@ msgstr ""
 msgid "Summary"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:121
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:137
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:15
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers.controller.coffee:7
 msgid "Teachers"
@@ -562,10 +577,16 @@ msgstr ""
 msgid "TolerationDate:"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:114
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:219
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:123
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:244
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/upload.modal.html:3
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/uploadcustom.modal.html:3
 msgid "Upload CSV"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:126
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:247
+msgid "Upload custom CSV"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.options.modal.html:26
@@ -594,6 +615,15 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/result.modal.html:27
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/result.modal.html:94
 msgid "Users to be updated"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/uploadcustom.modal.html:7
+msgid ""
+"Would you like to upload a custom csv file? This will replace your current "
+"CSV! After the the upload, sophomorix will try to execute the filter script "
+"configured in your school.conf. Please read the full documentation in <a "
+"href=\"https://github.com/linuxmuster/sophomorix4/wiki/Export-and-"
+"Filters#filters\">sophomorix's wiki</a> about it.<br> Use it with caution !"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/upload.modal.html:7
@@ -758,7 +788,7 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:301
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:313
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:325
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:438
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:432
 msgid "Please check the errors."
 msgstr ""
 
@@ -766,31 +796,27 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:306
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:330
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:278
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:304
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/extraCourses.controller.coffee:85
 msgid "Saved"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students.controller.coffee:27
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers.controller.coffee:27
-msgid "Status"
-msgstr ""
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students.controller.coffee:47
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers.controller.coffee:56
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students.controller.coffee:69
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers.controller.coffee:68
 msgid "Initial password"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students.controller.coffee:60
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students.controller.coffee:82
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/schooladmins.controller.coffee:37
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/globaladmins.controller.coffee:37
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers.controller.coffee:78
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers.controller.coffee:90
 msgid "Initial password set"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students.controller.coffee:64
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students.controller.coffee:86
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/schooladmins.controller.coffee:41
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/globaladmins.controller.coffee:41
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers.controller.coffee:82
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers.controller.coffee:94
 msgid "Random password set"
 msgstr ""
 
@@ -811,7 +837,7 @@ msgid "New password set"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:51
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:294
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:318
 msgid "You have to enter a username"
 msgstr ""
 
@@ -911,10 +937,11 @@ msgid "login"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:255
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:295
 msgid "Uploaded"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:297
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:321
 msgid "Adding administrator..."
 msgstr ""
 
@@ -999,12 +1026,12 @@ msgid "All users "
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/printPasswords.controller.coffee:44
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers.controller.coffee:120
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers.controller.coffee:132
 msgid "Created password pdf"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/printPasswords.controller.coffee:54
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers.controller.coffee:123
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers.controller.coffee:135
 msgid "Could not create password pdf"
 msgstr ""
 

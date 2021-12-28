@@ -19,7 +19,7 @@ import yaml
 
 from aj.auth import AuthenticationProvider, OSAuthenticationProvider, AuthenticationService
 from aj.config import UserConfigProvider
-from aj.plugins.lmn_common.api import lmconfig, lmsetup_schoolname
+from aj.plugins.lmn_common.api import ldap_config as params, lmsetup_schoolname
 import logging
 
 @component(AuthenticationProvider)
@@ -30,6 +30,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
     id = 'lm'
     name = _('Linux Muster LDAP') # skipcq: PYL-E0602
+    pw_reset = True
 
     def __init__(self, context):
         self.context = context
@@ -78,8 +79,8 @@ class LMAuthenticationProvider(AuthenticationProvider):
         if context == "userconfig":
             ldap_attrs = ['sophomorixWebuiDashboard']
 
+        # Apply escape chars on username value
         searchFilter = ldap.filter.filter_format(ldap_filter, [username])
-        params = lmconfig['linuxmuster']['ldap']
 
         l = ldap.initialize('ldap://' + params['host'])
         # Binduser bind to the  server
@@ -156,7 +157,6 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
         # Is the password right ?
         try:
-            params = lmconfig['linuxmuster']['ldap']
             l = ldap.initialize('ldap://' + params['host'])
             l.set_option(ldap.OPT_REFERRALS, 0)
             l.protocol_version = ldap.VERSION3
@@ -243,10 +243,10 @@ class LMAuthenticationProvider(AuthenticationProvider):
             if role in groupmembership:
                 try:
                     gid = grp.getgrnam(role).gr_gid
-                    logging.debug("Running Webui as %s", role)
+                    logging.debug(f"Running Webui as {role}")
                 except KeyError:
                     gid = grp.getgrnam('nogroup').gr_gid
-                    logging.debug("Context group not found, running Webui as %s", 'nogroup')
+                    logging.debug(f"Context group not found, running Webui as {nogroup}")
                 return gid
         return None
 
@@ -274,10 +274,10 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
         try:
             uid = pwd.getpwnam(username).pw_uid
-            logging.debug("Running Webui as %s", username)
+            logging.debug(f"Running Webui as {username}")
         except KeyError:
             uid = pwd.getpwnam('nobody').pw_uid
-            logging.debug("Context user not found, running Webui as %s", 'nobody')
+            logging.debug(f"Context user not found, running Webui as {nobody}")
         return uid
 
     def get_profile(self, username):
@@ -308,7 +308,47 @@ class LMAuthenticationProvider(AuthenticationProvider):
             logging.error(e)
             return {}
 
+    def check_mail(self, mail):
+        # Search in the mail field, this must be discuted with others devs
+        ldap_filter = """(&
+                            (objectClass=user)
+                            (|
+                                (sophomorixRole=globaladministrator)
+                                (sophomorixRole=schooladministrator)
+                                (sophomorixRole=teacher)
+                                (sophomorixRole=student)
+                            )
+                            (mail=%s)
+                        )"""
 
+        # Apply escape chars on mail value
+        searchFilter = ldap.filter.filter_format(ldap_filter, [mail])
+
+        l = ldap.initialize('ldap://' + params['host'])
+        # Binduser bind to the  server
+        try:
+            l.set_option(ldap.OPT_REFERRALS, 0)
+            l.protocol_version = ldap.VERSION3
+            l.bind_s(params['binddn'], params['bindpw'])
+        except Exception as e:
+            logging.error(str(e))
+            raise KeyError(e)
+        try:
+            res = l.search_s(params['searchdn'], ldap.SCOPE_SUBTREE, searchFilter, attrlist=['sAMAccountName'])
+            if res[0][0] is None:
+                raise KeyError
+            # What to do if email is not unique ?
+            return res[0][1]['sAMAccountName']
+        except ldap.LDAPError as e:
+            print(e)
+
+        l.unbind_s()
+        return False
+
+    def update_password(self, username, password):
+        systemString = ['sudo', 'sophomorix-passwd', '--user', username, '--pass', password, '--hide', '--nofirstpassupdate', '--use-smbpasswd']
+        subprocess.check_call(systemString, shell=False)
+        return True
 
 @component(UserConfigProvider)
 class UserLdapConfig(UserConfigProvider):
@@ -347,7 +387,11 @@ class UserLdapConfig(UserConfigProvider):
             try:
                 self.data = json.loads(userAttrs['sophomorixWebuiDashboard'])
             except Exception:
-                logging.warning('Error retrieving userconfig from %s, value: %s. This will be overwritten', self.user, userAttrs['sophomorixWebuiDashboard'])
+                logging.warning(
+                    f'Error retrieving userconfig from {self.user}, '
+                    f'value: {userAttrs["sophomorixWebuiDashboard"]}.'
+                    f'This will be overwritten.'
+                )
                 self.data = {}
 
     def save(self):
@@ -375,8 +419,8 @@ class UserLdapConfig(UserConfigProvider):
                         )"""
             ldap_attrs = ['sophomorixWebuiDashboard']
 
+            # Apply escape chars on self.user value
             searchFilter = ldap.filter.filter_format(ldap_filter, [self.user])
-            params = lmconfig['linuxmuster']['ldap']
             with open('/etc/linuxmuster/.secret/administrator') as f:
                 admin_pw = f.read()
 

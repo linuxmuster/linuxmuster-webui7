@@ -1,3 +1,95 @@
+linuxmuster-webui7 (7.1.0) lmn71; urgency=medium
+
+  * New version number for distribution 7.1
+  * Remove opsi, docker and mail server from setup wizard
+  * Ensure lmconfig structure
+  * Diverses bug fixs in linbo plugin 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Tue, 28 Dec 2021 12:28:26 +0100
+
+linuxmuster-webui7 (1.0.163~7) lmn71; urgency=medium
+
+  * Add docker plugin
+  * Fix MX handling in samba dns plugin
+  * Fix desc permission in linbo plugin
+  * Security fix in samba dns plugin
+  * Fix backups and macct handling in linbo4 plugin
+  * Add hyphen to image name in linbo 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 19 Dec 2021 11:02:40 +0100
+
+linuxmuster-webui7 (1.0.163~6) lmn71; urgency=medium
+
+  * Display used images in start.conf and vice versa
+  * Fix template selection for admin and teachers
+  * Fix warning for empty classes in print password list
+  * Fix icons problems and remove png support in linbo plugin 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 13 Dec 2021 20:55:34 +0100
+
+linuxmuster-webui7 (1.0.163~5) lmn71; urgency=medium
+
+  * Fixs in linbo4 plugin
+  * Add subnet settings
+  * Add linbo sync plugin 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 11 Dec 2021 16:16:51 +0100
+
+linuxmuster-webui7 (1.0.163~4) lmn71; urgency=medium
+
+  * Fix scan of files in /srv/linbo/images 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 10 Dec 2021 13:20:05 +0100
+
+linuxmuster-webui7 (1.0.163~3) lmn71; urgency=medium
+
+  * Properly restart torrent service after changing image
+  * Disable too long hostnames
+  * Publish cron plugin
+  * Publish dhcp plugin
+  * Publish samba dns plugin 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 26 Nov 2021 15:08:50 +0100
+
+linuxmuster-webui7 (1.0.163~2) lmn71; urgency=medium
+
+  * Update translations
+  * Fix torrent problem by renaming or deleting image
+  * Security fix when renaming an image 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 14 Nov 2021 17:10:03 +0100
+
+linuxmuster-webui7 (1.0.163~1) lmn71; urgency=medium
+
+  * New permissions system, per plugin configurable
+  * Cloop to qcow2 conversion
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 13 Nov 2021 11:12:59 +0100
+
+linuxmuster-webui7 (1.0.162~1) lmn71; urgency=medium
+
+  * New linbo 4 plugin ( still under developpment )
+  * Rename start.conf
+  * Prepare script to change permissions management
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 07 Nov 2021 17:12:20 +0100
+
+linuxmuster-webui7 (1.0.161~1) lmn7-testing; urgency=medium
+
+  - Multischool support
+  - Add custom fields
+  - Select template to print data, print data page improved
+  - Quota display on teacher view
+  - Update on Ajenti 2.1.43
+  - New plugins : samba DNS / vdi / dhcp / crontab
+  - Complete LMNFile actions
+  - More options for printer group management
+  - Manage filter script from sophomorix
+  - New footer style
+  - A lot of bug fixes and even more
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 08 Oct 2021 10:18:41 +0200
+
 linuxmuster-webui7 (1.0.160) lmn7-testing; urgency=medium
 
   * Current snapshot build 3efd640bf0f3999e77911358d9a0650ddd044425

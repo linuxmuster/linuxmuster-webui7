@@ -77,6 +77,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
         if context == "userconfig":
             ldap_attrs = ['sophomorixWebuiDashboard']
 
+        # Apply escape chars on username value
         searchFilter = ldap.filter.filter_format(ldap_filter, [username])
 
         l = ldap.initialize('ldap://' + params['host'])
@@ -212,10 +213,10 @@ class LMAuthenticationProvider(AuthenticationProvider):
             if role in groupmembership:
                 try:
                     gid = grp.getgrnam(role).gr_gid
-                    logging.debug("Running Webui as %s", role)
+                    logging.debug(f"Running Webui as {role}")
                 except KeyError:
                     gid = grp.getgrnam('nogroup').gr_gid
-                    logging.debug("Context group not found, running Webui as %s", 'nogroup')
+                    logging.debug(f"Context group not found, running Webui as {nogroup}")
                 return gid
         return None
 
@@ -243,10 +244,10 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
         try:
             uid = pwd.getpwnam(username).pw_uid
-            logging.debug("Running Webui as %s", username)
+            logging.debug(f"Running Webui as {username}")
         except KeyError:
             uid = pwd.getpwnam('nobody').pw_uid
-            logging.debug("Context user not found, running Webui as %s", 'nobody')
+            logging.debug(f"Context user not found, running Webui as {nobody}")
         return uid
 
     def get_profile(self, username):
@@ -290,6 +291,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
                             (mail=%s)
                         )"""
 
+        # Apply escape chars on mail value
         searchFilter = ldap.filter.filter_format(ldap_filter, [mail])
 
         l = ldap.initialize('ldap://' + params['host'])
@@ -355,7 +357,11 @@ class UserLdapConfig(UserConfigProvider):
             try:
                 self.data = json.loads(userAttrs['sophomorixWebuiDashboard'])
             except Exception:
-                logging.warning('Error retrieving userconfig from %s, value: %s. This will be overwritten', self.user, userAttrs['sophomorixWebuiDashboard'])
+                logging.warning(
+                    f'Error retrieving userconfig from {self.user}, '
+                    f'value: {userAttrs["sophomorixWebuiDashboard"]}.'
+                    f'This will be overwritten.'
+                )
                 self.data = {}
 
     def save(self):
@@ -383,6 +389,7 @@ class UserLdapConfig(UserConfigProvider):
                         )"""
             ldap_attrs = ['sophomorixWebuiDashboard']
 
+            # Apply escape chars on self.user value
             searchFilter = ldap.filter.filter_format(ldap_filter, [self.user])
             with open('/etc/linuxmuster/.secret/administrator') as f:
                 admin_pw = f.read()

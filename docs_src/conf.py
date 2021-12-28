@@ -11,6 +11,7 @@ import aj.log
 import aj.plugins
 import builtins
 import subprocess
+from datetime import datetime
 
 import sphinx_rtd_theme
 
@@ -40,7 +41,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'linuxmuster-webui7'
-copyright = '2020, Andreas Till & Arnaud Kientz'
+year = datetime.now().strftime('%Y')
+copyright = f'Andreas Till & Arnaud Kientz - {year}'
 author = 'Andreas Till & Arnaud Kientz'
 
 def setup(app):

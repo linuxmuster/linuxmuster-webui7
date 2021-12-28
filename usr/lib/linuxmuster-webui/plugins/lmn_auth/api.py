@@ -106,6 +106,11 @@ class LMAuthenticationProvider(AuthenticationProvider):
         l.unbind_s()
         return userAttrs
 
+    def prepare_environment(self, username):
+        uid = self.get_isolation_uid(username)
+        logging.warning("Changing kerberos ticket rights for %s", username)
+        os.chown(f'/tmp/krb5cc_{uid}', uid, 100)
+
     def _get_krb_ticket(self, username, password):
         """
         Get a new Kerberos ticket for username stored in /tmp/krb5cc_UID
@@ -118,7 +123,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
         uid = self.get_isolation_uid(username)
 
-        logging.warning('Initializing kerberos ticket for %s', username)
+        logging.warning(f'Initializing Kerberos ticket for {username}')
         child = pexpect.spawn('/usr/bin/kinit', ['-c', f'/tmp/krb5cc_{uid}', username])
         child.expect('Password.*:')
         child.sendline(password)
@@ -126,11 +131,8 @@ class LMAuthenticationProvider(AuthenticationProvider):
         child.close()
         exit_code = child.exitstatus
         if exit_code:
-            logging.error("Was not able to initialize kerbros ticket for %s", username)
-            logging.error("%s", child.before.decode().strip())
-        else:
-            logging.warning("Changing kerberos ticket rights for %s", username)
-            os.chown(f'/tmp/krb5cc_{uid}', uid, 100)
+            logging.error(f"Was not able to initialize Kerberos ticket for {username}")
+            logging.error(f"{child.before.decode().strip()}")
 
     def authenticate(self, username, password):
         """
@@ -278,6 +280,12 @@ class LMAuthenticationProvider(AuthenticationProvider):
         except KeyError:
             uid = pwd.getpwnam('nobody').pw_uid
             logging.debug(f"Context user not found, running Webui as {nobody}")
+
+        # Fix must be removed when prepare_environment is supported in Ajenti
+        if os.getuid() == 0:
+            logging.warning("Changing kerberos ticket rights for %s", username)
+            os.chown(f'/tmp/krb5cc_{uid}', uid, 100)
+
         return uid
 
     def get_profile(self, username):

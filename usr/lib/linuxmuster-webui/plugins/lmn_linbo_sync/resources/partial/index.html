@@ -12,7 +12,7 @@
                     <th translate>Hostname</th>
                     <th translate>IP</th>
                     <th translate>Mac address</th>
-                    <th ng:repeat="cloop in details.os"><span translate>Last sync </span><br />{{cloop.baseimage}}</th>
+                    <th ng:repeat="image in details.os"><span translate>Last sync </span><br />{{image.baseimage}}</th>
                     <th class="pull-right" translate>Online ?</th>
                 </tr>
                 <tr ng:repeat="h in details.hosts|orderBy:host:false">
@@ -22,7 +22,7 @@
                     <th>{{h.host}}</th>
                     <td>{{h.ip}}</td>
                     <td>{{h.mac}}</td>
-                    <td ng:repeat="os in h.cloop" style="width:160px;" class="{{os.status}}">
+                    <td ng:repeat="os in h.image" style="width:160px;" class="{{os.status}}">
                         <span ng:show="os.date != 'Never'">{{os.date*1000 | date:'dd MMM yyyy HH:mm:ss'}}</span>
                         <span ng:show="os.date == 'Never'" translate>No date found.</span>
                     </td>
@@ -36,24 +36,24 @@
             <hr />
             <h3 translate>Run linbo-remote command</h3>
             <table class="table">
-                <tr ng:repeat="cloop in details.os">
+                <tr ng:repeat="image in details.os">
                     <td style="display:flex;">
-                        <div style="width:200px;font-weight:bold;">{{cloop.baseimage}} (sda{{cloop.partition}})</div>
-                        <button class="btn btn-danger" style="width:110px; margin-left:10px;" ng:click="handle_format(group, cloop, 1)" translate>
+                        <div style="width:200px;font-weight:bold;">{{image.baseimage}} (sda{{image.partition}})</div>
+                        <button class="btn btn-danger" style="width:110px; margin-left:10px;" ng:click="handle_format(group, image, 1)" translate>
                             <i class="fas fa-eraser"></i>  Format
-                            <input type="checkbox" class="pull-right" ng:checked="cloop.run_format == 1">
+                            <input type="checkbox" class="pull-right" ng:checked="image.run_format == 1">
                         </button>
-                        <button class="btn btn-warning" style="width:110px; margin-left:10px;" ng:click="handle_sync(group, cloop, 'sync')" translate>
+                        <button class="btn btn-warning" style="width:110px; margin-left:10px;" ng:click="handle_sync(group, image, 'sync')" translate>
                             <i class="fas fa-sync-alt"></i>  Sync
-                            <input type="checkbox" ng:checked="cloop.run_sync" class="pull-right">
+                            <input type="checkbox" ng:checked="image.run_sync" class="pull-right">
                         </button>
-                        <button class="btn btn-success" style="width:110px; margin-left:10px;" ng:show="cloop.start_enabled" ng:click="handle_start(group, cloop, 1)" translate>
+                        <button class="btn btn-success" style="width:110px; margin-left:10px;" ng:show="image.start_enabled" ng:click="handle_start(group, image, 1)" translate>
                             <i class="fas fa-play"></i>  Start
-                            <input type="checkbox" class="pull-right" ng:checked="cloop.run_start == 1">
+                            <input type="checkbox" class="pull-right" ng:checked="image.run_start == 1">
                         </button>
-                        <button class="btn btn-danger" style="width:110px; margin-left:10px;" ng:show="cloop.new_enabled" ng:click="handle_sync(group, cloop, 'new')" translate>
+                        <button class="btn btn-danger" style="width:110px; margin-left:10px;" ng:show="image.new_enabled" ng:click="handle_sync(group, image, 'new')" translate>
                             <i class="fas fa-exclamation-triangle"></i>  New
-                            <input type="checkbox" class="pull-right" ng:checked="cloop.run_sync == 'new'">
+                            <input type="checkbox" class="pull-right" ng:checked="image.run_sync == 'new'">
                         </button>
                     </td>
                 </tr>

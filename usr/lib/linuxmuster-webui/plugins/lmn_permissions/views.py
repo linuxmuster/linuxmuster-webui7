@@ -159,7 +159,7 @@ class Handler(HttpPlugin):
                                     'plugin': "NOT IMPLEMENTED"
 
                                 }
-                                logging.warning('%s not listed in PermissionProvider', cat_id)
+                                logging.warning(f'{cat_id} not listed in PermissionProvider')
                             sidebarPermissionDict[url][role] = default
 
                         # API permissions
@@ -171,7 +171,7 @@ class Handler(HttpPlugin):
                                     'name': "NO DESCRIPTION",
                                     'default': False
                                 }
-                                logging.warning('%s not listed in PermissionProvider', cat_id)
+                                logging.warning(f'{cat_id} not listed in PermissionProvider')
                             apiPermissionDict[cat_id][role] = default
             return PluginDict, apiPermissionDict, sidebarPermissionDict
 

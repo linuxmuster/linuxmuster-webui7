@@ -40,7 +40,7 @@ def read_config(group):
         return osConfig
     return None
 
-def last_sync(w, cloop):
+def last_sync(workstation, cloop):
     """
     Get the date of the last sync date for a workstation w.
 
@@ -52,7 +52,7 @@ def last_sync(w, cloop):
     :rtype: datetime
     """
 
-    statusfile = '/var/log/linuxmuster/linbo/%s_image.status' % w
+    statusfile = f'/var/log/linuxmuster/linbo/{workstation}_image.status'
     last = False
 
     if os.path.isfile(statusfile) and os.stat(statusfile).st_size != 0:

@@ -547,11 +547,11 @@ class Handler(HttpPlugin):
 
         script = ''
         if http_context.json_body()['doAdd']:
-            script += 'sophomorix-add >> %s;' % path
+            script += f'sophomorix-add >> {path};'
         if http_context.json_body()['doMove']:
-            script += 'sophomorix-update >> %s;' % path
+            script += f'sophomorix-update >> {path};'
         if http_context.json_body()['doKill']:
-            script += 'sophomorix-kill >> %s;' % path
+            script += f'sophomorix-kill >> {path};'
 
         try:
             subprocess.check_call(script, shell=True, env={'LC_ALL': 'C'})

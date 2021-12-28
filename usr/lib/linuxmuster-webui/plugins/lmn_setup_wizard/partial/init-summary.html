@@ -86,60 +86,6 @@
                     </td>
                     <td class="check"> </td>
                 </tr>
-                <tr class="leaders">
-                    <td class="summary">
-                        <span >OPSI</span>
-                        <span><b ng-if="$ctrl.ini.opsiip">{{$ctrl.ini.opsiip}}</b></span>
-                        <span ng-if="!$ctrl.ini.opsiip" translate> No opsi will be configured </span>
-                    </td>
-                    <td class="check">
-                        <span ng:if="$ctrl.checked && $ctrl.ini.opsiip">
-                            <i class="fas" ng:class="$ctrl.checks.opsi_ssh ? 'fa-check': 'fa-times'" ng:style="$ctrl.checks.opsi_ssh && {'color':'green'} || {'color':'red'}"></i>
-                        </span>
-                    </td>
-                </tr>
-                <tr class="leaders" ng:class="{checked: $ctrl.checked}">
-                    <td class="summary">
-                        <span>Docker</span>
-                        <span><b ng-if="$ctrl.ini.dockerip">{{$ctrl.ini.dockerip}}</b></span>
-                        <span ng-if="!$ctrl.ini.dockerip" translate> No docker host will be configured </span>
-                    </td>
-                    <td class="check">
-                        <span ng:if="$ctrl.checked && $ctrl.ini.dockerip">
-                            <i class="fas" ng:class="$ctrl.checks.docker_ssh ? 'fa-check': 'fa-times'" ng:style="$ctrl.checks.docker_ssh && {'color':'green'} || {'color':'red'}"></i>
-                        </span>
-                    </td>
-                </tr>
-                <tr class="leaders">
-                    <td class="summary">
-                        <span >Mail</span>
-                        <span><b ng-if="$ctrl.ini.mailip">{{$ctrl.ini.mailip}}</b></span>
-                        <span ng-if="!$ctrl.ini.mailip" translate> No mailservice will be configured </span>
-                    </td>
-                    <td class="check">
-                        <span ng:if="$ctrl.checked && $ctrl.ini.mailip">
-                                <i class="fas" ng:class="$ctrl.checks.mail_ssh ? 'fa-check': 'fa-times'" ng:style="$ctrl.checks.mail_ssh && {'color':'green'} || {'color':'red'}"></i>
-                        </span>
-                    </td>
-                </tr>
-                <tr class="leaders" ng-if="$ctrl.ini.mailip">
-                    <td class="summary">
-                        <span translate >SMTP User</span>
-                        <span><b>{{$ctrl.ini.smtpuser}}</b></span>
-                    </td>
-                    <td> </td>
-                </tr>
-                <tr class="leaders" ng-if="$ctrl.ini.mailip">
-                    <td class="summary">
-                        <span translate >SMTP Relay</span>
-                        <span><b>{{$ctrl.ini.smtprelay}}</b></span>
-                    </td>
-                    <td class="check">
-                        <span ng:if="$ctrl.checked">
-                            <i class="fas" ng:class="$ctrl.checks.mail_relay ? 'fa-check': 'fa-times'" ng:style="$ctrl.checks.mail_relay && {'color':'green'} || {'color':'red'}"></i>
-                        </span>
-                    </td>
-                </tr>
             </table>
         </div>
 
@@ -154,8 +100,7 @@
 
     <div class="modal-footer">
         <a href="/view/lm/init/externalservices" class="btn btn-default btn-flat pull-left" translate>Back</a>
-        <a href='#' ng:show="$ctrl.ok" ng:click="$ctrl.finish()" class="btn btn-default btn-flat" translate>Start provisioning</a>
-        <a href='#' ng:show="!$ctrl.ok" ng:click="$ctrl.check()" class="btn btn-default btn-flat" translate>Check setup data</a>
+        <a href='#' ng:click="$ctrl.finish()" class="btn btn-default btn-flat" translate>Start provisioning</a>
     </div>
 </div>
 

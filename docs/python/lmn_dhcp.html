@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>API: aj.plugins.lmn_devices &mdash; linuxmuster-webui7 7.1.0 documentation</title>
+  <title>API: aj.plugins.lmn_dhcp &mdash; linuxmuster-webui7 7.1.0 documentation</title>
   
 
   
@@ -36,8 +36,8 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="API: aj.plugins.lmn_dhcp" href="lmn_dhcp.html" />
-    <link rel="prev" title="API: aj.plugins.lmn_common" href="lmn_common.html" /> 
+    <link rel="next" title="API: aj.plugins.lmn_groupmembership" href="lmn_groupmembership.html" />
+    <link rel="prev" title="API: aj.plugins.lmn_devices" href="lmn_devices.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -93,11 +93,11 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="lmn_auth.html">API: aj.plugins.lmn_auth</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_common.html">API: aj.plugins.lmn_common</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">API: aj.plugins.lmn_devices</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#module-aj.plugins.lmn_devices.views">LMN Devices Views</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_devices.html">API: aj.plugins.lmn_devices</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API: aj.plugins.lmn_dhcp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-aj.plugins.lmn_dhcp.views">LMN Dhcp Views</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="lmn_dhcp.html">API: aj.plugins.lmn_dhcp</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_groupmembership.html">API: aj.plugins.lmn_groupmembership</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_landingpage.html">API: aj.plugins.lmn_landingpage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_linbo.html">API: aj.plugins.lmn_linbo</a></li>
@@ -152,13 +152,13 @@
     
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>API: aj.plugins.lmn_devices</li>
+      <li>API: aj.plugins.lmn_dhcp</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/python/lmn_devices.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/python/lmn_dhcp.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -171,40 +171,46 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="api-aj-plugins-lmn-devices">
-<h1>API: aj.plugins.lmn_devices<a class="headerlink" href="#api-aj-plugins-lmn-devices" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="module-aj.plugins.lmn_devices.views">
-<span id="lmn-devices-views"></span><h2>LMN Devices Views<a class="headerlink" href="#module-aj.plugins.lmn_devices.views" title="Permalink to this headline">¶</a></h2>
-<p>API to load device file and run importing.</p>
+  <div class="section" id="api-aj-plugins-lmn-dhcp">
+<h1>API: aj.plugins.lmn_dhcp<a class="headerlink" href="#api-aj-plugins-lmn-dhcp" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-aj.plugins.lmn_dhcp.views">
+<span id="lmn-dhcp-views"></span><h2>LMN Dhcp Views<a class="headerlink" href="#module-aj.plugins.lmn_dhcp.views" title="Permalink to this headline">¶</a></h2>
+<p>Module to handle dchp leases and eventually add a new device.</p>
 <dl class="py class">
-<dt id="aj.plugins.lmn_devices.views.Handler">
-<em class="property">class </em><code class="sig-prename descclassname">aj.plugins.lmn_devices.views.</code><code class="sig-name descname">Handler</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_devices/views.html#Handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_devices.views.Handler" title="Permalink to this definition">¶</a></dt>
+<dt id="aj.plugins.lmn_dhcp.views.Handler">
+<em class="property">class </em><code class="sig-prename descclassname">aj.plugins.lmn_dhcp.views.</code><code class="sig-name descname">Handler</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_dhcp/views.html#Handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_dhcp.views.Handler" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="py method">
-<dt id="aj.plugins.lmn_devices.views.Handler.handle_api_devices">
-<code class="sig-name descname">handle_api_devices</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">http_context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_devices/views.html#Handler.handle_api_devices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_devices.views.Handler.handle_api_devices" title="Permalink to this definition">¶</a></dt>
-<dd><p>Read and write the devices file.
-Method GET.
+<dt id="aj.plugins.lmn_dhcp.views.Handler.handle_api_get_dhcp">
+<code class="sig-name descname">handle_api_get_dhcp</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">http_context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_dhcp/views.html#Handler.handle_api_get_dhcp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_dhcp.views.Handler.handle_api_get_dhcp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read dhcp lease file and sort it for each LMN devices.
+Method GET.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>All lease and LMN devices ip details</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple of dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="aj.plugins.lmn_dhcp.views.Handler.handle_api_register_dhcp">
+<code class="sig-name descname">handle_api_register_dhcp</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">http_context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_dhcp/views.html#Handler.handle_api_register_dhcp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_dhcp.views.Handler.handle_api_register_dhcp" title="Permalink to this definition">¶</a></dt>
+<dd><p>When a new device get an ip through dhcp, this method allows to register it in the LMN devices file.
 Method POST.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Content of config file in read mode.</p>
+<dd class="field-even"><p>Success</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="aj.plugins.lmn_devices.views.Handler.handle_api_devices_import">
-<code class="sig-name descname">handle_api_devices_import</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">http_context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_devices/views.html#Handler.handle_api_devices_import"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_devices.views.Handler.handle_api_devices_import" title="Permalink to this definition">¶</a></dt>
-<dd><p>Launch the import of the devices in the system.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -222,10 +228,10 @@ Method POST.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="lmn_dhcp.html" class="btn btn-neutral float-right" title="API: aj.plugins.lmn_dhcp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="lmn_groupmembership.html" class="btn btn-neutral float-right" title="API: aj.plugins.lmn_groupmembership" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="lmn_common.html" class="btn btn-neutral float-left" title="API: aj.plugins.lmn_common" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="lmn_devices.html" class="btn btn-neutral float-left" title="API: aj.plugins.lmn_devices" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

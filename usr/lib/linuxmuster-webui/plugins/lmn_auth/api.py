@@ -40,8 +40,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
         :param username: Username
         :type username: string
-        :param context: 'auth' to get permissions and 'userconfig' to get
-        user's personal config, e.g. for Dashboard
+        :param context: 'auth' to get permissions and 'userconfig' to get user's personal config, e.g. for Dashboard
         :type context: string
         :return: Dict of values
         :rtype: dict

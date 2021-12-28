@@ -98,6 +98,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_common.html">API: aj.plugins.lmn_common</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_devices.html">API: aj.plugins.lmn_devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_dhcp.html">API: aj.plugins.lmn_dhcp</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_groupmembership.html">API: aj.plugins.lmn_groupmembership</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_landingpage.html">API: aj.plugins.lmn_landingpage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_linbo.html">API: aj.plugins.lmn_linbo</a></li>
@@ -279,14 +280,16 @@ the right uid for the worker process.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>username</strong> (<em>string</em>) – Username</p></li>
-<li><p><strong>context</strong> – ‘auth’ to get permissions and ‘userconfig’ to get</p></li>
+<li><p><strong>context</strong> (<em>string</em>) – ‘auth’ to get permissions and ‘userconfig’ to get user’s personal config, e.g. for Dashboard</p></li>
 </ul>
 </dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dict of values</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)">dict</a></p>
+</dd>
 </dl>
-<p>user’s personal config, e.g. for Dashboard
-:type context: string
-:return: Dict of values
-:rtype: dict</p>
 </dd></dl>
 
 <dl class="py method">

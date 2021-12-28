@@ -1,3 +1,12 @@
+linuxmuster-webui7 (7.1.0) lmn71; urgency=medium
+
+  * New version number for distribution 7.1
+  * Remove opsi, docker and mail server from setup wizard
+  * Ensure lmconfig structure
+  * Diverses bug fixs in linbo plugin 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Tue, 28 Dec 2021 12:28:26 +0100
+
 linuxmuster-webui7 (1.0.163~7) lmn71; urgency=medium
 
   * Add docker plugin

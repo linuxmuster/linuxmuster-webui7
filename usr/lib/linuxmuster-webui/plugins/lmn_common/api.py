@@ -24,6 +24,33 @@ else:
     ldap_config = {}
     logging.error("Without config.yml the users will not be able to login.")
 
+# Fix missing entries in the lmconfig. Should be later refactored
+# and the config file should be splitted
+# Main linuxmuster config entry
+lmconfig.setdefault('linuxmuster', {})
+lmconfig['linuxmuster'].setdefault('initialized', False)
+lmconfig['linuxmuster'].setdefault('is-configured', False)
+lmconfig['linuxmuster'].setdefault('provision', False)
+lmconfig['linuxmuster'].setdefault('ldap', {})
+# Proxyaddresses, e.g. multivalue emails
+lmconfig.setdefault('proxyAddresses', {})
+lmconfig['proxyAddresses'].setdefault('students', {})
+lmconfig['proxyAddresses'].setdefault('teachers', {})
+# Custom fields with individual values
+lmconfig.setdefault('custom', {})
+lmconfig['custom'].setdefault('students', {})
+lmconfig['custom'].setdefault('teachers', {})
+# Custom fields with multi values
+lmconfig.setdefault('customMulti', {})
+lmconfig['customMulti'].setdefault('students', {})
+lmconfig['customMulti'].setdefault('teachers', {})
+# Choice of custom fields to display on user page
+lmconfig.setdefault('customDisplay', {})
+lmconfig['customDisplay'].setdefault('students', {})
+lmconfig['customDisplay'].setdefault('teachers', {})
+# Templates for password printing
+lmconfig.setdefault('passwordTemplates', {})
+
 # Used for pageTitle, see lmn_auth.api
 try:
     with LMNFile('/var/lib/linuxmuster/setup.ini', 'r') as s:

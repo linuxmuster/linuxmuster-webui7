@@ -93,6 +93,7 @@
 <li class="toctree-l1"><a class="reference internal" href="python/lmn_common.html">API: aj.plugins.lmn_common</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python/lmn_devices.html">API: aj.plugins.lmn_devices</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python/lmn_dhcp.html">API: aj.plugins.lmn_dhcp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/lmn_docker.html">API: aj.plugins.lmn_docker</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python/lmn_groupmembership.html">API: aj.plugins.lmn_groupmembership</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python/lmn_landingpage.html">API: aj.plugins.lmn_landingpage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python/lmn_linbo.html">API: aj.plugins.lmn_linbo</a></li>
@@ -235,6 +236,13 @@
 </li>
       </ul></li>
       <li>
+    aj.plugins.lmn_docker.views
+
+      <ul>
+        <li><a href="python/lmn_docker.html#module-aj.plugins.lmn_docker.views">module</a>
+</li>
+      </ul></li>
+      <li>
     aj.plugins.lmn_groupmembership.views
 
       <ul>
@@ -358,12 +366,16 @@
 </li>
       <li><a href="python/lmn_quotas.html#aj.plugins.lmn_quotas.views.Handler.handle_api_class_quotas">handle_api_class_quotas() (aj.plugins.lmn_quotas.views.Handler method)</a>
 </li>
+      <li><a href="python/lmn_docker.html#aj.plugins.lmn_docker.views.Handler.handle_api_container_stop">handle_api_container_stop() (aj.plugins.lmn_docker.views.Handler method)</a>
+</li>
       <li><a href="python/lmn_common.html#aj.plugins.lmn_common.views.Handler.handle_api_create_dir">handle_api_create_dir() (aj.plugins.lmn_common.views.Handler method)</a>
 
       <ul>
         <li><a href="python/lmn_session.html#aj.plugins.lmn_session.views.Handler.handle_api_create_dir">(aj.plugins.lmn_session.views.Handler method)</a>
 </li>
       </ul></li>
+      <li><a href="python/lmn_docker.html#aj.plugins.lmn_docker.views.Handler.handle_api_details_container">handle_api_details_container() (aj.plugins.lmn_docker.views.Handler method)</a>
+</li>
       <li><a href="python/lmn_devices.html#aj.plugins.lmn_devices.views.Handler.handle_api_devices">handle_api_devices() (aj.plugins.lmn_devices.views.Handler method)</a>
 </li>
       <li><a href="python/lmn_devices.html#aj.plugins.lmn_devices.views.Handler.handle_api_devices_import">handle_api_devices_import() (aj.plugins.lmn_devices.views.Handler method)</a>
@@ -387,6 +399,8 @@
       <li><a href="python/lmn_settings.html#aj.plugins.lmn_settings.views.Handler.handle_api_latex_template">handle_api_latex_template() (aj.plugins.lmn_settings.views.Handler method)</a>
 </li>
       <li><a href="python/lmn_quotas.html#aj.plugins.lmn_quotas.views.Handler.handle_api_ldap_search">handle_api_ldap_search() (aj.plugins.lmn_quotas.views.Handler method)</a>
+</li>
+      <li><a href="python/lmn_docker.html#aj.plugins.lmn_docker.views.Handler.handle_api_list_images">handle_api_list_images() (aj.plugins.lmn_docker.views.Handler method)</a>
 </li>
       <li><a href="python/lmn_common.html#aj.plugins.lmn_common.views.Handler.handle_api_log">handle_api_log() (aj.plugins.lmn_common.views.Handler method)</a>
 
@@ -412,7 +426,11 @@
 </li>
       <li><a href="python/lmn_common.html#aj.plugins.lmn_common.views.Handler.handle_api_remove_file">handle_api_remove_file() (aj.plugins.lmn_common.views.Handler method)</a>
 </li>
+      <li><a href="python/lmn_docker.html#aj.plugins.lmn_docker.views.Handler.handle_api_remove_image">handle_api_remove_image() (aj.plugins.lmn_docker.views.Handler method)</a>
+</li>
       <li><a href="python/lmn_groupmembership.html#aj.plugins.lmn_groupmembership.views.Handler.handle_api_reset">handle_api_reset() (aj.plugins.lmn_groupmembership.views.Handler method)</a>
+</li>
+      <li><a href="python/lmn_docker.html#aj.plugins.lmn_docker.views.Handler.handle_api_resources_docker">handle_api_resources_docker() (aj.plugins.lmn_docker.views.Handler method)</a>
 </li>
       <li><a href="python/lmn_setup_wizard.html#aj.plugins.lmn_setup_wizard.views.Handler.handle_api_restart">handle_api_restart() (aj.plugins.lmn_setup_wizard.views.Handler method)</a>
 </li>
@@ -428,12 +446,12 @@
 </li>
       <li><a href="python/lmn_groupmembership.html#aj.plugins.lmn_groupmembership.views.Handler.handle_api_set_group">handle_api_set_group() (aj.plugins.lmn_groupmembership.views.Handler method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python/lmn_groupmembership.html#aj.plugins.lmn_groupmembership.views.Handler.handle_api_set_members">handle_api_set_members() (aj.plugins.lmn_groupmembership.views.Handler method)</a>
 </li>
       <li><a href="python/lmn_settings.html#aj.plugins.lmn_settings.views.Handler.handle_api_settings">handle_api_settings() (aj.plugins.lmn_settings.views.Handler method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python/lmn_users.html#aj.plugins.lmn_users.views.Handler.handle_api_sophomorix_globaladmins">handle_api_sophomorix_globaladmins() (aj.plugins.lmn_users.views.Handler method)</a>
 </li>
       <li><a href="python/lmn_users.html#aj.plugins.lmn_users.views.Handler.handle_api_sophomorix_schooladmins">handle_api_sophomorix_schooladmins() (aj.plugins.lmn_users.views.Handler method)</a>
@@ -470,6 +488,8 @@
 </li>
       <li><a href="python/lmn_common.html#aj.plugins.lmn_common.views.Handler.handle_api_version">handle_api_version() (aj.plugins.lmn_common.views.Handler method)</a>
 </li>
+      <li><a href="python/lmn_docker.html#aj.plugins.lmn_docker.views.Handler.handle_api_which_docker">handle_api_which_docker() (aj.plugins.lmn_docker.views.Handler method)</a>
+</li>
       <li><a href="python/lmn_users.html#aj.plugins.lmn_users.views.Handler.handle_custom">handle_custom() (aj.plugins.lmn_users.views.Handler method)</a>
 </li>
       <li><a href="python/lmn_users.html#aj.plugins.lmn_users.views.Handler.handle_custom_csv">handle_custom_csv() (aj.plugins.lmn_users.views.Handler method)</a>
@@ -492,6 +512,8 @@
         <li><a href="python/lmn_devices.html#aj.plugins.lmn_devices.views.Handler">(class in aj.plugins.lmn_devices.views)</a>
 </li>
         <li><a href="python/lmn_dhcp.html#aj.plugins.lmn_dhcp.views.Handler">(class in aj.plugins.lmn_dhcp.views)</a>
+</li>
+        <li><a href="python/lmn_docker.html#aj.plugins.lmn_docker.views.Handler">(class in aj.plugins.lmn_docker.views)</a>
 </li>
         <li><a href="python/lmn_groupmembership.html#aj.plugins.lmn_groupmembership.views.Handler">(class in aj.plugins.lmn_groupmembership.views)</a>
 </li>
@@ -557,6 +579,8 @@
         <li><a href="python/lmn_devices.html#module-aj.plugins.lmn_devices.views">aj.plugins.lmn_devices.views</a>
 </li>
         <li><a href="python/lmn_dhcp.html#module-aj.plugins.lmn_dhcp.views">aj.plugins.lmn_dhcp.views</a>
+</li>
+        <li><a href="python/lmn_docker.html#module-aj.plugins.lmn_docker.views">aj.plugins.lmn_docker.views</a>
 </li>
         <li><a href="python/lmn_groupmembership.html#module-aj.plugins.lmn_groupmembership.views">aj.plugins.lmn_groupmembership.views</a>
 </li>

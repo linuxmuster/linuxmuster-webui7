@@ -43,6 +43,7 @@ This documentation only lists an API reference for the specific plugins in linux
    python/lmn_common.rst
    python/lmn_devices.rst
    python/lmn_dhcp.rst
+   python/lmn_docker.rst
    python/lmn_groupmembership.rst
    python/lmn_landingpage.rst
    python/lmn_linbo.rst

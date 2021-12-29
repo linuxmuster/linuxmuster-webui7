@@ -17,7 +17,7 @@
                         <b>{{config.file.substring('start.conf.'.length)}}</b>
                     </td>
                     <td ng:click="editConfig(config.file)" style="cursor:pointer;">
-                        <span ng:repeat="image in config.images" class="label label-info">
+                        <span ng:repeat="image in config.images" class="label label-info" style="display:inline-block;">
                             {{image}}
                         </span>
                     </td>
@@ -78,7 +78,7 @@
                         <i>{{image.size|bytes}}</i>
                     </td>
                     <td>
-                        <span ng:repeat="conf in image.used_in" class="label label-success">{{conf}}</span>
+                        <span ng:repeat="conf in image.used_in" class="label label-success" style="display:inline-block;">{{conf}}</span>
                     </td>
                     <td width="1">
                         <button class="btn btn-default" ng:click="editImage(image)">

@@ -48,6 +48,7 @@ This documentation only lists an API reference for the specific plugins in linux
    python/lmn_landingpage.rst
    python/lmn_linbo.rst
    python/lmn_linbo4.rst
+   python/lmn_linbo_sync.rst
    python/lmn_quotas.rst
    python/lmn_session.rst
    python/lmn_settings.rst

@@ -159,7 +159,7 @@ class Handler(HttpPlugin):
                                     'plugin': "NOT IMPLEMENTED"
 
                                 }
-                                logging.warning(f'{cat_id} not listed in PermissionProvider')
+                                logging.warning(f'{url} not listed in PermissionProvider')
                             sidebarPermissionDict[url][role] = default
 
                         # API permissions

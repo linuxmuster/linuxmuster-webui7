@@ -307,7 +307,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
             if res[0][0] is None:
                 raise KeyError
             # What to do if email is not unique ?
-            return res[0][1]['sAMAccountName']
+            return res[0][1]['sAMAccountName'][0].decode()
         except ldap.LDAPError as e:
             print(e)
 

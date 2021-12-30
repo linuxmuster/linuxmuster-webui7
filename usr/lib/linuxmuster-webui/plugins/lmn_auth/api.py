@@ -305,11 +305,12 @@ class LMAuthenticationProvider(AuthenticationProvider):
         try:
             res = l.search_s(params['searchdn'], ldap.SCOPE_SUBTREE, searchFilter, attrlist=['sAMAccountName'])
             if res[0][0] is None:
-                raise KeyError
+                # Don't show any hint if the email doesn't exists in ldap
+                return False
             # What to do if email is not unique ?
             return res[0][1]['sAMAccountName'][0].decode()
-        except ldap.LDAPError as e:
-            print(e)
+        except (ldap.LDAPError, KeyError):
+            return False
 
         l.unbind_s()
         return False

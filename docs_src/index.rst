@@ -33,6 +33,12 @@ This documentation only lists an API reference for the specific plugins in linux
    :caption: Users
    :hidden:
 
+.. toctree::
+   :maxdepth: 1
+   :caption: Plugins
+   :hidden:
+
+   plugins/lmn_auth.rst
 
 .. toctree::
    :maxdepth: 1

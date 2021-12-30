@@ -15,7 +15,7 @@ class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
 
-    @url(r'/api/get_crontab')
+    @url(r'/api/lm/get_crontab')
     @authorize('lm:crontab:read')
     @endpoint(api=True)
     def handle_api_get_crontab(self, http_context):
@@ -47,7 +47,7 @@ class Handler(HttpPlugin):
                     job['disable_holiday'] = False
             return crontab_dict
 
-    @url(r'/api/save_crontab')
+    @url(r'/api/lm/save_crontab')
     @authorize('lm:crontab:write')
     @endpoint(api=True)
     def handle_api_save_crontab(self, http_context):

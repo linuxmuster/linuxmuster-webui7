@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>aj.plugins.lmn_auth.views &mdash; linuxmuster-webui7 7.1.0 documentation</title>
+  <title>aj.plugins.lmn_crontab.manager &mdash; linuxmuster-webui7 7.1.0 documentation</title>
   
 
   
@@ -157,7 +157,7 @@
         
           <li><a href="../../../index.html">Module code</a> &raquo;</li>
         
-      <li>aj.plugins.lmn_auth.views</li>
+      <li>aj.plugins.lmn_crontab.manager</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -172,43 +172,53 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for aj.plugins.lmn_auth.views</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Authentication module for linuxmuster.net that enable and manage LDAP auth.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+  <h1>Source code for aj.plugins.lmn_crontab.manager</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">subprocess</span>
 
-<span class="kn">from</span> <span class="nn">jadi</span> <span class="kn">import</span> <span class="n">component</span>
-<span class="kn">from</span> <span class="nn">aj.api.http</span> <span class="kn">import</span> <span class="n">url</span><span class="p">,</span> <span class="n">HttpPlugin</span>
-<span class="kn">from</span> <span class="nn">aj.api.endpoint</span> <span class="kn">import</span> <span class="n">endpoint</span><span class="p">,</span> <span class="n">EndpointError</span>
-<span class="kn">from</span> <span class="nn">aj.auth</span> <span class="kn">import</span> <span class="n">AuthenticationService</span>
+<span class="kn">from</span> <span class="nn">jadi</span> <span class="kn">import</span> <span class="n">service</span>
+<span class="kn">from</span> <span class="nn">reconfigure.configs</span> <span class="kn">import</span> <span class="n">CrontabConfig</span>
 
-
-<div class="viewcode-block" id="Handler"><a class="viewcode-back" href="../../../../python/lmn_auth.html#aj.plugins.lmn_auth.views.Handler">[docs]</a><span class="nd">@component</span><span class="p">(</span><span class="n">HttpPlugin</span><span class="p">)</span>
-<span class="k">class</span> <span class="nc">Handler</span><span class="p">(</span><span class="n">HttpPlugin</span><span class="p">):</span>
+<div class="viewcode-block" id="CronManager"><a class="viewcode-back" href="../../../../python/lmn_crontab.html#aj.plugins.lmn_crontab.manager.CronManager">[docs]</a><span class="nd">@service</span>
+<span class="k">class</span> <span class="nc">CronManager</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Manage crontab file from user.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">context</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">crons</span> <span class="o">=</span> <span class="p">{}</span>
 
-<div class="viewcode-block" id="Handler.handle_api_change_password"><a class="viewcode-back" href="../../../../python/lmn_auth.html#aj.plugins.lmn_auth.views.Handler.handle_api_change_password">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/change-password&#39;</span><span class="p">)</span>
-    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">handle_api_change_password</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+<div class="viewcode-block" id="CronManager.load_tab"><a class="viewcode-back" href="../../../../python/lmn_crontab.html#aj.plugins.lmn_crontab.manager.CronManager.load_tab">[docs]</a>    <span class="k">def</span> <span class="nf">load_tab</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Change user password through authentication provider.</span>
-<span class="sd">        Method POST.</span>
-
-<span class="sd">        :param http_context: HttpContext</span>
-<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        Load crontab file from user.</span>
+<span class="sd">        :param user: user</span>
+<span class="sd">        :type user: string</span>
+<span class="sd">        :return: CrontabConfig</span>
+<span class="sd">        :rtype: object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">user</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">([</span><span class="s1">&#39;crontab&#39;</span><span class="p">,</span> <span class="s1">&#39;-l&#39;</span><span class="p">,</span> <span class="s1">&#39;-u&#39;</span><span class="p">,</span> <span class="n">user</span><span class="p">])</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">CrontabConfig</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">config</span></div>
 
-        <span class="n">provider</span> <span class="o">=</span> <span class="n">AuthenticationService</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span><span class="o">.</span><span class="n">get_provider</span><span class="p">()</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">provider</span><span class="o">.</span><span class="n">change_password</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">identity</span><span class="p">,</span>
-                <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;password&#39;</span><span class="p">],</span>
-                <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;new_password&#39;</span><span class="p">]</span>
-            <span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">EndpointError</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span></div></div>
-
+<div class="viewcode-block" id="CronManager.save_tab"><a class="viewcode-back" href="../../../../python/lmn_crontab.html#aj.plugins.lmn_crontab.manager.CronManager.save_tab">[docs]</a>    <span class="k">def</span> <span class="nf">save_tab</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Save new crontab data into crontab file.</span>
+<span class="sd">        :param user: user</span>
+<span class="sd">        :type user: string</span>
+<span class="sd">        :param config: CrontabConfig</span>
+<span class="sd">        :type config: CrontabConfig</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">save</span><span class="p">()[</span><span class="kc">None</span><span class="p">]</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s1">&#39;crontab&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;-u&#39;</span><span class="p">,</span> <span class="n">user</span><span class="p">])</span>
+        <span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">communicate</span><span class="p">(</span><span class="n">data</span> <span class="o">+</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">stderr</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">stderr</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>

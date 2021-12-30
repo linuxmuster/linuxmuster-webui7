@@ -1,0 +1,12 @@
+API: aj.plugins.lmn_crontab
+***************************
+
+LMN Crontab Manager
+===================
+.. automodule:: aj.plugins.lmn_cron.manager
+   :members:
+
+LMN Crontab Views
+=================
+.. automodule:: aj.plugins.lmn_cron.views
+   :members:

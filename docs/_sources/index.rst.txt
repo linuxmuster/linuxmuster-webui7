@@ -47,6 +47,7 @@ This documentation only lists an API reference for the specific plugins in linux
 
    python/lmn_auth.rst
    python/lmn_common.rst
+   python/lmn_crontab.rst
    python/lmn_devices.rst
    python/lmn_dhcp.rst
    python/lmn_docker.rst

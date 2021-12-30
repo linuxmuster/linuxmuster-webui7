@@ -95,6 +95,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="python/lmn_auth.html">API: aj.plugins.lmn_auth</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python/lmn_common.html">API: aj.plugins.lmn_common</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/lmn_crontab.html">API: aj.plugins.lmn_crontab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python/lmn_devices.html">API: aj.plugins.lmn_devices</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python/lmn_dhcp.html">API: aj.plugins.lmn_dhcp</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python/lmn_docker.html">API: aj.plugins.lmn_docker</a></li>
@@ -229,6 +230,20 @@
 </li>
       </ul></li>
       <li>
+    aj.plugins.lmn_crontab.manager
+
+      <ul>
+        <li><a href="python/lmn_crontab.html#module-aj.plugins.lmn_crontab.manager">module</a>
+</li>
+      </ul></li>
+      <li>
+    aj.plugins.lmn_crontab.views
+
+      <ul>
+        <li><a href="python/lmn_crontab.html#module-aj.plugins.lmn_crontab.views">module</a>
+</li>
+      </ul></li>
+      <li>
     aj.plugins.lmn_devices.views
 
       <ul>
@@ -263,6 +278,8 @@
         <li><a href="python/lmn_landingpage.html#module-aj.plugins.lmn_landingpage.views">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     aj.plugins.lmn_linbo.views
 
@@ -270,8 +287,6 @@
         <li><a href="python/lmn_linbo.html#module-aj.plugins.lmn_linbo.views">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     aj.plugins.lmn_linbo4.images
 
@@ -361,6 +376,8 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python/lmn_common.html#aj.plugins.lmn_common.lmnfile.ConfigLoader">ConfigLoader (class in aj.plugins.lmn_common.lmnfile)</a>
 </li>
+      <li><a href="python/lmn_crontab.html#aj.plugins.lmn_crontab.manager.CronManager">CronManager (class in aj.plugins.lmn_crontab.manager)</a>
+</li>
       <li><a href="python/lmn_common.html#aj.plugins.lmn_common.lmnfile.CSVLoader">CSVLoader (class in aj.plugins.lmn_common.lmnfile)</a>
 </li>
   </ul></td>
@@ -445,6 +462,8 @@
 </li>
       <li><a href="python/lmn_users.html#aj.plugins.lmn_users.views.Handler.handle_api_filelistImport">handle_api_filelistImport() (aj.plugins.lmn_users.views.Handler method)</a>
 </li>
+      <li><a href="python/lmn_crontab.html#aj.plugins.lmn_crontab.views.Handler.handle_api_get_crontab">handle_api_get_crontab() (aj.plugins.lmn_crontab.views.Handler method)</a>
+</li>
       <li><a href="python/lmn_dhcp.html#aj.plugins.lmn_dhcp.views.Handler.handle_api_get_dhcp">handle_api_get_dhcp() (aj.plugins.lmn_dhcp.views.Handler method)</a>
 </li>
       <li><a href="python/lmn_groupmembership.html#aj.plugins.lmn_groupmembership.views.Handler.handle_api_groupmembership_details">handle_api_groupmembership_details() (aj.plugins.lmn_groupmembership.views.Handler method)</a>
@@ -495,6 +514,8 @@
 </li>
       <li><a href="python/lmn_setup_wizard.html#aj.plugins.lmn_setup_wizard.views.Handler.handle_api_restart">handle_api_restart() (aj.plugins.lmn_setup_wizard.views.Handler method)</a>
 </li>
+      <li><a href="python/lmn_crontab.html#aj.plugins.lmn_crontab.views.Handler.handle_api_save_crontab">handle_api_save_crontab() (aj.plugins.lmn_crontab.views.Handler method)</a>
+</li>
       <li><a href="python/lmn_settings.html#aj.plugins.lmn_settings.views.Handler.handle_api_save_custom_config">handle_api_save_custom_config() (aj.plugins.lmn_settings.views.Handler method)</a>
 </li>
       <li><a href="python/lmn_quotas.html#aj.plugins.lmn_quotas.views.Handler.handle_api_save_quotas">handle_api_save_quotas() (aj.plugins.lmn_quotas.views.Handler method)</a>
@@ -507,10 +528,10 @@
 </li>
       <li><a href="python/lmn_groupmembership.html#aj.plugins.lmn_groupmembership.views.Handler.handle_api_set_group">handle_api_set_group() (aj.plugins.lmn_groupmembership.views.Handler method)</a>
 </li>
-      <li><a href="python/lmn_groupmembership.html#aj.plugins.lmn_groupmembership.views.Handler.handle_api_set_members">handle_api_set_members() (aj.plugins.lmn_groupmembership.views.Handler method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/lmn_groupmembership.html#aj.plugins.lmn_groupmembership.views.Handler.handle_api_set_members">handle_api_set_members() (aj.plugins.lmn_groupmembership.views.Handler method)</a>
+</li>
       <li><a href="python/lmn_settings.html#aj.plugins.lmn_settings.views.Handler.handle_api_settings">handle_api_settings() (aj.plugins.lmn_settings.views.Handler method)</a>
 </li>
       <li><a href="python/lmn_users.html#aj.plugins.lmn_users.views.Handler.handle_api_sophomorix_globaladmins">handle_api_sophomorix_globaladmins() (aj.plugins.lmn_users.views.Handler method)</a>
@@ -573,6 +594,8 @@
 
       <ul>
         <li><a href="python/lmn_common.html#aj.plugins.lmn_common.views.Handler">(class in aj.plugins.lmn_common.views)</a>
+</li>
+        <li><a href="python/lmn_crontab.html#aj.plugins.lmn_crontab.views.Handler">(class in aj.plugins.lmn_crontab.views)</a>
 </li>
         <li><a href="python/lmn_devices.html#aj.plugins.lmn_devices.views.Handler">(class in aj.plugins.lmn_devices.views)</a>
 </li>
@@ -641,6 +664,8 @@
 </li>
       <li><a href="python/lmn_linbo4.html#aj.plugins.lmn_linbo4.images.LinboImage.load_info">load_info() (aj.plugins.lmn_linbo4.images.LinboImage method)</a>
 </li>
+      <li><a href="python/lmn_crontab.html#aj.plugins.lmn_crontab.manager.CronManager.load_tab">load_tab() (aj.plugins.lmn_crontab.manager.CronManager method)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -660,6 +685,10 @@
         <li><a href="python/lmn_common.html#module-aj.plugins.lmn_common.lmnfile">aj.plugins.lmn_common.lmnfile</a>
 </li>
         <li><a href="python/lmn_common.html#module-aj.plugins.lmn_common.views">aj.plugins.lmn_common.views</a>
+</li>
+        <li><a href="python/lmn_crontab.html#module-aj.plugins.lmn_crontab.manager">aj.plugins.lmn_crontab.manager</a>
+</li>
+        <li><a href="python/lmn_crontab.html#module-aj.plugins.lmn_crontab.views">aj.plugins.lmn_crontab.views</a>
 </li>
         <li><a href="python/lmn_devices.html#module-aj.plugins.lmn_devices.views">aj.plugins.lmn_devices.views</a>
 </li>
@@ -734,6 +763,8 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/lmn_crontab.html#aj.plugins.lmn_crontab.manager.CronManager.save_tab">save_tab() (aj.plugins.lmn_crontab.manager.CronManager method)</a>
+</li>
       <li><a href="python/lmn_common.html#aj.plugins.lmn_common.api.SophomorixProcess">SophomorixProcess (class in aj.plugins.lmn_common.api)</a>
 </li>
       <li><a href="python/lmn_common.html#aj.plugins.lmn_common.lmnfile.StartConfLoader">StartConfLoader (class in aj.plugins.lmn_common.lmnfile)</a>

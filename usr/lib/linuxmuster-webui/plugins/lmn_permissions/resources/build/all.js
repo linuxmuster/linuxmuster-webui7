@@ -24,6 +24,7 @@ angular.module('lmn.permissions').config(function ($routeProvider) {
     $scope.columns = ['globaladministrator', 'schooladministrator', 'teacher', 'student', 'default'];
     $scope.roles = ['globaladministrator', 'schooladministrator', 'teacher', 'student'];
     $http.get('/api/permissions').then(function(resp) {
+      var details, i, len, ref, ref1, url;
       $scope.pluginObj = resp.data[0];
       // To iterate in alphabetical order
       $scope.pluginList = Object.keys($scope.pluginObj);
@@ -32,6 +33,22 @@ angular.module('lmn.permissions').config(function ($routeProvider) {
       $scope.sidebarPermissions = resp.data[2];
       // To iterate in alphabetical order
       $scope.sidebarPermissionsList = Object.keys($scope.sidebarPermissions);
+      $scope.sidebarPermissionsOrphans = [];
+      ref = $scope.sidebarPermissionsList;
+      for (i = 0, len = ref.length; i < len; i++) {
+        url = ref[i];
+        if ($scope.sidebarPermissions[url].plugin === 'NOT IMPLEMENTED') {
+          $scope.sidebarPermissionsOrphans.push(url);
+        }
+      }
+      $scope.apiPermissionsOrphans = [];
+      ref1 = $scope.apiPermissions;
+      for (url in ref1) {
+        details = ref1[url];
+        if (details.name === 'NO DESCRIPTION') {
+          $scope.apiPermissionsOrphans.push(url);
+        }
+      }
       return $scope.sidebarPermissionsList.sort();
     });
     $scope.get_provider = function(url) {

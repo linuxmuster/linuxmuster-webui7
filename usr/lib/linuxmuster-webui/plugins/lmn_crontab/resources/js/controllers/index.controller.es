@@ -1,4 +1,4 @@
-angular.module('lmn.cron').controller('CronIndexController', function($scope, $http, $log, pageTitle, gettext, notify) {
+angular.module('lmn.crontab').controller('CrontabIndexController', function($scope, $http, $log, pageTitle, gettext, notify) {
     pageTitle.set(gettext('Cron'));
 
     $scope.title = gettext('Cron');

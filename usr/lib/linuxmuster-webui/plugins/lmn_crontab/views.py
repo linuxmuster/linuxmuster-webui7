@@ -7,7 +7,7 @@ from jadi import component
 from aj.api.http import url, HttpPlugin
 from aj.auth import authorize
 from aj.api.endpoint import endpoint, EndpointError
-from .manager import CronManager
+from aj.plugins.lmn_crontab.manager import CronManager
 from reconfigure.items.crontab import CrontabNormalTaskData, CrontabSpecialTaskData, CrontabEnvSettingData
 
 @component(HttpPlugin)

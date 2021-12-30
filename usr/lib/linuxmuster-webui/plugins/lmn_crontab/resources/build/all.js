@@ -1,22 +1,22 @@
 'use strict';
 
 // the module should depend on 'core' to use the stock services & components
-angular.module('lmn.cron', ['core']);
+angular.module('lmn.crontab', ['core']);
 
 
 'use strict';
 
-angular.module('lmn.cron').config(function ($routeProvider) {
-    $routeProvider.when('/view/lm/cron', {
-        templateUrl: '/lmn_cron:resources/partial/index.html',
-        controller: 'CronIndexController'
+angular.module('lmn.crontab').config(function ($routeProvider) {
+    $routeProvider.when('/view/lm/crontab', {
+        templateUrl: '/lmn_crontab:resources/partial/index.html',
+        controller: 'CrontabIndexController'
     });
 });
 
 
 'use strict';
 
-angular.module('lmn.cron').controller('CronIndexController', function ($scope, $http, $log, pageTitle, gettext, notify) {
+angular.module('lmn.crontab').controller('CrontabIndexController', function ($scope, $http, $log, pageTitle, gettext, notify) {
     pageTitle.set(gettext('Cron'));
 
     $scope.title = gettext('Cron');

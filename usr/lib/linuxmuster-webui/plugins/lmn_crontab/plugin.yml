@@ -1,4 +1,4 @@
-name: lmn_cron
+name: lmn_crontab
 author: Linuxmuster.net
 email: arnaud@linuxmuster.net
 url: https://linuxmuster.net
@@ -14,4 +14,4 @@ resources:
     - 'resources/js/routing.es'
     - 'resources/js/controllers/index.controller.es'
     - 'resources/partial/index.html'
-    - 'ng:lmn.cron'
+    - 'ng:lmn.crontab'

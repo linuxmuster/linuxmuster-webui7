@@ -19,7 +19,7 @@ angular.module('lmn.dhcp').config(function ($routeProvider) {
 angular.module('lmn.dhcp').controller('ExtraDhcpIndexController', function ($scope, $http, pageTitle, gettext, notify, $uibModal) {
     pageTitle.set(gettext('DHCP'));
 
-    $http.get('/api/get-dhcp').then(function (resp) {
+    $http.get('/api/lm/get-dhcp').then(function (resp) {
         $scope.leases = resp.data[0];
         $scope.used = resp.data[1];
     });
@@ -158,7 +158,7 @@ angular.module('lmn.dhcp').controller('ExtraDhcpAddController', function ($scope
             return;
         }
         $scope.formNotValid = false;
-        $http.post('/api/register-dhcp', { device: $scope.newDevice }).then(function () {
+        $http.post('/api/lm/register-dhcp', { device: $scope.newDevice }).then(function () {
             notify.success(gettext('Device successfully saved in devices.csv!'));
             $scope.used.push({
                 'mac': device.mac,

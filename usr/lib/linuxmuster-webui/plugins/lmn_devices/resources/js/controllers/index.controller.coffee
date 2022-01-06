@@ -43,24 +43,31 @@ angular.module('lmn.devices').controller 'LMDevicesController', ($scope, $http, 
     $scope.dictLen = (d) ->
         return Object.keys(d).length
 
-    $scope.validateField = (name, val, isnew, ev) ->
+    $scope.validateField = (name, val, isnew, index, role="") ->
         if name == "Mac"
             # Index necessary to convert mac adress in $scope.devices
-            test = validation["isValidMac"](val, ev)
+            test = validation["isValidMac"](val, index)
+        else if name == "Host"
+            # Don't test hostname length for some devices
+            if ["server", "router", "printer", "switch"].indexOf(role) >= 0
+                test_length = false
+            else
+                test_length = true
+            test = validation["isValidHost"](val, test_length = test_length)
         else
             test = validation["isValid"+name](val)
 
         if test == true && (val || name == "Comment")
-            delete $scope.error_msg[name+"-"+ev]
-            delete $scope.emptyCells[name+"-"+ev]
+            delete $scope.error_msg[name + "-" + index]
+            delete $scope.emptyCells[name + "-" +  index]
             return ""
         else if !val
-            delete $scope.error_msg[name+"-"+ev]
-            $scope.emptyCells[name+"-"+ev] = 1
+            delete $scope.error_msg[name + "-" + index]
+            $scope.emptyCells[name + "-" + index] = 1
         else
-            delete $scope.emptyCells[name+"-"+ev]
+            delete $scope.emptyCells[name + "-" + index]
             if Object.values($scope.error_msg).indexOf(test) == -1
-                $scope.error_msg[name+"-"+ev] = test
+                $scope.error_msg[name + "-" + index] = test
 
         return "has-error-new"
 

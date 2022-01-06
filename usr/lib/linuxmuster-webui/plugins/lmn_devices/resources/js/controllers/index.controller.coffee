@@ -49,7 +49,7 @@ angular.module('lmn.devices').controller 'LMDevicesController', ($scope, $http, 
             test = validation["isValidMac"](val, index)
         else if name == "Host"
             # Don't test hostname length for some devices
-            if ["server", "router", "printer", "switch"].indexOf(role) >= 0
+            if ["server", "router", "printer", "switch", "iponly"].indexOf(role) >= 0
                 test_length = false
             else
                 test_length = true

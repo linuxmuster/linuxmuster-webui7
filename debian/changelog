@@ -1,3 +1,14 @@
+linuxmuster-webui7 (7.1.1) lmn71; urgency=medium
+
+  * Fix td overflow in linbo module
+  * Don't call import devices on each save
+  * Security fixs for pw reset
+  * Update permissions
+  * Update translations
+  * Some syntax update and homogenisation 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Thu, 06 Jan 2022 14:33:45 +0100
+
 linuxmuster-webui7 (7.1.0) lmn71; urgency=medium
 
   * New version number for distribution 7.1

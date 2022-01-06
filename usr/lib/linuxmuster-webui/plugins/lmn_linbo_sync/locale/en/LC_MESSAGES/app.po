@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-26 21:40+0200\n"
+"POT-Creation-Date: 2022-01-06 12:54+0100\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
@@ -114,6 +114,6 @@ msgstr ""
 msgid "Synchronize first OS from workstation"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/js/controllers/index.controller.coffee:154
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/js/controllers/index.controller.coffee:155
 msgid "Command successfully sent : "
 msgstr ""

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-26 21:41+0200\n"
-"PO-Revision-Date: 2021-11-14 16:06\n"
+"POT-Creation-Date: 2022-01-06 12:54+0100\n"
+"PO-Revision-Date: 2022-01-06 12:13\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -128,6 +128,14 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:165
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:77
 msgid "Value"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/main.py:28
+msgid "Get the crontab command of the user"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/main.py:33
+msgid "Modify the crontab of the user"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/js/controllers/index.controller.es:2

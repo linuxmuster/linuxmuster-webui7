@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ajenti\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-14 15:53+0100\n"
+"POT-Creation-Date: 2022-01-06 12:55+0100\n"
 "PO-Revision-Date: 2016-05-21 17:18-0400\n"
 "Last-Translator: eugenepankov <john.pankov@gmail.com>\n"
 "Language-Team: Bengali\n"
@@ -16,8 +16,8 @@ msgstr ""
 "X-Crowdin-Language: bn\n"
 "X-Crowdin-File: /2.0/lmn_users.po\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:26
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:45
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:31
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:50
 msgid ""
 "<i class=\"fa fa-asterisk\"></i> All users {{identity.profile.activeSchool}}"
 msgstr ""
@@ -144,7 +144,7 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:159
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/students.controller.coffee:11
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/extraStudents.controller.coffee:12
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/printPasswords.controller.coffee:38
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/printPasswords.controller.coffee:42
 msgid "Class"
 msgstr ""
 
@@ -335,9 +335,15 @@ msgstr ""
 msgid "Moved users"
 msgstr ""
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:13
+msgid ""
+"No classes found. You first need to join a class in the groupmembership "
+"modul in order to print passwords."
+msgstr ""
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:8
 msgid ""
-"No Classes found. You have to create a class by importing userlist before "
+"No classes found. You have to create a class by importing userlist before "
 "you can print user passwords!"
 msgstr ""
 
@@ -379,7 +385,7 @@ msgstr ""
 msgid "Passwords per page:"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:57
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:62
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.options.modal.html:80
 msgid "Print"
 msgstr ""
@@ -631,7 +637,7 @@ msgid ""
 "Please respect the format columns..."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:13
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:18
 msgid ""
 "You can directly print the password of one class through the icon, or select "
 "multiples classes to print all at once."
@@ -1020,25 +1026,25 @@ msgstr ""
 msgid "Delete global-administrator "
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/printPasswords.controller.coffee:38
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/printPasswords.controller.coffee:42
 msgid "All users "
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/printPasswords.controller.coffee:44
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/printPasswords.controller.coffee:48
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers.controller.coffee:132
 msgid "Created password pdf"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/printPasswords.controller.coffee:54
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/printPasswords.controller.coffee:58
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/teachers.controller.coffee:135
 msgid "Could not create password pdf"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/printPasswords.controller.coffee:64
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/printPasswords.controller.coffee:68
 msgid "Print Passwords"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/printPasswords.controller.coffee:68
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/printPasswords.controller.coffee:87
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/printPasswords.controller.coffee:72
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/printPasswords.controller.coffee:92
 msgid "It's not possible to print all users and a class at the same time."
 msgstr ""

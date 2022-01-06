@@ -527,7 +527,7 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
     $scope.$on("$locationChangeStart", (event) ->
         if ($scope.config_change && !confirm(gettext('You should call an import devices process to apply the new changes, quit this page anyway ?')))
             event.preventDefault()
-        )
+    )
 
     $http.get('/api/lm/linbo4/configs').then (resp) ->
         $scope.configs = resp.data
@@ -630,7 +630,7 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
                             notify.success("#{configName} " + gettext('saved'))
                             $scope.config_change = true
                     $http.post("/api/lm/linbo4/vdi/#{configName}.vdi", result[1]).then (resp) ->
-                        notify.success((gettext('VDI config saved'))
+                        notify.success((gettext('VDI config saved')))
 
 
     $scope.restartServices = () ->

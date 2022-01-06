@@ -155,7 +155,7 @@ angular.module('lmn.linbo').controller 'LMLINBOConfigModalController', ($scope, 
     $http.get('/api/lm/linbo/images').then (resp) ->
         $scope.oses = resp.data
 
-    for _partition in config.partitions
+    for _partition in $scope.config.partitions
         # Determine the position of the partition integer.
         # Different devices have it on a different position
         if _partition['Dev'].indexOf("nvme") != -1
@@ -179,7 +179,9 @@ angular.module('lmn.linbo').controller 'LMLINBOConfigModalController', ($scope, 
             }
             $scope.disks.push diskMap[_device]
         diskMap[_device].partitions.push _partition
-        _partition._isCache = _partition.Dev == config.config.LINBO.Cache
+        _partition._isCache = _partition.Dev == $scope.config.config.LINBO.Cache
+
+    $scope.config_backup = angular.copy($scope.config)
 
     for disk in $scope.disks
         disk.partitions.sort (a, b) -> if a.Dev > b.Dev then 1 else -1
@@ -269,7 +271,7 @@ angular.module('lmn.linbo').controller 'LMLINBOConfigModalController', ($scope, 
         return partition.FSType == 'swap'
 
     $scope.isCachePartition = (partition) ->
-        return partition.Dev == config.config.LINBO.Cache
+        return partition.Dev == $scope.config.config.LINBO.Cache
 
     $scope.getOS = (partition) ->
         for os in config.os
@@ -443,11 +445,11 @@ angular.module('lmn.linbo').controller 'LMLINBOConfigModalController', ($scope, 
                 partitionIndex++
 
                 if partition._isCache
-                    config.config.LINBO.Cache = partition.Dev
+                    $scope.config.config.LINBO.Cache = partition.Dev
 
         $log.log 'Remapping OSes', remap
 
-        for os in config.os
+        for os in $scope.config.os
             if os.Boot
                 os.Boot = remap[os.Boot]
             if os.Root
@@ -485,16 +487,18 @@ angular.module('lmn.linbo').controller 'LMLINBOConfigModalController', ($scope, 
 
     $scope.save = () ->
         console.log(vdiconfig)
-        config.partitions = []
+        $scope.config.partitions = []
         for disk in $scope.disks
             for partition in disk.partitions
-                config.partitions.push partition
-        $uibModalInstance.close([config, vdiconfig])
-        
-	# Remove # from background color
+                $scope.config.partitions.push partition
+
+        config_change = !angular.equals(angular.toJson($scope.config), angular.toJson($scope.config_backup))
+
+	    # Remove # from background color
         if $scope.config.config.LINBO.BackgroundColor
             $scope.config.config.LINBO.BackgroundColor = $scope.config.config.LINBO.BackgroundColor.substring(1)
-        $uibModalInstance.close(config)
+
+        $uibModalInstance.close([$scope.config, vdiconfig, config_change])
 
     $scope.backups = () ->
         lmFileBackups.show('/srv/linbo/start.conf.' + $scope.config.config.LINBO.Group).then () ->
@@ -510,6 +514,7 @@ angular.module('lmn.linbo').controller 'LMLINBOController', ($q, $scope, $http, 
 
     $scope.tabs = ['groups', 'images']
     $scope.showConvertDialog = false
+    $scope.config_change = false
 
     tag = $location.$$url.split("#")[1]
     if tag and tag in $scope.tabs
@@ -518,6 +523,11 @@ angular.module('lmn.linbo').controller 'LMLINBOController', ($q, $scope, $http, 
         $scope.activetab = 0
 
     $scope.images_selected = []
+
+    $scope.$on("$locationChangeStart", (event) ->
+        if ($scope.config_change && !confirm(gettext('You should call an import devices process to apply the new changes, quit this page anyway ?')))
+            event.preventDefault()
+        )
 
     $scope.$on('push:lmn_linbo', ($event, msg) ->
         if msg == 'refresh'
@@ -546,6 +556,7 @@ angular.module('lmn.linbo').controller 'LMLINBOController', ($q, $scope, $http, 
 
             backdrop: 'static'
         )
+        $scope.config_change = false
 
     $scope.createConfig = (example) ->
         messagebox.prompt('New name', '').then (msg) ->
@@ -564,7 +575,7 @@ angular.module('lmn.linbo').controller 'LMLINBOController', ($q, $scope, $http, 
                         $http.get("/api/lm/read-config-setup").then (setup) ->
                             resp.data['config']['LINBO']['Server'] = setup.data['setup']['serverip']
                             $http.post("/api/lm/linbo/config/start.conf.#{newName}", resp.data).then () ->
-                                $scope.importDevices()
+                                $scope.config_change = true
                 else
                     $http.post("/api/lm/linbo/config/start.conf.#{newName}", {
                         config:
@@ -573,12 +584,12 @@ angular.module('lmn.linbo').controller 'LMLINBOController', ($q, $scope, $http, 
                         os: []
                         partitions: []
                     }).then () ->
-                        $scope.importDevices()
+                        $scope.config_change = true
 
     $scope.deleteConfig = (configName) ->
         messagebox.show(text: "Delete '#{configName}'?", positive: 'Delete', negative: 'Cancel').then () ->
             $http.delete("/api/lm/linbo/config/#{configName}").then () ->
-                $scope.importDevices()
+                $scope.config_change = true
 
     $scope.duplicateConfig = (configName, deleteOriginal=false) ->
         newName = configName.substring('start.conf.'.length)
@@ -590,9 +601,9 @@ angular.module('lmn.linbo').controller 'LMLINBOController', ($q, $scope, $http, 
                     $http.post("/api/lm/linbo/config/start.conf.#{newName}", resp.data).then () ->
                         if deleteOriginal
                             $http.delete("/api/lm/linbo/config/#{configName}").then () ->
-                                $scope.importDevices()
+                                $scope.config_change = true
                         else
-                            $scope.importDevices()
+                            $scope.config_change = true
 
     $scope.editConfig = (configName) ->
         $http.get("/api/lm/linbo/config/#{configName}").then (resp) ->
@@ -608,11 +619,14 @@ angular.module('lmn.linbo').controller 'LMLINBOController', ($q, $scope, $http, 
                         config: () -> config
                         vdiconfig:() -> vdiconfig
                 ).result.then (result) ->
-                    $http.post("/api/lm/linbo/config/#{configName}", result[0]).then (resp) ->
-                        notify.success gettext('Saved')
-                    $http.post("/api/lm/linbo/vdi/#{configName}.vdi", result[1]).then (resp) ->
-                        notify.success gettext('Saved')
-                        $scope.importDevices()
+                    # result = [config, vdiconfig, config_change]
+                    # Config changed ?
+                    if result[2] == true
+                        $http.post("/api/lm/linbo4/config/#{configName}", result[0]).then (resp) ->
+                            notify.success("#{configName} " + gettext('saved'))
+                            $scope.config_change = true
+                    $http.post("/api/lm/linbo4/vdi/#{configName}.vdi", result[1]).then (resp) ->
+                        notify.success((gettext('VDI config saved')))
 
     $scope.deleteImage = (image) ->
         messagebox.show(text: "Delete '#{image.name}'?", positive: 'Delete', negative: 'Cancel').then () ->

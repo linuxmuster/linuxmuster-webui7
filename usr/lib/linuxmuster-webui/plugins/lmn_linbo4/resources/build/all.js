@@ -664,12 +664,13 @@
       return $scope.examples = resp.data;
     });
     $scope.importDevices = function() {
-      return $uibModal.open({
+      $uibModal.open({
         templateUrl: '/lmn_linbo:resources/partial/apply.modal.html',
         controller: 'LMImportDevicesApplyModalController',
         size: 'lg',
         backdrop: 'static'
       });
+      return $scope.config_change = false;
     };
     $scope.createConfig = function(example) {
       return messagebox.prompt('New name', '').then(function(msg) {
@@ -776,8 +777,8 @@
               }
             }
           }).result.then(function(result) {
+            // result = [config, vdiconfig, config_change]
             // Config changed ?
-            console.log(result);
             if (result[2] === true) {
               $http.post(`/api/lm/linbo4/config/${configName}`, result[0]).then(function(resp) {
                 notify.success(`${configName} ` + gettext('saved'));

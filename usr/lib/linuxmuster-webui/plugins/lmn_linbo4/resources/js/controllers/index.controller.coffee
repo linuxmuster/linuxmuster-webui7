@@ -490,12 +490,12 @@ angular.module('lmn.linbo4').controller 'LMLINBO4ConfigModalController', ($scope
         for disk in $scope.disks
             for partition in disk.partitions
                 config.partitions.push partition
-        $uibModalInstance.close([config, vdiconfig])
-        
-	# Remove # from background color
+
+	    # Remove # from background color
         if $scope.config.config.LINBO.BackgroundColor
             $scope.config.config.LINBO.BackgroundColor = $scope.config.config.LINBO.BackgroundColor.substring(1)
-        $uibModalInstance.close(config)
+
+        $uibModalInstance.close([config, vdiconfig])
 
     $scope.backups = () ->
         lmFileBackups.show('/srv/linbo/start.conf.' + $scope.config.config.LINBO.Group).then () ->

@@ -597,13 +597,11 @@
           config.partitions.push(partition);
         }
       }
-      $uibModalInstance.close([config, vdiconfig]);
-      
       // Remove # from background color
       if ($scope.config.config.LINBO.BackgroundColor) {
         $scope.config.config.LINBO.BackgroundColor = $scope.config.config.LINBO.BackgroundColor.substring(1);
       }
-      return $uibModalInstance.close(config);
+      return $uibModalInstance.close([config, vdiconfig]);
     };
     $scope.backups = function() {
       return lmFileBackups.show('/srv/linbo/start.conf.' + $scope.config.config.LINBO.Group).then(function() {

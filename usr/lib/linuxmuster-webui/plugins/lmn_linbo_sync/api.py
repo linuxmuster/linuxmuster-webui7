@@ -7,6 +7,7 @@ import locale
 import time
 import subprocess
 import gzip
+import xml.etree.ElementTree as ET
 
 LINBO_PATH = '/srv/linbo'
 
@@ -183,19 +184,51 @@ def test_online(host):
 
     :param host: Hostname
     :type host: string
-    :return: OS type
+    :return: OS type (Off, Linbo, OS Linux, OS Windows, OS Unknown)
     :rtype: string
     """
-
-    command=['nmap', '-p', '22', '-O', host]
+    command=["nmap", "-p", "2222,22,135", host, "-oX", "-"]
     r = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=False).stdout.read()
-    if b'Too many fingerprints' in r:
-        return "Linbo"
-    elif b'Linux' in r:
-        return "OS Linux"
-    else:
-        return 'Off'
+    xmlRoot = ET.fromstring(r)
+    openPorts = []
 
+    try:
+        hostElement = xmlRoot.findall("host")[0]
+        portsElement = hostElement.findall("ports")[0]
+        scannedPorts = portsElement.findall("port")
+    except:
+        return get_os_from_open_ports([])
+
+    for scannedPort in scannedPorts:
+        portNumber = scannedPort.attrib["portid"]
+        portState = scannedPort.findall("state")[0].attrib["state"]
+        if portState == "open":
+                openPorts.append(portNumber)
+
+    return get_os_from_open_ports(openPorts)
+
+def get_os_from_open_ports(openPorts):
+    """
+    Convert a list of open ports to an OS string.
+
+    :param openPorts: The list of open ports
+    :type openPorts: list
+    :return: OS type (Off, Linbo, OS Linux, OS Windows, OS Unknown)
+    :rtype: string
+    """
+    if len(openPorts) == 0:
+            return "Off"
+    elif len(openPorts) > 1:
+            return "OS Unknown"
+
+    if openPorts[0] == "22":
+        return "OS Linux"
+    elif openPorts[0] == "135":
+        return "OS Windows"
+    elif openPorts[0] == "2222":
+        return "Linbo"
+    else:
+        return "OS Unknown"
 
 def run(command):
     """

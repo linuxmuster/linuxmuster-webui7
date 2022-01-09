@@ -7,7 +7,7 @@ import locale
 import time
 import subprocess
 import gzip
-import xml.etree.ElementTree as ET
+import xml.etree.ElementTree as ElementTree
 
 LINBO_PATH = '/srv/linbo'
 
@@ -189,46 +189,97 @@ def test_online(host):
     """
     command=["nmap", "-p", "2222,22,135", host, "-oX", "-"]
     r = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=False).stdout.read()
-    xmlRoot = ET.fromstring(r)
-    openPorts = []
+    xmlRoot = ElementTree.fromstring(r)
 
-    try:
-        hostElement = xmlRoot.findall("host")[0]
-        portsElement = hostElement.findall("ports")[0]
-        scannedPorts = portsElement.findall("port")
-    except:
-        return get_os_from_open_ports([])
+    numberOfOnlineHosts = int(xmlRoot.find("runstats").find("hosts").attrib["up"])
+    if numberOfOnlineHosts == 0:
+        return "Off"
+
+    ports = {}
+    scannedPorts = xmlRoot.find("host").find("ports").findall("port")
 
     for scannedPort in scannedPorts:
         portNumber = scannedPort.attrib["portid"]
-        portState = scannedPort.findall("state")[0].attrib["state"]
-        if portState == "open":
-                openPorts.append(portNumber)
+        portState = scannedPort.find("state").attrib["state"]
+        ports[portNumber] = portState
 
-    return get_os_from_open_ports(openPorts)
+    return get_os_from_ports(ports)
 
-def get_os_from_open_ports(openPorts):
+def get_os_from_ports(ports):
     """
-    Convert a list of open ports to an OS string.
+    Convert a dict of ports to an OS string.
 
-    :param openPorts: The list of open ports
-    :type openPorts: list
-    :return: OS type (Off, Linbo, OS Linux, OS Windows, OS Unknown)
+    :param openPorts: The dict of open ports (key: port number, value: port state)
+    :type openPorts: dict
+    :return: OS type (Linbo, OS Linux, OS Windows, OS Unknown)
     :rtype: string
     """
-    if len(openPorts) == 0:
-            return "Off"
-    elif len(openPorts) > 1:
-            return "OS Unknown"
-
-    if openPorts[0] == "22":
-        return "OS Linux"
-    elif openPorts[0] == "135":
-        return "OS Windows"
-    elif openPorts[0] == "2222":
+    if is_port_signature_linbo(ports):
         return "Linbo"
+    elif is_port_signature_linux(ports):
+        return "OS Linux"
+    elif is_port_signature_windows(ports):
+        return "OS Windows"
     else:
         return "OS Unknown"
+
+def is_port_signature_linbo(ports):
+    """
+    Check if a dict of ports belongs to a Linbo host.
+    The criteria for Linbo is, that ONLY port 2222 is open
+    
+    :param openPorts: The dict of open ports (key: port number, value: port state)
+    :type openPorts: dict
+    :return: Whether it's a Linbo host
+    :rtype: bool
+    """
+    openPortNumbers = []
+    for port in ports:
+        if ports[port] == "open":
+            openPortNumbers.append(port)
+
+    return (
+        "2222" in openPortNumbers 
+        and len(openPortNumbers) == 1
+    )
+
+def is_port_signature_linux(ports):
+    """
+    Check if a dict of ports belongs to a Linux host.
+    The criteria for Linux is, that port 22 is open and 135 is closed.
+    
+    :param openPorts: The dict of open ports (key: port number, value: port state)
+    :type openPorts: dict
+    :return: Whether it's a Linux host
+    :rtype: bool
+    """
+    return (
+        "22" in ports
+        and ports["22"] in ["open", "filtered"]
+        and (
+            "135" not in ports
+            or ports["135"] != "open"
+        )
+    )
+
+def is_port_signature_windows(ports):
+    """
+    Check if a dict of ports belongs to a Windows host.
+    The criteria for Windows is, that port 135 is open and 22 is not open.
+    
+    :param openPorts: The dict of open ports (key: port number, value: port state)
+    :type openPorts: dict
+    :return: Whether it's a Windows host
+    :rtype: bool
+    """
+    return (
+        "135" in ports
+        and ports["135"] == "open"
+        and (
+            "22" not in ports
+            or ports["22"] != "open"
+        )
+    )
 
 def run(command):
     """

@@ -35,6 +35,9 @@ class LMAuthenticationProvider(AuthenticationProvider):
     def __init__(self, context):
         self.context = context
 
+    def prepare_environment(self, username):
+        pass
+
     def get_ldap_user(self, username, context=""):
         """
         Get the user's informations to initialize his session.

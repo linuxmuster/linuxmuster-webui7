@@ -274,7 +274,7 @@ def is_port_signature_windows(ports):
     """
     return (
         "135" in ports
-        and ports["135"]in ["open", "filtered"]
+        and ports["135"] in ["open", "filtered"]
         and (
             "22" not in ports
             or ports["22"] != "open"

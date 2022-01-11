@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-06 12:54+0100\n"
-"PO-Revision-Date: 2022-01-06 12:13\n"
+"POT-Creation-Date: 2022-01-11 17:18+0100\n"
+"PO-Revision-Date: 2022-01-11 16:21\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -555,15 +555,24 @@ msgstr "Multicast- und Torrent-Dienste neu gestartet"
 msgid "Failed to restart multicast and torrent services. Please see the log files"
 msgstr "Multicast und Torrent-Dienste konnten nicht neu gestartet werden. Bitte lesen Sie die Log-Dateien"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:680
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:651
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:669
+msgid "Failed to delete image :"
+msgstr "Fehler beim Löschen des Bilds:"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:658
+msgid "Failed to delete backup :"
+msgstr "Fehler beim Löschen der Sicherung:"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:686
 msgid " is not a valid name for a linbo image."
 msgstr " ist kein gültiger Name für ein Linbo-Bild."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:699
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:705
 msgid "Backup saved"
 msgstr "Sicherung gespeichert"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:703
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:709
 msgid "Saved"
 msgstr "Gespeichert"
 

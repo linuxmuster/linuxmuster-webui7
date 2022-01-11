@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-06 12:54+0100\n"
-"PO-Revision-Date: 2022-01-06 12:13\n"
+"POT-Creation-Date: 2022-01-11 17:18+0100\n"
+"PO-Revision-Date: 2022-01-11 16:21\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -45,11 +45,11 @@ msgstr "Gültige Zeichen sind: a-z A-Z 0-9 !§+-@#$%&amp;*( )[ ]{ }"
 msgid "Linux Muster LDAP"
 msgstr "linuxmuster LDAP"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:325
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:328
 msgid "Minimal length is 7 characters. Use upper, lower and special characters or numbers. (e.g. Muster!)."
 msgstr "Minimale Passwortlänge ist 7 Zeichen. Verwenden Sie Großbuchstaben, Kleinbuchstaben und Sonderzeichen oder Zahlen. (z.B. Muster!)."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:340
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:343
 msgid "Linuxmuster LDAP user config"
 msgstr "Linuxmuster LDAP-Benutzerkonfiguration"
 

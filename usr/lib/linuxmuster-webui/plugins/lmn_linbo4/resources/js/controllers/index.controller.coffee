@@ -647,11 +647,15 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
         messagebox.show(text: "Delete '#{image.name}'?", positive: 'Delete', negative: 'Cancel').then () ->
             $http.delete("/api/lm/linbo4/image/#{image.name}").then () ->
                 $scope.restartServices()
+            .catch (err) ->
+                notify.error(gettext("Failed to delete image :") + err.data.message)
 
     $scope.deleteBackupImage = (image, date) ->
         messagebox.show(text: "Delete '#{image.name}'?", positive: 'Delete', negative: 'Cancel').then () ->
             $http.post("/api/lm/linbo4/deleteBackupImage/#{image.name}", {date: date}).then () ->
                 $scope.restartServices()
+            .catch (err) ->
+                notify.error(gettext("Failed to delete backup :") + err.data.message)
 
     $scope.deleteImages = () ->
         name_list = (image.name for image in $scope.images_selected).toString()
@@ -661,6 +665,8 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
                 promises.push($http.delete("/api/lm/linbo4/image/#{image.name}"))
             $q.all(promises).then () ->
                 $scope.restartServices()
+            .catch (err) ->
+                notify.error(gettext("Failed to delete image :") + err.data.message)
 
     $scope.toggleSelected = (image) ->
         position = $scope.images_selected.indexOf(image)

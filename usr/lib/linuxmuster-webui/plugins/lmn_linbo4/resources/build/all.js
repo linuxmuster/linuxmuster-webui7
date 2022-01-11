@@ -811,6 +811,8 @@
       }).then(function() {
         return $http.delete(`/api/lm/linbo4/image/${image.name}`).then(function() {
           return $scope.restartServices();
+        }).catch(function(err) {
+          return notify.error(gettext("Failed to delete image :") + err.data.message);
         });
       });
     };
@@ -824,6 +826,8 @@
           date: date
         }).then(function() {
           return $scope.restartServices();
+        }).catch(function(err) {
+          return notify.error(gettext("Failed to delete backup :") + err.data.message);
         });
       });
     };
@@ -853,6 +857,8 @@
         }
         return $q.all(promises).then(function() {
           return $scope.restartServices();
+        }).catch(function(err) {
+          return notify.error(gettext("Failed to delete image :") + err.data.message);
         });
       });
     };

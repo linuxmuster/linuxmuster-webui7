@@ -6,6 +6,7 @@ from datetime import datetime
 
 from jadi import service
 from aj.plugins.lmn_common.lmnfile import LMNFile
+from aj.api.endpoint import EndpointError
 
 LINBO_PATH = '/srv/linbo/images'
 
@@ -133,7 +134,10 @@ class LinboImage:
         self._torrent_stop()
 
         # Remove directory
-        os.rmdir(self.path)
+        try:
+            os.rmdir(self.path)
+        except OSError as e:
+            raise EndpointError(e)
 
     def rename(self, new_name):
         """

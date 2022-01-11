@@ -1,3 +1,11 @@
+linuxmuster-webui7 (7.1.2) lmn71; urgency=medium
+
+  * Improve OS detection in Linbo sync plugin (thanks @doriannim)
+  * Fix macct bug in Linbo 4 plugin 
+  * Better notify delete error in Linbo 4 plugin
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Tue, 11 Jan 2022 17:40:15 +0100
+
 linuxmuster-webui7 (7.1.1) lmn71; urgency=medium
 
   * Fix td overflow in linbo module

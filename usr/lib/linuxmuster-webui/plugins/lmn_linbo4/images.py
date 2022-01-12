@@ -290,7 +290,10 @@ class LinboImageGroup:
             backup.delete()
 
         if os.path.isdir(self.backup_path):
-            os.rmdir(self.backup_path)
+            try:
+                os.rmdir(self.backup_path)
+            except OSError as e:
+                raise EndpointError(e)
 
         self.base.delete()
 

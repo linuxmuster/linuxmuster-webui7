@@ -12,6 +12,7 @@ dependencies:
 resources:
     - 'resources/js/module.coffee'
     - 'resources/js/directives.coffee'
+    - 'resources/js/directives/sambaAccess.es'
     - 'resources/js/upload.directives.coffee'
     - 'resources/js/lmFileEditor.service.coffee'
     - 'resources/js/validation.service.coffee'

@@ -1,14 +1,7 @@
 
 <br/>
 
-<div ng:show="identity.user == 'root'">
-    <br/>
-    <div class="alert alert-danger">
-        <i class="fa fa-info-circle"></i> <span translate>You should not use WebUI as root user! This module does not work for the root user. You can either use a administrative or teacher account.</span>
-    </div>
-</div>
-
-<div ng:show="identity.user != 'root'">
+<div samba-access>
 
     <progress-spinner ng:show="(groups == null) || (changeState)"></progress-spinner>
 

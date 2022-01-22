@@ -86,23 +86,6 @@
 
 'use strict';
 
-angular.module('core').directive('adminAccess', function (identity) {
-    return {
-        restrict: 'A',
-        link: function link($scope, element, attr) {
-            var template = '\n                <div class="text-center root-access-blocker">\n                    <h1>\n                        <i class="fa fa-lock"></i>\n                    </h1>\n                    <h3 translate>\n                        Superuser access required\n                    </h3>\n                </div>';
-            identity.promise.then(function () {
-                if (!identity.profile.sophomorixRole) {
-                    element.empty().append($(template));
-                }
-            });
-        }
-    };
-});
-
-
-'use strict';
-
 angular.module('core').directive('sambaAccess', function (identity) {
     return {
         restrict: 'A',

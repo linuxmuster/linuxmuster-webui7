@@ -254,5 +254,6 @@ angular.module('lmn.devices').controller 'LMDevicesController', ($scope, $http, 
 
     $http.get('/api/lm/devices').then (resp) ->
         $scope.devices = resp.data
-        validation.set($scope.devices, 'devices')
+        $scope.devices_without_comment = $scope.devices.filter((dict) -> dict['room'][0] != '#')
+        validation.set($scope.devices_without_comment, 'devices')
 

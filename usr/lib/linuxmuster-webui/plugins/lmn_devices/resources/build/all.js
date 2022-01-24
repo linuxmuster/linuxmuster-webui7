@@ -296,7 +296,10 @@
     });
     return $http.get('/api/lm/devices').then(function(resp) {
       $scope.devices = resp.data;
-      return validation.set($scope.devices, 'devices');
+      $scope.devices_without_comment = $scope.devices.filter(function(dict) {
+        return dict['room'][0] !== '#';
+      });
+      return validation.set($scope.devices_without_comment, 'devices');
     });
   });
 

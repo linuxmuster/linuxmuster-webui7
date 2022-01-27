@@ -399,10 +399,11 @@ angular.module('lmn.users').controller 'LMUsersListManagementController', ($scop
             if val != ''
                 test = test && ($scope.teachers.filter(validation.findval('login', val)).length < 2)
         else if filter == 'extrastudents'
-            test = test && ($scope.extrastudents.filter(validation.findval('login', val)).length < 2)
+            if val != ''
+                test = test && ($scope.extrastudents.filter(validation.findval('login', val)).length < 2)
 
         # Login for teachers may be empty
-        if name == 'Login' and filter == 'teachers' and test == true
+        if name == 'Login' and ( filter == 'teachers' or filter == 'extrastudents' ) and test == true
             delete $scope.error_msg[name+"-"+tab+"-"+ev]
             delete $scope.emptyCells[name+"-"+tab+"-"+ev]
             return ""

@@ -3056,10 +3056,12 @@
           test = test && ($scope.teachers.filter(validation.findval('login', val)).length < 2);
         }
       } else if (filter === 'extrastudents') {
-        test = test && ($scope.extrastudents.filter(validation.findval('login', val)).length < 2);
+        if (val !== '') {
+          test = test && ($scope.extrastudents.filter(validation.findval('login', val)).length < 2);
+        }
       }
       // Login for teachers may be empty
-      if (name === 'Login' && filter === 'teachers' && test === true) {
+      if (name === 'Login' && (filter === 'teachers' || filter === 'extrastudents') && test === true) {
         delete $scope.error_msg[name + "-" + tab + "-" + ev];
         delete $scope.emptyCells[name + "-" + tab + "-" + ev];
         return "";

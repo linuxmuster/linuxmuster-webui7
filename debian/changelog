@@ -1,3 +1,10 @@
+linuxmuster-webui7 (1.0.169rc6) bionic; urgency=medium
+
+  * Current snapshot build 1f21aa7578ff37845cfa469a81d3d3d193222a9b
+  *     fix problem wir userinformation proxyAddress
+
+ -- Lukas Spitznagel <lukas.spitznagel@netzint.de>  Tue, 27 Jan 2022 10:44:32 +0000
+
 linuxmuster-webui7 (1.0.169rc5) bionic; urgency=medium
 
   * Current snapshot build dc886580c367399f4d1837655df98ee553f998d0

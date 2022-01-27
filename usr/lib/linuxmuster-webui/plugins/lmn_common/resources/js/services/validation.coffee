@@ -19,8 +19,8 @@ angular.module('lmn.common').service 'validation', (gettext) ->
 
     # Valid chars for user passwords
     this.validCharPwd = (password) ->
-        error_msg = gettext('Password is not valid. Password can only contains a-zA-Z0-9!@#§+\-$%&*{}()\]\[')
-        regExp = /^[a-zA-Z0-9!@#§+\-$%&*{}()\]\[]+$/
+        error_msg = gettext('Password is not valid. Password can only contains a-zA-Z0-9?!@#§+\-$%&*{}()\]\[')
+        regExp = /^[a-zA-Z0-9\?!@#§+\-$%&*{}()\]\[]+$/
         validPassword = regExp.test(password)
         if !validPassword
             return error_msg

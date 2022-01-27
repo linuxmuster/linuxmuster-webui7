@@ -408,8 +408,8 @@ angular.module('core').directive('sambaAccess', function (identity) {
     // Valid chars for user passwords
     this.validCharPwd = function(password) {
       var error_msg, regExp, validPassword;
-      error_msg = gettext('Password is not valid. Password can only contains a-zA-Z0-9!@#§+\-$%&*{}()\]\[');
-      regExp = /^[a-zA-Z0-9!@#§+\-$%&*{}()\]\[]+$/;
+      error_msg = gettext('Password is not valid. Password can only contains a-zA-Z0-9?!@#§+\-$%&*{}()\]\[');
+      regExp = /^[a-zA-Z0-9\?!@#§+\-$%&*{}()\]\[]+$/;
       validPassword = regExp.test(password);
       if (!validPassword) {
         return error_msg;

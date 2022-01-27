@@ -60,10 +60,15 @@ angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $rou
             $scope.custom = resp.data.custom[role]
             $scope.customMulti = resp.data.customMulti[role]
             $scope.proxyAddresses = resp.data.proxyAddresses[role]
+            
+            # Check if proxyAddresses has content
+            if Object.keys(resp.data.proxyAddresses).length != 0
+                $scope.proxyAddresses = resp.data.proxyAddresses[role]
 
-            # Is there a custom field to show ?
-            if $scope.proxyAddresses.show
-                $scope.custom_column = true
+                # Is there a custom field to show ?
+                if $scope.proxyAddresses.show
+                    $scope.custom_column = true
+
 
             if not $scope.custom_column
                 for custom, values of $scope.custom

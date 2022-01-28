@@ -1,3 +1,16 @@
+linuxmuster-webui7 (7.1.3) lmn71; urgency=medium
+
+  * Refactor angularjs components in lmn_common
+  * Better page for password change
+  * Fix delete of backup dir in linbo4
+  * Add '?' to possible char in password
+  * Login is no longer require in extrastudent
+  * Fix comments handling in devices
+  * Remove unecessary acls
+  * New directive for root warning 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 28 Jan 2022 11:27:45 +0100
+
 linuxmuster-webui7 (7.1.2) lmn71; urgency=medium
 
   * Improve OS detection in Linbo sync plugin (thanks @doriannim)

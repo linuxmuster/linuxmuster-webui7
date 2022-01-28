@@ -7,12 +7,6 @@ angular.module('lmn.auth').controller 'LMNPasswordChangeCtrl', ($scope, $http, p
     pageTitle.set(gettext('Change Password'))
 
     $scope.change = () ->
-        if not $scope.newPassword or not $scope.password
-            return
-        if $scope.newPassword != $scope.newPassword2
-            notify.error gettext('Passwords do not match')
-            return
-
         test = validation.isValidPassword($scope.newPassword)
         if test != true
            notify.error gettext(test)

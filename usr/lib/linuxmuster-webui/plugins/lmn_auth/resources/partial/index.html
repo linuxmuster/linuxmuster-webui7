@@ -1,9 +1,12 @@
 <br/>
-    <div class="alert alert-info">
-    <i class="fa fa-info-circle"></i> <span translate>Minimal length is 7 characters. Use upper, lower and special characters or numbers. (e.g. Muster!)</span>
-    <br>
+<div class="alert alert-info">
+    <i class="fa fa-info-circle fa-3x pull-left"></i>
+    <span translate>Minimal length is 7 characters. Use upper, lower and special characters or numbers. (e.g. Muster!)</span>
+    <br />
     <span translate>Valid characters are: a-z A-Z 0-9 ?!§+-@#$%&amp;*( )[ ]{ }</span>
-    </div>
+    <br />
+    <strong translate>All fields are required</strong>
+</div>
 
 <div class="row">
     <div class="col-md-3">
@@ -23,12 +26,13 @@
             <input type="password" ng:model="newPassword2" required class="form-control" />
         </div>
         <div class="form-group">
-            <button class="btn btn-primary" ng:click="change()">
+            <div ng:show="newPassword && newPassword!=newPassword2" style="color:red;">
+                <small translate>The two entered passwords differ</small>
+            </div>
+            <button class="btn btn-primary" ng:disabled="!password || !newPassword || !newPassword2 || newPassword!=newPassword2" ng:click="change()">
                 <i class="fa fa-check"></i> <span translate>Change password</span>
             </button>
         </div>
-
-
     </div>
     <div class="col-md-3">
     </div>

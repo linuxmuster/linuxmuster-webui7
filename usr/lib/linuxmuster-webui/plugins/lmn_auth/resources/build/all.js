@@ -32,6 +32,10 @@
 
   angular.module('lmn.auth').controller('LMNPasswordChangeCtrl', function($scope, $http, pageTitle, gettext, notify, validation) {
     pageTitle.set(gettext('Change Password'));
+    $scope.showNewPassword = false;
+    $scope.toggleShowNewPassword = () => {
+      return $scope.showNewPassword = !$scope.showNewPassword;
+    };
     return $scope.change = function() {
       var test;
       test = validation.isValidPassword($scope.newPassword);

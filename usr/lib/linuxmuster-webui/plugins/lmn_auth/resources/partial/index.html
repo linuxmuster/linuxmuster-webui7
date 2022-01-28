@@ -17,9 +17,15 @@
             <label translate>Current password</label>
             <input type="password" ng:model="password" required class="form-control" />
         </div>
-        <div class="form-group">
+        <div ng:show="!showNewPassword" class="form-group has-feedback">
             <label translate>New password</label>
             <input type="password" ng:model="newPassword" required class="form-control" />
+            <span ng:show="!showNewPassword" ng:click="toggleShowNewPassword()" class="fas fa-eye form-control-feedback" style="cursor: pointer; pointer-events: all; line-height:34px;"></span>
+        </div>
+        <div ng:show="showNewPassword" class="form-group has-feedback">
+            <label translate>New password</label>
+            <input type="text" ng:model="newPassword" required class="form-control" />
+            <span ng:show="showNewPassword" ng:click="toggleShowNewPassword()" class="fas fa-eye-slash form-control-feedback" style="cursor: pointer; pointer-events: all; line-height:34px;"></span>
         </div>
         <div class="form-group">
             <label translate>Repeat password</label>

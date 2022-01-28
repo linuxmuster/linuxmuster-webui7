@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-06 12:55+0100\n"
-"PO-Revision-Date: 2022-01-11 16:21\n"
+"POT-Creation-Date: 2022-01-28 11:31+0100\n"
+"PO-Revision-Date: 2022-01-28 10:36\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -17,8 +17,8 @@ msgstr ""
 "X-Crowdin-File: /2.0/lmn_users.po\n"
 "X-Crowdin-File-ID: 108\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:31
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:50
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:29
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:48
 msgid "<i class=\"fa fa-asterisk\"></i> All users {{identity.profile.activeSchool}}"
 msgstr "<i class=\"fa fa-asterisk\"></i> Tous les utilisateurs {{identity.profile.activeSchool}}"
 
@@ -329,11 +329,11 @@ msgstr "Déplacer des utilisateurs"
 msgid "Moved users"
 msgstr "Utilisateurs déplacés"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:13
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:11
 msgid "No classes found. You first need to join a class in the groupmembership modul in order to print passwords."
 msgstr "Aucune classe trouvée. Vous devez d'abord rejoindre une classe dans le module de gestion des groupes afin d'imprimer les mots de passe."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:8
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:6
 msgid "No classes found. You have to create a class by importing userlist before you can print user passwords!"
 msgstr "Aucune classe trouvée. Vous devez créer une classe en important une liste d'utilisateurs avant d'imprimer les mots de passe!"
 
@@ -373,7 +373,7 @@ msgstr "Mot de passe:"
 msgid "Passwords per page:"
 msgstr "Mots de passe par page :"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:62
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:60
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.options.modal.html:80
 msgid "Print"
 msgstr "Imprimer"
@@ -556,10 +556,6 @@ msgstr "Il n'y a pas encore d'élèves à gérer. Vous pouvez ajouter des élèv
 msgid "There are no teachers to manage yet. You can add teachers using the list management module"
 msgstr "Il n'y a pas encore d'enseignants à gérer. Vous pouvez ajouter des enseignants en utilisant le module de gestion de liste"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:4
-msgid "This modul cannot work as root user."
-msgstr "Ce module ne peut pas fonctionner en tant qu'utilisateur root."
-
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:46
 msgid "TolerationDate:"
 msgstr "Date de tolérance :"
@@ -612,7 +608,7 @@ msgstr "Voulez-vous télécharger un fichier csv personnalisé ? Cela remplacera
 msgid "Would you like to upload a list csv? This will replace your current CSV! Please respect the format columns..."
 msgstr "Voulez-vous envoyer une liste csv ? Cela remplacera votre CSV actuel ! Veuillez respecter les colonnes de format..."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:18
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:16
 msgid "You can directly print the password of one class through the icon, or select multiples classes to print all at once."
 msgstr "Vous pouvez directement imprimer le mot de passe d'une classe via l'icône, ou sélectionner plusieurs classes à imprimer en même temps."
 
@@ -766,7 +762,7 @@ msgstr "Mot de passe souhaité"
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:301
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:313
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:325
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:432
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:433
 msgid "Please check the errors."
 msgstr "Merci de corriger les erreurs."
 

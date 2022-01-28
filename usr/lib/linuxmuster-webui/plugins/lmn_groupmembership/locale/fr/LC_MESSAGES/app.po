@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-14 15:53+0100\n"
-"PO-Revision-Date: 2022-01-11 16:21\n"
+"POT-Creation-Date: 2022-01-28 11:31+0100\n"
+"PO-Revision-Date: 2022-01-28 10:36\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -17,8 +17,8 @@ msgstr ""
 "X-Crowdin-File: /2.0/lmn_groupmembership.po\n"
 "X-Crowdin-File-ID: 120\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:105
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:62
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:55
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:98
 msgid "<i class=\"fas fa-undo\"></i>"
 msgstr "<i class=\"fa fa-undo\"></i>"
 
@@ -54,7 +54,7 @@ msgstr "Appliquer"
 msgid "Cancel"
 msgstr "Annuler"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:74
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:67
 msgid "Class"
 msgstr "Classe"
 
@@ -62,7 +62,7 @@ msgstr "Classe"
 msgid "Class as project admin"
 msgstr "Classe en tant qu'admin du projet"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:35
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:28
 msgid "Classes"
 msgstr "Classes"
 
@@ -128,7 +128,7 @@ msgstr "Membres"
 msgid "Members"
 msgstr "Membres"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:24
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:17
 msgid "New Project"
 msgstr "Nouveau projet"
 
@@ -154,26 +154,26 @@ msgstr "Aucun résultat trouvé..."
 msgid "Normal view"
 msgstr "Vue normale"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:28
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:21
 msgid "Objectsfilter"
 msgstr "Filtre objet"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:84
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:95
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:77
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:88
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:17
 msgid "Printer"
 msgstr "Imprimante"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:36
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:29
 msgid "Printers"
 msgstr "Imprimantes"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:117
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:110
 msgid "Project"
 msgstr "Projet"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:106
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:37
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:30
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:99
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:22
 msgid "Projects"
 msgstr "Projets"
@@ -186,7 +186,7 @@ msgstr "Propriétés"
 msgid "Save"
 msgstr "Sauvegarder"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:63
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:56
 msgid "Schoolclasses"
 msgstr "Classes"
 
@@ -227,15 +227,15 @@ msgstr "Enseignants"
 msgid "Teachers as project admin"
 msgstr "Enseignants en tant qu'admin du projet"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:87
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:80
 msgid "There are no printers configured yet. Ask your administrator to configure one."
 msgstr "Il n'y a pas encore d'imprimantes configurées. Demandez à votre administrateur d'en configurer une."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:109
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:102
 msgid "There are no projects yet. You can create a new project using the menu bar."
 msgstr "Il n'y a pas encore de projets. Vous pouvez créer un nouveau procet en utilisant la barre de menu."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:66
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:59
 msgid "There are no schoolclasses available. Ask the administrator to import students"
 msgstr "Il n'y a pas de classe disponible. Demandez à l'administrateur d'importer des élèves"
 
@@ -252,10 +252,6 @@ msgstr "Type:"
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:155
 msgid "User"
 msgstr "Utilisateur"
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:7
-msgid "You should not use WebUI as root user! This module does not work for the root user. You can either use a administrative or teacher account."
-msgstr "Vous ne devriez pas utiliser WebUI comme utilisateur root ! Ce module ne fonctionne pas pour l'utilisateur root. Vous pouvez soit utiliser un compte administratif soit un compte enseignant."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:53
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:88

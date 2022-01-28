@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-06 12:55+0100\n"
-"PO-Revision-Date: 2022-01-11 16:21\n"
+"POT-Creation-Date: 2022-01-28 11:31+0100\n"
+"PO-Revision-Date: 2022-01-28 10:36\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -17,8 +17,8 @@ msgstr ""
 "X-Crowdin-File: /2.0/lmn_users.po\n"
 "X-Crowdin-File-ID: 108\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:31
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:50
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:29
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:48
 msgid "<i class=\"fa fa-asterisk\"></i> All users {{identity.profile.activeSchool}}"
 msgstr ""
 
@@ -327,11 +327,11 @@ msgstr ""
 msgid "Moved users"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:13
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:11
 msgid "No classes found. You first need to join a class in the groupmembership modul in order to print passwords."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:8
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:6
 msgid "No classes found. You have to create a class by importing userlist before you can print user passwords!"
 msgstr ""
 
@@ -371,7 +371,7 @@ msgstr ""
 msgid "Passwords per page:"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:62
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:60
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.options.modal.html:80
 msgid "Print"
 msgstr ""
@@ -554,10 +554,6 @@ msgstr ""
 msgid "There are no teachers to manage yet. You can add teachers using the list management module"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:4
-msgid "This modul cannot work as root user."
-msgstr ""
-
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:46
 msgid "TolerationDate:"
 msgstr ""
@@ -610,7 +606,7 @@ msgstr ""
 msgid "Would you like to upload a list csv? This will replace your current CSV! Please respect the format columns..."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:18
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:16
 msgid "You can directly print the password of one class through the icon, or select multiples classes to print all at once."
 msgstr ""
 
@@ -764,7 +760,7 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:301
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:313
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:325
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:432
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:433
 msgid "Please check the errors."
 msgstr ""
 

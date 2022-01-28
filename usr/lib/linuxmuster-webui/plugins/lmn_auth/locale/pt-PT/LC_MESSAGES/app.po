@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-11 17:18+0100\n"
-"PO-Revision-Date: 2022-01-11 16:21\n"
+"POT-Creation-Date: 2022-01-28 11:31+0100\n"
+"PO-Revision-Date: 2022-01-28 10:36\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -17,28 +17,37 @@ msgstr ""
 "X-Crowdin-File: /2.0/lmn_auth.po\n"
 "X-Crowdin-File-ID: 94\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:27
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:8
+msgid "All fields are required"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:39
 msgid "Change password"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:14
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:17
 msgid "Current password"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:3
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:4
 msgid "Minimal length is 7 characters. Use upper, lower and special characters or numbers. (e.g. Muster!)"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:18
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:21
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:26
 msgid "New password"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:22
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:31
 msgid "Repeat password"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:5
-msgid "Valid characters are: a-z A-Z 0-9 !§+-@#$%&amp;*( )[ ]{ }"
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:36
+msgid "The two entered passwords differ"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:6
+msgid "Valid characters are: a-z A-Z 0-9 ?!§+-@#$%&amp;*( )[ ]{ }"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:32
@@ -57,15 +66,11 @@ msgstr ""
 msgid "Change Password"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:13
-msgid "Passwords do not match"
-msgstr ""
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:23
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:21
 msgid "Password changed"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:26
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:24
 msgid "Password change failed"
 msgstr ""
 

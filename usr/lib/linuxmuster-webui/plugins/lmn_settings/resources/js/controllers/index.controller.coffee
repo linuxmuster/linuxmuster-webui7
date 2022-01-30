@@ -160,8 +160,16 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
             notify.success gettext('Saved')
 
     $scope.saveApplyHolidays = () ->
+        if document.getElementsByClassName("has-error").length > 0
+            notify.error(gettext("Please first correct the mal formated fields."))
+            return
         $http.post('/api/lm/holidays', $scope.holidays).then () ->
             notify.success gettext('Saved')
+
+    $scope.validateDate = (date) ->
+        if validation.isValidDate(date) != true
+            return 'has-error'
+        return
 
     $scope.backups = () ->
         school = "default-school"

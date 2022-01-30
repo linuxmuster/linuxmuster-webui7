@@ -223,9 +223,18 @@
       });
     };
     $scope.saveApplyHolidays = function() {
+      if (document.getElementsByClassName("has-error").length > 0) {
+        notify.error(gettext("Please first correct the mal formated fields."));
+        return;
+      }
       return $http.post('/api/lm/holidays', $scope.holidays).then(function() {
         return notify.success(gettext('Saved'));
       });
+    };
+    $scope.validateDate = function(date) {
+      if (validation.isValidDate(date) !== true) {
+        return 'has-error';
+      }
     };
     $scope.backups = function() {
       var school;

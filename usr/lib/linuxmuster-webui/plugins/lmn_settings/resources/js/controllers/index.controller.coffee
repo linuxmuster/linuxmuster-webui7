@@ -63,9 +63,11 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
         $scope.templates_individual = resp.data[0]
         $scope.templates_multiple = resp.data[1]
 
-
     $http.get('/api/lm/subnets').then (resp) ->
         $scope.subnets = resp.data
+
+    $http.get('/api/lm/holidays').then (resp) ->
+        $scope.holidays = resp.data
 
     $scope.filterscriptNotEmpty = () ->
         # A filterscript option should not be empty but "---"
@@ -111,6 +113,17 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
     $scope.addSubnet = () ->
         $scope.subnets.push({'routerIp':'', 'network':'', 'beginRange':'', 'endRange':'', 'setupFlag':''})
 
+    $scope.addHoliday = () ->
+        $scope.holidays.push({'name':'', 'start':'', 'end':''})
+
+    $scope.removeHoliday = (holiday) ->
+        messagebox.show({
+            text: gettext('Are you sure you want to delete permanently these holidays ?'),
+            positive: gettext('Delete'),
+            negative: gettext('Cancel')
+        }).then () ->
+            $scope.holidays.remove(holiday)
+
     $scope.save = () ->
         validPrintserver = validation.isValidDomain($scope.settings.school.PRINTSERVER)
         if validPrintserver != true
@@ -144,6 +157,10 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
 
     $scope.saveApplySubnets = () ->
         $http.post('/api/lm/subnets', $scope.subnets).then () ->
+            notify.success gettext('Saved')
+
+    $scope.saveApplyHolidays = () ->
+        $http.post('/api/lm/holidays', $scope.holidays).then () ->
             notify.success gettext('Saved')
 
     $scope.backups = () ->

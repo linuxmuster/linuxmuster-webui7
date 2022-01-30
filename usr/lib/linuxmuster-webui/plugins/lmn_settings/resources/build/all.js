@@ -88,6 +88,9 @@
     $http.get('/api/lm/subnets').then(function(resp) {
       return $scope.subnets = resp.data;
     });
+    $http.get('/api/lm/holidays').then(function(resp) {
+      return $scope.holidays = resp.data;
+    });
     $scope.filterscriptNotEmpty = function() {
       var k, len2, ref2, results, role;
       ref2 = ['students', 'teachers', 'extrastudents'];
@@ -161,6 +164,22 @@
         'setupFlag': ''
       });
     };
+    $scope.addHoliday = function() {
+      return $scope.holidays.push({
+        'name': '',
+        'start': '',
+        'end': ''
+      });
+    };
+    $scope.removeHoliday = function(holiday) {
+      return messagebox.show({
+        text: gettext('Are you sure you want to delete permanently these holidays ?'),
+        positive: gettext('Delete'),
+        negative: gettext('Cancel')
+      }).then(function() {
+        return $scope.holidays.remove(holiday);
+      });
+    };
     $scope.save = function() {
       var validPrintserver;
       validPrintserver = validation.isValidDomain($scope.settings.school.PRINTSERVER);
@@ -200,6 +219,11 @@
     };
     $scope.saveApplySubnets = function() {
       return $http.post('/api/lm/subnets', $scope.subnets).then(function() {
+        return notify.success(gettext('Saved'));
+      });
+    };
+    $scope.saveApplyHolidays = function() {
+      return $http.post('/api/lm/holidays', $scope.holidays).then(function() {
         return notify.success(gettext('Saved'));
       });
     };

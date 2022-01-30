@@ -23,6 +23,8 @@ ALLOWED_PATHS = [
                 '/srv/linbo',
                 # used in lmn_settings for subnets configuration
                 '/etc/linuxmuster/subnets.csv',
+                # used in lmn_settings for holidays configuration
+                '/etc/linuxmuster/holidays.yml',
                 # used in lmn_settings
                 '/var/lib/linuxmuster/setup.ini',
                 # user in setup wizard during install

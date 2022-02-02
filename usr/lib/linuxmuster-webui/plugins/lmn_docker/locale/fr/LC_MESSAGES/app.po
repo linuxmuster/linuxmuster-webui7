@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-26 21:41+0200\n"
-"PO-Revision-Date: 2021-11-14 16:07\n"
+"POT-Creation-Date: 2022-01-06 12:54+0100\n"
+"PO-Revision-Date: 2022-01-28 10:36\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -85,9 +85,17 @@ msgstr "Étiquette"
 msgid "Volumes"
 msgstr "Volumes"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_docker/views.py:35
+#: usr/lib/linuxmuster-webui/plugins/lmn_docker/views.py:36
 msgid "Docker is not installed on this host"
 msgstr "Docker n'est pas installé sur cet hôte"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_docker/main.py:28
+msgid "List image and running containers"
+msgstr "Liste des images et des conteneurs en cours d'exécution"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_docker/main.py:33
+msgid "Remove images and change running containers"
+msgstr "Supprimer les images et changer les conteneurs en cours d'exécution"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/js/controllers/index.controller.es:41
 msgid "Stop command successfully sent."

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-14 15:53+0100\n"
-"PO-Revision-Date: 2021-11-14 16:07\n"
+"POT-Creation-Date: 2022-01-06 12:55+0100\n"
+"PO-Revision-Date: 2022-01-28 10:36\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
@@ -25,8 +25,21 @@ msgstr ""
 msgid "<b>Template for one password entry per page:</b>"
 msgstr ""
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:640
+msgid "<i class=\"fa fa-warning \"></i>\n"
+"            Change this values with high precaution ! A wrong value may completely block your network !"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:677
+msgid "Add a subnet"
+msgstr ""
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:378
 msgid "Admin description"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:648
+msgid "Begin lease range"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:334
@@ -68,6 +81,10 @@ msgstr ""
 msgid "Encoding"
 msgstr ""
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:649
+msgid "End lease range"
+msgstr ""
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:36
 msgid "FQDN SSL certificate file"
 msgstr ""
@@ -83,6 +100,10 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:506
 msgid "If you want to use your own latex template, please store it in the directory /etc/linuxmuster/sophomorix/SCHOOL/latex-templates/. More informations about it <a href=\"https://github.com/linuxmuster/sophomorix4/blob/bionic/sophomorix-samba/lang/latex/README.latextemplates\">in sophomorix's wiki</a>."
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:647
+msgid "Ip router"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:267
@@ -101,6 +122,10 @@ msgstr ""
 msgid "List encoding"
 msgstr ""
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:639
+msgid "List of subnets"
+msgstr ""
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:80
 msgid "Listimport"
 msgstr ""
@@ -115,6 +140,10 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:426
 msgid "Moodle"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:646
+msgid "Network / Prefix"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:134
@@ -204,21 +233,21 @@ msgid "SSL certificate file"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:57
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:687
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:688
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:689
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:690
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:691
 msgid "Save"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:688
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:686
 msgid "Save &amp; Apply Quota"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:692
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:690
 msgid "Save &amp; Apply Subnets"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:687
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:685
 msgid "Save &amp; check"
 msgstr ""
 
@@ -236,6 +265,10 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:15
 msgid "Schoolname"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:650
+msgid "Setup flag"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:535
@@ -256,7 +289,7 @@ msgstr ""
 msgid "Students"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:640
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:638
 msgid "Subnets"
 msgstr ""
 

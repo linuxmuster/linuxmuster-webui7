@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-26 21:41+0200\n"
-"PO-Revision-Date: 2021-11-14 16:07\n"
+"POT-Creation-Date: 2022-01-06 12:54+0100\n"
+"PO-Revision-Date: 2022-01-28 10:36\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -129,6 +129,14 @@ msgstr "Es ist keine Umgebungsvariable gesetzt."
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:77
 msgid "Value"
 msgstr "Wert"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/main.py:28
+msgid "Get the crontab command of the user"
+msgstr "Den crontab Befehl des Benutzers abrufen"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/main.py:33
+msgid "Modify the crontab of the user"
+msgstr "Crontab des Benutzers ändern"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/js/controllers/index.controller.es:2
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/js/controllers/index.controller.es:4

@@ -1,7 +1,7 @@
 angular.module('lmn.common').service 'lmFileBackups', ($uibModal) ->
     @show = (path, encoding) ->
         return $uibModal.open(
-            templateUrl: '/lmn_common:resources/js/lmFileBackups.modal.html'
+            templateUrl: '/lmn_common:resources/partial/lmFileBackups.modal.html'
             controller: 'lmFileBackupsModalController'
             resolve:
                 path: () -> path

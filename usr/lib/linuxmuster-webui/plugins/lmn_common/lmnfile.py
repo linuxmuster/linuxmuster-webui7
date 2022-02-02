@@ -23,6 +23,8 @@ ALLOWED_PATHS = [
                 '/srv/linbo',
                 # used in lmn_settings for subnets configuration
                 '/etc/linuxmuster/subnets.csv',
+                # used in lmn_settings for holidays configuration
+                '/etc/linuxmuster/holidays.yml',
                 # used in lmn_settings
                 '/var/lib/linuxmuster/setup.ini',
                 # user in setup wizard during install
@@ -119,7 +121,7 @@ class LMNFile(metaclass=abc.ABCMeta):
             return
 
         folder, name = os.path.split(self.file)
-        backups = sorted([x for x in os.listdir(folder) if x.startswith('.%s.bak.' % name)])
+        backups = sorted([x for x in os.listdir(folder) if x.startswith(f'.{name}.bak.')])
         while len(backups) > 10:
             os.unlink(os.path.join(folder, backups[0]))
             backups.pop(0)
@@ -167,14 +169,14 @@ class LMNFile(metaclass=abc.ABCMeta):
         """
 
         if not os.path.isfile(self.file):
-            logging.info('Detected encoding for %s : no file, using utf-8', self.file)
+            logging.info(f'Detected encoding for {self.file} : no file, using utf-8')
             return 'utf-8'
         loader = magic.Magic(mime_encoding=True)
         encoding = loader.from_file(self.file)
         if 'ascii' in encoding or encoding == "binary":
-            logging.info('Detected encoding for %s : ascii, but using utf-8', self.file)
+            logging.info(f'Detected encoding for {self.file} : ascii, but using utf-8')
             return 'utf-8'
-        logging.info('Detected encoding for %s : %s', self.file, encoding)
+        logging.info(f'Detected encoding for {self.file} : {encoding}')
         return encoding
 
 
@@ -265,7 +267,7 @@ class CSVLoader(LMNFile):
             )
             for elt in data:
                 first_field = elt[self.fieldnames[0]]
-                if first_field == '' or first_field[0] == '#':
+                if first_field == '':
                     f.write(first_field.replace(EMPTY_LINE_MARKER, '') + '\n')
                 else:
                     writer.writerow(elt)
@@ -355,9 +357,9 @@ class StartConfLoader(LMNFile):
         content = ''
 
         for section_name, section in data['config'].items():
-            content += '[%s]\n' % section_name
+            content += f'[{section_name}]\n'
             for k, v in section.items():
-                content += '%s = %s\n' % (k, convertBool(v))
+                content += f'{k} = {convertBool(v)}\n'
             content += '\n'
 
         for partition in data['partitions']:
@@ -365,13 +367,13 @@ class StartConfLoader(LMNFile):
             for k, v in partition.items():
                 if k[0] == '_':
                     continue
-                content += '%s = %s\n' % (k, convertBool(v))
+                content += f'{k} = {convertBool(v)}\n'
             content += '\n'
 
         for partition in data['os']:
             content += '[OS]\n'
             for k, v in partition.items():
-                content += '%s = %s\n' % (k, convertBool(v))
+                content += f'{k} = {convertBool(v)}\n'
             content += '\n'
 
         tmp = self.file + '_tmp'

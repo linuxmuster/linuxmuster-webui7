@@ -12,16 +12,7 @@ class SambaToolDNS():
     def __init__(self):
         self._get_zone()
         if self.zone:
-            self._get_credentials()
             self._get_ignore_list()
-
-    def _get_credentials(self):
-        """
-        Load the credentials to use with samba-tool and store it in self.credentials.
-        """
-
-        with open('/etc/linuxmuster/.secret/administrator', 'r') as f:
-            self.password = f.readline().strip('\n')
 
     def _get_zone(self):
         """
@@ -86,11 +77,13 @@ class SambaToolDNS():
         if action not in ['query', 'add', 'delete', 'update']:
             return
 
-        cmd = ['samba-tool', 'dns', action, 'localhost', self.zone, *options, '-U', 'administrator']
+        with open('/etc/linuxmuster/.secret/administrator', 'r') as f:
+            password = f.readline().strip('\n')
 
+        cmd = ['samba-tool', 'dns', action, 'localhost', self.zone, *options, '-U', 'administrator']
         child = pexpect.spawn(' '.join(cmd))
         child.expect("Password for .*:")
-        child.sendline(self.password)
+        child.sendline(password)
 
         return child.read().decode().split('\r\n')
 
@@ -148,6 +141,9 @@ class SambaToolDNS():
         :rtype: string
         """
 
+        if sub['type'] == "MX":
+            sub['value'] = sub['value'] + "\\ " + sub['priority']
+
         return self._samba_tool_process('add', (sub['host'], sub['type'], sub['value']))
 
     def update(self, old, new):
@@ -161,6 +157,10 @@ class SambaToolDNS():
         :return: Result of samba-tool
         :rtype: string
         """
+
+        if old['type'] == "MX":
+            old['value'] = old['value'] + "\\ " + old['priority']
+            new['value'] = new['value'] + "\\ " + new['priority']
 
         return self._samba_tool_process('update', (old['host'], old['type'], old['value'], new['value']))
 

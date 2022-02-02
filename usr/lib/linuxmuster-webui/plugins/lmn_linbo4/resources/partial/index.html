@@ -6,28 +6,47 @@
     <uib:tabset active=activetab>
         <uib:tab heading="{{'Groups'|translate}}">
             <br/>
-            <div class="list-group">
-                <div class="list-group-item list-group-item-small" ng:repeat="config in configs|orderBy:'toString()'">
-                    <a class="list-group-btn" ng:click="deleteConfig(config)">
-                        <i class="fa fa-trash-o"></i>
-                    </a>
-                    <a class="list-group-btn" ng:click="duplicateConfig(config)">
-                        <i class="fa fa-copy"></i>
-                    </a>
-                    <a class="list-group-btn" ng:click="duplicateConfig(config, true)">
-                        <i class="fa fa-pencil"></i>
-                    </a>
-                    <a class="list-group-main" ng:click="editConfig(config)">
-                        {{config.substring('start.conf.'.length)}}
-                    </a>
-                </div>
-            </div>
+            <table class="table">
+                <tr>
+                    <th translate>Group name</th>
+                    <th translate>Used images</th>
+                    <th colspan="3" translate>Actions</th>
+                </tr>
+                <tr ng:repeat="config in configs|orderBy:'toString()'">
+                    <td ng:click="editConfig(config.file)" style="cursor:pointer;">
+                        <b>{{config.file.substring('start.conf.'.length)}}</b>
+                    </td>
+                    <td ng:click="editConfig(config.file)" style="cursor:pointer;">
+                        <span ng:repeat="image in config.images" class="label label-info" style="display:inline-block;">
+                            {{image}}
+                        </span>
+                    </td>
+                    <td width="1">
+                        <button class="btn btn-default" ng:click="editConfig(config.file, true)">
+                            <i class="fa fa-pencil"></i>
+                        </button>
+                    </td>
+                    <td width="1">
+                        <button class="btn btn-default" ng:click="duplicateConfig(config.file)">
+                            <i class="fa fa-copy"></i>
+                        </button>
+                    </td>
+                    <td width="1">
+                        <button class="btn btn-default" ng:click="deleteConfig(config.file)">
+                            <i class="fa fa-trash-o"></i>
+                        </button>
+                    </td>
+                </tr>
+            </table>
 
             <div class="floating-toolbar-padder"></div>
 
             <floating-toolbar>
                 <button ng:click="downloadIso()" class="btn btn-lmn pull-right" translate>
                     Download Linbo Boot
+                </button>
+                <button ng:click="importDevices()" ng:show="config_change" class="btn btn-lmn pull-right" translate>
+                    Import devices
                 </button>
                 <div uib-dropdown class="dropup" style="width:50%;">
                     <button class="btn btn-lmn" uib-dropdown-toggle>
@@ -49,8 +68,8 @@
                 <tr>
                     <th> </th>
                     <th style="min-width:100px" translate>Name / Size</th>
-                    <th translate>Comment</th>
-                    <th style="min-width:150px" translate>Actions</th>
+                    <th translate>Used in group ...</th>
+                    <th colspan="3" translate>Actions</th>
                 </tr>
                 <tr ng:repeat="image in images|orderBy:'name'">
                     <td>
@@ -62,15 +81,19 @@
                         <i>{{image.size|bytes}}</i>
                     </td>
                     <td>
-                        {{image.desc}}
+                        <span ng:repeat="conf in image.used_in" class="label label-success" style="display:inline-block;">{{conf}}</span>
                     </td>
-                    <td>
+                    <td width="1">
                         <button class="btn btn-default" ng:click="editImage(image)">
                             <i class="fa fa-cog"></i>
                         </button>
+                    </td>
+                    <td width="1">
                         <button class="btn btn-default" ng:click="showBackups(image)">
                             <i class="fa fa-history"></i>
                         </button>
+                    </td>
+                    <td width="1">
                         <button class="btn btn-default" ng:click="deleteImage(image)">
                             <i class="fa fa-trash-o"></i>
                         </button>
@@ -79,9 +102,6 @@
             </table>
             <br/>
             <floating-toolbar ng:show="images_selected.length > 0">
-<!--                <button ng:click="duplicateImages()" class="btn btn-lmn" translate>-->
-<!--                    Duplicate selected images-->
-<!--                </button>-->
                 <button ng:click="deleteImages()" class="btn btn-lmn" translate>
                     Delete selected images
                 </button>

@@ -13,7 +13,7 @@ from jadi import component
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize
-from aj.plugins.lmn_common.api import lmn_getSophomorixValue, lmn_get_school_configpath
+from aj.plugins.lmn_common.api import lmn_getSophomorixValue, lmn_get_school_configpath, lmconfig
 from aj.plugins.lmn_common.lmnfile import LMNFile
 from aj.plugins.lmn_common.multischool import School
 import logging
@@ -547,11 +547,11 @@ class Handler(HttpPlugin):
 
         script = ''
         if http_context.json_body()['doAdd']:
-            script += 'sophomorix-add >> %s;' % path
+            script += f'sophomorix-add >> {path};'
         if http_context.json_body()['doMove']:
-            script += 'sophomorix-update >> %s;' % path
+            script += f'sophomorix-update >> {path};'
         if http_context.json_body()['doKill']:
-            script += 'sophomorix-kill >> %s;' % path
+            script += f'sophomorix-kill >> {path};'
 
         try:
             subprocess.check_call(script, shell=True, env={'LC_ALL': 'C'})
@@ -783,6 +783,9 @@ class Handler(HttpPlugin):
         """
 
         school = School.get(self.context).school
+        config_template = lmconfig.get('passwordTemplates', {'multiple': '', 'individual': ''})
+        config_template_individual = config_template.get('individual', '')
+        config_template_multiple = config_template.get('multiple', '')
 
         if http_context.method == 'POST':
             user = http_context.json_body()['user']
@@ -792,13 +795,19 @@ class Handler(HttpPlugin):
             template = ''
             sophomorixCommand = ['sudo', 'sophomorix-print', '--school', school, '--caller', str(user)]
             if one_per_page:
-                template = http_context.json_body()['template_one_per_page']
-                if not template:
-                    sophomorixCommand.extend(['--one-per-page'])
+                try:
+                    template = http_context.json_body()['template_one_per_page']['path']
+                except TypeError:
+                    template = config_template_individual
+                    if not template:
+                        sophomorixCommand.extend(['--one-per-page'])
             else:
-                template = http_context.json_body()['template_multiple']
+                try:
+                    template = http_context.json_body()['template_multiple']['path']
+                except TypeError:
+                    template = config_template_multiple
             if template:
-                sophomorixCommand.extend(['--template', template['path']])
+                sophomorixCommand.extend(['--template', template])
             if pdflatex:
                 sophomorixCommand.extend(['--command'])
                 sophomorixCommand.extend(['pdflatex'])

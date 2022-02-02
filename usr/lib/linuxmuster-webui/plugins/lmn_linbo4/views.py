@@ -23,10 +23,29 @@ class Handler(HttpPlugin):
     def handle_api_configs(self, http_context):
         r = []
         for file in os.listdir(self.LINBO_PATH):
-            if file.startswith('start.conf.'):
-                if not file.endswith('.vdi'):
-                    if not os.path.islink(os.path.join(self.LINBO_PATH, file)):
-                        r.append(file)
+            path = os.path.join(self.LINBO_PATH, file)
+            if (
+                file.startswith('start.conf.')
+                and not file.endswith('.vdi')
+                and not os.path.islink(path)
+            ):
+                with LMNFile(path, 'r') as f:
+                    os_list = f.read().get('os', [])
+
+                images = []
+                append = False
+                for OS in os_list:
+                    image = OS.get('BaseImage', None)
+                    if '.qcow2' in image or image is None:
+                        images.append(image)
+                        append = True
+
+                # Append file even if there's no partition
+                if append or os_list == []:
+                    r.append({
+                        'file': file,
+                        'images': images,
+                    })
         return r
 
     @url(r'/api/lm/linbo4/examples')
@@ -101,7 +120,12 @@ class Handler(HttpPlugin):
     @authorize('lm:linbo:icons')
     @endpoint(api=True)
     def handle_api_icons(self, http_context):
-        return os.listdir(os.path.join(self.LINBO_PATH, 'icons'))
+        icons = []
+        available_ext = ['.svg']
+        for f in os.listdir(os.path.join(self.LINBO_PATH, 'icons')) :
+            if f[-4:] in available_ext:
+                icons.append(f)
+        return icons
 
     @url(r'/api/lm/linbo4/icons/read/(?P<name>.+)')
     @endpoint(api=False, page=True)
@@ -111,7 +135,7 @@ class Handler(HttpPlugin):
 
         if not path.startswith(root):
             return http_context.respond_forbidden()
-        return http_context.file(path, inline=False, name=name.encode())
+        return http_context.file(path, inline=True, name=name.encode())
 
     
     @url(r'/api/lm/linbo4/vdi/(?P<name>.+)')
@@ -191,13 +215,6 @@ class Handler(HttpPlugin):
 
         if http_context.method == 'DELETE':
             self.mgr.delete(image)
-
-    # TODO : is duplicate necessary ?
-    # @url(r'/api/lm/linbo4/duplicateImage/(?P<image>.+)')
-    # @authorize('lm:linbo:images')
-    # @endpoint(api=True)
-    # def handle_api_duplicate_image(self, http_context, image=None):
-    #     pass
 
     @url(r'/api/lm/linbo4/renameImage/(?P<image>.+)')
     @authorize('lm:linbo:images')

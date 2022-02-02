@@ -150,25 +150,25 @@ class Handler(HttpPlugin):
             for _, userDict in http_context.json_body()['users'].items():
                 for _,values in userDict.items():
                     if values['quota'] == 'MAILQUOTA_DEFAULT':
-                        sophomorixCommand = ['sophomorix-user', '--mailquota', '%s' % (values['value']), '-u', values['login'], '-jj']
+                        sophomorixCommand = ['sophomorix-user', '--mailquota', f"{values['value']}", '-u', values['login'], '-jj']
                     else:
-                        sophomorixCommand = ['sophomorix-user', '--quota', '%s:%s:---' % (quota_types[values['quota']], values['value']), '-u', values['login'], '-jj']
+                        sophomorixCommand = ['sophomorix-user', '--quota', f"{quota_types[values['quota']]}:{values['value']}:---", '-u', values['login'], '-jj']
                     lmn_getSophomorixValue(sophomorixCommand, '')
 
             ## Update quota per class, but not applied yet
             for _, grpDict in http_context.json_body()['groups']['adminclass'].items():
                 if grpDict['quota'] == 'mailquota':
-                    sophomorixCommand = ['sophomorix-class', '-c', grpDict['group'], '--mailquota', '%s:' % grpDict['value'], '-jj']
+                    sophomorixCommand = ['sophomorix-class', '-c', grpDict['group'], '--mailquota', f"{grpDict['value']}:", '-jj']
                 else:
-                    sophomorixCommand = ['sophomorix-class', '-c', grpDict['group'], '--quota', '%s:%s:---' % (grpDict['quota'], grpDict['value']), '-jj']
+                    sophomorixCommand = ['sophomorix-class', '-c', grpDict['group'], '--quota', f"{grpDict['quota']}:{grpDict['value']}:---", '-jj']
                 lmn_getSophomorixValue(sophomorixCommand, '')
 
             ## Update quota per project, but not applied yet
             for _, grpDict in http_context.json_body()['groups']['project'].items():
                 if grpDict['quota'] == 'mailquota':
-                    sophomorixCommand = ['sophomorix-project', '-p', grpDict['group'], '--addmailquota', '%s:' % grpDict['value'], '-jj']
+                    sophomorixCommand = ['sophomorix-project', '-p', grpDict['group'], '--addmailquota', f"{grpDict['value']}:", '-jj']
                 else:
-                    sophomorixCommand = ['sophomorix-project', '-p', grpDict['group'], '--addquota', '%s:%s:---' % (grpDict['quota'], grpDict['value']), '-jj']
+                    sophomorixCommand = ['sophomorix-project', '-p', grpDict['group'], '--addquota', f"{grpDict['quota']}:{grpDict['value']}:---", '-jj']
                 lmn_getSophomorixValue(sophomorixCommand, '')
 
     @url(r'/api/lm/ldap-search')

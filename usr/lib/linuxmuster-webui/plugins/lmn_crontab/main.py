@@ -14,7 +14,7 @@ class ItemProvider(SidebarItemProvider):
                 'attach': 'category:system',
                 'name': 'Cron',
                 'icon': 'clock-o',
-                'url': '/view/lm/cron',
+                'url': '/view/lm/crontab',
                 'children': []
             }
         ]

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-14 15:53+0100\n"
-"PO-Revision-Date: 2021-11-14 16:07\n"
+"POT-Creation-Date: 2022-01-06 12:55+0100\n"
+"PO-Revision-Date: 2022-01-28 10:36\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -25,9 +25,23 @@ msgstr "<b>Vorlage für mehrere Passworteinträge auf einer Seite:</b>"
 msgid "<b>Template for one password entry per page:</b>"
 msgstr "<b>Vorlage für einen Passwort-Eintrag pro Seite:</b>"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:640
+msgid "<i class=\"fa fa-warning \"></i>\n"
+"            Change this values with high precaution ! A wrong value may completely block your network !"
+msgstr "<i class=\"fa fa-warning \"></i>\n"
+"            Ändern Sie diese Werte mit hoher Vorsicht ! Ein falscher Wert kann Ihr Netzwerk komplett blockieren !"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:677
+msgid "Add a subnet"
+msgstr "Subnetz hinzufügen"
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:378
 msgid "Admin description"
 msgstr "Admin-Beschreibung"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:648
+msgid "Begin lease range"
+msgstr "Lease-Bereich Beginn"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:334
 msgid "Cloudquota Percentage"
@@ -68,6 +82,10 @@ msgstr "E-Mail Domäne"
 msgid "Encoding"
 msgstr "Zeichenkodierung"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:649
+msgid "End lease range"
+msgstr "Lease-Bereich Ende"
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:36
 msgid "FQDN SSL certificate file"
 msgstr "FQDN SSL Zertifikatsdatei"
@@ -85,6 +103,10 @@ msgstr "Allgemein"
 msgid "If you want to use your own latex template, please store it in the directory /etc/linuxmuster/sophomorix/SCHOOL/latex-templates/. More informations about it <a href=\"https://github.com/linuxmuster/sophomorix4/blob/bionic/sophomorix-samba/lang/latex/README.latextemplates\">in sophomorix's wiki</a>."
 msgstr "Wenn Sie Ihr eigenes Latex-Template verwenden möchten, speichern Sie es bitte im Verzeichnis /etc/linuxmuster/sophomorix/SCHOOL/latex-templates/. Mehr Informationen dazu <a href=\"https://github.com/linuxmuster/sophomorix4/blob/bionic/sophomorix-samba/lang/latex/README.latextemplates\">im sophomorix Wiki</a>."
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:647
+msgid "Ip router"
+msgstr "IP-Router"
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:267
 msgid "It's possible to apply a filter script to your newly exported csv file. You must give here the absolute path of the script and the script must be executable.<br>Please read the full documentation in <a href=\"https://github.com/linuxmuster/sophomorix4/wiki/Export-and-Filters#filters\">sophomorix's wiki</a> about it."
 msgstr "Es ist möglich, ein Filterskript auf Ihre neu exportierte csv-Datei anzuwenden. Sie müssen hier den absoluten Pfad des Skripts angeben und das Skript muss ausführbar sein.<br>Bitte lesen Sie die vollständige Dokumentation im <a href=\"https://github.com/linuxmuster/sophomorix4/wiki/Export-and-Filters#filters\">sophomorix's Wiki</a> darüber."
@@ -101,6 +123,10 @@ msgstr "Latex-Templates"
 msgid "List encoding"
 msgstr "Listenkodierung"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:639
+msgid "List of subnets"
+msgstr "Liste der Subnetze"
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:80
 msgid "Listimport"
 msgstr "Listenimport"
@@ -116,6 +142,10 @@ msgstr "Maximale Sitzungsdauer"
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:426
 msgid "Moodle"
 msgstr "Moodle"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:646
+msgid "Network / Prefix"
+msgstr "Netzwerk / Präfix"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:134
 msgid "Password Length"
@@ -204,21 +234,21 @@ msgid "SSL certificate file"
 msgstr "SSL-Zertifikats-Datei"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:57
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:687
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:688
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:689
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:690
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:691
 msgid "Save"
 msgstr "Speichern"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:688
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:686
 msgid "Save &amp; Apply Quota"
 msgstr "Speichern &amp; Quota übernehmen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:692
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:690
 msgid "Save &amp; Apply Subnets"
 msgstr "Speichern &amp; Subnetze übernehmen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:687
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:685
 msgid "Save &amp; check"
 msgstr "Speichern &amp; Prüfen"
 
@@ -238,6 +268,10 @@ msgstr "Schuladministrator"
 msgid "Schoolname"
 msgstr "Schulname"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:650
+msgid "Setup flag"
+msgstr "Setup-Flagge"
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:535
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:537
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:566
@@ -256,7 +290,7 @@ msgstr "Anzeigen"
 msgid "Students"
 msgstr "Schüler"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:640
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:638
 msgid "Subnets"
 msgstr "Subnetze"
 

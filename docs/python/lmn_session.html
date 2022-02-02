@@ -3,26 +3,21 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en-GB" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8">
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>API: aj.plugins.lmn_session &mdash; linuxmuster-webui7 1.0.159-1 documentation</title>
+  <title>API: aj.plugins.lmn_session &mdash; linuxmuster-webui7 7.1.0 documentation</title>
   
 
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
 
   
   
-
   
-  
-
   
 
   
@@ -32,7 +27,6 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
@@ -57,7 +51,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> linuxmuster-webui7
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> linuxmuster-webui7
           
 
           
@@ -70,7 +64,7 @@
             
             
               <div class="version">
-                1.0.159-1
+                7.1.0
               </div>
             
           
@@ -151,8 +145,6 @@
 
 
 
-
-
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -164,7 +156,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-          
+            
             <a href="../_sources/python/lmn_session.rst.txt" rel="nofollow"> View page source</a>
           
         
@@ -182,128 +174,13 @@
 <h1>API: aj.plugins.lmn_session<a class="headerlink" href="#api-aj-plugins-lmn-session" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="module-aj.plugins.lmn_session.views">
 <span id="lmn-session-views"></span><h2>LMN Session views<a class="headerlink" href="#module-aj.plugins.lmn_session.views" title="Permalink to this headline">¶</a></h2>
-<p>Module to handle school session.</p>
 <dl class="py class">
-<dt class="sig sig-object py" id="aj.plugins.lmn_session.views.Handler">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">aj.plugins.lmn_session.views.</span></span><span class="sig-name descname"><span class="pre">Handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_session/views.html#Handler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_session.views.Handler" title="Permalink to this definition">¶</a></dt>
+<dt id="aj.plugins.lmn_session.views.Handler">
+<em class="property">class </em><code class="sig-prename descclassname">aj.plugins.lmn_session.views.</code><code class="sig-name descname">Handler</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_session/views.html#Handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_session.views.Handler" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="py method">
-<dt class="sig sig-object py" id="aj.plugins.lmn_session.views.Handler.handle_api_create_dir">
-<span class="sig-name descname"><span class="pre">handle_api_create_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">http_context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_session/views.html#Handler.handle_api_create_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_session.views.Handler.handle_api_create_dir" title="Permalink to this definition">¶</a></dt>
-<dd><p>Move file to user’s home through <cite>sophomorix-transfer</cite>.
-Method POST.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>http_context</strong> – </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="aj.plugins.lmn_session.views.Handler.handle_api_get_user_in_room">
-<span class="sig-name descname"><span class="pre">handle_api_get_user_in_room</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">http_context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_session/views.html#Handler.handle_api_get_user_in_room"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_session.views.Handler.handle_api_get_user_in_room" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get students in the same room as the teacher.
-Method POST.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Details of users in room</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)">dict</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="aj.plugins.lmn_session.views.Handler.handle_api_ldap_group_search">
-<span class="sig-name descname"><span class="pre">handle_api_ldap_group_search</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">http_context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_session/views.html#Handler.handle_api_ldap_group_search"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_session.views.Handler.handle_api_ldap_group_search" title="Permalink to this definition">¶</a></dt>
-<dd><p>Class query for javascript filters.
-Method POST.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Classes list with details</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)">list</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="aj.plugins.lmn_session.views.Handler.handle_api_ldap_user_search">
-<span class="sig-name descname"><span class="pre">handle_api_ldap_user_search</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">http_context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_session/views.html#Handler.handle_api_ldap_user_search"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_session.views.Handler.handle_api_ldap_user_search" title="Permalink to this definition">¶</a></dt>
-<dd><p>User query for javascript filters.
-Method POST.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Users list with details</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)">list</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="aj.plugins.lmn_session.views.Handler.handle_api_session_file_trans">
-<span class="sig-name descname"><span class="pre">handle_api_session_file_trans</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">http_context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_session/views.html#Handler.handle_api_session_file_trans"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_session.views.Handler.handle_api_session_file_trans" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles files between teacher and students (share, copy, move).
-Method POST.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>State of the action.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="aj.plugins.lmn_session.views.Handler.handle_api_session_file_trans_list">
-<span class="sig-name descname"><span class="pre">handle_api_session_file_trans_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">http_context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_session/views.html#Handler.handle_api_session_file_trans_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_session.views.Handler.handle_api_session_file_trans_list" title="Permalink to this definition">¶</a></dt>
-<dd><p>Move uploaded files into the user’s transfer directory.
-Method POST.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>List of files in transfer directory</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)">list</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="aj.plugins.lmn_session.views.Handler.handle_api_session_sessions">
-<span class="sig-name descname"><span class="pre">handle_api_session_sessions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">http_context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_session/views.html#Handler.handle_api_session_sessions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_session.views.Handler.handle_api_session_sessions" title="Permalink to this definition">¶</a></dt>
-<dd><p>Manage the sessions ( list of sessions, participants, … ).
-Method POST.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>List</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)">list</a></p>
-</dd>
-</dl>
+<dt id="aj.plugins.lmn_session.views.Handler.handle_api_create_dir">
+<code class="sig-name descname">handle_api_create_dir</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">http_context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_session/views.html#Handler.handle_api_create_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_session.views.Handler.handle_api_create_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create directory with given path, ignoring errors</p>
 </dd></dl>
 
 </dd></dl>
@@ -316,29 +193,37 @@ Method POST.</p>
            
           </div>
           <footer>
+  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="lmn_settings.html" class="btn btn-neutral float-right" title="API: aj.plugins.lmn_settings" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="lmn_quotas.html" class="btn btn-neutral float-left" title="API: aj.plugins.lmn_quotas" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+      
+        <a href="lmn_settings.html" class="btn btn-neutral float-right" title="API: aj.plugins.lmn_settings" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="lmn_quotas.html" class="btn btn-neutral float-left" title="API: aj.plugins.lmn_quotas" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
     </div>
+  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &#169; Copyright 2020, Andreas Till &amp; Arnaud Kientz.
+        
+        &copy; Copyright Andreas Till &amp; Arnaud Kientz - 2021
 
     </p>
   </div>
     
     
     
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
+
         </div>
       </div>
 

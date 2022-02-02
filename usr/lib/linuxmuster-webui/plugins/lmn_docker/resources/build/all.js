@@ -6,7 +6,7 @@ angular.module('lmn.docker', ['core']);
 'use strict';
 
 angular.module('lmn.docker').config(function ($routeProvider) {
-    $routeProvider.when('/view/docker', {
+    $routeProvider.when('/view/lm/docker', {
         templateUrl: '/lmn_docker:resources/partial/index.html',
         controller: 'DockerIndexController'
     });
@@ -22,7 +22,7 @@ angular.module('lmn.docker').controller('DockerIndexController', function ($scop
     $scope.ready = false;
     $scope.imagesReady = false;
 
-    $http.get('/api/docker/which').then(function () {
+    $http.get('/api/lm/docker/which').then(function () {
         $scope.getResources();
         $scope.start_refresh();
         $scope.installed = true;
@@ -35,14 +35,14 @@ angular.module('lmn.docker').controller('DockerIndexController', function ($scop
         if ($scope.refresh === undefined) $scope.refresh = $interval($scope.getResources, 5000, 0);
     };
     $scope.getResources = function () {
-        $http.get('/api/docker/get_resources', { ignoreLoadingBar: true }).then(function (resp) {
+        $http.get('/api/lm/docker/get_resources', { ignoreLoadingBar: true }).then(function (resp) {
             $scope.ready = true;
             $scope.container_stats = resp.data;
         });
     };
 
     $scope.getDetails = function (container) {
-        $http.post('/api/docker/get_details', { container: container }).then(function (resp) {
+        $http.post('/api/lm/docker/get_details', { container: container }).then(function (resp) {
             $scope.details = resp.data;
             $scope.showDetails = true;
         });
@@ -53,13 +53,13 @@ angular.module('lmn.docker').controller('DockerIndexController', function ($scop
     };
 
     $scope.stop = function (container) {
-        $http.post('/api/docker/container_command', { container: container, control: 'stop' }).then(function () {
+        $http.post('/api/lm/docker/container_command', { container: container, control: 'stop' }).then(function () {
             return notify.success(gettext('Stop command successfully sent.'));
         });
     };
 
     $scope.start = function (container) {
-        $http.post('/api/docker/container_command', { container: container, control: 'start' }).then(function () {
+        $http.post('/api/lm/docker/container_command', { container: container, control: 'start' }).then(function () {
             return notify.success(gettext('Start command successfully sent.'));
         });
     };
@@ -70,7 +70,7 @@ angular.module('lmn.docker').controller('DockerIndexController', function ($scop
             positive: gettext('Remove'),
             negative: gettext('Cancel')
         }).then(function () {
-            $http.post('/api/docker/container_command', { container: container, control: 'rm' }).then(function () {
+            $http.post('/api/lm/docker/container_command', { container: container, control: 'rm' }).then(function () {
                 return notify.success(gettext('Remove command successfully sent.'));
             });
         });
@@ -79,7 +79,7 @@ angular.module('lmn.docker').controller('DockerIndexController', function ($scop
     $scope.getImages = function () {
         $interval.cancel($scope.refresh);
         delete $scope.refresh;
-        $http.post('/api/docker/list_images').then(function (resp) {
+        $http.post('/api/lm/docker/list_images').then(function (resp) {
             $scope.images = resp.data;console.log($scope.images);
             $scope.imagesReady = true;
         });
@@ -91,7 +91,7 @@ angular.module('lmn.docker').controller('DockerIndexController', function ($scop
             positive: gettext('Remove'),
             negative: gettext('Cancel')
         }).then(function () {
-            $http.post('/api/docker/remove_image', { image: image }).then(function () {
+            $http.post('/api/lm/docker/remove_image', { image: image }).then(function () {
                 notify.success(gettext('Remove command successfully sent.'));
                 for (var i = 0; i < $scope.images.length; i++) {
                     if ($scope.images[i].hash == image) $scope.images.splice(i, 1);

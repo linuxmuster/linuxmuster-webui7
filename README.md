@@ -90,7 +90,7 @@ sudo sh -c 'echo "deb https://deb.linuxmuster.net/ lmn71 main" > /etc/apt/source
 sudo sh -c 'echo "deb https://deb.linuxmuster.net/ lmn70 main" > /etc/apt/sources.list.d/lmn7.list'
 ```
 
-## 3. Apt update
+### 3. Apt update
 
 ```bash
 sudo apt update && sudo apt install linuxmuster-webui7

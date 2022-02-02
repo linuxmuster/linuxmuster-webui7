@@ -6,6 +6,7 @@ from datetime import datetime
 
 from jadi import service
 from aj.plugins.lmn_common.lmnfile import LMNFile
+from aj.api.endpoint import EndpointError
 
 LINBO_PATH = '/srv/linbo/images'
 
@@ -89,7 +90,7 @@ class LinboImage:
             else:
                 self.extras[extra] = None
                 # Create empty desc in any case
-                if extra == 'desc':
+                if extra == 'desc' and os.getuid() == 0:
                     with LMNFile(extra_file, 'w') as f:
                         pass
                     os.chmod(extra_file, EXTRA_PERMISSIONS_MAPPING[extra])
@@ -133,7 +134,10 @@ class LinboImage:
         self._torrent_stop()
 
         # Remove directory
-        os.rmdir(self.path)
+        try:
+            os.rmdir(self.path)
+        except OSError as e:
+            raise EndpointError(e)
 
     def rename(self, new_name):
         """
@@ -149,7 +153,7 @@ class LinboImage:
         self._torrent_stop()
 
         # Rename extra files
-        for extra in EXTRA_IMAGE_FILES + EXTRA_NONEDITABLE_IMAGE_FILES:
+        for extra in EXTRA_IMAGE_FILES:
             actual = os.path.join(self.path, f"{self.image}.{extra}")
             if os.path.exists(actual):
                 # Replace image name in .info file
@@ -167,7 +171,7 @@ class LinboImage:
 
                 os.rename(actual, os.path.join(self.path, f"{new_image_name}.{extra}"))
 
-        for extra in EXTRA_COMMON_FILES:
+        for extra in EXTRA_COMMON_FILES + EXTRA_NONEDITABLE_COMMON_FILES:
             actual = os.path.join(self.path, f"{self.name}.{extra}")
             if os.path.exists(actual):
                 os.rename(actual, os.path.join(self.path, f"{new_name}.{extra}"))
@@ -285,7 +289,12 @@ class LinboImageGroup:
         for timestamp, backup in self.backups.items():
             backup.delete()
 
-        os.rmdir(self.backup_path)
+        if os.path.isdir(self.backup_path):
+            try:
+                os.rmdir(self.backup_path)
+            except OSError as e:
+                raise EndpointError(e)
+
         self.base.delete()
 
     def to_dict(self):
@@ -316,9 +325,10 @@ class LinboImageManager:
         if not os.path.isdir(LINBO_PATH):
             return
         for dir in os.listdir(LINBO_PATH):
-            for file in os.listdir(os.path.join(LINBO_PATH, dir)):
-                if file.endswith((f'.{IMAGE}')):
-                    self.linboImageGroups[dir] = LinboImageGroup(dir)
+            if os.path.isdir(os.path.join(LINBO_PATH, dir)):
+                for file in os.listdir(os.path.join(LINBO_PATH, dir)):
+                    if file == f'{dir}.{IMAGE}':
+                        self.linboImageGroups[dir] = LinboImageGroup(dir)
 
     def delete(self, group, date=0):
         """

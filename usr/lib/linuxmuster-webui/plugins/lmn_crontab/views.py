@@ -7,15 +7,17 @@ from jadi import component
 from aj.api.http import url, HttpPlugin
 from aj.auth import authorize
 from aj.api.endpoint import endpoint, EndpointError
-from .manager import CronManager
+from aj.plugins.lmn_crontab.manager import CronManager
 from reconfigure.items.crontab import CrontabNormalTaskData, CrontabSpecialTaskData, CrontabEnvSettingData
+
+HOLIDAY_PREFIX_TEST = '/usr/sbin/linuxmuster-holiday && '
 
 @component(HttpPlugin)
 class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
 
-    @url(r'/api/get_crontab')
+    @url(r'/api/lm/get_crontab')
     @authorize('lm:crontab:read')
     @endpoint(api=True)
     def handle_api_get_crontab(self, http_context):
@@ -29,25 +31,24 @@ class Handler(HttpPlugin):
         """
 
         if http_context.method == 'GET':
-            prepend_holiday = 'TestHolidays && '
             user = self.context.identity
             crontab = CronManager.get(self.context).load_tab(user)
             crontab_dict = crontab.tree.to_dict()
             for job in crontab_dict['normal_tasks']:
-                if job['command'].startswith(prepend_holiday):
+                if job['command'].startswith(HOLIDAY_PREFIX_TEST):
                     job['disable_holiday'] = True
-                    job['command'] = job['command'][len(prepend_holiday):]
+                    job['command'] = job['command'][len(HOLIDAY_PREFIX_TEST):]
                 else:
                     job['disable_holiday'] = False
             for job in crontab_dict['special_tasks']:
-                if job['command'].startswith(prepend_holiday):
+                if job['command'].startswith(HOLIDAY_PREFIX_TEST):
                     job['disable_holiday'] = True
-                    job['command'] = job['command'][len(prepend_holiday):]
+                    job['command'] = job['command'][len(HOLIDAY_PREFIX_TEST):]
                 else:
                     job['disable_holiday'] = False
             return crontab_dict
 
-    @url(r'/api/save_crontab')
+    @url(r'/api/lm/save_crontab')
     @authorize('lm:crontab:write')
     @endpoint(api=True)
     def handle_api_save_crontab(self, http_context):
@@ -72,7 +73,7 @@ class Handler(HttpPlugin):
                 """
                 if 'disable_holiday' in values:
                     if values['disable_holiday']:
-                        values['command'] = 'TestHolidays && ' + values['command']
+                        values['command'] = HOLIDAY_PREFIX_TEST + values['command']
                     del values['disable_holiday']
 
                 for k,v in values.items():

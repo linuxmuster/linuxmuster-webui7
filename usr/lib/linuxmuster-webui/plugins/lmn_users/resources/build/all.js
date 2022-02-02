@@ -1753,17 +1753,14 @@
       $scope.options.user = 'global-admin';
     }
     if ($scope.options.adminClass.includes('admins')) {
-      $http.get('/api/lm/schoolsettings/latex-templates').then(function(resp) {
-        $scope.templates_individual = resp.data[0];
-        $scope.templates_multiple = resp.data[1];
+      $http.get('/api/lm/schoolsettings/latex-templates').then(function(rp) {
+        $scope.templates_individual = rp.data[0];
+        $scope.templates_multiple = rp.data[1];
+        $scope.options['template_one_per_page'] = $scope.templates_individual[0];
+        $scope.options['template_multiple'] = $scope.templates_multiple[0];
         return $http.get('/api/lm/read_custom_config').then(function(resp) {
           var i, j, len, len1, ref, ref1, results, template;
-          $scope.templates = {
-            'multiple': '',
-            'individual': ''
-          };
           $scope.passwordTemplates = resp.data.passwordTemplates;
-          console.log($scope.templates_multiple);
           ref = $scope.templates_individual;
           for (i = 0, len = ref.length; i < len; i++) {
             template = ref[i];
@@ -1859,9 +1856,11 @@
       var classname, i, len, membership, ref, results;
       if ($scope.identity.user === 'root' || $scope.identity.profile.sophomorixRole === 'globaladministrator' || $scope.identity.profile.sophomorixRole === 'schooladministrator') {
         return $http.get('/api/lm/users/get-classes').then(function(resp) {
-          return $scope.classes = resp.data;
+          $scope.classes = resp.data;
+          return $scope.admin_warning = true;
         });
       } else {
+        $scope.admin_warning = false;
         $scope.classes = [];
         ref = $scope.identity.profile.memberOf;
         results = [];
@@ -3057,10 +3056,12 @@
           test = test && ($scope.teachers.filter(validation.findval('login', val)).length < 2);
         }
       } else if (filter === 'extrastudents') {
-        test = test && ($scope.extrastudents.filter(validation.findval('login', val)).length < 2);
+        if (val !== '') {
+          test = test && ($scope.extrastudents.filter(validation.findval('login', val)).length < 2);
+        }
       }
       // Login for teachers may be empty
-      if (name === 'Login' && filter === 'teachers' && test === true) {
+      if (name === 'Login' && (filter === 'teachers' || filter === 'extrastudents') && test === true) {
         delete $scope.error_msg[name + "-" + tab + "-" + ev];
         delete $scope.emptyCells[name + "-" + tab + "-" + ev];
         return "";

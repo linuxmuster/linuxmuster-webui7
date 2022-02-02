@@ -5,21 +5,22 @@ Authentication classes to communicate with LDAP tree and load user's information
 import logging
 import os
 import stat
-
+import re
 import ldap
 import ldap.filter
 import ldap.modlist as modlist
 import subprocess
-from jadi import component, service
 import pwd
 import grp
 import simplejson as json
 import yaml
+import logging
 
+from jadi import component, service
 from aj.auth import AuthenticationProvider, OSAuthenticationProvider, AuthenticationService
 from aj.config import UserConfigProvider
-from aj.plugins.lmn_common.api import lmconfig, lmsetup_schoolname
-import logging
+from aj.plugins.lmn_common.api import ldap_config as params, lmsetup_schoolname
+from aj.api.endpoint import EndpointError
 
 @component(AuthenticationProvider)
 class LMAuthenticationProvider(AuthenticationProvider):
@@ -29,9 +30,13 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
     id = 'lm'
     name = _('Linux Muster LDAP') # skipcq: PYL-E0602
+    pw_reset = True
 
     def __init__(self, context):
         self.context = context
+
+    def prepare_environment(self, username):
+        pass
 
     def get_ldap_user(self, username, context=""):
         """
@@ -39,8 +44,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
         :param username: Username
         :type username: string
-        :param context: 'auth' to get permissions and 'userconfig' to get
-        user's personal config, e.g. for Dashboard
+        :param context: 'auth' to get permissions and 'userconfig' to get user's personal config, e.g. for Dashboard
         :type context: string
         :return: Dict of values
         :rtype: dict
@@ -76,8 +80,8 @@ class LMAuthenticationProvider(AuthenticationProvider):
         if context == "userconfig":
             ldap_attrs = ['sophomorixWebuiDashboard']
 
+        # Apply escape chars on username value
         searchFilter = ldap.filter.filter_format(ldap_filter, [username])
-        params = lmconfig['linuxmuster']['ldap']
 
         l = ldap.initialize('ldap://' + params['host'])
         # Binduser bind to the  server
@@ -128,7 +132,6 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
         # Is the password right ?
         try:
-            params = lmconfig['linuxmuster']['ldap']
             l = ldap.initialize('ldap://' + params['host'])
             l.set_option(ldap.OPT_REFERRALS, 0)
             l.protocol_version = ldap.VERSION3
@@ -213,10 +216,10 @@ class LMAuthenticationProvider(AuthenticationProvider):
             if role in groupmembership:
                 try:
                     gid = grp.getgrnam(role).gr_gid
-                    logging.debug("Running Webui as %s", role)
+                    logging.debug(f"Running Webui as {role}")
                 except KeyError:
                     gid = grp.getgrnam('nogroup').gr_gid
-                    logging.debug("Context group not found, running Webui as %s", 'nogroup')
+                    logging.debug(f"Context group not found, running Webui as {nogroup}")
                 return gid
         return None
 
@@ -244,10 +247,10 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
         try:
             uid = pwd.getpwnam(username).pw_uid
-            logging.debug("Running Webui as %s", username)
+            logging.debug(f"Running Webui as {username}")
         except KeyError:
             uid = pwd.getpwnam('nobody').pw_uid
-            logging.debug("Context user not found, running Webui as %s", 'nobody')
+            logging.debug(f"Context user not found, running Webui as {nobody}")
         return uid
 
     def get_profile(self, username):
@@ -278,7 +281,57 @@ class LMAuthenticationProvider(AuthenticationProvider):
             logging.error(e)
             return {}
 
+    def check_mail(self, mail):
+        # Search in the mail field, this must be discuted with others devs
+        ldap_filter = """(&
+                            (objectClass=user)
+                            (|
+                                (sophomorixRole=globaladministrator)
+                                (sophomorixRole=schooladministrator)
+                                (sophomorixRole=teacher)
+                                (sophomorixRole=student)
+                            )
+                            (mail=%s)
+                        )"""
 
+        # Apply escape chars on mail value
+        searchFilter = ldap.filter.filter_format(ldap_filter, [mail])
+
+        l = ldap.initialize('ldap://' + params['host'])
+        # Binduser bind to the  server
+        try:
+            l.set_option(ldap.OPT_REFERRALS, 0)
+            l.protocol_version = ldap.VERSION3
+            l.bind_s(params['binddn'], params['bindpw'])
+        except Exception as e:
+            logging.error(str(e))
+            raise KeyError(e)
+        try:
+            res = l.search_s(params['searchdn'], ldap.SCOPE_SUBTREE, searchFilter, attrlist=['sAMAccountName'])
+            if res[0][0] is None:
+                # Don't show any hint if the email doesn't exists in ldap
+                return False
+            # What to do if email is not unique ?
+            return res[0][1]['sAMAccountName'][0].decode()
+        except (ldap.LDAPError, KeyError):
+            return False
+
+        l.unbind_s()
+        return False
+
+    def check_password_complexity(self, password):
+        strong_pw = re.match('(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*()]|(?=.*\d)).{7,}', password)
+        valid_pw = re.match('^[a-zA-Z0-9!@#§+\-$%&*{}()\]\[]+$', password)
+        if valid_pw and strong_pw:
+            return True
+        raise EndpointError(_(
+            f'Minimal length is 7 characters. Use upper, lower and special characters or numbers. (e.g. Muster!).' 
+            f'Valid characters are: a-z A-Z 0-9 !§+-@#$%&amp;*( )[ ]{{ }}'))
+
+    def update_password(self, username, password):
+        systemString = ['sudo', 'sophomorix-passwd', '--user', username, '--pass', password, '--hide', '--nofirstpassupdate', '--use-smbpasswd']
+        subprocess.check_call(systemString, shell=False)
+        return True
 
 @component(UserConfigProvider)
 class UserLdapConfig(UserConfigProvider):
@@ -317,7 +370,11 @@ class UserLdapConfig(UserConfigProvider):
             try:
                 self.data = json.loads(userAttrs['sophomorixWebuiDashboard'])
             except Exception:
-                logging.warning('Error retrieving userconfig from %s, value: %s. This will be overwritten', self.user, userAttrs['sophomorixWebuiDashboard'])
+                logging.warning(
+                    f'Error retrieving userconfig from {self.user}, '
+                    f'value: {userAttrs["sophomorixWebuiDashboard"]}.'
+                    f'This will be overwritten.'
+                )
                 self.data = {}
 
     def save(self):
@@ -345,8 +402,8 @@ class UserLdapConfig(UserConfigProvider):
                         )"""
             ldap_attrs = ['sophomorixWebuiDashboard']
 
+            # Apply escape chars on self.user value
             searchFilter = ldap.filter.filter_format(ldap_filter, [self.user])
-            params = lmconfig['linuxmuster']['ldap']
             with open('/etc/linuxmuster/.secret/administrator') as f:
                 admin_pw = f.read()
 

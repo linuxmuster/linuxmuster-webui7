@@ -80,13 +80,13 @@
                             <label translate>Icon</label>
                             <div uib-dropdown>
                                 <button class="btn btn-default btn-block" uib-dropdown-toggle>
-                                    <img src="/api/lm/linbo/icons/read/{{os.IconName}}" style="max-width: 32px;" />
+                                    <img ng:src="/api/lm/linbo/icons/read/{{os.IconName}}" style="max-width: 32px;" />
                                     <i class="fa fa-caret-down"></i>
                                 </button>
                                 <ul uib-dropdown-menu class="dropdown-menu-right" style="width: 150px !important; min-width: 0;">
-                                    <li ng:repeat="icon in icons" ng:show="icon.substring(0, 6) != 'linbo_' && icon.includes(image_extension)">
+                                    <li ng:repeat="icon in icons" ng:show="icon.substring(0, 6) != 'linbo_' && icon.includes('.' + image_extension)">
                                         <a ng:click="os.IconName = icon">
-                                            <img src="/api/lm/linbo/icons/read/{{icon}}" style="max-width: 32px;" />&emsp; {{icon}}
+                                            <img ng:src="/api/lm/linbo/icons/read/{{icon}}" style="max-width: 32px;" />&emsp; {{icon}}
                                         </a>
                                     </li>
                                 </ul>
@@ -106,12 +106,12 @@
                         </td>
                         <td>
                         </td>
-                        <td width="49%">
-                            <label translate>Differential image</label>
-                            <select ng:model="os.Image" ng:options="x for x in diffImages" class="form-control">
-                                <option value="">None</option>
-                            </select>
-                        </td>
+<!--                        <td width="49%">-->
+<!--                            <label translate>Differential image</label>-->
+<!--                            <select ng:model="os.Image" ng:options="x for x in diffImages" class="form-control">-->
+<!--                                <option value="">None</option>-->
+<!--                            </select>-->
+<!--                        </td>-->
                     </tr>
                 </table>
             </div>

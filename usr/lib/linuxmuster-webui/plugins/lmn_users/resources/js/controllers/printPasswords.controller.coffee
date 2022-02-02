@@ -20,13 +20,15 @@ angular.module('lmn.users').controller 'LMUsersPrintPasswordsOptionsModalControl
         $scope.options.user = 'global-admin'
 
     if $scope.options.adminClass.includes('admins')
-        $http.get('/api/lm/schoolsettings/latex-templates').then (resp) ->
-            $scope.templates_individual = resp.data[0]
-            $scope.templates_multiple = resp.data[1]
+        $http.get('/api/lm/schoolsettings/latex-templates').then (rp) ->
+            $scope.templates_individual = rp.data[0]
+            $scope.templates_multiple = rp.data[1]
+            $scope.options['template_one_per_page'] = $scope.templates_individual[0]
+            $scope.options['template_multiple'] = $scope.templates_multiple[0]
+
             $http.get('/api/lm/read_custom_config').then (resp) ->
-                $scope.templates = {'multiple': '', 'individual': ''}
                 $scope.passwordTemplates = resp.data.passwordTemplates
-                console.log($scope.templates_multiple)
+
                 for template in $scope.templates_individual
                     if template.path == $scope.passwordTemplates.individual
                         $scope.options['template_one_per_page'] = template
@@ -93,7 +95,9 @@ angular.module('lmn.users').controller 'LMUsersPrintPasswordsController', ($scop
         if $scope.identity.user == 'root' || $scope.identity.profile.sophomorixRole == 'globaladministrator' || $scope.identity.profile.sophomorixRole == 'schooladministrator'
             $http.get('/api/lm/users/get-classes').then (resp) ->
                 $scope.classes = resp.data
+                $scope.admin_warning = true
         else
+            $scope.admin_warning = false
             $scope.classes = []
             for membership in $scope.identity.profile.memberOf
                 if membership.indexOf("OU=Students") > -1

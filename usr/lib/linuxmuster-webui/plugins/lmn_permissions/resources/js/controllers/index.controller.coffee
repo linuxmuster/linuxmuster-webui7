@@ -20,6 +20,14 @@ angular.module('lmn.permissions').controller 'PermissionListIndexController', ($
         $scope.sidebarPermissions = resp.data[2]
         # To iterate in alphabetical order
         $scope.sidebarPermissionsList = Object.keys($scope.sidebarPermissions)
+        $scope.sidebarPermissionsOrphans = []
+        for url in $scope.sidebarPermissionsList
+            if $scope.sidebarPermissions[url].plugin == 'NOT IMPLEMENTED'
+                $scope.sidebarPermissionsOrphans.push(url)
+        $scope.apiPermissionsOrphans = []
+        for url, details of $scope.apiPermissions
+            if details.name == 'NO DESCRIPTION'
+                $scope.apiPermissionsOrphans.push(url)
         $scope.sidebarPermissionsList.sort()
 
     $scope.get_provider = (url) ->

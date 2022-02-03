@@ -679,9 +679,9 @@
     </uib:tab>
     <uib:tab heading="{{'Holidays'|translate}}">
        <h3 translate>Configuration of holidays</h3>
-        <div class="alert alert-info" ng:show="!holidays">
-            <i class="fa fa-info-circle fa-3x pull-left"></i>
-            <span translate>No holidays found</span>
+        <div class="alert alert-info" ng:show="holidays.length == 0">
+            <i class="fa fa-info-circle fa-2x"></i>
+            <span translate>No holidays found!</span>
         </div>
         <table class="table" ng:show="holidays">
             <tr>

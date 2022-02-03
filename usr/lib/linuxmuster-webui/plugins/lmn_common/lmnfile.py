@@ -204,6 +204,9 @@ class YAMLLoader(LMNFile):
 
     def __enter__(self):
         if os.geteuid() == 0:
+            # Creating empty file if it does not exist
+            if not os.path.exists(self.file):
+                open(self.file, 'w').close()
             os.chmod(self.file, 384)  # 0o600
         self.opened = open(self.file, 'r')
         if 'r' in self.mode or '+' in self.mode:

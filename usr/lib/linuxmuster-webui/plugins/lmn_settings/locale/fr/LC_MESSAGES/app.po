@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-06 12:55+0100\n"
-"PO-Revision-Date: 2022-01-28 10:36\n"
+"POT-Creation-Date: 2022-02-05 12:01+0100\n"
+"PO-Revision-Date: 2022-02-05 11:06\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -35,6 +35,10 @@ msgstr "<i class=\"fa fa-warning \"></i>\n"
 msgid "Add a subnet"
 msgstr "Ajouter un sous-réseau"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:711
+msgid "Add holidays"
+msgstr "Ajouter des vacances"
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:378
 msgid "Admin description"
 msgstr "Description de l'administrateur"
@@ -53,6 +57,10 @@ msgstr "Pourcentage de quota cloud"
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:458
 msgid "Comment"
 msgstr "Commentaire"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:681
+msgid "Configuration of holidays"
+msgstr "Configuration des vacances"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:524
 msgid "Custom fields"
@@ -82,6 +90,10 @@ msgstr "Domaine Email"
 msgid "Encoding"
 msgstr "Encodage"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:690
+msgid "End"
+msgstr "Fin"
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:649
 msgid "End lease range"
 msgstr "Fin plage DHCP"
@@ -98,6 +110,10 @@ msgstr "Nombre de caractères du prénom"
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:8
 msgid "General"
 msgstr "Général"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:680
+msgid "Holidays"
+msgstr "Vacances"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:506
 msgid "If you want to use your own latex template, please store it in the directory /etc/linuxmuster/sophomorix/SCHOOL/latex-templates/. More informations about it <a href=\"https://github.com/linuxmuster/sophomorix4/blob/bionic/sophomorix-samba/lang/latex/README.latextemplates\">in sophomorix's wiki</a>."
@@ -143,9 +159,17 @@ msgstr "Durée maximale de session"
 msgid "Moodle"
 msgstr "Moodle"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:688
+msgid "Name"
+msgstr "Nom"
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:646
 msgid "Network / Prefix"
 msgstr "Réseau / Préfixe"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:684
+msgid "No holidays found!"
+msgstr "Pas de vacances trouvées!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:134
 msgid "Password Length"
@@ -234,21 +258,22 @@ msgid "SSL certificate file"
 msgstr "Certificat SSL"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:57
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:687
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:688
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:689
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:721
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:722
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:723
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:725
 msgid "Save"
 msgstr "Sauvegarder"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:686
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:720
 msgid "Save &amp; Apply Quota"
 msgstr "Enregistrer &amp; Appliquer le quota"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:690
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:724
 msgid "Save &amp; Apply Subnets"
 msgstr "Enregistrer &amp; Appliquer les sous-réseaux"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:685
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:719
 msgid "Save &amp; check"
 msgstr "Sauvegarder &amp; vérifier"
 
@@ -280,6 +305,10 @@ msgstr "Drapeau de configuration"
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:599
 msgid "Show"
 msgstr "Afficher"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:689
+msgid "Start"
+msgstr "Début"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:300
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:531
@@ -401,11 +430,12 @@ msgid "Configure global settings"
 msgstr "Configurer les paramètres globaux"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:33
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:120
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:134
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:138
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:133
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:147
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:165
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:151
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:160
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:167
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:190
 msgid "Saved"
 msgstr "Enregistré"
 
@@ -426,7 +456,8 @@ msgid "Generate"
 msgstr "Générer"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:44
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:107
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:109
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:123
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -466,23 +497,32 @@ msgstr "Moyenne"
 msgid "Maximal"
 msgstr "Maximum"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:105
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:107
 msgid "Are you sure you want to delete permanently this subnet ?"
 msgstr "Êtes-vous sûr de vouloir supprimer définitivement ce sous-réseau ?"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:106
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:108
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:122
 msgid "Delete"
 msgstr "Supprimer"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:167
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:121
+msgid "Are you sure you want to delete permanently these holidays ?"
+msgstr "Voulez-vous vraiment supprimer ces vacances ?"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:164
+msgid "Please first correct the mal formated fields."
+msgstr "Veuillez d'abord corriger les champs mal formés."
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:192
 msgid "In order for changes to take effect, it's  necessary to restart the Webui. Restart now ?"
 msgstr "Pour que les changements prennent effet, il est nécessaire de redémarrer la Webui. Redémarrer maintenant ?"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:168
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:193
 msgid "Restart"
 msgstr "Redémarrer"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:169
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:194
 msgid "Later"
 msgstr "Plus tard"
 

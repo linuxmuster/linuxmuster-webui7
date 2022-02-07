@@ -89,11 +89,13 @@ def group_os(workstations):
         if config is not None:
             workstations[group]['power'] = {
                 'run_halt': 0,
-                'timeout': 0
+                'timeout': 1
                 }
             workstations[group]['auto'] = {
                 'disable_gui': 0,
-                'bypass': 0
+                'bypass': 0,
+                'wol': 0,
+                'prestart': 0,
             }
             for osConfig in config:
                 if osConfig['SyncEnabled'] or osConfig['NewEnabled']:

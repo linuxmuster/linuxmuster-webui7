@@ -93,6 +93,16 @@ angular.module('lmn.linbo_sync').controller 'SyncIndexController', ($scope, $htt
         $scope.groups[group]['auto']['disable_gui'] = 1 - $scope.groups[group]['auto']['disable_gui']
         $scope.refresh_cmd(group)
 
+    $scope.handle_wake_on_lan = (group) ->
+        # Possible values : 0 or 1
+        $scope.groups[group]['auto']['wol'] = 1 - $scope.groups[group]['auto']['wol']
+        $scope.refresh_cmd(group)
+
+    $scope.handle_prestart = (group) ->
+        # Possible values : 0 or 1
+        $scope.groups[group]['auto']['prestart'] = 1 - $scope.groups[group]['auto']['prestart']
+        $scope.refresh_cmd(group)
+
     $scope.refresh_cmd = (group) ->
         cmd = ' -c '
         format = []
@@ -112,6 +122,9 @@ angular.module('lmn.linbo_sync').controller 'SyncIndexController', ($scope, $htt
             if os.run_start
                 start.push('start:' + os.position)
 
+        if $scope.groups[group]['auto']['prestart'] > 0
+            cmd = ' -p '
+        
         cmd += format.join()
         if sync.length > 0
             cmd += if cmd.length > 4 then ','+sync.join() else sync.join()
@@ -123,7 +136,7 @@ angular.module('lmn.linbo_sync').controller 'SyncIndexController', ($scope, $htt
             cmd += if cmd.length > 4 then ','+$scope.groups[group]['power']['halt'] else $scope.groups[group]['power']['halt']
 
         timeout = ''
-        if $scope.groups[group]['power']['timeout'] > 0
+        if $scope.groups[group]['auto']['wol'] > 0
             timeout = ' -w ' + $scope.groups[group]['power']['timeout']
 
         autostart = ''
@@ -135,7 +148,7 @@ angular.module('lmn.linbo_sync').controller 'SyncIndexController', ($scope, $htt
         if cmd.length > 4 and $scope.linbo_command[group]['host'].length > 0
             if $scope.linbo_command[group]['target'] == 'group' or $scope.linbo_command[group]['host'].length == $scope.groups[group].hosts.length
                 $scope.linbo_command[group]['target'] = 'group'
-                $scope.linbo_command[group]['cmd'] = ['/usr/sbin/linbo-remote -g ' + group + timeout + autostart + cmd]
+                $scope.linbo_command[group]['cmd'] = ['/usr/sbin/linbo-remote -g ' + group + timeout + autostart + cmd ]
             else
                 $scope.linbo_command[group]['cmd'] = []
                 for ip in $scope.linbo_command[group]['host']

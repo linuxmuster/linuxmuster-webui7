@@ -2129,9 +2129,14 @@
         $scope.custom = resp.data.custom[role];
         $scope.customMulti = resp.data.customMulti[role];
         $scope.proxyAddresses = resp.data.proxyAddresses[role];
-        // Is there a custom field to show ?
-        if ($scope.proxyAddresses.show) {
-          $scope.custom_column = true;
+        
+        // Check if proxyAddresses has content
+        if (Object.keys(resp.data.proxyAddresses).length !== 0) {
+          $scope.proxyAddresses = resp.data.proxyAddresses[role];
+          // Is there a custom field to show ?
+          if ($scope.proxyAddresses.show) {
+            $scope.custom_column = true;
+          }
         }
         if (!$scope.custom_column) {
           ref = $scope.custom;

@@ -19,7 +19,7 @@
                     <td>
                         <input type="checkbox" ng:checked="clientIsInCmd(group, h.ip)" ng:click="update_host(group, h.ip)">
                     </td>
-                    <th>{{h.host}}</th>
+                    <th>{{h.hostname}}</th>
                     <td>{{h.ip}}</td>
                     <td>{{h.mac}}</td>
                     <td ng:repeat="os in h.image" style="width:160px;" class="{{os.status}}">

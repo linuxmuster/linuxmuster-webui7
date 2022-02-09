@@ -8,6 +8,11 @@ import time
 import subprocess
 import gzip
 import xml.etree.ElementTree as ElementTree
+from aj.plugins.lmn_common.lmnfile import LMNFile
+from aj.auth import authorize
+from aj.plugins.lmn_common.api import lmn_get_school_configpath
+from aj.plugins.lmn_common.multischool import School
+
 
 LINBO_PATH = '/srv/linbo'
 
@@ -112,41 +117,50 @@ def group_os(workstations):
 
     return workstations
 
-def list_workstations():
+def list_workstations(context):
     """
     Generate a dict with workstations and parameters out of devices file
 
+    :param context: user context set in views.py
     :return: Dict with all linbo informations for all workstations.
     :rtype: dict
     """
 
-    school = 'default-school'
-    workstations_file = '/etc/linuxmuster/sophomorix/' + school + '/devices.csv'
+    school = School.get(context).school
+    path = lmn_get_school_configpath(school)+'devices.csv'
 
-    workstations = {}
+    devices_dict = {}
+    fieldnames = [
+        'room',
+        'hostname',
+        'group',
+        'mac',
+        'ip',
+        'officeKey',
+        'windowsKey',
+        'dhcpOptions',
+        'sophomorixRole',
+        'lmnReserved10',
+        'pxeFlag',
+        'lmnReserved12',
+        'lmnReserved13',
+        'lmnReserved14',
+        'sophomorixComment',
+        'options',
+    ]    
+    with LMNFile(path, 'r', fieldnames=fieldnames) as devices_csv:
 
-    with open(workstations_file, 'r') as w:
-        buffer = csv.reader(w, delimiter=";")
-        for row in buffer:
-            # Not a comment
-            if row[0][0] != "#":
-                # If config file exists
-                if os.path.isfile(os.path.join(LINBO_PATH, 'start.conf.'+row[2])):
-                    room = row[0]
-                    group = row[2]
-                    host  = row[1]
-                    mac   = row[3]
-                    ip    = row[4]
-                    pxe   = row[10]
+        devices = devices_csv.read()
+        for device in devices:
+            if os.path.isfile(os.path.join(LINBO_PATH, 'start.conf.'+str(device['group']))):
+                if device['pxeFlag'] != '1' and device['pxeFlag'] != "2":
+                    continue
+                elif device['group'] not in devices_dict.keys():
+                    devices_dict[device['group']] = {'grp': device['group'], 'hosts': [device]}
+                else:
+                    devices_dict[device['group']]['hosts'].append(device)
 
-                    if pxe != "1" and pxe != "2":
-                        continue
-                    elif group not in workstations.keys():
-                        workstations[group] = {'grp': group, 'hosts': [{'host' : host, 'room' : room, 'mac' : mac, 'ip' : ip}]}
-                    else:
-                        workstations[group]['hosts'].append({'host' : host, 'room' : room, 'mac' : mac, 'ip' : ip})
-
-    return group_os(workstations)
+    return group_os(devices_dict)
 
 def last_sync_all(workstations):
     """
@@ -165,7 +179,7 @@ def last_sync_all(workstations):
             for host in grpDict['hosts']:
                 host['image'] = []
                 for image in workstations[group]['os']:
-                    last = last_sync(host['host'], image['baseimage'])
+                    last = last_sync(host['hostname'], image['baseimage'])
                     date = last if last else "Never"
                     tmpDict = {
                             'date': date,

@@ -1,10 +1,10 @@
-linuxmuster-webui7 (17.1.4.0) lmn71; urgency=medium
+linuxmuster-webui7 (17.1.4.1) lmn71; urgency=medium
 
     * lmn_linbo_sync use common librarys
     - rewritten list workstations to use common linuxmuster libraries
       (fixes occuring error with empty lines in devices.csv)
     - added multischool support
-    - fixed typo in nmap check
+    - removed nmap check
 
  -- Andreas Till <andreas.till@netzint.de>  Wed, 09 Feb 2022 11:37:45 +0100
 

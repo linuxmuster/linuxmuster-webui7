@@ -37,7 +37,14 @@ angular.module('lmn.linbo_sync').config(function ($routeProvider) {
       index = $scope.groups[group].hosts.indexOf(host);
       return $http.get(`/api/lm/linbo/isOnline/${host.host}`).then(function(resp) {
         $scope.groups[group].hosts[index].up = resp.data;
-        if (resp.data === "Off") {
+        if (resp.data === "Nmap-missing") {
+          messagebox.show({
+            title: gettext('Nmap not installed'),
+            text: gettext('Its not possible to check the online status because nmap is not installed. Please install nmap and try again'),
+            positive: 'OK'
+          });
+          return $scope.groups[group].hosts[index].upClass = "btn-danger";
+        } else if (resp.data === "Off") {
           return $scope.groups[group].hosts[index].upClass = "btn-danger";
         } else {
           return $scope.groups[group].hosts[index].upClass = "btn-success";

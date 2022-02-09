@@ -8,7 +8,6 @@ import time
 import subprocess
 import gzip
 import xml.etree.ElementTree as ElementTree
-from shutil import which
 from aj.plugins.lmn_common.lmnfile import LMNFile
 from aj.auth import authorize
 from aj.plugins.lmn_common.api import lmn_get_school_configpath
@@ -204,8 +203,6 @@ def test_online(host):
     :return: OS type (Off, Linbo, OS Linux, OS Windows, OS Unknown)
     :rtype: string
     """
-    if which("nmap") is None:
-        return "Nmap-missing"
 
     command=["nmap", "-p", "2222,22,135", host, "-oX", "-"]
     r = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=False).stdout.read()

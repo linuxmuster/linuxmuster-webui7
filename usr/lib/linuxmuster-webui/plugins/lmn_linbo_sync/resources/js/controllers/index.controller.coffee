@@ -12,7 +12,10 @@ angular.module('lmn.linbo_sync').controller 'SyncIndexController', ($scope, $htt
 
         $http.get("/api/lm/linbo/isOnline/#{host.host}").then (resp) ->
             $scope.groups[group].hosts[index].up = resp.data
-            if ( resp.data == "Off" )
+            if ( resp.data == "Nmap-missing" )
+                messagebox.show(title: gettext('Nmap not installed'), text: gettext('Its not possible to check the online status because nmap is not installed. Please install nmap and try again'), positive: 'OK')
+                $scope.groups[group].hosts[index].upClass = "btn-danger"
+            else if ( resp.data == "Off" )
                 $scope.groups[group].hosts[index].upClass = "btn-danger"
             else
                 $scope.groups[group].hosts[index].upClass = "btn-success"

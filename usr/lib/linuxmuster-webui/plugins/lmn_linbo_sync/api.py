@@ -204,7 +204,7 @@ def test_online(host):
     :return: OS type (Off, Linbo, OS Linux, OS Windows, OS Unknown)
     :rtype: string
     """
-    if which("namp") is None:
+    if which("nmap") is None:
         return "Nmap-missing"
 
     command=["nmap", "-p", "2222,22,135", host, "-oX", "-"]

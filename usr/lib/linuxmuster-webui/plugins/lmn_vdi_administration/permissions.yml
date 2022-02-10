@@ -1,0 +1,12 @@
+globaladministrator:
+    - 'sidebar:view/view/lmn_vdi_administration: false'
+    - 'lmn_vdi_administration:show: false'
+
+schooladministrator:
+    - 'sidebar:view:/view/lmn_vdi_administration: false'
+    - 'lmn_vdi_administration:show: false'
+
+
+teacher:
+    - 'sidebar:view:/view/lmn_vdi_administration: false'
+    - 'lmn_vdi_administration:show: false'

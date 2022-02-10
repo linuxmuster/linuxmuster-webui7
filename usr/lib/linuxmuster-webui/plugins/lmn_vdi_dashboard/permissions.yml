@@ -9,3 +9,7 @@ schooladministrator:
 teacher:
     - 'sidebar:view:/view/lmn_vdi_dashboard: false'
     - 'lmn_vdi_dashboard:show: false'
+
+student:
+    - 'sidebar:view:/view/lmn_vdi_dashboard: false'
+    - 'lmn_vdi_dashboard:show: false'

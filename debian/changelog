@@ -1,3 +1,9 @@
+linuxmuster-webui7 (17.1.4.2) lmn71; urgency=medium
+
+    * added permissions.yml for vdi plugins
+
+ -- Andreas Till <andreas.till@netzint.de>  Thu, 10 Feb 2022 18:10:45 +0100
+
 linuxmuster-webui7 (17.1.4.1) lmn71; urgency=medium
 
     * lmn_linbo_sync use common librarys

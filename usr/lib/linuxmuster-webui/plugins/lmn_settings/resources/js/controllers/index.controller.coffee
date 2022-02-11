@@ -63,9 +63,6 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
         $scope.templates_individual = resp.data[0]
         $scope.templates_multiple = resp.data[1]
 
-    $http.get('/api/lm/subnets').then (resp) ->
-        $scope.subnets = resp.data
-
     $http.get('/api/lm/holidays').then (resp) ->
         $scope.holidays = resp.data
 
@@ -101,17 +98,6 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
     # $scope.setSchoolShare = (enabled) ->
     #     $scope.schoolShareEnabled = enabled
     #     $http.post('/api/lm/schoolsettings/school-share', enabled)
-
-    $scope.removeSubnet = (subnet) ->
-        messagebox.show({
-            text: gettext('Are you sure you want to delete permanently this subnet ?'),
-            positive: gettext('Delete'),
-            negative: gettext('Cancel')
-        }).then () ->
-            $scope.subnets.remove(subnet)
-
-    $scope.addSubnet = () ->
-        $scope.subnets.push({'routerIp':'', 'network':'', 'beginRange':'', 'endRange':'', 'setupFlag':''})
 
     $scope.addHoliday = () ->
         $scope.holidays.push({'name':'', 'start':'', 'end':''})
@@ -154,10 +140,6 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
             controller: 'LMQuotasApplyModalController'
             backdrop: 'static'
         )
-
-    $scope.saveApplySubnets = () ->
-        $http.post('/api/lm/subnets', $scope.subnets).then () ->
-            notify.success gettext('Saved')
 
     $scope.saveApplyHolidays = () ->
         if document.getElementsByClassName("has-error").length > 0

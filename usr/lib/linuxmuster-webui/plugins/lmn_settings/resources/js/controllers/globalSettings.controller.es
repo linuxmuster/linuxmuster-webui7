@@ -1,4 +1,4 @@
-angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope, $http, $sce, notify, pageTitle, identity, messagebox, config, core, locale, gettext) => {
+angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope, $http, $sce, $location, notify, pageTitle, identity, messagebox, config, core, locale, gettext) => {
     pageTitle.set(gettext('Global Settings'));
 
     config.load();
@@ -10,6 +10,34 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope,
         o: '',
         cn: ''
     };
+
+    $scope.tabs = ['general', 'listimport', 'quota', 'printing'];
+    $scope.activetab = 0;
+
+    tag = $location.$$url.split("#")[1]
+    if (tag && (tag in $scope.tabs)) {
+        $scope.activetab = $scope.tabs.indexOf(tag);
+    }
+
+    $http.get('/api/lm/subnets').then((resp) => $scope.subnets = resp.data);
+
+    $scope.removeSubnet = (subnet) => {
+        messagebox.show({
+            text: gettext('Are you sure you want to delete permanently this subnet ?'),
+            positive: gettext('Delete'),
+            negative: gettext('Cancel')
+        }).then(() => $scope.subnets.remove(subnet))
+    }
+
+    $scope.addSubnet = () => {
+        $scope.subnets.push({'routerIp':'', 'network':'', 'beginRange':'', 'endRange':'', 'setupFlag':''});
+    }
+
+    $scope.saveApplySubnets = () => {
+        $http.post('/api/lm/subnets', $scope.subnets).then(() => {
+            notify.success(gettext('Saved'));
+        });
+    }
 
     $scope.getSmtpConfig = () => {
         config.getSmtpConfig().then((smtpConfig) => $scope.smtp_config = smtpConfig);

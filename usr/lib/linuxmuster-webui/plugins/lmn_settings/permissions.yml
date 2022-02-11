@@ -1,4 +1,5 @@
 globaladministrator:
+    - 'lm:globalsettings: true'
     - 'lm:schoolsettings: true'
     - 'sidebar:view:/view/lm/schoolsettings: true'
     - 'sidebar:view:/view/lm/globalsettings: true'

@@ -191,7 +191,7 @@ class Handler(HttpPlugin):
             os.chmod(path, 0o0700)
 
     @url(r'/api/lm/subnets')
-    @authorize('lm:schoolsettings')
+    @authorize('lm:globalsettings')
     @endpoint(api=True)
     def handle_api_subnet(self, http_context):
         """

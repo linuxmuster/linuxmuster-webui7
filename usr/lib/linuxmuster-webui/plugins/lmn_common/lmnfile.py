@@ -270,7 +270,7 @@ class CSVLoader(LMNFile):
             )
             for elt in data:
                 first_field = elt[self.fieldnames[0]]
-                if first_field == '':
+                if first_field in ['', EMPTY_LINE_MARKER]:
                     f.write(first_field.replace(EMPTY_LINE_MARKER, '') + '\n')
                 else:
                     writer.writerow(elt)

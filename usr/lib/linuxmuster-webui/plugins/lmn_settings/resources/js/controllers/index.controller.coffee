@@ -11,13 +11,7 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
         remove: gettext('Remove')
     }
 
-    $scope.tabs = ['general', 'listimport', 'quota', 'printing']
-
-    tag = $location.$$url.split("#")[1]
-    if tag and tag in $scope.tabs
-        $scope.activetab = $scope.tabs.indexOf(tag)
-    else
-        $scope.activetab = 0
+    $scope.activetab = 0
 
     $scope.logLevels = [
         {name: gettext('Minimal'), value: 0}

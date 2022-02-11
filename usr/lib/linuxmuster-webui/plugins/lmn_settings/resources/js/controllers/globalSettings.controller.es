@@ -11,13 +11,7 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope,
         cn: ''
     };
 
-    $scope.tabs = ['general', 'listimport', 'quota', 'printing'];
     $scope.activetab = 0;
-
-    tag = $location.$$url.split("#")[1]
-    if (tag && (tag in $scope.tabs)) {
-        $scope.activetab = $scope.tabs.indexOf(tag);
-    }
 
     $http.get('/api/lm/subnets').then((resp) => $scope.subnets = resp.data);
 

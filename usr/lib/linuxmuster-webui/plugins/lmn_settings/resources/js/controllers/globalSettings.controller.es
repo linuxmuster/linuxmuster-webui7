@@ -11,6 +11,10 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope,
         cn: ''
     };
 
+    $scope.getSmtpConfig = () => {
+        config.getSmtpConfig().then((smtpConfig) => $scope.smtp_config = smtpConfig);
+    };
+
     identity.promise.then(() => {
        // $scope.newClientCertificate.o = identity.machine.name;
        // passwd.list().then((data) => {
@@ -29,14 +33,18 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope,
     });
 
     $scope.save = () =>
-       config.save().then(data =>
-          notify.success(gettext('Saved'))
-       ).catch(() =>
-          notify.error(gettext('Could not save config'))
-       );
+        config.save().then(data =>
+            notify.success(gettext('Global config saved'))
+        ).catch(() =>
+            notify.error(gettext('Could not save global config')));
+
+        // config.setSmtpConfig($scope.smtp_config).then(data =>
+        //     notify.success(gettext('Smtp config saved'))
+        // ).catch(() =>
+        //     notify.error(gettext('Could not save smtp config')));
 
 
-       $scope.createNewServerCertificate = () =>
+    $scope.createNewServerCertificate = () =>
        messagebox.show({
           title: gettext('Self-signed certificate'),
           text: gettext('Generating a new certificate will void all existing client authentication certificates!'),

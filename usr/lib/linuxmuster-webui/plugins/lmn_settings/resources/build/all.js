@@ -285,6 +285,12 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', function
       cn: ''
    };
 
+   $scope.getSmtpConfig = function () {
+      config.getSmtpConfig().then(function (smtpConfig) {
+         return $scope.smtp_config = smtpConfig;
+      });
+   };
+
    identity.promise.then(function () {
       // $scope.newClientCertificate.o = identity.machine.name;
       // passwd.list().then((data) => {
@@ -305,11 +311,17 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', function
 
    $scope.save = function () {
       return config.save().then(function (data) {
-         return notify.success(gettext('Saved'));
+         return notify.success(gettext('Global config saved'));
       }).catch(function () {
-         return notify.error(gettext('Could not save config'));
+         return notify.error(gettext('Could not save global config'));
       });
    };
+
+   // config.setSmtpConfig($scope.smtp_config).then(data =>
+   //     notify.success(gettext('Smtp config saved'))
+   // ).catch(() =>
+   //     notify.error(gettext('Could not save smtp config')));
+
 
    $scope.createNewServerCertificate = function () {
       return messagebox.show({

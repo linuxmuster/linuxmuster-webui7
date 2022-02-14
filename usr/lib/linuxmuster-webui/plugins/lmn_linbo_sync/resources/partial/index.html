@@ -19,7 +19,7 @@
                     <td>
                         <input type="checkbox" ng:checked="clientIsInCmd(group, h.ip)" ng:click="update_host(group, h.ip)">
                     </td>
-                    <th>{{h.host}}</th>
+                    <th>{{h.hostname}}</th>
                     <td>{{h.ip}}</td>
                     <td>{{h.mac}}</td>
                     <td ng:repeat="os in h.image" style="width:160px;" class="{{os.status}}">
@@ -68,10 +68,17 @@
                             <i class="fas fa-sync"></i>  Reboot
                             <input type="checkbox" class="pull-right" ng:checked="details.power.halt == 'reboot'">
                         </button>
-                        <button class="btn btn-default" style="margin-left:10px;" translate>
-                            <i class="fas fa-clock"></i>  Boot timeout (in seconds):
+                        <button class="btn btn-default" style="width:200px; margin-left:10px;" ng:click="handle_wake_on_lan(group)" translate>
+                            <i class="fas fa-lightbulb"></i>  Wake on lan
+                            <input type="checkbox" class="pull-right" ng:checked="details.auto.wol">
                         </button>
-                        <input ng:model="details.power.timeout" style="width:50px;text-align:center;" type="number" ng:change="refresh_cmd(group)" min="0">
+
+                            <button class="btn btn-default" style="margin-left:10px;" ng:show="details.auto.wol > 0" translate>
+                                <i class="fas fa-clock"></i>  Boot timeout (in seconds):
+                            </button>
+                            <input ng:model="details.power.timeout" style="width:50px;text-align:center;" type="number" ng:change="refresh_cmd(group)" min="1"  ng:show="details.auto.wol > 0">
+
+
                     </td>
                 </tr>
                 <tr>
@@ -81,10 +88,14 @@
                            <i class="fas fa-terminal"></i>  Disable GUI
                            <input type="checkbox" class="pull-right" ng:checked="details.auto.disable_gui">
                        </button>
-                       <button class="btn btn-default" style="width:200px; margin-left:10px;" ng:click="handle_bypass(group)" ng:show="details.power.timeout > 0" translate>
+                       <button class="btn btn-default" style="width:200px; margin-left:10px;" ng:click="handle_bypass(group)" ng:show="details.auto.wol > 0" translate>
                            <i class="fas fa-directions"></i>  Bypass autostart
                            <input type="checkbox" class="pull-right" ng:checked="details.auto.bypass">
                        </button>
+                       <button class="btn btn-default" style="width:200px; margin-left:10px;" ng:click="handle_prestart(group)" ng:show="details.auto.wol > 0" translate>
+                        <i class="fas fa-plug"></i>  Use Prestart
+                        <input type="checkbox" class="pull-right" ng:checked="details.auto.prestart">
+                    </button>
                     </td>
                 </tr>
             </table>

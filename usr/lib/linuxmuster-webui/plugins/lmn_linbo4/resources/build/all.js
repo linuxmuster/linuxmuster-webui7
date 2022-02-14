@@ -183,7 +183,7 @@
     $http.get('/api/lm/linbo4/images').then(function(resp) {
       return $scope.oses = resp.data;
     });
-    ref = config.partitions;
+    ref = $scope.config.partitions;
     for (i = 0, len = ref.length; i < len; i++) {
       _partition = ref[i];
       // Determine the position of the partition integer.
@@ -215,8 +215,9 @@
         $scope.disks.push(diskMap[_device]);
       }
       diskMap[_device].partitions.push(_partition);
-      _partition._isCache = _partition.Dev === config.config.LINBO.Cache;
+      _partition._isCache = _partition.Dev === $scope.config.config.LINBO.Cache;
     }
+    $scope.config_backup = angular.copy($scope.config);
     ref1 = $scope.disks;
     for (j = 0, len1 = ref1.length; j < len1; j++) {
       disk = ref1[j];
@@ -323,11 +324,11 @@
       return partition.FSType === 'swap';
     };
     $scope.isCachePartition = function(partition) {
-      return partition.Dev === config.config.LINBO.Cache;
+      return partition.Dev === $scope.config.config.LINBO.Cache;
     };
     $scope.getOS = function(partition) {
       var k, len2, os, ref2;
-      ref2 = config.os;
+      ref2 = $scope.config.os;
       for (k = 0, len2 = ref2.length; k < len2; k++) {
         os = ref2[k];
         if (os.Root === partition.Dev) {
@@ -521,12 +522,12 @@
           partition.Dev = newDev;
           partitionIndex++;
           if (partition._isCache) {
-            config.config.LINBO.Cache = partition.Dev;
+            $scope.config.config.LINBO.Cache = partition.Dev;
           }
         }
       }
       $log.log('Remapping OSes', remap);
-      ref4 = config.os;
+      ref4 = $scope.config.os;
       results = [];
       for (m = 0, len4 = ref4.length; m < len4; m++) {
         os = ref4[m];
@@ -585,25 +586,24 @@
       });
     };
     $scope.save = function() {
-      var k, l, len2, len3, partition, ref2, ref3;
+      var config_change, k, l, len2, len3, partition, ref2, ref3;
       console.log(vdiconfig);
-      config.partitions = [];
+      $scope.config.partitions = [];
       ref2 = $scope.disks;
       for (k = 0, len2 = ref2.length; k < len2; k++) {
         disk = ref2[k];
         ref3 = disk.partitions;
         for (l = 0, len3 = ref3.length; l < len3; l++) {
           partition = ref3[l];
-          config.partitions.push(partition);
+          $scope.config.partitions.push(partition);
         }
       }
-      $uibModalInstance.close([config, vdiconfig]);
-      
+      config_change = !angular.equals(angular.toJson($scope.config), angular.toJson($scope.config_backup));
       // Remove # from background color
       if ($scope.config.config.LINBO.BackgroundColor) {
         $scope.config.config.LINBO.BackgroundColor = $scope.config.config.LINBO.BackgroundColor.substring(1);
       }
-      return $uibModalInstance.close(config);
+      return $uibModalInstance.close([$scope.config, vdiconfig, config_change]);
     };
     $scope.backups = function() {
       return lmFileBackups.show('/srv/linbo/start.conf.' + $scope.config.config.LINBO.Group).then(function() {
@@ -619,6 +619,7 @@
     var tag;
     pageTitle.set(gettext('LINBO 4'));
     $scope.tabs = ['groups', 'images'];
+    $scope.config_change = false;
     tag = $location.$$url.split("#")[1];
     if (tag && indexOf.call($scope.tabs, tag) >= 0) {
       $scope.activetab = $scope.tabs.indexOf(tag);
@@ -626,6 +627,11 @@
       $scope.activetab = 0;
     }
     $scope.images_selected = [];
+    $scope.$on("$locationChangeStart", function(event) {
+      if ($scope.config_change && !confirm(gettext('You should call an import devices process to apply the new changes, quit this page anyway ?'))) {
+        return event.preventDefault();
+      }
+    });
     $http.get('/api/lm/linbo4/configs').then(function(resp) {
       $scope.configs = resp.data;
       return $http.get('/api/lm/linbo4/images').then(function(resp) {
@@ -658,12 +664,13 @@
       return $scope.examples = resp.data;
     });
     $scope.importDevices = function() {
-      return $uibModal.open({
+      $uibModal.open({
         templateUrl: '/lmn_linbo:resources/partial/apply.modal.html',
         controller: 'LMImportDevicesApplyModalController',
         size: 'lg',
         backdrop: 'static'
       });
+      return $scope.config_change = false;
     };
     $scope.createConfig = function(example) {
       return messagebox.prompt('New name', '').then(function(msg) {
@@ -685,7 +692,7 @@
               return $http.get("/api/lm/read-config-setup").then(function(setup) {
                 resp.data['config']['LINBO']['Server'] = setup.data['setup']['serverip'];
                 return $http.post(`/api/lm/linbo4/config/start.conf.${newName}`, resp.data).then(function() {
-                  return $scope.importDevices();
+                  return $scope.config_change = true;
                 });
               });
             });
@@ -699,7 +706,7 @@
               os: [],
               partitions: []
             }).then(function() {
-              return $scope.importDevices();
+              return $scope.config_change = true;
             });
           }
         }
@@ -712,7 +719,7 @@
         negative: 'Cancel'
       }).then(function() {
         return $http.delete(`/api/lm/linbo4/config/${configName}`).then(function() {
-          return $scope.importDevices();
+          return $scope.config_change = true;
         });
       });
     };
@@ -727,10 +734,10 @@
             return $http.post(`/api/lm/linbo4/config/start.conf.${newName}`, resp.data).then(function() {
               if (deleteOriginal) {
                 return $http.delete(`/api/lm/linbo4/config/${configName}`).then(function() {
-                  return $scope.importDevices();
+                  return $scope.config_change = true;
                 });
               } else {
-                return $scope.importDevices();
+                return $scope.config_change = true;
               }
             });
           });
@@ -770,12 +777,16 @@
               }
             }
           }).result.then(function(result) {
-            $http.post(`/api/lm/linbo4/config/${configName}`, result[0]).then(function(resp) {
-              return notify.success(gettext('Saved'));
-            });
+            // result = [config, vdiconfig, config_change]
+            // Config changed ?
+            if (result[2] === true) {
+              $http.post(`/api/lm/linbo4/config/${configName}`, result[0]).then(function(resp) {
+                notify.success(`${configName} ` + gettext('saved'));
+                return $scope.config_change = true;
+              });
+            }
             return $http.post(`/api/lm/linbo4/vdi/${configName}.vdi`, result[1]).then(function(resp) {
-              notify.success(gettext('Saved'));
-              return $scope.importDevices();
+              return notify.success(gettext('VDI config saved'));
             });
           });
         });
@@ -800,6 +811,8 @@
       }).then(function() {
         return $http.delete(`/api/lm/linbo4/image/${image.name}`).then(function() {
           return $scope.restartServices();
+        }).catch(function(err) {
+          return notify.error(gettext("Failed to delete image :") + err.data.message);
         });
       });
     };
@@ -813,6 +826,8 @@
           date: date
         }).then(function() {
           return $scope.restartServices();
+        }).catch(function(err) {
+          return notify.error(gettext("Failed to delete backup :") + err.data.message);
         });
       });
     };
@@ -842,6 +857,8 @@
         }
         return $q.all(promises).then(function() {
           return $scope.restartServices();
+        }).catch(function(err) {
+          return notify.error(gettext("Failed to delete image :") + err.data.message);
         });
       });
     };

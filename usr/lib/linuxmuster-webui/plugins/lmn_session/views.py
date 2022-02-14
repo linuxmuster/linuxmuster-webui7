@@ -244,18 +244,17 @@ class Handler(HttpPlugin):
             with authorize('lm:users:students:read'):
                 if action == 'get-my-room':
                     try:
-                        sophomorixCommand = ['sophomorix-query', '-jj', '--smbstatus', '--schoolbase', school, '--query-user', username]
+                        sophomorixCommand = ['sophomorix-query', '-jj', '--smbstatus', '--schoolbase', schoolname, '--query-user', username]
                         response = lmn_getSophomorixValue(sophomorixCommand, '')
                         # remove our own
                         room = response[username]['ROOM']
                         response.pop(username, None)
-                        usersList=[]
-                        usersInRoom={}
-                        for user in response:
-                            usersList.append(user)
-                        usersInRoom={"usersList":usersList, "room":room, "objects": response}
-                        return usersInRoom
-                    except Exception:
+                        return {
+                            "usersList": list(response.keys()),
+                            "room": room,
+                            "objects": response,
+                        }
+                    except IndexError as e :
                         return 0
 
 

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-18 22:06+0200\n"
-"PO-Revision-Date: 2021-11-14 16:07\n"
+"POT-Creation-Date: 2022-01-28 11:31+0100\n"
+"PO-Revision-Date: 2022-02-14 08:39\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -17,71 +17,67 @@ msgstr ""
 "X-Crowdin-File: /2.0/lmn_landingpage.po\n"
 "X-Crowdin-File-ID: 124\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:29
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:26
 msgid "Account Information"
 msgstr "Información de la cuenta"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:20
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:17
 msgid "But keep in mind:"
 msgstr "Pero ten en cuenta:"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:37
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:34
 msgid "Change password"
 msgstr "Cambiar la contraseña"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:62
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:59
 msgid "Cloudquota Calculated in MB:"
 msgstr "Cuota de nubes calculada en MB:"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:69
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:66
 msgid "Groups"
 msgstr "Grupos"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:13
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:10
 msgid "Hello {{user.givenName}} {{user.sn}},"
 msgstr "Hola {{user.givenName}} {{user.sn}},"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:33
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:30
 msgid "Mail:"
 msgstr "Mail:"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:63
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:60
 msgid "Mailquota Calculated in MB:"
 msgstr "Cuota de correo calculada en MB:"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:32
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:29
 msgid "Name:"
 msgstr "Nombre:"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:45
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:42
 msgid "Quotas"
 msgstr "Cuotas"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:35
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:32
 msgid "Role:"
 msgstr "Rol:"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:34
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:31
 msgid "School:"
 msgstr "Escuela:"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:19
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:16
 msgid "Use the sidebar to navigate through the options."
 msgstr "Use la barra lateral para navegar por las opciones."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:1
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:2
 msgid "Welcome to Linuxmuster.net version 7!"
 msgstr "¡Bienvenido a Linuxmuster.net versión 7!"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:21
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:18
 msgid "With great power comes great responsibility!"
 msgstr "¡Con un gran poder viene una gran responsabilidad!"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:5
-msgid "You should not use WebUI as root user! If this is your first time running WebUI, proceed through the setup wizard. Afterwards login using the global-admin account."
-msgstr "¡No deberías usar WebUI como usuario root! Si es la primera vez que ejecuta WebUI, proceda con el asistente de configuración. Después, inicie sesión con la cuenta de global-admin."
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:16
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:13
 msgid "use the sidebar to navigate through the options. You can start by using the Enroll module to subscribe to your classes."
 msgstr "usa la barra lateral para navegar a través de las opciones. Puede comenzar usando el módulo de inscripción para suscribirse a sus clases."
 

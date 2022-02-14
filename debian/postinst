@@ -81,6 +81,9 @@ case "$1" in
             /usr/bin/python3 $webuietc/merge-permissions.py
             /usr/sbin/sophomorix-ui
             
+            # Recreate upload folder using the right permissions
+            /usr/lib/linuxmuster-webui/etc/create_webuiUploadFolder.sh
+            
             # start webui
             echo "Start linuxmuster-webui"
             systemctl daemon-reload

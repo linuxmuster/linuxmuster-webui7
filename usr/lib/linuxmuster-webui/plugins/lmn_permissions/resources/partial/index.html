@@ -62,23 +62,29 @@
             </uib-tab>
             <uib-tab heading="Orphan">
                 <h2 translate>Sidebar</h2>
-                <p>
+                <div ng:show="sidebarPermissionsOrphans.length > 0" class="alert alert-warning">
                     <span translate>Elements listed in default-ui-permissions.ini but not used :</span>
                     <ul>
-                        <li ng-repeat="url in sidebarPermissionsList" ng-show="sidebarPermissions[url].plugin == 'NOT IMPLEMENTED'">
+                        <li ng-repeat="url in sidebarPermissionsOrphans">
                             {{url}}
                         </li>
                     </ul>
+                </div>
+                <p ng:show="sidebarPermissionsOrphans.length == 0" class="alert alert-success" translate>
+                    No orphan element in the sidebar permissions !
                 </p>
 
                 <h2 translate>Permissions</h2>
-                <p>
+                <div ng:show="apiPermissionsOrphans.length > 0" class="alert alert-warning">
                     <span translate>Elements listed in default-ui-permissions.ini but not used :</span>
-                <ul>
-                    <li ng-repeat="(url,details) in apiPermissions" ng-show="details.name == 'NO DESCRIPTION'">
-                        {{url}}
-                    </li>
-                </ul>
+                    <ul>
+                        <li ng-repeat="url in apiPermissionsOrphans">
+                            {{url}}
+                        </li>
+                    </ul>
+                </div>
+                <p ng:show="apiPermissionsOrphans.length == 0" class="alert alert-success" translate>
+                    No orphan element in the permissions !
                 </p>
             </uib-tab>
         </uib-tabset>

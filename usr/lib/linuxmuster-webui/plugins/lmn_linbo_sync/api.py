@@ -7,6 +7,12 @@ import locale
 import time
 import subprocess
 import gzip
+import xml.etree.ElementTree as ElementTree
+from aj.plugins.lmn_common.lmnfile import LMNFile
+from aj.auth import authorize
+from aj.plugins.lmn_common.api import lmn_get_school_configpath
+from aj.plugins.lmn_common.multischool import School
+
 
 LINBO_PATH = '/srv/linbo'
 
@@ -88,11 +94,13 @@ def group_os(workstations):
         if config is not None:
             workstations[group]['power'] = {
                 'run_halt': 0,
-                'timeout': 0
+                'timeout': 1
                 }
             workstations[group]['auto'] = {
                 'disable_gui': 0,
-                'bypass': 0
+                'bypass': 0,
+                'wol': 0,
+                'prestart': 0,
             }
             for osConfig in config:
                 if osConfig['SyncEnabled'] or osConfig['NewEnabled']:
@@ -109,41 +117,50 @@ def group_os(workstations):
 
     return workstations
 
-def list_workstations():
+def list_workstations(context):
     """
     Generate a dict with workstations and parameters out of devices file
 
+    :param context: user context set in views.py
     :return: Dict with all linbo informations for all workstations.
     :rtype: dict
     """
 
-    school = 'default-school'
-    workstations_file = '/etc/linuxmuster/sophomorix/' + school + '/devices.csv'
+    school = School.get(context).school
+    path = lmn_get_school_configpath(school)+'devices.csv'
 
-    workstations = {}
+    devices_dict = {}
+    fieldnames = [
+        'room',
+        'hostname',
+        'group',
+        'mac',
+        'ip',
+        'officeKey',
+        'windowsKey',
+        'dhcpOptions',
+        'sophomorixRole',
+        'lmnReserved10',
+        'pxeFlag',
+        'lmnReserved12',
+        'lmnReserved13',
+        'lmnReserved14',
+        'sophomorixComment',
+        'options',
+    ]    
+    with LMNFile(path, 'r', fieldnames=fieldnames) as devices_csv:
 
-    with open(workstations_file, 'r') as w:
-        buffer = csv.reader(w, delimiter=";")
-        for row in buffer:
-            # Not a comment
-            if row[0][0] != "#":
-                # If config file exists
-                if os.path.isfile(os.path.join(LINBO_PATH, 'start.conf.'+row[2])):
-                    room = row[0]
-                    group = row[2]
-                    host  = row[1]
-                    mac   = row[3]
-                    ip    = row[4]
-                    pxe   = row[10]
+        devices = devices_csv.read()
+        for device in devices:
+            if os.path.isfile(os.path.join(LINBO_PATH, 'start.conf.'+str(device['group']))):
+                if device['pxeFlag'] != '1' and device['pxeFlag'] != "2":
+                    continue
+                elif device['group'] not in devices_dict.keys():
+                    devices_dict[device['group']] = {'grp': device['group'], 'hosts': [device]}
+                else:
+                    devices_dict[device['group']]['hosts'].append(device)
 
-                    if pxe != "1" and pxe != "2":
-                        continue
-                    elif group not in workstations.keys():
-                        workstations[group] = {'grp': group, 'hosts': [{'host' : host, 'room' : room, 'mac' : mac, 'ip' : ip}]}
-                    else:
-                        workstations[group]['hosts'].append({'host' : host, 'room' : room, 'mac' : mac, 'ip' : ip})
-
-    return group_os(workstations)
+    return group_os(devices_dict)
 
 def last_sync_all(workstations):
     """
@@ -162,7 +179,7 @@ def last_sync_all(workstations):
             for host in grpDict['hosts']:
                 host['image'] = []
                 for image in workstations[group]['os']:
-                    last = last_sync(host['host'], image['baseimage'])
+                    last = last_sync(host['hostname'], image['baseimage'])
                     date = last if last else "Never"
                     tmpDict = {
                             'date': date,
@@ -183,19 +200,103 @@ def test_online(host):
 
     :param host: Hostname
     :type host: string
-    :return: OS type
+    :return: OS type (Off, Linbo, OS Linux, OS Windows, OS Unknown)
     :rtype: string
     """
 
-    command=['nmap', '-p', '22', '-O', host]
+    command=["nmap", "-p", "2222,22,135", host, "-oX", "-"]
     r = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=False).stdout.read()
-    if b'Too many fingerprints' in r:
-        return "Linbo"
-    elif b'Linux' in r:
-        return "OS Linux"
-    else:
-        return 'Off'
+    xmlRoot = ElementTree.fromstring(r)
 
+    numberOfOnlineHosts = int(xmlRoot.find("runstats").find("hosts").attrib["up"])
+    if numberOfOnlineHosts == 0:
+        return "Off"
+
+    ports = {}
+    scannedPorts = xmlRoot.find("host").find("ports").findall("port")
+
+    for scannedPort in scannedPorts:
+        portNumber = scannedPort.attrib["portid"]
+        portState = scannedPort.find("state").attrib["state"]
+        ports[portNumber] = portState
+
+    return get_os_from_ports(ports)
+
+def get_os_from_ports(ports):
+    """
+    Convert a dict of ports to an OS string.
+
+    :param openPorts: The dict of open ports (key: port number, value: port state)
+    :type openPorts: dict
+    :return: OS type (Linbo, OS Linux, OS Windows, OS Unknown)
+    :rtype: string
+    """
+    if is_port_signature_linbo(ports):
+        return "Linbo"
+    elif is_port_signature_linux(ports):
+        return "OS Linux"
+    elif is_port_signature_windows(ports):
+        return "OS Windows"
+    else:
+        return "OS Unknown"
+
+def is_port_signature_linbo(ports):
+    """
+    Check if a dict of ports belongs to a Linbo host.
+    The criteria for Linbo is, that ONLY port 2222 is open
+    
+    :param openPorts: The dict of open ports (key: port number, value: port state)
+    :type openPorts: dict
+    :return: Whether it's a Linbo host
+    :rtype: bool
+    """
+    openPortNumbers = []
+    for port in ports:
+        if ports[port] == "open":
+            openPortNumbers.append(port)
+
+    return (
+        "2222" in openPortNumbers 
+        and len(openPortNumbers) == 1
+    )
+
+def is_port_signature_linux(ports):
+    """
+    Check if a dict of ports belongs to a Linux host.
+    The criteria for Linux is, that port 22 is open and 135 is closed.
+    
+    :param openPorts: The dict of open ports (key: port number, value: port state)
+    :type openPorts: dict
+    :return: Whether it's a Linux host
+    :rtype: bool
+    """
+    return (
+        "22" in ports
+        and ports["22"] in ["open", "filtered"]
+        and (
+            "135" not in ports
+            or ports["135"] != "open"
+        )
+    )
+
+def is_port_signature_windows(ports):
+    """
+    Check if a dict of ports belongs to a Windows host.
+    The criteria for Windows is, that port 135 is open and 22 is not open.
+    
+    :param openPorts: The dict of open ports (key: port number, value: port state)
+    :type openPorts: dict
+    :return: Whether it's a Windows host
+    :rtype: bool
+    """
+    return (
+        "135" in ports
+        and ports["135"] in ["open", "filtered"]
+        and (
+            "22" not in ports
+            or ports["22"] != "open"
+        )
+    )
 
 def run(command):
     """

@@ -32,15 +32,12 @@
 
   angular.module('lmn.auth').controller('LMNPasswordChangeCtrl', function($scope, $http, pageTitle, gettext, notify, validation) {
     pageTitle.set(gettext('Change Password'));
+    $scope.showNewPassword = false;
+    $scope.toggleShowNewPassword = () => {
+      return $scope.showNewPassword = !$scope.showNewPassword;
+    };
     return $scope.change = function() {
       var test;
-      if (!$scope.newPassword || !$scope.password) {
-        return;
-      }
-      if ($scope.newPassword !== $scope.newPassword2) {
-        notify.error(gettext('Passwords do not match'));
-        return;
-      }
       test = validation.isValidPassword($scope.newPassword);
       if (test !== true) {
         notify.error(gettext(test));

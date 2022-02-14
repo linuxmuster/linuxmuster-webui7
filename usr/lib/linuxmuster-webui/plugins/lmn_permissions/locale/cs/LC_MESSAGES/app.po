@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-26 21:41+0200\n"
-"PO-Revision-Date: 2021-11-14 16:06\n"
+"POT-Creation-Date: 2022-01-06 12:54+0100\n"
+"PO-Revision-Date: 2022-02-14 08:39\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -31,11 +31,11 @@ msgid "Def."
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:66
-#: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:76
+#: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:79
 msgid "Elements listed in default-ui-permissions.ini but not used :"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:86
+#: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:92
 msgid "Export permissions file"
 msgstr ""
 
@@ -48,11 +48,19 @@ msgstr ""
 msgid "No authorization set for this method."
 msgstr ""
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:86
+msgid "No orphan element in the permissions !"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:73
+msgid "No orphan element in the sidebar permissions !"
+msgstr ""
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:27
 msgid "Page"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:74
+#: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:77
 #: usr/lib/linuxmuster-webui/plugins/lmn_permissions/main.py:18
 msgid "Permissions"
 msgstr ""

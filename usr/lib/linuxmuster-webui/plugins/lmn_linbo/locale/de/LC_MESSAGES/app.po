@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-14 15:53+0100\n"
-"PO-Revision-Date: 2021-11-14 16:07\n"
+"POT-Creation-Date: 2022-01-06 12:54+0100\n"
+"PO-Revision-Date: 2022-02-14 08:39\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -17,9 +17,14 @@ msgstr ""
 "X-Crowdin-File: /2.0/lmn_linbo.po\n"
 "X-Crowdin-File-ID: 98\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:72
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:106
 msgid "<h3>Convert to qcow2</h3>"
 msgstr "<h3>In qcow2 umwandeln</h3>"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:13
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:69
+msgid "Actions"
+msgstr "Aktionen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:270
 msgid "Activated"
@@ -82,7 +87,7 @@ msgid "Cache"
 msgstr "Cache"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/accept.modal.html:9
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:88
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:122
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -93,12 +98,8 @@ msgstr "Abbrechen"
 msgid "Close"
 msgstr "Schließen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:58
-msgid "Comment: {{image.description}}"
-msgstr "Kommentar: {{image.description}}"
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:62
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:85
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:119
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:96
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/tasks.py:10
 msgid "Convert to qcow2"
 msgstr "Konvertiere zu qcow2"
@@ -107,7 +108,7 @@ msgstr "Konvertiere zu qcow2"
 msgid "Cores"
 msgstr "Kerne"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:34
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:53
 msgid "Create"
 msgstr "Erstellen"
 
@@ -119,7 +120,7 @@ msgstr "Daten"
 msgid "Default"
 msgstr "Standard Start"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:65
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:99
 msgid "Delete selected images"
 msgstr "Ausgewählte Bilder löschen"
 
@@ -143,7 +144,7 @@ msgstr "Bildschirm"
 msgid "Display client details by default"
 msgstr "Clientdetails standardmäßig anzeigen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:29
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:45
 msgid "Download Linbo Boot"
 msgstr "Linbo Boot herunterladen"
 
@@ -155,7 +156,7 @@ msgstr "Download Typ"
 msgid "EFI"
 msgstr "EFI"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:37
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:56
 msgid "Empty"
 msgstr "Leer"
 
@@ -196,6 +197,10 @@ msgstr "Allgemein"
 msgid "German"
 msgstr "Deutsch"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:11
+msgid "Group name"
+msgstr "Gruppenname"
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:7
 msgid "Groups"
 msgstr "Gruppen"
@@ -220,9 +225,13 @@ msgstr "IP-Adresse"
 msgid "Icon"
 msgstr "Symbol"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:43
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:62
 msgid "Images"
 msgstr "Abbilder"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:48
+msgid "Import devices"
+msgstr "Gerät importieren"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/apply.modal.html:2
 msgid "Importing device"
@@ -280,6 +289,10 @@ msgstr "Minimale Anzahl an VMs"
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/partition.modal.html:54
 msgid "Name"
 msgstr "Name"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:67
+msgid "Name / Size"
+msgstr "Name / Größe"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:318
 msgid "Network"
@@ -397,7 +410,7 @@ msgid "Storage"
 msgstr "Speicher"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:243
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:285
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:288
 msgid "Swap"
 msgstr "Swap"
 
@@ -437,6 +450,14 @@ msgstr "USB 0"
 msgid "Use minimal layout"
 msgstr "Minimales Layout verwenden"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:12
+msgid "Used images"
+msgstr "Verwendete Images"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/index.html:68
+msgid "Used in group ..."
+msgstr "In Gruppe verwendet ..."
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/partial/config.modal.html:268
 msgid "VDI"
 msgstr "VDI"
@@ -470,7 +491,7 @@ msgid "Virtual Desktop (VDI)"
 msgstr "Virtueller Desktop (VDI)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo/main.py:15
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:508
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:513
 msgid "LINBO"
 msgstr "LINBO"
 
@@ -498,17 +519,27 @@ msgstr "Import abgeschlossen"
 msgid "Import failed"
 msgstr "Import fehlgeschlagen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:287
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:290
 msgid "LINBO Cache"
 msgstr "LINBO Cache"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:554
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:528
+msgid "You should call an import devices process to apply the new changes, quit this page anyway ?"
+msgstr "Sie sollten einen Import-Geräte-Prozess aufrufen, um die neuen Änderungen anzuwenden. Diese Seite trotzdem verlassen ?"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:570
 msgid "A config file with this name already exists!"
 msgstr "Es existiert bereits eine Konfigurationsdatei mit diesem Namen!"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:607
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:609
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:684
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:626
+msgid "saved"
+msgstr "gespeichert"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:629
+msgid "VDI config saved"
+msgstr "VDI Konfiguration gespeichert"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo/resources/js/controllers/index.controller.coffee:703
 msgid "Saved"
 msgstr "Gespeichert"
 

@@ -3,26 +3,21 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en-GB" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8">
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>aj.plugins.lmn_session.views &mdash; linuxmuster-webui7 1.0.159-1 documentation</title>
+  <title>aj.plugins.lmn_session.views &mdash; linuxmuster-webui7 7.1.0 documentation</title>
   
 
   
   <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/theme_overrides.css" type="text/css" />
 
   
   
-
   
-  
-
   
 
   
@@ -32,7 +27,6 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
-        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
         <script src="../../../../_static/doctools.js"></script>
@@ -55,7 +49,7 @@
           
 
           
-            <a href="../../../../index.html" class="icon icon-home"> linuxmuster-webui7
+            <a href="../../../../index.html" class="icon icon-home" alt="Documentation Home"> linuxmuster-webui7
           
 
           
@@ -68,7 +62,7 @@
             
             
               <div class="version">
-                1.0.159-1
+                7.1.0
               </div>
             
           
@@ -93,14 +87,23 @@
               
             
             
-              <p class="caption"><span class="caption-text">Python API</span></p>
+              <p class="caption"><span class="caption-text">Plugins</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../plugins/lmn_auth.html">Plugin lmn_auth</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Python API</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_auth.html">API: aj.plugins.lmn_auth</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_common.html">API: aj.plugins.lmn_common</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_crontab.html">API: aj.plugins.lmn_crontab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_devices.html">API: aj.plugins.lmn_devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_dhcp.html">API: aj.plugins.lmn_dhcp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_docker.html">API: aj.plugins.lmn_docker</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_groupmembership.html">API: aj.plugins.lmn_groupmembership</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_landingpage.html">API: aj.plugins.lmn_landingpage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_linbo.html">API: aj.plugins.lmn_linbo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_linbo4.html">API: aj.plugins.lmn_linbo4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_linbo_sync.html">API: aj.plugins.lmn_linbo_sync</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_quotas.html">API: aj.plugins.lmn_quotas</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_session.html">API: aj.plugins.lmn_session</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_settings.html">API: aj.plugins.lmn_settings</a></li>
@@ -146,8 +149,6 @@
 
 
 
-
-
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -172,17 +173,13 @@
            <div itemprop="articleBody">
             
   <h1>Source code for aj.plugins.lmn_session.views</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Module to handle school session.</span>
-<span class="sd">&quot;&quot;&quot;</span>
-
-<span class="kn">from</span> <span class="nn">jadi</span> <span class="kn">import</span> <span class="n">component</span>
+<span></span><span class="kn">from</span> <span class="nn">jadi</span> <span class="kn">import</span> <span class="n">component</span>
 <span class="kn">from</span> <span class="nn">aj.api.http</span> <span class="kn">import</span> <span class="n">url</span><span class="p">,</span> <span class="n">HttpPlugin</span>
 <span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">localtime</span><span class="p">,</span> <span class="n">strftime</span>  <span class="c1"># needed for timestamp in collect transfer</span>
-<span class="kn">from</span> <span class="nn">aj.api.endpoint</span> <span class="kn">import</span> <span class="n">endpoint</span>
+<span class="kn">from</span> <span class="nn">aj.api.endpoint</span> <span class="kn">import</span> <span class="n">endpoint</span><span class="p">,</span> <span class="n">EndpointError</span>
 <span class="kn">from</span> <span class="nn">aj.auth</span> <span class="kn">import</span> <span class="n">authorize</span>
 <span class="kn">from</span> <span class="nn">aj.plugins.lmn_common.api</span> <span class="kn">import</span> <span class="n">lmn_getSophomorixValue</span>
-<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">aj.plugins.lmn_common.multischool</span> <span class="kn">import</span> <span class="n">School</span>
 
 
 <div class="viewcode-block" id="Handler"><a class="viewcode-back" href="../../../../python/lmn_session.html#aj.plugins.lmn_session.views.Handler">[docs]</a><span class="nd">@component</span><span class="p">(</span><span class="n">HttpPlugin</span><span class="p">)</span>
@@ -190,19 +187,9 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">context</span>
 
-<div class="viewcode-block" id="Handler.handle_api_session_sessions"><a class="viewcode-back" href="../../../../python/lmn_session.html#aj.plugins.lmn_session.views.Handler.handle_api_session_sessions">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/session/sessions&#39;</span><span class="p">)</span>
+    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/session/sessions&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_session_sessions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Manage the sessions ( list of sessions, participants, ... ).</span>
-<span class="sd">        Method POST.</span>
-
-<span class="sd">        :param http_context: HttpContext</span>
-<span class="sd">        :type http_context: HttpContext</span>
-<span class="sd">        :return: List</span>
-<span class="sd">        :rtype: list</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="n">action</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;action&#39;</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">action</span> <span class="o">==</span> <span class="s1">&#39;get-sessions&#39;</span><span class="p">:</span>
             <span class="n">supervisor</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;username&#39;</span><span class="p">]</span>
@@ -213,6 +200,7 @@
                 <span class="c1"># Most likeley key error &#39;cause no sessions for this user exist</span>
                 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Bad value in LDAP field SophomorixUserPermissions! Python error:</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+                    <span class="k">return</span> <span class="mi">0</span>
             <span class="n">sessionsList</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="k">if</span> <span class="n">supervisor</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sessions</span><span class="p">[</span><span class="s1">&#39;SUPERVISOR_LIST&#39;</span><span class="p">]:</span>
                 <span class="k">return</span> <span class="n">sessionsList</span>
@@ -234,7 +222,7 @@
 
             <span class="k">with</span> <span class="n">authorize</span><span class="p">(</span><span class="s1">&#39;lm:users:students:read&#39;</span><span class="p">):</span>
                     <span class="k">try</span><span class="p">:</span>
-                        <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-session&#39;</span><span class="p">,</span> <span class="s1">&#39;-i&#39;</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
+                        <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-session&#39;</span><span class="p">,</span> <span class="s1">&#39;-i&#39;</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">,</span> <span class="s1">&#39;--session&#39;</span><span class="p">,</span> <span class="n">session</span><span class="p">]</span>
                         <span class="n">participants</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;ID/&#39;</span><span class="o">+</span><span class="n">session</span><span class="o">+</span><span class="s1">&#39;/PARTICIPANTS&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
                         <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
                         <span class="k">for</span> <span class="n">participant</span> <span class="ow">in</span> <span class="n">participants</span><span class="p">:</span>
@@ -419,23 +407,13 @@
 
         <span class="k">if</span> <span class="n">http_context</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
             <span class="k">with</span> <span class="n">authorize</span><span class="p">(</span><span class="s1">&#39;lm:users:students:write&#39;</span><span class="p">):</span>
-                <span class="k">return</span> <span class="mi">0</span></div>
+                <span class="k">return</span> <span class="mi">0</span>
 
-<div class="viewcode-block" id="Handler.handle_api_get_user_in_room"><a class="viewcode-back" href="../../../../python/lmn_session.html#aj.plugins.lmn_session.views.Handler.handle_api_get_user_in_room">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/session/getUserInRoom&#39;</span><span class="p">)</span>
+    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/session/getUserInRoom&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_get_user_in_room</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get students in the same room as the teacher.</span>
-<span class="sd">        Method POST.</span>
-
-<span class="sd">        :param http_context: HttpContext</span>
-<span class="sd">        :type http_context: HttpContext</span>
-<span class="sd">        :return: Details of users in room</span>
-<span class="sd">        :rtype: dict</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="k">if</span> <span class="n">http_context</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
-            <span class="n">school</span> <span class="o">=</span> <span class="s1">&#39;default-school&#39;</span>
+            <span class="n">schoolname</span> <span class="o">=</span> <span class="n">School</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span><span class="o">.</span><span class="n">school</span> 
             <span class="n">action</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;action&#39;</span><span class="p">]</span>
             <span class="n">username</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;username&#39;</span><span class="p">]</span>
             <span class="k">with</span> <span class="n">authorize</span><span class="p">(</span><span class="s1">&#39;lm:users:students:read&#39;</span><span class="p">):</span>
@@ -453,51 +431,31 @@
                         <span class="n">usersInRoom</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;usersList&quot;</span><span class="p">:</span><span class="n">usersList</span><span class="p">,</span> <span class="s2">&quot;room&quot;</span><span class="p">:</span><span class="n">room</span><span class="p">,</span> <span class="s2">&quot;objects&quot;</span><span class="p">:</span> <span class="n">response</span><span class="p">}</span>
                         <span class="k">return</span> <span class="n">usersInRoom</span>
                     <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-                        <span class="k">return</span> <span class="mi">0</span></div>
+                        <span class="k">return</span> <span class="mi">0</span>
 
 
-<div class="viewcode-block" id="Handler.handle_api_ldap_user_search"><a class="viewcode-back" href="../../../../python/lmn_session.html#aj.plugins.lmn_session.views.Handler.handle_api_ldap_user_search">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/session/user-search&#39;</span><span class="p">)</span>
+    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/session/user-search&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_ldap_user_search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        User query for javascript filters.</span>
-<span class="sd">        Method POST.</span>
-
-<span class="sd">        :param http_context: HttpContext</span>
-<span class="sd">        :type http_context: HttpContext</span>
-<span class="sd">        :return: Users list with details</span>
-<span class="sd">        :rtype: list</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="n">school</span> <span class="o">=</span> <span class="s1">&#39;default-school&#39;</span>
+        <span class="n">schoolname</span> <span class="o">=</span> <span class="n">School</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span><span class="o">.</span><span class="n">school</span> 
         <span class="k">with</span> <span class="n">authorize</span><span class="p">(</span><span class="s1">&#39;lm:users:students:read&#39;</span><span class="p">):</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-query&#39;</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">,</span> <span class="s1">&#39;--schoolbase&#39;</span><span class="p">,</span> <span class="n">school</span><span class="p">,</span> <span class="s1">&#39;--student&#39;</span><span class="p">,</span> <span class="s1">&#39;--user-basic&#39;</span><span class="p">,</span> <span class="s1">&#39;--anyname&#39;</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="o">+</span><span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;q&#39;</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;*&#39;</span><span class="p">]</span>
+                <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-query&#39;</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">,</span> <span class="s1">&#39;--schoolbase&#39;</span><span class="p">,</span> <span class="n">schoolname</span><span class="p">,</span> <span class="s1">&#39;--student&#39;</span><span class="p">,</span> <span class="s1">&#39;--user-basic&#39;</span><span class="p">,</span> <span class="s1">&#39;--anyname&#39;</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="o">+</span><span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;q&#39;</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;*&#39;</span><span class="p">]</span>
                 <span class="n">users</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;USER&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
                 <span class="k">return</span> <span class="mi">0</span>
         <span class="n">userList</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">users</span><span class="p">:</span>
             <span class="n">userList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">users</span><span class="p">[</span><span class="n">user</span><span class="p">])</span>
-        <span class="k">return</span> <span class="n">userList</span></div>
+        <span class="k">return</span> <span class="n">userList</span>
 
-<div class="viewcode-block" id="Handler.handle_api_ldap_group_search"><a class="viewcode-back" href="../../../../python/lmn_session.html#aj.plugins.lmn_session.views.Handler.handle_api_ldap_group_search">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/session/schoolClass-search&#39;</span><span class="p">)</span>
+    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/session/schoolClass-search&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_ldap_group_search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Class query for javascript filters.</span>
-<span class="sd">        Method POST.</span>
-
-<span class="sd">        :param http_context: HttpContext</span>
-<span class="sd">        :type http_context: HttpContext</span>
-<span class="sd">        :return: Classes list with details</span>
-<span class="sd">        :rtype: list</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="n">school</span> <span class="o">=</span> <span class="s1">&#39;default-school&#39;</span>
+        <span class="n">schoolname</span> <span class="o">=</span> <span class="n">School</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span><span class="o">.</span><span class="n">school</span> 
         <span class="k">with</span> <span class="n">authorize</span><span class="p">(</span><span class="s1">&#39;lm:users:students:read&#39;</span><span class="p">):</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-query&#39;</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">,</span> <span class="s1">&#39;--schoolbase&#39;</span><span class="p">,</span> <span class="n">school</span><span class="p">,</span> <span class="s1">&#39;--class&#39;</span><span class="p">,</span> <span class="s1">&#39;--group-members&#39;</span><span class="p">,</span> <span class="s1">&#39;--user-full&#39;</span><span class="p">,</span> <span class="s1">&#39;--sam&#39;</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="o">+</span><span class="n">http_context</span><span class="o">.</span><span class="n">query</span><span class="p">[</span><span class="s1">&#39;q&#39;</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;*&#39;</span><span class="p">]</span>
+                <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-query&#39;</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">,</span> <span class="s1">&#39;--schoolbase&#39;</span><span class="p">,</span> <span class="n">schoolname</span><span class="p">,</span> <span class="s1">&#39;--class&#39;</span><span class="p">,</span> <span class="s1">&#39;--group-members&#39;</span><span class="p">,</span> <span class="s1">&#39;--user-full&#39;</span><span class="p">,</span> <span class="s1">&#39;--sam&#39;</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="o">+</span><span class="n">http_context</span><span class="o">.</span><span class="n">query</span><span class="p">[</span><span class="s1">&#39;q&#39;</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;*&#39;</span><span class="p">]</span>
                 <span class="n">schoolClasses</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;MEMBERS&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
                 <span class="k">return</span> <span class="mi">0</span>
@@ -507,19 +465,12 @@
             <span class="n">schoolClassJson</span><span class="p">[</span><span class="s1">&#39;sophomorixAdminClass&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">schoolClass</span>
             <span class="n">schoolClassJson</span><span class="p">[</span><span class="s1">&#39;members&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">schoolClasses</span><span class="p">[</span><span class="n">schoolClass</span><span class="p">]</span>
             <span class="n">schoolClassList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">schoolClassJson</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">schoolClassList</span></div>
+        <span class="k">return</span> <span class="n">schoolClassList</span>
 
 <div class="viewcode-block" id="Handler.handle_api_create_dir"><a class="viewcode-back" href="../../../../python/lmn_session.html#aj.plugins.lmn_session.views.Handler.handle_api_create_dir">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/session/moveFileToHome&#39;</span><span class="p">)</span>  <span class="c1">## TODO authorize</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_create_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Move file to user&#39;s home through `sophomorix-transfer`.</span>
-<span class="sd">        Method POST.</span>
-
-<span class="sd">        :param http_context:</span>
-<span class="sd">        :type http_context:</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
+        <span class="sd">&quot;&quot;&quot;Create directory with given path, ignoring errors&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">http_context</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
             <span class="n">user</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;user&#39;</span><span class="p">]</span>
             <span class="n">filepath</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;filepath&#39;</span><span class="p">]</span>
@@ -530,19 +481,9 @@
             <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
                 <span class="k">return</span> <span class="mi">0</span></div>
 
-<div class="viewcode-block" id="Handler.handle_api_session_file_trans_list"><a class="viewcode-back" href="../../../../python/lmn_session.html#aj.plugins.lmn_session.views.Handler.handle_api_session_file_trans_list">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/session/trans-list-files&#39;</span><span class="p">)</span>
+    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/session/trans-list-files&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_session_file_trans_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Move uploaded files into the user&#39;s transfer directory.</span>
-<span class="sd">        Method POST.</span>
-
-<span class="sd">        :param http_context: HttpContext</span>
-<span class="sd">        :type http_context: HttpContext</span>
-<span class="sd">        :return: List of files in transfer directory</span>
-<span class="sd">        :rtype: list</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="n">user</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;user&#39;</span><span class="p">]</span>
         <span class="c1"># check if user is a string(given by share option) or an object in an array (given by collect option)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
@@ -551,27 +492,7 @@
         <span class="n">subfolderPath</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
         <span class="k">if</span> <span class="s1">&#39;subfolderPath&#39;</span> <span class="ow">in</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">():</span>
             <span class="n">subfolderPath</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;subfolderPath&#39;</span><span class="p">]</span>
-
-        <span class="c1"># TODO: Workaround until sophomorix can create this folder by its own</span>
-        <span class="c1"># This is slow and needs an update</span>
-        <span class="c1"># look if session subfolder exist in user transfer dir, if not create</span>
-        <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-transfer&#39;</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">,</span> <span class="s1">&#39;--list-home-dir&#39;</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="s1">&#39;--subdir&#39;</span><span class="p">,</span> <span class="s1">&#39;/transfer/&#39;</span><span class="p">]</span>
-        <span class="n">FilesInTransfer</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;sAMAccountName/&#39;</span><span class="o">+</span><span class="n">user</span><span class="p">)</span>
-        <span class="c1">#raise Exception(&#39;Bad value in LDAP field SophomorixUserPermissions! Python error:\n&#39; + str(FilesInTransfer))</span>
-        <span class="k">if</span> <span class="s1">&#39;TREE&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">FilesInTransfer</span> <span class="ow">or</span> <span class="n">subfolderPath</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">FilesInTransfer</span><span class="p">[</span><span class="s1">&#39;TREE&#39;</span><span class="p">]:</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s1">&#39;/tmp/empty&#39;</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
-                <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Creation of the directory /tmp/empty failed&quot;</span><span class="p">)</span>
-            <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-transfer&#39;</span><span class="p">,</span> <span class="s1">&#39;--from-unix-path&#39;</span><span class="p">,</span> <span class="s1">&#39;/tmp/empty/&#39;</span><span class="p">,</span> <span class="s1">&#39;--to-user&#39;</span><span class="p">,</span>  <span class="n">user</span><span class="p">,</span> <span class="s1">&#39;--subdir&#39;</span><span class="p">,</span> <span class="s1">&#39;transfer/&#39;</span><span class="o">+</span><span class="n">subfolderPath</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
-            <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">os</span><span class="o">.</span><span class="n">rmdir</span><span class="p">(</span><span class="s1">&#39;/tmp/empty&#39;</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
-                <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Creation of the directory /tmp/empty failed&quot;</span><span class="p">)</span>
-
-
-        <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-transfer&#39;</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">,</span> <span class="s1">&#39;--list-home-dir&#39;</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="s1">&#39;--subdir&#39;</span><span class="p">,</span> <span class="s1">&#39;/transfer/&#39;</span><span class="o">+</span><span class="n">subfolderPath</span><span class="p">]</span>
+        <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-transfer&#39;</span><span class="p">,</span> <span class="s1">&#39;-j&#39;</span><span class="p">,</span> <span class="s1">&#39;--list-home-dir&#39;</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="s1">&#39;--subdir&#39;</span><span class="p">,</span> <span class="s1">&#39;/transfer/&#39;</span><span class="o">+</span><span class="n">subfolderPath</span><span class="p">]</span>
         <span class="n">availableFiles</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;sAMAccountName/&#39;</span><span class="o">+</span><span class="n">user</span><span class="p">)</span>
         <span class="c1">#raise Exception(&#39;Bad value in LDAP field SophomorixUserPermissions! Python error:\n&#39; + str(availableFiles))</span>
         <span class="n">availableFilesList</span> <span class="o">=</span> <span class="p">[]</span>
@@ -579,21 +500,11 @@
             <span class="k">return</span> <span class="n">availableFiles</span><span class="p">,</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">availableFile</span> <span class="ow">in</span> <span class="n">availableFiles</span><span class="p">[</span><span class="s1">&#39;TREE&#39;</span><span class="p">]:</span>
             <span class="n">availableFilesList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">availableFile</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">availableFiles</span><span class="p">,</span> <span class="n">availableFilesList</span></div>
+        <span class="k">return</span> <span class="n">availableFiles</span><span class="p">,</span> <span class="n">availableFilesList</span>
 
-<div class="viewcode-block" id="Handler.handle_api_session_file_trans"><a class="viewcode-back" href="../../../../python/lmn_session.html#aj.plugins.lmn_session.views.Handler.handle_api_session_file_trans">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/session/trans&#39;</span><span class="p">)</span>
+    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/session/trans&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_session_file_trans</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Handles files between teacher and students (share, copy, move).</span>
-<span class="sd">        Method POST.</span>
-
-<span class="sd">        :param http_context: HttpContext</span>
-<span class="sd">        :type http_context: HttpContext</span>
-<span class="sd">        :return: State of the action.</span>
-<span class="sd">        :rtype: string</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="n">senders</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;senders&#39;</span><span class="p">]</span>
         <span class="n">command</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;command&#39;</span><span class="p">]</span>
         <span class="n">receivers</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;receivers&#39;</span><span class="p">]</span>
@@ -622,26 +533,6 @@
                         <span class="n">sendersCSV</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
                         <span class="k">for</span> <span class="n">sender</span> <span class="ow">in</span> <span class="n">senders</span><span class="p">:</span>
                             <span class="n">sendersCSV</span> <span class="o">+=</span> <span class="n">sender</span><span class="p">[</span><span class="s1">&#39;sAMAccountName&#39;</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;,&#39;</span>
-
-                            <span class="c1"># TODO: Workaround until sophomorix can create this folder by its own</span>
-                            <span class="c1"># This is slow and needs an update</span>
-                            <span class="c1"># look if session subfolder exist in user transfer dir, if not create</span>
-                            <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-transfer&#39;</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">,</span> <span class="s1">&#39;--list-home-dir&#39;</span><span class="p">,</span> <span class="n">sender</span><span class="p">[</span><span class="s1">&#39;sAMAccountName&#39;</span><span class="p">],</span> <span class="s1">&#39;--subdir&#39;</span><span class="p">,</span> <span class="s1">&#39;/transfer/&#39;</span><span class="p">]</span>
-                            <span class="n">FilesInTransfer</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;sAMAccountName/&#39;</span><span class="o">+</span><span class="n">sender</span><span class="p">[</span><span class="s1">&#39;sAMAccountName&#39;</span><span class="p">])</span>
-                            <span class="c1">#raise Exception(&#39;Bad value in LDAP field SophomorixUserPermissions! Python error:\n&#39; + str(FilesInTransfer))</span>
-                            <span class="n">subfolderPath</span><span class="o">=</span><span class="n">receiver</span><span class="o">+</span><span class="s1">&#39;_&#39;</span><span class="o">+</span><span class="n">session</span>
-                            <span class="k">if</span> <span class="s1">&#39;TREE&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">FilesInTransfer</span> <span class="ow">or</span> <span class="n">subfolderPath</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">FilesInTransfer</span><span class="p">[</span><span class="s1">&#39;TREE&#39;</span><span class="p">]:</span>
-                                <span class="k">try</span><span class="p">:</span>
-                                    <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s1">&#39;/tmp/empty&#39;</span><span class="p">)</span>
-                                <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
-                                    <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Creation of the directory /tmp/empty failed&quot;</span><span class="p">)</span>
-                                <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-transfer&#39;</span><span class="p">,</span> <span class="s1">&#39;--from-unix-path&#39;</span><span class="p">,</span> <span class="s1">&#39;/tmp/empty/&#39;</span><span class="p">,</span> <span class="s1">&#39;--to-user&#39;</span><span class="p">,</span>  <span class="n">sender</span><span class="p">[</span><span class="s1">&#39;sAMAccountName&#39;</span><span class="p">],</span> <span class="s1">&#39;--subdir&#39;</span><span class="p">,</span> <span class="s1">&#39;transfer/&#39;</span><span class="o">+</span><span class="n">subfolderPath</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
-                                <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-                                <span class="k">try</span><span class="p">:</span>
-                                    <span class="n">os</span><span class="o">.</span><span class="n">rmdir</span><span class="p">(</span><span class="s1">&#39;/tmp/empty&#39;</span><span class="p">)</span>
-                                <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
-                                    <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Creation of the directory /tmp/empty failed&quot;</span><span class="p">)</span>
-
                         <span class="c1"># if files is All we&#39;re automatically in bulk mode</span>
                         <span class="k">if</span> <span class="n">files</span> <span class="o">==</span> <span class="s2">&quot;All&quot;</span><span class="p">:</span>
                             <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-transfer&#39;</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">,</span> <span class="s1">&#39;--scopy&#39;</span><span class="p">,</span> <span class="s1">&#39;--from-user&#39;</span><span class="p">,</span> <span class="n">sendersCSV</span><span class="p">,</span> <span class="s1">&#39;--to-user&#39;</span><span class="p">,</span> <span class="n">receiver</span><span class="p">,</span> <span class="s1">&#39;--from-path&#39;</span><span class="p">,</span> <span class="s1">&#39;transfer/&#39;</span><span class="o">+</span><span class="n">receiver</span><span class="o">+</span><span class="s1">&#39;_&#39;</span><span class="o">+</span><span class="n">session</span><span class="p">,</span> <span class="s1">&#39;--to-path&#39;</span><span class="p">,</span> <span class="s1">&#39;transfer/collected/&#39;</span><span class="o">+</span><span class="n">now</span><span class="o">+</span><span class="s1">&#39;-&#39;</span><span class="o">+</span><span class="n">session</span><span class="o">+</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;--to-path-addon&#39;</span><span class="p">,</span> <span class="s1">&#39;fullinfo&#39;</span><span class="p">,</span>  <span class="s1">&#39;--no-target-directory&#39;</span><span class="p">]</span>
@@ -658,25 +549,6 @@
                         <span class="n">sendersCSV</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
                         <span class="k">for</span> <span class="n">sender</span> <span class="ow">in</span> <span class="n">senders</span><span class="p">:</span>
                             <span class="n">sendersCSV</span> <span class="o">+=</span> <span class="n">sender</span><span class="p">[</span><span class="s1">&#39;sAMAccountName&#39;</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;,&#39;</span>
-
-                            <span class="c1"># TODO: Workaround until sophomorix can create this folder by its own</span>
-                            <span class="c1"># This is slow and needs an update</span>
-                            <span class="c1"># look if session subfolder exist in user transfer dir, if not create</span>
-                            <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-transfer&#39;</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">,</span> <span class="s1">&#39;--list-home-dir&#39;</span><span class="p">,</span> <span class="n">sender</span><span class="p">[</span><span class="s1">&#39;sAMAccountName&#39;</span><span class="p">],</span> <span class="s1">&#39;--subdir&#39;</span><span class="p">,</span> <span class="s1">&#39;/transfer/&#39;</span><span class="p">]</span>
-                            <span class="n">FilesInTransfer</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;sAMAccountName/&#39;</span><span class="o">+</span><span class="n">sender</span><span class="p">[</span><span class="s1">&#39;sAMAccountName&#39;</span><span class="p">])</span>
-                            <span class="c1">#raise Exception(&#39;Bad value in LDAP field SophomorixUserPermissions! Python error:\n&#39; + str(FilesInTransfer))</span>
-                            <span class="n">subfolderPath</span><span class="o">=</span><span class="n">receiver</span><span class="o">+</span><span class="s1">&#39;_&#39;</span><span class="o">+</span><span class="n">session</span>
-                            <span class="k">if</span> <span class="s1">&#39;TREE&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">FilesInTransfer</span> <span class="ow">or</span> <span class="n">subfolderPath</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">FilesInTransfer</span><span class="p">[</span><span class="s1">&#39;TREE&#39;</span><span class="p">]:</span>
-                                <span class="k">try</span><span class="p">:</span>
-                                    <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s1">&#39;/tmp/empty&#39;</span><span class="p">)</span>
-                                <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
-                                    <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Creation of the directory /tmp/empty failed&quot;</span><span class="p">)</span>
-                                <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-transfer&#39;</span><span class="p">,</span> <span class="s1">&#39;--from-unix-path&#39;</span><span class="p">,</span> <span class="s1">&#39;/tmp/empty/&#39;</span><span class="p">,</span> <span class="s1">&#39;--to-user&#39;</span><span class="p">,</span>  <span class="n">sender</span><span class="p">[</span><span class="s1">&#39;sAMAccountName&#39;</span><span class="p">],</span> <span class="s1">&#39;--subdir&#39;</span><span class="p">,</span> <span class="s1">&#39;transfer/&#39;</span><span class="o">+</span><span class="n">subfolderPath</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
-                                <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-                                <span class="k">try</span><span class="p">:</span>
-                                    <span class="n">os</span><span class="o">.</span><span class="n">rmdir</span><span class="p">(</span><span class="s1">&#39;/tmp/empty&#39;</span><span class="p">)</span>
-                                <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
-                                    <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Creation of the directory /tmp/empty failed&quot;</span><span class="p">)</span>
                         <span class="c1"># if files is All we&#39;re automatically in bulk mode</span>
                         <span class="k">if</span> <span class="n">files</span> <span class="o">==</span> <span class="s2">&quot;All&quot;</span><span class="p">:</span>
                             <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-transfer&#39;</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">,</span> <span class="s1">&#39;--move&#39;</span><span class="p">,</span> <span class="s1">&#39;--keep-source-directory&#39;</span><span class="p">,</span> <span class="s1">&#39;--from-user&#39;</span><span class="p">,</span> <span class="n">sendersCSV</span><span class="p">,</span> <span class="s1">&#39;--to-user&#39;</span><span class="p">,</span> <span class="n">receiver</span><span class="p">,</span> <span class="s1">&#39;--from-path&#39;</span><span class="p">,</span> <span class="s1">&#39;transfer/&#39;</span><span class="o">+</span><span class="n">receiver</span><span class="o">+</span><span class="s1">&#39;_&#39;</span><span class="o">+</span><span class="n">session</span><span class="p">,</span> <span class="s1">&#39;--to-path&#39;</span><span class="p">,</span> <span class="s1">&#39;transfer/collected/&#39;</span><span class="o">+</span><span class="n">now</span><span class="o">+</span><span class="s1">&#39;-&#39;</span><span class="o">+</span><span class="n">session</span><span class="o">+</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;--to-path-addon&#39;</span><span class="p">,</span> <span class="s1">&#39;fullinfo&#39;</span><span class="p">,</span>  <span class="s1">&#39;--no-target-directory&#39;</span><span class="p">]</span>
@@ -692,32 +564,35 @@
         <span class="c1">##    return returnMessage[&#39;TYPE&#39;][&#39;LOG&#39;]</span>
         <span class="c1">#return returnMessage[&#39;TYPE&#39;], returnMessage[&#39;LOG&#39;]</span>
         <span class="c1">#return returnMessage[&#39;TYPE&#39;][&#39;LOG&#39;]</span>
-        <span class="k">return</span> <span class="n">returnMessage</span></div></div>
+        <span class="k">return</span> <span class="n">returnMessage</span></div>
 </pre></div>
 
            </div>
            
           </div>
           <footer>
+  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &#169; Copyright 2020, Andreas Till &amp; Arnaud Kientz.
+        
+        &copy; Copyright Andreas Till &amp; Arnaud Kientz - 2021
 
     </p>
   </div>
     
     
     
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
+
         </div>
       </div>
 

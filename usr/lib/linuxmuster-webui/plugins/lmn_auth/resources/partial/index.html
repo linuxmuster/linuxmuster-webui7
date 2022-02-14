@@ -1,9 +1,12 @@
 <br/>
-    <div class="alert alert-info">
-    <i class="fa fa-info-circle"></i> <span translate>Minimal length is 7 characters. Use upper, lower and special characters or numbers. (e.g. Muster!)</span>
-    <br>
-    <span translate>Valid characters are: a-z A-Z 0-9 !§+-@#$%&amp;*( )[ ]{ }</span>
-    </div>
+<div class="alert alert-info">
+    <i class="fa fa-info-circle fa-3x pull-left"></i>
+    <span translate>Minimal length is 7 characters. Use upper, lower and special characters or numbers. (e.g. Muster!)</span>
+    <br />
+    <span translate>Valid characters are: a-z A-Z 0-9 ?!§+-@#$%&amp;*( )[ ]{ }</span>
+    <br />
+    <strong translate>All fields are required</strong>
+</div>
 
 <div class="row">
     <div class="col-md-3">
@@ -14,21 +17,28 @@
             <label translate>Current password</label>
             <input type="password" ng:model="password" required class="form-control" />
         </div>
-        <div class="form-group">
+        <div ng:show="!showNewPassword" class="form-group has-feedback">
             <label translate>New password</label>
             <input type="password" ng:model="newPassword" required class="form-control" />
+            <span ng:show="!showNewPassword" ng:click="toggleShowNewPassword()" class="fas fa-eye form-control-feedback" style="cursor: pointer; pointer-events: all; line-height:34px;"></span>
+        </div>
+        <div ng:show="showNewPassword" class="form-group has-feedback">
+            <label translate>New password</label>
+            <input type="text" ng:model="newPassword" required class="form-control" />
+            <span ng:show="showNewPassword" ng:click="toggleShowNewPassword()" class="fas fa-eye-slash form-control-feedback" style="cursor: pointer; pointer-events: all; line-height:34px;"></span>
         </div>
         <div class="form-group">
             <label translate>Repeat password</label>
             <input type="password" ng:model="newPassword2" required class="form-control" />
         </div>
         <div class="form-group">
-            <button class="btn btn-primary" ng:click="change()">
+            <div ng:show="newPassword && newPassword!=newPassword2" style="color:red;">
+                <small translate>The two entered passwords differ</small>
+            </div>
+            <button class="btn btn-primary" ng:disabled="!password || !newPassword || !newPassword2 || newPassword!=newPassword2" ng:click="change()">
                 <i class="fa fa-check"></i> <span translate>Change password</span>
             </button>
         </div>
-
-
     </div>
     <div class="col-md-3">
     </div>

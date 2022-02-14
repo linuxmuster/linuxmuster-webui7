@@ -3,26 +3,21 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en-GB" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8">
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Linuxmuster-webui7’s developer documentation &mdash; linuxmuster-webui7 1.0.159-1 documentation</title>
+  <title>Linuxmuster-webui7’s developer documentation &mdash; linuxmuster-webui7 7.1.0 documentation</title>
   
 
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
 
   
   
-
   
-  
-
   
 
   
@@ -32,7 +27,6 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
@@ -42,7 +36,7 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="API: aj.plugins.lmn_auth" href="python/lmn_auth.html" /> 
+    <link rel="next" title="Plugin lmn_auth" href="plugins/lmn_auth.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -56,7 +50,7 @@
           
 
           
-            <a href="#" class="icon icon-home"> linuxmuster-webui7
+            <a href="#" class="icon icon-home" alt="Documentation Home"> linuxmuster-webui7
           
 
           
@@ -69,7 +63,7 @@
             
             
               <div class="version">
-                1.0.159-1
+                7.1.0
               </div>
             
           
@@ -94,14 +88,23 @@
               
             
             
-              <p class="caption"><span class="caption-text">Python API</span></p>
+              <p class="caption"><span class="caption-text">Plugins</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="plugins/lmn_auth.html">Plugin lmn_auth</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Python API</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="python/lmn_auth.html">API: aj.plugins.lmn_auth</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python/lmn_common.html">API: aj.plugins.lmn_common</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/lmn_crontab.html">API: aj.plugins.lmn_crontab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python/lmn_devices.html">API: aj.plugins.lmn_devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/lmn_dhcp.html">API: aj.plugins.lmn_dhcp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/lmn_docker.html">API: aj.plugins.lmn_docker</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python/lmn_groupmembership.html">API: aj.plugins.lmn_groupmembership</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python/lmn_landingpage.html">API: aj.plugins.lmn_landingpage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python/lmn_linbo.html">API: aj.plugins.lmn_linbo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/lmn_linbo4.html">API: aj.plugins.lmn_linbo4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/lmn_linbo_sync.html">API: aj.plugins.lmn_linbo_sync</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python/lmn_quotas.html">API: aj.plugins.lmn_quotas</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python/lmn_session.html">API: aj.plugins.lmn_session</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python/lmn_settings.html">API: aj.plugins.lmn_settings</a></li>
@@ -147,8 +150,6 @@
 
 
 
-
-
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -160,7 +161,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-          
+            
             <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
           
         
@@ -186,7 +187,7 @@
 </table>
 <div class="section" id="about">
 <h2>About<a class="headerlink" href="#about" title="Permalink to this headline">¶</a></h2>
-<p>Welcome in this API reference docmentation !</p>
+<p>Welcome in this API reference documentation !</p>
 <p>Linuxmuster-webui7 is a part of the <a class="reference external" href="https://www.linuxmuster.net/de/home/">linuxmuster.net</a>’s project which provides a complete environment for school network management.</p>
 <p>You can find the whole description of the install process on the <a class="reference external" href="https://docs.linuxmuster.net/de/latest/">official documentation page</a> of the project.</p>
 <p>In particularly, some <a class="reference external" href="https://docs.linuxmuster.net/de/latest/getting-started/installoptions/index.html">appliances (Proxmox, XCP-ng and KVM) are prepared</a> in order to permit a fast deployment for test use.</p>
@@ -200,6 +201,8 @@
 </div>
 <div class="toctree-wrapper compound">
 </div>
+<div class="toctree-wrapper compound">
+</div>
 </div>
 </div>
 
@@ -208,28 +211,35 @@
            
           </div>
           <footer>
+  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="python/lmn_auth.html" class="btn btn-neutral float-right" title="API: aj.plugins.lmn_auth" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+      
+        <a href="plugins/lmn_auth.html" class="btn btn-neutral float-right" title="Plugin lmn_auth" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
     </div>
+  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &#169; Copyright 2020, Andreas Till &amp; Arnaud Kientz.
+        
+        &copy; Copyright Andreas Till &amp; Arnaud Kientz - 2021
 
     </p>
   </div>
     
     
     
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
+
         </div>
       </div>
 

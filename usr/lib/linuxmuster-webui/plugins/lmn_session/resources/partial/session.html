@@ -1,5 +1,5 @@
 <br/>
-<div>
+<div samba-access>
     <div class="input-group">
         <input ng-show="!sessionLoaded" ng:model="filter" type="search" autofocus class="form-control" placeholder="Filter"/>
         <input ng-show="sessionLoaded" type="text" style="width:70%" placeholder={{translation.addStudent}} ng:model="_.addParticipant" ng-readonly=!sessionLoaded typeahead-editable=false typeahead-min-length="2" uib-typeahead="user as user.sophomorixAdminClass+' '+user.givenName+ ' '+user.sn+ ' '+user.sAMAccountName  for user in findUsers($viewValue) | limitTo:10" class="form-control" />
@@ -204,10 +204,6 @@
 
     <div ng:show="info.message != '' && classes.length == 0" class="alert alert-info">
         <i class="fa fa-info-circle"></i> <span>{{info.message}}</span>
-    </div>
-
-    <div ng:show="identity.user == 'root'" class="alert alert-info">
-        <i class="fa fa-info-circle"></i> <span translate>This module does not work as root. Login as a teacher instead!</span>
     </div>
 
     <floating-toolbar >

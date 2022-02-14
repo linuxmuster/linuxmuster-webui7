@@ -1,7 +1,6 @@
 globaladministrator:
     - 'lmn:groupmembership: true'
     - 'lmn:groupmemberships:write: true'
-    - 'sidebar:view:/view/lmn/groupmemberships:write: true'
     - 'sidebar:view:/view/lmn/groupmembership: true'
 
 schooladministrator:

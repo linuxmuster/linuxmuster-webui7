@@ -1,4 +1,4 @@
-angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope, $http, $sce, notify, pageTitle, identity, messagebox, config, core, locale, gettext) => {
+angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope, $http, $sce, $location, notify, pageTitle, identity, messagebox, config, core, locale, gettext) => {
     pageTitle.set(gettext('Global Settings'));
 
     config.load();
@@ -9,6 +9,43 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope,
         st: 'NA',
         o: '',
         cn: ''
+    };
+
+    $scope.activetab = 0;
+
+    $scope.help_certificate = gettext(
+        "This certificate is the default certificate used to create client certificate and to provide https connection.\n" +
+        "Using a Let's Encrypt certificate here will break the client certificate generator.\n" +
+        "Using a self-generated certificate is fine here."
+    );
+
+    $scope.help_fqdn_certificate = gettext(
+        "If you have a special certificate for your domain, like a Let's Encrypt certificate, put it there.\n" +
+        "If you are not sure, just use the same certificate as the one above."
+    );
+
+    $http.get('/api/lm/subnets').then((resp) => $scope.subnets = resp.data);
+
+    $scope.removeSubnet = (subnet) => {
+        messagebox.show({
+            text: gettext('Are you sure you want to delete permanently this subnet ?'),
+            positive: gettext('Delete'),
+            negative: gettext('Cancel')
+        }).then(() => $scope.subnets.remove(subnet))
+    }
+
+    $scope.addSubnet = () => {
+        $scope.subnets.push({'routerIp':'', 'network':'', 'beginRange':'', 'endRange':'', 'setupFlag':''});
+    }
+
+    $scope.saveApplySubnets = () => {
+        $http.post('/api/lm/subnets', $scope.subnets).then(() => {
+            notify.success(gettext('Saved'));
+        });
+    }
+
+    $scope.getSmtpConfig = () => {
+        config.getSmtpConfig().then((smtpConfig) => $scope.smtp_config = smtpConfig);
     };
 
     identity.promise.then(() => {
@@ -29,14 +66,19 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope,
     });
 
     $scope.save = () =>
-       config.save().then(data =>
-          notify.success(gettext('Saved'))
-       ).catch(() =>
-          notify.error(gettext('Could not save config'))
-       );
+        config.save().then(data =>
+            notify.success(gettext('Global config saved'))
+        ).catch(() =>
+            notify.error(gettext('Could not save global config')));
 
+        // if ($scope.smtp_config) {
+        //     config.setSmtpConfig($scope.smtp_config).then(data =>
+        //         notify.success(gettext('Smtp config saved'))
+        //     ).catch(() =>
+        //         notify.error(gettext('Could not save smtp config')));
+        // }
 
-       $scope.createNewServerCertificate = () =>
+    $scope.createNewServerCertificate = () =>
        messagebox.show({
           title: gettext('Self-signed certificate'),
           text: gettext('Generating a new certificate will void all existing client authentication certificates!'),

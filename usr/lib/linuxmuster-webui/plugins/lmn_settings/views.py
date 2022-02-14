@@ -191,7 +191,7 @@ class Handler(HttpPlugin):
             os.chmod(path, 0o0700)
 
     @url(r'/api/lm/subnets')
-    @authorize('lm:schoolsettings')
+    @authorize('lm:globalsettings')
     @endpoint(api=True)
     def handle_api_subnet(self, http_context):
         """
@@ -276,3 +276,42 @@ class Handler(HttpPlugin):
             lmconfig['passwordTemplates'] = custom_config['passwordTemplates']
             with LMNFile('/etc/linuxmuster/webui/config.yml', 'w') as webui:
                 webui.write(lmconfig)
+
+    @url(r'/api/lm/holidays')
+    @authorize('lm:schoolsettings')
+    @endpoint(api=True)
+    def handle_api_holidays(self, http_context):
+        """
+        Manage `holidays.yml` config file for holidays.
+        Method GET: read content.
+        Method POST: write new content.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: Settings in read mode
+        :rtype: dict
+        """
+
+        # TODO : school = 'default-school'
+        path = '/etc/linuxmuster/holidays.yml'
+
+        if http_context.method == 'GET':
+            try:
+                with LMNFile(path, 'r') as s:
+                    return [{
+                        'name': name,
+                        'start': dates['start'],
+                        'end': dates['end'],
+                    } for name, dates in s.data.items()]
+            except AttributeError:
+                return []
+
+        if http_context.method == 'POST':
+            data = http_context.json_body()
+            holidays = {holiday['name']: {
+                'start': holiday['start'],
+                'end': holiday['end']}
+                for holiday in data
+            }
+            with LMNFile(path, 'w') as f:
+                f.write(holidays)

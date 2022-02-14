@@ -5,22 +5,23 @@ Authentication classes to communicate with LDAP tree and load user's information
 import logging
 import os
 import stat
-
 import pexpect
+import re
 import ldap
 import ldap.filter
 import ldap.modlist as modlist
 import subprocess
-from jadi import component, service
 import pwd
 import grp
 import simplejson as json
 import yaml
+import logging
 
+from jadi import component, service
 from aj.auth import AuthenticationProvider, OSAuthenticationProvider, AuthenticationService
 from aj.config import UserConfigProvider
 from aj.plugins.lmn_common.api import ldap_config as params, lmsetup_schoolname
-import logging
+from aj.api.endpoint import EndpointError
 
 @component(AuthenticationProvider)
 class LMAuthenticationProvider(AuthenticationProvider):
@@ -35,14 +36,16 @@ class LMAuthenticationProvider(AuthenticationProvider):
     def __init__(self, context):
         self.context = context
 
+    def prepare_environment(self, username):
+        pass
+
     def get_ldap_user(self, username, context=""):
         """
         Get the user's informations to initialize his session.
 
         :param username: Username
         :type username: string
-        :param context: 'auth' to get permissions and 'userconfig' to get
-        user's personal config, e.g. for Dashboard
+        :param context: 'auth' to get permissions and 'userconfig' to get user's personal config, e.g. for Dashboard
         :type context: string
         :return: Dict of values
         :rtype: dict
@@ -344,14 +347,24 @@ class LMAuthenticationProvider(AuthenticationProvider):
         try:
             res = l.search_s(params['searchdn'], ldap.SCOPE_SUBTREE, searchFilter, attrlist=['sAMAccountName'])
             if res[0][0] is None:
-                raise KeyError
+                # Don't show any hint if the email doesn't exists in ldap
+                return False
             # What to do if email is not unique ?
-            return res[0][1]['sAMAccountName']
-        except ldap.LDAPError as e:
-            print(e)
+            return res[0][1]['sAMAccountName'][0].decode()
+        except (ldap.LDAPError, KeyError):
+            return False
 
         l.unbind_s()
         return False
+
+    def check_password_complexity(self, password):
+        strong_pw = re.match('(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*()]|(?=.*\d)).{7,}', password)
+        valid_pw = re.match('^[a-zA-Z0-9!@#§+\-$%&*{}()\]\[]+$', password)
+        if valid_pw and strong_pw:
+            return True
+        raise EndpointError(_(
+            f'Minimal length is 7 characters. Use upper, lower and special characters or numbers. (e.g. Muster!).' 
+            f'Valid characters are: a-z A-Z 0-9 !§+-@#$%&amp;*( )[ ]{{ }}'))
 
     def update_password(self, username, password):
         systemString = ['sudo', 'sophomorix-passwd', '--user', username, '--pass', password, '--hide', '--nofirstpassupdate', '--use-smbpasswd']

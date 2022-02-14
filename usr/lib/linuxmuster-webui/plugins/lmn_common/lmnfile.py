@@ -23,6 +23,8 @@ ALLOWED_PATHS = [
                 '/srv/linbo',
                 # used in lmn_settings for subnets configuration
                 '/etc/linuxmuster/subnets.csv',
+                # used in lmn_settings for holidays configuration
+                '/etc/linuxmuster/holidays.yml',
                 # used in lmn_settings
                 '/var/lib/linuxmuster/setup.ini',
                 # user in setup wizard during install
@@ -202,6 +204,9 @@ class YAMLLoader(LMNFile):
 
     def __enter__(self):
         if os.geteuid() == 0:
+            # Creating empty file if it does not exist
+            if not os.path.exists(self.file):
+                open(self.file, 'w').close()
             os.chmod(self.file, 384)  # 0o600
         self.opened = open(self.file, 'r')
         if 'r' in self.mode or '+' in self.mode:
@@ -265,7 +270,7 @@ class CSVLoader(LMNFile):
             )
             for elt in data:
                 first_field = elt[self.fieldnames[0]]
-                if first_field == '' or first_field[0] == '#':
+                if first_field in ['', EMPTY_LINE_MARKER]:
                     f.write(first_field.replace(EMPTY_LINE_MARKER, '') + '\n')
                 else:
                     writer.writerow(elt)

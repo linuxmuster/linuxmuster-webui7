@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-26 21:42+0200\n"
-"PO-Revision-Date: 2021-11-14 16:07\n"
+"POT-Creation-Date: 2022-01-28 11:31+0100\n"
+"PO-Revision-Date: 2022-02-14 08:39\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -26,11 +26,11 @@ msgid "Add User"
 msgstr "Benutzer hinzufügen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/createSession.modal.html:78
-#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:80
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:75
 msgid "Close"
 msgstr "Schließen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:62
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:57
 msgid "Copy URL"
 msgstr "URL kopieren"
 
@@ -42,23 +42,23 @@ msgstr "Erstellen"
 msgid "Create new session"
 msgstr "Neue Sitzung erstellen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:28
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:23
 msgid "Currently no websession is running!"
 msgstr "Derzeit wird keine Websession ausgeführt!"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:60
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:55
 msgid "Delete"
 msgstr "Löschen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:57
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:52
 msgid "Join as attendee"
 msgstr "Als Teilnehmer beitreten"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:56
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:51
 msgid "Join as moderator"
 msgstr "Als Moderator beitreten"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:34
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:29
 msgid "Moderator"
 msgstr "Moderator"
 
@@ -70,12 +70,12 @@ msgstr "Name"
 msgid "No users selected!"
 msgstr "Keine Benutzer ausgewählt!"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:36
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:31
 msgid "Participants"
 msgstr "Teilnehmer"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/createSession.modal.html:23
-#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:35
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:30
 msgid "Password"
 msgstr "Passwort"
 
@@ -83,29 +83,29 @@ msgstr "Passwort"
 msgid "Public"
 msgstr "Öffentlich"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:20
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:15
 msgid "Running Websession"
 msgstr "Websession läuft"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:33
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:28
 msgid "Sessionname"
 msgstr "Sessionname"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:61
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:56
 msgid "Show URL"
 msgstr "URL anzeigen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:54
-#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:55
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:49
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:50
 msgid "Start"
 msgstr "Start"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:37
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:32
 msgid "Status"
 msgstr "Status"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:58
-#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:59
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:53
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:54
 msgid "Stop"
 msgstr "Stop"
 
@@ -117,15 +117,11 @@ msgstr "Typ"
 msgid "Users"
 msgstr "Benutzer"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:14
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:9
 msgid "Websession-Module not enabled! Please check Config-File!"
 msgstr "Websession-Modul nicht aktiviert! Bitte Config-Datei überprüfen!"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:3
-msgid "You should not use WebUI as root user! If this is your first time running WebUI, proceed through the setup wizard. Afterwards login using the global-admin account."
-msgstr "Sie sollten das Webinterface nicht als root benutzen! Wenn Sie das Webinterface das erste Mal nutzen, fahren Sie mit dem Setup-Assistenten fort. Danach melden Sie sich mit dem global-admin Konto an."
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:49
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:44
 msgid "no password"
 msgstr "kein Passwort"
 

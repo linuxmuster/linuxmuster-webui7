@@ -143,6 +143,16 @@ angular.module('lmn.linbo_sync').config(function ($routeProvider) {
       $scope.groups[group]['auto']['disable_gui'] = 1 - $scope.groups[group]['auto']['disable_gui'];
       return $scope.refresh_cmd(group);
     };
+    $scope.handle_wake_on_lan = function(group) {
+      // Possible values : 0 or 1
+      $scope.groups[group]['auto']['wol'] = 1 - $scope.groups[group]['auto']['wol'];
+      return $scope.refresh_cmd(group);
+    };
+    $scope.handle_prestart = function(group) {
+      // Possible values : 0 or 1
+      $scope.groups[group]['auto']['prestart'] = 1 - $scope.groups[group]['auto']['prestart'];
+      return $scope.refresh_cmd(group);
+    };
     $scope.refresh_cmd = function(group) {
       var autostart, cmd, format, i, index, ip, j, len, len1, os, ref, ref1, start, sync, timeout;
       cmd = ' -c ';
@@ -166,6 +176,9 @@ angular.module('lmn.linbo_sync').config(function ($routeProvider) {
           start.push('start:' + os.position);
         }
       }
+      if ($scope.groups[group]['auto']['prestart'] > 0) {
+        cmd = ' -p ';
+      }
       cmd += format.join();
       if (sync.length > 0) {
         cmd += cmd.length > 4 ? ',' + sync.join() : sync.join();
@@ -178,7 +191,7 @@ angular.module('lmn.linbo_sync').config(function ($routeProvider) {
         cmd += cmd.length > 4 ? ',' + $scope.groups[group]['power']['halt'] : $scope.groups[group]['power']['halt'];
       }
       timeout = '';
-      if ($scope.groups[group]['power']['timeout'] > 0) {
+      if ($scope.groups[group]['auto']['wol'] > 0) {
         timeout = ' -w ' + $scope.groups[group]['power']['timeout'];
       }
       autostart = '';

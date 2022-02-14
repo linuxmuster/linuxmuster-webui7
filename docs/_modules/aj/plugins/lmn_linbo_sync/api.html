@@ -1,0 +1,443 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en-GB" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>aj.plugins.lmn_linbo_sync.api &mdash; linuxmuster-webui7 7.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/theme_overrides.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home" alt="Documentation Home"> linuxmuster-webui7
+          
+
+          
+            
+            <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                7.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Plugins</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../plugins/lmn_auth.html">Plugin lmn_auth</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Python API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_auth.html">API: aj.plugins.lmn_auth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_common.html">API: aj.plugins.lmn_common</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_crontab.html">API: aj.plugins.lmn_crontab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_devices.html">API: aj.plugins.lmn_devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_dhcp.html">API: aj.plugins.lmn_dhcp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_docker.html">API: aj.plugins.lmn_docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_groupmembership.html">API: aj.plugins.lmn_groupmembership</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_landingpage.html">API: aj.plugins.lmn_landingpage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_linbo.html">API: aj.plugins.lmn_linbo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_linbo4.html">API: aj.plugins.lmn_linbo4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_linbo_sync.html">API: aj.plugins.lmn_linbo_sync</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_quotas.html">API: aj.plugins.lmn_quotas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_session.html">API: aj.plugins.lmn_session</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_settings.html">API: aj.plugins.lmn_settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_setup_wizard.html">API: aj.plugins.lmn_setup_wizard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_users.html">API: aj.plugins.lmn_users</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">linuxmuster-webui7</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>aj.plugins.lmn_linbo_sync.api</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for aj.plugins.lmn_linbo_sync.api</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding:utf8 -*-</span>
+
+<span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">locale</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">gzip</span>
+
+<span class="n">LINBO_PATH</span> <span class="o">=</span> <span class="s1">&#39;/srv/linbo&#39;</span>
+
+<div class="viewcode-block" id="read_config"><a class="viewcode-back" href="../../../../python/lmn_linbo_sync.html#aj.plugins.lmn_linbo_sync.api.read_config">[docs]</a><span class="k">def</span> <span class="nf">read_config</span><span class="p">(</span><span class="n">group</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the os config from linbo config file start.conf.&lt;group&gt;</span>
+
+<span class="sd">    :param group: Linbo group</span>
+<span class="sd">    :type group: string</span>
+<span class="sd">    :return: Config as list of dict</span>
+<span class="sd">    :rtype: list of dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">LINBO_PATH</span><span class="p">,</span> <span class="s1">&#39;start.conf.&#39;</span><span class="o">+</span><span class="n">group</span><span class="p">)</span>
+    <span class="n">osConfig</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;[&#39;</span><span class="p">):</span>
+                <span class="n">section</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="n">section_name</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;[]&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">section_name</span> <span class="o">==</span> <span class="s1">&#39;OS&#39;</span><span class="p">:</span>
+                    <span class="n">osConfig</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">section</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="s1">&#39;=&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">v</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">v</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;yes&#39;</span><span class="p">,</span> <span class="s1">&#39;no&#39;</span><span class="p">]:</span>
+                    <span class="n">v</span> <span class="o">=</span> <span class="n">v</span> <span class="o">==</span> <span class="s1">&#39;yes&#39;</span>
+                <span class="n">section</span><span class="p">[</span><span class="n">k</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span> <span class="o">=</span> <span class="n">v</span>
+        <span class="k">return</span> <span class="n">osConfig</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="last_sync"><a class="viewcode-back" href="../../../../python/lmn_linbo_sync.html#aj.plugins.lmn_linbo_sync.api.last_sync">[docs]</a><span class="k">def</span> <span class="nf">last_sync</span><span class="p">(</span><span class="n">workstation</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the date of the last sync date for a workstation w.</span>
+
+<span class="sd">    :param w: Workstation</span>
+<span class="sd">    :type w: string</span>
+<span class="sd">    :param image: Name of the image file</span>
+<span class="sd">    :type image: string</span>
+<span class="sd">    :return: Last synchronisation time</span>
+<span class="sd">    :rtype: datetime</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">statusfile</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;/var/log/linuxmuster/linbo/</span><span class="si">{</span><span class="n">workstation</span><span class="si">}</span><span class="s1">_image.status&#39;</span>
+    <span class="n">last</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">statusfile</span><span class="p">)</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="n">statusfile</span><span class="p">)</span><span class="o">.</span><span class="n">st_size</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="n">statusfile</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                <span class="n">last</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+                <span class="k">break</span>
+
+    <span class="k">if</span> <span class="n">last</span><span class="p">:</span>
+        <span class="c1">## Linbo locale is en_GB, not necessarily the server locale</span>
+        <span class="n">saved</span> <span class="o">=</span> <span class="n">locale</span><span class="o">.</span><span class="n">setlocale</span><span class="p">(</span><span class="n">locale</span><span class="o">.</span><span class="n">LC_ALL</span><span class="p">)</span>
+        <span class="n">locale</span><span class="o">.</span><span class="n">setlocale</span><span class="p">(</span><span class="n">locale</span><span class="o">.</span><span class="n">LC_ALL</span><span class="p">,</span> <span class="s1">&#39;C.UTF-8&#39;</span><span class="p">)</span>
+        <span class="n">last</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">last</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;%Y%m</span><span class="si">%d</span><span class="s1">%H%M&#39;</span><span class="p">)</span>
+        <span class="n">locale</span><span class="o">.</span><span class="n">setlocale</span><span class="p">(</span><span class="n">locale</span><span class="o">.</span><span class="n">LC_ALL</span><span class="p">,</span> <span class="n">saved</span><span class="p">)</span>
+
+        <span class="n">last</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">mktime</span><span class="p">(</span><span class="n">last</span><span class="o">.</span><span class="n">timetuple</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">last</span></div>
+
+<div class="viewcode-block" id="group_os"><a class="viewcode-back" href="../../../../python/lmn_linbo_sync.html#aj.plugins.lmn_linbo_sync.api.group_os">[docs]</a><span class="k">def</span> <span class="nf">group_os</span><span class="p">(</span><span class="n">workstations</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get all os infos from linbo config file and inject it in workstations dict.</span>
+<span class="sd">    The workstations dict is set in the function list_workstations().</span>
+
+<span class="sd">    :param workstations: Dict containing all workstations</span>
+<span class="sd">    :type workstations: dict</span>
+<span class="sd">    :return: Completed workstations dict with linbo informations</span>
+<span class="sd">    :rtype: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">workstations</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">workstations</span><span class="p">[</span><span class="n">group</span><span class="p">][</span><span class="s1">&#39;os&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span> 
+        <span class="n">config</span> <span class="o">=</span> <span class="n">read_config</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">workstations</span><span class="p">[</span><span class="n">group</span><span class="p">][</span><span class="s1">&#39;power&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;run_halt&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s1">&#39;timeout&#39;</span><span class="p">:</span> <span class="mi">0</span>
+                <span class="p">}</span>
+            <span class="n">workstations</span><span class="p">[</span><span class="n">group</span><span class="p">][</span><span class="s1">&#39;auto&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;disable_gui&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s1">&#39;bypass&#39;</span><span class="p">:</span> <span class="mi">0</span>
+            <span class="p">}</span>
+            <span class="k">for</span> <span class="n">osConfig</span> <span class="ow">in</span> <span class="n">config</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">osConfig</span><span class="p">[</span><span class="s1">&#39;SyncEnabled&#39;</span><span class="p">]</span> <span class="ow">or</span> <span class="n">osConfig</span><span class="p">[</span><span class="s1">&#39;NewEnabled&#39;</span><span class="p">]:</span>
+                    <span class="n">tmpDict</span> <span class="o">=</span> <span class="p">{</span>
+                                <span class="s1">&#39;baseimage&#39;</span><span class="p">:</span> <span class="n">osConfig</span><span class="p">[</span><span class="s1">&#39;BaseImage&#39;</span><span class="p">],</span>
+                                <span class="s1">&#39;partition&#39;</span><span class="p">:</span> <span class="n">osConfig</span><span class="p">[</span><span class="s1">&#39;Root&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                                <span class="s1">&#39;new_enabled&#39;</span><span class="p">:</span> <span class="n">osConfig</span><span class="p">[</span><span class="s1">&#39;NewEnabled&#39;</span><span class="p">],</span>
+                                <span class="s1">&#39;start_enabled&#39;</span><span class="p">:</span> <span class="n">osConfig</span><span class="p">[</span><span class="s1">&#39;StartEnabled&#39;</span><span class="p">],</span>
+                                <span class="s1">&#39;run_format&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                                <span class="s1">&#39;run_sync&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span>
+                                <span class="s1">&#39;run_start&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span>
+                        <span class="p">}</span>
+                    <span class="n">workstations</span><span class="p">[</span><span class="n">group</span><span class="p">][</span><span class="s1">&#39;os&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tmpDict</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">workstations</span></div>
+
+<div class="viewcode-block" id="list_workstations"><a class="viewcode-back" href="../../../../python/lmn_linbo_sync.html#aj.plugins.lmn_linbo_sync.api.list_workstations">[docs]</a><span class="k">def</span> <span class="nf">list_workstations</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate a dict with workstations and parameters out of devices file</span>
+
+<span class="sd">    :return: Dict with all linbo informations for all workstations.</span>
+<span class="sd">    :rtype: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">school</span> <span class="o">=</span> <span class="s1">&#39;default-school&#39;</span>
+    <span class="n">workstations_file</span> <span class="o">=</span> <span class="s1">&#39;/etc/linuxmuster/sophomorix/&#39;</span> <span class="o">+</span> <span class="n">school</span> <span class="o">+</span> <span class="s1">&#39;/devices.csv&#39;</span>
+
+    <span class="n">workstations</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">workstations_file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">w</span><span class="p">:</span>
+        <span class="n">buffer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s2">&quot;;&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">buffer</span><span class="p">:</span>
+            <span class="c1"># Not a comment</span>
+            <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;#&quot;</span><span class="p">:</span>
+                <span class="c1"># If config file exists</span>
+                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">LINBO_PATH</span><span class="p">,</span> <span class="s1">&#39;start.conf.&#39;</span><span class="o">+</span><span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">])):</span>
+                    <span class="n">room</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="n">group</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                    <span class="n">host</span>  <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="n">mac</span>   <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+                    <span class="n">ip</span>    <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+                    <span class="n">pxe</span>   <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span>
+
+                    <span class="k">if</span> <span class="n">pxe</span> <span class="o">!=</span> <span class="s2">&quot;1&quot;</span> <span class="ow">and</span> <span class="n">pxe</span> <span class="o">!=</span> <span class="s2">&quot;2&quot;</span><span class="p">:</span>
+                        <span class="k">continue</span>
+                    <span class="k">elif</span> <span class="n">group</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">workstations</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                        <span class="n">workstations</span><span class="p">[</span><span class="n">group</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;grp&#39;</span><span class="p">:</span> <span class="n">group</span><span class="p">,</span> <span class="s1">&#39;hosts&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;host&#39;</span> <span class="p">:</span> <span class="n">host</span><span class="p">,</span> <span class="s1">&#39;room&#39;</span> <span class="p">:</span> <span class="n">room</span><span class="p">,</span> <span class="s1">&#39;mac&#39;</span> <span class="p">:</span> <span class="n">mac</span><span class="p">,</span> <span class="s1">&#39;ip&#39;</span> <span class="p">:</span> <span class="n">ip</span><span class="p">}]}</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">workstations</span><span class="p">[</span><span class="n">group</span><span class="p">][</span><span class="s1">&#39;hosts&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;host&#39;</span> <span class="p">:</span> <span class="n">host</span><span class="p">,</span> <span class="s1">&#39;room&#39;</span> <span class="p">:</span> <span class="n">room</span><span class="p">,</span> <span class="s1">&#39;mac&#39;</span> <span class="p">:</span> <span class="n">mac</span><span class="p">,</span> <span class="s1">&#39;ip&#39;</span> <span class="p">:</span> <span class="n">ip</span><span class="p">})</span>
+
+    <span class="k">return</span> <span class="n">group_os</span><span class="p">(</span><span class="n">workstations</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="last_sync_all"><a class="viewcode-back" href="../../../../python/lmn_linbo_sync.html#aj.plugins.lmn_linbo_sync.api.last_sync_all">[docs]</a><span class="k">def</span> <span class="nf">last_sync_all</span><span class="p">(</span><span class="n">workstations</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Add last synchronisation informations into the workstations dict,</span>
+<span class="sd">    and status attribute to use as class for bootstrap.</span>
+
+<span class="sd">    :param workstations: Dict of workstations set in list_workstations().</span>
+<span class="sd">    :type workstations: dict</span>
+<span class="sd">    :return: Completed dict of workstations</span>
+<span class="sd">    :rtype: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">today</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">mktime</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">timetuple</span><span class="p">())</span>
+
+    <span class="k">for</span> <span class="n">group</span><span class="p">,</span> <span class="n">grpDict</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">workstations</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="k">for</span> <span class="n">host</span> <span class="ow">in</span> <span class="n">grpDict</span><span class="p">[</span><span class="s1">&#39;hosts&#39;</span><span class="p">]:</span>
+                <span class="n">host</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">workstations</span><span class="p">[</span><span class="n">group</span><span class="p">][</span><span class="s1">&#39;os&#39;</span><span class="p">]:</span>
+                    <span class="n">last</span> <span class="o">=</span> <span class="n">last_sync</span><span class="p">(</span><span class="n">host</span><span class="p">[</span><span class="s1">&#39;host&#39;</span><span class="p">],</span> <span class="n">image</span><span class="p">[</span><span class="s1">&#39;baseimage&#39;</span><span class="p">])</span>
+                    <span class="n">date</span> <span class="o">=</span> <span class="n">last</span> <span class="k">if</span> <span class="n">last</span> <span class="k">else</span> <span class="s2">&quot;Never&quot;</span>
+                    <span class="n">tmpDict</span> <span class="o">=</span> <span class="p">{</span>
+                            <span class="s1">&#39;date&#39;</span><span class="p">:</span> <span class="n">date</span><span class="p">,</span>
+                            <span class="s1">&#39;image&#39;</span><span class="p">:</span> <span class="n">image</span><span class="p">[</span><span class="s1">&#39;baseimage&#39;</span><span class="p">]</span>
+                    <span class="p">}</span>
+                    <span class="k">if</span> <span class="n">date</span> <span class="o">==</span> <span class="s2">&quot;Never&quot;</span> <span class="ow">or</span> <span class="p">(</span><span class="n">today</span> <span class="o">-</span> <span class="n">date</span> <span class="o">&gt;</span> <span class="mi">30</span><span class="o">*</span><span class="mi">24</span><span class="o">*</span><span class="mi">3600</span><span class="p">):</span>
+                        <span class="n">tmpDict</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;danger&quot;</span>
+                    <span class="k">elif</span> <span class="n">today</span> <span class="o">-</span> <span class="n">date</span> <span class="o">&gt;</span> <span class="mi">7</span><span class="o">*</span><span class="mi">24</span><span class="o">*</span><span class="mi">3600</span><span class="p">:</span>
+                        <span class="n">tmpDict</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;warning&quot;</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">tmpDict</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;success&quot;</span>
+                    <span class="n">host</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tmpDict</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="test_online"><a class="viewcode-back" href="../../../../python/lmn_linbo_sync.html#aj.plugins.lmn_linbo_sync.api.test_online">[docs]</a><span class="k">def</span> <span class="nf">test_online</span><span class="p">(</span><span class="n">host</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Launch a nmap on a host to test if the os is up, and return OS type.</span>
+
+<span class="sd">    :param host: Hostname</span>
+<span class="sd">    :type host: string</span>
+<span class="sd">    :return: OS type</span>
+<span class="sd">    :rtype: string</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">command</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;nmap&#39;</span><span class="p">,</span> <span class="s1">&#39;-p&#39;</span><span class="p">,</span> <span class="s1">&#39;22&#39;</span><span class="p">,</span> <span class="s1">&#39;-O&#39;</span><span class="p">,</span> <span class="n">host</span><span class="p">]</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">STDOUT</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="k">if</span> <span class="sa">b</span><span class="s1">&#39;Too many fingerprints&#39;</span> <span class="ow">in</span> <span class="n">r</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;Linbo&quot;</span>
+    <span class="k">elif</span> <span class="sa">b</span><span class="s1">&#39;Linux&#39;</span> <span class="ow">in</span> <span class="n">r</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;OS Linux&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;Off&#39;</span></div>
+
+
+<div class="viewcode-block" id="run"><a class="viewcode-back" href="../../../../python/lmn_linbo_sync.html#aj.plugins.lmn_linbo_sync.api.run">[docs]</a><span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">command</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Run linbo command.</span>
+
+<span class="sd">    :param command: Linbo command</span>
+<span class="sd">    :type command: list</span>
+<span class="sd">    :return: Error as string if down, or 0 if successfull</span>
+<span class="sd">    :rtype: string or integer</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">r</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">STDOUT</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+    <span class="k">if</span> <span class="s1">&#39;Not online, host skipped.&#39;</span> <span class="ow">in</span> <span class="n">r</span><span class="p">:</span>
+        <span class="n">clients_error</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="s1">&#39;Not online, host skipped.&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                <span class="n">clients_error</span> <span class="o">+=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;,&#39;</span>
+
+        <span class="k">return</span> <span class="s1">&#39;Not online, host skipped: &#39;</span> <span class="o">+</span> <span class="n">clients_error</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright Andreas Till &amp; Arnaud Kientz - 2021
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

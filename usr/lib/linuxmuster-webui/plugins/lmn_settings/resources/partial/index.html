@@ -635,46 +635,38 @@
         </table>
     </uib:tab>
 
-    <uib:tab heading="{{'Subnets'|translate}}">
-        <h3 translate>List of subnets</h3>
-        <div class="alert alert-danger" translate>
-            <i class="fa fa-warning "></i>
-            Change this values with high precaution ! A wrong value may completely block your network !
+    <uib:tab heading="{{'Holidays'|translate}}">
+       <h3 translate>Configuration of holidays</h3>
+        <div class="alert alert-info" ng:show="holidays.length == 0">
+            <i class="fa fa-info-circle fa-2x"></i>
+            <span translate>No holidays found!</span>
         </div>
-        <table class="table">
+        <table class="table" ng:show="holidays">
             <tr>
-                <th translate>Network / Prefix</th>
-                <th translate>Ip router</th>
-                <th translate>Begin lease range</th>
-                <th translate>End lease range</th>
-                <th translate>Setup flag</th>
+                <th translate>Name</th>
+                <th translate>Start</th>
+                <th translate>End</th>
+                <th translate> </th>
             </tr>
-            <tr ng:repeat="subnet in subnets" ng:if="subnet.network.charAt(0) != '#'">
+            <tr ng:repeat="holiday in holidays">
                 <td>
-                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="subnet.network" placeholder="Network" class="form-control" />
+                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="holiday.name" placeholder="Name" class="form-control" />
                 </td>
-                <td>
-                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="subnet.routerIp" placeholder="Ip router" class="form-control" />
+                <td ng:class="validateDate(holiday.start)">
+                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="holiday.start" placeholder="dd.mm.yyyy" class="form-control" />
                 </td>
-                <td>
-                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="subnet.beginRange" placeholder="Begin lease range" class="form-control" />
-                </td>
-                <td>
-                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="subnet.endRange" placeholder="End lease range" class="form-control" />
-                </td>
-                <td>
-                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="subnet.setupFlag" placeholder="Setup flag" class="form-control" />
+                <td ng:class="validateDate(holiday.end)">
+                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="holiday.end" placeholder="dd.mm.yyyy" class="form-control" />
                 </td>
                 <td width="1">
-                    <button class="btn btn-default" ng:click="removeSubnet(subnet)" title={{trans.remove}}>
+                    <button class="btn btn-default" ng:click="removeHoliday(holiday)" title={{trans.remove}}>
                         <i class="fa fa-trash-o"></i>
                     </button>
                 </td>
             </tr>
         </table>
-
-        <button class="btn btn-default" ng:click="addSubnet()">
-            <i class="fa fa-plus"></i> <span translate>Add a subnet</span>
+        <button class="btn btn-default" ng:click="addHoliday()">
+            <i class="fa fa-plus"></i> <span translate>Add holidays</span>
         </button>
     </uib:tab>
     </uib:tabset>
@@ -687,6 +679,6 @@
         <button ng-show="activetab < 3" ng:click="save()" class="btn btn-lmn" translate>Save</button>
         <button ng-show="activetab == 3" ng:click="save() && saveCustom()" class="btn btn-lmn" translate>Save</button>
         <button ng-show="activetab == 4" ng:click="saveCustom()" class="btn btn-lmn" translate>Save</button>
-        <button ng-show="activetab == 5" ng:click="saveApplySubnets()" class="btn btn-lmn" translate>Save &amp; Apply Subnets</button>
+        <button ng-show="activetab == 5" ng:click="saveApplyHolidays()" class="btn btn-lmn" translate>Save</button>
     </floating-toolbar>
 </div>

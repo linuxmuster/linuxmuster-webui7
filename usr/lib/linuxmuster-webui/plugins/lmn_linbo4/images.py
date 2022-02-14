@@ -6,16 +6,16 @@ from datetime import datetime
 
 from jadi import service
 from aj.plugins.lmn_common.lmnfile import LMNFile
+from aj.api.endpoint import EndpointError
 
 LINBO_PATH = '/srv/linbo/images'
 
 # Filenames like ubuntu.qcow2.desc
 EXTRA_IMAGE_FILES = ['desc', 'info',  'vdi']
-EXTRA_NONEDITABLE_IMAGE_FILES = ['torrent']
+EXTRA_NONEDITABLE_IMAGE_FILES = ['torrent', 'macct']
 
 # Filenames like ubuntu.reg
 EXTRA_COMMON_FILES = ['reg', 'postsync', 'prestart']
-EXTRA_NONEDITABLE_COMMON_FILES = ['macct']
 
 EXTRA_PERMISSIONS_MAPPING = {
     'desc': 0o664,
@@ -120,7 +120,7 @@ class LinboImage:
             if os.path.exists(path):
                 os.unlink(path)
 
-        for extra in EXTRA_COMMON_FILES + EXTRA_NONEDITABLE_COMMON_FILES:
+        for extra in EXTRA_COMMON_FILES:
             path = os.path.join(self.path, f"{self.name}.{extra}")
             if os.path.exists(path):
                 os.unlink(path)
@@ -134,7 +134,10 @@ class LinboImage:
         self._torrent_stop()
 
         # Remove directory
-        os.rmdir(self.path)
+        try:
+            os.rmdir(self.path)
+        except OSError as e:
+            raise EndpointError(e)
 
     def rename(self, new_name):
         """
@@ -150,7 +153,7 @@ class LinboImage:
         self._torrent_stop()
 
         # Rename extra files
-        for extra in EXTRA_IMAGE_FILES + EXTRA_NONEDITABLE_IMAGE_FILES:
+        for extra in EXTRA_IMAGE_FILES:
             actual = os.path.join(self.path, f"{self.image}.{extra}")
             if os.path.exists(actual):
                 # Replace image name in .info file
@@ -287,7 +290,10 @@ class LinboImageGroup:
             backup.delete()
 
         if os.path.isdir(self.backup_path):
-            os.rmdir(self.backup_path)
+            try:
+                os.rmdir(self.backup_path)
+            except OSError as e:
+                raise EndpointError(e)
 
         self.base.delete()
 

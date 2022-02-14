@@ -11,13 +11,7 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
         remove: gettext('Remove')
     }
 
-    $scope.tabs = ['general', 'listimport', 'quota', 'printing']
-
-    tag = $location.$$url.split("#")[1]
-    if tag and tag in $scope.tabs
-        $scope.activetab = $scope.tabs.indexOf(tag)
-    else
-        $scope.activetab = 0
+    $scope.activetab = 0
 
     $scope.logLevels = [
         {name: gettext('Minimal'), value: 0}
@@ -63,9 +57,8 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
         $scope.templates_individual = resp.data[0]
         $scope.templates_multiple = resp.data[1]
 
-
-    $http.get('/api/lm/subnets').then (resp) ->
-        $scope.subnets = resp.data
+    $http.get('/api/lm/holidays').then (resp) ->
+        $scope.holidays = resp.data
 
     $scope.filterscriptNotEmpty = () ->
         # A filterscript option should not be empty but "---"
@@ -100,16 +93,16 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
     #     $scope.schoolShareEnabled = enabled
     #     $http.post('/api/lm/schoolsettings/school-share', enabled)
 
-    $scope.removeSubnet = (subnet) ->
+    $scope.addHoliday = () ->
+        $scope.holidays.push({'name':'', 'start':'', 'end':''})
+
+    $scope.removeHoliday = (holiday) ->
         messagebox.show({
-            text: gettext('Are you sure you want to delete permanently this subnet ?'),
+            text: gettext('Are you sure you want to delete permanently these holidays ?'),
             positive: gettext('Delete'),
             negative: gettext('Cancel')
         }).then () ->
-            $scope.subnets.remove(subnet)
-
-    $scope.addSubnet = () ->
-        $scope.subnets.push({'routerIp':'', 'network':'', 'beginRange':'', 'endRange':'', 'setupFlag':''})
+            $scope.holidays.remove(holiday)
 
     $scope.save = () ->
         validPrintserver = validation.isValidDomain($scope.settings.school.PRINTSERVER)
@@ -142,9 +135,17 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
             backdrop: 'static'
         )
 
-    $scope.saveApplySubnets = () ->
-        $http.post('/api/lm/subnets', $scope.subnets).then () ->
+    $scope.saveApplyHolidays = () ->
+        if document.getElementsByClassName("has-error").length > 0
+            notify.error(gettext("Please first correct the mal formated fields."))
+            return
+        $http.post('/api/lm/holidays', $scope.holidays).then () ->
             notify.success gettext('Saved')
+
+    $scope.validateDate = (date) ->
+        if validation.isValidDate(date) != true
+            return 'has-error'
+        return
 
     $scope.backups = () ->
         school = "default-school"

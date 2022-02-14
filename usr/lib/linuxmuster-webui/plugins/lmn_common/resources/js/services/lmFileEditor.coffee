@@ -1,7 +1,7 @@
 angular.module('lmn.common').service 'lmFileEditor', ($uibModal) ->
     @show = (path, encoding) ->
         return $uibModal.open(
-            templateUrl: '/lmn_common:resources/js/lmFileEditor.modal.html'
+            templateUrl: '/lmn_common:resources/partial/lmFileEditor.modal.html'
             controller: 'lmFileEditorModalController'
             size: 'lg'
             resolve:

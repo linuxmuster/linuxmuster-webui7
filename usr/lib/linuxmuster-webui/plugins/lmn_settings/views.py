@@ -191,7 +191,7 @@ class Handler(HttpPlugin):
             os.chmod(path, 0o0700)
 
     @url(r'/api/lm/subnets')
-    @authorize('lm:schoolsettings')
+    @authorize('lm:globalsettings')
     @endpoint(api=True)
     def handle_api_subnet(self, http_context):
         """
@@ -296,12 +296,15 @@ class Handler(HttpPlugin):
         path = '/etc/linuxmuster/holidays.yml'
 
         if http_context.method == 'GET':
-            with LMNFile(path, 'r') as s:
-                return [{
-                    'name': name,
-                    'start': dates['start'],
-                    'end': dates['end'],
-                } for name, dates in s.data.items()]
+            try:
+                with LMNFile(path, 'r') as s:
+                    return [{
+                        'name': name,
+                        'start': dates['start'],
+                        'end': dates['end'],
+                    } for name, dates in s.data.items()]
+            except AttributeError:
+                return []
 
         if http_context.method == 'POST':
             data = http_context.json_body()

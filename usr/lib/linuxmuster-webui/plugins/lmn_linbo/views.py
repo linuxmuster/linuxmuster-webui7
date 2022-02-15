@@ -201,7 +201,7 @@ class Handler(HttpPlugin):
             if os.path.exists(path):
                 data = http_context.json_body()
                 with LMNFile(path, 'w') as settings:
-                    settings.write(json.dumps(data, indent=4))
+                    settings.write(data)
                 os.chmod(path, 0o755)
 
     @url(r'/api/lm/linbo/image/(?P<name>.+)')

@@ -1,3 +1,9 @@
+linuxmuster-webui7 (17.1.4.5) lmn71; urgency=low
+
+  * fixed writing vdi files back
+
+ -- Andreas Till <andreas.till@netzint.de>  Tue, 15 Feb 2022 13:32:02 +0200
+
 linuxmuster-webui7 (17.1.4.4) lmn71; urgency=low
 
   * fixed vdi filehandling

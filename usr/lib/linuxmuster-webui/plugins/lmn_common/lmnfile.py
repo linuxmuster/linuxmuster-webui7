@@ -11,6 +11,7 @@ import magic
 import filecmp
 import time
 import yaml
+import json
 from configobj import ConfigObj
 
 
@@ -194,13 +195,44 @@ class LinboLoader(LMNFile):
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.opened.close()
 
+class JSONLoader(LMNFile):
+    """
+    Handler for json files.
+    """
+
+    extensions = ['.vdi']
+
+    def __enter__(self):
+        if os.geteuid() == 0:
+            os.chmod(self.file, 384)  # 0o600
+        self.opened = open(self.file, 'r')
+        if 'r' in self.mode or '+' in self.mode:
+            self.data = yaml.load(self.opened, Loader=yaml.SafeLoader)
+        return self
+
+    def write(self, data):
+        tmp = self.file + '_tmp'
+        with open(tmp, 'w', encoding=self.encoding) as f:
+            json.dump(
+                data, 
+                f, 
+                indent=4)
+        if not filecmp.cmp(tmp, self.file):
+            self.backup()
+            os.rename(tmp, self.file)
+        else:
+            os.unlink(tmp)
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.opened.close()
+
 
 class YAMLLoader(LMNFile):
     """
     Handler for yaml files.
     """
 
-    extensions = ['.yml', '.vdi']
+    extensions = ['.yml']
 
     def __enter__(self):
         if os.geteuid() == 0:

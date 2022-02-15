@@ -1,5 +1,5 @@
 globaladministrator:
-    - 'sidebar:view/view/lmn_vdi_administration: false'
+    - 'sidebar:view:/view/lmn_vdi_administration: false'
     - 'lmn_vdi_administration:show: false'
 
 schooladministrator:

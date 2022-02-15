@@ -43,7 +43,7 @@ class Handler(HttpPlugin):
         """
 
         if http_context.method == 'GET':
-            workstations = api.list_workstations()
+            workstations = api.list_workstations(self.context)
             api.last_sync_all(workstations)
 
             if len(workstations) != 0:

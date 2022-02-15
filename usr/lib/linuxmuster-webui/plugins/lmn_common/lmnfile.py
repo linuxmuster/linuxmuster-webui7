@@ -11,6 +11,7 @@ import magic
 import filecmp
 import time
 import yaml
+import json
 from configobj import ConfigObj
 
 
@@ -194,16 +195,50 @@ class LinboLoader(LMNFile):
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.opened.close()
 
+class JSONLoader(LMNFile):
+    """
+    Handler for json files.
+    """
+
+    extensions = ['.vdi']
+
+    def __enter__(self):
+        if os.geteuid() == 0:
+            os.chmod(self.file, 384)  # 0o600
+        self.opened = open(self.file, 'r')
+        if 'r' in self.mode or '+' in self.mode:
+            self.data = yaml.load(self.opened, Loader=yaml.SafeLoader)
+        return self
+
+    def write(self, data):
+        tmp = self.file + '_tmp'
+        with open(tmp, 'w', encoding=self.encoding) as f:
+            json.dump(
+                data, 
+                f, 
+                indent=4)
+        if not filecmp.cmp(tmp, self.file):
+            self.backup()
+            os.rename(tmp, self.file)
+        else:
+            os.unlink(tmp)
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.opened.close()
+
 
 class YAMLLoader(LMNFile):
     """
     Handler for yaml files.
     """
 
-    extensions = ['.yml', '.vdi']
+    extensions = ['.yml']
 
     def __enter__(self):
         if os.geteuid() == 0:
+            # Creating empty file if it does not exist
+            if not os.path.exists(self.file):
+                open(self.file, 'w').close()
             os.chmod(self.file, 384)  # 0o600
         self.opened = open(self.file, 'r')
         if 'r' in self.mode or '+' in self.mode:
@@ -267,7 +302,7 @@ class CSVLoader(LMNFile):
             )
             for elt in data:
                 first_field = elt[self.fieldnames[0]]
-                if first_field == '':
+                if first_field in ['', EMPTY_LINE_MARKER]:
                     f.write(first_field.replace(EMPTY_LINE_MARKER, '') + '\n')
                 else:
                     writer.writerow(elt)

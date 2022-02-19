@@ -39,6 +39,9 @@ case "$1" in
                 cp -a $ajcfg $ajcfg.bak
             fi
 
+            # Email templates will always be overwritten
+            cp -a $webuietc/email-templates /etc/linuxmuster/webui/
+
             msg "Writing linuxmuster default ajenti config $ajcfg"
             cp -rf $webuietc/ajenti_default.yml $ajcfg
             if [ ! -f $wucfg ]; then

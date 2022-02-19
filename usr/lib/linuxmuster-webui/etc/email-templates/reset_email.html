@@ -1,0 +1,69 @@
+<html>
+  <head>
+    <style>
+        body {
+          color:#0D2943;
+          background-color: #efefef;
+          width:800px;
+        }
+
+        p {
+          padding-left:10px;
+        }
+
+        img {
+          width:200px;
+          display:block;
+          margin:auto;
+        }
+
+        .container {
+          background-color: white;
+          margin:auto;
+          width:600px;
+          padding:10px 50px;
+          border-radius:5px;
+        }
+
+        .link_button {
+          display:block;
+          padding:15px;
+          margin:30px auto;
+          width: 150px;
+          color: white;
+          background-color:#F59C00;
+          text-align: center;
+          font-size: 16px;
+          border-radius:10px;
+          cursor: pointer;
+        }
+
+        a {
+          text-decoration:none;
+          font-weight: bold;
+          color:#2196F3;
+        }
+    </style>
+  </head>
+  <body>
+    <br />
+    <img src="data:image/png;base64, {{ BASE64_LOGO }}" />
+    <br />
+    <div class="container">
+      <h3>Hello,</h3>
+      <p>
+        Someone, hopefully you, asked to receive a password reset link in order to recover your password in the Webui.<br />
+        If you really want to reset your password, just open the link below in order to update your password.<br />
+
+        <a href="{{ RESET_LINK }}" class="link_button">Reset password</a>
+        <span style="display:none">Reset link : {{ RESET_LINK }}</span>
+
+        If you are not the originator of this request, just ignore this email and nothing will happen.<br />
+        Only persons who have access to this email can reset your password.<br />
+        <br />
+        Regards, <br />
+        The team of linuxmuster.net
+      </p>
+    </div>
+  </body>
+</html>

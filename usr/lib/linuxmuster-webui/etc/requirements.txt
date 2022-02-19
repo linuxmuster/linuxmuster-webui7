@@ -8,7 +8,7 @@ ajenti.plugin.filesystem==0.48
 ajenti.plugin.passwd==0.25
 ajenti.plugin.plugins==0.48
 ajenti.plugin.settings==0.31
-ajenti.plugin.session-list==0.1
+ajenti.plugin.session-list==0.5
 gevent==1.5.0
 unicodecsv==0.14.1
 configparser==3.5.0

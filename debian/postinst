@@ -69,18 +69,6 @@ case "$1" in
             # Requirements must always be checked
             /usr/bin/python3 -m pip install -r $webuietc/requirements.txt
             
-            # For an upgrade Python2 --> Python3 the new installation of Ajenti will overwrite config.yml
-            if ! /usr/bin/python3 -c "import aj" &> /dev/null ; then
-                # Module aj not present, so upgrade to Python3
-                cp -a $ajcfg.bak $ajcfg
-            fi
-
-            # Add fqdn_certificate in config.yml if not present - for update ajenti 2.1.33
-            if [ "$(grep -e '^\s\{2,\}fqdn_certificate' /etc/ajenti/config.yml | wc -l)" -eq 0 ] ; then
-                echo "Add FQDN certificate parameter to /etc/ajenti/config.yml"
-                sed -i '/^\s\{2,\}certificate:/p;0,/^\s\{2,\}certificate:/ s/certificate/fqdn_certificate/' $ajcfg
-            fi
-            
             echo "Set default sophomorix webui rights"
             /usr/bin/python3 $webuietc/merge-permissions.py
             /usr/sbin/sophomorix-ui

@@ -1,6 +1,15 @@
 #!/bin/sh
 set -e
 
+msg()
+{
+    message=$1
+    echo
+    # Bold and orange font for linuxmuster.net
+    echo -e "\e[1m\e[38;5;214m$message\e[39m\e[0m"
+    echo
+}
+
 case "$1" in
     install|configure)
         ajcfg="/etc/ajenti/config.yml"
@@ -14,31 +23,33 @@ case "$1" in
 
         if [ ! -f $webuietc/.installed ];
         then
-            echo "---------------------------------------------------------------"
-            echo "Installing linuxmuster-webui"
-            echo "---------------------------------------------------------------"
+            msg "---------------------------------------------------------------"
+            msg "Installing linuxmuster-webui"
+            msg "---------------------------------------------------------------"
             # do first install
             /usr/bin/python3 -m pip install -U pip wheel setuptools #distribute
             hash -r
             /usr/bin/python3 -m pip install -r $webuietc/requirements.txt
-            echo "Copy default config files for webui"
+
+            msg "Copy default config files for webui"
             mkdir -p /etc/linuxmuster/webui/
             #
             if [ -f $ajcfg ];then
-                echo "Backing up config.yml"
+                msg "Backing up config.yml"
                 cp -a $ajcfg $ajcfg.bak
             fi
-            echo "Writing linuxmuster default ajenti config $ajcfg"
+
+            msg "Writing linuxmuster default ajenti config $ajcfg"
             cp -rf $webuietc/ajenti_default.yml $ajcfg
             if [ ! -f $wucfg ]; then
                 # cp -n would be silent, but it's important to inform the user
                 cp $webuietc/webui_default.yml  $wucfg
             else
-                echo "$wucfg already exists ... not overwriting with the default config file."
+                msg "$wucfg already exists ... not overwriting with the default config file."
             fi
 
             # enable systemctl service
-            echo "Configure systemctl.."
+            msg "Configure systemctl.."
             systemctl daemon-reload
             systemctl enable linuxmuster-webui
             systemctl restart linuxmuster-webui
@@ -48,28 +59,29 @@ case "$1" in
 
             touch $webuietc/.installed
             ipaddress=$(hostname --ip-address)
-            echo "---------------------------------------------------------------"
-            echo "linuxmuster-webui is now installed but not initialised!  http://$ipaddress"
-            echo "---------------------------------------------------------------"
+            msg "---------------------------------------------------------------"
+            msg "linuxmuster-webui is now installed but not initialised!  http://$ipaddress"
+            msg "---------------------------------------------------------------"
         else
             # do update
-            echo "---------------------------------------------------------------"
-            echo "Updating linuxmuster-webui"
-            echo "---------------------------------------------------------------"
-            echo "Stop linuxmuster-webui"
+            msg "---------------------------------------------------------------"
+            msg "Updating linuxmuster-webui"
+            msg "---------------------------------------------------------------"
+            msg "Stop linuxmuster-webui"
             systemctl stop linuxmuster-webui
             
             # Always backup config file if things are going bad
-            echo "Backing up config.yml"
+            msg "Backing up config.yml"
             cp -a $ajcfg $ajcfg.bak
 
+            msg "Check requirements"
             # Update Ajenti 2.1.44 : remove deprecated socketio library to avoid conflicts
             /usr/bin/python3 -m pip uninstall -y gevent-socketio-hartwork
 
             # Requirements must always be checked
             /usr/bin/python3 -m pip install -r $webuietc/requirements.txt
             
-            echo "Set default sophomorix webui rights"
+            msg "Set default sophomorix webui rights"
             /usr/bin/python3 $webuietc/merge-permissions.py
             /usr/sbin/sophomorix-ui
             
@@ -77,19 +89,19 @@ case "$1" in
             /usr/lib/linuxmuster-webui/etc/create_webuiUploadFolder.sh
             
             # start webui
-            echo "Start linuxmuster-webui"
+            msg "Start linuxmuster-webui"
             systemctl daemon-reload
             systemctl start linuxmuster-webui
-            echo "---------------------------------------------------------------"
-            echo "Updating linuxmuster-webui ..done"
-            echo "---------------------------------------------------------------"
+            msg "---------------------------------------------------------------"
+            msg "Updating linuxmuster-webui ..done"
+            msg "---------------------------------------------------------------"
         fi
     ;;
     upgrade|abort-upgrade)
     ;;
     
     *)
-        echo "postinst called with unknown argument \`$1'" >&2
+        msg "postinst called with unknown argument \`$1'" >&2
         exit 0
     ;;
 esac

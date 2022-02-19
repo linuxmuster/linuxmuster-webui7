@@ -71,8 +71,11 @@ case "$1" in
             systemctl stop linuxmuster-webui
             
             # Always backup config file if things are going bad
-            msg "Backing up config.yml"
+            msg "Backing up and updating config.yml"
             cp -a $ajcfg $ajcfg.bak
+
+            # Add new email parameters if needed ( Ajenti 2.1.44 )
+            /usr/bin/python3 $webuietc/update_ajenti_config.py
 
             msg "Check requirements"
             # Update Ajenti 2.1.44 : remove deprecated socketio library to avoid conflicts

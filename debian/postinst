@@ -6,7 +6,7 @@ msg()
     message=$1
     echo
     # Bold and orange font for linuxmuster.net
-    echo -e "\e[1m\e[38;5;214m$message\e[39m\e[0m"
+    echo "\e[1m\e[38;5;214m$message\e[39m\e[0m"
     echo
 }
 

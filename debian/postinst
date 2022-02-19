@@ -62,7 +62,10 @@ case "$1" in
             # Always backup config file if things are going bad
             echo "Backing up config.yml"
             cp -a $ajcfg $ajcfg.bak
-            
+
+            # Update Ajenti 2.1.44 : remove deprecated socketio library to avoid conflicts
+            /usr/bin/python3 -m pip uninstall -y gevent-socketio-hartwork
+
             # Requirements must always be checked
             /usr/bin/python3 -m pip install -r $webuietc/requirements.txt
             
@@ -71,6 +74,7 @@ case "$1" in
                 # Module aj not present, so upgrade to Python3
                 cp -a $ajcfg.bak $ajcfg
             fi
+
             # Add fqdn_certificate in config.yml if not present - for update ajenti 2.1.33
             if [ "$(grep -e '^\s\{2,\}fqdn_certificate' /etc/ajenti/config.yml | wc -l)" -eq 0 ] ; then
                 echo "Add FQDN certificate parameter to /etc/ajenti/config.yml"

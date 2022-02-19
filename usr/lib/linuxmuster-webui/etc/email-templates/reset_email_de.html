@@ -1,0 +1,69 @@
+<html>
+  <head>
+    <style>
+        body {
+          color:#0D2943;
+          background-color: #efefef;
+          width:800px;
+        }
+
+        p {
+          padding-left:10px;
+        }
+
+        img {
+          width:200px;
+          display:block;
+          margin:auto;
+        }
+
+        .container {
+          background-color: white;
+          margin:auto;
+          width:600px;
+          padding:10px 50px;
+          border-radius:5px;
+        }
+
+        .link_button {
+          display:block;
+          padding:15px;
+          margin:30px auto;
+          width: 150px;
+          color: white;
+          background-color:#F59C00;
+          text-align: center;
+          font-size: 16px;
+          border-radius:10px;
+          cursor: pointer;
+        }
+
+        a {
+          text-decoration:none;
+          font-weight: bold;
+          color:#2196F3;
+        }
+    </style>
+  </head>
+  <body>
+    <br />
+    <img src="data:image/png;base64, {{ BASE64_LOGO }}" />
+    <br />
+    <div class="container">
+      <h3>Hallo,</h3>
+      <p>
+        jemand, hoffentlich Du, hat einen Link angefordert, um Dein Passwort für die Linuxmuster.net-Weboberfläche neu zu setzen.<br />
+        Wenn Du Dein Passwort zurücksetzen möchtest, klicke einfach den untenstehenden Link an, um Dein Passwort neu zu setzen.<br />
+
+        <a href="{{ RESET_LINK }}" class="link_button">Passwort zurücksetzen</a>
+        <span style="display:none">Reset link : {{ RESET_LINK }}</span>
+
+        Wenn Du das Zurücksetzen Deines Passwortes nicht selbst angefordert hast, ignoriere einfach diese E-Mail und es wird nichts passieren.<br />
+        Nur Personen, die Zugang zu diesem E-Mail-Postfach haben, können Dein Passwort zurücksetzen.<br />
+        <br />
+        Viele Grüße, <br />
+        Das Team von linuxmuster.net
+      </p>
+    </div>
+  </body>
+</html>

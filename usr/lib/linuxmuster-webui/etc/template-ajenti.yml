@@ -8,6 +8,8 @@ bind:
   host: 0.0.0.0
   mode: tcp
   port: 443
+email:
+  enable: false
 color: default
 language: %%LANGUAGE%%
 max_sessions: 400

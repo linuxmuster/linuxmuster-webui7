@@ -313,12 +313,13 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', function
         });
     };
 
-    // if ($scope.smtp_config) {
-    //     config.setSmtpConfig($scope.smtp_config).then(data =>
-    //         notify.success(gettext('Smtp config saved'))
-    //     ).catch(() =>
-    //         notify.error(gettext('Could not save smtp config')));
-    // }
+    if ($scope.smtp_config) {
+        config.setSmtpConfig($scope.smtp_config).then(function (data) {
+            return notify.success(gettext('Smtp config saved'));
+        }).catch(function () {
+            return notify.error(gettext('Could not save smtp config'));
+        });
+    }
 
     $scope.createNewServerCertificate = function () {
         return messagebox.show({

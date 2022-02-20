@@ -1,3 +1,10 @@
+linuxmuster-webui7 (7.1.10) lmn71; urgency=medium
+
+  * Add german translation of reset_email template
+  * Show differences between backup and original file 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 20 Feb 2022 12:55:33 +0100
+
 linuxmuster-webui7 (7.1.9) lmn71; urgency=medium
 
   * Add pwReset provider 

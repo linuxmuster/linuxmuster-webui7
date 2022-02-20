@@ -21,5 +21,6 @@ resources:
     - 'resources/styles.less'
     - 'resources/partial/index.html'
     - 'resources/partial/lmFileBackups.modal.html'
+    - 'resources/partial/lmFileBackupsDiff.modal.html'
     - 'resources/partial/lmFileEditor.modal.html'
     - 'ng:lmn.common'

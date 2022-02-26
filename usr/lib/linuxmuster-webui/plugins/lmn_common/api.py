@@ -28,9 +28,6 @@ else:
 # and the config file should be splitted
 # Main linuxmuster config entry
 lmconfig.setdefault('linuxmuster', {})
-lmconfig['linuxmuster'].setdefault('initialized', False)
-lmconfig['linuxmuster'].setdefault('is-configured', False)
-lmconfig['linuxmuster'].setdefault('provision', False)
 lmconfig['linuxmuster'].setdefault('ldap', {})
 # Proxyaddresses, e.g. multivalue emails
 lmconfig.setdefault('proxyAddresses', {})

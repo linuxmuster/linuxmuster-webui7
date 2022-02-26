@@ -179,6 +179,7 @@ class Handler(HttpPlugin):
         :type http_context: HttpContext
         """
 
+        # TODO : school = 'default-school' ?
         school = 'default-school'
         path = '/srv/samba/schools/'+school+'/share'
         if http_context.method == 'GET':
@@ -205,7 +206,6 @@ class Handler(HttpPlugin):
         :rtype: dict
         """
 
-        # TODO : school = 'default-school'
         path = '/etc/linuxmuster/subnets.csv'
         fieldnames = [
             'network',
@@ -292,8 +292,8 @@ class Handler(HttpPlugin):
         :rtype: dict
         """
 
-        # TODO : school = 'default-school'
-        path = '/etc/linuxmuster/holidays.yml'
+        school = School.get(self.context).school
+        path = f'/etc/linuxmuster/sophomorix/{school}/holidays.yml'
 
         if http_context.method == 'GET':
             try:

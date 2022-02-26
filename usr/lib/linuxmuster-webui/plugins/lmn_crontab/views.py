@@ -8,9 +8,10 @@ from aj.api.http import url, HttpPlugin
 from aj.auth import authorize
 from aj.api.endpoint import endpoint, EndpointError
 from aj.plugins.lmn_crontab.manager import CronManager
+from aj.plugins.lmn_common.multischool import School
 from reconfigure.items.crontab import CrontabNormalTaskData, CrontabSpecialTaskData, CrontabEnvSettingData
 
-HOLIDAY_PREFIX_TEST = '/usr/sbin/linuxmuster-holiday && '
+HOLIDAY_PREFIX_TEST = '/usr/sbin/linuxmuster-holiday '
 
 @component(HttpPlugin)
 class Handler(HttpPlugin):
@@ -30,23 +31,33 @@ class Handler(HttpPlugin):
         :rtype: dict
         """
 
+        school = School.get(self.context).school
+
         if http_context.method == 'GET':
             user = self.context.identity
             crontab = CronManager.get(self.context).load_tab(user)
             crontab_dict = crontab.tree.to_dict()
             for job in crontab_dict['normal_tasks']:
+                job['school'] = 'default-school'
                 if job['command'].startswith(HOLIDAY_PREFIX_TEST):
                     job['disable_holiday'] = True
-                    job['command'] = job['command'][len(HOLIDAY_PREFIX_TEST):]
+                    holiday_command, job['command'] = job['command'].split('&&')
+                    # School option used, we can extract the school
+                    if '-s' in holiday_command:
+                        job['school'] = holiday_command.strip().split()[-1]
                 else:
                     job['disable_holiday'] = False
             for job in crontab_dict['special_tasks']:
+                job['school'] = 'default-school'
                 if job['command'].startswith(HOLIDAY_PREFIX_TEST):
                     job['disable_holiday'] = True
-                    job['command'] = job['command'][len(HOLIDAY_PREFIX_TEST):]
+                    holiday_command, job['command'] = job['command'].split('&&')
+                    # School option used, we can extract the school
+                    if '-s' in holiday_command:
+                        job['school'] = holiday_command.strip().split()[-1]
                 else:
                     job['disable_holiday'] = False
-            return crontab_dict
+            return crontab_dict, school
 
     @url(r'/api/lm/save_crontab')
     @authorize('lm:crontab:write')
@@ -60,6 +71,7 @@ class Handler(HttpPlugin):
         :return: True if successfull
         :rtype: bool
         """
+
         if http_context.method == 'POST':
             def setTask(obj, values):
                 """
@@ -71,10 +83,14 @@ class Handler(HttpPlugin):
                 :return: Crontab object
                 :rtype: object
                 """
+
                 if 'disable_holiday' in values:
+                    school = School.get(self.context).school
                     if values['disable_holiday']:
-                        values['command'] = HOLIDAY_PREFIX_TEST + values['command']
+                        school = values.get('school', school)
+                        values['command'] = f'{HOLIDAY_PREFIX_TEST} -s {school} && {values["command"]}'
                     del values['disable_holiday']
+                    del values['school']
 
                 for k,v in values.items():
                     setattr(obj, k, v)

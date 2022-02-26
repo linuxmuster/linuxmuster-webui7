@@ -35,8 +35,9 @@ angular.module('lmn.crontab').controller('CrontabIndexController', function($sco
     }
     $scope.special = ['@reboot', '@yearly', '@annually', '@monthly', '@weekly', '@daily', '@hourly']
 
-    $scope.add = (type, values) => {
+    $scope.add = (type) => {
         job = angular.copy($scope.new[type]);
+        job.school = $scope.school;
         $scope.modify(type, job);
     }
 
@@ -46,7 +47,8 @@ angular.module('lmn.crontab').controller('CrontabIndexController', function($sco
     }
 
     $http.get('/api/lm/get_crontab').then( (resp) => {
-        $scope.crontab = resp.data;
+        $scope.crontab = resp.data[0];
+        $scope.school = resp.data[1];
     });
 
     $scope.modify = (type, job) => {

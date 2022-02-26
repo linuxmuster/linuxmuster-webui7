@@ -6,9 +6,8 @@ version: '0.1'
 title: 'cron'
 icon: 'clock-o'
 dependencies:
-    - !PluginDependency {
-        plugin_name: core
-    }
+    - !PluginDependency { plugin_name: core }
+    - !PluginDependency { plugin_name: lmn_common }
 resources:
     - 'resources/js/module.es'
     - 'resources/js/routing.es'

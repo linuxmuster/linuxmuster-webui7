@@ -93,6 +93,11 @@ case "$1" in
             
             # Recreate upload folder using the right permissions
             /usr/lib/linuxmuster-webui/etc/create_webuiUploadFolder.sh
+
+            # Eventually move existing holiday file to /etc/linuxmuster/sophomorix/default-school (multischool-7.1.11)
+            if [ -f /etc/linuxmuster/holidays.yml ] ; then
+                mv /etc/linuxmuster/holidays.yml /etc/linuxmuster/sophomorix/default-school/holidays.yml
+            fi
             
             # start webui
             msg "Start linuxmuster-webui"

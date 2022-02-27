@@ -76,9 +76,13 @@ case "$1" in
             # Always backup config file if things are going bad
             msg "Backing up and updating config.yml"
             cp -a $ajcfg $ajcfg.bak
+            cp -a $wucfg $wucfg.bak
 
             # Add new email parameters if needed ( Ajenti 2.1.44 )
             /usr/bin/python3 $webuietc/update_ajenti_config.py
+
+            # Split custom fields to /etc/linuxmuster/sophomorix/default-school (multischool-7.1.11)
+            /usr/bin/python3 $webuietc/clean_webui_config.py
 
             msg "Check requirements"
             # Update Ajenti 2.1.44 : remove deprecated socketio library to avoid conflicts

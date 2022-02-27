@@ -72,6 +72,17 @@ class LMAuthenticationProvider(AuthenticationProvider):
             'sn',
             'mail',
             'sophomorixSchoolname',
+            'proxyAddresses',
+            'sophomorixCustom1',
+            'sophomorixCustom2',
+            'sophomorixCustom3',
+            'sophomorixCustom4',
+            'sophomorixCustom5',
+            'sophomorixCustomMulti1',
+            'sophomorixCustomMulti2',
+            'sophomorixCustomMulti3',
+            'sophomorixCustomMulti4',
+            'sophomorixCustomMulti5',
         ]
 
         if context == "auth":

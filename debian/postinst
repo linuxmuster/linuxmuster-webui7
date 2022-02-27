@@ -23,9 +23,10 @@ case "$1" in
 
         if [ ! -f $webuietc/.installed ];
         then
-            msg "---------------------------------------------------------------"
-            msg "Installing linuxmuster-webui"
-            msg "---------------------------------------------------------------"
+            msg "---------------------------------------------------------------
+Installing linuxmuster-webui
+---------------------------------------------------------------"
+
             # do first install
             /usr/bin/python3 -m pip install -U pip wheel setuptools #distribute
             hash -r
@@ -62,14 +63,16 @@ case "$1" in
 
             touch $webuietc/.installed
             ipaddress=$(hostname --ip-address)
-            msg "---------------------------------------------------------------"
-            msg "linuxmuster-webui is now installed but not initialised!  http://$ipaddress"
-            msg "---------------------------------------------------------------"
+            msg "---------------------------------------------------------------
+linuxmuster-webui is now installed but not initialised!  http://$ipaddress"
+----------------------------------------------------------------
+
         else
             # do update
-            msg "---------------------------------------------------------------"
-            msg "Updating linuxmuster-webui"
-            msg "---------------------------------------------------------------"
+            msg "---------------------------------------------------------------
+Updating linuxmuster-webui
+---------------------------------------------------------------"
+
             msg "Stop linuxmuster-webui"
             systemctl stop linuxmuster-webui
             
@@ -107,9 +110,9 @@ case "$1" in
             msg "Start linuxmuster-webui"
             systemctl daemon-reload
             systemctl start linuxmuster-webui
-            msg "---------------------------------------------------------------"
-            msg "Updating linuxmuster-webui ..done"
-            msg "---------------------------------------------------------------"
+            msg "---------------------------------------------------------------
+Updating linuxmuster-webui ..done
+---------------------------------------------------------------"
         fi
     ;;
     upgrade|abort-upgrade)

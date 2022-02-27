@@ -10,8 +10,12 @@ with open('/etc/ajenti/config.yml', 'r') as config_file:
 config.setdefault('email', {})
 config['email'].setdefault('enable', False)
 config['email'].setdefault('templates', {})
-config['email']['templates'].setdefault('reset_email', '/etc/linuxmuster/webui/email-templates/reset_email.html')
+config['email']['templates'].setdefault('reset_email', '/etc/linuxmuster/webui/email_templates/reset_email.html')
 config.setdefault('logo', '/usr/lib/linuxmuster-webui/plugins/lmn_common/resources/img/logo-full.png')
+
+# Fix hyphen to underscore in previous versions
+if config['email']['templates']['reset_email'] == '/etc/linuxmuster/webui/email-templates/reset_email.html':
+    config['email']['templates']['reset_email'] = '/etc/linuxmuster/webui/email_templates/reset_email.html'
 
 # Write new config file
 with open('/etc/ajenti/config.yml', 'w') as config_file:

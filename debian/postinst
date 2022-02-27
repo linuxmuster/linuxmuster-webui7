@@ -15,6 +15,9 @@ case "$1" in
         ajcfg="/etc/ajenti/config.yml"
         wucfg="/etc/linuxmuster/webui/config.yml"
         webuietc="/usr/lib/linuxmuster-webui/etc"
+        update_scripts="$webuietc/update_scripts"
+        install_scripts="$webuietc/install_scripts"
+        config_templates="$webuietc/config_templates"
 
         # circumvent missing .installed files in package. Can be removed later
         if [ -f /etc/linuxmuster/.secret/administrator ]; then
@@ -40,14 +43,16 @@ Installing linuxmuster-webui
                 cp -a $ajcfg $ajcfg.bak
             fi
 
+            # Update 7.1.11, same scheme for all directories, prefer underscore to hyphen
+            mv /etc/linuxmuster/webui/email-templates /etc/linuxmuster/webui/email_templates
             # Email templates will always be overwritten
-            cp -a $webuietc/email-templates /etc/linuxmuster/webui/
+            cp -a $webuietc/email_templates /etc/linuxmuster/webui/
 
             msg "Writing linuxmuster default ajenti config $ajcfg"
-            cp -rf $webuietc/ajenti_default.yml $ajcfg
+            cp -rf $config_templates/ajenti_default.yml $ajcfg
             if [ ! -f $wucfg ]; then
                 # cp -n would be silent, but it's important to inform the user
-                cp $webuietc/webui_default.yml  $wucfg
+                cp $config_templates/webui_default.yml  $wucfg
             else
                 msg "$wucfg already exists ... not overwriting with the default config file."
             fi
@@ -59,7 +64,7 @@ Installing linuxmuster-webui
             systemctl restart linuxmuster-webui
 
             # generate permissions file
-            /usr/bin/python3 $webuietc/merge-permissions.py
+            /usr/bin/python3 $update_scripts/merge-permissions.py
 
             touch $webuietc/.installed
             ipaddress=$(hostname --ip-address)
@@ -82,10 +87,15 @@ Updating linuxmuster-webui
             cp -a $wucfg $wucfg.bak
 
             # Add new email parameters if needed ( Ajenti 2.1.44 )
-            /usr/bin/python3 $webuietc/update_ajenti_config.py
+            /usr/bin/python3 $update_scripts/update_ajenti_config.py
 
             # Split custom fields to /etc/linuxmuster/sophomorix/default-school (multischool-7.1.11)
-            /usr/bin/python3 $webuietc/clean_webui_config.py
+            /usr/bin/python3 $update_scripts/clean_webui_config.py
+
+            # Eventually move existing holiday file to /etc/linuxmuster/sophomorix/default-school (multischool-7.1.11)
+            if [ -f /etc/linuxmuster/holidays.yml ] ; then
+                mv /etc/linuxmuster/holidays.yml /etc/linuxmuster/sophomorix/default-school/holidays.yml
+            fi
 
             msg "Check requirements"
             # Update Ajenti 2.1.44 : remove deprecated socketio library to avoid conflicts
@@ -95,17 +105,13 @@ Updating linuxmuster-webui
             /usr/bin/python3 -m pip install -r $webuietc/requirements.txt
             
             msg "Set default sophomorix webui rights"
-            /usr/bin/python3 $webuietc/merge-permissions.py
+            /usr/bin/python3 $update_scripts/merge-permissions.py
             /usr/sbin/sophomorix-ui
             
             # Recreate upload folder using the right permissions
-            /usr/lib/linuxmuster-webui/etc/create_webuiUploadFolder.sh
+            msg "Verifying upload folder"
+            bash $install_scripts/create_webuiUploadFolder.sh
 
-            # Eventually move existing holiday file to /etc/linuxmuster/sophomorix/default-school (multischool-7.1.11)
-            if [ -f /etc/linuxmuster/holidays.yml ] ; then
-                mv /etc/linuxmuster/holidays.yml /etc/linuxmuster/sophomorix/default-school/holidays.yml
-            fi
-            
             # start webui
             msg "Start linuxmuster-webui"
             systemctl daemon-reload

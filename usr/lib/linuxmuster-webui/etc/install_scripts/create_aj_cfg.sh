@@ -1,7 +1,7 @@
 #!/bin/bash
 setupini="/var/lib/linuxmuster/setup.ini"
-ajtemplate="/usr/lib/linuxmuster-webui/etc/template-ajenti.yml"
-wutemplate="/usr/lib/linuxmuster-webui/etc/template-webui.yml"
+ajtemplate="/usr/lib/linuxmuster-webui/etc/config_templates/template-ajenti.yml"
+wutemplate="/usr/lib/linuxmuster-webui/etc/config_templates/template-webui.yml"
 wucfg="/etc/linuxmuster/webui/config.yml"
 ajcfg="/etc/ajenti/config.yml"
 

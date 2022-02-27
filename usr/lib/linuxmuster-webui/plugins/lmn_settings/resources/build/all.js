@@ -222,14 +222,7 @@
       return $http.post('/api/lm/save_custom_config', {
         config: config
       }).then(function() {
-        notify.success(gettext('Saved'));
-        return messagebox.show({
-          text: gettext("In order for changes to take effect, it's  necessary to restart the Webui. Restart now ?"),
-          positive: gettext('Restart'),
-          negative: gettext('Later')
-        }).then(function() {
-          return core.forceRestart();
-        });
+        return notify.success(gettext('Saved'));
       });
     };
   });

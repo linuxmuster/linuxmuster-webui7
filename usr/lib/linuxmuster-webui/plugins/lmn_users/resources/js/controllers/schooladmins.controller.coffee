@@ -22,6 +22,22 @@ angular.module('lmn.users').controller 'LMUsersSchooladminsController', ($scope,
     $http.post('/api/lm/sophomorixUsers/schooladmins',{action: 'get-all'}).then (resp) ->
         $scope.schooladmins = resp.data
 
+    $http.get('/api/lm/users/binduser/school').then (resp) ->
+        $scope.schoolbindusers = resp.data
+
+    $scope.addSchoolBinduser = () ->
+        messagebox.prompt(gettext('Login for new school bind user'), '').then (msg) ->
+            # Filter chars ?
+            $http.post('/api/lm/users/binduser/', {binduser: msg.value, level: 'school'}).then (resp) ->
+                notify.success(resp.data)
+                $route.reload()
+
+    $scope.deleteSchoolBinduser = (user) ->
+        messagebox.show(title: gettext('Delete User'), text: gettext("Delete school bind user "+ ( x['sAMAccountName'] for x in user ) + '?'), positive: 'Delete', negative: 'Cancel').then () ->
+            $http.post('/api/lm/users/change-global-admin', {users: ( x['sAMAccountName'] for x in user ), action: 'delete'}).then (resp) ->
+                $route.reload()
+                notify.success gettext('User deleted')
+
     $scope.showInitialPassword = (user) ->
        $http.post('/api/lm/users/password', {users: ( x['sAMAccountName'] for x in user ), action: 'get'}).then (resp) ->
           $http.get('/api/lm/users/test-first-password/' + user[0]['sAMAccountName']).then (response) ->

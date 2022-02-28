@@ -680,6 +680,54 @@
     }).then(function(resp) {
       return $scope.schooladmins = resp.data;
     });
+    $http.get('/api/lm/users/binduser/school').then(function(resp) {
+      return $scope.schoolbindusers = resp.data;
+    });
+    $scope.addSchoolBinduser = function() {
+      return messagebox.prompt(gettext('Login for new school bind user'), '').then(function(msg) {
+        // Filter chars ?
+        return $http.post('/api/lm/users/binduser/', {
+          binduser: msg.value,
+          level: 'school'
+        }).then(function(resp) {
+          notify.success(resp.data);
+          return $route.reload();
+        });
+      });
+    };
+    $scope.deleteSchoolBinduser = function(user) {
+      var x;
+      return messagebox.show({
+        title: gettext('Delete User'),
+        text: gettext("Delete school bind user " + ((function() {
+          var i, len, results;
+          results = [];
+          for (i = 0, len = user.length; i < len; i++) {
+            x = user[i];
+            results.push(x['sAMAccountName']);
+          }
+          return results;
+        })()) + '?'),
+        positive: 'Delete',
+        negative: 'Cancel'
+      }).then(function() {
+        return $http.post('/api/lm/users/change-global-admin', {
+          users: (function() {
+            var i, len, results;
+            results = [];
+            for (i = 0, len = user.length; i < len; i++) {
+              x = user[i];
+              results.push(x['sAMAccountName']);
+            }
+            return results;
+          })(),
+          action: 'delete'
+        }).then(function(resp) {
+          $route.reload();
+          return notify.success(gettext('User deleted'));
+        });
+      });
+    };
     $scope.showInitialPassword = function(user) {
       var x;
       return $http.post('/api/lm/users/password', {

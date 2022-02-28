@@ -529,6 +529,38 @@
       }
       return false;
     };
+    $scope.printSelectedPasswords = function() {
+      var msg, user_list, x;
+      msg = messagebox.show({
+        progress: true
+      });
+      user_list = (function() {
+        var j, len1, ref1, results;
+        ref1 = $scope.students;
+        results = [];
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          x = ref1[j];
+          if (x.selected) {
+            results.push(x.sAMAccountName);
+          }
+        }
+        return results;
+      })();
+      return $http.post('/api/lm/users/print-individual', {
+        user: $scope.identity.user,
+        user_list: user_list
+      }).then(function(resp) {
+        console.log(resp.data);
+        if (resp.data === 'success') {
+          notify.success(gettext("Created password pdf"));
+          return location.href = `/api/lm/users/print-download/user-${$scope.identity.user}.pdf`;
+        } else {
+          return notify.error(gettext("Could not create password pdf"));
+        }
+      }).finally(function() {
+        return msg.close();
+      });
+    };
     $scope.batchSetInitialPassword = function() {
       var x;
       return $scope.setInitialPassword((function() {

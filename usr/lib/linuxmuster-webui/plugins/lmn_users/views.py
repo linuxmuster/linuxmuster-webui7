@@ -1081,3 +1081,45 @@ class Handler(HttpPlugin):
                     return ["ERROR", result['MESSAGE_EN']]
             if result['TYPE'] == "LOG":
                     return ["LOG", result['LOG']]
+
+    @url(r'/api/lm/users/binduser/(?P<level>.*)')
+    @authorize('lm:users:globaladmins:create')
+    @endpoint(api=True)
+    def handle_api_users_binduser(self, http_context, level=''):
+        """
+        List or create school and global bindusers.
+        Method POST and GET
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :param level: school or global
+        :type level: basestring
+        :return: State of the command
+        :rtype: string or list
+        """
+
+        if http_context.method == 'GET':
+            binduser_list = []
+            sophomorixCommand = ['sophomorix-query', f'--{level}binduser', '--user-full', '-jj']
+            result = lmn_getSophomorixValue(sophomorixCommand, '')
+            if 'USER' in result.keys():
+                for username, details in result['USER'].items():
+                    if details['sophomorixRole'] == f"{level}binduser":
+                        binduser_list.append(username)
+                return binduser_list
+            return ["none"]
+
+        if http_context.method == 'POST':
+            binduser = http_context.json_body()['binduser']
+            # level may be global or school
+            level = http_context.json_body()['level']
+            school_option = ''
+            if level == 'school':
+                school_option = ('--school', School.get(self.context).school)
+            sophomorixCommand = ['sophomorix-admin',
+                                 f'--create-{level}-binduser', binduser,
+                                 *school_option,
+                                 '--random-passwd-save', '-jj'
+                                 ]
+            result = lmn_getSophomorixValue(sophomorixCommand, '')
+            return result['COMMENT_EN']

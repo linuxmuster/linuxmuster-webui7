@@ -1,4 +1,4 @@
-<br/>
+<br />
 <progress-spinner ng:show="globaladmins == null"></progress-spinner>
 
 <div ng:show="globaladmins != null">
@@ -48,19 +48,27 @@
         </div>
     </div>
 
+    <br />
+
+    <h3 translate>Global admins</h3>
+
+    <br />
+
     <table ng:show="globaladmins[0] != 'none'" class="table" style="width:100%">
-        <tr><th><span checkbox ng:model="all_selected" ng:change="selectAll(filter)"></span></th>
-            <th width="120"> Login / Role</th>
-            <th> Name </th></tr>
+        <tr>
+            <th><span checkbox ng:model="all_selected" ng:change="selectAll(filter)"></span></th>
+            <th width="120" translate> Login</th>
+            <th translate> Name </th>
+        </tr>
         <tr ng:repeat="globaladmin in globaladmins|filter:filter|orderBy:['-_isNew', sort.fx]|page:paging.page:paging.pageSize" ng:show="globaladmin.class[0] != '#'">
             <td width="30" style="text-align:center;">
                 <span checkbox ng:model="globaladmin.selected"></span>
             </td>
             <td width="1" style="text-align:left;">
-                <i>{{globaladmin.sAMAccountName}}</i> <br> {{globaladmin.sophomorixAdminClass}}
+                <i>{{globaladmin.sAMAccountName}}</i>
             </td>
             <td>
-                <b>{{globaladmin.givenName}}</b> <br> {{globaladmin.sn}}
+                <b>{{globaladmin.givenName}} {{globaladmin.sn}}</b>
             </td>
             <td width="1">
                 <span  uib-dropdown class="dropup" >
@@ -110,6 +118,35 @@
         </tr>
     </table>
 
+    <hr />
+
+    <h3 translate>Global bind users</h3>
+
+    <br />
+
+    <table ng:show="globalbindusers.length > 0" class="table">
+        <tr>
+            <th> </th>
+            <th width="120" translate> Login</th>
+            <th translate> Name / DN </th>
+        </tr>
+        <tr ng:repeat="globalbinduser in globalbindusers">
+            <td width="30" style="text-align:center;"> </td>
+            <td width="1" style="text-align:left;">
+                <i>{{globalbinduser.sAMAccountName}}</i>
+            </td>
+            <td>
+                <b>{{globalbinduser.givenName}} {{globalbinduser.sn}}</b><br />
+                {{globalbinduser.DN}}
+            </td>
+            <td width="1">
+                <button class="btn btn-default" ng:click="deleteGlobalBinduser([globalbinduser])">
+                    <i class="fa fa-trash-o"></i>
+                </button>
+            </td>
+        </tr>
+    </table>
+
     <br/>
 
 </div>
@@ -118,12 +155,36 @@
 
 <div class="floating-toolbar-padder"></div>
 <floating-toolbar>
-    <button ng:click="addGlobalAdmin()" ng:show="globaladmins != null" class="btn btn-lmn pull-left">
-        <i class="fa fa-user-plus"></i> <span translate>Add global administrator</span>
-    </button>
-    <button ng:click="batchSetInitialPassword()" ng:show="haveSelection()" class="btn btn-lmn pull-right" translate>Set initial password for selected</button>
-    <button ng:click="batchSetRandomPassword()" ng:show="haveSelection()" class="btn btn-lmn pull-right" translate>Set random password for selected</button>
-    <button ng:click="batchSetCustomPassword()" ng:show="haveSelection()" class="btn btn-lmn pull-right" translate>Set custom password for selected</button>
+    <div uib-dropdown class="btn-group dropup">
+        <button uib-dropdown-toggle class="btn btn-lmn" translate>
+            <i class="fa fa-user-plus"></i> Add
+            <span class="caret"></span>
+        </button>
+        <ul uib-dropdown-menu class="dropdown-menu-left">
+            <li>
+                <a ng:click="addGlobalAdmin()" translate>Add global administrator</a>
+            </li>
+            <li>
+                <a ng:click="addGlobalBinduser()" translate>Add global bind user</a>
+            </li>
+        </ul>
+        <br />
+    </div>
+    <div uib-dropdown class="btn-group dropup pull-right" ng:show="haveSelection()">
+        <button uib-dropdown-toggle class="btn btn-lmn" translate>
+            <i class="fa fa-key"></i> For selected
+            <span class="caret"></span>
+        </button>
+        <ul uib-dropdown-menu class="dropdown-menu-left">
+            <li>
+                <a ng:click="batchSetRandomPassword()" translate>Set random password for selected</a>
+            </li>
+            <li>
+                <a ng:click="batchSetCustomPassword()" translate>Set custom password for selected</a>
+            </li>
+        </ul>
+        <br />
+    </div>
     <br />
 </floating-toolbar>
 </div>

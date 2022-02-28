@@ -1105,7 +1105,7 @@ class Handler(HttpPlugin):
             if 'USER' in result.keys():
                 for username, details in result['USER'].items():
                     if details['sophomorixRole'] == f"{level}binduser":
-                        binduser_list.append(username)
+                        binduser_list.append(details)
                 return binduser_list
             return ["none"]
 

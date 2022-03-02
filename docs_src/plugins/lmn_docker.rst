@@ -1,3 +1,3 @@
-# Docker extra plugin
+# Docker extra plugin DOC
 
 This plugin manages some informations from container and images on a docker host, possibly per ssh.

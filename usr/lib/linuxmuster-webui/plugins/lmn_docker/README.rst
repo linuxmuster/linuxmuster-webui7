@@ -1,1 +1,1 @@
-/srv/dev/linuxmuster-webui7/docs_src/plugins/lmn_docker.rst
+../../../../../docs_src/plugins/lmn_docker.rst

@@ -571,6 +571,7 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
                             resp.data['config']['LINBO']['Server'] = setup.data['setup']['serverip']
                             $http.post("/api/lm/linbo4/config/start.conf.#{newName}", resp.data).then () ->
                                 $scope.config_change = true
+                                $scope.configs.push({'file': "start.conf."+newName, 'images':[]})
                 else
                     $http.post("/api/lm/linbo4/config/start.conf.#{newName}", {
                         config:
@@ -580,11 +581,16 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
                         partitions: []
                     }).then () ->
                         $scope.config_change = true
+                        $scope.configs.push({'file': "start.conf."+newName, 'images':[]})
 
     $scope.deleteConfig = (configName) ->
         messagebox.show(text: "Delete '#{configName}'?", positive: 'Delete', negative: 'Cancel').then () ->
             $http.delete("/api/lm/linbo4/config/#{configName}").then () ->
                 $scope.config_change = true
+                for config, index in $scope.configs
+                    if configName == config.file
+                        $scope.configs.splice(index, 1)
+                        return
 
     $scope.duplicateConfig = (configName, deleteOriginal=false) ->
         newName = configName.substring('start.conf.'.length)

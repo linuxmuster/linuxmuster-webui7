@@ -634,7 +634,6 @@
     });
     $http.get('/api/lm/linbo4/configs').then(function(resp) {
       $scope.configs = resp.data;
-      console.log($scope.configs);
       return $http.get('/api/lm/linbo4/images').then(function(resp) {
         var config, i, image, len, ref, results;
         $scope.images = resp.data;
@@ -697,7 +696,11 @@
               return $http.get("/api/lm/read-config-setup").then(function(setup) {
                 resp.data['config']['LINBO']['Server'] = setup.data['setup']['serverip'];
                 return $http.post(`/api/lm/linbo4/config/start.conf.${newName}`, resp.data).then(function() {
-                  return $scope.config_change = true;
+                  $scope.config_change = true;
+                  return $scope.configs.push({
+                    'file': "start.conf." + newName,
+                    'images': []
+                  });
                 });
               });
             });
@@ -711,7 +714,11 @@
               os: [],
               partitions: []
             }).then(function() {
-              return $scope.config_change = true;
+              $scope.config_change = true;
+              return $scope.configs.push({
+                'file': "start.conf." + newName,
+                'images': []
+              });
             });
           }
         }
@@ -724,7 +731,16 @@
         negative: 'Cancel'
       }).then(function() {
         return $http.delete(`/api/lm/linbo4/config/${configName}`).then(function() {
-          return $scope.config_change = true;
+          var config, i, index, len, ref;
+          $scope.config_change = true;
+          ref = $scope.configs;
+          for (index = i = 0, len = ref.length; i < len; index = ++i) {
+            config = ref[index];
+            if (configName === config.file) {
+              $scope.configs.splice(index, 1);
+              return;
+            }
+          }
         });
       });
     };

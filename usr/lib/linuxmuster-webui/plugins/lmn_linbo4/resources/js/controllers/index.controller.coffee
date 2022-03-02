@@ -560,9 +560,10 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
                 notify.error gettext(test)
                 return
             if newName
-                if "start.conf."+newName in $scope.configs
-                    notify.error gettext('A config file with this name already exists!')
-                    return
+                for config in $scope.configs
+                    if "start.conf."+newName == config.file
+                        notify.error gettext('A config file with this name already exists!')
+                        return
                 if example
                     $http.get("/api/lm/linbo4/config/examples/#{example}").then (resp) ->
                         resp.data['config']['LINBO']['Group'] = newName

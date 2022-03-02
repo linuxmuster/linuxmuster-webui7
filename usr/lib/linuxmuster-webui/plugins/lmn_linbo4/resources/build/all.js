@@ -634,6 +634,7 @@
     });
     $http.get('/api/lm/linbo4/configs').then(function(resp) {
       $scope.configs = resp.data;
+      console.log($scope.configs);
       return $http.get('/api/lm/linbo4/images').then(function(resp) {
         var config, i, image, len, ref, results;
         $scope.images = resp.data;
@@ -674,7 +675,7 @@
     };
     $scope.createConfig = function(example) {
       return messagebox.prompt('New name', '').then(function(msg) {
-        var newName, ref, test;
+        var config, i, len, newName, ref, test;
         newName = msg.value;
         test = validation.isValidLinboConf(newName);
         if (test !== true) {
@@ -682,9 +683,13 @@
           return;
         }
         if (newName) {
-          if (ref = "start.conf." + newName, indexOf.call($scope.configs, ref) >= 0) {
-            notify.error(gettext('A config file with this name already exists!'));
-            return;
+          ref = $scope.configs;
+          for (i = 0, len = ref.length; i < len; i++) {
+            config = ref[i];
+            if ("start.conf." + newName === config.file) {
+              notify.error(gettext('A config file with this name already exists!'));
+              return;
+            }
           }
           if (example) {
             return $http.get(`/api/lm/linbo4/config/examples/${example}`).then(function(resp) {

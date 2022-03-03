@@ -101,6 +101,7 @@ def group_os(workstations):
                 'bypass': 0,
                 'wol': 0,
                 'prestart': 0,
+                'partition': 0,
             }
             for osConfig in config:
                 if osConfig['SyncEnabled'] or osConfig['NewEnabled']:

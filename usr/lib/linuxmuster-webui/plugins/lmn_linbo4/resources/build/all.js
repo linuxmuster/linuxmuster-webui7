@@ -726,7 +726,8 @@
     };
     $scope.deleteConfig = function(configName) {
       return messagebox.show({
-        text: `Delete '${configName}'?`,
+        title: `Delete '${configName}' ?`,
+        text: `Delete the file '${configName}'? This will also delete the associated grub config file located in /srv/linbo/boot/grub.`,
         positive: 'Delete',
         negative: 'Cancel'
       }).then(function() {

@@ -584,7 +584,11 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
                         $scope.configs.push({'file': "start.conf."+newName, 'images':[]})
 
     $scope.deleteConfig = (configName) ->
-        messagebox.show(text: "Delete '#{configName}'?", positive: 'Delete', negative: 'Cancel').then () ->
+        messagebox.show(
+            title: "Delete '#{configName}' ?",
+            text: "Delete the file '#{configName}'? This will also delete the associated grub config file located in /srv/linbo/boot/grub.",
+            positive: 'Delete', negative: 'Cancel'
+        ).then () ->
             $http.delete("/api/lm/linbo4/config/#{configName}").then () ->
                 $scope.config_change = true
                 for config, index in $scope.configs

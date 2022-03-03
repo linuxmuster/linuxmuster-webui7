@@ -231,14 +231,14 @@ def get_os_from_ports(ports):
     :return: OS type (Linbo, OS Linux, OS Windows, OS Unknown)
     :rtype: string
     """
+
     if is_port_signature_linbo(ports):
         return "Linbo"
-    elif is_port_signature_linux(ports):
+    if is_port_signature_linux(ports):
         return "OS Linux"
-    elif is_port_signature_windows(ports):
+    if is_port_signature_windows(ports):
         return "OS Windows"
-    else:
-        return "OS Unknown"
+    return "OS Unknown"
 
 def is_port_signature_linbo(ports):
     """
@@ -250,6 +250,7 @@ def is_port_signature_linbo(ports):
     :return: Whether it's a Linbo host
     :rtype: bool
     """
+
     openPortNumbers = []
     for port in ports:
         if ports[port] == "open":
@@ -270,6 +271,7 @@ def is_port_signature_linux(ports):
     :return: Whether it's a Linux host
     :rtype: bool
     """
+
     return (
         "22" in ports
         and ports["22"] in ["open", "filtered"]
@@ -289,6 +291,7 @@ def is_port_signature_windows(ports):
     :return: Whether it's a Windows host
     :rtype: bool
     """
+
     return (
         "135" in ports
         and ports["135"] in ["open", "filtered"]

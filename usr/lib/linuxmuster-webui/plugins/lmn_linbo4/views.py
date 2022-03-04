@@ -29,6 +29,7 @@ class Handler(HttpPlugin):
                 file.startswith('start.conf.')
                 and not file.endswith('.vdi')
                 and not os.path.islink(path)
+                and os.path.isfile(path)
             ):
                 with LMNFile(path, 'r') as f:
                     os_list = f.read().get('os', [])

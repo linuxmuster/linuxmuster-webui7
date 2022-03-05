@@ -913,7 +913,7 @@
     };
     $scope.restoreBackup = function(image, date) {
       return messagebox.show({
-        text: `Do you really want to restore the backup at '${date}'? This will erase the actual image.`,
+        text: `Do you really want to restore the backup at '${date}'? This will move the actual image to a backup.`,
         positive: 'Restore',
         negative: 'Cancel'
       }).then(function() {

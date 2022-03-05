@@ -30,10 +30,10 @@
             <td> </td>
             <td> </td>
         </tr>
-        <tr ng:repeat="(date,backup) in image.backups">
+        <tr ng:repeat="backup in image.backups_list|orderBy:'-timestamp'">
             <td translate><i>Backup</i></td>
             <td>
-                <b>{{date}}</b>
+                <b>{{backup.date}}</b>
                 <br />
                 <i>{{backup.size|bytes}}</i>
             </td>

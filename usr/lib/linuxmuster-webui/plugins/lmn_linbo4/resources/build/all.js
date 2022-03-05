@@ -635,19 +635,26 @@
     $http.get('/api/lm/linbo4/configs').then(function(resp) {
       $scope.configs = resp.data;
       return $http.get('/api/lm/linbo4/images').then(function(resp) {
-        var config, i, image, len, ref, results;
+        var backup, config, date, i, image, len, ref, ref1, results;
         $scope.images = resp.data;
         ref = $scope.images;
         results = [];
         for (i = 0, len = ref.length; i < len; i++) {
           image = ref[i];
+          image.backups_list = [];
+          ref1 = image.backups;
+          for (date in ref1) {
+            backup = ref1[date];
+            backup.date = date;
+            image.backups_list.push(backup);
+          }
           image.used_in = [];
           results.push((function() {
-            var j, len1, ref1, results1;
-            ref1 = $scope.configs;
+            var j, len1, ref2, results1;
+            ref2 = $scope.configs;
             results1 = [];
-            for (j = 0, len1 = ref1.length; j < len1; j++) {
-              config = ref1[j];
+            for (j = 0, len1 = ref2.length; j < len1; j++) {
+              config = ref2[j];
               if (config.images.indexOf(image.name + '.qcow2') > -1) {
                 results1.push(image.used_in.push(config.file.split('.').slice(-1)[0]));
               } else {

@@ -534,6 +534,10 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
         $http.get('/api/lm/linbo4/images').then (resp) ->
             $scope.images = resp.data
             for image in $scope.images
+                image.backups_list = []
+                for date,backup of image.backups
+                    backup.date = date
+                    image.backups_list.push(backup)
                 image.used_in = []
                 for config in $scope.configs
                     if config.images.indexOf(image.name + '.qcow2') > -1

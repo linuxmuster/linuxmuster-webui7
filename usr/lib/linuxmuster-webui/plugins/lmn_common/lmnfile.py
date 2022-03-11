@@ -29,6 +29,8 @@ ALLOWED_PATHS = [
                 '/var/lib/linuxmuster/setup.ini',
                 # user in setup wizard during install
                 '/tmp/setup.ini',
+                # used in lmn_permissions
+                '/usr/lib/linuxmuster-webui/plugins',
                 ]
 
 EMPTY_LINE_MARKER = '###EMPTY#LINE'

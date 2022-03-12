@@ -29,6 +29,7 @@ with open(PERMISSIONS_TARGET, 'w') as target:
     for role in permissions.keys():
         # Avoid duplicate
         permissions[role] = list(set(permissions[role]))
+        permissions[role].sort()
         target.write("\n")
         target.write(f"[{role}]\n")
         for permission in permissions[role]:

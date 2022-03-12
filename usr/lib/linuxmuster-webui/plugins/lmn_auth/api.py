@@ -122,12 +122,20 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
     def prepare_environment(self, username):
         uid = self.get_isolation_uid(username)
+
+        if os.path.isfile(f'/tmp/krb5cc_{uid}'):
+            os.unlink(f'/tmp/krb5cc_{uid}')
+
+        os.rename(f'/tmp/krb5cc_{uid}{uid}', f'/tmp/krb5cc_{uid}')
         logging.warning("Changing kerberos ticket rights for %s", username)
         os.chown(f'/tmp/krb5cc_{uid}', uid, 100)
 
     def _get_krb_ticket(self, username, password):
         """
-        Get a new Kerberos ticket for username stored in /tmp/krb5cc_UID
+        Get a new Kerberos ticket for username stored in /tmp/krb5cc_UIDUID
+        This ticket will later be renamed as /tmp/krb5cc_UID.
+        The reason is that this function is running as user nobody and cannot
+        overwrite an existing ticket.
 
         :param username: Username
         :type username: string
@@ -138,7 +146,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
         uid = self.get_isolation_uid(username)
 
         logging.warning(f'Initializing Kerberos ticket for {username}')
-        child = pexpect.spawn('/usr/bin/kinit', ['-c', f'/tmp/krb5cc_{uid}', username])
+        child = pexpect.spawn('/usr/bin/kinit', ['-c', f'/tmp/krb5cc_{uid}{uid}', username])
         child.expect('Password.*:')
         child.sendline(password)
         child.expect(pexpect.EOF)

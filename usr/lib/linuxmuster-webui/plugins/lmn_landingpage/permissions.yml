@@ -1,12 +1,8 @@
 globaladministrator:
-    - 'sidebar:view:/view/lmn/landingpage: true'
-
+- 'sidebar:view:/view/lmn/landingpage: true'
 schooladministrator:
-    - 'sidebar:view:/view/lmn/landingpage: true'
-
-teacher:
-    - 'sidebar:view:/view/lmn/landingpage: true'
-
+- 'sidebar:view:/view/lmn/landingpage: true'
 student:
-    - 'sidebar:view:/view/lmn/landingpage: true'
-
+- 'sidebar:view:/view/lmn/landingpage: true'
+teacher:
+- 'sidebar:view:/view/lmn/landingpage: true'

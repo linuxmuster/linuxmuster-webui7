@@ -1,12 +1,8 @@
 globaladministrator:
-    - 'sidebar:view:/view/lmn/websession: false'
-
+- 'sidebar:view:/view/lmn/websession: false'
 schooladministrator:
-    - 'sidebar:view:/view/lmn/websession: false'
-
-teacher:
-    - 'sidebar:view:/view/lmn/websession: false'
-
+- 'sidebar:view:/view/lmn/websession: false'
 student:
-    - 'sidebar:view:/view/lmn/websession: false'
-
+- 'sidebar:view:/view/lmn/websession: false'
+teacher:
+- 'sidebar:view:/view/lmn/websession: false'

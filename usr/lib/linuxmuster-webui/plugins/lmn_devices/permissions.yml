@@ -1,11 +1,8 @@
 globaladministrator:
-    - 'lm:devices: true'
-    - 'lm:devices:import: true'
-    - 'sidebar:view:/view/lm/devices: true'
-
+- 'lm:devices: true'
+- 'lm:devices:import: true'
+- 'sidebar:view:/view/lm/devices: true'
 schooladministrator:
-    - 'lm:devices: true'
-    - 'lm:devices:import: true'
-    - 'sidebar:view:/view/lm/devices: true'
-
-
+- 'lm:devices: true'
+- 'lm:devices:import: true'
+- 'sidebar:view:/view/lm/devices: true'

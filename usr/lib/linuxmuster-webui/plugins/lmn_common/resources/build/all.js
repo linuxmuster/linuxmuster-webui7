@@ -670,11 +670,42 @@ angular.module('core').directive('sambaAccess', function (identity) {
     return this;
   });
 
-  angular.module('lmn.common').controller('lmFileBackupsModalController', function($scope, $uibModalInstance, $route, $http, gettext, notify, filesystem, path, encoding, messagebox, lmFileBackups) {
+  angular.module('lmn.common').service('lmFileBackupsDiff', function($uibModal) {
+    this.show = function(path, backup_diff) {
+      return $uibModal.open({
+        templateUrl: '/lmn_common:resources/partial/lmFileBackupsDiff.modal.html',
+        controller: 'lmFileBackupsDiffModalController',
+        size: 'lg',
+        resolve: {
+          path: function() {
+            return path;
+          },
+          backup_diff: function() {
+            return backup_diff;
+          }
+        }
+      }).result;
+    };
+    return this;
+  });
+
+  angular.module('lmn.common').controller('lmFileBackupsDiffModalController', function($scope, $uibModalInstance, path, backup_diff) {
+    $scope.path = path;
+    $scope.backup_diff = backup_diff;
+    return $scope.cancel = function() {
+      return $uibModalInstance.dismiss();
+    };
+  });
+
+  angular.module('lmn.common').controller('lmFileBackupsModalController', function($scope, $uibModalInstance, $route, $http, gettext, notify, filesystem, path, encoding, messagebox, lmFileBackups, lmFileBackupsDiff) {
     var dir, name;
     $scope.path = path;
     dir = path.substring(0, path.lastIndexOf('/'));
     name = path.substring(path.lastIndexOf('/') + 1);
+    $scope.translations = {
+      'Restore': gettext('Restore'),
+      'Show differences': gettext('Show differences')
+    };
     $scope.loadBackupFiles = function() {
       return filesystem.list(dir).then(function(data) {
         var i, item, len, ref, results, tokens;
@@ -697,6 +728,15 @@ angular.module('core').directive('sambaAccess', function (identity) {
       });
     };
     $scope.loadBackupFiles();
+    $scope.diff = function(backup) {
+      return $http.post('/api/lm/diff', {
+        file1: path,
+        file2: dir + '/' + backup.name
+      }).then(function(resp) {
+        $scope.backup_diff = resp.data;
+        return lmFileBackupsDiff.show($scope.path, $scope.backup_diff);
+      });
+    };
     $scope.restore = function(backup) {
       return filesystem.read(dir + '/' + backup.name, encoding).then(function(content) {
         return filesystem.write(path, content, encoding).then(function() {

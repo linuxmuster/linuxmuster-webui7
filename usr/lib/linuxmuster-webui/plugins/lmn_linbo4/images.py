@@ -8,7 +8,11 @@ from jadi import service
 from aj.plugins.lmn_common.lmnfile import LMNFile
 from aj.api.endpoint import EndpointError
 
+
 LINBO_PATH = '/srv/linbo/images'
+TIMESTAMP_FMT = '%Y%m%d%H%M'
+DATE_UI_FMT = '%d/%m/%Y %H:%M'
+
 
 # Filenames like ubuntu.qcow2.desc
 EXTRA_IMAGE_FILES = ['desc', 'info',  'vdi']
@@ -29,10 +33,10 @@ EXTRA_PERMISSIONS_MAPPING = {
 IMAGE = "qcow2"
 
 def date2timestamp(date):
-    return datetime.strptime(date, '%d/%m/%Y %H:%M').strftime('%Y%m%d%H%M')
+    return datetime.strptime(date, DATE_UI_FMT).strftime(TIMESTAMP_FMT)
 
 def timestamp2date(timestamp):
-    return datetime.strptime(timestamp, '%Y%m%d%H%M').strftime('%d/%m/%Y %H:%M')
+    return datetime.strptime(timestamp, TIMESTAMP_FMT).strftime(DATE_UI_FMT)
 
 class LinboImage:
     """
@@ -71,7 +75,8 @@ class LinboImage:
             self.date = timestamp2date(self.timestamp)
         else:
             self.path = os.path.join(LINBO_PATH, self.name)
-            self.date = None
+            self.timestamp = self.get_timestamp()
+            self.date = timestamp2date(self.timestamp)
 
         self.size = os.stat(os.path.join(self.path, self.image)).st_size
         self.extras = {}
@@ -95,7 +100,6 @@ class LinboImage:
                         pass
                     os.chmod(extra_file, EXTRA_PERMISSIONS_MAPPING[extra])
 
-
         for extra in EXTRA_COMMON_FILES:
             extra_file = os.path.join(self.path, f"{self.name}.{extra}")
             if os.path.isfile(extra_file):
@@ -103,6 +107,18 @@ class LinboImage:
                     self.extras[extra] = f.read()
             else:
                 self.extras[extra] = None
+
+    def get_timestamp(self):
+        info_path = os.path.join(self.path, f"{self.image}.info")
+        if os.path.isfile(info_path):
+            with open(info_path, 'r') as info:
+                for line in info:
+                    if 'timestamp' in line:
+                        # Support timestamp=2021..
+                        # and timestamp="2021..."
+                        return line.strip().split('=')[1].strip('"')
+        logging.warning(f"Can not find timestamp for {self.image}, using current time as timestamp !")
+        return datetime.now().strftime(TIMESTAMP_FMT)
 
     def delete_files(self):
         """
@@ -379,10 +395,29 @@ class LinboImageManager:
         if group in self.linboImageGroups:
             imageGroup = self.linboImageGroups[group]
             if date in imageGroup.backups:
-                imageGroup.base.delete_files()
+                timestamp = imageGroup.base.timestamp
+                new_backup_dir = os.path.join(
+                    imageGroup.base.path,
+                    'backups',
+                    timestamp
+                )
+
+                if not os.path.isdir(new_backup_dir):
+                    os.mkdir(new_backup_dir)
+
+                # Move base image to backup/timestamp
+                for file in os.listdir(imageGroup.base.path):
+                    # Avoid copying backups dir in itself
+                    if os.path.isfile(os.path.join(imageGroup.base.path, file)):
+                        shutil.move(os.path.join(imageGroup.base.path, file),
+                                new_backup_dir)
+
+                # Move backup to base image
                 for file in os.listdir(imageGroup.backups[date].path):
                     shutil.move(os.path.join(imageGroup.backups[date].path, file),
                                 imageGroup.base.path)
+
+                # Cleanup and reload
                 imageGroup.backups[date].delete()
                 self.linboImageGroups[group].load()
                 imageGroup.base._torrent_create()

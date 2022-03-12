@@ -164,10 +164,3 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
         }
         $http.post('/api/lm/save_custom_config', {config: config}).then () ->
             notify.success(gettext('Saved'))
-            messagebox.show({
-                text: gettext("In order for changes to take effect, it's  necessary to restart the Webui. Restart now ?"),
-                positive: gettext('Restart'),
-                negative: gettext('Later')
-            }).then () ->
-                core.forceRestart()
-

@@ -1,12 +1,8 @@
 globaladministrator:
-    - 'sidebar:view:/view/lmn/nextcloud: false'
-
+- 'sidebar:view:/view/lmn/nextcloud: false'
 schooladministrator:
-    - 'sidebar:view:/view/lmn/nextcloud: false'
-
-teacher:
-    - 'sidebar:view:/view/lmn/nextcloud: false'
-
+- 'sidebar:view:/view/lmn/nextcloud: false'
 student:
-    - 'sidebar:view:/view/lmn/nextcloud: false'
-
+- 'sidebar:view:/view/lmn/nextcloud: false'
+teacher:
+- 'sidebar:view:/view/lmn/nextcloud: false'

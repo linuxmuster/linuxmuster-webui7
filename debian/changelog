@@ -1,3 +1,38 @@
+linuxmuster-webui7 (7.1.10) lmn71; urgency=medium
+
+  * Add german translation of reset_email template
+  * Show differences between backup and original file 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 20 Feb 2022 12:55:33 +0100
+
+linuxmuster-webui7 (7.1.9) lmn71; urgency=medium
+
+  * Add pwReset provider 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 19 Feb 2022 22:54:10 +0100
+
+linuxmuster-webui7 (7.1.8) lmn71; urgency=medium
+
+  * Disable password reset per default. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 19 Feb 2022 15:55:16 +0100
+
+linuxmuster-webui7 (7.1.7) lmn71; urgency=medium
+
+  * Fix typo in requirements blocking the install process. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 19 Feb 2022 15:41:10 +0100
+
+linuxmuster-webui7 (7.1.6) lmn71; urgency=medium
+
+  * Upgrade to Ajenti 2.1.44
+  * Smtp relay settings
+  * Password reset function
+  * Custom email templates for linuxmuster.net
+  * Update configuration's process 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 19 Feb 2022 15:18:20 +0100
+
 linuxmuster-webui7 (7.1.5) lmn71; urgency=medium
 
   * Linbo sync module : 

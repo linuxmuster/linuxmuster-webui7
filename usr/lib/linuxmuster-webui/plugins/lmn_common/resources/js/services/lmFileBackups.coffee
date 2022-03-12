@@ -10,12 +10,37 @@ angular.module('lmn.common').service 'lmFileBackups', ($uibModal) ->
 
     return this
 
+angular.module('lmn.common').service 'lmFileBackupsDiff', ($uibModal) ->
+    @show = (path, backup_diff) ->
+        return $uibModal.open(
+            templateUrl: '/lmn_common:resources/partial/lmFileBackupsDiff.modal.html'
+            controller: 'lmFileBackupsDiffModalController'
+            size: 'lg'
+            resolve:
+                path: () -> path
+                backup_diff: () -> backup_diff
+        ).result
 
-angular.module('lmn.common').controller 'lmFileBackupsModalController', ($scope, $uibModalInstance, $route, $http, gettext, notify, filesystem, path, encoding, messagebox, lmFileBackups) ->
+    return this
+
+angular.module('lmn.common').controller 'lmFileBackupsDiffModalController', ($scope, $uibModalInstance, path, backup_diff) ->
+    $scope.path = path
+    $scope.backup_diff = backup_diff
+
+    $scope.cancel = () ->
+        $uibModalInstance.dismiss()
+
+
+angular.module('lmn.common').controller 'lmFileBackupsModalController', ($scope, $uibModalInstance, $route, $http, gettext, notify, filesystem, path, encoding, messagebox, lmFileBackups, lmFileBackupsDiff) ->
     $scope.path = path
 
     dir = path.substring(0, path.lastIndexOf('/'))
     name = path.substring(path.lastIndexOf('/') + 1)
+
+    $scope.translations = {
+        'Restore': gettext('Restore'),
+        'Show differences': gettext('Show differences'),
+    }
 
     $scope.loadBackupFiles = () ->
         filesystem.list(dir).then (data) ->
@@ -29,7 +54,12 @@ angular.module('lmn.common').controller 'lmFileBackupsModalController', ($scope,
                     }
     
     $scope.loadBackupFiles()            
-    
+
+    $scope.diff = (backup) ->
+        $http.post('/api/lm/diff', {file1:path, file2: dir + '/' + backup.name}).then (resp) ->
+            $scope.backup_diff = resp.data
+            lmFileBackupsDiff.show($scope.path, $scope.backup_diff)
+
     $scope.restore = (backup) ->
         filesystem.read(dir + '/' + backup.name, encoding).then (content) ->
             filesystem.write(path, content, encoding).then () ->

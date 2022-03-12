@@ -523,98 +523,101 @@
 
     <uib:tab heading="{{'Custom fields'|translate}}" ng:click="load_custom_config()">
         <br />
-        <h3 translate>Proxy addresses</h3>
+        <h3 translate>Teachers</h3>
         <table class="table">
             <tr>
                 <th> </th>
-                <th colspan="2" translate class="text-center">Teachers</th>
-                <th colspan="2" translate class="text-center">Students</th>
+                <th translate class="text-center">Title</th>
+                <th translate class="text-center">Show in user details</th>
+                <th translate class="text-center">User can edit</th>
             </tr>
             <tr>
-                <th> </th>
-                <th translate class="text-center">Show</th>
-                <th translate class="text-center">Title</th>
-                <th translate class="text-center">Show</th>
-                <th translate class="text-center">Title</th>
-            </tr>
-            <tr>
-                <td>Proxy addresses</td>
+                <th>Proxy addresses</th>
+                <td class="text-center">
+                    <input type="text" ng:model="proxyAddresses['teachers']['title']" class="form-control" />
+                </td>
                 <td class="text-center">
                     <span checkbox ng:model="proxyAddresses['teachers']['show']"></span>
                 </td>
                 <td class="text-center">
-                    <input type="text" ng:model="proxyAddresses['teachers']['title']" placeholder="Title" class="form-control" />
+                    <span checkbox ng:model="proxyAddresses['teachers']['editable']"></span>
+                </td>
+            </tr>
+            <tr ng:repeat="n in [1,2,3,4,5]">
+                <th>Custom {{n}}</th>
+                <td class="text-center">
+                    <input type="text" ng:model="custom['teachers'][n]['title']" class="form-control" />
+                </td>
+                <td class="text-center">
+                    <span checkbox ng:model="custom['teachers'][n]['show']"></span>
+                </td>
+                <td class="text-center">
+                    <span checkbox ng:model="custom['teachers'][n]['editable']"></span>
+                </td>
+            </tr>
+            <tr ng:repeat="m in [1,2,3,4,5]">
+                <th>Custom Multi {{m}}</th>
+                <td class="text-center">
+                    <input type="text" ng:model="customMulti['teachers'][m]['title']" class="form-control" />
+                </td>
+                <td class="text-center">
+                    <span checkbox ng:model="customMulti['teachers'][m]['show']"></span>
+                </td>
+                <td class="text-center">
+                    <span checkbox ng:model="customMulti['teachers'][m]['editable']"></span>
+                </td>
+            </tr>
+        </table>
+
+        <hr />
+
+        <h3 translate>Students</h3>
+        <table class="table">
+            <tr>
+                <th> </th>
+                <th translate class="text-center">Title</th>
+                <th translate class="text-center">Show in user details</th>
+                <th translate class="text-center">User can edit</th>
+            </tr>
+            <tr>
+                <th>Proxy addresses</th>
+                <td class="text-center">
+                    <input type="text" ng:model="proxyAddresses['students']['title']" class="form-control" />
                 </td>
                 <td class="text-center">
                     <span checkbox ng:model="proxyAddresses['students']['show']"></span>
                 </td>
                 <td class="text-center">
-                    <input type="text" ng:model="proxyAddresses['students']['title']" placeholder="Title" class="form-control" />
+                    <span checkbox ng:model="proxyAddresses['students']['editable']"></span>
                 </td>
-            </tr>
-        </table>
-
-        <h3 translate>Custom values</h3>
-        <table class="table">
-            <tr>
-                <th> </th>
-                <th colspan="2" translate class="text-center">Teachers</th>
-                <th colspan="2" translate class="text-center">Students</th>
-            </tr>
-            <tr>
-                <th> </th>
-                <th translate class="text-center">Show</th>
-                <th translate class="text-center">Title</th>
-                <th translate class="text-center">Show</th>
-                <th translate class="text-center">Title</th>
             </tr>
             <tr ng:repeat="n in [1,2,3,4,5]">
-                <td>Custom {{n}}</td>
+                <th>Custom {{n}}</th>
                 <td class="text-center">
-                    <span checkbox ng:model="custom['teachers'][n]['show']"></span>
-                </td>
-                <td class="text-center">
-                    <input type="text" ng:model="custom['teachers'][n]['title']" placeholder="Title" class="form-control" />
+                    <input type="text" ng:model="custom['students'][n]['title']" class="form-control" />
                 </td>
                 <td class="text-center">
                     <span checkbox ng:model="custom['students'][n]['show']"></span>
                 </td>
                 <td class="text-center">
-                    <input type="text" ng:model="custom['students'][n]['title']" placeholder="Title" class="form-control" />
+                    <span checkbox ng:model="custom['students'][n]['editable']"></span>
                 </td>
-            </tr>
-        </table>
-
-        <h3 translate>Custom lists</h3>
-        <table class="table">
-            <tr>
-                <th> </th>
-                <th colspan="2" translate class="text-center">Teachers</th>
-                <th colspan="2" translate class="text-center">Students</th>
-            </tr>
-            <tr>
-                <th> </th>
-                <th translate class="text-center">Show</th>
-                <th translate class="text-center">Title</th>
-                <th translate class="text-center">Show</th>
-                <th translate class="text-center">Title</th>
             </tr>
             <tr ng:repeat="m in [1,2,3,4,5]">
-                <td>Custom Multi {{m}}</td>
+                <th>Custom Multi {{m}}</th>
                 <td class="text-center">
-                    <span checkbox ng:model="customMulti['teachers'][m]['show']"></span>
-                </td>
-                <td class="text-center">
-                    <input type="text" ng:model="customMulti['teachers'][m]['title']" placeholder="Title" class="form-control" />
+                    <input type="text" ng:model="customMulti['students'][m]['title']" class="form-control" />
                 </td>
                 <td class="text-center">
                     <span checkbox ng:model="customMulti['students'][m]['show']"></span>
                 </td>
                 <td class="text-center">
-                    <input type="text" ng:model="customMulti['students'][m]['title']" placeholder="Title" class="form-control" />
+                    <span checkbox ng:model="customMulti['students'][m]['editable']"></span>
                 </td>
             </tr>
         </table>
+
+        <hr />
 
         <h3 translate>Which custom values display on user's lists ?</h3>
         <table class="table">
@@ -624,7 +627,7 @@
                 <th translate class="text-center">Students</th>
             </tr>
             <tr ng:repeat="d in [1,2,3]">
-                <td>Custom Display {{d}}</td>
+                <th>Custom Display {{d}}</th>
                 <td class="text-center">
                     <select class="form-control" ng:model="customDisplay['teachers'][d]" ng:options="x for x in customDisplayOptions" />
                 </td>

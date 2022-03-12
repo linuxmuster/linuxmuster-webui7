@@ -31,7 +31,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
     id = 'lm'
     name = _('Linux Muster LDAP') # skipcq: PYL-E0602
-    pw_reset = True
+    pw_reset = False
 
     def __init__(self, context):
         self.context = context
@@ -74,6 +74,17 @@ class LMAuthenticationProvider(AuthenticationProvider):
             'mail',
             'sophomorixSchoolname',
             'homeDirectory',
+            'proxyAddresses',
+            'sophomorixCustom1',
+            'sophomorixCustom2',
+            'sophomorixCustom3',
+            'sophomorixCustom4',
+            'sophomorixCustom5',
+            'sophomorixCustomMulti1',
+            'sophomorixCustomMulti2',
+            'sophomorixCustomMulti3',
+            'sophomorixCustomMulti4',
+            'sophomorixCustomMulti5',
         ]
 
         if context == "auth":

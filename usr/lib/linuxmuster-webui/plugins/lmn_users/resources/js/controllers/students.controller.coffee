@@ -112,6 +112,19 @@ angular.module('lmn.users').controller 'LMUsersStudentsController', ($scope, $ht
                     return true
         return false
 
+    $scope.printSelectedPasswords = () ->
+        msg = messagebox.show(progress: true)
+        user_list = (x.sAMAccountName for x in $scope.students when x.selected)
+        $http.post('/api/lm/users/print-individual', {user: $scope.identity.user, user_list: user_list}).then (resp) ->
+            console.log(resp.data)
+            if resp.data == 'success'
+                notify.success(gettext("Created password pdf"))
+                location.href = "/api/lm/users/print-download/user-#{$scope.identity.user}.pdf"
+            else
+                notify.error(gettext("Could not create password pdf"))
+        .finally () ->
+            msg.close()
+
     $scope.batchSetInitialPassword = () ->
         $scope.setInitialPassword((x for x in $scope.students when x.selected))
 

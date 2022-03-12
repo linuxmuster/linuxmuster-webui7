@@ -4,14 +4,10 @@ Module to configure sophomorix.
 
 # coding=utf-8
 import os
-import unicodecsv as csv
 import subprocess
-import filecmp
-from datetime import datetime
 from jadi import component
 import re
 from glob import glob
-from configparser import ConfigParser
 
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
@@ -19,7 +15,6 @@ from aj.auth import authorize
 from aj.plugins.lmn_common.lmnfile import LMNFile
 from aj.plugins.lmn_common.api import lmn_get_school_configpath
 from aj.plugins.lmn_common.multischool import School
-from aj.plugins.lmn_common.api import lmconfig
 
 
 @component(HttpPlugin)
@@ -179,6 +174,7 @@ class Handler(HttpPlugin):
         :type http_context: HttpContext
         """
 
+        # TODO : school = 'default-school' ?
         school = 'default-school'
         path = '/srv/samba/schools/'+school+'/share'
         if http_context.method == 'GET':
@@ -205,7 +201,6 @@ class Handler(HttpPlugin):
         :rtype: dict
         """
 
-        # TODO : school = 'default-school'
         path = '/etc/linuxmuster/subnets.csv'
         fieldnames = [
             'network',
@@ -244,12 +239,19 @@ class Handler(HttpPlugin):
         """
 
         if http_context.method == 'GET':
+            school = School.get(self.context).school
+            custom_config_path = f'/etc/linuxmuster/sophomorix/{school}/custom_fields.yml'
+            custom_config = {}
+            if os.path.isfile(custom_config_path):
+                with LMNFile(custom_config_path, 'r') as config:
+                    custom_config = config.read()
+
             return {
-                'custom': lmconfig.get('custom', {}),
-                'customMulti': lmconfig.get('customMulti', {}),
-                'customDisplay': lmconfig.get('customDisplay', {}),
-                'proxyAddresses': lmconfig.get('proxyAddresses', {}),
-                'passwordTemplates': lmconfig.get('passwordTemplates', {'multiple': {}, 'individual': {}}),
+                'custom': custom_config.get('custom', {}),
+                'customMulti': custom_config.get('customMulti', {}),
+                'customDisplay': custom_config.get('customDisplay', {}),
+                'proxyAddresses': custom_config.get('proxyAddresses', {}),
+                'passwordTemplates': custom_config.get('passwordTemplates', {'multiple': {}, 'individual': {}}),
             }
 
 
@@ -269,13 +271,10 @@ class Handler(HttpPlugin):
 
         if http_context.method == 'POST':
             custom_config = http_context.json_body()['config']
-            lmconfig['custom'] = custom_config['custom']
-            lmconfig['customMulti'] = custom_config['customMulti']
-            lmconfig['customDisplay'] = custom_config['customDisplay']
-            lmconfig['proxyAddresses'] = custom_config['proxyAddresses']
-            lmconfig['passwordTemplates'] = custom_config['passwordTemplates']
-            with LMNFile('/etc/linuxmuster/webui/config.yml', 'w') as webui:
-                webui.write(lmconfig)
+            school = School.get(self.context).school
+            custom_config_path = f'/etc/linuxmuster/sophomorix/{school}/custom_fields.yml'
+            with LMNFile(custom_config_path, 'w') as config:
+                config.write(custom_config)
 
     @url(r'/api/lm/holidays')
     @authorize('lm:schoolsettings')
@@ -292,8 +291,8 @@ class Handler(HttpPlugin):
         :rtype: dict
         """
 
-        # TODO : school = 'default-school'
-        path = '/etc/linuxmuster/holidays.yml'
+        school = School.get(self.context).school
+        path = f'/etc/linuxmuster/sophomorix/{school}/holidays.yml'
 
         if http_context.method == 'GET':
             try:

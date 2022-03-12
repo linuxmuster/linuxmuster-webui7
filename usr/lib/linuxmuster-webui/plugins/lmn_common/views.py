@@ -4,6 +4,8 @@ Common tools to manipulate user's files and config files on the OS.
 
 import os
 import shutil
+import difflib
+import re
 import pwd, grp
 import subprocess
 
@@ -179,6 +181,32 @@ class Handler(HttpPlugin):
         except FileNotFoundError:
             return
 
+    # TODO authorize
+    @url(r'/api/lm/diff')
+    @endpoint(api=True)
+    def handle_api_diff(selfself, http_context):
+
+        if http_context.method == 'POST':
+            file1 = http_context.json_body()['file1']
+            file2 = http_context.json_body()['file2']
+
+            with open(file1) as f:
+                fromlines = f.readlines()
+
+            with open(file2) as f:
+                tolines = f.readlines()
+
+            diff = difflib.unified_diff(fromlines, tolines, file1, file2, n=0)
+
+            # Some formatting
+            def format_diff(entry):
+                entry = re.sub(r'^---', r'<<<', entry)
+                entry = re.sub(r'^\+\+\+', r'>>>', entry)
+                entry = re.sub(r'^-', r'< ', entry)
+                entry = re.sub(r'^\+', r'> ', entry)
+                return entry.strip()
+
+            return [format_diff(entry) for entry in diff]
 
     ## TODO authorize
     ## Used in

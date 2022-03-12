@@ -529,6 +529,38 @@
       }
       return false;
     };
+    $scope.printSelectedPasswords = function() {
+      var msg, user_list, x;
+      msg = messagebox.show({
+        progress: true
+      });
+      user_list = (function() {
+        var j, len1, ref1, results;
+        ref1 = $scope.students;
+        results = [];
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          x = ref1[j];
+          if (x.selected) {
+            results.push(x.sAMAccountName);
+          }
+        }
+        return results;
+      })();
+      return $http.post('/api/lm/users/print-individual', {
+        user: $scope.identity.user,
+        user_list: user_list
+      }).then(function(resp) {
+        console.log(resp.data);
+        if (resp.data === 'success') {
+          notify.success(gettext("Created password pdf"));
+          return location.href = `/api/lm/users/print-download/user-${$scope.identity.user}.pdf`;
+        } else {
+          return notify.error(gettext("Could not create password pdf"));
+        }
+      }).finally(function() {
+        return msg.close();
+      });
+    };
     $scope.batchSetInitialPassword = function() {
       var x;
       return $scope.setInitialPassword((function() {
@@ -648,6 +680,54 @@
     }).then(function(resp) {
       return $scope.schooladmins = resp.data;
     });
+    $http.get('/api/lm/users/binduser/school').then(function(resp) {
+      return $scope.schoolbindusers = resp.data;
+    });
+    $scope.addSchoolBinduser = function() {
+      return messagebox.prompt(gettext('Login for new school bind user'), '').then(function(msg) {
+        // Filter chars ?
+        return $http.post('/api/lm/users/binduser/', {
+          binduser: msg.value,
+          level: 'school'
+        }).then(function(resp) {
+          notify.success(resp.data);
+          return $route.reload();
+        });
+      });
+    };
+    $scope.deleteSchoolBinduser = function(user) {
+      var x;
+      return messagebox.show({
+        title: gettext('Delete User'),
+        text: gettext("Delete school bind user " + ((function() {
+          var i, len, results;
+          results = [];
+          for (i = 0, len = user.length; i < len; i++) {
+            x = user[i];
+            results.push(x['sAMAccountName']);
+          }
+          return results;
+        })()) + '?'),
+        positive: 'Delete',
+        negative: 'Cancel'
+      }).then(function() {
+        return $http.post('/api/lm/users/change-global-admin', {
+          users: (function() {
+            var i, len, results;
+            results = [];
+            for (i = 0, len = user.length; i < len; i++) {
+              x = user[i];
+              results.push(x['sAMAccountName']);
+            }
+            return results;
+          })(),
+          action: 'delete'
+        }).then(function(resp) {
+          $route.reload();
+          return notify.success(gettext('User deleted'));
+        });
+      });
+    };
     $scope.showInitialPassword = function(user) {
       var x;
       return $http.post('/api/lm/users/password', {
@@ -908,6 +988,54 @@
     }).then(function(resp) {
       return $scope.globaladmins = resp.data;
     });
+    $http.get('/api/lm/users/binduser/global').then(function(resp) {
+      return $scope.globalbindusers = resp.data;
+    });
+    $scope.addGlobalBinduser = function() {
+      return messagebox.prompt(gettext('Login for new global bind user'), '').then(function(msg) {
+        // Filter chars ?
+        return $http.post('/api/lm/users/binduser/', {
+          binduser: msg.value,
+          level: 'global'
+        }).then(function(resp) {
+          notify.success(resp.data);
+          return $route.reload();
+        });
+      });
+    };
+    $scope.deleteGlobalBinduser = function(user) {
+      var x;
+      return messagebox.show({
+        title: gettext('Delete User'),
+        text: gettext("Delete global bind user " + ((function() {
+          var i, len, results;
+          results = [];
+          for (i = 0, len = user.length; i < len; i++) {
+            x = user[i];
+            results.push(x['sAMAccountName']);
+          }
+          return results;
+        })()) + '?'),
+        positive: 'Delete',
+        negative: 'Cancel'
+      }).then(function() {
+        return $http.post('/api/lm/users/change-global-admin', {
+          users: (function() {
+            var i, len, results;
+            results = [];
+            for (i = 0, len = user.length; i < len; i++) {
+              x = user[i];
+              results.push(x['sAMAccountName']);
+            }
+            return results;
+          })(),
+          action: 'delete'
+        }).then(function(resp) {
+          $route.reload();
+          return notify.success(gettext('User deleted'));
+        });
+      });
+    };
     $scope.showInitialPassword = function(user) {
       var x;
       return $http.post('/api/lm/users/password', {

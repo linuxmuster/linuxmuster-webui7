@@ -12,6 +12,7 @@ from aj.plugins.lmn_linbo4.images import LinboImageManager
 @component(HttpPlugin)
 class Handler(HttpPlugin):
     LINBO_PATH = '/srv/linbo'
+    GRUB_PATH = f'{LINBO_PATH}/boot/grub'
 
     def __init__(self, context):
         self.context = context
@@ -28,6 +29,7 @@ class Handler(HttpPlugin):
                 file.startswith('start.conf.')
                 and not file.endswith('.vdi')
                 and not os.path.islink(path)
+                and os.path.isfile(path)
             ):
                 with LMNFile(path, 'r') as f:
                     os_list = f.read().get('os', [])
@@ -172,6 +174,8 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_config(self, http_context, name=None):
         path = os.path.join(self.LINBO_PATH, name)
+        group = name.split(".")[-1]
+        grub_cfg_path = os.path.join(self.GRUB_PATH, f'{group}.cfg')
 
         if http_context.method == 'GET':
             with LMNFile(path, 'r') as f:
@@ -182,6 +186,8 @@ class Handler(HttpPlugin):
             with LMNFile(path, 'r') as f:
                 f.backup()
             os.unlink(path)
+            if os.path.isfile(grub_cfg_path):
+                os.unlink(grub_cfg_path)
 
         if http_context.method == 'POST':
             data = http_context.json_body()

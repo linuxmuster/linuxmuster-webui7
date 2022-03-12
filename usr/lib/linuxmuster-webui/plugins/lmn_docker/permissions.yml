@@ -1,9 +1,8 @@
 globaladministrator:
-    - 'lm:docker:list: true'
-    - 'lm:docker:change: true'
-    - 'sidebar:view:/view/lm/docker: true'
-
+- 'lm:docker:change: true'
+- 'lm:docker:list: true'
+- 'sidebar:view:/view/lm/docker: true'
 schooladministrator:
-    - 'lm:docker:list: true'
-    - 'lm:docker:change: true'
-    - 'sidebar:view:/view/lm/docker: true'
+- 'lm:docker:change: true'
+- 'lm:docker:list: true'
+- 'sidebar:view:/view/lm/docker: true'

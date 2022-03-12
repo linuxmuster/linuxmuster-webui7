@@ -8,6 +8,11 @@ bind:
   host: 0.0.0.0
   mode: tcp
   port: 80
+logo: /usr/lib/linuxmuster-webui/plugins/lmn_common/resources/img/logo-full.png
+email:
+  enable: false
+  templates:
+    reset_email: /etc/linuxmuster/webui/email_templates/reset_email.html
 color: default
 language: en
 max_sessions: 400

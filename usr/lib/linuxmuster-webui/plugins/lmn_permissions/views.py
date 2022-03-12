@@ -149,8 +149,10 @@ class Handler(HttpPlugin):
                 if os.path.isdir(path) and 'lmn_' in plugin:
                     perm_path = os.path.join(path, 'permissions.yml')
 
-                    with LMNFile(perm_path, 'r') as f:
-                        lmn_permissions = f.data
+                    lmn_permissions = None
+                    if os.path.isfile(perm_path):
+                        with LMNFile(perm_path, 'r') as f:
+                            lmn_permissions = f.data
 
                     if lmn_permissions is not None:
                         permissions = {}

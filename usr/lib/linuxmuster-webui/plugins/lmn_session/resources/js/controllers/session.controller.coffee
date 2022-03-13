@@ -49,13 +49,13 @@ angular.module('lmn.session').controller 'LMNSessionFileSelectModalController', 
     $scope.removeFile = (file) ->
         role = $scope.identity.profile.sophomorixRole
         school = $scope.identity.profile.activeSchool
-        path = '/srv/samba/schools/'+school+'/'+role+'/'+$scope.identity.user+'/transfer/'+file
+        path = $scope.identity.profile.homeDirectory+'\\transfer\\'+file
         messagebox.show({
             text: gettext('Are you sure you want to delete permanently the file ' + file + '?'),
             positive: gettext('Delete'),
             negative: gettext('Cancel')
         }).then () ->
-            $http.post('/api/lm/remove-file', {filepath: path}).then (resp) ->
+            $http.post('/api/lmn/samba_share/unlink', {file: path}).then (resp) ->
                 notify.success(gettext("File " + file + " removed"))
                 delete $scope.files['TREE'][file]
                 $scope.files['COUNT']['files'] = $scope.files['COUNT']['files'] - 1

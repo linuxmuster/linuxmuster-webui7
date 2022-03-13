@@ -79,14 +79,14 @@
       var path, role, school;
       role = $scope.identity.profile.sophomorixRole;
       school = $scope.identity.profile.activeSchool;
-      path = '/srv/samba/schools/' + school + '/' + role + '/' + $scope.identity.user + '/transfer/' + file;
+      path = $scope.identity.profile.homeDirectory + '\\transfer\\' + file;
       return messagebox.show({
         text: gettext('Are you sure you want to delete permanently the file ' + file + '?'),
         positive: gettext('Delete'),
         negative: gettext('Cancel')
       }).then(function() {
-        return $http.post('/api/lm/remove-file', {
-          filepath: path
+        return $http.post('/api/lmn/samba_share/unlink', {
+          file: path
         }).then(function(resp) {
           var pos;
           notify.success(gettext("File " + file + " removed"));

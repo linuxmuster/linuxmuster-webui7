@@ -127,7 +127,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
             os.unlink(f'/tmp/krb5cc_{uid}')
 
         os.rename(f'/tmp/krb5cc_{uid}{uid}', f'/tmp/krb5cc_{uid}')
-        logging.warning("Changing kerberos ticket rights for %s", username)
+        logging.warning(f"Changing kerberos ticket rights for {username}")
         os.chown(f'/tmp/krb5cc_{uid}', uid, 100)
 
     def _get_krb_ticket(self, username, password):
@@ -302,11 +302,6 @@ class LMAuthenticationProvider(AuthenticationProvider):
         except KeyError:
             uid = pwd.getpwnam('nobody').pw_uid
             logging.debug(f"Context user not found, running Webui as {nobody}")
-
-        # Fix must be removed when prepare_environment is supported in Ajenti
-        if os.getuid() == 0:
-            logging.warning("Changing kerberos ticket rights for %s", username)
-            os.chown(f'/tmp/krb5cc_{uid}', uid, 100)
 
         return uid
 

@@ -47,8 +47,6 @@ class Handler(HttpPlugin):
         if http_context.method == 'POST':
             path = http_context.json_body()['path']
             user = self.context.identity
-            # Must be done with HomeService to keep trace of status
-            client = smbclient.ClientConfig(username=user, auth_protocol='kerberos')
 
             try:
                 items = []
@@ -169,6 +167,8 @@ class Handler(HttpPlugin):
             folder = http_context.json_body()['folder']
 
             try:
+                # Will throw an error if folder is not empty
+                # smbclient.removedirs do it recursively
                 smbclient.rmdir(folder)
             except (ValueError, SMBOSError) as e:
                 raise EndpointError(e)

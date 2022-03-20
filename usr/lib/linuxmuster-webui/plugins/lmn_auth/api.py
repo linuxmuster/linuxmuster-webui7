@@ -126,9 +126,10 @@ class LMAuthenticationProvider(AuthenticationProvider):
         if os.path.isfile(f'/tmp/krb5cc_{uid}'):
             os.unlink(f'/tmp/krb5cc_{uid}')
 
-        os.rename(f'/tmp/krb5cc_{uid}{uid}', f'/tmp/krb5cc_{uid}')
-        logging.warning(f"Changing kerberos ticket rights for {username}")
-        os.chown(f'/tmp/krb5cc_{uid}', uid, 100)
+        if os.path.isfile(f'/tmp/krb5cc_{uid}{uid}'):
+            os.rename(f'/tmp/krb5cc_{uid}{uid}', f'/tmp/krb5cc_{uid}')
+            logging.warning(f"Changing kerberos ticket rights for {username}")
+            os.chown(f'/tmp/krb5cc_{uid}', uid, 100)
 
     def _get_krb_ticket(self, username, password):
         """
@@ -144,6 +145,10 @@ class LMAuthenticationProvider(AuthenticationProvider):
         """
 
         uid = self.get_isolation_uid(username)
+
+        if uid == 0:
+            # No ticket for root user
+            return
 
         logging.warning(f'Initializing Kerberos ticket for {username}')
         child = pexpect.spawn('/usr/bin/kinit', ['-c', f'/tmp/krb5cc_{uid}{uid}', username])

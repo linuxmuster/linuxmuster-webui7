@@ -1,9 +1,6 @@
-<div>
+<div samba-access>
     <div class="row">
         <progress-spinner ng:show="loading"></progress-spinner>
-        <div class="alert alert-danger" ng:show="root" translate>
-            This plugin can not work as root.
-        </div>
         <div class="list-group" ng:hide="loading && root" keyboard-focus test-bind="fileList">
             <div ng:show="parent" class="list-group-item list-group-item-small">
                 <a ng:click="load_path(parent)" class="list-group-main" test-bind="up">

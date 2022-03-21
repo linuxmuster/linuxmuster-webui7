@@ -64,8 +64,8 @@ angular.module('lmn.home').controller('HomeIndexController', function ($scope, $
 
         samba_share.list(path).then(function (data) {
             $scope.items = data.items;
-        }, function (data) {
-            notify.error(gettext('Could not load directory'), data.message);
+        }, function (resp) {
+            notify.error(gettext('Could not load directory : '), resp.data.message);
         }).finally(function () {
             $scope.loading = false;
         });
@@ -80,8 +80,23 @@ angular.module('lmn.home').controller('HomeIndexController', function ($scope, $
             samba_share.delete_file(path).then(function (data) {
                 notify.success(path + gettext(' deleted !'));
                 $route.reload();
-            }, function (data) {
-                notify.error(gettext('Error during deleting'));
+            }, function (resp) {
+                notify.error(gettext('Error during deleting : '), resp.data.message);
+            });
+        });
+    };
+
+    $scope.delete_dir = function (path) {
+        messagebox.show({
+            text: "Do you really want to delete this directory? This is only possible if the directory is empty.",
+            positive: 'Delete',
+            negative: 'Cancel'
+        }).then(function () {
+            samba_share.delete_dir(path).then(function (data) {
+                notify.success(path + gettext(' deleted !'));
+                $route.reload();
+            }, function (resp) {
+                notify.error(gettext('Error during deleting : '), resp.data.message);
             });
         });
     };

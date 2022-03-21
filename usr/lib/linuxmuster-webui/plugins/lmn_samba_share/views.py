@@ -148,10 +148,10 @@ class Handler(HttpPlugin):
             except (ValueError, SMBOSError) as e:
                 raise EndpointError(e)
 
-    @url(r'/api/lmn/samba_share/rmdir')
+    @url(r'/api/lmn/samba_share/dir/(?P<path>.*)')
     # @authorize('samba_share:write')
     @endpoint(api=True)
-    def handle_api_smb_rmdir(self, http_context):
+    def handle_api_smb_rmdir(self, http_context, path=None):
         """
         Delete an empty directory. Throw an SMBOSError if the directory is
         not empty.
@@ -162,14 +162,9 @@ class Handler(HttpPlugin):
         :type path: string
         """
 
-        # DELETE ?
-        if http_context.method == 'POST':
-            folder = http_context.json_body()['folder']
-
+        if http_context.method == 'DELETE':
             try:
-                # Will throw an error if folder is not empty
-                # smbclient.removedirs do it recursively
-                smbclient.rmdir(folder)
+                smbclient.rmdir(path)
             except (ValueError, SMBOSError) as e:
                 raise EndpointError(e)
 

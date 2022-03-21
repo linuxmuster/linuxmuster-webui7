@@ -168,10 +168,10 @@ class Handler(HttpPlugin):
             except (ValueError, SMBOSError) as e:
                 raise EndpointError(e)
 
-    @url(r'/api/lmn/samba_share/unlink')
+    @url(r'/api/lmn/samba_share/file/(?P<path>.*)')
     # @authorize('samba_share:write')
     @endpoint(api=True)
-    def handle_api_smb_unlink(self, http_context):
+    def handle_api_smb_unlink(self, http_context, path=None):
         """
         Delete a file.
 
@@ -181,10 +181,7 @@ class Handler(HttpPlugin):
         :type path: string
         """
 
-        # DELETE ?
-        if http_context.method == 'POST':
-            path = http_context.json_body()['path']
-
+        if http_context.method == 'DELETE':
             try:
                 smbclient.unlink(path)
             except (ValueError, SMBOSError) as e:

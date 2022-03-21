@@ -15,7 +15,7 @@ angular.module('lmn.home').config(function ($routeProvider) {
 
 'use strict';
 
-angular.module('lmn.home').controller('HomeIndexController', function ($scope, $routeParams, $location, $localStorage, $timeout, notify, identity, samba_share, pageTitle, urlPrefix, tasks, messagebox, gettext) {
+angular.module('lmn.home').controller('HomeIndexController', function ($scope, $routeParams, $route, $location, $localStorage, $timeout, notify, identity, samba_share, pageTitle, urlPrefix, tasks, messagebox, gettext) {
     pageTitle.set('path', $scope);
 
     $scope.loading = true;
@@ -68,6 +68,21 @@ angular.module('lmn.home').controller('HomeIndexController', function ($scope, $
             notify.error(gettext('Could not load directory'), data.message);
         }).finally(function () {
             $scope.loading = false;
+        });
+    };
+
+    $scope.delete_file = function (path) {
+        messagebox.show({
+            text: "Do you really want to delete this file?",
+            positive: 'Delete',
+            negative: 'Cancel'
+        }).then(function () {
+            samba_share.delete_file(path).then(function (data) {
+                notify.success(path + gettext(' deleted !'));
+                $route.reload();
+            }, function (data) {
+                notify.error(gettext('Error during deleting'));
+            });
         });
     };
 });

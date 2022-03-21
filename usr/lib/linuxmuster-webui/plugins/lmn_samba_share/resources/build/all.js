@@ -30,6 +30,12 @@ angular.module('lmn.samba_share').service('samba_share', function ($rootScope, $
         });
     };
 
+    this.delete_file = function (path) {
+        return $http.post('/api/lmn/samba_share/unlink', { 'path': path }).then(function (response) {
+            return response.data;
+        });
+    };
+
     this.stat = function (path) {
         return $http.get('/api/lmn/samba_share/stat/' + path).then(function (response) {
             return response.data;

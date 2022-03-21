@@ -11,6 +11,9 @@ angular.module('lmn.samba_share').service('samba_share', function($rootScope, $h
     this.list = (path) =>
       $http.post(`/api/lmn/samba_share/list`, {'path': path}).then(response => response.data)
 
+    this.delete_file = (path) =>
+        $http.post(`/api/lmn/samba_share/unlink`, {'path': path}).then(response => response.data)
+
     this.stat = (path) =>
       $http.get(`/api/lmn/samba_share/stat/${path}`).then(response => response.data)
 

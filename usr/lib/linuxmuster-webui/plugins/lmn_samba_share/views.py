@@ -188,10 +188,10 @@ class Handler(HttpPlugin):
 
         # DELETE ?
         if http_context.method == 'POST':
-            file = http_context.json_body()['file']
+            path = http_context.json_body()['path']
 
             try:
-                smbclient.unlink(file)
+                smbclient.unlink(path)
             except (ValueError, SMBOSError) as e:
                 raise EndpointError(e)
 

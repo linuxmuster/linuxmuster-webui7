@@ -149,7 +149,7 @@ class Handler(HttpPlugin):
             except (ValueError, SMBOSError) as e:
                 raise EndpointError(e)
 
-    @url(r'/api/lmn/samba_share/dir/')
+    @url(r'/api/lmn/samba_share/dir')
     # @authorize('samba_share:write')
     @endpoint(api=True)
     def handle_api_smb_rmdir(self, http_context):
@@ -171,7 +171,7 @@ class Handler(HttpPlugin):
             except (ValueError, SMBOSError) as e:
                 raise EndpointError(e)
 
-    @url(r'/api/lmn/samba_share/file/')
+    @url(r'/api/lmn/samba_share/file')
     # @authorize('samba_share:write')
     @endpoint(api=True)
     def handle_api_smb_unlink(self, http_context):

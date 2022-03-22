@@ -77,6 +77,19 @@ angular.module('lmn.home').controller('HomeIndexController', function ($scope, $
         });
     };
 
+    $scope.rename = function (item) {
+        old_path = item.path;
+        messagebox.prompt(gettext('New name :'), item.name).then(function (msg) {
+            new_path = $scope.current_path + '/' + msg.value;
+            samba_share.move(old_path, new_path).then(function (data) {
+                notify.success(old_path + gettext(' renamed to ') + new_path);
+                $scope.reload();
+            }, function (resp) {
+                notify.error(gettext('Error during renaming: '), resp.data.message);
+            });
+        });
+    };
+
     $scope.delete_file = function (path) {
         messagebox.show({
             text: gettext("Do you really want to delete this file?"),

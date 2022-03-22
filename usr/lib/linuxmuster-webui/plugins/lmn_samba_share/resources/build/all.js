@@ -22,13 +22,19 @@ angular.module('lmn.samba_share').service('samba_share', function ($rootScope, $
     };
 
     this.delete_file = function (path) {
-        return $http.post('/api/lmn/samba_share/file/', { 'path': path }).then(function (response) {
+        return $http.post('/api/lmn/samba_share/file', { 'path': path }).then(function (response) {
+            return response.data;
+        });
+    };
+
+    this.move = function (src, dst) {
+        return $http.post('/api/lmn/samba_share/move', { 'src': src, 'dst': dst }).then(function (response) {
             return response.data;
         });
     };
 
     this.delete_dir = function (path) {
-        return $http.post('/api/lmn/samba_share/dir/', { 'path': path }).then(function (response) {
+        return $http.post('/api/lmn/samba_share/dir', { 'path': path }).then(function (response) {
             return response.data;
         });
     };
@@ -40,7 +46,7 @@ angular.module('lmn.samba_share').service('samba_share', function ($rootScope, $
     };
 
     this.createFile = function (path) {
-        return $http.post('/api/lmn/samba_share/create-file/', { 'path': path }).then(function (response) {
+        return $http.post('/api/lmn/samba_share/create-file', { 'path': path }).then(function (response) {
             return response.data;
         });
     };

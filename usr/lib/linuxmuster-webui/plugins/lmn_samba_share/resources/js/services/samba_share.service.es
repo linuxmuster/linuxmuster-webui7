@@ -12,10 +12,10 @@ angular.module('lmn.samba_share').service('samba_share', function($rootScope, $h
       $http.post(`/api/lmn/samba_share/list`, {'path': path}).then(response => response.data)
 
     this.delete_file = (path) =>
-        $http.delete(`/api/lmn/samba_share/file/${path}`).then(response => response.data)
+        $http.post(`/api/lmn/samba_share/file/`, {'path': path}).then(response => response.data)
 
     this.delete_dir = (path) =>
-        $http.delete(`/api/lmn/samba_share/dir/${path}`).then(response => response.data)
+        $http.post(`/api/lmn/samba_share/dir/`, {'path':path}).then(response => response.data)
 
     this.stat = (path) =>
       $http.get(`/api/lmn/samba_share/stat/${path}`).then(response => response.data)

@@ -25,6 +25,7 @@ angular.module('lmn.home').controller('HomeIndexController', function ($scope, $
             $scope.loading = false;
         } else {
             $scope.home = identity.profile.homeDirectory;
+            $scope.current_path = $scope.home;
             $scope.load_path($scope.home);
             $scope.splitted_path = [];
         }
@@ -64,6 +65,7 @@ angular.module('lmn.home').controller('HomeIndexController', function ($scope, $
 
         samba_share.list(path).then(function (data) {
             $scope.items = data.items;
+            $scope.current_path = path;
         }, function (resp) {
             notify.error(gettext('Could not load directory : '), resp.data.message);
         }).finally(function () {
@@ -73,9 +75,9 @@ angular.module('lmn.home').controller('HomeIndexController', function ($scope, $
 
     $scope.delete_file = function (path) {
         messagebox.show({
-            text: "Do you really want to delete this file?",
-            positive: 'Delete',
-            negative: 'Cancel'
+            text: gettext("Do you really want to delete this file?"),
+            positive: gettext('Delete'),
+            negative: gettext('Cancel')
         }).then(function () {
             samba_share.delete_file(path).then(function (data) {
                 notify.success(path + gettext(' deleted !'));
@@ -86,11 +88,23 @@ angular.module('lmn.home').controller('HomeIndexController', function ($scope, $
         });
     };
 
+    $scope.create_dir = function () {
+        messagebox.prompt(gettext('New directory name :'), '').then(function (msg) {
+            path = $scope.current_path + '/' + msg.value;
+            samba_share.createDirectory(path).then(function (data) {
+                notify.success(path + gettext(' created !'));
+                $route.reload();
+            }, function (resp) {
+                notify.error(gettext('Error during creating directory: '), resp.data.message);
+            });
+        });
+    };
+
     $scope.delete_dir = function (path) {
         messagebox.show({
-            text: "Do you really want to delete this directory? This is only possible if the directory is empty.",
-            positive: 'Delete',
-            negative: 'Cancel'
+            text: gettext("Do you really want to delete this directory? This is only possible if the directory is empty."),
+            positive: gettext('Delete'),
+            negative: gettext('Cancel')
         }).then(function () {
             samba_share.delete_dir(path).then(function (data) {
                 notify.success(path + gettext(' deleted !'));

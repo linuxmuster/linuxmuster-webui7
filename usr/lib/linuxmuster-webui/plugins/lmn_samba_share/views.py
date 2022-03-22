@@ -99,6 +99,7 @@ class Handler(HttpPlugin):
 
         if http_context.method == 'POST':
             path = http_context.json_body()['path']
+
             try:
                 smbclient.makedirs(path)
             except (ValueError, SMBOSError) as e:

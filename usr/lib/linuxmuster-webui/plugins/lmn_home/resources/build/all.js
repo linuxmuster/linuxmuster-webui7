@@ -15,7 +15,7 @@ angular.module('lmn.home').config(function ($routeProvider) {
 
 'use strict';
 
-angular.module('lmn.home').controller('HomeIndexController', function ($scope, $routeParams, $route, $location, $localStorage, $timeout, notify, identity, samba_share, pageTitle, urlPrefix, tasks, messagebox, gettext) {
+angular.module('lmn.home').controller('HomeIndexController', function ($scope, $routeParams, $location, $localStorage, $timeout, notify, identity, samba_share, pageTitle, urlPrefix, tasks, messagebox, gettext) {
     pageTitle.set('path', $scope);
 
     $scope.loading = true;
@@ -30,6 +30,10 @@ angular.module('lmn.home').controller('HomeIndexController', function ($scope, $
             $scope.splitted_path = [];
         }
     });
+
+    $scope.reload = function () {
+        return $scope.load_path($scope.current_path);
+    };
 
     $scope.load_path = function (path) {
         $scope.splitted_path_items = path.replace($scope.home, '').split('/');
@@ -81,7 +85,7 @@ angular.module('lmn.home').controller('HomeIndexController', function ($scope, $
         }).then(function () {
             samba_share.delete_file(path).then(function (data) {
                 notify.success(path + gettext(' deleted !'));
-                $route.reload();
+                $scope.reload();
             }, function (resp) {
                 notify.error(gettext('Error during deleting : '), resp.data.message);
             });
@@ -93,7 +97,7 @@ angular.module('lmn.home').controller('HomeIndexController', function ($scope, $
             path = $scope.current_path + '/' + msg.value;
             samba_share.createDirectory(path).then(function (data) {
                 notify.success(path + gettext(' created !'));
-                $route.reload();
+                $scope.reload();
             }, function (resp) {
                 notify.error(gettext('Error during creating directory: '), resp.data.message);
             });
@@ -108,7 +112,7 @@ angular.module('lmn.home').controller('HomeIndexController', function ($scope, $
         }).then(function () {
             samba_share.delete_dir(path).then(function (data) {
                 notify.success(path + gettext(' deleted !'));
-                $route.reload();
+                $scope.reload();
             }, function (resp) {
                 notify.error(gettext('Error during deleting : '), resp.data.message);
             });

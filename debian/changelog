@@ -1,3 +1,20 @@
+linuxmuster-webui7 (7.1.11) lmn71; urgency=medium
+
+  * Add multischool support for holidays and cron
+  * Split custom fields config to separate schools
+  * Prepare edition of custom fields
+  * Remove deprecated options in config
+  * Management of school and global bind users
+  * Avoid creating duplicate start.conf
+  * Delete grub.cfg when start.conf is deleted
+  * Fix online test in linbo sync plugin
+  * Add partition option to linbo sync plugin
+  * Some sorting and optimizations in lmn_linbo4
+  * Better way to sort and generate permissions
+  * Suggest linbo groups in devices
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Wed, 23 Mar 2022 16:16:29 +0100
+
 linuxmuster-webui7 (7.1.10) lmn71; urgency=medium
 
   * Add german translation of reset_email template

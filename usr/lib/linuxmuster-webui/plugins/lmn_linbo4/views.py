@@ -18,6 +18,31 @@ class Handler(HttpPlugin):
         self.context = context
         self.mgr = LinboImageManager.get(self.context)
 
+    @url(r'/api/lm/linbo4/groups')
+    @authorize('lm:linbo:configs')
+    @endpoint(api=True)
+    def handle_api_list_groups(self, http_context):
+        """
+        List all start.conf to get linbo groups.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: List of linbo4 groups
+        :rtype: list
+        """
+
+        groups = []
+        for file in os.listdir(self.LINBO_PATH):
+            path = os.path.join(self.LINBO_PATH, file)
+            if (
+                file.startswith('start.conf.')
+                and not file.endswith('.vdi')
+                and not os.path.islink(path)
+                and os.path.isfile(path)
+            ):
+                groups.append(file.split(".")[-1])
+        return groups
+
     @url(r'/api/lm/linbo4/configs')
     @authorize('lm:linbo:configs')
     @endpoint(api=True)

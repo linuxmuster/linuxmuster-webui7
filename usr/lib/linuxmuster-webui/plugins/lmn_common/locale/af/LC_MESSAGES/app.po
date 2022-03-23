@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-05 12:01+0100\n"
-"PO-Revision-Date: 2022-02-14 08:39\n"
+"POT-Creation-Date: 2022-03-23 16:24+0100\n"
+"PO-Revision-Date: 2022-03-23 15:41\n"
 "Last-Translator: \n"
 "Language-Team: Afrikaans\n"
 "Language: af_ZA\n"
@@ -26,12 +26,17 @@ msgid "Backups"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/lmFileEditor.modal.html:18
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/lmFileBackups.coffee:53
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/lmFileBackups.coffee:83
 msgid "Cancel"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/lmFileBackups.modal.html:23
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/lmFileBackups.modal.html:26
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/lmFileBackupsDiff.modal.html:19
 msgid "Close"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/lmFileBackupsDiff.modal.html:2
+msgid "Differences"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/lmFileEditor.modal.html:17
@@ -52,6 +57,10 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/lmFileBackups.modal.html:5
 msgid "No backups available"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/lmFileBackupsDiff.modal.html:5
+msgid "No differences detected"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:175
@@ -78,7 +87,7 @@ msgstr ""
 msgid "Session time : {{ counter[0] }}:{{ counter[1] }}:{{ counter[2] }}"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/lmnfile.py:161
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/lmnfile.py:163
 msgid "Access refused."
 msgstr ""
 
@@ -231,11 +240,19 @@ msgstr ""
 msgid " is not a valid domain"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/lmFileBackups.coffee:52
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/lmFileBackups.coffee:41
+msgid "Restore"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/lmFileBackups.coffee:42
+msgid "Show differences"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/lmFileBackups.coffee:82
 msgid "Do you really want to delete"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/lmFileBackups.coffee:53
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/lmFileBackups.coffee:83
 msgid "Confirmation"
 msgstr ""
 

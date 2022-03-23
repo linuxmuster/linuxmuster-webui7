@@ -284,6 +284,9 @@
 
       }
     });
+    $http.get('/api/lm/linbo4/groups').then(function(resp) {
+      return $scope.linbo_groups = resp.data;
+    });
     $http.get("/api/lmn/activeschool").then(function(resp) {
       var school;
       $scope.identity.profile.activeSchool = resp.data;

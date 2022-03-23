@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-14 09:34+0100\n"
-"PO-Revision-Date: 2022-02-14 08:39\n"
+"POT-Creation-Date: 2022-03-23 16:24+0100\n"
+"PO-Revision-Date: 2022-03-23 15:41\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -35,7 +35,7 @@ msgstr "<i class=\"fa fa-warning \"></i>\n"
 msgid "Add a subnet"
 msgstr "Subnetz hinzufügen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:669
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:672
 msgid "Add holidays"
 msgstr "Feiertage hinzufügen"
 
@@ -58,21 +58,13 @@ msgstr "Cloudquota in Prozent"
 msgid "Comment"
 msgstr "Bemerkung"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:639
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:642
 msgid "Configuration of holidays"
 msgstr "Konfiguration von Feiertagen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:524
 msgid "Custom fields"
 msgstr "Benutzerdefinierte Felder"
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:588
-msgid "Custom lists"
-msgstr "Eigene Listen"
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:557
-msgid "Custom values"
-msgstr "Benutzerdefinierte Werte"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:265
 msgid "Customs filters"
@@ -94,7 +86,7 @@ msgstr "E-Mail-Benachrichtigungen aktivieren"
 msgid "Encoding"
 msgstr "Zeichenkodierung"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:648
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:651
 msgid "End"
 msgstr "Ende"
 
@@ -112,7 +104,7 @@ msgstr "Vornamen Zeichen"
 msgid "General"
 msgstr "Allgemein"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:638
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:641
 msgid "Holidays"
 msgstr "Feiertage"
 
@@ -160,7 +152,7 @@ msgstr "Maximale Sitzungsdauer"
 msgid "Moodle"
 msgstr "Moodle"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:646
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:649
 msgid "Name"
 msgstr "Name"
 
@@ -168,7 +160,7 @@ msgstr "Name"
 msgid "Network / Prefix"
 msgstr "Netzwerk / Präfix"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:642
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:645
 msgid "No holidays found!"
 msgstr "Keine Feiertage gefunden!"
 
@@ -187,6 +179,10 @@ msgstr "Passwort Druckdaten"
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:278
 msgid "Path to filter script"
 msgstr "Pfad zum Filterskript"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:126
+msgid "Port"
+msgstr "Port"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:43
 msgid "Primary Group Adminclass"
@@ -208,10 +204,6 @@ msgstr "Druck-Daten"
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:70
 msgid "Printserver"
 msgstr "Druckserver"
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:526
-msgid "Proxy addresses"
-msgstr "Proxy-Adressen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:294
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:296
@@ -239,6 +231,7 @@ msgid "Replace slash(/) in classname by hypen(-)"
 msgstr "Ersetze Schrägstrich(/) in Klassenname durch Bindestrich(-)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:176
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:179
 msgid "Restart WebUI"
 msgstr "Schulkonsole neu starten"
 
@@ -254,6 +247,18 @@ msgstr "Rolle Schüler"
 msgid "Role Teachers"
 msgstr "Rolle Lehrer"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:121
+msgid "SMTP host"
+msgstr "SMTP-Host"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:143
+msgid "SMTP password"
+msgstr "SMTP-Passwort"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:137
+msgid "SMTP user"
+msgstr "SMTP-Benutzer"
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:43
 msgid "SSL FQDN certificate file"
 msgstr "SSL-FQDN-Zertifikatsdatei"
@@ -263,14 +268,15 @@ msgid "SSL certificate file"
 msgstr "SSL-Zertifikats-Datei"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:175
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:679
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:680
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:681
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:178
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:682
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:683
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:684
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:685
 msgid "Save"
 msgstr "Speichern"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:678
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:681
 msgid "Save &amp; Apply Quota"
 msgstr "Speichern &amp; Quota übernehmen"
 
@@ -278,7 +284,7 @@ msgstr "Speichern &amp; Quota übernehmen"
 msgid "Save &amp; Apply Subnets"
 msgstr "Speichern &amp; Subnetze übernehmen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:677
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:680
 msgid "Save &amp; check"
 msgstr "Speichern &amp; Prüfen"
 
@@ -302,28 +308,22 @@ msgstr "Schulname"
 msgid "Setup flag"
 msgstr "Setup-Flagge"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:535
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:537
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:566
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:568
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:597
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:599
-msgid "Show"
-msgstr "Anzeigen"
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:531
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:579
+msgid "Show in user details"
+msgstr "In Benutzerdetails anzeigen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:100
 msgid "Smtp relay"
 msgstr "Smtp-Relais"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:647
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:650
 msgid "Start"
 msgstr "Beginn"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:300
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:531
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:562
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:593
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:624
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:574
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:627
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:86
 msgid "Students"
 msgstr "Schüler"
@@ -337,20 +337,22 @@ msgid "Surname Characters"
 msgstr "Nachname Zeichen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:301
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:530
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:561
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:592
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:623
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:526
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:626
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:87
 msgid "Teachers"
 msgstr "Lehrer"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:536
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:538
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:567
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:569
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:598
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:600
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:159
+msgid "Template email reset"
+msgstr "E-Mail Vorlage für Passwortreset"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:115
+msgid "The smtp.yml config file seems to be empty. Currently it's ont possible to send emails with this configuration."
+msgstr "Die Konfigurationsdatei smtp.yml scheint leer zu sein. Derzeit ist es möglich, E-Mails mit dieser Konfiguration zu senden."
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:530
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:578
 msgid "Title"
 msgstr "Titel"
 
@@ -365,6 +367,11 @@ msgstr "Tage bis zum Deaktivieren nach Austreten"
 msgid "URL"
 msgstr "URL"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:532
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:580
+msgid "User can edit"
+msgstr "Benutzer kann bearbeiten"
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:82
 msgid "Username and Passwords"
 msgstr "Benutzername und Passwörter"
@@ -377,7 +384,7 @@ msgstr "Webmail"
 msgid "Webui"
 msgstr "Webui"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:619
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:622
 msgid "Which custom values display on user's lists ?"
 msgstr "Welche benutzerdefinierten Werte werden auf Benutzerlisten angezeigt?"
 
@@ -482,6 +489,14 @@ msgstr "Globale Konfiguration gespeichert"
 msgid "Could not save global config"
 msgstr "Konnte die globale Konfiguration nicht speichern"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:76
+msgid "Smtp config saved"
+msgstr "Smtp Konfiguration gespeichert"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:78
+msgid "Could not save smtp config"
+msgstr "Smtp Konfiguration konnte nicht gespeichert werden"
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:83
 msgid "Self-signed certificate"
 msgstr "Selbstsigniertes Zertifikat"
@@ -537,16 +552,4 @@ msgstr "Sind Sie sicher, dass Sie diese Feiertage endgültig löschen möchten?"
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:140
 msgid "Please first correct the mal formated fields."
 msgstr "Bitte korrigieren Sie zuerst die mal formatierten Felder."
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:168
-msgid "In order for changes to take effect, it's  necessary to restart the Webui. Restart now ?"
-msgstr "Um die Änderungen wirksam werden zu lassen, muss die Webui neu gestartet werden. Jetzt neu starten ?"
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:169
-msgid "Restart"
-msgstr "Neustart"
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:170
-msgid "Later"
-msgstr "Später"
 

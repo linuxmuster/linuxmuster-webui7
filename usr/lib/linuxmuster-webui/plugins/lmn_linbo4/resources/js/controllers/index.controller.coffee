@@ -614,7 +614,6 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
             config = resp.data
             $http.get("/api/lm/linbo4/vdi/#{configName}.vdi").then (resp) ->
                 vdiconfig = resp.data
-
                 $uibModal.open(
                     templateUrl: '/lmn_linbo4:resources/partial/config.modal.html'
                     controller: 'LMLINBO4ConfigModalController'

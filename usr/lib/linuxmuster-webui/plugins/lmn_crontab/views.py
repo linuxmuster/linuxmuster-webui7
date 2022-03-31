@@ -5,7 +5,7 @@ Module to handle an user crontab file.
 from jadi import component
 
 from aj.api.http import url, HttpPlugin
-from aj.auth import authorize
+from aj.auth import authorize, AuthenticationService
 from aj.api.endpoint import endpoint, EndpointError
 from aj.plugins.lmn_crontab.manager import CronManager
 from aj.plugins.lmn_common.multischool import School
@@ -35,29 +35,36 @@ class Handler(HttpPlugin):
 
         if http_context.method == 'GET':
             user = self.context.identity
-            crontab = CronManager.get(self.context).load_tab(user)
-            crontab_dict = crontab.tree.to_dict()
-            for job in crontab_dict['normal_tasks']:
-                job['school'] = 'default-school'
-                if job['command'].startswith(HOLIDAY_PREFIX_TEST):
-                    job['disable_holiday'] = True
-                    holiday_command, job['command'] = job['command'].split('&&')
-                    # School option used, we can extract the school
-                    if '-s' in holiday_command:
-                        job['school'] = holiday_command.strip().split()[-1]
-                else:
-                    job['disable_holiday'] = False
-            for job in crontab_dict['special_tasks']:
-                job['school'] = 'default-school'
-                if job['command'].startswith(HOLIDAY_PREFIX_TEST):
-                    job['disable_holiday'] = True
-                    holiday_command, job['command'] = job['command'].split('&&')
-                    # School option used, we can extract the school
-                    if '-s' in holiday_command:
-                        job['school'] = holiday_command.strip().split()[-1]
-                else:
-                    job['disable_holiday'] = False
-            return crontab_dict, school
+            profil = AuthenticationService.get(self.context).get_provider().get_profile(user)
+
+            if profil['sophomorixRole'] == 'globaladministrator':
+                # Load global-admin crontab for all global admins
+                crontab = CronManager.get(self.context).load_tab('global-admin')
+                crontab_dict = crontab.tree.to_dict()
+
+                for job in crontab_dict['normal_tasks']:
+                    job['school'] = 'default-school'
+                    if job['command'].startswith(HOLIDAY_PREFIX_TEST):
+                        job['disable_holiday'] = True
+                        holiday_command, job['command'] = job['command'].split('&&')
+                        # School option used, we can extract the school
+                        if '-s' in holiday_command:
+                            job['school'] = holiday_command.strip().split()[-1]
+                    else:
+                        job['disable_holiday'] = False
+
+                for job in crontab_dict['special_tasks']:
+                    job['school'] = 'default-school'
+                    if job['command'].startswith(HOLIDAY_PREFIX_TEST):
+                        job['disable_holiday'] = True
+                        holiday_command, job['command'] = job['command'].split('&&')
+                        # School option used, we can extract the school
+                        if '-s' in holiday_command:
+                            job['school'] = holiday_command.strip().split()[-1]
+                    else:
+                        job['disable_holiday'] = False
+
+                return crontab_dict, school
 
     @url(r'/api/lm/save_crontab')
     @authorize('lm:crontab:write')
@@ -108,8 +115,13 @@ class Handler(HttpPlugin):
                         crontab.tree.special_tasks.append(setTask(CrontabSpecialTaskData(), values))
                     elif _type == 'env_settings':
                         crontab.tree.env_settings.append(setTask(CrontabEnvSettingData(), values))
+
+            profil = AuthenticationService.get(self.context).get_provider().get_profile(user)
+
             try:
-                CronManager.get(self.context).save_tab(user, crontab)
-                return True
+                if profil['sophomorixRole'] == 'globaladministrator':
+                    CronManager.get(self.context).save_tab('global-admin', crontab)
+                    return True
+                return False
             except Exception as e:
                 raise EndpointError(e)

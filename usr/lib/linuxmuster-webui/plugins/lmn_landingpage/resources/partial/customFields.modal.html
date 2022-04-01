@@ -16,42 +16,54 @@
         <tr ng:repeat="custom in custom_fields | orderBy:['title']">
             <td>{{custom.title}}</td>
 
-            <td ng:if="custom.attr == 'proxyAddresses'">
-               <span ng:repeat="value in custom.value" class="label label-info" ng:click="removeProxyAddresses(custom, value)">
+            <td ng:if="custom.attr == 'proxyAddresses' && custom.editable">
+                <span ng:repeat="value in custom.value" class="label label-info" ng:click="removeProxyAddresses(custom, value)">
                     {{value}}
                     <i class="far fa-times-circle"></i>
-               </span>
+                </span>
+            </td>
+            <td ng:if="custom.attr == 'proxyAddresses' && !custom.editable">
+                <span ng:repeat="value in custom.value" class="label label-info" >
+                    {{value}}
+                </span>
             </td>
 
-            <td ng:if="custom.attr == 'proxyAddresses'">
+            <td ng:if="custom.attr == 'proxyAddresses' && custom.editable">
                 <a ng:click="addProxyAddresses(custom)">
                     <i class="fa fa-plus"></i>
                 </a>
             </td>
+            <td ng:if="custom.attr == 'proxyAddresses' && !custom.editable"> </td>
 
-            <td ng:if="custom.attr != 'proxyAddresses' && isListAttr(custom.attr)">
-               <span ng:repeat="value in custom.value" class="label label-info" ng:click="removeCustomMulti(custom, value)">
+            <td ng:if="custom.attr != 'proxyAddresses' && isListAttr(custom.attr) && custom.editable">
+                <span ng:repeat="value in custom.value" class="label label-info" ng:click="removeCustomMulti(custom, value)">
                     {{value}}
                     <i class="far fa-times-circle"></i>
-               </span>
+                </span>
+            </td>
+            <td ng:if="custom.attr != 'proxyAddresses' && isListAttr(custom.attr) && !custom.editable">
+                <span ng:repeat="value in custom.value" class="label label-info" >
+                    {{value}}
+                </span>
             </td>
 
-            <td ng:if="custom.attr != 'proxyAddresses' && isListAttr(custom.attr)">
+            <td ng:if="custom.attr != 'proxyAddresses' && isListAttr(custom.attr) && custom.editable">
                 <a ng:click="addCustomMulti(custom)">
                     <i class="fa fa-plus"></i>
                 </a>
             </td>
+            <td ng:if="custom.attr != 'proxyAddresses' && isListAttr(custom.attr) && !custom.editable"> </td>
 
             <td ng:if="!isListAttr(custom.attr)">
                 {{custom.value}}
             </td>
 
-            <td ng:if="!isListAttr(custom.attr)">
+            <td ng:if="!isListAttr(custom.attr) && custom.editable">
                 <a ng:click="editCustom(custom)">
                     <i class="fa fa-pencil"></i>
                 </a>
             </td>
-
+            <td ng:if="!isListAttr(custom.attr) && !custom.editable"> </td>
         </tr>
 
     </table>

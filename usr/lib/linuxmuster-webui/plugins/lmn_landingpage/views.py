@@ -72,15 +72,19 @@ class Handler(HttpPlugin):
                             editable = details.get('editable', False)
                             if show:
                                 attr = f'sophomorixC{field[1:]}{entry}'
+
                                 if 'Multi' in field:
-                                    default_value = []
+                                    value = profil.get(attr, [])
+                                    # Sophomorix sends a string if there's only one address
+                                    if isinstance(value, str):
+                                        value = [value]
                                 else:
-                                    default_value = ''
+                                    value = profil.get(attr, '')
                                 custom_fields_to_show.append({
                                     'attr': attr,
                                     'title': title,
                                     'editable': editable,
-                                    'value': profil.get(attr, default_value),
+                                    'value': value,
                                 })
                     else:
                         # Proxyaddresses
@@ -92,8 +96,8 @@ class Handler(HttpPlugin):
 
                             custom_fields_to_show.append({
                                 'attr': 'proxyAddresses',
-                                'title': custom_fields['proxyAddresses'][role]['title'],
-                                'editable': custom_fields['proxyAddresses'][role]['editable'],
+                                'title': custom_fields['proxyAddresses'][role].get('title', ''),
+                                'editable': custom_fields['proxyAddresses'][role].get('editable', False),
                                 'value': addresses,
                             })
 

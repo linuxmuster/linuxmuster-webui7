@@ -13,13 +13,12 @@
     });
   });
 
-  angular.module('lmn.landingpage').controller('LMNLandingController', function($scope, $http, $uibModal, $location, gettext, notify, pageTitle, messagebox) {
+  angular.module('lmn.landingpage').controller('LMNLandingController', function($scope, $http, $uibModal, $location, $route, gettext, notify, pageTitle) {
     var i, len, n, ref;
     pageTitle.set(gettext('Home'));
     $scope.getData = function(user) {
       $http.get(`/api/lmn/custom_fields/${user}`).then(function(resp) {
-        $scope.custom_fields = resp.data;
-        return console.table(resp.data);
+        return $scope.custom_fields = resp.data;
       });
       return $http.get(`/api/lmn/quota/${user}`).then(function(resp) {
         var ref, results, share, total, type, usage, used, values;
@@ -78,6 +77,23 @@
     $scope.changePassword = function() {
       return $location.path('/view/lmn/change-password');
     };
+    $scope.changeCustomFields = function() {
+      return $uibModal.open({
+        templateUrl: '/lmn_landingpage:resources/partial/customFields.modal.html',
+        controller: 'LMNUserCustomFieldsController',
+        size: 'md',
+        resolve: {
+          custom_fields: function() {
+            return $scope.custom_fields;
+          },
+          user: function() {
+            return $scope.user;
+          }
+        }
+      }).closed.then(function() {
+        return $route.reload();
+      });
+    };
     return $scope.$watch('identity.user', function() {
       var category, cn, dn, j, len1, ref1;
       if ($scope.identity.user === void 0) {
@@ -129,6 +145,124 @@
         }
       }
     });
+  });
+
+  angular.module('lmn.users').controller('LMNUserCustomFieldsController', function($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, user, custom_fields) {
+    var i, len, n, ref;
+    $scope.custom_fields = custom_fields;
+    $scope.user = user;
+    $scope.id = user.sAMAccountName;
+    $scope.list_attr_enabled = ['proxyAddresses'];
+    ref = [1, 2, 3, 4, 5];
+    for (i = 0, len = ref.length; i < len; i++) {
+      n = ref[i];
+      $scope.list_attr_enabled.push('sophomorixCustomMulti' + n);
+    }
+    $scope.isListAttr = function(attr_name) {
+      return $scope.list_attr_enabled.includes(attr_name);
+    };
+    $scope.editCustom = function(custom) {
+      var value;
+      value = custom.value;
+      n = custom.attr.slice(-1);
+      return messagebox.prompt(gettext('New value'), value).then(function(msg) {
+        return $http.post("/api/lm/custom", {
+          index: n,
+          value: msg.value,
+          user: $scope.id
+        }).then(function() {
+          if (msg.value) {
+            custom.value = msg.value;
+          } else {
+            custom.value = 'null';
+          }
+          return notify.success(gettext("Value updated !"));
+        }, function() {
+          return notify.error(gettext("Error, please verify the user and/or your values."));
+        });
+      });
+    };
+    $scope.removeCustomMulti = function(custom, value) {
+      n = custom.attr.slice(-1);
+      return messagebox.show({
+        title: gettext('Remove custom field value'),
+        text: gettext('Do you really want to remove ') + value + ' ?',
+        positive: gettext('OK'),
+        negative: gettext('Cancel')
+      }).then(function(msg) {
+        return $http.post("/api/lm/custommulti/remove", {
+          index: n,
+          value: value,
+          user: $scope.id
+        }).then(function() {
+          var position;
+          position = custom.value.indexOf(value);
+          custom.value.splice(position, 1);
+          return notify.success(gettext("Value removed !"));
+        }, function() {
+          return notify.error(gettext("Error, please verify the user and/or your values."));
+        });
+      });
+    };
+    $scope.addCustomMulti = function(custom) {
+      n = custom.attr.slice(-1);
+      return messagebox.prompt(gettext('New value')).then(function(msg) {
+        return $http.post("/api/lm/custommulti/add", {
+          index: n,
+          value: msg.value,
+          user: $scope.id
+        }).then(function() {
+          if (msg.value) {
+            custom.value.push(msg.value);
+            notify.success(gettext("Value added !"));
+            return console.log(custom);
+          }
+        }, function() {
+          return notify.error(gettext("Error, please verify the user and/or your values."));
+        });
+      });
+    };
+    $scope.removeProxyAddresses = function(custom, value) {
+      return messagebox.show({
+        title: gettext('Remove proxy address'),
+        text: gettext('Do you really want to remove ') + value + ' ?',
+        positive: gettext('OK'),
+        negative: gettext('Cancel')
+      }).then(function(msg) {
+        return $http.post("/api/lm/changeProxyAddresses", {
+          action: 'remove',
+          address: value,
+          user: $scope.id
+        }).then(function() {
+          var position;
+          position = custom.value.indexOf(value);
+          custom.value.splice(position, 1);
+          return notify.success(gettext("Value removed !"));
+        }, function() {
+          return notify.error(gettext("Error, please verify the user and/or your values."));
+        });
+      });
+    };
+    $scope.addProxyAddresses = function(custom) {
+      n = custom.attr.slice(-1);
+      return messagebox.prompt(gettext('New address')).then(function(msg) {
+        return $http.post("/api/lm/changeProxyAddresses", {
+          action: 'add',
+          address: msg.value,
+          user: $scope.id
+        }).then(function() {
+          if (msg.value) {
+            custom.value.push(msg.value);
+          }
+          return notify.success(gettext("Address added !"));
+        }, function() {
+          return notify.error(gettext("Error, please verify the user and/or your values."));
+        });
+      });
+    };
+    return $scope.close = function() {
+      return $uibModalInstance.dismiss();
+    };
   });
 
 }).call(this);

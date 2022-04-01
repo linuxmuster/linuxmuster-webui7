@@ -14,4 +14,5 @@ resources:
     - 'resources/js/module.coffee'
     - 'resources/js/controllers/index.controller.coffee'
     - 'resources/partial/index.html'
+    - 'resources/partial/customFields.modal.html'
     - 'ng:lmn.landingpage'

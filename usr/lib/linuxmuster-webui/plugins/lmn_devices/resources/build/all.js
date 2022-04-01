@@ -32,7 +32,7 @@
     };
   });
 
-  angular.module('lmn.devices').controller('LMDevicesController', function($scope, $http, $uibModal, $route, $location, $anchorScroll, gettext, notify, pageTitle, lmFileEditor, lmFileBackups, validation) {
+  angular.module('lmn.devices').controller('LMDevicesController', function($scope, $http, $uibModal, $route, $location, $anchorScroll, gettext, hotkeys, notify, pageTitle, lmFileEditor, lmFileBackups, validation) {
     pageTitle.set(gettext('Devices'));
     $scope.error_msg = {};
     $scope.show_errors = false;
@@ -297,12 +297,23 @@
         return $scope.path = '/etc/linuxmuster/sophomorix/' + school + '/' + school + '.devices.csv';
       }
     });
-    return $http.get('/api/lm/devices').then(function(resp) {
+    $http.get('/api/lm/devices').then(function(resp) {
       $scope.devices = resp.data;
       $scope.devices_without_comment = $scope.devices.filter(function(dict) {
         return dict['room'][0] !== '#';
       });
       return validation.set($scope.devices_without_comment, 'devices');
+    });
+    return hotkeys.on($scope, function(key, event) {
+      if (key === 'I' && event.ctrlKey) {
+        $scope.saveAndImport();
+        return true;
+      }
+      if (key === 'S' && event.ctrlKey) {
+        $scope.save();
+        return true;
+      }
+      return false;
     });
   });
 

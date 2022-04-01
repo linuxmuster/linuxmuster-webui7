@@ -67,8 +67,35 @@
                 </div>
                 <div class="panel-body">
                     <ul class="list-unstyled" style="column-width:300px;padding:0;">
-                        <li style="margin: 0 15px 5px 0px;" ng:repeat="group in groups | orderBy:['category','cn'] " class="cardlist">{{group.cn}} <span style="position:absolute;right:10px;">{{group.category}}</span></li>
+                        <li style="margin: 0 15px 5px 0px;" ng:repeat="group in groups | orderBy:['category','cn'] " class="cardlist">
+                            {{group.cn}}
+                            <span style="position:absolute;right:10px;">{{group.category}}</span>
+                        </li>
                     </ul>
+                </div>
+            </div>
+
+            <div class="panel panel-info" ng:show="custom_fields.length > 0">
+                <div class="panel-heading">
+                    <h4 translate>My informations</h4>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-unstyled" style="column-width:300px;padding:0;">
+                        <li style="margin: 0 15px 5px 0px;" ng:repeat="custom in custom_fields | orderBy:['title'] " class="cardlist">
+                            {{custom.title}}
+                            <span style="position:absolute;right:10px;" ng:show="!isListAttr(custom.attr)">
+                                {{custom.value}}
+                            </span>
+                            <div ng:show="isListAttr(custom.attr)" style="position:absolute;right:10px;">
+                                <span ng:repeat="value in custom.value track by $index">
+                                    {{value}}
+                                </span>
+                            </div>
+                        </li>
+                    </ul>
+                    <button style="margin-top:20px;" class="btn btn-primary pull-right" ng:click="changeCustomFields()">
+                        <span translate>Change my data</span>
+                    </button>
                 </div>
             </div>
         </div>

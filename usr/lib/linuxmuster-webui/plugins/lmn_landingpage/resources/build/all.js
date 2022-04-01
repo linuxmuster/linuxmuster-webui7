@@ -14,8 +14,13 @@
   });
 
   angular.module('lmn.landingpage').controller('LMNLandingController', function($scope, $http, $uibModal, $location, gettext, notify, pageTitle, messagebox) {
+    var i, len, n, ref;
     pageTitle.set(gettext('Home'));
-    $scope.getQuota = function(user) {
+    $scope.getData = function(user) {
+      $http.get(`/api/lmn/custom_fields/${user}`).then(function(resp) {
+        $scope.custom_fields = resp.data;
+        return console.table(resp.data);
+      });
       return $http.get(`/api/lmn/quota/${user}`).then(function(resp) {
         var ref, results, share, total, type, usage, used, values;
         $scope.quotas = [];
@@ -61,11 +66,20 @@
         return results;
       });
     };
+    $scope.list_attr_enabled = ['proxyAddresses'];
+    ref = [1, 2, 3, 4, 5];
+    for (i = 0, len = ref.length; i < len; i++) {
+      n = ref[i];
+      $scope.list_attr_enabled.push('sophomorixCustomMulti' + n);
+    }
+    $scope.isListAttr = function(attr_name) {
+      return $scope.list_attr_enabled.includes(attr_name);
+    };
     $scope.changePassword = function() {
       return $location.path('/view/lmn/change-password');
     };
     return $scope.$watch('identity.user', function() {
-      var category, cn, dn, i, len, ref;
+      var category, cn, dn, j, len1, ref1;
       if ($scope.identity.user === void 0) {
         return;
       }
@@ -76,11 +90,11 @@
         return;
       }
       $scope.user = $scope.identity.profile;
-      $scope.getQuota($scope.identity.user);
+      $scope.getData($scope.identity.user);
       $scope.groups = [];
-      ref = $scope.user['memberOf'];
-      for (i = 0, len = ref.length; i < len; i++) {
-        dn = ref[i];
+      ref1 = $scope.user['memberOf'];
+      for (j = 0, len1 = ref1.length; j < len1; j++) {
+        dn = ref1[j];
         cn = dn.split(',')[0].split('=')[1];
         category = dn.split(',')[1].split('=')[1];
         if (category !== "Management") {

@@ -6,7 +6,10 @@ angular.module('lmn.landingpage').config ($routeProvider) ->
 angular.module('lmn.landingpage').controller 'LMNLandingController', ($scope, $http, $uibModal, $location, gettext, notify, pageTitle, messagebox) ->
     pageTitle.set(gettext('Home'))
 
-    $scope.getQuota = (user) ->
+    $scope.getData = (user) ->
+        $http.get("/api/lmn/custom_fields/#{user}").then (resp) ->
+            $scope.custom_fields = resp.data
+
         $http.get("/api/lmn/quota/#{user}").then (resp) ->
             $scope.quotas = []
             $scope.user['sophomorixCloudQuotaCalculated'] = resp.data['sophomorixCloudQuotaCalculated']
@@ -31,6 +34,13 @@ angular.module('lmn.landingpage').controller 'LMNLandingController', ($scope, $h
                         type = "danger"
                     $scope.quotas.push({'share':share, 'total':total + " MiB", 'used':used, 'usage':usage, 'type':type})
 
+    $scope.list_attr_enabled = ['proxyAddresses']
+    for n in [1,2,3,4,5]
+        $scope.list_attr_enabled.push('sophomorixCustomMulti' + n)
+
+    $scope.isListAttr = (attr_name) ->
+        return $scope.list_attr_enabled.includes(attr_name)
+
     $scope.changePassword = () ->
         $location.path('/view/lmn/change-password');
 
@@ -43,7 +53,7 @@ angular.module('lmn.landingpage').controller 'LMNLandingController', ($scope, $h
            return
 
         $scope.user = $scope.identity.profile
-        $scope.getQuota($scope.identity.user)
+        $scope.getData($scope.identity.user)
         $scope.groups = []
 
         for dn in $scope.user['memberOf']

@@ -12,7 +12,6 @@ import subprocess
 from jadi import component
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint
-from aj.plugins.lmn_common.multischool import School
 from aj.plugins.lmn_common.lmnfile import LMNFile
 
 
@@ -250,5 +249,4 @@ class Handler(HttpPlugin):
         :rtype: string 
         """
         if http_context.method == 'GET':
-            school = School.get(self.context).school     
-            return school
+            return self.context.schoolmgr.school

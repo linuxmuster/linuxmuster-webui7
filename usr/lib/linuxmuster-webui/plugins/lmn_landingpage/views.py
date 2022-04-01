@@ -31,7 +31,6 @@ class Handler(HttpPlugin):
         if http_context.method == 'GET':
 
                 if user != 'root':
-                    
                     sophomorixCommand = ['sophomorix-query', '--sam', user, '--user-full', '--quota-usage', '-jj']
                     jsonpath          = 'USER/' + user
                     return lmn_getSophomorixValue(sophomorixCommand, jsonpath)

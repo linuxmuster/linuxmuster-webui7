@@ -9,7 +9,6 @@ from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint
 from aj.auth import authorize
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue
-from aj.plugins.lmn_common.multischool import School
 
 
 @component(HttpPlugin)
@@ -60,7 +59,7 @@ class Handler(HttpPlugin):
 
         # TODO : this need to be splitted into atomic functions/tasks.
 
-        schoolname = School.get(self.context).school 
+        schoolname = self.context.schoolmgr.school
         username = http_context.json_body()['username']
         action = http_context.json_body()['action']
         user_details = http_context.json_body()['profil']

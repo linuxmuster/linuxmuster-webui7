@@ -15,7 +15,6 @@ from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue, lmn_get_school_configpath, lmconfig
 from aj.plugins.lmn_common.lmnfile import LMNFile
-from aj.plugins.lmn_common.multischool import School
 import logging
 
 
@@ -112,7 +111,7 @@ class Handler(HttpPlugin):
                             fileToWrite.write(csvDict[findIndex(csvDict, 'coloumn', 'id')]['data'][i]+';')
                         fileToWrite.write('\n')
                         i += 1
-            school = School.get(self.context).school 
+            school = self.context.schoolmgr.school 
             if userlist == 'teachers.csv':
                 with authorize('lm:users:teachers:write'):
                     if school == 'default-school':
@@ -199,7 +198,7 @@ class Handler(HttpPlugin):
         :rtype: list of dict
         """
 
-        school = School.get(self.context).school
+        school = self.context.schoolmgr.school
         path = lmn_get_school_configpath(school)+'students.csv'
 
 
@@ -240,7 +239,7 @@ class Handler(HttpPlugin):
         :rtype: list of dict
         """
 
-        school = School.get(self.context).school
+        school = self.context.schoolmgr.school
         path = lmn_get_school_configpath(school)+'teachers.csv'
 
             
@@ -286,7 +285,7 @@ class Handler(HttpPlugin):
 
         action = http_context.json_body()['action']
         if http_context.method == 'POST':
-            schoolname = School.get(self.context).school
+            schoolname = self.context.schoolmgr.school
             teachersList = []
 
             if action == 'get-all':
@@ -325,7 +324,7 @@ class Handler(HttpPlugin):
 
         action = http_context.json_body()['action']
         if http_context.method == 'POST':
-            schoolname = School.get(self.context).school
+            schoolname = self.context.schoolmgr.school
 
             studentsList = []
             with authorize('lm:users:students:read'):
@@ -432,7 +431,7 @@ class Handler(HttpPlugin):
         :rtype: list of dict
         """
 
-        school = School.get(self.context).school
+        school = self.context.schoolmgr.school
         path = lmn_get_school_configpath(school)+'extrastudents.csv'
 
         if os.path.isfile(path) is False:
@@ -472,7 +471,7 @@ class Handler(HttpPlugin):
         :rtype: list of dict
         """
 
-        school = School.get(self.context).school
+        school = self.context.schoolmgr.school
         path = lmn_get_school_configpath(school)+'extraclasses.csv'
 
         if os.path.isfile(path) is False:
@@ -608,7 +607,7 @@ class Handler(HttpPlugin):
         :return: State of the command
         :rtype: string
         """
-        school = School.get(self.context).school
+        school = self.context.schoolmgr.school
         action = http_context.json_body()['action']
         users = http_context.json_body()['users']
         user = ','.join([x.strip() for x in users])
@@ -711,7 +710,7 @@ class Handler(HttpPlugin):
         :rtype: With GET, list of dict
         """
 
-        school = School.get(self.context).school
+        school = self.context.schoolmgr.school
         if http_context.method == 'GET':
 
             sophomorixCommand = ['sophomorix-query', '--class', '--schoolbase', school, '--group-full', '-jj']
@@ -745,7 +744,7 @@ class Handler(HttpPlugin):
         :type http_context: HttpContext
         """
 
-        school = School.get(self.context).school
+        school = self.context.schoolmgr.school
 
         if http_context.method == 'POST':
             user = http_context.json_body()['user']
@@ -782,7 +781,7 @@ class Handler(HttpPlugin):
         :type http_context: HttpContext
         """
 
-        school = School.get(self.context).school
+        school = self.context.schoolmgr.school
         config_template = lmconfig.get('passwordTemplates', {'multiple': '', 'individual': ''})
         config_template_individual = config_template.get('individual', '')
         config_template_multiple = config_template.get('multiple', '')
@@ -894,7 +893,7 @@ class Handler(HttpPlugin):
             result = lmn_getSophomorixValue(sophomorixCommand, 'QUOTA/USERS')
 
             quotaMap = {}
-            school = School.get(self.context).school
+            school = self.context.schoolmgr.school
             # Only read default-school for the moment, must be maybe adapted later
             for user in groupList:
                 share = result[user]["SHARES"][school]['smbcquotas']
@@ -1115,7 +1114,7 @@ class Handler(HttpPlugin):
             level = http_context.json_body()['level']
             school_option = ''
             if level == 'school':
-                school_option = ('--school', School.get(self.context).school)
+                school_option = ('--school', self.context.schoolmgr.school)
             sophomorixCommand = ['sophomorix-admin',
                                  f'--create-{level}-binduser', binduser,
                                  *school_option,

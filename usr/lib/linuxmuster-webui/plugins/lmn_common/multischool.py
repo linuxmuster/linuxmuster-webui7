@@ -1,15 +1,22 @@
-from aj.auth import AuthenticationService
-from jadi import service
+import os
+import yaml
+import logging
 
-@service
-class School():
-    def __init__(self, context):
-        self.context = context
-        username = AuthenticationService.get(self.context).get_identity()
-        profil = AuthenticationService.get(self.context).get_provider().get_profile(username)
-        self.school = profil['activeSchool']
+class SchoolManager():
+    def __init__(self):
+        self.school = 'default-school'
+
+    def load_custom_fields(self):
+        config = f'/etc/linuxmuster/sophomorix/{self.school}/custom_fields.yml'
+        self.custom_fields = {}
+        if os.path.isfile(config):
+            try:
+                with open(config, 'r') as f:
+                    self.custom_fields = yaml.load(f, Loader=yaml.SafeLoader)
+            except Exception as e:
+                logging.error(f"Could not load custom fields config: {e}")
 
     def switch(self, school):
         # Switch to another school
         self.school = school
-        # Do stuff to effectively change the school
+        self.load_custom_fields()

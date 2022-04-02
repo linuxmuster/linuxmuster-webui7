@@ -522,9 +522,24 @@
     </uib:tab>
 
     <uib:tab heading="{{'Custom fields'|translate}}" ng:click="load_custom_config()">
+
         <br />
-        <h3 translate>Teachers</h3>
-        <table class="table">
+
+        <div class="form-group">
+            <label translate>Choose a role to configure</label>
+            <select class="form-control" ng:model="custom_fields_role_selector">
+                <option value="students" translate>Students</option>
+                <option value="teachers" translate>Teachers</option>
+                <option value="schooladministrators" translate>School administrators</option>
+                <option value="globaladministrators" translate>Global administrators</option>
+            </select>
+        </div>
+
+        <br />
+        <hr />
+
+        <h3 ng:show="custom_fields_role_selector == 'teachers'" translate>Teachers</h3>
+        <table class="table" ng:show="custom_fields_role_selector == 'teachers'">
             <tr>
                 <th> </th>
                 <th translate class="text-center">Title</th>
@@ -569,10 +584,8 @@
             </tr>
         </table>
 
-        <hr />
-
-        <h3 translate>Students</h3>
-        <table class="table">
+        <h3 ng:show="custom_fields_role_selector == 'students'" translate>Students</h3>
+        <table class="table" ng:show="custom_fields_role_selector == 'students'">
             <tr>
                 <th> </th>
                 <th translate class="text-center">Title</th>
@@ -617,10 +630,8 @@
             </tr>
         </table>
 
-        <hr />
-
-        <h3 translate>School administrators</h3>
-        <table class="table">
+        <h3 ng:show="custom_fields_role_selector == 'schooladministrators'" translate>School administrators</h3>
+        <table class="table" ng:show="custom_fields_role_selector == 'schooladministrators'">
             <tr>
                 <th> </th>
                 <th translate class="text-center">Title</th>
@@ -665,10 +676,8 @@
             </tr>
         </table>
 
-        <hr />
-
-        <h3 translate>Global administrators</h3>
-        <table class="table">
+        <h3 ng:show="custom_fields_role_selector == 'globaladministrators'" translate>Global administrators</h3>
+        <table class="table" ng:show="custom_fields_role_selector == 'globaladministrators'">
             <tr>
                 <th> </th>
                 <th translate class="text-center">Title</th>
@@ -716,7 +725,7 @@
         <hr />
 
         <h3 translate>Which custom values display on user's lists ?</h3>
-        <table class="table">
+        <table class="table" ng:show="['teachers', 'students'].indexOf(custom_fields_role_selector) >= 0">
             <tr>
                 <th> </th>
                 <th translate class="text-center">Teachers</th>
@@ -729,6 +738,22 @@
                 </td>
                 <td class="text-center">
                     <select class="form-control" ng:model="customDisplay['students'][d]" ng:options="x for x in customDisplayOptions" />
+                </td>
+            </tr>
+        </table>
+        <table class="table" ng:show="['schooladministrators', 'globaladministrators'].indexOf(custom_fields_role_selector) >= 0">
+            <tr>
+                <th> </th>
+                <th translate class="text-center">Global administrators</th>
+                <th translate class="text-center">School administrators</th>
+            </tr>
+            <tr ng:repeat="d in [1,2,3]">
+                <th>Custom Display {{d}}</th>
+                <td class="text-center">
+                    <select class="form-control" ng:model="customDisplay['globaladministrators'][d]" ng:options="x for x in customDisplayOptions" />
+                </td>
+                <td class="text-center">
+                    <select class="form-control" ng:model="customDisplay['schooladministrators'][d]" ng:options="x for x in customDisplayOptions" />
                 </td>
             </tr>
         </table>

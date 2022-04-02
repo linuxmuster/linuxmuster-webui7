@@ -12,6 +12,7 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
     }
 
     $scope.activetab = 0
+    $scope.custom_fields_role_selector = 'students'
 
     $scope.logLevels = [
         {name: gettext('Minimal'), value: 0}

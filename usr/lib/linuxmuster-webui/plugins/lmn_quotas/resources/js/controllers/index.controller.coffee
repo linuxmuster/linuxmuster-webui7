@@ -23,7 +23,7 @@ angular.module('lmn.quotas').controller 'LMQuotasApplyModalController', ($scope,
         $window.location.reload()
 
 
-angular.module('lmn.quotas').controller 'LMQuotasController', ($scope, $http, $uibModal, $location, $q, gettext, lmEncodingMap, notify, pageTitle, lmFileBackups, $rootScope, wait) ->
+angular.module('lmn.quotas').controller 'LMQuotasController', ($scope, $http, $uibModal, $location, $q, gettext, hotkeys, lmEncodingMap, notify, pageTitle, lmFileBackups, $rootScope, wait) ->
     pageTitle.set(gettext('Quotas'))
 
     $scope.UserSearchVisible = false
@@ -157,3 +157,17 @@ angular.module('lmn.quotas').controller 'LMQuotasController', ($scope, $http, $u
                 controller: 'LMQuotasApplyModalController'
                 backdrop: 'static'
             )
+
+    hotkeys.on $scope, (key, event) ->
+        current_tab = $scope.tabs[$scope.activeTab]
+        if (key == 'F' && event.ctrlKey)
+            if $scope.activeTab <= 2
+                $scope.showUserSearch()
+                return true
+            return false
+
+        if (key == 'S' && event.ctrlKey)
+            $scope.saveApply()
+            return true
+
+        return false

@@ -2694,9 +2694,11 @@
     });
   });
 
-  angular.module('lmn.users').controller('LMUsersListManagementController', function($scope, $http, $location, $route, $uibModal, gettext, notify, lmEncodingMap, messagebox, pageTitle, lmFileEditor, lmFileBackups, filesystem, validation) {
+  angular.module('lmn.users').controller('LMUsersListManagementController', function($scope, $http, $location, $route, $uibModal, gettext, hotkeys, notify, lmEncodingMap, messagebox, pageTitle, lmFileEditor, lmFileBackups, filesystem, validation) {
     var lmn_get_school_configpath;
     pageTitle.set(gettext('Listmanagement'));
+    $scope.activeTab = 0;
+    $scope.tabs = ['students', 'teachers', 'extrastudents'];
     lmn_get_school_configpath = function(school) {
       
       //"This is an example of a function"
@@ -3245,7 +3247,20 @@
       });
     });
     // Loading first tab
-    return $scope.getstudents();
+    $scope.getstudents();
+    return hotkeys.on($scope, function(key, event) {
+      var current_tab;
+      current_tab = $scope.tabs[$scope.activeTab];
+      if (key === 'I' && event.ctrlKey) {
+        $scope.saveAndCheck(current_tab);
+        return true;
+      }
+      if (key === 'S' && event.ctrlKey) {
+        $scope[current_tab + "_save"]();
+        return true;
+      }
+      return false;
+    });
   });
 
 }).call(this);

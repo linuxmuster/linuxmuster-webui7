@@ -260,7 +260,6 @@ angular.module('lmn.devices').controller 'LMDevicesController', ($scope, $http, 
         $scope.devices_without_comment = $scope.devices.filter((dict) -> dict['room'][0] != '#')
         validation.set($scope.devices_without_comment, 'devices')
 
-
     hotkeys.on $scope, (key, event) ->
         if (key == 'I' && event.ctrlKey)
             $scope.saveAndImport()

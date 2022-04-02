@@ -468,4 +468,8 @@ angular.module('lmn.users').controller 'LMUsersListManagementController', ($scop
             $scope[current_tab + "_save"]()
             return true
 
+        if (key == 'B' && event.ctrlKey)
+            $scope[current_tab + "_backups"]()
+            return true
+
         return false

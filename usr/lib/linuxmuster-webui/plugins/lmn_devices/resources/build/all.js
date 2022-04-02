@@ -313,6 +313,10 @@
         $scope.save();
         return true;
       }
+      if (key === 'B' && event.ctrlKey) {
+        $scope.backups();
+        return true;
+      }
       return false;
     });
   });

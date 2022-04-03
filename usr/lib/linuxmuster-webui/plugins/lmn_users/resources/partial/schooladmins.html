@@ -166,6 +166,8 @@
             <th> </th>
             <th width="120" translate> Login</th>
             <th translate> Name / DN </th>
+            <th> </th>
+            <th> </th>
         </tr>
         <tr ng:repeat="schoolbinduser in schoolbindusers">
             <td width="30" style="text-align:center;"> </td>
@@ -175,6 +177,11 @@
             <td>
                 <b>{{schoolbinduser.givenName}} {{schoolbinduser.sn}}</b><br />
                 {{schoolbinduser.DN}}
+            </td>
+            <td width="1">
+                <button class="btn btn-default" ng:click="showPW(schoolbinduser)" ng:show="schoolbinduser.pw">
+                    <i class="fa fa-eye"></i>
+                </button>
             </td>
             <td width="1">
                 <button class="btn btn-default" ng:click="deleteSchoolBinduser([schoolbinduser])">

@@ -765,6 +765,24 @@
         });
       });
     };
+    $scope.showPW = function(user) {
+      return messagebox.show({
+        title: gettext('Show bind user password'),
+        text: gettext("Do you really want to see this password ? It could be a security issue!"),
+        positive: 'Show',
+        negative: 'Cancel'
+      }).then(function() {
+        return $http.post('/api/lm/users/showBindPW', {
+          user: user.sAMAccountName
+        }).then(function(resp) {
+          return messagebox.show({
+            title: gettext('Show bind user password'),
+            text: resp.data,
+            positive: 'OK'
+          });
+        });
+      });
+    };
     $scope.showInitialPassword = function(user) {
       var x;
       return $http.post('/api/lm/users/password', {

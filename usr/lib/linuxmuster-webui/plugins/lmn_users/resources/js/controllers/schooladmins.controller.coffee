@@ -60,6 +60,11 @@ angular.module('lmn.users').controller 'LMUsersSchooladminsController', ($scope,
                 $route.reload()
                 notify.success gettext('User deleted')
 
+    $scope.showPW = (user) ->
+       messagebox.show(title: gettext('Show bind user password'), text: gettext("Do you really want to see this password ? It could be a security issue!"), positive: 'Show', negative: 'Cancel').then () ->
+            $http.post('/api/lm/users/showBindPW', {user: user.sAMAccountName}).then (resp) ->
+                messagebox.show(title: gettext('Show bind user password'), text: resp.data, positive: 'OK')
+
     $scope.showInitialPassword = (user) ->
        $http.post('/api/lm/users/password', {users: ( x['sAMAccountName'] for x in user ), action: 'get'}).then (resp) ->
           $http.get('/api/lm/users/test-first-password/' + user[0]['sAMAccountName']).then (response) ->

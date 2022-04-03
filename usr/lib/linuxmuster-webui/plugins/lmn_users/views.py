@@ -11,7 +11,7 @@ import io
 
 from jadi import component
 from aj.api.http import url, HttpPlugin
-from aj.api.endpoint import endpoint, EndpointError
+from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
 from aj.auth import authorize
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue, lmn_get_school_configpath, lmconfig
 from aj.plugins.lmn_common.lmnfile import LMNFile
@@ -1141,6 +1141,9 @@ class Handler(HttpPlugin):
         :return: State of the command
         :rtype: string or list
         """
+
+        if os.getuid() != 0:
+            return EndpointReturn(403)
 
         if http_context.method == 'POST':
             user = http_context.json_body()['user']

@@ -1007,6 +1007,7 @@
   });
 
   angular.module('lmn.users').controller('LMUsersGloballadminsController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) {
+    var i, len, n, ref;
     pageTitle.set(gettext('Globaladmins'));
     $scope.sorts = [
       {
@@ -1022,11 +1023,47 @@
       pageSize: 50
     };
     $scope.all_selected = false;
+    $scope.list_attr_enabled = ['proxyAddresses'];
+    ref = [1, 2, 3, 4, 5];
+    for (i = 0, len = ref.length; i < len; i++) {
+      n = ref[i];
+      $scope.list_attr_enabled.push('sophomorixCustomMulti' + n);
+    }
     $http.post('/api/lm/sophomorixUsers/globaladmins', {
       action: 'get-all'
     }).then(function(resp) {
       return $scope.globaladmins = resp.data;
     });
+    $http.get('/api/lm/read_custom_config').then(function(resp) {
+      var idx, index, j, len1, ref1, results;
+      $scope.customDisplay = resp.data.customDisplay.globaladministrators || {
+        1: '',
+        2: '',
+        3: ''
+      };
+      $scope.customTitle = [''];
+      ref1 = [1, 2, 3];
+      results = [];
+      for (j = 0, len1 = ref1.length; j < len1; j++) {
+        idx = ref1[j];
+        if ($scope.customDisplay[idx] === void 0 || $scope.customDisplay[idx] === '') {
+          results.push($scope.customTitle.push(''));
+        } else if ($scope.customDisplay[idx] === 'proxyAddresses') {
+          results.push($scope.customTitle.push(resp.data.proxyAddresses.globaladministrators.title));
+        } else {
+          index = $scope.customDisplay[idx].slice(-1);
+          if ($scope.isListAttr($scope.customDisplay[idx])) {
+            results.push($scope.customTitle.push(resp.data.customMulti.globaladministrators[index].title || ''));
+          } else {
+            results.push($scope.customTitle.push(resp.data.custom.globaladministrators[index].title || ''));
+          }
+        }
+      }
+      return results;
+    });
+    $scope.isListAttr = function(attr_name) {
+      return $scope.list_attr_enabled.includes(attr_name);
+    };
     $http.get('/api/lm/users/binduser/global').then(function(resp) {
       return $scope.globalbindusers = resp.data;
     });
@@ -1047,10 +1084,10 @@
       return messagebox.show({
         title: gettext('Delete User'),
         text: gettext("Delete global bind user " + ((function() {
-          var i, len, results;
+          var j, len1, results;
           results = [];
-          for (i = 0, len = user.length; i < len; i++) {
-            x = user[i];
+          for (j = 0, len1 = user.length; j < len1; j++) {
+            x = user[j];
             results.push(x['sAMAccountName']);
           }
           return results;
@@ -1060,10 +1097,10 @@
       }).then(function() {
         return $http.post('/api/lm/users/change-global-admin', {
           users: (function() {
-            var i, len, results;
+            var j, len1, results;
             results = [];
-            for (i = 0, len = user.length; i < len; i++) {
-              x = user[i];
+            for (j = 0, len1 = user.length; j < len1; j++) {
+              x = user[j];
               results.push(x['sAMAccountName']);
             }
             return results;
@@ -1079,10 +1116,10 @@
       var x;
       return $http.post('/api/lm/users/password', {
         users: (function() {
-          var i, len, results;
+          var j, len1, results;
           results = [];
-          for (i = 0, len = user.length; i < len; i++) {
-            x = user[i];
+          for (j = 0, len1 = user.length; j < len1; j++) {
+            x = user[j];
             results.push(x['sAMAccountName']);
           }
           return results;
@@ -1108,10 +1145,10 @@
       var x;
       return $http.post('/api/lm/users/password', {
         users: (function() {
-          var i, len, results;
+          var j, len1, results;
           results = [];
-          for (i = 0, len = user.length; i < len; i++) {
-            x = user[i];
+          for (j = 0, len1 = user.length; j < len1; j++) {
+            x = user[j];
             results.push(x['sAMAccountName']);
           }
           return results;
@@ -1125,10 +1162,10 @@
       var x;
       return $http.post('/api/lm/users/password', {
         users: (function() {
-          var i, len, results;
+          var j, len1, results;
           results = [];
-          for (i = 0, len = user.length; i < len; i++) {
-            x = user[i];
+          for (j = 0, len1 = user.length; j < len1; j++) {
+            x = user[j];
             results.push(x['sAMAccountName']);
           }
           return results;
@@ -1158,10 +1195,10 @@
       return messagebox.show({
         title: gettext('Delete User'),
         text: gettext("Delete global-administrator " + ((function() {
-          var i, len, results;
+          var j, len1, results;
           results = [];
-          for (i = 0, len = user.length; i < len; i++) {
-            x = user[i];
+          for (j = 0, len1 = user.length; j < len1; j++) {
+            x = user[j];
             results.push(x['sAMAccountName']);
           }
           return results;
@@ -1171,10 +1208,10 @@
       }).then(function() {
         return $http.post('/api/lm/users/change-global-admin', {
           users: (function() {
-            var i, len, results;
+            var j, len1, results;
             results = [];
-            for (i = 0, len = user.length; i < len; i++) {
-              x = user[i];
+            for (j = 0, len1 = user.length; j < len1; j++) {
+              x = user[j];
               results.push(x['sAMAccountName']);
             }
             return results;
@@ -1212,14 +1249,16 @@
             return 'globaladmins';
           }
         }
+      }).closed.then(function() {
+        return $route.reload();
       });
     };
     $scope.haveSelection = function() {
-      var i, len, ref, x;
+      var j, len1, ref1, x;
       if ($scope.globaladmins) {
-        ref = $scope.globaladmins;
-        for (i = 0, len = ref.length; i < len; i++) {
-          x = ref[i];
+        ref1 = $scope.globaladmins;
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          x = ref1[j];
           if (x.selected) {
             return true;
           }
@@ -1230,11 +1269,11 @@
     $scope.batchSetInitialPassword = function() {
       var x;
       return $scope.setInitialPassword((function() {
-        var i, len, ref, results;
-        ref = $scope.globaladmins;
+        var j, len1, ref1, results;
+        ref1 = $scope.globaladmins;
         results = [];
-        for (i = 0, len = ref.length; i < len; i++) {
-          x = ref[i];
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          x = ref1[j];
           if (x.selected) {
             results.push(x);
           }
@@ -1245,11 +1284,11 @@
     $scope.batchSetRandomPassword = function() {
       var x;
       return $scope.setRandomPassword((function() {
-        var i, len, ref, results;
-        ref = $scope.globaladmins;
+        var j, len1, ref1, results;
+        ref1 = $scope.globaladmins;
         results = [];
-        for (i = 0, len = ref.length; i < len; i++) {
-          x = ref[i];
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          x = ref1[j];
           if (x.selected) {
             results.push(x);
           }
@@ -1260,11 +1299,11 @@
     $scope.batchSetCustomPassword = function() {
       var x;
       return $scope.setCustomPassword((function() {
-        var i, len, ref, results;
-        ref = $scope.globaladmins;
+        var j, len1, ref1, results;
+        ref1 = $scope.globaladmins;
         results = [];
-        for (i = 0, len = ref.length; i < len; i++) {
-          x = ref[i];
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          x = ref1[j];
           if (x.selected) {
             results.push(x);
           }
@@ -1273,14 +1312,14 @@
       })());
     };
     return $scope.selectAll = function(filter) {
-      var globaladmin, i, len, ref, results;
+      var globaladmin, j, len1, ref1, results;
       if (filter == null) {
         filter = '';
       }
-      ref = $scope.globaladmins;
+      ref1 = $scope.globaladmins;
       results = [];
-      for (i = 0, len = ref.length; i < len; i++) {
-        globaladmin = ref[i];
+      for (j = 0, len1 = ref1.length; j < len1; j++) {
+        globaladmin = ref1[j];
         if (filter === void 0 || filter === '') {
           globaladmin.selected = $scope.all_selected;
         }

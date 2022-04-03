@@ -57,8 +57,18 @@
     <table ng:show="globaladmins[0] != 'none'" class="table" style="width:100%">
         <tr>
             <th><span checkbox ng:model="all_selected" ng:change="selectAll(filter)"></span></th>
-            <th width="120" translate> Login</th>
-            <th translate> Name </th>
+            <th width="120" translate>
+                Login
+                <span ng:show="customTitle[1]"> / {{customTitle[1]}}</span>
+            </th>
+            <th translate>
+                Name
+                <span ng:show="customTitle[2]"> / {{customTitle[2]}}</span>
+            </th>
+            <th><span ng:show="customTitle[3]">{{customTitle[3]}}</span></th>
+            <th> </th>
+            <th> </th>
+            <th> </th>
         </tr>
         <tr ng:repeat="globaladmin in globaladmins|filter:filter|orderBy:['-_isNew', sort.fx]|page:paging.page:paging.pageSize" ng:show="globaladmin.class[0] != '#'">
             <td width="30" style="text-align:center;">
@@ -66,9 +76,37 @@
             </td>
             <td width="1" style="text-align:left;">
                 <i>{{globaladmin.sAMAccountName}}</i>
+                <br />
+                <div ng:show="isListAttr(customDisplay[1])">
+                    <span ng:repeat="custom1 in globaladmin[customDisplay[1]] track by $index" class="label label-info">
+                        {{custom1}}
+                    </span>
+                </div>
+                <div ng:show="!isListAttr(customDisplay[1]) && globaladmin[customDisplay[1]] != 'null'">
+                    {{globaladmin[customDisplay[1]]}}
+                </div>
             </td>
             <td>
                 <b>{{globaladmin.givenName}} {{globaladmin.sn}}</b>
+                <br />
+                <div ng:show="isListAttr(customDisplay[2])">
+                    <span ng:repeat="custom2 in globaladmin[customDisplay[2]] track by $index" class="label label-info">
+                        {{custom2}}
+                    </span>
+                </div>
+                <div ng:show="!isListAttr(customDisplay[2]) && globaladmin[customDisplay[2]] != 'null'">
+                    {{globaladmin[customDisplay[2]]}}
+                </div>
+            </td>
+            <td>
+                <div ng:show="isListAttr(customDisplay[3])">
+                    <span ng:repeat="custom3 in globaladmin[customDisplay[3]] track by $index" class="label label-info">
+                        {{custom3}}
+                    </span>
+                </div>
+                <div ng:show="!isListAttr(customDisplay[3]) && globaladmin[customDisplay[3]] != 'null'">
+                    {{globaladmin[customDisplay[3]]}}
+                </div>
             </td>
             <td width="1">
                 <span  uib-dropdown class="dropup" >

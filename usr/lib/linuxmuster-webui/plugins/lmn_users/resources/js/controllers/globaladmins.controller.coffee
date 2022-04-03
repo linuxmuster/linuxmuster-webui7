@@ -19,8 +19,30 @@ angular.module('lmn.users').controller 'LMUsersGloballadminsController', ($scope
 
     $scope.all_selected = false
 
+    $scope.list_attr_enabled = ['proxyAddresses']
+    for n in [1,2,3,4,5]
+        $scope.list_attr_enabled.push('sophomorixCustomMulti' + n)
+
     $http.post('/api/lm/sophomorixUsers/globaladmins',{action: 'get-all'}).then (resp) ->
         $scope.globaladmins = resp.data
+
+    $http.get('/api/lm/read_custom_config').then (resp) ->
+        $scope.customDisplay = resp.data.customDisplay.globaladministrators || {1:'', 2:'', 3:''}
+        $scope.customTitle = ['',]
+        for idx in [1,2,3]
+            if $scope.customDisplay[idx] == undefined or $scope.customDisplay[idx] == ''
+                $scope.customTitle.push('')
+            else if $scope.customDisplay[idx] == 'proxyAddresses'
+                $scope.customTitle.push(resp.data.proxyAddresses.globaladministrators.title)
+            else
+                index = $scope.customDisplay[idx].slice(-1)
+                if $scope.isListAttr($scope.customDisplay[idx])
+                    $scope.customTitle.push(resp.data.customMulti.globaladministrators[index].title || '')
+                else
+                    $scope.customTitle.push(resp.data.custom.globaladministrators[index].title || '')
+
+    $scope.isListAttr = (attr_name) ->
+        return $scope.list_attr_enabled.includes(attr_name)
 
     $http.get('/api/lm/users/binduser/global').then (resp) ->
         $scope.globalbindusers = resp.data
@@ -90,8 +112,8 @@ angular.module('lmn.users').controller 'LMUsersGloballadminsController', ($scope
         resolve:
           id: () -> user[0]['sAMAccountName']
           role: () -> 'globaladmins'
-          )
-
+          ).closed.then () ->
+                $route.reload()
 
     $scope.haveSelection = () ->
         if $scope.globaladmins

@@ -14,7 +14,6 @@ from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize
 from aj.plugins.lmn_common.lmnfile import LMNFile
 from aj.plugins.lmn_common.api import lmn_get_school_configpath
-from aj.plugins.lmn_common.multischool import School
 
 
 @component(HttpPlugin)
@@ -70,7 +69,7 @@ class Handler(HttpPlugin):
         :rtype: dict in read mode
         """
 
-        school = School.get(self.context).school
+        school = self.context.schoolmgr.school
         path = lmn_get_school_configpath(school)+'school.conf'
         # Update each time the config_obj because it may have changed
         with LMNFile(path, 'r') as f:
@@ -147,7 +146,7 @@ class Handler(HttpPlugin):
                     templates_individual.append(template)
 
         # School defined templates
-        school = School.get(self.context).school
+        school = self.context.schoolmgr.school
         custom_templates_path = f'/etc/linuxmuster/sophomorix/{school}/latex-templates/'
         if os.path.isdir(custom_templates_path):
             for path in glob(custom_templates_path + "*tex"):
@@ -239,7 +238,7 @@ class Handler(HttpPlugin):
         """
 
         if http_context.method == 'GET':
-            school = School.get(self.context).school
+            school = self.context.schoolmgr.school
             custom_config_path = f'/etc/linuxmuster/sophomorix/{school}/custom_fields.yml'
             custom_config = {}
             if os.path.isfile(custom_config_path):
@@ -271,7 +270,7 @@ class Handler(HttpPlugin):
 
         if http_context.method == 'POST':
             custom_config = http_context.json_body()['config']
-            school = School.get(self.context).school
+            school = self.context.schoolmgr.school
             custom_config_path = f'/etc/linuxmuster/sophomorix/{school}/custom_fields.yml'
             with LMNFile(custom_config_path, 'w') as config:
                 config.write(custom_config)
@@ -291,7 +290,7 @@ class Handler(HttpPlugin):
         :rtype: dict
         """
 
-        school = School.get(self.context).school
+        school = self.context.schoolmgr.school
         path = f'/etc/linuxmuster/sophomorix/{school}/holidays.yml'
 
         if http_context.method == 'GET':

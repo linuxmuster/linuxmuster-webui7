@@ -8,7 +8,6 @@ from aj.api.http import url, HttpPlugin
 from aj.auth import authorize, AuthenticationService
 from aj.api.endpoint import endpoint, EndpointError
 from aj.plugins.lmn_crontab.manager import CronManager
-from aj.plugins.lmn_common.multischool import School
 from reconfigure.items.crontab import CrontabNormalTaskData, CrontabSpecialTaskData, CrontabEnvSettingData
 
 HOLIDAY_PREFIX_TEST = '/usr/sbin/linuxmuster-holiday '
@@ -31,7 +30,7 @@ class Handler(HttpPlugin):
         :rtype: dict
         """
 
-        school = School.get(self.context).school
+        school = self.context.schoolmgr.school
 
         if http_context.method == 'GET':
             user = self.context.identity
@@ -92,7 +91,7 @@ class Handler(HttpPlugin):
                 """
 
                 if 'disable_holiday' in values:
-                    school = School.get(self.context).school
+                    school = self.context.schoolmgr.school
                     if values['disable_holiday']:
                         school = values.get('school', school)
                         values['command'] = f'{HOLIDAY_PREFIX_TEST} -s {school} && {values["command"]}'

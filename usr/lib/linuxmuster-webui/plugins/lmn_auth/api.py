@@ -21,6 +21,7 @@ from jadi import component, service
 from aj.auth import AuthenticationProvider, OSAuthenticationProvider, AuthenticationService
 from aj.config import UserConfigProvider
 from aj.plugins.lmn_common.api import ldap_config as params, lmsetup_schoolname
+from aj.plugins.lmn_common.multischool import SchoolManager
 from aj.api.endpoint import EndpointError
 
 @component(AuthenticationProvider)
@@ -37,7 +38,10 @@ class LMAuthenticationProvider(AuthenticationProvider):
         self.context = context
 
     def prepare_environment(self, username):
-        pass
+        active_school = self.get_profile(username)['activeSchool']
+        schoolmgr = SchoolManager()
+        schoolmgr.switch(active_school)
+        self.context.schoolmgr = schoolmgr
 
     def get_ldap_user(self, username, context=""):
         """

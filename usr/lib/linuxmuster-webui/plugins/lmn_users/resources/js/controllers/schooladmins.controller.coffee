@@ -19,8 +19,30 @@ angular.module('lmn.users').controller 'LMUsersSchooladminsController', ($scope,
 
     $scope.all_selected = false
 
+    $scope.list_attr_enabled = ['proxyAddresses']
+    for n in [1,2,3,4,5]
+        $scope.list_attr_enabled.push('sophomorixCustomMulti' + n)
+
     $http.post('/api/lm/sophomorixUsers/schooladmins',{action: 'get-all'}).then (resp) ->
         $scope.schooladmins = resp.data
+
+    $http.get('/api/lm/read_custom_config').then (resp) ->
+        $scope.customDisplay = resp.data.customDisplay.schooladministrators || {1:'', 2:'', 3:''}
+        $scope.customTitle = ['',]
+        for idx in [1,2,3]
+            if $scope.customDisplay[idx] == undefined or $scope.customDisplay[idx] == ''
+                $scope.customTitle.push('')
+            else if $scope.customDisplay[idx] == 'proxyAddresses'
+                $scope.customTitle.push(resp.data.proxyAddresses.schooladministrators.title)
+            else
+                index = $scope.customDisplay[idx].slice(-1)
+                if $scope.isListAttr($scope.customDisplay[idx])
+                    $scope.customTitle.push(resp.data.customMulti.schooladministrators[index].title || '')
+                else
+                    $scope.customTitle.push(resp.data.custom.schooladministrators[index].title || '')
+
+    $scope.isListAttr = (attr_name) ->
+        return $scope.list_attr_enabled.includes(attr_name)
 
     $http.get('/api/lm/users/binduser/school').then (resp) ->
         $scope.schoolbindusers = resp.data
@@ -37,6 +59,11 @@ angular.module('lmn.users').controller 'LMUsersSchooladminsController', ($scope,
             $http.post('/api/lm/users/change-global-admin', {users: ( x['sAMAccountName'] for x in user ), action: 'delete'}).then (resp) ->
                 $route.reload()
                 notify.success gettext('User deleted')
+
+    $scope.showPW = (user) ->
+       messagebox.show(title: gettext('Show bind user password'), text: gettext("Do you really want to see this password ? It could be a security issue!"), positive: 'Show', negative: 'Cancel').then () ->
+            $http.post('/api/lm/users/showBindPW', {user: user.sAMAccountName}).then (resp) ->
+                messagebox.show(title: gettext('Show bind user password'), text: resp.data, positive: 'OK')
 
     $scope.showInitialPassword = (user) ->
        $http.post('/api/lm/users/password', {users: ( x['sAMAccountName'] for x in user ), action: 'get'}).then (resp) ->
@@ -91,7 +118,8 @@ angular.module('lmn.users').controller 'LMUsersSchooladminsController', ($scope,
         resolve:
           id: () -> user[0]['sAMAccountName']
           role: () -> 'schooladmins'
-          )
+          ).closed.then () ->
+                $route.reload()
 
 
     $scope.haveSelection = () ->

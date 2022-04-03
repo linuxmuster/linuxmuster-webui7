@@ -20,6 +20,7 @@
       remove: gettext('Remove')
     };
     $scope.activetab = 0;
+    $scope.custom_fields_role_selector = 'students';
     $scope.logLevels = [
       {
         name: gettext('Minimal'),

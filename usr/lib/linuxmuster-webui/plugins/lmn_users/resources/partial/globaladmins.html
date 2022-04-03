@@ -167,6 +167,8 @@
             <th> </th>
             <th width="120" translate> Login</th>
             <th translate> Name / DN </th>
+            <th> </th>
+            <th> </th>
         </tr>
         <tr ng:repeat="globalbinduser in globalbindusers">
             <td width="30" style="text-align:center;"> </td>
@@ -176,6 +178,11 @@
             <td>
                 <b>{{globalbinduser.givenName}} {{globalbinduser.sn}}</b><br />
                 {{globalbinduser.DN}}
+            </td>
+            <td width="1">
+                <button class="btn btn-default" ng:click="showPW(globalbinduser)" ng:show="globalbinduser.pw">
+                    <i class="fa fa-eye"></i>
+                </button>
             </td>
             <td width="1">
                 <button class="btn btn-default" ng:click="deleteGlobalBinduser([globalbinduser])">

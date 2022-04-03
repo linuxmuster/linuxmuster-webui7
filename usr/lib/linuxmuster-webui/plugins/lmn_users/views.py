@@ -1097,6 +1097,8 @@ class Handler(HttpPlugin):
         :rtype: string or list
         """
 
+        secret_path = '/etc/linuxmuster/.secret/'
+
         if http_context.method == 'GET':
             binduser_list = []
             sophomorixCommand = ['sophomorix-query', f'--{level}binduser', '--user-full', '-jj']
@@ -1104,6 +1106,9 @@ class Handler(HttpPlugin):
             if 'USER' in result.keys():
                 for username, details in result['USER'].items():
                     if details['sophomorixRole'] == f"{level}binduser":
+                        details['pw'] = False
+                        if os.path.isfile(os.path.join(secret_path, username)):
+                            details['pw'] = True
                         binduser_list.append(details)
                 return binduser_list
             return ["none"]
@@ -1122,3 +1127,25 @@ class Handler(HttpPlugin):
                                  ]
             result = lmn_getSophomorixValue(sophomorixCommand, '')
             return result['COMMENT_EN']
+
+    @url(r'/api/lm/users/showBindPW')
+    @authorize('lm:users:globaladmins:create')
+    @endpoint(api=True)
+    def handle_api_users_showpw_binduser(self, http_context):
+        """
+        Get the bind user's password.
+        Method POST
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: State of the command
+        :rtype: string or list
+        """
+
+        if http_context.method == 'POST':
+            user = http_context.json_body()['user']
+            secret_path = os.path.join('/etc/linuxmuster/.secret/', user)
+
+            if os.path.isfile(secret_path):
+                with open(secret_path, 'r') as f:
+                    return f.read()

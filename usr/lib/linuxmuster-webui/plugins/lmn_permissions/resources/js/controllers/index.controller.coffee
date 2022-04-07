@@ -48,14 +48,14 @@ angular.module('lmn.permissions').controller 'PermissionListIndexController', ($
     $scope.iconify = (bool) ->
         if typeof(bool) == "undefined"
             return 'question'
-        if bool == "true"
+        if bool == "true" or bool == true
             return 'check'
         return 'times'
 
     $scope.colorize = (bool) ->
         if typeof(bool) == "undefined"
             return ''
-        if bool == "true"
+        if bool == "true" or bool == true
             return 'color:green'
         return 'color:red'
 
@@ -104,4 +104,8 @@ angular.module('lmn.permissions').controller 'PermissionListIndexController', ($
         return true
 
     $scope.export = () ->
-        $http.post('/api/permissions/export', {'api':$scope.apiPermissions, 'sidebar':$scope.sidebarPermissions}).then (resp) -> location.href = '/api/permissions/download/' + resp.data
+        $http.post('/api/permissions/export', {
+            'api': $scope.apiPermissions,
+            'sidebar': $scope.sidebarPermissions,
+            'pluginDict': $scope.pluginObj,
+        })

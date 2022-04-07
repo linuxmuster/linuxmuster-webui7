@@ -12,12 +12,14 @@
             <th translate>Status</th>
             <th style="min-width:100px" translate>Name / Size</th>
             <th translate>Comment</th>
-            <th style="min-width:150px" translate>Actions</th>
+            <th colspan="3" style="min-width:150px" translate>Actions</th>
         </tr>
         <tr>
             <td><i class="fas fa-check" style="color:green;"></i></td>
             <td>
                 <b>{{image.name}}</b>
+                <br />
+                <b>{{image.date}}</b>
                 <br />
                 <i>{{image.size|bytes}}</i>
             </td>
@@ -25,24 +27,30 @@
                 {{image.desc}}
             </td>
             <td> </td>
-        </tr>
-        <tr ng:repeat="(date,backup) in image.backups">
             <td> </td>
+            <td> </td>
+        </tr>
+        <tr ng:repeat="backup in image.backups_list|orderBy:'-timestamp'">
+            <td translate><i>Backup</i></td>
             <td>
-                <b>{{date}}</b>
+                <b>{{backup.date}}</b>
                 <br />
                 <i>{{backup.size|bytes}}</i>
             </td>
             <td>
                 {{backup.desc}}
             </td>
-            <td>
+            <td width="1">
                 <button class="btn btn-default" ng:click="$parent.editImage(backup)">
                     <i class="fa fa-cog"></i>
                 </button>
+            </td>
+            <td width="1">
                 <button class="btn btn-default" ng:click="$parent.restoreBackup(image, date)">
                     <i class="fa fa-undo"></i>
                 </button>
+            </td>
+            <td width="1">
                 <button class="btn btn-default" ng:click="$parent.deleteBackupImage(image, date)">
                     <i class="fa fa-trash-o"></i>
                 </button>

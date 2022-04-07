@@ -1,12 +1,8 @@
 globaladministrator:
-    - 'sidebar:view:/view/lmn/links: false'
-
+- 'sidebar:view:/view/lmn/links: false'
 schooladministrator:
-    - 'sidebar:view:/view/lmn/links: false'
-
-teacher:
-    - 'sidebar:view:/view/lmn/links: false'
-
+- 'sidebar:view:/view/lmn/links: false'
 student:
-    - 'sidebar:view:/view/lmn/links: false'
-
+- 'sidebar:view:/view/lmn/links: false'
+teacher:
+- 'sidebar:view:/view/lmn/links: false'

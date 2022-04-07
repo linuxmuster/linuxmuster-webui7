@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-06 12:54+0100\n"
-"PO-Revision-Date: 2022-02-14 08:39\n"
+"POT-Creation-Date: 2022-03-23 16:24+0100\n"
+"PO-Revision-Date: 2022-04-03 20:05\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -17,11 +17,11 @@ msgstr ""
 "X-Crowdin-File: /2.0/lmn_devices.po\n"
 "X-Crowdin-File-ID: 112\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:147
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:151
 msgid "Add a device"
 msgstr "Gerät hinzufügen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:98
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:102
 msgid "BYOD"
 msgstr "BYOD"
 
@@ -33,15 +33,15 @@ msgstr "Schließen"
 msgid "Details"
 msgstr "Details"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:103
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:107
 msgid "Domain-Controller"
 msgstr "Domaincontroller"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:158
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:162
 msgid "Edit CSV"
 msgstr "Im Editor öffnen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:92
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:96
 msgid "Faculty-Teachercomputer"
 msgstr "Fachbereich-Lehrer-PC"
 
@@ -53,7 +53,7 @@ msgstr "Felder"
 msgid "Hide details"
 msgstr "Details ausblenden"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:101
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:105
 msgid "IP-Only"
 msgstr "IP-Only"
 
@@ -61,27 +61,27 @@ msgstr "IP-Only"
 msgid "Importing device"
 msgstr "Gerät wird importiert"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:112
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:116
 msgid "Linbo-PXE"
 msgstr "Linbo-PXE"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:113
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:117
 msgid "Linbo-PXE + OPSI-MGMT"
 msgstr "Linbo-PXE + OPSI-MGMT"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:102
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:106
 msgid "Mobile"
 msgstr "Handy"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:111
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:115
 msgid "No PXE"
 msgstr "Kein PXE"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:114
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:118
 msgid "OPSI-PXE"
 msgstr "OPSI-PXE"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:96
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:100
 msgid "Printer"
 msgstr "Drucker"
 
@@ -89,43 +89,43 @@ msgstr "Drucker"
 msgid "Rows"
 msgstr "Zeilen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:156
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:160
 msgid "Save"
 msgstr "Speichern"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:157
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:161
 msgid "Save &amp; import"
 msgstr "Speichern &amp; importieren"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:93
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:97
 msgid "Server"
 msgstr "Server"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:91
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:95
 msgid "Staffcomputer"
 msgstr "Lehrer-PC"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:95
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:99
 msgid "Switch"
 msgstr "Switch"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:97
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:101
 msgid "Thinclient"
 msgstr "Thinclient"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:99
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:103
 msgid "VOIP"
 msgstr "VOIP"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:100
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:104
 msgid "WLan"
 msgstr "WLan"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:89
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:93
 msgid "classroom-studentcomputer"
 msgstr "Schüler-PC im Klassenzimmer"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:90
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:94
 msgid "classroom-teachercomputer"
 msgstr "Lehrer-PC im Klassenzimmer"
 
@@ -133,7 +133,7 @@ msgstr "Lehrer-PC im Klassenzimmer"
 msgid "empty cells"
 msgstr "leere Zellen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:94
+#: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:98
 msgid "router"
 msgstr "Router"
 

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-11 17:18+0100\n"
-"PO-Revision-Date: 2022-02-14 08:39\n"
+"POT-Creation-Date: 2022-03-23 16:24+0100\n"
+"PO-Revision-Date: 2022-04-03 20:05\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -16,6 +16,10 @@ msgstr ""
 "X-Crowdin-Language: fr\n"
 "X-Crowdin-File: /2.0/lmn_linbo4.po\n"
 "X-Crowdin-File-ID: 225\n"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/image.backups.modal.html:34
+msgid "<i>Backup</i>"
+msgstr "<i>Sauvegarde</i>"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/image.backups.modal.html:15
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/index.html:13
@@ -93,7 +97,7 @@ msgstr "Annuler"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/apply.modal.html:11
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:524
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/image.backups.modal.html:55
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/image.backups.modal.html:63
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/image.modal.html:88
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:176
 msgid "Close"
@@ -531,48 +535,48 @@ msgstr "Cache LINBO"
 msgid "You should call an import devices process to apply the new changes, quit this page anyway ?"
 msgstr "Vous devriez appeler le processus d'importation pour appliquer les nouvelles modifications, quitter cette page quand même ?"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:564
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:569
 msgid "A config file with this name already exists!"
 msgstr "Un fichier portant ce nom existe déjà !"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:630
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:645
 msgid "saved"
 msgstr "sauvegardé"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:633
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:648
 msgid "VDI config saved"
 msgstr "Configuration VDI enregistrée"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:638
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:653
 msgid "Restarting multicast and torrent services, please wait ..."
 msgstr "Redémarrage des services multicast et torrent, veuillez patienter..."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:640
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:655
 msgid "Multicast and torrent services restarted"
 msgstr "Services multicast et torrent redémarrés"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:644
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:659
 msgid "Failed to restart multicast and torrent services. Please see the log files"
 msgstr "Impossible de redémarrer les services multicast et torrents. Veuillez consulter les fichiers journaux"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:651
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:669
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:667
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:686
 msgid "Failed to delete image :"
 msgstr "Échec de la suppression de l'image :"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:658
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:674
 msgid "Failed to delete backup :"
 msgstr "Échec de la suppression de la sauvegarde :"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:686
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:703
 msgid " is not a valid name for a linbo image."
 msgstr " n'est pas un nom valide pour une image linbo."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:705
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:722
 msgid "Backup saved"
 msgstr "Sauvegarde effectuée"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:709
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:726
 msgid "Saved"
 msgstr "Sauvegardé"
 

@@ -1,12 +1,10 @@
 globaladministrator:
-    - 'lm:sync:sync: true'
-    - 'lm:sync:list: true'
-    - 'lm:sync:online: true'
-    - 'sidebar:view:/view/lmn/linbo_sync: true'
-
+- 'lm:sync:list: true'
+- 'lm:sync:online: true'
+- 'lm:sync:sync: true'
+- 'sidebar:view:/view/lmn/linbo_sync: true'
 schooladministrator:
-    - 'lm:sync:sync: true'
-    - 'lm:sync:list: true'
-    - 'lm:sync:online: true'
-    - 'sidebar:view:/view/lmn/linbo_sync: true'
-
+- 'lm:sync:list: true'
+- 'lm:sync:online: true'
+- 'lm:sync:sync: true'
+- 'sidebar:view:/view/lmn/linbo_sync: true'

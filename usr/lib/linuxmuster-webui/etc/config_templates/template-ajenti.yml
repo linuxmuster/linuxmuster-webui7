@@ -1,0 +1,29 @@
+auth:
+  allow_sudo: true
+  emails: {}
+  provider: lm
+  user_config: lm
+  users:
+bind:
+  host: 0.0.0.0
+  mode: tcp
+  port: 443
+logo: /usr/lib/linuxmuster-webui/plugins/lmn_common/resources/img/logo-full.png
+email:
+  enable: false
+  templates:
+    reset_email: /etc/linuxmuster/webui/email_templates/reset_email.html
+color: default
+language: %%LANGUAGE%%
+max_sessions: 400
+session_max_time: 3600
+name: %%SERVERNAME%%.%%DOMAINNAME%%
+restricted_user: nobody
+ssl:
+  certificate: /etc/linuxmuster/ssl/%%SERVERNAME%%.cert.bundle.pem
+  fqdn_certificate: /etc/linuxmuster/ssl/%%SERVERNAME%%.cert.bundle.pem
+  client_auth:
+    certificates: []
+    enable: false
+    force: false
+  enable: true

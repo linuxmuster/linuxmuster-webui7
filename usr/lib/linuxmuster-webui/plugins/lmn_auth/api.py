@@ -20,6 +20,7 @@ from jadi import component, service
 from aj.auth import AuthenticationProvider, OSAuthenticationProvider, AuthenticationService
 from aj.config import UserConfigProvider
 from aj.plugins.lmn_common.api import ldap_config as params, lmsetup_schoolname
+from aj.plugins.lmn_common.multischool import SchoolManager
 from aj.api.endpoint import EndpointError
 
 @component(AuthenticationProvider)
@@ -30,13 +31,16 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
     id = 'lm'
     name = _('Linux Muster LDAP') # skipcq: PYL-E0602
-    pw_reset = True
+    pw_reset = False
 
     def __init__(self, context):
         self.context = context
 
     def prepare_environment(self, username):
-        pass
+        active_school = self.get_profile(username)['activeSchool']
+        schoolmgr = SchoolManager()
+        schoolmgr.switch(active_school)
+        self.context.schoolmgr = schoolmgr
 
     def get_ldap_user(self, username, context=""):
         """
@@ -72,6 +76,17 @@ class LMAuthenticationProvider(AuthenticationProvider):
             'sn',
             'mail',
             'sophomorixSchoolname',
+            'proxyAddresses',
+            'sophomorixCustom1',
+            'sophomorixCustom2',
+            'sophomorixCustom3',
+            'sophomorixCustom4',
+            'sophomorixCustom5',
+            'sophomorixCustomMulti1',
+            'sophomorixCustomMulti2',
+            'sophomorixCustomMulti3',
+            'sophomorixCustomMulti4',
+            'sophomorixCustomMulti5',
         ]
 
         if context == "auth":

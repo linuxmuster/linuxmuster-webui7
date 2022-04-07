@@ -3,8 +3,7 @@ Generate a matrix of permissions and api for all plugins and sidebar items.
 """
 
 import logging
-import re
-from datetime import datetime
+import os
 from jadi import component
 
 
@@ -13,6 +12,7 @@ from aj.auth import authorize
 from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import PermissionProvider
 from aj.plugins.core.api.sidebar import SidebarItemProvider
+from aj.plugins.lmn_common.lmnfile import LMNFile
 
 
 @component(HttpPlugin)
@@ -57,13 +57,17 @@ class Handler(HttpPlugin):
                         url = perm['id'].split(':')[2]
                         sidebarPermissionDict[url] = {
                             'name': perm['name'],
-                            'default': perm['default'],
+                            # perm['default'] always True in Ajenti,
+                            # but not with lm authenticator
+                            'default': False,
                             'plugin': sidebarItems[url]['plugin']
                         }
                     else:
                         apiPermissionDict[perm['id']] = {
                             'name': perm['name'],
-                            'default': perm['default']
+                            # perm['default'] may be True in Ajenti,
+                            # but not with lm authenticator
+                            'default': False,
                         }
 
             def filter_url_regexp(url):
@@ -105,6 +109,7 @@ class Handler(HttpPlugin):
                 if name not in PluginDict.keys():
                     PluginDict[name] = {
                         'methods':{},
+                        'lmn':[],
                     }
 
                 for n,m in plugin.__class__.__dict__.items():
@@ -135,44 +140,59 @@ class Handler(HttpPlugin):
                             'post': "Method POST" in doc if doc else ''
                         }
 
-            ## Load default ui permissions from file
-            path = '/usr/lib/linuxmuster-webui/etc/default-ui-permissions.ini'
+            ## Load default ui permissions from permissions.yml files
+            plugins_path = '/usr/lib/linuxmuster-webui/plugins'
 
-            with open(path, 'r') as f:
-                for line in f:
-                    # Stanza header
-                    if line.startswith('['):
-                        role = re.sub(r"[^A-Za-z]+", '', line) ## .strip(']') does not work
+            for plugin in os.listdir(plugins_path):
+                path = os.path.join(plugins_path, plugin)
+                plugin_permissions = []
+                if os.path.isdir(path) and 'lmn_' in plugin:
+                    perm_path = os.path.join(path, 'permissions.yml')
 
-                    # Property
-                    elif "WEBUI" in line:
-                        line = line.split('=')[1].split(':')
-                        default = line[-1].strip()
+                    lmn_permissions = None
+                    if os.path.isfile(perm_path):
+                        with LMNFile(perm_path, 'r') as f:
+                            lmn_permissions = f.data
 
-                        if "sidebar" in line[0]:
-                            url = line[2].strip()
+                    if lmn_permissions is not None:
+                        permissions = {}
+                        for role, perms_list in lmn_permissions.items():
+                            permissions[role] = {}
+                            for perm in perms_list:
+                                cat_id, value = perm.split()
+                                # Remove last ":"
+                                cat_id = cat_id[:-1]
+                                plugin_permissions.append(cat_id)
 
-                            if url not in sidebarPermissionDict.keys():
-                                sidebarPermissionDict[url] = {
-                                    'name': url,
-                                    'default': False,
-                                    'plugin': "NOT IMPLEMENTED"
+                                if 'sidebar' in cat_id:
+                                    url = cat_id.split(':')[-1]
 
-                                }
-                                logging.warning(f'{url} not listed in PermissionProvider')
-                            sidebarPermissionDict[url][role] = default
+                                    if url not in sidebarPermissionDict.keys():
+                                        sidebarPermissionDict[url] = {
+                                            'name': url,
+                                            'default': False,
+                                            'plugin': "NOT IMPLEMENTED"
 
-                        # API permissions
-                        else:
-                            cat_id = ':'.join(line[:-1])
+                                        }
+                                        logging.warning(f'{url} not listed in PermissionProvider')
+                                    sidebarPermissionDict[url][role] = value
 
-                            if cat_id not in apiPermissionDict.keys():
-                                apiPermissionDict[cat_id] = {
-                                    'name': "NO DESCRIPTION",
-                                    'default': False
-                                }
-                                logging.warning(f'{cat_id} not listed in PermissionProvider')
-                            apiPermissionDict[cat_id][role] = default
+                                # API permissions
+                                else:
+                                   if cat_id not in apiPermissionDict.keys():
+                                        apiPermissionDict[cat_id] = {
+                                            'name': "NO DESCRIPTION",
+                                            'default': False
+                                        }
+                                        logging.warning(f'{cat_id} not listed in PermissionProvider')
+                                   apiPermissionDict[cat_id][role] = value
+
+                    # Avoid duplicates
+                    # We need this later to write per plugin the permissions
+                    if plugin in PluginDict.keys():
+                        PluginDict[plugin]['lmn'] = list(set(plugin_permissions))
+                        PluginDict[plugin]['lmn'].sort()
+
             return PluginDict, apiPermissionDict, sidebarPermissionDict
 
     @url(r'/api/permissions/export')
@@ -192,32 +212,36 @@ class Handler(HttpPlugin):
         if http_context.method == "POST":
             api = http_context.json_body()['api']
             sidebar = http_context.json_body()['sidebar']
+            pluginDict = http_context.json_body()['pluginDict']
 
-            roles = ['globaladministrator', 'schooladministrator', 'teacher', 'student']
-            permissions = {
-                'globaladministrator': [],
-                'schooladministrator': [],
-                'teacher': [],
-                'student': []
-            }
+            plugins_path = '/usr/lib/linuxmuster-webui/plugins'
+            roles = [
+                'globaladministrator',
+                'schooladministrator',
+                'teacher',
+                'student'
+            ]
 
-            for perm, details in api.items():
-                for role in roles:
-                    if role in details.keys():
-                        permissions[role].append(f"    WEBUI_PERMISSIONS={perm}: {details[role]}")
+            for plugin, details in pluginDict.items():
+                if len(details['lmn']) > 0:
+                    permissions = {}
 
-            for perm, details in sidebar.items():
-                for role in roles:
-                    if role in details.keys():
-                        permissions[role].append(f"    WEBUI_PERMISSIONS=sidebar:view:{perm}: {details[role]}")
+                    for role in roles:
+                        for permission_id in details['lmn']:
+                            if 'sidebar' in permission_id:
+                                url = permission_id.split(':')[-1]
+                                perm = sidebar[url].get(role, '')
+                            else:
+                                perm = api[permission_id].get(role, '')
 
-            tmpfile = f'/tmp/default-ui-permissions_{datetime.now().strftime("%Y-%m-%d-%H-%M-%S")}.ini'
-            with open(tmpfile, 'w') as f:
-                for role in roles:
-                    f.write(f"[{role}]\n")
-                    f.write("\n".join(permissions[role]) + "\n")
+                            if perm:
+                                if role not in permissions:
+                                    permissions[role] = []
+                                permissions[role].append(f'{permission_id}: {str(perm).lower()}')
 
-            return tmpfile
+                    perm_file = os.path.join(plugins_path, plugin, 'permissions.yml')
+                    with LMNFile(perm_file, 'w') as f:
+                        f.write(permissions)
 
     @url(r'/api/permissions/download/(?P<tmpfile>.+)')
     @authorize('lm:schoolsettings') # TODO : adapt

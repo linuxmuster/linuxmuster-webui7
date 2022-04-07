@@ -23,7 +23,7 @@ angular.module('lmn.devices').controller 'LMDevicesApplyModalController', ($scop
 
 
 
-angular.module('lmn.devices').controller 'LMDevicesController', ($scope, $http, $uibModal, $route, $location, $anchorScroll, gettext, notify, pageTitle, lmFileEditor, lmFileBackups, validation) ->
+angular.module('lmn.devices').controller 'LMDevicesController', ($scope, $http, $uibModal, $route, $location, $anchorScroll, gettext, hotkeys, notify, pageTitle, lmFileEditor, lmFileBackups, validation) ->
     pageTitle.set(gettext('Devices'))
 
     $scope.error_msg = {}
@@ -242,7 +242,10 @@ angular.module('lmn.devices').controller 'LMDevicesController', ($scope, $http, 
            return
         if $scope.identity.user is 'root'
            return
-        
+
+    $http.get('/api/lm/linbo4/groups').then (resp) ->
+        $scope.linbo_groups = resp.data
+
     $http.get("/api/lmn/activeschool").then (resp) ->
         $scope.identity.profile.activeSchool = resp.data
         school = $scope.identity.profile.activeSchool
@@ -256,4 +259,19 @@ angular.module('lmn.devices').controller 'LMDevicesController', ($scope, $http, 
         $scope.devices = resp.data
         $scope.devices_without_comment = $scope.devices.filter((dict) -> dict['room'][0] != '#')
         validation.set($scope.devices_without_comment, 'devices')
+
+    hotkeys.on $scope, (key, event) ->
+        if (key == 'I' && event.ctrlKey)
+            $scope.saveAndImport()
+            return true
+
+        if (key == 'S' && event.ctrlKey)
+            $scope.save()
+            return true
+
+        if (key == 'B' && event.ctrlKey)
+            $scope.backups()
+            return true
+
+        return false
 

@@ -534,6 +534,10 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
         $http.get('/api/lm/linbo4/images').then (resp) ->
             $scope.images = resp.data
             for image in $scope.images
+                image.backups_list = []
+                for date,backup of image.backups
+                    backup.date = date
+                    image.backups_list.push(backup)
                 image.used_in = []
                 for config in $scope.configs
                     if config.images.indexOf(image.name + '.qcow2') > -1
@@ -560,9 +564,10 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
                 notify.error gettext(test)
                 return
             if newName
-                if "start.conf."+newName in $scope.configs
-                    notify.error gettext('A config file with this name already exists!')
-                    return
+                for config in $scope.configs
+                    if "start.conf."+newName == config.file
+                        notify.error gettext('A config file with this name already exists!')
+                        return
                 if example
                     $http.get("/api/lm/linbo4/config/examples/#{example}").then (resp) ->
                         resp.data['config']['LINBO']['Group'] = newName
@@ -570,6 +575,7 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
                             resp.data['config']['LINBO']['Server'] = setup.data['setup']['serverip']
                             $http.post("/api/lm/linbo4/config/start.conf.#{newName}", resp.data).then () ->
                                 $scope.config_change = true
+                                $scope.configs.push({'file': "start.conf."+newName, 'images':[]})
                 else
                     $http.post("/api/lm/linbo4/config/start.conf.#{newName}", {
                         config:
@@ -579,11 +585,20 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
                         partitions: []
                     }).then () ->
                         $scope.config_change = true
+                        $scope.configs.push({'file': "start.conf."+newName, 'images':[]})
 
     $scope.deleteConfig = (configName) ->
-        messagebox.show(text: "Delete '#{configName}'?", positive: 'Delete', negative: 'Cancel').then () ->
+        messagebox.show(
+            title: "Delete '#{configName}' ?",
+            text: "Delete the file '#{configName}'? This will also delete the associated grub config file located in /srv/linbo/boot/grub.",
+            positive: 'Delete', negative: 'Cancel'
+        ).then () ->
             $http.delete("/api/lm/linbo4/config/#{configName}").then () ->
                 $scope.config_change = true
+                for config, index in $scope.configs
+                    if configName == config.file
+                        $scope.configs.splice(index, 1)
+                        return
 
     $scope.duplicateConfig = (configName, deleteOriginal=false) ->
         newName = configName.substring('start.conf.'.length)
@@ -646,6 +661,7 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
         messagebox.show(text: "Delete '#{image.name}'?", positive: 'Delete', negative: 'Cancel').then () ->
             $http.delete("/api/lm/linbo4/image/#{image.name}").then () ->
                 $scope.restartServices()
+                $location.hash("images")
             .catch (err) ->
                 notify.error(gettext("Failed to delete image :") + err.data.message)
 
@@ -664,6 +680,7 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
                 promises.push($http.delete("/api/lm/linbo4/image/#{image.name}"))
             $q.all(promises).then () ->
                 $scope.restartServices()
+                $location.hash("images")
             .catch (err) ->
                 notify.error(gettext("Failed to delete image :") + err.data.message)
 
@@ -685,7 +702,7 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
                 notify.error(gettext(new_name + " is not a valid name for a linbo image."))
 
     $scope.restoreBackup = (image, date) ->
-        messagebox.show(text: "Do you really want to restore the backup at '#{date}'? This will erase the actual image.", positive: 'Restore', negative: 'Cancel').then () ->
+        messagebox.show(text: "Do you really want to restore the backup at '#{date}'? This will move the actual image to a backup.", positive: 'Restore', negative: 'Cancel').then () ->
             $http.post("/api/lm/linbo4/restoreBackupImage/#{image.name}", {date: date}).then (resp) ->
                 $scope.restartServices()
 

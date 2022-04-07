@@ -1,4 +1,5 @@
 *.pyc
+.permissions.yml.bak*
 .*.swp
 .idea*
 .installed

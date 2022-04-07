@@ -1,0 +1,20 @@
+<div class="modal-header">
+    <h4 translate>Differences</h4>
+</div>
+<div class="modal-body">
+    <div class="alert alert-info" ng:show="backup_diff.length == 0" translate>
+        No differences detected
+    </div>
+    <div class="list-group">
+        <p ng:repeat="entry in backup_diff">
+            <span ng:style="entry[0] == '>' && {'color':'red'} ||
+                            entry[0] == '<' && {'color':'green'} ||
+                            entry[0] == '@' && {'color':'blue'}">
+                {{entry}}
+            </span>
+        </p>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default btn-flat" translate ng:click="cancel()">Close</button>
+</div

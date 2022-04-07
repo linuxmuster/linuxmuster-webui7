@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-28 11:31+0100\n"
-"PO-Revision-Date: 2022-02-14 08:39\n"
+"POT-Creation-Date: 2022-04-03 21:57+0200\n"
+"PO-Revision-Date: 2022-04-03 20:05\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -25,9 +25,17 @@ msgstr "Konto Informationen"
 msgid "But keep in mind:"
 msgstr "Aber denken Sie daran:"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:97
+msgid "Change my data"
+msgstr "Meine Daten ändern"
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:34
 msgid "Change password"
 msgstr "Passwort ändern"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/customFields.modal.html:73
+msgid "Close"
+msgstr "Schließen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:59
 msgid "Cloudquota Calculated in MB:"
@@ -49,9 +57,17 @@ msgstr "E-Mail:"
 msgid "Mailquota Calculated in MB:"
 msgstr "Mailquota berechnet in MB:"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:80
+msgid "My informations"
+msgstr "Meine Informationen"
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:29
 msgid "Name:"
 msgstr "Name:"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/customFields.modal.html:13
+msgid "Properties"
+msgstr "Eigenschaften"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:42
 msgid "Quotas"
@@ -69,6 +85,10 @@ msgstr "Schule:"
 msgid "Use the sidebar to navigate through the options."
 msgstr "Benutzen Sie die Seitenleiste, um durch die Optionen zu navigieren."
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/customFields.modal.html:3
+msgid "User Details"
+msgstr "Benutzerdetails"
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:2
 msgid "Welcome to Linuxmuster.net version 7!"
 msgstr "Willkommen zu Linuxmuster.net 7!"
@@ -85,23 +105,80 @@ msgstr "verwenden Sie die Seitenleiste, um in den Einstellungen zu navigieren. S
 msgid "Home"
 msgstr "Hauptseite"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:22
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:25
 msgid "NO LIMIT"
 msgstr "UNBEGRENZT"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:58
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:79
 msgid "Class"
 msgstr "Klasse"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:60
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:81
 msgid "Teachers"
 msgstr "Lehrer"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:62
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:83
 msgid "Printers"
 msgstr "Drucker"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:64
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:85
 msgid "Project"
 msgstr "Projekt"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:104
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:131
+msgid "New value"
+msgstr "Neuer Wert"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:110
+msgid "Value updated !"
+msgstr "Wert aktualisiert!"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:112
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:127
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:138
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:152
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:162
+msgid "Error, please verify the user and/or your values."
+msgstr "Fehler, bitte überprüfen Sie den Benutzer und/oder Ihre Werte."
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:117
+msgid "Remove custom field value"
+msgstr "Eigenen Feldwert entfernen"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:118
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:143
+msgid "Do you really want to remove "
+msgstr "Möchten Sie wirklich Folgendes entfernen: "
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:119
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:144
+msgid "OK"
+msgstr "OK"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:120
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:145
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:125
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:150
+msgid "Value removed !"
+msgstr "Wert entfernt!"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:135
+msgid "Value added !"
+msgstr "Wert hinzugefügt!"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:142
+msgid "Remove proxy address"
+msgstr "Proxy-Adresse entfernen"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:156
+msgid "New address"
+msgstr "Neue Adresse"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:160
+msgid "Address added !"
+msgstr "Adresse hinzugefügt!"
 

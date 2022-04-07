@@ -635,19 +635,26 @@
     $http.get('/api/lm/linbo4/configs').then(function(resp) {
       $scope.configs = resp.data;
       return $http.get('/api/lm/linbo4/images').then(function(resp) {
-        var config, i, image, len, ref, results;
+        var backup, config, date, i, image, len, ref, ref1, results;
         $scope.images = resp.data;
         ref = $scope.images;
         results = [];
         for (i = 0, len = ref.length; i < len; i++) {
           image = ref[i];
+          image.backups_list = [];
+          ref1 = image.backups;
+          for (date in ref1) {
+            backup = ref1[date];
+            backup.date = date;
+            image.backups_list.push(backup);
+          }
           image.used_in = [];
           results.push((function() {
-            var j, len1, ref1, results1;
-            ref1 = $scope.configs;
+            var j, len1, ref2, results1;
+            ref2 = $scope.configs;
             results1 = [];
-            for (j = 0, len1 = ref1.length; j < len1; j++) {
-              config = ref1[j];
+            for (j = 0, len1 = ref2.length; j < len1; j++) {
+              config = ref2[j];
               if (config.images.indexOf(image.name + '.qcow2') > -1) {
                 results1.push(image.used_in.push(config.file.split('.').slice(-1)[0]));
               } else {
@@ -674,7 +681,7 @@
     };
     $scope.createConfig = function(example) {
       return messagebox.prompt('New name', '').then(function(msg) {
-        var newName, ref, test;
+        var config, i, len, newName, ref, test;
         newName = msg.value;
         test = validation.isValidLinboConf(newName);
         if (test !== true) {
@@ -682,9 +689,13 @@
           return;
         }
         if (newName) {
-          if (ref = "start.conf." + newName, indexOf.call($scope.configs, ref) >= 0) {
-            notify.error(gettext('A config file with this name already exists!'));
-            return;
+          ref = $scope.configs;
+          for (i = 0, len = ref.length; i < len; i++) {
+            config = ref[i];
+            if ("start.conf." + newName === config.file) {
+              notify.error(gettext('A config file with this name already exists!'));
+              return;
+            }
           }
           if (example) {
             return $http.get(`/api/lm/linbo4/config/examples/${example}`).then(function(resp) {
@@ -692,7 +703,11 @@
               return $http.get("/api/lm/read-config-setup").then(function(setup) {
                 resp.data['config']['LINBO']['Server'] = setup.data['setup']['serverip'];
                 return $http.post(`/api/lm/linbo4/config/start.conf.${newName}`, resp.data).then(function() {
-                  return $scope.config_change = true;
+                  $scope.config_change = true;
+                  return $scope.configs.push({
+                    'file': "start.conf." + newName,
+                    'images': []
+                  });
                 });
               });
             });
@@ -706,7 +721,11 @@
               os: [],
               partitions: []
             }).then(function() {
-              return $scope.config_change = true;
+              $scope.config_change = true;
+              return $scope.configs.push({
+                'file': "start.conf." + newName,
+                'images': []
+              });
             });
           }
         }
@@ -714,12 +733,22 @@
     };
     $scope.deleteConfig = function(configName) {
       return messagebox.show({
-        text: `Delete '${configName}'?`,
+        title: `Delete '${configName}' ?`,
+        text: `Delete the file '${configName}'? This will also delete the associated grub config file located in /srv/linbo/boot/grub.`,
         positive: 'Delete',
         negative: 'Cancel'
       }).then(function() {
         return $http.delete(`/api/lm/linbo4/config/${configName}`).then(function() {
-          return $scope.config_change = true;
+          var config, i, index, len, ref;
+          $scope.config_change = true;
+          ref = $scope.configs;
+          for (index = i = 0, len = ref.length; i < len; index = ++i) {
+            config = ref[index];
+            if (configName === config.file) {
+              $scope.configs.splice(index, 1);
+              return;
+            }
+          }
         });
       });
     };
@@ -810,7 +839,8 @@
         negative: 'Cancel'
       }).then(function() {
         return $http.delete(`/api/lm/linbo4/image/${image.name}`).then(function() {
-          return $scope.restartServices();
+          $scope.restartServices();
+          return $location.hash("images");
         }).catch(function(err) {
           return notify.error(gettext("Failed to delete image :") + err.data.message);
         });
@@ -856,7 +886,8 @@
           promises.push($http.delete(`/api/lm/linbo4/image/${image.name}`));
         }
         return $q.all(promises).then(function() {
-          return $scope.restartServices();
+          $scope.restartServices();
+          return $location.hash("images");
         }).catch(function(err) {
           return notify.error(gettext("Failed to delete image :") + err.data.message);
         });
@@ -889,7 +920,7 @@
     };
     $scope.restoreBackup = function(image, date) {
       return messagebox.show({
-        text: `Do you really want to restore the backup at '${date}'? This will erase the actual image.`,
+        text: `Do you really want to restore the backup at '${date}'? This will move the actual image to a backup.`,
         positive: 'Restore',
         negative: 'Cancel'
       }).then(function() {

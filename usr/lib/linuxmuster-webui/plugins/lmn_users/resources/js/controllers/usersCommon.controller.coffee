@@ -54,33 +54,33 @@ angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $rou
     $scope.showQuotaDetails = true
     $scope.nevertext = gettext('Never')
     $scope.custom_column = false
+    if role == 'schooladmins'
+        custom_fields_role = 'schooladministrators'
+    else if role == 'globaladmins'
+        custom_fields_role = 'globaladministrators'
+    else
+        custom_fields_role = role
 
-    if role == 'students' or role == 'teachers'
-        $http.get('/api/lm/read_custom_config').then (resp) ->
-            $scope.custom = resp.data.custom[role]
-            $scope.customMulti = resp.data.customMulti[role]
-            $scope.proxyAddresses = resp.data.proxyAddresses[role]
-            
-            # Check if proxyAddresses has content
-            if Object.keys(resp.data.proxyAddresses).length != 0
-                $scope.proxyAddresses = resp.data.proxyAddresses[role]
+    $http.get('/api/lm/read_custom_config').then (resp) ->
+        $scope.custom = resp.data.custom[custom_fields_role]
+        $scope.customMulti = resp.data.customMulti[custom_fields_role]
+        $scope.proxyAddresses = resp.data.proxyAddresses[custom_fields_role]
 
-                # Is there a custom field to show ?
-                if $scope.proxyAddresses.show
+        # Is there a custom field to show ?
+        if $scope.proxyAddresses.show
+            $scope.custom_column = true
+
+        if not $scope.custom_column
+            for custom, values of $scope.custom
+                if values.show
                     $scope.custom_column = true
+                    break
 
-
-            if not $scope.custom_column
-                for custom, values of $scope.custom
-                    if values.show
-                        $scope.custom_column = true
-                        break
-
-            if not $scope.custom_column
-                for custom, values of $scope.customMulti
-                    if values.show
-                        $scope.custom_column = true
-                        break
+        if not $scope.custom_column
+            for custom, values of $scope.customMulti
+                if values.show
+                    $scope.custom_column = true
+                    break
 
     $scope.formatDate = (date) ->
         if (date == "19700101000000.0Z")

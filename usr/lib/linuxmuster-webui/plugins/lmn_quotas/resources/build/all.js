@@ -33,7 +33,7 @@
     };
   });
 
-  angular.module('lmn.quotas').controller('LMQuotasController', function($scope, $http, $uibModal, $location, $q, gettext, lmEncodingMap, notify, pageTitle, lmFileBackups, $rootScope, wait) {
+  angular.module('lmn.quotas').controller('LMQuotasController', function($scope, $http, $uibModal, $location, $q, gettext, hotkeys, lmEncodingMap, notify, pageTitle, lmFileBackups, $rootScope, wait) {
     pageTitle.set(gettext('Quotas'));
     $scope.UserSearchVisible = false;
     $scope.activeTab = 0;
@@ -195,7 +195,7 @@
       delete $scope.non_default[role][user.login];
       return $scope.non_default[role].list.splice($scope.non_default[role].list.indexOf(user), 1);
     };
-    return $scope.saveApply = function() {
+    $scope.saveApply = function() {
       wait.modal(gettext("Saving quotas ..."), 'progressbar');
       return $http.post('/api/lm/quotas/save', {
         users: $scope.toChange,
@@ -209,6 +209,22 @@
         });
       });
     };
+    return hotkeys.on($scope, function(key, event) {
+      var current_tab;
+      current_tab = $scope.tabs[$scope.activeTab];
+      if (key === 'F' && event.ctrlKey) {
+        if ($scope.activeTab <= 2) {
+          $scope.showUserSearch();
+          return true;
+        }
+        return false;
+      }
+      if (key === 'S' && event.ctrlKey) {
+        $scope.saveApply();
+        return true;
+      }
+      return false;
+    });
   });
 
 }).call(this);

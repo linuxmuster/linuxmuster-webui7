@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-14 09:34+0100\n"
-"PO-Revision-Date: 2022-02-14 08:39\n"
+"POT-Creation-Date: 2022-03-23 16:24+0100\n"
+"PO-Revision-Date: 2022-04-03 20:05\n"
 "Last-Translator: \n"
 "Language-Team: Norwegian\n"
 "Language: no_NO\n"
@@ -21,7 +21,7 @@ msgstr ""
 msgid "<i class=\"fas fa-clock\"></i>  Boot timeout (in seconds):"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:91
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:95
 msgid "<i class=\"fas fa-directions\"></i>  Bypass autostart"
 msgstr ""
 
@@ -29,11 +29,15 @@ msgstr ""
 msgid "<i class=\"fas fa-eraser\"></i>  Format"
 msgstr ""
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:87
+msgid "<i class=\"fas fa-eraser\"></i>  Partition"
+msgstr ""
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:54
 msgid "<i class=\"fas fa-exclamation-triangle\"></i>  New"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:102
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:106
 msgid "<i class=\"fas fa-info-circle\"></i>\n"
 "                To apply a linbo-remote command, you have to select at least one client and one command."
 msgstr ""
@@ -46,7 +50,7 @@ msgstr ""
 msgid "<i class=\"fas fa-play\"></i>  Start"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:95
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:99
 msgid "<i class=\"fas fa-plug\"></i>  Use Prestart"
 msgstr ""
 
@@ -62,20 +66,20 @@ msgstr ""
 msgid "<i class=\"fas fa-sync-alt\"></i>  Sync"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:87
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:91
 msgid "<i class=\"fas fa-terminal\"></i>  Disable GUI"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:112
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:116
 msgid "Apply"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:86
-msgid "Autostart"
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:115
+msgid "Check online"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:111
-msgid "Check online"
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:86
+msgid "Global options"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:12
@@ -106,7 +110,7 @@ msgstr ""
 msgid "Power management"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:107
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:111
 msgid "Result command"
 msgstr ""
 
@@ -131,7 +135,7 @@ msgstr ""
 msgid "Synchronize first OS from workstation"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/js/controllers/index.controller.coffee:168
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/js/controllers/index.controller.coffee:178
 msgid "Command successfully sent : "
 msgstr ""
 

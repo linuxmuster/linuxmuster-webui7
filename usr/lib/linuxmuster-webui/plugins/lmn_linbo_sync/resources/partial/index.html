@@ -83,7 +83,11 @@
                 </tr>
                 <tr>
                    <td style="display:flex;">
-                       <div style="width:200px;font-weight:bold;" translate>Autostart</div>
+                       <div style="width:200px;font-weight:bold;" translate>Global options</div>
+                       <button class="btn btn-info" style="width:110px; margin-left:10px;" ng:click="handle_partition(group)" translate>
+                           <i class="fas fa-eraser"></i>  Partition
+                           <input type="checkbox" class="pull-right" ng:checked="image.run_partition == 1">
+                       </button>
                        <button class="btn btn-default" style="width:200px; margin-left:10px;" ng:click="handle_disable_gui(group)" translate>
                            <i class="fas fa-terminal"></i>  Disable GUI
                            <input type="checkbox" class="pull-right" ng:checked="details.auto.disable_gui">

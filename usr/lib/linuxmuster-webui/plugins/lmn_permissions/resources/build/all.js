@@ -75,7 +75,7 @@ angular.module('lmn.permissions').config(function ($routeProvider) {
       if (typeof bool === "undefined") {
         return 'question';
       }
-      if (bool === "true") {
+      if (bool === "true" || bool === true) {
         return 'check';
       }
       return 'times';
@@ -84,7 +84,7 @@ angular.module('lmn.permissions').config(function ($routeProvider) {
       if (typeof bool === "undefined") {
         return '';
       }
-      if (bool === "true") {
+      if (bool === "true" || bool === true) {
         return 'color:green';
       }
       return 'color:red';
@@ -144,9 +144,8 @@ angular.module('lmn.permissions').config(function ($routeProvider) {
     return $scope.export = function() {
       return $http.post('/api/permissions/export', {
         'api': $scope.apiPermissions,
-        'sidebar': $scope.sidebarPermissions
-      }).then(function(resp) {
-        return location.href = '/api/permissions/download/' + resp.data;
+        'sidebar': $scope.sidebarPermissions,
+        'pluginDict': $scope.pluginObj
       });
     };
   });

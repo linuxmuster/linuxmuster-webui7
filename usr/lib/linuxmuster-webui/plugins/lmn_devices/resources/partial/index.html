@@ -67,7 +67,11 @@
                     <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.hostname" placeholder="Hostname" class="form-control" />
                 </td>
                 <td ng:if="fields.group.visible" class="form-group" ng:class="validateField('LinboConf', device.group, device._isNew, $index)">
-                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.group" placeholder="Group" class="form-control" />
+                    <input type="text"
+                           ng:model="device.group"
+                           placeholder="Group"
+                           uib-typeahead="group for group in linbo_groups | filter:$viewValue "
+                           class="form-control" />
                 </td>
                 <td ng:if="fields.mac.visible" class="form-group" ng:class="validateField('Mac', device.mac, device._isNew, $index)">
                     <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="device.mac" placeholder="MAC" class="form-control" />

@@ -1,0 +1,6 @@
+linuxmuster:
+  ldap:
+    binddn: %%BINDUSER%%
+    bindpw: %%BINDPW%%
+    host: %%SERVERNAME%%
+    searchdn: %%BASEDN%%

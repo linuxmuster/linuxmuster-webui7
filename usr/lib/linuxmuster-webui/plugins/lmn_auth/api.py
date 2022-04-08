@@ -37,12 +37,6 @@ class LMAuthenticationProvider(AuthenticationProvider):
     def __init__(self, context):
         self.context = context
 
-    def prepare_environment(self, username):
-        active_school = self.get_profile(username)['activeSchool']
-        schoolmgr = SchoolManager()
-        schoolmgr.switch(active_school)
-        self.context.schoolmgr = schoolmgr
-
     def get_ldap_user(self, username, context=""):
         """
         Get the user's informations to initialize his session.
@@ -125,6 +119,13 @@ class LMAuthenticationProvider(AuthenticationProvider):
         return userAttrs
 
     def prepare_environment(self, username):
+        # Initialize school manager
+        active_school = self.get_profile(username)['activeSchool']
+        schoolmgr = SchoolManager()
+        schoolmgr.switch(active_school)
+        self.context.schoolmgr = schoolmgr
+ 
+        # Permissions for kerberos ticket
         uid = self.get_isolation_uid(username)
 
         if os.path.isfile(f'/tmp/krb5cc_{uid}'):

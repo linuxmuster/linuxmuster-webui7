@@ -68,7 +68,11 @@
     });
     $http.get('/api/lm/read_custom_config').then(function(resp) {
       var idx, index, j, len1, ref1, results;
-      $scope.customDisplay = resp.data.customDisplay.teachers;
+      $scope.customDisplay = resp.data.customDisplay.teachers || {
+        '1': '',
+        '2': '',
+        '3': ''
+      };
       $scope.customTitle = [''];
       ref1 = [1, 2, 3];
       results = [];
@@ -403,7 +407,11 @@
     }
     $http.get('/api/lm/read_custom_config').then(function(resp) {
       var idx, index, j, len1, ref1, results;
-      $scope.customDisplay = resp.data.customDisplay.students;
+      $scope.customDisplay = resp.data.customDisplay.students || {
+        '1': '',
+        '2': '',
+        '3': ''
+      };
       $scope.customTitle = [''];
       ref1 = [1, 2, 3];
       results = [];
@@ -1693,7 +1701,11 @@
     });
     $http.get('/api/lm/read_custom_config').then(function(resp) {
       var idx, index, j, len1, ref1, results;
-      $scope.customDisplay = resp.data.customDisplay.teachers;
+      $scope.customDisplay = resp.data.customDisplay.teachers || {
+        '1': '',
+        '2': '',
+        '3': ''
+      };
       $scope.customTitle = [''];
       ref1 = [1, 2, 3];
       results = [];

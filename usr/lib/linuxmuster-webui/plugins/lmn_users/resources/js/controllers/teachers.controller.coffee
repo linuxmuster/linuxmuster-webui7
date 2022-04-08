@@ -44,7 +44,7 @@ angular.module('lmn.users').controller 'LMUsersTeachersController', ($q, $scope,
         $scope.teachers = resp.data
 
     $http.get('/api/lm/read_custom_config').then (resp) ->
-        $scope.customDisplay = resp.data.customDisplay.teachers
+        $scope.customDisplay = resp.data.customDisplay.teachers || {'1':'', '2':'', '3':''}
         $scope.customTitle = ['',]
         for idx in [1,2,3]
             if $scope.customDisplay[idx] == undefined or $scope.customDisplay[idx] == ''

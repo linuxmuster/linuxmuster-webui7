@@ -41,7 +41,7 @@ angular.module('lmn.users').controller 'LMUsersStudentsController', ($scope, $ht
         $scope.list_attr_enabled.push('sophomorixCustomMulti' + n)
 
     $http.get('/api/lm/read_custom_config').then (resp) ->
-        $scope.customDisplay = resp.data.customDisplay.students
+        $scope.customDisplay = resp.data.customDisplay.students || {'1':'', '2':'', '3':''}
         $scope.customTitle = ['',]
         for idx in [1,2,3]
             if $scope.customDisplay[idx] == undefined or $scope.customDisplay[idx] == ''

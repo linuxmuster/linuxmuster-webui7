@@ -1,6 +1,6 @@
 #!/bin/bash
 # check if samba already installed
-installed=$(cat /etc/samba/smb.conf | grep active\ directory\ domain\ controller)
+installed=$(grep active\ directory\ domain\ controller /etc/samba/smb.conf)
 ACLS="/usr/lib/linuxmuster-webui/etc/install_scripts/webuiUpload.ntacl"
 
 if [ -d "/srv/webuiUpload/" ];then
@@ -11,7 +11,7 @@ mkdir -p /srv/webuiUpload/
 if [ -z "$installed" ];then
     echo "not installed skip setting acl on webuiUpload"
 else
-    workgroup=$(cat /etc/samba/smb.conf | grep workgroup | awk '{print $3}')
+    workgroup=$(testparm -l -s --parameter-name=workgroup 2>/dev/null)
     sed -i "s/LINUXMUSTER/$workgroup/" $ACLS
     setfacl --set-file $ACLS /srv/webuiUpload
 fi

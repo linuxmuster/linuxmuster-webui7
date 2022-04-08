@@ -55,7 +55,7 @@ angular.module('lmn.session').controller 'LMNSessionFileSelectModalController', 
             positive: gettext('Delete'),
             negative: gettext('Cancel')
         }).then () ->
-            $http.post('/api/lmn/samba_share/unlink', {file: path}).then (resp) ->
+            $http.post('/api/lmn/samba_share/file', {path: path}).then (resp) ->
                 notify.success(gettext("File " + file + " removed"))
                 delete $scope.files['TREE'][file]
                 $scope.files['COUNT']['files'] = $scope.files['COUNT']['files'] - 1

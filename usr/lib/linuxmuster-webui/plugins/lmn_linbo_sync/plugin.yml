@@ -8,7 +8,7 @@ icon: clock-o
 dependencies:
     - !PluginDependency { plugin_name: core }
     - !PluginDependency { plugin_name: lmn_common }
-    - !PluginDependency { plugin_name: lmn_linbo }
+    - !PluginDependency { plugin_name: lmn_linbo4 }
 resources:
     - resources/js/module.es
     - resources/js/routing.es

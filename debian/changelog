@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.1.16) lmn71; urgency=medium
+
+  * Fix typo in postinst. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 08 Apr 2022 22:10:25 +0200
+
 linuxmuster-webui7 (7.1.15) lmn71; urgency=medium
 
   * Fix duplicate workgroup result in postinst 

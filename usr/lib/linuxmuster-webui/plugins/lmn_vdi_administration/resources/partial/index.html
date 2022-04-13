@@ -14,17 +14,17 @@
                         <th>Master VMs</th>
                     </tr>
                     <tr ng:repeat="(masterGroup, masterGroupData) in masterVmGroupStates" ng:show="masterVmGroupStates != null">
-                        <td ng:click="showGroupInfo(masterGroupData)">
+                        <td ng:click="showGroupInfo(masterGroupData.current_master)">
                             {{masterGroup}}
                         </td>
-                        <td ng:click="showGroupInfo(masterGroupData)">
-                            {{masterGroupData.hostname}}
+                        <td ng:click="showGroupInfo(masterGroupData.current_master)">
+                            {{masterGroupData.current_master.hostname}}
                         </td>
-                        <td ng:click="showGroupInfo(masterGroupData)">
-                            {{masterGroupData.ip}}
+                        <td ng:click="showGroupInfo(masterGroupData.current_master)">
+                            {{masterGroupData.current_master.ip}}
                         </td>
-                        <td ng:click="showGroupInfo(masterGroupData)">
-                            {{masterGroupData.mac}}
+                        <td ng:click="showGroupInfo(masterGroupData.current_master)">
+                            {{masterGroupData.current_master.mac}}
                         </td>
                         <td>
                             <div ng:repeat="(masterVM, masterVMData) in masterGroupData.master_vms">

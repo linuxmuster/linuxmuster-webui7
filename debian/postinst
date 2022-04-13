@@ -44,7 +44,9 @@ Installing linuxmuster-webui
             fi
 
             # Update 7.1.11, same scheme for all directories, prefer underscore to hyphen
-            mv /etc/linuxmuster/webui/email-templates /etc/linuxmuster/webui/email_templates
+            if [ -d "/etc/linuxmuster/webui/email-templates" ] ; then
+                mv /etc/linuxmuster/webui/email-templates /etc/linuxmuster/webui/email_templates
+            fi
             # Email templates will always be overwritten
             cp -a $webuietc/email_templates /etc/linuxmuster/webui/
 
@@ -69,8 +71,8 @@ Installing linuxmuster-webui
             touch $webuietc/.installed
             ipaddress=$(hostname --ip-address)
             msg "---------------------------------------------------------------
-linuxmuster-webui is now installed but not initialised!  http://$ipaddress"
-----------------------------------------------------------------
+linuxmuster-webui is now installed but not initialised!  http://$ipaddress
+----------------------------------------------------------------"
 
         else
             # do update

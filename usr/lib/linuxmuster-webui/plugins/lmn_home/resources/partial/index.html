@@ -1,0 +1,50 @@
+<div samba-access>
+    <div class="row">
+        <progress-spinner ng:show="loading"></progress-spinner>
+        <br />
+
+        <ol class="breadcrumb">
+            <li>
+                <a href="#" ng:click="load_path(home)">
+                    <i class="fa fa-home"></i>
+                </a>
+            </li>
+            <li ng:repeat="item in splitted_path" ng:class="{'active':$last}">
+                <a href="#" ng:click="load_path(item.path)" ng:if="!$last">{{item.name}}</a>
+                <span ng:if="$last">{{item.name}}</span>
+            </li>
+        </ol>
+
+        <button class="btn btn-lmn pull-right" ng:click="create_dir()" style="margin:0 10px 10px 0;">
+            <i class="fa fa-plus"></i>
+        </button>
+
+        <br style="clear:right;" />
+
+        <div class="list-group" ng:hide="loading && root" keyboard-focus test-bind="fileList">
+            <div ng:repeat="item in items|orderBy:['-isDir', 'name']" class="list-group-item list-group-item-small" test-bind-item="{{item.name}}">
+                <a ng:click="delete_file(item.path)" class="list-group-btn" ng:if="item.isFile">
+                    <i class="fa fa-trash"></i>
+                </a>
+                <a ng:click="delete_dir(item.path)" class="list-group-btn" ng:if="item.isDir && item.name != 'transfer'">
+                    <i class="fa fa-trash"></i>
+                </a>
+                <a ng:click="rename(item)" class="list-group-btn" ng:if="item.name != 'transfer'">
+                    <i class="fa fa-pen"></i>
+                </a>
+                <div class="list-group-addon pull-left">
+                    <span class="subtle" checkbox ng:model="item.selected"></span>
+                </div>
+                <a ng:click="load_path(item.path)" class="list-group-main">
+                    &nbsp;
+                    <i class="fa fa-fw fa-folder" ng:if="item.isDir"></i>
+                    <i class="fa fa-fw fa-file-o" ng:if="item.isFile"></i>
+                    &nbsp;
+                    {{item.name}}
+                    &nbsp;
+                    <span class="subtle" ng:show="item.isFile">{{item.size|bytes}}</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

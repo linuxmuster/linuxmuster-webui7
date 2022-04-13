@@ -1,0 +1,13 @@
+name: lmn_samba_share
+author: Arnaud Kientz
+email: arnaud@linuxmuster.net
+url: https://www.linuxmuster.net
+version: '0.1'
+title: 'Samba share'
+icon: cog
+dependencies:
+    - !PluginDependency { plugin_name: core }
+resources:
+    - resources/js/module.es
+    - resources/js/services/samba_share.service.es
+    - ng:lmn.samba_share

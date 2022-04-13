@@ -1,7 +1,0 @@
-{
-  "name": "plugin",
-  "private": true,
-  "dependencies": {
-    "angular-bootstrap-colorpicker": "~3.0.32"
-  }
-}

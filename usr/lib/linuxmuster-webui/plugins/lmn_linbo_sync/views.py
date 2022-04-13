@@ -2,10 +2,6 @@
 Module to drive some workstations through linbo.
 """
 
-import logging
-import subprocess
-import time
-from datetime import datetime
 from jadi import component
 
 import sys
@@ -17,9 +13,6 @@ from aj.api.endpoint import endpoint, EndpointError
 from aj.plugins.lmn_linbo_sync import api
 
 ## TODO
-# Add initcache and partition
-# Add option -p
-# Delete option -w if timeout is 0
 # Better icons and design
 # Force some options even if not present in start.conf ?
 

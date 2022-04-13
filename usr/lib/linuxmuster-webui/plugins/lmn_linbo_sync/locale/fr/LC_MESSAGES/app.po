@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-14 09:34+0100\n"
-"PO-Revision-Date: 2022-02-14 08:39\n"
+"POT-Creation-Date: 2022-03-23 16:24+0100\n"
+"PO-Revision-Date: 2022-04-03 20:05\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -21,7 +21,7 @@ msgstr ""
 msgid "<i class=\"fas fa-clock\"></i>  Boot timeout (in seconds):"
 msgstr "<i class=\"fas fa-clock\"></i>  Délai de démarrage (en secondes) :"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:91
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:95
 msgid "<i class=\"fas fa-directions\"></i>  Bypass autostart"
 msgstr "<i class=\"fas fa-directions\"></i>  Ignorer le démarrage automatique"
 
@@ -29,11 +29,15 @@ msgstr "<i class=\"fas fa-directions\"></i>  Ignorer le démarrage automatique"
 msgid "<i class=\"fas fa-eraser\"></i>  Format"
 msgstr "<i class=\"fas fa-eraser\"></i> Formater"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:87
+msgid "<i class=\"fas fa-eraser\"></i>  Partition"
+msgstr "<i class=\"fas fa-eraser\"></i> Formater"
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:54
 msgid "<i class=\"fas fa-exclamation-triangle\"></i>  New"
 msgstr "<i class=\"fas fa-exclamation-triangle\"></i>  Nouveau"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:102
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:106
 msgid "<i class=\"fas fa-info-circle\"></i>\n"
 "                To apply a linbo-remote command, you have to select at least one client and one command."
 msgstr "<i class=\"fas fa-info-circle\"></i>\n"
@@ -47,7 +51,7 @@ msgstr "<i class=\"fas fa-lightbulb\"></i>  Réveil réseau"
 msgid "<i class=\"fas fa-play\"></i>  Start"
 msgstr "<i class=\"fas fa-play\"></i>  Démarrer"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:95
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:99
 msgid "<i class=\"fas fa-plug\"></i>  Use Prestart"
 msgstr "<i class=\"fas fa-plug\"></i>  Utiliser le prédémarrage"
 
@@ -63,21 +67,21 @@ msgstr "<i class=\"fas fa-sync\"></i>  Redémarrer"
 msgid "<i class=\"fas fa-sync-alt\"></i>  Sync"
 msgstr "<i class=\"fas fa-sync-alt\"></i>  Synchroniser"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:87
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:91
 msgid "<i class=\"fas fa-terminal\"></i>  Disable GUI"
 msgstr "<i class=\"fas fa-terminal\"></i>  Désactiver l'interface graphique"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:112
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:116
 msgid "Apply"
 msgstr "Appliquer"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:86
-msgid "Autostart"
-msgstr "Démarrage automatique"
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:111
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:115
 msgid "Check online"
 msgstr "Vérifier en ligne"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:86
+msgid "Global options"
+msgstr "Options globales"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:12
 msgid "Hostname"
@@ -107,7 +111,7 @@ msgstr "En ligne ?"
 msgid "Power management"
 msgstr "Gestion de l'alimentation"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:107
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:111
 msgid "Result command"
 msgstr "Commande résultat"
 
@@ -132,7 +136,7 @@ msgstr "Tester si le client est en marche"
 msgid "Synchronize first OS from workstation"
 msgstr "Synchroniser le premier OS du poste de travail"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/js/controllers/index.controller.coffee:168
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/js/controllers/index.controller.coffee:178
 msgid "Command successfully sent : "
 msgstr "Commande envoyée avec succès : "
 

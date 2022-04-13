@@ -10,8 +10,11 @@
             <a class="list-group-btn" ng:click="removeUI(backup)">
                 <i class="fa fa-trash-o"></i>
             </a>
-            <a class="list-group-btn" ng:click="restore(backup)">
+            <a class="list-group-btn" title="{{translations['Restore']}}" ng:click="restore(backup)">
                 <i class="fa fa-history"></i>
+            </a>
+            <a class="list-group-btn" title="{{translations['Show differences']}}" ng:click="diff(backup)">
+                <i class="fas fa-exchange-alt"></i>
             </a>
             <div class="list-group-main">
                 {{backup.date|date:'medium'}}

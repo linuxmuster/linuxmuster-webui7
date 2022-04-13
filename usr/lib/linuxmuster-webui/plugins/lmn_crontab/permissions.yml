@@ -1,9 +1,4 @@
 globaladministrator:
-    - 'lm:crontab:read: true'
-    - 'lm:crontab:write: true'
-    - 'sidebar:view:/view/lm/crontab: true'
-
-schooladministrator:
-    - 'lm:crontab:read: true'
-    - 'lm:crontab:write: true'
-    - 'sidebar:view:/view/lm/crontab: true'
+- 'lm:crontab:read: true'
+- 'lm:crontab:write: true'
+- 'sidebar:view:/view/lm/crontab: true'

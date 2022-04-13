@@ -1,6 +1,0 @@
-linuxmuster:
-  initialized: false
-  is-configured: false
-  provision: false
-  ldap:
-      host: server

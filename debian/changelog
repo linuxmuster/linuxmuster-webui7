@@ -1,3 +1,94 @@
+linuxmuster-webui7 (7.1.16) lmn71; urgency=medium
+
+  * Fix typo in postinst. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 08 Apr 2022 22:10:25 +0200
+
+linuxmuster-webui7 (7.1.15) lmn71; urgency=medium
+
+  * Fix duplicate workgroup result in postinst 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 08 Apr 2022 13:31:31 +0200
+
+linuxmuster-webui7 (7.1.14) lmn71; urgency=medium
+
+  * Fix linbo_sync dependency problem 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 08 Apr 2022 11:43:33 +0200
+
+linuxmuster-webui7 (7.1.13) lmn71; urgency=medium
+
+  * Fix directory error in install process
+  * Fix undefined custom display values 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 08 Apr 2022 09:30:54 +0200
+
+linuxmuster-webui7 (7.1.12) lmn71; urgency=medium
+
+  * Add many hotkeys
+  * Limit crontab to user global-admin
+  * Remove deprecated lmn_linbo plugin
+  * Add level access tests and messages
+  * Load custom fields at auth
+  * Edit custom fields on landing page
+  * Add custom fields for school and global admins
+  * Add selector for custom fields in settings
+  * Possibility to display bind user password
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 03 Apr 2022 22:07:40 +0200
+
+linuxmuster-webui7 (7.1.11) lmn71; urgency=medium
+
+  * Add multischool support for holidays and cron
+  * Split custom fields config to separate schools
+  * Prepare edition of custom fields
+  * Remove deprecated options in config
+  * Management of school and global bind users
+  * Avoid creating duplicate start.conf
+  * Delete grub.cfg when start.conf is deleted
+  * Fix online test in linbo sync plugin
+  * Add partition option to linbo sync plugin
+  * Some sorting and optimizations in lmn_linbo4
+  * Better way to sort and generate permissions
+  * Suggest linbo groups in devices
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Wed, 23 Mar 2022 16:16:29 +0100
+
+linuxmuster-webui7 (7.1.10) lmn71; urgency=medium
+
+  * Add german translation of reset_email template
+  * Show differences between backup and original file 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 20 Feb 2022 12:55:33 +0100
+
+linuxmuster-webui7 (7.1.9) lmn71; urgency=medium
+
+  * Add pwReset provider 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 19 Feb 2022 22:54:10 +0100
+
+linuxmuster-webui7 (7.1.8) lmn71; urgency=medium
+
+  * Disable password reset per default. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 19 Feb 2022 15:55:16 +0100
+
+linuxmuster-webui7 (7.1.7) lmn71; urgency=medium
+
+  * Fix typo in requirements blocking the install process. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 19 Feb 2022 15:41:10 +0100
+
+linuxmuster-webui7 (7.1.6) lmn71; urgency=medium
+
+  * Upgrade to Ajenti 2.1.44
+  * Smtp relay settings
+  * Password reset function
+  * Custom email templates for linuxmuster.net
+  * Update configuration's process 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 19 Feb 2022 15:18:20 +0100
+
 linuxmuster-webui7 (7.1.5) lmn71; urgency=medium
 
   * Linbo sync module : 

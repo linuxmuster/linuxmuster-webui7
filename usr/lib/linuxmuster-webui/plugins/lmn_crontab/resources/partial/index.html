@@ -1,13 +1,13 @@
 <br/>
 
-<div>
+<div global-admin-access>
     <uib:tabset active="activeTab">
         <uib:tab heading="{{'Jobs'|translate}}">
             <br/>
             <div ng:show="crontab.normal_tasks.length == 0" class="alert alert-info" translate>There is no cronjob.</div>
             <table ng:show="crontab.normal_tasks.length > 0" class="table">
                 <tr>
-                    <th class="text-center" translate>Disable holidays</th>
+                    <th translate>Disable holidays</th>
                     <th class="text-center" translate>Minute</th>
                     <th class="text-center" translate>Hour</th>
                     <th class="text-center" translate>Day (month)</th>
@@ -18,7 +18,9 @@
                     <th></th> <!-- Column for remove -->
                 </tr>
                 <tr ng:repeat="job in crontab.normal_tasks" ng:click="editTask('normal_tasks', job)">
-                    <td class="text-center"><span checkbox ng:model="job.disable_holiday" ></span></td>
+                    <td>
+                        <span checkbox ng:model="job.disable_holiday"></span> ({{job.school}})
+                    </td>
                     <td class="text-center" style="width:75px">{{job.minute}}</td>
                     <td class="text-center" style="width:75px">{{job.hour}}</td>
                     <td class="text-center" style="width:75px">{{job.day_of_month}}</td>
@@ -44,14 +46,16 @@
             <div ng:show="crontab.special_tasks.length == 0" class="alert alert-info" translate>There is no special task.</div>
             <table ng:show="crontab.special_tasks.length > 0" class="table">
                 <tr>
-                    <th class="text-center" translate>Disable holidays</th>
+                    <th translate>Disable holidays</th>
                     <th translate>Special</th>
                     <th translate>Command</th>
                     <th></th> <!-- Column for modify -->
                     <th></th> <!-- Column for remove -->
                 </tr>
                 <tr ng:repeat="job in crontab.special_tasks">
-                    <td class="text-center"><span checkbox ng:model="job.disable_holiday" ></span></td>
+                    <td>
+                        <span checkbox ng:model="job.disable_holiday"></span> ({{job.school}})
+                    </td>
                     <td>{{job.special}}</td>
                     <td>{{job.command}}</td>
                     <td style="width:1px;">

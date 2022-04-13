@@ -5,6 +5,7 @@ Authentication classes to communicate with LDAP tree and load user's information
 import logging
 import os
 import stat
+import pexpect
 import re
 import ldap
 import ldap.filter
@@ -20,6 +21,7 @@ from jadi import component, service
 from aj.auth import AuthenticationProvider, OSAuthenticationProvider, AuthenticationService
 from aj.config import UserConfigProvider
 from aj.plugins.lmn_common.api import ldap_config as params, lmsetup_schoolname
+from aj.plugins.lmn_common.multischool import SchoolManager
 from aj.api.endpoint import EndpointError
 
 @component(AuthenticationProvider)
@@ -30,13 +32,10 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
     id = 'lm'
     name = _('Linux Muster LDAP') # skipcq: PYL-E0602
-    pw_reset = True
+    pw_reset = False
 
     def __init__(self, context):
         self.context = context
-
-    def prepare_environment(self, username):
-        pass
 
     def get_ldap_user(self, username, context=""):
         """
@@ -72,6 +71,18 @@ class LMAuthenticationProvider(AuthenticationProvider):
             'sn',
             'mail',
             'sophomorixSchoolname',
+            'homeDirectory',
+            'proxyAddresses',
+            'sophomorixCustom1',
+            'sophomorixCustom2',
+            'sophomorixCustom3',
+            'sophomorixCustom4',
+            'sophomorixCustom5',
+            'sophomorixCustomMulti1',
+            'sophomorixCustomMulti2',
+            'sophomorixCustomMulti3',
+            'sophomorixCustomMulti4',
+            'sophomorixCustomMulti5',
         ]
 
         if context == "auth":
@@ -106,6 +117,54 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
         l.unbind_s()
         return userAttrs
+
+    def prepare_environment(self, username):
+        # Initialize school manager
+        active_school = self.get_profile(username)['activeSchool']
+        schoolmgr = SchoolManager()
+        schoolmgr.switch(active_school)
+        self.context.schoolmgr = schoolmgr
+ 
+        # Permissions for kerberos ticket
+        uid = self.get_isolation_uid(username)
+
+        if os.path.isfile(f'/tmp/krb5cc_{uid}'):
+            os.unlink(f'/tmp/krb5cc_{uid}')
+
+        if os.path.isfile(f'/tmp/krb5cc_{uid}{uid}'):
+            os.rename(f'/tmp/krb5cc_{uid}{uid}', f'/tmp/krb5cc_{uid}')
+            logging.warning(f"Changing kerberos ticket rights for {username}")
+            os.chown(f'/tmp/krb5cc_{uid}', uid, 100)
+
+    def _get_krb_ticket(self, username, password):
+        """
+        Get a new Kerberos ticket for username stored in /tmp/krb5cc_UIDUID
+        This ticket will later be renamed as /tmp/krb5cc_UID.
+        The reason is that this function is running as user nobody and cannot
+        overwrite an existing ticket.
+
+        :param username: Username
+        :type username: string
+        :param password: Password
+        :type password: string
+        """
+
+        uid = self.get_isolation_uid(username)
+
+        if uid == 0:
+            # No ticket for root user
+            return
+
+        logging.warning(f'Initializing Kerberos ticket for {username}')
+        child = pexpect.spawn('/usr/bin/kinit', ['-c', f'/tmp/krb5cc_{uid}{uid}', username])
+        child.expect('Password.*:')
+        child.sendline(password)
+        child.expect(pexpect.EOF)
+        child.close()
+        exit_code = child.exitstatus
+        if exit_code:
+            logging.error(f"Was not able to initialize Kerberos ticket for {username}")
+            logging.error(f"{child.before.decode().strip()}")
 
     def authenticate(self, username, password):
         """
@@ -150,6 +209,8 @@ class LMAuthenticationProvider(AuthenticationProvider):
             except Exception as e:
                 logging.error(str(e))
                 raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(e))
+
+        self._get_krb_ticket(username, password)
 
         return {
             'username': username,
@@ -251,6 +312,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
         except KeyError:
             uid = pwd.getpwnam('nobody').pw_uid
             logging.debug(f"Context user not found, running Webui as {nobody}")
+
         return uid
 
     def get_profile(self, username):

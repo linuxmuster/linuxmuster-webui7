@@ -10,7 +10,7 @@ angular.module('lmn.linbo_sync').controller 'SyncIndexController', ($scope, $htt
     $scope.isUp = (group, host) ->
         index = $scope.groups[group].hosts.indexOf(host)
 
-        $http.get("/api/lm/linbo/isOnline/#{host.host}").then (resp) ->
+        $http.get("/api/lm/linbo/isOnline/#{host.hostname}").then (resp) ->
             $scope.groups[group].hosts[index].up = resp.data
             if ( resp.data == "Off" )
                 $scope.groups[group].hosts[index].upClass = "btn-danger"
@@ -52,6 +52,11 @@ angular.module('lmn.linbo_sync').controller 'SyncIndexController', ($scope, $htt
             os.run_sync = 0
         else
             os.run_sync = value
+        $scope.refresh_cmd(group)
+
+    $scope.handle_partition = (group) ->
+        # Possible values : 1 or 0
+        $scope.groups[group]['auto']['partition'] = 1 - $scope.groups[group]['auto']['partition']
         $scope.refresh_cmd(group)
 
     $scope.handle_format = (group, os, value) ->
@@ -108,6 +113,10 @@ angular.module('lmn.linbo_sync').controller 'SyncIndexController', ($scope, $htt
         format = []
         sync = []
         start = []
+
+        if $scope.groups[group]['auto']['partition'] > 0
+            cmd += ' partition'
+
         for os, index in $scope.groups[group]['os']
             os.position = index + 1
             # First format
@@ -124,8 +133,9 @@ angular.module('lmn.linbo_sync').controller 'SyncIndexController', ($scope, $htt
 
         if $scope.groups[group]['auto']['prestart'] > 0
             cmd = ' -p '
-        
-        cmd += format.join()
+
+        if format.length > 0
+            cmd += if cmd.length > 4 then ','+format.join() else format.join()
         if sync.length > 0
             cmd += if cmd.length > 4 then ','+sync.join() else sync.join()
         if start.length > 0

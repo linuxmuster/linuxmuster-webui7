@@ -5,8 +5,11 @@ angular.module('lmn.users').config ($routeProvider) ->
 
 
 
-angular.module('lmn.users').controller 'LMUsersListManagementController', ($scope, $http, $location, $route, $uibModal, gettext, notify, lmEncodingMap, messagebox, pageTitle, lmFileEditor, lmFileBackups, filesystem, validation) ->
+angular.module('lmn.users').controller 'LMUsersListManagementController', ($scope, $http, $location, $route, $uibModal, gettext, hotkeys, notify, lmEncodingMap, messagebox, pageTitle, lmFileEditor, lmFileBackups, filesystem, validation) ->
     pageTitle.set(gettext('Listmanagement'))
+
+    $scope.activeTab = 0
+    $scope.tabs = ['students', 'teachers', 'extrastudents']
 
     lmn_get_school_configpath = (school) -> 
         #"This is an example of a function"
@@ -454,3 +457,19 @@ angular.module('lmn.users').controller 'LMUsersListManagementController', ($scop
 
     # Loading first tab
     $scope.getstudents()
+
+    hotkeys.on $scope, (key, event) ->
+        current_tab = $scope.tabs[$scope.activeTab]
+        if (key == 'I' && event.ctrlKey)
+            $scope.saveAndCheck(current_tab)
+            return true
+
+        if (key == 'S' && event.ctrlKey)
+            $scope[current_tab + "_save"]()
+            return true
+
+        if (key == 'B' && event.ctrlKey)
+            $scope[current_tab + "_backups"]()
+            return true
+
+        return false

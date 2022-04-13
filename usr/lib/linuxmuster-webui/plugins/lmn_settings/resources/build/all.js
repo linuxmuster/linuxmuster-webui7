@@ -20,6 +20,7 @@
       remove: gettext('Remove')
     };
     $scope.activetab = 0;
+    $scope.custom_fields_role_selector = 'students';
     $scope.logLevels = [
       {
         name: gettext('Minimal'),
@@ -222,14 +223,7 @@
       return $http.post('/api/lm/save_custom_config', {
         config: config
       }).then(function() {
-        notify.success(gettext('Saved'));
-        return messagebox.show({
-          text: gettext("In order for changes to take effect, it's  necessary to restart the Webui. Restart now ?"),
-          positive: gettext('Restart'),
-          negative: gettext('Later')
-        }).then(function() {
-          return core.forceRestart();
-        });
+        return notify.success(gettext('Saved'));
       });
     };
   });
@@ -313,12 +307,13 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', function
         });
     };
 
-    // if ($scope.smtp_config) {
-    //     config.setSmtpConfig($scope.smtp_config).then(data =>
-    //         notify.success(gettext('Smtp config saved'))
-    //     ).catch(() =>
-    //         notify.error(gettext('Could not save smtp config')));
-    // }
+    if ($scope.smtp_config) {
+        config.setSmtpConfig($scope.smtp_config).then(function (data) {
+            return notify.success(gettext('Smtp config saved'));
+        }).catch(function () {
+            return notify.error(gettext('Could not save smtp config'));
+        });
+    }
 
     $scope.createNewServerCertificate = function () {
         return messagebox.show({

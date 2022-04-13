@@ -1,0 +1,16 @@
+name: lmn_home
+author: Arnaud Kientz
+email: arnaud@linuxmuster.net
+url: https://www.linuxmuster.net
+version: '0.1'
+title: 'Home'
+icon: cog
+dependencies:
+    - !PluginDependency { plugin_name: core }
+    - !PluginDependency { plugin_name: lmn_samba_share }
+resources:
+    - resources/js/module.es
+    - resources/js/routing.es
+    - resources/js/controllers/index.controller.es
+    - resources/partial/index.html
+    - ng:lmn.home

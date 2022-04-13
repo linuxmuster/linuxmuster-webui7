@@ -10,7 +10,6 @@ from aj.api.endpoint import endpoint, EndpointError
 from aj.plugins.lmn_common.lmnfile import LMNFile
 from aj.auth import authorize
 from aj.plugins.lmn_common.api import lmn_get_school_configpath
-from aj.plugins.lmn_common.multischool import School
 
 @component(HttpPlugin)
 class Handler(HttpPlugin):
@@ -33,7 +32,7 @@ class Handler(HttpPlugin):
         """
         
         
-        school = School.get(self.context).school
+        school = self.context.schoolmgr.school
         path = lmn_get_school_configpath(school)+'devices.csv'
         
         if os.path.isfile(path) is False:
@@ -79,7 +78,7 @@ class Handler(HttpPlugin):
         :param http_context: HttpContext
         :type http_context: HttpContext
         """
-        school = School.get(self.context).school
+        school = self.context.schoolmgr.school
         try:
             subprocess.check_call('linuxmuster-import-devices -s '+ school +' > /tmp/import_devices.log', shell=True)
         except Exception as e:

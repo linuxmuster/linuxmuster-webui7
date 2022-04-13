@@ -150,9 +150,27 @@
 
         <div class="floating-toolbar-padder"></div>
         <floating-toolbar>
-            <button ng:click="batchSetInitialPassword()" ng:show="haveSelection()" class="btn btn-lmn pull-right" translate>Set initial password for selected</button>
-            <button ng:click="batchSetRandomPassword()" ng:show="haveSelection()" class="btn btn-lmn pull-right" translate>Set random password for selected</button>
-            <button ng:click="batchSetCustomPassword()" ng:show="haveSelection()" class="btn btn-lmn pull-right" translate>Set custom password for selected</button>
+            <div uib-dropdown ng:show="haveSelection()" class="btn-group dropup">
+                <button uib-dropdown-toggle class="btn btn-lmn" translate>
+                    <i class="fa fa-key"></i> For selected
+                    <span class="caret"></span>
+                </button>
+                <ul uib-dropdown-menu class="dropdown-menu-left">
+                    <li>
+                        <a ng:click="batchSetInitialPassword()" translate>Set initial password</a>
+                    </li>
+                    <li>
+                        <a ng:click="batchSetRandomPassword()" translate>Set random password</a>
+                    </li>
+                    <li>
+                        <a ng:click="batchSetCustomPassword()" translate>Set custom password</a>
+                    </li>
+                    <li>
+                        <a ng:click="printSelectedPasswords()" translate>Print passwords</a>
+                    </li>
+                </ul>
+                <br />
+            </div
             <br />
         </floating-toolbar>
     </div>

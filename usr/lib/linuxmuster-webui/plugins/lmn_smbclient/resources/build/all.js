@@ -1,58 +1,58 @@
 'use strict';
 
-angular.module('lmn.samba_share', ['core', 'flow']);
+angular.module('lmn.smbclient', ['core', 'flow']);
 
 
 'use strict';
 
-angular.module('lmn.samba_share').service('samba_share', function ($rootScope, $http, $q) {
+angular.module('lmn.smbclient').service('smbclient', function ($rootScope, $http, $q) {
     // this.shares = () =>
-    //   $http.get("/api/lmn/samba_share/shares").then(response => response.data)
+    //   $http.get("/api/lmn/smbclient/shares").then(response => response.data)
     //
     // this.read = (path, encoding) =>
-    //   $http.get(`/api/lmn/samba_share/read/${path}?encoding=${encoding || 'utf-8'}`).then(response => response.data)
+    //   $http.get(`/api/lmn/smbclient/read/${path}?encoding=${encoding || 'utf-8'}`).then(response => response.data)
     //
     // this.write = (path, content, encoding) =>
-    //   $http.post(`/api/lmn/samba_share/write/${path}?encoding=${encoding || 'utf-8'}`, content).then(response => response.data)
+    //   $http.post(`/api/lmn/smbclient/write/${path}?encoding=${encoding || 'utf-8'}`, content).then(response => response.data)
 
     this.list = function (path) {
-        return $http.post('/api/lmn/samba_share/list', { 'path': path }).then(function (response) {
+        return $http.post('/api/lmn/smbclient/list', { 'path': path }).then(function (response) {
             return response.data;
         });
     };
 
     this.delete_file = function (path) {
-        return $http.post('/api/lmn/samba_share/file', { 'path': path }).then(function (response) {
+        return $http.post('/api/lmn/smbclient/file', { 'path': path }).then(function (response) {
             return response.data;
         });
     };
 
     this.move = function (src, dst) {
-        return $http.post('/api/lmn/samba_share/move', { 'src': src, 'dst': dst }).then(function (response) {
+        return $http.post('/api/lmn/smbclient/move', { 'src': src, 'dst': dst }).then(function (response) {
             return response.data;
         });
     };
 
     this.delete_dir = function (path) {
-        return $http.post('/api/lmn/samba_share/dir', { 'path': path }).then(function (response) {
+        return $http.post('/api/lmn/smbclient/dir', { 'path': path }).then(function (response) {
             return response.data;
         });
     };
 
     this.stat = function (path) {
-        return $http.get('/api/lmn/samba_share/stat/' + path).then(function (response) {
+        return $http.get('/api/lmn/smbclient/stat/' + path).then(function (response) {
             return response.data;
         });
     };
 
     this.createFile = function (path) {
-        return $http.post('/api/lmn/samba_share/create-file', { 'path': path }).then(function (response) {
+        return $http.post('/api/lmn/smbclient/create-file', { 'path': path }).then(function (response) {
             return response.data;
         });
     };
 
     this.createDirectory = function (path) {
-        return $http.post('/api/lmn/samba_share/create-directory', { 'path': path }).then(function (response) {
+        return $http.post('/api/lmn/smbclient/create-directory', { 'path': path }).then(function (response) {
             return response.data;
         });
     };
@@ -91,7 +91,7 @@ angular.module('lmn.samba_share').service('samba_share', function ($rootScope, $
     //                     id: file.uniqueIdentifier, path, name: file.name
     //                 })
     //             }
-    //             let response = await $http.post(`/api/lmn/samba_share/finish-upload`, filesToFinish)
+    //             let response = await $http.post(`/api/lmn/smbclient/finish-upload`, filesToFinish)
     //             $rootScope.$apply(() => {
     //                 q.resolve(response.data)
     //             })

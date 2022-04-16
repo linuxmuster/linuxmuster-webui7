@@ -1,4 +1,4 @@
-name: lmn_samba_share
+name: lmn_smbclient
 author: Arnaud Kientz
 email: arnaud@linuxmuster.net
 url: https://www.linuxmuster.net
@@ -9,5 +9,5 @@ dependencies:
     - !PluginDependency { plugin_name: core }
 resources:
     - resources/js/module.es
-    - resources/js/services/samba_share.service.es
-    - ng:lmn.samba_share
+    - resources/js/services/smbclient.service.es
+    - ng:lmn.smbclient

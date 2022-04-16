@@ -1,33 +1,33 @@
-angular.module('lmn.samba_share').service('samba_share', function($rootScope, $http, $q) {
+angular.module('lmn.smbclient').service('smbclient', function($rootScope, $http, $q) {
     // this.shares = () =>
-    //   $http.get("/api/lmn/samba_share/shares").then(response => response.data)
+    //   $http.get("/api/lmn/smbclient/shares").then(response => response.data)
     //
     // this.read = (path, encoding) =>
-    //   $http.get(`/api/lmn/samba_share/read/${path}?encoding=${encoding || 'utf-8'}`).then(response => response.data)
+    //   $http.get(`/api/lmn/smbclient/read/${path}?encoding=${encoding || 'utf-8'}`).then(response => response.data)
     //
     // this.write = (path, content, encoding) =>
-    //   $http.post(`/api/lmn/samba_share/write/${path}?encoding=${encoding || 'utf-8'}`, content).then(response => response.data)
+    //   $http.post(`/api/lmn/smbclient/write/${path}?encoding=${encoding || 'utf-8'}`, content).then(response => response.data)
 
     this.list = (path) =>
-        $http.post(`/api/lmn/samba_share/list`, {'path': path}).then(response => response.data)
+        $http.post(`/api/lmn/smbclient/list`, {'path': path}).then(response => response.data)
 
     this.delete_file = (path) =>
-        $http.post(`/api/lmn/samba_share/file`, {'path': path}).then(response => response.data)
+        $http.post(`/api/lmn/smbclient/file`, {'path': path}).then(response => response.data)
 
     this.move = (src, dst) =>
-        $http.post(`/api/lmn/samba_share/move`, {'src': src, 'dst':dst}).then(response => response.data)
+        $http.post(`/api/lmn/smbclient/move`, {'src': src, 'dst':dst}).then(response => response.data)
 
     this.delete_dir = (path) =>
-        $http.post(`/api/lmn/samba_share/dir`, {'path':path}).then(response => response.data)
+        $http.post(`/api/lmn/smbclient/dir`, {'path':path}).then(response => response.data)
 
     this.stat = (path) =>
-        $http.get(`/api/lmn/samba_share/stat/${path}`).then(response => response.data)
+        $http.get(`/api/lmn/smbclient/stat/${path}`).then(response => response.data)
 
     this.createFile = (path) =>
-        $http.post(`/api/lmn/samba_share/create-file`, {'path':path}).then(response => response.data)
+        $http.post(`/api/lmn/smbclient/create-file`, {'path':path}).then(response => response.data)
 
     this.createDirectory = (path) =>
-        $http.post(`/api/lmn/samba_share/create-directory`, {'path':path}).then(response => response.data)
+        $http.post(`/api/lmn/smbclient/create-directory`, {'path':path}).then(response => response.data)
 
 //     this.downloadBlob = (content, mime, name) =>
 //         setTimeout(() => {
@@ -63,7 +63,7 @@ angular.module('lmn.samba_share').service('samba_share', function($rootScope, $h
 //                     id: file.uniqueIdentifier, path, name: file.name
 //                 })
 //             }
-//             let response = await $http.post(`/api/lmn/samba_share/finish-upload`, filesToFinish)
+//             let response = await $http.post(`/api/lmn/smbclient/finish-upload`, filesToFinish)
 //             $rootScope.$apply(() => {
 //                 q.resolve(response.data)
 //             })

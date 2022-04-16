@@ -31,8 +31,8 @@ class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
 
-    @url(r'/api/lmn/samba_share/list')
-    # @authorize('samba_share:read')
+    @url(r'/api/lmn/smbclient/list')
+    # @authorize('smbclient:read')
     @endpoint(api=True)
     def handle_api_smb_list(self, http_context):
         """
@@ -84,8 +84,8 @@ class Handler(HttpPlugin):
                 'items': items
             }
 
-    @url(r'/api/lmn/samba_share/create-directory')
-    # @authorize('samba_share:write')
+    @url(r'/api/lmn/smbclient/create-directory')
+    # @authorize('smbclient:write')
     @endpoint(api=True)
     def handle_api_smb_create_directory(self, http_context):
         """
@@ -105,8 +105,8 @@ class Handler(HttpPlugin):
             except (ValueError, SMBOSError) as e:
                 raise EndpointError(e)
 
-    @url(r'/api/lmn/samba_share/move')
-    # @authorize('samba_share:write')
+    @url(r'/api/lmn/smbclient/move')
+    # @authorize('smbclient:write')
     @endpoint(api=True)
     def handle_api_smb_move(self, http_context):
         """
@@ -127,8 +127,8 @@ class Handler(HttpPlugin):
             except (ValueError, SMBOSError) as e:
                 raise EndpointError(e)
 
-    @url(r'/api/lmn/samba_share/copy')
-    # @authorize('samba_share:write')
+    @url(r'/api/lmn/smbclient/copy')
+    # @authorize('smbclient:write')
     @endpoint(api=True)
     def handle_api_smb_copy(self, http_context):
         """
@@ -149,8 +149,8 @@ class Handler(HttpPlugin):
             except (ValueError, SMBOSError) as e:
                 raise EndpointError(e)
 
-    @url(r'/api/lmn/samba_share/dir')
-    # @authorize('samba_share:write')
+    @url(r'/api/lmn/smbclient/dir')
+    # @authorize('smbclient:write')
     @endpoint(api=True)
     def handle_api_smb_rmdir(self, http_context):
         """
@@ -171,8 +171,8 @@ class Handler(HttpPlugin):
             except (ValueError, SMBOSError) as e:
                 raise EndpointError(e)
 
-    @url(r'/api/lmn/samba_share/file')
-    # @authorize('samba_share:write')
+    @url(r'/api/lmn/smbclient/file')
+    # @authorize('smbclient:write')
     @endpoint(api=True)
     def handle_api_smb_unlink(self, http_context):
         """
@@ -192,8 +192,8 @@ class Handler(HttpPlugin):
             except (ValueError, SMBOSError) as e:
                 raise EndpointError(e)
 
-    @url(r'/api/lmn/samba_share/stat')
-    # @authorize('samba_share:read')
+    @url(r'/api/lmn/smbclient/stat')
+    # @authorize('smbclient:read')
     @endpoint(api=True)
     def handle_api_smb_stat(self, http_context):
         """
@@ -233,8 +233,8 @@ class Handler(HttpPlugin):
 
         return data
 
-    # @url(r'/api/lmn/samba_share/read/(?P<path>.+)')
-    # @authorize('samba_share:read')
+    # @url(r'/api/lmn/smbclient/read/(?P<path>.+)')
+    # @authorize('smbclient:read')
     # @endpoint(api=True)
     # def handle_api_fs_read(self, http_context, path=None):
     #     """
@@ -262,8 +262,8 @@ class Handler(HttpPlugin):
     #         http_context.respond_server_error()
     #         return json.dumps({'error': str(e)})
     #
-    # @url(r'/api/lmn/samba_share/write/(?P<path>.+)')
-    # @authorize('samba_share:write')
+    # @url(r'/api/lmn/smbclient/write/(?P<path>.+)')
+    # @authorize('smbclient:write')
     # @endpoint(api=True)
     # def handle_api_fs_write(self, http_context, path=None):
     #     """
@@ -290,8 +290,8 @@ class Handler(HttpPlugin):
 
 
     #
-    # @url(r'/api/lmn/samba_share/chmod/(?P<path>.+)')
-    # @authorize('samba_share:write')
+    # @url(r'/api/lmn/smbclient/chmod/(?P<path>.+)')
+    # @authorize('smbclient:write')
     # @endpoint(api=True)
     # def handle_api_fs_chmod(self, http_context, path=None):
     #     """
@@ -311,8 +311,8 @@ class Handler(HttpPlugin):
     #     except OSError as e:
     #         raise EndpointError(e)
     #
-    # @url(r'/api/lmn/samba_share/create-file/(?P<path>.+)')
-    # @authorize('samba_share:write')
+    # @url(r'/api/lmn/smbclient/create-file/(?P<path>.+)')
+    # @authorize('smbclient:write')
     # @endpoint(api=True)
     # def handle_api_fs_create_file(self, http_context, path=None):
     #     """
@@ -330,8 +330,8 @@ class Handler(HttpPlugin):
     #         raise EndpointError(e)
     #
     #
-    # @url(r'/api/lmn/samba_share/upload')
-    # @authorize('samba_share:write')
+    # @url(r'/api/lmn/smbclient/upload')
+    # @authorize('smbclient:write')
     # @endpoint(page=True)
     # def handle_api_fs_upload_chunk(self, http_context):
     #     """
@@ -363,8 +363,8 @@ class Handler(HttpPlugin):
     #         http_context.respond('200 OK')
     #     return ''
     #
-    # @url(r'/api/lmn/samba_share/finish-upload')
-    # @authorize('samba_share:write')
+    # @url(r'/api/lmn/smbclient/finish-upload')
+    # @authorize('smbclient:write')
     # @endpoint(api=True)
     # def handle_api_fs_finish_upload(self, http_context):
     #     """

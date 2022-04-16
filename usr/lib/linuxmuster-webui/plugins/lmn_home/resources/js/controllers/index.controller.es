@@ -1,4 +1,4 @@
-angular.module('lmn.home').controller('HomeIndexController', function($scope, $routeParams, $location, $localStorage, $timeout, notify, identity, samba_share, pageTitle, urlPrefix, tasks, messagebox, gettext) {
+angular.module('lmn.home').controller('HomeIndexController', function($scope, $routeParams, $location, $localStorage, $timeout, notify, identity, smbclient, pageTitle, urlPrefix, tasks, messagebox, gettext) {
     pageTitle.set('path', $scope);
 
     $scope.loading = true;
@@ -29,7 +29,7 @@ angular.module('lmn.home').controller('HomeIndexController', function($scope, $r
             }
         }
 
-        samba_share.list(path).then((data) => {
+        smbclient.list(path).then((data) => {
                 $scope.items = data.items;
                 $scope.current_path = path;
             }, (resp) => {
@@ -43,7 +43,7 @@ angular.module('lmn.home').controller('HomeIndexController', function($scope, $r
         old_path = item.path;
         messagebox.prompt(gettext('New name :'), item.name).then( (msg) => {
             new_path = $scope.current_path + '/' + msg.value;
-            samba_share.move(old_path, new_path).then((data) => {
+            smbclient.move(old_path, new_path).then((data) => {
                 notify.success(old_path + gettext(' renamed to ') + new_path);
             $scope.reload();
         }, (resp) => {
@@ -58,7 +58,7 @@ angular.module('lmn.home').controller('HomeIndexController', function($scope, $r
             positive: gettext('Delete'),
             negative: gettext('Cancel')
         }).then( () => {
-            samba_share.delete_file(path).then((data) => {
+            smbclient.delete_file(path).then((data) => {
                 notify.success(path + gettext(' deleted !'));
                 $scope.reload();
             }, (resp) => {
@@ -70,7 +70,7 @@ angular.module('lmn.home').controller('HomeIndexController', function($scope, $r
     $scope.create_dir = () => {
         messagebox.prompt(gettext('New directory name :'), '').then( (msg) => {
             path = $scope.current_path + '/' + msg.value;
-            samba_share.createDirectory(path).then((data) => {
+            smbclient.createDirectory(path).then((data) => {
                 notify.success(path + gettext(' created !'));
             $scope.reload();
         }, (resp) => {
@@ -85,7 +85,7 @@ angular.module('lmn.home').controller('HomeIndexController', function($scope, $r
             positive: gettext('Delete'),
             negative: gettext('Cancel')
         }).then( () => {
-            samba_share.delete_dir(path).then((data) => {
+            smbclient.delete_dir(path).then((data) => {
                 notify.success(path + gettext(' deleted !'));
                 $scope.reload();
             }, (resp) => {

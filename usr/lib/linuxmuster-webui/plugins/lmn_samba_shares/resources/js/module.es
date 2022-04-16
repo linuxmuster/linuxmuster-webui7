@@ -1,4 +1,4 @@
-angular.module('lmn.home', [
+angular.module('lmn.samba_shares', [
     'core',
     'flow',
     'lmn.smbclient'

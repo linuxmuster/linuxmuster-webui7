@@ -1,13 +1,13 @@
 'use strict';
 
-angular.module('lmn.home', ['core', 'flow', 'lmn.smbclient']);
+angular.module('lmn.samba_shares', ['core', 'flow', 'lmn.smbclient']);
 
 
 'use strict';
 
-angular.module('lmn.home').config(function ($routeProvider) {
+angular.module('lmn.samba_shares').config(function ($routeProvider) {
     $routeProvider.when('/view/lmn/home', {
-        templateUrl: '/lmn_home:resources/partial/index.html',
+        templateUrl: '/lmn_samba_shares:resources/partial/index.html',
         controller: 'HomeIndexController'
     });
 });
@@ -15,7 +15,7 @@ angular.module('lmn.home').config(function ($routeProvider) {
 
 'use strict';
 
-angular.module('lmn.home').controller('HomeIndexController', function ($scope, $routeParams, $location, $localStorage, $timeout, notify, identity, smbclient, pageTitle, urlPrefix, tasks, messagebox, gettext) {
+angular.module('lmn.samba_shares').controller('HomeIndexController', function ($scope, $routeParams, $location, $localStorage, $timeout, notify, identity, smbclient, pageTitle, urlPrefix, tasks, messagebox, gettext) {
     pageTitle.set('path', $scope);
 
     $scope.loading = true;

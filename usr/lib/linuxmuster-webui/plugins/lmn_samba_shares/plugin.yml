@@ -1,4 +1,4 @@
-name: lmn_home
+name: lmn_samba_shares
 author: Arnaud Kientz
 email: arnaud@linuxmuster.net
 url: https://www.linuxmuster.net
@@ -13,4 +13,4 @@ resources:
     - resources/js/routing.es
     - resources/js/controllers/index.controller.es
     - resources/partial/index.html
-    - ng:lmn.home
+    - ng:lmn.samba_shares

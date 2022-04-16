@@ -1,4 +1,4 @@
-angular.module('lmn.home').controller('HomeIndexController', function($scope, $routeParams, $location, $localStorage, $timeout, notify, identity, smbclient, pageTitle, urlPrefix, tasks, messagebox, gettext) {
+angular.module('lmn.samba_shares').controller('HomeIndexController', function($scope, $routeParams, $location, $localStorage, $timeout, notify, identity, smbclient, pageTitle, urlPrefix, tasks, messagebox, gettext) {
     pageTitle.set('path', $scope);
 
     $scope.loading = true;

@@ -151,7 +151,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
         uid = self.get_isolation_uid(username)
 
-        if uid == 0:
+        if uid == 0 and username == 'root':
             # No ticket for root user
             return
 

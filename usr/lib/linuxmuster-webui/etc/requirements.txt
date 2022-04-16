@@ -12,7 +12,7 @@ ajenti.plugin.session-list==0.5
 gevent==1.5.0
 unicodecsv==0.14.1
 configparser==3.5.0
-dpath==1.4.2         # used for getSophomorixValue
+dpath==2.0.6         # used for getSophomorixValue
 python-magic==0.4.15 # used to determine encoding in linbo files and csv uploads
 scrypt
 python-ldap

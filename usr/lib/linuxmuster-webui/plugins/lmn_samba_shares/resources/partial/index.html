@@ -51,4 +51,8 @@
             </div>
         </div>
     </div>
+
+    <floating-toolbar ng:show="(items|filter:{selected:true}).length > 0">
+        <a ng:click="doDelete()" class="btn btn-default btn-flat" translate>Delete</a>
+    </floating-toolbar>
 </div>

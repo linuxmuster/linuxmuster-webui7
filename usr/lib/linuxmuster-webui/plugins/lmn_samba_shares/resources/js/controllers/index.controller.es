@@ -1,4 +1,4 @@
-angular.module('lmn.samba_shares').controller('HomeIndexController', function($scope, $routeParams, $location, $localStorage, $timeout, notify, identity, smbclient, pageTitle, urlPrefix, tasks, messagebox, gettext) {
+angular.module('lmn.samba_shares').controller('HomeIndexController', function($scope, $routeParams, $location, $localStorage, $timeout, $q, notify, identity, smbclient, pageTitle, urlPrefix, messagebox, gettext) {
     pageTitle.set('path', $scope);
 
     $scope.loading = true;
@@ -17,6 +17,10 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function($s
 
     $scope.reload = () =>
         $scope.load_path($scope.current_path)
+
+    $scope.clear_selection = () => {
+        $scope.items.forEach((item) => item.selected = false)
+    };
 
     $scope.load_path = (path) => {
         $scope.splitted_path_items = path.replace($scope.home, '').split('/');
@@ -66,6 +70,24 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function($s
             });
         });
     };
+
+    $scope.doDelete = () =>
+        messagebox.show({
+            text: gettext('Delete selected items?'),
+            positive: gettext('Delete'),
+            negative: gettext('Cancel')
+        }).then(() => {
+            let items = $scope.items.filter((item) => item.selected);
+            promises = []
+            for (let item of items) {
+                promises.push(smbclient.delete_file(item.path));
+            }
+            $q.all(promises).then(() => {
+                notify.success('Deleted !');
+                $scope.clear_selection();
+                $scope.reload();
+            });
+        })
 
     $scope.create_dir = () => {
         messagebox.prompt(gettext('New directory name :'), '').then( (msg) => {

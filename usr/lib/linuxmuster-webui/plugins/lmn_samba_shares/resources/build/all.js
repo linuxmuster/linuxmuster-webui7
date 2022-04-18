@@ -15,7 +15,7 @@ angular.module('lmn.samba_shares').config(function ($routeProvider) {
 
 'use strict';
 
-angular.module('lmn.samba_shares').controller('HomeIndexController', function ($scope, $routeParams, $location, $localStorage, $timeout, notify, identity, smbclient, pageTitle, urlPrefix, tasks, messagebox, gettext) {
+angular.module('lmn.samba_shares').controller('HomeIndexController', function ($scope, $routeParams, $location, $localStorage, $timeout, $q, notify, identity, smbclient, pageTitle, urlPrefix, messagebox, gettext) {
     pageTitle.set('path', $scope);
 
     $scope.loading = true;
@@ -33,6 +33,12 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function ($
 
     $scope.reload = function () {
         return $scope.load_path($scope.current_path);
+    };
+
+    $scope.clear_selection = function () {
+        $scope.items.forEach(function (item) {
+            return item.selected = false;
+        });
     };
 
     $scope.load_path = function (path) {
@@ -101,6 +107,49 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function ($
                 $scope.reload();
             }, function (resp) {
                 notify.error(gettext('Error during deleting : '), resp.data.message);
+            });
+        });
+    };
+
+    $scope.doDelete = function () {
+        return messagebox.show({
+            text: gettext('Delete selected items?'),
+            positive: gettext('Delete'),
+            negative: gettext('Cancel')
+        }).then(function () {
+            var items = $scope.items.filter(function (item) {
+                return item.selected;
+            });
+            promises = [];
+            var _iteratorNormalCompletion2 = true;
+            var _didIteratorError2 = false;
+            var _iteratorError2 = undefined;
+
+            try {
+                for (var _iterator2 = items[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                    var _item = _step2.value;
+
+                    promises.push(smbclient.delete_file(_item.path));
+                }
+            } catch (err) {
+                _didIteratorError2 = true;
+                _iteratorError2 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                        _iterator2.return();
+                    }
+                } finally {
+                    if (_didIteratorError2) {
+                        throw _iteratorError2;
+                    }
+                }
+            }
+
+            $q.all(promises).then(function () {
+                notify.success('Deleted !');
+                $scope.clear_selection();
+                $scope.reload();
             });
         });
     };

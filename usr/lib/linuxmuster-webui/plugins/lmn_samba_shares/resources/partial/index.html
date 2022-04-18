@@ -3,6 +3,12 @@
         <progress-spinner ng:show="loading"></progress-spinner>
         <br />
 
+        <button class="btn btn-lmn pull-right" ng:click="create_dir()" style="margin:0 10px 10px 0;">
+            <i class="fa fa-plus"></i>
+        </button>
+
+        <br style="clear:right;" />
+
         <ol class="breadcrumb">
             <li>
                 <a href="#" ng:click="load_path(home)">
@@ -15,11 +21,9 @@
             </li>
         </ol>
 
-        <button class="btn btn-lmn pull-right" ng:click="create_dir()" style="margin:0 10px 10px 0;">
-            <i class="fa fa-plus"></i>
-        </button>
+        <smb-upload uploadpath="{{current_path}}" reload="true"></smb-upload>
 
-        <br style="clear:right;" />
+        <br style="clear:both;"  />
 
         <div class="list-group" ng:hide="loading && root" keyboard-focus test-bind="fileList">
             <div ng:repeat="item in items|orderBy:['-isDir', 'name']" class="list-group-item list-group-item-small" test-bind-item="{{item.name}}">

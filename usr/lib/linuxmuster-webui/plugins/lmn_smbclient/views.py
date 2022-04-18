@@ -10,12 +10,12 @@ from jadi import component
 
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
-from aj.auth import authorize
+from aj.auth import authorize, AuthenticationService
 
 # TODO
 # - HomeService
 # - Handle end of ticket
-# - Better error management (file already exists, directory not emty, ... )
+# - Better error management (file already exists, directory not empty, ... )
 # - Test encoding Windows
 # - chmod
 # - mknod
@@ -233,6 +233,94 @@ class Handler(HttpPlugin):
 
         return data
 
+    @url(r'/api/lmn/smbclient/upload')
+    # @authorize('smbclient:write')
+    @endpoint(page=True)
+    def handle_api_smb_upload_chunk(self, http_context):
+        """
+        Write a chunk part of an upload in HOME/.upload//upload*/<index>.
+        If method get is called, verify if the chunk part is present.
+        Method GET.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        """
+
+        user = self.context.identity
+        home = AuthenticationService.get(self.context).get_provider().get_profile(user)['homeDirectory']
+        upload_dir = f'{home}\\.upload'
+
+        if not smbclient.path.exists(upload_dir):
+            smbclient.mkdir(upload_dir)
+
+        id = http_context.query['flowIdentifier']
+        chunk_index = http_context.query['flowChunkNumber']
+        chunk_dir = f'{upload_dir}\\upload-{id}'
+
+        try:
+            smbclient.mkdir(chunk_dir)
+        except Exception as e:
+            pass
+
+        chunk_path = f'{chunk_dir}\\{chunk_index}'
+
+        if http_context.method == 'GET':
+            if smbclient.path.exists(chunk_path):
+                http_context.respond('200 OK')
+            else:
+                http_context.respond('204 No Content')
+        else:
+            with smbclient.open_file(chunk_path, mode='wb') as f:
+                f.write(http_context.query['file'])
+            http_context.respond('200 OK')
+        return ''
+
+    @url(r'/api/lmn/smbclient/finish-upload')
+    # @authorize('smbclient:write')
+    @endpoint(api=True)
+    def handle_api_smb_finish_upload(self, http_context):
+        """
+        Build all chunk parts from an uploaded file together and return it.
+        Clean the tmp directory.
+        Method POST.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: Path of files
+        :rtype: list of string
+        """
+
+        # files should be a list of dict
+        files = http_context.json_body()
+        targets = []
+
+        user = self.context.identity
+        home = AuthenticationService.get(self.context).get_provider().get_profile(user)['homeDirectory']
+        upload_dir = f'{home}\\.upload'
+
+        for file in files:
+            name = file['name'].replace('/', '')
+            path = file['path']
+            id = file['id']
+            chunk_dir = f'{upload_dir}\\upload-{id}'
+
+            target = f'{path}\\{name}'
+            with smbclient.open_file(target, mode='wb') as f:
+                for i in range(len(smbclient.listdir(chunk_dir))):
+                    chunk_file = f'{chunk_dir}\\{str(i+1)}'
+                    with smbclient.open_file(chunk_file, mode='rb') as chunk:
+                        f.write(chunk.read())
+                    smbclient.remove(chunk_file)
+
+            smbclient.rmdir(chunk_dir)
+
+            targets.append(target)
+        return targets
+
+
+
+
+
     # @url(r'/api/lmn/smbclient/read/(?P<path>.+)')
     # @authorize('smbclient:read')
     # @endpoint(api=True)
@@ -330,69 +418,3 @@ class Handler(HttpPlugin):
     #         raise EndpointError(e)
     #
     #
-    # @url(r'/api/lmn/smbclient/upload')
-    # @authorize('smbclient:write')
-    # @endpoint(page=True)
-    # def handle_api_fs_upload_chunk(self, http_context):
-    #     """
-    #     Write a chunk part of an upload in /tmp/upload*/<index>.
-    #     If method get is called, verify if the chunk part is present.
-    #     Method GET.
-    #
-    #     :param http_context: HttpContext
-    #     :type http_context: HttpContext
-    #     """
-    #
-    #     id = http_context.query['flowIdentifier']
-    #     chunk_index = http_context.query['flowChunkNumber']
-    #     chunk_dir = '/tmp/upload-%s' % id
-    #     try:
-    #         os.makedirs(chunk_dir)
-    #     except Exception as e:
-    #         pass
-    #     chunk_path = os.path.join(chunk_dir, chunk_index)
-    #
-    #     if http_context.method == 'GET':
-    #         if os.path.exists(chunk_path):
-    #             http_context.respond('200 OK')
-    #         else:
-    #             http_context.respond('204 No Content')
-    #     else:
-    #         with open(chunk_path, 'wb') as f:
-    #             f.write(http_context.query['file'])
-    #         http_context.respond('200 OK')
-    #     return ''
-    #
-    # @url(r'/api/lmn/smbclient/finish-upload')
-    # @authorize('smbclient:write')
-    # @endpoint(api=True)
-    # def handle_api_fs_finish_upload(self, http_context):
-    #     """
-    #     Build all chunk parts from an uploaded file together and return it.
-    #     Clean the tmp directory.
-    #     Method POST.
-    #
-    #     :param http_context: HttpContext
-    #     :type http_context: HttpContext
-    #     :return: Path of files
-    #     :rtype: list of string
-    #     """
-    #
-    #     # files should be a list of dict
-    #     files = http_context.json_body()
-    #     targets = []
-    #
-    #     for file in files:
-    #         name = file['name']
-    #         path = file['path']
-    #         id = file['id']
-    #         chunk_dir = '/tmp/upload-%s' % id
-    #
-    #         target = os.path.join(path, name.replace('/', ''))
-    #         with open(target, 'wb') as f:
-    #             for i in range(len(os.listdir(chunk_dir))):
-    #                 f.write(open(os.path.join(chunk_dir, str(i + 1)), 'rb').read())
-    #
-    #         shutil.rmtree(chunk_dir)
-    #         targets.append(target)
-    #     return targets

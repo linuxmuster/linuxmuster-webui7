@@ -40,38 +40,38 @@ angular.module('lmn.smbclient').service('smbclient', function($rootScope, $http,
 //             document.body.removeChild(elem);
 //         })
 //
-//     this.startFlowUpload = ($flow, path) => {
-//         q = $q.defer()
-//         $flow.on('fileProgress', (file, chunk) => {
-//             $rootScope.$apply(() => {
-//                 // $flow.files may contain more than one file
-//                 var uploadProgress = []
-//                 for (var file of $flow.files) {
-//                     uploadProgress.push({
-//                         id: file.uniqueIdentifier, name: file.name, progress: Math.floor(100*file.progress())
-//                     })
-//                 }
-//                 q.notify(uploadProgress)
-//             })
-//         })
-//         $flow.on('complete', async () => {
-//             $flow.off('complete')
-//             $flow.off('fileProgress')
-//             let filesToFinish = []
-//             for (var file of $flow.files) {
-//                 filesToFinish.push({
-//                     id: file.uniqueIdentifier, path, name: file.name
-//                 })
-//             }
-//             let response = await $http.post(`/api/lmn/smbclient/finish-upload`, filesToFinish)
-//             $rootScope.$apply(() => {
-//                 q.resolve(response.data)
-//             })
-//             $flow.cancel()
-//         })
-//         $flow.upload()
-//         return q.promise
-//     }
-//
-//     return this;
+    this.startFlowUpload = ($flow, path) => {
+        q = $q.defer()
+        $flow.on('fileProgress', (file, chunk) => {
+            $rootScope.$apply(() => {
+                // $flow.files may contain more than one file
+                var uploadProgress = []
+                for (var file of $flow.files) {
+                    uploadProgress.push({
+                        id: file.uniqueIdentifier, name: file.name, progress: Math.floor(100*file.progress())
+                    })
+                }
+                q.notify(uploadProgress)
+            })
+        })
+        $flow.on('complete', async () => {
+            $flow.off('complete')
+            $flow.off('fileProgress')
+            let filesToFinish = []
+            for (var file of $flow.files) {
+                filesToFinish.push({
+                    id: file.uniqueIdentifier, path, name: file.name
+                })
+            }
+            let response = await $http.post(`/api/lmn/smbclient/finish-upload`, filesToFinish)
+            $rootScope.$apply(() => {
+                q.resolve(response.data)
+            })
+            $flow.cancel()
+        })
+        $flow.upload()
+        return q.promise
+    }
+
+    return this;
 });

@@ -10,4 +10,5 @@ dependencies:
 resources:
     - resources/js/module.es
     - resources/js/services/smbclient.service.es
+    - resources/js/directives/smbupload.directive.coffee
     - ng:lmn.smbclient

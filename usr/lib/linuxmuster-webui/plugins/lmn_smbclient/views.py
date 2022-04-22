@@ -11,6 +11,7 @@ from jadi import component
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
 from aj.auth import authorize, AuthenticationService
+from aj.plugins.lmn_common.mimetypes import content_mimetypes
 
 # TODO
 # - HomeService
@@ -22,7 +23,6 @@ from aj.auth import authorize, AuthenticationService
 # - upload
 # - read/write/create file
 # - symlink ?
-# - permissions ?
 # - download selected resources as zip
 # - Method DELETE ?
 
@@ -44,9 +44,18 @@ class Handler(HttpPlugin):
         :rtype: dict
         """
 
+        def SMB2UnixPath(path):
+            path = path.replace('\\', '/')
+
+            if 'linuxmuster-global' in path:
+                root = '/srv/samba/schools/global'
+            else:
+                root = f'/srv/samba/schools/{self.context.schoolmgr.school}'
+
+            return os.path.join(root, *list(filter(None, path.split('/')))[2:])
+
         if http_context.method == 'POST':
             path = http_context.json_body()['path']
-            user = self.context.identity
 
             try:
                 items = []
@@ -56,6 +65,7 @@ class Handler(HttpPlugin):
                     data = {
                         'name': item.name,
                         'path': item_path,
+                        'unixPath': SMB2UnixPath(item_path),
                         'isDir': item.is_dir(),
                         'isFile': item.is_file(),
                         'isLink': item.is_symlink(),
@@ -316,9 +326,6 @@ class Handler(HttpPlugin):
 
             targets.append(target)
         return targets
-
-
-
 
 
     # @url(r'/api/lmn/smbclient/read/(?P<path>.+)')

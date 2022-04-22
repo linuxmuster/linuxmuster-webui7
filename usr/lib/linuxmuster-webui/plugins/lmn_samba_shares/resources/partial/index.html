@@ -36,6 +36,9 @@
                 <a ng:click="rename(item)" class="list-group-btn" ng:if="item.name != 'transfer'">
                     <i class="fa fa-pen"></i>
                 </a>
+                <a ng:click="download(item.path)" class="list-group-btn" ng:if="item.isFile">
+                    <i class="fas fa-download"></i>
+                </a>
                 <div class="list-group-addon pull-left">
                     <span class="subtle" checkbox ng:model="item.selected"></span>
                 </div>

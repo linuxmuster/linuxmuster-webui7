@@ -15,7 +15,7 @@ angular.module('lmn.samba_shares').config(function ($routeProvider) {
 
 'use strict';
 
-angular.module('lmn.samba_shares').controller('HomeIndexController', function ($scope, $routeParams, $location, $localStorage, $timeout, $q, notify, identity, smbclient, pageTitle, urlPrefix, messagebox, gettext) {
+angular.module('lmn.samba_shares').controller('HomeIndexController', function ($scope, $routeParams, $window, $localStorage, $timeout, $q, $http, notify, identity, smbclient, pageTitle, urlPrefix, messagebox, gettext) {
     pageTitle.set('path', $scope);
 
     $scope.loading = true;
@@ -179,6 +179,10 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function ($
                 notify.error(gettext('Error during deleting : '), resp.data.message);
             });
         });
+    };
+
+    $scope.download = function (path) {
+        $window.open('/api/lmn/smbclient/download/' + path);
     };
 });
 

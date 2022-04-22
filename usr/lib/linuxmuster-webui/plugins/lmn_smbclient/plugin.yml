@@ -7,6 +7,7 @@ title: 'Samba share'
 icon: cog
 dependencies:
     - !PluginDependency { plugin_name: core }
+    - !PluginDependency { plugin_name: lmn_common }
 resources:
     - resources/js/module.es
     - resources/js/services/smbclient.service.es

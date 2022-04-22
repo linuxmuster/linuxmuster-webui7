@@ -328,6 +328,31 @@ class Handler(HttpPlugin):
         return targets
 
 
+    @url(r'/api/lmn/smbclient/download/(?P<path>.+)')
+    @endpoint(page=True)
+    def handle_smb_download(self, http_context, path):
+        if '..' in path:
+            return http_context.respond_forbidden()
+
+        try:
+            smbclient.path.isfile(path)
+        except SMBOSError:
+            http_context.respond_not_found()
+            return
+
+        name = path.split('/')[-1]
+        ext = os.path.splitext(name)[1]
+
+        if ext in content_mimetypes:
+            http_context.add_header('Content-Type', content_mimetypes[ext])
+        else:
+            http_context.add_header('Content-Type', 'application/octet-stream')
+
+        http_context.add_header('Content-Disposition', (f'attachment; filename={name}'))
+
+        content = smbclient.open_file(path, 'rb').read()
+        yield http_context.gzip(content)
+
     # @url(r'/api/lmn/smbclient/read/(?P<path>.+)')
     # @authorize('smbclient:read')
     # @endpoint(api=True)

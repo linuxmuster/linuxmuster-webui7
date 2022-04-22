@@ -1,4 +1,4 @@
-angular.module('lmn.samba_shares').controller('HomeIndexController', function($scope, $routeParams, $location, $localStorage, $timeout, $q, notify, identity, smbclient, pageTitle, urlPrefix, messagebox, gettext) {
+angular.module('lmn.samba_shares').controller('HomeIndexController', function($scope, $routeParams, $window, $localStorage, $timeout, $q, $http, notify, identity, smbclient, pageTitle, urlPrefix, messagebox, gettext) {
     pageTitle.set('path', $scope);
 
     $scope.loading = true;
@@ -116,5 +116,8 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function($s
         });
     };
 
+    $scope.download = (path) => {
+        $window.open(`/api/lmn/smbclient/download/${path}`);
+    };
 
 });

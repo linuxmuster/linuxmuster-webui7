@@ -358,8 +358,8 @@ class Handler(HttpPlugin):
         :rtype: list of dict
         """
 
-        action = http_context.json_body()['action']
         if http_context.method == 'POST':
+            action = http_context.json_body()['action']
             schooladminsList = []
             with authorize('lm:users:schooladmins:read'):
                 if action == 'get-all':
@@ -375,9 +375,6 @@ class Handler(HttpPlugin):
                         schooladminsList.append(details)
                     return schooladminsList
                 return ["none"]
-        if http_context.method == 'POST':
-            with authorize('lm:users:schooladmins:write'):
-                return 0
 
     @url(r'/api/lm/sophomorixUsers/globaladmins')
     @endpoint(api=True)
@@ -392,8 +389,8 @@ class Handler(HttpPlugin):
         :rtype: list of dict
         """
 
-        action = http_context.json_body()['action']
         if http_context.method == 'POST':
+            action = http_context.json_body()['action']
             globaladminsList = []
             with authorize('lm:users:globaladmins:read'):
                 if action == 'get-all':
@@ -409,9 +406,6 @@ class Handler(HttpPlugin):
                         globaladminsList.append(details)
                     return globaladminsList
                 return ["none"]
-        if http_context.method == 'POST':
-            with authorize('lm:users:globaladmins:write'):
-                return 0
 
     @url(r'/api/lm/users/extra-students')
     @endpoint(api=True)

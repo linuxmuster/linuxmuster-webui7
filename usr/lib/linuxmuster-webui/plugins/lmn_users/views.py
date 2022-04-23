@@ -1105,7 +1105,7 @@ class Handler(HttpPlugin):
                             details['pw'] = True
                         binduser_list.append(details)
                 return binduser_list
-            return ["none"]
+            return []
 
         if http_context.method == 'POST':
             binduser = http_context.json_body()['binduser']

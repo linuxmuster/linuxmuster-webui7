@@ -963,7 +963,7 @@
       });
     };
     return $scope.downloadIso = function() {
-      return location.href = '/api/lm/linbo.iso';
+      return location.href = '/lmn/download/linbo.iso';
     };
   });
 

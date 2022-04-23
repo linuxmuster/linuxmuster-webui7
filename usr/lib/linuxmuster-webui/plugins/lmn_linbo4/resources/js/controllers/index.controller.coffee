@@ -727,4 +727,4 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
                     $scope.restartServices()
 
     $scope.downloadIso = () ->
-        location.href = '/api/lm/linbo.iso'
+        location.href = '/lmn/download/linbo.iso'

@@ -9,7 +9,6 @@ from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
 from aj.plugins.lmn_common.lmnfile import LMNFile
 from aj.auth import authorize
-from aj.plugins.lmn_common.api import lmn_get_school_configpath
 
 @component(HttpPlugin)
 class Handler(HttpPlugin):
@@ -30,14 +29,12 @@ class Handler(HttpPlugin):
         :return: Content of config file in read mode.
         :rtype: string
         """
-        
-        
-        school = self.context.schoolmgr.school
-        path = lmn_get_school_configpath(school)+'devices.csv'
-        
+
+        path = f'{self.context.schoolmgr.configpath}devices.csv'
+
         if os.path.isfile(path) is False:
             os.mknod(path)
-        #path = '/etc/linuxmuster/sophomorix/default-school/devices.csv'
+
         fieldnames = [
             'room',
             'hostname',

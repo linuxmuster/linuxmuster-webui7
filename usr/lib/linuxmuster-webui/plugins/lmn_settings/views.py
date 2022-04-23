@@ -13,7 +13,6 @@ from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize
 from aj.plugins.lmn_common.lmnfile import LMNFile
-from aj.plugins.lmn_common.api import lmn_get_school_configpath
 
 
 @component(HttpPlugin)
@@ -69,8 +68,7 @@ class Handler(HttpPlugin):
         :rtype: dict in read mode
         """
 
-        school = self.context.schoolmgr.school
-        path = lmn_get_school_configpath(school)+'school.conf'
+        path = f'{self.context.schoolmgr.configpath}school.conf'
         # Update each time the config_obj because it may have changed
         with LMNFile(path, 'r') as f:
             self.config_obj = f

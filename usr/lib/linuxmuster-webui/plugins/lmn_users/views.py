@@ -13,7 +13,7 @@ from jadi import component
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
 from aj.auth import authorize
-from aj.plugins.lmn_common.api import lmn_getSophomorixValue, lmn_get_school_configpath, lmconfig
+from aj.plugins.lmn_common.api import lmn_getSophomorixValue
 from aj.plugins.lmn_common.lmnfile import LMNFile
 import logging
 
@@ -198,9 +198,7 @@ class Handler(HttpPlugin):
         :rtype: list of dict
         """
 
-        school = self.context.schoolmgr.school
-        path = lmn_get_school_configpath(school)+'students.csv'
-
+        path = f'{self.context.schoolmgr.configpath}students.csv'
 
         if os.path.isfile(path) is False:
             os.mknod(path)
@@ -239,10 +237,8 @@ class Handler(HttpPlugin):
         :rtype: list of dict
         """
 
-        school = self.context.schoolmgr.school
-        path = lmn_get_school_configpath(school)+'teachers.csv'
+        path = f'{self.context.schoolmgr.configpath}teachers.csv'
 
-            
         if os.path.isfile(path) is False:
             os.mknod(path)
         fieldnames = [
@@ -431,8 +427,7 @@ class Handler(HttpPlugin):
         :rtype: list of dict
         """
 
-        school = self.context.schoolmgr.school
-        path = lmn_get_school_configpath(school)+'extrastudents.csv'
+        path = f'{self.context.schoolmgr.configpath}extrastudents.csv'
 
         if os.path.isfile(path) is False:
             os.mknod(path)
@@ -471,8 +466,7 @@ class Handler(HttpPlugin):
         :rtype: list of dict
         """
 
-        school = self.context.schoolmgr.school
-        path = lmn_get_school_configpath(school)+'extraclasses.csv'
+        path = f'{self.context.schoolmgr.configpath}extraclasses.csv'
 
         if os.path.isfile(path) is False:
             os.mknod(path)

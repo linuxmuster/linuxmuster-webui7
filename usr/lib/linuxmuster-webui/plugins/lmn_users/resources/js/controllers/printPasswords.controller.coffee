@@ -26,7 +26,7 @@ angular.module('lmn.users').controller 'LMUsersPrintPasswordsOptionsModalControl
             $scope.options['template_one_per_page'] = $scope.templates_individual[0]
             $scope.options['template_multiple'] = $scope.templates_multiple[0]
 
-            $http.get('/api/lm/read_custom_config').then (resp) ->
+            $http.get('/api/lm/read_custom_config/').then (resp) ->
                 $scope.passwordTemplates = resp.data.passwordTemplates
 
                 for template in $scope.templates_individual

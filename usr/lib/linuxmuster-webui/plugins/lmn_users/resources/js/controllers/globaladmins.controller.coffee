@@ -26,20 +26,20 @@ angular.module('lmn.users').controller 'LMUsersGloballadminsController', ($scope
     $http.post('/api/lm/sophomorixUsers/globaladmins',{action: 'get-all'}).then (resp) ->
         $scope.globaladmins = resp.data
 
-    $http.get('/api/lm/read_custom_config').then (resp) ->
-        $scope.customDisplay = resp.data.customDisplay.globaladministrators || {1:'', 2:'', 3:''}
+    $http.get('/api/lm/read_custom_config/globaladministrators').then (resp) ->
+        $scope.customDisplay = resp.data.customDisplay
         $scope.customTitle = ['',]
         for idx in [1,2,3]
             if $scope.customDisplay[idx] == undefined or $scope.customDisplay[idx] == ''
                 $scope.customTitle.push('')
             else if $scope.customDisplay[idx] == 'proxyAddresses'
-                $scope.customTitle.push(resp.data.proxyAddresses.globaladministrators.title)
+                $scope.customTitle.push(resp.data.proxyAddresses.title)
             else
                 index = $scope.customDisplay[idx].slice(-1)
                 if $scope.isListAttr($scope.customDisplay[idx])
-                    $scope.customTitle.push(resp.data.customMulti.globaladministrators[index].title || '')
+                    $scope.customTitle.push(resp.data.customMulti[index].title || '')
                 else
-                    $scope.customTitle.push(resp.data.custom.globaladministrators[index].title || '')
+                    $scope.customTitle.push(resp.data.custom[index].title || '')
 
     $scope.isListAttr = (attr_name) ->
         return $scope.list_attr_enabled.includes(attr_name)

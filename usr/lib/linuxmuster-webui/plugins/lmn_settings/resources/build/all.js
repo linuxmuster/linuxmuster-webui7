@@ -97,7 +97,7 @@
       return results;
     };
     $scope.load_custom_config = function() {
-      return $http.get('/api/lm/read_custom_config').then(function(resp) {
+      return $http.get('/api/lm/read_custom_config/').then(function(resp) {
         var k, l, len2, len3, ref2, ref3, results, template;
         $scope.custom = resp.data.custom;
         $scope.customMulti = resp.data.customMulti;

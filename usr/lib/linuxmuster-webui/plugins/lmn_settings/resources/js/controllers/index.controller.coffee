@@ -68,7 +68,7 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
                $scope.settings['userfile.' + role + '.csv']['FILTERSCRIPT'] = "---"
 
     $scope.load_custom_config = () ->
-        $http.get('/api/lm/read_custom_config').then (resp) ->
+        $http.get('/api/lm/read_custom_config/').then (resp) ->
             $scope.custom = resp.data.custom
             $scope.customMulti = resp.data.customMulti
             $scope.customDisplay = resp.data.customDisplay

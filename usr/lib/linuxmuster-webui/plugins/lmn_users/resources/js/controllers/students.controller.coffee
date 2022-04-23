@@ -40,20 +40,20 @@ angular.module('lmn.users').controller 'LMUsersStudentsController', ($scope, $ht
     for n in [1,2,3,4,5]
         $scope.list_attr_enabled.push('sophomorixCustomMulti' + n)
 
-    $http.get('/api/lm/read_custom_config').then (resp) ->
-        $scope.customDisplay = resp.data.customDisplay.students || {'1':'', '2':'', '3':''}
+    $http.get('/api/lm/read_custom_config/students').then (resp) ->
+        $scope.customDisplay = resp.data.customDisplay
         $scope.customTitle = ['',]
         for idx in [1,2,3]
             if $scope.customDisplay[idx] == undefined or $scope.customDisplay[idx] == ''
                 $scope.customTitle.push('')
             else if $scope.customDisplay[idx] == 'proxyAddresses'
-                $scope.customTitle.push(resp.data.proxyAddresses.students.title)
+                $scope.customTitle.push(resp.data.proxyAddresses.title)
             else
                 index = $scope.customDisplay[idx].slice(-1)
                 if $scope.isListAttr($scope.customDisplay[idx])
-                    $scope.customTitle.push(resp.data.customMulti.students[index].title || '')
+                    $scope.customTitle.push(resp.data.customMulti[index].title || '')
                 else
-                    $scope.customTitle.push(resp.data.custom.students[index].title || '')
+                    $scope.customTitle.push(resp.data.custom[index].title || '')
 
     $scope.isListAttr = (attr_name) ->
         return $scope.list_attr_enabled.includes(attr_name)

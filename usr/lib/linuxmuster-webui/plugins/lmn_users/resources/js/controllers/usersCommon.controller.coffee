@@ -61,10 +61,10 @@ angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $rou
     else
         custom_fields_role = role
 
-    $http.get('/api/lm/read_custom_config').then (resp) ->
-        $scope.custom = resp.data.custom[custom_fields_role]
-        $scope.customMulti = resp.data.customMulti[custom_fields_role]
-        $scope.proxyAddresses = resp.data.proxyAddresses[custom_fields_role]
+    $http.get("/api/lm/read_custom_config/#{custom_fields_role}").then (resp) ->
+        $scope.custom = resp.data.custom
+        $scope.customMulti = resp.data.customMulti
+        $scope.proxyAddresses = resp.data.proxyAddresses
 
         # Is there a custom field to show ?
         if $scope.proxyAddresses.show

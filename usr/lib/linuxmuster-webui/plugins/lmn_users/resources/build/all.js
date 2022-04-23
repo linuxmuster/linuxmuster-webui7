@@ -66,13 +66,9 @@
     }).then(function(resp) {
       return $scope.teachers = resp.data;
     });
-    $http.get('/api/lm/read_custom_config').then(function(resp) {
+    $http.get('/api/lm/read_custom_config/teachers').then(function(resp) {
       var idx, index, j, len1, ref1, results;
-      $scope.customDisplay = resp.data.customDisplay.teachers || {
-        '1': '',
-        '2': '',
-        '3': ''
-      };
+      $scope.customDisplay = resp.data.customDisplay;
       $scope.customTitle = [''];
       ref1 = [1, 2, 3];
       results = [];
@@ -81,13 +77,13 @@
         if ($scope.customDisplay[idx] === void 0 || $scope.customDisplay[idx] === '') {
           results.push($scope.customTitle.push(''));
         } else if ($scope.customDisplay[idx] === 'proxyAddresses') {
-          results.push($scope.customTitle.push(resp.data.proxyAddresses.teachers.title));
+          results.push($scope.customTitle.push(resp.data.proxyAddresses.title));
         } else {
           index = $scope.customDisplay[idx].slice(-1);
           if ($scope.isListAttr($scope.customDisplay[idx])) {
-            results.push($scope.customTitle.push(resp.data.customMulti.teachers[index].title || ''));
+            results.push($scope.customTitle.push(resp.data.customMulti[index].title || ''));
           } else {
-            results.push($scope.customTitle.push(resp.data.custom.teachers[index].title || ''));
+            results.push($scope.customTitle.push(resp.data.custom[index].title || ''));
           }
         }
       }
@@ -405,13 +401,9 @@
       n = ref[i];
       $scope.list_attr_enabled.push('sophomorixCustomMulti' + n);
     }
-    $http.get('/api/lm/read_custom_config').then(function(resp) {
+    $http.get('/api/lm/read_custom_config/students').then(function(resp) {
       var idx, index, j, len1, ref1, results;
-      $scope.customDisplay = resp.data.customDisplay.students || {
-        '1': '',
-        '2': '',
-        '3': ''
-      };
+      $scope.customDisplay = resp.data.customDisplay;
       $scope.customTitle = [''];
       ref1 = [1, 2, 3];
       results = [];
@@ -420,13 +412,13 @@
         if ($scope.customDisplay[idx] === void 0 || $scope.customDisplay[idx] === '') {
           results.push($scope.customTitle.push(''));
         } else if ($scope.customDisplay[idx] === 'proxyAddresses') {
-          results.push($scope.customTitle.push(resp.data.proxyAddresses.students.title));
+          results.push($scope.customTitle.push(resp.data.proxyAddresses.title));
         } else {
           index = $scope.customDisplay[idx].slice(-1);
           if ($scope.isListAttr($scope.customDisplay[idx])) {
-            results.push($scope.customTitle.push(resp.data.customMulti.students[index].title || ''));
+            results.push($scope.customTitle.push(resp.data.customMulti[index].title || ''));
           } else {
-            results.push($scope.customTitle.push(resp.data.custom.students[index].title || ''));
+            results.push($scope.customTitle.push(resp.data.custom[index].title || ''));
           }
         }
       }
@@ -695,13 +687,9 @@
     }).then(function(resp) {
       return $scope.schooladmins = resp.data;
     });
-    $http.get('/api/lm/read_custom_config').then(function(resp) {
+    $http.get('/api/lm/read_custom_config/schooladministrators').then(function(resp) {
       var idx, index, j, len1, ref1, results;
-      $scope.customDisplay = resp.data.customDisplay.schooladministrators || {
-        1: '',
-        2: '',
-        3: ''
-      };
+      $scope.customDisplay = resp.data.customDisplay;
       $scope.customTitle = [''];
       ref1 = [1, 2, 3];
       results = [];
@@ -710,13 +698,13 @@
         if ($scope.customDisplay[idx] === void 0 || $scope.customDisplay[idx] === '') {
           results.push($scope.customTitle.push(''));
         } else if ($scope.customDisplay[idx] === 'proxyAddresses') {
-          results.push($scope.customTitle.push(resp.data.proxyAddresses.schooladministrators.title));
+          results.push($scope.customTitle.push(resp.data.proxyAddresses.title));
         } else {
           index = $scope.customDisplay[idx].slice(-1);
           if ($scope.isListAttr($scope.customDisplay[idx])) {
-            results.push($scope.customTitle.push(resp.data.customMulti.schooladministrators[index].title || ''));
+            results.push($scope.customTitle.push(resp.data.customMulti[index].title || ''));
           } else {
-            results.push($scope.customTitle.push(resp.data.custom.schooladministrators[index].title || ''));
+            results.push($scope.customTitle.push(resp.data.custom[index].title || ''));
           }
         }
       }
@@ -1060,13 +1048,9 @@
     }).then(function(resp) {
       return $scope.globaladmins = resp.data;
     });
-    $http.get('/api/lm/read_custom_config').then(function(resp) {
+    $http.get('/api/lm/read_custom_config/globaladministrators').then(function(resp) {
       var idx, index, j, len1, ref1, results;
-      $scope.customDisplay = resp.data.customDisplay.globaladministrators || {
-        1: '',
-        2: '',
-        3: ''
-      };
+      $scope.customDisplay = resp.data.customDisplay;
       $scope.customTitle = [''];
       ref1 = [1, 2, 3];
       results = [];
@@ -1075,13 +1059,13 @@
         if ($scope.customDisplay[idx] === void 0 || $scope.customDisplay[idx] === '') {
           results.push($scope.customTitle.push(''));
         } else if ($scope.customDisplay[idx] === 'proxyAddresses') {
-          results.push($scope.customTitle.push(resp.data.proxyAddresses.globaladministrators.title));
+          results.push($scope.customTitle.push(resp.data.proxyAddresses.title));
         } else {
           index = $scope.customDisplay[idx].slice(-1);
           if ($scope.isListAttr($scope.customDisplay[idx])) {
-            results.push($scope.customTitle.push(resp.data.customMulti.globaladministrators[index].title || ''));
+            results.push($scope.customTitle.push(resp.data.customMulti[index].title || ''));
           } else {
-            results.push($scope.customTitle.push(resp.data.custom.globaladministrators[index].title || ''));
+            results.push($scope.customTitle.push(resp.data.custom[index].title || ''));
           }
         }
       }
@@ -1699,13 +1683,9 @@
     }).then(function(resp) {
       return $scope.teachers = resp.data;
     });
-    $http.get('/api/lm/read_custom_config').then(function(resp) {
+    $http.get('/api/lm/read_custom_config/teachers').then(function(resp) {
       var idx, index, j, len1, ref1, results;
-      $scope.customDisplay = resp.data.customDisplay.teachers || {
-        '1': '',
-        '2': '',
-        '3': ''
-      };
+      $scope.customDisplay = resp.data.customDisplay;
       $scope.customTitle = [''];
       ref1 = [1, 2, 3];
       results = [];
@@ -1714,13 +1694,13 @@
         if ($scope.customDisplay[idx] === void 0 || $scope.customDisplay[idx] === '') {
           results.push($scope.customTitle.push(''));
         } else if ($scope.customDisplay[idx] === 'proxyAddresses') {
-          results.push($scope.customTitle.push(resp.data.proxyAddresses.teachers.title));
+          results.push($scope.customTitle.push(resp.data.proxyAddresses.title));
         } else {
           index = $scope.customDisplay[idx].slice(-1);
           if ($scope.isListAttr($scope.customDisplay[idx])) {
-            results.push($scope.customTitle.push(resp.data.customMulti.teachers[index].title || ''));
+            results.push($scope.customTitle.push(resp.data.customMulti[index].title || ''));
           } else {
-            results.push($scope.customTitle.push(resp.data.custom.teachers[index].title || ''));
+            results.push($scope.customTitle.push(resp.data.custom[index].title || ''));
           }
         }
       }
@@ -2012,7 +1992,7 @@
         $scope.templates_multiple = rp.data[1];
         $scope.options['template_one_per_page'] = $scope.templates_individual[0];
         $scope.options['template_multiple'] = $scope.templates_multiple[0];
-        return $http.get('/api/lm/read_custom_config').then(function(resp) {
+        return $http.get('/api/lm/read_custom_config/').then(function(resp) {
           var i, j, len, len1, ref, ref1, results, template;
           $scope.passwordTemplates = resp.data.passwordTemplates;
           ref = $scope.templates_individual;
@@ -2385,11 +2365,11 @@
     } else {
       custom_fields_role = role;
     }
-    $http.get('/api/lm/read_custom_config').then(function(resp) {
+    $http.get(`/api/lm/read_custom_config/${custom_fields_role}`).then(function(resp) {
       var custom, ref, ref1, results, values;
-      $scope.custom = resp.data.custom[custom_fields_role];
-      $scope.customMulti = resp.data.customMulti[custom_fields_role];
-      $scope.proxyAddresses = resp.data.proxyAddresses[custom_fields_role];
+      $scope.custom = resp.data.custom;
+      $scope.customMulti = resp.data.customMulti;
+      $scope.proxyAddresses = resp.data.proxyAddresses;
       // Is there a custom field to show ?
       if ($scope.proxyAddresses.show) {
         $scope.custom_column = true;

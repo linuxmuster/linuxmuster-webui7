@@ -3,6 +3,7 @@ Tools to handle files, directories and uploads.
 """
 
 import os
+import re
 import smbclient
 import logging
 from smbprotocol.exceptions import SMBOSError
@@ -315,6 +316,32 @@ class Handler(HttpPlugin):
             chunk_dir = f'{upload_dir}\\upload-{id}'
 
             target = f'{path}\\{name}'
+
+            try:
+                # Avoid overwriting existing file
+                while smbclient.path.isfile(target):
+                    try:
+                        last, ext = list(filter(None, name.split('.')))[-2:]
+                    except (IndexError, ValueError):
+                        last = name.split('.')[-1]
+                        ext = ''
+                    # Test if previously numbered
+                    count = re.match('.* \((\d+)\)$', last)
+
+                    if ext:
+                        ext = f'.{ext}'
+
+                    if count:
+                        new_count = int(count.group(1)) + 1
+                        name = re.sub(f' \(\d+\){ext}$', f' ({new_count}){ext}', name)
+                    else:
+                        name = re.sub(f'{ext}$', f' (1){ext}', name)
+
+                    target = f'{path}\\{name}'
+            except SMBOSError:
+                # That's ok we can write a new file
+                pass
+
             with smbclient.open_file(target, mode='wb') as f:
                 for i in range(len(smbclient.listdir(chunk_dir))):
                     chunk_file = f'{chunk_dir}\\{str(i+1)}'

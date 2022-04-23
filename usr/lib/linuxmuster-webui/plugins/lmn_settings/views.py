@@ -221,10 +221,10 @@ class Handler(HttpPlugin):
             except Exception as e:
                 raise EndpointError(None, message=str(e))
 
-    @url(r'/api/lm/read_custom_config')
+    @url(r'/api/lm/read_custom_config/(?P<role>.*)')
     @authorize('lm:schoolsettings')
     @endpoint(api=True)
-    def handle_api_read_custom_config(self, http_context):
+    def handle_api_read_custom_config(self, http_context, role=''):
         """
         Read webui yaml config and return the settings for custom fields.
         Method GET: read content.
@@ -235,6 +235,26 @@ class Handler(HttpPlugin):
         :rtype: dict
         """
 
+        def ensure_role_config_structure(config, role):
+            base_custom_dict = {'show': False, 'editable': False, 'title': ''}
+            base_role_dict = {
+                str(i+1):base_custom_dict
+                for i in range(3)
+            }
+
+            role_dict = config.get(role, {})
+
+            if role_dict:
+                for i in range(3):
+                    idx = str(i+1)
+                    role_dict[idx] = role_dict.get(idx, base_custom_dict)
+                    for key, value in base_custom_dict.items():
+                        role_dict[idx][key] = role_dict[idx].get(key, value)
+
+                return role_dict
+            return base_role_dict
+
+
         if http_context.method == 'GET':
             school = self.context.schoolmgr.school
             custom_config_path = f'/etc/linuxmuster/sophomorix/{school}/custom_fields.yml'
@@ -243,13 +263,26 @@ class Handler(HttpPlugin):
                 with LMNFile(custom_config_path, 'r') as config:
                     custom_config = config.read()
 
-            return {
+            base_dict = {'show': False, 'editable': False, 'title': ''}
+
+            config_dict = {
                 'custom': custom_config.get('custom', {}),
                 'customMulti': custom_config.get('customMulti', {}),
                 'customDisplay': custom_config.get('customDisplay', {}),
                 'proxyAddresses': custom_config.get('proxyAddresses', {}),
                 'passwordTemplates': custom_config.get('passwordTemplates', {'multiple': {}, 'individual': {}}),
             }
+
+            if role:
+                role_dict = {
+                    'custom': ensure_role_config_structure(config_dict['custom'], role),
+                    'customMulti': ensure_role_config_structure(config_dict['customMulti'], role),
+                    'customDisplay': config_dict['customDisplay'].get(role, {1:'', 2:'', 3:''}),
+                    'proxyAddresses': ensure_role_config_structure(config_dict['proxyAddresses'], role),
+                }
+                return role_dict
+
+            return config_dict
 
 
     @url(r'/api/lm/save_custom_config')

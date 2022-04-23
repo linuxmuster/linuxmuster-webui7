@@ -395,6 +395,15 @@ class LMAuthenticationProvider(AuthenticationProvider):
         subprocess.check_call(systemString, shell=False)
         return True
 
+    def signout(self):
+        uid = self.get_isolation_uid(self.context.identity)
+
+        if uid == 0 and username == 'root':
+            # No ticket for root user
+            return
+        # Remove Kerberos ticket
+        subprocess.check_output(['/usr/bin/kdestroy', '-c', f'/tmp/krb5cc_{uid}'])
+
 @component(UserConfigProvider)
 class UserLdapConfig(UserConfigProvider):
     """

@@ -15,13 +15,8 @@ from aj.auth import authorize, AuthenticationService
 from aj.plugins.lmn_common.mimetypes import content_mimetypes
 
 # TODO
-# - HomeService
-# - Handle end of ticket
-# - Better error management (file already exists, directory not empty, ... )
+# - Better error management (directory not empty, ... )
 # - Test encoding Windows
-# - chmod
-# - mknod
-# - upload
 # - read/write/create file
 # - symlink ?
 # - download selected resources as zip

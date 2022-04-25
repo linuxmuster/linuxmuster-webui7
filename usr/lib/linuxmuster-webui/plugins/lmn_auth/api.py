@@ -398,7 +398,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
     def signout(self):
         uid = self.get_isolation_uid(self.context.identity)
 
-        if uid == 0 and username == 'root':
+        if uid == 0 and self.context.identity == 'root':
             # No ticket for root user
             return
         # Remove Kerberos ticket

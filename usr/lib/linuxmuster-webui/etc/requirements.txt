@@ -21,3 +21,4 @@ isc_dhcp_leases
 requests
 xmltodict
 paramiko
+smbprotocol

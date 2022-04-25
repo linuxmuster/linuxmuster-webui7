@@ -2350,7 +2350,7 @@
     };
   });
 
-  angular.module('lmn.users').controller('LMNUserDetailsController', function($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, id, role) {
+  angular.module('lmn.users').controller('LMNUserDetailsController', function($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, id, role, identity) {
     var custom_fields_role;
     //notify.error gettext("You have to enter a username")
     $scope.id = id;
@@ -2365,38 +2365,42 @@
     } else {
       custom_fields_role = role;
     }
-    $http.get(`/api/lm/read_custom_config/${custom_fields_role}`).then(function(resp) {
-      var custom, ref, ref1, results, values;
-      $scope.custom = resp.data.custom;
-      $scope.customMulti = resp.data.customMulti;
-      $scope.proxyAddresses = resp.data.proxyAddresses;
-      // Is there a custom field to show ?
-      if ($scope.proxyAddresses.show) {
-        $scope.custom_column = true;
-      }
-      if (!$scope.custom_column) {
-        ref = $scope.custom;
-        for (custom in ref) {
-          values = ref[custom];
-          if (values.show) {
+    identity.promise.then(function() {
+      if (identity.profile.isAdmin) {
+        return $http.get(`/api/lm/read_custom_config/${custom_fields_role}`).then(function(resp) {
+          var custom, ref, ref1, results, values;
+          $scope.custom = resp.data.custom;
+          $scope.customMulti = resp.data.customMulti;
+          $scope.proxyAddresses = resp.data.proxyAddresses;
+          // Is there a custom field to show ?
+          if ($scope.proxyAddresses.show) {
             $scope.custom_column = true;
-            break;
           }
-        }
-      }
-      if (!$scope.custom_column) {
-        ref1 = $scope.customMulti;
-        results = [];
-        for (custom in ref1) {
-          values = ref1[custom];
-          if (values.show) {
-            $scope.custom_column = true;
-            break;
-          } else {
-            results.push(void 0);
+          if (!$scope.custom_column) {
+            ref = $scope.custom;
+            for (custom in ref) {
+              values = ref[custom];
+              if (values.show) {
+                $scope.custom_column = true;
+                break;
+              }
+            }
           }
-        }
-        return results;
+          if (!$scope.custom_column) {
+            ref1 = $scope.customMulti;
+            results = [];
+            for (custom in ref1) {
+              values = ref1[custom];
+              if (values.show) {
+                $scope.custom_column = true;
+                break;
+              } else {
+                results.push(void 0);
+              }
+            }
+            return results;
+          }
+        });
       }
     });
     $scope.formatDate = function(date) {

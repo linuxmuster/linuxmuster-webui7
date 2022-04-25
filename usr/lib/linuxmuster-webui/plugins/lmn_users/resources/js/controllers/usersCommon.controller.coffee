@@ -46,7 +46,7 @@ angular.module('lmn.users').controller 'LMNUsersCustomPasswordController', ($sco
     $scope.close = () ->
         $uibModalInstance.dismiss()
 
-angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, id, role) ->
+angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, id, role, identity) ->
 
     #notify.error gettext("You have to enter a username")
     $scope.id = id
@@ -61,26 +61,28 @@ angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $rou
     else
         custom_fields_role = role
 
-    $http.get("/api/lm/read_custom_config/#{custom_fields_role}").then (resp) ->
-        $scope.custom = resp.data.custom
-        $scope.customMulti = resp.data.customMulti
-        $scope.proxyAddresses = resp.data.proxyAddresses
+    identity.promise.then () ->
+        if identity.profile.isAdmin
+            $http.get("/api/lm/read_custom_config/#{custom_fields_role}").then (resp) ->
+                $scope.custom = resp.data.custom
+                $scope.customMulti = resp.data.customMulti
+                $scope.proxyAddresses = resp.data.proxyAddresses
 
-        # Is there a custom field to show ?
-        if $scope.proxyAddresses.show
-            $scope.custom_column = true
-
-        if not $scope.custom_column
-            for custom, values of $scope.custom
-                if values.show
+                # Is there a custom field to show ?
+                if $scope.proxyAddresses.show
                     $scope.custom_column = true
-                    break
 
-        if not $scope.custom_column
-            for custom, values of $scope.customMulti
-                if values.show
-                    $scope.custom_column = true
-                    break
+                if not $scope.custom_column
+                    for custom, values of $scope.custom
+                        if values.show
+                            $scope.custom_column = true
+                            break
+
+                if not $scope.custom_column
+                    for custom, values of $scope.customMulti
+                        if values.show
+                            $scope.custom_column = true
+                            break
 
     $scope.formatDate = (date) ->
         if (date == "19700101000000.0Z")

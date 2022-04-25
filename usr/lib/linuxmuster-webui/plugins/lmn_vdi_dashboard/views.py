@@ -21,7 +21,7 @@ class Handler(HttpPlugin):
             if action == 'get-vdiSession':
                 username = http_context.json_body()['username']
                 group = http_context.json_body()['group']
-                createSessionCommand = ['/usr/lib/linuxmuster-linbo-vdi/getConnection.py', group, username]
+                createSessionCommand = ['sudo', '/usr/lib/linuxmuster-linbo-vdi/getConnection.py', group, username]
                 output = subprocess.check_output(createSessionCommand, shell=False)
                 output = json.loads(output.decode())
                 return output['configFile'].split("/")[3]

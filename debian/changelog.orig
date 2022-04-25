@@ -1,0 +1,1726 @@
+<<<<<<< HEAD
+linuxmuster-webui7 (17.1.5.1) lmn71; urgency=medium
+
+ * New build
+
+ -- Andreas Till <andreas.till@netzint.de>  Wed, 15 Feb 2022 15:24:45 +0100
+=======
+linuxmuster-webui7 (7.1.12) lmn71; urgency=medium
+
+  * Add many hotkeys
+  * Limit crontab to user global-admin
+  * Remove deprecated lmn_linbo plugin
+  * Add level access tests and messages
+  * Load custom fields at auth
+  * Edit custom fields on landing page
+  * Add custom fields for school and global admins
+  * Add selector for custom fields in settings
+  * Possibility to display bind user password
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 03 Apr 2022 22:07:40 +0200
+
+linuxmuster-webui7 (7.1.11) lmn71; urgency=medium
+
+  * Add multischool support for holidays and cron
+  * Split custom fields config to separate schools
+  * Prepare edition of custom fields
+  * Remove deprecated options in config
+  * Management of school and global bind users
+  * Avoid creating duplicate start.conf
+  * Delete grub.cfg when start.conf is deleted
+  * Fix online test in linbo sync plugin
+  * Add partition option to linbo sync plugin
+  * Some sorting and optimizations in lmn_linbo4
+  * Better way to sort and generate permissions
+  * Suggest linbo groups in devices
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Wed, 23 Mar 2022 16:16:29 +0100
+
+linuxmuster-webui7 (7.1.10) lmn71; urgency=medium
+
+  * Add german translation of reset_email template
+  * Show differences between backup and original file 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 20 Feb 2022 12:55:33 +0100
+
+linuxmuster-webui7 (7.1.9) lmn71; urgency=medium
+
+  * Add pwReset provider 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 19 Feb 2022 22:54:10 +0100
+
+linuxmuster-webui7 (7.1.8) lmn71; urgency=medium
+
+  * Disable password reset per default. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 19 Feb 2022 15:55:16 +0100
+
+linuxmuster-webui7 (7.1.7) lmn71; urgency=medium
+
+  * Fix typo in requirements blocking the install process. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 19 Feb 2022 15:41:10 +0100
+
+linuxmuster-webui7 (7.1.6) lmn71; urgency=medium
+
+  * Upgrade to Ajenti 2.1.44
+  * Smtp relay settings
+  * Password reset function
+  * Custom email templates for linuxmuster.net
+  * Update configuration's process 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 19 Feb 2022 15:18:20 +0100
+>>>>>>> upstream-lmn
+
+linuxmuster-webui7 (7.1.5) lmn71; urgency=medium
+
+  * Linbo sync module : 
+    * Refactor
+    * Support of -p option
+    * Possibility to run command without wol
+  * Redesign global settings with tabs
+  * Move subnets settings to global settings
+  * Update permissions for subnets
+  * Preparation for smtp relay settings
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 14 Feb 2022 09:43:20 +0100
+
+linuxmuster-webui7 (17.1.4.5) lmn71; urgency=low
+
+  * fixed writing vdi files back
+
+ -- Andreas Till <andreas.till@netzint.de>  Tue, 15 Feb 2022 13:32:02 +0200
+
+linuxmuster-webui7 (17.1.4.4) lmn71; urgency=low
+
+  * fixed vdi filehandling
+
+ -- Andreas Till <andreas.till@netzint.de>  Tue, 15 Feb 2022 13:22:55 +0200
+
+linuxmuster-webui7 (17.1.4.3) lmn71; urgency=medium
+
+    * Added students to possible vdi dashboard permissions
+
+ -- Andreas Till <andreas.till@netzint.de>  Thu, 10 Feb 2022 18:56:45 +0100
+
+linuxmuster-webui7 (17.1.4.2) lmn71; urgency=medium
+
+    * added permissions.yml for vdi plugins
+
+ -- Andreas Till <andreas.till@netzint.de>  Thu, 10 Feb 2022 18:10:45 +0100
+
+linuxmuster-webui7 (17.1.4.1) lmn71; urgency=medium
+
+    * lmn_linbo_sync use common librarys
+    - rewritten list workstations to use common linuxmuster libraries
+      (fixes occuring error with empty lines in devices.csv)
+    - added multischool support
+    - removed nmap check
+
+ -- Andreas Till <andreas.till@netzint.de>  Wed, 09 Feb 2022 11:37:45 +0100
+
+linuxmuster-webui7 (17.1.99.4) lmn71; urgency=medium
+
+    * Improved Linbo Sync Module
+      - Set Boot timeout to minimal 1 (wont work otherwise)
+      - Added option to run commands without sending WOL package
+      - Added option to use prestart (-p instead of -w argument)
+
+ -- Andreas Till <andreas.till@netzint.de>  Mon, 07 Feb 2022 18:50:45 +0100
+
+linuxmuster-webui7 (7.1.99.4) lmn71; urgency=medium
+
+ * New build
+
+ -- Andreas Till <andreas.till@netzint.de>  Wed, 02 Feb 2022 18:52:45 +0100
+
+linuxmuster-webui7 (7.1.4) lmn71; urgency=medium
+
+  * Fix creation of webuiUpload directory by upgrade
+  * Fix room detection in session plugin
+  * Handle holidays in cron plugin 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 05 Feb 2022 12:31:15 +0100
+
+linuxmuster-webui7 (7.1.3) lmn71; urgency=medium
+
+  * Refactor angularjs components in lmn_common
+  * Better page for password change
+  * Fix delete of backup dir in linbo4
+  * Add '?' to possible char in password
+  * Login is no longer require in extrastudent
+  * Fix comments handling in devices
+  * Remove unecessary acls
+  * New directive for root warning 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 28 Jan 2022 11:27:45 +0100
+
+linuxmuster-webui7 (7.1.2) lmn71; urgency=medium
+
+  * Improve OS detection in Linbo sync plugin (thanks @doriannim)
+  * Fix macct bug in Linbo 4 plugin 
+  * Better notify delete error in Linbo 4 plugin
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Tue, 11 Jan 2022 17:40:15 +0100
+
+linuxmuster-webui7 (7.1.1) lmn71; urgency=medium
+
+  * Fix td overflow in linbo module
+  * Don't call import devices on each save
+  * Security fixs for pw reset
+  * Update permissions
+  * Update translations
+  * Some syntax update and homogenisation 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Thu, 06 Jan 2022 14:33:45 +0100
+
+linuxmuster-webui7 (7.1.0) lmn71; urgency=medium
+
+  * New version number for distribution 7.1
+  * Remove opsi, docker and mail server from setup wizard
+  * Ensure lmconfig structure
+  * Diverses bug fixs in linbo plugin 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Tue, 28 Dec 2021 12:28:26 +0100
+
+linuxmuster-webui7 (1.0.169rc5) bionic; urgency=medium
+
+  * Current snapshot build dc886580c367399f4d1837655df98ee553f998d0
+  *     added vdi basic permissions
+
+ -- Andreas Till <andreas.till@netzint.de>  Tue, 23 Nov 2021 10:38:32 +0000
+
+linuxmuster-webui7 (1.0.169rc4) bionic; urgency=medium
+
+  * Current snapshot build 651de861f11b9c8f5ab4f61ba2a2e61fbfba546d
+  *     added vdi basic permissions
+
+ -- Andreas Till <andreas.till@netzint.de>  Tue, 23 Nov 2021 10:14:32 +0000
+
+linuxmuster-webui7 (1.0.169rc3) bionic; urgency=medium
+
+  * Current snapshot build 177b60cac1bfadc99778f8e84bee729b01e909e1
+  * Fixed private start.conf handling
+
+ -- Andreas Till <andreas.till@netzint.de>  Tue, 23 Nov 2021 10:01:32 +0000
+
+linuxmuster-webui7 (1.0.169rc2) bionic; urgency=medium
+
+  * Current snapshot build 7747169edabe829b3484dced243ff3cbbb6dc785
+  * Added possibility for private start.confs per school
+
+ -- Andreas Till <andreas.till@netzint.de>  Tue, 23 Nov 2021 09:05:32 +0000
+
+linuxmuster-webui7 (1.0.169~1) bionic; urgency=medium
+
+  * Current snapshot build 7747169edabe829b3484dced243ff3cbbb6dc785
+  * Added possibility for private start.confs per school
+
+ -- Andreas Till <andreas.till@netzint.de>  Tue, 23 Nov 2021 08:50:32 +0000
+
+linuxmuster-webui7 (1.0.168-1) bionic; urgency=medium
+
+  * Current snapshot build fac37af4df344c4b64dc71474778bedf7ce2dbbc
+  * fixed issues in printing password with no users
+
+ -- Andreas Till <andreas.till@netzint.de>  Tue, 02 Nov 2021 19:58:32 +0000
+
+linuxmuster-webui7 (1.0.167-1) bionic; urgency=medium
+
+  * Current snapshot build 04e8c018c663a74968af7149ad8e059fa4d0256f
+  * fixed issues in several moduls which occur when no user exist
+
+ -- Andreas Till <andreas.till@netzint.de>  Tue, 02 Nov 2021 14:47:19 +0000
+
+linuxmuster-webui7 (1.0.166-2) bionic; urgency=medium
+
+  * Current snapshot build 4e848cb279af77b34ba6b10209ae9b3edef2e9bc
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri, 29 Oct 2021 18:31:33 +0000
+
+linuxmuster-webui7 (1.0.166) bionic; urgency=medium
+
+  * Current snapshot build 973adcb9da529122217b498456253f47ef2c736e
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri, 29 Oct 2021 17:59:33 +0000
+
+linuxmuster-webui7 (1.0.165-rc01) bionic-testing; urgency=medium
+
+  * GUI enhancements
+  * Maildomain for project fix
+  * Differenciate save and saveCustom.
+  *  Add basic ssh test with paramiko. See linuxmuster#186. 
+
+ -- Andreas Till <andreas.till@netzint.de>  Thu 22 Jul 11:31:27 CET 2021
+
+linuxmuster-webui7 (1.0.164-release) bionic; urgency=medium
+
+  * move to release
+
+ -- Dorian Zedler <dorian@itsblue.de>  Mon 21 Jun 16:07:38 CET 2021
+
+linuxmuster-webui7 (1.0.164-rc06) bionic-testing; urgency=medium
+
+  * Current snapshot build 47f9c71c8d2b534c18a238bbb6ddb988f0749cc3
+
+ -- Andreas Till <andreas.till@netzint.de>  Mon 1 Jun 16:07:38 CET 2021
+
+linuxmuster-webui7 (1.0.164-rc05) bionic-testing; urgency=medium
+
+  * Current snapshot build 558899528ef78257a25b2cf178d66d3323430b40
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri 19 May 13:03:33 CET 2021
+
+linuxmuster-webui7 (1.0.164-rc04) bionic-testing; urgency=medium
+
+  * Current snapshot build c11c81f6a2bb3ee9394cf8a0fa3880aa01e29872
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri 18 May 19:03:18 CET 2021
+
+linuxmuster-webui7 (1.0.164-rc03) bionic-testing; urgency=medium
+
+  * Current snapshot build 099eb10deab2c2ebad31c2ab1a8a776af88edea3
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri 18 May 17:38:41 CET 2021
+
+linuxmuster-webui7 (1.0.164-rc02) bionic-testing; urgency=medium
+
+  * Current snapshot build 8d5fd7112cbc477a5b31df9a93b0fa25e60bab16
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri 18 May 13:13:43 CET 2021
+
+linuxmuster-webui7 (1.0.164-rc01) bionic-testing; urgency=medium
+
+  * Current snapshot build 3083684829a3df25eb7cf667116e6d26d85803ea
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri 18 May 12:24:52 CET 2021
+
+linuxmuster-webui7 (1.0.164-rc) bionic-testing; urgency=medium
+
+  * Current snapshot build f51eb9572828b954100544e7d6823e518a099c40
+  * Changed package method to install
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri 10 May 12:16:41 CET 2021
+
+linuxmuster-webui7 (1.0.163-rc) bionic-testing; urgency=medium
+
+  * Current snapshot build f51eb9572828b954100544e7d6823e518a099c40
+  * Fixed release Name
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri 10 May 11:48:25 CET 2021
+
+linuxmuster-webui7 (1.0.163) lmn7-testing; urgency=medium
+
+  * Current snapshot build f51eb9572828b954100544e7d6823e518a099c40
+  * Fixed lmp permissions
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri 07 May 16:52:23 CET 2021
+
+linuxmuster-webui7 (1.0.163~7) lmn71; urgency=medium
+
+  * Add docker plugin
+  * Fix MX handling in samba dns plugin
+  * Fix desc permission in linbo plugin
+  * Security fix in samba dns plugin
+  * Fix backups and macct handling in linbo4 plugin
+  * Add hyphen to image name in linbo 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 19 Dec 2021 11:02:40 +0100
+
+linuxmuster-webui7 (1.0.163~6) lmn71; urgency=medium
+
+  * Display used images in start.conf and vice versa
+  * Fix template selection for admin and teachers
+  * Fix warning for empty classes in print password list
+  * Fix icons problems and remove png support in linbo plugin 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 13 Dec 2021 20:55:34 +0100
+
+linuxmuster-webui7 (1.0.163~5) lmn71; urgency=medium
+
+  * Fixs in linbo4 plugin
+  * Add subnet settings
+  * Add linbo sync plugin 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 11 Dec 2021 16:16:51 +0100
+
+linuxmuster-webui7 (1.0.163~4) lmn71; urgency=medium
+
+  * Fix scan of files in /srv/linbo/images 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 10 Dec 2021 13:20:05 +0100
+>>>>>>> 77821de2feee31d2a2ba0dc55b026165dfa6837b
+
+linuxmuster-webui7 (1.0.163~3) lmn71; urgency=medium
+
+  * Properly restart torrent service after changing image
+  * Disable too long hostnames
+  * Publish cron plugin
+  * Publish dhcp plugin
+  * Publish samba dns plugin 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 26 Nov 2021 15:08:50 +0100
+
+linuxmuster-webui7 (1.0.163~2) lmn71; urgency=medium
+
+  * Update translations
+  * Fix torrent problem by renaming or deleting image
+  * Security fix when renaming an image 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 14 Nov 2021 17:10:03 +0100
+
+linuxmuster-webui7 (1.0.163~1) lmn71; urgency=medium
+
+  * New permissions system, per plugin configurable
+  * Cloop to qcow2 conversion
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 13 Nov 2021 11:12:59 +0100
+
+linuxmuster-webui7 (1.0.162~1) lmn71; urgency=medium
+
+  * New linbo 4 plugin ( still under developpment )
+  * Rename start.conf
+  * Prepare script to change permissions management
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 07 Nov 2021 17:12:20 +0100
+
+linuxmuster-webui7 (1.0.162) lmn7-testing; urgency=medium
+
+  * Current snapshot build f51eb9572828b954100544e7d6823e518a099c40
+  * Fixed schooladministrator permissions
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri 07 May 13:49:07 CET 2021
+
+linuxmuster-webui7 (1.0.161) lmn7-testing; urgency=medium
+
+  * Current snapshot build 169bc01d9d0ba6569a02b17393a276a2d57d7494
+  * Added multischool support to all modules
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri 07 May 12:59:57 CET 2021
+
+linuxmuster-webui7 (1.0.161~1) lmn7-testing; urgency=medium
+
+  - Multischool support
+  - Add custom fields
+  - Select template to print data, print data page improved
+  - Quota display on teacher view
+  - Update on Ajenti 2.1.43
+  - New plugins : samba DNS / vdi / dhcp / crontab
+  - Complete LMNFile actions
+  - More options for printer group management
+  - Manage filter script from sophomorix
+  - New footer style
+  - A lot of bug fixes and even more
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 08 Oct 2021 10:18:41 +0200
+
+
+linuxmuster-webui7 (1.0.160) lmn7-testing; urgency=medium
+
+  * Current snapshot build 3efd640bf0f3999e77911358d9a0650ddd044425
+   * Issue with Websession and DHCP Plugin
+
+ -- Lukas Spitznagel <lukas.spitznagel@netzint.de>  Wed, 10 Mar 2021 19:26:33 +0000
+
+linuxmuster-webui7 (1.0.159-1) lmn7-testing; urgency=medium 
+
+  * Current snapshot build cb871ceaf6cfea435b8c2d0e574a75579e07af85
+   *     Removed lmn_printers fixed urls in lmn_linbo_sync
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Feb 26 12:51:03 CET 2021
+
+linuxmuster-webui7 (1.0.158-1) lmn7-testing; urgency=medium
+
+  * Current snapshot build 840d43415eedad30b91eedfa1a6a300b375b2a99
+   *     Add all built js.
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 12 Feb 2021 22:10:27 +0100
+
+linuxmuster-webui7 (1.0.157-1) lmn7-testing; urgency=medium
+
+  * Current snapshot build 5be14f0ba99a7c2c2f959834f8d58aa95a3688fd
+   *     Add many plugins and update permissions
+
+ -- Lukas Spitznagel <lukas.spitznagel@netzint.de>  Tue Feb 2 15:41:31 2021 +0000
+
+linuxmuster-webui7 (1.0.155-1) lmn7; urgency=medium 
+
+  * Current snapshot build 66422b02d79a6a569eec445006396380f10d20cc
+   *     fixed postinst before samba installation
+
+ -- Andreas Till <andreas.till@netzint.de> Tue Dec  8 18:39:35 CET 2020
+
+linuxmuster-webui7 (1.0.154-1) lmn7; urgency=medium~
+
+  * Current snapshot build b67e18ac87b21783adf9861b5445a3ac347cb7a7
+   *     Updated Changelog due to new package
+
+ -- Andreas Till <andreas.till@netzint.de> Tue Dec  8 18:34:11 CET 2020
+
+linuxmuster-webui7 (1.0.153-1) lmn7; urgency=medium 
+
+  * Current snapshot build 2807d5c582c927d84ed76f411fcccd0d2d52b887
+   *     check if workgroup variable is empty before setting rights
+
+ -- Andreas Till <andreas.till@netzint.de> Tue Dec  8 17:41:59 CET 2020
+
+linuxmuster-webui7 (1.0.152-1) lmn7; urgency=medium 
+
+  * Current snapshot build b2c2df5d75a6964a7f3ad4ebdac0a160681aa2da
+   *     workaround for transfer sessionsubdolfer whole session
+
+ -- Andreas Till <andreas.till@netzint.de> Mon Dec  7 13:49:21 CET 2020
+
+linuxmuster-webui7 (1.0.151-1) lmn7; urgency=medium 
+
+  * Current snapshot build 3e0e2c3010ba6ea6d957e95da271016552842510
+   *     temporary fix for 147
+
+ -- Andreas Till <andreas.till@netzint.de> Sun Dec  6 16:15:00 CET 2020
+
+linuxmuster-webui7 (1.0.150-1) lmn7; urgency=medium
+
+   * Fix filter properties to search for.
+
+ -- Andreas Till <andreas.till@netzint.de>  Sun, 06 Dec 2020 16:13:32 +0100
+
+linuxmuster-webui7 (1.0.149-1) lmn7; urgency=medium
+
+  * Current snapshot build e10a5bdbab262d5823ae441025bc468415c31e99
+   *     Fix filter properties to search for.
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 26 Oct 2020 17:54:16 +0100
+
+linuxmuster-webui7 (1.0.148-1) lmn7; urgency=medium 
+
+  * Current snapshot build d16a5060d5e783f0ba8b77a3fcfd1f2b342693b1
+   *     Add marker to show which template is used.
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Jul  9 09:09:09 CEST 2020
+
+linuxmuster-webui7 (1.0.147-1) lmn7; urgency=medium 
+
+  * Current snapshot build f80a31400ad4128a8c90f68846440f4a13a43ad2
+   *     added dependencie for sophomorix-samba version
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Jul  2 15:26:04 CEST 2020
+
+linuxmuster-webui7 (1.0.146-1) lmn7; urgency=medium 
+
+  * Current snapshot build fe36fddfe2373bfb1df36c135b06ad6d5cd3c6f7
+   *     Handle empty config files.
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Jul  2 14:57:27 CEST 2020
+
+linuxmuster-webui7 (1.0.145-1) lmn7; urgency=medium 
+
+  * Current snapshot build 6ba624c7ddc91670a524ddd320e825660469a526
+   *     Merge branch 'testing' into release
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Jul  2 12:22:25 CEST 2020
+
+linuxmuster-webui7 (1.0.144-1) lmn7-testing; urgency=medium
+
+  * Current snapshot build 89d7cbc1185b5bef0834b25f761cb3a11c82e4a0
+   *     LMNFile also for user management.
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Tue, 30 Jun 2020 09:01:27 +0200
+
+linuxmuster-webui7 (1.0.143-1) lmn7-testing; urgency=medium 
+
+  * Current snapshot build ff3a123914595b61206a55b954e994c58afbebea
+   *     Merge branch 'sessionTransferPath' into testing
+
+ -- Andreas Till <andreas.till@netzint.de> Wed May 27 15:51:31 CEST 2020
+
+linuxmuster-webui7 (1.0.142-1) lmn7; urgency=medium 
+
+  * Current snapshot build 79f22e2646abeb62e16a0c29279aa51bcd656b94
+   *     revert auth login mistake
+
+ -- Andreas Till <andreas.till@netzint.de> Thu May  7 10:38:48 CEST 2020
+
+linuxmuster-webui7 (1.0.141-1) lmn7; urgency=medium 
+
+  * Current snapshot build 288a5969e9ec8f0ab1c01c41a0b8e2ca9dd3cc5f
+   *     Fix #133.
+
+ -- Andreas Till <andreas.till@netzint.de> Thu May  7 09:14:59 CEST 2020
+
+linuxmuster-webui7 (1.0.140-1) lmn7; urgency=medium 
+
+  * Current snapshot build df4b9a499edbdf17b2e783979058e49f5ef7c0b9
+   *     Temporary fix for linbo icon download.
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Apr 22 16:26:21 CEST 2020
+
+linuxmuster-webui7 (1.0.139-1) lmn7; urgency=medium 
+
+  * Current snapshot build 782e871d0f3de28749eb00b939e55d3b570c8f89
+   * 
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Apr 17 12:25:23 CEST 2020
+
+linuxmuster-webui7 (1.0.138-1) lmn7; urgency=medium 
+
+  * Current snapshot build 782e871d0f3de28749eb00b939e55d3b570c8f89
+   * 
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Apr 17 12:23:44 CEST 2020
+
+linuxmuster-webui7 (1.0.137-1) lmn7-testing; urgency=medium 
+
+  * Current snapshot build f6d11bc00b411ba44ec14035175743852c62a1cc
+   * 
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Apr 17 10:26:30 CEST 2020
+
+linuxmuster-webui7 (1.0.136-1) lmn7-testing; urgency=medium 
+
+  * Current snapshot build da7b644a131a055c9734f279f8f7b244b690cebb
+   * 
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Apr 16 18:27:22 CEST 2020
+
+linuxmuster-webui7 (1.0.135-1) lmn7-testing; urgency=medium 
+
+  * Current snapshot build 18b0d2413ea3094585622181b695a50e5fc842c3
+   *     Case root login or no netbios domain.
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Apr 16 08:27:29 CEST 2020
+
+linuxmuster-webui7 (1.0.134-1) lmn7-testing; urgency=medium 
+
+  * Current snapshot build 5da7dbb70130178ba55ab0f30f557236293338bc
+   * 
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Apr 15 11:47:36 CEST 2020
+
+linuxmuster-webui7 (1.0.133-1) lmn7-testing; urgency=medium 
+
+  * Current snapshot build 5da7dbb70130178ba55ab0f30f557236293338bc
+   * 
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Apr 15 11:47:17 CEST 2020
+
+linuxmuster-webui7 (1.0.132-1) lmn7-testing; urgency=medium 
+
+  * Current snapshot build 9b6ceac7dcb4837a2f63a91efe4a7fc06ffe7da9
+   *     Quick fix for recursive groups.
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Apr 15 09:01:36 CEST 2020
+
+linuxmuster-webui7 (1.0.131-1) lmn7-testing; urgency=medium 
+
+  * Current snapshot build 325a6bc20ee8b780112aa06ffda6fb4f6c88ca90
+   *     Disable elevate button for sudo.
+
+ -- Andreas Till <andreas.till@netzint.de> Tue Apr 14 17:26:10 CEST 2020
+
+linuxmuster-webui7 (1.0.130-1) lmn7-testing; urgency=medium 
+
+  * Current snapshot build 83d6d93cfb731aad46d3c25570fd4dc9647ba725
+   *     fixed postinst missing fi
+
+ -- Andreas Till <andreas.till@netzint.de> Tue Apr 14 12:54:29 CEST 2020
+
+linuxmuster-webui7 (1.0.129-1) lmn7-testing; urgency=medium 
+
+  * Current snapshot build 1b952b92fa54d3ecf50d0cd67a7670b7c7c44d33
+   *     Cleanup and gitignore for vscode.
+
+ -- Andreas Till <andreas.till@netzint.de> Tue Apr 14 12:26:35 CEST 2020
+
+linuxmuster-webui7 (1.0.128-1) lmn7-testing; urgency=medium 
+
+  * Current snapshot build a4eb24a96145381ebcbedfe049dfa8d4ff97a64e
+   *     Complete empty post request.
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Apr  9 11:16:56 CEST 2020
+
+linuxmuster-webui7 (1.0.127-1) lmn7-testing; urgency=medium 
+
+  * Current snapshot build a4eb24a96145381ebcbedfe049dfa8d4ff97a64e
+   *     Complete empty post request.
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Apr  9 10:42:13 CEST 2020
+
+linuxmuster-webui7 (1.0.126-1) lmn7-testing; urgency=medium 
+
+  * Current snapshot build 343c739580c435434ca1305ff891d0c5a6f7e500
+   *     fixed postinst fi leftover
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Apr  8 14:29:21 CEST 2020
+
+linuxmuster-webui7 (1.0.125-1) lmn7-testing; urgency=medium 
+
+  * Current snapshot build b32e47960ddeccbc1471f1b46463b95766bf5514
+   *     overwrite ajenti config on initial setup
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Apr  8 13:55:46 CEST 2020
+
+linuxmuster-webui7 (1.0.124-1) lmn7-testing; urgency=medium 
+
+  * Current snapshot build 26f44bf4b2bfcd0a7e44572428d05519e5f19f90
+   *     Updateded postinst and rules so the installation
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Apr  8 13:20:49 CEST 2020
+
+linuxmuster-webui7 (1.0.123-1) lmn7-testing; urgency=medium 
+
+  * Current snapshot build c9491fc49826bb67f159de665d9c7fa64db87c02
+   *     fixed postinst sophomorix-ui command
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Apr  8 13:05:31 CEST 2020
+
+linuxmuster-webui7 (1.0.122-1) lmn7-testing; urgency=medium 
+
+  * Current snapshot build c9491fc49826bb67f159de665d9c7fa64db87c02
+   *     fixed postinst sophomorix-ui command
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Apr  8 12:15:13 CEST 2020
+
+linuxmuster-webui7 (1.0.121-1) lmn7-testing; urgency=medium 
+
+  * Current snapshot build c9491fc49826bb67f159de665d9c7fa64db87c02
+   *     fixed postinst sophomorix-ui command
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Apr  8 11:33:52 CEST 2020
+
+linuxmuster-webui7 (1.0.120-1) lmn7-testing; urgency=medium 
+
+  * Current snapshot build ad4e15ff423851dc27508810236e72d4f9b6ef51
+   *     fixed some python3 related packages and split_config
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Apr  8 10:42:35 CEST 2020
+
+linuxmuster-webui7 (1.0.119-1) lmn7; urgency=medium 
+
+  * Current snapshot build b0f54953c4b31512f4d8f891e41bb3c44cb27ab2
+   *     temporary removed subnets from schoolsettings
+
+ -- Andreas Till <andreas.till@netzint.de> Tue Mar  3 14:57:28 UTC 2020
+
+linuxmuster-webui7 (1.0.118-1) lmn7-testing; urgency=medium 
+
+  * Current snapshot build 643a8daba67714daa8fde837ce1e32238f597cd1
+   *     Possible fix #117, works for me, must be tested again.
+
+ -- Andreas Till <andreas.till@netzint.de> Mon Mar  2 15:09:55 UTC 2020
+
+linuxmuster-webui7 (1.0.117-1) lmn7-testing; urgency=medium 
+
+  * Current snapshot build 2eef62bd57cb6859d2021eab53aa8b28b79ebc29
+   *     Fixed kill session waiting bug
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Feb 26 11:40:32 UTC 2020
+
+linuxmuster-webui7 (1.0.116-1) lmn7-testing; urgency=medium 
+
+  * Current snapshot build 6f833a2fe1377de1cc8bebb21f2f87b0978108f4
+   *     Merge branch 'aj33' into alpha
+
+ -- Andreas Till <andreas.till@netzint.de> Mon Feb 24 16:08:19 UTC 2020
+
+linuxmuster-webui7 (1.0.115-1) lmn7; urgency=medium 
+
+  * Current snapshot build 79bccd1ca5df7907df021aafb322dfecbc0c89f1
+   *     Suggestion for one line test.
+
+ -- Andreas Till <andreas.till@netzint.de> Mon Feb 24 13:23:28 UTC 2020
+
+linuxmuster-webui7 (1.0.114-1) lmn7; urgency=medium 
+
+  * Current snapshot build ef8f53b41f9a7b6a5cb9e00c59a53fc2e7e5a19f
+   *     Fixed session generating bug adding teachers to session
+
+ -- Andreas Till <andreas.till@netzint.de> Mon Feb 17 10:53:37 UTC 2020
+
+linuxmuster-webui7 (1.0.113-1) lmn7-testing; urgency=medium 
+
+  * Current snapshot build fb714ae0aabf7020e34e4bf77276507112d51694
+   *     fixed some session genration issues
+
+ -- Andreas Till <andreas.till@netzint.de> Tue Feb  4 12:05:41 UTC 2020
+
+linuxmuster-webui7 (1.0.112-1) lmn7-testing; urgency=medium 
+
+  * Current snapshot build 9001d16c7f48e36953465c6ddab3e9d6adc0cda8
+   *     updated translation
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Jan 30 12:52:53 UTC 2020
+
+linuxmuster-webui7 (1.0.111-1) lmn7-testing; urgency=medium 
+
+  * Current snapshot build aa5fbbf20b6706b15fc5e72f5e9627c377792ae4
+   *     added option to apply default role quota
+
+ -- Andreas Till <andreas.till@netzint.de> Tue Jan 28 10:59:32 UTC 2020
+
+linuxmuster-webui7 (1.0.110-1) lmn7; urgency=medium 
+
+  * Current snapshot build e7baa5f305183e04f7cbd312ec95146c8f0b9359
+   *     updated buildpackage.sh
+
+ -- Andreas Till <andreas.till@netzint.de> Sun Dec 15 10:08:38 UTC 2019
+
+linuxmuster-webui7 (1.0.109-1) lmn7; urgency=medium 
+
+  * Current snapshot build 2bdf3446b37e9c3e959bbdb3a4ca74ee663abb53
+   *     fixed null handling when operating trhough perl json
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Nov 22 12:11:07 UTC 2019
+
+linuxmuster-webui7 (1.0.108-1) lmn7; urgency=medium 
+
+  * Current snapshot build bc46452d64dca50e7b90cd3697c5e0a661dee458
+   *     Cleanup.
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Nov 22 11:08:40 UTC 2019
+
+linuxmuster-webui7 (1.0.107-1) lmn7; urgency=medium 
+
+  * Current snapshot build b6106f606cabc9e430e92352f2976936ef74295f
+  * Not overwriting existing config files.
+
+ -- Andreas Till <andreas.till@netzint.de> Mon Nov  3 07:57:03 UTC 2019
+
+linuxmuster-webui7 (1.0.106-1) lmn7; urgency=medium 
+
+  * Current snapshot build 347f7940e9976134e451df514c4ebd9c9a1c9755
+   *     Fix #120.
+
+ -- Andreas Till <andreas.till@netzint.de> Sat Nov  2 10:27:12 UTC 2019
+
+linuxmuster-webui7 (1.0.105-1) lmn7; urgency=medium 
+
+  * Current snapshot build 
+   * 
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Oct 17 07:44:50 UTC 2019
+
+linuxmuster-webui7 (1.0.104-1) lmn7; urgency=medium 
+
+  * Current snapshot build 414ea22ce43166cff2c2227d97c650785af110b6
+   *     removed extra courses from listmanagement module
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Oct 16 06:41:20 UTC 2019
+
+linuxmuster-webui7 (1.0.103-1) lmn7; urgency=medium 
+
+  * Current snapshot build a02ea821cfccff3026c9937b61035d1b095a939c
+   *     Update translations.
+
+ -- Andreas Till <andreas.till@netzint.de> Tue Oct 15 09:44:30 UTC 2019
+
+linuxmuster-webui7 (1.0.102-1) lmn7; urgency=medium 
+
+  * Current snapshot build 5cd4805d5d0c7681b0be9449c7068df6cad16929
+   *     Merge branch 'projects' into alpha
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Oct  9 14:54:29 UTC 2019
+
+linuxmuster-webui7 (1.0.101-1) lmn7; urgency=medium 
+
+  * Current snapshot build d28598e53ba5c5d9d182d6c265c57e4231542a99
+   *     Only reverse permissions if neccessary
+
+ -- Andreas Till <andreas.till@netzint.de> Mon Oct  7 14:07:35 UTC 2019
+
+linuxmuster-webui7 (1.0.100-1) lmn7; urgency=medium 
+
+  * Current snapshot build 23099a75d1d4b55e0d076fdb37b697e0f4181f9d
+   *     New version of Ajenti to fix fd problems.
+
+ -- Andreas Till <andreas.till@netzint.de> Mon Sep 30 06:08:37 UTC 2019
+
+linuxmuster-webui7 (1.0.99-1) lmn7; urgency=medium 
+
+  * Current snapshot build ae0e7f336175fb3e64dba4408244c3398354af54
+   *     Moving users now shows all attributes which are going to be changed
+
+ -- Andreas Till <andreas.till@netzint.de> Sat Sep 21 11:01:12 UTC 2019
+
+linuxmuster-webui7 (1.0.98-1) lmn7; urgency=medium 
+
+  * Current snapshot build 05f382c77c3547989fdaed1f85661e929ce7557d
+   *     added translations
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Sep 20 16:57:16 UTC 2019
+
+linuxmuster-webui7 (1.0.97-1) lmn7; urgency=medium 
+
+  * Current snapshot build 939ecc9f984162796412af880d7ac9f99bd551ba
+   *     fixed student list import (typo)
+
+ -- Andreas Till <andreas.till@netzint.de> Mon Sep 16 12:13:40 UTC 2019
+
+linuxmuster-webui7 (1.0.96-1) lmn7; urgency=medium 
+
+  * Current snapshot build 5274ec63a00bcdbf86afca800e13669323571c42
+   *     Fixed Password printing Bug and updated school settings menu
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Sep 13 11:13:20 UTC 2019
+
+linuxmuster-webui7 (1.0.95-1) lmn7; urgency=medium 
+
+  * Current snapshot build b339642d04cff06adf4a3e0585c4567bea4cfbab
+   *     added the right setting string for globalsettings. This module should now appear for global-admins
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Sep 12 14:56:59 UTC 2019
+
+linuxmuster-webui7 (1.0.94-1) lmn7; urgency=medium 
+
+  * Current snapshot build 6553b2edcc897279d45253c99f25ab477b85933f
+   *     Updaded csv coloumn handling
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Sep 12 14:47:49 UTC 2019
+
+linuxmuster-webui7 (1.0.93-1) lmn7; urgency=medium 
+
+  * Current snapshot build 21d94a8936e96e7c5a455efd8e765ec555a75dd0
+   *     this is now
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Sep 12 13:24:21 UTC 2019
+
+linuxmuster-webui7 (1.0.92-1) lmn7; urgency=medium 
+
+  * Current snapshot build 3bf386af6744931e6375e4c011b7a4d428fa6ddb
+   *     updated gitignore and permissions
+
+ -- Andreas Till <andreas.till@netzint.de> Sat Aug 17 14:43:15 UTC 2019
+
+linuxmuster-webui7 (1.0.91-1) lmn7; urgency=medium 
+
+  * Current snapshot build 0ff1630f0b6c568f97d7e1914f374ec25ad977af
+   *     updated new icons
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Aug 16 11:11:39 UTC 2019
+
+linuxmuster-webui7 (1.0.90-1) lmn7; urgency=medium 
+
+  * Current snapshot build 868c4da338790c0973b9a5393052ab8ca2b611a1
+   *     recreated custom breadcrumbs
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Aug 16 11:02:05 UTC 2019
+
+linuxmuster-webui7 (1.0.89-1) lmn7; urgency=medium 
+
+  * Current snapshot build 
+   * 
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Aug 16 10:53:40 UTC 2019
+
+linuxmuster-webui7 (1.0.88-1) lmn7; urgency=medium 
+
+  * Current snapshot build 690229a5808b5da4b2ee588b35d853f7f9c7b143
+   *     workaround fix ajenti fontawesome issue
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Aug 16 10:37:48 UTC 2019
+
+linuxmuster-webui7 (1.0.87-1) lmn7; urgency=medium 
+
+  * Current snapshot build 
+   * 
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Aug 16 09:29:14 UTC 2019
+
+linuxmuster-webui7 (1.0.86-1) lmn7; urgency=medium 
+
+  * Current snapshot build 63b86635f16ccc5ad0060989af90d8796328f10b
+   *     update other ajenti comonents
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Aug 16 08:51:29 UTC 2019
+
+linuxmuster-webui7 (1.0.85-1) lmn7; urgency=medium 
+
+  * Current snapshot build 4db3b101778733d0830655ff3ba81c0ec7f98afd
+   *     upgrade ajenti to 2.1.30
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Aug 16 08:33:07 UTC 2019
+
+linuxmuster-webui7 (1.0.84-1) lmn7; urgency=medium 
+
+  * Current snapshot build 87831485b33cdb746ee6db0ce52cd349613e8254
+   *     Updated Changelog due to new package
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Aug  8 13:05:27 UTC 2019
+
+linuxmuster-webui7 (1.0.83-1) lmn7; urgency=medium 
+
+  * Current snapshot build 7a1375c089df023c3f8d1d5d8c065143b6f52f5f
+   *     changed default port before setup wizard to 80 http
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Aug  7 08:15:10 UTC 2019
+
+linuxmuster-webui7 (1.0.82-1) lmn7; urgency=medium 
+
+  * Current snapshot build c2b4af31cfbef4eae8450f6f0532fd99218ee8bf
+   *     Merged Crowdin Translations
+
+ -- Andreas Till <andreas.till@netzint.de> Tue Aug  6 16:22:37 UTC 2019
+
+linuxmuster-webui7 (1.0.81-1) lmn7; urgency=medium 
+
+  * Current snapshot build aa7a87a1b69f53cc54530032701b61bf621764e6
+   *     added webuisettings module
+
+ -- Andreas Till <andreas.till@netzint.de> Tue Aug  6 14:43:52 UTC 2019
+
+linuxmuster-webui7 (1.0.80-1) lmn7; urgency=medium 
+
+  * Current snapshot build f1c04ef6efcd90895e6dea4e28a7759988697bbc
+   *     Some fixs for the backups.
+
+ -- Andreas Till <andreas.till@netzint.de> Tue Aug  6 11:50:39 UTC 2019
+
+linuxmuster-webui7 (1.0.79-1) lmn7; urgency=medium 
+
+  * Current snapshot build b95143eba5b4dc133ff76c2a0dee80fa6ef9c122
+   *     Changed default WebUI Port to 443
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Aug  2 15:14:54 UTC 2019
+
+linuxmuster-webui7 (1.0.78-1) lmn7; urgency=medium 
+
+  * Current snapshot build 1eb73f4f597303d327b92834b4525757129705c1
+   *     possible fix for login issue
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Jul 31 10:18:20 UTC 2019
+
+linuxmuster-webui7 (1.0.77-1) lmn7; urgency=medium 
+
+  * Current snapshot build 98d346070bce2a03f5f1a94d612d686c08ff5713
+  * modified file upload for dfs
+
+ -- Andreas Till <andreas.till@netzint.de> Tue Jul 30 15:45:00 UTC 2019
+
+linuxmuster-webui7 (1.0.76-1) lmn7; urgency=medium 
+
+  * Current snapshot build ef82bde3d100e4a6fc7dc562bf7864d97b30b1c9
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Jul  5 10:22:38 UTC 2019
+
+linuxmuster-webui7 (1.0.75-1) lmn7; urgency=medium 
+
+  * Current snapshot build 5e0f5f883416d14b440478f1b94825f79f43324a
+   *     split share and collect in two buttons in session module
+
+ -- Andreas Till <andreas.till@netzint.de> Mon Jul  1 07:33:23 UTC 2019
+
+linuxmuster-webui7 (1.0.74-1) lmn7; urgency=medium 
+
+  * Current snapshot build e262752b88aeb9a1b7680abc7fff9fd18d28b4ae
+   *     Allow admins to print teachers passwords, right parameter in lmn_checkPermission.
+
+ -- Andreas Till <andreas.till@netzint.de> Mon Jul  1 06:31:17 UTC 2019
+
+linuxmuster-webui7 (1.0.73-1) lmn7; urgency=medium 
+
+  * Current snapshot build fbccf99f69d486229b0c47ca11a0a2d3b2160834
+   *     Handles userdata changes and not only user status.
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Jun 28 07:25:27 UTC 2019
+
+linuxmuster-webui7 (1.0.72-1) lmn7; urgency=medium 
+
+  * Current snapshot build 040dfbb9eb6974345d22b81210bd00612c070abb
+   *     added minor fixes to layout
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Jun 13 18:41:05 UTC 2019
+
+linuxmuster-webui7 (1.0.71-1) lmn7; urgency=medium 
+
+  * Current snapshot build 60c4d4d6c700134cb6791c286b2ac21c787dac3d
+   *     updated frontend look
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Jun 13 15:37:00 UTC 2019
+
+linuxmuster-webui7 (1.0.70-1) lmn7; urgency=medium 
+
+  * Current snapshot build 028bd1d1385528927e5efbab46495d978b9ec1d2
+   *     Added custom csv list support
+
+ -- Andreas Till <andreas.till@netzint.de> Wed May 29 16:05:57 UTC 2019
+
+linuxmuster-webui7 (1.0.69-1) lmn7; urgency=medium 
+
+  * Current snapshot build 318cea2e21ff71233e71b2e362263dde5c5ddaa0
+   *     Added no students in printer module
+
+ -- Andreas Till <andreas.till@netzint.de> Fri May 24 11:47:57 UTC 2019
+
+linuxmuster-webui7 (1.0.68-1) lmn7; urgency=medium 
+
+  * Current snapshot build 77da5f0b63537560f3fa68a23009e463862adbf7
+   *     removed comments
+
+ -- Andreas Till <andreas.till@netzint.de> Fri May 24 10:05:12 UTC 2019
+
+linuxmuster-webui7 (1.0.67-1) lmn7; urgency=medium 
+
+  * Current snapshot build 701d8e957a069bff7d22ef067ddbddf7919b394b
+   *     improved error handling on bad encoding
+
+ -- Andreas Till <andreas.till@netzint.de> Thu May 23 14:21:00 UTC 2019
+
+linuxmuster-webui7 (1.0.66-1) lmn7; urgency=medium 
+
+  * Current snapshot build 701d8e957a069bff7d22ef067ddbddf7919b394b
+   *     improved error handling on bad encoding
+
+ -- Andreas Till <andreas.till@netzint.de> Thu May 23 14:19:14 UTC 2019
+
+linuxmuster-webui7 (1.0.65-1) lmn7; urgency=medium 
+
+  * Current snapshot build 
+   * 
+
+ -- Andreas Till <andreas.till@netzint.de> Fri May 17 15:10:38 UTC 2019
+
+linuxmuster-webui7 (1.0.64-1) lmn7; urgency=medium 
+
+  * Current snapshot build d57ed5da0633680a1519689216e44122673dbadd
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Mai 8 12:29:33 UTC 2019
+
+linuxmuster-webui7 (1.0.63-1) lmn7; urgency=medium 
+
+  * Current snapshot build f0f8e984322d6c50018c40d4b8c8501f3680ff23
+   *     build javascript
+
+ -- Andreas Till <andreas.till@netzint.de> Sat Mar 23 16:25:36 UTC 2019
+
+linuxmuster-webui7 (1.0.62-1) UNRELEASED; urgency=medium 
+
+  * Current snapshot build 
+   * 
+
+ -- Andreas Till <andreas.till@netzint.de> Sat Mar 23 17:14:40 UTC 2019
+
+linuxmuster-webui7 (1.0.61-1) UNRELEASED; urgency=medium 
+
+  * Current snapshot build 
+   * 
+
+ -- Andreas Till <andreas.till@netzint.de> Sat Mar 23 14:32:40 UTC 2019
+
+linuxmuster-webui7 (1.0.60-1) UNRELEASED; urgency=medium 
+
+  * Current snapshot build 7414283f811e179fd265bc30ddc945d7a6148fdd
+   *     possibly fixed print password bug in a clean way
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Mar 15 07:15:03 UTC 2019
+
+linuxmuster-webui7 (1.0.59-1) UNRELEASED; urgency=medium 
+
+  * Current snapshot build 500bda52f024f22c6399eb215c91015c8d665bf4
+   *     quick fix: landingpage if no quota limitation is set
+
+ -- Andreas Till <andreas.till@netzint.de> Tue Mar 12 07:54:03 UTC 2019
+
+linuxmuster-webui7 (1.0.58-1) UNRELEASED; urgency=medium 
+
+  * Current snapshot build 5ae8f7c8dbedd9874be8fb4a90ed8b42cb23ec05
+   *     merged
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Mar  8 13:12:33 UTC 2019
+
+linuxmuster-webui7 (1.0.57-1) UNRELEASED; urgency=medium 
+
+  * Current snapshot build d8892290be9a7d0c715d81321989114548acff69
+  * fixed print password empty pdf problem
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Mar  8 10:16:42 UTC 2019
+
+linuxmuster-webui7 (1.0.56-1) UNRELEASED; urgency=medium 
+
+  * Current snapshot build 
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Feb 20 12:17:31 UTC 2019
+
+linuxmuster-webui7 (1.0.55-1) UNRELEASED; urgency=medium 
+
+  * Current snapshot build 
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Feb 20 12:17:31 UTC 2019
+
+linuxmuster-webui7 (1.0.54-1) UNRELEASED; urgency=medium 
+
+  * Current snapshot build 
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Feb 20 12:17:31 UTC 2019
+
+linuxmuster-webui7 (1.0.50-1) UNRELEASED; urgency=medium 
+
+  * Current snapshot build 
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Feb 20 12:17:31 UTC 2019
+
+linuxmuster-webui7 (1.0.49-1) UNRELEASED; urgency=medium 
+
+  * Current snapshot build 
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Feb 20 12:17:31 UTC 2019
+
+linuxmuster-webui7 (1.0.48-1) UNRELEASED; urgency=medium 
+
+  * Current snapshot build 005d6624169523f0ff599beb678687de1671196a
+  * merged 5f6c900 a80e695
+  * setup wizard added information page after setup is finished
+  * added change password button to landing page
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Feb 20 12:17:31 UTC 2019
+
+linuxmuster-webui7 (1.0.47-1) UNRELEASED; urgency=medium 
+
+  * Current snapshot build 31708c017c105e2e5f542473039a741470832eff
+   *     fixed summary page in wizard firewall entry
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Feb 20 12:17:31 UTC 2019
+
+linuxmuster-webui7 (1.0.46-1) UNRELEASED; urgency=medium 
+
+  * Current snapshot build 2e229ec619106f94b987fdc1b2e683fc06c3f960
+   *     Change Password now validates like setup wizard. Added forwarding to landingpage on successfull change
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Feb 15 14:10:58 UTC 2019
+
+linuxmuster-webui7 (1.0.45-1) UNRELEASED; urgency=medium 
+
+  * Current snapshot build 1b8bf44d8454762e443d656ba1eb32fb7e6613b4
+   *     added navigation support (tab) in setup wizard
+
+ -- Andreas Till <andreas.till@netzint.de> Tue Feb 12 15:21:51 UTC 2019
+
+linuxmuster-webui7 (1.0.44-1) UNRELEASED; urgency=medium 
+
+  * Current snapshot build cb17d0008ed0235a8e4b54f13b337bf544ef9869
+   *     fixed type in landingpage, added administrator message to landing page
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Jan 23 12:42:10 UTC 2019
+
+linuxmuster-webui7 (1.0.43-1) UNRELEASED; urgency=medium 
+
+  * Current snapshot build b3b40f4930fc6d814805d260b2f74eda8cc6c850
+   *     added landingpage plugin. removed dashboard permission for everyon
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Jan 23 12:20:37 UTC 2019
+
+linuxmuster-webui7 (1.0.42-1) UNRELEASED; urgency=medium 
+
+  * Current snapshot build 146a964f7ca85727a867d13037b0f3931c6fc3d7
+   *     Merge branch 'config-linuxmuster' into alpha
+
+ -- Andreas Till <andreas.till@netzint.de> Mon Jan 21 15:26:18 UTC 2019
+
+linuxmuster-webui7 (1.0.41-1) UNRELEASED; urgency=medium 
+
+  * Current snapshot build fdf420e21254552b98cef682f1d68487cef57e27
+   *     setup wizard minor fix
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Jan 18 08:46:37 UTC 2019
+
+linuxmuster-webui7 (1.0.40-1) UNRELEASED; urgency=medium 
+
+  * Current snapshot build 31d8bdd1e2fff3e441c2430b3f79a06fb8e90334
+   *     removed some merging errors
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Jan 17 17:10:34 UTC 2019
+
+linuxmuster-webui7 (1.0.39-1) UNRELEASED; urgency=medium 
+
+  * Current snapshot build b05d1465511cdb873ee77199df455b8b3ff94336
+   *     merged config-linuxmuster
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Jan 17 13:26:22 UTC 2019
+
+linuxmuster-webui7 (1.0.38-1) UNRELEASED; urgency=medium 
+
+  * Current snapshot build 7104d16af81408fd84c63a6a9877c5a31c13844c
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Jan 17 12:50:58 UTC 2019
+
+linuxmuster-webui7 (1.0.37-1) UNRELEASED; urgency=medium 
+
+  * Current snapshot build e7f016179975662e36fd1d099a332eaaaf57f26a
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Jan 17 11:50:49 UTC 2019
+
+linuxmuster-webui7 (1.0.36-1) UNRELEASED; urgency=medium
+
+  * Current snapshot build for config-test
+
+ -- Andreas Till <andreas.till@netzint.de> Sat Jan 17 10:56:03 2018 +0000
+
+linuxmuster-webui7 (1.0.35-1) UNRELEASED; urgency=medium
+
+  * Current snapshot build  
+
+ -- Andreas Till <andreas.till@netzint.de> Sat Dec 12 15:05:03 2018 +0000
+
+linuxmuster-webui7 (1.0.34-1) UNRELEASED; urgency=medium
+
+  * Current snapshot build  f290b2621780dc6a0f7de3696a61407b5e711722
+
+ -- Andreas Till <andreas.till@netzint.de> Sat Jan 12 14:00:03 2018 +0000
+
+linuxmuster-webui7 (1.0.33-1) UNRELEASED; urgency=medium
+
+  * Current snapshot build 
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Jan 12 12:10:03 2018 +0000
+
+linuxmuster-webui7 (1.0.32-1) UNRELEASED; urgency=medium
+
+  * Current snapshot build 
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Jan 12 12:10:03 2018 +0000
+
+linuxmuster-webui7 (1.0.31-1) UNRELEASED; urgency=medium
+
+  * Current snapshot build 
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Jan 12 10:41:03 2018 +0000
+
+
+linuxmuster-webui7 (1.0.30-1) UNRELEASED; urgency=medium
+
+  * Current snapshot build 68bbed11647c099c90275ba8c00740273b6c2fb3
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Jan 12 10:29:03 2018 +0000
+
+linuxmuster-webui7 (1.0.29-1) UNRELEASED; urgency=medium
+
+  * Current snapshot build temp build 
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Jan 12 09:58:03 2018 +0000
+
+linuxmuster-webui7 (1.0.28-1) UNRELEASED; urgency=medium
+
+  * Current snapshot build  e3e6ee897c6b7cd40a03f76962551bab66b0ee1a
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Jan 11 12:01:03 2018 +0000
+
+linuxmuster-webui7 (1.0.27-1) UNRELEASED; urgency=medium
+
+  * Current snapshot build  71e0e08ece8175b8965fb2d23066769268932acd
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Jan 11 22:29:03 2018 +0000
+
+linuxmuster-webui7 (1.0.26-1) UNRELEASED; urgency=medium
+
+  * Current snapshot build  e32df6f33f9b63214a4e3ba81d2a0aaa808a392f
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Jan 11 17:23:03 2018 +0000
+
+linuxmuster-webui7 (1.0.25-1) UNRELEASED; urgency=medium
+
+  * Current snapshot build  4a942b45e35351d465003b5d7cb52e568ce15ee5
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Jan 11 16:04:03 2018 +0000
+
+linuxmuster-webui7 (1.0.24-1) UNRELEASED; urgency=medium
+
+  * Current snapshot build  58d62bf8d3ad784af31cec3ce57a6449ddd4f0b1
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Jan 11 15:59:03 2018 +0000
+
+linuxmuster-webui7 (1.0.23-1) UNRELEASED; urgency=medium
+
+  * Current snapshot build  cf6334f03eceefbf06fa0f8ed0246b4d6f72e8fc
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Dec 07 15:45:03 2018 +0000
+
+linuxmuster-webui7 (1.0.23-0) UNRELEASED; urgency=medium
+
+  * Current snapshot build  137fe1945d43bc0d33c5a146b10cf1796f1a001d
+  * updated linbo module
+  * added feature to choose disk type
+  * removed debug output
+  * adddresses issue #55 fixed groupname in menu bar
+  * fixed #55
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Dec 06 19:4:50 2018 +0000
+
+linuxmuster-webui7 (1.0.22-0) UNRELEASED; urgency=medium
+
+  * Current snapshot build  3766463859050338258bdc9380299aa076a495c7
+  * updated session module to work with the new sophomorix-transfer features
+  * added project support
+  * prohibit blanks and special characters in project names
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Dec 06 11:03:30 2018 +0000
+
+linuxmuster-webui7 (1.0.21-0) UNRELEASED; urgency=medium
+
+  * Current snapshot build  9acaf292a63284c5c6d7ae9badbb7a6235dd02d9
+  * Fixed sharing several files in transfer directory from session
+  * Updated groupmembership module
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Nov 24 17:11:48 2018 +0000
+
+linuxmuster-webui7 (1.0.20-0) UNRELEASED; urgency=medium
+
+  * Current snapshot build  4008acfe64d94849004e5a73bbc159965dd80848
+  * Fixed sharing files containing whitespaces in session
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Nov 24 17:11:48 2018 +0000
+
+linuxmuster-webui7 (1.0.19-3) UNRELEASED; urgency=medium
+
+  * Current snapshot build  5dcdb39fe98f54c4118c6253b3d8a2c7c59aebf0
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Nov 24 17:11:48 2018 +0000
+
+linuxmuster-webui7 (1.0.19-2) UNRELEASED; urgency=medium
+
+  * Current snapshot build  d408bc9691a6f97234e32c679ac5c9ef9bff960f
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Nov 22 15:47:48 2018 +0000
+
+linuxmuster-webui7 (1.0.19-1) UNRELEASED; urgency=medium
+
+  * Current snapshot build  b98437dbd5bb3016807428d0a618fe0af27810a6
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Nov 22 12:32:21 2018 +0000
+
+linuxmuster-webui7 (1.0.19-0) UNRELEASED; urgency=medium
+
+  * Current snapshot build  455dfcbc2c054ec8c19e8e697ea8f242af651333
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Nov 21 18:50:01 2018 +0000
+
+linuxmuster-webui7 (1.0.18-44) UNRELEASED; urgency=medium
+
+  * Current snapshot build  7160756bd38b7d9431f796298a0d29a4297d06c9
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Nov 11 22:43:01 2018 +0000
+
+
+linuxmuster-webui7 (1.0.18-43) UNRELEASED; urgency=medium
+
+  * Current snapshot build  1893d46cb26b4fe983cb56cabbb7620f6d563a4e
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Oct 25 13:13:32 2018 +0000
+
+linuxmuster-webui7 (1.0.18-42) UNRELEASED; urgency=medium
+
+  * Current snapshot build  0cd67245602714c2a263a79da286b00f09c4c07c
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Oct 25 12:20:10 2018 +0000
+
+linuxmuster-webui7 (1.0.18-41) UNRELEASED; urgency=medium
+
+  * Current snapshot build  ce361bc12b6c5be79014fde0ede930f9ed50c0b4
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Oct 11 11:27:14 2018 +0000
+
+linuxmuster-webui7 (1.0.18-40) UNRELEASED; urgency=medium
+
+  * Current snapshot build  ea78f9a63291525660cda0860c831a21b96d05c9
+
+ -- Andreas Till <andreas.till@netzint.de> Mon Oct 08 10:27:12 2018 +0000
+
+linuxmuster-webui7 (1.0.18-39) UNRELEASED; urgency=medium
+
+  * Current snapshot build  00738e8db2f54bcdba1a282cf6dce6d21d9ae7ab
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Oct 04 21:02:32 2018 +0000
+
+linuxmuster-webui7 (1.0.18-38) UNRELEASED; urgency=medium
+
+  * Current snapshot build  01c9e7fc4f2175a3f33c964ddcafda3bea491273
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Sep 28 17:58:32 2018 +0000
+
+linuxmuster-webui7 (1.0.18-37) UNRELEASED; urgency=medium
+
+  * Current snapshot build  bd9826c9e2fb663491a6aaa83db07a14a8dd989b 
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Sep 27 16:31:50 2018 +0000
+
+linuxmuster-webui7 (1.0.18-36) UNRELEASED; urgency=medium
+
+  * Current snapshot build  3eac87fd4f158f622b701e16e07850d61f652773
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Sep 27 16:31:50 2018 +0000
+
+linuxmuster-webui7 (1.0.18-34) UNRELEASED; urgency=medium
+
+  * Current snapshot build  d1f149ff2f8190742cc5ef324b9b692c297fdd82
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Sep 27 13:01:53 2018 +0000
+
+linuxmuster-webui7 (1.0.18-33) UNRELEASED; urgency=medium
+
+  * Current snapshot build  5b4734b6d3c13e41363bc2804020a974db23f53e
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Sep 26 17:43:10 2018 +0000
+
+linuxmuster-webui7 (1.0.18-32) UNRELEASED; urgency=medium
+
+  * Current snapshot build  d70cc2448694075c0ce396703a53eadc9625d909
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Sep 26 15:59:10 2018 +0000
+
+linuxmuster-webui7 (1.0.18-31) UNRELEASED; urgency=medium
+
+  * Current snapshot build  e54b85fed6c851e11f2c64cf2ec03b784ae95a3a
+
+ -- Andreas Till <andreas.till@netzint.de> Fri Sep 21 09:17:13 2018 +0000
+
+linuxmuster-webui7 (1.0.18-30) UNRELEASED; urgency=medium
+
+  * Current snapshot build  42510d619502df93fc00ee15f8d65488f76e790d
+
+ -- Andreas Till <andreas.till@netzint.de> Thu Sep 13 12:15:26 2018 +0000
+
+linuxmuster-webui7 (1.0.18-29) UNRELEASED; urgency=medium
+
+  * Current snapshot build  7caf7fce1dc79ce479c3004503ba12347394765e
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Sep 12 18:44:56 2018 +0000
+
+linuxmuster-webui7 (1.0.18-28) UNRELEASED; urgency=medium
+
+  * Current snapshot build  a3d11addcb3a4ce7c77db4915325db08984df0a2
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Sep 12 14:59:19 2018 +0000
+
+linuxmuster-webui7 (1.0.18-27) UNRELEASED; urgency=medium
+
+  * Current snapshot build  5d034340e0719d4fc2ac5ec836c0f11385414a55
+
+ -- Andreas Till <andreas.till@netzint.de> Tue Sep 11 16:17:19 2018 +0000
+
+linuxmuster-webui7 (1.0.18-26) UNRELEASED; urgency=medium
+
+  * Current snapshot build  9b68a72d8b106f453cb2e51464da55d5747ad2ed
+
+ -- Andreas Till <andreas.till@netzint.de> Tue Sep 11 15:24:19 2018 +0000
+
+linuxmuster-webui7 (1.0.18-25) UNRELEASED; urgency=medium
+
+  * Current snapshot build  2e639e6eba8d87ec06c58be2cdee15a84fe7456f
+
+ -- Andreas Till <andreas.till@netzint.de> Tue Sep 11 14:28:33 2018 +0000
+
+linuxmuster-webui7 (1.0.18-24) UNRELEASED; urgency=medium
+
+  * Current snapshot build  051cb3f79e7015e982c7c52dbcae876d2a1506cf
+
+ -- Andreas Till <andreas.till@netzint.de> Mo Aug 31 18:25:03 2018 +0000
+
+linuxmuster-webui7 (1.0.18-23) UNRELEASED; urgency=medium
+
+  * Current snapshot build  3f25549cbca9c5e0f8b6a2b9fe8a01bf3cb8969f
+
+ -- Andreas Till <andreas.till@netzint.de> Mo Aug 31 17:56:02 2018 +0000
+
+linuxmuster-webui7 (1.0.18-22) UNRELEASED; urgency=medium
+
+  * Current snapshot build  a3fcacb2d18b640485bfb64ba6d155569de1beb0
+
+ -- Andreas Till <andreas.till@netzint.de> Mo Aug 31 17:48:23 2018 +0000
+
+linuxmuster-webui7 (1.0.18-21) UNRELEASED; urgency=medium
+
+  * Current snapshot build  ac096d970386a3a89e1b043df52c5d16170bf849
+
+ -- Andreas Till <andreas.till@netzint.de> Mo Aug 22 19:18:43 2018 +0000
+
+linuxmuster-webui7 (1.0.18-20) UNRELEASED; urgency=medium
+
+  * Current snapshot build  cdcb632be3ce0a3f41f4ee2da6a1f2f9c7f72f4f
+
+ -- Andreas Till <andreas.till@netzint.de> Mo Aug 22 15:58:51 2018 +0000
+
+linuxmuster-webui7 (1.0.18-19) UNRELEASED; urgency=medium
+
+  * Current snapshot build  58391b3abe87474ea6d2af795f51903f97f31270
+
+ -- Andreas Till <andreas.till@netzint.de> Mo Aug 22 17:40:13 2018 +0000
+
+linuxmuster-webui7 (1.0.18-18) UNRELEASED; urgency=medium
+
+  * Current snapshot build  349c6e06a3f9faf3493a572eff15c26e66b527cd
+
+ -- Andreas Till <andreas.till@netzint.de> Mo Aug 22 17:03:34 2018 +0000
+
+linuxmuster-webui7 (1.0.18-17) UNRELEASED; urgency=medium
+
+  * Current snapshot build  c1d14707d43c6ac39efb4d9c4dad5f2ba1cef308
+
+ -- Andreas Till <andreas.till@netzint.de> Mo Aug 22 12:31:23 2018 +0000
+
+linuxmuster-webui7 (1.0.18-16) UNRELEASED; urgency=medium
+
+  * Current snapshot build  c9a03978625e0b052f9a427ee3deac8410800b73
+
+ -- Andreas Till <andreas.till@netzint.de> Mo Aug 22 11:26:56 2018 +0000
+
+linuxmuster-webui7 (1.0.18-15) UNRELEASED; urgency=medium
+
+  * Current snapshot build  50c984cc9197502f1714253bab5354b324bdd1e7
+
+ -- Andreas Till <andreas.till@netzint.de> Mo Aug 20 23:24:28 2018 +0000
+
+linuxmuster-webui7 (1.0.18-14) UNRELEASED; urgency=medium
+
+  * Current snapshot build  3fbf44d73492d1d200afeb710f8712e959876057
+
+ -- Andreas Till <andreas.till@netzint.de> Mo Aug 20 20:44:18 2018 +0000
+
+linuxmuster-webui7 (1.0.18-13) UNRELEASED; urgency=medium
+
+  * Current snapshot build 15354a022f451661064ba05d50a8b3744264f475
+
+ -- Andreas Till <andreas.till@netzint.de> Fr Aug 10 14:06:08 2018 +0000
+
+
+linuxmuster-webui7 (1.0.18-12) UNRELEASED; urgency=medium
+
+  * Current snapshot build f4f40e8da83b8bf9907cfcbc8819ea64f451f946
+
+ -- Andreas Till <andreas.till@netzint.de> Wed Aug 8 18:19:24 2018 +0000
+
+linuxmuster-webui7 (1.0.18-11) UNRELEASED; urgency=medium
+
+  * Current snapshot build
+
+ -- Andreas Till <andreas.till@netzint.de>  Tu, 00 Aug 2018 12:32:21 +0200
+
+linuxmuster-webui7 (1.0.18-10) UNRELEASED; urgency=medium
+
+  * Current snapshot build 593e37096d68cada1313ea9eee22eac45c6dddc0
+
+ -- Andreas Till <andreas.till@netzint.de>  Tu, 08 Aug 2018 12:39:54 +0200
+
+linuxmuster-webui7 (1.0.18-9) UNRELEASED; urgency=medium
+
+  * Current snapshot build b3dc07eed3cbb0b03da1afa251ebf24fae5f564c
+
+ -- Andreas Till <andreas.till@netzint.de>  Tu, 04 Jul 2018 15:34:03 +0200
+
+linuxmuster-webui7 (1.0.18-8) UNRELEASED; urgency=medium
+
+  * Current snapshot build bae227d338f65f5ceaceadbcc6089a21b2f26e41
+
+ -- Andreas Till <andreas.till@netzint.de>  Tu, 04 Jul 2018 15:13:03 +0200
+
+linuxmuster-webui7 (1.0.18-7) UNRELEASED; urgency=medium
+
+  * Current snapshot build ef2e1e1ef9c4430437d2eb7a167b8fd5208493d4
+
+ -- Andreas Till <andreas.till@netzint.de>  Tu, 03 Jul 2018 17:13:03 +0200
+
+linuxmuster-webui7 (1.0.18-6) UNRELEASED; urgency=medium
+
+  * Current snapshot build 2be6ae415611f90e72e6242f832822285891b96e
+
+ -- Andreas Till <andreas.till@netzint.de>  Tu, 03 Jul 2018 12:13:03 +0200
+
+linuxmuster-webui7 (1.0.18-5) UNRELEASED; urgency=medium
+
+  * Current snapshot build 4b34b59b07d16e7ac62f0ec0a208976bf102e686
+
+ -- Andreas Till <andreas.till@netzint.de>  Tu, 03 Jul 2018 11:29:03 +0200
+
+linuxmuster-webui7 (1.0.18-4) UNRELEASED; urgency=medium
+
+  * Current snapshot build 628f05d89cd7d9011c5dc0b46bd2d5ff15478085
+  * fixede linbo remove parition bug
+
+ -- Andreas Till <andreas.till@netzint.de>  Tu, 03 Jul 2018 10:45:20 +0200
+
+linuxmuster-webui7 (1.0.18-3) UNRELEASED; urgency=medium
+
+  * Current snapshot build 4577af102fa6e66eec531d9ee228e9a191b63d8f
+  * extended session module for handling exams
+  * batch password changing is  currently broken
+  * fixed encoding erros
+
+ -- Andreas Till <andreas.till@netzint.de>  Fr, 29 Jun 2018 16:39:20 +0200
+
+linuxmuster-webui7 (1.0.18-2) UNRELEASED; urgency=medium
+
+  * Current snapshot build bc4b69dcf5b5f2d099202c56de7f7ca6fec4a0e8
+
+ -- Andreas Till <andreas.till@netzint.de>  Wed, 20 Jun 2018 16:11:39 +0200
+
+linuxmuster-webui7 (1.0.18-1) UNRELEASED; urgency=medium
+
+  * Current snapshot build a5109eff6bca8f837e3f71cce3322f4cec46cd00
+  * Updated webui-permissions
+
+ -- Andreas Till <andreas.till@netzint.de>  Wed, 20 Jun 2018 15:25:4 +0200
+
+linuxmuster-webui7 (1.0.17-1) UNRELEASED; urgency=medium
+
+  * Current snapshot build cdafc9a12a350067d2c6e917677c45e8563d8e12
+  * Fixed Encoding Issues
+  * Added function to determine encoding from sophomorix-check
+  * WebUI now creates empty userlists if none are present
+
+ -- Andreas Till <andreas.till@netzint.de>  Wed, 20 Jun 2018 14:52:21 +0200
+
+linuxmuster-webui7 (1.0.16-1) UNRELEASED; urgency=medium
+
+  * Current snapshot build
+
+ -- Andreas Till <andreas.till@netzint.de>  Thu, 07 Jun 2018 17:37:02 +0200
+
+linuxmuster-webui7 (1.0.15-1) UNRELEASED; urgency=medium
+
+  * Current snapshot build
+
+ -- Andreas Till <andreas.till@netzint.de>  Thu, 07 Jun 2018 13:37:02 +0200
+
+linuxmuster-webui7 (1.0.14-1) UNRELEASED; urgency=medium
+
+  * Current snapshot build
+
+ -- Andreas Till <andreas.till@netzint.de>  Thu, 07 Jun 2018 12:14:10 +0200
+
+linuxmuster-webui7 (1.0.13-1) UNRELEASED; urgency=medium
+
+  * Current snapshot build
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri, 25 May 2018 15:17:10 +0200
+
+linuxmuster-webui7 (1.0.12-1) UNRELEASED; urgency=medium
+
+  * Current snapshot build
+
+ -- Andreas Till <andreas.till@netzint.de>  Thu, 17 May 2018 11:17:09 +0200
+
+linuxmuster-webui7 (1.0.11-1) ALPHA; urgency=medium
+
+  * Current build 
+
+ -- Maurice Cazautet <maurice.cazautet@netzint.de>  Wed, 16 May 2018 13:46:31 +0200
+
+linuxmuster-webui7 (1.0.10-1) ALPHA; urgency=medium
+
+  * Finalizing Setup Wizzard 
+
+ -- Maurice Cazautet <maurice.cazautet@netzint.de>  Tue, 08 May 2018 16:00:22 +0000
+
+linuxmuster-webui7 (1.0.9-1) ALPHA; urgency=medium
+
+  * Updated install wizzard 
+
+ -- Maurice Cazautet <maurice.cazautet@netzint.de>  Tue, 08 May 2018 15:05:45 +0000
+
+linuxmuster-webui7 (1.0.8-1) ALPHA; urgency=medium
+
+  * Fix AJ-Setup
+
+ -- Maurice Cazautet <maurice.cazautet@netzint.de>  Mon, 07 May 2018 14:19:49 +0000
+
+linuxmuster-webui7 (1.0.7-7) lmn7-testing; urgency=medium
+
+  * Initial upload WebUI for lmn7
+
+ -- Maurice Cazautet <maurice.cazautet@netzint.de>  Mon, 06 Feb 2017 20:02:54 +0100

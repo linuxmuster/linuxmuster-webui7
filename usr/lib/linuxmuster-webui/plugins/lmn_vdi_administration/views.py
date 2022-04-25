@@ -20,28 +20,20 @@ class Handler(HttpPlugin):
         if http_context.method == 'POST':
 
             path = "/usr/lib/linuxmuster-linbo-vdi"
-            if os.path.isdir(path) == False:
+            if os.path.isdir(path) == False and os.path.islink(path) == False:
                 return { "status": "error", "message": "VDI Tools not installed!" }
 
             action = http_context.json_body()['action']
             if action == 'get-masterVMs':
-                getVmStatesCommand=['/usr/lib/linuxmuster-linbo-vdi/getVmStates.py', '-master']
+                getVmStatesCommand=['sudo', '/usr/lib/linuxmuster-linbo-vdi/getVmStates.py', '-master']
                 output = subprocess.check_output(getVmStatesCommand, shell=False)
-                output_new = ""
-                for line in output.decode().splitlines():
-                    if line.find("*") == -1:
-                        output_new += line + "\n"
-                vmStates = json.loads(output_new)
+                vmStates = json.loads(output)
                 return { "status": "success", "data": vmStates }
-            
+
             if action == 'get-clones':
-                getClonesCommand=['/usr/lib/linuxmuster-linbo-vdi/getVmStates.py', '-clones']
+                getClonesCommand=['sudo', '/usr/lib/linuxmuster-linbo-vdi/getVmStates.py', '-clones']
                 output = subprocess.check_output(getClonesCommand, shell=False)
-                output_new = ""
-                for line in output.decode().splitlines():
-                    if line.find("*") == -1:
-                        output_new += line + "\n"
-                clones = json.loads(output_new)
+                clones = json.loads(output)
                 return { "status": "success", "data": clones }
  
 

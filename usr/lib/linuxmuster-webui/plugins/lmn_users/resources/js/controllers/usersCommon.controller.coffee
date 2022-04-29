@@ -152,7 +152,7 @@ angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $rou
             negative: gettext('Cancel')
         ).then (msg) ->
             $http.post("/api/lm/custommulti/remove", {index: n, value: value, user: id}).then () ->
-                position = $scope.userDetails['sophomorixCustomMulti'+n].indexOf(msg.value)
+                position = $scope.userDetails['sophomorixCustomMulti'+n].indexOf(value)
                 $scope.userDetails['sophomorixCustomMulti'+n].splice(position, 1)
                 notify.success(gettext("Value removed !"))
             , () ->
@@ -175,7 +175,7 @@ angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $rou
             negative: gettext('Cancel')
         ).then (msg) ->
             $http.post("/api/lm/changeProxyAddresses", {action: 'remove', address: value, user: id}).then () ->
-                position = $scope.userDetails['proxyAddresses'].indexOf(msg.value)
+                position = $scope.userDetails['proxyAddresses'].indexOf(value)
                 $scope.userDetails['proxyAddresses'].splice(position, 1)
                 notify.success(gettext("Value removed !"))
             , () ->

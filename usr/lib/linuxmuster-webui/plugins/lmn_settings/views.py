@@ -263,8 +263,6 @@ class Handler(HttpPlugin):
                 with LMNFile(custom_config_path, 'r') as config:
                     custom_config = config.read()
 
-            base_dict = {'show': False, 'editable': False, 'title': ''}
-
             config_dict = {
                 'custom': custom_config.get('custom', {}),
                 'customMulti': custom_config.get('customMulti', {}),

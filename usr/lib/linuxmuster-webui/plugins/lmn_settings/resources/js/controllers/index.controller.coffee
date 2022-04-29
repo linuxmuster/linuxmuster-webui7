@@ -4,7 +4,7 @@ angular.module('lmn.settings').config ($routeProvider) ->
         templateUrl: '/lmn_settings:resources/partial/index.html'
 
 
-angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $location, $http, $uibModal, messagebox, gettext, notify, pageTitle, core, lmFileBackups, validation) ->
+angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $location, $http, $uibModal, messagebox, gettext, notify, pageTitle, core, lmFileBackups, validation, customFields) ->
     pageTitle.set(gettext('Settings'))
 
     $scope.trans = {
@@ -30,13 +30,6 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
         'WIN-1252',
         'UTF8',
     ]
-
-    $scope.customDisplayOptions = ['']
-    $scope.customDisplayOptions.push('proxyAddresses')
-    for n in [1,2,3,4,5]
-        $scope.customDisplayOptions.push('sophomorixCustom' + n)
-    for n in [1,2,3,4,5]
-        $scope.customDisplayOptions.push('sophomorixCustomMulti' + n)
 
     $http.get('/api/lm/schoolsettings').then (resp) ->
         school = 'default-school'
@@ -67,25 +60,26 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
             if $scope.settings['userfile.' + role + '.csv']['FILTERSCRIPT'] == ""
                $scope.settings['userfile.' + role + '.csv']['FILTERSCRIPT'] = "---"
 
-    $scope.load_custom_config = () ->
-        $http.get('/api/lm/read_custom_config/').then (resp) ->
-            $scope.custom = resp.data.custom
-            $scope.customMulti = resp.data.customMulti
-            $scope.customDisplay = resp.data.customDisplay
-            $scope.proxyAddresses = resp.data.proxyAddresses
+    $scope.customDisplayOptions = customFields.customDisplayOptions
 
-            $scope.templates = {'multiple': '', 'individual': ''}
-            $scope.passwordTemplates = resp.data.passwordTemplates
+    customFields.load_config().then (resp) ->
+        $scope.custom = resp.custom
+        $scope.customMulti = resp.customMulti
+        $scope.customDisplay = resp.customDisplay
+        $scope.proxyAddresses = resp.proxyAddresses
 
-            for template in $scope.templates_individual
-                if template.path == $scope.passwordTemplates.individual
-                    $scope.templates.individual = template
-                    break
+        $scope.templates = {'multiple': '', 'individual': ''}
+        $scope.passwordTemplates = resp.passwordTemplates
 
-            for template in $scope.templates_multiple
-                if template.path == $scope.passwordTemplates.multiple
-                    $scope.templates.multiple = template
-                    break
+        for template in $scope.templates_individual
+            if template.path == $scope.passwordTemplates.individual
+                $scope.templates.individual = template
+                break
+
+        for template in $scope.templates_multiple
+            if template.path == $scope.passwordTemplates.multiple
+                $scope.templates.multiple = template
+                break
 
     # $http.get('/api/lm/schoolsettings/school-share').then (resp) ->
     #     $scope.schoolShareEnabled = resp.data
@@ -163,5 +157,5 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
                 'individual': $scope.templates.individual.path,
             },
         }
-        $http.post('/api/lm/save_custom_config', {config: config}).then () ->
+        customFields.save(config).then () ->
             notify.success(gettext('Saved'))

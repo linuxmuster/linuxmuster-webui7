@@ -4,7 +4,7 @@ angular.module('lmn.users').config ($routeProvider) ->
         templateUrl: '/lmn_users:resources/partial/print-passwords.html'
 
 
-angular.module('lmn.users').controller 'LMUsersPrintPasswordsOptionsModalController', ($scope, $uibModalInstance, $http, notify, messagebox, gettext, schoolclass, user, adminClass) ->
+angular.module('lmn.users').controller 'LMUsersPrintPasswordsOptionsModalController', ($scope, $uibModalInstance, $http, notify, messagebox, gettext, schoolclass, user, adminClass, customFields) ->
     $scope.options = {
         format: 'pdf'
         one_per_page: false
@@ -26,8 +26,8 @@ angular.module('lmn.users').controller 'LMUsersPrintPasswordsOptionsModalControl
             $scope.options['template_one_per_page'] = $scope.templates_individual[0]
             $scope.options['template_multiple'] = $scope.templates_multiple[0]
 
-            $http.get('/api/lm/read_custom_config/').then (resp) ->
-                $scope.passwordTemplates = resp.data.passwordTemplates
+            customFields.load_config().then (resp) ->
+                $scope.passwordTemplates = resp.passwordTemplates
 
                 for template in $scope.templates_individual
                     if template.path == $scope.passwordTemplates.individual

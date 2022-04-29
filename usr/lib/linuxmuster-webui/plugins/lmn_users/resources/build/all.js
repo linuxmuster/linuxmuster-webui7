@@ -59,9 +59,9 @@
     }).then(function(resp) {
       return $scope.teachers = resp.data;
     });
-    customFields.load_config('teachers').then(function(resp) {
-      $scope.customDisplay = resp[0];
-      return $scope.customTitle = resp[1];
+    customFields.load_display('teachers').then(function(resp) {
+      $scope.customDisplay = resp['customDisplay'];
+      return $scope.customTitle = resp['customTitle'];
     });
     $scope.isListAttr = function(attr) {
       return customFields.isListAttr(attr);
@@ -368,9 +368,9 @@
     };
     $scope.all_selected = false;
     $scope.query = '';
-    customFields.load_config('students').then(function(resp) {
-      $scope.customDisplay = resp[0];
-      return $scope.customTitle = resp[1];
+    customFields.load_display('students').then(function(resp) {
+      $scope.customDisplay = resp['customDisplay'];
+      return $scope.customTitle = resp['customTitle'];
     });
     $scope.isListAttr = function(attr) {
       return customFields.isListAttr(attr);
@@ -628,9 +628,9 @@
     }).then(function(resp) {
       return $scope.schooladmins = resp.data;
     });
-    customFields.load_config('schooladministrators').then(function(resp) {
-      $scope.customDisplay = resp[0];
-      return $scope.customTitle = resp[1];
+    customFields.load_display('schooladministrators').then(function(resp) {
+      $scope.customDisplay = resp['customDisplay'];
+      return $scope.customTitle = resp['customTitle'];
     });
     $scope.isListAttr = function(attr) {
       return customFields.isListAttr(attr);
@@ -963,9 +963,9 @@
     }).then(function(resp) {
       return $scope.globaladmins = resp.data;
     });
-    customFields.load_config('globaladministrators').then(function(resp) {
-      $scope.customDisplay = resp[0];
-      return $scope.customTitle = resp[1];
+    customFields.load_display('globaladministrators').then(function(resp) {
+      $scope.customDisplay = resp['customDisplay'];
+      return $scope.customTitle = resp['customTitle'];
     });
     $scope.isListAttr = function(attr) {
       return customFields.isListAttr(attr);
@@ -1572,9 +1572,9 @@
     }).then(function(resp) {
       return $scope.teachers = resp.data;
     });
-    customFields.load_config('teachers').then(function(resp) {
-      $scope.customDisplay = resp[0];
-      return $scope.customTitle = resp[1];
+    customFields.load_display('teachers').then(function(resp) {
+      $scope.customDisplay = resp['customDisplay'];
+      return $scope.customTitle = resp['customTitle'];
     });
     $scope.isListAttr = function(attr) {
       return customFields.isListAttr(attr);
@@ -1842,7 +1842,7 @@
     });
   });
 
-  angular.module('lmn.users').controller('LMUsersPrintPasswordsOptionsModalController', function($scope, $uibModalInstance, $http, notify, messagebox, gettext, schoolclass, user, adminClass) {
+  angular.module('lmn.users').controller('LMUsersPrintPasswordsOptionsModalController', function($scope, $uibModalInstance, $http, notify, messagebox, gettext, schoolclass, user, adminClass, customFields) {
     $scope.options = {
       format: 'pdf',
       one_per_page: false,
@@ -1862,9 +1862,9 @@
         $scope.templates_multiple = rp.data[1];
         $scope.options['template_one_per_page'] = $scope.templates_individual[0];
         $scope.options['template_multiple'] = $scope.templates_multiple[0];
-        return $http.get('/api/lm/read_custom_config/').then(function(resp) {
+        return customFields.load_config().then(function(resp) {
           var i, j, len, len1, ref, ref1, results, template;
-          $scope.passwordTemplates = resp.data.passwordTemplates;
+          $scope.passwordTemplates = resp.passwordTemplates;
           ref = $scope.templates_individual;
           for (i = 0, len = ref.length; i < len; i++) {
             template = ref[i];
@@ -2220,7 +2220,7 @@
     };
   });
 
-  angular.module('lmn.users').controller('LMNUserDetailsController', function($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, id, role, identity) {
+  angular.module('lmn.users').controller('LMNUserDetailsController', function($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, id, role, identity, customFields) {
     var custom_fields_role;
     //notify.error gettext("You have to enter a username")
     $scope.id = id;
@@ -2236,12 +2236,12 @@
       custom_fields_role = role;
     }
     identity.promise.then(function() {
-      if (identity.profile.isAdmin) {
-        return $http.get(`/api/lm/read_custom_config/${custom_fields_role}`).then(function(resp) {
+      if (identity.profile.isAdmin || identity.user === 'root') {
+        return customFields.load_config(custom_fields_role).then(function(resp) {
           var custom, ref, ref1, results, values;
-          $scope.custom = resp.data.custom;
-          $scope.customMulti = resp.data.customMulti;
-          $scope.proxyAddresses = resp.data.proxyAddresses;
+          $scope.custom = resp.custom;
+          $scope.customMulti = resp.customMulti;
+          $scope.proxyAddresses = resp.proxyAddresses;
           // Is there a custom field to show ?
           if ($scope.proxyAddresses.show) {
             $scope.custom_column = true;
@@ -2387,7 +2387,7 @@
           user: id
         }).then(function() {
           var position;
-          position = $scope.userDetails['sophomorixCustomMulti' + n].indexOf(msg.value);
+          position = $scope.userDetails['sophomorixCustomMulti' + n].indexOf(value);
           $scope.userDetails['sophomorixCustomMulti' + n].splice(position, 1);
           return notify.success(gettext("Value removed !"));
         }, function() {
@@ -2424,7 +2424,7 @@
           user: id
         }).then(function() {
           var position;
-          position = $scope.userDetails['proxyAddresses'].indexOf(msg.value);
+          position = $scope.userDetails['proxyAddresses'].indexOf(value);
           $scope.userDetails['proxyAddresses'].splice(position, 1);
           return notify.success(gettext("Value removed !"));
         }, function() {

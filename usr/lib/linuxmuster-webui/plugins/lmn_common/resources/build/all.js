@@ -747,6 +747,12 @@ angular.module('lmn.common').service('customFields', function ($http) {
         });
     };
 
+    this.load_user_fields = function (user) {
+        return $http.get('/api/lmn/custom_fields/' + user).then(function (response) {
+            return response.data;
+        });
+    };
+
     this.save = function (config) {
         return $http.post("/api/lm/save_custom_config", { 'config': config });
     };

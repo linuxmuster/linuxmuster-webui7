@@ -714,33 +714,36 @@ angular.module('lmn.common').service('customFields', function ($http) {
         return _this.customLists.includes(attr);
     };
 
-    this.load_config = function () {
-        var role = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-
+    this.load_display = function (role) {
         return $http.get('/api/lm/read_custom_config/' + role).then(function (response) {
-            if (role) {
-                // Filter title per display
-                customDisplay = response.data.customDisplay;
-                customTitle = ['', '', '', ''];
-                var _arr = [1, 2, 3];
-                for (var _i = 0; _i < _arr.length; _i++) {
-                    idx = _arr[_i];
+            // Filter title per display
+            config = {
+                'customDisplay': response.data.customDisplay,
+                'customTitle': ['', '', '', '']
+            };
+            var _arr = [1, 2, 3];
+            for (var _i = 0; _i < _arr.length; _i++) {
+                idx = _arr[_i];
 
-                    if (customDisplay[idx] == 'proxyAddresses') {
-                        customTitle[idx] = response.data.proxyAddresses.title;
+                if (config['customDisplay'][idx] == 'proxyAddresses') {
+                    config['customTitle'][idx] = response.data.proxyAddresses.title;
+                } else {
+                    index = config['customDisplay'][idx].slice(-1);
+                    if (_this.isListAttr(config['customDisplay'][idx])) {
+                        config['customTitle'][idx] = response.data.customMulti[index].title || '';
                     } else {
-                        index = customDisplay[idx].slice(-1);
-                        if (_this.isListAttr(customDisplay[idx])) {
-                            customTitle[idx] = response.data.customMulti[index].title || '';
-                        } else {
-                            customTitle[idx] = response.data.custom[index].title || '';
-                        }
+                        config['customTitle'][idx] = response.data.custom[index].title || '';
                     }
                 }
-                return [customDisplay, customTitle];
-            } else {
-                return response.data;
             }
+            return config;
+        });
+    };
+
+    this.load_config = function () {
+        var role = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+        return $http.get('/api/lm/read_custom_config/' + role).then(function (response) {
+            return response.data;
         });
     };
 

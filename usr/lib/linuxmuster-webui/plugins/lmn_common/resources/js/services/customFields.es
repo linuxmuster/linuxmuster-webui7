@@ -25,32 +25,31 @@ angular.module('lmn.common').service('customFields', function($http) {
 
     this.isListAttr = (attr) => this.customLists.includes(attr);
 
-    this.load_config = (role='') => {
+    this.load_display = (role) => {
         return $http.get(`/api/lm/read_custom_config/${role}`).then(response => {
-            if (role) {
-                // Filter title per display
-                customDisplay = response.data.customDisplay;
-                customTitle = ['', '', '', ''];
-                for (idx of [1,2,3]) {
-                    if (customDisplay[idx] == 'proxyAddresses') {
-                        customTitle[idx] = response.data.proxyAddresses.title;
+            // Filter title per display
+            config = {
+                'customDisplay': response.data.customDisplay,
+                'customTitle': ['', '', '', ''],
+            };
+            for (idx of [1,2,3]) {
+                if (config['customDisplay'][idx] == 'proxyAddresses') {
+                    config['customTitle'][idx] = response.data.proxyAddresses.title;
+                } else {
+                    index = config['customDisplay'][idx].slice(-1);
+                    if (this.isListAttr(config['customDisplay'][idx])) {
+                        config['customTitle'][idx] = response.data.customMulti[index].title || '';
                     } else {
-                        index = customDisplay[idx].slice(-1);
-                        if (this.isListAttr(customDisplay[idx])) {
-                            customTitle[idx] = response.data.customMulti[index].title || '';
-                        } else {
-                            customTitle[idx] = response.data.custom[index].title || '';
-                        }
+                        config['customTitle'][idx] = response.data.custom[index].title || '';
                     }
                 }
-                return [customDisplay, customTitle];
             }
-            else {
-                return response.data;
-            }
+            return config;
         });
     }
 
+    this.load_config = (role='') =>
+        $http.get(`/api/lm/read_custom_config/${role}`).then(response => response.data)
 
     this.save = (config) =>
         $http.post("/api/lm/save_custom_config", {'config':config})

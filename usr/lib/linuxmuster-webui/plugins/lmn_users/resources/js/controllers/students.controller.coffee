@@ -36,9 +36,9 @@ angular.module('lmn.users').controller 'LMUsersStudentsController', ($scope, $ht
     $scope.all_selected = false
     $scope.query = ''
 
-    customFields.load_config('students').then (resp) ->
-        $scope.customDisplay = resp[0]
-        $scope.customTitle = resp[1]
+    customFields.load_display('students').then (resp) ->
+        $scope.customDisplay = resp['customDisplay']
+        $scope.customTitle = resp['customTitle']
 
     $scope.isListAttr = (attr) ->
         return customFields.isListAttr(attr)

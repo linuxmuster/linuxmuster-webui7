@@ -22,9 +22,9 @@ angular.module('lmn.users').controller 'LMUsersGloballadminsController', ($scope
     $http.post('/api/lm/sophomorixUsers/globaladmins',{action: 'get-all'}).then (resp) ->
         $scope.globaladmins = resp.data
 
-    customFields.load_config('globaladministrators').then (resp) ->
-        $scope.customDisplay = resp[0]
-        $scope.customTitle = resp[1]
+    customFields.load_display('globaladministrators').then (resp) ->
+        $scope.customDisplay = resp['customDisplay']
+        $scope.customTitle = resp['customTitle']
 
     $scope.isListAttr = (attr) ->
         return customFields.isListAttr(attr)

@@ -22,9 +22,9 @@ angular.module('lmn.users').controller 'LMUsersSchooladminsController', ($scope,
     $http.post('/api/lm/sophomorixUsers/schooladmins',{action: 'get-all'}).then (resp) ->
         $scope.schooladmins = resp.data
 
-    customFields.load_config('schooladministrators').then (resp) ->
-        $scope.customDisplay = resp[0]
-        $scope.customTitle = resp[1]
+    customFields.load_display('schooladministrators').then (resp) ->
+        $scope.customDisplay = resp['customDisplay']
+        $scope.customTitle = resp['customTitle']
 
     $scope.isListAttr = (attr) ->
         return customFields.isListAttr(attr)

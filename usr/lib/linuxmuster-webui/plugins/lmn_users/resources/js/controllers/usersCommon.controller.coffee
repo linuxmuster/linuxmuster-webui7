@@ -46,7 +46,7 @@ angular.module('lmn.users').controller 'LMNUsersCustomPasswordController', ($sco
     $scope.close = () ->
         $uibModalInstance.dismiss()
 
-angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, id, role, identity) ->
+angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, id, role, identity, customFields) ->
 
     #notify.error gettext("You have to enter a username")
     $scope.id = id
@@ -62,11 +62,11 @@ angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $rou
         custom_fields_role = role
 
     identity.promise.then () ->
-        if identity.profile.isAdmin
-            $http.get("/api/lm/read_custom_config/#{custom_fields_role}").then (resp) ->
-                $scope.custom = resp.data.custom
-                $scope.customMulti = resp.data.customMulti
-                $scope.proxyAddresses = resp.data.proxyAddresses
+        if identity.profile.isAdmin || identity.user == 'root'
+            customFields.load_config(custom_fields_role).then (resp) ->
+                $scope.custom = resp.custom
+                $scope.customMulti = resp.customMulti
+                $scope.proxyAddresses = resp.proxyAddresses
 
                 # Is there a custom field to show ?
                 if $scope.proxyAddresses.show

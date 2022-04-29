@@ -3,7 +3,7 @@ angular.module('lmn.users').config ($routeProvider) ->
         controller: 'LMUsersGloballadminsController'
         templateUrl: '/lmn_users:resources/partial/globaladmins.html'
 
-angular.module('lmn.users').controller 'LMUsersGloballadminsController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) ->
+angular.module('lmn.users').controller 'LMUsersGloballadminsController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, customFields) ->
     pageTitle.set(gettext('Globaladmins'))
 
     $scope.sorts = [
@@ -19,30 +19,15 @@ angular.module('lmn.users').controller 'LMUsersGloballadminsController', ($scope
 
     $scope.all_selected = false
 
-    $scope.list_attr_enabled = ['proxyAddresses']
-    for n in [1,2,3,4,5]
-        $scope.list_attr_enabled.push('sophomorixCustomMulti' + n)
-
     $http.post('/api/lm/sophomorixUsers/globaladmins',{action: 'get-all'}).then (resp) ->
         $scope.globaladmins = resp.data
 
-    $http.get('/api/lm/read_custom_config/globaladministrators').then (resp) ->
-        $scope.customDisplay = resp.data.customDisplay
-        $scope.customTitle = ['',]
-        for idx in [1,2,3]
-            if $scope.customDisplay[idx] == undefined or $scope.customDisplay[idx] == ''
-                $scope.customTitle.push('')
-            else if $scope.customDisplay[idx] == 'proxyAddresses'
-                $scope.customTitle.push(resp.data.proxyAddresses.title)
-            else
-                index = $scope.customDisplay[idx].slice(-1)
-                if $scope.isListAttr($scope.customDisplay[idx])
-                    $scope.customTitle.push(resp.data.customMulti[index].title || '')
-                else
-                    $scope.customTitle.push(resp.data.custom[index].title || '')
+    customFields.load_config('globaladministrators').then (resp) ->
+        $scope.customDisplay = resp[0]
+        $scope.customTitle = resp[1]
 
-    $scope.isListAttr = (attr_name) ->
-        return $scope.list_attr_enabled.includes(attr_name)
+    $scope.isListAttr = (attr) ->
+        return customFields.isListAttr(attr)
 
     $http.get('/api/lm/users/binduser/global').then (resp) ->
         $scope.globalbindusers = resp.data

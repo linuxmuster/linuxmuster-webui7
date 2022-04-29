@@ -704,13 +704,43 @@ angular.module('core').directive('teacherAccess', function (identity) {
 'use strict';
 
 angular.module('lmn.common').service('customFields', function ($http) {
+    var _this = this;
 
     this.customDisplayOptions = ['proxyAddresses', 'sophomorixCustom1', 'sophomorixCustom2', 'sophomorixCustom3', 'sophomorixCustom4', 'sophomorixCustom5', 'sophomorixCustomMulti1', 'sophomorixCustomMulti2', 'sophomorixCustomMulti3', 'sophomorixCustomMulti4', 'sophomorixCustomMulti5'];
 
+    this.customLists = ['proxyAddresses', 'sophomorixCustomMulti1', 'sophomorixCustomMulti2', 'sophomorixCustomMulti3', 'sophomorixCustomMulti4', 'sophomorixCustomMulti5'];
+
+    this.isListAttr = function (attr) {
+        return _this.customLists.includes(attr);
+    };
+
     this.load_config = function () {
         var role = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+
         return $http.get('/api/lm/read_custom_config/' + role).then(function (response) {
-            return response.data;
+            if (role) {
+                // Filter title per display
+                customDisplay = response.data.customDisplay;
+                customTitle = ['', '', '', ''];
+                var _arr = [1, 2, 3];
+                for (var _i = 0; _i < _arr.length; _i++) {
+                    idx = _arr[_i];
+
+                    if (customDisplay[idx] == 'proxyAddresses') {
+                        customTitle[idx] = response.data.proxyAddresses.title;
+                    } else {
+                        index = customDisplay[idx].slice(-1);
+                        if (_this.isListAttr(customDisplay[idx])) {
+                            customTitle[idx] = response.data.customMulti[index].title || '';
+                        } else {
+                            customTitle[idx] = response.data.custom[index].title || '';
+                        }
+                    }
+                }
+                return [customDisplay, customTitle];
+            } else {
+                return response.data;
+            }
         });
     };
 

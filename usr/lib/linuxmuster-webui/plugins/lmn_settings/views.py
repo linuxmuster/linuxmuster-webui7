@@ -263,12 +263,16 @@ class Handler(HttpPlugin):
                 with LMNFile(custom_config_path, 'r') as config:
                     custom_config = config.read()
 
+            password_templates = custom_config.get('passwordTemplates', {})
+            password_templates['multiple'] = password_templates.get('multiple', '')
+            password_templates['individual'] = password_templates.get('individual', '')
+
             config_dict = {
                 'custom': custom_config.get('custom', {}),
                 'customMulti': custom_config.get('customMulti', {}),
                 'customDisplay': custom_config.get('customDisplay', {}),
                 'proxyAddresses': custom_config.get('proxyAddresses', {}),
-                'passwordTemplates': custom_config.get('passwordTemplates', {'multiple': {}, 'individual': {}}),
+                'passwordTemplates': password_templates,
             }
 
             if role:

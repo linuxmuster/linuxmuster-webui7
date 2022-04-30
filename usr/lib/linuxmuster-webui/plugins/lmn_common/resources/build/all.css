@@ -65,7 +65,7 @@ span.cardlist div.cardbtn button.cardbtn {
 }
 .dragdroparea {
   color: gray;
-  background-color: lightgray;
+  background-color: #e6e6e6;
   border-radius: 10px;
   min-height: 100px;
   line-height: 100px;

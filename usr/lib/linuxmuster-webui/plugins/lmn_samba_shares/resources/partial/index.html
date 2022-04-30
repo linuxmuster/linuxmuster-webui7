@@ -1,5 +1,5 @@
 <div samba-access>
-    <div class="row">
+    <div class="row" style="padding-bottom:100px;">
         <progress-spinner ng:show="loading"></progress-spinner>
         <br />
 
@@ -32,11 +32,9 @@
             </li>
         </ol>
 
-        <smb-upload uploadpath="{{current_path}}" reload="true"></smb-upload>
-
         <br style="clear:both;"  />
 
-        <div class="list-group" ng:hide="loading && root" keyboard-focus test-bind="fileList">
+        <div class="list-group" ng:hide="loading && root" keyboard-focus>
             <div ng:repeat="item in items|orderBy:['-isDir', 'name']" class="list-group-item list-group-item-small" test-bind-item="{{item.name}}">
                 <a ng:click="delete_file(item.path)" class="list-group-btn" ng:if="item.isFile">
                     <i class="fa fa-trash"></i>
@@ -64,6 +62,9 @@
                 </a>
             </div>
         </div>
+
+        <smb-upload uploadpath="{{current_path}}" reload="true"></smb-upload>
+
     </div>
 
     <floating-toolbar ng:show="(items|filter:{selected:true}).length > 0">

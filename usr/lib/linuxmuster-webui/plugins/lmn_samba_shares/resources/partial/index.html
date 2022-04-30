@@ -41,10 +41,10 @@
                 <a ng:click="delete_file(item.path)" class="list-group-btn" ng:if="item.isFile">
                     <i class="fa fa-trash"></i>
                 </a>
-                <a ng:click="delete_dir(item.path)" class="list-group-btn" ng:if="item.isDir && item.name != 'transfer'">
+                <a ng:click="delete_dir(item.path)" class="list-group-btn" ng:if="item.isDir && item.name != 'transfer' && item.name != '.upload'">
                     <i class="fa fa-trash"></i>
                 </a>
-                <a ng:click="rename(item)" class="list-group-btn" ng:if="item.name != 'transfer'">
+                <a ng:click="rename(item)" class="list-group-btn" ng:if="item.name != 'transfer' && item.name != '.upload'">
                     <i class="fa fa-pen"></i>
                 </a>
                 <a ng:click="download(item.path)" class="list-group-btn" ng:if="item.isFile">

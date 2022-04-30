@@ -2,16 +2,24 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function($s
     pageTitle.set('path', $scope);
 
     $scope.loading = true;
+    $scope.active_share = '';
 
     identity.promise.then(() => {
         if (identity.user == 'root') {
             $scope.loading = false;
         }
         else {
-            $scope.home = identity.profile.homeDirectory;
-            $scope.current_path = $scope.home;
-            $scope.load_path($scope.home);
-            $scope.splitted_path = [];
+            smbclient.shares(identity.user).then((resp) => {
+                $scope.shares = resp;
+                for (share of $scope.shares) {
+                    if (share.name == 'Home') {
+                        $scope.active_share = share;
+                        $scope.current_path = share.path;
+                        $scope.load_share(share);
+                        $scope.splitted_path = [];
+                    }
+                }
+            });
         }
     });
 
@@ -22,10 +30,19 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function($s
         $scope.items.forEach((item) => item.selected = false)
     };
 
+    $scope.load_share = (shareObj) => {
+        for (share of $scope.shares) {
+            share.active = false;
+        }
+        shareObj.active = true;
+        $scope.active_share = shareObj;
+        $scope.load_path(shareObj.path);
+    }
+
     $scope.load_path = (path) => {
-        $scope.splitted_path_items = path.replace($scope.home, '').split('/');
+        $scope.splitted_path_items = path.replace($scope.active_share.path, '').split('/');
         $scope.splitted_path = [];
-        progressive_path = $scope.home;
+        progressive_path = $scope.active_share.path;
         for (item of $scope.splitted_path_items) {
             if (item != '') {
                 progressive_path = progressive_path + '/' + item;

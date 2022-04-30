@@ -3,6 +3,17 @@
         <progress-spinner ng:show="loading"></progress-spinner>
         <br />
 
+        <div class="pull-left">
+            <button ng:repeat="share in shares"
+                    ng:click="load_share(share)"
+                    class="btn btn-lmn"
+                    style="margin-left:20px;"
+                    ng:style="share.active && {'background-color':'#ffc876'}">
+                <i class="{{share.icon}}"></i>
+                {{share.name}}
+            </button>
+        </div>
+
         <button class="btn btn-lmn pull-right" ng:click="create_dir()" style="margin:0 10px 10px 0;">
             <i class="fa fa-plus"></i>
         </button>
@@ -11,8 +22,8 @@
 
         <ol class="breadcrumb">
             <li>
-                <a href="#" ng:click="load_path(home)">
-                    <i class="fa fa-home"></i>
+                <a href="#" ng:click="load_path(active_share.path)">
+                    <i class="{{active_share.icon}}"></i>
                 </a>
             </li>
             <li ng:repeat="item in splitted_path" ng:class="{'active':$last}">

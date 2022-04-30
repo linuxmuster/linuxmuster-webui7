@@ -6,9 +6,12 @@ angular.module('lmn.smbclient', ['core', 'flow']);
 'use strict';
 
 angular.module('lmn.smbclient').service('smbclient', function ($rootScope, $http, $q) {
-    // this.shares = () =>
-    //   $http.get("/api/lmn/smbclient/shares").then(response => response.data)
-    //
+    this.shares = function (user) {
+        return $http.get('/api/lmn/smbclient/shares/' + user).then(function (response) {
+            return response.data;
+        });
+    };
+
     // this.read = (path, encoding) =>
     //   $http.get(`/api/lmn/smbclient/read/${path}?encoding=${encoding || 'utf-8'}`).then(response => response.data)
     //

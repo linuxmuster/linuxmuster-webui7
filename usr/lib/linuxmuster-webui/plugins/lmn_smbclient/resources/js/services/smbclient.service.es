@@ -1,7 +1,7 @@
 angular.module('lmn.smbclient').service('smbclient', function($rootScope, $http, $q) {
-    // this.shares = () =>
-    //   $http.get("/api/lmn/smbclient/shares").then(response => response.data)
-    //
+    this.shares = (user) =>
+      $http.get(`/api/lmn/smbclient/shares/${user}`).then(response => response.data)
+
     // this.read = (path, encoding) =>
     //   $http.get(`/api/lmn/smbclient/read/${path}?encoding=${encoding || 'utf-8'}`).then(response => response.data)
     //

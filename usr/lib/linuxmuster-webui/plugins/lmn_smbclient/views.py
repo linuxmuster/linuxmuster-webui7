@@ -27,6 +27,106 @@ class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
 
+    @url(r'/api/lmn/smbclient/shares/(?P<user>.+)')
+    # @authorize('smbclient:read')
+    @endpoint(api=True)
+    def handle_api_smb_shares(self, http_context, user=None):
+        """
+        Return a list of hard-coded shares per role.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: All items with informations
+        :rtype: dict
+        """
+
+        if http_context.method == 'GET':
+            if user is None:
+                user = self.context.identity
+            profil = AuthenticationService.get(self.context).get_provider().get_profile(user)
+            role = profil['sophomorixRole']
+            home_path = profil['homeDirectory']
+            try:
+                domain = re.search(r'\\\\([^\\]*)\\', home_path).groups()[0]
+            except AttributeError:
+                domain = ''
+
+            school = self.context.schoolmgr.school
+
+            home = {
+                'name' : 'Home',
+                'path' : home_path,
+                'icon' : 'fas fa-home',
+                'active': False,
+            }
+            linuxmuster_global = {
+                'name' : 'Linuxmuster-Global',
+                'path' : f'\\\\{domain}\\linuxmuster-global',
+                'icon' : 'fas fa-globe',
+                'active': False,
+            }
+            allschool = {
+                'name' : school,
+                'path' : f'\\\\{domain}\\{school}',
+                'icon' : 'fas fa-school',
+                'active': False,
+            }
+            # teachers = {
+            #     'name' : 'Teachers',
+            #     'path' : f'\\\\{domain}\\{school}\\teachers',
+            #     'icon' : 'fas fa-chalkboard-teacher',
+            #     'active': False,
+            # }
+            students = {
+                'name' : 'Students',
+                'path' : f'\\\\{domain}\\{school}\\students',
+                'icon' : 'fas fa-user-graduate',
+                'active': False,
+            }
+            share = {
+                'name' : 'Share',
+                'path' : f'\\\\{domain}\\{school}\\share',
+                'icon' : 'fas fa-hand-holding',
+                'active': False,
+            }
+            program = {
+                'name' : 'Programs',
+                'path' : f'\\\\{domain}\\{school}\\program',
+                'icon' : 'fas fa-desktop',
+                'active': False,
+            }
+            # iso = {
+            #     'name' : 'ISO',
+            #     'path' : f'\\\\{domain}\\{school}\\iso',
+            #     'icon' : 'fas fa-compact-disc',
+            #     'active': False,
+            # }
+
+            shares = {
+                'globaladministrator': [
+                    home,
+                    linuxmuster_global,
+                    allschool,
+                ],
+                'schooladministrator': [
+                    home,
+                    allschool,
+                ],
+                'teacher': [
+                    home,
+                    students,
+                    program,
+                    share,
+                ],
+                'student': [
+                    home,
+                    share,
+                    program,
+                ]
+            }
+
+            return shares[role]
+
     @url(r'/api/lmn/smbclient/list')
     # @authorize('smbclient:read')
     @endpoint(api=True)

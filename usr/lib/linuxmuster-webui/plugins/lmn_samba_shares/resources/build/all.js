@@ -19,15 +19,44 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function ($
     pageTitle.set('path', $scope);
 
     $scope.loading = true;
+    $scope.active_share = '';
 
     identity.promise.then(function () {
         if (identity.user == 'root') {
             $scope.loading = false;
         } else {
-            $scope.home = identity.profile.homeDirectory;
-            $scope.current_path = $scope.home;
-            $scope.load_path($scope.home);
-            $scope.splitted_path = [];
+            smbclient.shares(identity.user).then(function (resp) {
+                $scope.shares = resp;
+                var _iteratorNormalCompletion = true;
+                var _didIteratorError = false;
+                var _iteratorError = undefined;
+
+                try {
+                    for (var _iterator = $scope.shares[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                        share = _step.value;
+
+                        if (share.name == 'Home') {
+                            $scope.active_share = share;
+                            $scope.current_path = share.path;
+                            $scope.load_share(share);
+                            $scope.splitted_path = [];
+                        }
+                    }
+                } catch (err) {
+                    _didIteratorError = true;
+                    _iteratorError = err;
+                } finally {
+                    try {
+                        if (!_iteratorNormalCompletion && _iterator.return) {
+                            _iterator.return();
+                        }
+                    } finally {
+                        if (_didIteratorError) {
+                            throw _iteratorError;
+                        }
+                    }
+                }
+            });
         }
     });
 
@@ -41,17 +70,48 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function ($
         });
     };
 
-    $scope.load_path = function (path) {
-        $scope.splitted_path_items = path.replace($scope.home, '').split('/');
-        $scope.splitted_path = [];
-        progressive_path = $scope.home;
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
+    $scope.load_share = function (shareObj) {
+        var _iteratorNormalCompletion2 = true;
+        var _didIteratorError2 = false;
+        var _iteratorError2 = undefined;
 
         try {
-            for (var _iterator = $scope.splitted_path_items[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                item = _step.value;
+            for (var _iterator2 = $scope.shares[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                share = _step2.value;
+
+                share.active = false;
+            }
+        } catch (err) {
+            _didIteratorError2 = true;
+            _iteratorError2 = err;
+        } finally {
+            try {
+                if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                    _iterator2.return();
+                }
+            } finally {
+                if (_didIteratorError2) {
+                    throw _iteratorError2;
+                }
+            }
+        }
+
+        shareObj.active = true;
+        $scope.active_share = shareObj;
+        $scope.load_path(shareObj.path);
+    };
+
+    $scope.load_path = function (path) {
+        $scope.splitted_path_items = path.replace($scope.active_share.path, '').split('/');
+        $scope.splitted_path = [];
+        progressive_path = $scope.active_share.path;
+        var _iteratorNormalCompletion3 = true;
+        var _didIteratorError3 = false;
+        var _iteratorError3 = undefined;
+
+        try {
+            for (var _iterator3 = $scope.splitted_path_items[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+                item = _step3.value;
 
                 if (item != '') {
                     progressive_path = progressive_path + '/' + item;
@@ -59,16 +119,16 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function ($
                 }
             }
         } catch (err) {
-            _didIteratorError = true;
-            _iteratorError = err;
+            _didIteratorError3 = true;
+            _iteratorError3 = err;
         } finally {
             try {
-                if (!_iteratorNormalCompletion && _iterator.return) {
-                    _iterator.return();
+                if (!_iteratorNormalCompletion3 && _iterator3.return) {
+                    _iterator3.return();
                 }
             } finally {
-                if (_didIteratorError) {
-                    throw _iteratorError;
+                if (_didIteratorError3) {
+                    throw _iteratorError3;
                 }
             }
         }
@@ -121,27 +181,27 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function ($
                 return item.selected;
             });
             promises = [];
-            var _iteratorNormalCompletion2 = true;
-            var _didIteratorError2 = false;
-            var _iteratorError2 = undefined;
+            var _iteratorNormalCompletion4 = true;
+            var _didIteratorError4 = false;
+            var _iteratorError4 = undefined;
 
             try {
-                for (var _iterator2 = items[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-                    var _item = _step2.value;
+                for (var _iterator4 = items[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+                    var _item = _step4.value;
 
                     promises.push(smbclient.delete_file(_item.path));
                 }
             } catch (err) {
-                _didIteratorError2 = true;
-                _iteratorError2 = err;
+                _didIteratorError4 = true;
+                _iteratorError4 = err;
             } finally {
                 try {
-                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
-                        _iterator2.return();
+                    if (!_iteratorNormalCompletion4 && _iterator4.return) {
+                        _iterator4.return();
                     }
                 } finally {
-                    if (_didIteratorError2) {
-                        throw _iteratorError2;
+                    if (_didIteratorError4) {
+                        throw _iteratorError4;
                     }
                 }
             }

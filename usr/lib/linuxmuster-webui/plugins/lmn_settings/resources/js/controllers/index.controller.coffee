@@ -51,6 +51,26 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
         $scope.templates_individual = resp.data[0]
         $scope.templates_multiple = resp.data[1]
 
+        customFields.load_config().then (resp) ->
+            $scope.custom = resp.custom
+            $scope.customMulti = resp.customMulti
+            $scope.customDisplay = resp.customDisplay
+            $scope.proxyAddresses = resp.proxyAddresses
+
+            $scope.templates = {'multiple': '', 'individual': ''}
+            $scope.passwordTemplates = resp.passwordTemplates
+
+            for template in $scope.templates_individual
+                if template.path == $scope.passwordTemplates.individual
+                    $scope.templates.individual = template
+                    break
+
+            for template in $scope.templates_multiple
+                if template.path == $scope.passwordTemplates.multiple
+                    $scope.templates.multiple = template
+                    break
+
+
     $http.get('/api/lm/holidays').then (resp) ->
         $scope.holidays = resp.data
 
@@ -61,25 +81,6 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
                $scope.settings['userfile.' + role + '.csv']['FILTERSCRIPT'] = "---"
 
     $scope.customDisplayOptions = customFields.customDisplayOptions
-
-    customFields.load_config().then (resp) ->
-        $scope.custom = resp.custom
-        $scope.customMulti = resp.customMulti
-        $scope.customDisplay = resp.customDisplay
-        $scope.proxyAddresses = resp.proxyAddresses
-
-        $scope.templates = {'multiple': '', 'individual': ''}
-        $scope.passwordTemplates = resp.passwordTemplates
-
-        for template in $scope.templates_individual
-            if template.path == $scope.passwordTemplates.individual
-                $scope.templates.individual = template
-                break
-
-        for template in $scope.templates_multiple
-            if template.path == $scope.passwordTemplates.multiple
-                $scope.templates.multiple = template
-                break
 
     # $http.get('/api/lm/schoolsettings/school-share').then (resp) ->
     #     $scope.schoolShareEnabled = resp.data

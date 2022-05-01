@@ -63,7 +63,39 @@
     });
     $http.get('/api/lm/schoolsettings/latex-templates').then(function(resp) {
       $scope.templates_individual = resp.data[0];
-      return $scope.templates_multiple = resp.data[1];
+      $scope.templates_multiple = resp.data[1];
+      return customFields.load_config().then(function(resp) {
+        var i, j, len, len1, ref, ref1, results, template;
+        $scope.custom = resp.custom;
+        $scope.customMulti = resp.customMulti;
+        $scope.customDisplay = resp.customDisplay;
+        $scope.proxyAddresses = resp.proxyAddresses;
+        $scope.templates = {
+          'multiple': '',
+          'individual': ''
+        };
+        $scope.passwordTemplates = resp.passwordTemplates;
+        ref = $scope.templates_individual;
+        for (i = 0, len = ref.length; i < len; i++) {
+          template = ref[i];
+          if (template.path === $scope.passwordTemplates.individual) {
+            $scope.templates.individual = template;
+            break;
+          }
+        }
+        ref1 = $scope.templates_multiple;
+        results = [];
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          template = ref1[j];
+          if (template.path === $scope.passwordTemplates.multiple) {
+            $scope.templates.multiple = template;
+            break;
+          } else {
+            results.push(void 0);
+          }
+        }
+        return results;
+      });
     });
     $http.get('/api/lm/holidays').then(function(resp) {
       return $scope.holidays = resp.data;
@@ -84,38 +116,6 @@
       return results;
     };
     $scope.customDisplayOptions = customFields.customDisplayOptions;
-    customFields.load_config().then(function(resp) {
-      var i, j, len, len1, ref, ref1, results, template;
-      $scope.custom = resp.custom;
-      $scope.customMulti = resp.customMulti;
-      $scope.customDisplay = resp.customDisplay;
-      $scope.proxyAddresses = resp.proxyAddresses;
-      $scope.templates = {
-        'multiple': '',
-        'individual': ''
-      };
-      $scope.passwordTemplates = resp.passwordTemplates;
-      ref = $scope.templates_individual;
-      for (i = 0, len = ref.length; i < len; i++) {
-        template = ref[i];
-        if (template.path === $scope.passwordTemplates.individual) {
-          $scope.templates.individual = template;
-          break;
-        }
-      }
-      ref1 = $scope.templates_multiple;
-      results = [];
-      for (j = 0, len1 = ref1.length; j < len1; j++) {
-        template = ref1[j];
-        if (template.path === $scope.passwordTemplates.multiple) {
-          $scope.templates.multiple = template;
-          break;
-        } else {
-          results.push(void 0);
-        }
-      }
-      return results;
-    });
     // $http.get('/api/lm/schoolsettings/school-share').then (resp) ->
     //     $scope.schoolShareEnabled = resp.data
 

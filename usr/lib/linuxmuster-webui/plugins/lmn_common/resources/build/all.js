@@ -728,11 +728,13 @@ angular.module('lmn.common').service('customFields', function ($http) {
                 if (config['customDisplay'][idx] == 'proxyAddresses') {
                     config['customTitle'][idx] = response.data.proxyAddresses.title;
                 } else {
-                    index = config['customDisplay'][idx].slice(-1);
-                    if (_this.isListAttr(config['customDisplay'][idx])) {
-                        config['customTitle'][idx] = response.data.customMulti[index].title || '';
+                    position = config['customDisplay'][idx].slice(-1);
+                    if (position == '') {
+                        config['customTitle'][idx] = '';
+                    } else if (_this.isListAttr(config['customDisplay'][idx])) {
+                        config['customTitle'][idx] = response.data.customMulti[position].title || '';
                     } else {
-                        config['customTitle'][idx] = response.data.custom[index].title || '';
+                        config['customTitle'][idx] = response.data.custom[position].title || '';
                     }
                 }
             }

@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.1.19) lmn71; urgency=medium
+
+  * Fix missing krb5 dependencies. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 01 May 2022 23:09:13 +0200
+
 linuxmuster-webui7 (7.1.18) lmn71; urgency=medium
 
   * Fix async mismatch between templates and custom fields

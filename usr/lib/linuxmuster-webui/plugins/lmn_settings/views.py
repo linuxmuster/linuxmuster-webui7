@@ -235,24 +235,45 @@ class Handler(HttpPlugin):
         :rtype: dict
         """
 
-        def ensure_role_config_structure(config, role):
+        def ensure_config_structure(config, role=None):
             base_custom_dict = {'show': False, 'editable': False, 'title': ''}
             base_role_dict = {
                 str(i+1):base_custom_dict
                 for i in range(3)
             }
+            base_config_dict = {
+                'globaladministrators': {},
+                'schooladministrators': {},
+                'teachers': {},
+                'students': {},
+            }
 
-            role_dict = config.get(role, {})
+            if role is None:
+                for role in base_config_dict:
+                    role_dict = config.get(role, {})
 
-            if role_dict:
-                for i in range(3):
-                    idx = str(i+1)
-                    role_dict[idx] = role_dict.get(idx, base_custom_dict)
-                    for key, value in base_custom_dict.items():
-                        role_dict[idx][key] = role_dict[idx].get(key, value)
+                    if role_dict:
+                        for i in range(3):
+                            idx = str(i+1)
+                            role_dict[idx] = role_dict.get(idx, base_custom_dict)
+                            for key, value in base_custom_dict.items():
+                                role_dict[idx][key] = role_dict[idx].get(key, value)
+                        base_config_dict[role] = role_dict
+                    else:
+                        base_config_dict[role] = base_role_dict
+                return base_config_dict
+            else:
+                role_dict = config.get(role, {})
 
-                return role_dict
-            return base_role_dict
+                if role_dict:
+                    for i in range(3):
+                        idx = str(i+1)
+                        role_dict[idx] = role_dict.get(idx, base_custom_dict)
+                        for key, value in base_custom_dict.items():
+                            role_dict[idx][key] = role_dict[idx].get(key, value)
+
+                    return role_dict
+                return base_role_dict
 
 
         if http_context.method == 'GET':
@@ -268,22 +289,21 @@ class Handler(HttpPlugin):
             password_templates['individual'] = password_templates.get('individual', '')
 
             config_dict = {
-                'custom': custom_config.get('custom', {}),
-                'customMulti': custom_config.get('customMulti', {}),
-                'customDisplay': custom_config.get('customDisplay', {}),
-                'proxyAddresses': custom_config.get('proxyAddresses', {}),
+                'custom': ensure_config_structure(custom_config.get('custom', {})),
+                'customMulti': ensure_config_structure(custom_config.get('customMulti', {})),
+                'customDisplay': custom_config.get('customDisplay', {1:'', 2:'', 3:''}),
+                'proxyAddresses': ensure_config_structure(custom_config.get('proxyAddresses', {})),
                 'passwordTemplates': password_templates,
             }
 
             if role:
                 role_dict = {
-                    'custom': ensure_role_config_structure(config_dict['custom'], role),
-                    'customMulti': ensure_role_config_structure(config_dict['customMulti'], role),
+                    'custom': ensure_config_structure(config_dict['custom'], role),
+                    'customMulti': ensure_config_structure(config_dict['customMulti'], role),
                     'customDisplay': config_dict['customDisplay'].get(role, {1:'', 2:'', 3:''}),
-                    'proxyAddresses': ensure_role_config_structure(config_dict['proxyAddresses'], role),
+                    'proxyAddresses': ensure_config_structure(config_dict['proxyAddresses'], role),
                 }
                 return role_dict
-
             return config_dict
 
 

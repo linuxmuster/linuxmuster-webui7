@@ -1,3 +1,10 @@
+linuxmuster-webui7 (7.1.20) lmn71; urgency=medium
+
+  * Expand languages for regexp in pexpect
+  * Non blocking kerberos auth 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 02 May 2022 10:37:01 +0200
+
 linuxmuster-webui7 (7.1.19) lmn71; urgency=medium
 
   * Fix missing krb5 dependencies. 

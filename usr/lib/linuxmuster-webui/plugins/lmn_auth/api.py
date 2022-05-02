@@ -156,15 +156,19 @@ class LMAuthenticationProvider(AuthenticationProvider):
             return
 
         logging.warning(f'Initializing Kerberos ticket for {username}')
-        child = pexpect.spawn('/usr/bin/kinit', ['-c', f'/tmp/krb5cc_{uid}{uid}', username])
-        child.expect('Pass.*:')
-        child.sendline(password)
-        child.expect(pexpect.EOF)
-        child.close()
-        exit_code = child.exitstatus
-        if exit_code:
-            logging.error(f"Was not able to initialize Kerberos ticket for {username}")
-            logging.error(f"{child.before.decode().strip()}")
+        try:
+            child = pexpect.spawn('/usr/bin/kinit', ['-c', f'/tmp/krb5cc_{uid}{uid}', username])
+            child.expect('Passwort.*:', timeout=2)
+            child.sendline(password)
+            child.expect(pexpect.EOF)
+            child.close()
+            exit_code = child.exitstatus
+            if exit_code:
+                logging.error(f"Was not able to initialize Kerberos ticket for {username}")
+                logging.error(f"{child.before.decode().strip()}")
+        except pexpect.exceptions.TIMEOUT:
+            logging.error(
+                f"Was not able to initialize Kerberos ticket for {username}")
 
     def authenticate(self, username, password):
         """

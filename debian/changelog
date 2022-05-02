@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.1.21) lmn71; urgency=medium
+
+  * Idiotic typo 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 02 May 2022 10:40:08 +0200
+
 linuxmuster-webui7 (7.1.20) lmn71; urgency=medium
 
   * Expand languages for regexp in pexpect

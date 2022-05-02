@@ -157,7 +157,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
         logging.warning(f'Initializing Kerberos ticket for {username}')
         child = pexpect.spawn('/usr/bin/kinit', ['-c', f'/tmp/krb5cc_{uid}{uid}', username])
-        child.expect('Password.*:')
+        child.expect('Pass.*:')
         child.sendline(password)
         child.expect(pexpect.EOF)
         child.close()

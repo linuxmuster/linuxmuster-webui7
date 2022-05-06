@@ -24,7 +24,7 @@ angular.module('lmn.smbclient').directive 'smbUpload', ($http, $route, notify, m
                                     <span translate>Drag and drop your files here</span>
                                     <span class=\"btn btn-lmn\" style=\"position:relative;top:20px;left:370px;\" flow-btn translate>Upload file</span>
                                 </div>
-                                <div ng-repeat=\"p in progress\" style=\"margin-top:10px;\">
+                                <div ng-repeat=\"p in progress\" style=\"margin-top:10px;\" ng-show='p.progress < 100'>
                                     <span>{{p.name}} ({{p.progress}} %) </span>
                                     <smart-progress type=\"warning\" max=\"100\" value=\"p.progress\"></smart-progress>
                                 </div>

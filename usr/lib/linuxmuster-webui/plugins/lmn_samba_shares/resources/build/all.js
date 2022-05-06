@@ -242,7 +242,7 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function ($
     };
 
     $scope.download = function (path) {
-        $window.open('/api/lmn/smbclient/download/' + path);
+        $window.open('/api/lmn/smbclient/download?path=' + path);
     };
 });
 

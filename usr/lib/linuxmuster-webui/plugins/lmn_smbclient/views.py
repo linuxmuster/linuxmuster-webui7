@@ -450,9 +450,11 @@ class Handler(HttpPlugin):
         return targets
 
 
-    @url(r'/api/lmn/smbclient/download/(?P<path>.+)')
+    @url(r'/api/lmn/smbclient/download')
     @endpoint(page=True)
-    def handle_smb_download(self, http_context, path):
+    def handle_smb_download(self, http_context):
+        path = http_context.query.get('path', None)
+
         if '..' in path:
             return http_context.respond_forbidden()
 

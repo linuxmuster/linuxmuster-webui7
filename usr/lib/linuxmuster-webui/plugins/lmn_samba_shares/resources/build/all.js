@@ -242,7 +242,11 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function ($
     };
 
     $scope.download = function (path) {
-        $window.open('/api/lmn/smbclient/download?path=' + path);
+        $http.head('/api/lmn/smbclient/download?path=' + path).then(function (resp) {
+            $window.open('/api/lmn/smbclient/download?path=' + path);
+        }, function (resp) {
+            notify.error(gettext('File not found, may be due to special chars in the file name.'));
+        });
     };
 });
 

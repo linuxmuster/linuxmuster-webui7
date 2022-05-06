@@ -472,9 +472,14 @@ class Handler(HttpPlugin):
         else:
             http_context.add_header('Content-Type', 'application/octet-stream')
 
+        try:
+            content = smbclient.open_file(path, 'rb').read()
+        except SMBOSError:
+            http_context.respond_not_found()
+            return
+
         http_context.add_header('Content-Disposition', (f'attachment; filename={name}'))
 
-        content = smbclient.open_file(path, 'rb').read()
         yield http_context.gzip(content)
 
     # @url(r'/api/lmn/smbclient/read/(?P<path>.+)')

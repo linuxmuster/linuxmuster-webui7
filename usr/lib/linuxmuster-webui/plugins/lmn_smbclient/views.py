@@ -402,15 +402,15 @@ class Handler(HttpPlugin):
 
         user = self.context.identity
         home = AuthenticationService.get(self.context).get_provider().get_profile(user)['homeDirectory']
-        upload_dir = f'{home}\\.upload'
+        upload_dir = f'{home}/.upload'
 
         for file in files:
             name = file['name'].replace('/', '')
             path = file['path']
             id = file['id']
-            chunk_dir = f'{upload_dir}\\upload-{id}'
+            chunk_dir = f'{upload_dir}/upload-{id}'
 
-            target = f'{path}\\{name}'
+            target = f'{path}/{name}'
 
             try:
                 # Avoid overwriting existing file
@@ -432,21 +432,28 @@ class Handler(HttpPlugin):
                     else:
                         name = re.sub(f'{ext}$', f' (1){ext}', name)
 
-                    target = f'{path}\\{name}'
+                    target = f'{path}/{name}'
             except SMBOSError:
                 # That's ok we can write a new file
                 pass
 
             with smbclient.open_file(target, mode='wb') as f:
                 for i in range(len(smbclient.listdir(chunk_dir))):
-                    chunk_file = f'{chunk_dir}\\{str(i+1)}'
+                    chunk_file = f'{chunk_dir}/{str(i+1)}'
                     with smbclient.open_file(chunk_file, mode='rb') as chunk:
                         f.write(chunk.read())
                     smbclient.remove(chunk_file)
 
             smbclient.rmdir(chunk_dir)
 
-            targets.append(target)
+            targets.append({
+                'name': name,
+                'path': target,
+                'unixPath': '',
+                'isDir': False,
+                'isFile': True,
+                'isLink': False,
+            })
         return targets
 
 

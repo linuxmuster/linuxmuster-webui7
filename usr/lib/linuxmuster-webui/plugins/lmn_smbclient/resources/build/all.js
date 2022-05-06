@@ -183,10 +183,17 @@ angular.module('lmn.smbclient').service('smbclient', function ($rootScope, $http
             $scope.files.push(file.name);
           }
           $scope.files_list = $scope.files.join(', ');
-          return smbclient.startFlowUpload($flow, $scope.uploadpath).then(function() {
+          return smbclient.startFlowUpload($flow, $scope.uploadpath).then(function(resp) {
+            var desc, j, len1, results;
             notify.success(gettext('Uploaded ') + $scope.files_list);
             if ($scope.reload) {
-              return $route.reload();
+// Add new file to samba listing without reloading the whole page
+              results = [];
+              for (j = 0, len1 = resp.length; j < len1; j++) {
+                desc = resp[j];
+                results.push($scope.$parent.items.push(desc));
+              }
+              return results;
             }
           }, null, function(progress) {
             return $scope.progress = progress.sort(function(a, b) {

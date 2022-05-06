@@ -41,10 +41,13 @@ angular.module('lmn.smbclient').directive 'smbUpload', ($http, $route, notify, m
                     $scope.files.push(file.name)
                 $scope.files_list = $scope.files.join(', ')
                 smbclient.startFlowUpload($flow, $scope.uploadpath)
-                .then () ->
+                .then (resp) ->
                     notify.success(gettext('Uploaded ') + $scope.files_list)
                     if $scope.reload
-                        $route.reload()
+                        # Add new file to samba listing without reloading the whole page
+                        for desc in resp
+                            $scope.$parent.items.push(desc)
+
                 , null, (progress) ->
                     $scope.progress = progress.sort((a,b) -> a.name > b.name)
     }

@@ -35,7 +35,7 @@
         <br style="clear:both;"  />
 
         <div class="list-group" ng:hide="loading && root" keyboard-focus>
-            <div ng:repeat="item in items|orderBy:['-isDir', 'name']" class="list-group-item list-group-item-small" test-bind-item="{{item.name}}">
+            <div ng:repeat="item in items|orderBy:['-isDir', 'name']" class="list-group-item list-group-item-small" test-bind-item="{{item.name}}" ng:style="item.selected && {'background':'#ffc876'}">
                 <a ng:click="delete_file(item.path)" class="list-group-btn" ng:if="item.isFile">
                     <i class="fa fa-trash"></i>
                 </a>

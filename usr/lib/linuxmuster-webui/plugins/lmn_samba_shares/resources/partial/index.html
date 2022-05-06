@@ -51,15 +51,15 @@
                 <div class="list-group-addon pull-left">
                     <span class="subtle" checkbox ng:model="item.selected"></span>
                 </div>
-                <a ng:click="load_path(item.path)" class="list-group-main">
-                    &nbsp;
-                    <i class="fa fa-fw fa-folder" ng:if="item.isDir"></i>
-                    <i class="fa fa-fw fa-file-o" ng:if="item.isFile"></i>
-                    &nbsp;
+                <a ng:click="load_path(item.path)" class="list-group-main" ng:if="item.isDir">
+                    <i class="fa fa-fw fa-folder"></i>
                     {{item.name}}
-                    &nbsp;
-                    <span class="subtle" ng:show="item.isFile">{{item.size|bytes}}</span>
                 </a>
+                <span class="list-group-main" ng:if="item.isFile">
+                    <i class="fa fa-fw fa-file-o"></i>
+                    {{item.name}}
+                    <span class="subtle">{{item.size|bytes}}</span>
+                </span>
             </div>
         </div>
 

@@ -186,11 +186,12 @@ class Handler(HttpPlugin):
             else:
                 vdiSettings = None
             return vdiSettings
-        
+
         if http_context.method == 'POST':
             if os.path.exists(path):
                 data = http_context.json_body()
-                data['vmids']=list(data['vmids'].split(','))
+                if type(data['vmids']) is str:
+                    data['vmids']=list(data['vmids'].split(','))
                 with LMNFile(path, 'w') as settings:
                     settings.write(data)
                 os.chmod(path, 0o755)

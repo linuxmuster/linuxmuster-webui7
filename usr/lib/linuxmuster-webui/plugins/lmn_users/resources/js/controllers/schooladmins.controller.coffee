@@ -3,7 +3,7 @@ angular.module('lmn.users').config ($routeProvider) ->
         controller: 'LMUsersSchooladminsController'
         templateUrl: '/lmn_users:resources/partial/schooladmins.html'
 
-angular.module('lmn.users').controller 'LMUsersSchooladminsController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) ->
+angular.module('lmn.users').controller 'LMUsersSchooladminsController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, customFields) ->
     pageTitle.set(gettext('Schooladmins'))
 
     $scope.sorts = [
@@ -19,30 +19,15 @@ angular.module('lmn.users').controller 'LMUsersSchooladminsController', ($scope,
 
     $scope.all_selected = false
 
-    $scope.list_attr_enabled = ['proxyAddresses']
-    for n in [1,2,3,4,5]
-        $scope.list_attr_enabled.push('sophomorixCustomMulti' + n)
-
     $http.post('/api/lm/sophomorixUsers/schooladmins',{action: 'get-all'}).then (resp) ->
         $scope.schooladmins = resp.data
 
-    $http.get('/api/lm/read_custom_config').then (resp) ->
-        $scope.customDisplay = resp.data.customDisplay.schooladministrators || {1:'', 2:'', 3:''}
-        $scope.customTitle = ['',]
-        for idx in [1,2,3]
-            if $scope.customDisplay[idx] == undefined or $scope.customDisplay[idx] == ''
-                $scope.customTitle.push('')
-            else if $scope.customDisplay[idx] == 'proxyAddresses'
-                $scope.customTitle.push(resp.data.proxyAddresses.schooladministrators.title)
-            else
-                index = $scope.customDisplay[idx].slice(-1)
-                if $scope.isListAttr($scope.customDisplay[idx])
-                    $scope.customTitle.push(resp.data.customMulti.schooladministrators[index].title || '')
-                else
-                    $scope.customTitle.push(resp.data.custom.schooladministrators[index].title || '')
+    customFields.load_display('schooladministrators').then (resp) ->
+        $scope.customDisplay = resp['customDisplay']
+        $scope.customTitle = resp['customTitle']
 
-    $scope.isListAttr = (attr_name) ->
-        return $scope.list_attr_enabled.includes(attr_name)
+    $scope.isListAttr = (attr) ->
+        return customFields.isListAttr(attr)
 
     $http.get('/api/lm/users/binduser/school').then (resp) ->
         $scope.schoolbindusers = resp.data

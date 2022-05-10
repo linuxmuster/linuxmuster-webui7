@@ -161,7 +161,9 @@
     <h3 translate>Global bind users</h3>
 
     <br />
-
+    <div class="alert alert-info" ng:show="globalbindusers.length == 0" translate>
+        No global bind user found.
+    </div>
     <table ng:show="globalbindusers.length > 0" class="table">
         <tr>
             <th> </th>

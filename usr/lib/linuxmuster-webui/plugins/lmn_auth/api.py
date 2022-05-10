@@ -151,20 +151,24 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
         uid = self.get_isolation_uid(username)
 
-        if uid == 0:
+        if uid == 0 and username == 'root':
             # No ticket for root user
             return
 
         logging.warning(f'Initializing Kerberos ticket for {username}')
-        child = pexpect.spawn('/usr/bin/kinit', ['-c', f'/tmp/krb5cc_{uid}{uid}', username])
-        child.expect('Password.*:')
-        child.sendline(password)
-        child.expect(pexpect.EOF)
-        child.close()
-        exit_code = child.exitstatus
-        if exit_code:
-            logging.error(f"Was not able to initialize Kerberos ticket for {username}")
-            logging.error(f"{child.before.decode().strip()}")
+        try:
+            child = pexpect.spawn('/usr/bin/kinit', ['-c', f'/tmp/krb5cc_{uid}{uid}', username])
+            child.expect('.*:', timeout=2)
+            child.sendline(password)
+            child.expect(pexpect.EOF)
+            child.close()
+            exit_code = child.exitstatus
+            if exit_code:
+                logging.error(f"Was not able to initialize Kerberos ticket for {username}")
+                logging.error(f"{child.before.decode().strip()}")
+        except pexpect.exceptions.TIMEOUT:
+            logging.error(
+                f"Was not able to initialize Kerberos ticket for {username}")
 
     def authenticate(self, username, password):
         """
@@ -394,6 +398,15 @@ class LMAuthenticationProvider(AuthenticationProvider):
         systemString = ['sudo', 'sophomorix-passwd', '--user', username, '--pass', password, '--hide', '--nofirstpassupdate', '--use-smbpasswd']
         subprocess.check_call(systemString, shell=False)
         return True
+
+    def signout(self):
+        uid = self.get_isolation_uid(self.context.identity)
+
+        if uid == 0 and self.context.identity == 'root':
+            # No ticket for root user
+            return
+        # Remove Kerberos ticket
+        subprocess.check_output(['/usr/bin/kdestroy', '-c', f'/tmp/krb5cc_{uid}'])
 
 @component(UserConfigProvider)
 class UserLdapConfig(UserConfigProvider):

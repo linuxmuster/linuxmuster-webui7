@@ -1,0 +1,15 @@
+name: lmn_smbclient
+author: Arnaud Kientz
+email: arnaud@linuxmuster.net
+url: https://www.linuxmuster.net
+version: '0.1'
+title: 'Samba share'
+icon: cog
+dependencies:
+    - !PluginDependency { plugin_name: core }
+    - !PluginDependency { plugin_name: lmn_common }
+resources:
+    - resources/js/module.es
+    - resources/js/services/smbclient.service.es
+    - resources/js/directives/smbupload.directive.coffee
+    - ng:lmn.smbclient

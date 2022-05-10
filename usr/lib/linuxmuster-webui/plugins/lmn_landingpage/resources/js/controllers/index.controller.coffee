@@ -3,12 +3,12 @@ angular.module('lmn.landingpage').config ($routeProvider) ->
         controller: 'LMNLandingController'
         templateUrl: '/lmn_landingpage:resources/partial/index.html'
 
-angular.module('lmn.landingpage').controller 'LMNLandingController', ($scope, $http, $uibModal, $location, $route, gettext, notify, pageTitle) ->
+angular.module('lmn.landingpage').controller 'LMNLandingController', ($scope, $http, $uibModal, $location, $route, gettext, notify, pageTitle, customFields) ->
     pageTitle.set(gettext('Home'))
 
     $scope.getData = (user) ->
-        $http.get("/api/lmn/custom_fields/#{user}").then (resp) ->
-            $scope.custom_fields = resp.data
+        customFields.load_user_fields(user).then (resp) ->
+            $scope.custom_fields = resp
 
         $http.get("/api/lmn/quota/#{user}").then (resp) ->
             $scope.quotas = []
@@ -34,12 +34,8 @@ angular.module('lmn.landingpage').controller 'LMNLandingController', ($scope, $h
                         type = "danger"
                     $scope.quotas.push({'share':share, 'total':total + " MiB", 'used':used, 'usage':usage, 'type':type})
 
-    $scope.list_attr_enabled = ['proxyAddresses']
-    for n in [1,2,3,4,5]
-        $scope.list_attr_enabled.push('sophomorixCustomMulti' + n)
-
     $scope.isListAttr = (attr_name) ->
-        return $scope.list_attr_enabled.includes(attr_name)
+        return customFields.isListAttr(attr_name)
 
     $scope.changePassword = () ->
         $location.path('/view/lmn/change-password');
@@ -85,18 +81,14 @@ angular.module('lmn.landingpage').controller 'LMNLandingController', ($scope, $h
                     $scope.groups.push({'cn':cn, 'category':gettext('Project')})
         return
 
-angular.module('lmn.users').controller 'LMNUserCustomFieldsController', ($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, user, custom_fields) ->
+angular.module('lmn.users').controller 'LMNUserCustomFieldsController', ($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, user, customFields, custom_fields) ->
 
     $scope.custom_fields = custom_fields
     $scope.user = user
     $scope.id = user.sAMAccountName
 
-    $scope.list_attr_enabled = ['proxyAddresses']
-    for n in [1,2,3,4,5]
-        $scope.list_attr_enabled.push('sophomorixCustomMulti' + n)
-
     $scope.isListAttr = (attr_name) ->
-        return $scope.list_attr_enabled.includes(attr_name)
+        return customFields.isListAttr(attr_name)
 
     $scope.editCustom = (custom) ->
         value = custom.value

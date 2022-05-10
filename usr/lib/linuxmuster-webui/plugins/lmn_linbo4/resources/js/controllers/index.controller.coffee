@@ -548,7 +548,7 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
 
     $scope.importDevices = () ->
         $uibModal.open(
-            templateUrl: '/lmn_linbo:resources/partial/apply.modal.html'
+            templateUrl: '/lmn_linbo4:resources/partial/apply.modal.html'
             controller: 'LMImportDevicesApplyModalController'
             size: 'lg'
 
@@ -726,4 +726,4 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
                     $scope.restartServices()
 
     $scope.downloadIso = () ->
-        location.href = '/api/lm/linbo.iso'
+        location.href = '/lmn/download/linbo.iso'

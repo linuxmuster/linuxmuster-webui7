@@ -42,18 +42,6 @@ try:
 except FileNotFoundError:
     lmsetup_schoolname = None
 
-def lmn_get_school_configpath(school):
-    """
-    Return the default absolute path for config files in multischool env.
-
-    :param school: school shortname
-
-    """
-    if school == "default-school":
-        return '/etc/linuxmuster/sophomorix/default-school/'
-    else:
-        return f'/etc/linuxmuster/sophomorix/{school}/{school}.'
-
 class SophomorixProcess(threading.Thread):
     """
     Worker for processing sophomorix commands.

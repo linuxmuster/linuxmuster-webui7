@@ -13,12 +13,11 @@
     });
   });
 
-  angular.module('lmn.landingpage').controller('LMNLandingController', function($scope, $http, $uibModal, $location, $route, gettext, notify, pageTitle) {
-    var i, len, n, ref;
+  angular.module('lmn.landingpage').controller('LMNLandingController', function($scope, $http, $uibModal, $location, $route, gettext, notify, pageTitle, customFields) {
     pageTitle.set(gettext('Home'));
     $scope.getData = function(user) {
-      $http.get(`/api/lmn/custom_fields/${user}`).then(function(resp) {
-        return $scope.custom_fields = resp.data;
+      customFields.load_user_fields(user).then(function(resp) {
+        return $scope.custom_fields = resp;
       });
       return $http.get(`/api/lmn/quota/${user}`).then(function(resp) {
         var ref, results, share, total, type, usage, used, values;
@@ -65,14 +64,8 @@
         return results;
       });
     };
-    $scope.list_attr_enabled = ['proxyAddresses'];
-    ref = [1, 2, 3, 4, 5];
-    for (i = 0, len = ref.length; i < len; i++) {
-      n = ref[i];
-      $scope.list_attr_enabled.push('sophomorixCustomMulti' + n);
-    }
     $scope.isListAttr = function(attr_name) {
-      return $scope.list_attr_enabled.includes(attr_name);
+      return customFields.isListAttr(attr_name);
     };
     $scope.changePassword = function() {
       return $location.path('/view/lmn/change-password');
@@ -95,7 +88,7 @@
       });
     };
     return $scope.$watch('identity.user', function() {
-      var category, cn, dn, j, len1, ref1;
+      var category, cn, dn, i, len, ref;
       if ($scope.identity.user === void 0) {
         return;
       }
@@ -108,9 +101,9 @@
       $scope.user = $scope.identity.profile;
       $scope.getData($scope.identity.user);
       $scope.groups = [];
-      ref1 = $scope.user['memberOf'];
-      for (j = 0, len1 = ref1.length; j < len1; j++) {
-        dn = ref1[j];
+      ref = $scope.user['memberOf'];
+      for (i = 0, len = ref.length; i < len; i++) {
+        dn = ref[i];
         cn = dn.split(',')[0].split('=')[1];
         category = dn.split(',')[1].split('=')[1];
         if (category !== "Management") {
@@ -147,22 +140,15 @@
     });
   });
 
-  angular.module('lmn.users').controller('LMNUserCustomFieldsController', function($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, user, custom_fields) {
-    var i, len, n, ref;
+  angular.module('lmn.users').controller('LMNUserCustomFieldsController', function($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, user, customFields, custom_fields) {
     $scope.custom_fields = custom_fields;
     $scope.user = user;
     $scope.id = user.sAMAccountName;
-    $scope.list_attr_enabled = ['proxyAddresses'];
-    ref = [1, 2, 3, 4, 5];
-    for (i = 0, len = ref.length; i < len; i++) {
-      n = ref[i];
-      $scope.list_attr_enabled.push('sophomorixCustomMulti' + n);
-    }
     $scope.isListAttr = function(attr_name) {
-      return $scope.list_attr_enabled.includes(attr_name);
+      return customFields.isListAttr(attr_name);
     };
     $scope.editCustom = function(custom) {
-      var value;
+      var n, value;
       value = custom.value;
       n = custom.attr.slice(-1);
       return messagebox.prompt(gettext('New value'), value).then(function(msg) {
@@ -183,6 +169,7 @@
       });
     };
     $scope.removeCustomMulti = function(custom, value) {
+      var n;
       n = custom.attr.slice(-1);
       return messagebox.show({
         title: gettext('Remove custom field value'),
@@ -205,6 +192,7 @@
       });
     };
     $scope.addCustomMulti = function(custom) {
+      var n;
       n = custom.attr.slice(-1);
       return messagebox.prompt(gettext('New value')).then(function(msg) {
         return $http.post("/api/lm/custommulti/add", {
@@ -244,6 +232,7 @@
       });
     };
     $scope.addProxyAddresses = function(custom) {
+      var n;
       n = custom.attr.slice(-1);
       return messagebox.prompt(gettext('New address')).then(function(msg) {
         return $http.post("/api/lm/changeProxyAddresses", {

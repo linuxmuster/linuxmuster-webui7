@@ -46,7 +46,7 @@ angular.module('lmn.users').controller 'LMNUsersCustomPasswordController', ($sco
     $scope.close = () ->
         $uibModalInstance.dismiss()
 
-angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, id, role) ->
+angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, id, role, identity, customFields) ->
 
     #notify.error gettext("You have to enter a username")
     $scope.id = id
@@ -61,26 +61,28 @@ angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $rou
     else
         custom_fields_role = role
 
-    $http.get('/api/lm/read_custom_config').then (resp) ->
-        $scope.custom = resp.data.custom[custom_fields_role]
-        $scope.customMulti = resp.data.customMulti[custom_fields_role]
-        $scope.proxyAddresses = resp.data.proxyAddresses[custom_fields_role]
-        # Is there a custom field to show ?
-        if $scope.proxyAddresses
-            if $scope.proxyAddresses.show
-                $scope.custom_column = true
+    identity.promise.then () ->
+        if identity.profile.isAdmin || identity.user == 'root'
+            customFields.load_config(custom_fields_role).then (resp) ->
+                $scope.custom = resp.custom
+                $scope.customMulti = resp.customMulti
+                $scope.proxyAddresses = resp.proxyAddresses
 
-        if not $scope.custom_column
-            for custom, values of $scope.custom
-                if values.show
+                # Is there a custom field to show ?
+                if $scope.proxyAddresses.show
                     $scope.custom_column = true
-                    break
 
-        if not $scope.custom_column
-            for custom, values of $scope.customMulti
-                if values.show
-                    $scope.custom_column = true
-                    break
+                if not $scope.custom_column
+                    for custom, values of $scope.custom
+                        if values.show
+                            $scope.custom_column = true
+                            break
+
+                if not $scope.custom_column
+                    for custom, values of $scope.customMulti
+                        if values.show
+                            $scope.custom_column = true
+                            break
 
     $scope.formatDate = (date) ->
         if (date == "19700101000000.0Z")
@@ -150,7 +152,7 @@ angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $rou
             negative: gettext('Cancel')
         ).then (msg) ->
             $http.post("/api/lm/custommulti/remove", {index: n, value: value, user: id}).then () ->
-                position = $scope.userDetails['sophomorixCustomMulti'+n].indexOf(msg.value)
+                position = $scope.userDetails['sophomorixCustomMulti'+n].indexOf(value)
                 $scope.userDetails['sophomorixCustomMulti'+n].splice(position, 1)
                 notify.success(gettext("Value removed !"))
             , () ->
@@ -173,7 +175,7 @@ angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $rou
             negative: gettext('Cancel')
         ).then (msg) ->
             $http.post("/api/lm/changeProxyAddresses", {action: 'remove', address: value, user: id}).then () ->
-                position = $scope.userDetails['proxyAddresses'].indexOf(msg.value)
+                position = $scope.userDetails['proxyAddresses'].indexOf(value)
                 $scope.userDetails['proxyAddresses'].splice(position, 1)
                 notify.success(gettext("Value removed !"))
             , () ->

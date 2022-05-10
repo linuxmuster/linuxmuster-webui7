@@ -1,6 +1,8 @@
+from concurrent import futures
+from time import localtime, strftime  # needed for timestamp in collect transfer
+
 from jadi import component
 from aj.api.http import url, HttpPlugin
-from time import localtime, strftime  # needed for timestamp in collect transfer
 from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue
@@ -335,6 +337,44 @@ class Handler(HttpPlugin):
         session = http_context.json_body()['session']
         now = strftime("%Y%m%d_%H-%M-%S", localtime())
 
+        def shareFiles(file):
+            sophomorixCommand = [
+                'sophomorix-transfer',
+                '-jj',
+                '--scopy',
+                '--from-user', sender,
+                '--to-user', receiversCSV,
+                '--from-path', f'transfer/{file}',
+                '--to-path', f'transfer/{sender}_{session}/'
+            ]
+            return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
+
+        def collectFiles(file):
+            sophomorixCommand = [
+                'sophomorix-transfer',
+                '-jj',
+                '--scopy',
+                '--from-user', sendersCSV,
+                '--to-user', receiver,
+                '--from-path', f'transfer/{receiver}_{session}/{file}',
+                '--to-path', f'transfer/collected/{now}-{session}/',
+                '--to-path-addon', 'fullinfo'
+            ]
+            return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
+
+        def moveFiles(file):
+            sophomorixCommand = [
+                'sophomorix-transfer',
+                '-jj',
+                '--move',
+                '--from-user', sendersCSV,
+                '--to-user', receiver,
+                '--from-path', f'transfer/{receiver}_{session}/{file}',
+                '--to-path', f'transfer/collected/{now}-{session}/',
+                '--to-path-addon', 'fullinfo'
+            ]
+            return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
+
         with authorize('lmn:session:trans'):
             if command == 'share':
                 try:
@@ -344,9 +384,9 @@ class Handler(HttpPlugin):
                         if not isinstance(receivers[0], str):
                             receivers[0] = receivers[0]['sAMAccountName']
                         receiversCSV = ",".join(receivers)
-                        for File in files:
-                            sophomorixCommand = ['sophomorix-transfer', '-jj', '--scopy', '--from-user', sender, '--to-user', receiversCSV, '--from-path', 'transfer/'+File, '--to-path', 'transfer/'+sender+'_'+session+'/']
-                            returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
+                        with futures.ThreadPoolExecutor() as executor:
+                            returnMessage = executor.map(shareFiles, files)
+                        returnMessage = list(returnMessage)[-1]
                 except Exception as e:
                     raise Exception('Something went wrong. Error:\n' + str(e))
             if command == 'copy':
@@ -361,9 +401,9 @@ class Handler(HttpPlugin):
                             sophomorixCommand = ['sophomorix-transfer', '-jj', '--scopy', '--from-user', sendersCSV, '--to-user', receiver, '--from-path', 'transfer/'+receiver+'_'+session, '--to-path', 'transfer/collected/'+now+'-'+session+'/', '--to-path-addon', 'fullinfo',  '--no-target-directory']
                             returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
                         else:
-                            for File in files:
-                                sophomorixCommand = ['sophomorix-transfer', '-jj', '--scopy', '--from-user', sendersCSV, '--to-user', receiver, '--from-path', 'transfer/'+receiver+'_'+session+'/'+File, '--to-path', 'transfer/collected/'+now+'-'+session+'/', '--to-path-addon', 'fullinfo']
-                                returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
+                            with futures.ThreadPoolExecutor() as executor:
+                                returnMessage = executor.map(collectFiles, files)
+                            returnMessage = list(returnMessage)[-1]
                 except Exception as e:
                     raise Exception('Something went wrong. Error:\n' + str(e))
             if command == 'move':
@@ -377,9 +417,9 @@ class Handler(HttpPlugin):
                             sophomorixCommand = ['sophomorix-transfer', '-jj', '--move', '--keep-source-directory', '--from-user', sendersCSV, '--to-user', receiver, '--from-path', 'transfer/'+receiver+'_'+session, '--to-path', 'transfer/collected/'+now+'-'+session+'/', '--to-path-addon', 'fullinfo',  '--no-target-directory']
                             returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
                         else:
-                            for File in files:
-                                sophomorixCommand = ['sophomorix-transfer', '-jj', '--move', '--from-user', sendersCSV, '--to-user', receiver, '--from-path', 'transfer/'+receiver+'_'+session+'/'+File, '--to-path', 'transfer/collected/'+now+'-'+session+'/', '--to-path-addon', 'fullinfo']
-                                returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
+                            with futures.ThreadPoolExecutor() as executor:
+                                returnMessage = executor.map(moveFiles, files)
+                            returnMessage = list(returnMessage)[-1]
                 except Exception as e:
                     raise Exception('Something went wrong. Error:\n' + str(e))
         # TODO: Fifure out why return message changed

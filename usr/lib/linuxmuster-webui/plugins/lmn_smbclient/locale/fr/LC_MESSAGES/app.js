@@ -1,0 +1,1 @@
+{"": "", "Delete Samba files": "Supprimer les fichiers Samba"}

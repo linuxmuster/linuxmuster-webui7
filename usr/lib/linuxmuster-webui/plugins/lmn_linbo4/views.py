@@ -222,8 +222,8 @@ class Handler(HttpPlugin):
             with LMNFile(path, 'w') as f:
                 f.write(data)
 
-    @url(r'/api/lm/linbo.iso')
-    @endpoint(api=False, page=True)
+    @url(r'/lmn/download/linbo.iso')
+    @endpoint(page=True)
     def handle_linbo_iso(self, http_context):
         return http_context.file('/srv/linbo/linbo.iso', inline=False, name=b'linbo.iso')
 

@@ -85,7 +85,7 @@
         positive: gettext('Delete'),
         negative: gettext('Cancel')
       }).then(function() {
-        return $http.post('/api/lmn/samba_share/file', {
+        return $http.post('/api/lmn/smbclient/file', {
           path: path
         }).then(function(resp) {
           var pos;

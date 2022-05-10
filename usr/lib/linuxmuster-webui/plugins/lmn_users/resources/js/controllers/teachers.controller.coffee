@@ -3,7 +3,7 @@ angular.module('lmn.users').config ($routeProvider) ->
         controller: 'LMUsersTeachersController'
         templateUrl: '/lmn_users:resources/partial/teachers.html'
 
-angular.module('lmn.users').controller 'LMUsersTeachersController', ($q, $scope, $http, $location, $route, $uibModal, $sce, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap) ->
+angular.module('lmn.users').controller 'LMUsersTeachersController', ($q, $scope, $http, $location, $route, $uibModal, $sce, gettext, notify, messagebox, pageTitle, customFields) ->
     pageTitle.set(gettext('Teachers'))
 
     $scope.sorts = [
@@ -36,30 +36,15 @@ angular.module('lmn.users').controller 'LMUsersTeachersController', ($q, $scope,
     $scope.all_selected = false
     $scope.query = ''
 
-    $scope.list_attr_enabled = ['proxyAddresses']
-    for n in [1,2,3,4,5]
-        $scope.list_attr_enabled.push('sophomorixCustomMulti' + n)
-
     $http.post('/api/lm/sophomorixUsers/teachers',{action: 'get-all'}).then (resp) ->
         $scope.teachers = resp.data
 
-    $http.get('/api/lm/read_custom_config').then (resp) ->
-        $scope.customDisplay = resp.data.customDisplay.teachers || {'1':'', '2':'', '3':''}
-        $scope.customTitle = ['',]
-        for idx in [1,2,3]
-            if $scope.customDisplay[idx] == undefined or $scope.customDisplay[idx] == ''
-                $scope.customTitle.push('')
-            else if $scope.customDisplay[idx] == 'proxyAddresses'
-                $scope.customTitle.push(resp.data.proxyAddresses.teachers.title)
-            else
-                index = $scope.customDisplay[idx].slice(-1)
-                if $scope.isListAttr($scope.customDisplay[idx])
-                    $scope.customTitle.push(resp.data.customMulti.teachers[index].title || '')
-                else
-                    $scope.customTitle.push(resp.data.custom.teachers[index].title || '')
+    customFields.load_display('teachers').then (resp) ->
+        $scope.customDisplay = resp['customDisplay']
+        $scope.customTitle = resp['customTitle']
 
-    $scope.isListAttr = (attr_name) ->
-        return $scope.list_attr_enabled.includes(attr_name)
+    $scope.isListAttr = (attr) ->
+        return customFields.isListAttr(attr)
 
     $scope.showInitialPassword = (users) ->
         user=[]

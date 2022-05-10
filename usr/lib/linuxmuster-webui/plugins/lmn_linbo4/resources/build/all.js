@@ -672,7 +672,7 @@
     });
     $scope.importDevices = function() {
       $uibModal.open({
-        templateUrl: '/lmn_linbo:resources/partial/apply.modal.html',
+        templateUrl: '/lmn_linbo4:resources/partial/apply.modal.html',
         controller: 'LMImportDevicesApplyModalController',
         size: 'lg',
         backdrop: 'static'
@@ -963,7 +963,7 @@
       });
     };
     return $scope.downloadIso = function() {
-      return location.href = '/api/lm/linbo.iso';
+      return location.href = '/lmn/download/linbo.iso';
     };
   });
 

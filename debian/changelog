@@ -1,3 +1,9 @@
+linuxmuster-webui7 (17.1.17.1) lmn71; urgency=medium
+ 
+ * Merge changes + New build
+ 
+ -- Lukas Spitznagel <lukas.spitznagel@netzint.de>  Tue, 10 May 2022 17:31:45 +0100
+
 linuxmuster-webui7 (17.1.16.1) lmn71; urgency=medium
  
  * New build
@@ -9,6 +15,47 @@ linuxmuster-webui7 (17.1.5.1) lmn71; urgency=medium
  * New build
 
  -- Andreas Till <andreas.till@netzint.de>  Wed, 15 Feb 2022 15:24:45 +0100
+linuxmuster-webui7 (7.1.21) lmn71; urgency=medium
+
+  * Idiotic typo 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 02 May 2022 10:40:08 +0200
+
+linuxmuster-webui7 (7.1.20) lmn71; urgency=medium
+
+  * Expand languages for regexp in pexpect
+  * Non blocking kerberos auth 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 02 May 2022 10:37:01 +0200
+
+linuxmuster-webui7 (7.1.19) lmn71; urgency=medium
+
+  * Fix missing krb5 dependencies. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 01 May 2022 23:09:13 +0200
+
+linuxmuster-webui7 (7.1.18) lmn71; urgency=medium
+
+  * Fix async mismatch between templates and custom fields
+  * Fix config structure if config file does not exist
+  * Fix empty cutomDIsplay title 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 01 May 2022 13:19:17 +0200
+
+linuxmuster-webui7 (7.1.17) lmn71; urgency=medium
+
+  * Update dpath lib for jammy
+  * Kerberos ticket for user at auth
+  * New backend plugin smbclient to handle communication with samba shares
+  * New plugin samba shares to display shares content
+  * New upload method directly in home 
+  * New angular service for custom fields
+  * Fix structure for custom fields
+  * Fix custom fields in session plugin
+  * Fix links in linbo4 plugin
+  * Use concurrency to accelerate transfers in session plugin
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 01 May 2022 11:32:34 +0200
 
 linuxmuster-webui7 (7.1.16) lmn71; urgency=medium
 

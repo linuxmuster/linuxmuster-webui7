@@ -1,10 +1,70 @@
-<<<<<<< HEAD
-linuxmuster-webui7 (17.1.5.1) lmn71; urgency=medium
+linuxmuster-webui7 (7.1.21) lmn71; urgency=medium
 
- * New build
+  * Idiotic typo 
 
- -- Andreas Till <andreas.till@netzint.de>  Wed, 15 Feb 2022 15:24:45 +0100
-=======
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 02 May 2022 10:40:08 +0200
+
+linuxmuster-webui7 (7.1.20) lmn71; urgency=medium
+
+  * Expand languages for regexp in pexpect
+  * Non blocking kerberos auth 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 02 May 2022 10:37:01 +0200
+
+linuxmuster-webui7 (7.1.19) lmn71; urgency=medium
+
+  * Fix missing krb5 dependencies. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 01 May 2022 23:09:13 +0200
+
+linuxmuster-webui7 (7.1.18) lmn71; urgency=medium
+
+  * Fix async mismatch between templates and custom fields
+  * Fix config structure if config file does not exist
+  * Fix empty cutomDIsplay title 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 01 May 2022 13:19:17 +0200
+
+linuxmuster-webui7 (7.1.17) lmn71; urgency=medium
+
+  * Update dpath lib for jammy
+  * Kerberos ticket for user at auth
+  * New backend plugin smbclient to handle communication with samba shares
+  * New plugin samba shares to display shares content
+  * New upload method directly in home 
+  * New angular service for custom fields
+  * Fix structure for custom fields
+  * Fix custom fields in session plugin
+  * Fix links in linbo4 plugin
+  * Use concurrency to accelerate transfers in session plugin
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 01 May 2022 11:32:34 +0200
+
+linuxmuster-webui7 (7.1.16) lmn71; urgency=medium
+
+  * Fix typo in postinst. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 08 Apr 2022 22:10:25 +0200
+
+linuxmuster-webui7 (7.1.15) lmn71; urgency=medium
+
+  * Fix duplicate workgroup result in postinst 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 08 Apr 2022 13:31:31 +0200
+
+linuxmuster-webui7 (7.1.14) lmn71; urgency=medium
+
+  * Fix linbo_sync dependency problem 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 08 Apr 2022 11:43:33 +0200
+
+linuxmuster-webui7 (7.1.13) lmn71; urgency=medium
+
+  * Fix directory error in install process
+  * Fix undefined custom display values 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 08 Apr 2022 09:30:54 +0200
+
 linuxmuster-webui7 (7.1.12) lmn71; urgency=medium
 
   * Add many hotkeys
@@ -70,7 +130,6 @@ linuxmuster-webui7 (7.1.6) lmn71; urgency=medium
   * Update configuration's process 
 
  -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 19 Feb 2022 15:18:20 +0100
->>>>>>> upstream-lmn
 
 linuxmuster-webui7 (7.1.5) lmn71; urgency=medium
 

@@ -13,7 +13,7 @@ from jadi import component
 from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
 from aj.auth import authorize
-from aj.plugins.lmn_common.api import lmn_getSophomorixValue, lmn_get_school_configpath, lmconfig
+from aj.plugins.lmn_common.api import lmn_getSophomorixValue
 from aj.plugins.lmn_common.lmnfile import LMNFile
 import logging
 
@@ -198,9 +198,7 @@ class Handler(HttpPlugin):
         :rtype: list of dict
         """
 
-        school = self.context.schoolmgr.school
-        path = lmn_get_school_configpath(school)+'students.csv'
-
+        path = f'{self.context.schoolmgr.configpath}students.csv'
 
         if os.path.isfile(path) is False:
             os.mknod(path)
@@ -239,10 +237,8 @@ class Handler(HttpPlugin):
         :rtype: list of dict
         """
 
-        school = self.context.schoolmgr.school
-        path = lmn_get_school_configpath(school)+'teachers.csv'
+        path = f'{self.context.schoolmgr.configpath}teachers.csv'
 
-            
         if os.path.isfile(path) is False:
             os.mknod(path)
         fieldnames = [
@@ -362,8 +358,8 @@ class Handler(HttpPlugin):
         :rtype: list of dict
         """
 
-        action = http_context.json_body()['action']
         if http_context.method == 'POST':
+            action = http_context.json_body()['action']
             schooladminsList = []
             with authorize('lm:users:schooladmins:read'):
                 if action == 'get-all':
@@ -379,9 +375,6 @@ class Handler(HttpPlugin):
                         schooladminsList.append(details)
                     return schooladminsList
                 return ["none"]
-        if http_context.method == 'POST':
-            with authorize('lm:users:schooladmins:write'):
-                return 0
 
     @url(r'/api/lm/sophomorixUsers/globaladmins')
     @endpoint(api=True)
@@ -396,8 +389,8 @@ class Handler(HttpPlugin):
         :rtype: list of dict
         """
 
-        action = http_context.json_body()['action']
         if http_context.method == 'POST':
+            action = http_context.json_body()['action']
             globaladminsList = []
             with authorize('lm:users:globaladmins:read'):
                 if action == 'get-all':
@@ -413,9 +406,6 @@ class Handler(HttpPlugin):
                         globaladminsList.append(details)
                     return globaladminsList
                 return ["none"]
-        if http_context.method == 'POST':
-            with authorize('lm:users:globaladmins:write'):
-                return 0
 
     @url(r'/api/lm/users/extra-students')
     @endpoint(api=True)
@@ -431,8 +421,7 @@ class Handler(HttpPlugin):
         :rtype: list of dict
         """
 
-        school = self.context.schoolmgr.school
-        path = lmn_get_school_configpath(school)+'extrastudents.csv'
+        path = f'{self.context.schoolmgr.configpath}extrastudents.csv'
 
         if os.path.isfile(path) is False:
             os.mknod(path)
@@ -471,8 +460,7 @@ class Handler(HttpPlugin):
         :rtype: list of dict
         """
 
-        school = self.context.schoolmgr.school
-        path = lmn_get_school_configpath(school)+'extraclasses.csv'
+        path = f'{self.context.schoolmgr.configpath}extraclasses.csv'
 
         if os.path.isfile(path) is False:
             os.mknod(path)
@@ -1111,7 +1099,7 @@ class Handler(HttpPlugin):
                             details['pw'] = True
                         binduser_list.append(details)
                 return binduser_list
-            return ["none"]
+            return []
 
         if http_context.method == 'POST':
             binduser = http_context.json_body()['binduser']

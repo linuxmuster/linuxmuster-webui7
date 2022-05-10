@@ -8,7 +8,6 @@ import time
 import subprocess
 import xml.etree.ElementTree as ElementTree
 from aj.plugins.lmn_common.lmnfile import LMNFile
-from aj.plugins.lmn_common.api import lmn_get_school_configpath
 
 
 LINBO_PATH = '/srv/linbo'
@@ -124,8 +123,7 @@ def list_workstations(context):
     :rtype: dict
     """
 
-    school = context.schoolmgr.school
-    path = lmn_get_school_configpath(school)+'devices.csv'
+    path = f'{context.schoolmgr.configpath}devices.csv'
 
     devices_dict = {}
     fieldnames = [

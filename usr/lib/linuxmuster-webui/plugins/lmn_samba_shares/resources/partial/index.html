@@ -1,0 +1,73 @@
+<div samba-access>
+    <div class="row" style="padding-bottom:100px;">
+        <progress-spinner ng:show="loading"></progress-spinner>
+        <br />
+
+        <div class="pull-left">
+            <button ng:repeat="share in shares"
+                    ng:click="load_share(share)"
+                    class="btn btn-lmn"
+                    style="margin-left:20px;"
+                    ng:style="share.active && {'background-color':'#ffc876'}">
+                <i class="{{share.icon}}"></i>
+                {{share.name}}
+            </button>
+        </div>
+
+        <button class="btn btn-lmn pull-right" ng:click="create_dir()" style="margin:0 10px 10px 0;">
+            <i class="fa fa-plus"></i>
+        </button>
+
+        <br style="clear:right;" />
+
+        <ol class="breadcrumb">
+            <li>
+                <a href="#" ng:click="load_path(active_share.path)">
+                    <i class="{{active_share.icon}}"></i>
+                </a>
+            </li>
+            <li ng:repeat="item in splitted_path" ng:class="{'active':$last}">
+                <a href="#" ng:click="load_path(item.path)" ng:if="!$last">{{item.name}}</a>
+                <span ng:if="$last">{{item.name}}</span>
+            </li>
+        </ol>
+
+        <br style="clear:both;"  />
+
+        <div class="list-group" ng:hide="loading && root" keyboard-focus>
+            <div ng:repeat="item in items|orderBy:['-isDir', 'name']" class="list-group-item list-group-item-small" test-bind-item="{{item.name}}" ng:style="item.selected && {'background':'#ffc876'}">
+                <a ng:click="delete_file(item.path)" class="list-group-btn" ng:if="item.isFile">
+                    <i class="fa fa-trash"></i>
+                </a>
+                <a ng:click="delete_dir(item.path)" class="list-group-btn" ng:if="item.isDir && item.name != 'transfer' && item.name != '.upload'">
+                    <i class="fa fa-trash"></i>
+                </a>
+                <a ng:click="rename(item)" class="list-group-btn" ng:if="item.name != 'transfer' && item.name != '.upload'">
+                    <i class="fa fa-pen"></i>
+                </a>
+                <a ng:click="download(item.path)" class="list-group-btn" ng:if="item.isFile">
+                    <i class="fas fa-download"></i>
+                </a>
+                <div class="list-group-addon pull-left">
+                    <span class="subtle" checkbox ng:model="item.selected"></span>
+                </div>
+                <a ng:click="load_path(item.path)" class="list-group-main" ng:if="item.isDir">
+                    <i class="fa fa-fw fa-folder"></i>
+                    {{item.name}}
+                </a>
+                <span class="list-group-main" ng:if="item.isFile">
+                    <i class="fa fa-fw fa-file-o"></i>
+                    {{item.name}}
+                    <span class="subtle">{{item.size|bytes}}</span>
+                </span>
+            </div>
+        </div>
+
+        <smb-upload uploadpath="{{current_path}}" reload="true"></smb-upload>
+
+    </div>
+
+    <floating-toolbar ng:show="(items|filter:{selected:true}).length > 0">
+        <a ng:click="doDelete()" class="btn btn-default btn-flat" translate>Delete</a>
+    </floating-toolbar>
+</div>

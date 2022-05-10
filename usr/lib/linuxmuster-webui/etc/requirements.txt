@@ -22,3 +22,5 @@ requests
 xmltodict
 paramiko
 smbprotocol
+pyspnego
+ipaddress

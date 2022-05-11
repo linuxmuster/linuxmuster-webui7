@@ -770,7 +770,9 @@ class Handler(HttpPlugin):
         """
 
         school = self.context.schoolmgr.school
-        config_template = lmconfig.get('passwordTemplates', {'multiple': '', 'individual': ''})
+        config_template = self.context.schoolmgr.custom_fields.get(
+            'passwordTemplates', {'multiple': '', 'individual': ''}
+        )
         config_template_individual = config_template.get('individual', '')
         config_template_multiple = config_template.get('multiple', '')
 

@@ -24,15 +24,6 @@ for key in ['custom', 'customDisplay', 'customMulti', 'proxyAddresses']:
         CUSTOM_FIELDS_DICT[key] = config[key]
         del config[key]
 
-with open(WEBUI_CONFIG, 'w') as f:
-    f.write(
-        yaml.safe_dump(
-            config,
-            default_flow_style=False,
-            encoding='utf-8',
-            allow_unicode=True
-        ).decode('utf-8'))
-
 if CUSTOM_FIELDS_DICT:
     with open(CUSTOM_FIELDS_CONFIG, 'w') as f:
         f.write(
@@ -42,3 +33,28 @@ if CUSTOM_FIELDS_DICT:
                 encoding='utf-8',
                 allow_unicode=True
             ).decode('utf-8'))
+else:
+    if 'passwordTemplates' in config.keys():
+        with open(CUSTOM_FIELDS_CONFIG, 'r') as f:
+            CUSTOM_FIELDS_DICT = yaml.load(f, Loader=yaml.SafeLoader)
+        CUSTOM_FIELDS_DICT['passwordTemplates'] = config['passwordTemplates']
+        del config['passwordTemplates']
+        with open(CUSTOM_FIELDS_CONFIG, 'w') as f:
+            f.write(
+                yaml.safe_dump(
+                    CUSTOM_FIELDS_DICT,
+                    default_flow_style=False,
+                    encoding='utf-8',
+                    allow_unicode=True
+                ).decode('utf-8'))
+
+with open(WEBUI_CONFIG, 'w') as f:
+    f.write(
+        yaml.safe_dump(
+            config,
+            default_flow_style=False,
+            encoding='utf-8',
+            allow_unicode=True
+        ).decode('utf-8'))
+
+

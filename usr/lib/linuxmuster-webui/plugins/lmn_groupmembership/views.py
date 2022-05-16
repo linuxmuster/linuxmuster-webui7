@@ -116,7 +116,7 @@ class Handler(HttpPlugin):
                 project = http_context.json_body()['project']
                 sophomorixCommand = ['sophomorix-project', '-i', '-p', project, '-jj']
                 groupAdmins = lmn_getSophomorixValue(sophomorixCommand, 'GROUPS/'+project+'/sophomorixAdmins')
-                if username in groupAdmins or username == 'global-admin':
+                if username in groupAdmins or user_details['sophomorixRole'] in ['globaladministrator', 'schooladministrator']:
                     sophomorixCommand = ['sophomorix-project', '--kill', '-p', project, '-jj']
                     result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
                     if result['TYPE'] == "ERROR":

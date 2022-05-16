@@ -1,3 +1,9 @@
+linuxmuster-webui7 (1.0.170) bionic; urgency=low
+
+  * allow schooladmins to delete projects
+
+ -- Andreas Till <andreas.till@netzint.de>  Mon, 16 May 2022 16:11:32 +0200
+
 linuxmuster-webui7 (1.0.169rc6) bionic; urgency=medium
 
   * Current snapshot build 1f21aa7578ff37845cfa469a81d3d3d193222a9b

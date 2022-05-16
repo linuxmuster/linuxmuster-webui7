@@ -1,3 +1,9 @@
+linuxmuster-webui7 (17.1.17.2) lmn71; urgency=low
+
+  * Allow schooladmins to delete projects
+
+ -- Andreas Till <andreas.till@netzint.de>  Mon, 16 May 2022 16:13:58 +0200
+
 linuxmuster-webui7 (17.1.17.1) lmn71; urgency=medium
  
  * Merge changes + New build

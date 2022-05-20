@@ -1,3 +1,10 @@
+linuxmuster-webui7 (7.1.23) lmn71; urgency=medium
+
+  * Allow schooladmins to delete projects
+  * Upgrade paramiko to avoid attribute error during installation 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 20 May 2022 12:10:12 +0200
+
 linuxmuster-webui7 (7.1.22) lmn71; urgency=medium
 
   * Retrieve password template config to custom school config

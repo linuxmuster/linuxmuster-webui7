@@ -13,7 +13,7 @@ configparser==3.5.0
 dpath==2.0.6         # used for getSophomorixValue
 gevent==1.5.0
 isc_dhcp_leases
-paramiko
+paramiko==2.6.0
 python-ldap
 python-magic==0.4.15 # used to determine encoding in linbo files and csv uploads
 requests

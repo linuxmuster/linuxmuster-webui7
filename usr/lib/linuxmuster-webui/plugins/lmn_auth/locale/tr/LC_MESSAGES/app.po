@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-30 19:02+0200\n"
-"PO-Revision-Date: 2022-04-30 17:50\n"
+"POT-Creation-Date: 2022-05-30 12:25+0200\n"
+"PO-Revision-Date: 2022-05-30 10:34\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -54,11 +54,11 @@ msgstr ""
 msgid "Linux Muster LDAP"
 msgstr "Linux Muster LDAP"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:390
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:394
 msgid "Minimal length is 7 characters. Use upper, lower and special characters or numbers. (e.g. Muster!)."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:414
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:418
 msgid "Linuxmuster LDAP user config"
 msgstr "Linux Muster LDAP kullanıcı yapılandırması"
 

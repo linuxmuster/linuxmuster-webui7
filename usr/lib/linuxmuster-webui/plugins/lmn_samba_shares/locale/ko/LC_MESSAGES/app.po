@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-30 19:02+0200\n"
-"PO-Revision-Date: 2022-04-30 17:50\n"
+"POT-Creation-Date: 2022-05-30 12:25+0200\n"
+"PO-Revision-Date: 2022-05-30 10:34\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -176,5 +176,9 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:123
 msgid "Do you really want to delete this directory? This is only possible if the directory is empty."
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:140
+msgid "File not found, may be due to special chars in the file name."
 msgstr ""
 

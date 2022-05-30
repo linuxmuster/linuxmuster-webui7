@@ -307,14 +307,14 @@ function resetColor(id) {
 }
 
 function validCharPwd(password) {
-    var regExp = /^[a-zA-Z0-9!@#§+\-$%&*{}()\]\[]+$/;
+    var regExp = /^[a-zA-Z0-9!@#§+\-%&*{}()\]\[]+$/;
     var validPassword = regExp.test(password);
     return validPassword;
 }
 
 function isStrongPwd(password) {
     // console.log ("check strength");
-    var regExp = /(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#§+\-$%&*{}()\]\[]|(?=.*\d)).{7,}/;
+    var regExp = /(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#§+\-%&*{}()\]\[]|(?=.*\d)).{7,}/;
     var validPassword = regExp.test(password);
     return validPassword;
 }

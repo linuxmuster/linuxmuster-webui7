@@ -130,6 +130,23 @@ angular.module('lmn.setup_wizard').controller('InitSchoolController', function (
 angular.module('lmn.setup_wizard').controller('InitAccountController', function ($scope, $location, $http, gettext, pageTitle, notify) {
     pageTitle.set(gettext('Setup Wizard'))
     this.ini = {}
+
+    this.samePW = () => {
+        return this.ini.adminpw == this.adminpwConfirmation
+    }
+
+    this.validPW = () => {
+        return validCharPwd(this.ini.adminpw)
+    }
+
+    this.strongPW = () => {
+        return isStrongPwd(this.ini.adminpw)
+    }
+
+    this.checkPW = () => {
+        return this.validPW() && this.strongPW() && this.samePW()
+    }
+
     this.apply = () => {
         if (this.ini.adminpw != this.adminpwConfirmation) {
             notify.error('Administrator password missmatch')
@@ -265,7 +282,7 @@ function validCharPwd(password) {
 }
 
 function isStrongPwd(password) {
-    console.log ("check strength");
+    // console.log ("check strength");
     var regExp = /(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#§+\-$%&*{}()\]\[]|(?=.*\d)).{7,}/;
     var validPassword = regExp.test(password);
     return validPassword;

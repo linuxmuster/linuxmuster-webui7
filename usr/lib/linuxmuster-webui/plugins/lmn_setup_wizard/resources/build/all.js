@@ -152,6 +152,23 @@ angular.module('lmn.setup_wizard').controller('InitAccountController', function 
 
     pageTitle.set(gettext('Setup Wizard'));
     this.ini = {};
+
+    this.samePW = function () {
+        return _this3.ini.adminpw == _this3.adminpwConfirmation;
+    };
+
+    this.validPW = function () {
+        return validCharPwd(_this3.ini.adminpw);
+    };
+
+    this.strongPW = function () {
+        return isStrongPwd(_this3.ini.adminpw);
+    };
+
+    this.checkPW = function () {
+        return _this3.validPW() && _this3.strongPW() && _this3.samePW();
+    };
+
     this.apply = function () {
         if (_this3.ini.adminpw != _this3.adminpwConfirmation) {
             notify.error('Administrator password missmatch');
@@ -296,7 +313,7 @@ function validCharPwd(password) {
 }
 
 function isStrongPwd(password) {
-    console.log("check strength");
+    // console.log ("check strength");
     var regExp = /(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#§+\-$%&*{}()\]\[]|(?=.*\d)).{7,}/;
     var validPassword = regExp.test(password);
     return validPassword;

@@ -645,6 +645,6 @@
     <label translate><input type="checkbox" ng:model="$ctrl.licenseAccepted" /> I accept the license terms </label>
     </div>
     <div class="modal-footer">
-        <a href='#' ng:click="$ctrl.apply()" class="btn btn-default btn-flat" translate>Next</a>
+        <a href='#' ng:click="$ctrl.apply()" ng:disabled="!$ctrl.licenseAccepted" class="btn btn-default btn-flat" translate>Next</a>
     </div>
 </dialog>

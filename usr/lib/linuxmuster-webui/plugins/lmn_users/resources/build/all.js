@@ -281,7 +281,9 @@
       ref = ['sAMAccountName', 'givenName', 'sn'];
       for (i = 0, len = ref.length; i < len; i++) {
         value = ref[i];
-        result = result || row[value].toLowerCase().indexOf($scope.query.toLowerCase() || '') !== -1;
+        if (row[value] !== void 0) {
+          result = result || row[value].toLowerCase().indexOf($scope.query.toLowerCase() || '') !== -1;
+        }
       }
       return result;
     };
@@ -561,7 +563,9 @@
       ref = ['sAMAccountName', 'givenName', 'sn', 'sophomorixAdminClass'];
       for (i = 0, len = ref.length; i < len; i++) {
         value = ref[i];
-        result = result || row[value].toLowerCase().indexOf($scope.query.toLowerCase() || '') !== -1;
+        if (row[value] !== void 0) {
+          result = result || row[value].toLowerCase().indexOf($scope.query.toLowerCase() || '') !== -1;
+        }
       }
       return result;
     };
@@ -1794,7 +1798,9 @@
       ref = ['sAMAccountName', 'givenName', 'sn'];
       for (i = 0, len = ref.length; i < len; i++) {
         value = ref[i];
-        result = result || row[value].toLowerCase().indexOf($scope.query.toLowerCase() || '') !== -1;
+        if (row[value] !== void 0) {
+          result = result || row[value].toLowerCase().indexOf($scope.query.toLowerCase() || '') !== -1;
+        }
       }
       return result;
     };

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-30 19:02+0200\n"
-"PO-Revision-Date: 2022-04-30 17:50\n"
+"POT-Creation-Date: 2022-05-30 12:25+0200\n"
+"PO-Revision-Date: 2022-05-30 10:34\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -177,4 +177,8 @@ msgstr "Erreur lors de la création du répertoire : "
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:123
 msgid "Do you really want to delete this directory? This is only possible if the directory is empty."
 msgstr "Voulez-vous vraiment supprimer ce répertoire ? Ceci n'est possible que si le répertoire est vide."
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:140
+msgid "File not found, may be due to special chars in the file name."
+msgstr "Fichier introuvable, peut être dû à des caractères spéciaux dans le nom du fichier."
 

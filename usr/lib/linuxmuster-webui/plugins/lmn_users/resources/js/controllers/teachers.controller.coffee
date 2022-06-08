@@ -134,7 +134,8 @@ angular.module('lmn.users').controller 'LMUsersTeachersController', ($q, $scope,
         # Only query sAMAccountName, givenName and sn
         result = false
         for value in ['sAMAccountName', 'givenName', 'sn']
-            result = result || row[value].toLowerCase().indexOf($scope.query.toLowerCase() || '') != -1
+            if (row[value] != undefined)
+                result = result || row[value].toLowerCase().indexOf($scope.query.toLowerCase() || '') != -1
         return result
 
     $scope.selectAll = (query) ->

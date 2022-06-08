@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-06 12:55+0100\n"
-"PO-Revision-Date: 2022-04-30 17:50\n"
+"POT-Creation-Date: 2022-05-30 12:25+0200\n"
+"PO-Revision-Date: 2022-05-30 10:34\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -29,7 +29,7 @@ msgstr "Información de la cuenta"
 msgid "Almost done..."
 msgstr "Ya casi termino..."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-account.html:21
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-account.html:34
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-externalServices.html:14
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:51
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:102
@@ -89,20 +89,28 @@ msgstr ""
 msgid "Location"
 msgstr "Ubicación"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-account.html:22
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-account.html:35
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-externalServices.html:15
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:52
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-welcome.html:648
 msgid "Next"
 msgstr "Siguiente"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-account.html:13
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-account.html:8
 msgid "Note: Minimal length is 7 characters. Use upper, lower and special characters or numbers. (e.g. mUster!)"
 msgstr "Nota: La longitud mínima es de 7 caracteres. Utilice caracteres o números superiores, inferiores y especiales. (por ejemplo, mUster!)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:41
 msgid "Note: The first part (up to the first dot) of the domain name will be used as the SAMBA domain and has a maximal length of 15 characters. We suggest to use &quot;linuxmuster&quot; or &quot;lmn&quot; and prepend it to your domain."
 msgstr "Nota: La primera parte (hasta el primer punto) del nombre de dominio se utilizará como dominio SAMBA y tiene una longitud máxima de 15 caracteres. Sugerimos usar &quot;linuxmuster&quot; o &quot;lmn&quot; y prepárelo a su dominio."
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-account.html:23
+msgid "Password contains invalid characters"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-account.html:26
+msgid "Password too weak"
+msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-welcome.html:7
 msgid "Please follow the next few steps to quickly configure your system"
@@ -141,7 +149,7 @@ msgid "Setup"
 msgstr "Configuración"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-done.html:3
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:204
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:221
 msgid "Setup complete"
 msgstr "Configuración completa"
 
@@ -170,7 +178,11 @@ msgstr "Lenguaje del sistema"
 msgid "The setup was completed."
 msgstr "El montaje se completó."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-account.html:15
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-account.html:20
+msgid "The two given passwords differ"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-account.html:10
 msgid "Valid characters are:"
 msgstr "Los caracteres válidos son:"
 
@@ -209,29 +221,29 @@ msgstr "por ejemplo: el servidor"
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:47
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:70
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:131
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:153
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:188
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:200
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:170
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:205
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:217
 msgid "Setup Wizard"
 msgstr "Asistente de configuración"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:215
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:232
 msgid "Setup Done"
 msgstr "Configuración realizada"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:232
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:249
 msgid "Restarting"
 msgstr "Reiniciando"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:236
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:253
 msgid "Restarted"
 msgstr "Reiniciado"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:236
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:253
 msgid "Please wait"
 msgstr "Por favor, espere"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:246
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:263
 msgid "Could not restart"
 msgstr "No se pudo reiniciar"
 

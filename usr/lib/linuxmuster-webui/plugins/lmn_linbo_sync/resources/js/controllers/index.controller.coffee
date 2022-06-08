@@ -1,4 +1,4 @@
-angular.module('lmn.linbo_sync').controller 'SyncIndexController', ($scope, $http, $interval, $timeout, notify, pageTitle, messagebox, gettext) ->
+angular.module('lmn.linbo_sync').controller 'SyncIndexController', ($scope, $http, $interval, $timeout, notify, pageTitle, messagebox, gettext, identity) ->
     pageTitle.set(gettext('Linbo synchronization'))
 
     $http.get("/api/lm/linbo/SyncList").then (resp) ->
@@ -9,6 +9,8 @@ angular.module('lmn.linbo_sync').controller 'SyncIndexController', ($scope, $htt
 
     $scope.isUp = (group, host) ->
         index = $scope.groups[group].hosts.indexOf(host)
+        if school != 'default-school'
+            host.hostname = school+'-'+host.hostname
 
         $http.get("/api/lm/linbo/isOnline/#{host.hostname}").then (resp) ->
             $scope.groups[group].hosts[index].up = resp.data

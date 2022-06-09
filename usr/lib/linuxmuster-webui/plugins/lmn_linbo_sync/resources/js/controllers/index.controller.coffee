@@ -8,10 +8,6 @@ angular.module('lmn.linbo_sync').controller 'SyncIndexController', ($scope, $htt
             $scope.linbo_command[group] = {'cmd':[], 'show':false, 'host': [], 'target':'clients' }
 
     $scope.isUp = (group, host) ->
-        index = $scope.groups[group].hosts.indexOf(host)
-        if school != 'default-school'
-            host.hostname = school+'-'+host.hostname
-
         $http.get("/api/lm/linbo/isOnline/#{host.hostname}").then (resp) ->
             $scope.groups[group].hosts[index].up = resp.data
             if ( resp.data == "Off" )

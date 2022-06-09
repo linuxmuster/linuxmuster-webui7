@@ -143,11 +143,14 @@ def list_workstations(context):
         'lmnReserved14',
         'sophomorixComment',
         'options',
-    ]    
+    ]
     with LMNFile(path, 'r', fieldnames=fieldnames) as devices_csv:
 
         devices = devices_csv.read()
         for device in devices:
+            if school != 'default-school':
+                if device['hostname']:
+                    device['hostname'] = school + '-' + device['hostname']
             if os.path.isfile(os.path.join(LINBO_PATH, 'start.conf.'+str(device['group']))):
                 if device['pxeFlag'] != '1' and device['pxeFlag'] != "2":
                     continue

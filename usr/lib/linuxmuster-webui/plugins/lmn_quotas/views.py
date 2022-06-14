@@ -31,12 +31,12 @@ class Handler(HttpPlugin):
         :rtype: list of dict
         """
 
-        school = 'default-school'
-        settings_path = '/etc/linuxmuster/sophomorix/'+school+'/school.conf'
+        school = self.context.schoolmgr.school
+        settings_path = f'{self.context.schoolmgr.configpath}school.conf'
 
         quota_types = {
             'QUOTA_DEFAULT_GLOBAL':'linuxmuster-global',
-            'QUOTA_DEFAULT_SCHOOL':'default-school',
+            'QUOTA_DEFAULT_SCHOOL':school,
         }
 
         if http_context.method == 'GET':
@@ -92,10 +92,11 @@ class Handler(HttpPlugin):
         :return: Dict with all quotas informations
         :rtype: dict
         """
+        school = self.context.schoolmgr.school
 
         if http_context.method == 'GET':
             groups = {'adminclass':{}, 'project':{}}
-            shares = ['linuxmuster-global', 'default-school']
+            shares = ['linuxmuster-global', school]
 
             sophomorixCommand = ['sophomorix-class', '-i', '-jj']
             result = lmn_getSophomorixValue(sophomorixCommand, 'GROUPS')
@@ -138,10 +139,11 @@ class Handler(HttpPlugin):
         :param http_context: HttpContext
         :type http_context: HttpContext
         """
+        school = self.context.schoolmgr.school
 
         quota_types = {
             'QUOTA_DEFAULT_GLOBAL':'linuxmuster-global',
-            'QUOTA_DEFAULT_SCHOOL':'default-school',
+            'QUOTA_DEFAULT_SCHOOL':school,
         }
 
         if http_context.method == 'POST':

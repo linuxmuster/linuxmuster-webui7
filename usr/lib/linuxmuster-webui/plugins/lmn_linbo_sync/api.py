@@ -124,7 +124,7 @@ def list_workstations(context):
     """
 
     path = f'{context.schoolmgr.configpath}devices.csv'
-
+    school = context.schoolmgr.school
     devices_dict = {}
     fieldnames = [
         'room',
@@ -158,7 +158,6 @@ def list_workstations(context):
                     devices_dict[device['group']] = {'grp': device['group'], 'hosts': [device]}
                 else:
                     devices_dict[device['group']]['hosts'].append(device)
-
     return group_os(devices_dict)
 
 def last_sync_all(workstations):

@@ -124,7 +124,7 @@ def list_workstations(context):
     """
 
     path = f'{context.schoolmgr.configpath}devices.csv'
-
+    school = context.schoolmgr.school
     devices_dict = {}
     fieldnames = [
         'room',
@@ -148,6 +148,9 @@ def list_workstations(context):
 
         devices = devices_csv.read()
         for device in devices:
+            if school != 'default-school':
+                if device['hostname']:
+                    device['hostname'] = school + '-' + device['hostname']
             if os.path.isfile(os.path.join(LINBO_PATH, 'start.conf.'+str(device['group']))):
                 if device['pxeFlag'] != '1' and device['pxeFlag'] != "2":
                     continue
@@ -155,7 +158,6 @@ def list_workstations(context):
                     devices_dict[device['group']] = {'grp': device['group'], 'hosts': [device]}
                 else:
                     devices_dict[device['group']]['hosts'].append(device)
-
     return group_os(devices_dict)
 
 def last_sync_all(workstations):

@@ -1,4 +1,4 @@
-angular.module('lmn.linbo_sync').controller 'SyncIndexController', ($scope, $http, $interval, $timeout, notify, pageTitle, messagebox, gettext, identity) ->
+angular.module('lmn.linbo_sync').controller 'SyncIndexController', ($scope, $http, $interval, $timeout, notify, pageTitle, messagebox, gettext) ->
     pageTitle.set(gettext('Linbo synchronization'))
 
     $http.get("/api/lm/linbo/SyncList").then (resp) ->

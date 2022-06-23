@@ -18,6 +18,7 @@ paramiko==2.10.1
 python-ldap
 python-magic==0.4.15 # used to determine encoding in linbo files and csv uploads
 requests
+reconfigure
 scrypt
 simplejson==3.17.0
 smbprotocol[kerberos]

@@ -150,7 +150,7 @@ def list_workstations(context):
         for device in devices:
             if school != 'default-school':
                 if device['hostname']:
-                    device['hostname'] = f'{school}-{device['hostname']}'
+                    device['hostname'] = f'{school}-{device["hostname"]}'
             if os.path.isfile(os.path.join(LINBO_PATH, 'start.conf.'+str(device['group']))):
                 if device['pxeFlag'] != '1' and device['pxeFlag'] != "2":
                     continue

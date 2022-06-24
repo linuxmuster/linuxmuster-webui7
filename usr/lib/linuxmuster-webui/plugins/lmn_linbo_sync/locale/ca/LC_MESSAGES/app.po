@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-23 16:24+0100\n"
-"PO-Revision-Date: 2022-05-30 10:34\n"
+"POT-Creation-Date: 2022-06-24 14:52+0200\n"
+"PO-Revision-Date: 2022-06-24 12:56\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -135,7 +135,7 @@ msgstr ""
 msgid "Synchronize first OS from workstation"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/js/controllers/index.controller.coffee:178
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/js/controllers/index.controller.coffee:177
 msgid "Command successfully sent : "
 msgstr ""
 

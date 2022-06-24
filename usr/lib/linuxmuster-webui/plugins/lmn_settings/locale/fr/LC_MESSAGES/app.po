@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-30 12:25+0200\n"
-"PO-Revision-Date: 2022-05-30 10:34\n"
+"POT-Creation-Date: 2022-06-24 14:52+0200\n"
+"PO-Revision-Date: 2022-06-24 12:55\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -31,7 +31,7 @@ msgid "<i class=\"fa fa-warning \"></i>\n"
 msgstr "<i class=\"fa fa-warning \"></i>\n"
 "            Changez ces valeurs avec précaution ! Une mauvaise valeur peut bloquer complètement votre réseau !"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:97
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:103
 msgid "Add a subnet"
 msgstr "Ajouter un sous-réseau"
 
@@ -82,7 +82,7 @@ msgstr "Encodage détecté"
 msgid "Email Domain"
 msgstr "Domaine Email"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:106
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:112
 msgid "Enable email relay for notification"
 msgstr "Activer la notification par e-mail"
 
@@ -190,7 +190,7 @@ msgstr "Données d'impression des mots de passe"
 msgid "Path to filter script"
 msgstr "Chemin du script de filtre"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:126
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:132
 msgid "Port"
 msgstr "Port"
 
@@ -240,8 +240,8 @@ msgstr "Suppression après le départ (jours)"
 msgid "Replace slash(/) in classname by hypen(-)"
 msgstr "Remplacer slash(/) dans le nom de classe par un trait d'union(-)"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:176
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:179
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:182
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:185
 msgid "Restart WebUI"
 msgstr "Redémarrer WebUI"
 
@@ -257,15 +257,15 @@ msgstr "Rôle élève"
 msgid "Role Teachers"
 msgstr "Rôle enseignant"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:121
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:127
 msgid "SMTP host"
 msgstr "Hôte SMTP"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:143
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:149
 msgid "SMTP password"
 msgstr "Mot de passe SMTP"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:137
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:143
 msgid "SMTP user"
 msgstr "Utilisateur SMTP"
 
@@ -277,8 +277,8 @@ msgstr "Fichier de certificat SSL FQDN"
 msgid "SSL certificate file"
 msgstr "Certificat SSL"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:175
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:178
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:181
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:184
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:803
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:804
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:805
@@ -290,7 +290,7 @@ msgstr "Sauvegarder"
 msgid "Save &amp; Apply Quota"
 msgstr "Enregistrer &amp; Appliquer le quota"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:177
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:183
 msgid "Save &amp; Apply Subnets"
 msgstr "Enregistrer &amp; Appliquer les sous-réseaux"
 
@@ -331,7 +331,7 @@ msgstr "Drapeau de configuration"
 msgid "Show in user details"
 msgstr "Afficher dans les détails de l'utilisateur"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:100
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:106
 msgid "Smtp relay"
 msgstr "Relais Smtp"
 
@@ -363,11 +363,11 @@ msgstr "Nombre de caractères du nom"
 msgid "Teachers"
 msgstr "Professeur"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:159
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:165
 msgid "Template email reset"
 msgstr "Modèle d'email de réinitialisation de mot de passe"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:115
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:121
 msgid "The smtp.yml config file seems to be empty. Currently it's ont possible to send emails with this configuration."
 msgstr "Le fichier de configuration de smtp.yml semble être vide. Il est actuellement possible d'envoyer des emails avec cette configuration."
 

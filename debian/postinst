@@ -59,6 +59,17 @@ Installing linuxmuster-webui
                 msg "$wucfg already exists ... not overwriting with the default config file."
             fi
 
+            # Avoid empty smtp config file until Ajenti 2.2.1
+            if  [ ! -f /etc/ajenti/smtp.yml ] ; then
+              cat << EOF > /etc/ajenti/smtp.yml
+smtp:
+  password:
+  port:
+  server:
+  user:
+EOF
+            fi
+
             # enable systemctl service
             msg "Configure systemctl.."
             systemctl daemon-reload
@@ -113,6 +124,17 @@ Updating linuxmuster-webui
             # Recreate upload folder using the right permissions
             msg "Verifying upload folder"
             bash $install_scripts/create_webuiUploadFolder.sh
+
+            # Avoid empty smtp config file until Ajenti 2.2.1
+            if  [ ! -f /etc/ajenti/smtp.yml ] ; then
+              cat << EOF > /etc/ajenti/smtp.yml
+smtp:
+  password:
+  port:
+  server:
+  user:
+EOF
+            fi
 
             # start webui
             msg "Start linuxmuster-webui"

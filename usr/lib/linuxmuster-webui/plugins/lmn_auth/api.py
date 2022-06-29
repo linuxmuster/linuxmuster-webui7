@@ -253,7 +253,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
         if not self.authenticate(username, password):
             raise Exception('Wrong password')
         systemString = ['sudo', 'sophomorix-passwd', '--user', username, '--pass', new_password, '--hide', '--nofirstpassupdate', '--use-smbpasswd']
-        subprocess.check_call(systemString, shell=False)
+        subprocess.check_call(systemString, shell=False, sensitive=True)
 
     def get_isolation_gid(self, username):
         """
@@ -396,7 +396,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
     def update_password(self, username, password):
         systemString = ['sudo', 'sophomorix-passwd', '--user', username, '--pass', password, '--hide', '--nofirstpassupdate', '--use-smbpasswd']
-        subprocess.check_call(systemString, shell=False)
+        subprocess.check_call(systemString, shell=False, sensitive=True)
         return True
 
     def signout(self):

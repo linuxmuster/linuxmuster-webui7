@@ -576,11 +576,11 @@ class Handler(HttpPlugin):
         if action == 'set':
             password = http_context.json_body()['password']
             sophomorixCommand = ['sophomorix-passwd', '-u', user, '--pass', password, '-jj', '--use-smbpasswd']
-            return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
+            return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN', sensitive=True)
         if action == 'set-actual':
             password = http_context.json_body()['password']
             sophomorixCommand = ['sophomorix-passwd', '-u', user, '--pass', password, '--nofirstpassupdate', '--hide', '-jj', '--use-smbpasswd']
-            return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
+            return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN', sensitive=True)
 
     @url(r'/api/lm/users/change-school-admin')
     @authorize('lm:users:schooladmins:create')

@@ -13,13 +13,15 @@ configparser==3.5.0
 dpath==2.0.6         # used for getSophomorixValue
 gssapi==1.7.3
 isc_dhcp_leases
+krb5==0.3.0
 paramiko==2.10.1
+pyspnego==0.5.2
 python-ldap
 python-magic==0.4.15 # used to determine encoding in linbo files and csv uploads
 requests
 reconfigure
 scrypt
 simplejson==3.17.0
-smbprotocol[kerberos]
+smbprotocol==1.9.0
 unicodecsv==0.14.1
 xmltodict

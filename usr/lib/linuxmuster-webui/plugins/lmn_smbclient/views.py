@@ -53,6 +53,20 @@ class Handler(HttpPlugin):
 
             school = self.context.schoolmgr.school
 
+            if school in self.context.schoolmgr.dfs.keys():
+                share_prefix = self.context.schoolmgr.dfs[school]['dfs_proxy']
+                if role == 'globaladministrator':
+                    # TODO : path not correct
+                    home_path = f'{share_prefix}\\global\\management\\{user}'
+                elif role == 'schooladministrator':
+                    # TODO : path not correct
+                    home_path = f'{share_prefix}\\management\\{user}'
+                else:
+                    home_path = f'{share_prefix}\\{role}s\\{user}'
+            else:
+                share_prefix = f'\\\\{domain}\\{school}'
+                home_path = profil['homeDirectory']
+
             home = {
                 'name' : 'Home',
                 'path' : home_path,
@@ -65,39 +79,39 @@ class Handler(HttpPlugin):
                 'icon' : 'fas fa-globe',
                 'active': False,
             }
-            allschool = {
+            all_schools = {
                 'name' : school,
-                'path' : f'\\\\{domain}\\{school}',
+                'path' : share_prefix,
                 'icon' : 'fas fa-school',
                 'active': False,
             }
             # teachers = {
             #     'name' : 'Teachers',
-            #     'path' : f'\\\\{domain}\\{school}\\teachers',
+            #     'path' : f'{share_prefix}\\teachers',
             #     'icon' : 'fas fa-chalkboard-teacher',
             #     'active': False,
             # }
             students = {
                 'name' : 'Students',
-                'path' : f'\\\\{domain}\\{school}\\students',
+                'path' : f'{share_prefix}\\students',
                 'icon' : 'fas fa-user-graduate',
                 'active': False,
             }
             share = {
                 'name' : 'Share',
-                'path' : f'\\\\{domain}\\{school}\\share',
+                'path' : f'{share_prefix}\\share',
                 'icon' : 'fas fa-hand-holding',
                 'active': False,
             }
             program = {
                 'name' : 'Programs',
-                'path' : f'\\\\{domain}\\{school}\\program',
+                'path' : f'{share_prefix}\\program',
                 'icon' : 'fas fa-desktop',
                 'active': False,
             }
             # iso = {
             #     'name' : 'ISO',
-            #     'path' : f'\\\\{domain}\\{school}\\iso',
+            #     'path' : f'{share_prefix}\\iso',
             #     'icon' : 'fas fa-compact-disc',
             #     'active': False,
             # }
@@ -106,11 +120,11 @@ class Handler(HttpPlugin):
                 'globaladministrator': [
                     home,
                     linuxmuster_global,
-                    allschool,
+                    all_schools,
                 ],
                 'schooladministrator': [
                     home,
-                    allschool,
+                    all_schools,
                 ],
                 'teacher': [
                     home,

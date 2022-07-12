@@ -102,8 +102,10 @@
                 <span ng:if="identity.user && resttime >= 0" translate class="pull-right sessiontime hide-phone">Session time : {{ counter[0] }}:{{ counter[1] }}:{{ counter[2] }}</span>
             </div>
         </nav>
-
-        <div class="container" ng:show="appReady">
+        <div class="container" ng:show="showIframe">
+            <div class="row" ng:view></div>
+        </div>
+        <div class="container" ng:show="appReady && showIframe != true">
             <div class="row">
                 <div class="col-md-3 sidebar hide-tablet hide-phone" ng:show="showSidebar && navigationPresent">
                     <a ng:if="devMode" ng:click="restart_panel()" class="btn btn-danger center-block">Reload Python</a>

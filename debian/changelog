@@ -1,3 +1,14 @@
+linuxmuster-webui7 (7.1.26) lmn71; urgency=medium
+
+  * Upgrade Ajenti 2.2.0
+  * Fix logged passwords
+  * Better handle kerberos dependencies
+  * Add config parameter for https redirect
+  * [smbclient] Experimental support for DFS shares
+  * Prepare container for iframes
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 16 Jul 2022 11:50:36 +0200
+
 linuxmuster-webui7 (7.1.25) lmn71; urgency=medium
 
   * [linbo_sync, quotas, devices] Add multischool support (@PlanB2008)

@@ -213,10 +213,19 @@ def test_online(host):
     ports = {}
     scannedPorts = xmlRoot.find("host").find("ports").findall("port")
 
+    numberOfFilteredPorts = 0
+
     for scannedPort in scannedPorts:
         portNumber = scannedPort.attrib["portid"]
         portState = scannedPort.find("state").attrib["state"]
         ports[portNumber] = portState
+
+        numberOfFilteredPorts += int(portState == "filtered")
+
+    if numberOfFilteredPorts == 3:
+        # All ports filtered, no answer from the host,
+        # likely because the host is down and the firewall doesn't respond.
+        return "No response"
 
     return get_os_from_ports(ports)
 

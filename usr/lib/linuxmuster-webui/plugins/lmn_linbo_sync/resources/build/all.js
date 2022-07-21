@@ -37,7 +37,7 @@ angular.module('lmn.linbo_sync').config(function ($routeProvider) {
       index = $scope.groups[group].hosts.indexOf(host);
       return $http.get(`/api/lm/linbo/isOnline/${host.hostname}`).then(function(resp) {
         $scope.groups[group].hosts[index].up = resp.data;
-        if (resp.data === "Off") {
+        if (resp.data === "Off" || resp.data === "No response") {
           return $scope.groups[group].hosts[index].upClass = "btn-danger";
         } else {
           return $scope.groups[group].hosts[index].upClass = "btn-success";

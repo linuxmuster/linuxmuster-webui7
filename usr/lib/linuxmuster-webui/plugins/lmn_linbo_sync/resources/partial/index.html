@@ -27,9 +27,10 @@
                         <span ng:show="os.date == 'Never'" translate>No date found.</span>
                     </td>
                     <td>
-                        <button ng:click="isUp(group, h)" ng:class=" h.upClass ? h.upClass : 'btn-primary'" class="btn btn-default pull-right">
-                            {{ h.up ? h.up : "Up ?" }}
-                        </button>
+                        <a ng:click="isUp(group, h)" ng:class=" h.upClass ? h.upClass : 'btn-primary'" class="btn btn-default pull-right">
+                            <i class="{{h.up_icon}} fa-lg" ng:show="h.up_comment"></i>
+                            {{ h.up_comment ? h.up_comment : "Up ?" }}
+                        </a>
                     </td>
                 </tr>
             </table>

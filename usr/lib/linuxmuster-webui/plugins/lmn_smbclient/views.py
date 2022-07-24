@@ -13,6 +13,8 @@ from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
 from aj.auth import authorize, AuthenticationService
 from aj.plugins.lmn_common.mimetypes import content_mimetypes
+from aj.plugins.lmn_common.api import samba_domain
+
 
 # TODO
 # - Better error management (directory not empty, ... )
@@ -43,14 +45,15 @@ class Handler(HttpPlugin):
         if http_context.method == 'GET':
             if user is None:
                 user = self.context.identity
+
             profil = AuthenticationService.get(self.context).get_provider().get_profile(user)
             role = profil['sophomorixRole']
             home_path = profil['homeDirectory']
-            try:
-                domain = re.search(r'\\\\([^\\]*)\\', home_path).groups()[0]
-            except AttributeError:
-                domain = ''
-
+            #try:
+            #    domain = re.search(r'\\\\([^\\]*)\\', home_path).groups()[0]
+            #except AttributeError:
+            #    domain = ''
+            
             school = self.context.schoolmgr.school
 
             if school in self.context.schoolmgr.dfs.keys():
@@ -64,7 +67,7 @@ class Handler(HttpPlugin):
                 else:
                     home_path = f'{share_prefix}\\{role}s\\{user}'
             else:
-                share_prefix = f'\\\\{domain}\\{school}'
+                share_prefix = f'\\\\{samba_domain}\\{school}'
                 home_path = profil['homeDirectory']
 
             home = {
@@ -75,7 +78,7 @@ class Handler(HttpPlugin):
             }
             linuxmuster_global = {
                 'name' : 'Linuxmuster-Global',
-                'path' : f'\\\\{domain}\\linuxmuster-global',
+                'path' : f'\\\\{samba_domain}\\linuxmuster-global',
                 'icon' : 'fas fa-globe',
                 'active': False,
             }

@@ -36,6 +36,12 @@ angular.module('lmn.smbclient').service('smbclient', function ($rootScope, $http
         });
     };
 
+    this.copy = function (src, dst) {
+        return $http.post('/api/lmn/smbclient/copy', { 'src': src, 'dst': dst }).then(function (response) {
+            return response.data;
+        });
+    };
+
     this.delete_dir = function (path) {
         return $http.post('/api/lmn/smbclient/dir', { 'path': path }).then(function (response) {
             return response.data;

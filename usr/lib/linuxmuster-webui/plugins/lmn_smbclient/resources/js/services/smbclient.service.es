@@ -17,6 +17,9 @@ angular.module('lmn.smbclient').service('smbclient', function($rootScope, $http,
     this.move = (src, dst) =>
         $http.post(`/api/lmn/smbclient/move`, {'src': src, 'dst':dst}).then(response => response.data)
 
+    this.copy = (src, dst) =>
+        $http.post(`/api/lmn/smbclient/copy`, {'src': src, 'dst':dst}).then(response => response.data)
+
     this.delete_dir = (path) =>
         $http.post(`/api/lmn/smbclient/dir`, {'path':path}).then(response => response.data)
 

@@ -228,6 +228,28 @@ class Handler(HttpPlugin):
             except (ValueError, SMBOSError) as e:
                 raise EndpointError(e)
 
+    @url(r'/api/lmn/smbclient/create-file')
+    # @authorize('smbclient:write')
+    @endpoint(api=True)
+    def handle_api_smb_create_file(self, http_context):
+        """
+        Create empty file on specified path.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :param path: Path of directory
+        :type path: string
+        """
+
+        if http_context.method == 'POST':
+            path = http_context.json_body()['path']
+
+            try:
+                with smbclient.open_file(path, 'w') as towrite:
+                    pass
+            except (ValueError, SMBOSError) as e:
+                raise EndpointError(e)
+
     @url(r'/api/lmn/smbclient/move')
     # @authorize('smbclient:write')
     @endpoint(api=True)

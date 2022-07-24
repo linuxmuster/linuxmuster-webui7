@@ -1,8 +1,11 @@
-angular.module('lmn.samba_shares').controller('HomeIndexController', function($scope, $routeParams, $window, $localStorage, $timeout, $q, $http, notify, identity, smbclient, pageTitle, urlPrefix, messagebox, gettext) {
-    pageTitle.set('path', $scope);
+angular.module('lmn.samba_shares').controller('HomeIndexController', function($scope, $routeParams, $window, $localStorage, $timeout, $q, $http, notify, identity, smbclient, pageTitle, urlPrefix, messagebox, gettext, tasks) {
+    pageTitle.set(gettext('Samba shares'));
 
     $scope.loading = true;
     $scope.active_share = '';
+    $scope.newDirectoryDialogVisible = false;
+    $scope.newFileDialogVisible = false;
+    $scope.clipboardVisible = false;
 
     identity.promise.then(() => {
         if (identity.user == 'root') {
@@ -88,6 +91,50 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function($s
         });
     };
 
+    $scope.doCut = function() {
+        for (let item of $scope.items) {
+            if (item.selected) {
+                $scope.clipboard.push({
+                    mode: 'move',
+                    item
+                });
+            }
+        }
+        $scope.clear_selection();
+    };
+
+    $scope.doCopy = function() {
+        for (let item of $scope.items) {
+            if (item.selected) {
+                $scope.clipboard.push({
+                    mode: 'copy',
+                    item
+                });
+            }
+        }
+        $scope.clear_selection();
+    };
+
+    $scope.doPaste = function() {
+        let items = angular.copy($scope.clipboard);
+        console.log(items);
+        promises = []
+        for (let item of items) {
+            if (item.mode == 'copy') {
+                promises.push(smbclient.copy(item.item.path, $scope.current_path + '/' + item.item.name));
+            }
+            if (item.mode == 'move') {
+                promises.push(smbclient.move(item.item.path, $scope.current_path + '/' + item.item.name));
+            }
+        }
+        $q.all(promises).then(() => {
+            notify.success('Done !');
+            $scope.clear_selection();
+            $scope.clearClipboard();
+            $scope.reload();
+        });
+    };
+
     $scope.doDelete = () =>
         messagebox.show({
             text: gettext('Delete selected items?'),
@@ -106,18 +153,6 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function($s
             });
         })
 
-    $scope.create_dir = () => {
-        messagebox.prompt(gettext('New directory name :'), '').then( (msg) => {
-            path = $scope.current_path + '/' + msg.value;
-            smbclient.createDirectory(path).then((data) => {
-                notify.success(path + gettext(' created !'));
-            $scope.reload();
-        }, (resp) => {
-                notify.error(gettext('Error during creating directory: '), resp.data.message);
-            });
-        });
-    };
-
     $scope.delete_dir = (path) => {
         messagebox.show({
             text: gettext("Do you really want to delete this directory? This is only possible if the directory is empty."),
@@ -130,6 +165,57 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function($s
             }, (resp) => {
                 notify.error(gettext('Error during deleting : '), resp.data.message);
             });
+        });
+    };
+
+    $localStorage.sambaSharesClipboard = $localStorage.sambaSharesClipboard || [];
+    $scope.clipboard = $localStorage.sambaSharesClipboard;
+
+    $scope.showClipboard = () => $scope.clipboardVisible = true;
+
+    $scope.hideClipboard = () => $scope.clipboardVisible = false;
+
+    $scope.clearClipboard = function() {
+        $scope.clipboard.length = 0;
+        $scope.hideClipboard();
+    };
+
+    // new file dialog
+
+    $scope.showNewFileDialog = function() {
+        $scope.newFileName = '';console.log("test");
+        $scope.newFileDialogVisible = true;
+    };
+
+    $scope.doCreateFile = function() {
+        if (!$scope.newFileName) {
+            return;
+        }
+        return smbclient.createFile($scope.current_path + '/' + $scope.newFileName).then(() => {
+            $scope.reload();
+            $scope.newFileDialogVisible = false;
+        }, (err) => {
+            notify.error(gettext('Could not create file'), err.data.message)
+        });
+    };
+
+    // new directory dialog
+
+    $scope.showNewDirectoryDialog = function() {
+        $scope.newDirectoryName = '';
+        $scope.newDirectoryDialogVisible = true;
+    };
+
+    $scope.doCreateDirectory = function() {
+        if (!$scope.newDirectoryName) {
+            return;
+        }
+
+        return smbclient.createDirectory($scope.current_path + '/' + $scope.newDirectoryName).then(() => {
+            $scope.reload();
+            $scope.newDirectoryDialogVisible = false;
+        }, (err) => {
+            notify.error(gettext('Could not create directory'), err.data.message)
         });
     };
 

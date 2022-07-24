@@ -37,10 +37,13 @@ try:
     with LMNFile('/var/lib/linuxmuster/setup.ini', 'r') as s:
         try:
             lmsetup_schoolname = s.data['setup']['schoolname']
+            samba_domain = s.data['setup']['domainname']
         except KeyError:
             lmsetup_schoolname = None
+            samba_domain = None
 except FileNotFoundError:
     lmsetup_schoolname = None
+    samba_domain = None
 
 class SophomorixProcess(threading.Thread):
     """

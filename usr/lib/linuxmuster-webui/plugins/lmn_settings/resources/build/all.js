@@ -231,6 +231,10 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', function
 
     $scope.activetab = 0;
 
+    $scope.help_trusted_domains = gettext("If Ajenti is installed behind a proxy, oder reachable by a fqdn other than provided by the host,\n" + "you can then specify the other domains here, and by this way avoiding some resources loading problems.");
+
+    $scope.help_trusted_proxies = gettext("If Ajenti is installed behind one or more proxies, specify the ip of these proxies here, in order to\n" + "get the real client ip address.");
+
     $scope.help_certificate = gettext("This certificate is the default certificate used to create client certificate and to provide https connection.\n" + "Using a Let's Encrypt certificate here will break the client certificate generator.\n" + "Using a self-generated certificate is fine here.");
 
     $scope.help_fqdn_certificate = gettext("If you have a special certificate for your domain, like a Let's Encrypt certificate, put it there.\n" + "If you are not sure, just use the same certificate as the one above.");
@@ -262,6 +266,40 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', function
     $scope.getSmtpConfig = function () {
         config.getSmtpConfig().then(function (smtpConfig) {
             return $scope.smtp_config = smtpConfig;
+        });
+    };
+
+    $scope.add_trusted_proxy = function () {
+        config.data.trusted_proxies.push("");
+    };
+
+    $scope.add_trusted_domain = function () {
+        config.data.trusted_domains.push("");
+    };
+
+    $scope.delete_trusted_proxy = function (proxy) {
+        messagebox.show({
+            title: gettext('Remove ' + proxy),
+            text: gettext('Do you really want to remove the proxy ' + proxy + ' from the list ?'),
+            positive: gettext('Delete'),
+            negative: gettext('Cancel')
+        }).then(function () {
+            pos = $scope.config.data.trusted_proxies.indexOf(proxy);
+            $scope.config.data.trusted_proxies.splice(pos, 1);
+            notify.success(gettext(proxy + ' removed'));
+        });
+    };
+
+    $scope.delete_trusted_domain = function (domain) {
+        messagebox.show({
+            title: gettext('Remove ' + domain),
+            text: gettext('Do you really want to remove the domain ' + domain + ' from the list ?'),
+            positive: gettext('Delete'),
+            negative: gettext('Cancel')
+        }).then(function () {
+            pos = $scope.config.data.trusted_domains.indexOf(domain);
+            $scope.config.data.trusted_domains.splice(pos, 1);
+            notify.success(gettext(domain + ' removed'));
         });
     };
 

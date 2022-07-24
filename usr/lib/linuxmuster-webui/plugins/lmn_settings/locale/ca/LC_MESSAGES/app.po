@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-24 14:52+0200\n"
+"POT-Creation-Date: 2022-07-24 11:51+0200\n"
 "PO-Revision-Date: 2022-06-24 12:56\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
@@ -25,12 +25,14 @@ msgstr ""
 msgid "<b>Template for one password entry per page:</b>"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:60
-msgid "<i class=\"fa fa-warning \"></i>\n"
-"                Change this values with high precaution ! A wrong value may completely block your network !"
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:64
+msgid ""
+"<i class=\"fa fa-warning \"></i>\n"
+"                Change this values with high precaution ! A wrong value may "
+"completely block your network !"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:103
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:107
 msgid "Add a subnet"
 msgstr ""
 
@@ -42,7 +44,7 @@ msgstr ""
 msgid "Admin description"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:68
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:72
 msgid "Begin lease range"
 msgstr ""
 
@@ -81,7 +83,7 @@ msgstr ""
 msgid "Email Domain"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:112
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:116
 msgid "Enable email relay for notification"
 msgstr ""
 
@@ -93,12 +95,16 @@ msgstr ""
 msgid "End"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:69
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:73
 msgid "End lease range"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:120
 msgid "Firstname Chars"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:51
+msgid "Force SSL"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:7
@@ -118,15 +124,25 @@ msgid "Holidays"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:506
-msgid "If you want to use your own latex template, please store it in the directory /etc/linuxmuster/sophomorix/SCHOOL/latex-templates/. More informations about it <a href=\"https://github.com/linuxmuster/sophomorix4/blob/bionic/sophomorix-samba/lang/latex/README.latextemplates\">in sophomorix's wiki</a>."
+msgid ""
+"If you want to use your own latex template, please store it in the "
+"directory /etc/linuxmuster/sophomorix/SCHOOL/latex-templates/. More "
+"informations about it <a href=\"https://github.com/linuxmuster/sophomorix4/"
+"blob/bionic/sophomorix-samba/lang/latex/README.latextemplates\">in "
+"sophomorix's wiki</a>."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:67
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:71
 msgid "Ip router"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:267
-msgid "It's possible to apply a filter script to your newly exported csv file. You must give here the absolute path of the script and the script must be executable.<br>Please read the full documentation in <a href=\"https://github.com/linuxmuster/sophomorix4/wiki/Export-and-Filters#filters\">sophomorix's wiki</a> about it."
+msgid ""
+"It's possible to apply a filter script to your newly exported csv file. You "
+"must give here the absolute path of the script and the script must be "
+"executable.<br>Please read the full documentation in <a href=\"https://"
+"github.com/linuxmuster/sophomorix4/wiki/Export-and-Filters#filters"
+"\">sophomorix's wiki</a> about it."
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:14
@@ -141,7 +157,7 @@ msgstr ""
 msgid "List encoding"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:59
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:63
 msgid "List of subnets"
 msgstr ""
 
@@ -165,7 +181,7 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:66
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:70
 msgid "Network / Prefix"
 msgstr ""
 
@@ -189,7 +205,7 @@ msgstr ""
 msgid "Path to filter script"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:132
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:136
 msgid "Port"
 msgstr ""
 
@@ -239,8 +255,8 @@ msgstr ""
 msgid "Replace slash(/) in classname by hypen(-)"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:182
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:185
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:186
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:189
 msgid "Restart WebUI"
 msgstr ""
 
@@ -256,15 +272,15 @@ msgstr ""
 msgid "Role Teachers"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:127
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:131
 msgid "SMTP host"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:149
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:153
 msgid "SMTP password"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:143
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:147
 msgid "SMTP user"
 msgstr ""
 
@@ -276,8 +292,8 @@ msgstr ""
 msgid "SSL certificate file"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:181
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:184
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:185
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:188
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:803
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:804
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:805
@@ -289,7 +305,7 @@ msgstr ""
 msgid "Save &amp; Apply Quota"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:183
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:187
 msgid "Save &amp; Apply Subnets"
 msgstr ""
 
@@ -319,7 +335,7 @@ msgstr ""
 msgid "Schoolname"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:70
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:74
 msgid "Setup flag"
 msgstr ""
 
@@ -330,7 +346,7 @@ msgstr ""
 msgid "Show in user details"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:106
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:110
 msgid "Smtp relay"
 msgstr ""
 
@@ -346,7 +362,7 @@ msgstr ""
 msgid "Students"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:56
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:60
 msgid "Subnets"
 msgstr ""
 
@@ -362,12 +378,14 @@ msgstr ""
 msgid "Teachers"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:165
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:169
 msgid "Template email reset"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:121
-msgid "The smtp.yml config file seems to be empty. Currently it's ont possible to send emails with this configuration."
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:125
+msgid ""
+"The smtp.yml config file seems to be empty. Currently it's ont possible to "
+"send emails with this configuration."
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:545
@@ -469,13 +487,18 @@ msgid "Configure global settings"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:17
-msgid "This certificate is the default certificate used to create client certificate and to provide https connection.\n"
-"Using a Let's Encrypt certificate here will break the client certificate generator.\n"
+msgid ""
+"This certificate is the default certificate used to create client "
+"certificate and to provide https connection.\n"
+"Using a Let's Encrypt certificate here will break the client certificate "
+"generator.\n"
 "Using a self-generated certificate is fine here."
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:23
-msgid "If you have a special certificate for your domain, like a Let's Encrypt certificate, put it there.\n"
+msgid ""
+"If you have a special certificate for your domain, like a Let's Encrypt "
+"certificate, put it there.\n"
 "If you are not sure, just use the same certificate as the one above."
 msgstr ""
 
@@ -524,7 +547,9 @@ msgid "Self-signed certificate"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:84
-msgid "Generating a new certificate will void all existing client authentication certificates!"
+msgid ""
+"Generating a new certificate will void all existing client authentication "
+"certificates!"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:85
@@ -574,4 +599,3 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:136
 msgid "Please first correct the mal formated fields."
 msgstr ""
-

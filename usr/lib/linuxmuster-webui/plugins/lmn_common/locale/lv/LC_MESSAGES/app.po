@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ajenti\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-23 16:24+0100\n"
+"POT-Creation-Date: 2022-07-24 11:50+0200\n"
 "PO-Revision-Date: 2016-05-21 17:19-0400\n"
 "Last-Translator: eugenepankov <john.pankov@gmail.com>\n"
 "Language-Team: Latvian\n"
@@ -16,7 +16,8 @@ msgstr ""
 "X-Crowdin-Language: lv\n"
 "X-Crowdin-File: /2.0/lmn_common.po\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:151
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:153
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/truc/chabala.html:153
 msgid "A bootstrap error has occured"
 msgstr ""
 
@@ -46,11 +47,13 @@ msgstr ""
 msgid "Drop a CSV file here to import"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:134
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:136
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/truc/chabala.html:136
 msgid "Enter"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:92
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:92
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/truc/chabala.html:92
 msgid "Log out"
 msgstr ""
 
@@ -62,15 +65,18 @@ msgstr ""
 msgid "No differences detected"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:175
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:177
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/truc/chabala.html:177
 msgid "OK"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:154
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:156
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/truc/chabala.html:156
 msgid "Please see browser console"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:130
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:132
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/truc/chabala.html:132
 msgid "Quick search"
 msgstr ""
 
@@ -78,11 +84,13 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:49
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:49
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/truc/chabala.html:49
 msgid "School Console"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:102
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:102
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/truc/chabala.html:102
 msgid "Session time : {{ counter[0] }}:{{ counter[1] }}:{{ counter[2] }}"
 msgstr ""
 

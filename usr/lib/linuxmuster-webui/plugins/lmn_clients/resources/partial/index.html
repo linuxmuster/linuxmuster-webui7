@@ -1,0 +1,47 @@
+<div samba-access>
+    <h2 translate>Clients configuration</h2>
+
+    <br />
+
+    <div>
+        <div class="alert alert-info" translate>
+            The following scripts are executed by Samba when the client boots, in root context, and after the
+            execution of the postsync script of Linbo. <br />This must be handled with caution.
+        </div>
+        <h3>Linux</h3>
+        <ul class="list-group">
+            <li ng:repeat="script in custom_scripts_linux" class="list-group-item">
+                <button class="btn btn-default pull-right" ng:click="edit(script)">
+                    <i class="fa fa-edit"></i>
+                </button>
+                {{script.name}}
+            </li>
+        </ul>
+
+        <hr />
+
+        <h3>Windows</h3>
+        <ul class="list-group">
+            <li ng:repeat="script in custom_scripts_windows" class="list-group-item">
+                <button class="btn btn-default pull-right" ng:click="edit(script)">
+                    <i class="fa fa-edit"></i>
+                </button>
+                {{script.name}}
+            </li>
+        </ul>
+    </div>
+
+    <dialog ng:show="scriptToEdit" dialog-class='modal-lg'>
+        <div class="modal-header">
+            <h4 translate>Edit custom script</h4>
+        </div>
+        <div class="modal-body">
+            <ace-editor ng:model="$parent.scriptToEdit.content"></ace-editor>
+        </div>
+        <div class="modal-footer">
+            <a ng:click="save($parent.scriptToEdit)" class="btn btn-default btn-flat" translate>Save</a>
+            <a ng:click="close()" class="btn btn-default btn-flat" translate>Close</a>
+        </div>
+
+    </dialog>
+</div>

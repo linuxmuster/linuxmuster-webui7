@@ -6,6 +6,7 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function($s
     $scope.newDirectoryDialogVisible = false;
     $scope.newFileDialogVisible = false;
     $scope.clipboardVisible = false;
+    $scope.uploadProgress = [];
 
     identity.promise.then(() => {
         if (identity.user == 'root') {
@@ -273,4 +274,31 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function($s
         });
     };
 
+    $scope.areUploadsFinished = () => {
+        numUploads = $scope.uploadProgress.length;
+        if (numUploads == 0) {
+            return true;
+        };
+
+        globalProgress = 0;
+        for (p of $scope.uploadProgress) {
+            globalProgress += p.progress;
+        }
+        return numUploads * 100 == globalProgress;
+    }
+
+    $scope.sambaSharesUploadBegin = ($flow) => {
+        $scope.uploadProgress = [];
+        $scope.uploadFiles = [];
+        for (file in $flow.files) {
+            $scope.uploadFiles.push(file.name);
+        }
+        $scope.files_list = $scope.uploadFiles.join(', ');
+        smbclient.startFlowUpload($flow, $scope.current_path).then((resp) => {
+            notify.success(gettext('Uploaded ') + $scope.files_list);
+            $scope.reload();
+        }, null, (progress) => {
+            $scope.uploadProgress = progress.sort((a, b) => a.name > b.name);
+        });
+    };
 });

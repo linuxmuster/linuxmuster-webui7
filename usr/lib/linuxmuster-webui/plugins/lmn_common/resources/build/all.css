@@ -63,6 +63,12 @@ span.cardlist div.cardbtn button.cardbtn {
 .color-orange {
   color: #ff8f00;
 }
+.uploads {
+  margin: 10px 20px;
+  padding: 20px 50px;
+  border: solid 1px #ffab40;
+  border-radius: 10px;
+}
 .dragdroparea {
   color: gray;
   background-color: #e6e6e6;

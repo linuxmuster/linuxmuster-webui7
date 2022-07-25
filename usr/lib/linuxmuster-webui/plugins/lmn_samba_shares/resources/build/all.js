@@ -23,6 +23,7 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function ($
     $scope.newDirectoryDialogVisible = false;
     $scope.newFileDialogVisible = false;
     $scope.clipboardVisible = false;
+    $scope.uploadProgress = [];
 
     identity.promise.then(function () {
         if (identity.user == 'root') {
@@ -457,6 +458,58 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function ($
             $window.open('/api/lmn/smbclient/download?path=' + path);
         }, function (resp) {
             notify.error(gettext('File not found, may be due to special chars in the file name.'));
+        });
+    };
+
+    $scope.areUploadsFinished = function () {
+        numUploads = $scope.uploadProgress.length;
+        if (numUploads == 0) {
+            return true;
+        };
+
+        globalProgress = 0;
+        var _iteratorNormalCompletion8 = true;
+        var _didIteratorError8 = false;
+        var _iteratorError8 = undefined;
+
+        try {
+            for (var _iterator8 = $scope.uploadProgress[Symbol.iterator](), _step8; !(_iteratorNormalCompletion8 = (_step8 = _iterator8.next()).done); _iteratorNormalCompletion8 = true) {
+                p = _step8.value;
+
+                globalProgress += p.progress;
+            }
+        } catch (err) {
+            _didIteratorError8 = true;
+            _iteratorError8 = err;
+        } finally {
+            try {
+                if (!_iteratorNormalCompletion8 && _iterator8.return) {
+                    _iterator8.return();
+                }
+            } finally {
+                if (_didIteratorError8) {
+                    throw _iteratorError8;
+                }
+            }
+        }
+
+        return numUploads * 100 == globalProgress;
+    };
+
+    $scope.sambaSharesUploadBegin = function ($flow) {
+        $scope.uploadProgress = [];
+        $scope.uploadFiles = [];
+        for (file in $flow.files) {
+            $scope.uploadFiles.push(file.name);
+        }
+        $scope.files_list = $scope.uploadFiles.join(', ');
+        smbclient.startFlowUpload($flow, $scope.current_path).then(function (resp) {
+            notify.success(gettext('Uploaded ') + $scope.files_list);
+            $scope.reload();
+        }, null, function (progress) {
+            $scope.uploadProgress = progress.sort(function (a, b) {
+                return a.name > b.name;
+            });
         });
     };
 });

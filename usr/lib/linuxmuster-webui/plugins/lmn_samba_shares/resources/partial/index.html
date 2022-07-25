@@ -34,7 +34,22 @@
 
         <br style="clear:both;"  />
 
-        <div class="list-group" ng:hide="loading && root" keyboard-focus>
+        <div class="list-group" ng:hide="loading && root" keyboard-focus
+             flow-init="{target: '/api/lmn/smbclient/upload', chunkSize: 1024 * 1024}"
+             flow-files-submitted="sambaSharesUploadBegin($flow)"
+             flow-drag-enter="style={border: 'solid 2px #234c4c'}"
+             flow-drag-leave="style={}"
+             ng:style="style"
+             flow-drop >
+
+            <div ng:show="!areUploadsFinished()" class="uploads">
+                <h3 translate>Uploading ... </h3>
+                <div ng-repeat="p in uploadProgress" style="margin-top:10px;" ng-show='p.progress < 100'>
+                    <span>{{p.name}} ({{p.progress}} %) </span>
+                    <smart-progress type="warning" max="100" value="p.progress"></smart-progress>
+                </div>
+            </div>
+
             <div ng:repeat="item in items|orderBy:['-isDir', 'name']" class="list-group-item list-group-item-small" test-bind-item="{{item.name}}" ng:style="item.selected && {'background':'#ffc876'}">
                 <a ng:click="delete_file(item.path)" class="list-group-btn" ng:if="item.isFile">
                     <i class="fa fa-trash"></i>
@@ -61,32 +76,30 @@
                     <span class="subtle">{{item.size|bytes}}</span>
                 </span>
             </div>
+
+            <floating-toolbar>
+                <a ng:click="showClipboard()" ng:show="clipboard.length > 0" class="btn btn-default btn-flat pull-right">
+                    <i class="fa fa-paste"></i> {{clipboard.length}}
+                </a>
+
+                <a ng:click="showNewFileDialog()" class="btn btn-default btn-flat" translate>New file</a>
+                <a ng:click="showNewDirectoryDialog()" class="btn btn-default btn-flat" translate>New directory</a>
+                <a class="btn btn-default btn-flat" flow-btn translate>Upload</a>
+
+                <a ng:click="doPaste()" ng:show="clipboard.length > 0" class="btn btn-default btn-flat" translate>Paste here</a>
+            </floating-toolbar>
+
+            <floating-toolbar class="accented" ng:show="(items|filter:{selected:true}).length > 0">
+                <a disabled class="btn btn-default btn-flat pull-right">
+                    <strong>{{(items|filter:{selected:true}).length}}</strong> <span translate>items selected</span>
+                </a>
+
+                <a ng:click="doCut()" class="btn btn-default btn-flat" translate>Cut</a>
+                <a ng:click="doCopy()" class="btn btn-default btn-flat" translate>Copy</a>
+                <a ng:click="doDelete()" class="btn btn-default btn-flat" translate>Delete</a>
+            </floating-toolbar>
         </div>
-
-        <smb-upload uploadpath="{{current_path}}" reload="true"></smb-upload>
-
     </div>
-
-    <floating-toolbar>
-        <a ng:click="showClipboard()" ng:show="clipboard.length > 0" class="btn btn-default btn-flat pull-right">
-            <i class="fa fa-paste"></i> {{clipboard.length}}
-        </a>
-
-        <a ng:click="showNewFileDialog()" class="btn btn-default btn-flat" translate>New file</a>
-        <a ng:click="showNewDirectoryDialog()" class="btn btn-default btn-flat" translate>New directory</a>
-
-        <a ng:click="doPaste()" ng:show="clipboard.length > 0" class="btn btn-default btn-flat" translate>Paste here</a>
-    </floating-toolbar>
-
-    <floating-toolbar class="accented" ng:show="(items|filter:{selected:true}).length > 0">
-        <a disabled class="btn btn-default btn-flat pull-right">
-            <strong>{{(items|filter:{selected:true}).length}}</strong> <span translate>items selected</span>
-        </a>
-
-        <a ng:click="doCut()" class="btn btn-default btn-flat" translate>Cut</a>
-        <a ng:click="doCopy()" class="btn btn-default btn-flat" translate>Copy</a>
-        <a ng:click="doDelete()" class="btn btn-default btn-flat" translate>Delete</a>
-    </floating-toolbar>
 
     <dialog ng:show="newFileDialogVisible">
         <div class="modal-header">

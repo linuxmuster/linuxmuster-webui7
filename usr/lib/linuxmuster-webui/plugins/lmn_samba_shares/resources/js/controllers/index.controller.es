@@ -63,6 +63,13 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function($s
             });
     };
 
+    $scope.isEmptyDir = (path) => {
+       return smbclient.list(path).then((data) => {
+           console.log(data.items.length, data.items.length == 0);
+           return data.items.length == 0;
+       });
+    };
+
     $scope.rename = (item) => {
         old_path = item.path;
         messagebox.prompt(gettext('New name :'), item.name).then( (msg) => {
@@ -76,31 +83,58 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function($s
         });
     };
 
-    $scope.doCut = function() {
+    $scope.doCut = () => {
         for (let item of $scope.items) {
             if (item.selected) {
-                $scope.clipboard.push({
-                    mode: 'move',
-                    item
-                });
+                if (item.isDir) {
+                    $scope.isEmptyDir(item.path).then((resp) => {
+                        if (resp) {
+                            $scope.clipboard.push({
+                                mode: 'move',
+                                item
+                            });
+                        } else {
+                            notify.error(gettext("Can not cut/copy or delete non empty directories !"));
+                        };
+                    });
+                }
+                else {
+                    $scope.clipboard.push({
+                        mode: 'move',
+                        item
+                    });
+                }
             }
         }
         $scope.clear_selection();
     };
 
-    $scope.doCopy = function() {
+    $scope.doCopy = () => {
         for (let item of $scope.items) {
             if (item.selected) {
-                $scope.clipboard.push({
-                    mode: 'copy',
-                    item
-                });
+                if (item.isDir) {
+                    $scope.isEmptyDir(item.path).then((resp) => {
+                        if (resp) {
+                            $scope.clipboard.push({
+                                mode: 'move',
+                                item
+                            });
+                        } else {
+                            notify.error(gettext("Can not cut/copy or delete non empty directories !"));
+                        };
+                    });
+                } else {
+                    $scope.clipboard.push({
+                        mode: 'copy',
+                        item
+                    });
+                };
             }
         }
         $scope.clear_selection();
     };
 
-    $scope.doPaste = function() {
+    $scope.doPaste = () => {
         // Cut and/or copy a list of files
         // Problem with error handling in promise list
         let items = angular.copy($scope.clipboard);
@@ -160,17 +194,23 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function($s
 
     $scope.delete_dir = (path) => {
         // Directly delete a single directory
-        messagebox.show({
-            text: gettext("Do you really want to delete this directory? This is only possible if the directory is empty."),
-            positive: gettext('Delete'),
-            negative: gettext('Cancel')
-        }).then( () => {
-            smbclient.delete_dir(path).then((data) => {
-                notify.success(path + gettext(' deleted !'));
-                $scope.reload();
-            }, (resp) => {
-                notify.error(gettext('Error during deleting : '), resp.data.message);
-            });
+        $scope.isEmptyDir(path).then((resp) => {
+            if (resp) {
+                messagebox.show({
+                    text: gettext("Do you really want to delete this directory?"),
+                    positive: gettext('Delete'),
+                    negative: gettext('Cancel')
+                }).then( () => {
+                    smbclient.delete_dir(path).then((data) => {
+                        notify.success(path + gettext(' deleted !'));
+                        $scope.reload();
+                    }, (resp) => {
+                        notify.error(gettext('Error during deleting : '), resp.data.message);
+                    });
+                });
+            } else {
+                notify.error(gettext("Can not cut/copy or delete non empty directories !"));
+            };
         });
     };
 

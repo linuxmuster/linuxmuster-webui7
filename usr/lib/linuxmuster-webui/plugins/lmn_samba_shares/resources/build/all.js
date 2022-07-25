@@ -146,6 +146,13 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function ($
         });
     };
 
+    $scope.isEmptyDir = function (path) {
+        return smbclient.list(path).then(function (data) {
+            console.log(data.items.length, data.items.length == 0);
+            return data.items.length == 0;
+        });
+    };
+
     $scope.rename = function (item) {
         old_path = item.path;
         messagebox.prompt(gettext('New name :'), item.name).then(function (msg) {
@@ -165,15 +172,32 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function ($
         var _iteratorError4 = undefined;
 
         try {
-            for (var _iterator4 = $scope.items[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-                var _item = _step4.value;
+            var _loop = function _loop() {
+                var item = _step4.value;
 
-                if (_item.selected) {
-                    $scope.clipboard.push({
-                        mode: 'move',
-                        item: _item
-                    });
+                if (item.selected) {
+                    if (item.isDir) {
+                        $scope.isEmptyDir(item.path).then(function (resp) {
+                            if (resp) {
+                                $scope.clipboard.push({
+                                    mode: 'move',
+                                    item: item
+                                });
+                            } else {
+                                notify.error(gettext("Can not cut/copy or delete non empty directories !"));
+                            };
+                        });
+                    } else {
+                        $scope.clipboard.push({
+                            mode: 'move',
+                            item: item
+                        });
+                    }
                 }
+            };
+
+            for (var _iterator4 = $scope.items[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+                _loop();
             }
         } catch (err) {
             _didIteratorError4 = true;
@@ -199,15 +223,32 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function ($
         var _iteratorError5 = undefined;
 
         try {
-            for (var _iterator5 = $scope.items[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
-                var _item2 = _step5.value;
+            var _loop2 = function _loop2() {
+                var item = _step5.value;
 
-                if (_item2.selected) {
-                    $scope.clipboard.push({
-                        mode: 'copy',
-                        item: _item2
-                    });
+                if (item.selected) {
+                    if (item.isDir) {
+                        $scope.isEmptyDir(item.path).then(function (resp) {
+                            if (resp) {
+                                $scope.clipboard.push({
+                                    mode: 'move',
+                                    item: item
+                                });
+                            } else {
+                                notify.error(gettext("Can not cut/copy or delete non empty directories !"));
+                            };
+                        });
+                    } else {
+                        $scope.clipboard.push({
+                            mode: 'copy',
+                            item: item
+                        });
+                    };
                 }
+            };
+
+            for (var _iterator5 = $scope.items[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+                _loop2();
             }
         } catch (err) {
             _didIteratorError5 = true;
@@ -239,13 +280,13 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function ($
 
         try {
             for (var _iterator6 = items[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
-                var _item3 = _step6.value;
+                var _item = _step6.value;
 
-                if (_item3.mode == 'copy') {
-                    promises.push(smbclient.copy(_item3.item.path, $scope.current_path + '/' + _item3.item.name));
+                if (_item.mode == 'copy') {
+                    promises.push(smbclient.copy(_item.item.path, $scope.current_path + '/' + _item.item.name));
                 }
-                if (_item3.mode == 'move') {
-                    promises.push(smbclient.move(_item3.item.path, $scope.current_path + '/' + _item3.item.name));
+                if (_item.mode == 'move') {
+                    promises.push(smbclient.move(_item.item.path, $scope.current_path + '/' + _item.item.name));
                 }
             }
         } catch (err) {
@@ -306,9 +347,9 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function ($
 
                 try {
                     for (var _iterator7 = items[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
-                        var _item4 = _step7.value;
+                        var _item2 = _step7.value;
 
-                        promises.push(smbclient.delete_file(_item4.path));
+                        promises.push(smbclient.delete_file(_item2.path));
                     }
                 } catch (err) {
                     _didIteratorError7 = true;
@@ -336,17 +377,23 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function ($
 
     $scope.delete_dir = function (path) {
         // Directly delete a single directory
-        messagebox.show({
-            text: gettext("Do you really want to delete this directory? This is only possible if the directory is empty."),
-            positive: gettext('Delete'),
-            negative: gettext('Cancel')
-        }).then(function () {
-            smbclient.delete_dir(path).then(function (data) {
-                notify.success(path + gettext(' deleted !'));
-                $scope.reload();
-            }, function (resp) {
-                notify.error(gettext('Error during deleting : '), resp.data.message);
-            });
+        $scope.isEmptyDir(path).then(function (resp) {
+            if (resp) {
+                messagebox.show({
+                    text: gettext("Do you really want to delete this directory?"),
+                    positive: gettext('Delete'),
+                    negative: gettext('Cancel')
+                }).then(function () {
+                    smbclient.delete_dir(path).then(function (data) {
+                        notify.success(path + gettext(' deleted !'));
+                        $scope.reload();
+                    }, function (resp) {
+                        notify.error(gettext('Error during deleting : '), resp.data.message);
+                    });
+                });
+            } else {
+                notify.error(gettext("Can not cut/copy or delete non empty directories !"));
+            };
         });
     };
 

@@ -2,6 +2,7 @@
 //@theme-color: #ff8f00;
 // lmn-blue
 @theme-color: #233c4c;
+@theme-color-weak: #ABDEFF;
 @theme-color-orange:#ff8f00 ;
 @theme-color-orange-weak: #ffab40;
 
@@ -85,16 +86,21 @@ li.cardlist, span.cardlist {
     min-height:100px;
     line-height:100px;
     padding-left:50px;
+    border:dashed 1px @theme-color-orange;
 }
 
 .dragdroparea-enter {
-    color:#eee;
-    background-color:#eee;
+    color:@theme-color-orange-weak;
+    background-color:@theme-color-orange-weak;
     border-radius:10px;
-    border:dashed 1px gray;
+    border:dashed 2px @theme-color;
     min-height:100px;
     line-height:100px;
     padding-left:50px;
+
+    span.btn-upload {
+        display: none;
+    }
 }
 
 // Table
@@ -468,4 +474,9 @@ floating-toolbar {
     color: #333;
     background-color: #ffc876;
     border-color: #1b272f;
+}
+.btn-upload {
+    position:relative;
+    top:20px;
+    left:370px;
 }

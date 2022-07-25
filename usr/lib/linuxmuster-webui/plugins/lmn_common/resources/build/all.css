@@ -70,15 +70,19 @@ span.cardlist div.cardbtn button.cardbtn {
   min-height: 100px;
   line-height: 100px;
   padding-left: 50px;
+  border: dashed 1px #ff8f00;
 }
 .dragdroparea-enter {
-  color: #eee;
-  background-color: #eee;
+  color: #ffab40;
+  background-color: #ffab40;
   border-radius: 10px;
-  border: dashed 1px gray;
+  border: dashed 2px #233c4c;
   min-height: 100px;
   line-height: 100px;
   padding-left: 50px;
+}
+.dragdroparea-enter span.btn-upload {
+  display: none;
 }
 .lm-table {
   width: 100%;
@@ -368,5 +372,10 @@ floating-toolbar.accented .bar .btn-flat {
   color: #333;
   background-color: #ffc876;
   border-color: #1b272f;
+}
+.btn-upload {
+  position: relative;
+  top: 20px;
+  left: 370px;
 }
 

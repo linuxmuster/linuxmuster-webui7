@@ -76,21 +76,6 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function($s
         });
     };
 
-    $scope.delete_file = (path) => {
-        messagebox.show({
-            text: gettext("Do you really want to delete this file?"),
-            positive: gettext('Delete'),
-            negative: gettext('Cancel')
-        }).then( () => {
-            smbclient.delete_file(path).then((data) => {
-                notify.success(path + gettext(' deleted !'));
-                $scope.reload();
-            }, (resp) => {
-                notify.error(gettext('Error during deleting : '), resp.data.message);
-            });
-        });
-    };
-
     $scope.doCut = function() {
         for (let item of $scope.items) {
             if (item.selected) {
@@ -116,6 +101,8 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function($s
     };
 
     $scope.doPaste = function() {
+        // Cut and/or copy a list of files
+        // Problem with error handling in promise list
         let items = angular.copy($scope.clipboard);
         console.log(items);
         promises = []
@@ -135,7 +122,25 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function($s
         });
     };
 
+    $scope.delete_file = (path) => {
+        // Delete directly one single file
+        messagebox.show({
+            text: gettext("Do you really want to delete this file?"),
+            positive: gettext('Delete'),
+            negative: gettext('Cancel')
+        }).then( () => {
+            smbclient.delete_file(path).then((data) => {
+                notify.success(path + gettext(' deleted !'));
+                $scope.reload();
+            }, (resp) => {
+                notify.error(gettext('Error during deleting : '), resp.data.message);
+            });
+        });
+    };
+
     $scope.doDelete = () =>
+        // Delete a list of selected files
+        // Problem with error handling in promise list
         messagebox.show({
             text: gettext('Delete selected items?'),
             positive: gettext('Delete'),
@@ -154,6 +159,7 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function($s
         })
 
     $scope.delete_dir = (path) => {
+        // Directly delete a single directory
         messagebox.show({
             text: gettext("Do you really want to delete this directory? This is only possible if the directory is empty."),
             positive: gettext('Delete'),

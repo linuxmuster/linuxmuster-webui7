@@ -17,9 +17,8 @@ from aj.plugins.lmn_common.api import samba_domain
 
 
 # TODO
-# - Better error management (directory not empty, ... )
+# - Better error management (directory not empty, errors in promise list, ... )
 # - Test encoding Windows
-# - read/write/create file
 # - symlink ?
 # - download selected resources as zip
 # - Method DELETE ?
@@ -30,7 +29,6 @@ class Handler(HttpPlugin):
         self.context = context
 
     @url(r'/api/lmn/smbclient/shares/(?P<user>.+)')
-    # @authorize('smbclient:read')
     @endpoint(api=True)
     def handle_api_smb_shares(self, http_context, user=None):
         """
@@ -145,7 +143,6 @@ class Handler(HttpPlugin):
             return shares[role]
 
     @url(r'/api/lmn/smbclient/list')
-    # @authorize('smbclient:read')
     @endpoint(api=True)
     def handle_api_smb_list(self, http_context):
         """
@@ -208,7 +205,6 @@ class Handler(HttpPlugin):
             }
 
     @url(r'/api/lmn/smbclient/create-directory')
-    # @authorize('smbclient:write')
     @endpoint(api=True)
     def handle_api_smb_create_directory(self, http_context):
         """
@@ -229,7 +225,6 @@ class Handler(HttpPlugin):
                 raise EndpointError(e)
 
     @url(r'/api/lmn/smbclient/create-file')
-    # @authorize('smbclient:write')
     @endpoint(api=True)
     def handle_api_smb_create_file(self, http_context):
         """
@@ -251,7 +246,6 @@ class Handler(HttpPlugin):
                 raise EndpointError(e)
 
     @url(r'/api/lmn/smbclient/move')
-    # @authorize('smbclient:write')
     @endpoint(api=True)
     def handle_api_smb_move(self, http_context):
         """
@@ -273,7 +267,6 @@ class Handler(HttpPlugin):
                 raise EndpointError(e)
 
     @url(r'/api/lmn/smbclient/copy')
-    # @authorize('smbclient:write')
     @endpoint(api=True)
     def handle_api_smb_copy(self, http_context):
         """
@@ -295,7 +288,6 @@ class Handler(HttpPlugin):
                 raise EndpointError(e)
 
     @url(r'/api/lmn/smbclient/dir')
-    # @authorize('smbclient:write')
     @endpoint(api=True)
     def handle_api_smb_rmdir(self, http_context):
         """
@@ -317,7 +309,6 @@ class Handler(HttpPlugin):
                 raise EndpointError(e)
 
     @url(r'/api/lmn/smbclient/file')
-    # @authorize('smbclient:write')
     @endpoint(api=True)
     def handle_api_smb_unlink(self, http_context):
         """
@@ -338,7 +329,6 @@ class Handler(HttpPlugin):
                 raise EndpointError(e)
 
     @url(r'/api/lmn/smbclient/stat')
-    # @authorize('smbclient:read')
     @endpoint(api=True)
     def handle_api_smb_stat(self, http_context):
         """
@@ -379,7 +369,6 @@ class Handler(HttpPlugin):
         return data
 
     @url(r'/api/lmn/smbclient/upload')
-    # @authorize('smbclient:write')
     @endpoint(page=True)
     def handle_api_smb_upload_chunk(self, http_context):
         """
@@ -527,101 +516,3 @@ class Handler(HttpPlugin):
         http_context.add_header('Content-Disposition', (f'attachment; filename={name}'))
 
         yield http_context.gzip(content)
-
-    # @url(r'/api/lmn/smbclient/read/(?P<path>.+)')
-    # @authorize('smbclient:read')
-    # @endpoint(api=True)
-    # def handle_api_fs_read(self, http_context, path=None):
-    #     """
-    #     Return the content of a file on the filesystem.
-    #
-    #     :param http_context: HttpContext
-    #     :type http_context: HttpContext
-    #     :param path: Path of the file
-    #     :type path: string
-    #     :return: Content of the file
-    #     :rtype: string
-    #     """
-    #
-    #     if not os.path.exists(path):
-    #         http_context.respond_not_found()
-    #         return 'File not found'
-    #     try:
-    #         content = open(path, 'rb').read()
-    #         if http_context.query:
-    #             encoding = http_context.query.get('encoding', None)
-    #             if encoding:
-    #                 content = content.decode(encoding)
-    #         return content
-    #     except OSError as e:
-    #         http_context.respond_server_error()
-    #         return json.dumps({'error': str(e)})
-    #
-    # @url(r'/api/lmn/smbclient/write/(?P<path>.+)')
-    # @authorize('smbclient:write')
-    # @endpoint(api=True)
-    # def handle_api_fs_write(self, http_context, path=None):
-    #     """
-    #     Write content (method post) to a specific file given with path.
-    #     Method POST.
-    #
-    #     :param http_context: HttpContext
-    #     :type http_context: HttpContext
-    #     :param path: Path of the file
-    #     :type path: string
-    #     """
-    #
-    #     try:
-    #         content = http_context.body
-    #         if http_context.query:
-    #             encoding = http_context.query.get('encoding', None)
-    #             if encoding:
-    #                 content = content.decode('utf-8')
-    #         with open(path, 'w') as f:
-    #             f.write(content)
-    #     except OSError as e:
-    #         raise EndpointError(e)
-
-
-
-    #
-    # @url(r'/api/lmn/smbclient/chmod/(?P<path>.+)')
-    # @authorize('smbclient:write')
-    # @endpoint(api=True)
-    # def handle_api_fs_chmod(self, http_context, path=None):
-    #     """
-    #     Change mode for a specific file.
-    #
-    #     :param http_context: HttpContext
-    #     :type http_context: HttpContext
-    #     :param path: Path of file
-    #     :type path: string
-    #     """
-    #
-    #     if not os.path.exists(path):
-    #         raise EndpointReturn(404)
-    #     data = json.loads(http_context.body.decode())
-    #     try:
-    #         os.chmod(path, data['mode'])
-    #     except OSError as e:
-    #         raise EndpointError(e)
-    #
-    # @url(r'/api/lmn/smbclient/create-file/(?P<path>.+)')
-    # @authorize('smbclient:write')
-    # @endpoint(api=True)
-    # def handle_api_fs_create_file(self, http_context, path=None):
-    #     """
-    #     Create empty file on specified path.
-    #
-    #     :param http_context: HttpContext
-    #     :type http_context: HttpContext
-    #     :param path: Path of file
-    #     :type path: string
-    #     """
-    #
-    #     try:
-    #         os.mknod(path, int('644', 8))
-    #     except OSError as e:
-    #         raise EndpointError(e)
-    #
-    #

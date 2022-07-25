@@ -159,21 +159,6 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function ($
         });
     };
 
-    $scope.delete_file = function (path) {
-        messagebox.show({
-            text: gettext("Do you really want to delete this file?"),
-            positive: gettext('Delete'),
-            negative: gettext('Cancel')
-        }).then(function () {
-            smbclient.delete_file(path).then(function (data) {
-                notify.success(path + gettext(' deleted !'));
-                $scope.reload();
-            }, function (resp) {
-                notify.error(gettext('Error during deleting : '), resp.data.message);
-            });
-        });
-    };
-
     $scope.doCut = function () {
         var _iteratorNormalCompletion4 = true;
         var _didIteratorError4 = false;
@@ -243,6 +228,8 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function ($
     };
 
     $scope.doPaste = function () {
+        // Cut and/or copy a list of files
+        // Problem with error handling in promise list
         var items = angular.copy($scope.clipboard);
         console.log(items);
         promises = [];
@@ -284,50 +271,71 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function ($
         });
     };
 
-    $scope.doDelete = function () {
-        return messagebox.show({
-            text: gettext('Delete selected items?'),
+    $scope.delete_file = function (path) {
+        // Delete directly one single file
+        messagebox.show({
+            text: gettext("Do you really want to delete this file?"),
             positive: gettext('Delete'),
             negative: gettext('Cancel')
         }).then(function () {
-            var items = $scope.items.filter(function (item) {
-                return item.selected;
-            });
-            promises = [];
-            var _iteratorNormalCompletion7 = true;
-            var _didIteratorError7 = false;
-            var _iteratorError7 = undefined;
-
-            try {
-                for (var _iterator7 = items[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
-                    var _item4 = _step7.value;
-
-                    promises.push(smbclient.delete_file(_item4.path));
-                }
-            } catch (err) {
-                _didIteratorError7 = true;
-                _iteratorError7 = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion7 && _iterator7.return) {
-                        _iterator7.return();
-                    }
-                } finally {
-                    if (_didIteratorError7) {
-                        throw _iteratorError7;
-                    }
-                }
-            }
-
-            $q.all(promises).then(function () {
-                notify.success('Deleted !');
-                $scope.clear_selection();
+            smbclient.delete_file(path).then(function (data) {
+                notify.success(path + gettext(' deleted !'));
                 $scope.reload();
+            }, function (resp) {
+                notify.error(gettext('Error during deleting : '), resp.data.message);
             });
         });
     };
 
+    $scope.doDelete = function () {
+        return (
+            // Delete a list of selected files
+            // Problem with error handling in promise list
+            messagebox.show({
+                text: gettext('Delete selected items?'),
+                positive: gettext('Delete'),
+                negative: gettext('Cancel')
+            }).then(function () {
+                var items = $scope.items.filter(function (item) {
+                    return item.selected;
+                });
+                promises = [];
+                var _iteratorNormalCompletion7 = true;
+                var _didIteratorError7 = false;
+                var _iteratorError7 = undefined;
+
+                try {
+                    for (var _iterator7 = items[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
+                        var _item4 = _step7.value;
+
+                        promises.push(smbclient.delete_file(_item4.path));
+                    }
+                } catch (err) {
+                    _didIteratorError7 = true;
+                    _iteratorError7 = err;
+                } finally {
+                    try {
+                        if (!_iteratorNormalCompletion7 && _iterator7.return) {
+                            _iterator7.return();
+                        }
+                    } finally {
+                        if (_didIteratorError7) {
+                            throw _iteratorError7;
+                        }
+                    }
+                }
+
+                $q.all(promises).then(function () {
+                    notify.success('Deleted !');
+                    $scope.clear_selection();
+                    $scope.reload();
+                });
+            })
+        );
+    };
+
     $scope.delete_dir = function (path) {
+        // Directly delete a single directory
         messagebox.show({
             text: gettext("Do you really want to delete this directory? This is only possible if the directory is empty."),
             positive: gettext('Delete'),

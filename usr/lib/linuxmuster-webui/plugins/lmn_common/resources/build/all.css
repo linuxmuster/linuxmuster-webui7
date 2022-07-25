@@ -334,6 +334,15 @@ tr.leaders td span + span {
 dialog .modal {
   z-index: 2000;
 }
+/* Floating toolbar
+---------------------------- */
+floating-toolbar.accented .bar {
+  background: #233c4c;
+  color: white;
+}
+floating-toolbar.accented .bar .btn-flat {
+  color: white !important;
+}
 /* Button LMN
 ---------------------------- */
 .btn-lmn {

@@ -1,0 +1,1 @@
+{"": "", "Clients configuration": "", "Close": "", "Edit custom script": "", "Save": "", "The following scripts are executed by Samba when the client boots, in root context, and after the\\n": "", "Unable to determine samba domain": "", "Client configuration": "", "Configure clients features": "", "Lmn_clients": "", "Script saved !": "", "Error while saving script": ""}

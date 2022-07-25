@@ -1,3 +1,18 @@
+linuxmuster-webui7 (7.1.27) lmn71; urgency=medium
+
+  * Upgrade Ajenti 2.2.1
+  * Add settings for trusted domains and proxies
+  * [linbo_sync] : fix online test behind firewall
+  * [linbo_sync] : new icons for online status 
+  * New plugin lmn_clients to edit custom sysvol scripts
+  * [home] : add cut/copy/clipboard methods
+  * [home] : dragdrop fully integrated in view
+  * [home] : better error handling
+  * Publish home plugin for all users 
+  * Diverses fixs and cleanup
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 25 Jul 2022 19:52:37 +0200
+
 linuxmuster-webui7 (7.1.26) lmn71; urgency=medium
 
   * Upgrade Ajenti 2.2.0

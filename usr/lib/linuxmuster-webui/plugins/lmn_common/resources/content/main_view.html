@@ -32,6 +32,9 @@
     </head>
     <body class="global-color-{{identity.color || 'default'}} widescreen-mode-{{isWidescreen ? 'on' : 'off'}} {{customization.plugins.core.bodyClass}}">
         <nav class="navbar navbar-default navbar-fixed-top" ng:show="appReady" ng:cloak>
+            <a ng:if="devMode && identity.user" ng:click="restart_panel()" class="btn btn-danger navbar-btn pull-right">
+                <i class="fas fa-redo"></i>
+            </a>
             <div class="container">
                 <a ng:click="toggleNavigation()" ng:show="navigationPresent" class="navbar-brand navigation-toggle hide-phone hide-tablet">
                     <i class="fa fa-navicon"></i>
@@ -108,7 +111,6 @@
         <div class="container" ng:show="appReady && showIframe != true">
             <div class="row">
                 <div class="col-md-3 sidebar hide-tablet hide-phone" ng:show="showSidebar && navigationPresent">
-                    <a ng:if="devMode" ng:click="restart_panel()" class="btn btn-danger center-block">Reload Python</a>
                     <ng:include src="'/core:resources/partial/sidebarTasks.html'"></ng:include>
                     <core:sidebar></core:sidebar>
                 </div>

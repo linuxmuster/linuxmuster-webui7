@@ -1,3 +1,10 @@
+linuxmuster-webui7 (7.1.28) lmn71; urgency=medium
+
+  * Fix stupid dependecy error
+  * [clients] : add locales 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 25 Jul 2022 22:56:52 +0200
+
 linuxmuster-webui7 (7.1.27) lmn71; urgency=medium
 
   * Upgrade Ajenti 2.2.1

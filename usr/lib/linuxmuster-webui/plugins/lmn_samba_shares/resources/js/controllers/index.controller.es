@@ -146,7 +146,6 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function($s
             }
         }
         $q.all(promises).then(() => {
-            notify.success('Done !');
             $scope.clear_selection();
             $scope.clearClipboard();
             $scope.reload();

@@ -1,12 +1,6 @@
-angular.module('lmn.smbclient').service('smbclient', function($rootScope, $http, $q) {
+angular.module('lmn.smbclient').service('smbclient', function($rootScope, $http, $q, gettext, notify) {
     this.shares = (user) =>
       $http.get(`/api/lmn/smbclient/shares/${user}`).then(response => response.data)
-
-    // this.read = (path, encoding) =>
-    //   $http.get(`/api/lmn/smbclient/read/${path}?encoding=${encoding || 'utf-8'}`).then(response => response.data)
-    //
-    // this.write = (path, content, encoding) =>
-    //   $http.post(`/api/lmn/smbclient/write/${path}?encoding=${encoding || 'utf-8'}`, content).then(response => response.data)
 
     this.list = (path) =>
         $http.post(`/api/lmn/smbclient/list`, {'path': path}).then(response => response.data)
@@ -14,11 +8,23 @@ angular.module('lmn.smbclient').service('smbclient', function($rootScope, $http,
     this.delete_file = (path) =>
         $http.post(`/api/lmn/smbclient/file`, {'path': path}).then(response => response.data)
 
-    this.move = (src, dst) =>
-        $http.post(`/api/lmn/smbclient/move`, {'src': src, 'dst':dst}).then(response => response.data)
+    this.move = (src, dst) => {
+        return $http.post(`/api/lmn/smbclient/move`, {'src': src, 'dst':dst}).then((response) => {
+            notify.success(src + gettext(' moved!'));
+            return response.data;
+        }, (response) => {
+            notify.error(response.data.message);
+        });
+    };
 
-    this.copy = (src, dst) =>
-        $http.post(`/api/lmn/smbclient/copy`, {'src': src, 'dst':dst}).then(response => response.data)
+    this.copy = (src, dst) => {
+        return $http.post(`/api/lmn/smbclient/copy`, {'src': src, 'dst':dst}).then((response) => {
+            notify.success(src + gettext(' copied!'));
+            return response.data;
+        }, (response) => {
+            notify.error(response.data.message);
+        });
+    };
 
     this.delete_dir = (path) =>
         $http.post(`/api/lmn/smbclient/dir`, {'path':path}).then(response => response.data)
@@ -32,17 +38,6 @@ angular.module('lmn.smbclient').service('smbclient', function($rootScope, $http,
     this.createDirectory = (path) =>
         $http.post(`/api/lmn/smbclient/create-directory`, {'path':path}).then(response => response.data)
 
-//     this.downloadBlob = (content, mime, name) =>
-//         setTimeout(() => {
-//             let blob = new Blob([content], {type: mime});
-//             let elem = window.document.createElement('a');
-//             elem.href = URL.createObjectURL(blob);
-//             elem.download = name;
-//             document.body.appendChild(elem);
-//             elem.click();
-//             document.body.removeChild(elem);
-//         })
-//
     this.startFlowUpload = ($flow, path) => {
         q = $q.defer()
         $flow.on('fileProgress', (file, chunk) => {

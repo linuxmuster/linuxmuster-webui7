@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.1.29) lmn71; urgency=medium
+
+  * Fix gitignore and add right build files 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 25 Jul 2022 23:20:38 +0200
+
 linuxmuster-webui7 (7.1.28) lmn71; urgency=medium
 
   * Fix stupid dependecy error

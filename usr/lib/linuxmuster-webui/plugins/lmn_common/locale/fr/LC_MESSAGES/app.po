@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-24 11:50+0200\n"
-"PO-Revision-Date: 2022-06-24 12:55\n"
+"POT-Creation-Date: 2022-07-25 18:56+0200\n"
+"PO-Revision-Date: 2022-07-25 17:45\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -17,8 +17,7 @@ msgstr ""
 "X-Crowdin-File: /2.0/lmn_common.po\n"
 "X-Crowdin-File-ID: 96\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:153
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/truc/chabala.html:153
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:155
 msgid "A bootstrap error has occured"
 msgstr "Une erreur « bootstrap » est survenue"
 
@@ -48,13 +47,11 @@ msgstr "Télécharger le CSV"
 msgid "Drop a CSV file here to import"
 msgstr "Dépose un fichier CSV ici pour l'importer"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:136
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/truc/chabala.html:136
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:138
 msgid "Enter"
 msgstr "Entrer"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:92
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/truc/chabala.html:92
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:95
 msgid "Log out"
 msgstr "Déconnexion"
 
@@ -66,18 +63,15 @@ msgstr "Aucune copie de sauvegarde existante"
 msgid "No differences detected"
 msgstr "Aucune différence détectée"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:177
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/truc/chabala.html:177
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:179
 msgid "OK"
 msgstr "OK"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:156
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/truc/chabala.html:156
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:158
 msgid "Please see browser console"
 msgstr "Veuillez consulter la console JavaScript du navigateur"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:132
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/truc/chabala.html:132
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:134
 msgid "Quick search"
 msgstr "Recherche rapide"
 
@@ -85,16 +79,13 @@ msgstr "Recherche rapide"
 msgid "Save"
 msgstr "Sauvegarder"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:49
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/truc/chabala.html:49
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:52
 msgid "School Console"
 msgstr "Webconsole"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:102
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/truc/chabala.html:102
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:105
 msgid "Session time : {{ counter[0] }}:{{ counter[1] }}:{{ counter[2] }}"
-msgstr ""
-"Durée de la session : {{ counter[0] }}:{{ counter[1] }}:{{ counter[2] }}"
+msgstr "Durée de la session : {{ counter[0] }}:{{ counter[1] }}:{{ counter[2] }}"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/lmnfile.py:163
 msgid "Access refused."
@@ -193,19 +184,12 @@ msgid "Copying files: %s."
 msgstr "Copie des fichiers : %s."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:13
-msgid ""
-"Passwords must contain at least one lowercase, one uppercase, one special "
-"char or number, and at least 7 chars"
-msgstr ""
-"Les mots de passe doivent contenir au moins un minuscule, un majuscule, un "
-"caractère spécial ou un chiffre, et au moins 7 caractères"
+msgid "Passwords must contain at least one lowercase, one uppercase, one special char or number, and at least 7 chars"
+msgstr "Les mots de passe doivent contenir au moins un minuscule, un majuscule, un caractère spécial ou un chiffre, et au moins 7 caractères"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:22
-msgid ""
-"Password is not valid. Password can only contains a-zA-Z0-9?!@#§+-$%&*{}()]["
-msgstr ""
-"Le mot de passe n'est pas valide. Le mot de passe ne peut contenir que a-zA-"
-"Z0-9?!@#§+-$%&*{}()]["
+msgid "Password is not valid. Password can only contains a-zA-Z0-9?!@#§+-$%&*{}()]["
+msgstr "Le mot de passe n'est pas valide. Le mot de passe ne peut contenir que a-zA-Z0-9?!@#§+-$%&*{}()]["
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:42
 msgid " can only contain lowercase chars or numbers"
@@ -242,9 +226,7 @@ msgstr " n'est pas valide ou en double"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:145
 msgid " does not contain valid chars, is duplicated or too long (>15 chars)"
-msgstr ""
-" ne contient pas de caractères valides, est dupliqué ou trop long (>15 "
-"caractères)"
+msgstr " ne contient pas de caractères valides, est dupliqué ou trop long (>15 caractères)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:156
 msgid " does not contain valid chars or is duplicated"
@@ -273,3 +255,4 @@ msgstr "Voulez-vous vraiment supprimer"
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/lmFileBackups.coffee:83
 msgid "Confirmation"
 msgstr "Confirmation"
+

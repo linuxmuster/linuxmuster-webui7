@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-24 11:51+0200\n"
-"PO-Revision-Date: 2022-06-24 12:56\n"
+"PO-Revision-Date: 2022-07-25 17:45\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -38,14 +38,10 @@ msgid "<i class=\"fas fa-exclamation-triangle\"></i>  New"
 msgstr "<i class=\"fas fa-exclamation-triangle\"></i>  Neu"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:107
-msgid ""
-"<i class=\"fas fa-info-circle\"></i>\n"
-"                To apply a linbo-remote command, you have to select at least "
-"one client and one command."
-msgstr ""
-"<i class=\"fas fa-info-circle\"></i>\n"
-"                Um einen linbo-remote Befehl anzuwenden, müssen Sie "
-"mindestens einen Client und einen Befehl auswählen."
+msgid "<i class=\"fas fa-info-circle\"></i>\n"
+"                To apply a linbo-remote command, you have to select at least one client and one command."
+msgstr "<i class=\"fas fa-info-circle\"></i>\n"
+"                Um einen linbo-remote Befehl anzuwenden, müssen Sie mindestens einen Client und einen Befehl auswählen."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:72
 msgid "<i class=\"fas fa-lightbulb\"></i>  Wake on lan"
@@ -143,3 +139,4 @@ msgstr "Das erste Betriebssystem des Rechners synchronisieren"
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/js/controllers/index.controller.coffee:186
 msgid "Command successfully sent : "
 msgstr "Befehl erfolgreich versendet: "
+

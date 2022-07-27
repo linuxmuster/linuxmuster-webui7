@@ -15,7 +15,7 @@
                     <th ng:repeat="image in details.os"><span translate>Last sync </span><br />{{image.baseimage}}</th>
                     <th class="pull-right" translate>Online ?</th>
                 </tr>
-                <tr ng:repeat="h in details.hosts|orderBy:host:false">
+                <tr ng:repeat="h in details.hosts|orderBy:'hostname'">
                     <td>
                         <input type="checkbox" ng:checked="clientIsInCmd(group, h.ip)" ng:click="update_host(group, h.ip)">
                     </td>

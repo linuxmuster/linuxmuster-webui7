@@ -93,7 +93,10 @@ Updating linuxmuster-webui
 
             msg "Stop linuxmuster-webui"
             systemctl stop linuxmuster-webui
-            
+
+            msg "Upgrade pip to latest version"
+            /usr/bin/python3 -m pip install pip -U
+
             # Always backup config file if things are going bad
             msg "Backing up and updating config.yml"
             cp -a $ajcfg $ajcfg.bak

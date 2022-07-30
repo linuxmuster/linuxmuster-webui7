@@ -567,20 +567,20 @@ class Handler(HttpPlugin):
             sophomorixCommand = ['sophomorix-user', '--info', '-jj', '-u', user]
             return lmn_getSophomorixValue(sophomorixCommand, '/USERS/'+user+'/sophomorixFirstPassword')
         if action == 'set-initial':
-            sophomorixCommand = ['sudo', 'sophomorix-passwd', '--set-firstpassword', '-jj', '-u', user, '--use-smbpasswd']
+            sophomorixCommand = ['sophomorix-passwd', '--set-firstpassword', '-jj', '-u', user, '--use-smbpasswd']
             return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
         if action == 'set-random':
             # TODO: Password length should be read from school settings
-            sophomorixCommand = ['sudo', 'sophomorix-passwd', '-u', user, '--random', '8', '-jj', '--use-smbpasswd']
+            sophomorixCommand = ['sophomorix-passwd', '-u', user, '--random', '8', '-jj', '--use-smbpasswd']
             return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
         if action == 'set':
             password = http_context.json_body()['password']
-            sophomorixCommand = ['sudo', 'sophomorix-passwd', '-u', user, '--pass', password, '-jj', '--use-smbpasswd']
-            return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
+            sophomorixCommand = ['sophomorix-passwd', '-u', user, '--pass', password, '-jj', '--use-smbpasswd']
+            return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN', sensitive=True)
         if action == 'set-actual':
             password = http_context.json_body()['password']
-            sophomorixCommand = ['sudo', 'sophomorix-passwd', '-u', user, '--pass', password, '--nofirstpassupdate', '--hide', '-jj', '--use-smbpasswd']
-            return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
+            sophomorixCommand = ['sophomorix-passwd', '-u', user, '--pass', password, '--nofirstpassupdate', '--hide', '-jj', '--use-smbpasswd']
+            return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN', sensitive=True)
 
     @url(r'/api/lm/users/change-school-admin')
     @authorize('lm:users:schooladmins:create')

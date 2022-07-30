@@ -16,13 +16,16 @@ angular.module('lmn.smbclient').directive 'smbUpload', ($http, $route, notify, m
                         <div class=\"col-md-1\"></div>
                         <div class=\"col-md-10\">
                             <div    flow-init=\"{target: #{target}, chunkSize: 1024 * 1024}\"
-                                    flow-files-submitted=\"onUploadBegin($flow)\"
-                                    flow-drag-enter=\"class='dragdroparea-enter'\"
-                                    flow-drag-leave=\"class='dragdroparea'\"
-                                    ng-style=\"style\">
-                                <div class=\"dragdroparea\" flow-drop style=\"border:dashed 1px orange;\">
+                                    flow-files-submitted=\"onUploadBegin($flow)\">
+                                <div class=\"dragdroparea\"
+                                     flow-drop
+                                     flow-drag-enter=\"class='dragdroparea-enter'\"
+                                     flow-drag-leave=\"class='dragdroparea'\"
+                                     ng-class=\"class\">
                                     <span translate>Drag and drop your files here</span>
-                                    <span class=\"btn btn-lmn\" style=\"position:relative;top:20px;left:370px;\" flow-btn translate>Upload file</span>
+                                    <span class=\"btn btn-lmn btn-upload\" flow-btn translate>
+                                        Upload file
+                                    </span>
                                 </div>
                                 <div ng-repeat=\"p in progress\" style=\"margin-top:10px;\" ng-show='p.progress < 100'>
                                     <span>{{p.name}} ({{p.progress}} %) </span>

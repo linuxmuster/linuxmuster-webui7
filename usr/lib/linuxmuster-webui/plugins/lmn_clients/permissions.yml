@@ -1,0 +1,6 @@
+globaladministrator:
+  - 'lmn:clients:config: true'
+  - 'sidebar:view:/view/lmn_clients: true'
+schooladministrator:
+  - 'lmn:clients:config: true'
+  - 'sidebar:view:/view/lmn_clients: true'

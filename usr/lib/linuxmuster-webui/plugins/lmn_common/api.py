@@ -37,28 +37,32 @@ try:
     with LMNFile('/var/lib/linuxmuster/setup.ini', 'r') as s:
         try:
             lmsetup_schoolname = s.data['setup']['schoolname']
+            samba_domain = s.data['setup']['domainname']
         except KeyError:
             lmsetup_schoolname = None
+            samba_domain = None
 except FileNotFoundError:
     lmsetup_schoolname = None
+    samba_domain = None
 
 class SophomorixProcess(threading.Thread):
     """
     Worker for processing sophomorix commands.
     """
 
-    def __init__(self, command):
+    def __init__(self, command, sensitive):
         self.stdout = None
         self.stderr = None
         self.command = command
+        self.sensitive = sensitive
         threading.Thread.__init__(self)
 
     def run(self):
-        p = subprocess.Popen(self.command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=False)
+        p = subprocess.Popen(self.command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=False, sensitive=self.sensitive)
         self.stdout, self.stderr = p.communicate()
 
 
-def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
+def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False, sensitive=False):
     """
     Connector to all sophomorix commands. Run a sophomorix command with -j
     option (output as json) through a SophomorixProcess and parse the results.
@@ -80,7 +84,7 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
         sophomorixCommand = ['sudo'] + sophomorixCommand
 
     # New Thread for one process to avoid conflicts
-    t = SophomorixProcess(sophomorixCommand)
+    t = SophomorixProcess(sophomorixCommand, sensitive=sensitive)
     t.daemon = True
     t.start()
     t.join()

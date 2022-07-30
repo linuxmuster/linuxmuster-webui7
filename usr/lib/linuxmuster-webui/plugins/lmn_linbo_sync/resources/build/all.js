@@ -32,12 +32,20 @@ angular.module('lmn.linbo_sync').config(function ($routeProvider) {
       }
       return results;
     });
+    $scope.up_icons = {
+      'Off': "fas fa-power-off",
+      'No response': "fas fa-power-off",
+      'OS Linux': "fab fa-linux",
+      'OS Windows': "fab fa-windows",
+      'Linbo': "fas fa-laptop-medical"
+    };
     $scope.isUp = function(group, host) {
       var index;
       index = $scope.groups[group].hosts.indexOf(host);
       return $http.get(`/api/lm/linbo/isOnline/${host.hostname}`).then(function(resp) {
-        $scope.groups[group].hosts[index].up = resp.data;
-        if (resp.data === "Off") {
+        $scope.groups[group].hosts[index].up_comment = resp.data;
+        $scope.groups[group].hosts[index].up_icon = $scope.up_icons[resp.data];
+        if (resp.data === "Off" || resp.data === "No response") {
           return $scope.groups[group].hosts[index].upClass = "btn-danger";
         } else {
           return $scope.groups[group].hosts[index].upClass = "btn-success";

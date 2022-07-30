@@ -63,6 +63,12 @@ span.cardlist div.cardbtn button.cardbtn {
 .color-orange {
   color: #ff8f00;
 }
+.uploads {
+  margin: 10px 20px;
+  padding: 20px 50px;
+  border: solid 1px #ffab40;
+  border-radius: 10px;
+}
 .dragdroparea {
   color: gray;
   background-color: #e6e6e6;
@@ -70,15 +76,19 @@ span.cardlist div.cardbtn button.cardbtn {
   min-height: 100px;
   line-height: 100px;
   padding-left: 50px;
+  border: dashed 1px #ff8f00;
 }
 .dragdroparea-enter {
-  color: #eee;
-  background-color: #eee;
+  color: #ffab40;
+  background-color: #ffab40;
   border-radius: 10px;
-  border: dashed 1px gray;
+  border: dashed 2px #233c4c;
   min-height: 100px;
   line-height: 100px;
   padding-left: 50px;
+}
+.dragdroparea-enter span.btn-upload {
+  display: none;
 }
 .lm-table {
   width: 100%;
@@ -334,6 +344,15 @@ tr.leaders td span + span {
 dialog .modal {
   z-index: 2000;
 }
+/* Floating toolbar
+---------------------------- */
+floating-toolbar.accented .bar {
+  background: #233c4c;
+  color: white;
+}
+floating-toolbar.accented .bar .btn-flat {
+  color: white !important;
+}
 /* Button LMN
 ---------------------------- */
 .btn-lmn {
@@ -359,5 +378,10 @@ dialog .modal {
   color: #333;
   background-color: #ffc876;
   border-color: #1b272f;
+}
+.btn-upload {
+  position: relative;
+  top: 20px;
+  left: 370px;
 }
 

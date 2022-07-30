@@ -1,1 +1,1 @@
-{"": "", "Delete Samba files": "Supprimer les fichiers Samba"}
+{"": "", "Delete Samba files": "Supprimer les fichiers Samba", " moved!": " d\u00e9plac\u00e9 !", " copied!": " copi\u00e9\u00a0!"}

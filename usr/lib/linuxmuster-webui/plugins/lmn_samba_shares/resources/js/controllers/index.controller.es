@@ -1,8 +1,12 @@
-angular.module('lmn.samba_shares').controller('HomeIndexController', function($scope, $routeParams, $window, $localStorage, $timeout, $q, $http, notify, identity, smbclient, pageTitle, urlPrefix, messagebox, gettext) {
-    pageTitle.set('path', $scope);
+angular.module('lmn.samba_shares').controller('HomeIndexController', function($scope, $routeParams, $window, $localStorage, $timeout, $q, $http, notify, identity, smbclient, pageTitle, urlPrefix, messagebox, gettext, tasks) {
+    pageTitle.set(gettext('Samba shares'));
 
     $scope.loading = true;
     $scope.active_share = '';
+    $scope.newDirectoryDialogVisible = false;
+    $scope.newFileDialogVisible = false;
+    $scope.clipboardVisible = false;
+    $scope.uploadProgress = [];
 
     identity.promise.then(() => {
         if (identity.user == 'root') {
@@ -60,6 +64,12 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function($s
             });
     };
 
+    $scope.isEmptyDir = (path) => {
+       return smbclient.list(path).then((data) => {
+           return data.items.length == 0;
+       });
+    };
+
     $scope.rename = (item) => {
         old_path = item.path;
         messagebox.prompt(gettext('New name :'), item.name).then( (msg) => {
@@ -73,7 +83,77 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function($s
         });
     };
 
+    $scope.addClipboardOperation = (item, mode) => {
+        for (element of $scope.clipboard) {
+            if (element.item.path == item.path) {
+                position = $scope.clipboard.indexOf(element);
+                $scope.clipboard.splice(position, 1);
+            };
+        };
+        $scope.clipboard.push({item, 'mode': mode});
+    };
+
+    $scope.doCut = () => {
+        for (let item of $scope.items) {
+            if (item.selected) {
+                if (item.isDir) {
+                    $scope.isEmptyDir(item.path).then((resp) => {
+                        if (resp) {
+                            $scope.addClipboardOperation(item, 'move');
+                        } else {
+                            notify.error(gettext("Can not cut/copy or delete non empty directories !"));
+                        };
+                    });
+                }
+                else {
+                    $scope.addClipboardOperation(item, 'move');
+                }
+            }
+        }
+        $scope.clear_selection();
+    };
+
+    $scope.doCopy = () => {
+        for (let item of $scope.items) {
+            if (item.selected) {
+                if (item.isDir) {
+                    $scope.isEmptyDir(item.path).then((resp) => {
+                        if (resp) {
+                            $scope.addClipboardOperation(item, 'copy');
+                        } else {
+                            notify.error(gettext("Can not cut/copy or delete non empty directories !"));
+                        };
+                    });
+                } else {
+                    $scope.addClipboardOperation(item, 'copy');
+                };
+            }
+        }
+        $scope.clear_selection();
+    };
+
+    $scope.doPaste = () => {
+        // Cut and/or copy a list of files
+        // Problem with error handling in promise list
+        let items = angular.copy($scope.clipboard);
+        promises = []
+        for (let item of items) {
+            if (item.mode == 'copy') {
+                promises.push(smbclient.copy(item.item.path, $scope.current_path + '/' + item.item.name));
+            }
+            if (item.mode == 'move') {
+                promises.push(smbclient.move(item.item.path, $scope.current_path + '/' + item.item.name));
+            }
+        }
+        $q.all(promises).then(() => {
+            $scope.clear_selection();
+            $scope.clearClipboard();
+            $scope.reload();
+        });
+    };
+
     $scope.delete_file = (path) => {
+        // Delete directly one single file
         messagebox.show({
             text: gettext("Do you really want to delete this file?"),
             positive: gettext('Delete'),
@@ -89,6 +169,8 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function($s
     };
 
     $scope.doDelete = () =>
+        // Delete a list of selected files
+        // Problem with error handling in promise list
         messagebox.show({
             text: gettext('Delete selected items?'),
             positive: gettext('Delete'),
@@ -106,30 +188,76 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function($s
             });
         })
 
-    $scope.create_dir = () => {
-        messagebox.prompt(gettext('New directory name :'), '').then( (msg) => {
-            path = $scope.current_path + '/' + msg.value;
-            smbclient.createDirectory(path).then((data) => {
-                notify.success(path + gettext(' created !'));
-            $scope.reload();
-        }, (resp) => {
-                notify.error(gettext('Error during creating directory: '), resp.data.message);
-            });
+    $scope.delete_dir = (path) => {
+        // Directly delete a single directory
+        $scope.isEmptyDir(path).then((resp) => {
+            if (resp) {
+                messagebox.show({
+                    text: gettext("Do you really want to delete this directory?"),
+                    positive: gettext('Delete'),
+                    negative: gettext('Cancel')
+                }).then( () => {
+                    smbclient.delete_dir(path).then((data) => {
+                        notify.success(path + gettext(' deleted !'));
+                        $scope.reload();
+                    }, (resp) => {
+                        notify.error(gettext('Error during deleting : '), resp.data.message);
+                    });
+                });
+            } else {
+                notify.error(gettext("Can not cut/copy or delete non empty directories !"));
+            };
         });
     };
 
-    $scope.delete_dir = (path) => {
-        messagebox.show({
-            text: gettext("Do you really want to delete this directory? This is only possible if the directory is empty."),
-            positive: gettext('Delete'),
-            negative: gettext('Cancel')
-        }).then( () => {
-            smbclient.delete_dir(path).then((data) => {
-                notify.success(path + gettext(' deleted !'));
-                $scope.reload();
-            }, (resp) => {
-                notify.error(gettext('Error during deleting : '), resp.data.message);
-            });
+    $localStorage.sambaSharesClipboard = $localStorage.sambaSharesClipboard || [];
+    $scope.clipboard = $localStorage.sambaSharesClipboard;
+
+    $scope.showClipboard = () => $scope.clipboardVisible = true;
+
+    $scope.hideClipboard = () => $scope.clipboardVisible = false;
+
+    $scope.clearClipboard = function() {
+        $scope.clipboard.length = 0;
+        $scope.hideClipboard();
+    };
+
+    // new file dialog
+
+    $scope.showNewFileDialog = function() {
+        $scope.newFileName = '';
+        $scope.newFileDialogVisible = true;
+    };
+
+    $scope.doCreateFile = function() {
+        if (!$scope.newFileName) {
+            return;
+        }
+        return smbclient.createFile($scope.current_path + '/' + $scope.newFileName).then(() => {
+            $scope.reload();
+            $scope.newFileDialogVisible = false;
+        }, (err) => {
+            notify.error(gettext('Could not create file'), err.data.message)
+        });
+    };
+
+    // new directory dialog
+
+    $scope.showNewDirectoryDialog = function() {
+        $scope.newDirectoryName = '';
+        $scope.newDirectoryDialogVisible = true;
+    };
+
+    $scope.doCreateDirectory = function() {
+        if (!$scope.newDirectoryName) {
+            return;
+        }
+
+        return smbclient.createDirectory($scope.current_path + '/' + $scope.newDirectoryName).then(() => {
+            $scope.reload();
+            $scope.newDirectoryDialogVisible = false;
+        }, (err) => {
+            notify.error(gettext('Could not create directory'), err.data.message)
         });
     };
 
@@ -141,4 +269,31 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function($s
         });
     };
 
+    $scope.areUploadsFinished = () => {
+        numUploads = $scope.uploadProgress.length;
+        if (numUploads == 0) {
+            return true;
+        };
+
+        globalProgress = 0;
+        for (p of $scope.uploadProgress) {
+            globalProgress += p.progress;
+        }
+        return numUploads * 100 == globalProgress;
+    }
+
+    $scope.sambaSharesUploadBegin = ($flow) => {
+        $scope.uploadProgress = [];
+        $scope.uploadFiles = [];
+        for (file in $flow.files) {
+            $scope.uploadFiles.push(file.name);
+        }
+        $scope.files_list = $scope.uploadFiles.join(', ');
+        smbclient.startFlowUpload($flow, $scope.current_path).then((resp) => {
+            notify.success(gettext('Uploaded ') + $scope.files_list);
+            $scope.reload();
+        }, null, (progress) => {
+            $scope.uploadProgress = progress.sort((a, b) => a.name > b.name);
+        });
+    };
 });

@@ -1,28 +1,60 @@
 <<<<<<< HEAD
-linuxmuster-webui7 (17.1.17.2) lmn71; urgency=low
+linuxmuster-webui7 (17.1.25) lmn71; urgency=low
 
-  * Allow schooladmins to delete projects
+  * Fixed Multischool support in lmn_quotas and lmn_linbo_sync
 
- -- Andreas Till <andreas.till@netzint.de>  Mon, 16 May 2022 16:13:58 +0200
-
-linuxmuster-webui7 (17.1.17.1) lmn71; urgency=medium
- 
- * Merge changes + New build
- 
- -- Lukas Spitznagel <lukas.spitznagel@netzint.de>  Tue, 10 May 2022 17:31:45 +0100
-
-linuxmuster-webui7 (17.1.16.1) lmn71; urgency=medium
- 
- * New build
- 
- -- Andreas Till <andreas.till@netzint.de>  Wed, 13 Apr 2022 18:20:45 +0100
-
-linuxmuster-webui7 (17.1.5.1) lmn71; urgency=medium
-
- * New build
-
- -- Andreas Till <andreas.till@netzint.de>  Wed, 15 Feb 2022 15:24:45 +0100
+ -- Andreas Till <andreas.till@netzint.de>  Tue, 14 Jun 2022 18:46:59 +0200
 =======
+linuxmuster-webui7 (7.1.29) lmn71; urgency=medium
+
+  * Fix gitignore and add right build files 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 25 Jul 2022 23:20:38 +0200
+
+linuxmuster-webui7 (7.1.28) lmn71; urgency=medium
+
+  * Fix stupid dependecy error
+  * [clients] : add locales 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 25 Jul 2022 22:56:52 +0200
+
+linuxmuster-webui7 (7.1.27) lmn71; urgency=medium
+
+  * Upgrade Ajenti 2.2.1
+  * Add settings for trusted domains and proxies
+  * [linbo_sync] : fix online test behind firewall
+  * [linbo_sync] : new icons for online status 
+  * New plugin lmn_clients to edit custom sysvol scripts
+  * [home] : add cut/copy/clipboard methods
+  * [home] : dragdrop fully integrated in view
+  * [home] : better error handling
+  * Publish home plugin for all users 
+  * Diverses fixs and cleanup
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 25 Jul 2022 19:52:37 +0200
+
+linuxmuster-webui7 (7.1.26) lmn71; urgency=medium
+
+  * Upgrade Ajenti 2.2.0
+  * Fix logged passwords
+  * Better handle kerberos dependencies
+  * Add config parameter for https redirect
+  * [smbclient] Experimental support for DFS shares
+  * Prepare container for iframes
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 16 Jul 2022 11:50:36 +0200
+
+linuxmuster-webui7 (7.1.25) lmn71; urgency=medium
+
+  * [linbo_sync, quotas, devices] Add multischool support (@PlanB2008)
+  * Remove deprecated deb dependecies
+  * [settings] Add fields to configure name and tftp servers
+  * Pin gssapi version ta avoid kerberos auth problems
+  * Proper handling of question mark in passwords 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 24 Jun 2022 14:57:08 +0200
+>>>>>>> test123
+
 linuxmuster-webui7 (7.1.24) lmn71; urgency=medium
 
   * Setup : Remove dollar from global-admin password
@@ -45,7 +77,6 @@ linuxmuster-webui7 (7.1.22) lmn71; urgency=medium
 
  -- Arnaud Kientz <arnaud@linuxmuster.net>  Wed, 11 May 2022 21:49:42 +0200
 
->>>>>>> upstream-lmn
 linuxmuster-webui7 (7.1.21) lmn71; urgency=medium
 
   * Idiotic typo 
@@ -87,6 +118,30 @@ linuxmuster-webui7 (7.1.17) lmn71; urgency=medium
   * Use concurrency to accelerate transfers in session plugin
 
  -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 01 May 2022 11:32:34 +0200
+ 
+linuxmuster-webui7 (17.1.17.2) lmn71; urgency=low
+
+  * Allow schooladmins to delete projects
+
+ -- Andreas Till <andreas.till@netzint.de>  Mon, 16 May 2022 16:13:58 +0200
+
+linuxmuster-webui7 (17.1.17.1) lmn71; urgency=medium
+ 
+ * Merge changes + New build
+ 
+ -- Lukas Spitznagel <lukas.spitznagel@netzint.de>  Tue, 10 May 2022 17:31:45 +0100
+
+linuxmuster-webui7 (17.1.16.1) lmn71; urgency=medium
+ 
+ * New build
+ 
+ -- Andreas Till <andreas.till@netzint.de>  Wed, 13 Apr 2022 18:20:45 +0100
+
+linuxmuster-webui7 (17.1.5.1) lmn71; urgency=medium
+
+ * New build
+
+ -- Andreas Till <andreas.till@netzint.de>  Wed, 15 Feb 2022 15:24:45 +0100
 
 linuxmuster-webui7 (7.1.16) lmn71; urgency=medium
 

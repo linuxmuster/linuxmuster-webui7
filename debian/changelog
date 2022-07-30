@@ -1,3 +1,9 @@
+linuxmuster-webui7 (17.1.26) lmn71; urgency=low
+
+  *  Merged upstream
+
+ -- Andreas Till <andreas.till@netzint.de>  Sat, 30 Jul 2022 15:19:58 +0200
+
 linuxmuster-webui7 (17.1.25) lmn71; urgency=low
 
   * Fixed Multischool support in lmn_quotas and lmn_linbo_sync

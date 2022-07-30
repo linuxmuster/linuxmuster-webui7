@@ -11,6 +11,7 @@ import ast
 import logging
 from pprint import pformat
 from .lmnfile import LMNFile
+from configobj import ConfigObj
 
 
 # Load Webui settings
@@ -23,6 +24,10 @@ else:
     lmconfig = {}
     ldap_config = {}
     logging.error("Without config.yml the users will not be able to login.")
+
+# Load samba domain
+smbconf = ConfigObj('/etc/samba/smb.conf')
+samba_domain = f'{smbconf["global"]["netbios name"]}.{smbconf["global"]["realm"]}'.lower()
 
 # Fix missing entries in the lmconfig. Should be later refactored
 # and the config file should be splitted
@@ -37,13 +42,10 @@ try:
     with LMNFile('/var/lib/linuxmuster/setup.ini', 'r') as s:
         try:
             lmsetup_schoolname = s.data['setup']['schoolname']
-            samba_domain = s.data['setup']['domainname']
         except KeyError:
             lmsetup_schoolname = None
-            samba_domain = None
 except FileNotFoundError:
     lmsetup_schoolname = None
-    samba_domain = None
 
 class SophomorixProcess(threading.Thread):
     """

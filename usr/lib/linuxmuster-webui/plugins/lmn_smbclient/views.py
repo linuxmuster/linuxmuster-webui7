@@ -46,7 +46,6 @@ class Handler(HttpPlugin):
 
             profil = AuthenticationService.get(self.context).get_provider().get_profile(user)
             role = profil['sophomorixRole']
-            home_path = profil['homeDirectory']
             #try:
             #    domain = re.search(r'\\\\([^\\]*)\\', home_path).groups()[0]
             #except AttributeError:
@@ -56,17 +55,17 @@ class Handler(HttpPlugin):
 
             if school in self.context.schoolmgr.dfs.keys():
                 share_prefix = self.context.schoolmgr.dfs[school]['dfs_proxy']
-                if role == 'globaladministrator':
-                    # TODO : path not correct
-                    home_path = f'{share_prefix}\\global\\management\\{user}'
-                elif role == 'schooladministrator':
-                    # TODO : path not correct
-                    home_path = f'{share_prefix}\\management\\{user}'
-                else:
-                    home_path = f'{share_prefix}\\{role}s\\{user}'
             else:
                 share_prefix = f'\\\\{samba_domain}\\{school}'
-                home_path = profil['homeDirectory']
+
+            if role == 'globaladministrator':
+                # TODO : path not correct
+                home_path = f'{share_prefix}\\global\\management\\{user}'
+            elif role == 'schooladministrator':
+                # TODO : path not correct
+                home_path = f'{share_prefix}\\management\\{user}'
+            else:
+                home_path = f'{share_prefix}\\{role}s\\{user}'
 
             home = {
                 'name' : 'Home',

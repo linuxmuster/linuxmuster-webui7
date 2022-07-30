@@ -761,13 +761,27 @@
           return $http.get(`/api/lm/linbo4/config/${configName}`).then(function(resp) {
             resp.data.config.LINBO.Group = newName;
             return $http.post(`/api/lm/linbo4/config/start.conf.${newName}`, resp.data).then(function() {
+              var config, i, index, len, newConfig, ref, results;
               if (deleteOriginal) {
-                return $http.delete(`/api/lm/linbo4/config/${configName}`).then(function() {
+                $http.delete(`/api/lm/linbo4/config/${configName}`).then(function() {
                   return $scope.config_change = true;
                 });
               } else {
-                return $scope.config_change = true;
+                $scope.config_change = true;
               }
+              ref = $scope.configs;
+              results = [];
+              for (index = i = 0, len = ref.length; i < len; index = ++i) {
+                config = ref[index];
+                if (configName === config.file) {
+                  newConfig = angular.copy(config);
+                  newConfig.file = `start.conf.${newName}`;
+                  results.push($scope.configs.push(newConfig));
+                } else {
+                  results.push(void 0);
+                }
+              }
+              return results;
             });
           });
         }

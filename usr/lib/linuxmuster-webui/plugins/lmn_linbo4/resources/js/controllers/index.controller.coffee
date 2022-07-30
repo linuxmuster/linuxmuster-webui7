@@ -613,6 +613,11 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
                                 $scope.config_change = true
                         else
                             $scope.config_change = true
+                        for config, index in $scope.configs
+                            if configName == config.file
+                                newConfig = angular.copy(config)
+                                newConfig.file = "start.conf.#{newName}"
+                                $scope.configs.push(newConfig)
 
     $scope.showBackups = (image) ->
         $uibModal.open(

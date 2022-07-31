@@ -4,8 +4,13 @@
 <div class="modal-body">
     <div class="alert alert-danger" ng:show="error">
         <i class="fa fa-warning"></i> <span translate>Check failed</span>
-        <br>
-        {{errorMessage}}
+        <br />
+        <br />
+        <div ng:repeat="(error, details) in errorList">
+            <br />
+            {{error}}<br />
+            --> {{details.REASON}}
+        </div>
     </div>
     <progress-spinner ng:show="isWorking"></progress-spinner>
     <lm-log path="'/tmp/sophomorix-check.log'"></lm-log>

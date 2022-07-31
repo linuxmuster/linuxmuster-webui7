@@ -85,7 +85,8 @@
 
                 <a ng:click="showNewFileDialog()" class="btn btn-default btn-flat" translate>New file</a>
                 <a ng:click="showNewDirectoryDialog()" class="btn btn-default btn-flat" translate>New directory</a>
-                <a class="btn btn-default btn-flat" flow-btn translate>Upload</a>
+                <!-- Flow init button only reactiv with span under Firefox               -->
+                <span class="btn btn-default btn-flat" flow-btn translate>Upload</span>
 
                 <a ng:click="doPaste()" ng:show="clipboard.length > 0" class="btn btn-default btn-flat" translate>Paste here</a>
             </floating-toolbar>

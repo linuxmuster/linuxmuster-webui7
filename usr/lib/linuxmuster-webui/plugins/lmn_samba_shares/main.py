@@ -12,7 +12,7 @@ class ItemProvider(SidebarItemProvider):
         return [
             {
                 'attach': 'category:general',
-                'name': 'My files',
+                'name': _('My files'), # skipcq: PYL-E0602
                 'icon': 'fas fa-folder-open',
                 'url': '/view/lmn/home',
                 'children': []

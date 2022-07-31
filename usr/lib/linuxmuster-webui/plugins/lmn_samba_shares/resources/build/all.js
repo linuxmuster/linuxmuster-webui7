@@ -64,6 +64,14 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function ($
         }
     });
 
+    $scope.isProtectedFile = function (item) {
+        // Actually only 2 file types, restraining tests
+        if (["transfer", ".upload"].includes(item.name)) {
+            return $scope.protectedFiles.indexOf(item.path) > -1;
+        }
+        return false;
+    };
+
     $scope.reload = function () {
         return $scope.load_path($scope.current_path);
     };
@@ -102,6 +110,11 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function ($
 
         shareObj.active = true;
         $scope.active_share = shareObj;
+        $scope.protectedFiles = [];
+
+        if (shareObj.name == 'Home') $scope.protectedFiles.push(shareObj.path + '/transfer');
+        $scope.protectedFiles.push(shareObj.path + '/.upload');
+
         $scope.load_path(shareObj.path);
     };
 

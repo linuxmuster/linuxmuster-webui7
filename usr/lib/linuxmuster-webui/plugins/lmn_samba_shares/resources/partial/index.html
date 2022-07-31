@@ -55,17 +55,17 @@
                 <a ng:click="delete_file(item.path)" class="list-group-btn" ng:if="item.isFile">
                     <i class="fa fa-trash"></i>
                 </a>
-                <a ng:click="delete_dir(item.path)" class="list-group-btn" ng:if="item.isDir && item.name != 'transfer' && item.name != '.upload'">
+                <a ng:click="delete_dir(item.path)" class="list-group-btn" ng:if="item.isDir && !isProtectedFile(item)">
                     <i class="fa fa-trash"></i>
                 </a>
-                <a ng:click="rename(item)" class="list-group-btn" ng:if="item.name != 'transfer' && item.name != '.upload'">
+                <a ng:click="rename(item)" class="list-group-btn" ng:if="!isProtectedFile(item)">
                     <i class="fa fa-pen"></i>
                 </a>
                 <a ng:click="download(item.path)" class="list-group-btn" ng:if="item.isFile">
                     <i class="fas fa-download"></i>
                 </a>
                 <div class="list-group-addon pull-left">
-                    <span class="subtle" checkbox ng:model="item.selected" ng:if="item.name != 'transfer' && item.name != '.upload'"></span>
+                    <span class="subtle" checkbox ng:model="item.selected" ng:if="!isProtectedFile(item)"></span>
                 </div>
                 <a ng:click="load_path(item.path)" class="list-group-main" ng:if="item.isDir">
                     <i class="fa fa-fw fa-folder"></i>

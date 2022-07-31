@@ -1,3 +1,14 @@
+linuxmuster-webui7 (7.1.31) lmn71; urgency=medium
+
+  * [linbo4] Display new duplicate start.conf on create
+  * [linbo4] Remove linbo backup warning
+  * [home] Bigger frame for upload and fix upload button
+  * [home] Fix transfer and upload directory bug
+  * [devices] Better handle add, remove and duplicate
+  * [devices] Better display new devices 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 31 Jul 2022 19:13:33 +0200
+
 linuxmuster-webui7 (7.1.30) lmn71; urgency=medium
 
   * [linbo_sync] Fix backup handling

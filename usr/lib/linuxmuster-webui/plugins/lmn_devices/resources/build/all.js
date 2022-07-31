@@ -235,6 +235,13 @@
       $scope.show_errors = false;
       $scope.devices_form.$setPristine();
       return $http.post('/api/lm/devices', $scope.devices).then(function() {
+        var device, i, len, ref;
+        ref = $scope.devices;
+        // Reset all isNew tags
+        for (i = 0, len = ref.length; i < len; i++) {
+          device = ref[i];
+          device._isNew = false;
+        }
         return notify.success(gettext('Saved'));
       });
     };

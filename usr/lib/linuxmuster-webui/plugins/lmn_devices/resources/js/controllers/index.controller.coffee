@@ -198,6 +198,9 @@ angular.module('lmn.devices').controller 'LMDevicesController', ($scope, $http, 
         $scope.show_errors = false
         $scope.devices_form.$setPristine()
         return $http.post('/api/lm/devices', $scope.devices).then () ->
+            # Reset all isNew tags
+            for device in $scope.devices
+                device._isNew = false
             notify.success gettext('Saved')
 
     $scope.saveAndImport = () ->

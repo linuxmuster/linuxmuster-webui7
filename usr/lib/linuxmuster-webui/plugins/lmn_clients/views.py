@@ -6,7 +6,7 @@ from aj.api.http import get, post, HttpPlugin
 from aj.auth import authorize
 from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize, AuthenticationService
-from aj.plugins.lmn_common.api import samba_domain
+from aj.plugins.lmn_common.api import samba_realm
 
 @component(HttpPlugin)
 class Handler(HttpPlugin):
@@ -26,13 +26,13 @@ class Handler(HttpPlugin):
             logging.warning(f'{path} does not exists !')
             return ""
 
-        if samba_domain is None:
+        if samba_realm is None:
             logging.error(_('Unable to determine samba domain'))
             return {}
 
         school = self.context.schoolmgr.school
 
-        custom_script_path = f'/var/lib/samba/sysvol/{samba_domain}/scripts/{school}/custom/'
+        custom_script_path = f'/var/lib/samba/sysvol/{samba_realm}/scripts/{school}/custom/'
         scripts_linux = ['logoff.sh', 'logon.sh', 'sysstart.sh', 'sysstop.sh']
         scripts_windows = ['logoff.bat', 'logon.bat', 'sysstart.bat', 'sysstop.bat']
 

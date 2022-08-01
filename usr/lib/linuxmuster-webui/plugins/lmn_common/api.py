@@ -27,7 +27,8 @@ else:
 
 # Load samba domain
 smbconf = ConfigObj('/etc/samba/smb.conf')
-samba_domain = f'{smbconf["global"]["netbios name"]}.{smbconf["global"]["realm"]}'.lower()
+samba_realm = smbconf["global"]["realm"].lower()
+samba_domain = f'{smbconf["global"]["netbios name"]}.{samba_realm}'.lower()
 
 # Fix missing entries in the lmconfig. Should be later refactored
 # and the config file should be splitted

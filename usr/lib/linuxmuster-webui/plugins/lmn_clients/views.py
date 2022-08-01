@@ -1,5 +1,5 @@
 from jadi import component
-import re
+import os
 import logging
 
 from aj.api.http import get, post, HttpPlugin
@@ -19,9 +19,12 @@ class Handler(HttpPlugin):
     def handle_api_get_clients_scripts(self, http_context):
 
         def read_script_content(path):
-            with open(path, 'r') as script:
-                content = script.read()
-            return content
+            if os.path.isfile(path):
+                with open(path, 'r') as script:
+                    content = script.read()
+                return content
+            logging.warning(f'{path} does not exists !')
+            return ""
 
         if samba_domain is None:
             logging.error(_('Unable to determine samba domain'))

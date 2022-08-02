@@ -1,3 +1,10 @@
+linuxmuster-webui7 (7.1.33) lmn71; urgency=medium
+
+  * [linbo4] Test backups timestamp before loading backup
+  * Fix semi-colon comment problem with configobj 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Tue, 02 Aug 2022 15:24:35 +0200
+
 linuxmuster-webui7 (7.1.32) lmn71; urgency=medium
 
   * [users] Integrate sophomorix-check errors

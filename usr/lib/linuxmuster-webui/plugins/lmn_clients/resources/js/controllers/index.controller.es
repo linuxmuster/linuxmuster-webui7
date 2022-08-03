@@ -33,7 +33,12 @@ angular.module('lmn.clients').controller('Lmn_clientsIndexController', function(
         });
     };
 
-    $scope.loadDrives();
+    $scope.saveDrives = () => {
+        $http.post('/api/lmn/samba/drives', {'drives': $scope.drives}).then((resp) =>
+            notify.success(gettext('Saved !'))
+            , (err) => notify.error(err.data.message)
+        );
+    };
 })
 .filter('driveLettersOptions', function($filter) {
     return function(value, driveLetter) {

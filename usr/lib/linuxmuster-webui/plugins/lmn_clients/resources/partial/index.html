@@ -46,11 +46,15 @@
                 </div>
             </dialog>
         </uib:tab>
-        <uib:tab heading="{{'Drives'|translate}}" ng:click="load_drives()">
+        <uib:tab heading="{{'Drives'|translate}}" ng:click="loadDrives()">
 
             <br />
 
-            <div>
+            <div class="alert alert-warning" ng:show="drives.length == 0" translate>
+                Unable to find a Drives.xml in your policy directory. Does the file really exists ?
+            </div>
+
+            <div ng:show="drives.length > 0">
                 <table class="table">
                     <tr>
                         <th translate>Label</th>
@@ -76,6 +80,9 @@
                     </tr>
                 </table>
             </div>
+            <floating-toolbar ng:show="drives.length > 0">
+                <a class="btn btn-lmn" ng:click="saveDrives()" translate>Save</a>
+            </floating-toolbar>
         </uib:tab>
     </uib:tabset>
 </div>

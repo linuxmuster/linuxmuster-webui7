@@ -85,7 +85,11 @@ class Handler(HttpPlugin):
         # xml_path = f'/var/lib/samba/sysvol/{samba_realm}/Policies/{policy}/User/Preferences/Drives/Drives.xml'
         xml_path = ""
 
-        tree = ElementTree.parse(xml_path)
+        try:
+            tree = ElementTree.parse(xml_path)
+        except FileNotFoundError:
+            return [], []
+
         drives = []
         usedLetter = []
         for drive in tree.findall('Drive'):
@@ -107,3 +111,33 @@ class Handler(HttpPlugin):
         ]
 
         return drives, availableDriveLetters
+
+    @post(r'/api/lmn/samba/drives')
+    @authorize('lmn:clients:config')
+    @endpoint(api=True)
+    def handle_api_post_samba_drives(self, http_context):
+
+        school = self.context.schoolmgr.school
+        # sophomorixCommand = ['sophomorix-school', '--gpo-listall', '-j']
+        # policy = lmn_getSophomorixValue(sophomorixCommand, f'LOOKUP/by_display_name/sophomorix:school:{school}')
+        # xml_path = f'/var/lib/samba/sysvol/{samba_realm}/Policies/{policy}/User/Preferences/Drives/Drives.xml'
+        xml_path = ""
+
+        drives_config = http_context.json_body()['drives']
+        try:
+            tree = ElementTree.parse(xml_path)
+        except FileNotFoundError:
+            raise EndpointError(_('Drives.xml not found !'))
+
+        # Backup
+        tree.write(f'{xml_path}.bak', encoding='utf-8', xml_declaration=True)
+
+        for drive in tree.findall('Drive'):
+            for prop in drive.findall('Properties'):
+                for newDrive in drives_config:
+                    if newDrive['properties']['label'] == prop.get('label', 'Unknown'):
+                        prop.set('letter', newDrive['properties']['letter'])
+                        prop.set('useLetter', str(int(newDrive['properties']['useLetter'])))
+                        drive.set('disabled', str(int(newDrive['disabled'])))
+
+        tree.write(xml_path, encoding='utf-8', xml_declaration=True)

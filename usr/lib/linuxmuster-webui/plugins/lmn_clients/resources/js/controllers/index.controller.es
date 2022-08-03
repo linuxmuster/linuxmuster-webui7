@@ -33,6 +33,13 @@ angular.module('lmn.clients').controller('Lmn_clientsIndexController', function(
         });
     };
 
+    $scope.updateAvailableLetters = (newValue, oldValue) => {
+        for (l of $scope.availableDriveLetters) {
+            if (l.letter == newValue) l.active = true;
+            if (l.letter == oldValue) l.active = false;
+        };
+    };
+
     $scope.saveDrives = () => {
         $http.post('/api/lmn/samba/drives', {'drives': $scope.drives}).then((resp) =>
             notify.success(gettext('Saved !'))

@@ -1,19 +1,23 @@
 from jadi import component
 import os
 import logging
+import string
+import xml.etree.ElementTree as ElementTree
 
 from aj.api.http import get, post, HttpPlugin
 from aj.auth import authorize
 from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize, AuthenticationService
 from aj.plugins.lmn_common.api import samba_realm
+from aj.plugins.lmn_common.api import lmn_getSophomorixValue
+
 
 @component(HttpPlugin)
 class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
 
-    @get(r'/api/lmn_clients_scripts')
+    @get(r'/api/lmn/clients/scripts')
     @authorize('lmn:clients:config')
     @endpoint(api=True)
     def handle_api_get_clients_scripts(self, http_context):
@@ -54,7 +58,7 @@ class Handler(HttpPlugin):
             ],
         }
 
-    @post(r'/api/lmn_client_script')
+    @post(r'/api/lmn/client/script')
     @authorize('lmn:clients:config')
     @endpoint(api=True)
     def handle_api_write_clients_scripts(self, http_context):
@@ -69,3 +73,37 @@ class Handler(HttpPlugin):
             http_context.respond_not_found()
             return
 
+
+    @get(r'/api/lmn/samba/drives')
+    @authorize('lmn:clients:config')
+    @endpoint(api=True)
+    def handle_api_get_samba_drives(self, http_context):
+
+        school = self.context.schoolmgr.school
+        # sophomorixCommand = ['sophomorix-school', '--gpo-listall', '-j']
+        # policy = lmn_getSophomorixValue(sophomorixCommand, f'LOOKUP/by_display_name/sophomorix:school:{school}')
+        # xml_path = f'/var/lib/samba/sysvol/{samba_realm}/Policies/{policy}/User/Preferences/Drives/Drives.xml'
+        xml_path = ""
+
+        tree = ElementTree.parse(xml_path)
+        drives = []
+        usedLetter = []
+        for drive in tree.findall('Drive'):
+            drive_attr = {'properties': {}}
+            drive_attr['disabled'] = bool(int(drive.attrib.get('disabled', '0')))
+            for prop in drive.findall('Properties'):
+                drive_attr['properties']['useLetter'] = bool(int(prop.get('useLetter', '0')))
+                drive_attr['properties']['letter'] = prop.get('letter', '')
+                drive_attr['properties']['label'] = prop.get('label', 'Unknown')
+                usedLetter.append(drive_attr['properties']['letter'])
+
+            drives.append(drive_attr)
+
+        availableDriveLetters = [ {
+            'letter': l,
+            'active': False if l not in usedLetter else True,
+            }
+            for l in list(string.ascii_letters[26:])
+        ]
+
+        return drives, availableDriveLetters

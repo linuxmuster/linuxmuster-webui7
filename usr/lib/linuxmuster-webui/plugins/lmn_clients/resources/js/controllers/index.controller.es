@@ -4,26 +4,40 @@ angular.module('lmn.clients').controller('Lmn_clientsIndexController', function(
     $scope.pathToEdit = '';
     $scope.scriptContent = '';
 
-    $http.get('/api/lmn_clients_scripts').then( (resp) => {
+    $http.get('/api/lmn/clients/scripts').then( (resp) => {
         $scope.custom_scripts_path = resp.data['path'];
 	    $scope.custom_scripts_linux = resp.data['linux'];
         $scope.custom_scripts_windows = resp.data['windows'];
     });
 
-    $scope.edit = (script) => {
+    $scope.editScript = (script) => {
         $scope.scriptToEdit = script;
     };
 
-    $scope.save = (script) => {
-        $http.post('/api/lmn_client_script', {'path':script.path, 'content':script.content}).then(() => {
+    $scope.saveScript = (script) => {
+        $http.post('/api/lmn/client/script', {'path':script.path, 'content':script.content}).then(() => {
                 $scope.scriptToEdit = '';
                 notify.success(gettext('Script saved !'));
             }, () => notify.error(gettext('Error while saving script'))
         );
     };
 
-    $scope.close = () => {
+    $scope.closeEditScript = () => {
         $scope.scriptToEdit = '';
+    };
+
+    $scope.loadDrives = () => {
+        $http.get('/api/lmn/samba/drives').then((resp) => {
+            $scope.drives = resp.data[0];
+            $scope.availableDriveLetters = resp.data[1];
+        });
+    };
+
+    $scope.loadDrives();
+})
+.filter('driveLettersOptions', function($filter) {
+    return function(value, driveLetter) {
+        return value.filter((obj) => !obj.active || obj.active && obj.letter == driveLetter);
     };
 });
 

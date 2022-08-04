@@ -60,7 +60,7 @@ class Handler(HttpPlugin):
 
             if role == 'globaladministrator':
                 # TODO : path not correct
-                home_path = f'{share_prefix}\\global\\management\\{user}'
+                home_path = f'\\\\{samba_domain}\\linuxmuster-global\\management\\{user}'
             elif role == 'schooladministrator':
                 # TODO : path not correct
                 home_path = f'{share_prefix}\\management\\{user}'

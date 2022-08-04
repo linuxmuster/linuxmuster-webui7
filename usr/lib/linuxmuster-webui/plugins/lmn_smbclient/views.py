@@ -13,7 +13,6 @@ from aj.api.http import url, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
 from aj.auth import authorize, AuthenticationService
 from aj.plugins.lmn_common.mimetypes import content_mimetypes
-from aj.plugins.lmn_common.api import samba_domain
 
 
 # TODO
@@ -44,102 +43,8 @@ class Handler(HttpPlugin):
             if user is None:
                 user = self.context.identity
 
-            profil = AuthenticationService.get(self.context).get_provider().get_profile(user)
-            role = profil['sophomorixRole']
-            #try:
-            #    domain = re.search(r'\\\\([^\\]*)\\', home_path).groups()[0]
-            #except AttributeError:
-            #    domain = ''
-            
-            school = self.context.schoolmgr.school
-
-            if school in self.context.schoolmgr.dfs.keys():
-                share_prefix = self.context.schoolmgr.dfs[school]['dfs_proxy']
-            else:
-                share_prefix = f'\\\\{samba_domain}\\{school}'
-
-            if role == 'globaladministrator':
-                # TODO : path not correct
-                home_path = f'\\\\{samba_domain}\\linuxmuster-global\\management\\{user}'
-            elif role == 'schooladministrator':
-                # TODO : path not correct
-                home_path = f'{share_prefix}\\management\\{user}'
-            else:
-                home_path = f'{share_prefix}\\{role}s\\{user}'
-
-            home = {
-                'name' : 'Home',
-                'path' : home_path,
-                'icon' : 'fas fa-home',
-                'active': False,
-            }
-            linuxmuster_global = {
-                'name' : 'Linuxmuster-Global',
-                'path' : f'\\\\{samba_domain}\\linuxmuster-global',
-                'icon' : 'fas fa-globe',
-                'active': False,
-            }
-            all_schools = {
-                'name' : school,
-                'path' : share_prefix,
-                'icon' : 'fas fa-school',
-                'active': False,
-            }
-            # teachers = {
-            #     'name' : 'Teachers',
-            #     'path' : f'{share_prefix}\\teachers',
-            #     'icon' : 'fas fa-chalkboard-teacher',
-            #     'active': False,
-            # }
-            students = {
-                'name' : 'Students',
-                'path' : f'{share_prefix}\\students',
-                'icon' : 'fas fa-user-graduate',
-                'active': False,
-            }
-            share = {
-                'name' : 'Share',
-                'path' : f'{share_prefix}\\share',
-                'icon' : 'fas fa-hand-holding',
-                'active': False,
-            }
-            program = {
-                'name' : 'Programs',
-                'path' : f'{share_prefix}\\program',
-                'icon' : 'fas fa-desktop',
-                'active': False,
-            }
-            # iso = {
-            #     'name' : 'ISO',
-            #     'path' : f'{share_prefix}\\iso',
-            #     'icon' : 'fas fa-compact-disc',
-            #     'active': False,
-            # }
-
-            shares = {
-                'globaladministrator': [
-                    home,
-                    linuxmuster_global,
-                    all_schools,
-                ],
-                'schooladministrator': [
-                    home,
-                    all_schools,
-                ],
-                'teacher': [
-                    home,
-                    students,
-                    program,
-                    share,
-                ],
-                'student': [
-                    home,
-                    share,
-                    program,
-                ]
-            }
-
-            return shares[role]
+            role = AuthenticationService.get(self.context).get_provider().get_profile(user)['sophomorixRole']
+            return self.context.schoolmgr.get_shares(user, role)
 
     @url(r'/api/lmn/smbclient/list')
     @endpoint(api=True)
@@ -380,7 +285,8 @@ class Handler(HttpPlugin):
         """
 
         user = self.context.identity
-        home = AuthenticationService.get(self.context).get_provider().get_profile(user)['homeDirectory']
+        role = AuthenticationService.get(self.context).get_provider().get_profile(user)['sophomorixRole']
+        home = self.context.schoolmgr.get_homepath(user, role)
         upload_dir = f'{home}\\.upload'
 
         if not smbclient.path.exists(upload_dir):
@@ -428,7 +334,8 @@ class Handler(HttpPlugin):
         targets = []
 
         user = self.context.identity
-        home = AuthenticationService.get(self.context).get_provider().get_profile(user)['homeDirectory']
+        role = AuthenticationService.get(self.context).get_provider().get_profile(user)['sophomorixRole']
+        home = self.context.schoolmgr.get_homepath(user, role)
         upload_dir = f'{home}/.upload'
 
         for file in files:

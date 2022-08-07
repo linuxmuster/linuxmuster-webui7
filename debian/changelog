@@ -1,3 +1,10 @@
+linuxmuster-webui7 (7.1.35) lmn71; urgency=medium
+
+  * [home] Fix upload and admin paths
+  * [home] Handle more error cases 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 07 Aug 2022 12:34:16 +0200
+
 linuxmuster-webui7 (7.1.34) lmn71; urgency=medium
 
   * [clients] Prepare config for drives.xml

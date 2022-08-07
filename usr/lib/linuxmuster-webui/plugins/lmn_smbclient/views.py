@@ -6,7 +6,8 @@ import os
 import re
 import smbclient
 import logging
-from smbprotocol.exceptions import SMBOSError
+from smbprotocol.exceptions import SMBOSError, NotFound, SMBAuthenticationError, InvalidParameter
+from spnego.exceptions import BadMechanismError
 from jadi import component
 
 from aj.api.http import url, HttpPlugin
@@ -94,15 +95,14 @@ class Handler(HttpPlugin):
                             'gid': stat.st_gid,
                             'size': stat.st_size,
                         })
-                    except SMBOSError as e:
+                    except (ValueError, SMBOSError, NotFound) as e:
                         data['accessError'] = str(e)
                         # if e.errno == errno.ENOENT and os.path.islink(item_path):
                         #     data['brokenLink'] = True
 
                     items.append(data)
-            except Exception as e: #spnego.exceptions.BadMechanismError:
-                logging.error("%s", e)
-                return {}
+            except (BadMechanismError, SMBAuthenticationError) as e:
+                raise EndpointError(f"There's a problem with the kerberos authentication : {e}")
             return {
                 'parent': '', # TODO
                 'items': items
@@ -125,8 +125,10 @@ class Handler(HttpPlugin):
 
             try:
                 smbclient.makedirs(path)
-            except (ValueError, SMBOSError) as e:
+            except (ValueError, SMBOSError, NotFound) as e:
                 raise EndpointError(e)
+            except InvalidParameter as e:
+                raise EndpointError(f'Problem with path {path} : {e}')
 
     @url(r'/api/lmn/smbclient/create-file')
     @endpoint(api=True)
@@ -146,8 +148,10 @@ class Handler(HttpPlugin):
             try:
                 with smbclient.open_file(path, 'w') as towrite:
                     pass
-            except (ValueError, SMBOSError) as e:
+            except (ValueError, SMBOSError, NotFound) as e:
                 raise EndpointError(e)
+            except InvalidParameter as e:
+                raise EndpointError(f'Problem with path {path} : {e}')
 
     @url(r'/api/lmn/smbclient/move')
     @endpoint(api=True)
@@ -167,7 +171,7 @@ class Handler(HttpPlugin):
 
             try:
                 smbclient.rename(src, dst)
-            except (ValueError, SMBOSError) as e:
+            except (ValueError, SMBOSError, NotFound) as e:
                 raise EndpointError(e)
 
     @url(r'/api/lmn/smbclient/copy')
@@ -188,7 +192,7 @@ class Handler(HttpPlugin):
 
             try:
                 smbclient.copyfile(src, dst)
-            except (ValueError, SMBOSError) as e:
+            except (ValueError, SMBOSError, NotFound) as e:
                 raise EndpointError(e)
 
     @url(r'/api/lmn/smbclient/dir')
@@ -209,7 +213,7 @@ class Handler(HttpPlugin):
 
             try:
                 smbclient.rmdir(path)
-            except (ValueError, SMBOSError) as e:
+            except (ValueError, SMBOSError, NotFound) as e:
                 raise EndpointError(e)
 
     @url(r'/api/lmn/smbclient/file')
@@ -229,7 +233,7 @@ class Handler(HttpPlugin):
 
             try:
                 smbclient.unlink(path)
-            except (ValueError, SMBOSError) as e:
+            except (ValueError, SMBOSError, NotFound) as e:
                 raise EndpointError(e)
 
     @url(r'/api/lmn/smbclient/stat')
@@ -267,7 +271,7 @@ class Handler(HttpPlugin):
                     'gid': stat.st_gid,
                     'size': stat.st_size,
                 })
-            except SMBOSError as e:
+            except (ValueError, SMBOSError, NotFound) as e:
                 data['accessError'] = str(e)
 
         return data
@@ -401,7 +405,7 @@ class Handler(HttpPlugin):
 
         try:
             smbclient.path.isfile(path)
-        except SMBOSError:
+        except (ValueError, SMBOSError, NotFound):
             http_context.respond_not_found()
             return
 
@@ -415,7 +419,7 @@ class Handler(HttpPlugin):
 
         try:
             content = smbclient.open_file(path, 'rb').read()
-        except SMBOSError:
+        except (ValueError, SMBOSError, NotFound):
             http_context.respond_not_found()
             return
 

@@ -1,4 +1,4 @@
-angular.module('lmn.samba_shares').controller('HomeIndexController', function($scope, $routeParams, $window, $localStorage, $timeout, $q, $http, notify, identity, smbclient, pageTitle, urlPrefix, messagebox, gettext, tasks) {
+angular.module('lmn.samba_shares').controller('HomeIndexController', function($scope, $routeParams, $window, $localStorage, $timeout, $q, $http, notify, identity, smbclient, pageTitle, urlPrefix, messagebox, gettext, tasks, toaster) {
     pageTitle.set(gettext('Samba shares'));
 
     $scope.loading = true;
@@ -72,7 +72,7 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function($s
                 $scope.items = data.items;
                 $scope.current_path = path;
             }, (resp) => {
-                notify.error(gettext('Could not load directory : '), resp.data.message)
+                toaster.pop('error', gettext("Could not load directory : "), resp.data.message, 5000);
             }).finally(() => {
                 $scope.loading = false
             });

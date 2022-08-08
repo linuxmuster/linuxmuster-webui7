@@ -103,6 +103,8 @@ class Handler(HttpPlugin):
                     items.append(data)
             except (BadMechanismError, SMBAuthenticationError) as e:
                 raise EndpointError(f"There's a problem with the kerberos authentication : {e}")
+            except InvalidParameter as e:
+                raise EndpointError("This server does not support this feature actually, but it will come soon!")
             return {
                 'parent': '', # TODO
                 'items': items

@@ -31,7 +31,7 @@ angular.module('lmn.linbo4').controller 'LMLINBO4AcceptModalController', ($scope
     $scope.close = () ->
         $uibModalInstance.dismiss()
 
-angular.module('lmn.linbo4').controller 'LMLINBO4PartitionModalController', ($scope, $uibModalInstance, $http, partition, os) ->
+angular.module('lmn.linbo4').controller 'LMLINBO4PartitionModalController', ($scope, $uibModalInstance, $http, partition, messagebox, os) ->
     $scope.partition = partition
     $scope.os = os
 
@@ -48,6 +48,12 @@ angular.module('lmn.linbo4').controller 'LMLINBO4PartitionModalController', ($sc
         oses = resp.data
         for os in oses
             $scope.images.push os.name + '.qcow2'
+        if $scope.images.indexOf($scope.os.BaseImage) < 0
+            $scope.images.push $scope.os.BaseImage
+
+    $scope.addNewImage = () ->
+       messagebox.prompt('New image name', '').then (msg) ->
+            $scope.images.push(msg.value)
 
     $scope.save = () ->
         $uibModalInstance.close(partition: $scope.partition, os: $scope.os)

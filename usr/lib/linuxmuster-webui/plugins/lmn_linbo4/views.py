@@ -60,20 +60,15 @@ class Handler(HttpPlugin):
                     os_list = f.read().get('os', [])
 
                 images = []
-                append = False
                 for OS in os_list:
                     image = OS.get('BaseImage', '')
-                    if '.qcow2' in image or image == '':
+                    if image.endswith('.qcow2'):
                         images.append(image)
-                        append = True
 
-                print(file, os_list, images)
-                # Append file even if there's no partition
-                if append or os_list == []:
-                    r.append({
+                r.append({
                         'file': file,
                         'images': images,
-                    })
+                })
         return r
 
     @url(r'/api/lm/linbo4/examples')

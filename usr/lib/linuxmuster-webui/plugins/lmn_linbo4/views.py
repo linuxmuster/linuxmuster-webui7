@@ -62,7 +62,7 @@ class Handler(HttpPlugin):
                 images = []
                 for OS in os_list:
                     image = OS.get('BaseImage', '')
-                    if image.endswith('.qcow2'):
+                    if image.endswith('.qcow2') or image.endswith('.cloop'):
                         images.append(image)
 
                 r.append({

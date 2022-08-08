@@ -17,7 +17,7 @@
                         <b>{{config.file.substring('start.conf.'.length)}}</b>
                     </td>
                     <td ng:click="editConfig(config.file)" style="cursor:pointer;">
-                        <span ng:repeat="image in config.images" ng:if="image" class="label label-info" style="display:inline-block;">
+                        <span ng:repeat="image in config.images" ng:if="image" class="label" ng:class="(image.endsWith('.qcow2')) ? 'label-info' : 'label-default'" style="display:inline-block;">
                             {{image}}
                         </span>
                     </td>

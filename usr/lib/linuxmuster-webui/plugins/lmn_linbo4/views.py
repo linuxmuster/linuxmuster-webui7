@@ -62,11 +62,12 @@ class Handler(HttpPlugin):
                 images = []
                 append = False
                 for OS in os_list:
-                    image = OS.get('BaseImage', None)
-                    if '.qcow2' in image or image is None:
+                    image = OS.get('BaseImage', '')
+                    if '.qcow2' in image or image == '':
                         images.append(image)
                         append = True
 
+                print(file, os_list, images)
                 # Append file even if there's no partition
                 if append or os_list == []:
                     r.append({

@@ -1,3 +1,11 @@
+linuxmuster-webui7 (7.1.36) lmn71; urgency=medium
+
+  * [linbo4] Display all start.conf even if empty
+  * [linbo4] Manually add some custom image name in partition
+  * [linbo4] Display deprecated cloops in groups 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 08 Aug 2022 19:00:04 +0200
+
 linuxmuster-webui7 (7.1.35) lmn71; urgency=medium
 
   * [home] Fix upload and admin paths

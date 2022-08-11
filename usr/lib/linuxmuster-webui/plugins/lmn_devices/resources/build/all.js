@@ -52,6 +52,11 @@
     };
     $scope.validateField = function(name, val, isnew, index, role = "") {
       var test, test_length;
+      if (!val) {
+        delete $scope.error_msg[name + "-" + index];
+        $scope.emptyCells[name + "-" + index] = 1;
+        return "has-error-new";
+      }
       if (name === "Mac") {
         // Index necessary to convert mac adress in $scope.devices
         test = validation["isValidMac"](val, index);
@@ -66,20 +71,18 @@
       } else {
         test = validation["isValid" + name](val);
       }
-      if (test === true && (val || name === "Comment")) {
+      if (test === true) {
         delete $scope.error_msg[name + "-" + index];
         delete $scope.emptyCells[name + "-" + index];
         return "";
-      } else if (!val) {
-        delete $scope.error_msg[name + "-" + index];
-        $scope.emptyCells[name + "-" + index] = 1;
       } else {
         delete $scope.emptyCells[name + "-" + index];
+        // Error not already registered, adding it
         if (Object.values($scope.error_msg).indexOf(test) === -1) {
           $scope.error_msg[name + "-" + index] = test;
         }
+        return "has-error-new";
       }
-      return "has-error-new";
     };
     $scope.sorts = [
       {
@@ -129,7 +132,7 @@
         $scope.paging.page = Math.floor(($scope.devices.length - 1) / $scope.paging.pageSize) + 1;
       }
       $scope.filter = '';
-      $scope.devices.push({
+      return $scope.devices.push({
         _isNew: true,
         room: '',
         hostname: '',
@@ -139,29 +142,16 @@
         sophomorixRole: 'classroom-studentcomputer',
         pxeFlag: '1'
       });
-      return console.log($scope.devices);
     };
     $scope.duplicate = function(device) {
-      $scope.devices.push({
-        _isNew: true,
-        room: device.room,
-        hostname: device.hostname,
-        group: device.group,
-        mac: device.mac,
-        ip: device.ip,
-        officeKey: device.officeKey,
-        windowsKey: device.windowsKey,
-        dhcpOptions: device.dhcpOptions,
-        sophomorixRole: device.sophomorixRole,
-        lmnReserved10: device.lmnReserved10,
-        pxeFlag: device.pxeFlag,
-        lmnReserved12: device.lmnReserved12,
-        lmnReserved13: device.lmnReserved13,
-        lmnReserved14: device.lmnReserved14,
-        sophomorixComment: device.sophomorixComment
-      });
-      $location.hash('end_table');
-      return $anchorScroll();
+      var newDevice;
+      newDevice = angular.copy(device);
+      newDevice._isNew = true;
+      // New device is added at first place
+      $scope.devices.unshift(newDevice);
+      $scope.devices_without_comment.unshift(newDevice);
+      // Return to first page after adding the new device
+      return $scope.paging.page = 1;
     };
     $scope.fields = {
       room: {
@@ -226,7 +216,8 @@
       }
     };
     $scope.remove = function(device) {
-      return $scope.devices.remove(device);
+      $scope.devices.remove(device);
+      return $scope.devices_without_comment.remove(device);
     };
     $scope.numErrors = function() {
       // Remove previous errors
@@ -244,6 +235,13 @@
       $scope.show_errors = false;
       $scope.devices_form.$setPristine();
       return $http.post('/api/lm/devices', $scope.devices).then(function() {
+        var device, i, len, ref;
+        ref = $scope.devices;
+        // Reset all isNew tags
+        for (i = 0, len = ref.length; i < len; i++) {
+          device = ref[i];
+          device._isNew = false;
+        }
         return notify.success(gettext('Saved'));
       });
     };

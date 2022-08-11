@@ -48,7 +48,7 @@
     };
   });
 
-  angular.module('lmn.linbo4').controller('LMLINBO4PartitionModalController', function($scope, $uibModalInstance, $http, partition, os) {
+  angular.module('lmn.linbo4').controller('LMLINBO4PartitionModalController', function($scope, $uibModalInstance, $http, partition, messagebox, os) {
     $scope.partition = partition;
     $scope.os = os;
     $http.get('/api/lm/linbo4/icons').then(function(resp) {
@@ -62,16 +62,22 @@
       }
     });
     $http.get('/api/lm/linbo4/images').then(function(resp) {
-      var i, len, oses, results;
+      var i, len, oses;
       $scope.images = [];
       oses = resp.data;
-      results = [];
       for (i = 0, len = oses.length; i < len; i++) {
         os = oses[i];
-        results.push($scope.images.push(os.name + '.qcow2'));
+        $scope.images.push(os.name + '.qcow2');
       }
-      return results;
+      if ($scope.images.indexOf($scope.os.BaseImage) < 0) {
+        return $scope.images.push($scope.os.BaseImage);
+      }
     });
+    $scope.addNewImage = function() {
+      return messagebox.prompt('New image name', '').then(function(msg) {
+        return $scope.images.push(msg.value);
+      });
+    };
     $scope.save = function() {
       return $uibModalInstance.close({
         partition: $scope.partition,
@@ -761,13 +767,27 @@
           return $http.get(`/api/lm/linbo4/config/${configName}`).then(function(resp) {
             resp.data.config.LINBO.Group = newName;
             return $http.post(`/api/lm/linbo4/config/start.conf.${newName}`, resp.data).then(function() {
+              var config, i, index, len, newConfig, ref, results;
               if (deleteOriginal) {
-                return $http.delete(`/api/lm/linbo4/config/${configName}`).then(function() {
+                $http.delete(`/api/lm/linbo4/config/${configName}`).then(function() {
                   return $scope.config_change = true;
                 });
               } else {
-                return $scope.config_change = true;
+                $scope.config_change = true;
               }
+              ref = $scope.configs;
+              results = [];
+              for (index = i = 0, len = ref.length; i < len; index = ++i) {
+                config = ref[index];
+                if (configName === config.file) {
+                  newConfig = angular.copy(config);
+                  newConfig.file = `start.conf.${newName}`;
+                  results.push($scope.configs.push(newConfig));
+                } else {
+                  results.push(void 0);
+                }
+              }
+              return results;
             });
           });
         }

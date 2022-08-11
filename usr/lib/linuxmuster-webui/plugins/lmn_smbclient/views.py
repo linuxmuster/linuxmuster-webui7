@@ -6,7 +6,8 @@ import os
 import re
 import smbclient
 import logging
-from smbprotocol.exceptions import SMBOSError
+from smbprotocol.exceptions import SMBOSError, NotFound, SMBAuthenticationError, InvalidParameter
+from spnego.exceptions import BadMechanismError
 from jadi import component
 
 from aj.api.http import url, HttpPlugin
@@ -14,10 +15,10 @@ from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
 from aj.auth import authorize, AuthenticationService
 from aj.plugins.lmn_common.mimetypes import content_mimetypes
 
+
 # TODO
-# - Better error management (directory not empty, ... )
+# - Better error management (directory not empty, errors in promise list, ... )
 # - Test encoding Windows
-# - read/write/create file
 # - symlink ?
 # - download selected resources as zip
 # - Method DELETE ?
@@ -28,7 +29,6 @@ class Handler(HttpPlugin):
         self.context = context
 
     @url(r'/api/lmn/smbclient/shares/(?P<user>.+)')
-    # @authorize('smbclient:read')
     @endpoint(api=True)
     def handle_api_smb_shares(self, http_context, user=None):
         """
@@ -43,92 +43,11 @@ class Handler(HttpPlugin):
         if http_context.method == 'GET':
             if user is None:
                 user = self.context.identity
-            profil = AuthenticationService.get(self.context).get_provider().get_profile(user)
-            role = profil['sophomorixRole']
-            home_path = profil['homeDirectory']
-            try:
-                domain = re.search(r'\\\\([^\\]*)\\', home_path).groups()[0]
-            except AttributeError:
-                domain = ''
 
-            school = self.context.schoolmgr.school
-
-            home = {
-                'name' : 'Home',
-                'path' : home_path,
-                'icon' : 'fas fa-home',
-                'active': False,
-            }
-            linuxmuster_global = {
-                'name' : 'Linuxmuster-Global',
-                'path' : f'\\\\{domain}\\linuxmuster-global',
-                'icon' : 'fas fa-globe',
-                'active': False,
-            }
-            allschool = {
-                'name' : school,
-                'path' : f'\\\\{domain}\\{school}',
-                'icon' : 'fas fa-school',
-                'active': False,
-            }
-            # teachers = {
-            #     'name' : 'Teachers',
-            #     'path' : f'\\\\{domain}\\{school}\\teachers',
-            #     'icon' : 'fas fa-chalkboard-teacher',
-            #     'active': False,
-            # }
-            students = {
-                'name' : 'Students',
-                'path' : f'\\\\{domain}\\{school}\\students',
-                'icon' : 'fas fa-user-graduate',
-                'active': False,
-            }
-            share = {
-                'name' : 'Share',
-                'path' : f'\\\\{domain}\\{school}\\share',
-                'icon' : 'fas fa-hand-holding',
-                'active': False,
-            }
-            program = {
-                'name' : 'Programs',
-                'path' : f'\\\\{domain}\\{school}\\program',
-                'icon' : 'fas fa-desktop',
-                'active': False,
-            }
-            # iso = {
-            #     'name' : 'ISO',
-            #     'path' : f'\\\\{domain}\\{school}\\iso',
-            #     'icon' : 'fas fa-compact-disc',
-            #     'active': False,
-            # }
-
-            shares = {
-                'globaladministrator': [
-                    home,
-                    linuxmuster_global,
-                    allschool,
-                ],
-                'schooladministrator': [
-                    home,
-                    allschool,
-                ],
-                'teacher': [
-                    home,
-                    students,
-                    program,
-                    share,
-                ],
-                'student': [
-                    home,
-                    share,
-                    program,
-                ]
-            }
-
-            return shares[role]
+            role = AuthenticationService.get(self.context).get_provider().get_profile(user)['sophomorixRole']
+            return self.context.schoolmgr.get_shares(user, role)
 
     @url(r'/api/lmn/smbclient/list')
-    # @authorize('smbclient:read')
     @endpoint(api=True)
     def handle_api_smb_list(self, http_context):
         """
@@ -176,22 +95,22 @@ class Handler(HttpPlugin):
                             'gid': stat.st_gid,
                             'size': stat.st_size,
                         })
-                    except SMBOSError as e:
+                    except (ValueError, SMBOSError, NotFound) as e:
                         data['accessError'] = str(e)
                         # if e.errno == errno.ENOENT and os.path.islink(item_path):
                         #     data['brokenLink'] = True
 
                     items.append(data)
-            except Exception as e: #spnego.exceptions.BadMechanismError:
-                logging.error("%s", e)
-                return {}
+            except (BadMechanismError, SMBAuthenticationError) as e:
+                raise EndpointError(f"There's a problem with the kerberos authentication : {e}")
+            except InvalidParameter as e:
+                raise EndpointError("This server does not support this feature actually, but it will come soon!")
             return {
                 'parent': '', # TODO
                 'items': items
             }
 
     @url(r'/api/lmn/smbclient/create-directory')
-    # @authorize('smbclient:write')
     @endpoint(api=True)
     def handle_api_smb_create_directory(self, http_context):
         """
@@ -208,11 +127,35 @@ class Handler(HttpPlugin):
 
             try:
                 smbclient.makedirs(path)
-            except (ValueError, SMBOSError) as e:
+            except (ValueError, SMBOSError, NotFound) as e:
                 raise EndpointError(e)
+            except InvalidParameter as e:
+                raise EndpointError(f'Problem with path {path} : {e}')
+
+    @url(r'/api/lmn/smbclient/create-file')
+    @endpoint(api=True)
+    def handle_api_smb_create_file(self, http_context):
+        """
+        Create empty file on specified path.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :param path: Path of directory
+        :type path: string
+        """
+
+        if http_context.method == 'POST':
+            path = http_context.json_body()['path']
+
+            try:
+                with smbclient.open_file(path, 'w') as towrite:
+                    pass
+            except (ValueError, SMBOSError, NotFound) as e:
+                raise EndpointError(e)
+            except InvalidParameter as e:
+                raise EndpointError(f'Problem with path {path} : {e}')
 
     @url(r'/api/lmn/smbclient/move')
-    # @authorize('smbclient:write')
     @endpoint(api=True)
     def handle_api_smb_move(self, http_context):
         """
@@ -230,11 +173,10 @@ class Handler(HttpPlugin):
 
             try:
                 smbclient.rename(src, dst)
-            except (ValueError, SMBOSError) as e:
+            except (ValueError, SMBOSError, NotFound) as e:
                 raise EndpointError(e)
 
     @url(r'/api/lmn/smbclient/copy')
-    # @authorize('smbclient:write')
     @endpoint(api=True)
     def handle_api_smb_copy(self, http_context):
         """
@@ -252,11 +194,10 @@ class Handler(HttpPlugin):
 
             try:
                 smbclient.copyfile(src, dst)
-            except (ValueError, SMBOSError) as e:
+            except (ValueError, SMBOSError, NotFound) as e:
                 raise EndpointError(e)
 
     @url(r'/api/lmn/smbclient/dir')
-    # @authorize('smbclient:write')
     @endpoint(api=True)
     def handle_api_smb_rmdir(self, http_context):
         """
@@ -274,11 +215,10 @@ class Handler(HttpPlugin):
 
             try:
                 smbclient.rmdir(path)
-            except (ValueError, SMBOSError) as e:
+            except (ValueError, SMBOSError, NotFound) as e:
                 raise EndpointError(e)
 
     @url(r'/api/lmn/smbclient/file')
-    # @authorize('smbclient:write')
     @endpoint(api=True)
     def handle_api_smb_unlink(self, http_context):
         """
@@ -295,11 +235,10 @@ class Handler(HttpPlugin):
 
             try:
                 smbclient.unlink(path)
-            except (ValueError, SMBOSError) as e:
+            except (ValueError, SMBOSError, NotFound) as e:
                 raise EndpointError(e)
 
     @url(r'/api/lmn/smbclient/stat')
-    # @authorize('smbclient:read')
     @endpoint(api=True)
     def handle_api_smb_stat(self, http_context):
         """
@@ -334,13 +273,12 @@ class Handler(HttpPlugin):
                     'gid': stat.st_gid,
                     'size': stat.st_size,
                 })
-            except SMBOSError as e:
+            except (ValueError, SMBOSError, NotFound) as e:
                 data['accessError'] = str(e)
 
         return data
 
     @url(r'/api/lmn/smbclient/upload')
-    # @authorize('smbclient:write')
     @endpoint(page=True)
     def handle_api_smb_upload_chunk(self, http_context):
         """
@@ -353,7 +291,8 @@ class Handler(HttpPlugin):
         """
 
         user = self.context.identity
-        home = AuthenticationService.get(self.context).get_provider().get_profile(user)['homeDirectory']
+        role = AuthenticationService.get(self.context).get_provider().get_profile(user)['sophomorixRole']
+        home = self.context.schoolmgr.get_homepath(user, role)
         upload_dir = f'{home}\\.upload'
 
         if not smbclient.path.exists(upload_dir):
@@ -401,7 +340,8 @@ class Handler(HttpPlugin):
         targets = []
 
         user = self.context.identity
-        home = AuthenticationService.get(self.context).get_provider().get_profile(user)['homeDirectory']
+        role = AuthenticationService.get(self.context).get_provider().get_profile(user)['sophomorixRole']
+        home = self.context.schoolmgr.get_homepath(user, role)
         upload_dir = f'{home}/.upload'
 
         for file in files:
@@ -467,7 +407,7 @@ class Handler(HttpPlugin):
 
         try:
             smbclient.path.isfile(path)
-        except SMBOSError:
+        except (ValueError, SMBOSError, NotFound):
             http_context.respond_not_found()
             return
 
@@ -481,108 +421,10 @@ class Handler(HttpPlugin):
 
         try:
             content = smbclient.open_file(path, 'rb').read()
-        except SMBOSError:
+        except (ValueError, SMBOSError, NotFound):
             http_context.respond_not_found()
             return
 
         http_context.add_header('Content-Disposition', (f'attachment; filename={name}'))
 
         yield http_context.gzip(content)
-
-    # @url(r'/api/lmn/smbclient/read/(?P<path>.+)')
-    # @authorize('smbclient:read')
-    # @endpoint(api=True)
-    # def handle_api_fs_read(self, http_context, path=None):
-    #     """
-    #     Return the content of a file on the filesystem.
-    #
-    #     :param http_context: HttpContext
-    #     :type http_context: HttpContext
-    #     :param path: Path of the file
-    #     :type path: string
-    #     :return: Content of the file
-    #     :rtype: string
-    #     """
-    #
-    #     if not os.path.exists(path):
-    #         http_context.respond_not_found()
-    #         return 'File not found'
-    #     try:
-    #         content = open(path, 'rb').read()
-    #         if http_context.query:
-    #             encoding = http_context.query.get('encoding', None)
-    #             if encoding:
-    #                 content = content.decode(encoding)
-    #         return content
-    #     except OSError as e:
-    #         http_context.respond_server_error()
-    #         return json.dumps({'error': str(e)})
-    #
-    # @url(r'/api/lmn/smbclient/write/(?P<path>.+)')
-    # @authorize('smbclient:write')
-    # @endpoint(api=True)
-    # def handle_api_fs_write(self, http_context, path=None):
-    #     """
-    #     Write content (method post) to a specific file given with path.
-    #     Method POST.
-    #
-    #     :param http_context: HttpContext
-    #     :type http_context: HttpContext
-    #     :param path: Path of the file
-    #     :type path: string
-    #     """
-    #
-    #     try:
-    #         content = http_context.body
-    #         if http_context.query:
-    #             encoding = http_context.query.get('encoding', None)
-    #             if encoding:
-    #                 content = content.decode('utf-8')
-    #         with open(path, 'w') as f:
-    #             f.write(content)
-    #     except OSError as e:
-    #         raise EndpointError(e)
-
-
-
-    #
-    # @url(r'/api/lmn/smbclient/chmod/(?P<path>.+)')
-    # @authorize('smbclient:write')
-    # @endpoint(api=True)
-    # def handle_api_fs_chmod(self, http_context, path=None):
-    #     """
-    #     Change mode for a specific file.
-    #
-    #     :param http_context: HttpContext
-    #     :type http_context: HttpContext
-    #     :param path: Path of file
-    #     :type path: string
-    #     """
-    #
-    #     if not os.path.exists(path):
-    #         raise EndpointReturn(404)
-    #     data = json.loads(http_context.body.decode())
-    #     try:
-    #         os.chmod(path, data['mode'])
-    #     except OSError as e:
-    #         raise EndpointError(e)
-    #
-    # @url(r'/api/lmn/smbclient/create-file/(?P<path>.+)')
-    # @authorize('smbclient:write')
-    # @endpoint(api=True)
-    # def handle_api_fs_create_file(self, http_context, path=None):
-    #     """
-    #     Create empty file on specified path.
-    #
-    #     :param http_context: HttpContext
-    #     :type http_context: HttpContext
-    #     :param path: Path of file
-    #     :type path: string
-    #     """
-    #
-    #     try:
-    #         os.mknod(path, int('644', 8))
-    #     except OSError as e:
-    #         raise EndpointError(e)
-    #
-    #

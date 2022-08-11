@@ -204,6 +204,8 @@ class Handler(HttpPlugin):
             'routerIp',
             'beginRange',
             'endRange',
+            'nameServer',
+            'nextServer',
             'setupFlag',
         ]
         if http_context.method == 'GET':

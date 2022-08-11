@@ -504,10 +504,6 @@ class Handler(HttpPlugin):
         results = lmn_getSophomorixValue(sophomorixCommand, '')
         ## Remove UPDATE entries which are also in KILL ( necessary to show it in KILL and UPDATE ? )
 
-        if "CHECK_RESULT" not in results:
-            # TODO : Unknow error with sophomorix-check not specified in json
-            return False
-
         if "UPDATE" in results["CHECK_RESULT"] and "KILL" in results["CHECK_RESULT"]:
             for user_update in tuple(results["CHECK_RESULT"]["UPDATE"]):
                 if user_update in results["CHECK_RESULT"]["KILL"]:
@@ -567,20 +563,20 @@ class Handler(HttpPlugin):
             sophomorixCommand = ['sophomorix-user', '--info', '-jj', '-u', user]
             return lmn_getSophomorixValue(sophomorixCommand, '/USERS/'+user+'/sophomorixFirstPassword')
         if action == 'set-initial':
-            sophomorixCommand = ['sudo', 'sophomorix-passwd', '--set-firstpassword', '-jj', '-u', user, '--use-smbpasswd']
+            sophomorixCommand = ['sophomorix-passwd', '--set-firstpassword', '-jj', '-u', user, '--use-smbpasswd']
             return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
         if action == 'set-random':
             # TODO: Password length should be read from school settings
-            sophomorixCommand = ['sudo', 'sophomorix-passwd', '-u', user, '--random', '8', '-jj', '--use-smbpasswd']
+            sophomorixCommand = ['sophomorix-passwd', '-u', user, '--random', '8', '-jj', '--use-smbpasswd']
             return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
         if action == 'set':
             password = http_context.json_body()['password']
-            sophomorixCommand = ['sudo', 'sophomorix-passwd', '-u', user, '--pass', password, '-jj', '--use-smbpasswd']
-            return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
+            sophomorixCommand = ['sophomorix-passwd', '-u', user, '--pass', password, '-jj', '--use-smbpasswd']
+            return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN', sensitive=True)
         if action == 'set-actual':
             password = http_context.json_body()['password']
-            sophomorixCommand = ['sudo', 'sophomorix-passwd', '-u', user, '--pass', password, '--nofirstpassupdate', '--hide', '-jj', '--use-smbpasswd']
-            return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
+            sophomorixCommand = ['sophomorix-passwd', '-u', user, '--pass', password, '--nofirstpassupdate', '--hide', '-jj', '--use-smbpasswd']
+            return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN', sensitive=True)
 
     @url(r'/api/lm/users/change-school-admin')
     @authorize('lm:users:schooladmins:create')

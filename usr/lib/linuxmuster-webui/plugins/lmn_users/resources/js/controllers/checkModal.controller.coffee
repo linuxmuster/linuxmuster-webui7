@@ -92,18 +92,18 @@ angular.module('lmn.users').controller 'LMUsersCheckModalController', ($scope, $
             $uibModalInstance.close()
             return
 
-        if resp.data['OUTPUT'][0]['TYPE']  is 'ERROR'
-            notify.error gettext('Check failed'), resp.data.message
+        if resp.data["CHECK_RESULT"]["ERRORLIST"].length > 0
+            notify.error(gettext('Check failed'))
             $scope.isWorking = false
             $scope.error = true
-            $scope.errorMessage = resp.data['OUTPUT'][0]['MESSAGE_EN']
+            $scope.errorList = resp.data["CHECK_RESULT"]['ERROR']
         else
             $scope.showCheckResults(resp.data)
             $uibModalInstance.close()
     .catch (resp) ->
         $scope.isWorking = false
         $scope.error = true
-        notify.error gettext('Check failed'), resp.data.message
+        notify.error(gettext('Check failed'), resp.data.message)
 
     $scope.showCheckResults = (data) ->
         $uibModal.open(
@@ -112,7 +112,6 @@ angular.module('lmn.users').controller 'LMUsersCheckModalController', ($scope, $
             resolve:
                 data: () -> data
         )
-        console.log(data)
 
     $scope.close = () ->
         $uibModalInstance.close()

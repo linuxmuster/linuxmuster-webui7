@@ -17,6 +17,9 @@ color: default
 language: en
 max_sessions: 400
 session_max_time: 3600
+view:
+    plugin: lmn_common
+    filepath: resources/content/main_view.html
 name: server.linuxmuster.lan
 restricted_user: nobody
 ssl:

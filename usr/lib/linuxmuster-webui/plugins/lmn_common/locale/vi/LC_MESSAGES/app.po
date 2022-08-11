@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-23 16:24+0100\n"
-"PO-Revision-Date: 2022-05-30 10:34\n"
+"POT-Creation-Date: 2022-07-25 18:56+0200\n"
+"PO-Revision-Date: 2022-07-31 17:11\n"
 "Last-Translator: \n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Crowdin-File: /2.0/lmn_common.po\n"
 "X-Crowdin-File-ID: 96\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:151
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:155
 msgid "A bootstrap error has occured"
 msgstr ""
 
@@ -47,11 +47,11 @@ msgstr ""
 msgid "Drop a CSV file here to import"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:134
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:138
 msgid "Enter"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:92
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:95
 msgid "Log out"
 msgstr ""
 
@@ -63,15 +63,15 @@ msgstr ""
 msgid "No differences detected"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:175
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:179
 msgid "OK"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:154
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:158
 msgid "Please see browser console"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:130
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:134
 msgid "Quick search"
 msgstr ""
 
@@ -79,11 +79,11 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:49
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:52
 msgid "School Console"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/index.html:102
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:105
 msgid "Session time : {{ counter[0] }}:{{ counter[1] }}:{{ counter[2] }}"
 msgstr ""
 

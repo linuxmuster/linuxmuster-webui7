@@ -11,6 +11,7 @@ import ast
 import logging
 from pprint import pformat
 from .lmnfile import LMNFile
+from configparser import SafeConfigParser
 
 
 # Load Webui settings
@@ -23,6 +24,16 @@ else:
     lmconfig = {}
     ldap_config = {}
     logging.error("Without config.yml the users will not be able to login.")
+
+# Load samba domain
+smbconf = SafeConfigParser()
+try:
+    smbconf.read('/etc/samba/smb.conf')
+    samba_realm = smbconf["global"]["realm"].lower()
+    samba_domain = f'{smbconf["global"]["netbios name"]}.{samba_realm}'.lower()
+except Exception:
+    logging.error("Can not read realm and domain from smb.conf")
+    samba_domain, samba_realm = '', ''
 
 # Fix missing entries in the lmconfig. Should be later refactored
 # and the config file should be splitted
@@ -47,18 +58,19 @@ class SophomorixProcess(threading.Thread):
     Worker for processing sophomorix commands.
     """
 
-    def __init__(self, command):
+    def __init__(self, command, sensitive):
         self.stdout = None
         self.stderr = None
         self.command = command
+        self.sensitive = sensitive
         threading.Thread.__init__(self)
 
     def run(self):
-        p = subprocess.Popen(self.command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=False)
+        p = subprocess.Popen(self.command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=False, sensitive=self.sensitive)
         self.stdout, self.stderr = p.communicate()
 
 
-def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
+def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False, sensitive=False):
     """
     Connector to all sophomorix commands. Run a sophomorix command with -j
     option (output as json) through a SophomorixProcess and parse the results.
@@ -80,7 +92,7 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
         sophomorixCommand = ['sudo'] + sophomorixCommand
 
     # New Thread for one process to avoid conflicts
-    t = SophomorixProcess(sophomorixCommand)
+    t = SophomorixProcess(sophomorixCommand, sensitive=sensitive)
     t.daemon = True
     t.start()
     t.join()

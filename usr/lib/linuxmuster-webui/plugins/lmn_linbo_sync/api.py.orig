@@ -154,7 +154,11 @@ def list_workstations(context):
                     device['hostname'] = school + '-' + device['hostname']
 =======
                     device['hostname'] = f'{school}-{device["hostname"]}'
+<<<<<<< HEAD
 >>>>>>> upstream-lmn
+=======
+>>>>>>> test123
+>>>>>>> 6ecf9a6310662b060c0089345be78aa594e94fe8
             if os.path.isfile(os.path.join(LINBO_PATH, 'start.conf.'+str(device['group']))):
                 if device['pxeFlag'] != '1' and device['pxeFlag'] != "2":
                     continue

@@ -19,7 +19,11 @@ angular.module('lmn.linbo_sync').controller 'SyncIndexController', ($scope, $htt
 <<<<<<< HEAD
 =======
         index = $scope.groups[group].hosts.indexOf(host)
+<<<<<<< HEAD
 >>>>>>> upstream-lmn
+=======
+>>>>>>> test123
+>>>>>>> 6ecf9a6310662b060c0089345be78aa594e94fe8
         $http.get("/api/lm/linbo/isOnline/#{host.hostname}").then (resp) ->
             $scope.groups[group].hosts[index].up_comment = resp.data
             $scope.groups[group].hosts[index].up_icon = $scope.up_icons[resp.data]

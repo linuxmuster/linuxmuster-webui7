@@ -1,9 +1,3 @@
-linuxmuster-webui7 (7.1.38) lmn71; urgency=low
-
-  * Merged to netzint
-
- -- Andreas Till <andreas.till@netzint.de>  Thu, 11 Aug 2022 18:50:15 +0200
-
 linuxmuster-webui7 (7.1.37) lmn71; urgency=medium
 
   * [home] Better error message for invalidparameter error
@@ -96,6 +90,12 @@ linuxmuster-webui7 (7.1.27) lmn71; urgency=medium
 
  -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 25 Jul 2022 19:52:37 +0200
 
+linuxmuster-webui7 (17.1.26) lmn71; urgency=low
+
+  *  Merged upstream
+
+ -- Andreas Till <andreas.till@netzint.de>  Sat, 30 Jul 2022 15:19:58 +0200
+
 linuxmuster-webui7 (7.1.26) lmn71; urgency=medium
 
   * Upgrade Ajenti 2.2.0
@@ -106,6 +106,12 @@ linuxmuster-webui7 (7.1.26) lmn71; urgency=medium
   * Prepare container for iframes
 
  -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 16 Jul 2022 11:50:36 +0200
+
+linuxmuster-webui7 (17.1.25) lmn71; urgency=low
+
+  * Merged to netzint
+
+ -- Andreas Till <andreas.till@netzint.de>  Thu, 11 Aug 2022 18:50:15 +0200
 
 linuxmuster-webui7 (17.1.25) lmn71; urgency=low
 
@@ -122,7 +128,11 @@ linuxmuster-webui7 (7.1.25) lmn71; urgency=medium
   * Proper handling of question mark in passwords 
 
  -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 24 Jun 2022 14:57:08 +0200
+<<<<<<< HEAD
 >>>>>>> upstream-lmn
+=======
+>>>>>>> test123
+>>>>>>> 6ecf9a6310662b060c0089345be78aa594e94fe8
 
 linuxmuster-webui7 (7.1.24) lmn71; urgency=medium
 
@@ -580,7 +590,7 @@ linuxmuster-webui7 (1.0.163~4) lmn71; urgency=medium
   * Fix scan of files in /srv/linbo/images 
 
  -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 10 Dec 2021 13:20:05 +0100
->>>>>>> 77821de2feee31d2a2ba0dc55b026165dfa6837b
+
 
 linuxmuster-webui7 (1.0.163~3) lmn71; urgency=medium
 

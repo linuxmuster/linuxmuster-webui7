@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-30 19:02+0200\n"
-"PO-Revision-Date: 2022-07-31 17:11\n"
+"POT-Creation-Date: 2022-08-29 22:10+0200\n"
+"PO-Revision-Date: 2022-08-29 20:15\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -182,15 +182,15 @@ msgid "Class:"
 msgstr "Classe:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/apply.modal.html:11
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/check.modal.html:14
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/check.modal.html:19
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/showPassword.modal.html:34
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/upload.modal.html:14
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/uploadcustom.modal.html:14
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:138
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:142
 msgid "Close"
 msgstr "Fermer"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:133
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:137
 msgid "Cloudquota Calculated in MiB:"
 msgstr "Quota cloud calculé en MiB:"
 
@@ -206,7 +206,7 @@ msgstr "Nombre"
 msgid "Course"
 msgstr "Cours"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:50
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:54
 msgid "CreationDate:"
 msgstr "Date de création:"
 
@@ -219,7 +219,7 @@ msgstr "Modèle personnalisé pour votre école"
 msgid "Customizations"
 msgstr "Personnalisations"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:42
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:46
 msgid "DeactivationDate:"
 msgstr "Date de désactivation :"
 
@@ -291,7 +291,7 @@ msgstr "Admins globaux"
 msgid "Global bind users"
 msgstr "Bind User globaux"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:108
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:112
 msgid "Group Membership:"
 msgstr "Adhésion au groupe:"
 
@@ -353,7 +353,7 @@ msgstr "Login / Classe"
 msgid "Loginname:"
 msgstr "Identifiant:"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:134
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:138
 msgid "Mailquota Calculated in MiB:"
 msgstr "Quota mail calculé en MiB:"
 
@@ -445,7 +445,7 @@ msgstr "Propriétés"
 msgid "Quota"
 msgstr "Quota"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:121
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:125
 msgid "Quota:"
 msgstr "Quota:"
 
@@ -618,7 +618,7 @@ msgstr "Il n'y a pas encore d'élèves à gérer. Vous pouvez ajouter des élèv
 msgid "There are no teachers to manage yet. You can add teachers using the list management module"
 msgstr "Il n'y a pas encore d'enseignants à gérer. Vous pouvez ajouter des enseignants en utilisant le module de gestion de liste"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:46
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:50
 msgid "TolerationDate:"
 msgstr "Date de tolérance :"
 
@@ -646,6 +646,10 @@ msgstr "Utiliser pdflatex à la place de latex"
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:3
 msgid "User Details"
 msgstr "Détails utilisateur"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:42
+msgid "User ID (optional):"
+msgstr "ID utilisateur (facultatif) :"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/result.modal.html:13
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/result.modal.html:77

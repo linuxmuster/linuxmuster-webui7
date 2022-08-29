@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-31 19:05+0200\n"
-"PO-Revision-Date: 2022-07-31 17:11\n"
+"POT-Creation-Date: 2022-08-29 22:10+0200\n"
+"PO-Revision-Date: 2022-08-29 20:15\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -35,11 +35,11 @@ msgstr "Aktiviert"
 msgid "Add <span class=\"caret\"></span>"
 msgstr "Hinzufügen<span class=\"caret\"></span>"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:150
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:153
 msgid "Additional kernel parameters"
 msgstr "Zusätzliche Kernel-Parameter"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:175
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:178
 msgid "Advanced"
 msgstr "Erweitert"
 
@@ -59,7 +59,7 @@ msgstr "Beim Start partitionieren"
 msgid "Auto update cache"
 msgstr "Beim Start Cache aktualisieren"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:130
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:133
 msgid "Autostart timeout"
 msgstr "Autostart-Timeout"
 
@@ -83,7 +83,7 @@ msgstr "BIOS Typ"
 msgid "Boot"
 msgstr "Systemstart"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:119
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:122
 msgid "Boot buttons"
 msgstr "Start Optionen"
 
@@ -99,7 +99,7 @@ msgstr "Abbrechen"
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:524
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/image.backups.modal.html:58
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/image.modal.html:88
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:176
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:179
 msgid "Close"
 msgstr "Schließen"
 
@@ -179,7 +179,7 @@ msgstr "Dateisystem"
 msgid "Flags"
 msgstr "Flags"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:159
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:162
 msgid "Force Opsi setup"
 msgstr "Opsi-Setup erzwingen"
 
@@ -240,12 +240,12 @@ msgstr "Importiere Gerät"
 msgid "Info"
 msgstr "Info"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:146
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:149
 msgid "Initrd"
 msgstr "Initrd"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:134
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:142
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:137
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:145
 msgid "Kernel"
 msgstr "Kernel"
 
@@ -314,7 +314,7 @@ msgstr "OS"
 msgid "OS-Type"
 msgstr "Betriebssystem-Typ"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:163
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:166
 msgid "Options"
 msgstr "Optionen"
 
@@ -366,7 +366,7 @@ msgstr "Festplatte entfernen"
 msgid "Reserved VM-IDs"
 msgstr "Reservierte VM-IDs"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:154
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:157
 msgid "Restore Opsi state"
 msgstr "Opsi-Status wiederherstellen"
 
@@ -384,7 +384,7 @@ msgstr "SCSI-Hardware"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:522
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/image.modal.html:87
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:174
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:177
 msgid "Save"
 msgstr "Speichern"
 
@@ -414,7 +414,7 @@ msgid "Storage"
 msgstr "Speicher"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:243
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:289
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:295
 msgid "Swap"
 msgstr "Swap"
 
@@ -499,7 +499,7 @@ msgid "Virtual Desktop (VDI)"
 msgstr "Virtueller Desktop (VDI)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/main.py:15
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:514
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:520
 msgid "LINBO 4"
 msgstr "LINBO 4"
 
@@ -527,56 +527,56 @@ msgstr "Import abgeschlossen"
 msgid "Import failed"
 msgstr "Import fehlgeschlagen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:291
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:297
 msgid "LINBO Cache"
 msgstr "LINBO Cache"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:528
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:534
 msgid "You should call an import devices process to apply the new changes, quit this page anyway ?"
 msgstr "Sie sollten einen Import-Geräte-Prozess aufrufen, um die neuen Änderungen anzuwenden. Diese Seite trotzdem verlassen ?"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:569
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:575
 msgid "A config file with this name already exists!"
 msgstr "Es existiert bereits eine Konfigurationsdatei mit diesem Namen!"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:650
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:656
 msgid "saved"
 msgstr "gespeichert"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:653
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:659
 msgid "VDI config saved"
 msgstr "VDI Konfiguration gespeichert"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:658
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:664
 msgid "Restarting multicast and torrent services, please wait ..."
 msgstr "Multicast und Torrent-Dienste werden neu gestartet, bitte warten ..."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:660
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:666
 msgid "Multicast and torrent services restarted"
 msgstr "Multicast- und Torrent-Dienste neu gestartet"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:664
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:670
 msgid "Failed to restart multicast and torrent services. Please see the log files"
 msgstr "Multicast und Torrent-Dienste konnten nicht neu gestartet werden. Bitte lesen Sie die Log-Dateien"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:672
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:691
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:678
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:697
 msgid "Failed to delete image :"
 msgstr "Fehler beim Löschen des Bilds:"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:679
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:685
 msgid "Failed to delete backup :"
 msgstr "Fehler beim Löschen der Sicherung:"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:708
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:714
 msgid " is not a valid name for a linbo image."
 msgstr " ist kein gültiger Name für ein Linbo-Bild."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:727
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:733
 msgid "Backup saved"
 msgstr "Sicherung gespeichert"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:731
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:737
 msgid "Saved"
 msgstr "Gespeichert"
 

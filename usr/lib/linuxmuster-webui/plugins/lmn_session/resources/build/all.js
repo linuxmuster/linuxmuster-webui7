@@ -531,22 +531,6 @@
         }
       });
     };
-    $scope.list_ka = function() {
-      var i, len, participant, path, ref, results;
-      ref = $scope.participants;
-      results = [];
-      for (i = 0, len = ref.length; i < len; i++) {
-        participant = ref[i];
-        participant.files = [];
-        path = '\\\\lmn.unpeud.info\\default-school\\examusers\\' + participant.sAMAccountName + '\\transfer';
-        results.push($http.post('/api/lmn/smbclient/list', {
-          'path': path
-        }).then(function(resp) {
-          return participant.files = resp.data.items;
-        }));
-      }
-      return results;
-    };
     $scope.showRoomDetails = function(username) {
       return $http.post('/api/lmn/session/getUserInRoom', {
         action: 'get-my-room',

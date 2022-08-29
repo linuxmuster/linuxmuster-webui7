@@ -399,13 +399,6 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
             groupName: () -> groupName
        )
 
-    $scope.list_ka = () ->
-        for participant in $scope.participants
-            participant.files = []
-            path = '\\\\lmn.unpeud.info\\default-school\\examusers\\' + participant.sAMAccountName + '\\transfer'
-            $http.post('/api/lmn/smbclient/list', {'path':path}).then (resp) ->
-                participant.files = resp.data.items
-
     $scope.showRoomDetails = (username) ->
         $http.post('/api/lmn/session/getUserInRoom', {action: 'get-my-room', username: username}).then (resp) ->
             if resp.data == 0

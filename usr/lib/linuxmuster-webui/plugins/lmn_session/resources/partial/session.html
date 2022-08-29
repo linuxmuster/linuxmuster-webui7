@@ -92,7 +92,6 @@
     <div id="expand-box-header" class="clearfix">
         <span style="float: left;"> <h4 style="display:{{visible.sessionname}}">{{currentSession.comment}}</h4></span>
         <span style="float: right;"> <h6 style="display:{{visible.sessionname}}">{{currentSession.name}}</h6></span>
-        <a class="btn btn-lmn" ng:click="list_ka()" translate>Refresh</a>
     </div>
     <table class="table" style="display:{{visible.participanttable}};margin-bottom:60px;">
         <tr>
@@ -105,12 +104,6 @@
         <tr style="display:;"  ng:repeat="participant in participants|orderBy:[sort.fx]">
             <td class="ng-binding"> <a href="#"  ng-click="showDetails = ! showDetails"> <b> {{participant.sn}}, {{participant.givenName}} </b> </a>{{participant.sophomorixAdminClass}}, <br><i> {{participant.sAMAccountName}}</i>
                 <div ng-show="showDetails"> <!--<img src="https://openclipart.org/image/2400px/svg_to_png/211821/matt-icons_preferences-desktop-personal.png" style="height:75px;"</img>--> </div>
-                <div class="alert alert-success" ng:show="participant.files.length > 0">
-                    <div ng:repeat="f in participant.files">{{f.name}}</div>
-                </div>
-                <div class="alert alert-warning" ng:show="participant.files.length == 0">
-                    <span>NOTHING !</span>
-                </div>
             </td>
             <td>
                 <div class="button-group">

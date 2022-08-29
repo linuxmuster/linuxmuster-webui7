@@ -82,20 +82,22 @@ class SchoolManager():
         else:
             self.share_prefix = f'\\\\{samba_domain}\\{self.school}'
 
-    def get_homepath(self, user, role):
+    def get_homepath(self, user, role, adminclass):
 
         if role == 'globaladministrator':
             home_path = f'\\\\{samba_domain}\\linuxmuster-global\\management\\{user}'
         elif role == 'schooladministrator':
             home_path = f'{self.share_prefix}\\management\\{user}'
-        else:
+        elif role == "teacher":
             home_path = f'{self.share_prefix}\\{role}s\\{user}'
+        else:
+            home_path = f'{self.share_prefix}\\{role}s\\{adminclass}\\{user}'
 
         return home_path
 
-    def get_shares(self, user, role):
+    def get_shares(self, user, role, adminclass):
 
-        home_path = self.get_homepath(user, role)
+        home_path = self.get_homepath(user, role, adminclass)
 
         home = {
             'name' : 'Home',

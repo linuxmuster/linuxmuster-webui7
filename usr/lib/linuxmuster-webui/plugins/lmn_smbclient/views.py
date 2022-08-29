@@ -44,8 +44,10 @@ class Handler(HttpPlugin):
             if user is None:
                 user = self.context.identity
 
-            role = AuthenticationService.get(self.context).get_provider().get_profile(user)['sophomorixRole']
-            return self.context.schoolmgr.get_shares(user, role)
+            profil = AuthenticationService.get(self.context).get_provider().get_profile(user)
+            role = profil['sophomorixRole']
+            adminclass = profil['sophomorixAdminClass']
+            return self.context.schoolmgr.get_shares(user, role, adminclass)
 
     @url(r'/api/lmn/smbclient/list')
     @endpoint(api=True)
@@ -291,8 +293,10 @@ class Handler(HttpPlugin):
         """
 
         user = self.context.identity
-        role = AuthenticationService.get(self.context).get_provider().get_profile(user)['sophomorixRole']
-        home = self.context.schoolmgr.get_homepath(user, role)
+        profil = AuthenticationService.get(self.context).get_provider().get_profile(user)
+        role = profil['sophomorixRole']
+        adminclass = profil['sophomorixAdminClass']
+        home = self.context.schoolmgr.get_homepath(user, role, adminclass)
         upload_dir = f'{home}\\.upload'
 
         if not smbclient.path.exists(upload_dir):
@@ -340,8 +344,10 @@ class Handler(HttpPlugin):
         targets = []
 
         user = self.context.identity
-        role = AuthenticationService.get(self.context).get_provider().get_profile(user)['sophomorixRole']
-        home = self.context.schoolmgr.get_homepath(user, role)
+        profil = AuthenticationService.get(self.context).get_provider().get_profile(user)
+        role = profil['sophomorixRole']
+        adminclass = profil['sophomorixAdminClass']
+        home = self.context.schoolmgr.get_homepath(user, role, adminclass)
         upload_dir = f'{home}/.upload'
 
         for file in files:

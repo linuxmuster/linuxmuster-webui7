@@ -37,7 +37,7 @@ class Handler(HttpPlugin):
         school = self.context.schoolmgr.school
 
         custom_script_path = f'/var/lib/samba/sysvol/{samba_realm}/scripts/{school}/custom/'
-        scripts_linux = ['logoff.sh', 'logon.sh', 'sysstart.sh', 'sysstop.sh']
+        scripts_linux = ['sessionstart.sh', 'logon.sh', 'sysstart.sh', 'sysstop.sh']
         scripts_windows = ['logoff.bat', 'logon.bat', 'sysstart.bat', 'sysstop.bat']
 
         return {

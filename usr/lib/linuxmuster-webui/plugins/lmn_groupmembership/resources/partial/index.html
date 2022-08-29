@@ -103,8 +103,8 @@
             </div>
             <div class="flex-container lmn-container-list" >
                 <div ng:repeat="project in projects|orderBy:[sort.fx]:sortReverse|filter:filter">
-                    <div ng:show="!projectIsHidden(project)" ng-class="{'color-orange': project.membership}">
-                        <input id={{project.groupname}} type="checkbox" ng:show="projectIsJoinable(project)" ng-click='setMembership(project)' ng-checked="project.membership"></input>
+                    <div ng:show="!projectIsHidden(project)" ng:class="{'color-orange': project.membership}" ng:style="!projectIsJoinable(project) && {'padding-left':'17px'}">
+                        <input id={{project.groupname}} type="checkbox" ng:show="projectIsJoinable(project)" ng:click='setMembership(project)' ng:checked="project.membership">
                         <i class="fa fa-flask"></i>
                         <a href="#" ng-click='showGroupDetails($index, project.type, project.groupname)'>
                             <span translate>Project</span>

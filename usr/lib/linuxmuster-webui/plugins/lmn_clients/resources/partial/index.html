@@ -1,0 +1,91 @@
+<div samba-access>
+    <br />
+    <uib:tabset>
+        <uib:tab heading="{{'Custom scripts'|translate}}">
+
+            <br />
+
+            <div>
+                <div class="alert alert-info" translate>
+                    The following scripts are executed by Samba when the client boots, in root context, and after the
+                    execution of the postsync script of Linbo. <br />This must be handled with caution.
+                </div>
+                <h3>Linux</h3>
+                <ul class="list-group">
+                    <li ng:repeat="script in custom_scripts_linux" class="list-group-item">
+                        <button class="btn btn-default pull-right" ng:click="editScript(script)">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                        {{script.name}}
+                    </li>
+                </ul>
+
+                <hr />
+
+                <h3>Windows</h3>
+                <ul class="list-group">
+                    <li ng:repeat="script in custom_scripts_windows" class="list-group-item">
+                        <button class="btn btn-default pull-right" ng:click="editScript(script)">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                        {{script.name}}
+                    </li>
+                </ul>
+            </div>
+
+            <dialog ng:show="scriptToEdit" dialog-class='modal-lg'>
+                <div class="modal-header">
+                    <h4 translate>Edit custom script</h4>
+                </div>
+                <div class="modal-body">
+                    <ace-editor ng:model="$parent.scriptToEdit.content"></ace-editor>
+                </div>
+                <div class="modal-footer">
+                    <a ng:click="saveScript($parent.scriptToEdit)" class="btn btn-default btn-flat" translate>Save</a>
+                    <a ng:click="closeEditScript()" class="btn btn-default btn-flat" translate>Close</a>
+                </div>
+            </dialog>
+        </uib:tab>
+<!--        <uib:tab heading="{{'Drives'|translate}}" ng:click="loadDrives()">-->
+
+<!--            <br />-->
+
+<!--            <div class="alert alert-warning" ng:show="drives.length == 0" translate>-->
+<!--                Unable to find a Drives.xml in your policy directory. Does the file really exists ?-->
+<!--            </div>-->
+
+<!--            <div ng:show="drives.length > 0">-->
+<!--                <form>-->
+<!--                    <table class="table">-->
+<!--                        <tr>-->
+<!--                            <th translate>Label</th>-->
+<!--                            <th translate>Show letter</th>-->
+<!--                            <th translate>Letter</th>-->
+<!--                            <th translate>Disable</th>-->
+<!--                        </tr>-->
+<!--                        <tr ng:repeat="drive in drives">-->
+<!--                            <td>{{drive.properties.label}}</td>-->
+<!--                            <td>-->
+<!--                                <span checkbox ng:model="drive.properties.useLetter"></span>-->
+<!--                            </td>-->
+<!--                            <td>-->
+<!--                                <select-->
+<!--                                    ng:model="drive.properties.letter"-->
+<!--                                    ng:change="updateAvailableLetters(drive.properties.letter, '{{drive.properties.letter}}')"-->
+<!--                                    class="form-control">-->
+<!--                                    <option ng:repeat="l in availableDriveLetters | driveLettersOptions: drive.properties.letter">{{l.letter}}</option>-->
+<!--                                </select>-->
+<!--                            </td>-->
+<!--                            <td>-->
+<!--                                <span checkbox ng:model="drive.disabled"></span>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                    </table>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--            <floating-toolbar ng:show="drives.length > 0">-->
+<!--                <a class="btn btn-lmn" ng:click="saveDrives()" translate>Save</a>-->
+<!--            </floating-toolbar>-->
+<!--        </uib:tab>-->
+    </uib:tabset>
+</div>

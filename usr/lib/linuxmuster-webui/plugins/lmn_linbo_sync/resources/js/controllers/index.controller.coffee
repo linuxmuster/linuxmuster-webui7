@@ -7,11 +7,20 @@ angular.module('lmn.linbo_sync').controller 'SyncIndexController', ($scope, $htt
         for group of $scope.groups
             $scope.linbo_command[group] = {'cmd':[], 'show':false, 'host': [], 'target':'clients' }
 
+    $scope.up_icons = {
+        'Off': "fas fa-power-off",
+        'No response': "fas fa-power-off",
+        'OS Linux': "fab fa-linux",
+        'OS Windows': "fab fa-windows",
+        'Linbo': "fas fa-laptop-medical",
+    }
+
     $scope.isUp = (group, host) ->
         index = $scope.groups[group].hosts.indexOf(host)
         $http.get("/api/lm/linbo/isOnline/#{host.hostname}").then (resp) ->
-            $scope.groups[group].hosts[index].up = resp.data
-            if ( resp.data == "Off" )
+            $scope.groups[group].hosts[index].up_comment = resp.data
+            $scope.groups[group].hosts[index].up_icon = $scope.up_icons[resp.data]
+            if ( resp.data == "Off" or resp.data == "No response" )
                 $scope.groups[group].hosts[index].upClass = "btn-danger"
             else
                 $scope.groups[group].hosts[index].upClass = "btn-success"

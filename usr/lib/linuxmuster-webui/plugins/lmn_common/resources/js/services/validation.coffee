@@ -134,7 +134,7 @@ angular.module('lmn.common').service 'validation', (gettext) ->
     # Regexp for ip address, and tests if no duplicate
     this.isValidIP = (ip) ->
         error_msg = ip + gettext(' is not valid or duplicated')
-        regExp = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/ ## TODO all IPs allowed, and 010.1.1.1
+        regExp = /^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[1-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[1-9])$/
         validIP = regExp.test(ip) && (this.externVar['devices'].filter(this.findval('ip', ip)).length < 2)
         if !validIP
             return error_msg

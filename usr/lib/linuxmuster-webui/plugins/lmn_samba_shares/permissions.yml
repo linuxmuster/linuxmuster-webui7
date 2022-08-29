@@ -1,0 +1,8 @@
+globaladministrator:
+    - 'sidebar:view:/view/lmn/home: true'
+schooladministrator:
+    - 'sidebar:view:/view/lmn/home: true'
+teacher:
+    - 'sidebar:view:/view/lmn/home: true'
+student:
+    - 'sidebar:view:/view/lmn/home: true'

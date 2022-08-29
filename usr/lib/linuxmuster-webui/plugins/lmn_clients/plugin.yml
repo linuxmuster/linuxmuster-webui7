@@ -1,0 +1,15 @@
+name: lmn_clients
+author: Arnaud Kientz
+email: arnaud@linuxmuster.net
+url: https://linuxmuster.net
+version: '0.1'
+title: 'lmn_clients'
+icon: fas fa-toolbox
+dependencies:
+    - !PluginDependency { plugin_name: lmn_common}
+resources:
+    - 'resources/js/module.es'
+    - 'resources/js/routing.es'
+    - 'resources/js/controllers/index.controller.es'
+    - 'resources/partial/index.html'
+    - 'ng:lmn.clients'

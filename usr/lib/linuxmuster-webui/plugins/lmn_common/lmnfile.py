@@ -14,6 +14,9 @@ import yaml
 from configobj import ConfigObj
 
 
+# Allow 1 MiB for csv
+csv.field_size_limit(2**20)
+
 ALLOWED_PATHS = [
                 # Webui settings
                 '/etc/linuxmuster/webui/config.yml',

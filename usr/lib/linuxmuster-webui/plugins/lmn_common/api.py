@@ -11,6 +11,7 @@ import ast
 import logging
 from pprint import pformat
 from .lmnfile import LMNFile
+from configparser import SafeConfigParser
 
 
 # Load Webui settings
@@ -23,6 +24,16 @@ else:
     lmconfig = {}
     ldap_config = {}
     logging.error("Without config.yml the users will not be able to login.")
+
+# Load samba domain
+smbconf = SafeConfigParser()
+try:
+    smbconf.read('/etc/samba/smb.conf')
+    samba_realm = smbconf["global"]["realm"].lower()
+    samba_domain = f'{smbconf["global"]["netbios name"]}.{samba_realm}'.lower()
+except Exception:
+    logging.error("Can not read realm and domain from smb.conf")
+    samba_domain, samba_realm = '', ''
 
 # Fix missing entries in the lmconfig. Should be later refactored
 # and the config file should be splitted

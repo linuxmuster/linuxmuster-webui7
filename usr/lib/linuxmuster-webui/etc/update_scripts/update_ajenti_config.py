@@ -17,6 +17,11 @@ config.setdefault('logo', '/usr/lib/linuxmuster-webui/plugins/lmn_common/resourc
 if config['email']['templates']['reset_email'] == '/etc/linuxmuster/webui/email-templates/reset_email.html':
     config['email']['templates']['reset_email'] = '/etc/linuxmuster/webui/email_templates/reset_email.html'
 
+# Add new custom main view for Ajenti 2.2.1
+config.setdefault('view', {})
+config['view'].setdefault('plugin', 'lmn_common')
+config['view'].setdefault('filepath', 'resources/content/main_view.html')
+
 # Write new config file
 with open('/etc/ajenti/config.yml', 'w') as config_file:
     config_file.write(

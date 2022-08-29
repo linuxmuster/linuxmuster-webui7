@@ -4,6 +4,109 @@ linuxmuster-webui7 (7.2.1) lmn72; urgency=medium
 
  -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 24 Jun 2022 15:16:34 +0200
 
+linuxmuster-webui7 (7.1.37) lmn71; urgency=medium
+
+  * [home] Better error message for invalidparameter error
+  * Remove deprecated plugins by update 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 08 Aug 2022 23:22:39 +0200
+
+linuxmuster-webui7 (7.1.36) lmn71; urgency=medium
+
+  * [linbo4] Display all start.conf even if empty
+  * [linbo4] Manually add some custom image name in partition
+  * [linbo4] Display deprecated cloops in groups 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 08 Aug 2022 19:00:04 +0200
+
+linuxmuster-webui7 (7.1.35) lmn71; urgency=medium
+
+  * [home] Fix upload and admin paths
+  * [home] Handle more error cases 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 07 Aug 2022 12:34:16 +0200
+
+linuxmuster-webui7 (7.1.34) lmn71; urgency=medium
+
+  * [clients] Prepare config for drives.xml
+  * Fix ldap error ( controllers called twice ) 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Thu, 04 Aug 2022 12:37:37 +0200
+
+linuxmuster-webui7 (7.1.33) lmn71; urgency=medium
+
+  * [linbo4] Test backups timestamp before loading backup
+  * Fix semi-colon comment problem with configobj 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Tue, 02 Aug 2022 15:24:35 +0200
+
+linuxmuster-webui7 (7.1.32) lmn71; urgency=medium
+
+  * [users] Integrate sophomorix-check errors
+  * [clients] Fix wrong path and non existent file error 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 01 Aug 2022 15:20:46 +0200
+
+linuxmuster-webui7 (7.1.31) lmn71; urgency=medium
+
+  * [linbo4] Display new duplicate start.conf on create
+  * [linbo4] Remove linbo backup warning
+  * [home] Bigger frame for upload and fix upload button
+  * [home] Fix transfer and upload directory bug
+  * [devices] Better handle add, remove and duplicate
+  * [devices] Better display new devices 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 31 Jul 2022 19:13:33 +0200
+
+linuxmuster-webui7 (7.1.30) lmn71; urgency=medium
+
+  * [linbo_sync] Fix backup handling
+  * [linbo_sync] Sort devices by hostname
+  * [home] Fqdn in home samba path
+  * Always upgrade pip first
+  *  
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 30 Jul 2022 13:38:35 +0200
+
+linuxmuster-webui7 (7.1.29) lmn71; urgency=medium
+
+  * Fix gitignore and add right build files 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 25 Jul 2022 23:20:38 +0200
+
+linuxmuster-webui7 (7.1.28) lmn71; urgency=medium
+
+  * Fix stupid dependecy error
+  * [clients] : add locales 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 25 Jul 2022 22:56:52 +0200
+
+linuxmuster-webui7 (7.1.27) lmn71; urgency=medium
+
+  * Upgrade Ajenti 2.2.1
+  * Add settings for trusted domains and proxies
+  * [linbo_sync] : fix online test behind firewall
+  * [linbo_sync] : new icons for online status 
+  * New plugin lmn_clients to edit custom sysvol scripts
+  * [home] : add cut/copy/clipboard methods
+  * [home] : dragdrop fully integrated in view
+  * [home] : better error handling
+  * Publish home plugin for all users 
+  * Diverses fixs and cleanup
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 25 Jul 2022 19:52:37 +0200
+
+linuxmuster-webui7 (7.1.26) lmn71; urgency=medium
+
+  * Upgrade Ajenti 2.2.0
+  * Fix logged passwords
+  * Better handle kerberos dependencies
+  * Add config parameter for https redirect
+  * [smbclient] Experimental support for DFS shares
+  * Prepare container for iframes
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 16 Jul 2022 11:50:36 +0200
+
 linuxmuster-webui7 (7.1.25) lmn71; urgency=medium
 
   * [linbo_sync, quotas, devices] Add multischool support (@PlanB2008)

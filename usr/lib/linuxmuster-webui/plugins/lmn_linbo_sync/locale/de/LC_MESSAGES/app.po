@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-24 14:52+0200\n"
-"PO-Revision-Date: 2022-06-24 12:56\n"
+"POT-Creation-Date: 2022-07-24 11:51+0200\n"
+"PO-Revision-Date: 2022-07-31 17:11\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -17,69 +17,69 @@ msgstr ""
 "X-Crowdin-File: /2.0/lmn_linbo_sync.po\n"
 "X-Crowdin-File-ID: 207\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:76
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:77
 msgid "<i class=\"fas fa-clock\"></i>  Boot timeout (in seconds):"
 msgstr "<i class=\"fas fa-clock\"></i>  Boot-Timeout (in Sekunden):"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:95
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:96
 msgid "<i class=\"fas fa-directions\"></i>  Bypass autostart"
 msgstr "<i class=\"fas fa-directions\"></i>  Autostart umgehen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:42
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:43
 msgid "<i class=\"fas fa-eraser\"></i>  Format"
 msgstr "<i class=\"fas fa-eraser\"></i>  Formatieren"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:87
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:88
 msgid "<i class=\"fas fa-eraser\"></i>  Partition"
 msgstr "<i class=\"fas fa-eraser\"></i>  Formatieren"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:54
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:55
 msgid "<i class=\"fas fa-exclamation-triangle\"></i>  New"
 msgstr "<i class=\"fas fa-exclamation-triangle\"></i>  Neu"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:106
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:107
 msgid "<i class=\"fas fa-info-circle\"></i>\n"
 "                To apply a linbo-remote command, you have to select at least one client and one command."
 msgstr "<i class=\"fas fa-info-circle\"></i>\n"
 "                Um einen linbo-remote Befehl anzuwenden, müssen Sie mindestens einen Client und einen Befehl auswählen."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:71
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:72
 msgid "<i class=\"fas fa-lightbulb\"></i>  Wake on lan"
 msgstr "<i class=\"fas fa-lightbulb\"></i>  Wake on lan"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:50
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:51
 msgid "<i class=\"fas fa-play\"></i>  Start"
 msgstr "<i class=\"fas fa-play\"></i>  Start"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:99
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:100
 msgid "<i class=\"fas fa-plug\"></i>  Use Prestart"
 msgstr "<i class=\"fas fa-plug\"></i>  Prestart verwenden"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:63
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:64
 msgid "<i class=\"fas fa-power-off\"></i>  Halt"
 msgstr "<i class=\"fas fa-power-off\"></i>  Herunterfahren"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:67
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:68
 msgid "<i class=\"fas fa-sync\"></i>  Reboot"
 msgstr "<i class=\"fas fa-sync\"></i>  Neustart"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:46
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:47
 msgid "<i class=\"fas fa-sync-alt\"></i>  Sync"
 msgstr "<i class=\"fas fa-sync-alt\"></i>  Synchronisieren"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:91
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:92
 msgid "<i class=\"fas fa-terminal\"></i>  Disable GUI"
 msgstr "<i class=\"fas fa-terminal\"></i>  GUI deaktivieren"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:116
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:117
 msgid "Apply"
 msgstr "Übernehmen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:115
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:116
 msgid "Check online"
 msgstr "Online prüfen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:86
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:87
 msgid "Global options"
 msgstr "Globale Optionen"
 
@@ -107,15 +107,15 @@ msgstr "Kein Datum gefunden."
 msgid "Online ?"
 msgstr "Online ?"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:62
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:63
 msgid "Power management"
 msgstr "Energieverwaltung"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:111
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:112
 msgid "Result command"
 msgstr "Befehl"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:37
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:38
 msgid "Run linbo-remote command"
 msgstr "linbo-remote Befehl ausführen"
 
@@ -136,7 +136,7 @@ msgstr "Testen, ob Rechner online ist"
 msgid "Synchronize first OS from workstation"
 msgstr "Das erste Betriebssystem des Rechners synchronisieren"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/js/controllers/index.controller.coffee:177
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/js/controllers/index.controller.coffee:186
 msgid "Command successfully sent : "
 msgstr "Befehl erfolgreich versendet: "
 

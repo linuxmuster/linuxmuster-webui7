@@ -269,6 +269,12 @@ class LinboImageGroup:
 
         if os.path.exists(self.backup_path):
             for timestamp in os.listdir(self.backup_path):
+                try:
+                    # Is it a valid timestamp ?
+                    timestamp2date(timestamp)
+                except ValueError:
+                    # Not a backup done with Linbo, passing
+                    continue
                 for file in os.listdir(os.path.join(self.backup_path, timestamp)):
                     if file.endswith(f".{IMAGE}"):
                         self.backups[timestamp2date(timestamp)] = LinboImage(

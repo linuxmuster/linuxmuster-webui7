@@ -2118,11 +2118,11 @@
         $uibModalInstance.close();
         return;
       }
-      if (resp.data['OUTPUT'][0]['TYPE'] === 'ERROR') {
-        notify.error(gettext('Check failed'), resp.data.message);
+      if (resp.data["CHECK_RESULT"]["ERRORLIST"].length > 0) {
+        notify.error(gettext('Check failed'));
         $scope.isWorking = false;
         $scope.error = true;
-        return $scope.errorMessage = resp.data['OUTPUT'][0]['MESSAGE_EN'];
+        return $scope.errorList = resp.data["CHECK_RESULT"]['ERROR'];
       } else {
         $scope.showCheckResults(resp.data);
         return $uibModalInstance.close();
@@ -2133,7 +2133,7 @@
       return notify.error(gettext('Check failed'), resp.data.message);
     });
     $scope.showCheckResults = function(data) {
-      $uibModal.open({
+      return $uibModal.open({
         templateUrl: '/lmn_users:resources/partial/result.modal.html',
         controller: 'LMUsersCheckResultsModalController',
         resolve: {
@@ -2142,7 +2142,6 @@
           }
         }
       });
-      return console.log(data);
     };
     return $scope.close = function() {
       return $uibModalInstance.close();

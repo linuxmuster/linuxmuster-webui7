@@ -15,11 +15,15 @@ angular.module('lmn.samba_shares').config(function ($routeProvider) {
 
 'use strict';
 
-angular.module('lmn.samba_shares').controller('HomeIndexController', function ($scope, $routeParams, $window, $localStorage, $timeout, $q, $http, notify, identity, smbclient, pageTitle, urlPrefix, messagebox, gettext) {
-    pageTitle.set('path', $scope);
+angular.module('lmn.samba_shares').controller('HomeIndexController', function ($scope, $routeParams, $window, $localStorage, $timeout, $q, $http, notify, identity, smbclient, pageTitle, urlPrefix, messagebox, gettext, tasks, toaster) {
+    pageTitle.set(gettext('Samba shares'));
 
     $scope.loading = true;
     $scope.active_share = '';
+    $scope.newDirectoryDialogVisible = false;
+    $scope.newFileDialogVisible = false;
+    $scope.clipboardVisible = false;
+    $scope.uploadProgress = [];
 
     identity.promise.then(function () {
         if (identity.user == 'root') {
@@ -60,6 +64,14 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function ($
         }
     });
 
+    $scope.isProtectedFile = function (item) {
+        // Actually only 2 file types, restraining tests
+        if (["transfer", ".upload"].includes(item.name)) {
+            return $scope.protectedFiles.indexOf(item.path) > -1;
+        }
+        return false;
+    };
+
     $scope.reload = function () {
         return $scope.load_path($scope.current_path);
     };
@@ -98,6 +110,11 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function ($
 
         shareObj.active = true;
         $scope.active_share = shareObj;
+        $scope.protectedFiles = [];
+
+        if (shareObj.name == 'Home') $scope.protectedFiles.push(shareObj.path + '/transfer');
+        $scope.protectedFiles.push(shareObj.path + '/.upload');
+
         $scope.load_path(shareObj.path);
     };
 
@@ -137,9 +154,15 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function ($
             $scope.items = data.items;
             $scope.current_path = path;
         }, function (resp) {
-            notify.error(gettext('Could not load directory : '), resp.data.message);
+            toaster.pop('error', gettext("Could not load directory : "), resp.data.message, 5000);
         }).finally(function () {
             $scope.loading = false;
+        });
+    };
+
+    $scope.isEmptyDir = function (path) {
+        return smbclient.list(path).then(function (data) {
+            return data.items.length == 0;
         });
     };
 
@@ -156,7 +179,173 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function ($
         });
     };
 
+    $scope.addClipboardOperation = function (item, mode) {
+        var _iteratorNormalCompletion4 = true;
+        var _didIteratorError4 = false;
+        var _iteratorError4 = undefined;
+
+        try {
+            for (var _iterator4 = $scope.clipboard[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+                element = _step4.value;
+
+                if (element.item.path == item.path) {
+                    position = $scope.clipboard.indexOf(element);
+                    $scope.clipboard.splice(position, 1);
+                };
+            }
+        } catch (err) {
+            _didIteratorError4 = true;
+            _iteratorError4 = err;
+        } finally {
+            try {
+                if (!_iteratorNormalCompletion4 && _iterator4.return) {
+                    _iterator4.return();
+                }
+            } finally {
+                if (_didIteratorError4) {
+                    throw _iteratorError4;
+                }
+            }
+        }
+
+        ;
+        $scope.clipboard.push({ item: item, 'mode': mode });
+    };
+
+    $scope.doCut = function () {
+        var _iteratorNormalCompletion5 = true;
+        var _didIteratorError5 = false;
+        var _iteratorError5 = undefined;
+
+        try {
+            var _loop = function _loop() {
+                var item = _step5.value;
+
+                if (item.selected) {
+                    if (item.isDir) {
+                        $scope.isEmptyDir(item.path).then(function (resp) {
+                            if (resp) {
+                                $scope.addClipboardOperation(item, 'move');
+                            } else {
+                                notify.error(gettext("Can not cut/copy or delete non empty directories !"));
+                            };
+                        });
+                    } else {
+                        $scope.addClipboardOperation(item, 'move');
+                    }
+                }
+            };
+
+            for (var _iterator5 = $scope.items[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+                _loop();
+            }
+        } catch (err) {
+            _didIteratorError5 = true;
+            _iteratorError5 = err;
+        } finally {
+            try {
+                if (!_iteratorNormalCompletion5 && _iterator5.return) {
+                    _iterator5.return();
+                }
+            } finally {
+                if (_didIteratorError5) {
+                    throw _iteratorError5;
+                }
+            }
+        }
+
+        $scope.clear_selection();
+    };
+
+    $scope.doCopy = function () {
+        var _iteratorNormalCompletion6 = true;
+        var _didIteratorError6 = false;
+        var _iteratorError6 = undefined;
+
+        try {
+            var _loop2 = function _loop2() {
+                var item = _step6.value;
+
+                if (item.selected) {
+                    if (item.isDir) {
+                        $scope.isEmptyDir(item.path).then(function (resp) {
+                            if (resp) {
+                                $scope.addClipboardOperation(item, 'copy');
+                            } else {
+                                notify.error(gettext("Can not cut/copy or delete non empty directories !"));
+                            };
+                        });
+                    } else {
+                        $scope.addClipboardOperation(item, 'copy');
+                    };
+                }
+            };
+
+            for (var _iterator6 = $scope.items[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
+                _loop2();
+            }
+        } catch (err) {
+            _didIteratorError6 = true;
+            _iteratorError6 = err;
+        } finally {
+            try {
+                if (!_iteratorNormalCompletion6 && _iterator6.return) {
+                    _iterator6.return();
+                }
+            } finally {
+                if (_didIteratorError6) {
+                    throw _iteratorError6;
+                }
+            }
+        }
+
+        $scope.clear_selection();
+    };
+
+    $scope.doPaste = function () {
+        // Cut and/or copy a list of files
+        // Problem with error handling in promise list
+        var items = angular.copy($scope.clipboard);
+        promises = [];
+        var _iteratorNormalCompletion7 = true;
+        var _didIteratorError7 = false;
+        var _iteratorError7 = undefined;
+
+        try {
+            for (var _iterator7 = items[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
+                var _item = _step7.value;
+
+                if (_item.mode == 'copy') {
+                    promises.push(smbclient.copy(_item.item.path, $scope.current_path + '/' + _item.item.name));
+                }
+                if (_item.mode == 'move') {
+                    promises.push(smbclient.move(_item.item.path, $scope.current_path + '/' + _item.item.name));
+                }
+            }
+        } catch (err) {
+            _didIteratorError7 = true;
+            _iteratorError7 = err;
+        } finally {
+            try {
+                if (!_iteratorNormalCompletion7 && _iterator7.return) {
+                    _iterator7.return();
+                }
+            } finally {
+                if (_didIteratorError7) {
+                    throw _iteratorError7;
+                }
+            }
+        }
+
+        $q.all(promises).then(function () {
+            $scope.clear_selection();
+            $scope.clearClipboard();
+            $scope.reload();
+        });
+    };
+
     $scope.delete_file = function (path) {
+        // Delete directly one single file
         messagebox.show({
             text: gettext("Do you really want to delete this file?"),
             positive: gettext('Delete'),
@@ -172,72 +361,126 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function ($
     };
 
     $scope.doDelete = function () {
-        return messagebox.show({
-            text: gettext('Delete selected items?'),
-            positive: gettext('Delete'),
-            negative: gettext('Cancel')
-        }).then(function () {
-            var items = $scope.items.filter(function (item) {
-                return item.selected;
-            });
-            promises = [];
-            var _iteratorNormalCompletion4 = true;
-            var _didIteratorError4 = false;
-            var _iteratorError4 = undefined;
+        return (
+            // Delete a list of selected files
+            // Problem with error handling in promise list
+            messagebox.show({
+                text: gettext('Delete selected items?'),
+                positive: gettext('Delete'),
+                negative: gettext('Cancel')
+            }).then(function () {
+                var items = $scope.items.filter(function (item) {
+                    return item.selected;
+                });
+                promises = [];
+                var _iteratorNormalCompletion8 = true;
+                var _didIteratorError8 = false;
+                var _iteratorError8 = undefined;
 
-            try {
-                for (var _iterator4 = items[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-                    var _item = _step4.value;
-
-                    promises.push(smbclient.delete_file(_item.path));
-                }
-            } catch (err) {
-                _didIteratorError4 = true;
-                _iteratorError4 = err;
-            } finally {
                 try {
-                    if (!_iteratorNormalCompletion4 && _iterator4.return) {
-                        _iterator4.return();
+                    for (var _iterator8 = items[Symbol.iterator](), _step8; !(_iteratorNormalCompletion8 = (_step8 = _iterator8.next()).done); _iteratorNormalCompletion8 = true) {
+                        var _item2 = _step8.value;
+
+                        promises.push(smbclient.delete_file(_item2.path));
                     }
+                } catch (err) {
+                    _didIteratorError8 = true;
+                    _iteratorError8 = err;
                 } finally {
-                    if (_didIteratorError4) {
-                        throw _iteratorError4;
+                    try {
+                        if (!_iteratorNormalCompletion8 && _iterator8.return) {
+                            _iterator8.return();
+                        }
+                    } finally {
+                        if (_didIteratorError8) {
+                            throw _iteratorError8;
+                        }
                     }
                 }
-            }
 
-            $q.all(promises).then(function () {
-                notify.success('Deleted !');
-                $scope.clear_selection();
-                $scope.reload();
-            });
-        });
-    };
-
-    $scope.create_dir = function () {
-        messagebox.prompt(gettext('New directory name :'), '').then(function (msg) {
-            path = $scope.current_path + '/' + msg.value;
-            smbclient.createDirectory(path).then(function (data) {
-                notify.success(path + gettext(' created !'));
-                $scope.reload();
-            }, function (resp) {
-                notify.error(gettext('Error during creating directory: '), resp.data.message);
-            });
-        });
+                $q.all(promises).then(function () {
+                    notify.success('Deleted !');
+                    $scope.clear_selection();
+                    $scope.reload();
+                });
+            })
+        );
     };
 
     $scope.delete_dir = function (path) {
-        messagebox.show({
-            text: gettext("Do you really want to delete this directory? This is only possible if the directory is empty."),
-            positive: gettext('Delete'),
-            negative: gettext('Cancel')
-        }).then(function () {
-            smbclient.delete_dir(path).then(function (data) {
-                notify.success(path + gettext(' deleted !'));
-                $scope.reload();
-            }, function (resp) {
-                notify.error(gettext('Error during deleting : '), resp.data.message);
-            });
+        // Directly delete a single directory
+        $scope.isEmptyDir(path).then(function (resp) {
+            if (resp) {
+                messagebox.show({
+                    text: gettext("Do you really want to delete this directory?"),
+                    positive: gettext('Delete'),
+                    negative: gettext('Cancel')
+                }).then(function () {
+                    smbclient.delete_dir(path).then(function (data) {
+                        notify.success(path + gettext(' deleted !'));
+                        $scope.reload();
+                    }, function (resp) {
+                        notify.error(gettext('Error during deleting : '), resp.data.message);
+                    });
+                });
+            } else {
+                notify.error(gettext("Can not cut/copy or delete non empty directories !"));
+            };
+        });
+    };
+
+    $localStorage.sambaSharesClipboard = $localStorage.sambaSharesClipboard || [];
+    $scope.clipboard = $localStorage.sambaSharesClipboard;
+
+    $scope.showClipboard = function () {
+        return $scope.clipboardVisible = true;
+    };
+
+    $scope.hideClipboard = function () {
+        return $scope.clipboardVisible = false;
+    };
+
+    $scope.clearClipboard = function () {
+        $scope.clipboard.length = 0;
+        $scope.hideClipboard();
+    };
+
+    // new file dialog
+
+    $scope.showNewFileDialog = function () {
+        $scope.newFileName = '';
+        $scope.newFileDialogVisible = true;
+    };
+
+    $scope.doCreateFile = function () {
+        if (!$scope.newFileName) {
+            return;
+        }
+        return smbclient.createFile($scope.current_path + '/' + $scope.newFileName).then(function () {
+            $scope.reload();
+            $scope.newFileDialogVisible = false;
+        }, function (err) {
+            notify.error(gettext('Could not create file'), err.data.message);
+        });
+    };
+
+    // new directory dialog
+
+    $scope.showNewDirectoryDialog = function () {
+        $scope.newDirectoryName = '';
+        $scope.newDirectoryDialogVisible = true;
+    };
+
+    $scope.doCreateDirectory = function () {
+        if (!$scope.newDirectoryName) {
+            return;
+        }
+
+        return smbclient.createDirectory($scope.current_path + '/' + $scope.newDirectoryName).then(function () {
+            $scope.reload();
+            $scope.newDirectoryDialogVisible = false;
+        }, function (err) {
+            notify.error(gettext('Could not create directory'), err.data.message);
         });
     };
 
@@ -246,6 +489,58 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function ($
             $window.open('/api/lmn/smbclient/download?path=' + path);
         }, function (resp) {
             notify.error(gettext('File not found, may be due to special chars in the file name.'));
+        });
+    };
+
+    $scope.areUploadsFinished = function () {
+        numUploads = $scope.uploadProgress.length;
+        if (numUploads == 0) {
+            return true;
+        };
+
+        globalProgress = 0;
+        var _iteratorNormalCompletion9 = true;
+        var _didIteratorError9 = false;
+        var _iteratorError9 = undefined;
+
+        try {
+            for (var _iterator9 = $scope.uploadProgress[Symbol.iterator](), _step9; !(_iteratorNormalCompletion9 = (_step9 = _iterator9.next()).done); _iteratorNormalCompletion9 = true) {
+                p = _step9.value;
+
+                globalProgress += p.progress;
+            }
+        } catch (err) {
+            _didIteratorError9 = true;
+            _iteratorError9 = err;
+        } finally {
+            try {
+                if (!_iteratorNormalCompletion9 && _iterator9.return) {
+                    _iterator9.return();
+                }
+            } finally {
+                if (_didIteratorError9) {
+                    throw _iteratorError9;
+                }
+            }
+        }
+
+        return numUploads * 100 == globalProgress;
+    };
+
+    $scope.sambaSharesUploadBegin = function ($flow) {
+        $scope.uploadProgress = [];
+        $scope.uploadFiles = [];
+        for (file in $flow.files) {
+            $scope.uploadFiles.push(file.name);
+        }
+        $scope.files_list = $scope.uploadFiles.join(', ');
+        smbclient.startFlowUpload($flow, $scope.current_path).then(function (resp) {
+            notify.success(gettext('Uploaded ') + $scope.files_list);
+            $scope.reload();
+        }, null, function (progress) {
+            $scope.uploadProgress = progress.sort(function (a, b) {
+                return a.name > b.name;
+            });
         });
     };
 });

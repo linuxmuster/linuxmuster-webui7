@@ -44,6 +44,12 @@ angular.module('lmn.devices').controller 'LMDevicesController', ($scope, $http, 
         return Object.keys(d).length
 
     $scope.validateField = (name, val, isnew, index, role="") ->
+        # Empty cell
+        if !val
+            delete $scope.error_msg[name + "-" + index]
+            $scope.emptyCells[name + "-" + index] = 1
+            return "has-error-new"
+
         if name == "Mac"
             # Index necessary to convert mac adress in $scope.devices
             test = validation["isValidMac"](val, index)
@@ -57,19 +63,17 @@ angular.module('lmn.devices').controller 'LMDevicesController', ($scope, $http, 
         else
             test = validation["isValid"+name](val)
 
-        if test == true && (val || name == "Comment")
+        if test == true
             delete $scope.error_msg[name + "-" + index]
             delete $scope.emptyCells[name + "-" +  index]
             return ""
-        else if !val
-            delete $scope.error_msg[name + "-" + index]
-            $scope.emptyCells[name + "-" + index] = 1
         else
             delete $scope.emptyCells[name + "-" + index]
+            # Error not already registered, adding it
             if Object.values($scope.error_msg).indexOf(test) == -1
                 $scope.error_msg[name + "-" + index] = test
 
-        return "has-error-new"
+            return "has-error-new"
 
     $scope.sorts = [
         {
@@ -117,29 +121,15 @@ angular.module('lmn.devices').controller 'LMDevicesController', ($scope, $http, 
             sophomorixRole: 'classroom-studentcomputer',
             pxeFlag: '1',
         }
-        console.log($scope.devices)
 
     $scope.duplicate = (device) ->
-        $scope.devices.push {
-            _isNew: true,
-            room: device.room,
-            hostname: device.hostname,
-            group: device.group,
-            mac: device.mac,
-            ip: device.ip,
-            officeKey: device.officeKey,
-            windowsKey: device.windowsKey,
-            dhcpOptions: device.dhcpOptions,
-            sophomorixRole: device.sophomorixRole,
-            lmnReserved10: device.lmnReserved10,
-            pxeFlag: device.pxeFlag,
-            lmnReserved12: device.lmnReserved12,
-            lmnReserved13: device.lmnReserved13,
-            lmnReserved14: device.lmnReserved14,
-            sophomorixComment: device.sophomorixComment,
-        }
-        $location.hash('end_table');
-        $anchorScroll();
+        newDevice = angular.copy(device)
+        newDevice._isNew = true
+        # New device is added at first place
+        $scope.devices.unshift(newDevice)
+        $scope.devices_without_comment.unshift(newDevice)
+        # Return to first page after adding the new device
+        $scope.paging.page = 1
 
     $scope.fields = {
         room:
@@ -189,10 +179,9 @@ angular.module('lmn.devices').controller 'LMDevicesController', ($scope, $http, 
             name: gettext('Sophomorix-Comment')
     }
 
-
-
     $scope.remove = (device) ->
         $scope.devices.remove(device)
+        $scope.devices_without_comment.remove(device)
 
     $scope.numErrors = () ->
         # Remove previous errors
@@ -209,6 +198,9 @@ angular.module('lmn.devices').controller 'LMDevicesController', ($scope, $http, 
         $scope.show_errors = false
         $scope.devices_form.$setPristine()
         return $http.post('/api/lm/devices', $scope.devices).then () ->
+            # Reset all isNew tags
+            for device in $scope.devices
+                device._isNew = false
             notify.success gettext('Saved')
 
     $scope.saveAndImport = () ->

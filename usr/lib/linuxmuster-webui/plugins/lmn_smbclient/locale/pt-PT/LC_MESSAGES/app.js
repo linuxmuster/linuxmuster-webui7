@@ -1,1 +1,1 @@
-{"": "", "Delete Samba files": ""}
+{"": "", "Delete Samba files": "", " moved!": "", " copied!": ""}

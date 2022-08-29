@@ -255,8 +255,7 @@ class Handler(HttpPlugin):
                 elif objtype == 'teacher':
                     sophomorixCommand = ['sophomorix-query', '--anyname',
                                          login + '*', '--teacher', '-jj']
-                    result = lmn_getSophomorixValue(sophomorixCommand,
-                                                    'USER')
+                    result = lmn_getSophomorixValue(sophomorixCommand,'USER')
                 elif objtype == 'usergroup':
                     sophomorixCommand = ['sophomorix-query', '--sam', login+'*', '--group-members', '-jj']
                     result = lmn_getSophomorixValue(sophomorixCommand, 'MEMBERS')
@@ -267,6 +266,10 @@ class Handler(HttpPlugin):
                     sophomorixCommand = ['sophomorix-query', '--anyname', login+'*', '-jj']
                     result = lmn_getSophomorixValue(sophomorixCommand, 'LISTS')
                     return result['GROUP'] + result['ROOM']
+                elif objtype == 'computer':
+                    sophomorixCommand = ['sophomorix-query', '--sam', login+'*', '-jj']
+                    result = lmn_getSophomorixValue(sophomorixCommand, 'LISTS')
+                    return result['COMPUTER']
 
                 for _, details in result.items():
                     resultArray.append({

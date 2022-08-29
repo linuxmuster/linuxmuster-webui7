@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.2.2) lmn72; urgency=medium
+
+  * Fix gevent version for Python 3.10 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 29 Aug 2022 18:09:07 +0200
+
 linuxmuster-webui7 (7.2.1) lmn72; urgency=medium
 
   * Build package for Ubuntu 22.04

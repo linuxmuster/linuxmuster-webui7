@@ -422,6 +422,11 @@
         return u.login === login;
       }).length === 0;
     };
+    $scope.removeTeacherClass = function(user) {
+      // Temporary wrapper to remove a teacher as member and admin from a class, to avoid conflicts
+      $scope.removeMember(user);
+      return $scope.removeAdmin(user);
+    };
     $scope.addMember = function(user) {
       var entity, i, len, u;
       entity = '';

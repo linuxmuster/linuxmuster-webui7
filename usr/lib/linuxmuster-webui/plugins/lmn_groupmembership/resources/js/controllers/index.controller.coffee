@@ -292,6 +292,11 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
         $scope.filterLogin = (membersArray, login) ->
             return membersArray.filter((u) -> u.login == login).length == 0
 
+        $scope.removeTeacherClass = (user) ->
+            # Temporary wrapper to remove a teacher as member and admin from a class, to avoid conflicts
+            $scope.removeMember(user)
+            $scope.removeAdmin(user)
+
         $scope.addMember = (user) ->
             entity = ''
             if Array.isArray(user)

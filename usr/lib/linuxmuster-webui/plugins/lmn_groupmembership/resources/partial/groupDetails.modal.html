@@ -97,7 +97,8 @@
                         {{member.sophomorixAdminClass}}
                         <span ng:show="editGroup">
                             <button class="cardbtn" ng:show="type == 'project'" title="{{text.addAsAdmin}}"><i class="fas fa-level-up-alt" ng:click="elevateMember(member)"></i></button>
-                            <button class="cardbtn" ng:show="type == 'project' || (type == 'class' && member.sophomorixRole == 'teacher')" title="{{text.remove}}"><i class="fas fa-trash" ng:click="removeMember(member)"></i></button>
+                            <button class="cardbtn" ng:show="type == 'project'" title="{{text.remove}}"><i class="fas fa-trash" ng:click="removeMember(member)"></i></button>
+                            <button class="cardbtn" ng:show="type == 'class' && member.sophomorixRole == 'teacher'" title="{{text.remove}}"><i class="fas fa-trash" ng:click="removeTeacherClass(member)"></i></button>
                         </span>
                     </div>
                 </li>

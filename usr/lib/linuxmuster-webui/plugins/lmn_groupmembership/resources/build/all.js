@@ -710,6 +710,10 @@
     });
     $scope.addEntities = function() {
       $scope.UserSearchVisible = false;
+      if ($scope.type === 'class') {
+        // Only teachers which are always admins in classes
+        $scope._.addasadmin = true;
+      }
       if ($scope._.addasadmin) {
         $scope.addAdmin($scope._.newUser);
         $scope.addAdminGroup($scope._.newGroup);

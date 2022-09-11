@@ -517,8 +517,18 @@
             $scope.admins = $scope.admins.concat(user.filter(function(u) {
               return $scope.admins.indexOf(u) < 0;
             }));
+            if ($scope.type === 'class') {
+              // Teachers are shown as members ...
+              $scope.members = $scope.members.concat(user.filter(function(u) {
+                return $scope.members.indexOf(u) < 0;
+              }));
+            }
           } else {
             $scope.admins.push(user);
+            if ($scope.type === 'class') {
+              // Teachers are shown as members ...
+              $scope.members.push(user);
+            }
           }
         }
         return $scope.changeState = false;

@@ -12,7 +12,9 @@ student:
 - 'lm:quotas:apply: false'
 - 'lm:quotas:configure: false'
 - 'lm:quotas:ldap-search: false'
+- 'sidebar:view:/view/lm/quotas: false'
 teacher:
 - 'lm:quotas:apply: false'
 - 'lm:quotas:configure: false'
 - 'lm:quotas:ldap-search: false'
+- 'sidebar:view:/view/lm/quotas: false'

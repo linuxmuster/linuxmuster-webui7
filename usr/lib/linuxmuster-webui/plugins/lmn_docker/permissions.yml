@@ -9,6 +9,8 @@ schooladministrator:
 student:
 - 'lm:docker:change: false'
 - 'lm:docker:list: false'
+- 'sidebar:view:/view/lm/docker: false'
 teacher:
 - 'lm:docker:change: false'
 - 'lm:docker:list: false'
+- 'sidebar:view:/view/lm/docker: false'

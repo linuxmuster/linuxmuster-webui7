@@ -5,9 +5,12 @@ globaladministrator:
 schooladministrator:
 - 'lm:crontab:read: false'
 - 'lm:crontab:write: false'
+- 'sidebar:view:/view/lm/crontab: false'
 student:
 - 'lm:crontab:read: false'
 - 'lm:crontab:write: false'
+- 'sidebar:view:/view/lm/crontab: false'
 teacher:
 - 'lm:crontab:read: false'
 - 'lm:crontab:write: false'
+- 'sidebar:view:/view/lm/crontab: false'

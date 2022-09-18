@@ -9,6 +9,8 @@ schooladministrator:
 student:
 - 'lm:devices: false'
 - 'lm:devices:import: false'
+- 'sidebar:view:/view/lm/devices: false'
 teacher:
 - 'lm:devices: false'
 - 'lm:devices:import: false'
+- 'sidebar:view:/view/lm/devices: false'

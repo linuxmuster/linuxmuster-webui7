@@ -1,11 +1,11 @@
-angular.module('lmn.docker').controller('DockerIndexController', function($scope, $http, $interval, messagebox, pageTitle, gettext, notify) {
+angular.module('lmn.docker').controller('DockerLMNIndexController', function($scope, $http, $interval, messagebox, pageTitle, gettext, notify) {
     pageTitle.set('Docker');
     $scope.container_stats = [];
     $scope.images= [];
     $scope.ready = false;
     $scope.imagesReady = false;
 
-    $http.get('/api/lm/docker/which').then(() => {
+    $http.get('/api/lmn/docker/which').then(() => {
             $scope.getResources();
             $scope.start_refresh();
             $scope.installed = true;
@@ -21,14 +21,14 @@ angular.module('lmn.docker').controller('DockerIndexController', function($scope
             $scope.refresh = $interval($scope.getResources, 5000, 0);
     }
     $scope.getResources = () => {
-        $http.get('/api/lm/docker/get_resources', {ignoreLoadingBar: true}).then((resp) => {
+        $http.get('/api/lmn/docker/containers', {ignoreLoadingBar: true}).then((resp) => {
             $scope.ready = true;
             $scope.container_stats = resp.data;
         });
     }
 
-    $scope.getDetails = (container) => {
-        $http.post('/api/lm/docker/get_details', {container: container}).then((resp) => {
+    $scope.getDetails = (container_id) => {
+        $http.get(`/api/lmn/docker/container/${container_id}`).then((resp) => {
             $scope.details = resp.data;
             $scope.showDetails = true;
         });
@@ -36,23 +36,23 @@ angular.module('lmn.docker').controller('DockerIndexController', function($scope
 
     $scope.closeDetails = () => $scope.showDetails = false;
 
-    $scope.stop = (container) => {
-        $http.post('/api/lm/docker/container_command', {container: container, control:'stop'}).then(() =>
+    $scope.stop = (container_id) => {
+        $http.post('/api/lmn/docker/container_command', {container_id: container_id, control:'stop'}).then(() =>
             notify.success(gettext('Stop command successfully sent.')));
     }
 
-    $scope.start = (container) => {
-        $http.post('/api/lm/docker/container_command', {container: container, control:'start'}).then(() =>
+    $scope.start = (container_id) => {
+        $http.post('/api/lmn/docker/container_command', {container_id: container_id, control:'start'}).then(() =>
             notify.success(gettext('Start command successfully sent.')));
     }
 
-    $scope.remove = (container) => {
+    $scope.remove = (container_id) => {
         messagebox.show({
             text: gettext('Really remove this container?'),
             positive: gettext('Remove'),
             negative: gettext('Cancel')
         }).then(() => {
-            $http.post('/api/lm/docker/container_command', {container: container, control: 'rm'}).then(() =>
+            $http.post('/api/lmn/docker/container_command', {container_id: container_id, control: 'rm'}).then(() =>
                 notify.success(gettext('Remove command successfully sent.')));
         });
     }
@@ -60,22 +60,22 @@ angular.module('lmn.docker').controller('DockerIndexController', function($scope
     $scope.getImages = () => {
         $interval.cancel($scope.refresh);
         delete $scope.refresh;
-        $http.post('/api/lm/docker/list_images').then((resp) => {
+        $http.get('/api/lmn/docker/images').then((resp) => {
             $scope.images = resp.data;console.log($scope.images);
             $scope.imagesReady = true;
         });
     }
 
-    $scope.removeImage = (image) => {
+    $scope.removeImage = (image_id) => {
         messagebox.show({
             text: gettext('Really remove this image?'),
             positive: gettext('Remove'),
             negative: gettext('Cancel')
         }).then(() => {
-            $http.post('/api/lm/docker/remove_image', {image: image}).then(() => {
+            $http.delete(`/api/lmn/docker/image/${image_id}`).then(() => {
                 notify.success(gettext('Remove command successfully sent.'));
                 for (let i = 0; i < $scope.images.length; i++) {
-                    if ($scope.images[i].hash == image)
+                    if ($scope.images[i].hash == image_id)
                         $scope.images.splice(i, 1);
                 }
             },

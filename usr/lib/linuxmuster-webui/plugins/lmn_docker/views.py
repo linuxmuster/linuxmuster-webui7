@@ -6,7 +6,7 @@ from jadi import component
 import subprocess
 import json
 
-from aj.api.http import url, HttpPlugin
+from aj.api.http import get, post, delete, HttpPlugin
 from aj.auth import authorize
 from aj.api.endpoint import endpoint, EndpointError
 
@@ -17,7 +17,7 @@ class Handler(HttpPlugin):
         # TODO : read config /var/lib/linuxmuster/setup.ini to get docker host ip
         self.docker = ['ssh', '10.0.0.3', 'docker']
 
-    @url(r'/api/lm/docker/which')
+    @get(r'/api/lmn/docker/which')
     @authorize('lm:docker:list')
     @endpoint(api=True)
     def handle_api_which_docker(self, http_context):
@@ -30,12 +30,13 @@ class Handler(HttpPlugin):
         """
 
         try:
+            # TODO make docker host ip configurable
             self.docker = subprocess.check_output(['ssh', '10.0.0.3', 'which', 'docker']).decode().strip()
             self.docker = ['ssh', '10.0.0.3', 'docker']
         except subprocess.CalledProcessError as e:
             raise EndpointError(_('Docker is not installed on this host'))
 
-    @url(r'/api/lm/docker/get_resources')
+    @get(r'/api/lmn/docker/containers')
     @authorize('lm:docker:list')
     @endpoint(api=True)
     def handle_api_resources_docker(self, http_context):
@@ -51,13 +52,12 @@ class Handler(HttpPlugin):
         command = self.docker + ['stats', '--format', '\'{{json .}}\'', '--no-stream', '-a']
         return [json.loads(line) for line in subprocess.check_output(command).decode().splitlines()]
 
-    @url(r'/api/lm/docker/get_details')
+    @get(r'/api/lmn/docker/container/(?P<container_id>.*)')
     @authorize('lm:docker:list')
     @endpoint(api=True)
-    def handle_api_details_container(self, http_context):
+    def handle_api_details_container(self, http_context, container_id=None):
         """
         Retrieve all informations from docker inspect for one container.
-        Method POST.
 
         :param http_context: HttpContext
         :type http_context: HttpContext
@@ -65,33 +65,34 @@ class Handler(HttpPlugin):
         :rtype: json
         """
 
-        if http_context.method == 'POST':
-            container = http_context.json_body()['container']
-            command = self.docker + ['inspect', container, '--format', '\'{{json .}}\'']
-            return json.loads(subprocess.check_output(command).decode())
+        command = self.docker + ['inspect', container_id, '--format', '\'{{json .}}\'']
+        return json.loads(subprocess.check_output(command).decode())
 
-    @url(r'/api/lm/docker/container_command')
+    @post(r'/api/lmn/docker/container_command')
     @authorize('lm:docker:change')
     @endpoint(api=True)
     def handle_api_container_stop(self, http_context):
         """
         Some controls for container : start, stop and remove. The hash of the container is sent per POST.
-        Method POST.
 
         :param http_context: HttpContext
         :type http_context: HttpContext
         """
 
-        if http_context.method == 'POST':
-            container = http_context.json_body()['container']
-            control = http_context.json_body()['control']
-            command = self.docker + [control, container]
-            try:
-                subprocess.check_output(command, stderr=subprocess.STDOUT)
-            except subprocess.CalledProcessError as e:
-                raise EndpointError(e.output.decode().strip())
+        container_id = http_context.json_body()['container_id']
+        control = http_context.json_body()['control']
 
-    @url(r'/api/lm/docker/list_images')
+        if control in ['start', 'stop', 'rm']:
+            command = self.docker + [control, container_id]
+        else:
+            return http_context.respond_not_found()
+
+        try:
+            subprocess.check_output(command, stderr=subprocess.STDOUT)
+        except subprocess.CalledProcessError as e:
+            raise EndpointError(e.output.decode().strip())
+
+    @get(r'/api/lmn/docker/images')
     @authorize('lm:docker:list')
     @endpoint(api=True)
     def handle_api_list_images(self, http_context):
@@ -112,23 +113,20 @@ class Handler(HttpPlugin):
             images.append(image)
         return images
 
-    @url(r'/api/lm/docker/remove_image')
+    @delete(r'/api/lmn/docker/image/(?P<image_id>.*)')
     @authorize('lm:docker:change')
     @endpoint(api=True)
-    def handle_api_remove_image(self, http_context):
+    def handle_api_remove_image(self, http_context, image_id=None):
         """
         Delete one image (given as hash) on the docker host.
-        Method POST.
 
         :param http_context: HttpContext
         :type http_context: HttpContext
         """
 
-        if http_context.method == 'POST':
-            image = http_context.json_body()['image']
-            command = self.docker + ['rmi', image]
-            try:
-                subprocess.check_output(command, stderr=subprocess.STDOUT)
-            except subprocess.CalledProcessError as e:
-                raise EndpointError(e.output.decode().strip())
+        command = self.docker + ['rmi', image_id]
+        try:
+            subprocess.check_output(command, stderr=subprocess.STDOUT)
+        except subprocess.CalledProcessError as e:
+            raise EndpointError(e.output.decode().strip())
 

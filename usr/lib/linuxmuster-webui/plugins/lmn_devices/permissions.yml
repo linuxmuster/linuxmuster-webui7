@@ -6,3 +6,9 @@ schooladministrator:
 - 'lm:devices: true'
 - 'lm:devices:import: true'
 - 'sidebar:view:/view/lm/devices: true'
+student:
+- 'lm:devices: false'
+- 'lm:devices:import: false'
+teacher:
+- 'lm:devices: false'
+- 'lm:devices:import: false'

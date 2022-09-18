@@ -6,3 +6,9 @@ schooladministrator:
 - 'lm:samba_dns:read: true'
 - 'lm:samba_dns:write: true'
 - 'sidebar:view:/view/lm/samba_dns: true'
+student:
+- 'lm:samba_dns:read: false'
+- 'lm:samba_dns:write: false'
+teacher:
+- 'lm:samba_dns:read: false'
+- 'lm:samba_dns:write: false'

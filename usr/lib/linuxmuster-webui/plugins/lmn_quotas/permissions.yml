@@ -8,3 +8,11 @@ schooladministrator:
 - 'lm:quotas:configure: true'
 - 'lm:quotas:ldap-search: true'
 - 'sidebar:view:/view/lm/quotas: true'
+student:
+- 'lm:quotas:apply: false'
+- 'lm:quotas:configure: false'
+- 'lm:quotas:ldap-search: false'
+teacher:
+- 'lm:quotas:apply: false'
+- 'lm:quotas:configure: false'
+- 'lm:quotas:ldap-search: false'

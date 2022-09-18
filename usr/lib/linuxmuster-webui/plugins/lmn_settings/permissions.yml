@@ -4,7 +4,12 @@ globaladministrator:
 - 'sidebar:view:/view/lm/globalsettings: true'
 - 'sidebar:view:/view/lm/schoolsettings: true'
 schooladministrator:
+- 'lm:globalsettings: false'
 - 'lm:schoolsettings: true'
 - 'sidebar:view:/view/lm/schoolsettings: true'
+student:
+- 'lm:globalsettings: false'
+- 'lm:schoolsettings: false'
 teacher:
+- 'lm:globalsettings: false'
 - 'lm:schoolsettings: false'

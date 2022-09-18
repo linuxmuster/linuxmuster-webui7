@@ -6,6 +6,9 @@ schooladministrator:
 - 'lmn:groupmembership: true'
 - 'lmn:groupmemberships:write: true'
 - 'sidebar:view:/view/lmn/groupmembership: true'
+student:
+- 'lmn:groupmembership: false'
+- 'lmn:groupmemberships:write: false'
 teacher:
 - 'lmn:groupmembership: true'
 - 'lmn:groupmemberships:write: true'

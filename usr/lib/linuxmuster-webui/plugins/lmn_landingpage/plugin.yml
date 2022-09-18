@@ -9,6 +9,7 @@ dependencies:
     - !PluginDependency { plugin_name: core }
     - !PluginDependency { plugin_name: lmn_common }
     - !PluginDependency { plugin_name: lmn_auth }
+    - !PluginDependency { plugin_name: lmn_quotas }
 
 resources:
     - 'resources/js/module.coffee'

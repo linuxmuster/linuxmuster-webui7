@@ -8,7 +8,6 @@ icon: tasks
 dependencies:
     - !PluginDependency { plugin_name: core }
     - !PluginDependency { plugin_name: lmn_common }
-    - !PluginDependency { plugin_name: lmn_users }
 resources:
     - 'resources/js/module.coffee'
     - 'resources/js/controllers/index.controller.coffee'

@@ -28,7 +28,7 @@ angular.module('lmn.samba_dns').controller('SambaDnsIndexController', function (
     $scope.showNew = false;
     $scope.types = ['AAAA', 'A', 'PTR', 'CNAME', 'NS', 'MX', 'TXT'];
 
-    $http.get('/api/dns/get').then(function (resp) {
+    $http.get('/api/lmn/dns').then(function (resp) {
         $scope.entries = resp.data[0];
         $scope.zone = resp.data[1];
     });
@@ -40,7 +40,7 @@ angular.module('lmn.samba_dns').controller('SambaDnsIndexController', function (
             negative: 'Cancel'
         }).then(function () {
             if (sub.type == 'MX') value = sub.value + '\\ ' + sub.priority;else value = sub.value;
-            $http.post('/api/dns/delete', { sub: sub.host, type: sub.type, value: value }).then(function (resp) {
+            $http.post('/api/lmn/dns/delete', { sub: sub.host, type: sub.type, value: value }).then(function (resp) {
                 notify.success(gettext('Entry deleted !'));
                 position = $scope.entries.sub.indexOf(sub);
                 $scope.entries.sub.splice(position, 1);
@@ -61,7 +61,7 @@ angular.module('lmn.samba_dns').controller('SambaDnsIndexController', function (
 
     $scope.update = function () {
         $scope.showUpdate = false;
-        $http.post('/api/dns/update', { old: $scope.old_sub, new: $scope.sub }).then(function (resp) {
+        $http.post('/api/lmn/dns', { old: $scope.old_sub, new: $scope.sub }).then(function (resp) {
             notify.success(gettext('Entry updated !'));
         });
     };
@@ -73,7 +73,7 @@ angular.module('lmn.samba_dns').controller('SambaDnsIndexController', function (
 
     $scope.save = function () {
         $scope.showNew = false;
-        $http.post('/api/dns/add', { sub: $scope.new }).then(function (resp) {
+        $http.put('/api/lmn/dns', { sub: $scope.new }).then(function (resp) {
             notify.success(gettext('Entry saved !'));
             $scope.entries.sub.push($scope.new);
         });

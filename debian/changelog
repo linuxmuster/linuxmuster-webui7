@@ -1,3 +1,11 @@
+linuxmuster-webui7 (17.1.38) lmn71; urgency=medium
+  * [devices] Filter leading zeros in IPs too
+  * [home] Fix students home path
+  * [clients] Fix script list in linux
+  * [common] Rise field limit for csv
+  * [groupmembership] Better projects alignment 
+  * [users] Add user ID to user details 
+
 linuxmuster-webui7 (7.1.38) lmn71; urgency=medium
 
   * [devices] Filter leading zeros in IPs too

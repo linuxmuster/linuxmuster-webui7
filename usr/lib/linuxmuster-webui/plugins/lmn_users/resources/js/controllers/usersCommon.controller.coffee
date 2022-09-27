@@ -110,7 +110,7 @@ angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $rou
             category = dn.split(',')[1].split('=')[1]
             $scope.groups.push({'cn':cn, 'category':category})
 
-    $http.get("/api/lmn/quota/#{id}").then (resp) ->
+    $http.get("/api/lmn/quota/user/#{id}").then (resp) ->
         $scope.quotas = []
 
         for share, values of resp.data['QUOTA_USAGE_BY_SHARE']

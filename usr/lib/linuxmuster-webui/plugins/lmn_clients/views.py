@@ -37,7 +37,7 @@ class Handler(HttpPlugin):
         school = self.context.schoolmgr.school
 
         custom_script_path = f'/var/lib/samba/sysvol/{samba_realm}/scripts/{school}/custom/'
-        scripts_linux = ['logoff.sh', 'logon.sh', 'sysstart.sh', 'sysstop.sh']
+        scripts_linux = ['sessionstart.sh', 'logon.sh', 'sysstart.sh', 'sysstop.sh']
         scripts_windows = ['logoff.bat', 'logon.bat', 'sysstart.bat', 'sysstop.bat']
 
         return {
@@ -80,10 +80,9 @@ class Handler(HttpPlugin):
     def handle_api_get_samba_drives(self, http_context):
 
         school = self.context.schoolmgr.school
-        # sophomorixCommand = ['sophomorix-school', '--gpo-listall', '-j']
-        # policy = lmn_getSophomorixValue(sophomorixCommand, f'LOOKUP/by_display_name/sophomorix:school:{school}')
-        # xml_path = f'/var/lib/samba/sysvol/{samba_realm}/Policies/{policy}/User/Preferences/Drives/Drives.xml'
-        xml_path = ""
+        sophomorixCommand = ['sophomorix-school', '--gpo-listall', '-j']
+        policy = lmn_getSophomorixValue(sophomorixCommand, f'LOOKUP/by_display_name/sophomorix:school:{school}')
+        xml_path = f'/var/lib/samba/sysvol/{samba_realm}/Policies/{policy}/User/Preferences/Drives/Drives.xml'
 
         try:
             tree = ElementTree.parse(xml_path)
@@ -118,10 +117,9 @@ class Handler(HttpPlugin):
     def handle_api_post_samba_drives(self, http_context):
 
         school = self.context.schoolmgr.school
-        # sophomorixCommand = ['sophomorix-school', '--gpo-listall', '-j']
-        # policy = lmn_getSophomorixValue(sophomorixCommand, f'LOOKUP/by_display_name/sophomorix:school:{school}')
-        # xml_path = f'/var/lib/samba/sysvol/{samba_realm}/Policies/{policy}/User/Preferences/Drives/Drives.xml'
-        xml_path = ""
+        sophomorixCommand = ['sophomorix-school', '--gpo-listall', '-j']
+        policy = lmn_getSophomorixValue(sophomorixCommand, f'LOOKUP/by_display_name/sophomorix:school:{school}')
+        xml_path = f'/var/lib/samba/sysvol/{samba_realm}/Policies/{policy}/User/Preferences/Drives/Drives.xml'
 
         drives_config = http_context.json_body()['drives']
         try:

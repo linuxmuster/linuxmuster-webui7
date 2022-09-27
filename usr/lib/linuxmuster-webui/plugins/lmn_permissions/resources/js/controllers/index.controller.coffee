@@ -9,7 +9,7 @@ angular.module('lmn.permissions').controller 'PermissionListIndexController', ($
 
 
     $scope.roles = ['globaladministrator', 'schooladministrator', 'teacher', 'student']
-    $http.get('/api/permissions').then (resp) ->
+    $http.get('/api/lmn/permissions').then (resp) ->
 
         $scope.pluginObj = resp.data[0]
         # To iterate in alphabetical order
@@ -104,7 +104,7 @@ angular.module('lmn.permissions').controller 'PermissionListIndexController', ($
         return true
 
     $scope.export = () ->
-        $http.post('/api/permissions/export', {
+        $http.post('/api/lmn/permissions/export', {
             'api': $scope.apiPermissions,
             'sidebar': $scope.sidebarPermissions,
             'pluginDict': $scope.pluginObj,

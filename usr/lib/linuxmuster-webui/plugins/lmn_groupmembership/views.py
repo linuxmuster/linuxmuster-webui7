@@ -273,11 +273,12 @@ class Handler(HttpPlugin):
 
                 for _, details in result.items():
                     resultArray.append({
-                            'label':details['sophomorixAdminClass'] + " " + details['sn'] + " " + details['givenName'],
+                            'label': f"{details['sophomorixAdminClass']} {details['sn']} {details['givenName']}",
                             'sn': details['sn'],
                             'givenName': details['givenName'],
                             'login': details['sAMAccountName'],
                             'sophomorixAdminClass': details['sophomorixAdminClass'],
+                            'sophomorixRole': details.get('sophomorixRole', ''),
                             })
             except:
                 # Ignore SophomorixValue errors

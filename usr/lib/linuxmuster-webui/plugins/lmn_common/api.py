@@ -12,7 +12,7 @@ import logging
 from pprint import pformat
 from .lmnfile import LMNFile
 from configparser import SafeConfigParser
-
+from time import time
 
 # Load Webui settings
 config_path = '/etc/linuxmuster/webui/config.yml'
@@ -92,14 +92,17 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False, sens
         sophomorixCommand = ['sudo'] + sophomorixCommand
 
     # New Thread for one process to avoid conflicts
+    s = time()
     t = SophomorixProcess(sophomorixCommand, sensitive=sensitive)
     t.daemon = True
     t.start()
     t.join()
+    logging.debug(f"Sophomorix command time : {time()-s}")
 
     # Cleanup stderr output
     # output = t.stderr.replace(':null,', ":\"null\",")
     # TODO: Maybe sophomorix should provide the null value  in  a python usable format
+    s = time()
     output = t.stderr.decode("utf8").replace(':null', ":\"null\"")
     output = output.replace(':null}', ":\"null\"}")
     output = output.replace(':null]', ":\"null\"]")
@@ -109,11 +112,14 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False, sens
     output = output.replace('\n', '').split('# JSON-end')[0]
     output = output.split('# JSON-begin')[1]
     output = re.sub('# JSON-begin', '', output)
+    logging.debug(f"Sophomorix filter result time : {time()-s}")
 
     # Convert str to dict
     jsonDict = {}
     if output:
+        s = time()
         jsonDict = ast.literal_eval(output)
+        logging.debug(f"Sophomorix convert to dict time : {time()-s}")
 
     if debug:
         logging.debug(
@@ -127,7 +133,9 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False, sens
 
     if ignoreErrors is False:
         try:
+            s = time()
             resultString = dpath.util.get(jsonDict, jsonpath)
+            logging.debug(f"Sophomorix search in dict time : {time()-s}")
         except Exception as e:
             raise Exception(
                 'Sophomorix Value error !\n\n'

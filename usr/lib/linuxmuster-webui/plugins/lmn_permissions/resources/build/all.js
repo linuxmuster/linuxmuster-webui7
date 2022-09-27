@@ -23,7 +23,7 @@ angular.module('lmn.permissions').config(function ($routeProvider) {
     };
     $scope.columns = ['globaladministrator', 'schooladministrator', 'teacher', 'student', 'default'];
     $scope.roles = ['globaladministrator', 'schooladministrator', 'teacher', 'student'];
-    $http.get('/api/permissions').then(function(resp) {
+    $http.get('/api/lmn/permissions').then(function(resp) {
       var details, i, len, ref, ref1, url;
       $scope.pluginObj = resp.data[0];
       // To iterate in alphabetical order
@@ -142,7 +142,7 @@ angular.module('lmn.permissions').config(function ($routeProvider) {
       return true;
     };
     return $scope.export = function() {
-      return $http.post('/api/permissions/export', {
+      return $http.post('/api/lmn/permissions/export', {
         'api': $scope.apiPermissions,
         'sidebar': $scope.sidebarPermissions,
         'pluginDict': $scope.pluginObj

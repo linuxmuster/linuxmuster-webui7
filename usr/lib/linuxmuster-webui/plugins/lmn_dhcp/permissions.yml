@@ -2,3 +2,7 @@ globaladministrator:
 - 'sidebar:view:/view/lm/dhcp: true'
 schooladministrator:
 - 'sidebar:view:/view/lm/dhcp: true'
+student:
+- 'sidebar:view:/view/lm/dhcp: false'
+teacher:
+- 'sidebar:view:/view/lm/dhcp: false'

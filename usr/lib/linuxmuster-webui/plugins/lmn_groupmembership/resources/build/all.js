@@ -422,6 +422,11 @@
         return u.login === login;
       }).length === 0;
     };
+    $scope.removeTeacherClass = function(user) {
+      // Temporary wrapper to remove a teacher as member and admin from a class, to avoid conflicts
+      $scope.removeMember(user);
+      return $scope.removeAdmin(user);
+    };
     $scope.addMember = function(user) {
       var entity, i, len, u;
       entity = '';
@@ -517,8 +522,18 @@
             $scope.admins = $scope.admins.concat(user.filter(function(u) {
               return $scope.admins.indexOf(u) < 0;
             }));
+            if ($scope.type === 'class') {
+              // Teachers are shown as members ...
+              $scope.members = $scope.members.concat(user.filter(function(u) {
+                return $scope.members.indexOf(u) < 0;
+              }));
+            }
           } else {
             $scope.admins.push(user);
+            if ($scope.type === 'class') {
+              // Teachers are shown as members ...
+              $scope.members.push(user);
+            }
           }
         }
         return $scope.changeState = false;
@@ -710,6 +725,10 @@
     });
     $scope.addEntities = function() {
       $scope.UserSearchVisible = false;
+      if ($scope.type === 'class') {
+        // Only teachers which are always admins in classes
+        $scope._.addasadmin = true;
+      }
       if ($scope._.addasadmin) {
         $scope.addAdmin($scope._.newUser);
         $scope.addAdminGroup($scope._.newGroup);

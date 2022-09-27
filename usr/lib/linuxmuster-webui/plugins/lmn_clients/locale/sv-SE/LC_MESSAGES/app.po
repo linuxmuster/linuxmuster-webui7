@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-24 11:50+0200\n"
-"PO-Revision-Date: 2022-07-31 17:11\n"
+"POT-Creation-Date: 2022-08-29 22:09+0200\n"
+"PO-Revision-Date: 2022-08-29 20:15\n"
 "Last-Translator: \n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -17,29 +17,37 @@ msgstr ""
 "X-Crowdin-File: /2.0/lmn_clients.po\n"
 "X-Crowdin-File-ID: 230\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:2
-msgid "Clients configuration"
-msgstr ""
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:43
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:45
 msgid "Close"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:36
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:4
+msgid "Custom scripts"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:49
+msgid "Drives"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:38
 msgid "Edit custom script"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:42
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:44
 msgid "Save"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:7
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:9
 msgid "The following scripts are executed by Samba when the client boots, in root context, and after the\n"
-"            execution of the postsync script of Linbo. <br>This must be handled with caution."
+"                    execution of the postsync script of Linbo. <br>This must be handled with caution."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_clients/views.py:27
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/views.py:34
 msgid "Unable to determine samba domain"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/views.py:130
+msgid "Drives.xml not found !"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_clients/main.py:16
@@ -60,5 +68,9 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/js/controllers/index.controller.es:21
 msgid "Error while saving script"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/js/controllers/index.controller.es:45
+msgid "Saved !"
 msgstr ""
 

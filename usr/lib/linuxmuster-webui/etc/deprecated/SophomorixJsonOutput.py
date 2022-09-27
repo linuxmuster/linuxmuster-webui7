@@ -21,7 +21,7 @@ for complete dict.
 import threading
 import ast
 import json
-import dpath
+import dpath.util
 import subprocess
 import re
 import sys

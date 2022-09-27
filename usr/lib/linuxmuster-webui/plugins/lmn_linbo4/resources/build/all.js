@@ -21,7 +21,7 @@
     $scope.showLog = function() {
       return $scope.logVisible = !$scope.logVisible;
     };
-    $http.get('/api/lm/devices/import').then(function(resp) {
+    $http.post('/api/lmn/devices/import').then(function(resp) {
       $scope.isWorking = false;
       return notify.success(gettext('Import complete'));
     }).catch(function(resp) {

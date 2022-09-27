@@ -10,7 +10,7 @@ angular.module('lmn.landingpage').controller 'LMNLandingController', ($scope, $h
         customFields.load_user_fields(user).then (resp) ->
             $scope.custom_fields = resp
 
-        $http.get("/api/lmn/quota/#{user}").then (resp) ->
+        $http.get("/api/lmn/quota/user/#{user}").then (resp) ->
             $scope.quotas = []
             $scope.user['sophomorixCloudQuotaCalculated'] = resp.data['sophomorixCloudQuotaCalculated']
             $scope.user['sophomorixMailQuotaCalculated'] = resp.data['sophomorixMailQuotaCalculated']

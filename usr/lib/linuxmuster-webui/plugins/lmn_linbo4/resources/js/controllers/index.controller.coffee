@@ -9,7 +9,7 @@ angular.module('lmn.linbo4').controller 'LMImportDevicesApplyModalController', (
     $scope.showLog = () ->
         $scope.logVisible = !$scope.logVisible
 
-    $http.get('/api/lm/devices/import').then (resp) ->
+    $http.post('/api/lmn/devices/import').then (resp) ->
         $scope.isWorking = false
         notify.success gettext('Import complete')
     .catch (resp) ->

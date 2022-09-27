@@ -10,7 +10,7 @@ angular.module('lmn.devices').controller 'LMDevicesApplyModalController', ($scop
     $scope.showLog = () ->
         $scope.logVisible = !$scope.logVisible
 
-    $http.get('/api/lm/devices/import').then (resp) ->
+    $http.post('/api/lmn/devices/import').then (resp) ->
         $scope.isWorking = false
         notify.success gettext('Import complete')
     .catch (resp) ->
@@ -197,7 +197,7 @@ angular.module('lmn.devices').controller 'LMDevicesController', ($scope, $http, 
             return
         $scope.show_errors = false
         $scope.devices_form.$setPristine()
-        return $http.post('/api/lm/devices', $scope.devices).then () ->
+        return $http.post('/api/lmn/devices', $scope.devices).then () ->
             # Reset all isNew tags
             for device in $scope.devices
                 device._isNew = false
@@ -247,7 +247,7 @@ angular.module('lmn.devices').controller 'LMDevicesController', ($scope, $http, 
         else
             $scope.path =  '/etc/linuxmuster/sophomorix/'+school+'/'+school+'.devices.csv'
 
-    $http.get('/api/lm/devices').then (resp) ->
+    $http.get('/api/lmn/devices').then (resp) ->
         $scope.devices = resp.data
         $scope.devices_without_comment = $scope.devices.filter((dict) -> dict['room'][0] != '#')
         validation.set($scope.devices_without_comment, 'devices')

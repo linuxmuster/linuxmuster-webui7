@@ -19,7 +19,7 @@
       customFields.load_user_fields(user).then(function(resp) {
         return $scope.custom_fields = resp;
       });
-      return $http.get(`/api/lmn/quota/${user}`).then(function(resp) {
+      return $http.get(`/api/lmn/quota/user/${user}`).then(function(resp) {
         var ref, results, share, total, type, usage, used, values;
         $scope.quotas = [];
         $scope.user['sophomorixCloudQuotaCalculated'] = resp.data['sophomorixCloudQuotaCalculated'];

@@ -1060,12 +1060,15 @@ class Handler(HttpPlugin):
             target = http_context.json_body()['userlist']
 
             command = ['sophomorix-newfile', tmp_path, '--name', target, '-jj']
-            result = lmn_getSophomorixValue(command, 'OUTPUT/0')
+            try:
+                result = lmn_getSophomorixValue(command, 'OUTPUT/0')
 
-            if result['TYPE'] == "ERROR":
-                    return ["ERROR", result['MESSAGE_EN']]
-            if result['TYPE'] == "LOG":
-                    return ["LOG", result['LOG']]
+                if result['TYPE'] == "ERROR":
+                        return ["ERROR", result['MESSAGE_EN']]
+                if result['TYPE'] == "LOG":
+                        return ["LOG", result['LOG']]
+            except UnicodeDecodeError:
+                return ["ERROR", "sophomorix was not able to detect the encoding of the file."]
 
     @url(r'/api/lm/users/binduser/(?P<level>.*)')
     @authorize('lm:users:globaladmins:create')

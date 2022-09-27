@@ -10,7 +10,7 @@ angular.module('lmn.quotas').controller 'LMQuotasApplyModalController', ($scope,
     $scope.logVisible = true
     $scope.isWorking = true
 
-    $http.get('/api/lm/quotas/apply').then () ->
+    $http.post('/api/lmn/quota/apply').then () ->
         $scope.isWorking = false
         notify.success gettext('Update complete')
     .catch (resp) ->
@@ -72,11 +72,11 @@ angular.module('lmn.quotas').controller 'LMQuotasController', ($scope, $http, $u
     $scope.get_class_quota = () ->
         if !$scope.groupquota
             wait.modal(gettext("Retrieving groups quotas ..."), 'progressbar')
-            $http.get('/api/lm/quotas/group').then (resp) ->
+            $http.get('/api/lmn/quota/groups').then (resp) ->
                 $scope.groupquota = resp.data
                 $rootScope.$emit('updateWaiting', 'done')
 
-    $http.get('/api/lm/quotas').then (resp) ->
+    $http.get('/api/lmn/quota/quotas').then (resp) ->
         $scope.non_default = resp.data[0]
         $scope.settings = resp.data[1]
 
@@ -101,7 +101,7 @@ angular.module('lmn.quotas').controller 'LMQuotasController', ($scope, $http, $u
 
     $scope.findUsers = (q) ->
         role = $scope.tabs[$scope.activeTab]
-        return $http.post("/api/lm/ldap-search", {role:role, login:q}).then (resp) ->
+        return $http.post("/api/lmn/ldap-search", {role:role, login:q}).then (resp) ->
             return resp.data
 
     $scope.changeUser = (role, login, quota) ->
@@ -150,7 +150,7 @@ angular.module('lmn.quotas').controller 'LMQuotasController', ($scope, $http, $u
 
     $scope.saveApply = () ->
         wait.modal(gettext("Saving quotas ..."), 'progressbar')
-        $http.post('/api/lm/quotas/save', {users: $scope.toChange, groups: $scope.groupsToChange}).then () ->
+        $http.post('/api/lmn/quota/save', {users: $scope.toChange, groups: $scope.groupsToChange}).then () ->
             $rootScope.$emit('updateWaiting', 'done')
             $uibModal.open(
                 templateUrl: '/lmn_quotas:resources/partial/apply.modal.html'

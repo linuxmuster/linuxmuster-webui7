@@ -2317,7 +2317,7 @@
       }
       return results;
     });
-    $http.get(`/api/lmn/quota/${id}`).then(function(resp) {
+    $http.get(`/api/lmn/quota/user/${id}`).then(function(resp) {
       var ref, results, share, total, type, usage, used, values;
       $scope.quotas = [];
       ref = resp.data['QUOTA_USAGE_BY_SHARE'];

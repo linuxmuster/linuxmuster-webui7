@@ -292,6 +292,11 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
         $scope.filterLogin = (membersArray, login) ->
             return membersArray.filter((u) -> u.login == login).length == 0
 
+        $scope.removeTeacherClass = (user) ->
+            # Temporary wrapper to remove a teacher as member and admin from a class, to avoid conflicts
+            $scope.removeMember(user)
+            $scope.removeAdmin(user)
+
         $scope.addMember = (user) ->
             entity = ''
             if Array.isArray(user)
@@ -345,8 +350,14 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
                     notify.success gettext(resp['data'][1])
                     if Array.isArray(user)
                         $scope.admins = $scope.admins.concat(user.filter((u) -> $scope.admins.indexOf(u) < 0))
+                        if $scope.type == 'class'
+                            # Teachers are shown as members ...
+                            $scope.members = $scope.members.concat(user.filter((u) -> $scope.members.indexOf(u) < 0))
                     else
                         $scope.admins.push(user)
+                        if $scope.type == 'class'
+                            # Teachers are shown as members ...
+                            $scope.members.push(user)
                 $scope.changeState = false
 
         $scope.removeAdmin = (user) ->
@@ -468,6 +479,9 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
 
         $scope.addEntities = () ->
             $scope.UserSearchVisible = false
+            if $scope.type == 'class'
+                # Only teachers which are always admins in classes
+                $scope._.addasadmin = true
             if $scope._.addasadmin
                 $scope.addAdmin($scope._.newUser)
                 $scope.addAdminGroup($scope._.newGroup)

@@ -1,4 +1,4 @@
-linuxmuster-webui7 (17.1.38) lmn71-testing; urgency=medium
+linuxmuster-webui7 (17.1.38.1) lmn71-testing; urgency=medium
   * [devices] Filter leading zeros in IPs too
   * [home] Fix students home path
   * [clients] Fix script list in linux

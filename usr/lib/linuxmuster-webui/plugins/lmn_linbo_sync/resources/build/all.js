@@ -17,6 +17,14 @@ angular.module('lmn.linbo_sync').config(function ($routeProvider) {
 (function() {
   angular.module('lmn.linbo_sync').controller('SyncIndexController', function($scope, $http, $interval, $timeout, notify, pageTitle, messagebox, gettext) {
     pageTitle.set(gettext('Linbo synchronization'));
+    $http.get("/api/lmn/activeschool").then(function(resp) {
+      $scope.school = resp.data;
+      if ($scope.school === 'default-school') {
+        return $scope.linbo_remote = '/usr/sbin/linbo-remote';
+      } else {
+        return $scope.linbo_remote = '/usr/sbin/linbo-remote -s ' + $scope.school;
+      }
+    });
     $http.get("/api/lm/linbo/SyncList").then(function(resp) {
       var group, results;
       $scope.groups = resp.data;
@@ -219,16 +227,18 @@ angular.module('lmn.linbo_sync').config(function ($routeProvider) {
       if ($scope.groups[group]['auto']['bypass'] > 0 && timeout) {
         autostart += ' -n ';
       }
+      // At least one command and one host selected
       if (cmd.length > 4 && $scope.linbo_command[group]['host'].length > 0) {
+        // If target is a group or if all hosts are selected
         if ($scope.linbo_command[group]['target'] === 'group' || $scope.linbo_command[group]['host'].length === $scope.groups[group].hosts.length) {
           $scope.linbo_command[group]['target'] = 'group';
-          $scope.linbo_command[group]['cmd'] = ['/usr/sbin/linbo-remote -g ' + group + timeout + autostart + cmd];
+          $scope.linbo_command[group]['cmd'] = [$scope.linbo_remote + ' -g ' + group + timeout + autostart + cmd];
         } else {
           $scope.linbo_command[group]['cmd'] = [];
           ref1 = $scope.linbo_command[group]['host'];
           for (j = 0, len1 = ref1.length; j < len1; j++) {
             ip = ref1[j];
-            $scope.linbo_command[group]['cmd'].push('/usr/sbin/linbo-remote -i ' + ip + timeout + autostart + cmd);
+            $scope.linbo_command[group]['cmd'].push($scope.linbo_remote + ' -i ' + ip + timeout + autostart + cmd);
           }
         }
         return $scope.linbo_command[group]['show'] = true;

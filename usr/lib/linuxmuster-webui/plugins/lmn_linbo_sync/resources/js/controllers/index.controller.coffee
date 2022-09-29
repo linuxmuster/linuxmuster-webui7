@@ -1,6 +1,13 @@
 angular.module('lmn.linbo_sync').controller 'SyncIndexController', ($scope, $http, $interval, $timeout, notify, pageTitle, messagebox, gettext, identity) ->
     pageTitle.set(gettext('Linbo synchronization'))
 
+    $http.get("/api/lmn/activeschool").then (resp) ->
+        $scope.school = resp.data
+        if $scope.school == 'default-school'
+            $scope.linbo_remote = '/usr/sbin/linbo-remote'
+        else
+            $scope.linbo_remote = '/usr/sbin/linbo-remote -s ' + $scope.school
+
     $http.get("/api/lm/linbo/SyncList").then (resp) ->
         $scope.groups = resp.data
         $scope.linbo_command = {}
@@ -163,14 +170,16 @@ angular.module('lmn.linbo_sync').controller 'SyncIndexController', ($scope, $htt
         if $scope.groups[group]['auto']['bypass'] > 0 and timeout
             autostart += ' -n '
 
+        # At least one command and one host selected
         if cmd.length > 4 and $scope.linbo_command[group]['host'].length > 0
+            # If target is a group or if all hosts are selected
             if $scope.linbo_command[group]['target'] == 'group' or $scope.linbo_command[group]['host'].length == $scope.groups[group].hosts.length
                 $scope.linbo_command[group]['target'] = 'group'
-                $scope.linbo_command[group]['cmd'] = ['/usr/sbin/linbo-remote -g ' + group + timeout + autostart + cmd ]
+                $scope.linbo_command[group]['cmd'] = [$scope.linbo_remote + ' -g ' + group + timeout + autostart + cmd ]
             else
                 $scope.linbo_command[group]['cmd'] = []
                 for ip in $scope.linbo_command[group]['host']
-                    $scope.linbo_command[group]['cmd'].push('/usr/sbin/linbo-remote -i ' + ip + timeout + autostart + cmd)
+                    $scope.linbo_command[group]['cmd'].push($scope.linbo_remote + ' -i ' + ip + timeout + autostart + cmd)
 
             $scope.linbo_command[group]['show'] = true
         else

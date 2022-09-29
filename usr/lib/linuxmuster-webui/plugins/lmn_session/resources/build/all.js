@@ -394,7 +394,7 @@
         {
           name: gettext('Lastname'),
           fx: function(x) {
-            return x.sn;
+            return x.sn + ' ' + x.givenName;
           }
         },
         {

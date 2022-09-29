@@ -112,7 +112,10 @@
       {
         name: gettext('IP'),
         fx: function(x) {
-          return x.ip;
+          return x.ip.split(".").map(function(num) {
+            return num.padStart(3,
+      '0');
+          }).join(".");
         }
       }
     ];

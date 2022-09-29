@@ -94,7 +94,7 @@ angular.module('lmn.devices').controller 'LMDevicesController', ($scope, $http, 
         }
         {
             name: gettext('IP')
-            fx: (x) -> x.ip
+            fx: (x) -> x.ip.split(".").map((num) -> num.padStart(3, '0')).join(".")
         }
     ]
     $scope.sort = $scope.sorts[0]

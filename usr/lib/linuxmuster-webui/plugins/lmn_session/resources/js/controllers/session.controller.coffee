@@ -295,7 +295,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                 $scope.sorts = [
                    {
                       name: gettext('Lastname')
-                      fx: (x) -> x.sn
+                      fx: (x) -> x.sn + ' ' + x.givenName
                    }
                    {
                       name: gettext('Login name')

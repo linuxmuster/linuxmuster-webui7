@@ -1,3 +1,11 @@
+linuxmuster-webui7 (17.1.38.2) lmn71-testing; urgency=low
+
+  * Add multischool support in linbo-remote
+  * sort padded ips
+  * Consider firstname when sorting per lastname
+
+ -- Andreas Till <andreas.till@netzint.de>  Thu, 29 Sep 2022 18:44:08 +0200
+
 linuxmuster-webui7 (17.1.38.1) lmn71-testing; urgency=medium
   * [devices] Filter leading zeros in IPs too
   * [home] Fix students home path

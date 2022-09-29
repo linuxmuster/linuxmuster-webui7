@@ -67,8 +67,8 @@ class SchoolManager():
         config = ConfigObj(StringIO(check_output(["/usr/bin/net", "conf", "list"], shell=False).decode()))
         for share_name, share_config in config.items():
             # DFS activated ?
-            if share_config.get('msdfs_root', 'no') == 'yes':
-                dfs_proxy = share_config.get('msdfs_proxy', '')
+            if share_config.get('msdfs root', 'no') == 'yes':
+                dfs_proxy = share_config.get('msdfs proxy', '')
                 if dfs_proxy != '':
                     # //sub.domain.lan/school to \\\\sub.domain.lan\\school
                     self.dfs[share_name] = {

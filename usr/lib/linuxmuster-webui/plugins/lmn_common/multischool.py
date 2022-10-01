@@ -5,7 +5,7 @@ from io import StringIO
 from configobj import ConfigObj
 from subprocess import check_output
 
-from aj.plugins.lmn_common.api import samba_domain
+from aj.plugins.lmn_common.api import samba_realm
 
 
 class SchoolManager():
@@ -80,12 +80,12 @@ class SchoolManager():
         if self.school in self.dfs.keys():
             self.share_prefix = self.dfs[self.school]['dfs_proxy']
         else:
-            self.share_prefix = f'\\\\{samba_domain}\\{self.school}'
+            self.share_prefix = f'\\\\{samba_realm}\\{self.school}'
 
     def get_homepath(self, user, role, adminclass):
 
         if role == 'globaladministrator':
-            home_path = f'\\\\{samba_domain}\\linuxmuster-global\\management\\{user}'
+            home_path = f'\\\\{samba_realm}\\linuxmuster-global\\management\\{user}'
         elif role == 'schooladministrator':
             home_path = f'{self.share_prefix}\\management\\{user}'
         elif role == "teacher":
@@ -107,7 +107,7 @@ class SchoolManager():
         }
         linuxmuster_global = {
             'name' : 'Linuxmuster-Global',
-            'path' : f'\\\\{samba_domain}\\linuxmuster-global',
+            'path' : f'\\\\{samba_realm}\\linuxmuster-global',
             'icon' : 'fas fa-globe',
             'active': False,
         }

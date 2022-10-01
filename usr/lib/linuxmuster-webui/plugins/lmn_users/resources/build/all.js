@@ -2118,6 +2118,13 @@
         $uibModalInstance.close();
         return;
       }
+      if (resp.data["OUTPUT"][0]["TYPE"] === "ERROR") {
+        notify.error(resp.data["OUTPUT"][0]["MESSAGE_EN"]);
+        $scope.error = true;
+        $scope.isWorking = false;
+        $uibModalInstance.close();
+        return;
+      }
       if (resp.data["CHECK_RESULT"]["ERRORLIST"].length > 0) {
         notify.error(gettext('Check failed'));
         $scope.isWorking = false;

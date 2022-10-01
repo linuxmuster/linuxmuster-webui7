@@ -504,10 +504,11 @@ class Handler(HttpPlugin):
         results = lmn_getSophomorixValue(sophomorixCommand, '')
         ## Remove UPDATE entries which are also in KILL ( necessary to show it in KILL and UPDATE ? )
 
-        if "UPDATE" in results["CHECK_RESULT"] and "KILL" in results["CHECK_RESULT"]:
-            for user_update in tuple(results["CHECK_RESULT"]["UPDATE"]):
-                if user_update in results["CHECK_RESULT"]["KILL"]:
-                    del results["CHECK_RESULT"]["UPDATE"][user_update]
+        if "CHECK_RESULT" in results:
+            if "UPDATE" in results["CHECK_RESULT"] and "KILL" in results["CHECK_RESULT"]:
+                for user_update in tuple(results["CHECK_RESULT"]["UPDATE"]):
+                    if user_update in results["CHECK_RESULT"]["KILL"]:
+                        del results["CHECK_RESULT"]["UPDATE"][user_update]
         return results
 
     @url(r'/api/lm/users/apply')

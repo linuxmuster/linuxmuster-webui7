@@ -48,8 +48,9 @@ angular.module('lmn.linbo4').controller 'LMLINBO4PartitionModalController', ($sc
         oses = resp.data
         for os in oses
             $scope.images.push os.name + '.qcow2'
-        if $scope.images.indexOf($scope.os.BaseImage) < 0
-            $scope.images.push $scope.os.BaseImage
+        if $scope.os != null
+            if $scope.images.indexOf($scope.os.BaseImage) < 0
+                $scope.images.push $scope.os.BaseImage
 
     $scope.addNewImage = () ->
        messagebox.prompt('New image name', '').then (msg) ->

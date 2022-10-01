@@ -69,8 +69,10 @@
         os = oses[i];
         $scope.images.push(os.name + '.qcow2');
       }
-      if ($scope.images.indexOf($scope.os.BaseImage) < 0) {
-        return $scope.images.push($scope.os.BaseImage);
+      if ($scope.os !== null) {
+        if ($scope.images.indexOf($scope.os.BaseImage) < 0) {
+          return $scope.images.push($scope.os.BaseImage);
+        }
       }
     });
     $scope.addNewImage = function() {

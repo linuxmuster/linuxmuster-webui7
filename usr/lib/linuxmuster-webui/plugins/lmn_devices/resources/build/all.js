@@ -285,7 +285,7 @@
 
       }
     });
-    $http.get('/api/lm/linbo4/groups').then(function(resp) {
+    $http.get('/api/lmn/linbo4/groups').then(function(resp) {
       return $scope.linbo_groups = resp.data;
     });
     $http.get("/api/lmn/activeschool").then(function(resp) {

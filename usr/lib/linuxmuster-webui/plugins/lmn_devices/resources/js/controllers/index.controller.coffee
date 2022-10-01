@@ -235,7 +235,7 @@ angular.module('lmn.devices').controller 'LMDevicesController', ($scope, $http, 
         if $scope.identity.user is 'root'
            return
 
-    $http.get('/api/lm/linbo4/groups').then (resp) ->
+    $http.get('/api/lmn/linbo4/groups').then (resp) ->
         $scope.linbo_groups = resp.data
 
     $http.get("/api/lmn/activeschool").then (resp) ->

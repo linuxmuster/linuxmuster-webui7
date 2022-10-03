@@ -19,7 +19,7 @@ angular.module('lmn.vdi_dashboard').config(function ($routeProvider) {
 angular.module('lmn.vdi_dashboard').controller('Lmn_vdi_dashboardIndexController', function ($scope, $http, pageTitle, gettext, notify) {
     pageTitle.set(gettext('Lmn_vdi_dashboard'));
 
-    $http.post('/api/lmn_vdi_administration', { action: 'get-clones' }).then(function (resp) {
+    $http.get('/api/lmn/vdi/administration/clones').then(function (resp) {
         if (resp.data.status == "success") {
             $scope.vdiClones = resp.data.data;
         } else {
@@ -29,10 +29,10 @@ angular.module('lmn.vdi_dashboard').controller('Lmn_vdi_dashboardIndexController
     });
 
     $scope.startVdiSession = function (group) {
-        $http.post('/api/lmn_vdi_dashboard', { action: 'get-vdiSession', username: $scope.identity.user, group: group }).then(function (resp) {
+        $http.get('/api/lmn/vdi/dashboard/vdiSession/' + group).then(function (resp) {
             console.log(resp.data);
             $scope.filename = resp.data;
-            location.href = "/api/lmn_vdi_dashboard/download/" + $scope.filename;
+            location.href = "/api/lmn/vdi/dashboard/download/" + $scope.filename;
         });
     };
 });

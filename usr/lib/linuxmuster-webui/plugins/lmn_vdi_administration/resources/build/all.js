@@ -19,7 +19,7 @@ angular.module('lmn.vdi_administration').config(function ($routeProvider) {
 angular.module('lmn.vdi_administration').controller('Lmn_vdi_administrationIndexController', function ($scope, $uibModal, $http, pageTitle, gettext, notify) {
     pageTitle.set(gettext('Lmn_vdi_administration'));
 
-    $http.post('/api/lmn_vdi_administration', { action: 'get-masterVMs' }).then(function (resp) {
+    $http.get('/api/lmn/vdi/administration/masterVMs').then(function (resp) {
         if (resp.data.status == "success") {
             $scope.masterVmGroupStates = resp.data.data;
         } else {
@@ -29,7 +29,7 @@ angular.module('lmn.vdi_administration').controller('Lmn_vdi_administrationIndex
     });
 
     $scope.getClones = function () {
-        $http.post('/api/lmn_vdi_administration', { action: 'get-clones' }).then(function (resp) {
+        $http.get('/api/lmn/vdi/administration/clones').then(function (resp) {
             if (resp.data.status == "success") {
                 var vdiCloneGroups = resp.data.data;
 

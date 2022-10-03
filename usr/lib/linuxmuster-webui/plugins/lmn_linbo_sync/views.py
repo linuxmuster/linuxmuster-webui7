@@ -21,13 +21,12 @@ class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
 
-    @url(r'/api/lm/linbo/SyncList')
+    @get(r'/api/lmn/linbosync/last_syncs')
     @authorize('lm:sync:list')
     @endpoint(api=True)
     def handle_api_linbo_sync(self, http_context):
         """
         Get the last synchronisation date from all workstations.
-        Method GET.
 
         :param http_context: HttpContext
         :type http_context: HttpContext
@@ -35,22 +34,20 @@ class Handler(HttpPlugin):
         :rtype: dict or list
         """
 
-        if http_context.method == 'GET':
-            workstations = api.list_workstations(self.context)
-            api.last_sync_all(workstations)
+        workstations = api.list_workstations(self.context)
+        api.last_sync_all(workstations)
 
-            if len(workstations) != 0:
-                return workstations
-            else:
-                return ["none"]
+        if len(workstations) != 0:
+            return workstations
+        else:
+            return ["none"]
 
-    @url(r'/api/lm/linbo/isOnline/(?P<host>[\w\-]+)')
+    @get(r'/api/lmn/linbosync/isOnline/(?P<host>[\w\-]+)')
     @endpoint(api=True)
     @authorize('lm:sync:online')
     def handle_api_workstations_online(self, http_context, host):
         """
         Connector to test if a host is online.
-        Method GET.
 
         :param http_context: HttpContext
         :type http_context: HttpContext
@@ -60,16 +57,14 @@ class Handler(HttpPlugin):
         :rtype: string
         """
 
-        if http_context.method == 'GET':
-            return api.test_online(host)
+        return api.test_online(host)
 
-    @url(r'/api/lm/linbo/run')
+    @post(r'/api/lmn/linbosync/run')
     @endpoint(api=True)
     @authorize('lm:sync:sync')
     def handle_api_sync_workstation(self, http_context):
         """
         Connector to launch a linbo command.
-        Method POST.
 
         :param http_context: HttpContext
         :type http_context: HttpContext
@@ -77,9 +72,5 @@ class Handler(HttpPlugin):
         :rtype: string or integer 0
         """
 
-        action = http_context.json_body()['action']
-
-        if http_context.method == 'POST':
-            if action == 'run-linbo':
-                cmd = http_context.json_body()['cmd']
-                return api.run(cmd.split())
+        cmd = http_context.json_body()['cmd']
+        return api.run(cmd.split())

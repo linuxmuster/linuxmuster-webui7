@@ -8,7 +8,7 @@ angular.module('lmn.linbo_sync').controller 'SyncIndexController', ($scope, $htt
         else
             $scope.linbo_remote = '/usr/sbin/linbo-remote -s ' + $scope.school
 
-    $http.get("/api/lm/linbo/SyncList").then (resp) ->
+    $http.get("/api/lmn/linbosync/last_syncs").then (resp) ->
         $scope.groups = resp.data
         $scope.linbo_command = {}
         for group of $scope.groups
@@ -24,7 +24,7 @@ angular.module('lmn.linbo_sync').controller 'SyncIndexController', ($scope, $htt
 
     $scope.isUp = (group, host) ->
         index = $scope.groups[group].hosts.indexOf(host)
-        $http.get("/api/lm/linbo/isOnline/#{host.hostname}").then (resp) ->
+        $http.get("/api/lmn/linbosync/isOnline/#{host.hostname}").then (resp) ->
             $scope.groups[group].hosts[index].up_comment = resp.data
             $scope.groups[group].hosts[index].up_icon = $scope.up_icons[resp.data]
             if ( resp.data == "Off" or resp.data == "No response" )
@@ -188,7 +188,7 @@ angular.module('lmn.linbo_sync').controller 'SyncIndexController', ($scope, $htt
 
     $scope.run = (group) ->
         for cmd in $scope.linbo_command[group]['cmd']
-            $http.post("/api/lm/linbo/run", {cmd: cmd, action:'run-linbo'}).then (resp) ->
+            $http.post("/api/lmn/linbosync/run", {cmd: cmd}).then (resp) ->
                 if resp.data
                     notify.error(resp.data)
                 else

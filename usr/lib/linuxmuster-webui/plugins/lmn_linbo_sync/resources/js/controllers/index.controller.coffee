@@ -12,7 +12,12 @@ angular.module('lmn.linbo_sync').controller 'SyncIndexController', ($scope, $htt
         $scope.groups = resp.data
         $scope.linbo_command = {}
         for group of $scope.groups
-            $scope.linbo_command[group] = {'cmd':[], 'show':false, 'host': [], 'target':'clients' }
+            $scope.linbo_command[group] = {
+                'cmd':[],
+                'cmd_parameters':[],
+                'show':false,
+                'host': [],
+                'target':'clients' }
 
     $scope.up_icons = {
         'Off': "fas fa-power-off",
@@ -124,30 +129,54 @@ angular.module('lmn.linbo_sync').controller 'SyncIndexController', ($scope, $htt
         $scope.refresh_cmd(group)
 
     $scope.refresh_cmd = (group) ->
-        cmd = ' -c '
+        cmd_parameters = {
+            'target':{
+                'type' : '',
+                'host' : '',
+            },
+            'timeout' : 0,
+            'prestart' : false,
+            'disable_gui' : false,
+            'bypass' : false,
+            'partition' : false,
+            'actions' : {
+                'format' : [],
+                'sync' : [],
+                'start' : [],
+            },
+            'acpi' : '',
+        }
+
         format = []
         sync = []
         start = []
 
+        if $scope.groups[group]['auto']['prestart'] > 0
+            cmd = ' -p '
+            cmd_parameters['prestart'] = true
+        else
+            cmd = ' -c '
+
         if $scope.groups[group]['auto']['partition'] > 0
             cmd += ' partition'
+            cmd_parameters['partition'] = true
 
         for os, index in $scope.groups[group]['os']
             os.position = index + 1
             # First format
             if os.run_format
                 format.push('format:'+os.partition)
+                cmd_parameters['actions']['format'].push(os.partition)
 
             # Then sync or new ( not both )
             if os.run_sync
                 sync.push('sync:' + os.position)
+                cmd_parameters['actions']['sync'].push(os.position)
 
             # A little start, but only one
             if os.run_start
                 start.push('start:' + os.position)
-
-        if $scope.groups[group]['auto']['prestart'] > 0
-            cmd = ' -p '
+                cmd_parameters['actions']['start'].push(os.position)
 
         if format.length > 0
             cmd += if cmd.length > 4 then ','+format.join() else format.join()
@@ -159,16 +188,20 @@ angular.module('lmn.linbo_sync').controller 'SyncIndexController', ($scope, $htt
         # Power is the key, but without start ...
         if $scope.groups[group]['power']['halt']
             cmd += if cmd.length > 4 then ','+$scope.groups[group]['power']['halt'] else $scope.groups[group]['power']['halt']
+            cmd_parameters['acpi'] = $scope.groups[group]['power']['halt']
 
         timeout = ''
         if $scope.groups[group]['auto']['wol'] > 0
             timeout = ' -w ' + $scope.groups[group]['power']['timeout']
+            cmd_parameters['timeout'] = $scope.groups[group]['power']['timeout']
 
         autostart = ''
         if $scope.groups[group]['auto']['disable_gui'] > 0
             autostart += ' -d '
+            cmd_parameters['disable_gui'] = true
         if $scope.groups[group]['auto']['bypass'] > 0 and timeout
             autostart += ' -n '
+            cmd_parameters['bypass'] = true
 
         # At least one command and one host selected
         if cmd.length > 4 and $scope.linbo_command[group]['host'].length > 0
@@ -176,20 +209,31 @@ angular.module('lmn.linbo_sync').controller 'SyncIndexController', ($scope, $htt
             if $scope.linbo_command[group]['target'] == 'group' or $scope.linbo_command[group]['host'].length == $scope.groups[group].hosts.length
                 $scope.linbo_command[group]['target'] = 'group'
                 $scope.linbo_command[group]['cmd'] = [$scope.linbo_remote + ' -g ' + group + timeout + autostart + cmd ]
+
+                cmd_parameters['target']['type'] = 'group'
+                cmd_parameters['target']['host'] = group
+                $scope.linbo_command[group]['cmd_parameters'] = [cmd_parameters]
+
             else
                 $scope.linbo_command[group]['cmd'] = []
+                $scope.linbo_command[group]['cmd_parameters'] = []
                 for ip in $scope.linbo_command[group]['host']
                     $scope.linbo_command[group]['cmd'].push($scope.linbo_remote + ' -i ' + ip + timeout + autostart + cmd)
+
+                    cmd_parameters['target']['type'] = 'host'
+                    cmd_parameters['target']['host'] = ip
+                    $scope.linbo_command[group]['cmd_parameters'].push(cmd_parameters)
 
             $scope.linbo_command[group]['show'] = true
         else
             $scope.linbo_command[group]['cmd'] = ''
+            $scope.linbo_command[group]['cmd_parameters'] = []
             $scope.linbo_command[group]['show'] = false
 
     $scope.run = (group) ->
-        for cmd in $scope.linbo_command[group]['cmd']
-            $http.post("/api/lmn/linbosync/run", {cmd: cmd}).then (resp) ->
-                if resp.data
-                    notify.error(resp.data)
+        for cmd_parameters in $scope.linbo_command[group]['cmd_parameters']
+            $http.post("/api/lmn/linbosync/run", {cmd_parameters: cmd_parameters}).then (resp) ->
+                if resp.data['status'] == 1
+                    notify.error(resp.data['msg'])
                 else
-                    notify.success(gettext('Command successfully sent : ') + cmd)
+                    notify.success(gettext('Command successfully sent: ' + resp.data['msg']))

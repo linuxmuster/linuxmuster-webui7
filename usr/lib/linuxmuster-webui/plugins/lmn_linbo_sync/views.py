@@ -34,7 +34,9 @@ class Handler(HttpPlugin):
         :rtype: dict or list
         """
 
-        workstations = api.list_workstations(self.context)
+        configpath = f'{self.context.schoolmgr.configpath}devices.csv'
+        school = self.context.schoolmgr.school
+        workstations = api.list_workstations(configpath, school)
         api.last_sync_all(workstations)
 
         if len(workstations) != 0:
@@ -72,5 +74,11 @@ class Handler(HttpPlugin):
         :rtype: string or integer 0
         """
 
-        cmd = http_context.json_body()['cmd']
-        return api.run(cmd.split())
+        cmd_parameters = http_context.json_body()['cmd_parameters']
+        school = self.context.schoolmgr.school
+        configpath = f'{self.context.schoolmgr.configpath}devices.csv'
+
+        cmd_parameters['school'] = school
+        cmd_parameters['configpath'] = configpath
+
+        return api.run(cmd_parameters)

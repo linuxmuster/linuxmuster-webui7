@@ -70,7 +70,7 @@ angular.module('lmn.setup_wizard').controller('InitSchoolController', function (
     pageTitle.set(gettext('Setup Wizard'))
     $http.get('/api/core/languages').then(response => this.languages = response.data)
 
-    $http.get('/api/lm/setup-wizard/read-ini').then(response => this.ini = response.data)
+    $http.get('/api/lmn/setup-wizard/setup').then(response => this.ini = response.data)
 
     // fields to validate
     // define property values so they are not null
@@ -120,7 +120,7 @@ angular.module('lmn.setup_wizard').controller('InitSchoolController', function (
         }
 
 
-        await $http.post('/api/lm/setup-wizard/update-ini', this.ini)
+        await $http.post('/api/lmn/setup-wizard/setup', this.ini)
         $location.path('/view/lm/init/account')
     }
 })
@@ -160,7 +160,7 @@ angular.module('lmn.setup_wizard').controller('InitAccountController', function 
             notify.error('Password too weak')
             return
         }
-        $http.post('/api/lm/setup-wizard/update-ini', this.ini).then(() => {
+        $http.post('/api/lmn/setup-wizard/setup', this.ini).then(() => {
             return $location.path('/view/lm/init/externalservices')
         })
     }
@@ -169,7 +169,7 @@ angular.module('lmn.setup_wizard').controller('InitAccountController', function 
 angular.module('lmn.setup_wizard').controller('InitExternalServicesController', function ($location, $http, gettext, pageTitle, notify) {
     pageTitle.set(gettext('Setup Wizard'))
     this.ini = {}
-    $http.get('/api/lm/setup-wizard/read-ini').then(response => this.ini = response.data)
+    $http.get('/api/lmn/setup-wizard/setup').then(response => this.ini = response.data)
 
     this.apply= () => {
         console.log(this.enableOPSI)
@@ -194,7 +194,7 @@ angular.module('lmn.setup_wizard').controller('InitExternalServicesController', 
             return
         }
         }
-        $http.post('/api/lm/setup-wizard/update-ini', this.ini).then(() => {
+        $http.post('/api/lmn/setup-wizard/setup', this.ini).then(() => {
             return $location.path('/view/lm/init/summary')
         })
 
@@ -204,10 +204,10 @@ angular.module('lmn.setup_wizard').controller('InitExternalServicesController', 
 angular.module('lmn.setup_wizard').controller('InitSummaryController', function ($location, $http, gettext, pageTitle, notify) {
     pageTitle.set(gettext('Setup Wizard'))
     this.ini = {}
-    $http.get('/api/lm/setup-wizard/read-ini').then(response => this.ini = response.data)
+    $http.get('/api/lmn/setup-wizard/setup').then(response => this.ini = response.data)
 
     this.finish= () => {
-        $http.post('/api/lm/setup-wizard/update-ini', this.ini).then(() => {
+        $http.post('/api/lmn/setup-wizard/setup', this.ini).then(() => {
             return $location.path('/view/lm/init/setup')
         })
     }
@@ -216,7 +216,7 @@ angular.module('lmn.setup_wizard').controller('InitSummaryController', function 
 angular.module('lmn.setup_wizard').controller('InitSetupController', function ($location, $http, gettext, pageTitle, notify) {
     pageTitle.set(gettext('Setup Wizard'))
     this.isWorking = true
-    $http.post('/api/lm/setup-wizard/provision', {start: 'setup'}).then(() => {
+    $http.post('/api/lmn/setup-wizard/provision', {start: 'setup'}).then(() => {
         this.isWorking = false
         notify.success(gettext('Setup complete'))
     }).catch(() => {

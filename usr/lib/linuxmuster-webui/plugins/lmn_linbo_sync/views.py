@@ -7,7 +7,7 @@ from jadi import component
 import sys
 sys.path.append('/srv/tmp')
 
-from aj.api.http import url, HttpPlugin
+from aj.api.http import get, post, HttpPlugin
 from aj.auth import authorize
 from aj.api.endpoint import endpoint, EndpointError
 from aj.plugins.lmn_linbo_sync import api

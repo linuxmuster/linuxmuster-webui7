@@ -5,12 +5,11 @@ Tools to handle files, directories and uploads.
 import os
 import re
 import smbclient
-import logging
 from smbprotocol.exceptions import SMBOSError, NotFound, SMBAuthenticationError, InvalidParameter
 from spnego.exceptions import BadMechanismError
 from jadi import component
 
-from aj.api.http import url, HttpPlugin
+from aj.api.http import url, get, post, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
 from aj.auth import authorize, AuthenticationService
 from aj.plugins.lmn_common.mimetypes import content_mimetypes
@@ -28,7 +27,7 @@ class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
 
-    @url(r'/api/lmn/smbclient/shares/(?P<user>.+)')
+    @get(r'/api/lmn/smbclient/shares/(?P<user>.+)')
     @endpoint(api=True)
     def handle_api_smb_shares(self, http_context, user=None):
         """
@@ -40,16 +39,15 @@ class Handler(HttpPlugin):
         :rtype: dict
         """
 
-        if http_context.method == 'GET':
-            if user is None:
-                user = self.context.identity
+        if user is None:
+            user = self.context.identity
 
-            profil = AuthenticationService.get(self.context).get_provider().get_profile(user)
-            role = profil['sophomorixRole']
-            adminclass = profil['sophomorixAdminClass']
-            return self.context.schoolmgr.get_shares(user, role, adminclass)
+        profil = AuthenticationService.get(self.context).get_provider().get_profile(user)
+        role = profil['sophomorixRole']
+        adminclass = profil['sophomorixAdminClass']
+        return self.context.schoolmgr.get_shares(user, role, adminclass)
 
-    @url(r'/api/lmn/smbclient/list')
+    @post(r'/api/lmn/smbclient/list')
     @endpoint(api=True)
     def handle_api_smb_list(self, http_context):
         """
@@ -71,48 +69,47 @@ class Handler(HttpPlugin):
 
             return os.path.join(root, *list(filter(None, path.split('/')))[2:])
 
-        if http_context.method == 'POST':
-            path = http_context.json_body()['path']
+        path = http_context.json_body()['path']
 
-            try:
-                items = []
-                for item in smbclient.scandir(path):
-                    item_path = os.path.join(path, item.name) # TODO
+        try:
+            items = []
+            for item in smbclient.scandir(path):
+                item_path = os.path.join(path, item.name) # TODO
 
-                    data = {
-                        'name': item.name,
-                        'path': item_path,
-                        'unixPath': SMB2UnixPath(item_path),
-                        'isDir': item.is_dir(),
-                        'isFile': item.is_file(),
-                        'isLink': item.is_symlink(),
-                    }
+                data = {
+                    'name': item.name,
+                    'path': item_path,
+                    'unixPath': SMB2UnixPath(item_path),
+                    'isDir': item.is_dir(),
+                    'isFile': item.is_file(),
+                    'isLink': item.is_symlink(),
+                }
 
-                    try:
-                        stat = item.stat()
-                        data.update({
-                            'mode': stat.st_mode,
-                            'mtime': stat.st_mtime,
-                            'uid': stat.st_uid,
-                            'gid': stat.st_gid,
-                            'size': stat.st_size,
-                        })
-                    except (ValueError, SMBOSError, NotFound) as e:
-                        data['accessError'] = str(e)
-                        # if e.errno == errno.ENOENT and os.path.islink(item_path):
-                        #     data['brokenLink'] = True
+                try:
+                    stat = item.stat()
+                    data.update({
+                        'mode': stat.st_mode,
+                        'mtime': stat.st_mtime,
+                        'uid': stat.st_uid,
+                        'gid': stat.st_gid,
+                        'size': stat.st_size,
+                    })
+                except (ValueError, SMBOSError, NotFound) as e:
+                    data['accessError'] = str(e)
+                    # if e.errno == errno.ENOENT and os.path.islink(item_path):
+                    #     data['brokenLink'] = True
 
-                    items.append(data)
-            except (BadMechanismError, SMBAuthenticationError) as e:
-                raise EndpointError(f"There's a problem with the kerberos authentication : {e}")
-            except InvalidParameter as e:
-                raise EndpointError("This server does not support this feature actually, but it will come soon!")
-            return {
-                'parent': '', # TODO
-                'items': items
-            }
+                items.append(data)
+        except (BadMechanismError, SMBAuthenticationError) as e:
+            raise EndpointError(f"There's a problem with the kerberos authentication : {e}")
+        except InvalidParameter as e:
+            raise EndpointError("This server does not support this feature actually, but it will come soon!")
+        return {
+            'parent': '', # TODO
+            'items': items
+        }
 
-    @url(r'/api/lmn/smbclient/create-directory')
+    @post(r'/api/lmn/smbclient/directory')
     @endpoint(api=True)
     def handle_api_smb_create_directory(self, http_context):
         """
@@ -124,17 +121,16 @@ class Handler(HttpPlugin):
         :type path: string
         """
 
-        if http_context.method == 'POST':
-            path = http_context.json_body()['path']
+        path = http_context.json_body()['path']
 
-            try:
-                smbclient.makedirs(path)
-            except (ValueError, SMBOSError, NotFound) as e:
-                raise EndpointError(e)
-            except InvalidParameter as e:
-                raise EndpointError(f'Problem with path {path} : {e}')
+        try:
+            smbclient.makedirs(path)
+        except (ValueError, SMBOSError, NotFound) as e:
+            raise EndpointError(e)
+        except InvalidParameter as e:
+            raise EndpointError(f'Problem with path {path} : {e}')
 
-    @url(r'/api/lmn/smbclient/create-file')
+    @post(r'/api/lmn/smbclient/file')
     @endpoint(api=True)
     def handle_api_smb_create_file(self, http_context):
         """
@@ -146,18 +142,17 @@ class Handler(HttpPlugin):
         :type path: string
         """
 
-        if http_context.method == 'POST':
-            path = http_context.json_body()['path']
+        path = http_context.json_body()['path']
 
-            try:
-                with smbclient.open_file(path, 'w') as towrite:
-                    pass
-            except (ValueError, SMBOSError, NotFound) as e:
-                raise EndpointError(e)
-            except InvalidParameter as e:
-                raise EndpointError(f'Problem with path {path} : {e}')
+        try:
+            with smbclient.open_file(path, 'w') as towrite:
+                pass
+        except (ValueError, SMBOSError, NotFound) as e:
+            raise EndpointError(e)
+        except InvalidParameter as e:
+            raise EndpointError(f'Problem with path {path} : {e}')
 
-    @url(r'/api/lmn/smbclient/move')
+    @post(r'/api/lmn/smbclient/move')
     @endpoint(api=True)
     def handle_api_smb_move(self, http_context):
         """
@@ -169,16 +164,15 @@ class Handler(HttpPlugin):
         :type path: string
         """
 
-        if http_context.method == 'POST':
-            src = http_context.json_body()['src']
-            dst = http_context.json_body()['dst']
+        src = http_context.json_body()['src']
+        dst = http_context.json_body()['dst']
 
-            try:
-                smbclient.rename(src, dst)
-            except (ValueError, SMBOSError, NotFound) as e:
-                raise EndpointError(e)
+        try:
+            smbclient.rename(src, dst)
+        except (ValueError, SMBOSError, NotFound) as e:
+            raise EndpointError(e)
 
-    @url(r'/api/lmn/smbclient/copy')
+    @post(r'/api/lmn/smbclient/copy')
     @endpoint(api=True)
     def handle_api_smb_copy(self, http_context):
         """
@@ -190,16 +184,15 @@ class Handler(HttpPlugin):
         :type path: string
         """
 
-        if http_context.method == 'POST':
-            src = http_context.json_body()['src']
-            dst = http_context.json_body()['dst']
+        src = http_context.json_body()['src']
+        dst = http_context.json_body()['dst']
 
-            try:
-                smbclient.copyfile(src, dst)
-            except (ValueError, SMBOSError, NotFound) as e:
-                raise EndpointError(e)
+        try:
+            smbclient.copyfile(src, dst)
+        except (ValueError, SMBOSError, NotFound) as e:
+            raise EndpointError(e)
 
-    @url(r'/api/lmn/smbclient/dir')
+    @post(r'/api/lmn/smbclient/rmdir') # TODO : bad method, should be delete
     @endpoint(api=True)
     def handle_api_smb_rmdir(self, http_context):
         """
@@ -212,15 +205,14 @@ class Handler(HttpPlugin):
         :type path: string
         """
 
-        if http_context.method == 'POST':
-            path = http_context.json_body()['path']
+        path = http_context.json_body()['path']
 
-            try:
-                smbclient.rmdir(path)
-            except (ValueError, SMBOSError, NotFound) as e:
-                raise EndpointError(e)
+        try:
+            smbclient.rmdir(path)
+        except (ValueError, SMBOSError, NotFound) as e:
+            raise EndpointError(e)
 
-    @url(r'/api/lmn/smbclient/file')
+    @post(r'/api/lmn/smbclient/unlink') # TODO : bad method, should be delete
     @endpoint(api=True)
     def handle_api_smb_unlink(self, http_context):
         """
@@ -232,17 +224,16 @@ class Handler(HttpPlugin):
         :type path: string
         """
 
-        if http_context.method == 'POST':
-            path = http_context.json_body()['path']
+        path = http_context.json_body()['path']
 
-            try:
-                smbclient.unlink(path)
-            except (ValueError, SMBOSError, NotFound) as e:
-                raise EndpointError(e)
+        try:
+            smbclient.unlink(path)
+        except (ValueError, SMBOSError, NotFound) as e:
+            raise EndpointError(e)
 
-    @url(r'/api/lmn/smbclient/stat')
+    @get(r'/api/lmn/smbclient/stat/(?P<path>.+)')
     @endpoint(api=True)
-    def handle_api_smb_stat(self, http_context):
+    def handle_api_smb_stat(self, http_context, path=None):
         """
         Get all informations from a specific path.
 
@@ -254,35 +245,33 @@ class Handler(HttpPlugin):
         :rtype: dict
         """
 
-        if http_context.method == 'POST':
-            path = http_context.json_body()['path']
-            smb_file = smbclient._os.SMBDirEntry.from_path(path)
-            data = {
-                        'name': smb_file.name,
-                        'path': path, # TODO
-                        'isDir': smb_file.is_dir(),
-                        'isFile': smb_file.is_file(),
-                        'isLink': smb_file.is_symlink(),
-                    }
-            # unix permissions ?
+        smb_file = smbclient._os.SMBDirEntry.from_path(path)
+        data = {
+                    'name': smb_file.name,
+                    'path': path, # TODO
+                    'isDir': smb_file.is_dir(),
+                    'isFile': smb_file.is_file(),
+                    'isLink': smb_file.is_symlink(),
+                }
+        # unix permissions ?
 
-            try:
-                stat = smb_file.stat()
-                data.update({
-                    'mode': stat.st_mode,
-                    'mtime': stat.st_mtime,
-                    'uid': stat.st_uid,
-                    'gid': stat.st_gid,
-                    'size': stat.st_size,
-                })
-            except (ValueError, SMBOSError, NotFound) as e:
-                data['accessError'] = str(e)
+        try:
+            stat = smb_file.stat()
+            data.update({
+                'mode': stat.st_mode,
+                'mtime': stat.st_mtime,
+                'uid': stat.st_uid,
+                'gid': stat.st_gid,
+                'size': stat.st_size,
+            })
+        except (ValueError, SMBOSError, NotFound) as e:
+            data['accessError'] = str(e)
 
         return data
 
-    @url(r'/api/lmn/smbclient/upload')
+    @get(r'/api/lmn/smbclient/upload')
     @endpoint(page=True)
-    def handle_api_smb_upload_chunk(self, http_context):
+    def handle_api_smb_get_upload_chunk(self, http_context):
         """
         Write a chunk part of an upload in HOME/.upload//upload*/<index>.
         If method get is called, verify if the chunk part is present.
@@ -313,18 +302,49 @@ class Handler(HttpPlugin):
 
         chunk_path = f'{chunk_dir}\\{chunk_index}'
 
-        if http_context.method == 'GET':
-            if smbclient.path.exists(chunk_path):
-                http_context.respond('200 OK')
-            else:
-                http_context.respond('204 No Content')
-        else:
-            with smbclient.open_file(chunk_path, mode='wb') as f:
-                f.write(http_context.query['file'])
+        if smbclient.path.exists(chunk_path):
             http_context.respond('200 OK')
+        else:
+            http_context.respond('204 No Content')
         return ''
 
-    @url(r'/api/lmn/smbclient/finish-upload')
+    @post(r'/api/lmn/smbclient/upload')
+    @endpoint(page=True)
+    def handle_api_smb_post_upload_chunk(self, http_context):
+        """
+        Write a chunk part of an upload in HOME/.upload//upload*/<index>.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        """
+
+        user = self.context.identity
+        profil = AuthenticationService.get(self.context).get_provider().get_profile(user)
+        role = profil['sophomorixRole']
+        adminclass = profil['sophomorixAdminClass']
+        home = self.context.schoolmgr.get_homepath(user, role, adminclass)
+        upload_dir = f'{home}\\.upload'
+
+        if not smbclient.path.exists(upload_dir):
+            smbclient.mkdir(upload_dir)
+
+        id = http_context.query['flowIdentifier']
+        chunk_index = http_context.query['flowChunkNumber']
+        chunk_dir = f'{upload_dir}\\upload-{id}'
+
+        try:
+            smbclient.mkdir(chunk_dir)
+        except Exception as e:
+            pass
+
+        chunk_path = f'{chunk_dir}\\{chunk_index}'
+
+        with smbclient.open_file(chunk_path, mode='wb') as f:
+            f.write(http_context.query['file'])
+        http_context.respond('200 OK')
+        return ''
+
+    @post(r'/api/lmn/smbclient/finish-upload')
     # @authorize('smbclient:write')
     @endpoint(api=True)
     def handle_api_smb_finish_upload(self, http_context):
@@ -402,8 +422,7 @@ class Handler(HttpPlugin):
             })
         return targets
 
-
-    @url(r'/api/lmn/smbclient/download')
+    @url(r'/api/lmn/smbclient/download') # TODO : wait until Ajenti supports head for get requests
     @endpoint(page=True)
     def handle_smb_download(self, http_context):
         path = http_context.query.get('path', None)
@@ -413,6 +432,10 @@ class Handler(HttpPlugin):
 
         try:
             smbclient.path.isfile(path)
+            # Head request to handle 404 in Angular
+            if http_context.method == 'HEAD':
+                http_context.respond('200 OK')
+                return ''
         except (ValueError, SMBOSError, NotFound):
             http_context.respond_not_found()
             return

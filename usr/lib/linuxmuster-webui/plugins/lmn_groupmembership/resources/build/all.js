@@ -725,34 +725,25 @@
       "group": gettext("Type the group name, e.g. p_wifi")
     };
     $scope.findUsers = function(q) {
-      return $http.post("/api/lm/find-users", {
-        login: q,
-        type: 'user'
+      return $http.post("/api/lmn/find/user", {
+        name: q
       }).then(function(resp) {
         return resp.data;
       });
     };
     $scope.findTeachers = function(q) {
-      return $http.post("/api/lm/find-users", {
-        login: q,
-        type: 'teacher'
-      }).then(function(resp) {
+      return $http.get("/api/lmn/find/teacher/" + q).then(function(resp) {
         return resp.data;
       });
     };
     $scope.findGroups = function(q) {
-      return $http.post("/api/lm/find-users", {
-        login: q,
-        type: 'group'
-      }).then(function(resp) {
+      return $http.get("/api/lmn/find/group/" + q).then(function(resp) {
         return resp.data;
       });
     };
     $scope.findUsersGroup = function(q) {
-      return $http.post("/api/lm/find-users", {
-        login: q,
-        type: 'usergroup'
-      }).then(function(resp) {
+      return $http.get("/api/lmn/find/usergroup/" + q).then(function(resp) {
+        console.log(resp.data);
         return resp.data;
       });
     };

@@ -142,7 +142,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
               for project in $scope.projects
                   all_groups += project.groupname + ','
 
-          $http.post('/api/lmn/groupmembership/reset', {type: type, all_groups: all_groups}).then (resp) ->
+          $http.post('/api/lmn/groupmembership/resetadmins', {type: type, all_groups: all_groups}).then (resp) ->
               notify.success gettext('Admin membership reset')
           .finally () ->
               msg.close()
@@ -500,16 +500,16 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
         }
 
         $scope.findUsers = (q) ->
-            return $http.post("/api/lm/find-users", {login:q, type:'user'}).then (resp) ->
+            return $http.post("/api/lmn/find/user", {name:q}).then (resp) ->
                 return resp.data
         $scope.findTeachers = (q) ->
-            return $http.post("/api/lm/find-users", {login:q, type:'teacher'}).then (resp) ->
+            return $http.get("/api/lmn/find/teacher/" + q).then (resp) ->
                 return resp.data
         $scope.findGroups = (q) ->
-            return $http.post("/api/lm/find-users", {login:q, type:'group'}).then (resp) ->
+            return $http.get("/api/lmn/find/group/" + q).then (resp) ->
                 return resp.data
         $scope.findUsersGroup = (q) ->
-            return $http.post("/api/lm/find-users", {login:q, type:'usergroup'}).then (resp) ->
+            return $http.get("/api/lmn/find/usergroup/" + q).then (resp) ->
                 return resp.data
 
         $scope.groupType = groupType

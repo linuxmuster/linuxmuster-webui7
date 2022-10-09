@@ -179,7 +179,7 @@ class Handler(HttpPlugin):
             return result['TYPE'], result['MESSAGE_EN']
         return result['TYPE'], result['LOG']
 
-    @url(r'/api/lmn/groupmembership/membership')
+    @post(r'/api/lmn/groupmembership/membership')
     @authorize('lmn:groupmembership')
     @endpoint(api=True)
     def handle_api_set_members(self, http_context):
@@ -193,57 +193,59 @@ class Handler(HttpPlugin):
         :rtype: tuple
         """
 
-        if http_context.method == 'POST':
-            action  = http_context.json_body()['action']
-            groupname = http_context.json_body()['groupname']
-            entity = http_context.json_body()['entity'].strip(",")
-            try:
-                objtype = http_context.json_body()['type']
-            except KeyError:
-                objtype = 'project'
+        # TODO : missing body in delete request method to do it properly ...
 
-            possible_actions = [
-                'removemembers',
-                'addmembers',
-                'addadmins',
-                'removeadmins',
-                'addmembergroups',
-                'removemembergroups',
-                'addadmingroups',
-                'removeadmingroups',
+        action  = http_context.json_body()['action']
+        groupname = http_context.json_body()['groupname']
+        entity = http_context.json_body()['entity'].strip(",")
+        try:
+            objtype = http_context.json_body()['type']
+        except KeyError:
+            objtype = 'project'
 
-            ]
+        possible_actions = [
+            'removemembers',
+            'addmembers',
+            'addadmins',
+            'removeadmins',
+            'addmembergroups',
+            'removemembergroups',
+            'addadmingroups',
+            'removeadmingroups',
 
-            if action in possible_actions:
-                sophomorixCommand = ['sophomorix-'+objtype,  '--'+action, entity, '--'+objtype, groupname, '-jj']
-                result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
-                if result['TYPE'] == "ERROR":
-                    return result['TYPE'], result['MESSAGE_EN']
-                return result['TYPE'], result['LOG']
+        ]
 
-    @url(r'/api/lmn/groupmembership/reset')
+        if action in possible_actions:
+            sophomorixCommand = ['sophomorix-'+objtype,  '--'+action, entity, '--'+objtype, groupname, '-jj']
+            result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
+            if result['TYPE'] == "ERROR":
+                return result['TYPE'], result['MESSAGE_EN']
+            return result['TYPE'], result['LOG']
+
+    @post(r'/api/lmn/groupmembership/resetadmins')
     @authorize('lmn:groupmembership')
     @endpoint(api=True)
     def handle_api_reset(self, http_context):
         """Reset the admins of all projects or classes."""
+
         type = http_context.json_body()['type']
         all_groups = http_context.json_body()['all_groups']
-        select = '-' + type[0] # -c for class and -p for project
+        select = f'-{type[0]}'  # -c for class and -p for project
 
-        sophomorixCommand = ['sophomorix-'+type,  select, all_groups, '--admins', '""', '-jj']
+        sophomorixCommand = [f'sophomorix-{type}',  select, all_groups, '--admins', '""', '-jj']
         result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
         if result['TYPE'] == "ERROR":
             return result['TYPE'], result['MESSAGE_EN']
         return result['TYPE'], result['LOG']
 
-    @url(r'/api/lm/find-users')
+    # TODO : Duplicate with ldap-search in lmn_quotas ?
+
+    @post(r'/api/lmn/find/user')
     @authorize('lmn:groupmembership')
     @endpoint(api=True)
-    def handle_api_search_project(self, http_context):
+    def handle_api_find_user(self, http_context):
         """
-        Perform partial searchs in projects in the LDAP tree, per user or per
-        group.
-        Method POST.
+        Search for an user.
 
         :param http_context: HttpContext
         :type http_context: HttpContext
@@ -251,40 +253,88 @@ class Handler(HttpPlugin):
         :rtype: list
         """
 
-        if http_context.method == 'POST':
+        # TODO : should be get request, but passing the name in the url
+        # gives some encoding problems
 
-            # Problem with unicode In&egraves --> In\xe8s (py) --> In\ufffds (replace)
-            # Should be In&egraves --> Ines ( sophomorix supports this )
-            # login = http_context.json_body()['login'].decode('utf-8', 'replace')
+        # Problem with unicode In&egraves --> In\xe8s (py) --> In\ufffds (replace)
+        # Should be In&egraves --> Ines ( sophomorix supports this )
+        # login = http_context.json_body()['login'].decode('utf-8', 'replace')
 
-            login = http_context.json_body()['login']
-            objtype = http_context.json_body()['type']
-            resultArray = []
+        resultArray = []
+        name = http_context.json_body()['name']
 
-            try:
-                if objtype == 'user':
-                    sophomorixCommand = ['sophomorix-query', '--anyname', login+'*', '-jj']
-                    result = lmn_getSophomorixValue(sophomorixCommand, 'USER')
-                elif objtype == 'teacher':
-                    sophomorixCommand = ['sophomorix-query', '--anyname',
-                                         login + '*', '--teacher', '-jj']
-                    result = lmn_getSophomorixValue(sophomorixCommand,'USER')
-                elif objtype == 'usergroup':
-                    sophomorixCommand = ['sophomorix-query', '--sam', login+'*', '--group-members', '-jj']
-                    result = lmn_getSophomorixValue(sophomorixCommand, 'MEMBERS')
-                    if len(result) != 1:
-                        return []
-                    result = result[login]
-                elif objtype == 'group':
-                    sophomorixCommand = ['sophomorix-query', '--anyname', login+'*', '-jj']
-                    result = lmn_getSophomorixValue(sophomorixCommand, 'LISTS')
-                    return result['GROUP'] + result['ROOM']
-                elif objtype == 'computer':
-                    sophomorixCommand = ['sophomorix-query', '--sam', login+'*', '-jj']
-                    result = lmn_getSophomorixValue(sophomorixCommand, 'LISTS')
-                    return result['COMPUTER']
+        try:
+            sophomorixCommand = ['sophomorix-query', '--anyname', f'{name}*', '-jj']
+            result = lmn_getSophomorixValue(sophomorixCommand, 'USER')
 
-                for _, details in result.items():
+            for _, details in result.items():
+                resultArray.append({
+                        'label': f"{details['sophomorixAdminClass']} {details['sn']} {details['givenName']}",
+                        'sn': details['sn'],
+                        'givenName': details['givenName'],
+                        'login': details['sAMAccountName'],
+                        'sophomorixAdminClass': details['sophomorixAdminClass'],
+                        'sophomorixRole': details.get('sophomorixRole', ''),
+                        })
+        except:
+            # Ignore SophomorixValue errors
+            pass
+        return resultArray
+
+    @get(r'/api/lmn/find/teacher/(?P<login>.+)')
+    @authorize('lmn:groupmembership')
+    @endpoint(api=True)
+    def handle_api_find_teacher(self, http_context, login):
+        """
+        Search for an teacher.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: List of search results
+        :rtype: list
+        """
+
+        resultArray = []
+
+        try:
+            sophomorixCommand = ['sophomorix-query', '--anyname', f'{login}*', '--teacher', '-jj']
+            result = lmn_getSophomorixValue(sophomorixCommand,'USER')
+
+            for _, details in result.items():
+                resultArray.append({
+                        'label': f"{details['sophomorixAdminClass']} {details['sn']} {details['givenName']}",
+                        'sn': details['sn'],
+                        'givenName': details['givenName'],
+                        'login': details['sAMAccountName'],
+                        'sophomorixAdminClass': details['sophomorixAdminClass'],
+                        'sophomorixRole': details.get('sophomorixRole', ''),
+                        })
+        except:
+            # Ignore SophomorixValue errors
+            pass
+        return resultArray
+
+    @get(r'/api/lmn/find/usergroup/(?P<group>.+)')
+    @authorize('lmn:groupmembership')
+    @endpoint(api=True)
+    def handle_api_find_usergroup(self, http_context, group):
+        """
+        Search for members in a group
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: List of search results
+        :rtype: list
+        """
+
+        resultArray = []
+
+        try:
+            sophomorixCommand = ['sophomorix-query', '--sam', f'{group}*', '--group-members', '-jj']
+            result = lmn_getSophomorixValue(sophomorixCommand, 'MEMBERS')
+
+            for classe in result.keys():
+                for _, details in result[classe].items():
                     resultArray.append({
                             'label': f"{details['sophomorixAdminClass']} {details['sn']} {details['givenName']}",
                             'sn': details['sn'],
@@ -293,7 +343,57 @@ class Handler(HttpPlugin):
                             'sophomorixAdminClass': details['sophomorixAdminClass'],
                             'sophomorixRole': details.get('sophomorixRole', ''),
                             })
-            except:
-                # Ignore SophomorixValue errors
-                pass
-            return resultArray
+        except:
+            # Ignore SophomorixValue errors
+            pass
+        return resultArray
+
+    @get(r'/api/lmn/find/group/(?P<group>.+)')
+    @authorize('lmn:groupmembership')
+    @endpoint(api=True)
+    def handle_api_find_group(self, http_context, group):
+        """
+        Search for members in a group
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: List of search results
+        :rtype: list
+        """
+
+        resultArray = []
+
+        try:
+            sophomorixCommand = ['sophomorix-query', '--anyname', f'{group}*', '-jj']
+            result = lmn_getSophomorixValue(sophomorixCommand, 'LISTS')
+            return result['GROUP'] + result['ROOM']
+
+        except:
+            # Ignore SophomorixValue errors
+            pass
+        return resultArray
+
+    @get(r'/api/lmn/find/computer/(?P<computer>.+)')
+    @authorize('lmn:groupmembership')
+    @endpoint(api=True)
+    def handle_api_find_computer(self, http_context, computer):
+        """
+        Search for computers.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: List of search results
+        :rtype: list
+        """
+
+        resultArray = []
+
+        try:
+            sophomorixCommand = ['sophomorix-query', '--sam', f'{computer}*', '-jj']
+            result = lmn_getSophomorixValue(sophomorixCommand, 'LISTS')
+            return result['COMPUTER']
+
+        except:
+            # Ignore SophomorixValue errors
+            pass
+        return resultArray

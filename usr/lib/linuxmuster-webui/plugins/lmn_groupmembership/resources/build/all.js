@@ -237,9 +237,8 @@
       var option;
       $scope.changeState = true;
       option = $scope.maillist ? '--maillist' : '--nomaillist';
-      return $http.post('/api/lmn/changeGroup', {
+      return $http.post('/api/lmn/groupmembership/groupoptions/' + $scope.groupName, {
         option: option,
-        group: $scope.groupName,
         type: $scope.type
       }).then(function(resp) {
         if (resp['data'][0] === 'ERROR') {
@@ -255,9 +254,8 @@
       var option;
       $scope.changeState = true;
       option = $scope.joinable ? '--join' : '--nojoin';
-      return $http.post('/api/lmn/changeGroup', {
+      return $http.post('/api/lmn/groupmembership/groupoptions/' + $scope.groupName, {
         option: option,
-        group: $scope.groupName,
         type: $scope.type
       }).then(function(resp) {
         if (resp['data'][0] === 'ERROR') {
@@ -273,9 +271,8 @@
       var option;
       $scope.changeState = true;
       option = $scope.hidden ? '--hide' : '--nohide';
-      return $http.post('/api/lmn/changeGroup', {
+      return $http.post('/api/lmn/groupmembership/groupoptions/' + $scope.groupName, {
         option: option,
-        group: $scope.groupName,
         type: $scope.type
       }).then(function(resp) {
         if (resp['data'][0] === 'ERROR') {

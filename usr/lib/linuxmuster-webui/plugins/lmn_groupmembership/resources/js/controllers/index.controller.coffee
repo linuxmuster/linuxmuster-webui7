@@ -170,7 +170,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
         $scope.changeMaillist = () ->
             $scope.changeState = true
             option = if $scope.maillist then '--maillist' else '--nomaillist'
-            $http.post('/api/lmn/changeGroup', {option: option, group: $scope.groupName, type: $scope.type}).then (resp) ->
+            $http.post('/api/lmn/groupmembership/groupoptions/' + $scope.groupName, {option: option, type: $scope.type}).then (resp) ->
                 if resp['data'][0] == 'ERROR'
                     notify.error (resp['data'][1])
                 if resp['data'][0] == 'LOG'
@@ -180,7 +180,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
         $scope.changeJoin = () ->
             $scope.changeState = true
             option = if $scope.joinable then '--join' else '--nojoin'
-            $http.post('/api/lmn/changeGroup', {option: option, group: $scope.groupName, type: $scope.type}).then (resp) ->
+            $http.post('/api/lmn/groupmembership/groupoptions/' + $scope.groupName, {option: option, type: $scope.type}).then (resp) ->
                 if resp['data'][0] == 'ERROR'
                     notify.error (resp['data'][1])
                 if resp['data'][0] == 'LOG'
@@ -190,7 +190,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
         $scope.changeHide = () ->
             $scope.changeState = true
             option = if $scope.hidden then '--hide' else '--nohide'
-            $http.post('/api/lmn/changeGroup', {option: option, group: $scope.groupName, type: $scope.type}).then (resp) ->
+            $http.post('/api/lmn/groupmembership/groupoptions/' + $scope.groupName, {option: option, type: $scope.type}).then (resp) ->
                 if resp['data'][0] == 'ERROR'
                     notify.error (resp['data'][1])
                 if resp['data'][0] == 'LOG'

@@ -151,13 +151,12 @@ class Handler(HttpPlugin):
             return result['TYPE'],result['MESSAGE_EN']
         return result['TYPE'], result['LOG']
 
-    @url(r'/api/lmn/changeGroup')
+    @post(r'/api/lmn/groupmembership/groupoptions/(?P<group>.+)')
     @authorize('lmn:groupmembership')
     @endpoint(api=True)
-    def handle_api_set_group(self, http_context):
+    def handle_api_set_group(self, http_context, group=''):
         """
-        Handles join and hide options for a group.
-        Method POST.
+        Handles join, hide, maillist options for a group.
 
         :param http_context: HttpContext
         :type http_context: HttpContext
@@ -165,22 +164,20 @@ class Handler(HttpPlugin):
         :rtype: tuple
         """
 
-        if http_context.method == 'POST':
-            option  = http_context.json_body()['option']
-            group = http_context.json_body()['group']
-            groupType = http_context.json_body()['type']
+        option  = http_context.json_body()['option']
+        groupType = http_context.json_body()['type']
 
-            if groupType == "project":
-                sophomorixCommand = ['sophomorix-project',  option, '--project', group, '-jj']
-            else:
-                # Class
-                sophomorixCommand = ['sophomorix-class',  option, '--class', group, '-jj']
+        if groupType == "project":
+            sophomorixCommand = ['sophomorix-project',  option, '--project', group, '-jj']
+        else:
+            # Class
+            sophomorixCommand = ['sophomorix-class',  option, '--class', group, '-jj']
 
-            result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
+        result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
 
-            if result['TYPE'] == "ERROR":
-                return result['TYPE'], result['MESSAGE_EN']
-            return result['TYPE'], result['LOG']
+        if result['TYPE'] == "ERROR":
+            return result['TYPE'], result['MESSAGE_EN']
+        return result['TYPE'], result['LOG']
 
     @url(r'/api/lmn/groupmembership/membership')
     @authorize('lmn:groupmembership')

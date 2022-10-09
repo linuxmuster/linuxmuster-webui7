@@ -117,11 +117,7 @@
       };
     };
     $scope.getGroups = function(username) {
-      return $http.post('/api/lmn/groupmembership', {
-        action: 'list-groups',
-        username: username,
-        profil: $scope.identity.profile
-      }).then(function(resp) {
+      return $http.get('/api/lmn/groupmembership/groups').then(function(resp) {
         $scope.groups = resp.data[0];
         $scope.identity.isAdmin = resp.data[1];
         $scope.classes = $scope.groups.filter($scope.filterGroupType('schoolclass'));
@@ -140,12 +136,7 @@
           notify.error(gettext(test));
           return;
         }
-        return $http.post('/api/lmn/groupmembership', {
-          action: 'create-project',
-          username: $scope.identity.user,
-          project: msg.value,
-          profil: $scope.identity.profile
-        }).then(function(resp) {
+        return $http.post('/api/lmn/groupmembership/projects/' + msg.value).then(function(resp) {
           if (resp.data[0] === 'ERROR') {
             return notify.error(gettext(resp.data[1]));
           } else {
@@ -306,12 +297,7 @@
         msg = messagebox.show({
           progress: true
         });
-        return $http.post('/api/lmn/groupmembership', {
-          action: 'kill-project',
-          username: $scope.identity.user,
-          project: project,
-          profil: $scope.identity.profile
-        }).then(function(resp) {
+        return $http.delete('/api/lmn/groupmembership/projects/' + project).then(function(resp) {
           if (resp['data'][0] === 'ERROR') {
             notify.error(resp['data'][1]);
           }
@@ -351,11 +337,7 @@
     $scope.getGroupDetails = function(group) {
       groupType = group[0];
       groupName = group[1];
-      return $http.post('/api/lmn/groupmembership/details', {
-        action: 'get-specified',
-        groupType: groupType,
-        groupName: groupName
-      }).then(function(resp) {
+      return $http.get('/api/lmn/groupmembership/groups/' + groupName).then(function(resp) {
         var admin, i, len, member, name, ref, ref1;
         $scope.groupName = groupName;
         $scope.groupDetails = resp.data['GROUP'][groupName];

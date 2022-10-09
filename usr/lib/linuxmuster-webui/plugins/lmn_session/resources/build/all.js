@@ -479,11 +479,7 @@
       };
       //get groups
       console.log($scope.identity.profile);
-      $http.post('/api/lmn/groupmembership', {
-        action: 'list-groups',
-        username: username,
-        profil: $scope.identity.profile
-      }).then(function(resp) {
+      $http.get('/api/lmn/groupmembership/groups').then(function(resp) {
         $scope.groups = resp.data[0];
         $scope.identity.isAdmin = resp.data[1];
         $scope.classes = $scope.groups.filter($scope.filterGroupType('schoolclass'));
@@ -702,11 +698,7 @@
         }
       }
       wait.modal(gettext('Generating session...'), 'spinner');
-      return $http.post('/api/lmn/groupmembership/details', {
-        action: 'get-specified',
-        groupType: 'class',
-        groupName: classname
-      }).then(function(resp) {
+      return $http.get('/api/lmn/groupmembership/groups/' + classname).then(function(resp) {
         var data, participant, participants, participantsArray;
         // get participants from specified class
         participants = resp.data['MEMBERS'][classname];

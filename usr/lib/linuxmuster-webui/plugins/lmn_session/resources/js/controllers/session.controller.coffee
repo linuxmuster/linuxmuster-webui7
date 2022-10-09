@@ -364,7 +364,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                 }
                 #get groups
                 console.log ($scope.identity.profile)
-                $http.post('/api/lmn/groupmembership', {action: 'list-groups', username: username, profil: $scope.identity.profile}).then (resp) ->
+                $http.get('/api/lmn/groupmembership/groups').then (resp) ->
                     $scope.groups = resp.data[0]
                     $scope.identity.isAdmin = resp.data[1]
                     $scope.classes = $scope.groups.filter($scope.filterGroupType('schoolclass'))
@@ -510,7 +510,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                 console.log ('sessionExist '+sessionExist )
 
         wait.modal(gettext('Generating session...'), 'spinner')
-        $http.post('/api/lmn/groupmembership/details', {action: 'get-specified', groupType: 'class', groupName: classname}).then (resp) ->
+        $http.get('/api/lmn/groupmembership/groups/' + classname).then (resp) ->
             # get participants from specified class
             participants = resp.data['MEMBERS'][classname]
             participantsArray = []

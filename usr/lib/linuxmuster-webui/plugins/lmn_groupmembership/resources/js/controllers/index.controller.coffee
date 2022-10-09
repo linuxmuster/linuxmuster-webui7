@@ -86,7 +86,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
       dict['type'] == val
 
   $scope.getGroups = (username) ->
-    $http.post('/api/lmn/groupmembership', {action: 'list-groups', username: username, profil: $scope.identity.profile}).then (resp) ->
+    $http.get('/api/lmn/groupmembership/groups').then (resp) ->
       $scope.groups = resp.data[0]
       $scope.identity.isAdmin = resp.data[1]
       $scope.classes = $scope.groups.filter($scope.filterGroupType('schoolclass'))
@@ -101,7 +101,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
       if test != true
         notify.error gettext(test)
         return
-      $http.post('/api/lmn/groupmembership', {action: 'create-project', username:$scope.identity.user, project: msg.value, profil: $scope.identity.profile}).then (resp) ->
+      $http.post('/api/lmn/groupmembership/projects/' + msg.value).then (resp) ->
         if resp.data[0] is 'ERROR'
             notify.error gettext(resp.data[1])
         else
@@ -200,7 +200,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
         $scope.killProject = (project) ->
              messagebox.show(text: "Do you really want to delete '#{project}'? This can't be undone!", positive: 'Delete', negative: 'Cancel').then () ->
                 msg = messagebox.show(progress: true)
-                $http.post('/api/lmn/groupmembership', {action: 'kill-project', username:$scope.identity.user, project: project, profil: $scope.identity.profile}).then (resp) ->
+                $http.delete('/api/lmn/groupmembership/projects/' + project).then (resp) ->
                     if resp['data'][0] == 'ERROR'
                         notify.error (resp['data'][1])
                     if resp['data'][0] == 'LOG'
@@ -233,7 +233,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
         $scope.getGroupDetails = (group) ->
             groupType = group[0]
             groupName = group[1]
-            $http.post('/api/lmn/groupmembership/details', {action: 'get-specified', groupType: groupType, groupName: groupName}).then (resp) ->
+            $http.get('/api/lmn/groupmembership/groups/' + groupName).then (resp) ->
                 $scope.groupName    = groupName
                 $scope.groupDetails = resp.data['GROUP'][groupName]
                 $scope.adminList = resp.data['GROUP'][groupName]['sophomorixAdmins']

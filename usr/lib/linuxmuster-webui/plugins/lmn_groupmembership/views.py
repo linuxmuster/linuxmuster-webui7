@@ -5,9 +5,9 @@ environment.
 
 # coding=utf-8
 from jadi import component
-from aj.api.http import url, HttpPlugin
+from aj.api.http import url, get, post, delete, HttpPlugin
 from aj.api.endpoint import endpoint
-from aj.auth import authorize
+from aj.auth import authorize, AuthenticationService
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue
 
 
@@ -16,40 +16,12 @@ class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
 
-    @url(r'/api/lmn/groupmembership/details')
-    @authorize('lmn:groupmemberships:write')
-    @endpoint(api=True)
-    def handle_api_groupmembership_details(self, http_context):
-        """
-        Get the group informations of a specified group.
-        Method POST.
-
-        :param http_context: HttpContext
-        :type http_context: HttpContext
-        :return: Group informations in LDAP ( name, owner, ... )
-        :rtype: dict
-        """
-
-        action = http_context.json_body()['action']
-
-        if http_context.method == 'POST':
-            with authorize('lmn:groupmemberships:write'):
-                if action == 'get-specified':
-                    groupName = http_context.json_body()['groupName']
-                    sophomorixCommand = ['sophomorix-query', '--group-members', '--group-full', '--sam', groupName, '-jj']
-                    groupDetails = lmn_getSophomorixValue(sophomorixCommand, '')
-                    if not 'MEMBERS' in groupDetails.keys():
-                        groupDetails['MEMBERS'] = {}
-
-            return groupDetails
-
-    @url(r'/api/lmn/groupmembership')
+    @get(r'/api/lmn/groupmembership/groups')
     @authorize('lmn:groupmembership')
     @endpoint(api=True)
-    def handle_api_groups(self, http_context):
+    def handle_api_list_groups(self, http_context):
         """
-        Performs diverses actions on groups, like list all groups, kill and create.
-        Method POST.
+        List all groups.
 
         :param http_context: HttpContext
         :type http_context: HttpContext
@@ -57,83 +29,127 @@ class Handler(HttpPlugin):
         :rtype: dict or tuple
         """
 
-        # TODO : this need to be splitted into atomic functions/tasks.
-
         schoolname = self.context.schoolmgr.school
-        username = http_context.json_body()['username']
-        action = http_context.json_body()['action']
-        user_details = http_context.json_body()['profil']
+        username = self.context.identity
+        user_details = AuthenticationService.get(self.context).get_provider().get_profile(username)
         isAdmin = "administrator" in user_details['sophomorixRole']
 
-        if http_context.method == 'POST':
-            if action == 'list-groups':
-                membershipList = []
-                usergroups = []
-                if not isAdmin:
-                    # get groups specified user is member of
-                    for group in user_details['memberOf']:
-                        usergroups.append(group.split(',')[0].split('=')[1])
+        membershipList = []
+        usergroups = []
+        if not isAdmin:
+            # get groups specified user is member of
+            for group in user_details['memberOf']:
+                usergroups.append(group.split(',')[0].split('=')[1])
 
-                # get all available classes and projects
-                sophomorixCommand = ['sophomorix-query', '--class', '--project', '--schoolbase', schoolname, '--group-full', '-jj']
-                groups = lmn_getSophomorixValue(sophomorixCommand, '')
-                # get all available groups TODO
+        # get all available classes and projects
+        sophomorixCommand = ['sophomorix-query', '--class', '--project', '--schoolbase', schoolname, '--group-full', '-jj']
+        groups = lmn_getSophomorixValue(sophomorixCommand, '')
+        # get all available groups TODO
 
-                # build membershipList with membership status
-                for group in groups['LISTS']['GROUP']:
-                    membershipDict = {}
-                    groupDetails = groups['GROUP'][group]
+        # build membershipList with membership status
+        for group in groups['LISTS']['GROUP']:
+            membershipDict = {}
+            groupDetails = groups['GROUP'][group]
 
-                    if group in usergroups or isAdmin or groupDetails['sophomorixHidden'] == "FALSE":
-                        membershipDict['groupname'] = group
-                        membershipDict['membership'] = group in usergroups or isAdmin
-                        membershipDict['admin'] = username in groupDetails['sophomorixAdmins'] or isAdmin
-                        membershipDict['joinable'] = groupDetails['sophomorixJoinable']
-                        membershipDict['DN'] = groupDetails['DN']
+            if group in usergroups or isAdmin or groupDetails['sophomorixHidden'] == "FALSE":
+                membershipDict['groupname'] = group
+                membershipDict['membership'] = group in usergroups or isAdmin
+                membershipDict['admin'] = username in groupDetails['sophomorixAdmins'] or isAdmin
+                membershipDict['joinable'] = groupDetails['sophomorixJoinable']
+                membershipDict['DN'] = groupDetails['DN']
 
-                        # Project name always starts with p_, but not classname
-                        if group[:2] == "p_":
-                            membershipDict['type'] = 'project'
-                            membershipDict['typename'] = 'Project'
-                        else:
-                            membershipDict['type'] = 'schoolclass'
-                            membershipDict['typename'] = 'Class'
+                # Project name always starts with p_, but not classname
+                if group[:2] == "p_":
+                    membershipDict['type'] = 'project'
+                    membershipDict['typename'] = 'Project'
+                else:
+                    membershipDict['type'] = 'schoolclass'
+                    membershipDict['typename'] = 'Class'
 
-                        membershipList.append(membershipDict)
+                membershipList.append(membershipDict)
 
-                #get printers
-                sophomorixCommand = ['sophomorix-query', '--printergroup', '--schoolbase', schoolname, '-jj']
-                printergroups = lmn_getSophomorixValue(sophomorixCommand, 'LISTS/GROUP')
+        #get printers
+        sophomorixCommand = ['sophomorix-query', '--printergroup', '--schoolbase', schoolname, '-jj']
+        printergroups = lmn_getSophomorixValue(sophomorixCommand, 'LISTS/GROUP')
 
-                for printergroup in printergroups:
-                  if printergroup in usergroups or isAdmin:
-                    membershipList.append({'type': 'printergroup', 'typename': 'Printer', 'groupname': printergroup, 'membership': True})
-                  else:
-                    membershipList.append({'type': 'printergroup', 'typename': 'Printer', 'groupname': printergroup, 'membership': False})
-                return membershipList, isAdmin, user_details
+        for printergroup in printergroups:
+          if printergroup in usergroups or isAdmin:
+            membershipList.append({'type': 'printergroup', 'typename': 'Printer', 'groupname': printergroup, 'membership': True})
+          else:
+            membershipList.append({'type': 'printergroup', 'typename': 'Printer', 'groupname': printergroup, 'membership': False})
+        return membershipList, isAdmin, user_details
 
-            if action == 'kill-project':
-                project = http_context.json_body()['project']
-                sophomorixCommand = ['sophomorix-project', '-i', '-p', project, '-jj']
-                groupAdmins = lmn_getSophomorixValue(sophomorixCommand, 'GROUPS/'+project+'/sophomorixAdmins')
-                if username in groupAdmins or user_details['sophomorixRole'] in ['globaladministrator', 'schooladministrator']:
-                    sophomorixCommand = ['sophomorix-project', '--kill', '-p', project, '-jj']
-                    result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
-                    if result['TYPE'] == "ERROR":
-                        return result['TYPE']['LOG']
-                    # Try to return last result to frontend
-                    return result['TYPE'], result['LOG']
-                # TODO: This should be done by sophomorix
-                return ['ERROR', 'Permission Denied']
+    @get(r'/api/lmn/groupmembership/groups/(?P<groupName>.+)')
+    @authorize('lmn:groupmemberships:write')
+    @endpoint(api=True)
+    def handle_api_groupmembership_details(self, http_context, groupName=''):
+        """
+        Get the group informations of a specified group.
 
-            if action == 'create-project':
-                ## Projectname must be in lowercase to avoid conflicts
-                project = http_context.json_body()['project'].lower()
-                sophomorixCommand = ['sophomorix-project',  '--admins', username, '--create', '-p', project, '--school', schoolname, '-jj']
-                result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
-                if result['TYPE'] == "ERROR":
-                    return result['TYPE'],result['MESSAGE_EN']
-                return result['TYPE'], result['LOG']
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: Group informations in LDAP ( name, owner, ... )
+        :rtype: dict
+        """
+
+        sophomorixCommand = ['sophomorix-query', '--group-members', '--group-full', '--sam', groupName, '-jj']
+        groupDetails = lmn_getSophomorixValue(sophomorixCommand, '')
+        if not 'MEMBERS' in groupDetails.keys():
+            groupDetails['MEMBERS'] = {}
+
+        return groupDetails
+
+    @delete(r'/api/lmn/groupmembership/projects/(?P<project>.+)')
+    @authorize('lmn:groupmembership')
+    @endpoint(api=True)
+    def handle_api_kill_project(self, http_context, project=''):
+        """
+        Kill specified project.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: List of groups or result for actions kill and create
+        :rtype: dict or tuple
+        """
+
+        username = self.context.identity
+        user_details = AuthenticationService.get(self.context).get_provider().get_profile(username)
+
+        sophomorixCommand = ['sophomorix-project', '-i', '-p', project, '-jj']
+        groupAdmins = lmn_getSophomorixValue(sophomorixCommand, f'GROUPS/{project}/sophomorixAdmins')
+
+        if username in groupAdmins or user_details['sophomorixRole'] in ['globaladministrator', 'schooladministrator']:
+            sophomorixCommand = ['sophomorix-project', '--kill', '-p', project, '-jj']
+            result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
+            if result['TYPE'] == "ERROR":
+                return result['TYPE']['LOG']
+            # Try to return last result to frontend
+            return result['TYPE'], result['LOG']
+        # TODO: This should be done by sophomorix
+        return ['ERROR', 'Permission Denied']
+
+    @post(r'/api/lmn/groupmembership/projects/(?P<project>.+)')
+    @authorize('lmn:groupmembership')
+    @endpoint(api=True)
+    def handle_api_create_project(self, http_context, project=''):
+        """
+        Create a project.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: List of groups or result for actions kill and create
+        :rtype: dict or tuple
+        """
+
+        schoolname = self.context.schoolmgr.school
+        username = self.context.identity
+
+        ## Projectname must be in lowercase to avoid conflicts
+        sophomorixCommand = ['sophomorix-project',  '--admins', username, '--create', '-p', project.lower(), '--school', schoolname, '-jj']
+        result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
+        if result['TYPE'] == "ERROR":
+            return result['TYPE'],result['MESSAGE_EN']
+        return result['TYPE'], result['LOG']
 
     @url(r'/api/lmn/changeGroup')
     @authorize('lmn:groupmembership')

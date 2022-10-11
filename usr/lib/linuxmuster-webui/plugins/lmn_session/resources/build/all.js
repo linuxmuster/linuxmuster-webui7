@@ -71,7 +71,7 @@
       }
     };
     $scope.createDir = function(path) {
-      return $http.post('/api/lm/create-dir', {
+      return $http.post('/api/lmn/create-dir', {
         filepath: path
       });
     };
@@ -107,7 +107,7 @@
         positive: gettext('Delete'),
         negative: gettext('Cancel')
       }).then(function() {
-        return $http.post('/api/lm/remove-dir', {
+        return $http.post('/api/lmn/remove-dir', {
           filepath: path
         }).then(function(resp) {
           var pos;

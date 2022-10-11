@@ -51,7 +51,7 @@
         $scope.content = '';
         $scope.autoscroll = true;
         i = $interval(function() {
-          return $http.get(`/api/lm/log${$scope.path}?offset=${$scope.content.length}`).then(function(resp) {
+          return $http.get(`/api/lmn/log${$scope.path}?offset=${$scope.content.length}`).then(function(resp) {
             var lines;
             // console.log ($scope)
             $scope.content += resp.data;
@@ -186,7 +186,7 @@ angular.module('core').directive('teacherAccess', function (identity) {
             if ($scope.owner && $scope.group) {
               filename = $flow.files[0].name;
               filepath = $scope.uploadpath + filename;
-              $http.post('/api/lm/chown', {
+              $http.post('/api/lmn/chown', {
                 filepath: $scope.uploadpath + $flow.files[0].name,
                 owner: $scope.owner,
                 group: $scope.group
@@ -199,7 +199,7 @@ angular.module('core').directive('teacherAccess', function (identity) {
                   }).then(function(resp) {
                     console.log('return');
                     console.log(resp.data);
-                    return $http.post('/api/lm/remove-file', {
+                    return $http.post('/api/lmn/remove-file', {
                       filepath: filepath
                     }).then(function() {
                       notify.success(gettext('Uploaded'));
@@ -252,7 +252,7 @@ angular.module('core').directive('teacherAccess', function (identity) {
             if ($scope.owner && $scope.group) {
               filename = $flow.files[0].name;
               filepath = $scope.uploadpath + filename;
-              $http.post('/api/lm/chown', {
+              $http.post('/api/lmn/chown', {
                 filepath: $scope.uploadpath + $flow.files[0].name,
                 owner: $scope.owner,
                 group: $scope.group
@@ -263,7 +263,7 @@ angular.module('core').directive('teacherAccess', function (identity) {
                     filepath: $scope.uploadpath,
                     subdir: $scope.subdir
                   }).then(function(resp) {
-                    return $http.post('/api/lm/remove-file', {
+                    return $http.post('/api/lmn/remove-file', {
                       filepath: filepath
                     }).then(function() {
                       notify.success(gettext('Uploaded'));
@@ -317,7 +317,7 @@ angular.module('core').directive('teacherAccess', function (identity) {
             if ($scope.owner && $scope.group) {
               filename = $flow.files[0].name;
               filepath = $scope.uploadpath + filename;
-              $http.post('/api/lm/chown', {
+              $http.post('/api/lmn/chown', {
                 filepath: $scope.uploadpath + $flow.files[0].name,
                 owner: $scope.owner,
                 group: $scope.group
@@ -328,7 +328,7 @@ angular.module('core').directive('teacherAccess', function (identity) {
                     filepath: $scope.uploadpath,
                     subdir: $scope.subdir
                   }).then(function(resp) {
-                    return $http.post('/api/lm/remove-file', {
+                    return $http.post('/api/lmn/remove-file', {
                       filepath: filepath
                     }).then(function() {
                       notify.success(gettext('Uploaded'));
@@ -842,7 +842,7 @@ angular.module('lmn.common').service('customFields', function ($http) {
     };
     $scope.loadBackupFiles();
     $scope.diff = function(backup) {
-      return $http.post('/api/lm/diff', {
+      return $http.post('/api/lmn/diff', {
         file1: path,
         file2: dir + '/' + backup.name
       }).then(function(resp) {
@@ -866,7 +866,7 @@ angular.module('lmn.common').service('customFields', function ($http) {
       };
     };
     $scope.onlyremove = function(backup) {
-      return $http.post('/api/lm/remove-file', {
+      return $http.post('/api/lmn/remove-file', {
         filepath: dir + '/' + backup.name
       }).then(function(resp) {
         var pos;

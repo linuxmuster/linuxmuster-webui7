@@ -19,7 +19,7 @@ angular.module('lmn.common').directive 'lmLog', ($http, $interval, $timeout) ->
             $scope.content = ''
             $scope.autoscroll = true
             i = $interval () ->
-                $http.get("/api/lm/log#{$scope.path}?offset=#{$scope.content.length}").then (resp) ->
+                $http.get("/api/lmn/log#{$scope.path}?offset=#{$scope.content.length}").then (resp) ->
                     # console.log ($scope)
                     $scope.content += resp.data
 

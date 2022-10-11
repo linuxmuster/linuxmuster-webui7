@@ -263,7 +263,7 @@ angular.module('lmn.setup_wizard').controller('InitDoneController', function ($w
 
     pageTitle.set(gettext('Setup Done'));
 
-    $http.get('/api/lm/read-config-setup').then(function (resp) {
+    $http.get('/api/lmn/read-config-setup').then(function (resp) {
         oldUrl = new URL(window.location.href); // TODO Fix port with ajenti new config
         servername = resp.data['setup']['servername'] ? resp.data['setup']['servername'] : resp.data['setup']['hostname'];
         //url = 'https://' + servername + '.' + resp.data['setup']['domainname'] + ':' + oldUrl.port // TODO Fix port with ajenti new config

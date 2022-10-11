@@ -202,7 +202,7 @@
             all_groups += project.groupname + ',';
           }
         }
-        return $http.post('/api/lmn/groupmembership/reset', {
+        return $http.post('/api/lmn/groupmembership/resetadmins', {
           type: type,
           all_groups: all_groups
         }).then(function(resp) {
@@ -743,7 +743,6 @@
     };
     $scope.findUsersGroup = function(q) {
       return $http.get("/api/lmn/find/usergroup/" + q).then(function(resp) {
-        console.log(resp.data);
         return resp.data;
       });
     };

@@ -578,7 +578,7 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
                 if example
                     $http.get("/api/lmn/linbo4/config/examples/#{example}").then (resp) ->
                         resp.data['config']['LINBO']['Group'] = newName
-                        $http.get("/api/lm/read-config-setup").then (setup) ->
+                        $http.get("/api/lmn/read-config-setup").then (setup) ->
                             resp.data['config']['LINBO']['Server'] = setup.data['setup']['serverip']
                             $http.post("/api/lmn/linbo4/config/start.conf.#{newName}", resp.data).then () ->
                                 $scope.config_change = true

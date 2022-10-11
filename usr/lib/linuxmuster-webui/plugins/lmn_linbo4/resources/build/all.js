@@ -708,7 +708,7 @@
           if (example) {
             return $http.get(`/api/lmn/linbo4/config/examples/${example}`).then(function(resp) {
               resp.data['config']['LINBO']['Group'] = newName;
-              return $http.get("/api/lm/read-config-setup").then(function(setup) {
+              return $http.get("/api/lmn/read-config-setup").then(function(setup) {
                 resp.data['config']['LINBO']['Server'] = setup.data['setup']['serverip'];
                 return $http.post(`/api/lmn/linbo4/config/start.conf.${newName}`, resp.data).then(function() {
                   $scope.config_change = true;

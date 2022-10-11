@@ -44,7 +44,7 @@ angular.module('lmn.session').controller 'LMNSessionFileSelectModalController', 
                 $scope.filesList = resp['data'][1]
 
     $scope.createDir = (path) ->
-        $http.post('/api/lm/create-dir', {filepath: path})
+        $http.post('/api/lmn/create-dir', {filepath: path})
 
     $scope.removeFile = (file) ->
         role = $scope.identity.profile.sophomorixRole
@@ -71,7 +71,7 @@ angular.module('lmn.session').controller 'LMNSessionFileSelectModalController', 
             positive: gettext('Delete'),
             negative: gettext('Cancel')
         }).then () ->
-            $http.post('/api/lm/remove-dir', {filepath: path}).then (resp) ->
+            $http.post('/api/lmn/remove-dir', {filepath: path}).then (resp) ->
                 notify.success(gettext("Directory " + file + " removed"))
                 delete $scope.files['TREE'][file]
                 $scope.files['COUNT']['files'] = $scope.files['COUNT']['files'] - 1

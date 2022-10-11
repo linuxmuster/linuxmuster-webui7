@@ -1346,7 +1346,7 @@
         return "has-error";
       }
     };
-    $http.get('/api/lm/schoolsettings').then(function(resp) {
+    $http.get('/api/lmn/schoolsettings').then(function(resp) {
       $scope.encoding = lmEncodingMap[resp.data.encoding_students_extra] || 'ISO8859-1';
       return $http.get(`/api/lm/users/extra-students?encoding=${$scope.encoding}`).then(function(resp) {
         return $scope.students = resp.data;
@@ -1446,7 +1446,7 @@
       page: 1,
       pageSize: 100
     };
-    $http.get('/api/lm/schoolsettings').then(function(resp) {
+    $http.get('/api/lmn/schoolsettings').then(function(resp) {
       $scope.encoding = lmEncodingMap[resp.data.encoding_courses_extra] || 'ISO8859-1';
       return $http.get(`/api/lm/users/extra-courses?encoding=${$scope.encoding}`).then(function(resp) {
         return $scope.courses = resp.data;
@@ -1863,7 +1863,7 @@
       $scope.options.user = 'global-admin';
     }
     if ($scope.options.adminClass.includes('admins')) {
-      $http.get('/api/lm/schoolsettings/latex-templates').then(function(rp) {
+      $http.get('/api/lmn/schoolsettings/latex-templates').then(function(rp) {
         $scope.templates_individual = rp.data[0];
         $scope.templates_multiple = rp.data[1];
         $scope.options['template_one_per_page'] = $scope.templates_individual[0];
@@ -3014,7 +3014,7 @@
     };
     $scope.getcourses = function() {
       if (!$scope.courses) {
-        return $http.get('/api/lm/schoolsettings').then(function(resp) {
+        return $http.get('/api/lmn/schoolsettings').then(function(resp) {
           $scope.courses_encoding = lmEncodingMap[resp.data.encoding_courses_extra] || 'ISO8859-1';
           return $http.get(`/api/lm/users/extra-courses?encoding=${$scope.courses_encoding}`).then(function(resp) {
             return $scope.courses = resp.data;

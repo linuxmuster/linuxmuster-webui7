@@ -715,7 +715,7 @@ angular.module('lmn.common').service('customFields', function ($http) {
     };
 
     this.load_display = function (role) {
-        return $http.get('/api/lm/read_custom_config/' + role).then(function (response) {
+        return $http.get('/api/lmn/read_custom_config/' + role).then(function (response) {
             // Filter title per display
             config = {
                 'customDisplay': response.data.customDisplay,
@@ -744,7 +744,7 @@ angular.module('lmn.common').service('customFields', function ($http) {
 
     this.load_config = function () {
         var role = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-        return $http.get('/api/lm/read_custom_config/' + role).then(function (response) {
+        return $http.get('/api/lmn/read_custom_config/' + role).then(function (response) {
             return response.data;
         });
     };
@@ -756,7 +756,7 @@ angular.module('lmn.common').service('customFields', function ($http) {
     };
 
     this.save = function (config) {
-        return $http.post("/api/lm/save_custom_config", { 'config': config });
+        return $http.post("/api/lmn/save_custom_config", { 'config': config });
     };
 
     return this;

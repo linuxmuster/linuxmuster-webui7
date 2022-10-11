@@ -255,7 +255,7 @@ angular.module('lmn.users').controller 'LMUsersListManagementController', ($scop
 
     $scope.getcourses = () ->
         if !$scope.courses
-            $http.get('/api/lm/schoolsettings').then (resp) ->
+            $http.get('/api/lmn/schoolsettings').then (resp) ->
                 $scope.courses_encoding = lmEncodingMap[resp.data.encoding_courses_extra] or 'ISO8859-1'
                 $http.get("/api/lm/users/extra-courses?encoding=#{$scope.courses_encoding}").then (resp) ->
                     $scope.courses = resp.data

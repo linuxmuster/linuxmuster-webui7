@@ -9,7 +9,7 @@ from jadi import component
 import re
 from glob import glob
 
-from aj.api.http import url, HttpPlugin
+from aj.api.http import get, post, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize
 from aj.plugins.lmn_common.lmnfile import LMNFile
@@ -30,13 +30,12 @@ class Handler(HttpPlugin):
         self.context = context
 
 
-    @url(r'/api/lmn/schoolsettings/determine-encoding')
+    @post(r'/api/lmn/schoolsettings/determine-encoding')
     @authorize('lm:schoolsettings')
     @endpoint(api=True)
     def handle_api_session_sessions(self, http_context):
         """
         Determine encoding using sophomorix-check.
-        Method POST.
 
         :param http_context: HttpContext
         :type http_context: HttpContext
@@ -53,14 +52,12 @@ class Handler(HttpPlugin):
         return None
 
 
-    @url(r'/api/lm/schoolsettings')
+    @get(r'/api/lmn/schoolsettings')
     @authorize('lm:schoolsettings')
     @endpoint(api=True)
-    def handle_api_settings(self, http_context):
+    def handle_api_get_schoolsettings(self, http_context):
         """
-        Read and write the config file `school.conf`.
-        Method GET: read the file.
-        Method POST: write the new content.
+        Read the config file `school.conf`.
 
         :param http_context: HttpContext
         :type http_context: HttpContext
@@ -73,22 +70,38 @@ class Handler(HttpPlugin):
         with LMNFile(path, 'r') as f:
             self.config_obj = f
 
-        if http_context.method == 'GET':
-            # Just export ConfigObj as dict for angularjs
-            return dict(self.config_obj.data)
+        # Just export ConfigObj as dict for angularjs
+        return dict(self.config_obj.data)
 
-        if http_context.method == 'POST':
-            data = http_context.json_body()
-            if 'admins_print' in data:
-                for k, v in self.EMAIL_MAPPING.items():
-                    data['admins_print'] = data['admins_print'].replace(k, v)
+    @post(r'/api/lmn/schoolsettings')
+    @authorize('lm:schoolsettings')
+    @endpoint(api=True)
+    def handle_api_write_schoolsettings(self, http_context):
+        """
+        Write the config file `school.conf`.
 
-            self.config_obj.write(data)
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: Settings in read mode
+        :rtype: dict in read mode
+        """
 
-            # Update setup.ini with new schoolname
-            with LMNFile('/var/lib/linuxmuster/setup.ini', 'r') as s:
-                s.data['setup']['schoolname'] = data['school']['SCHOOL_LONGNAME']
-                s.write(s.data)
+        path = f'{self.context.schoolmgr.configpath}school.conf'
+        # Update each time the config_obj because it may have changed
+        with LMNFile(path, 'r') as f:
+            self.config_obj = f
+
+        data = http_context.json_body()
+        if 'admins_print' in data:
+            for k, v in self.EMAIL_MAPPING.items():
+                data['admins_print'] = data['admins_print'].replace(k, v)
+
+        self.config_obj.write(data)
+
+        # Update setup.ini with new schoolname
+        with LMNFile('/var/lib/linuxmuster/setup.ini', 'r') as s:
+            s.data['setup']['schoolname'] = data['school']['SCHOOL_LONGNAME']
+            s.write(s.data)
 
     def _filter_templates(self, filename, school=''):
         """
@@ -117,13 +130,12 @@ class Handler(HttpPlugin):
         }
         return template
 
-    @url(r'/api/lm/schoolsettings/latex-templates')
+    @get(r'/api/lmn/schoolsettings/latex-templates')
     @authorize('lm:schoolsettings')
     @endpoint(api=True)
     def handle_api_latex_template(self, http_context):
         """
         Get list of latex templates for printing with sophomorix.
-        Method GET.
 
         :param http_context: HttpContext
         :type http_context: HttpContext
@@ -159,38 +171,12 @@ class Handler(HttpPlugin):
 
         return templates_individual, templates_multiple
 
-    @url(r'/api/lm/schoolsettings/school-share')
-    @authorize('lm:schoolsettings')
-    @endpoint(api=True)
-    def handle_api_school_share(self, http_context):
-        """
-        DEPRECATED, not used anymore. Adapt owner and group rights
-        on a share directory.
-
-        :param http_context: HttpContext
-        :type http_context: HttpContext
-        """
-
-        # TODO : school = 'default-school' ?
-        school = 'default-school'
-        path = '/srv/samba/schools/'+school+'/share'
-        if http_context.method == 'GET':
-            print(os.stat(path).st_mode)
-            return os.stat(path).st_mode & 0o3777 == 0o3777
-
-        if http_context.json_body():
-            os.chmod(path, 0o3777)
-        else:
-            os.chmod(path, 0o0700)
-
-    @url(r'/api/lm/subnets')
+    @get(r'/api/lmn/subnets')
     @authorize('lm:globalsettings')
     @endpoint(api=True)
-    def handle_api_subnet(self, http_context):
+    def handle_api_get_subnet(self, http_context):
         """
-        Manage `subnets.csv` config file for subnets.
-        Method GET: read content.
-        Method POST: write new content.
+        Get `subnets.csv` config file for subnets.
 
         :param http_context: HttpContext
         :type http_context: HttpContext
@@ -208,28 +194,50 @@ class Handler(HttpPlugin):
             'nextServer',
             'setupFlag',
         ]
-        if http_context.method == 'GET':
-            with LMNFile(path, 'r', fieldnames=fieldnames) as s:
-                subnets = list(s.data)
-            return subnets
 
-        if http_context.method == 'POST':
-            data = http_context.json_body()
-            with LMNFile(path, 'w', fieldnames=fieldnames) as f:
-                f.write(data)
+        with LMNFile(path, 'r', fieldnames=fieldnames) as s:
+            subnets = list(s.data)
+        return subnets
 
-            try:
-                subprocess.check_call('linuxmuster-import-subnets > /tmp/import_devices.log', shell=True)
-            except Exception as e:
-                raise EndpointError(None, message=str(e))
+    @post(r'/api/lmn/subnets')
+    @authorize('lm:globalsettings')
+    @endpoint(api=True)
+    def handle_api_write_subnet(self, http_context):
+        """
+        Write `subnets.csv` config file for subnets.
 
-    @url(r'/api/lm/read_custom_config/(?P<role>.*)')
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: Settings in read mode
+        :rtype: dict
+        """
+
+        path = '/etc/linuxmuster/subnets.csv'
+        fieldnames = [
+            'network',
+            'routerIp',
+            'beginRange',
+            'endRange',
+            'nameServer',
+            'nextServer',
+            'setupFlag',
+        ]
+
+        data = http_context.json_body()
+        with LMNFile(path, 'w', fieldnames=fieldnames) as f:
+            f.write(data)
+
+        try:
+            subprocess.check_call('linuxmuster-import-subnets > /tmp/import_devices.log', shell=True)
+        except Exception as e:
+            raise EndpointError(None, message=str(e))
+
+    @get(r'/api/lmn/read_custom_config/(?P<role>.*)')
     @authorize('lm:schoolsettings')
     @endpoint(api=True)
     def handle_api_read_custom_config(self, http_context, role=''):
         """
         Read webui yaml config and return the settings for custom fields.
-        Method GET: read content.
 
         :param http_context: HttpContext
         :type http_context: HttpContext
@@ -278,44 +286,42 @@ class Handler(HttpPlugin):
                 return base_role_dict
 
 
-        if http_context.method == 'GET':
-            school = self.context.schoolmgr.school
-            custom_config_path = f'/etc/linuxmuster/sophomorix/{school}/custom_fields.yml'
-            custom_config = {}
-            if os.path.isfile(custom_config_path):
-                with LMNFile(custom_config_path, 'r') as config:
-                    custom_config = config.read()
+        school = self.context.schoolmgr.school
+        custom_config_path = f'/etc/linuxmuster/sophomorix/{school}/custom_fields.yml'
+        custom_config = {}
+        if os.path.isfile(custom_config_path):
+            with LMNFile(custom_config_path, 'r') as config:
+                custom_config = config.read()
 
-            password_templates = custom_config.get('passwordTemplates', {})
-            password_templates['multiple'] = password_templates.get('multiple', '')
-            password_templates['individual'] = password_templates.get('individual', '')
+        password_templates = custom_config.get('passwordTemplates', {})
+        password_templates['multiple'] = password_templates.get('multiple', '')
+        password_templates['individual'] = password_templates.get('individual', '')
 
-            config_dict = {
-                'custom': ensure_config_structure(custom_config.get('custom', {})),
-                'customMulti': ensure_config_structure(custom_config.get('customMulti', {})),
-                'customDisplay': custom_config.get('customDisplay', {1:'', 2:'', 3:''}),
-                'proxyAddresses': ensure_config_structure(custom_config.get('proxyAddresses', {})),
-                'passwordTemplates': password_templates,
+        config_dict = {
+            'custom': ensure_config_structure(custom_config.get('custom', {})),
+            'customMulti': ensure_config_structure(custom_config.get('customMulti', {})),
+            'customDisplay': custom_config.get('customDisplay', {1:'', 2:'', 3:''}),
+            'proxyAddresses': ensure_config_structure(custom_config.get('proxyAddresses', {})),
+            'passwordTemplates': password_templates,
+        }
+
+        if role:
+            role_dict = {
+                'custom': ensure_config_structure(config_dict['custom'], role),
+                'customMulti': ensure_config_structure(config_dict['customMulti'], role),
+                'customDisplay': config_dict['customDisplay'].get(role, {1:'', 2:'', 3:''}),
+                'proxyAddresses': ensure_config_structure(config_dict['proxyAddresses'], role),
             }
-
-            if role:
-                role_dict = {
-                    'custom': ensure_config_structure(config_dict['custom'], role),
-                    'customMulti': ensure_config_structure(config_dict['customMulti'], role),
-                    'customDisplay': config_dict['customDisplay'].get(role, {1:'', 2:'', 3:''}),
-                    'proxyAddresses': ensure_config_structure(config_dict['proxyAddresses'], role),
-                }
-                return role_dict
-            return config_dict
+            return role_dict
+        return config_dict
 
 
-    @url(r'/api/lm/save_custom_config')
+    @post(r'/api/lmn/save_custom_config')
     @authorize('lm:schoolsettings')
     @endpoint(api=True)
     def handle_api_save_custom_config(self, http_context):
         """
         Save customs sophomorix fields settings in the webui yaml config.
-        Method POST.
 
         :param http_context: HttpContext
         :type http_context: HttpContext
@@ -323,21 +329,18 @@ class Handler(HttpPlugin):
         :rtype:
         """
 
-        if http_context.method == 'POST':
-            custom_config = http_context.json_body()['config']
-            school = self.context.schoolmgr.school
-            custom_config_path = f'/etc/linuxmuster/sophomorix/{school}/custom_fields.yml'
-            with LMNFile(custom_config_path, 'w') as config:
-                config.write(custom_config)
+        custom_config = http_context.json_body()['config']
+        school = self.context.schoolmgr.school
+        custom_config_path = f'/etc/linuxmuster/sophomorix/{school}/custom_fields.yml'
+        with LMNFile(custom_config_path, 'w') as config:
+            config.write(custom_config)
 
-    @url(r'/api/lm/holidays')
+    @get(r'/api/lmn/holidays')
     @authorize('lm:schoolsettings')
     @endpoint(api=True)
-    def handle_api_holidays(self, http_context):
+    def handle_api_get_holidays(self, http_context):
         """
-        Manage `holidays.yml` config file for holidays.
-        Method GET: read content.
-        Method POST: write new content.
+        Get `holidays.yml` config file for holidays.
 
         :param http_context: HttpContext
         :type http_context: HttpContext
@@ -348,23 +351,37 @@ class Handler(HttpPlugin):
         school = self.context.schoolmgr.school
         path = f'/etc/linuxmuster/sophomorix/{school}/holidays.yml'
 
-        if http_context.method == 'GET':
-            try:
-                with LMNFile(path, 'r') as s:
-                    return [{
-                        'name': name,
-                        'start': dates['start'],
-                        'end': dates['end'],
-                    } for name, dates in s.data.items()]
-            except AttributeError:
-                return []
+        try:
+            with LMNFile(path, 'r') as s:
+                return [{
+                    'name': name,
+                    'start': dates['start'],
+                    'end': dates['end'],
+                } for name, dates in s.data.items()]
+        except AttributeError:
+            return []
 
-        if http_context.method == 'POST':
-            data = http_context.json_body()
-            holidays = {holiday['name']: {
-                'start': holiday['start'],
-                'end': holiday['end']}
-                for holiday in data
-            }
-            with LMNFile(path, 'w') as f:
-                f.write(holidays)
+    @post(r'/api/lmn/holidays')
+    @authorize('lm:schoolsettings')
+    @endpoint(api=True)
+    def handle_api_write_holidays(self, http_context):
+        """
+        Write `holidays.yml` config file for holidays.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: Settings in read mode
+        :rtype: dict
+        """
+
+        school = self.context.schoolmgr.school
+        path = f'/etc/linuxmuster/sophomorix/{school}/holidays.yml
+
+        data = http_context.json_body()
+        holidays = {holiday['name']: {
+            'start': holiday['start'],
+            'end': holiday['end']}
+            for holiday in data
+        }
+        with LMNFile(path, 'w') as f:
+            f.write(holidays)

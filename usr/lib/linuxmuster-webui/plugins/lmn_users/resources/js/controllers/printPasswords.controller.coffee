@@ -20,7 +20,7 @@ angular.module('lmn.users').controller 'LMUsersPrintPasswordsOptionsModalControl
         $scope.options.user = 'global-admin'
 
     if $scope.options.adminClass.includes('admins')
-        $http.get('/api/lm/schoolsettings/latex-templates').then (rp) ->
+        $http.get('/api/lmn/schoolsettings/latex-templates').then (rp) ->
             $scope.templates_individual = rp.data[0]
             $scope.templates_multiple = rp.data[1]
             $scope.options['template_one_per_page'] = $scope.templates_individual[0]

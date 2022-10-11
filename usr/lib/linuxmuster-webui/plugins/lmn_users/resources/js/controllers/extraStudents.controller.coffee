@@ -57,7 +57,7 @@ angular.module('lmn.users').controller 'LMUsersExtraStudentsController', ($scope
         else
             return "has-error"
 
-    $http.get('/api/lm/schoolsettings').then (resp) ->
+    $http.get('/api/lmn/schoolsettings').then (resp) ->
         $scope.encoding = lmEncodingMap[resp.data.encoding_students_extra] or 'ISO8859-1'
         $http.get("/api/lm/users/extra-students?encoding=#{$scope.encoding}").then (resp) ->
             $scope.students = resp.data

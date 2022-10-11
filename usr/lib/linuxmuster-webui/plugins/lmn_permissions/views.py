@@ -134,7 +134,7 @@ class Handler(HttpPlugin):
                         'api': api,
                         'auth': auth,
                         'page': page,
-                        'post': "Method POST" in doc if doc else ''
+                        'method': m.method if hasattr(m, 'method') else 'url'
                     }
 
         ## Load default ui permissions from permissions.yml files

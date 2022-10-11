@@ -6,7 +6,7 @@
             <uib-tab heading="Plugins">
                 <input ng:model="query.plugin" type="search" autofocus class="form-control" placeholder="Filter per plugin name or per role" />
                 <div ng-repeat="plugin in pluginList|filter:filter_plugin" ng-show="count_rows(plugin)">
-                    <span class="label label-{{label_color(pluginObj[plugin].provider)}} pull-right">{{pluginObj[plugin].provider}}</span>
+                    <img ng:src="/resources/lmn_common/resources/img/{{providerLogo(pluginObj[plugin].provider)}}" class="pull-right" height="33" />
                     <h2>{{plugin}}</h2>
                     <table style="width:100%" class="table" id="table_{{plugin}}">
                         <tr>
@@ -20,12 +20,13 @@
                         <tr ng-repeat="(method,details) in pluginObj[plugin].methods" ng-if="filter_api(details)">
                             <td style="width:300px;" title="{{details.doc}}">
                                 <b>{{details.url}}</b><br />
-                                <i>{{method}}</i><br />
-                                <span class="label label-danger">{{details.permission_id}}</span>
-                                <span ng-show="details.auth" class="label label-warning" translate>Auth</span>
-                                <span ng-show="details.api" class="label label-info" translate>Api</span>
-                                <span ng-show="details.page" class="label label-success" translate>Page</span>
-                                <span ng-show="details.post" class="label label-primary" translate>Post</span>
+                                <br />
+                                <span ng-show="details.auth"><i class="fas fa-lock"></i></span>
+                                <span ng-show="!details.auth"><i class="fas fa-lock-open"></i></span>
+                                <span ng-show="details.api"><i class="fas fa-project-diagram"></i></span>
+                                <span ng-show="details.page"><i class="far fa-file"></i></span>
+                                <span ng-show="details.method" class="label label-{{methodLabelClass(details.method)}}">{{ details.method }}</span>
+                                <span class="label label-default">{{details.permission_id}}</span>
                             </td>
                             <td ng:repeat="role in columns" ng:click="changeApi(details, role)" style="text-align:center;" ng:show="details.permission_id">
                                 <i class="fas fa-{{iconify(apiPermissions[details.permission_id][role])}}" style="{{colorize(apiPermissions[details.permission_id][role])}}"></i>
@@ -50,7 +51,7 @@
                     </tr>
                     <tr ng-repeat="url in sidebarPermissionsList|filter:filter_sidebar">
                         <td style="width:300px;" ng-init="details = sidebarPermissions[url]">
-                            <span class="label label-{{label_color(get_provider(url))}} pull-right">{{get_provider(url)}}</span>
+                            <img ng:src="/resources/lmn_common/resources/img/{{providerLogo(get_provider(url))}}" class="pull-right" height="33" />
                             <b>{{url}}</b><br />
                             <i>Plugin {{details.plugin}}</i><br />
                         </td>

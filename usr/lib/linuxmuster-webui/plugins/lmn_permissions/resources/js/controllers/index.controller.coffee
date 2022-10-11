@@ -37,13 +37,24 @@ angular.module('lmn.permissions').controller 'PermissionListIndexController', ($
             return "Netzint"
         return "Ajenti"
 
-    $scope.label_color = (provider) ->
+    $scope.providerLogo = (provider) ->
         if provider == "Linuxmuster.net"
-            return "warning"
+            return "logo-x.png"
         if provider == "Netzint"
-            return "info"
+            return "logo-ni.png"
         if provider == "Ajenti"
-            return "default"
+            return "logo-ajenti.png"
+
+    $scope.methodLabelClass = (method) ->
+        if method == "get"
+            return "success"
+        if method == "post"
+            return "primary"
+        if method == "put"
+            return "info"
+        if method == "delete"
+            return "danger"
+        return "default"
 
     $scope.iconify = (bool) ->
         if typeof(bool) == "undefined"

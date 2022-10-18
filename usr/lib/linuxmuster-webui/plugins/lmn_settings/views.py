@@ -375,7 +375,7 @@ class Handler(HttpPlugin):
         """
 
         school = self.context.schoolmgr.school
-        path = f'/etc/linuxmuster/sophomorix/{school}/holidays.yml
+        path = f'/etc/linuxmuster/sophomorix/{school}/holidays.yml'
 
         data = http_context.json_body()
         holidays = {holiday['name']: {

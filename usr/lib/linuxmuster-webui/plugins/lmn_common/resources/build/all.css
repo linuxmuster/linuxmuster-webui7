@@ -349,6 +349,11 @@ tr.leaders td span + span {
 dialog .modal {
   z-index: 2000;
 }
+.lmn-blurred,
+.lmn-blurred .label {
+  color: transparent;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
 /* Floating toolbar
 ---------------------------- */
 floating-toolbar.accented .bar {

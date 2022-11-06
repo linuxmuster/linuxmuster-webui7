@@ -3,7 +3,7 @@ angular.module('lmn.users').config ($routeProvider) ->
         controller: 'LMUsersTeachersController'
         templateUrl: '/lmn_users:resources/partial/teachers.html'
 
-angular.module('lmn.users').controller 'LMUsersTeachersController', ($q, $scope, $http, $location, $route, $uibModal, $sce, gettext, notify, messagebox, pageTitle, customFields) ->
+angular.module('lmn.users').controller 'LMUsersTeachersController', ($q, $scope, $http, $location, $route, $uibModal, $sce, gettext, notify, messagebox, pageTitle, customFields, userPassword) ->
     pageTitle.set(gettext('Teachers'))
 
     $scope.sorts = [
@@ -46,18 +46,6 @@ angular.module('lmn.users').controller 'LMUsersTeachersController', ($q, $scope,
     $scope.isListAttr = (attr) ->
         return customFields.isListAttr(attr)
 
-    $scope.showInitialPassword = (users) ->
-        user=[]
-        user[0]=users[0]["sAMAccountName"]
-        # function needs an array which contains user on first position
-        type=gettext('Initial password')
-        $uibModal.open(
-           templateUrl: '/lmn_users:resources/partial/showPassword.modal.html'
-           controller: 'LMNUsersShowPasswordController'
-           resolve:
-              user: () -> user
-              type: () -> type
-        )
     $scope.teachersQuota = false
     $scope.getQuotas = () ->
         teacherList = (t.sAMAccountName for t in $scope.teachers)
@@ -70,25 +58,19 @@ angular.module('lmn.users').controller 'LMUsersTeachersController', ($q, $scope,
                 login = Object.keys(teacher.data)[0]
                 $scope.teachersQuota[login] = teacher.data[login]
 
-    $scope.setInitialPassword = (user) ->
-       $http.post('/api/lm/users/password', {users: (x['sAMAccountName'] for x in user), action: 'set-initial'}).then (resp) ->
-          notify.success gettext('Initial password set')
+    $scope.showFirstPassword = (username) ->
+        $scope.blurred = true
+        userPassword.showFirstPassword(username).then((resp) ->
+            $scope.blurred = false
+        )
+    $scope.resetFirstPassword = userPassword.resetFirstPassword
+    $scope.setRandomFirstPassword = userPassword.setRandomFirstPassword
+    $scope.setCustomPassword = userPassword.setCustomPassword
+    $scope.batchResetFirstPassword = () -> userPassword.batchPasswords($scope.teachers, 'reset-first')
+    $scope.batchSetRandomFirstPassword = () -> userPassword.batchPasswords($scope.teachers, 'random-first')
+    $scope.batchSetCustomFirstPassword = () -> userPassword.batchPasswords($scope.teachers, 'custom-first')
 
-    $scope.setRandomPassword = (user) ->
-       $http.post('/api/lm/users/password', {users: (x['sAMAccountName'] for x in user), action: 'set-random'}).then (resp) ->
-          notify.success gettext('Random password set')
-
-    $scope.setCustomPassword = (user,type) ->
-       $uibModal.open(
-          templateUrl: '/lmn_users:resources/partial/customPassword.modal.html'
-          controller: 'LMNUsersCustomPasswordController'
-          size: 'mg'
-          resolve:
-             users: () -> user
-             type: () -> type
-       )
     $scope.userInfo = (user) ->
-       console.log (user)
        $uibModal.open(
           templateUrl: '/lmn_users:resources/partial/userDetails.modal.html'
           controller: 'LMNUserDetailsController'
@@ -98,8 +80,6 @@ angular.module('lmn.users').controller 'LMUsersTeachersController', ($q, $scope,
              role: () -> 'teachers'
              ).closed.then () ->
                 $route.reload()
-
-
 
     $scope.haveSelection = () ->
         if $scope.teachers
@@ -112,7 +92,6 @@ angular.module('lmn.users').controller 'LMUsersTeachersController', ($q, $scope,
         msg = messagebox.show(progress: true)
         user_list = (x.sAMAccountName for x in $scope.teachers when x.selected)
         $http.post('/api/lm/users/print-individual', {user: $scope.identity.user, user_list: user_list}).then (resp) ->
-            console.log(resp.data)
             if resp.data == 'success'
                 notify.success(gettext("Created password pdf"))
                 location.href = "/api/lm/users/print-download/user-#{$scope.identity.user}.pdf"
@@ -120,15 +99,6 @@ angular.module('lmn.users').controller 'LMUsersTeachersController', ($q, $scope,
                 notify.error(gettext("Could not create password pdf"))
         .finally () ->
             msg.close()
-
-    $scope.batchSetInitialPassword = () ->
-        $scope.setInitialPassword((x for x in $scope.teachers when x.selected))
-
-    $scope.batchSetRandomPassword = () ->
-        $scope.setRandomPassword((x for x in $scope.teachers when x.selected))
-
-    $scope.batchSetCustomPassword = () ->
-        $scope.setCustomPassword((x for x in $scope.teachers when x.selected))
 
     $scope.filter = (row) ->
         # Only query sAMAccountName, givenName and sn

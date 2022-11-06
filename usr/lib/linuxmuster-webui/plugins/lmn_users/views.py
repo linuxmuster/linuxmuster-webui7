@@ -10,13 +10,11 @@ import magic
 import io
 
 from jadi import component
-from aj.api.http import url, HttpPlugin
+from aj.api.http import get, post, url, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
-from aj.auth import authorize
+from aj.auth import authorize, AuthenticationService
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue
 from aj.plugins.lmn_common.lmnfile import LMNFile
-import logging
-
 
 
 @component(HttpPlugin)
@@ -542,13 +540,27 @@ class Handler(HttpPlugin):
         except Exception as e:
             raise EndpointError(None, message=str(e))
 
-    @url(r'/api/lm/users/password')
+    def _checkPasswordPermissions(self, http_context, user):
+        identity = self.context.identity
+        identity_role = AuthenticationService.get(self.context).get_provider().get_profile(identity)['sophomorixRole']
+
+        if identity_role == 'globaladministrator':
+            return
+
+        user_role = AuthenticationService.get(self.context).get_provider().get_profile(user)['sophomorixRole']
+
+        # Some additional security checks
+        if identity_role not in ['teacher', 'schooladministrator']:
+            return http_context.respond_forbidden()
+        if identity_role == user_role and identity != user:
+            return http_context.respond_forbidden()
+
+    @get(r'/api/lmn/users/password/(?P<user>.+)')
     @authorize('lm:users:passwords')
     @endpoint(api=True)
-    def handle_api_users_password(self, http_context):
+    def handle_api_user_get_password(self, http_context, user):
         """
-        Update users passwords through `sophomorix-passwd`.
-        Method POST.
+        Get user's first password.
 
         :param http_context: HttpContext
         :type http_context: HttpContext
@@ -556,28 +568,96 @@ class Handler(HttpPlugin):
         :rtype: dict
         """
 
-        action = http_context.json_body()['action']
+        self._checkPasswordPermissions(http_context, user)
+
+        sophomorixCommand = ['sophomorix-user', '--info', '-jj', '-u', user]
+        return lmn_getSophomorixValue(sophomorixCommand, '/USERS/'+user+'/sophomorixFirstPassword')
+
+    @post(r'/api/lmn/users/passwords/reset-first')
+    @authorize('lm:users:passwords')
+    @endpoint(api=True)
+    def handle_api_users_passwords_first(self, http_context):
+        """
+        Reset user's password to initial password.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: Output of `sophomorix-passwd`
+        :rtype: dict
+        """
+
         users = http_context.json_body()['users']
-        user = ','.join([x.strip() for x in users])
-        # Read Password
-        if action == 'get':
-            sophomorixCommand = ['sophomorix-user', '--info', '-jj', '-u', user]
-            return lmn_getSophomorixValue(sophomorixCommand, '/USERS/'+user+'/sophomorixFirstPassword')
-        if action == 'set-initial':
-            sophomorixCommand = ['sophomorix-passwd', '--set-firstpassword', '-jj', '-u', user, '--use-smbpasswd']
-            return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
-        if action == 'set-random':
-            # TODO: Password length should be read from school settings
-            sophomorixCommand = ['sophomorix-passwd', '-u', user, '--random', '8', '-jj', '--use-smbpasswd']
-            return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
-        if action == 'set':
-            password = http_context.json_body()['password']
-            sophomorixCommand = ['sophomorix-passwd', '-u', user, '--pass', password, '-jj', '--use-smbpasswd']
-            return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN', sensitive=True)
-        if action == 'set-actual':
-            password = http_context.json_body()['password']
-            sophomorixCommand = ['sophomorix-passwd', '-u', user, '--pass', password, '--nofirstpassupdate', '--hide', '-jj', '--use-smbpasswd']
-            return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN', sensitive=True)
+        for user in users.split(','):
+            self._checkPasswordPermissions(http_context, user)
+
+        sophomorixCommand = ['sophomorix-passwd', '--set-firstpassword', '-jj', '-u', users, '--use-smbpasswd']
+        return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
+
+    @post(r'/api/lmn/users/passwords/set-random')
+    @authorize('lm:users:passwords')
+    @endpoint(api=True)
+    def handle_api_users_passwords_random(self, http_context):
+        """
+        Set a random password.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: Output of `sophomorix-passwd`
+        :rtype: dict
+        """
+
+        users = http_context.json_body()['users']
+        for user in users.split(','):
+            self._checkPasswordPermissions(http_context, user)
+
+        # TODO: Password length should be read from school settings
+        password_length = '8'
+        sophomorixCommand = ['sophomorix-passwd', '-u', users, '--random', password_length, '-jj', '--use-smbpasswd']
+        return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
+
+    @post(r'/api/lmn/users/passwords/set-first')
+    @authorize('lm:users:passwords')
+    @endpoint(api=True)
+    def handle_api_users_passwords_set(self, http_context):
+        """
+        Set user's initial password.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: Output of `sophomorix-passwd`
+        :rtype: dict
+        """
+
+        users = http_context.json_body()['users']
+        password = http_context.json_body()['password']
+
+        for user in users.split(','):
+            self._checkPasswordPermissions(http_context, user)
+
+        sophomorixCommand = ['sophomorix-passwd', '-u', users, '--pass', password, '-jj', '--use-smbpasswd']
+        return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN', sensitive=True)
+
+    @post(r'/api/lmn/users/passwords/set-current')
+    @authorize('lm:users:passwords')
+    @endpoint(api=True)
+    def handle_api_users_passwords_set_current(self, http_context):
+        """
+        Set user's actual password.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: Output of `sophomorix-passwd`
+        :rtype: dict
+        """
+
+        users = http_context.json_body()['users']
+        password = http_context.json_body()['password']
+
+        for user in users.split(','):
+            self._checkPasswordPermissions(http_context, user)
+
+        sophomorixCommand = ['sophomorix-passwd', '-u', users, '--pass', password, '--nofirstpassupdate', '--hide', '-jj', '--use-smbpasswd']
+        return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN', sensitive=True)
 
     @url(r'/api/lm/users/change-school-admin')
     @authorize('lm:users:schooladmins:create')
@@ -653,33 +733,6 @@ class Handler(HttpPlugin):
                 #    return result['LOG']
                 return result['COMMENT_EN']
                 # return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
-
-    #@url(r'/api/lmn/sophomorixUsers/new-file')
-    #@endpoint(api=True)
-    #def handle_api_sophomorix_newfile(self, http_context):
-    #    # TODO needs update for multischool
-
-    #    path = http_context.json_body()['path']
-    #    userlist = http_context.json_body()['userlist']
-    #    if http_context.method == 'POST':
-
-    #        if userlist == 'teachers.csv':
-    #            with authorize('lm:users:teachers:write'):
-    #                sophomorixCommand = ['sophomorix-newfile', path, '--name', userlist, '-jj']
-    #                result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
-    #                if result['TYPE'] == "ERROR":
-    #                    return ["ERROR", result['MESSAGE_EN']]
-    #                if result['TYPE'] == "LOG":
-    #                    return ["LOG", result['LOG']]
-
-    #        if userlist == 'students.csv':
-    #            with authorize('lm:users:students:write'):
-    #                sophomorixCommand = ['sophomorix-newfile', path, '--name', userlist, '-jj']
-    #                result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
-    #                if result['TYPE'] == "ERROR":
-    #                    return ["ERROR", result['MESSAGE_EN']]
-    #                if result['TYPE'] == "LOG":
-    #                    return ["LOG", result['LOG']]
 
     @url(r'/api/lm/users/get-classes')
     @authorize('lm:users:passwords')
@@ -841,7 +894,7 @@ class Handler(HttpPlugin):
             return http_context.respond_forbidden()
         return http_context.file(path, inline=False, name=name.encode())
 
-    @url(r'/api/lm/users/test-first-password/(?P<name>.+)')
+    @get(r'/api/lmn/users/test-first-password/(?P<name>.+)')
     @authorize('lm:users:passwords')
     @endpoint(api=True)
     def handle_api_users_test_password(self, http_context, name):
@@ -855,6 +908,8 @@ class Handler(HttpPlugin):
         :return: First password still set or not
         :rtype: bool
         """
+
+        self._checkPasswordPermissions(http_context, name)
 
         line = subprocess.check_output(['sudo', 'sophomorix-passwd', '--test-firstpassword', '-u', name]).splitlines()[-4]
         return b'1 OK' in line

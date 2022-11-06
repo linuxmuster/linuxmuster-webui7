@@ -3,7 +3,7 @@ angular.module('lmn.users').config ($routeProvider) ->
         controller: 'LMUsersSchooladminsController'
         templateUrl: '/lmn_users:resources/partial/schooladmins.html'
 
-angular.module('lmn.users').controller 'LMUsersSchooladminsController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, customFields) ->
+angular.module('lmn.users').controller 'LMUsersSchooladminsController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, customFields, userPassword) ->
     pageTitle.set(gettext('Schooladmins'))
 
     $scope.sorts = [
@@ -45,38 +45,19 @@ angular.module('lmn.users').controller 'LMUsersSchooladminsController', ($scope,
                 $route.reload()
                 notify.success gettext('User deleted')
 
-    $scope.showPW = (user) ->
-       messagebox.show(title: gettext('Show bind user password'), text: gettext("Do you really want to see this password ? It could be a security issue!"), positive: 'Show', negative: 'Cancel').then () ->
-            $http.post('/api/lm/users/showBindPW', {user: user.sAMAccountName}).then (resp) ->
-                messagebox.show(title: gettext('Show bind user password'), text: resp.data, positive: 'OK')
+    $scope.showBindPW = userPassword.showBindPW
 
-    $scope.showInitialPassword = (user) ->
-       $http.post('/api/lm/users/password', {users: ( x['sAMAccountName'] for x in user ), action: 'get'}).then (resp) ->
-          $http.get('/api/lm/users/test-first-password/' + user[0]['sAMAccountName']).then (response) ->
-            if response.data == true
-                msg = gettext('Initial password (still set)')
-            else
-                msg = gettext('Initial password (changed from user)')
-            messagebox.show(title: msg, text: resp.data, positive: 'OK')
-
-
-    $scope.setInitialPassword = (user) ->
-       $http.post('/api/lm/users/password', {users: ( x['sAMAccountName'] for x in user ), action: 'set-initial'}).then (resp) ->
-          notify.success gettext('Initial password set')
-
-    $scope.setRandomPassword = (user) ->
-       $http.post('/api/lm/users/password', {users: ( x['sAMAccountName'] for x in user ), action: 'set-random'}).then (resp) ->
-          notify.success gettext('Random password set')
-
-    $scope.setCustomPassword = (user,type) ->
-       $uibModal.open(
-          templateUrl: '/lmn_users:resources/partial/customPassword.modal.html'
-          controller: 'LMNUsersCustomPasswordController'
-          size: 'mg'
-          resolve:
-             users: () -> user
-             type: () -> type
-       )
+    $scope.showFirstPassword = (username) ->
+        $scope.blurred = true
+        userPassword.showFirstPassword(username).then((resp) ->
+            $scope.blurred = false
+        )
+    $scope.resetFirstPassword = userPassword.resetFirstPassword
+    $scope.setRandomFirstPassword = userPassword.setRandomFirstPassword
+    $scope.setCustomPassword = userPassword.setCustomPassword
+    $scope.batchResetFirstPassword = () -> userPassword.batchPasswords($scope.schooladmins, 'reset-first')
+    $scope.batchSetRandomFirstPassword = () -> userPassword.batchPasswords($scope.schooladmins, 'random-first')
+    $scope.batchSetCustomFirstPassword = () -> userPassword.batchPasswords($scope.schooladmins, 'custom-first')
 
     $scope.deleteSchoolAdmin = (user) ->
         messagebox.show(title: gettext('Delete User'), text: gettext("Delete school-administrator "+ ( x['sAMAccountName'] for x in user ) + '?'), positive: 'Delete', negative: 'Cancel').then () ->
@@ -95,7 +76,6 @@ angular.module('lmn.users').controller 'LMUsersSchooladminsController', ($scope,
             )
 
     $scope.userInfo = (user) ->
-      console.log (user)
       $uibModal.open(
         templateUrl: '/lmn_users:resources/partial/userDetails.modal.html'
         controller: 'LMNUserDetailsController'
@@ -113,15 +93,6 @@ angular.module('lmn.users').controller 'LMUsersSchooladminsController', ($scope,
                 if x.selected
                     return true
         return false
-
-    $scope.batchSetInitialPassword = () ->
-        $scope.setInitialPassword((x for x in $scope.schooladmins when x.selected))
-
-    $scope.batchSetRandomPassword = () ->
-        $scope.setRandomPassword((x for x in $scope.schooladmins when x.selected))
-
-    $scope.batchSetCustomPassword = () ->
-        $scope.setCustomPassword((x for x in $scope.schooladmins when x.selected))
 
     $scope.selectAll = (filter) ->
         if !filter?

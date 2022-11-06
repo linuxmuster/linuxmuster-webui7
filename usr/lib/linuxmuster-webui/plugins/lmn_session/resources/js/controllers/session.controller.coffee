@@ -100,7 +100,7 @@ angular.module('lmn.session').config ($routeProvider) ->
         templateUrl: '/lmn_session:resources/partial/session.html'
 
 
-angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem, validation, $rootScope, wait) ->
+angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem, validation, $rootScope, wait, userPassword) ->
     pageTitle.set(gettext('Session'))
 
 
@@ -650,51 +650,30 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
         $scope.currentSession.comment = ''
         $scope.visible.participanttable = 'none'
 
-    $scope.showInitialPassword = (user) ->
-                # if user is exam user show InitialPassword of real user
-                if user[0].endsWith('-exam')
-                    user[0] = user[0].replace('-exam', '')
-                type=gettext('Initial password')
-                $uibModal.open(
-                    templateUrl: '/lmn_users:resources/partial/showPassword.modal.html'
-                    controller: 'LMNUsersShowPasswordController'
-                    resolve:
-                        user: () -> user
-                        type: () -> type
-                )
-
-
-    $scope.setInitialPassword = (user) ->
-                # if user is in exammode prohibit password change in session
-                if user[0].endsWith('-exam')
-                    messagebox.show(title: gettext('User in exam'), text: gettext('This user seems to be in exam. End exam mode before changing password!'), positive: 'OK')
-                    return
-                $http.post('/api/lm/users/password', {users: user, action: 'set-initial'}).then (resp) ->
-                    notify.success gettext('Initial password set')
-
-    $scope.setRandomPassword = (user) ->
-            if user[0].endsWith('-exam')
-                messagebox.show(title: gettext('User in exam'), text: gettext('This user seems to be in exam. End exam mode before changing password!'), positive: 'OK')
-                return
-            $http.post('/api/lm/users/password', {users: user, action: 'set-random'}).then (resp) ->
-                notify.success gettext('Random password set')
-
-    $scope.setCustomPassword = (user, id, type) ->
-        if user[0]['sAMAccountName'].endsWith('-exam')
+    $scope._checkExamUser = (username) ->
+        if username.endsWith('-exam')
             messagebox.show(title: gettext('User in exam'), text: gettext('This user seems to be in exam. End exam mode before changing password!'), positive: 'OK')
-            return
-        # Set sAMAccountName to establish compability to userInfo Module
-        # This information is provided only as key (id) in sophomorix session
-        user[0]['sAMAccountName'] = id
-        $uibModal.open(
-            templateUrl: '/lmn_users:resources/partial/customPassword.modal.html'
-            controller: 'LMNUsersCustomPasswordController'
-            size: 'mg'
-            resolve:
-                users: () -> user
-                type: () -> type
-        )
+            return true
+        return false
 
+    $scope.showFirstPassword = (username) ->
+        $scope.blurred = true
+        # if user is exam user show InitialPassword of real user
+        username = username.replace('-exam', '')
+        userPassword.showFirstPassword(username).then((resp) ->
+            $scope.blurred = false
+        )
+    $scope.resetFirstPassword = (username) ->
+        if not $scope._checkExamUser(username)
+            userPassword.resetFirstPassword(username)
+
+    $scope.setRandomFirstPassword = (username) ->
+        if not $scope._checkExamUser(username)
+            userPassword.setRandomFirstPassword(username)
+
+    $scope.setCustomPassword = (user, pwtype) ->
+        if not $scope._checkExamUser(user.sAMAccountName)
+            userPassword.setCustomPassword(user, pwtype)
 
     $scope.userInfo = (user) ->
         console.log (user)

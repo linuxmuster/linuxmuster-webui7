@@ -142,7 +142,7 @@
     });
   });
 
-  angular.module('lmn.session').controller('LMNSessionController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem, validation, $rootScope, wait) {
+  angular.module('lmn.session').controller('LMNSessionController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem, validation, $rootScope, wait, userPassword) {
     var generateSession, typeIsArray, validateResult;
     pageTitle.set(gettext('Session'));
     $scope.generateSessionMouseover = gettext('Regenerate this session');
@@ -907,84 +907,39 @@
       $scope.currentSession.comment = '';
       return $scope.visible.participanttable = 'none';
     };
-    $scope.showInitialPassword = function(user) {
-      var type;
+    $scope._checkExamUser = function(username) {
+      if (username.endsWith('-exam')) {
+        messagebox.show({
+          title: gettext('User in exam'),
+          text: gettext('This user seems to be in exam. End exam mode before changing password!'),
+          positive: 'OK'
+        });
+        return true;
+      }
+      return false;
+    };
+    $scope.showFirstPassword = function(username) {
+      $scope.blurred = true;
       // if user is exam user show InitialPassword of real user
-      if (user[0].endsWith('-exam')) {
-        user[0] = user[0].replace('-exam', '');
-      }
-      type = gettext('Initial password');
-      return $uibModal.open({
-        templateUrl: '/lmn_users:resources/partial/showPassword.modal.html',
-        controller: 'LMNUsersShowPasswordController',
-        resolve: {
-          user: function() {
-            return user;
-          },
-          type: function() {
-            return type;
-          }
-        }
+      username = username.replace('-exam', '');
+      return userPassword.showFirstPassword(username).then(function(resp) {
+        return $scope.blurred = false;
       });
     };
-    $scope.setInitialPassword = function(user) {
-      // if user is in exammode prohibit password change in session
-      if (user[0].endsWith('-exam')) {
-        messagebox.show({
-          title: gettext('User in exam'),
-          text: gettext('This user seems to be in exam. End exam mode before changing password!'),
-          positive: 'OK'
-        });
-        return;
+    $scope.resetFirstPassword = function(username) {
+      if (!$scope._checkExamUser(username)) {
+        return userPassword.resetFirstPassword(username);
       }
-      return $http.post('/api/lm/users/password', {
-        users: user,
-        action: 'set-initial'
-      }).then(function(resp) {
-        return notify.success(gettext('Initial password set'));
-      });
     };
-    $scope.setRandomPassword = function(user) {
-      if (user[0].endsWith('-exam')) {
-        messagebox.show({
-          title: gettext('User in exam'),
-          text: gettext('This user seems to be in exam. End exam mode before changing password!'),
-          positive: 'OK'
-        });
-        return;
+    $scope.setRandomFirstPassword = function(username) {
+      if (!$scope._checkExamUser(username)) {
+        return userPassword.setRandomFirstPassword(username);
       }
-      return $http.post('/api/lm/users/password', {
-        users: user,
-        action: 'set-random'
-      }).then(function(resp) {
-        return notify.success(gettext('Random password set'));
-      });
     };
-    $scope.setCustomPassword = function(user, id, type) {
-      if (user[0]['sAMAccountName'].endsWith('-exam')) {
-        messagebox.show({
-          title: gettext('User in exam'),
-          text: gettext('This user seems to be in exam. End exam mode before changing password!'),
-          positive: 'OK'
-        });
-        return;
+    $scope.setCustomPassword = function(user, pwtype) {
+      if (!$scope._checkExamUser(user.sAMAccountName)) {
+        return userPassword.setCustomPassword(user, pwtype);
       }
-      // Set sAMAccountName to establish compability to userInfo Module
-      // This information is provided only as key (id) in sophomorix session
-      user[0]['sAMAccountName'] = id;
-      return $uibModal.open({
-        templateUrl: '/lmn_users:resources/partial/customPassword.modal.html',
-        controller: 'LMNUsersCustomPasswordController',
-        size: 'mg',
-        resolve: {
-          users: function() {
-            return user;
-          },
-          type: function() {
-            return type;
-          }
-        }
-      });
     };
     $scope.userInfo = function(user) {
       console.log(user);

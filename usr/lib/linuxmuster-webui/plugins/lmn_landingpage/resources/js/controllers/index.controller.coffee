@@ -81,7 +81,7 @@ angular.module('lmn.landingpage').controller 'LMNLandingController', ($scope, $h
                     $scope.groups.push({'cn':cn, 'category':gettext('Project')})
         return
 
-angular.module('lmn.users').controller 'LMNUserCustomFieldsController', ($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, user, customFields, custom_fields) ->
+angular.module('lmn.landingpage').controller 'LMNUserCustomFieldsController', ($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, user, customFields, custom_fields) ->
 
     $scope.custom_fields = custom_fields
     $scope.user = user

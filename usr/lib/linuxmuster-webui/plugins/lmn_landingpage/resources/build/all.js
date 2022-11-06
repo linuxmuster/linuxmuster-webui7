@@ -140,7 +140,7 @@
     });
   });
 
-  angular.module('lmn.users').controller('LMNUserCustomFieldsController', function($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, user, customFields, custom_fields) {
+  angular.module('lmn.landingpage').controller('LMNUserCustomFieldsController', function($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, user, customFields, custom_fields) {
     $scope.custom_fields = custom_fields;
     $scope.user = user;
     $scope.id = user.sAMAccountName;

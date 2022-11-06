@@ -886,7 +886,7 @@ class Handler(HttpPlugin):
         root = '/var/lib/sophomorix/print-data/'
         path = os.path.abspath(os.path.join(root, name))
 
-        if not path.startswith(root):
+        if not path.startswith(root) or self.context.identity not in name:
             return http_context.respond_forbidden()
         return http_context.file(path, inline=False, name=name.encode())
 

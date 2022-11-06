@@ -1,37 +1,30 @@
-angular.module('lmn.users').controller 'LMNUsersShowPasswordController', ($scope, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, user, type) ->
-    $scope.username = user[0]
-    $scope.type = type
+angular.module('lmn.users').controller 'LMNUsersShowPasswordController', ($scope, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, username) ->
+    $scope.username = username
 
-    $http.post('/api/lm/users/password', {users: user, action: 'get'}).then (resp) ->
-        password = resp.data
-        $scope.password = password
-        $http.get('/api/lm/users/test-first-password/' + user).then (response) ->
+    $http.get('/api/lmn/users/password/' + $scope.username).then (resp) ->
+        $scope.password = resp.data
+        $http.get('/api/lmn/users/test-first-password/' + $scope.username).then (response) ->
             if response.data == true
                 $scope.passwordStatus = gettext('Still Set')
+                $scope.passwordStatusColor = 'green'
             else
                 $scope.passwordStatus = gettext('Changed from user')
-          #messagebox.show(title: msg, text: resp.data, positive: 'OK')
-
-    #$http.post('/api/lm/users/password', {users: user, action: 'get'}).then (resp) ->
+                $scope.passwordStatusColor = 'red'
 
     $scope.close = () ->
-        $uibModalInstance.dismiss()
+        $uibModalInstance.close()
 
-angular.module('lmn.users').controller 'LMNUsersCustomPasswordController', ($scope, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, users, type, validation) ->
-    $scope.username = users
-    $scope.action = type
+angular.module('lmn.users').controller 'LMNUsersCustomPasswordController', ($scope, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, users, pwtype, validation) ->
+    $scope.users = users
+    # Single user
+    if not Array.isArray(users)
+        $scope.users = [users]
+    $scope.pwtype = if (pwtype == 'current') then pwtype else 'first'
+    $scope.userpw = ""
 
-    $scope.save = (userpw) ->
-        if not type?
-            action = 'set'
-        else
-            if type == 'actual'
-                action = 'set-actual'
-            else
-                action = 'set'
-
+    $scope.save = () ->
         if not $scope.userpw
-            notify.error gettext("You have to enter a password")
+            notify.error(gettext("You have to enter a password"))
             return
 
         test = validation.isValidPassword($scope.userpw)
@@ -39,12 +32,13 @@ angular.module('lmn.users').controller 'LMNUsersCustomPasswordController', ($sco
            notify.error gettext(test)
            return
         else
-            $http.post('/api/lm/users/password', {users: (x['sAMAccountName'] for x in users), action: action, password: $scope.userpw, type: type}).then (resp) ->
-                notify.success gettext('New password set')
-        $uibModalInstance.dismiss()
+            usernames = $scope.users.flatMap((x) => x.sAMAccountName).join(',').trim()
+            $http.post('/api/lmn/users/passwords/set-'+$scope.pwtype, {users: usernames, password: $scope.userpw}).then (resp) ->
+                notify.success(gettext('New password set'))
+        $scope.close()
 
     $scope.close = () ->
-        $uibModalInstance.dismiss()
+        $uibModalInstance.close()
 
 angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, id, role, identity, customFields) ->
 

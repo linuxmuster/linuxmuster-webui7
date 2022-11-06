@@ -22,6 +22,7 @@ resources:
     - 'resources/js/controllers/checkModal.controller.coffee'
     - 'resources/js/controllers/usersCommon.controller.coffee'
     - 'resources/js/controllers/listmanagement.controller.coffee'
+    - 'resources/js/services/userPassword.es'
     - 'resources/partial/listmanagement.html'
     - 'resources/partial/extra-students.html'
     - 'resources/partial/extra-courses.html'

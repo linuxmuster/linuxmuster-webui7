@@ -46,7 +46,6 @@ angular.module('lmn.users').controller 'LMUsersSchooladminsController', ($scope,
                 notify.success gettext('User deleted')
 
     $scope.showBindPW = userPassword.showBindPW
-
     $scope.showFirstPassword = (username) ->
         $scope.blurred = true
         userPassword.showFirstPassword(username).then((resp) ->

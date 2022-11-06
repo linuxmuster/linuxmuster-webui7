@@ -164,7 +164,7 @@
     <div class="alert alert-info" ng:show="schoolbindusers.length == 0" translate>
         No school bind user found.
     </div>
-    <table ng:show="schoolbindusers.length > 0" class="table">
+    <table ng:show="schoolbindusers.length > 0" class="table" ng:class="{'lmn-blurred': blurred}">
         <tr>
             <th> </th>
             <th width="120" translate> Login</th>

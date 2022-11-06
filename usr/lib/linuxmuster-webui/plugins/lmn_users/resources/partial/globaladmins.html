@@ -54,7 +54,7 @@
 
     <br />
 
-    <table ng:show="globaladmins[0] != 'none'" class="table" style="width:100%">
+    <table ng:show="globaladmins[0] != 'none'" class="table" style="width:100%" ng:class="{'lmn-blurred': blurred}">
         <tr>
             <th><span checkbox ng:model="all_selected" ng:change="selectAll(filter)"></span></th>
             <th width="120" translate>
@@ -116,28 +116,28 @@
                     </button>
                     <ul uib-dropdown-menu class="dropdown-menu-right" style=" margin-bottom: -30px; margin-right: 40px; z-index: 4000;">
                         <li>
-                            <a ng:click="showInitialPassword([globaladmin])" translate>
+                            <a ng:click="showFirstPassword(globaladmin.sAMAccountName)" translate>
                                 Show initial password
                             </a>
                         </li>
                         <li>
-                            <a ng:click="setInitialPassword([globaladmin])" translate>
+                            <a ng:click="resetFirstPassword(globaladmin.sAMAccountName)" translate>
                                 Restore initial password
                             </a>
                         </li>
                         <li>
-                            <a ng:click="setRandomPassword([globaladmin])" translate>
+                            <a ng:click="setRandomFirstPassword(globaladmin.sAMAccountName)" translate>
                                 Set random initial password
                             </a>
                         </li>
                         <li>
-                            <a ng:click="setCustomPassword([globaladmin], 'initial')" translate>
-                                Set custom initial password
+                            <a ng:click="setCustomPassword(globaladmin, 'first')" translate>
+                                Set custom first password
                             </a>
                         </li>
                         <li>
-                            <a ng:click="setCustomPassword([globaladmin], 'actual')" translate>
-                                Set actual user password
+                            <a ng:click="setCustomPassword(globaladmin, 'current')" translate>
+                                Set current user password
                             </a>
                         </li>
                     </ul>
@@ -164,7 +164,7 @@
     <div class="alert alert-info" ng:show="globalbindusers.length == 0" translate>
         No global bind user found.
     </div>
-    <table ng:show="globalbindusers.length > 0" class="table">
+    <table ng:show="globalbindusers.length > 0" class="table" ng:class="{'lmn-blurred': blurred}">
         <tr>
             <th> </th>
             <th width="120" translate> Login</th>
@@ -182,7 +182,7 @@
                 {{globalbinduser.DN}}
             </td>
             <td width="1">
-                <button class="btn btn-default" ng:click="showPW(globalbinduser)" ng:show="globalbinduser.pw">
+                <button class="btn btn-default" ng:click="showBindPW(globalbinduser)" ng:show="globalbinduser.pw">
                     <i class="fa fa-eye"></i>
                 </button>
             </td>
@@ -223,11 +223,14 @@
             <span class="caret"></span>
         </button>
         <ul uib-dropdown-menu class="dropdown-menu-left">
+<!--            <li>-->
+<!--                <a ng:click="batchResetFirstPassword()" translate>Set initial password</a>-->
+<!--            </li>-->
             <li>
-                <a ng:click="batchSetRandomPassword()" translate>Set random password for selected</a>
+                <a ng:click="batchSetRandomFirstPassword()" translate>Set random password</a>
             </li>
             <li>
-                <a ng:click="batchSetCustomPassword()" translate>Set custom password for selected</a>
+                <a ng:click="batchSetCustomFirstPassword()" translate>Set custom password</a>
             </li>
         </ul>
         <br />

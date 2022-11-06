@@ -770,42 +770,38 @@ class Handler(HttpPlugin):
                         classes.append(school+'-teachers')
                 return classes
 
-    @url(r'/api/lm/users/print-individual')
+    @post(r'/api/lmn/users/passwords/print')
     @authorize('lm:users:teachers:read') #TODO
     @endpoint(api=True)
     def handle_api_users_print_individual(self, http_context):
         """
         Print individual passwords for selected users as PDF, one per page.
-        Method POST.
 
         :param http_context: HttpContext
         :type http_context: HttpContext
         """
 
         school = self.context.schoolmgr.school
+        users = http_context.json_body()['users']
 
-        if http_context.method == 'POST':
-            user = http_context.json_body()['user']
-            user_list = http_context.json_body()['user_list']
+        sophomorixCommand = [
+            'sudo',
+            'sophomorix-print',
+            '--school', school,
+            '--caller', self.context.identity,
+            '--user', users,
+            '--one-per-page',
+            '-jj',
+        ]
 
-            sophomorixCommand = [
-                'sudo', 'sophomorix-print',
-                '--school', school,
-                '--caller', str(user),
-                '--user', ','.join(user_list),
-                '--one-per-page',
-            ]
-
-            # sophomorix-print needs the json parameter at the very end
-            sophomorixCommand.extend(['-jj'])
-
-            # generate real shell environment for sophomorix print
-            shell_env = {'TERM': 'xterm', 'SHELL': '/bin/bash',  'PATH': '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',  'HOME': '/root', '_': '/usr/bin/python3'}
-            try:
-                subprocess.check_call(sophomorixCommand, shell=False, env=shell_env)
-            except subprocess.CalledProcessError as e:
-                return 'Error '+str(e)
-            return 'success'
+        # generate real shell environment for sophomorix print
+        shell_env = {'TERM': 'xterm', 'SHELL': '/bin/bash',  'PATH': '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',  'HOME': '/root', '_': '/usr/bin/python3'}
+        try:
+            subprocess.check_call(sophomorixCommand, shell=False, env=shell_env)
+        except subprocess.CalledProcessError as e:
+            return 'Error '+str(e)
+        filename = f'user-{self.context.identity}.pdf'
+        return filename
 
     @url(r'/api/lm/users/print')
     @authorize('lm:users:passwords')
@@ -874,7 +870,7 @@ class Handler(HttpPlugin):
             return 'success'
             # return lmn_getSophomorixValue(sophomorixCommand, 'JSONINFO')
 
-    @url(r'/api/lm/users/print-download/(?P<name>.+)')
+    @get(r'/api/lmn/users/passwords/download/(?P<name>.+)')
     @authorize('lm:users:passwords')
     @endpoint(api=False, page=True)
     def handle_api_users_print_download(self, http_context, name):

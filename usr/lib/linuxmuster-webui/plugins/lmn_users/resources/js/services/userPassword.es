@@ -63,5 +63,19 @@ angular.module('lmn.users').service('userPassword', function($http, $uibModal, m
             });
     };
 
+    this.printSelectedPasswords = (userlist) => {
+        msg = messagebox.show({progress: true});
+        usernames = userlist.flatMap((x) => x.selected ? x.sAMAccountName : [] ).join(',').trim();
+        $http.post('/api/lmn/users/passwords/print', {users: usernames}).then((resp) => {
+            if (resp.data.startsWith('user-')) {
+                notify.success(gettext("PDF with passwords successfully created"));
+                location.href = "/api/lmn/users/passwords/download/" + resp.data;
+            } else {
+                notify.error(gettext("Could not create password pdf"))
+            };
+            msg.close();
+        });
+    };
+
     return this;
 });

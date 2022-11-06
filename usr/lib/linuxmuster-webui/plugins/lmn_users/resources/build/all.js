@@ -116,6 +116,9 @@
     $scope.batchSetCustomFirstPassword = function() {
       return userPassword.batchPasswords($scope.teachers, 'custom-first');
     };
+    $scope.printSelectedPasswords = function() {
+      return userPassword.printSelectedPasswords($scope.teachers);
+    };
     $scope.userInfo = function(user) {
       return $uibModal.open({
         templateUrl: '/lmn_users:resources/partial/userDetails.modal.html',
@@ -145,37 +148,6 @@
         }
       }
       return false;
-    };
-    $scope.printSelectedPasswords = function() {
-      var msg, user_list, x;
-      msg = messagebox.show({
-        progress: true
-      });
-      user_list = (function() {
-        var i, len, ref, results;
-        ref = $scope.teachers;
-        results = [];
-        for (i = 0, len = ref.length; i < len; i++) {
-          x = ref[i];
-          if (x.selected) {
-            results.push(x.sAMAccountName);
-          }
-        }
-        return results;
-      })();
-      return $http.post('/api/lm/users/print-individual', {
-        user: $scope.identity.user,
-        user_list: user_list
-      }).then(function(resp) {
-        if (resp.data === 'success') {
-          notify.success(gettext("Created password pdf"));
-          return location.href = `/api/lm/users/print-download/user-${$scope.identity.user}.pdf`;
-        } else {
-          return notify.error(gettext("Could not create password pdf"));
-        }
-      }).finally(function() {
-        return msg.close();
-      });
     };
     $scope.filter = function(row) {
       var i, len, ref, result, value;
@@ -303,6 +275,9 @@
     $scope.batchSetCustomFirstPassword = function() {
       return userPassword.batchPasswords($scope.students, 'custom-first');
     };
+    $scope.printSelectedPasswords = function() {
+      return userPassword.printSelectedPasswords($scope.students);
+    };
     $scope.userInfo = function(user) {
       return $uibModal.open({
         templateUrl: '/lmn_users:resources/partial/userDetails.modal.html',
@@ -330,38 +305,6 @@
         }
       }
       return false;
-    };
-    $scope.printSelectedPasswords = function() {
-      var msg, user_list, x;
-      msg = messagebox.show({
-        progress: true
-      });
-      user_list = (function() {
-        var i, len, ref, results;
-        ref = $scope.students;
-        results = [];
-        for (i = 0, len = ref.length; i < len; i++) {
-          x = ref[i];
-          if (x.selected) {
-            results.push(x.sAMAccountName);
-          }
-        }
-        return results;
-      })();
-      return $http.post('/api/lm/users/print-individual', {
-        user: $scope.identity.user,
-        user_list: user_list
-      }).then(function(resp) {
-        console.log(resp.data);
-        if (resp.data === 'success') {
-          notify.success(gettext("Created password pdf"));
-          return location.href = `/api/lm/users/print-download/user-${$scope.identity.user}.pdf`;
-        } else {
-          return notify.error(gettext("Could not create password pdf"));
-        }
-      }).finally(function() {
-        return msg.close();
-      });
     };
     $scope.filter = function(row) {
       var i, len, ref, result, value;
@@ -1195,6 +1138,9 @@
     $scope.batchSetCustomFirstPassword = function() {
       return userPassword.batchPasswords($scope.teachers, 'custom-first');
     };
+    $scope.printSelectedPasswords = function() {
+      return userPassword.printSelectedPasswords($scope.teachers);
+    };
     $scope.userInfo = function(user) {
       return $uibModal.open({
         templateUrl: '/lmn_users:resources/partial/userDetails.modal.html',
@@ -1224,37 +1170,6 @@
         }
       }
       return false;
-    };
-    $scope.printSelectedPasswords = function() {
-      var msg, user_list, x;
-      msg = messagebox.show({
-        progress: true
-      });
-      user_list = (function() {
-        var i, len, ref, results;
-        ref = $scope.teachers;
-        results = [];
-        for (i = 0, len = ref.length; i < len; i++) {
-          x = ref[i];
-          if (x.selected) {
-            results.push(x.sAMAccountName);
-          }
-        }
-        return results;
-      })();
-      return $http.post('/api/lm/users/print-individual', {
-        user: $scope.identity.user,
-        user_list: user_list
-      }).then(function(resp) {
-        if (resp.data === 'success') {
-          notify.success(gettext("Created password pdf"));
-          return location.href = `/api/lm/users/print-download/user-${$scope.identity.user}.pdf`;
-        } else {
-          return notify.error(gettext("Could not create password pdf"));
-        }
-      }).finally(function() {
-        return msg.close();
-      });
     };
     $scope.filter = function(row) {
       var i, len, ref, result, value;
@@ -2787,6 +2702,22 @@ angular.module('lmn.users').service('userPassword', function ($http, $uibModal, 
             $http.post('/api/lm/users/showBindPW', { user: user.sAMAccountName }).then(function (resp) {
                 messagebox.show({ title: gettext('Show bind user password'), text: resp.data, positive: 'OK' });
             });
+        });
+    };
+
+    this.printSelectedPasswords = function (userlist) {
+        msg = messagebox.show({ progress: true });
+        usernames = userlist.flatMap(function (x) {
+            return x.selected ? x.sAMAccountName : [];
+        }).join(',').trim();
+        $http.post('/api/lmn/users/passwords/print', { users: usernames }).then(function (resp) {
+            if (resp.data.startsWith('user-')) {
+                notify.success(gettext("PDF with passwords successfully created"));
+                location.href = "/api/lmn/users/passwords/download/" + resp.data;
+            } else {
+                notify.error(gettext("Could not create password pdf"));
+            };
+            msg.close();
         });
     };
 

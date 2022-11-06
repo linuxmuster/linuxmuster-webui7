@@ -57,6 +57,7 @@ angular.module('lmn.users').controller 'LMUsersStudentsController', ($scope, $ht
     $scope.batchResetFirstPassword = () -> userPassword.batchPasswords($scope.students, 'reset-first')
     $scope.batchSetRandomFirstPassword = () -> userPassword.batchPasswords($scope.students, 'random-first')
     $scope.batchSetCustomFirstPassword = () -> userPassword.batchPasswords($scope.students, 'custom-first')
+    $scope.printSelectedPasswords = () -> userPassword.printSelectedPasswords($scope.students)
 
     $scope.userInfo = (user) ->
         $uibModal.open(
@@ -68,26 +69,12 @@ angular.module('lmn.users').controller 'LMUsersStudentsController', ($scope, $ht
                 role: () -> 'students'
                 )
 
-
     $scope.haveSelection = () ->
         if $scope.students
             for x in $scope.students
                 if x.selected
                     return true
         return false
-
-    $scope.printSelectedPasswords = () ->
-        msg = messagebox.show(progress: true)
-        user_list = (x.sAMAccountName for x in $scope.students when x.selected)
-        $http.post('/api/lm/users/print-individual', {user: $scope.identity.user, user_list: user_list}).then (resp) ->
-            console.log(resp.data)
-            if resp.data == 'success'
-                notify.success(gettext("Created password pdf"))
-                location.href = "/api/lm/users/print-download/user-#{$scope.identity.user}.pdf"
-            else
-                notify.error(gettext("Could not create password pdf"))
-        .finally () ->
-            msg.close()
 
     $scope.filter = (row) ->
         # Only query sAMAccountName, givenName, sn and sophomorixAdminClass

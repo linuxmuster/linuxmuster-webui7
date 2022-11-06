@@ -69,6 +69,7 @@ angular.module('lmn.users').controller 'LMUsersTeachersController', ($q, $scope,
     $scope.batchResetFirstPassword = () -> userPassword.batchPasswords($scope.teachers, 'reset-first')
     $scope.batchSetRandomFirstPassword = () -> userPassword.batchPasswords($scope.teachers, 'random-first')
     $scope.batchSetCustomFirstPassword = () -> userPassword.batchPasswords($scope.teachers, 'custom-first')
+    $scope.printSelectedPasswords = () -> userPassword.printSelectedPasswords($scope.teachers)
 
     $scope.userInfo = (user) ->
        $uibModal.open(
@@ -87,18 +88,6 @@ angular.module('lmn.users').controller 'LMUsersTeachersController', ($q, $scope,
                 if x.selected
                     return true
         return false
-
-    $scope.printSelectedPasswords = () ->
-        msg = messagebox.show(progress: true)
-        user_list = (x.sAMAccountName for x in $scope.teachers when x.selected)
-        $http.post('/api/lm/users/print-individual', {user: $scope.identity.user, user_list: user_list}).then (resp) ->
-            if resp.data == 'success'
-                notify.success(gettext("Created password pdf"))
-                location.href = "/api/lm/users/print-download/user-#{$scope.identity.user}.pdf"
-            else
-                notify.error(gettext("Could not create password pdf"))
-        .finally () ->
-            msg.close()
 
     $scope.filter = (row) ->
         # Only query sAMAccountName, givenName and sn

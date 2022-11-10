@@ -529,6 +529,9 @@ class Handler(HttpPlugin):
         open(path, 'w').close()
 
         script = ''
+        uid = os.getuid()
+            if uid != 0:
+                script += f'sudo '
         if http_context.json_body()['doAdd']:
             script += f'sophomorix-add >> {path};'
         if http_context.json_body()['doMove']:

@@ -54,7 +54,7 @@ angular.module('lmn.common').service('customFields', function($http, messagebox,
         $http.get(`/api/lmn/read_custom_config/${role}`).then(response => response.data)
 
     this.load_user_fields = (user) =>
-        $http.get(`/api/lmn/custom_fields/${user}`).then(response => response.data)
+        $http.get(`/api/lmn/users/${user}/customfields`).then(response => response.data)
 
     this.save = (config) =>
         $http.post("/api/lmn/save_custom_config", {'config':config})
@@ -64,9 +64,9 @@ angular.module('lmn.common').service('customFields', function($http, messagebox,
             return $http.post(`/api/lmn/users/${user}/custom/${index}`, {value: msg.value}).then(() => {
                 notify.success(gettext("Value updated !"));
                 return msg.value || 'null';
-            }, () => {
-                notify.error(gettext("Error, please verify the user and/or your values."));
-            });
+            }, () =>
+                notify.error(gettext("Error, please verify the user and/or your values."))
+            );
         });
     };
 

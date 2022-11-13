@@ -2709,7 +2709,7 @@ angular.module('lmn.common').service('customFields', function ($http, messagebox
 
     this.load_config = function () {
         var role = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-        return $http.get('/api/lmn/read_custom_config/' + role).then(function (response) {
+        return $http.get('/api/lmn/config/customfields/' + role).then(function (response) {
             return response.data;
         });
     };
@@ -2721,7 +2721,7 @@ angular.module('lmn.common').service('customFields', function ($http, messagebox
     };
 
     this.save = function (config) {
-        return $http.post("/api/lmn/save_custom_config", { 'config': config });
+        return $http.post("/api/lmn/config/customfields", { 'config': config });
     };
 
     this.editCustom = function (user, value, index) {

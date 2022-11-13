@@ -51,13 +51,13 @@ angular.module('lmn.common').service('customFields', function($http, messagebox,
     }
 
     this.load_config = (role='') =>
-        $http.get(`/api/lmn/read_custom_config/${role}`).then(response => response.data)
+        $http.get(`/api/lmn/config/customfields/${role}`).then(response => response.data)
 
     this.load_user_fields = (user) =>
         $http.get(`/api/lmn/users/${user}/customfields`).then(response => response.data)
 
     this.save = (config) =>
-        $http.post("/api/lmn/save_custom_config", {'config':config})
+        $http.post("/api/lmn/config/customfields", {'config':config})
 
     this.editCustom = (user, value, index) => {
         return messagebox.prompt(gettext('New value'), value).then((msg) => {

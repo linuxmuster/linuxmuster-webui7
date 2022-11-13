@@ -232,7 +232,7 @@ class Handler(HttpPlugin):
         except Exception as e:
             raise EndpointError(None, message=str(e))
 
-    @get(r'/api/lmn/read_custom_config/(?P<role>.*)')
+    @get(r'/api/lmn/config/customfields/(?P<role>.*)')
     @authorize('lm:schoolsettings')
     @endpoint(api=True)
     def handle_api_read_custom_config(self, http_context, role=''):
@@ -316,7 +316,7 @@ class Handler(HttpPlugin):
         return config_dict
 
 
-    @post(r'/api/lmn/save_custom_config')
+    @post(r'/api/lmn/config/customfields')
     @authorize('lm:schoolsettings')
     @endpoint(api=True)
     def handle_api_save_custom_config(self, http_context):

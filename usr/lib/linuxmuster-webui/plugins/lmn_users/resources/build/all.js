@@ -1280,7 +1280,7 @@
       msg = messagebox.show({
         progress: true
       });
-      return $http.post('/api/lm/users/print', $scope.options).then(function(resp) {
+      return $http.post('/api/lmn/users/print', $scope.options).then(function(resp) {
         var prefix;
         if (resp.data === 'success') {
           notify.success(gettext("Created password pdf"));
@@ -1292,7 +1292,7 @@
           } else {
             prefix = 'multiclass';
           }
-          location.href = `/api/lm/users/print-download/${prefix}-${$scope.options.user}.${$scope.options.format}`;
+          location.href = `/api/lmn/users/passwords/download/${prefix}-${$scope.options.user}.${$scope.options.format}`;
         } else {
           notify.error(gettext("Could not create password pdf"));
         }
@@ -1345,7 +1345,7 @@
     $scope.getGroups = function(username) {
       var classname, i, len, membership, ref, results;
       if ($scope.identity.user === 'root' || $scope.identity.profile.sophomorixRole === 'globaladministrator' || $scope.identity.profile.sophomorixRole === 'schooladministrator') {
-        return $http.get('/api/lm/users/get-classes').then(function(resp) {
+        return $http.get('/api/lmn/users/classes').then(function(resp) {
           $scope.classes = resp.data;
           return $scope.admin_warning = true;
         });
@@ -1543,7 +1543,7 @@
     $scope.username = username;
     $http.get('/api/lmn/users/password/' + $scope.username).then(function(resp) {
       $scope.password = resp.data;
-      return $http.get('/api/lmn/users/test-first-password/' + $scope.username).then(function(response) {
+      return $http.get(`/api/lmn/users/${$scope.username}/first-password-set`).then(function(response) {
         if (response.data === true) {
           $scope.passwordStatus = gettext('Still Set');
           return $scope.passwordStatusColor = 'green';
@@ -1580,7 +1580,7 @@
         usernames = $scope.users.flatMap((x) => {
           return x.sAMAccountName;
         }).join(',').trim();
-        $http.post('/api/lmn/users/passwords/set-' + $scope.pwtype, {
+        $http.post(`/api/lmn/users/passwords/set-${$scope.pwtype}`, {
           users: usernames,
           password: $scope.userpw
         }).then(function(resp) {
@@ -2640,7 +2640,7 @@ angular.module('lmn.users').service('userPassword', function ($http, $uibModal, 
             text: gettext("Do you really want to see this password ? It could be a security issue!"),
             positive: 'Show',
             negative: 'Cancel' }).then(function () {
-            $http.post('/api/lm/users/showBindPW', { user: user.sAMAccountName }).then(function (resp) {
+            $http.get('/api/lmn/users/' + user.sAMAccountName + '/bindpassword').then(function (resp) {
                 messagebox.show({ title: gettext('Show bind user password'), text: resp.data, positive: 'OK' });
             });
         });
@@ -2654,7 +2654,7 @@ angular.module('lmn.users').service('userPassword', function ($http, $uibModal, 
         $http.post('/api/lmn/users/passwords/print', { users: usernames }).then(function (resp) {
             if (resp.data.startsWith('user-')) {
                 notify.success(gettext("PDF with passwords successfully created"));
-                location.href = "/api/lmn/users/passwords/download/" + resp.data;
+                location.href = '/api/lmn/users/passwords/download/' + resp.data;
             } else {
                 notify.error(gettext("Could not create password pdf"));
             };

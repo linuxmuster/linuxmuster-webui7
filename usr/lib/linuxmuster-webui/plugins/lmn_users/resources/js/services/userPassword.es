@@ -57,7 +57,7 @@ angular.module('lmn.users').service('userPassword', function($http, $uibModal, m
             text: gettext("Do you really want to see this password ? It could be a security issue!"),
             positive: 'Show',
             negative: 'Cancel'}).then(() => {
-                $http.post('/api/lm/users/showBindPW', {user: user.sAMAccountName}).then((resp) => {
+                $http.get(`/api/lmn/users/${user.sAMAccountName}/bindpassword`).then((resp) => {
                     messagebox.show({title: gettext('Show bind user password'), text: resp.data, positive: 'OK'});
                 });
             });
@@ -69,7 +69,7 @@ angular.module('lmn.users').service('userPassword', function($http, $uibModal, m
         $http.post('/api/lmn/users/passwords/print', {users: usernames}).then((resp) => {
             if (resp.data.startsWith('user-')) {
                 notify.success(gettext("PDF with passwords successfully created"));
-                location.href = "/api/lmn/users/passwords/download/" + resp.data;
+                location.href = `/api/lmn/users/passwords/download/${resp.data}`;
             } else {
                 notify.error(gettext("Could not create password pdf"))
             };

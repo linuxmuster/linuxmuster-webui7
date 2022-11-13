@@ -3,7 +3,7 @@ angular.module('lmn.users').controller 'LMNUsersShowPasswordController', ($scope
 
     $http.get('/api/lmn/users/password/' + $scope.username).then (resp) ->
         $scope.password = resp.data
-        $http.get('/api/lmn/users/test-first-password/' + $scope.username).then (response) ->
+        $http.get("/api/lmn/users/#{$scope.username}/first-password-set").then (response) ->
             if response.data == true
                 $scope.passwordStatus = gettext('Still Set')
                 $scope.passwordStatusColor = 'green'
@@ -33,7 +33,7 @@ angular.module('lmn.users').controller 'LMNUsersCustomPasswordController', ($sco
            return
         else
             usernames = $scope.users.flatMap((x) => x.sAMAccountName).join(',').trim()
-            $http.post('/api/lmn/users/passwords/set-'+$scope.pwtype, {users: usernames, password: $scope.userpw}).then (resp) ->
+            $http.post("/api/lmn/users/passwords/set-#{$scope.pwtype}", {users: usernames, password: $scope.userpw}).then (resp) ->
                 notify.success(gettext('New password set'))
         $scope.close()
 

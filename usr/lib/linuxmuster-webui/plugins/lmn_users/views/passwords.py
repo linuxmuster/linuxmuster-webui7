@@ -1,20 +1,15 @@
 """
-APIs for user management in linuxmuster.net. Basically parse the output of
-sophomorix commands.
+API for password management.
 """
 
-import unicodecsv as csv
 import os
 import subprocess
-import magic
-import io
 
 from jadi import component
 from aj.api.http import get, post, url, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
 from aj.auth import authorize, AuthenticationService
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue
-from aj.plugins.lmn_common.lmnfile import LMNFile
 
 
 @component(HttpPlugin)
@@ -141,13 +136,13 @@ class Handler(HttpPlugin):
         sophomorixCommand = ['sophomorix-passwd', '-u', users, '--pass', password, '--nofirstpassupdate', '--hide', '-jj', '--use-smbpasswd']
         return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN', sensitive=True)
 
-    @url(r'/api/lm/users/get-classes')
+    @get(r'/api/lmn/users/classes')
     @authorize('lm:users:passwords')
     @endpoint(api=True)
     def handle_api_users_get_classes(self, http_context):
         """
-        Get list of all classes.
-        Method GET: get all classes lists for teachers.
+        Get list of all classes for teachers. Used in print password view.
+        TODO : should maybe be moved in a more common api.
 
         :param http_context: HttpContext
         :type http_context: HttpContext
@@ -156,26 +151,24 @@ class Handler(HttpPlugin):
         """
 
         school = self.context.schoolmgr.school
-        if http_context.method == 'GET':
+        sophomorixCommand = ['sophomorix-query', '--class', '--schoolbase', school, '--group-full', '-jj']
 
-            sophomorixCommand = ['sophomorix-query', '--class', '--schoolbase', school, '--group-full', '-jj']
-
-            with authorize('lm:users:students:read'):
-                # Check if there are any classes if not return empty list
-                classes_raw = lmn_getSophomorixValue(sophomorixCommand, 'GROUP')
-                classes = []
-                for c, details in classes_raw.items():
-                    if details["sophomorixHidden"] == "FALSE":
-                        classes.append(c)
-                with authorize('lm:users:teachers:read'):
-                    # append empty element. This references to all users
-                    classes.append('')
-                    # add also teachers passwords
-                    if school == 'default-school':
-                        classes.append('teachers')
-                    else:
-                        classes.append(school+'-teachers')
-                return classes
+        with authorize('lm:users:students:read'):
+            # Check if there are any classes if not return empty list
+            classes_raw = lmn_getSophomorixValue(sophomorixCommand, 'GROUP')
+            classes = []
+            for c, details in classes_raw.items():
+                if details["sophomorixHidden"] == "FALSE":
+                    classes.append(c)
+            with authorize('lm:users:teachers:read'):
+                # append empty element. This references to all users
+                classes.append('')
+                # add also teachers passwords
+                if school == 'default-school':
+                    classes.append('teachers')
+                else:
+                    classes.append(f'{school}-teachers')
+            return classes
 
     @post(r'/api/lmn/users/passwords/print')
     @authorize('lm:users:teachers:read') #TODO
@@ -210,7 +203,7 @@ class Handler(HttpPlugin):
         filename = f'user-{self.context.identity}.pdf'
         return filename
 
-    @url(r'/api/lm/users/print')
+    @post(r'/api/lmn/users/print')
     @authorize('lm:users:passwords')
     @endpoint(api=True)
     def handle_api_users_print(self, http_context):
@@ -229,52 +222,51 @@ class Handler(HttpPlugin):
         config_template_individual = config_template.get('individual', '')
         config_template_multiple = config_template.get('multiple', '')
 
-        if http_context.method == 'POST':
-            user = http_context.json_body()['user']
-            one_per_page = http_context.json_body()['one_per_page']
-            pdflatex = http_context.json_body()['pdflatex']
-            schoolclass = http_context.json_body()['schoolclass']
-            template = ''
-            sophomorixCommand = ['sudo', 'sophomorix-print', '--school', school, '--caller', str(user)]
-            if one_per_page:
-                try:
-                    template = http_context.json_body()['template_one_per_page']['path']
-                except TypeError:
-                    template = config_template_individual
-                    if not template:
-                        sophomorixCommand.extend(['--one-per-page'])
-            else:
-                try:
-                    template = http_context.json_body()['template_multiple']['path']
-                except TypeError:
-                    template = config_template_multiple
-            if template:
-                sophomorixCommand.extend(['--template', template])
-            if pdflatex:
-                sophomorixCommand.extend(['--command'])
-                sophomorixCommand.extend(['pdflatex'])
-            if schoolclass:
-                sophomorixCommand.extend(['--class', ','.join(schoolclass)])
-            # sophomorix-print needs the json parameter at the very end
-            sophomorixCommand.extend(['-jj'])
-            # check permissions
-            if not schoolclass:
-                # double check if user is allowed to print all passwords
-                with authorize('lm:users:teachers:read'):
-                    pass
-            # double check if user is allowed to print teacher passwords
-            if schoolclass == 'teachers':
-                with authorize('lm:users:teachers:read'):
-                    pass
-            # generate real shell environment for sophomorix print
-            shell_env = {'TERM': 'xterm', 'SHELL': '/bin/bash',  'PATH': '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',  'HOME': '/root', '_': '/usr/bin/python3'}
+        user = http_context.json_body()['user']
+        one_per_page = http_context.json_body()['one_per_page']
+        pdflatex = http_context.json_body()['pdflatex']
+        schoolclass = http_context.json_body()['schoolclass']
+        template = ''
+
+        sophomorixCommand = ['sudo', 'sophomorix-print', '--school', school, '--caller', str(user)]
+
+        if one_per_page:
             try:
-                subprocess.check_call(sophomorixCommand, shell=False, env=shell_env)
-
-
-            except subprocess.CalledProcessError as e:
-                return 'Error '+str(e)
-            return 'success'
+                template = http_context.json_body()['template_one_per_page']['path']
+            except TypeError:
+                template = config_template_individual
+                if not template:
+                    sophomorixCommand.extend(['--one-per-page'])
+        else:
+            try:
+                template = http_context.json_body()['template_multiple']['path']
+            except TypeError:
+                template = config_template_multiple
+        if template:
+            sophomorixCommand.extend(['--template', template])
+        if pdflatex:
+            sophomorixCommand.extend(['--command'])
+            sophomorixCommand.extend(['pdflatex'])
+        if schoolclass:
+            sophomorixCommand.extend(['--class', ','.join(schoolclass)])
+        # sophomorix-print needs the json parameter at the very end
+        sophomorixCommand.extend(['-jj'])
+        # check permissions
+        if not schoolclass:
+            # double check if user is allowed to print all passwords
+            with authorize('lm:users:teachers:read'):
+                pass
+        # double check if user is allowed to print teacher passwords
+        if schoolclass == 'teachers':
+            with authorize('lm:users:teachers:read'):
+                pass
+        # generate real shell environment for sophomorix print
+        shell_env = {'TERM': 'xterm', 'SHELL': '/bin/bash',  'PATH': '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',  'HOME': '/root', '_': '/usr/bin/python3'}
+        try:
+            subprocess.check_call(sophomorixCommand, shell=False, env=shell_env)
+        except subprocess.CalledProcessError as e:
+            return f'Error {e}'
+        return 'success'
             # return lmn_getSophomorixValue(sophomorixCommand, 'JSONINFO')
 
     @get(r'/api/lmn/users/passwords/download/(?P<name>.+)')
@@ -297,10 +289,10 @@ class Handler(HttpPlugin):
             return http_context.respond_forbidden()
         return http_context.file(path, inline=False, name=name.encode())
 
-    @get(r'/api/lmn/users/test-first-password/(?P<name>.+)')
+    @get(r'/api/lmn/users/(?P<user>[a-z0-9\-]*)/first-password-set')
     @authorize('lm:users:passwords')
     @endpoint(api=True)
-    def handle_api_users_test_password(self, http_context, name):
+    def handle_api_users_test_password(self, http_context, user):
         """
         Check if first password is still set.
 
@@ -312,18 +304,17 @@ class Handler(HttpPlugin):
         :rtype: bool
         """
 
-        self._checkPasswordPermissions(http_context, name)
+        self._checkPasswordPermissions(http_context, user)
 
-        line = subprocess.check_output(['sudo', 'sophomorix-passwd', '--test-firstpassword', '-u', name]).splitlines()[-4]
+        line = subprocess.check_output(['sudo', 'sophomorix-passwd', '--test-firstpassword', '-u', user]).splitlines()[-4]
         return b'1 OK' in line
 
-    @url(r'/api/lm/users/showBindPW')
+    @get(r'/api/lmn/users/(?P<binduser>[a-z0-9\-]*)/bindpassword')
     @authorize('lm:users:globaladmins:create')
     @endpoint(api=True)
-    def handle_api_users_showpw_binduser(self, http_context):
+    def handle_api_users_showpw_binduser(self, http_context, binduser):
         """
         Get the bind user's password.
-        Method POST
 
         :param http_context: HttpContext
         :type http_context: HttpContext
@@ -334,10 +325,8 @@ class Handler(HttpPlugin):
         if os.getuid() != 0:
             return EndpointReturn(403)
 
-        if http_context.method == 'POST':
-            user = http_context.json_body()['user']
-            secret_path = os.path.join('/etc/linuxmuster/.secret/', user)
+        secret_path = os.path.join('/etc/linuxmuster/.secret/', binduser)
 
-            if os.path.isfile(secret_path):
-                with open(secret_path, 'r') as f:
-                    return f.read()
+        if os.path.isfile(secret_path):
+            with open(secret_path, 'r') as f:
+                return f.read()

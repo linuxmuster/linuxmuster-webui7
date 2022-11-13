@@ -703,7 +703,7 @@ angular.module('core').directive('teacherAccess', function (identity) {
 
 'use strict';
 
-angular.module('lmn.common').service('customFields', function ($http) {
+angular.module('lmn.common').service('customFields', function ($http, messagebox, gettext, notify) {
     var _this = this;
 
     this.customDisplayOptions = ['proxyAddresses', 'sophomorixCustom1', 'sophomorixCustom2', 'sophomorixCustom3', 'sophomorixCustom4', 'sophomorixCustom5', 'sophomorixCustomMulti1', 'sophomorixCustomMulti2', 'sophomorixCustomMulti3', 'sophomorixCustomMulti4', 'sophomorixCustomMulti5'];
@@ -757,6 +757,69 @@ angular.module('lmn.common').service('customFields', function ($http) {
 
     this.save = function (config) {
         return $http.post("/api/lmn/save_custom_config", { 'config': config });
+    };
+
+    this.editCustom = function (user, value, index) {
+        return messagebox.prompt(gettext('New value'), value).then(function (msg) {
+            return $http.post('/api/lmn/users/' + user + '/custom/' + index, { value: msg.value }).then(function () {
+                notify.success(gettext("Value updated !"));
+                return msg.value || 'null';
+            }, function () {
+                notify.error(gettext("Error, please verify the user and/or your values."));
+            });
+        });
+    };
+
+    this.removeCustomMulti = function (user, value, index) {
+        return messagebox.show({
+            title: gettext('Remove custom field value'),
+            text: gettext('Do you really want to remove ') + value + ' ?',
+            positive: gettext('OK'),
+            negative: gettext('Cancel')
+        }).then(function (msg) {
+            return $http.patch('/api/lmn/users/' + user + '/custommulti/' + index, { 'value': value }).then(function () {
+                notify.success(gettext("Value removed !"));
+            });
+        }, function () {
+            notify.error(gettext("Error, please verify the user and/or your values."));
+        });
+    };
+
+    this.addCustomMulti = function (user, index) {
+        return messagebox.prompt(gettext('New value')).then(function (msg) {
+            return $http.post('/api/lmn/users/' + user + '/custommulti/' + index, { 'value': msg.value }).then(function () {
+                notify.success(gettext("Value added !"));
+                return msg.value;
+            }, function () {
+                notify.error(gettext("Error, please verify the user and/or your values."));
+            });
+        });
+    };
+
+    this.removeProxyAddresses = function (user, value) {
+        return messagebox.show({
+            title: gettext('Remove proxy address'),
+            text: gettext('Do you really want to remove ') + value + ' ?',
+            positive: gettext('OK'),
+            negative: gettext('Cancel')
+        }).then(function (msg) {
+            return $http.patch('/api/lmn/users/' + user + '/proxyaddresses', { address: value }).then(function () {
+                notify.success(gettext("Value removed !"));
+            }, function () {
+                notify.error(gettext("Error, please verify the user and/or your values."));
+            });
+        });
+    };
+
+    this.addProxyAddresses = function (user) {
+        return messagebox.prompt(gettext('New address')).then(function (msg) {
+            return $http.post('/api/lmn/users/' + user + '/proxyaddresses', { address: msg.value }).then(function () {
+                notify.success(gettext("Address added !"));
+                return msg.value;
+            }, function () {
+                notify.error(gettext("Error, please verify the user and/or your values."));
+            });
+        });
     };
 
     return this;

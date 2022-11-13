@@ -129,7 +129,7 @@ angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $rou
     $scope.editCustom = (n) ->
         value = $scope.userDetails['sophomorixCustom'+n]
         messagebox.prompt(gettext('New value'), value).then (msg) ->
-            $http.post("/api/lm/custom", {index: n, value: msg.value, user: id}).then () ->
+            $http.post("/api/lmn/users/#{$scope.id}/custom/#{n}", {value: msg.value}).then () ->
                 if msg.value
                     $scope.userDetails['sophomorixCustom'+n] = msg.value
                 else
@@ -145,7 +145,7 @@ angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $rou
             positive: gettext('OK'),
             negative: gettext('Cancel')
         ).then (msg) ->
-            $http.post("/api/lm/custommulti/remove", {index: n, value: value, user: id}).then () ->
+            $http.patch("/api/lmn/users/#{$scope.id}/custommulti/#{n}", {value: msg.value}).then () ->
                 position = $scope.userDetails['sophomorixCustomMulti'+n].indexOf(value)
                 $scope.userDetails['sophomorixCustomMulti'+n].splice(position, 1)
                 notify.success(gettext("Value removed !"))
@@ -154,7 +154,7 @@ angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $rou
 
     $scope.addCustomMulti = (n) ->
         messagebox.prompt(gettext('New value')).then (msg) ->
-            $http.post("/api/lm/custommulti/add", {index: n, value: msg.value, user: id}).then () ->
+            $http.post("/api/lmn/users/#{$scope.id}/custommulti/#{n}", {value: msg.value}).then () ->
                 if msg.value
                     $scope.userDetails['sophomorixCustomMulti'+n].push(msg.value)
                     notify.success(gettext("Value added !"))
@@ -168,7 +168,7 @@ angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $rou
             positive: gettext('OK'),
             negative: gettext('Cancel')
         ).then (msg) ->
-            $http.post("/api/lm/changeProxyAddresses", {action: 'remove', address: value, user: id}).then () ->
+            $http.patch("/api/lmn/users/#{$scope.id}/proxyaddresses", {address: value}).then () ->
                 position = $scope.userDetails['proxyAddresses'].indexOf(value)
                 $scope.userDetails['proxyAddresses'].splice(position, 1)
                 notify.success(gettext("Value removed !"))
@@ -177,7 +177,7 @@ angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $rou
 
     $scope.addProxyAddresses = (n) ->
         messagebox.prompt(gettext('New address')).then (msg) ->
-            $http.post("/api/lm/changeProxyAddresses", {action: 'add', address: msg.value, user: id}).then () ->
+            $http.post("/api/lmn/users/#{$scope.id}/proxyaddresses", {address: msg.value}).then () ->
                 if msg.value
                     $scope.userDetails['proxyAddresses'].push(msg.value)
                 notify.success(gettext("Address added !"))

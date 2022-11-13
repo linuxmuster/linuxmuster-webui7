@@ -1732,10 +1732,8 @@
       var value;
       value = $scope.userDetails['sophomorixCustom' + n];
       return messagebox.prompt(gettext('New value'), value).then(function(msg) {
-        return $http.post("/api/lm/custom", {
-          index: n,
-          value: msg.value,
-          user: id
+        return $http.post(`/api/lmn/users/${$scope.id}/custom/${n}`, {
+          value: msg.value
         }).then(function() {
           if (msg.value) {
             $scope.userDetails['sophomorixCustom' + n] = msg.value;
@@ -1755,10 +1753,8 @@
         positive: gettext('OK'),
         negative: gettext('Cancel')
       }).then(function(msg) {
-        return $http.post("/api/lm/custommulti/remove", {
-          index: n,
-          value: value,
-          user: id
+        return $http.patch(`/api/lmn/users/${$scope.id}/custommulti/${n}`, {
+          value: msg.value
         }).then(function() {
           var position;
           position = $scope.userDetails['sophomorixCustomMulti' + n].indexOf(value);
@@ -1771,10 +1767,8 @@
     };
     $scope.addCustomMulti = function(n) {
       return messagebox.prompt(gettext('New value')).then(function(msg) {
-        return $http.post("/api/lm/custommulti/add", {
-          index: n,
-          value: msg.value,
-          user: id
+        return $http.post(`/api/lmn/users/${$scope.id}/custommulti/${n}`, {
+          value: msg.value
         }).then(function() {
           if (msg.value) {
             $scope.userDetails['sophomorixCustomMulti' + n].push(msg.value);
@@ -1792,10 +1786,8 @@
         positive: gettext('OK'),
         negative: gettext('Cancel')
       }).then(function(msg) {
-        return $http.post("/api/lm/changeProxyAddresses", {
-          action: 'remove',
-          address: value,
-          user: id
+        return $http.patch(`/api/lmn/users/${$scope.id}/proxyaddresses`, {
+          address: value
         }).then(function() {
           var position;
           position = $scope.userDetails['proxyAddresses'].indexOf(value);
@@ -1808,10 +1800,8 @@
     };
     $scope.addProxyAddresses = function(n) {
       return messagebox.prompt(gettext('New address')).then(function(msg) {
-        return $http.post("/api/lm/changeProxyAddresses", {
-          action: 'add',
-          address: msg.value,
-          user: id
+        return $http.post(`/api/lmn/users/${$scope.id}/proxyaddresses`, {
+          address: msg.value
         }).then(function() {
           if (msg.value) {
             $scope.userDetails['proxyAddresses'].push(msg.value);

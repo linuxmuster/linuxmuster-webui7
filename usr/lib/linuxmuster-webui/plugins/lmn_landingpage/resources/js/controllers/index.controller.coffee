@@ -94,7 +94,7 @@ angular.module('lmn.landingpage').controller 'LMNUserCustomFieldsController', ($
         value = custom.value
         n = custom.attr.slice(-1)
         messagebox.prompt(gettext('New value'), value).then (msg) ->
-            $http.post("/api/lm/custom", {index: n, value: msg.value, user: $scope.id}).then () ->
+            $http.post("/api/lmn/users/#{$scope.id}/custom/#{n}", {value: msg.value}).then () ->
                 if msg.value
                     custom.value = msg.value
                 else
@@ -111,7 +111,7 @@ angular.module('lmn.landingpage').controller 'LMNUserCustomFieldsController', ($
             positive: gettext('OK'),
             negative: gettext('Cancel')
         ).then (msg) ->
-            $http.post("/api/lm/custommulti/remove", {index: n, value: value, user: $scope.id}).then () ->
+            $http.patch("/api/lmn/users/#{$scope.id}/custommulti/#{n}", {value: value}).then () ->
                 position = custom.value.indexOf(value)
                 custom.value.splice(position, 1)
                 notify.success(gettext("Value removed !"))
@@ -121,7 +121,7 @@ angular.module('lmn.landingpage').controller 'LMNUserCustomFieldsController', ($
     $scope.addCustomMulti = (custom) ->
         n = custom.attr.slice(-1)
         messagebox.prompt(gettext('New value')).then (msg) ->
-            $http.post("/api/lm/custommulti/add", {index: n, value: msg.value, user: $scope.id}).then () ->
+            $http.post("/api/lmn/users/#{$scope.id}/custommulti/#{n}", {value: msg.value}).then () ->
                 if msg.value
                     custom.value.push(msg.value)
                     notify.success(gettext("Value added !"))
@@ -136,7 +136,7 @@ angular.module('lmn.landingpage').controller 'LMNUserCustomFieldsController', ($
             positive: gettext('OK'),
             negative: gettext('Cancel')
         ).then (msg) ->
-            $http.post("/api/lm/changeProxyAddresses", {action: 'remove', address: value, user: $scope.id}).then () ->
+            $http.patch("/api/lmn/users/#{$scope.id}/proxyaddresses", {address: value}).then () ->
                 position = custom.value.indexOf(value)
                 custom.value.splice(position, 1)
                 notify.success(gettext("Value removed !"))
@@ -146,7 +146,7 @@ angular.module('lmn.landingpage').controller 'LMNUserCustomFieldsController', ($
     $scope.addProxyAddresses = (custom) ->
         n = custom.attr.slice(-1)
         messagebox.prompt(gettext('New address')).then (msg) ->
-            $http.post("/api/lm/changeProxyAddresses", {action: 'add', address: msg.value, user: $scope.id}).then () ->
+            $http.post("/api/lmn/users/#{$scope.id}/proxyaddresses", {address: msg.value}).then () ->
                 if msg.value
                     custom.value.push(msg.value)
                 notify.success(gettext("Address added !"))

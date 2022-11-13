@@ -1728,88 +1728,39 @@
       }
       return results;
     });
-    $scope.editCustom = function(n) {
+    $scope.editCustom = function(index) {
       var value;
-      value = $scope.userDetails['sophomorixCustom' + n];
-      return messagebox.prompt(gettext('New value'), value).then(function(msg) {
-        return $http.post(`/api/lmn/users/${$scope.id}/custom/${n}`, {
-          value: msg.value
-        }).then(function() {
-          if (msg.value) {
-            $scope.userDetails['sophomorixCustom' + n] = msg.value;
-          } else {
-            $scope.userDetails['sophomorixCustom' + n] = 'null';
-          }
-          return notify.success(gettext("Value updated !"));
-        }, function() {
-          return notify.error(gettext("Error, please verify the user and/or your values."));
-        });
+      value = $scope.userDetails['sophomorixCustom' + index];
+      return customFields.editCustom($scope.id, value, index).then(function(resp) {
+        return $scope.userDetails['sophomorixCustom' + index] = resp;
       });
     };
-    $scope.removeCustomMulti = function(n, value) {
-      return messagebox.show({
-        title: gettext('Remove custom field value'),
-        text: gettext('Do you really want to remove ') + value + ' ?',
-        positive: gettext('OK'),
-        negative: gettext('Cancel')
-      }).then(function(msg) {
-        return $http.patch(`/api/lmn/users/${$scope.id}/custommulti/${n}`, {
-          value: msg.value
-        }).then(function() {
-          var position;
-          position = $scope.userDetails['sophomorixCustomMulti' + n].indexOf(value);
-          $scope.userDetails['sophomorixCustomMulti' + n].splice(position, 1);
-          return notify.success(gettext("Value removed !"));
-        }, function() {
-          return notify.error(gettext("Error, please verify the user and/or your values."));
-        });
+    $scope.removeCustomMulti = function(index, value) {
+      return customFields.removeCustomMulti($scope.id, value, index).then(function() {
+        var position;
+        position = $scope.userDetails['sophomorixCustomMulti' + index].indexOf(value);
+        return $scope.userDetails['sophomorixCustomMulti' + index].splice(position, 1);
       });
     };
-    $scope.addCustomMulti = function(n) {
-      return messagebox.prompt(gettext('New value')).then(function(msg) {
-        return $http.post(`/api/lmn/users/${$scope.id}/custommulti/${n}`, {
-          value: msg.value
-        }).then(function() {
-          if (msg.value) {
-            $scope.userDetails['sophomorixCustomMulti' + n].push(msg.value);
-            return notify.success(gettext("Value added !"));
-          }
-        }, function() {
-          return notify.error(gettext("Error, please verify the user and/or your values."));
-        });
+    $scope.addCustomMulti = function(index) {
+      return customFields.addCustomMulti($scope.id, index).then(function(resp) {
+        if (resp) {
+          return $scope.userDetails['sophomorixCustomMulti' + index].push(resp);
+        }
       });
     };
     $scope.removeProxyAddresses = function(value) {
-      return messagebox.show({
-        title: gettext('Remove proxy address'),
-        text: gettext('Do you really want to remove ') + value + ' ?',
-        positive: gettext('OK'),
-        negative: gettext('Cancel')
-      }).then(function(msg) {
-        return $http.patch(`/api/lmn/users/${$scope.id}/proxyaddresses`, {
-          address: value
-        }).then(function() {
-          var position;
-          position = $scope.userDetails['proxyAddresses'].indexOf(value);
-          $scope.userDetails['proxyAddresses'].splice(position, 1);
-          return notify.success(gettext("Value removed !"));
-        }, function() {
-          return notify.error(gettext("Error, please verify the user and/or your values."));
-        });
+      return customFields.removeProxyAddresses($scope.id, value).then(function() {
+        var position;
+        position = $scope.userDetails['proxyAddresses'].indexOf(value);
+        return $scope.userDetails['proxyAddresses'].splice(position, 1);
       });
     };
-    $scope.addProxyAddresses = function(n) {
-      return messagebox.prompt(gettext('New address')).then(function(msg) {
-        return $http.post(`/api/lmn/users/${$scope.id}/proxyaddresses`, {
-          address: msg.value
-        }).then(function() {
-          if (msg.value) {
-            $scope.userDetails['proxyAddresses'].push(msg.value);
-          }
-          return notify.success(gettext("Address added !"));
-        }, function() {
-          return notify.error(gettext("Error, please verify the user and/or your values."));
-        });
+    $scope.addProxyAddresses = function() {
+      return customFields.addProxyAddresses($scope.id).then(function(resp) {
+        if (resp) {
+          return $scope.userDetails['proxyAddresses'].push(resp);
+        }
       });
     };
     return $scope.close = function() {

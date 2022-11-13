@@ -126,63 +126,30 @@ angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $rou
                     type = "danger"
                 $scope.quotas.push({'share':share, 'total':total + " MiB", 'used':used, 'usage':usage, 'type':type})
 
-    $scope.editCustom = (n) ->
-        value = $scope.userDetails['sophomorixCustom'+n]
-        messagebox.prompt(gettext('New value'), value).then (msg) ->
-            $http.post("/api/lmn/users/#{$scope.id}/custom/#{n}", {value: msg.value}).then () ->
-                if msg.value
-                    $scope.userDetails['sophomorixCustom'+n] = msg.value
-                else
-                    $scope.userDetails['sophomorixCustom'+n] = 'null'
-                notify.success(gettext("Value updated !"))
-            , () ->
-                notify.error(gettext("Error, please verify the user and/or your values."))
+    $scope.editCustom = (index) ->
+        value = $scope.userDetails['sophomorixCustom' + index]
+        customFields.editCustom($scope.id, value, index).then (resp) ->
+            $scope.userDetails['sophomorixCustom' + index] = resp
 
-    $scope.removeCustomMulti = (n, value) ->
-        messagebox.show(
-            title: gettext('Remove custom field value'),
-            text: gettext('Do you really want to remove ') + value + ' ?',
-            positive: gettext('OK'),
-            negative: gettext('Cancel')
-        ).then (msg) ->
-            $http.patch("/api/lmn/users/#{$scope.id}/custommulti/#{n}", {value: msg.value}).then () ->
-                position = $scope.userDetails['sophomorixCustomMulti'+n].indexOf(value)
-                $scope.userDetails['sophomorixCustomMulti'+n].splice(position, 1)
-                notify.success(gettext("Value removed !"))
-            , () ->
-                notify.error(gettext("Error, please verify the user and/or your values."))
+    $scope.removeCustomMulti = (index, value) ->
+        customFields.removeCustomMulti($scope.id, value, index).then () ->
+            position = $scope.userDetails['sophomorixCustomMulti' + index].indexOf(value)
+            $scope.userDetails['sophomorixCustomMulti' + index].splice(position, 1)
 
-    $scope.addCustomMulti = (n) ->
-        messagebox.prompt(gettext('New value')).then (msg) ->
-            $http.post("/api/lmn/users/#{$scope.id}/custommulti/#{n}", {value: msg.value}).then () ->
-                if msg.value
-                    $scope.userDetails['sophomorixCustomMulti'+n].push(msg.value)
-                    notify.success(gettext("Value added !"))
-            , () ->
-                notify.error(gettext("Error, please verify the user and/or your values."))
+    $scope.addCustomMulti = (index) ->
+        customFields.addCustomMulti($scope.id, index).then (resp) ->
+            if resp
+                $scope.userDetails['sophomorixCustomMulti' + index].push(resp)
 
     $scope.removeProxyAddresses = (value) ->
-        messagebox.show(
-            title: gettext('Remove proxy address'),
-            text: gettext('Do you really want to remove ') + value + ' ?',
-            positive: gettext('OK'),
-            negative: gettext('Cancel')
-        ).then (msg) ->
-            $http.patch("/api/lmn/users/#{$scope.id}/proxyaddresses", {address: value}).then () ->
-                position = $scope.userDetails['proxyAddresses'].indexOf(value)
-                $scope.userDetails['proxyAddresses'].splice(position, 1)
-                notify.success(gettext("Value removed !"))
-            , () ->
-                notify.error(gettext("Error, please verify the user and/or your values."))
+        customFields.removeProxyAddresses($scope.id, value).then () ->
+            position = $scope.userDetails['proxyAddresses'].indexOf(value)
+            $scope.userDetails['proxyAddresses'].splice(position, 1)
 
-    $scope.addProxyAddresses = (n) ->
-        messagebox.prompt(gettext('New address')).then (msg) ->
-            $http.post("/api/lmn/users/#{$scope.id}/proxyaddresses", {address: msg.value}).then () ->
-                if msg.value
-                    $scope.userDetails['proxyAddresses'].push(msg.value)
-                notify.success(gettext("Address added !"))
-            , () ->
-                notify.error(gettext("Error, please verify the user and/or your values."))
+    $scope.addProxyAddresses = () ->
+        customFields.addProxyAddresses($scope.id).then (resp) ->
+            if resp
+                $scope.userDetails['proxyAddresses'].push(resp)
 
     $scope.close = () ->
         $uibModalInstance.dismiss()

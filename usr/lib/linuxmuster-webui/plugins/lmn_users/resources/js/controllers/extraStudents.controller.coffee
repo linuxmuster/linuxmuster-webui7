@@ -59,7 +59,7 @@ angular.module('lmn.users').controller 'LMUsersExtraStudentsController', ($scope
 
     $http.get('/api/lmn/schoolsettings').then (resp) ->
         $scope.encoding = lmEncodingMap[resp.data.encoding_students_extra] or 'ISO8859-1'
-        $http.get("/api/lm/users/extra-students?encoding=#{$scope.encoding}").then (resp) ->
+        $http.get("/api/lmn/users/lists/extrastudents?encoding=#{$scope.encoding}").then (resp) ->
             $scope.students = resp.data
 
     $scope.add = () ->
@@ -83,7 +83,7 @@ angular.module('lmn.users').controller 'LMUsersExtraStudentsController', ($scope
             angular.element(document.getElementsByClassName("has-error-new")).addClass('has-error')
             notify.error('Required data missing')
             return
-        return $http.post("/api/lm/users/extra-students?encoding=#{$scope.encoding}", $scope.students).then () ->
+        return $http.post("/api/lmn/users/lists/extrastudents?encoding=#{$scope.encoding}", $scope.students).then () ->
             notify.success 'Saved'
 
     $scope.saveAndCheck = () ->

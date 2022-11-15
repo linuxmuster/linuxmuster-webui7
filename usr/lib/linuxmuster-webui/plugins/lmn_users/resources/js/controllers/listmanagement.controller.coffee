@@ -193,7 +193,7 @@ angular.module('lmn.users').controller 'LMUsersListManagementController', ($scop
 
     $scope.teachers_add = () ->
         if $scope.teachers.length > 0
-                $scope.paging.page_teachers = Math.floor(($scope.teachers.length - 1) / $scope.paging.pageSize) + 1
+            $scope.paging.page_teachers = Math.floor(($scope.teachers.length - 1) / $scope.paging.pageSize) + 1
             $scope.teachers_filter = ''
             $scope.teachers.push {class: 'Lehrer', _isNew: true}
 
@@ -238,29 +238,27 @@ angular.module('lmn.users').controller 'LMUsersListManagementController', ($scop
 
     $scope.getstudents = () ->
         if !$scope.students
-            $http.get("/api/lm/users/students-list").then (resp) ->
+            $http.get("/api/lmn/users/lists/students").then (resp) ->
                 $scope.students = resp.data
 
 
     $scope.getteachers = () ->
         if !$scope.teachers
-            $http.get("/api/lm/users/teachers-list").then (resp) ->
+            $http.get("/api/lmn/users/lists/teachers").then (resp) ->
                 $scope.teachers = resp.data
 
 
     $scope.getextrastudents = () ->
         if !$scope.extrastudents
-            $http.get("/api/lm/users/extra-students").then (resp) ->
+            $http.get("/api/lmn/users/lists/extrastudents").then (resp) ->
                     $scope.extrastudents = resp.data
 
     $scope.getcourses = () ->
         if !$scope.courses
             $http.get('/api/lmn/schoolsettings').then (resp) ->
                 $scope.courses_encoding = lmEncodingMap[resp.data.encoding_courses_extra] or 'ISO8859-1'
-                $http.get("/api/lm/users/extra-courses?encoding=#{$scope.courses_encoding}").then (resp) ->
+                $http.get("/api/lmn/users/lists/extraclasses?encoding=#{$scope.courses_encoding}").then (resp) ->
                     $scope.courses = resp.data
-
-
 
     $scope.students_editCSV = () ->
         path = lmn_get_school_configpath($scope.identity.profile.activeSchool)+'students.csv'
@@ -293,7 +291,7 @@ angular.module('lmn.users').controller 'LMUsersListManagementController', ($scop
             return
         $scope.show_errors = false
         $scope.students_first_save = false
-        return $http.post("/api/lm/users/students-list?encoding=#{$scope.students_encoding}", $scope.students).then () ->
+        return $http.post("/api/lmn/users/lists/students?encoding=#{$scope.students_encoding}", $scope.students).then () ->
             notify.success gettext('Saved')
 
     $scope.teachers_save = () ->
@@ -305,7 +303,7 @@ angular.module('lmn.users').controller 'LMUsersListManagementController', ($scop
            return
         $scope.show_errors = false
         $scope.teachers_first_save = false
-        return $http.post("/api/lm/users/teachers-list?encoding=#{$scope.teachers_encoding}", $scope.teachers).then () ->
+        return $http.post("/api/lmn/users/lists/teachers?encoding=#{$scope.teachers_encoding}", $scope.teachers).then () ->
            notify.success gettext('Saved')
 
     $scope.extrastudents_save = () ->
@@ -317,7 +315,7 @@ angular.module('lmn.users').controller 'LMUsersListManagementController', ($scop
            return
         $scope.show_errors = false
         $scope.extrastudents_first_save = false
-        return $http.post("/api/lm/users/extra-students?encoding=#{$scope.extrastudents_encoding}", $scope.extrastudents).then () ->
+        return $http.post("/api/lmn/users/lists/extrastudents?encoding=#{$scope.extrastudents_encoding}", $scope.extrastudents).then () ->
            notify.success 'Saved'
 
     $scope.courses_save = () ->
@@ -329,7 +327,7 @@ angular.module('lmn.users').controller 'LMUsersListManagementController', ($scop
            return
         $scope.show_errors = false
         $scope.courses_first_save = false
-        return $http.post("/api/lm/users/extra-courses?encoding=#{$scope.courses_encoding}", $scope.courses).then () ->
+        return $http.post("/api/lmn/users/lists/extraclasses?encoding=#{$scope.courses_encoding}", $scope.courses).then () ->
            notify.success gettext('Saved')
 
     $scope.confirmUpload = (type, role) ->

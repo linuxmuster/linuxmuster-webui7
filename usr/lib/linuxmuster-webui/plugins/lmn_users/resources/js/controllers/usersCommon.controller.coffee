@@ -222,7 +222,7 @@ angular.module('lmn.users').controller 'LMUsersUploadModalController', ($scope, 
         filesystem.startFlowUpload($flow, $scope.path).then(() ->
             notify.success(gettext('Uploaded'))
             filename = $flow["files"][0]["name"]
-            $http.post('/api/lmn/sophomorixUsers/import-list', {action: 'get', path: $scope.path+filename, userlist: userlist}).then (resp) ->
+            $http.post('/api/lmn/users/lists/import', {action: 'get', path: $scope.path+filename, userlist: userlist}).then (resp) ->
                 userListCSV = resp.data
                 #console.log (userListCSV)
                 # console.log (resp['data'])
@@ -234,7 +234,7 @@ angular.module('lmn.users').controller 'LMUsersUploadModalController', ($scope, 
                                 userlist: () -> userlist
                           ).result.then (result) ->
                              #console.log (result)
-                             $http.post("/api/lmn/sophomorixUsers/import-list", {action: 'save', data: result, userlist: userlist}).then (resp) ->
+                             $http.post("/api/lmn/users/lists/import", {action: 'save', data: result, userlist: userlist}).then (resp) ->
                                 #console.log (resp['data'])
                                 if resp['data'][0] == 'ERROR'
                                     notify.error (resp['data'][1])
@@ -262,7 +262,7 @@ angular.module('lmn.users').controller 'LMUsersUploadCustomModalController', ($s
         filesystem.startFlowUpload($flow, $scope.path).then(() ->
             notify.success(gettext('Uploaded'))
             filename = $flow["files"][0]["name"]
-            $http.post('/api/lm/filterCustomCSV', {tmp_path: $scope.path + filename, userlist: userlist}).then (resp) ->
+            $http.post('/api/lmn/users/lists/filterCustomCSV', {tmp_path: $scope.path + filename, userlist: userlist}).then (resp) ->
                 if resp['data'][0] == 'ERROR'
                     notify.error (resp['data'][1])
                 if resp['data'][0] == 'LOG'

@@ -853,7 +853,7 @@
     };
     $http.get('/api/lmn/schoolsettings').then(function(resp) {
       $scope.encoding = lmEncodingMap[resp.data.encoding_students_extra] || 'ISO8859-1';
-      return $http.get(`/api/lm/users/extra-students?encoding=${$scope.encoding}`).then(function(resp) {
+      return $http.get(`/api/lmn/users/lists/extrastudents?encoding=${$scope.encoding}`).then(function(resp) {
         return $scope.students = resp.data;
       });
     });
@@ -883,7 +883,7 @@
         notify.error('Required data missing');
         return;
       }
-      return $http.post(`/api/lm/users/extra-students?encoding=${$scope.encoding}`, $scope.students).then(function() {
+      return $http.post(`/api/lmn/users/lists/extrastudents?encoding=${$scope.encoding}`, $scope.students).then(function() {
         return notify.success('Saved');
       });
     };
@@ -953,7 +953,7 @@
     };
     $http.get('/api/lmn/schoolsettings').then(function(resp) {
       $scope.encoding = lmEncodingMap[resp.data.encoding_courses_extra] || 'ISO8859-1';
-      return $http.get(`/api/lm/users/extra-courses?encoding=${$scope.encoding}`).then(function(resp) {
+      return $http.get(`/api/lmn/users/lists/extraclasses?encoding=${$scope.encoding}`).then(function(resp) {
         return $scope.courses = resp.data;
       });
     });
@@ -1006,7 +1006,7 @@
         notify.error('Required data missing');
         return;
       }
-      return $http.post(`/api/lm/users/extra-courses?encoding=${$scope.encoding}`, $scope.courses).then(function() {
+      return $http.post(`/api/lmn/users/lists/extraclasses?encoding=${$scope.encoding}`, $scope.courses).then(function() {
         return notify.success(gettext('Saved'));
       });
     };
@@ -1480,7 +1480,7 @@
       return $uibModalInstance.close();
     };
     $scope.isWorking = true;
-    return $http.post('/api/lm/users/apply', params).then(function(resp) {
+    return $http.post('/api/lmn/users/lists/apply', params).then(function(resp) {
       $scope.isWorking = false;
       notify.success(gettext('Changes applied'));
       return $route.reload();
@@ -1492,7 +1492,7 @@
 
   angular.module('lmn.users').controller('LMUsersCheckModalController', function($scope, $http, notify, $uibModalInstance, $uibModal, gettext) {
     $scope.isWorking = true;
-    $http.get('/api/lm/users/check').then(function(resp) {
+    $http.get('/api/lmn/users/lists/check').then(function(resp) {
       if (!resp.data) {
         notify.error(gettext('Unknown error!'), gettext('Please run sophomorix-check manually to identity the reason.'));
         $uibModalInstance.close();
@@ -1870,7 +1870,7 @@
         var filename;
         notify.success(gettext('Uploaded'));
         filename = $flow["files"][0]["name"];
-        return $http.post('/api/lmn/sophomorixUsers/import-list', {
+        return $http.post('/api/lmn/users/lists/import', {
           action: 'get',
           path: $scope.path + filename,
           userlist: userlist
@@ -1892,7 +1892,7 @@
             }
           }).result.then(function(result) {
             //console.log (result)
-            return $http.post("/api/lmn/sophomorixUsers/import-list", {
+            return $http.post("/api/lmn/users/lists/import", {
               action: 'save',
               data: result,
               userlist: userlist
@@ -1933,7 +1933,7 @@
         var filename;
         notify.success(gettext('Uploaded'));
         filename = $flow["files"][0]["name"];
-        return $http.post('/api/lm/filterCustomCSV', {
+        return $http.post('/api/lmn/users/lists/filterCustomCSV', {
           tmp_path: $scope.path + filename,
           userlist: userlist
         }).then(function(resp) {
@@ -2231,12 +2231,12 @@
     $scope.teachers_add = function() {
       if ($scope.teachers.length > 0) {
         $scope.paging.page_teachers = Math.floor(($scope.teachers.length - 1) / $scope.paging.pageSize) + 1;
+        $scope.teachers_filter = '';
+        return $scope.teachers.push({
+          class: 'Lehrer',
+          _isNew: true
+        });
       }
-      $scope.teachers_filter = '';
-      return $scope.teachers.push({
-        class: 'Lehrer',
-        _isNew: true
-      });
     };
     $scope.extrastudents_add = function() {
       if ($scope.extrastudents.length > 0) {
@@ -2296,21 +2296,21 @@
     };
     $scope.getstudents = function() {
       if (!$scope.students) {
-        return $http.get("/api/lm/users/students-list").then(function(resp) {
+        return $http.get("/api/lmn/users/lists/students").then(function(resp) {
           return $scope.students = resp.data;
         });
       }
     };
     $scope.getteachers = function() {
       if (!$scope.teachers) {
-        return $http.get("/api/lm/users/teachers-list").then(function(resp) {
+        return $http.get("/api/lmn/users/lists/teachers").then(function(resp) {
           return $scope.teachers = resp.data;
         });
       }
     };
     $scope.getextrastudents = function() {
       if (!$scope.extrastudents) {
-        return $http.get("/api/lm/users/extra-students").then(function(resp) {
+        return $http.get("/api/lmn/users/lists/extrastudents").then(function(resp) {
           return $scope.extrastudents = resp.data;
         });
       }
@@ -2319,7 +2319,7 @@
       if (!$scope.courses) {
         return $http.get('/api/lmn/schoolsettings').then(function(resp) {
           $scope.courses_encoding = lmEncodingMap[resp.data.encoding_courses_extra] || 'ISO8859-1';
-          return $http.get(`/api/lm/users/extra-courses?encoding=${$scope.courses_encoding}`).then(function(resp) {
+          return $http.get(`/api/lmn/users/lists/extraclasses?encoding=${$scope.courses_encoding}`).then(function(resp) {
             return $scope.courses = resp.data;
           });
         });
@@ -2363,7 +2363,7 @@
       }
       $scope.show_errors = false;
       $scope.students_first_save = false;
-      return $http.post(`/api/lm/users/students-list?encoding=${$scope.students_encoding}`, $scope.students).then(function() {
+      return $http.post(`/api/lmn/users/lists/students?encoding=${$scope.students_encoding}`, $scope.students).then(function() {
         return notify.success(gettext('Saved'));
       });
     };
@@ -2377,7 +2377,7 @@
       }
       $scope.show_errors = false;
       $scope.teachers_first_save = false;
-      return $http.post(`/api/lm/users/teachers-list?encoding=${$scope.teachers_encoding}`, $scope.teachers).then(function() {
+      return $http.post(`/api/lmn/users/lists/teachers?encoding=${$scope.teachers_encoding}`, $scope.teachers).then(function() {
         return notify.success(gettext('Saved'));
       });
     };
@@ -2391,7 +2391,7 @@
       }
       $scope.show_errors = false;
       $scope.extrastudents_first_save = false;
-      return $http.post(`/api/lm/users/extra-students?encoding=${$scope.extrastudents_encoding}`, $scope.extrastudents).then(function() {
+      return $http.post(`/api/lmn/users/lists/extrastudents?encoding=${$scope.extrastudents_encoding}`, $scope.extrastudents).then(function() {
         return notify.success('Saved');
       });
     };
@@ -2405,7 +2405,7 @@
       }
       $scope.show_errors = false;
       $scope.courses_first_save = false;
-      return $http.post(`/api/lm/users/extra-courses?encoding=${$scope.courses_encoding}`, $scope.courses).then(function() {
+      return $http.post(`/api/lmn/users/lists/extraclasses?encoding=${$scope.courses_encoding}`, $scope.courses).then(function() {
         return notify.success(gettext('Saved'));
       });
     };

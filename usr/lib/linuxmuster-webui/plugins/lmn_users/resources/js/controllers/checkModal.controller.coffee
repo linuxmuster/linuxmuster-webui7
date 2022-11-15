@@ -72,7 +72,7 @@ angular.module('lmn.users').controller 'LMUsersApplyModalController', ($scope, $
         $uibModalInstance.close()
 
     $scope.isWorking = true
-    $http.post('/api/lm/users/apply', params).then (resp) ->
+    $http.post('/api/lmn/users/lists/apply', params).then (resp) ->
         $scope.isWorking = false
         notify.success gettext('Changes applied')
         $route.reload()
@@ -86,7 +86,7 @@ angular.module('lmn.users').controller 'LMUsersApplyModalController', ($scope, $
 angular.module('lmn.users').controller 'LMUsersCheckModalController', ($scope, $http, notify, $uibModalInstance, $uibModal, gettext) ->
     $scope.isWorking = true
 
-    $http.get('/api/lm/users/check').then (resp) ->
+    $http.get('/api/lmn/users/lists/check').then (resp) ->
         if not resp.data
             notify.error gettext('Unknown error!'), gettext('Please run sophomorix-check manually to identity the reason.')
             $uibModalInstance.close()

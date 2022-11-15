@@ -1,6 +1,5 @@
 """
-APIs for user management in linuxmuster.net. Basically parse the output of
-sophomorix commands.
+APIs for user lists management in linuxmuster.net.
 """
 
 import unicodecsv as csv
@@ -10,7 +9,7 @@ import magic
 import io
 
 from jadi import component
-from aj.api.http import get, post, url, HttpPlugin
+from aj.api.http import get, post, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
 from aj.auth import authorize, AuthenticationService
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue
@@ -21,14 +20,19 @@ from aj.plugins.lmn_common.lmnfile import LMNFile
 class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
+        self.fieldnames = {
+            'students': ['class','last_name','first_name','birthday','id'],
+            'teachers': ['class','last_name','first_name','birthday','login','password','usertoken','quota','mailquota','reserved'],
+            'extrastudents': ['class','last_name','first_name','birthday','login','reserved'],
+            'extraclasses': ['course','base_name','count','birthday','gecos','password','removal_date']
+        }
 
 
-    @url(r'/api/lmn/sophomorixUsers/import-list')
+    @post(r'/api/lmn/users/lists/import')
     @endpoint(api=True)
     def handle_api_filelistImport(self, http_context):
         """
         Import and save users's import lists (teachers, students, ...).
-        Method POST.
 
         :param http_context: HttpContext
         :type http_context: HttpContext
@@ -168,168 +172,57 @@ class Handler(HttpPlugin):
                 with authorize('lm:users:students:read'):
                     return (coloumns)
 
-    @url(r'/api/lm/users/students-list')
+    @get(r'/api/lmn/users/lists/(?P<role>\b(?:students|teachers|extraclasses|extrastudents)\b)')
     @endpoint(api=True)
-    def handle_api_students(self, http_context):
+    def handle_api_get_lists(self, http_context, role):
         """
-        Read and write students csv lists.
-        Method GET: read students list.
-        Method POST: write students list.
+        Read roles csv lists.
 
         :param http_context: HttpContext
         :type http_context: HttpContext
+        :param role: which role list to get
+        :type role: str
         :return: List of students in read mode, one dict per student.
         :rtype: list of dict
         """
 
-        path = f'{self.context.schoolmgr.configpath}students.csv'
+        path = f'{self.context.schoolmgr.configpath}{role}.csv'
 
         if os.path.isfile(path) is False:
             os.mknod(path)
-        fieldnames = [
-            'class',
-            'last_name',
-            'first_name',
-            'birthday',
-            'id'
-        ]
-        if http_context.method == 'GET':
-            with authorize('lm:users:students:read'):
-                with LMNFile(path, 'r', fieldnames=fieldnames) as students:
-                    return students.read()
 
-        if http_context.method == 'POST':
-            with authorize('lm:users:students:write'):
-                data = http_context.json_body()
-                for item in data:
-                    item.pop('_isNew', None)
-                    item.pop('null', None)
-                with LMNFile(path, 'w', fieldnames=fieldnames) as f:
-                    f.write(data)
+        with authorize(f'lm:users:{role}:read'):
+            with LMNFile(path, 'r', fieldnames=self.fieldnames[role]) as list:
+                return list.read()
 
-    @url(r'/api/lm/users/teachers-list')
+    @post(r'/api/lmn/users/lists/(?P<role>\b(?:students|teachers|extraclasses|extrastudents)\b)')
     @endpoint(api=True)
-    def handle_api_teachers(self, http_context):
+    def handle_api_post_lists(self, http_context, role):
         """
-        Read and write teachers csv lists.
-        Method GET: read teachers list.
-        Method POST: write teachers list.
+        Write roles csv lists.
 
         :param http_context: HttpContext
         :type http_context: HttpContext
-        :return: List of teachers in read mode, one dict per teacher.
+        :param role: which role list to write
+        :type role: str
+        :return: List of students in read mode, one dict per student.
         :rtype: list of dict
         """
 
-        path = f'{self.context.schoolmgr.configpath}teachers.csv'
+        path = f'{self.context.schoolmgr.configpath}{role}.csv'
 
         if os.path.isfile(path) is False:
             os.mknod(path)
-        fieldnames = [
-            'class',
-            'last_name',
-            'first_name',
-            'birthday',
-            'login',
-            'password',
-            'usertoken',
-            'quota',
-            'mailquota',
-            'reserved',
-        ]
-        if http_context.method == 'GET':
-            with authorize('lm:users:teachers:read'):
-                with LMNFile(path, 'r', fieldnames=fieldnames) as teachers:
-                    return teachers.read()
 
-        if http_context.method == 'POST':
-            with authorize('lm:users:teachers:write'):
-                data = http_context.json_body()
-                for item in data:
-                    item.pop('_isNew', None)
-                with LMNFile(path, 'w', fieldnames=fieldnames) as f:
-                    f.write(data)
+        with authorize(f'lm:users:{role}:write'):
+            data = http_context.json_body()
+            for item in data:
+                item.pop('_isNew', None)
+                item.pop('null', None)
+            with LMNFile(path, 'w', fieldnames=self.fieldnames[role]) as f:
+                f.write(data)
 
-    @url(r'/api/lm/users/extra-students')
-    @endpoint(api=True)
-    def handle_api_extra_students(self, http_context):
-        """
-        Read and write extra-students csv lists.
-        Method GET: read extra-students list.
-        Method POST: write extra-students list.
-
-        :param http_context: HttpContext
-        :type http_context: HttpContext
-        :return: List of extra-students in read mode, one dict per extra-student.
-        :rtype: list of dict
-        """
-
-        path = f'{self.context.schoolmgr.configpath}extrastudents.csv'
-
-        if os.path.isfile(path) is False:
-            os.mknod(path)
-        fieldnames = [
-            'class',
-            'last_name',
-            'first_name',
-            'birthday',
-            'login',
-            'reserved',
-        ]
-        if http_context.method == 'GET':
-            with authorize('lm:users:extra-students:read'):
-                with LMNFile(path, 'r', fieldnames=fieldnames) as extra_students:
-                    return extra_students.read()
-
-        if http_context.method == 'POST':
-            with authorize('lm:users:extra-students:write'):
-                data = http_context.json_body()
-                for item in data:
-                    item.pop('_isNew', None)
-                with LMNFile(path, 'w', fieldnames=fieldnames) as f:
-                    f.write(data)
-
-    @url(r'/api/lm/users/extra-courses')
-    @endpoint(api=True)
-    def handle_api_extra_courses(self, http_context):
-        """
-        Read and write extra-courses csv lists.
-        Method GET: read extra-courses list.
-        Method POST: write extra-courses list.
-
-        :param http_context: HttpContext
-        :type http_context: HttpContext
-        :return: List of extra-courses in read mode, one dict per extra-course.
-        :rtype: list of dict
-        """
-
-        path = f'{self.context.schoolmgr.configpath}extraclasses.csv'
-
-        if os.path.isfile(path) is False:
-            os.mknod(path)
-        fieldnames = [
-            'course',
-            'base_name',
-            'count',
-            'birthday',
-            'gecos',
-            'password',
-            'removal_date',
-        ]
-        if http_context.method == 'GET':
-            with authorize('lm:users:extra-courses:read'):
-                with LMNFile(path, 'r', fieldnames=fieldnames) as extra_courses:
-                    return extra_courses.read()
-
-        if http_context.method == 'POST':
-            with authorize('lm:users:extra-courses:write'):
-                data = http_context.json_body()
-                for item in data:
-                    item.pop('_isNew', None)
-                with LMNFile(path, 'w', fieldnames=fieldnames) as f:
-                    f.write(data)
-
-    @url(r'/api/lm/users/check')
+    @get(r'/api/lmn/users/lists/check')
     @authorize('lm:users:check')
     @endpoint(api=True)
     def handle_api_users_check(self, http_context):
@@ -344,6 +237,7 @@ class Handler(HttpPlugin):
         """
 
         sophomorixCommand = ['sophomorix-check', '-jj']
+        print("ici")
         results = lmn_getSophomorixValue(sophomorixCommand, '')
         ## Remove UPDATE entries which are also in KILL ( necessary to show it in KILL and UPDATE ? )
 
@@ -354,14 +248,13 @@ class Handler(HttpPlugin):
                         del results["CHECK_RESULT"]["UPDATE"][user_update]
         return results
 
-    @url(r'/api/lm/users/apply')
+    @post(r'/api/lmn/users/lists/apply')
     @authorize('lm:users:apply')
     @endpoint(api=True)
     def handle_api_users_apply(self, http_context):
         """
         Performs an add, update or kill of sophomorix objects after a
         `sophomorix-check` if necessary.
-        Method POST.
 
         :param http_context: HttpContext
         :type http_context: HttpContext
@@ -385,7 +278,7 @@ class Handler(HttpPlugin):
         except Exception as e:
             raise EndpointError(None, message=str(e))
 
-    @url(r'/api/lm/filterCustomCSV')
+    @post(r'/api/lmn/users/lists/filterCustomCSV')
     @authorize('lm:users:passwords')
     @endpoint(api=True)
     def handle_custom_csv(self, http_context):
@@ -399,20 +292,19 @@ class Handler(HttpPlugin):
         :rtype: dict
         """
 
-        if http_context.method == 'POST':
-            # E.g. /tmp/students.csv
-            tmp_path = http_context.json_body()['tmp_path']
-            # E.g. students.csv
-            target = http_context.json_body()['userlist']
+        # E.g. /tmp/students.csv
+        tmp_path = http_context.json_body()['tmp_path']
+        # E.g. students.csv
+        target = http_context.json_body()['userlist']
 
-            command = ['sophomorix-newfile', tmp_path, '--name', target, '-jj']
-            try:
-                result = lmn_getSophomorixValue(command, 'OUTPUT/0')
+        command = ['sophomorix-newfile', tmp_path, '--name', target, '-jj']
+        try:
+            result = lmn_getSophomorixValue(command, 'OUTPUT/0')
 
-                if result['TYPE'] == "ERROR":
-                        return ["ERROR", result['MESSAGE_EN']]
-                if result['TYPE'] == "LOG":
-                        return ["LOG", result['LOG']]
-            except UnicodeDecodeError:
-                return ["ERROR", "sophomorix was not able to detect the encoding of the file."]
+            if result['TYPE'] == "ERROR":
+                    return ["ERROR", result['MESSAGE_EN']]
+            if result['TYPE'] == "LOG":
+                    return ["LOG", result['LOG']]
+        except UnicodeDecodeError:
+            return ["ERROR", "sophomorix was not able to detect the encoding of the file."]
 

@@ -17,10 +17,11 @@
                             <th translate ng-click="switch('plugin','student')">Student</th>
                             <th translate>Def.</th>
                         </tr>
-                        <tr ng-repeat="(method,details) in pluginObj[plugin].methods" ng-if="filter_api(details)">
-                            <td style="width:300px;" title="{{details.doc}}">
-                                <b>{{details.url}}</b><br />
-                                <br />
+                        <tr ng-repeat-start="(method,details) in pluginObj[plugin].methods" ng-if="filter_api(details)">
+                            <td colspan="6"><b>{{details.url}}</b></td>
+                        </tr>
+                        <tr ng-repeat-end>
+                            <td style="width:300px;border-top-width:0" title="{{details.doc}}">
                                 <span ng-show="details.auth"><i class="fas fa-lock"></i></span>
                                 <span ng-show="!details.auth"><i class="fas fa-lock-open"></i></span>
                                 <span ng-show="details.api"><i class="fas fa-project-diagram"></i></span>
@@ -28,10 +29,10 @@
                                 <span ng-show="details.method" class="label label-{{methodLabelClass(details.method)}}">{{ details.method }}</span>
                                 <span class="label label-default">{{details.permission_id}}</span>
                             </td>
-                            <td ng:repeat="role in columns" ng:click="changeApi(details, role)" style="text-align:center;" ng:show="details.permission_id">
+                            <td ng:repeat="role in columns" ng:click="changeApi(details, role)" style="text-align:center;border-top-width:0" ng:show="details.permission_id">
                                 <i class="fas fa-{{iconify(apiPermissions[details.permission_id][role])}}" style="{{colorize(apiPermissions[details.permission_id][role])}}"></i>
                             </td>
-                            <td ng:show="!details.permission_id" colspan="5" style="text-align:center;" translate>
+                            <td ng:show="!details.permission_id" colspan="5" style="text-align:center;border-top-width:0" translate>
                                 No authorization set for this method.
                             </td>
                         </tr>

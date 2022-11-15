@@ -97,11 +97,13 @@ class Handler(HttpPlugin):
         PluginDict = {}
 
         for plugin in HttpPlugin.all(self.context):
-            # Split aj.plugins.network.views
-            name, module = plugin.__class__.__module__.split('.')[-2:]
+            # Split aj.plugins.network.views or aj.plugins.core.views.api
+            module_split_path = plugin.__class__.__module__.split('.')
+            module = module_split_path[-1]
+            name = module_split_path[2]
 
-            if 'core' in plugin.__class__.__module__ :
-                name = 'core-' + module
+            if len(module_split_path) == 5:
+                name = f'{name}-{module}'
 
             if name not in PluginDict.keys():
                 PluginDict[name] = {

@@ -281,10 +281,9 @@ class Handler(HttpPlugin):
     @post(r'/api/lmn/users/lists/filterCustomCSV')
     @authorize('lm:users:passwords')
     @endpoint(api=True)
-    def handle_custom_csv(self, http_context):
+    def handle_users_list_custom_csv(self, http_context):
         """
         Run sophomorix-newfile in order to apply a custom script for a newly custom csv file.
-        Method POST.
 
         :param http_context: HttpContext
         :type http_context: HttpContext

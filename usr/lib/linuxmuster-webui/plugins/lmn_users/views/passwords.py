@@ -32,7 +32,7 @@ class Handler(HttpPlugin):
         if identity_role == user_role and identity != user:
             return http_context.respond_forbidden()
 
-    @get(r'/api/lmn/users/password/(?P<user>.+)')
+    @get(r'/api/lmn/users/passwords/(?P<user>.+)')
     @authorize('lm:users:passwords')
     @endpoint(api=True)
     def handle_api_user_get_password(self, http_context, user):

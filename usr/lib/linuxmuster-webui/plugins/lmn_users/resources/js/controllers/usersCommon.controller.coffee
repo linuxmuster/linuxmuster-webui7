@@ -1,7 +1,7 @@
 angular.module('lmn.users').controller 'LMNUsersShowPasswordController', ($scope, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, username) ->
     $scope.username = username
 
-    $http.get('/api/lmn/users/password/' + $scope.username).then (resp) ->
+    $http.get('/api/lmn/users/passwords/' + $scope.username).then (resp) ->
         $scope.password = resp.data
         $http.get("/api/lmn/users/#{$scope.username}/first-password-set").then (response) ->
             if response.data == true
@@ -224,8 +224,6 @@ angular.module('lmn.users').controller 'LMUsersUploadModalController', ($scope, 
             filename = $flow["files"][0]["name"]
             $http.post('/api/lmn/users/lists/import', {action: 'get', path: $scope.path+filename, userlist: userlist}).then (resp) ->
                 userListCSV = resp.data
-                #console.log (userListCSV)
-                # console.log (resp['data'])
                 $uibModal.open(
                              templateUrl: '/lmn_users:resources/partial/sortList.modal.html'
                              controller: 'LMUsersSortListModalController'

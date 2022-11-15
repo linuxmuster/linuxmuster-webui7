@@ -1541,7 +1541,7 @@
 (function() {
   angular.module('lmn.users').controller('LMNUsersShowPasswordController', function($scope, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, username) {
     $scope.username = username;
-    $http.get('/api/lmn/users/password/' + $scope.username).then(function(resp) {
+    $http.get('/api/lmn/users/passwords/' + $scope.username).then(function(resp) {
       $scope.password = resp.data;
       return $http.get(`/api/lmn/users/${$scope.username}/first-password-set`).then(function(response) {
         if (response.data === true) {
@@ -1877,8 +1877,6 @@
         }).then(function(resp) {
           var userListCSV;
           userListCSV = resp.data;
-          //console.log (userListCSV)
-          // console.log (resp['data'])
           $uibModal.open({
             templateUrl: '/lmn_users:resources/partial/sortList.modal.html',
             controller: 'LMUsersSortListModalController',

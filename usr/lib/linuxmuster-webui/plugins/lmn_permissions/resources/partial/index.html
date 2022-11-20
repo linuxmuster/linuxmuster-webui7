@@ -17,10 +17,10 @@
                             <th translate ng-click="switch('plugin','student')">Student</th>
                             <th translate>Def.</th>
                         </tr>
-                        <tr ng-repeat-start="(method,details) in pluginObj[plugin].methods" ng-if="filter_api(details)">
-                            <td colspan="6"><b>{{details.url}}</b></td>
+                        <tr ng-repeat-start="(url,methods) in pluginObj[plugin].methods">
+                            <td colspan="6"><b>{{url}}</b></td>
                         </tr>
-                        <tr ng-repeat-end>
+                        <tr ng-repeat-end ng-repeat="details in methods"  ng-if="filter_api(details)">
                             <td style="width:300px;border-top-width:0" title="{{details.doc}}">
                                 <span ng-show="details.auth"><i class="fas fa-lock"></i></span>
                                 <span ng-show="!details.auth"><i class="fas fa-lock-open"></i></span>

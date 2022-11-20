@@ -129,15 +129,21 @@ class Handler(HttpPlugin):
                     if hasattr(m, 'page'):
                         page = m.page
 
-                    PluginDict[name]['methods'][n] = {
-                        'url': filter_url_regexp(m.url_pattern.pattern[1:-1]),
-                        'permission_id': permission_id,
-                        'doc': doc,
-                        'api': api,
-                        'auth': auth,
-                        'page': page,
-                        'method': m.method if hasattr(m, 'method') else 'url'
-                    }
+                    url = filter_url_regexp(m.url_pattern.pattern[1:-1])
+                    details = {
+                            'permission_id': permission_id,
+                            'doc': doc,
+                            'api': api,
+                            'auth': auth,
+                            'page': page,
+                            'method': m.method if hasattr(m, 'method') else 'url'
+                        }
+
+                    if url in PluginDict[name]['methods']:
+                        PluginDict[name]['methods'][url].append(details)
+                    else:
+                        PluginDict[name]['methods'][url] = [details]
+
 
         ## Load default ui permissions from permissions.yml files
         plugins_path = '/usr/lib/linuxmuster-webui/plugins'

@@ -19,7 +19,7 @@ angular.module('lmn.users').controller 'LMUsersGloballadminsController', ($scope
 
     $scope.all_selected = false
 
-    $http.post('/api/lm/sophomorixUsers/globaladmins',{action: 'get-all'}).then (resp) ->
+    $http.get('/api/lmn/sophomorixUsers/globaladmins').then (resp) ->
         $scope.globaladmins = resp.data
 
     customFields.load_display('globaladministrators').then (resp) ->
@@ -29,19 +29,19 @@ angular.module('lmn.users').controller 'LMUsersGloballadminsController', ($scope
     $scope.isListAttr = (attr) ->
         return customFields.isListAttr(attr)
 
-    $http.get('/api/lm/users/binduser/global').then (resp) ->
+    $http.get('/api/lmn/sophomorixUsers/bindusers/global').then (resp) ->
         $scope.globalbindusers = resp.data
 
     $scope.addGlobalBinduser = () ->
         messagebox.prompt(gettext('Login for new global bind user'), '').then (msg) ->
             # Filter chars ?
-            $http.post('/api/lm/users/binduser/', {binduser: msg.value, level: 'global'}).then (resp) ->
+            $http.post('/api/lmn/sophomorixUsers/bindusers/global', {binduser: msg.value}).then (resp) ->
                 notify.success(resp.data)
                 $route.reload()
 
     $scope.deleteGlobalBinduser = (user) ->
         messagebox.show(title: gettext('Delete User'), text: gettext("Delete global bind user "+ ( x['sAMAccountName'] for x in user ) + '?'), positive: 'Delete', negative: 'Cancel').then () ->
-            $http.post('/api/lm/users/change-global-admin', {users: ( x['sAMAccountName'] for x in user ), action: 'delete'}).then (resp) ->
+            $http.patch('/api/lmn/sophomorixUsers/globaladmins', {users: ( x['sAMAccountName'] for x in user )}).then (resp) ->
                 $route.reload()
                 notify.success gettext('User deleted')
 
@@ -60,7 +60,7 @@ angular.module('lmn.users').controller 'LMUsersGloballadminsController', ($scope
 
     $scope.deleteGlobalAdmin = (user) ->
         messagebox.show(title: gettext('Delete User'), text: gettext("Delete global-administrator "+ ( x['sAMAccountName'] for x in user ) + '?'), positive: 'Delete', negative: 'Cancel').then () ->
-            $http.post('/api/lm/users/change-global-admin', {users: ( x['sAMAccountName'] for x in user ), action: 'delete'}).then (resp) ->
+            $http.patch('/api/lmn/sophomorixUsers/globaladmins', {users: ( x['sAMAccountName'] for x in user )}).then (resp) ->
                     $route.reload()
                     notify.success gettext('User deleted')
 
@@ -71,7 +71,7 @@ angular.module('lmn.users').controller 'LMUsersGloballadminsController', ($scope
         controller: 'LMNUsersAddAdminController'
         size: 'mg'
         resolve:
-          role: () -> angular.copy('global-admin')
+          role: () -> 'globaladmin'
       )
     $scope.userInfo = (user) ->
       console.log (user)

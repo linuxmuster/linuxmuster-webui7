@@ -43,7 +43,7 @@ angular.module('lmn.users').controller 'LMUsersStudentsController', ($scope, $ht
     $scope.isListAttr = (attr) ->
         return customFields.isListAttr(attr)
 
-    $http.post('/api/lm/sophomorixUsers/students', {action: 'get-all'}).then (resp) ->
+    $http.get('/api/lmn/sophomorixUsers/students').then (resp) ->
         $scope.students = resp.data
 
     $scope.showFirstPassword = (username) ->

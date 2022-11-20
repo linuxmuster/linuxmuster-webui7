@@ -36,7 +36,7 @@ angular.module('lmn.users').controller 'LMUsersTeachersController', ($q, $scope,
     $scope.all_selected = false
     $scope.query = ''
 
-    $http.post('/api/lm/sophomorixUsers/teachers',{action: 'get-all'}).then (resp) ->
+    $http.get('/api/lmn/sophomorixUsers/teachers').then (resp) ->
         $scope.teachers = resp.data
 
     customFields.load_display('teachers').then (resp) ->
@@ -51,8 +51,9 @@ angular.module('lmn.users').controller 'LMUsersTeachersController', ($q, $scope,
         teacherList = (t.sAMAccountName for t in $scope.teachers)
         promises = []
         for teacher in teacherList
-            promises.push($http.post('/api/lm/users/get-group-quota',{groupList: [teacher]}))
+            promises.push($http.get("/api/lmn/users/quotas/#{teacher}"))
         $q.all(promises).then (resp) ->
+            console.log(resp)
             $scope.teachersQuota = {}
             for teacher in resp
                 login = Object.keys(teacher.data)[0]

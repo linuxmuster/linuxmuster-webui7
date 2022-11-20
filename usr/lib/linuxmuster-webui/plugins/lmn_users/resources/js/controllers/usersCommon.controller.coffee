@@ -96,7 +96,7 @@ angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $rou
     $scope.hidetext = gettext("Hide")
     $scope.showtext = gettext("Show")
 
-    $http.post('/api/lm/sophomorixUsers/'+role, {action: 'get-specified', user: id}).then (resp) ->
+    $http.get("/api/lmn/sophomorixUsers/#{role}/#{id}").then (resp) ->
         $scope.userDetails = resp.data[0]
         $scope.groups = []
         for dn in $scope.userDetails['memberOf']
@@ -285,7 +285,7 @@ angular.module('lmn.users').controller 'LMNUsersAddAdminController', ($scope, $r
             return
         else
             notify.success gettext('Adding administrator...')
-            $http.post('/api/lm/users/change-'+role, {action: 'create' ,users: username}).then (resp) ->
+            $http.post("/api/lmn/sophomorixUsers/#{role}s", {users: username}).then (resp) ->
                 # console.log (resp.data)
                 if resp['data'][0] == 'ERROR'
                     notify.error (resp['data'][1])

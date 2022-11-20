@@ -19,7 +19,7 @@ angular.module('lmn.users').controller 'LMUsersSchooladminsController', ($scope,
 
     $scope.all_selected = false
 
-    $http.post('/api/lm/sophomorixUsers/schooladmins',{action: 'get-all'}).then (resp) ->
+    $http.get('/api/lmn/sophomorixUsers/schooladmins').then (resp) ->
         $scope.schooladmins = resp.data
 
     customFields.load_display('schooladministrators').then (resp) ->
@@ -29,19 +29,19 @@ angular.module('lmn.users').controller 'LMUsersSchooladminsController', ($scope,
     $scope.isListAttr = (attr) ->
         return customFields.isListAttr(attr)
 
-    $http.get('/api/lm/users/binduser/school').then (resp) ->
+    $http.get('/api/lmn/sophomorixUsers/bindusers/school').then (resp) ->
         $scope.schoolbindusers = resp.data
 
     $scope.addSchoolBinduser = () ->
         messagebox.prompt(gettext('Login for new school bind user'), '').then (msg) ->
             # Filter chars ?
-            $http.post('/api/lm/users/binduser/', {binduser: msg.value, level: 'school'}).then (resp) ->
+            $http.post('/api/lmn/sophomorixUsers/bindusers/school', {binduser: msg.value}).then (resp) ->
                 notify.success(resp.data)
                 $route.reload()
 
     $scope.deleteSchoolBinduser = (user) ->
         messagebox.show(title: gettext('Delete User'), text: gettext("Delete school bind user "+ ( x['sAMAccountName'] for x in user ) + '?'), positive: 'Delete', negative: 'Cancel').then () ->
-            $http.post('/api/lm/users/change-global-admin', {users: ( x['sAMAccountName'] for x in user ), action: 'delete'}).then (resp) ->
+            $http.patch('/api/lmn/sophomorixUsers/schooladmins', {users: ( x['sAMAccountName'] for x in user )}).then (resp) ->
                 $route.reload()
                 notify.success gettext('User deleted')
 
@@ -60,7 +60,7 @@ angular.module('lmn.users').controller 'LMUsersSchooladminsController', ($scope,
 
     $scope.deleteSchoolAdmin = (user) ->
         messagebox.show(title: gettext('Delete User'), text: gettext("Delete school-administrator "+ ( x['sAMAccountName'] for x in user ) + '?'), positive: 'Delete', negative: 'Cancel').then () ->
-            $http.post('/api/lm/users/change-school-admin', {users: ( x['sAMAccountName'] for x in user ), action: 'delete'}).then (resp) ->
+            $http.patch('/api/lmn/sophomorixUsers/schooladmins', {users: ( x['sAMAccountName'] for x in user )}).then (resp) ->
                 $route.reload()
                 notify.success gettext('User deleted')
 
@@ -71,7 +71,7 @@ angular.module('lmn.users').controller 'LMUsersSchooladminsController', ($scope,
                 controller: 'LMNUsersAddAdminController'
                 size: 'mg'
                 resolve:
-                    role: () -> 'school-admin'
+                    role: () -> 'schooladmin'
             )
 
     $scope.userInfo = (user) ->

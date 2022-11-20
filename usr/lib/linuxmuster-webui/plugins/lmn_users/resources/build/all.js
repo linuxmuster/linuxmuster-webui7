@@ -54,9 +54,7 @@
     };
     $scope.all_selected = false;
     $scope.query = '';
-    $http.post('/api/lm/sophomorixUsers/teachers', {
-      action: 'get-all'
-    }).then(function(resp) {
+    $http.get('/api/lmn/sophomorixUsers/teachers').then(function(resp) {
       return $scope.teachers = resp.data;
     });
     customFields.load_display('teachers').then(function(resp) {
@@ -82,12 +80,11 @@
       promises = [];
       for (i = 0, len = teacherList.length; i < len; i++) {
         teacher = teacherList[i];
-        promises.push($http.post('/api/lm/users/get-group-quota', {
-          groupList: [teacher]
-        }));
+        promises.push($http.get(`/api/lmn/users/quotas/${teacher}`));
       }
       return $q.all(promises).then(function(resp) {
         var j, len1, login, results;
+        console.log(resp);
         $scope.teachersQuota = {};
         results = [];
         for (j = 0, len1 = resp.length; j < len1; j++) {
@@ -252,9 +249,7 @@
     $scope.isListAttr = function(attr) {
       return customFields.isListAttr(attr);
     };
-    $http.post('/api/lm/sophomorixUsers/students', {
-      action: 'get-all'
-    }).then(function(resp) {
+    $http.get('/api/lmn/sophomorixUsers/students').then(function(resp) {
       return $scope.students = resp.data;
     });
     $scope.showFirstPassword = function(username) {
@@ -377,9 +372,7 @@
       pageSize: 50
     };
     $scope.all_selected = false;
-    $http.post('/api/lm/sophomorixUsers/schooladmins', {
-      action: 'get-all'
-    }).then(function(resp) {
+    $http.get('/api/lmn/sophomorixUsers/schooladmins').then(function(resp) {
       return $scope.schooladmins = resp.data;
     });
     customFields.load_display('schooladministrators').then(function(resp) {
@@ -389,15 +382,14 @@
     $scope.isListAttr = function(attr) {
       return customFields.isListAttr(attr);
     };
-    $http.get('/api/lm/users/binduser/school').then(function(resp) {
+    $http.get('/api/lmn/sophomorixUsers/bindusers/school').then(function(resp) {
       return $scope.schoolbindusers = resp.data;
     });
     $scope.addSchoolBinduser = function() {
       return messagebox.prompt(gettext('Login for new school bind user'), '').then(function(msg) {
         // Filter chars ?
-        return $http.post('/api/lm/users/binduser/', {
-          binduser: msg.value,
-          level: 'school'
+        return $http.post('/api/lmn/sophomorixUsers/bindusers/school', {
+          binduser: msg.value
         }).then(function(resp) {
           notify.success(resp.data);
           return $route.reload();
@@ -420,7 +412,7 @@
         positive: 'Delete',
         negative: 'Cancel'
       }).then(function() {
-        return $http.post('/api/lm/users/change-global-admin', {
+        return $http.patch('/api/lmn/sophomorixUsers/schooladmins', {
           users: (function() {
             var i, len, results;
             results = [];
@@ -429,8 +421,7 @@
               results.push(x['sAMAccountName']);
             }
             return results;
-          })(),
-          action: 'delete'
+          })()
         }).then(function(resp) {
           $route.reload();
           return notify.success(gettext('User deleted'));
@@ -472,7 +463,7 @@
         positive: 'Delete',
         negative: 'Cancel'
       }).then(function() {
-        return $http.post('/api/lm/users/change-school-admin', {
+        return $http.patch('/api/lmn/sophomorixUsers/schooladmins', {
           users: (function() {
             var i, len, results;
             results = [];
@@ -481,8 +472,7 @@
               results.push(x['sAMAccountName']);
             }
             return results;
-          })(),
-          action: 'delete'
+          })()
         }).then(function(resp) {
           $route.reload();
           return notify.success(gettext('User deleted'));
@@ -496,7 +486,7 @@
         size: 'mg',
         resolve: {
           role: function() {
-            return 'school-admin';
+            return 'schooladmin';
           }
         }
       });
@@ -589,9 +579,7 @@
       pageSize: 50
     };
     $scope.all_selected = false;
-    $http.post('/api/lm/sophomorixUsers/globaladmins', {
-      action: 'get-all'
-    }).then(function(resp) {
+    $http.get('/api/lmn/sophomorixUsers/globaladmins').then(function(resp) {
       return $scope.globaladmins = resp.data;
     });
     customFields.load_display('globaladministrators').then(function(resp) {
@@ -601,15 +589,14 @@
     $scope.isListAttr = function(attr) {
       return customFields.isListAttr(attr);
     };
-    $http.get('/api/lm/users/binduser/global').then(function(resp) {
+    $http.get('/api/lmn/sophomorixUsers/bindusers/global').then(function(resp) {
       return $scope.globalbindusers = resp.data;
     });
     $scope.addGlobalBinduser = function() {
       return messagebox.prompt(gettext('Login for new global bind user'), '').then(function(msg) {
         // Filter chars ?
-        return $http.post('/api/lm/users/binduser/', {
-          binduser: msg.value,
-          level: 'global'
+        return $http.post('/api/lmn/sophomorixUsers/bindusers/global', {
+          binduser: msg.value
         }).then(function(resp) {
           notify.success(resp.data);
           return $route.reload();
@@ -632,7 +619,7 @@
         positive: 'Delete',
         negative: 'Cancel'
       }).then(function() {
-        return $http.post('/api/lm/users/change-global-admin', {
+        return $http.patch('/api/lmn/sophomorixUsers/globaladmins', {
           users: (function() {
             var i, len, results;
             results = [];
@@ -641,8 +628,7 @@
               results.push(x['sAMAccountName']);
             }
             return results;
-          })(),
-          action: 'delete'
+          })()
         }).then(function(resp) {
           $route.reload();
           return notify.success(gettext('User deleted'));
@@ -684,7 +670,7 @@
         positive: 'Delete',
         negative: 'Cancel'
       }).then(function() {
-        return $http.post('/api/lm/users/change-global-admin', {
+        return $http.patch('/api/lmn/sophomorixUsers/globaladmins', {
           users: (function() {
             var i, len, results;
             results = [];
@@ -693,8 +679,7 @@
               results.push(x['sAMAccountName']);
             }
             return results;
-          })(),
-          action: 'delete'
+          })()
         }).then(function(resp) {
           $route.reload();
           return notify.success(gettext('User deleted'));
@@ -708,7 +693,7 @@
         size: 'mg',
         resolve: {
           role: function() {
-            return angular.copy('global-admin');
+            return 'globaladmin';
           }
         }
       });
@@ -1076,9 +1061,7 @@
     };
     $scope.all_selected = false;
     $scope.query = '';
-    $http.post('/api/lm/sophomorixUsers/teachers', {
-      action: 'get-all'
-    }).then(function(resp) {
+    $http.get('/api/lmn/sophomorixUsers/teachers').then(function(resp) {
       return $scope.teachers = resp.data;
     });
     customFields.load_display('teachers').then(function(resp) {
@@ -1104,12 +1087,11 @@
       promises = [];
       for (i = 0, len = teacherList.length; i < len; i++) {
         teacher = teacherList[i];
-        promises.push($http.post('/api/lm/users/get-group-quota', {
-          groupList: [teacher]
-        }));
+        promises.push($http.get(`/api/lmn/users/quotas/${teacher}`));
       }
       return $q.all(promises).then(function(resp) {
         var j, len1, login, results;
+        console.log(resp);
         $scope.teachersQuota = {};
         results = [];
         for (j = 0, len1 = resp.length; j < len1; j++) {
@@ -1666,10 +1648,7 @@
     };
     $scope.hidetext = gettext("Hide");
     $scope.showtext = gettext("Show");
-    $http.post('/api/lm/sophomorixUsers/' + role, {
-      action: 'get-specified',
-      user: id
-    }).then(function(resp) {
+    $http.get(`/api/lmn/sophomorixUsers/${role}/${id}`).then(function(resp) {
       var category, cn, dn, j, len, ref, results;
       $scope.userDetails = resp.data[0];
       $scope.groups = [];
@@ -1961,8 +1940,7 @@
         notify.error(gettext("You have to enter a username"));
       } else {
         notify.success(gettext('Adding administrator...'));
-        $http.post('/api/lm/users/change-' + role, {
-          action: 'create',
+        $http.post(`/api/lmn/sophomorixUsers/${role}s`, {
           users: username
         }).then(function(resp) {
           // console.log (resp.data)

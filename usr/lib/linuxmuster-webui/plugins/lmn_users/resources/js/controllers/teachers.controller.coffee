@@ -51,7 +51,7 @@ angular.module('lmn.users').controller 'LMUsersTeachersController', ($q, $scope,
         teacherList = (t.sAMAccountName for t in $scope.teachers)
         promises = []
         for teacher in teacherList
-            promises.push($http.get("/api/lmn/users/quotas/#{teacher}"))
+            promises.push($http.get("/api/lmn/quota/usermap/#{teacher}"))
         $q.all(promises).then (resp) ->
             $scope.teachersQuota = {}
             for teacher in resp

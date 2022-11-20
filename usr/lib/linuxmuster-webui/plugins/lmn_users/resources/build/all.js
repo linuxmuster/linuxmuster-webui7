@@ -80,7 +80,7 @@
       promises = [];
       for (i = 0, len = teacherList.length; i < len; i++) {
         teacher = teacherList[i];
-        promises.push($http.get(`/api/lmn/users/quotas/${teacher}`));
+        promises.push($http.get(`/api/lmn/quota/usermap/${teacher}`));
       }
       return $q.all(promises).then(function(resp) {
         var j, len1, login, results;
@@ -1086,7 +1086,7 @@
       promises = [];
       for (i = 0, len = teacherList.length; i < len; i++) {
         teacher = teacherList[i];
-        promises.push($http.get(`/api/lmn/users/quotas/${teacher}`));
+        promises.push($http.get(`/api/lmn/quota/usermap/${teacher}`));
       }
       return $q.all(promises).then(function(resp) {
         var j, len1, login, results;

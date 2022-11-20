@@ -81,7 +81,7 @@ angular.module('lmn.permissions').config(function ($routeProvider) {
       if (method === "put") {
         return "info";
       }
-      if (method === "delete") {
+      if (method === "delete" || method === "patch") {
         return "danger";
       }
       return "default";

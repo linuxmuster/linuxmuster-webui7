@@ -6,7 +6,7 @@ import os
 import subprocess
 
 from jadi import component
-from aj.api.http import get, post, url, HttpPlugin
+from aj.api.http import get, post, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
 from aj.auth import authorize, AuthenticationService
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue

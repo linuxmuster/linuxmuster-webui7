@@ -53,7 +53,6 @@ angular.module('lmn.users').controller 'LMUsersTeachersController', ($q, $scope,
         for teacher in teacherList
             promises.push($http.get("/api/lmn/users/quotas/#{teacher}"))
         $q.all(promises).then (resp) ->
-            console.log(resp)
             $scope.teachersQuota = {}
             for teacher in resp
                 login = Object.keys(teacher.data)[0]

@@ -84,7 +84,6 @@
       }
       return $q.all(promises).then(function(resp) {
         var j, len1, login, results;
-        console.log(resp);
         $scope.teachersQuota = {};
         results = [];
         for (j = 0, len1 = resp.length; j < len1; j++) {
@@ -1091,7 +1090,6 @@
       }
       return $q.all(promises).then(function(resp) {
         var j, len1, login, results;
-        console.log(resp);
         $scope.teachersQuota = {};
         results = [];
         for (j = 0, len1 = resp.length; j < len1; j++) {

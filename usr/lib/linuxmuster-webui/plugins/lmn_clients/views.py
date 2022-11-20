@@ -58,7 +58,7 @@ class Handler(HttpPlugin):
             ],
         }
 
-    @post(r'/api/lmn/client/script')
+    @post(r'/api/lmn/clients/scripts')
     @authorize('lmn:clients:config')
     @endpoint(api=True)
     def handle_api_write_clients_scripts(self, http_context):

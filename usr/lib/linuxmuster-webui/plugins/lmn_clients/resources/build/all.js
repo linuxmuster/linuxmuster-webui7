@@ -32,7 +32,7 @@ angular.module('lmn.clients').controller('Lmn_clientsIndexController', function 
     };
 
     $scope.saveScript = function (script) {
-        $http.post('/api/lmn/client/script', { 'path': script.path, 'content': script.content }).then(function () {
+        $http.post('/api/lmn/clients/scripts', { 'path': script.path, 'content': script.content }).then(function () {
             $scope.scriptToEdit = '';
             notify.success(gettext('Script saved !'));
         }, function () {

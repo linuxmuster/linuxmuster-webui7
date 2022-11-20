@@ -4,7 +4,7 @@ Module to handle the samba dns through samba-tool.
 
 from jadi import component
 
-from aj.api.http import get, post, delete, put, HttpPlugin
+from aj.api.http import get, post, delete, put, patch, HttpPlugin
 from aj.auth import authorize
 from aj.api.endpoint import endpoint, EndpointError
 from aj.plugins.lmn_samba_dns.smbtool import SambaToolDNS
@@ -33,7 +33,7 @@ class Handler(HttpPlugin):
 
         return [self.dns.get_list(), self.dns.zone]
 
-    @post(r'/api/lmn/dns/delete')
+    @patch(r'/api/lmn/dns')
     @authorize('lm:samba_dns:write')
     @endpoint(api=True)
     def handle_api_dns_delete(self, http_context):

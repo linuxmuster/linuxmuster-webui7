@@ -278,7 +278,7 @@ class Handler(HttpPlugin):
         except Exception as e:
             raise EndpointError(None, message=str(e))
 
-    @post(r'/api/lmn/users/lists/filterCustomCSV')
+    @post(r'/api/lmn/users/lists/csv')
     @authorize('lm:users:passwords')
     @endpoint(api=True)
     def handle_users_list_custom_csv(self, http_context):

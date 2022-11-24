@@ -1835,9 +1835,12 @@
     return $scope.rebuildCSV();
   });
 
-  angular.module('lmn.users').controller('LMUsersUploadModalController', function($scope, $window, $http, $uibModalInstance, messagebox, notify, $uibModal, gettext, filesystem, userlist) {
+  angular.module('lmn.users').controller('LMUsersUploadModalController', function($scope, $window, $http, $uibModalInstance, messagebox, notify, $uibModal, gettext, filesystem, role, parent) {
     $scope.path = "/tmp/";
-    $scope.onUploadBegin = function($flow) {
+    $scope.parent = parent;
+    $scope.role = role;
+    $scope.csv_name = `${role}.csv`;
+    $scope.upload = function($flow, check = true) {
       var msg;
       $uibModalInstance.close();
       msg = messagebox.show({
@@ -1847,83 +1850,71 @@
         var filename;
         notify.success(gettext('Uploaded'));
         filename = $flow["files"][0]["name"];
-        return $http.post('/api/lmn/users/lists/import', {
-          action: 'get',
-          path: $scope.path + filename,
-          userlist: userlist
-        }).then(function(resp) {
-          var userListCSV;
-          userListCSV = resp.data;
-          $uibModal.open({
-            templateUrl: '/lmn_users:resources/partial/sortList.modal.html',
-            controller: 'LMUsersSortListModalController',
-            resolve: {
-              userListCSV: function() {
-                return userListCSV;
-              },
-              userlist: function() {
-                return userlist;
-              }
+        if (check) {
+          $scope.checkColumns(filename);
+        } else {
+          $scope.saveCSV(filename);
+        }
+        return msg.close();
+      }, null, function(progress) {
+        return msg.messagebox.title = `Uploading: ${Math.floor(100 * progress)}%`;
+      });
+    };
+    $scope.checkColumns = function(filename) {
+      return $http.post('/api/lmn/users/lists/import', {
+        action: 'get',
+        path: $scope.path + filename,
+        userlist: $scope.csv_name
+      }).then(function(resp) {
+        var userListCSV;
+        userListCSV = resp.data;
+        return $uibModal.open({
+          templateUrl: '/lmn_users:resources/partial/sortList.modal.html',
+          controller: 'LMUsersSortListModalController',
+          resolve: {
+            userListCSV: function() {
+              return userListCSV;
+            },
+            userlist: function() {
+              return $scope.csv_name;
             }
-          }).result.then(function(result) {
-            //console.log (result)
-            return $http.post("/api/lmn/users/lists/import", {
-              action: 'save',
-              data: result,
-              userlist: userlist
-            }).then(function(resp) {
-              //console.log (resp['data'])
-              if (resp['data'][0] === 'ERROR') {
-                notify.error(resp['data'][1]);
-              }
-              if (resp['data'][0] === 'LOG') {
-                notify.success(gettext(resp['data'][1]));
-              }
-              // TODO: it would be better to reload just the content frame. Currently I dont know how to set the route to reload it
-              $window.location.reload();
-              msg.close();
+          }
+        }).result.then(function(result) {
+          return $http.post("/api/lmn/users/lists/import", {
+            action: 'save',
+            data: result,
+            userlist: $scope.csv_name
+          }).then(function(resp) {
+            //console.log (resp['data'])
+            if (resp['data'][0] === 'ERROR') {
+              notify.error(resp['data'][1]);
+            }
+            if (resp['data'][0] === 'LOG') {
+              $scope.parent[`get${$scope.role}`]({
+                force: true
+              });
+              notify.success(gettext(resp['data'][1]));
               return notify.success(gettext('Saved'));
-            });
+            }
           });
-          return msg.close();
         });
-      }, null, function(progress) {
-        return msg.messagebox.title = `Uploading: ${Math.floor(100 * progress)}%`;
       });
     };
-    return $scope.close = function() {
-      return $uibModalInstance.close();
-    };
-  });
-
-  angular.module('lmn.users').controller('LMUsersUploadCustomModalController', function($scope, $window, $http, $uibModalInstance, messagebox, notify, $uibModal, gettext, filesystem, userlist) {
-    $scope.path = "/tmp/";
-    $scope.onUploadBegin = function($flow) {
-      var msg;
-      $uibModalInstance.close();
-      msg = messagebox.show({
-        progress: true
-      });
-      return filesystem.startFlowUpload($flow, $scope.path).then(function() {
-        var filename;
-        notify.success(gettext('Uploaded'));
-        filename = $flow["files"][0]["name"];
-        return $http.post('/api/lmn/users/lists/filterCustomCSV', {
-          tmp_path: $scope.path + filename,
-          userlist: userlist
-        }).then(function(resp) {
-          if (resp['data'][0] === 'ERROR') {
-            notify.error(resp['data'][1]);
-          }
-          if (resp['data'][0] === 'LOG') {
-            notify.success(gettext(resp['data'][1]));
-          }
-          $window.location.reload();
-          msg.close();
+    $scope.saveCSV = function(filename) {
+      return $http.post('/api/lmn/users/lists/csv', {
+        tmp_path: $scope.path + filename,
+        userlist: $scope.csv_name
+      }).then(function(resp) {
+        if (resp['data'][0] === 'ERROR') {
+          notify.error(resp['data'][1]);
+        }
+        if (resp['data'][0] === 'LOG') {
+          $scope.parent[`get${$scope.role}`]({
+            force: true
+          });
+          notify.success(gettext(resp['data'][1]));
           return notify.success(gettext('Saved'));
-        });
-      }, null, function(progress) {
-        return msg.messagebox.title = `Uploading: ${Math.floor(100 * progress)}%`;
+        }
       });
     };
     return $scope.close = function() {
@@ -1970,19 +1961,9 @@
   });
 
   angular.module('lmn.users').controller('LMUsersListManagementController', function($scope, $http, $location, $route, $uibModal, gettext, hotkeys, notify, lmEncodingMap, messagebox, pageTitle, lmFileEditor, lmFileBackups, filesystem, validation) {
-    var lmn_get_school_configpath;
     pageTitle.set(gettext('Listmanagement'));
     $scope.activeTab = 0;
     $scope.tabs = ['students', 'teachers', 'extrastudents'];
-    lmn_get_school_configpath = function(school) {
-      
-      //"This is an example of a function"
-      if (school === "default-school") {
-        return '/etc/linuxmuster/sophomorix/default-school/';
-      } else {
-        return '/etc/linuxmuster/sophomorix/' + school + '/' + school + '.';
-      }
-    };
     $scope.students_sorts = [
       {
         name: gettext('Class'),
@@ -2268,29 +2249,29 @@
       }
       return $scope.courses.remove(course);
     };
-    $scope.getstudents = function() {
-      if (!$scope.students) {
+    $scope.getstudents = function(force = false) {
+      if (!$scope.students || force) {
         return $http.get("/api/lmn/users/lists/students").then(function(resp) {
           return $scope.students = resp.data;
         });
       }
     };
-    $scope.getteachers = function() {
-      if (!$scope.teachers) {
+    $scope.getteachers = function(force = false) {
+      if (!$scope.teachers || force) {
         return $http.get("/api/lmn/users/lists/teachers").then(function(resp) {
           return $scope.teachers = resp.data;
         });
       }
     };
-    $scope.getextrastudents = function() {
-      if (!$scope.extrastudents) {
+    $scope.getextrastudents = function(force = false) {
+      if (!$scope.extrastudents || force) {
         return $http.get("/api/lmn/users/lists/extrastudents").then(function(resp) {
           return $scope.extrastudents = resp.data;
         });
       }
     };
-    $scope.getcourses = function() {
-      if (!$scope.courses) {
+    $scope.getcourses = function(force = false) {
+      if (!$scope.courses || force) {
         return $http.get('/api/lmn/schoolsettings').then(function(resp) {
           $scope.courses_encoding = lmEncodingMap[resp.data.encoding_courses_extra] || 'ISO8859-1';
           return $http.get(`/api/lmn/users/lists/extraclasses?encoding=${$scope.courses_encoding}`).then(function(resp) {
@@ -2299,31 +2280,8 @@
         });
       }
     };
-    $scope.students_editCSV = function() {
-      var path;
-      path = lmn_get_school_configpath($scope.identity.profile.activeSchool) + 'students.csv';
-      return lmFileEditor.show(path, $scope.students_encoding).then(function() {
-        return $route.reload();
-      });
-    };
-    $scope.teachers_editCSV = function() {
-      var path;
-      path = lmn_get_school_configpath($scope.identity.profile.activeSchool) + 'teachers.csv';
-      return lmFileEditor.show(path, $scope.teachers_encoding).then(function() {
-        return $route.reload();
-      });
-    };
-    $scope.extrastudents_editCSV = function() {
-      var path;
-      path = lmn_get_school_configpath($scope.identity.profile.activeSchool) + 'extrastudents.csv';
-      return lmFileEditor.show(path, $scope.extrastudents_encoding).then(function() {
-        return $route.reload();
-      });
-    };
-    $scope.courses_editCSV = function() {
-      var path;
-      path = lmn_get_school_configpath($scope.identity.profile.activeSchool) + 'extraclasses.csv';
-      return lmFileEditor.show(path, $scope.courses_encoding).then(function() {
+    $scope.editCSV = function(role) {
+      return lmFileEditor.show(`${$scope.configpath}${role}.csv`, '').then(function() {
         return $route.reload();
       });
     };
@@ -2366,7 +2324,7 @@
       $scope.show_errors = false;
       $scope.extrastudents_first_save = false;
       return $http.post(`/api/lmn/users/lists/extrastudents?encoding=${$scope.extrastudents_encoding}`, $scope.extrastudents).then(function() {
-        return notify.success('Saved');
+        return notify.success(gettext('Saved'));
       });
     };
     $scope.courses_save = function() {
@@ -2383,45 +2341,23 @@
         return notify.success(gettext('Saved'));
       });
     };
-    $scope.confirmUpload = function(type, role) {
-      var controller, templateUrl;
-      if (type === "custom") {
-        templateUrl = '/lmn_users:resources/partial/uploadcustom.modal.html';
-        controller = 'LMUsersUploadCustomModalController';
-      } else {
-        templateUrl = '/lmn_users:resources/partial/upload.modal.html';
-        controller = 'LMUsersUploadModalController';
-      }
+    $scope.confirmUpload = function(role) {
       return $uibModal.open({
-        templateUrl: templateUrl,
-        controller: controller,
+        templateUrl: '/lmn_users:resources/partial/upload.modal.html',
+        controller: 'LMUsersUploadModalController',
         backdrop: 'static',
         resolve: {
-          userlist: function() {
-            return role + '.csv';
+          role: function() {
+            return role;
+          },
+          parent: function() {
+            return $scope;
           }
         }
       });
     };
-    $scope.students_backups = function() {
-      var path;
-      path = lmn_get_school_configpath($scope.identity.profile.activeSchool) + 'students.csv';
-      return lmFileBackups.show(path, $scope.students_encoding);
-    };
-    $scope.teachers_backups = function() {
-      var path;
-      path = lmn_get_school_configpath($scope.identity.profile.activeSchool) + 'teachers.csv';
-      return lmFileBackups.show(path, $scope.teachers_encoding);
-    };
-    $scope.extrastudents_backups = function() {
-      var path;
-      path = lmn_get_school_configpath($scope.identity.profile.activeSchool) + 'extrastudents.csv';
-      return lmFileBackups.show(path, $scope.extrastudents_encoding);
-    };
-    $scope.courses_backups = function() {
-      var path;
-      path = lmn_get_school_configpath($scope.identity.profile.activeSchool) + 'extraclasses.csv';
-      return lmFileBackups.show(path, $scope.courses_encoding);
+    $scope.backups = function(role) {
+      return lmFileBackups.show(`${$scope.configpath}${role}.csv`, '');
     };
     // general functions
     $scope.error_msg = {};
@@ -2518,7 +2454,12 @@
         return;
       }
       return $http.get("/api/lmn/activeschool").then(function(resp) {
-        return $scope.identity.profile.activeSchool = resp.data;
+        $scope.school = resp.data;
+        if ($scope.school === "default-school") {
+          return $scope.configpath = '/etc/linuxmuster/sophomorix/default-school/';
+        } else {
+          return $scope.configpath = `/etc/linuxmuster/sophomorix/${$scope.school}/${$scope.school}.`;
+        }
       });
     });
     // Loading first tab
@@ -2535,7 +2476,7 @@
         return true;
       }
       if (key === 'B' && event.ctrlKey) {
-        $scope[current_tab + "_backups"]();
+        $scope.backups(current_tab);
         return true;
       }
       return false;

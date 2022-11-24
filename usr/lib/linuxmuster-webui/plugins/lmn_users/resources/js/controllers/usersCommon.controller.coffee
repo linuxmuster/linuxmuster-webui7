@@ -214,64 +214,54 @@ angular.module('lmn.users').controller 'LMUsersSortListModalController', ($scope
 
     $scope.rebuildCSV()
 
-angular.module('lmn.users').controller 'LMUsersUploadModalController', ($scope, $window, $http, $uibModalInstance, messagebox, notify, $uibModal, gettext, filesystem, userlist) ->
+angular.module('lmn.users').controller 'LMUsersUploadModalController', ($scope, $window, $http, $uibModalInstance, messagebox, notify, $uibModal, gettext, filesystem, role, parent) ->
     $scope.path = "/tmp/"
-    $scope.onUploadBegin = ($flow) ->
+    $scope.parent = parent
+    $scope.role = role
+    $scope.csv_name = "#{role}.csv"
+
+    $scope.upload = ($flow, check=true) ->
         $uibModalInstance.close()
         msg = messagebox.show({progress: true})
         filesystem.startFlowUpload($flow, $scope.path).then(() ->
             notify.success(gettext('Uploaded'))
             filename = $flow["files"][0]["name"]
-            $http.post('/api/lmn/users/lists/import', {action: 'get', path: $scope.path+filename, userlist: userlist}).then (resp) ->
-                userListCSV = resp.data
-                $uibModal.open(
-                             templateUrl: '/lmn_users:resources/partial/sortList.modal.html'
-                             controller: 'LMUsersSortListModalController'
-                             resolve:
-                                userListCSV: () -> userListCSV
-                                userlist: () -> userlist
-                          ).result.then (result) ->
-                             #console.log (result)
-                             $http.post("/api/lmn/users/lists/import", {action: 'save', data: result, userlist: userlist}).then (resp) ->
-                                #console.log (resp['data'])
-                                if resp['data'][0] == 'ERROR'
-                                    notify.error (resp['data'][1])
-                                if resp['data'][0] == 'LOG'
-                                    notify.success gettext(resp['data'][1])
-                                # TODO: it would be better to reload just the content frame. Currently I dont know how to set the route to reload it
-                                $window.location.reload()
-                                msg.close()
-                                notify.success gettext('Saved')
-
-                msg.close()
-        , null, (progress) ->
-          msg.messagebox.title = "Uploading: #{Math.floor(100 * progress)}%"
-        )
-
-
-    $scope.close = () ->
-        $uibModalInstance.close()
-
-angular.module('lmn.users').controller 'LMUsersUploadCustomModalController', ($scope, $window, $http, $uibModalInstance, messagebox, notify, $uibModal, gettext, filesystem, userlist) ->
-    $scope.path = "/tmp/"
-    $scope.onUploadBegin = ($flow) ->
-        $uibModalInstance.close()
-        msg = messagebox.show({progress: true})
-        filesystem.startFlowUpload($flow, $scope.path).then(() ->
-            notify.success(gettext('Uploaded'))
-            filename = $flow["files"][0]["name"]
-            $http.post('/api/lmn/users/lists/filterCustomCSV', {tmp_path: $scope.path + filename, userlist: userlist}).then (resp) ->
-                if resp['data'][0] == 'ERROR'
-                    notify.error (resp['data'][1])
-                if resp['data'][0] == 'LOG'
-                    notify.success gettext(resp['data'][1])
-                $window.location.reload()
-                msg.close()
-                notify.success gettext('Saved')
+            if check
+                $scope.checkColumns(filename)
+            else
+                $scope.saveCSV(filename)
+            msg.close()
         , null, (progress) ->
             msg.messagebox.title = "Uploading: #{Math.floor(100 * progress)}%"
         )
 
+    $scope.checkColumns = (filename) ->
+        $http.post('/api/lmn/users/lists/import', {action: 'get', path: $scope.path+filename, userlist: $scope.csv_name}).then (resp) ->
+            userListCSV = resp.data
+            $uibModal.open(
+                templateUrl: '/lmn_users:resources/partial/sortList.modal.html'
+                controller: 'LMUsersSortListModalController'
+                resolve:
+                    userListCSV: () -> userListCSV
+                    userlist: () -> $scope.csv_name
+            ).result.then (result) ->
+                 $http.post("/api/lmn/users/lists/import", {action: 'save', data: result, userlist: $scope.csv_name}).then (resp) ->
+                    #console.log (resp['data'])
+                    if resp['data'][0] == 'ERROR'
+                        notify.error (resp['data'][1])
+                    if resp['data'][0] == 'LOG'
+                        $scope.parent["get#{$scope.role}"](force:true)
+                        notify.success gettext(resp['data'][1])
+                        notify.success gettext('Saved')
+
+    $scope.saveCSV = (filename) ->
+        $http.post('/api/lmn/users/lists/csv', {tmp_path: $scope.path + filename, userlist: $scope.csv_name}).then (resp) ->
+            if resp['data'][0] == 'ERROR'
+                notify.error (resp['data'][1])
+            if resp['data'][0] == 'LOG'
+                $scope.parent["get#{$scope.role}"](force:true)
+                notify.success gettext(resp['data'][1])
+                notify.success gettext('Saved')
 
     $scope.close = () ->
         $uibModalInstance.close()

@@ -4,13 +4,31 @@
 </div>
 <div class="modal-body">
     <div class="alert alert-warning">
-        <i class="fa fa-warning"></i> <span translate>Would you like to upload a list csv? This will replace your current CSV! Please respect the format columns... </span>
+        <i class="fa fa-warning"></i>
+        <span translate>Would you like to upload a list csv? This will replace your current CSV!<br />
+            It's highly recommend to check the columns after the upload instead of directly uploading your own CSV.<br />
+            <br />
+            After the the upload, sophomorix will try to execute the filter script configured in your school.conf.
+            Please read the full documentation at
+            <a href="https://github.com/linuxmuster/sophomorix4/wiki/Export-and-Filters#filters">
+                sophomorix's wiki
+            </a> about it.
+            <br />
+            Use it with caution !
+        </span>
     </div>
     <progress-spinner ng:show="isWorking"></progress-spinner>
 </div>
-<div class="modal-footer" 	
-    flow-init='{target: "/api/filesystem/upload", chunkSize: 1024 * 1024, singleFile: true}'
-    flow-files-submitted="onUploadBegin($flow)">
+<div class="modal-footer">
     <button class="btn btn-default btn-flat" ng:click="close()" translate>Close</button>
-    <span type="file" class="btn btn-default btn-flat" flow-btn>Upload CSV</span>
+    <span
+        flow-init='{target: "/api/filesystem/upload", chunkSize: 1024 * 1024, singleFile: true}'
+        flow-files-submitted="upload($flow, false)">
+        <span type="file" class="btn btn-default btn-flat" flow-btn translate>Save directly</span>
+    </span>
+    <span
+        flow-init='{target: "/api/filesystem/upload", chunkSize: 1024 * 1024, singleFile: true}'
+        flow-files-submitted="upload($flow)">
+        <span type="file" class="btn btn-default btn-flat" flow-btn translate>Check columns</span>
+    </span>
 </div>

@@ -31,7 +31,6 @@ resources:
     - 'resources/partial/print-passwords.options.modal.html'
     - 'resources/partial/apply.modal.html'
     - 'resources/partial/upload.modal.html'
-    - 'resources/partial/uploadcustom.modal.html'
     - 'resources/partial/sortList.modal.html'
     - 'resources/partial/check.modal.html'
     - 'resources/partial/result.modal.html'

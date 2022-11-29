@@ -422,7 +422,7 @@ class Handler(HttpPlugin):
             })
         return targets
 
-    @url(r'/api/lmn/smbclient/download') # TODO : wait until Ajenti supports head for get requests
+    @get(r'/api/lmn/smbclient/download')
     @endpoint(page=True)
     def handle_smb_download(self, http_context):
         path = http_context.query.get('path', None)

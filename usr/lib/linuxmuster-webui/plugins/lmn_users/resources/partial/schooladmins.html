@@ -53,7 +53,7 @@
 
     <br />
 
-    <table ng:show="schooladmins[0] != 'none'" class="table" style="width:100%">
+    <table ng:show="schooladmins[0] != 'none'" class="table" style="width:100%" ng:class="{'lmn-blurred': blurred}">
         <tr>
             <th><span checkbox ng:model="all_selected" ng:change="selectAll(filter)"></span></th>
             <th width="120" translate>
@@ -115,28 +115,28 @@
                     </button>
                     <ul uib-dropdown-menu class="dropdown-menu-right" style=" margin-bottom: -30px; margin-right: 40px; z-index: 4000;">
                         <li>
-                            <a ng:click="showInitialPassword([schooladmin])" translate>
+                            <a ng:click="showFirstPassword(schooladmin.sAMAccountName)" translate>
                                 Show initial password
                             </a>
                         </li>
                         <li>
-                            <a ng:click="setInitialPassword([schooladmin])" translate>
+                            <a ng:click="resetFirstPassword(schooladmin.sAMAccountName)" translate>
                                 Restore initial password
                             </a>
                         </li>
                         <li>
-                            <a ng:click="setRandomPassword([schooladmin])" translate>
+                            <a ng:click="setRandomFirstPassword(schooladmin.sAMAccountName)" translate>
                                 Set random initial password
                             </a>
                         </li>
                         <li>
-                            <a ng:click="setCustomPassword([schooladmin], 'initial')" translate>
-                                Set custom initial password
+                            <a ng:click="setCustomPassword(schooladmin, 'first')" translate>
+                                Set custom first password
                             </a>
                         </li>
                         <li>
-                            <a ng:click="setCustomPassword([schooladmin], 'actual')" translate>
-                                Set actual user password
+                            <a ng:click="setCustomPassword(schooladmin, 'current')" translate>
+                                Set current user password
                             </a>
                         </li>
                     </ul>
@@ -164,7 +164,7 @@
     <div class="alert alert-info" ng:show="schoolbindusers.length == 0" translate>
         No school bind user found.
     </div>
-    <table ng:show="schoolbindusers.length > 0" class="table">
+    <table ng:show="schoolbindusers.length > 0" class="table" ng:class="{'lmn-blurred': blurred}">
         <tr>
             <th> </th>
             <th width="120" translate> Login</th>
@@ -182,7 +182,7 @@
                 {{schoolbinduser.DN}}
             </td>
             <td width="1">
-                <button class="btn btn-default" ng:click="showPW(schoolbinduser)" ng:show="schoolbinduser.pw">
+                <button class="btn btn-default" ng:click="showBindPW(schoolbinduser)" ng:show="schoolbinduser.pw">
                     <i class="fa fa-eye"></i>
                 </button>
             </td>
@@ -221,13 +221,13 @@
         </button>
         <ul uib-dropdown-menu class="dropdown-menu-left">
             <li>
-                <a ng:click="batchSetInitialPassword()" translate>Set initial password for selected</a>
+                <a ng:click="batchResetFirstPassword()" translate>Set initial password</a>
             </li>
             <li>
-                <a ng:click="batchSetRandomPassword()" translate>Set random password for selected</a>
+                <a ng:click="batchSetRandomFirstPassword()" translate>Set random password</a>
             </li>
             <li>
-                <a ng:click="batchSetCustomPassword()" translate>Set custom password for selected</a>
+                <a ng:click="batchSetCustomFirstPassword()" translate>Set custom password</a>
             </li>
         </ul>
         <br />

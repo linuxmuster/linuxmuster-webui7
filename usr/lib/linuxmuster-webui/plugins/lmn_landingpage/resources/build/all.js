@@ -140,7 +140,7 @@
     });
   });
 
-  angular.module('lmn.users').controller('LMNUserCustomFieldsController', function($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, user, customFields, custom_fields) {
+  angular.module('lmn.landingpage').controller('LMNUserCustomFieldsController', function($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, user, customFields, custom_fields) {
     $scope.custom_fields = custom_fields;
     $scope.user = user;
     $scope.id = user.sAMAccountName;
@@ -148,105 +148,43 @@
       return customFields.isListAttr(attr_name);
     };
     $scope.editCustom = function(custom) {
-      var n, value;
+      var index, value;
       value = custom.value;
-      n = custom.attr.slice(-1);
-      return messagebox.prompt(gettext('New value'), value).then(function(msg) {
-        return $http.post("/api/lm/custom", {
-          index: n,
-          value: msg.value,
-          user: $scope.id
-        }).then(function() {
-          if (msg.value) {
-            custom.value = msg.value;
-          } else {
-            custom.value = 'null';
-          }
-          return notify.success(gettext("Value updated !"));
-        }, function() {
-          return notify.error(gettext("Error, please verify the user and/or your values."));
-        });
+      index = custom.attr.slice(-1);
+      return customFields.editCustom($scope.id, value, index).then(function(resp) {
+        return custom.value = resp;
       });
     };
     $scope.removeCustomMulti = function(custom, value) {
-      var n;
-      n = custom.attr.slice(-1);
-      return messagebox.show({
-        title: gettext('Remove custom field value'),
-        text: gettext('Do you really want to remove ') + value + ' ?',
-        positive: gettext('OK'),
-        negative: gettext('Cancel')
-      }).then(function(msg) {
-        return $http.post("/api/lm/custommulti/remove", {
-          index: n,
-          value: value,
-          user: $scope.id
-        }).then(function() {
-          var position;
-          position = custom.value.indexOf(value);
-          custom.value.splice(position, 1);
-          return notify.success(gettext("Value removed !"));
-        }, function() {
-          return notify.error(gettext("Error, please verify the user and/or your values."));
-        });
+      var index;
+      index = custom.attr.slice(-1);
+      return customFields.removeCustomMulti($scope.id, value, index).then(function() {
+        var position;
+        position = custom.value.indexOf(value);
+        return custom.value.splice(position, 1);
       });
     };
     $scope.addCustomMulti = function(custom) {
-      var n;
-      n = custom.attr.slice(-1);
-      return messagebox.prompt(gettext('New value')).then(function(msg) {
-        return $http.post("/api/lm/custommulti/add", {
-          index: n,
-          value: msg.value,
-          user: $scope.id
-        }).then(function() {
-          if (msg.value) {
-            custom.value.push(msg.value);
-            notify.success(gettext("Value added !"));
-            return console.log(custom);
-          }
-        }, function() {
-          return notify.error(gettext("Error, please verify the user and/or your values."));
-        });
+      var index;
+      index = custom.attr.slice(-1);
+      return customFields.addCustomMulti($scope.id, index).then(function(resp) {
+        if (resp) {
+          return custom.value.push(resp);
+        }
       });
     };
     $scope.removeProxyAddresses = function(custom, value) {
-      return messagebox.show({
-        title: gettext('Remove proxy address'),
-        text: gettext('Do you really want to remove ') + value + ' ?',
-        positive: gettext('OK'),
-        negative: gettext('Cancel')
-      }).then(function(msg) {
-        return $http.post("/api/lm/changeProxyAddresses", {
-          action: 'remove',
-          address: value,
-          user: $scope.id
-        }).then(function() {
-          var position;
-          position = custom.value.indexOf(value);
-          custom.value.splice(position, 1);
-          return notify.success(gettext("Value removed !"));
-        }, function() {
-          return notify.error(gettext("Error, please verify the user and/or your values."));
-        });
+      return customFields.removeProxyAddresses($scope.id, value).then(function() {
+        var position;
+        position = custom.value.indexOf(value);
+        return custom.value.splice(position, 1);
       });
     };
     $scope.addProxyAddresses = function(custom) {
-      var n;
-      n = custom.attr.slice(-1);
-      return messagebox.prompt(gettext('New address')).then(function(msg) {
-        return $http.post("/api/lm/changeProxyAddresses", {
-          action: 'add',
-          address: msg.value,
-          user: $scope.id
-        }).then(function() {
-          if (msg.value) {
-            custom.value.push(msg.value);
-          }
-          return notify.success(gettext("Address added !"));
-        }, function() {
-          return notify.error(gettext("Error, please verify the user and/or your values."));
-        });
+      return customFields.addProxyAddresses($scope.id).then(function(resp) {
+        if (resp) {
+          return custom.value.push(resp);
+        }
       });
     };
     return $scope.close = function() {

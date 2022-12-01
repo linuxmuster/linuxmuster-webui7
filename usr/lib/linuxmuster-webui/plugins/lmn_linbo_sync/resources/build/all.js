@@ -25,7 +25,7 @@ angular.module('lmn.linbo_sync').config(function ($routeProvider) {
         return $scope.linbo_remote = '/usr/sbin/linbo-remote -s ' + $scope.school;
       }
     });
-    $http.get("/api/lm/linbo/SyncList").then(function(resp) {
+    $http.get("/api/lmn/linbosync/last_syncs").then(function(resp) {
       var group, results;
       $scope.groups = resp.data;
       $scope.linbo_command = {};
@@ -33,6 +33,7 @@ angular.module('lmn.linbo_sync').config(function ($routeProvider) {
       for (group in $scope.groups) {
         results.push($scope.linbo_command[group] = {
           'cmd': [],
+          'cmd_parameters': [],
           'show': false,
           'host': [],
           'target': 'clients'
@@ -50,7 +51,7 @@ angular.module('lmn.linbo_sync').config(function ($routeProvider) {
     $scope.isUp = function(group, host) {
       var index;
       index = $scope.groups[group].hosts.indexOf(host);
-      return $http.get(`/api/lm/linbo/isOnline/${host.hostname}`).then(function(resp) {
+      return $http.get(`/api/lmn/linbosync/isOnline/${host.hostname}`).then(function(resp) {
         $scope.groups[group].hosts[index].up_comment = resp.data;
         $scope.groups[group].hosts[index].up_icon = $scope.up_icons[resp.data];
         if (resp.data === "Off" || resp.data === "No response") {
@@ -175,13 +176,36 @@ angular.module('lmn.linbo_sync').config(function ($routeProvider) {
       return $scope.refresh_cmd(group);
     };
     $scope.refresh_cmd = function(group) {
-      var autostart, cmd, format, i, index, ip, j, len, len1, os, ref, ref1, start, sync, timeout;
-      cmd = ' -c ';
+      var autostart, cmd, cmd_parameters, format, i, index, ip, j, len, len1, os, ref, ref1, start, sync, timeout;
+      cmd_parameters = {
+        'target': {
+          'type': '',
+          'host': ''
+        },
+        'timeout': 0,
+        'prestart': false,
+        'disable_gui': false,
+        'bypass': false,
+        'partition': false,
+        'actions': {
+          'format': [],
+          'sync': [],
+          'start': []
+        },
+        'acpi': ''
+      };
       format = [];
       sync = [];
       start = [];
+      if ($scope.groups[group]['auto']['prestart'] > 0) {
+        cmd = ' -p ';
+        cmd_parameters['prestart'] = true;
+      } else {
+        cmd = ' -c ';
+      }
       if ($scope.groups[group]['auto']['partition'] > 0) {
         cmd += ' partition';
+        cmd_parameters['partition'] = true;
       }
       ref = $scope.groups[group]['os'];
       for (index = i = 0, len = ref.length; i < len; index = ++i) {
@@ -190,18 +214,18 @@ angular.module('lmn.linbo_sync').config(function ($routeProvider) {
         // First format
         if (os.run_format) {
           format.push('format:' + os.partition);
+          cmd_parameters['actions']['format'].push(os.partition);
         }
         // Then sync or new ( not both )
         if (os.run_sync) {
           sync.push('sync:' + os.position);
+          cmd_parameters['actions']['sync'].push(os.position);
         }
         // A little start, but only one
         if (os.run_start) {
           start.push('start:' + os.position);
+          cmd_parameters['actions']['start'].push(os.position);
         }
-      }
-      if ($scope.groups[group]['auto']['prestart'] > 0) {
-        cmd = ' -p ';
       }
       if (format.length > 0) {
         cmd += cmd.length > 4 ? ',' + format.join() : format.join();
@@ -215,17 +239,21 @@ angular.module('lmn.linbo_sync').config(function ($routeProvider) {
       // Power is the key, but without start ...
       if ($scope.groups[group]['power']['halt']) {
         cmd += cmd.length > 4 ? ',' + $scope.groups[group]['power']['halt'] : $scope.groups[group]['power']['halt'];
+        cmd_parameters['acpi'] = $scope.groups[group]['power']['halt'];
       }
       timeout = '';
       if ($scope.groups[group]['auto']['wol'] > 0) {
         timeout = ' -w ' + $scope.groups[group]['power']['timeout'];
+        cmd_parameters['timeout'] = $scope.groups[group]['power']['timeout'];
       }
       autostart = '';
       if ($scope.groups[group]['auto']['disable_gui'] > 0) {
         autostart += ' -d ';
+        cmd_parameters['disable_gui'] = true;
       }
       if ($scope.groups[group]['auto']['bypass'] > 0 && timeout) {
         autostart += ' -n ';
+        cmd_parameters['bypass'] = true;
       }
       // At least one command and one host selected
       if (cmd.length > 4 && $scope.linbo_command[group]['host'].length > 0) {
@@ -233,34 +261,41 @@ angular.module('lmn.linbo_sync').config(function ($routeProvider) {
         if ($scope.linbo_command[group]['target'] === 'group' || $scope.linbo_command[group]['host'].length === $scope.groups[group].hosts.length) {
           $scope.linbo_command[group]['target'] = 'group';
           $scope.linbo_command[group]['cmd'] = [$scope.linbo_remote + ' -g ' + group + timeout + autostart + cmd];
+          cmd_parameters['target']['type'] = 'group';
+          cmd_parameters['target']['host'] = group;
+          $scope.linbo_command[group]['cmd_parameters'] = [cmd_parameters];
         } else {
           $scope.linbo_command[group]['cmd'] = [];
+          $scope.linbo_command[group]['cmd_parameters'] = [];
           ref1 = $scope.linbo_command[group]['host'];
           for (j = 0, len1 = ref1.length; j < len1; j++) {
             ip = ref1[j];
             $scope.linbo_command[group]['cmd'].push($scope.linbo_remote + ' -i ' + ip + timeout + autostart + cmd);
+            cmd_parameters['target']['type'] = 'host';
+            cmd_parameters['target']['host'] = ip;
+            $scope.linbo_command[group]['cmd_parameters'].push(cmd_parameters);
           }
         }
         return $scope.linbo_command[group]['show'] = true;
       } else {
         $scope.linbo_command[group]['cmd'] = '';
+        $scope.linbo_command[group]['cmd_parameters'] = [];
         return $scope.linbo_command[group]['show'] = false;
       }
     };
     return $scope.run = function(group) {
-      var cmd, i, len, ref, results;
-      ref = $scope.linbo_command[group]['cmd'];
+      var cmd_parameters, i, len, ref, results;
+      ref = $scope.linbo_command[group]['cmd_parameters'];
       results = [];
       for (i = 0, len = ref.length; i < len; i++) {
-        cmd = ref[i];
-        results.push($http.post("/api/lm/linbo/run", {
-          cmd: cmd,
-          action: 'run-linbo'
+        cmd_parameters = ref[i];
+        results.push($http.post("/api/lmn/linbosync/run", {
+          cmd_parameters: cmd_parameters
         }).then(function(resp) {
-          if (resp.data) {
-            return notify.error(resp.data);
+          if (resp.data['status'] === 1) {
+            return notify.error(resp.data['msg']);
           } else {
-            return notify.success(gettext('Command successfully sent : ') + cmd);
+            return notify.success(gettext('Command successfully sent: ' + resp.data['msg']));
           }
         }));
       }

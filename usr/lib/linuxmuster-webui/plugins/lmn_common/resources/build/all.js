@@ -51,7 +51,7 @@
         $scope.content = '';
         $scope.autoscroll = true;
         i = $interval(function() {
-          return $http.get(`/api/lm/log${$scope.path}?offset=${$scope.content.length}`).then(function(resp) {
+          return $http.get(`/api/lmn/log${$scope.path}?offset=${$scope.content.length}`).then(function(resp) {
             var lines;
             // console.log ($scope)
             $scope.content += resp.data;
@@ -186,7 +186,7 @@ angular.module('core').directive('teacherAccess', function (identity) {
             if ($scope.owner && $scope.group) {
               filename = $flow.files[0].name;
               filepath = $scope.uploadpath + filename;
-              $http.post('/api/lm/chown', {
+              $http.post('/api/lmn/chown', {
                 filepath: $scope.uploadpath + $flow.files[0].name,
                 owner: $scope.owner,
                 group: $scope.group
@@ -199,7 +199,7 @@ angular.module('core').directive('teacherAccess', function (identity) {
                   }).then(function(resp) {
                     console.log('return');
                     console.log(resp.data);
-                    return $http.post('/api/lm/remove-file', {
+                    return $http.post('/api/lmn/remove-file', {
                       filepath: filepath
                     }).then(function() {
                       notify.success(gettext('Uploaded'));
@@ -252,7 +252,7 @@ angular.module('core').directive('teacherAccess', function (identity) {
             if ($scope.owner && $scope.group) {
               filename = $flow.files[0].name;
               filepath = $scope.uploadpath + filename;
-              $http.post('/api/lm/chown', {
+              $http.post('/api/lmn/chown', {
                 filepath: $scope.uploadpath + $flow.files[0].name,
                 owner: $scope.owner,
                 group: $scope.group
@@ -263,7 +263,7 @@ angular.module('core').directive('teacherAccess', function (identity) {
                     filepath: $scope.uploadpath,
                     subdir: $scope.subdir
                   }).then(function(resp) {
-                    return $http.post('/api/lm/remove-file', {
+                    return $http.post('/api/lmn/remove-file', {
                       filepath: filepath
                     }).then(function() {
                       notify.success(gettext('Uploaded'));
@@ -317,7 +317,7 @@ angular.module('core').directive('teacherAccess', function (identity) {
             if ($scope.owner && $scope.group) {
               filename = $flow.files[0].name;
               filepath = $scope.uploadpath + filename;
-              $http.post('/api/lm/chown', {
+              $http.post('/api/lmn/chown', {
                 filepath: $scope.uploadpath + $flow.files[0].name,
                 owner: $scope.owner,
                 group: $scope.group
@@ -328,7 +328,7 @@ angular.module('core').directive('teacherAccess', function (identity) {
                     filepath: $scope.uploadpath,
                     subdir: $scope.subdir
                   }).then(function(resp) {
-                    return $http.post('/api/lm/remove-file', {
+                    return $http.post('/api/lmn/remove-file', {
                       filepath: filepath
                     }).then(function() {
                       notify.success(gettext('Uploaded'));
@@ -701,68 +701,6 @@ angular.module('core').directive('teacherAccess', function (identity) {
 
 }).call(this);
 
-'use strict';
-
-angular.module('lmn.common').service('customFields', function ($http) {
-    var _this = this;
-
-    this.customDisplayOptions = ['proxyAddresses', 'sophomorixCustom1', 'sophomorixCustom2', 'sophomorixCustom3', 'sophomorixCustom4', 'sophomorixCustom5', 'sophomorixCustomMulti1', 'sophomorixCustomMulti2', 'sophomorixCustomMulti3', 'sophomorixCustomMulti4', 'sophomorixCustomMulti5'];
-
-    this.customLists = ['proxyAddresses', 'sophomorixCustomMulti1', 'sophomorixCustomMulti2', 'sophomorixCustomMulti3', 'sophomorixCustomMulti4', 'sophomorixCustomMulti5'];
-
-    this.isListAttr = function (attr) {
-        return _this.customLists.includes(attr);
-    };
-
-    this.load_display = function (role) {
-        return $http.get('/api/lm/read_custom_config/' + role).then(function (response) {
-            // Filter title per display
-            config = {
-                'customDisplay': response.data.customDisplay,
-                'customTitle': ['', '', '', '']
-            };
-            var _arr = [1, 2, 3];
-            for (var _i = 0; _i < _arr.length; _i++) {
-                idx = _arr[_i];
-
-                if (config['customDisplay'][idx] == 'proxyAddresses') {
-                    config['customTitle'][idx] = response.data.proxyAddresses.title;
-                } else {
-                    position = config['customDisplay'][idx].slice(-1);
-                    if (position == '') {
-                        config['customTitle'][idx] = '';
-                    } else if (_this.isListAttr(config['customDisplay'][idx])) {
-                        config['customTitle'][idx] = response.data.customMulti[position].title || '';
-                    } else {
-                        config['customTitle'][idx] = response.data.custom[position].title || '';
-                    }
-                }
-            }
-            return config;
-        });
-    };
-
-    this.load_config = function () {
-        var role = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-        return $http.get('/api/lm/read_custom_config/' + role).then(function (response) {
-            return response.data;
-        });
-    };
-
-    this.load_user_fields = function (user) {
-        return $http.get('/api/lmn/custom_fields/' + user).then(function (response) {
-            return response.data;
-        });
-    };
-
-    this.save = function (config) {
-        return $http.post("/api/lm/save_custom_config", { 'config': config });
-    };
-
-    return this;
-});
-
-
 // Generated by CoffeeScript 2.5.1
 (function() {
   angular.module('lmn.common').service('lmFileBackups', function($uibModal) {
@@ -842,7 +780,7 @@ angular.module('lmn.common').service('customFields', function ($http) {
     };
     $scope.loadBackupFiles();
     $scope.diff = function(backup) {
-      return $http.post('/api/lm/diff', {
+      return $http.post('/api/lmn/diff', {
         file1: path,
         file2: dir + '/' + backup.name
       }).then(function(resp) {
@@ -866,7 +804,7 @@ angular.module('lmn.common').service('customFields', function ($http) {
       };
     };
     $scope.onlyremove = function(backup) {
-      return $http.post('/api/lm/remove-file', {
+      return $http.post('/api/lmn/remove-file', {
         filepath: dir + '/' + backup.name
       }).then(function(resp) {
         var pos;

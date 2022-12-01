@@ -1,6 +1,5 @@
 # -*- coding:utf8 -*-
 
-import csv
 from datetime import datetime
 import os
 import locale
@@ -114,18 +113,18 @@ def group_os(workstations):
 
     return workstations
 
-def list_workstations(context):
+def devices_reader(configpath, school):
     """
-    Generate a dict with workstations and parameters out of devices file
+    Read devices.csv for actual school and return the devices list.
 
-    :param context: user context set in views.py
-    :return: Dict with all linbo informations for all workstations.
+    :param configpath: Path of devices.csv
+    :type configpath:  basestringg
+    :param school: Actual school
+    :type school: basestring
+    :return: Devices list
     :rtype: dict
     """
 
-    path = f'{context.schoolmgr.configpath}devices.csv'
-    school = context.schoolmgr.school
-    devices_dict = {}
     fieldnames = [
         'room',
         'hostname',
@@ -144,20 +143,34 @@ def list_workstations(context):
         'sophomorixComment',
         'options',
     ]
-    with LMNFile(path, 'r', fieldnames=fieldnames) as devices_csv:
 
+    with LMNFile(configpath, 'r', fieldnames=fieldnames) as devices_csv:
         devices = devices_csv.read()
-        for device in devices:
-            if school != 'default-school':
-                if device['hostname']:
-                    device['hostname'] = f'{school}-{device["hostname"]}'
-            if os.path.isfile(os.path.join(LINBO_PATH, 'start.conf.'+str(device['group']))):
-                if device['pxeFlag'] != '1' and device['pxeFlag'] != "2":
-                    continue
-                elif device['group'] not in devices_dict.keys():
-                    devices_dict[device['group']] = {'grp': device['group'], 'hosts': [device]}
-                else:
-                    devices_dict[device['group']]['hosts'].append(device)
+
+    return devices
+
+def list_workstations(configpath, school):
+    """
+    Generate a dict with workstations and parameters out of devices file
+
+    :param context: user context set in views.py
+    :return: Dict with all linbo informations for all workstations.
+    :rtype: dict
+    """
+
+    devices_dict = {}
+
+    for device in devices_reader(configpath, school):
+        if school != 'default-school':
+            if device['hostname']:
+                device['hostname'] = f'{school}-{device["hostname"]}'
+        if os.path.isfile(os.path.join(LINBO_PATH, 'start.conf.'+str(device['group']))):
+            if device['pxeFlag'] != '1' and device['pxeFlag'] != "2":
+                continue
+            elif device['group'] not in devices_dict.keys():
+                devices_dict[device['group']] = {'grp': device['group'], 'hosts': [device]}
+            else:
+                devices_dict[device['group']]['hosts'].append(device)
     return group_os(devices_dict)
 
 def last_sync_all(workstations):
@@ -308,7 +321,84 @@ def is_port_signature_windows(ports):
         )
     )
 
-def run(command):
+def build_linbo_command(cmd_parameters):
+    """
+    Check command parameters sent to linbo-remote command and build whole command.
+
+    :param cmd_parameters: All parameters to call linbo-remote
+    :type cmd_parameters: dict
+    :return: One line linbo-remote command
+    :rtype: basestring
+    """
+
+    # Load devices and group list to check parameters
+    devices_list = []
+    group_list = []
+    for device in devices_reader(cmd_parameters['configpath'], cmd_parameters['school']):
+        devices_list.append(device['ip'])
+        group_list.append(device['group'])
+
+    group_list = list(set(group_list))
+
+    cmd = '/usr/sbin/linbo-remote'
+
+    # School
+    if cmd_parameters['school'] != 'default-school':
+        cmd = f'{cmd} -s {cmd_parameters["school"]}'
+
+    # Target (check if existing)
+    target = cmd_parameters["target"]["host"]
+    if cmd_parameters['target']['type'] == 'host':
+        if target in devices_list:
+            cmd = f'{cmd} -i {target}'
+        else:
+            return False
+    elif cmd_parameters['target']['type'] == 'group':
+        if target in group_list:
+            cmd = f'{cmd} -g {target}'
+        else:
+            return False
+
+    # Timeout and bypass
+    if cmd_parameters['timeout'] > 0:
+        cmd = f'{cmd} -w {int(cmd_parameters["timeout"])}'
+        if cmd_parameters['bypass']:
+            cmd = f'{cmd} -n'
+
+    # Disable gui
+    if cmd_parameters['disable_gui']:
+        cmd = f'{cmd} -d'
+
+    actions = ''
+    # Partition
+    if cmd_parameters['partition']:
+        actions = 'partition'
+
+    # Format, sync, start
+    for action in ['format', 'sync', 'start']:
+        for position in cmd_parameters['actions'][action]:
+            if actions:
+                actions = f'{actions},{action}:{position}'
+            else:
+                actions = f'{action}:{position}'
+
+    # Halt or reboot
+    if cmd_parameters['acpi'] in ['halt', 'reboot']:
+        if actions:
+            actions = f'{actions},{cmd_parameters["acpi"]}'
+        else:
+            actions = f'{cmd_parameters["acpi"]}'
+
+    # Prestart
+    if cmd_parameters['prestart']:
+        cmd = f'{cmd} -p {actions}'
+    else:
+        cmd = f'{cmd} -c {actions}'
+
+    return cmd
+
+
+def run(cmd_parameters):
     """
     Run linbo command.
 
@@ -318,13 +408,19 @@ def run(command):
     :rtype: string or integer
     """
 
-    r = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=False).stdout.read().decode()
+    command = build_linbo_command(cmd_parameters)
+
+    if not command:
+        return {'status': 1, 'msg': 'Wrong parameters sent to linbo-remote'}
+
+    r = subprocess.Popen(command.split(), stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=False).stdout.read().decode()
+
     if 'Not online, host skipped.' in r:
         clients_error = ''
         for line in r.split('\n'):
             if 'Not online, host skipped.' in line:
                 clients_error += line.split()[0] + ','
 
-        return 'Not online, host skipped: ' + clients_error[:-1]
+        return {'status': 1, 'msg': f'Not online, host skipped: {clients_error[:-1]}'}
     else:
-        return 0
+        return {'status': 0, 'msg': command}

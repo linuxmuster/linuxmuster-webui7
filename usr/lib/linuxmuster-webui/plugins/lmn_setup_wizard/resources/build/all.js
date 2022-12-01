@@ -5,7 +5,7 @@ angular.module('lmn.setup_wizard', ['core']);
 angular.module('lmn.setup_wizard').run(function ($http, $location, identity) {
   identity.promise.then(function () {
     if (identity.user) {
-      $http.get('/api/lm/setup-wizard/is-configured').then(function (response) {
+      $http.get('/api/lmn/setup-wizard/is-configured').then(function (response) {
         if (!response.data) {
           $location.path('/view/lm/init/welcome');
         }
@@ -94,7 +94,7 @@ angular.module('lmn.setup_wizard').controller('InitSchoolController', function (
         return _this2.languages = response.data;
     });
 
-    $http.get('/api/lm/setup-wizard/read-ini').then(function (response) {
+    $http.get('/api/lmn/setup-wizard/setup').then(function (response) {
         return _this2.ini = response.data;
     });
 
@@ -142,7 +142,7 @@ angular.module('lmn.setup_wizard').controller('InitSchoolController', function (
             return;
         }
 
-        await $http.post('/api/lm/setup-wizard/update-ini', _this2.ini);
+        await $http.post('/api/lmn/setup-wizard/setup', _this2.ini);
         $location.path('/view/lm/init/account');
     };
 });
@@ -182,7 +182,7 @@ angular.module('lmn.setup_wizard').controller('InitAccountController', function 
             notify.error('Password too weak');
             return;
         }
-        $http.post('/api/lm/setup-wizard/update-ini', _this3.ini).then(function () {
+        $http.post('/api/lmn/setup-wizard/setup', _this3.ini).then(function () {
             return $location.path('/view/lm/init/externalservices');
         });
     };
@@ -193,7 +193,7 @@ angular.module('lmn.setup_wizard').controller('InitExternalServicesController', 
 
     pageTitle.set(gettext('Setup Wizard'));
     this.ini = {};
-    $http.get('/api/lm/setup-wizard/read-ini').then(function (response) {
+    $http.get('/api/lmn/setup-wizard/setup').then(function (response) {
         return _this4.ini = response.data;
     });
 
@@ -220,7 +220,7 @@ angular.module('lmn.setup_wizard').controller('InitExternalServicesController', 
                 return;
             }
         }
-        $http.post('/api/lm/setup-wizard/update-ini', _this4.ini).then(function () {
+        $http.post('/api/lmn/setup-wizard/setup', _this4.ini).then(function () {
             return $location.path('/view/lm/init/summary');
         });
     };
@@ -231,12 +231,12 @@ angular.module('lmn.setup_wizard').controller('InitSummaryController', function 
 
     pageTitle.set(gettext('Setup Wizard'));
     this.ini = {};
-    $http.get('/api/lm/setup-wizard/read-ini').then(function (response) {
+    $http.get('/api/lmn/setup-wizard/setup').then(function (response) {
         return _this5.ini = response.data;
     });
 
     this.finish = function () {
-        $http.post('/api/lm/setup-wizard/update-ini', _this5.ini).then(function () {
+        $http.post('/api/lmn/setup-wizard/setup', _this5.ini).then(function () {
             return $location.path('/view/lm/init/setup');
         });
     };
@@ -247,7 +247,7 @@ angular.module('lmn.setup_wizard').controller('InitSetupController', function ($
 
     pageTitle.set(gettext('Setup Wizard'));
     this.isWorking = true;
-    $http.post('/api/lm/setup-wizard/provision', { start: 'setup' }).then(function () {
+    $http.post('/api/lmn/setup-wizard/provision', { start: 'setup' }).then(function () {
         _this6.isWorking = false;
         notify.success(gettext('Setup complete'));
     }).catch(function () {
@@ -263,7 +263,7 @@ angular.module('lmn.setup_wizard').controller('InitDoneController', function ($w
 
     pageTitle.set(gettext('Setup Done'));
 
-    $http.get('/api/lm/read-config-setup').then(function (resp) {
+    $http.get('/api/lmn/read-config-setup').then(function (resp) {
         oldUrl = new URL(window.location.href); // TODO Fix port with ajenti new config
         servername = resp.data['setup']['servername'] ? resp.data['setup']['servername'] : resp.data['setup']['hostname'];
         //url = 'https://' + servername + '.' + resp.data['setup']['domainname'] + ':' + oldUrl.port // TODO Fix port with ajenti new config

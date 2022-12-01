@@ -93,7 +93,7 @@
         <span style="float: left;"> <h4 style="display:{{visible.sessionname}}">{{currentSession.comment}}</h4></span>
         <span style="float: right;"> <h6 style="display:{{visible.sessionname}}">{{currentSession.name}}</h6></span>
     </div>
-    <table class="table" style="display:{{visible.participanttable}};margin-bottom:60px;">
+    <table class="table" style="display:{{visible.participanttable}};margin-bottom:60px;" ng:class="{'lmn-blurred': blurred}">
         <tr>
             <th ng:repeat="(id, field) in fields" ng:if="field.visible"><div title="{{field.title}}" class="{{field.icon}}" style="font-size:20px;"></div> <br>{{field.name}}
                 <span checkbox style="float:right;" id="{{id}}.all" ng:if="field.examBox" ng-click="selectAll('exammode')" ng:model=field.checkboxStatus>"</span>
@@ -102,7 +102,12 @@
             <th></th>
         </tr>
         <tr style="display:;"  ng:repeat="participant in participants|orderBy:[sort.fx]">
-            <td class="ng-binding"> <a href="#"  ng-click="showDetails = ! showDetails"> <b> {{participant.sn}}, {{participant.givenName}} </b> </a>{{participant.sophomorixAdminClass}}, <br><i> {{participant.sAMAccountName}}</i>
+            <td class="ng-binding">
+                <a>
+                    <b> {{participant.sn}}, {{participant.givenName}} </b>
+                </a> {{participant.sophomorixAdminClass}},
+                <br />
+                <i> {{participant.sAMAccountName}}</i>
                 <div ng-show="showDetails"> <!--<img src="https://openclipart.org/image/2400px/svg_to_png/211821/matt-icons_preferences-desktop-personal.png" style="height:75px;"</img>--> </div>
             </td>
             <td>
@@ -110,7 +115,7 @@
                     <button type="button" class="btn btn-default" ng:click="shareTrans('share', [identity.user], participant, currentSession.comment)"translate > <a>Share</a></button>
                     <span uib-dropdown>
                         <button class="btn btn-default" uib-dropdown-toggle>
-                            <a class=""translate>Collect</a>
+                            <a translate>Collect</a>
                         </button>
                         <ul uib-dropdown-menu class="dropdown-menu-right">
                             <li>
@@ -167,27 +172,27 @@
                     </button>
                     <ul uib-dropdown-menu class="dropdown-menu-right" style=" margin-bottom: -30px; margin-right: 40px; z-index: 4000;">
                         <li>
-                            <a ng:click="showInitialPassword([participant.sAMAccountName])" translate>
+                            <a ng:click="showFirstPassword(participant.sAMAccountName)" translate>
                                 Show initial password
                             </a>
                         </li>
                         <li>
-                            <a ng:click="setInitialPassword([participant.sAMAccountName])" translate>
+                            <a ng:click="resetFirstPassword(participant.sAMAccountName)" translate>
                                 Restore initial password
                             </a>
                         </li>
                         <li>
-                            <a ng:click="setRandomPassword([participant.sAMAccountName])" translate>
+                            <a ng:click="setRandomFirstPassword(participant.sAMAccountName)" translate>
                                 Set random initial password
                             </a>
                         </li>
                         <li>
-                            <a ng:click="setCustomPassword([participant], participant.sAMAccountName, 'initial')" translate>
+                            <a ng:click="setCustomPassword(participant, 'first')" translate>
                                 Set custom initial password
                             </a>
                         </li>
                         <li>
-                            <a ng:click="setCustomPassword([participant], participant.sAMAccountName, 'actual')" translate>
+                            <a ng:click="setCustomPassword(participant, 'current')" translate>
                                 Set actual user password
                             </a>
                         </li>

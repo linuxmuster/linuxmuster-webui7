@@ -31,7 +31,7 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
         'UTF8',
     ]
 
-    $http.get('/api/lm/schoolsettings').then (resp) ->
+    $http.get('/api/lmn/schoolsettings').then (resp) ->
         school = 'default-school'
         encoding = {}
         #TODO: Remove comments
@@ -47,7 +47,7 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
         $scope.encoding = encoding
         $scope.settings = resp.data
 
-    $http.get('/api/lm/schoolsettings/latex-templates').then (resp) ->
+    $http.get('/api/lmn/schoolsettings/latex-templates').then (resp) ->
         $scope.templates_individual = resp.data[0]
         $scope.templates_multiple = resp.data[1]
 
@@ -71,7 +71,7 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
                     break
 
 
-    $http.get('/api/lm/holidays').then (resp) ->
+    $http.get('/api/lmn/holidays').then (resp) ->
         $scope.holidays = resp.data
 
     $scope.filterscriptNotEmpty = () ->
@@ -82,12 +82,12 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
 
     $scope.customDisplayOptions = customFields.customDisplayOptions
 
-    # $http.get('/api/lm/schoolsettings/school-share').then (resp) ->
+    # $http.get('/api/lmn/schoolsettings/school-share').then (resp) ->
     #     $scope.schoolShareEnabled = resp.data
 
     # $scope.setSchoolShare = (enabled) ->
     #     $scope.schoolShareEnabled = enabled
-    #     $http.post('/api/lm/schoolsettings/school-share', enabled)
+    #     $http.post('/api/lmn/schoolsettings/school-share', enabled)
 
     $scope.addHoliday = () ->
         $scope.holidays.push({'name':'', 'start':'', 'end':''})
@@ -105,7 +105,7 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
         if validPrintserver != true
             notify.error(validPrintserver)
             return
-        $http.post('/api/lm/schoolsettings', $scope.settings).then () ->
+        $http.post('/api/lmn/schoolsettings', $scope.settings).then () ->
             notify.success gettext('Saved')
 
     $scope.saveAndCheck = () ->
@@ -113,7 +113,7 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
         if validPrintserver != true
             notify.error(validPrintserver)
             return
-        $http.post('/api/lm/schoolsettings', $scope.settings).then () ->
+        $http.post('/api/lmn/schoolsettings', $scope.settings).then () ->
             $uibModal.open(
                 templateUrl: '/lmn_users:resources/partial/check.modal.html'
                 controller: 'LMUsersCheckModalController'
@@ -123,7 +123,7 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
             notify.success gettext('Saved')
 
     $scope.saveApplyQuota = () ->
-        $http.post('/api/lm/schoolsettings', $scope.settings).then () ->
+        $http.post('/api/lmn/schoolsettings', $scope.settings).then () ->
             notify.success gettext('Saved')
         $uibModal.open(
             templateUrl: '/lmn_quotas:resources/partial/apply.modal.html'
@@ -135,7 +135,7 @@ angular.module('lmn.settings').controller 'LMSettingsController', ($scope, $loca
         if document.getElementsByClassName("has-error").length > 0
             notify.error(gettext("Please first correct the mal formated fields."))
             return
-        $http.post('/api/lm/holidays', $scope.holidays).then () ->
+        $http.post('/api/lmn/holidays', $scope.holidays).then () ->
             notify.success gettext('Saved')
 
     $scope.validateDate = (date) ->

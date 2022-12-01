@@ -19,7 +19,7 @@ angular.module('lmn.smbclient').service('smbclient', function ($rootScope, $http
     };
 
     this.delete_file = function (path) {
-        return $http.post('/api/lmn/smbclient/file', { 'path': path }).then(function (response) {
+        return $http.post('/api/lmn/smbclient/unlink', { 'path': path }).then(function (response) {
             return response.data;
         });
     };
@@ -43,7 +43,7 @@ angular.module('lmn.smbclient').service('smbclient', function ($rootScope, $http
     };
 
     this.delete_dir = function (path) {
-        return $http.post('/api/lmn/smbclient/dir', { 'path': path }).then(function (response) {
+        return $http.post('/api/lmn/smbclient/rmdir', { 'path': path }).then(function (response) {
             return response.data;
         });
     };
@@ -55,13 +55,13 @@ angular.module('lmn.smbclient').service('smbclient', function ($rootScope, $http
     };
 
     this.createFile = function (path) {
-        return $http.post('/api/lmn/smbclient/create-file', { 'path': path }).then(function (response) {
+        return $http.post('/api/lmn/smbclient/file', { 'path': path }).then(function (response) {
             return response.data;
         });
     };
 
     this.createDirectory = function (path) {
-        return $http.post('/api/lmn/smbclient/create-directory', { 'path': path }).then(function (response) {
+        return $http.post('/api/lmn/smbclient/directory', { 'path': path }).then(function (response) {
             return response.data;
         });
     };

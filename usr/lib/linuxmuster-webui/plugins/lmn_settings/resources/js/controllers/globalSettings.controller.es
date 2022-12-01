@@ -34,7 +34,7 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope,
         "If you are not sure, just use the same certificate as the one above."
     );
 
-    $http.get('/api/lm/subnets').then((resp) => $scope.subnets = resp.data);
+    $http.get('/api/lmn/subnets').then((resp) => $scope.subnets = resp.data);
 
     $scope.removeSubnet = (subnet) => {
         messagebox.show({
@@ -49,7 +49,7 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope,
     }
 
     $scope.saveApplySubnets = () => {
-        $http.post('/api/lm/subnets', $scope.subnets).then(() => {
+        $http.post('/api/lmn/subnets', $scope.subnets).then(() => {
             notify.success(gettext('Saved'));
         });
     }

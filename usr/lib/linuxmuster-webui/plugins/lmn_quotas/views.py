@@ -37,6 +37,55 @@ class Handler(HttpPlugin):
             return lmn_getSophomorixValue(sophomorixCommand, jsonpath)
         return {}
 
+    @get(r'/api/lmn/quota/usermap/(?P<user>[a-z0-9\-]*)')
+    @authorize('lm:users:passwords')
+    @endpoint(api=True)
+    def handle_group_quota(self, http_context, user=None):
+        """
+        Get samba share limits for a group list. Prepare type key for style
+        (danger, warning, success) to display status.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: All quotas for specified users
+        :rtype: dict
+        """
+
+        if user is None:
+            return ''
+
+        school = self.context.schoolmgr.school
+
+        sophomorixCommand = ['sophomorix-quota', '--smbcquotas-only', '-i', '--user', user, '-jj']
+        json_path = f'QUOTA/USERS/{user}/SHARES/{school}/smbcquotas'
+        share = lmn_getSophomorixValue(sophomorixCommand, json_path)
+
+        quotaMap = {}
+
+        if int(share['HARDLIMIT_MiB']) == share['HARDLIMIT_MiB']:
+            # Avoid strings for non set quotas
+            used = int(float(share['USED_MiB']) / share['HARDLIMIT_MiB'] * 100)
+            soft = int(float(share['SOFTLIMIT_MiB']) / share['HARDLIMIT_MiB'] * 100)
+            if used >= 80:
+                state = "danger"
+            elif used >= 60:
+                state = "warning"
+            else:
+                state = "success"
+
+            quotaMap[user] = {
+                "USED": used,
+                "SOFTLIMIT": soft,
+                "TYPE": state,
+            }
+        else:
+            quotaMap[user] = {
+                "USED": 0,
+                "SOFTLIMIT": 0,
+                "TYPE": "success",
+            }
+        return quotaMap
+
     @get(r'/api/lmn/quota/quotas')
     @authorize('lm:quotas:configure')
     @endpoint(api=True)

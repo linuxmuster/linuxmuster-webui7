@@ -5,13 +5,11 @@ Handles `setup.ini` file and finish the install process.
 import configparser
 import os
 import subprocess
-import smtplib
 
 from jadi import component
-from aj.api.http import url, HttpPlugin
+from aj.api.http import get, post, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
 from aj.plugins.lmn_common.lmnfile import LMNFile
-from aj.plugins.lmn_common.tools import testSSH
 
 
 @component(HttpPlugin)
@@ -19,12 +17,11 @@ class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
 
-    @url(r'/api/lm/setup-wizard/read-ini')
+    @get(r'/api/lmn/setup-wizard/setup')
     @endpoint(api=True, auth=True)
-    def handle_api_read_log(self, http_context):
+    def handle_api_read_setup(self, http_context):
         """
         Read settings from `/tmp/setup.ini`.
-        Method GET.
 
         :param http_context: HttpContext
         :type http_context: HttpContext
@@ -32,17 +29,15 @@ class Handler(HttpPlugin):
         :rtype: dict
         """
 
-        if http_context.method == 'GET':
-            if os.path.exists('/tmp/setup.ini'):
-                with LMNFile('/tmp/setup.ini', 'r') as setup:
-                    return setup.data['setup']
+        if os.path.exists('/tmp/setup.ini'):
+            with LMNFile('/tmp/setup.ini', 'r') as setup:
+                return setup.data['setup']
 
-    @url(r'/api/lm/setup-wizard/update-ini')
+    @post(r'/api/lmn/setup-wizard/setup')
     @endpoint(api=True, auth=True)
-    def handle_api_log(self, http_context):
+    def handle_api_write_setup(self, http_context):
         """
         Write setup config into `/tmp/setup.ini`.
-        Method POST.
 
         :param http_context: HttpContext
         :type http_context: HttpContext
@@ -68,7 +63,7 @@ class Handler(HttpPlugin):
         with open('/tmp/setup.ini', 'w') as f:
             cfg.write(f)
 
-    @url(r'/api/lm/setup-wizard/is-configured')
+    @get(r'/api/lmn/setup-wizard/is-configured')
     @endpoint(api=True)
     def handle_api_is_configured(self, http_context):
         """
@@ -83,7 +78,7 @@ class Handler(HttpPlugin):
 
         return os.path.exists('/var/lib/linuxmuster/setup.ini')
 
-    @url(r'/api/lm/setup-wizard/provision')
+    @post(r'/api/lmn/setup-wizard/provision')
     @endpoint(api=True, auth=True)
     def handle_api_provision(self, http_context):
         """
@@ -93,8 +88,6 @@ class Handler(HttpPlugin):
         :type http_context: HttpContext
         """
 
-        if http_context.method != 'POST':
-            return
         if http_context.json_body()['start'] == 'setup':
             try:
                 subprocess.check_call(
@@ -103,23 +96,3 @@ class Handler(HttpPlugin):
                 )
             except Exception as e:
                 raise EndpointError(None, message=str(e))
-
-    @url(r'/api/lm/setup-wizard/restart') ## TODO : Handle maybe obsolet
-    @endpoint(api=True, auth=True)
-    def handle_api_restart(self, http_context):
-        """
-        Restart webui service after setup is finished (to switch to https).
-
-        :param http_context: HttpContext
-        :type http_context: HttpContext
-        """
-
-        if http_context.method != 'POST':
-            return
-        try:
-            subprocess.check_call(
-                'systemctl restart linuxmuster-webui.service',
-                shell=True
-            )
-        except Exception as e:
-            raise EndpointError(None, message=str(e))

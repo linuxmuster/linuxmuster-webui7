@@ -36,7 +36,7 @@
     ];
     $scope.unit = 'MiB';
     $scope.encodings = ['auto', 'ASCII', 'ISO_8859-1', 'ISO_8859-15', 'WIN-1252', 'UTF8'];
-    $http.get('/api/lm/schoolsettings').then(function(resp) {
+    $http.get('/api/lmn/schoolsettings').then(function(resp) {
       var encoding, file, i, len, ref, school, userfile;
       school = 'default-school';
       encoding = {};
@@ -61,7 +61,7 @@
       $scope.encoding = encoding;
       return $scope.settings = resp.data;
     });
-    $http.get('/api/lm/schoolsettings/latex-templates').then(function(resp) {
+    $http.get('/api/lmn/schoolsettings/latex-templates').then(function(resp) {
       $scope.templates_individual = resp.data[0];
       $scope.templates_multiple = resp.data[1];
       return customFields.load_config().then(function(resp) {
@@ -97,7 +97,7 @@
         return results;
       });
     });
-    $http.get('/api/lm/holidays').then(function(resp) {
+    $http.get('/api/lmn/holidays').then(function(resp) {
       return $scope.holidays = resp.data;
     });
     $scope.filterscriptNotEmpty = function() {
@@ -116,12 +116,12 @@
       return results;
     };
     $scope.customDisplayOptions = customFields.customDisplayOptions;
-    // $http.get('/api/lm/schoolsettings/school-share').then (resp) ->
+    // $http.get('/api/lmn/schoolsettings/school-share').then (resp) ->
     //     $scope.schoolShareEnabled = resp.data
 
     // $scope.setSchoolShare = (enabled) ->
     //     $scope.schoolShareEnabled = enabled
-    //     $http.post('/api/lm/schoolsettings/school-share', enabled)
+    //     $http.post('/api/lmn/schoolsettings/school-share', enabled)
     $scope.addHoliday = function() {
       return $scope.holidays.push({
         'name': '',
@@ -145,7 +145,7 @@
         notify.error(validPrintserver);
         return;
       }
-      return $http.post('/api/lm/schoolsettings', $scope.settings).then(function() {
+      return $http.post('/api/lmn/schoolsettings', $scope.settings).then(function() {
         return notify.success(gettext('Saved'));
       });
     };
@@ -156,7 +156,7 @@
         notify.error(validPrintserver);
         return;
       }
-      return $http.post('/api/lm/schoolsettings', $scope.settings).then(function() {
+      return $http.post('/api/lmn/schoolsettings', $scope.settings).then(function() {
         $uibModal.open({
           templateUrl: '/lmn_users:resources/partial/check.modal.html',
           controller: 'LMUsersCheckModalController',
@@ -166,7 +166,7 @@
       });
     };
     $scope.saveApplyQuota = function() {
-      $http.post('/api/lm/schoolsettings', $scope.settings).then(function() {
+      $http.post('/api/lmn/schoolsettings', $scope.settings).then(function() {
         return notify.success(gettext('Saved'));
       });
       return $uibModal.open({
@@ -180,7 +180,7 @@
         notify.error(gettext("Please first correct the mal formated fields."));
         return;
       }
-      return $http.post('/api/lm/holidays', $scope.holidays).then(function() {
+      return $http.post('/api/lmn/holidays', $scope.holidays).then(function() {
         return notify.success(gettext('Saved'));
       });
     };
@@ -239,7 +239,7 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', function
 
     $scope.help_fqdn_certificate = gettext("If you have a special certificate for your domain, like a Let's Encrypt certificate, put it there.\n" + "If you are not sure, just use the same certificate as the one above.");
 
-    $http.get('/api/lm/subnets').then(function (resp) {
+    $http.get('/api/lmn/subnets').then(function (resp) {
         return $scope.subnets = resp.data;
     });
 
@@ -258,7 +258,7 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', function
     };
 
     $scope.saveApplySubnets = function () {
-        $http.post('/api/lm/subnets', $scope.subnets).then(function () {
+        $http.post('/api/lmn/subnets', $scope.subnets).then(function () {
             notify.success(gettext('Saved'));
         });
     };

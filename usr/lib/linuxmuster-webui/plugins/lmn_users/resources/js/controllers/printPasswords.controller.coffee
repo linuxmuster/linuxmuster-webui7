@@ -20,7 +20,7 @@ angular.module('lmn.users').controller 'LMUsersPrintPasswordsOptionsModalControl
         $scope.options.user = 'global-admin'
 
     if $scope.options.adminClass.includes('admins')
-        $http.get('/api/lm/schoolsettings/latex-templates').then (rp) ->
+        $http.get('/api/lmn/schoolsettings/latex-templates').then (rp) ->
             $scope.templates_individual = rp.data[0]
             $scope.templates_multiple = rp.data[1]
             $scope.options['template_one_per_page'] = $scope.templates_individual[0]
@@ -43,7 +43,7 @@ angular.module('lmn.users').controller 'LMUsersPrintPasswordsOptionsModalControl
 
     $scope.print = () ->
         msg = messagebox.show(progress: true)
-        $http.post('/api/lm/users/print', $scope.options).then (resp) ->
+        $http.post('/api/lmn/users/print', $scope.options).then (resp) ->
             if resp.data == 'success'
                 notify.success(gettext("Created password pdf"))
                 if schoolclass.length == 1
@@ -53,7 +53,7 @@ angular.module('lmn.users').controller 'LMUsersPrintPasswordsOptionsModalControl
                 else
                     prefix = 'multiclass'
 
-                location.href = "/api/lm/users/print-download/#{prefix}-#{$scope.options.user}.#{$scope.options.format}"
+                location.href = "/api/lmn/users/passwords/download/#{prefix}-#{$scope.options.user}.#{$scope.options.format}"
             else
                 notify.error(gettext("Could not create password pdf"))
             $uibModalInstance.close()
@@ -93,7 +93,7 @@ angular.module('lmn.users').controller 'LMUsersPrintPasswordsController', ($scop
 
     $scope.getGroups = (username) ->
         if $scope.identity.user == 'root' || $scope.identity.profile.sophomorixRole == 'globaladministrator' || $scope.identity.profile.sophomorixRole == 'schooladministrator'
-            $http.get('/api/lm/users/get-classes').then (resp) ->
+            $http.get('/api/lmn/users/classes').then (resp) ->
                 $scope.classes = resp.data
                 $scope.admin_warning = true
         else

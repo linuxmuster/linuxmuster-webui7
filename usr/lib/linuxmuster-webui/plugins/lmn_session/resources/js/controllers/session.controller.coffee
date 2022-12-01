@@ -44,7 +44,7 @@ angular.module('lmn.session').controller 'LMNSessionFileSelectModalController', 
                 $scope.filesList = resp['data'][1]
 
     $scope.createDir = (path) ->
-        $http.post('/api/lm/create-dir', {filepath: path})
+        $http.post('/api/lmn/create-dir', {filepath: path})
 
     $scope.removeFile = (file) ->
         role = $scope.identity.profile.sophomorixRole
@@ -55,7 +55,7 @@ angular.module('lmn.session').controller 'LMNSessionFileSelectModalController', 
             positive: gettext('Delete'),
             negative: gettext('Cancel')
         }).then () ->
-            $http.post('/api/lmn/smbclient/file', {path: path}).then (resp) ->
+            $http.post('/api/lmn/smbclient/unlink', {path: path}).then (resp) ->
                 notify.success(gettext("File " + file + " removed"))
                 delete $scope.files['TREE'][file]
                 $scope.files['COUNT']['files'] = $scope.files['COUNT']['files'] - 1
@@ -71,7 +71,7 @@ angular.module('lmn.session').controller 'LMNSessionFileSelectModalController', 
             positive: gettext('Delete'),
             negative: gettext('Cancel')
         }).then () ->
-            $http.post('/api/lm/remove-dir', {filepath: path}).then (resp) ->
+            $http.post('/api/lmn/remove-dir', {filepath: path}).then (resp) ->
                 notify.success(gettext("Directory " + file + " removed"))
                 delete $scope.files['TREE'][file]
                 $scope.files['COUNT']['files'] = $scope.files['COUNT']['files'] - 1
@@ -100,7 +100,7 @@ angular.module('lmn.session').config ($routeProvider) ->
         templateUrl: '/lmn_session:resources/partial/session.html'
 
 
-angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem, validation, $rootScope, wait) ->
+angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem, validation, $rootScope, wait, userPassword) ->
     pageTitle.set(gettext('Session'))
 
 
@@ -364,7 +364,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                 }
                 #get groups
                 console.log ($scope.identity.profile)
-                $http.post('/api/lmn/groupmembership', {action: 'list-groups', username: username, profil: $scope.identity.profile}).then (resp) ->
+                $http.get('/api/lmn/groupmembership/groups').then (resp) ->
                     $scope.groups = resp.data[0]
                     $scope.identity.isAdmin = resp.data[1]
                     $scope.classes = $scope.groups.filter($scope.filterGroupType('schoolclass'))
@@ -510,7 +510,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                 console.log ('sessionExist '+sessionExist )
 
         wait.modal(gettext('Generating session...'), 'spinner')
-        $http.post('/api/lmn/groupmembership/details', {action: 'get-specified', groupType: 'class', groupName: classname}).then (resp) ->
+        $http.get('/api/lmn/groupmembership/groups/' + classname).then (resp) ->
             # get participants from specified class
             participants = resp.data['MEMBERS'][classname]
             participantsArray = []
@@ -650,51 +650,30 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
         $scope.currentSession.comment = ''
         $scope.visible.participanttable = 'none'
 
-    $scope.showInitialPassword = (user) ->
-                # if user is exam user show InitialPassword of real user
-                if user[0].endsWith('-exam')
-                    user[0] = user[0].replace('-exam', '')
-                type=gettext('Initial password')
-                $uibModal.open(
-                    templateUrl: '/lmn_users:resources/partial/showPassword.modal.html'
-                    controller: 'LMNUsersShowPasswordController'
-                    resolve:
-                        user: () -> user
-                        type: () -> type
-                )
-
-
-    $scope.setInitialPassword = (user) ->
-                # if user is in exammode prohibit password change in session
-                if user[0].endsWith('-exam')
-                    messagebox.show(title: gettext('User in exam'), text: gettext('This user seems to be in exam. End exam mode before changing password!'), positive: 'OK')
-                    return
-                $http.post('/api/lm/users/password', {users: user, action: 'set-initial'}).then (resp) ->
-                    notify.success gettext('Initial password set')
-
-    $scope.setRandomPassword = (user) ->
-            if user[0].endsWith('-exam')
-                messagebox.show(title: gettext('User in exam'), text: gettext('This user seems to be in exam. End exam mode before changing password!'), positive: 'OK')
-                return
-            $http.post('/api/lm/users/password', {users: user, action: 'set-random'}).then (resp) ->
-                notify.success gettext('Random password set')
-
-    $scope.setCustomPassword = (user, id, type) ->
-        if user[0]['sAMAccountName'].endsWith('-exam')
+    $scope._checkExamUser = (username) ->
+        if username.endsWith('-exam')
             messagebox.show(title: gettext('User in exam'), text: gettext('This user seems to be in exam. End exam mode before changing password!'), positive: 'OK')
-            return
-        # Set sAMAccountName to establish compability to userInfo Module
-        # This information is provided only as key (id) in sophomorix session
-        user[0]['sAMAccountName'] = id
-        $uibModal.open(
-            templateUrl: '/lmn_users:resources/partial/customPassword.modal.html'
-            controller: 'LMNUsersCustomPasswordController'
-            size: 'mg'
-            resolve:
-                users: () -> user
-                type: () -> type
-        )
+            return true
+        return false
 
+    $scope.showFirstPassword = (username) ->
+        $scope.blurred = true
+        # if user is exam user show InitialPassword of real user
+        username = username.replace('-exam', '')
+        userPassword.showFirstPassword(username).then((resp) ->
+            $scope.blurred = false
+        )
+    $scope.resetFirstPassword = (username) ->
+        if not $scope._checkExamUser(username)
+            userPassword.resetFirstPassword(username)
+
+    $scope.setRandomFirstPassword = (username) ->
+        if not $scope._checkExamUser(username)
+            userPassword.setRandomFirstPassword(username)
+
+    $scope.setCustomPassword = (user, pwtype) ->
+        if not $scope._checkExamUser(user.sAMAccountName)
+            userPassword.setCustomPassword(user, pwtype)
 
     $scope.userInfo = (user) ->
         console.log (user)

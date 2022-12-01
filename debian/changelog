@@ -1,3 +1,10 @@
+linuxmuster-webui7 (17.1.38.4) lmn71-testing; urgency=low
+
+  * Fixed Session collect files empty transfer folder issue
+  * merged upstream content
+
+ -- Andreas Till <andreas.till@netzint.de>  Thu, 01 Dec 2022 17:51:38 +0200
+
 linuxmuster-webui7 (17.1.38.3) lmn71-testing; urgency=low
 
   * Fixed Homeplugin when using dfs

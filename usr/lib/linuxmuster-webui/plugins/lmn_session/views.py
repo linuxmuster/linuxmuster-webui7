@@ -347,7 +347,7 @@ class Handler(HttpPlugin):
                 '--from-path', f'transfer/{file}',
                 '--to-path', f'transfer/{sender}_{session}/'
             ]
-            return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
+            return lmn_getSophomorixValue(sophomorixCommand, '')
 
         def collectFiles(file):
             sophomorixCommand = [
@@ -360,7 +360,7 @@ class Handler(HttpPlugin):
                 '--to-path', f'transfer/collected/{now}-{session}/',
                 '--to-path-addon', 'fullinfo'
             ]
-            return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
+            return lmn_getSophomorixValue(sophomorixCommand, '')
 
         def moveFiles(file):
             sophomorixCommand = [
@@ -373,7 +373,7 @@ class Handler(HttpPlugin):
                 '--to-path', f'transfer/collected/{now}-{session}/',
                 '--to-path-addon', 'fullinfo'
             ]
-            return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
+            return lmn_getSophomorixValue(sophomorixCommand, '')
 
         with authorize('lmn:session:trans'):
             if command == 'share':
@@ -399,7 +399,7 @@ class Handler(HttpPlugin):
                         # if files is All we're automatically in bulk mode
                         if files == "All":
                             sophomorixCommand = ['sophomorix-transfer', '-jj', '--scopy', '--from-user', sendersCSV, '--to-user', receiver, '--from-path', 'transfer/'+receiver+'_'+session, '--to-path', 'transfer/collected/'+now+'-'+session+'/', '--to-path-addon', 'fullinfo',  '--no-target-directory']
-                            returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
+                            returnMessage = lmn_getSophomorixValue(sophomorixCommand, '')
                         else:
                             with futures.ThreadPoolExecutor() as executor:
                                 returnMessage = executor.map(collectFiles, files)
@@ -415,7 +415,7 @@ class Handler(HttpPlugin):
                         # if files is All we're automatically in bulk mode
                         if files == "All":
                             sophomorixCommand = ['sophomorix-transfer', '-jj', '--move', '--keep-source-directory', '--from-user', sendersCSV, '--to-user', receiver, '--from-path', 'transfer/'+receiver+'_'+session, '--to-path', 'transfer/collected/'+now+'-'+session+'/', '--to-path-addon', 'fullinfo',  '--no-target-directory']
-                            returnMessage = lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
+                            returnMessage = lmn_getSophomorixValue(sophomorixCommand, '')
                         else:
                             with futures.ThreadPoolExecutor() as executor:
                                 returnMessage = executor.map(moveFiles, files)

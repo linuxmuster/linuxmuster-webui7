@@ -847,11 +847,9 @@
       }).then(function(resp) {});
     };
     $scope.endExam = function(participant, supervisor, session, sessionName) {
-      return $http.post('/api/lmn/session/sessions', {
-        action: 'end-exam',
+      return $http.patch(`/api/lmn/session/exam/${sessionName}`, {
         supervisor: supervisor,
-        participant: participant,
-        sessionName: sessionName
+        participant: participant
       }).then(function(resp) {
         return $scope.getParticipants(session);
       });

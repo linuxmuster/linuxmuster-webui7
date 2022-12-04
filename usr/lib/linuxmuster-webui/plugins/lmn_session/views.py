@@ -39,7 +39,7 @@ class Handler(HttpPlugin):
             sessionsList.append(sessionJson)
         return sessionsList
 
-    @get(r'/api/lmn/session/sessions/(?P<session>[a-z0-9\+\-_]*)')
+    @get(r'/api/lmn/session/sessions/(?P<session>[\w\+\-]*)')
     @authorize('lm:users:students:read')
     @endpoint(api=True)
     def handle_api_get_session(self, http_context, session=None):
@@ -61,12 +61,12 @@ class Handler(HttpPlugin):
             participantList = 'empty'
         return participantList
 
-    @put(r'/api/lmn/session/sessions/(?P<comment>[a-z0-9\+\-_]*)')
+    @put(r'/api/lmn/session/sessions/(?P<session>[\w\+\-]*)')
     @authorize('lm:users:students:read')
     @endpoint(api=True)
-    def handle_api_put_session(self, http_context, comment=None):
+    def handle_api_put_session(self, http_context, session=None):
         supervisor = self.context.identity
-        sophomorixCommand = ['sophomorix-session', '--create', '--supervisor', supervisor, '-j', '--comment', comment]
+        sophomorixCommand = ['sophomorix-session', '--create', '--supervisor', supervisor, '-j', '--comment', session]
 
         if "participants" in http_context.json_body():
             participantsArray = http_context.json_body()['participants']
@@ -75,13 +75,26 @@ class Handler(HttpPlugin):
         result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
         return result
 
-    @delete(r'/api/lmn/session/sessions/(?P<session>[a-z0-9\+\-_]*)')
+    @delete(r'/api/lmn/session/sessions/(?P<session>[\w\+\-]*)')
     @authorize('lm:users:students:read')
     @endpoint(api=True)
     def handle_api_delete_session(self, http_context, session=None):
         sophomorixCommand = ['sophomorix-session', '-j', '--session', session, '--kill']
         result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
         return result
+
+    @patch(r'/api/lmn/session/exam/(?P<session>[\w\+\-]*)')
+    @authorize('lm:users:students:read')
+    @endpoint(api=True)
+    def handle_api_end_exam(self, http_context, session=None):
+        supervisor = http_context.json_body()['supervisor']
+        participant = http_context.json_body()['participant']
+        now = strftime("%Y%m%d_%H-%M-%S", localtime())
+        try:
+            sophomorixCommand = ['sophomorix-exam-mode', '--unset', '--subdir', 'transfer/collected/'+now+'-'+session+'-ended-by-'+supervisor+'/exam', '-j', '--participants', participant]
+            lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
+        except Exception as e:
+            raise Exception('Error:\n' + str(e))
 
     @post(r'/api/lmn/session/sessions')
     @endpoint(api=True)
@@ -106,18 +119,6 @@ class Handler(HttpPlugin):
             with authorize('lm:users:students:read'):
                 result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
                 return result
-        if action == 'end-exam':
-            supervisor = http_context.json_body()['supervisor']
-            participant = http_context.json_body()['participant']
-            sessionName = http_context.json_body()['sessionName']
-            now = strftime("%Y%m%d_%H-%M-%S", localtime())
-            with authorize('lm:users:students:read'):
-                try:
-                    sophomorixCommand = ['sophomorix-exam-mode', '--unset', '--subdir', 'transfer/collected/'+now+'-'+sessionName+'-ended-by-'+supervisor+'/exam', '-j', '--participants', participant]
-                    result = lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
-                except Exception as e:
-                    raise Exception('Error:\n' + str(e))
-
         if action == 'save-session':
             def checkIfUserInManagementGroup(participant, participantBasename, managementgroup, managementList, noManagementList):
                 try:

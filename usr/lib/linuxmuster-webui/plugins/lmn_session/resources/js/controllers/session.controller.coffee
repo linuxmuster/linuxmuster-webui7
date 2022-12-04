@@ -575,61 +575,61 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
 
     # TODO Figure out how to call the existing watch addParticipant function
     $scope.addParticipant = (participant) ->
-                if participant
-                    if $scope.participants == 'empty'
-                                $scope.participants = []
-                    $scope.info.message = ''
-                    $scope.visible.participanttable = 'show'
-                    # console.log participant
-                    # Only add Students
-                    if participant.sophomorixRole is 'student'
-                        # Add Managementgroups list if missing. This happens when all managementgroup attributes are false, causing the json tree to skip this key
-                        if not participant.MANAGEMENTGROUPS?
-                                    participant.MANAGEMENTGROUPS = []
-                        #if not participant.changed?
-                        #            participant.changed = 'False'
-                        #if not participant.exammode-changed?
-                        #            participant.exammode-changed = 'False'
-                        # console.log ($scope.participants)
-                        $scope.participants.push {"sAMAccountName":participant.sAMAccountName,"givenName":participant.givenName,"sn":participant.sn,
-                        "sophomorixExamMode":participant.sophomorixExamMode,
-                        "group_webfilter":participant.MANAGEMENTGROUPS.webfilter,
-                        "group_intranetaccess":participant.MANAGEMENTGROUPS.intranet,
-                        "group_printing":participant.MANAGEMENTGROUPS.printing,
-                        "sophomorixStatus":"U","sophomorixRole":participant.sophomorixRole,
-                        "group_internetaccess":participant.MANAGEMENTGROUPS.internet,
-                        "sophomorixAdminClass":participant.sophomorixAdminClass,
-                        "user_existing":true,"group_wifiaccess":participant.MANAGEMENTGROUPS.wifi,
-                        "changed": false, "exammode-changed": false}
-                    participant = null
+        if participant
+            if $scope.participants == 'empty'
+                        $scope.participants = []
+            $scope.info.message = ''
+            $scope.visible.participanttable = 'show'
+            # console.log participant
+            # Only add Students
+            if participant.sophomorixRole is 'student'
+                # Add Managementgroups list if missing. This happens when all managementgroup attributes are false, causing the json tree to skip this key
+                if not participant.MANAGEMENTGROUPS?
+                            participant.MANAGEMENTGROUPS = []
+                #if not participant.changed?
+                #            participant.changed = 'False'
+                #if not participant.exammode-changed?
+                #            participant.exammode-changed = 'False'
+                # console.log ($scope.participants)
+                $scope.participants.push {"sAMAccountName":participant.sAMAccountName,"givenName":participant.givenName,"sn":participant.sn,
+                "sophomorixExamMode":participant.sophomorixExamMode,
+                "group_webfilter":participant.MANAGEMENTGROUPS.webfilter,
+                "group_intranetaccess":participant.MANAGEMENTGROUPS.intranet,
+                "group_printing":participant.MANAGEMENTGROUPS.printing,
+                "sophomorixStatus":"U","sophomorixRole":participant.sophomorixRole,
+                "group_internetaccess":participant.MANAGEMENTGROUPS.internet,
+                "sophomorixAdminClass":participant.sophomorixAdminClass,
+                "user_existing":true,"group_wifiaccess":participant.MANAGEMENTGROUPS.wifi,
+                "changed": false, "exammode-changed": false}
+            participant = null
 
     $scope.$watch '_.addSchoolClass', () ->
-                if $scope._.addSchoolClass
-                    members = $scope._.addSchoolClass.members
-                    for schoolClass,member of $scope._.addSchoolClass.members
-                        $scope.addParticipant(member)
-                    $scope._.addSchoolClass = null
+        if $scope._.addSchoolClass
+            members = $scope._.addSchoolClass.members
+            for schoolClass,member of $scope._.addSchoolClass.members
+                $scope.addParticipant(member)
+            $scope._.addSchoolClass = null
 
     $scope.removeParticipant = (participant) ->
-                deleteIndex = $scope.participants.indexOf(participant)
-                if deleteIndex != -1
-                    $scope.participants.splice(deleteIndex, 1)
+        deleteIndex = $scope.participants.indexOf(participant)
+        if deleteIndex != -1
+            $scope.participants.splice(deleteIndex, 1)
 
     $scope.changeExamSupervisor = (participant, supervisor) ->
-                $http.post('/api/lmn/session/sessions', {action: 'change-exam-supervisor', supervisor: supervisor, participant: participant}).then (resp) ->
+        $http.post('/api/lmn/session/sessions', {action: 'change-exam-supervisor', supervisor: supervisor, participant: participant}).then (resp) ->
 
     $scope.endExam = (participant, supervisor,session, sessionName) ->
-                $http.post('/api/lmn/session/sessions', {action: 'end-exam', supervisor: supervisor, participant: participant, sessionName: sessionName}).then (resp) ->
-                    $scope.getParticipants(session)
+        $http.patch("/api/lmn/session/exam/#{sessionName}", {supervisor: supervisor, participant: participant}).then (resp) ->
+            $scope.getParticipants(session)
 
     $scope.saveApply = (username,participants, session, sessionName) ->
-                wait.modal(gettext('Changes are applied...'), 'progressbar')
-                $http.post('/api/lmn/session/sessions', {action: 'save-session',username: username, participants: participants, session: session, sessionName: sessionName}).then (resp) ->
-                    # emit process is done
-                    $rootScope.$emit('updateWaiting', 'done')
-                    $scope.output = resp.data
-                    $scope.getParticipants(session)
-                    notify.success gettext($scope.output)
+        wait.modal(gettext('Changes are applied...'), 'progressbar')
+        $http.post('/api/lmn/session/sessions', {action: 'save-session',username: username, participants: participants, session: session, sessionName: sessionName}).then (resp) ->
+            # emit process is done
+            $rootScope.$emit('updateWaiting', 'done')
+            $scope.output = resp.data
+            $scope.getParticipants(session)
+            notify.success gettext($scope.output)
 
     $scope.cancel = (username,participants, session) ->
         $scope.getSessions()

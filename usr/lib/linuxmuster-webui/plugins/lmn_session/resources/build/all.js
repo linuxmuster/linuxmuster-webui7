@@ -337,10 +337,7 @@
         negative: gettext('Cancel')
       }).then(function() {
         wait.modal(gettext('Deleting session...'), 'spinner');
-        return $http.post('/api/lmn/session/sessions', {
-          action: 'kill-sessions',
-          session: session
-        }).then(function(resp) {
+        return $http.delete(`/api/lmn/session/sessions/${session}`).then(function(resp) {
           $rootScope.$emit('updateWaiting', 'done');
           //notify.success gettext('Session Deleted')
           $scope.visible.sessionname = 'none';

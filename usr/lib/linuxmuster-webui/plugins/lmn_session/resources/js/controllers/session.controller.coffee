@@ -246,22 +246,22 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
         return
 
     $scope.killSession = (username,session,comment) ->
-                if session is ''
-                    messagebox.show(title: gettext('No Session selected'), text: gettext('You have to select a session first.'), positive: 'OK')
-                    return
-                messagebox.show(text: gettext("Delete Session:  "+comment+" ?"), positive: gettext('Delete'), negative: gettext('Cancel')).then () ->
-                    wait.modal(gettext('Deleting session...'), 'spinner')
-                    $http.post('/api/lmn/session/sessions', {action: 'kill-sessions', session: session}).then (resp) ->
-                        $rootScope.$emit('updateWaiting', 'done')
-                        #notify.success gettext('Session Deleted')
-                        $scope.visible.sessionname = 'none'
-                        $scope.visible.participanttable = 'none'
-                        $scope.visible.mainpage = 'show'
-                        $scope.sessionLoaded = false
-                        $scope.info.message = ''
-                        $scope.getSessions()
-                        $scope.currentSession.name = ''
-                        notify.success gettext(resp.data)
+        if session is ''
+            messagebox.show(title: gettext('No Session selected'), text: gettext('You have to select a session first.'), positive: 'OK')
+            return
+        messagebox.show(text: gettext("Delete Session:  "+comment+" ?"), positive: gettext('Delete'), negative: gettext('Cancel')).then () ->
+            wait.modal(gettext('Deleting session...'), 'spinner')
+            $http.delete("/api/lmn/session/sessions/#{session}").then (resp) ->
+                $rootScope.$emit('updateWaiting', 'done')
+                #notify.success gettext('Session Deleted')
+                $scope.visible.sessionname = 'none'
+                $scope.visible.participanttable = 'none'
+                $scope.visible.mainpage = 'show'
+                $scope.sessionLoaded = false
+                $scope.info.message = ''
+                $scope.getSessions()
+                $scope.currentSession.name = ''
+                notify.success gettext(resp.data)
 
     $scope.newSession = () ->
         messagebox.prompt(gettext('Session Name'), '').then (msg) ->

@@ -75,16 +75,18 @@ class Handler(HttpPlugin):
         result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
         return result
 
+    @delete(r'/api/lmn/session/sessions/(?P<session>[a-z0-9\+\-_]*)')
+    @authorize('lm:users:students:read')
+    @endpoint(api=True)
+    def handle_api_put_session(self, http_context, session=None):
+        sophomorixCommand = ['sophomorix-session', '-j', '--session', session, '--kill']
+        result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
+        return result
+
     @post(r'/api/lmn/session/sessions')
     @endpoint(api=True)
     def handle_api_session_sessions(self, http_context):
         action = http_context.json_body()['action']
-        if action == 'kill-sessions':
-            session = http_context.json_body()['session']
-            with authorize('lm:users:students:read'):
-                sophomorixCommand = ['sophomorix-session', '-j', '--session', session, '--kill']
-                result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
-                return result
         if action == 'rename-session':
             session = http_context.json_body()['session']
             comment = http_context.json_body()['comment']

@@ -438,7 +438,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                 # Reset select all checkboxes when loading participants
                 angular.forEach $scope.fields, (field) ->
                     field.checkboxStatus = false
-                $http.post('/api/lmn/session/sessions', {action: 'get-participants', username: username, session: session}).then (resp) ->
+                $http.get("/api/lmn/session/sessions/#{session}").then (resp) ->
                     $scope.visible.sessionname = 'show'
                     $scope.sessionLoaded = 'true'
                     $scope.filter = ''

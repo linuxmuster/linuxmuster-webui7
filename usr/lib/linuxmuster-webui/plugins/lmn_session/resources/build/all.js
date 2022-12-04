@@ -588,11 +588,7 @@
       angular.forEach($scope.fields, function(field) {
         return field.checkboxStatus = false;
       });
-      return $http.post('/api/lmn/session/sessions', {
-        action: 'get-participants',
-        username: username,
-        session: session
-      }).then(function(resp) {
+      return $http.get(`/api/lmn/session/sessions/${session}`).then(function(resp) {
         $scope.visible.sessionname = 'show';
         $scope.sessionLoaded = 'true';
         $scope.filter = '';

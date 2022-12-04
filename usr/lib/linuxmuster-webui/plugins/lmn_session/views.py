@@ -39,38 +39,32 @@ class Handler(HttpPlugin):
             sessionsList.append(sessionJson)
         return sessionsList
 
+    @get(r'/api/lmn/session/sessions/(?P<session>[a-z0-9\+\-_]*)')
+    @authorize('lm:users:students:read')
+    @endpoint(api=True)
+    def handle_api_get_session(self, http_context, session=None):
+        participantList = []
+        try:
+            sophomorixCommand = ['sophomorix-session', '-i', '-jj', '--session', session]
+            participants = lmn_getSophomorixValue(sophomorixCommand, f'ID/{session}/PARTICIPANTS', True)
+            for user,details in participants.items():
+                details['sAMAccountName'] = user
+                details['changed'] = False
+                details['exammode-changed'] = False
+                for key,value in details.items():
+                    if value == 'TRUE':
+                        details[key] = True
+                    elif value == 'FALSE':
+                        details[key] = False
+                participantList.append(details)
+        except KeyError:
+            participantList = 'empty'
+        return participantList
+
     @post(r'/api/lmn/session/sessions')
     @endpoint(api=True)
     def handle_api_session_sessions(self, http_context):
         action = http_context.json_body()['action']
-        if action == 'get-participants':
-            participantList = []
-            session = http_context.json_body()['session']
-
-            with authorize('lm:users:students:read'):
-                    try:
-                        sophomorixCommand = ['sophomorix-session', '-i', '-jj', '--session', session]
-                        participants = lmn_getSophomorixValue(sophomorixCommand, 'ID/'+session+'/PARTICIPANTS', True)
-                        i = 0
-                        for participant in participants:
-                            participantList.append(participants[participant])
-                            participantList[i]['sAMAccountName'] = participant
-                            #if participant.endswith('-exam'):
-                            #    participantList[i]['sAMAccountname-basename'] = participant.replace('-exam', '')
-                            #else:
-                            #    participantList[i]['sAMAccountname-basename'] = participant
-                            participantList[i]['changed'] = 'FALSE'
-                            participantList[i]['exammode-changed'] = 'FALSE'
-                            for key in participantList[i]:
-                                if participantList[i][key] == 'TRUE':
-                                    participantList[i][key] = True
-                                if participantList[i][key] == 'FALSE':
-                                    participantList[i][key] = False
-                            i = i + 1
-                    except Exception:
-                        participantList = 'empty'
-
-            return participantList
         if action == 'kill-sessions':
             session = http_context.json_body()['session']
             with authorize('lm:users:students:read'):

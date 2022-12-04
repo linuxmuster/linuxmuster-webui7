@@ -78,7 +78,7 @@ class Handler(HttpPlugin):
     @delete(r'/api/lmn/session/sessions/(?P<session>[a-z0-9\+\-_]*)')
     @authorize('lm:users:students:read')
     @endpoint(api=True)
-    def handle_api_put_session(self, http_context, session=None):
+    def handle_api_delete_session(self, http_context, session=None):
         sophomorixCommand = ['sophomorix-session', '-j', '--session', session, '--kill']
         result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
         return result

@@ -26,7 +26,7 @@
         </div>
 
         <div ng-show="!sessionLoaded" class="input-group-btn">
-            <button class="btn btn-default" ng:click="newSession(identity.user)">
+            <button class="btn btn-default" ng:click="newSession()">
                 <div translate>
                     New Session
                 </div>
@@ -41,7 +41,7 @@
             <ul uib-dropdown-menu class="dropdown-menu-right" >
                 <li>
 
-                    <a ng:click="newSession(identity.user)" translate>
+                    <a ng:click="newSession()" translate>
                         New Session
                     </a>
                 </li>

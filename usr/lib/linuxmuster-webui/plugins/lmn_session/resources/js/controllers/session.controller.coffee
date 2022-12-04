@@ -263,27 +263,23 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                         $scope.currentSession.name = ''
                         notify.success gettext(resp.data)
 
-    $scope.newSession = (username) ->
-                messagebox.prompt(gettext('Session Name'), '').then (msg) ->
-                    if not msg.value
-                        return
-                    testChar = validation.isValidLinboConf(msg.value)
-                    if testChar != true
-                        notify.error gettext(testChar)
-                        return
-                    $http.post('/api/lmn/session/sessions', {action: 'new-session', username: username, comment: msg.value}).then (resp) ->
-                        $scope.new-sessions = resp.data
-                        $scope.getSessions()
-                        notify.success gettext('Session Created')
-                        # Reset alle messages and information to show session table
-                        $scope.info.message = ''
-                        $scope.currentSession.name = ''
-                        $scope.currentSession.comment = ''
-                        $scope.sessionLoaded = false
-                        $scope.visible.participanttable = 'none'
-
-
-
+    $scope.newSession = () ->
+        messagebox.prompt(gettext('Session Name'), '').then (msg) ->
+            if not msg.value
+                return
+            testChar = validation.isValidLinboConf(msg.value)
+            if testChar != true
+                notify.error gettext(testChar)
+                return
+            $http.put("/api/lmn/session/sessions/#{msg.value}", {}).then (resp) ->
+                $scope.getSessions()
+                notify.success gettext('Session Created')
+                # Reset alle messages and information to show session table
+                $scope.info.message = ''
+                $scope.currentSession.name = ''
+                $scope.currentSession.comment = ''
+                $scope.sessionLoaded = false
+                $scope.visible.participanttable = 'none'
 
     $scope.getSessions = () ->
                 # TODO Figure out why this only works correctly if defined in this function (translation string etc.)
@@ -533,10 +529,9 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
         # create new session
         if sessionExist == false
             # create new specified session
-            $http.post('/api/lmn/session/sessions', {action: 'new-session', username: $scope.identity.user, comment: sessionComment, participants: participants}).then (resp) ->
+            $http.put("/api/lmn/session/sessions/#{sessionComment}", {participants: participants}).then (resp) ->
                 # emit wait process is done
                 $rootScope.$emit('updateWaiting', 'done')
-                $scope.new-sessions = resp.data
                 await $scope.getSessions()
                 notify.success gettext('Session generated')
                 # get new created sessionID

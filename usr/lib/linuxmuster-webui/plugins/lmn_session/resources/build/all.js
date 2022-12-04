@@ -354,7 +354,7 @@
         });
       });
     };
-    $scope.newSession = function(username) {
+    $scope.newSession = function() {
       return messagebox.prompt(gettext('Session Name'), '').then(function(msg) {
         var testChar;
         if (!msg.value) {
@@ -365,13 +365,7 @@
           notify.error(gettext(testChar));
           return;
         }
-        return $http.post('/api/lmn/session/sessions', {
-          action: 'new-session',
-          username: username,
-          comment: msg.value
-        }).then(function(resp) {
-          var sessions;
-          $scope.new - (sessions = resp.data);
+        return $http.put(`/api/lmn/session/sessions/${msg.value}`, {}).then(function(resp) {
           $scope.getSessions();
           notify.success(gettext('Session Created'));
           // Reset alle messages and information to show session table
@@ -725,16 +719,12 @@
       // create new session
       if (sessionExist === false) {
         // create new specified session
-        return $http.post('/api/lmn/session/sessions', {
-          action: 'new-session',
-          username: $scope.identity.user,
-          comment: sessionComment,
+        return $http.put(`/api/lmn/session/sessions/${sessionComment}`, {
           participants: participants
         }).then(async function(resp) {
-          var i, len, ref, session, sessions;
+          var i, len, ref, session;
           // emit wait process is done
           $rootScope.$emit('updateWaiting', 'done');
-          $scope.new - (sessions = resp.data);
           await $scope.getSessions();
           notify.success(gettext('Session generated'));
           ref = $scope.sessions;

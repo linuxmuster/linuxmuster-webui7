@@ -61,6 +61,20 @@ class Handler(HttpPlugin):
             participantList = 'empty'
         return participantList
 
+    @put(r'/api/lmn/session/sessions/(?P<comment>[a-z0-9\+\-_]*)')
+    @authorize('lm:users:students:read')
+    @endpoint(api=True)
+    def handle_api_put_session(self, http_context, comment=None):
+        supervisor = self.context.identity
+        sophomorixCommand = ['sophomorix-session', '--create', '--supervisor', supervisor, '-j', '--comment', comment]
+
+        if "participants" in http_context.json_body():
+            participantsArray = http_context.json_body()['participants']
+            sophomorixCommand.extend(['--participants', ','.join(participantsArray)])
+
+        result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
+        return result
+
     @post(r'/api/lmn/session/sessions')
     @endpoint(api=True)
     def handle_api_session_sessions(self, http_context):
@@ -76,18 +90,6 @@ class Handler(HttpPlugin):
             comment = http_context.json_body()['comment']
             with authorize('lm:users:students:read'):
                 sophomorixCommand = ['sophomorix-session', '-j', '--session', session, '--comment', comment]
-                result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
-                return result
-        if action == 'new-session':
-            supervisor = http_context.json_body()['username']
-            comment = http_context.json_body()['comment']
-            if "participants" in http_context.json_body():
-                participantsArray = http_context.json_body()['participants']
-                participants = ','.join(participantsArray)
-                sophomorixCommand = ['sophomorix-session', '--create', '--supervisor', supervisor,  '-j', '--comment', comment, '--participants', participants]
-            else:
-                sophomorixCommand = ['sophomorix-session', '--create', '--supervisor', supervisor,  '-j', '--comment', comment]
-            with authorize('lm:users:students:read'):
                 result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
                 return result
         if action == 'update-session':

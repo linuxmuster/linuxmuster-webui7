@@ -239,7 +239,7 @@
     </floating-toolbar>
 
     <!-- Room -->
-    <div ng:show="!sessionLoaded && identity.user != 'root'"  class="list-group">
+    <div ng:show="!sessionLoaded"  class="list-group">
         <h4 translate>This Room</h4>
 
         <div class="flex-container lmn-container-list" >
@@ -266,7 +266,7 @@
 </div>
 
 <!-- auto sessions -->
-<div ng:show="classes.length > 0 && !sessionLoaded && identity.user != 'root'"  class="list-group">
+<div ng:show="classes.length > 0 && !sessionLoaded"  class="list-group">
     <h4 translate>My Classes</h4>
 
     <div class="flex-container lmn-container-list" >
@@ -292,7 +292,7 @@
 
     <!-- session overview list -->
     <!--<div ng:show="sessions[0]['SESSIONCOUNT'] != 0">
-        <progress-spinner ng:show="sessions == null && identity.user != 'root'"></progress-spinner>-->
+        <progress-spinner ng:show="sessions == null"></progress-spinner>-->
         <!-- selfcreated sessions -->
         <div ng:show="sessions.length > 0 && !sessionLoaded"  class="list-group">
             <h4 translate>My Sessions </h4>

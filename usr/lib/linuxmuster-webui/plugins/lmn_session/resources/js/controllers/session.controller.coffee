@@ -245,7 +245,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                     $scope.changeClass(item, participant)
         return
 
-    $scope.killSession = (username,session,comment) ->
+    $scope.killSession = (session,comment) ->
         if session is ''
             messagebox.show(title: gettext('No Session selected'), text: gettext('You have to select a session first.'), positive: 'OK')
             return
@@ -253,7 +253,6 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
             wait.modal(gettext('Deleting session...'), 'spinner')
             $http.delete("/api/lmn/session/sessions/#{session}").then (resp) ->
                 $rootScope.$emit('updateWaiting', 'done')
-                #notify.success gettext('Session Deleted')
                 $scope.visible.sessionname = 'none'
                 $scope.visible.participanttable = 'none'
                 $scope.visible.mainpage = 'show'
@@ -261,7 +260,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                 $scope.info.message = ''
                 $scope.getSessions()
                 $scope.currentSession.name = ''
-                notify.success gettext(resp.data)
+                notify.success(gettext(resp.data))
 
     $scope.newSession = () ->
         messagebox.prompt(gettext('Session Name'), '').then (msg) ->
@@ -282,96 +281,96 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                 $scope.visible.participanttable = 'none'
 
     $scope.getSessions = () ->
-                # TODO Figure out why this only works correctly if defined in this function (translation string etc.)
-                # translationstrings
-                $scope.translation ={
-                    addStudent: gettext('Add Student')
-                    addClass: gettext('Add Class')
-                }
-                $scope.sorts = [
-                   {
-                      name: gettext('Lastname')
-                      fx: (x) -> x.sn + ' ' + x.givenName
-                   }
-                   {
-                      name: gettext('Login name')
-                      fx: (x) -> x.sAMAccountName
-                   }
-                   {
-                      name: gettext('Firstname')
-                      fx: (x) -> x.givenName
-                   }
-                   {
-                      name: gettext('Email')
-                      fx: (x) -> x.mail
-                   }
-                ]
-                $scope.sort = $scope.sorts[0]
+        # TODO Figure out why this only works correctly if defined in this function (translation string etc.)
+        # translationstrings
+        $scope.translation ={
+            addStudent: gettext('Add Student')
+            addClass: gettext('Add Class')
+        }
+        $scope.sorts = [
+           {
+              name: gettext('Lastname')
+              fx: (x) -> x.sn + ' ' + x.givenName
+           }
+           {
+              name: gettext('Login name')
+              fx: (x) -> x.sAMAccountName
+           }
+           {
+              name: gettext('Firstname')
+              fx: (x) -> x.givenName
+           }
+           {
+              name: gettext('Email')
+              fx: (x) -> x.mail
+           }
+        ]
+        $scope.sort = $scope.sorts[0]
 
-                $scope.fields = {
-                   sAMAccountName:
-                      visible: true
-                      name: gettext('Userdata')
-                    transfer:
-                      visible: true
-                      name: gettext('Transfer')
-                   examModeSupervisor:
-                      visible: true
-                      name: gettext('Exam-Supervisor')
-                   sophomorixRole:
-                      visible: false
-                      name: gettext('sophomorixRole')
-                   exammode:
-                      visible: true
-                      icon:"fa fa-graduation-cap"
-                      title: gettext('Exam-Mode')
-                      checkboxAll: false
-                      examBox: true
-                      checkboxStatus: false
-                   wifiaccess:
-                      visible: true
-                      icon:"fa fa-wifi"
-                      title: gettext('Wifi-Access')
-                      checkboxAll: true
-                      checkboxStatus: false
-                   internetaccess:
-                      visible: true
-                      icon:"fa fa-globe"
-                      title: gettext('Internet-Access')
-                      checkboxAll: true
-                      checkboxStatus: false
-                   intranetaccess:
-                      visible: false
-                      icon:"fa fa-server"
-                      title: gettext('Intranet Access')
-                      checkboxAll: true
-                   webfilter:
-                      visible: false
-                      icon:"fa fa-filter"
-                      title: gettext('Webfilter')
-                      checkboxAll: true
-                      checkboxStatus: false
-                   printing:
-                      visible: true
-                      icon:"fa fa-print"
-                      title: gettext('Printing')
-                      checkboxAll: true
-                      checkboxStatus: false
-                }
-                #get groups
-                $http.get('/api/lmn/groupmembership/groups').then (resp) ->
-                    $scope.groups = resp.data[0]
-                    $scope.identity.isAdmin = resp.data[1]
-                    $scope.classes = $scope.groups.filter($scope.filterGroupType('schoolclass'))
-                    $scope.classes = $scope.classes.filter($scope.filterMembership(true))
+        $scope.fields = {
+           sAMAccountName:
+              visible: true
+              name: gettext('Userdata')
+            transfer:
+              visible: true
+              name: gettext('Transfer')
+           examModeSupervisor:
+              visible: true
+              name: gettext('Exam-Supervisor')
+           sophomorixRole:
+              visible: false
+              name: gettext('sophomorixRole')
+           exammode:
+              visible: true
+              icon:"fa fa-graduation-cap"
+              title: gettext('Exam-Mode')
+              checkboxAll: false
+              examBox: true
+              checkboxStatus: false
+           wifiaccess:
+              visible: true
+              icon:"fa fa-wifi"
+              title: gettext('Wifi-Access')
+              checkboxAll: true
+              checkboxStatus: false
+           internetaccess:
+              visible: true
+              icon:"fa fa-globe"
+              title: gettext('Internet-Access')
+              checkboxAll: true
+              checkboxStatus: false
+           intranetaccess:
+              visible: false
+              icon:"fa fa-server"
+              title: gettext('Intranet Access')
+              checkboxAll: true
+           webfilter:
+              visible: false
+              icon:"fa fa-filter"
+              title: gettext('Webfilter')
+              checkboxAll: true
+              checkboxStatus: false
+           printing:
+              visible: true
+              icon:"fa fa-print"
+              title: gettext('Printing')
+              checkboxAll: true
+              checkboxStatus: false
+        }
+        #get groups
+        $http.get('/api/lmn/groupmembership/groups').then (resp) ->
+            $scope.groups = resp.data[0]
+            $scope.identity.isAdmin = resp.data[1]
+            $scope.classes = $scope.groups.filter($scope.filterGroupType('schoolclass'))
+            $scope.classes = $scope.classes.filter($scope.filterMembership(true))
 
-                $http.get('/api/lmn/session/sessions').then (resp) ->
-                    if resp.data.length is 0
-                        $scope.sessions = resp.data
-                        $scope.info.message = gettext("There are no sessions yet. Create a session using the 'New Session' button at the top!")
-                    else
-                        $scope.visible.sessiontable = 'show'
-                        $scope.sessions = resp.data
+        $http.get('/api/lmn/session/sessions').then (resp) ->
+            if resp.data.length is 0
+                $scope.sessions = resp.data
+                $scope.info.message = gettext("There are no sessions yet. Create a session using the 'New Session' button at the top!")
+            else
+                $scope.visible.sessiontable = 'show'
+                $scope.sessions = resp.data
 
     $scope.filterGroupType = (val) ->
             return (dict) ->
@@ -428,7 +427,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                         $scope.info.message = ''
                         notify.success gettext('Session Renamed')
 
-    $scope.getParticipants = (username,session) ->
+    $scope.getParticipants = (session) ->
                 $scope.visible.sessiontable = 'none'
                 $scope.resetClass()
                 # Reset select all checkboxes when loading participants
@@ -473,7 +472,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
             # open existing session
             $scope.currentSession.name=sessionID
             $scope.currentSession.comment=sessionComment
-            $scope.getParticipants($scope.identity.user,sessionID)
+            $scope.getParticipants(sessionID)
             $scope.getWebConferenceEnabled()
 
     $scope.generateRoomSession = (user) ->
@@ -524,7 +523,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                 # open new created session
                 $scope.currentSession.name=sessionID
                 $scope.currentSession.comment=sessionComment
-                $scope.getParticipants($scope.identity.user,sessionID)
+                $scope.getParticipants(sessionID)
                 $scope.getWebConferenceEnabled()
         # create new session
         if sessionExist == false
@@ -541,7 +540,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                 # open new created session
                 $scope.currentSession.name=sessionID
                 $scope.currentSession.comment=sessionComment
-                $scope.getParticipants($scope.identity.user,sessionID)
+                $scope.getParticipants(sessionID)
                 $scope.getWebConferenceEnabled()
 
 
@@ -621,7 +620,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
 
     $scope.endExam = (participant, supervisor,session, sessionName) ->
                 $http.post('/api/lmn/session/sessions', {action: 'end-exam', supervisor: supervisor, participant: participant, sessionName: sessionName}).then (resp) ->
-                    $scope.getParticipants(supervisor,session)
+                    $scope.getParticipants(session)
 
     $scope.saveApply = (username,participants, session, sessionName) ->
                 wait.modal(gettext('Changes are applied...'), 'progressbar')
@@ -629,7 +628,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                     # emit process is done
                     $rootScope.$emit('updateWaiting', 'done')
                     $scope.output = resp.data
-                    $scope.getParticipants(username,session)
+                    $scope.getParticipants(session)
                     notify.success gettext($scope.output)
 
     $scope.cancel = (username,participants, session) ->

@@ -322,7 +322,7 @@
         });
       }
     };
-    $scope.killSession = function(username, session, comment) {
+    $scope.killSession = function(session, comment) {
       if (session === '') {
         messagebox.show({
           title: gettext('No Session selected'),
@@ -339,7 +339,6 @@
         wait.modal(gettext('Deleting session...'), 'spinner');
         return $http.delete(`/api/lmn/session/sessions/${session}`).then(function(resp) {
           $rootScope.$emit('updateWaiting', 'done');
-          //notify.success gettext('Session Deleted')
           $scope.visible.sessionname = 'none';
           $scope.visible.participanttable = 'none';
           $scope.visible.mainpage = 'show';
@@ -572,7 +571,7 @@
         });
       });
     };
-    $scope.getParticipants = function(username, session) {
+    $scope.getParticipants = function(session) {
       $scope.visible.sessiontable = 'none';
       $scope.resetClass();
       // Reset select all checkboxes when loading participants
@@ -629,7 +628,7 @@
         // open existing session
         $scope.currentSession.name = sessionID;
         $scope.currentSession.comment = sessionComment;
-        $scope.getParticipants($scope.identity.user, sessionID);
+        $scope.getParticipants(sessionID);
         return $scope.getWebConferenceEnabled();
       }
     };
@@ -709,7 +708,7 @@
           // open new created session
           $scope.currentSession.name = sessionID;
           $scope.currentSession.comment = sessionComment;
-          $scope.getParticipants($scope.identity.user, sessionID);
+          $scope.getParticipants(sessionID);
           return $scope.getWebConferenceEnabled();
         });
       }
@@ -735,7 +734,7 @@
           // open new created session
           $scope.currentSession.name = sessionID;
           $scope.currentSession.comment = sessionComment;
-          $scope.getParticipants($scope.identity.user, sessionID);
+          $scope.getParticipants(sessionID);
           return $scope.getWebConferenceEnabled();
         });
       }
@@ -854,7 +853,7 @@
         participant: participant,
         sessionName: sessionName
       }).then(function(resp) {
-        return $scope.getParticipants(supervisor, session);
+        return $scope.getParticipants(session);
       });
     };
     $scope.saveApply = function(username, participants, session, sessionName) {
@@ -869,7 +868,7 @@
         // emit process is done
         $rootScope.$emit('updateWaiting', 'done');
         $scope.output = resp.data;
-        $scope.getParticipants(username, session);
+        $scope.getParticipants(session);
         return notify.success(gettext($scope.output));
       });
     };

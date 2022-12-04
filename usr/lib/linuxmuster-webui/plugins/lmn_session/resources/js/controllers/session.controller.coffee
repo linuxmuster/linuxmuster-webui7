@@ -259,7 +259,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                         $scope.visible.mainpage = 'show'
                         $scope.sessionLoaded = false
                         $scope.info.message = ''
-                        $scope.getSessions($scope.identity.user)
+                        $scope.getSessions()
                         $scope.currentSession.name = ''
                         notify.success gettext(resp.data)
 
@@ -273,7 +273,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                         return
                     $http.post('/api/lmn/session/sessions', {action: 'new-session', username: username, comment: msg.value}).then (resp) ->
                         $scope.new-sessions = resp.data
-                        $scope.getSessions($scope.identity.user)
+                        $scope.getSessions()
                         notify.success gettext('Session Created')
                         # Reset alle messages and information to show session table
                         $scope.info.message = ''
@@ -285,7 +285,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
 
 
 
-    $scope.getSessions = (username) ->
+    $scope.getSessions = () ->
                 # TODO Figure out why this only works correctly if defined in this function (translation string etc.)
                 # translationstrings
                 $scope.translation ={
@@ -363,21 +363,17 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                       checkboxStatus: false
                 }
                 #get groups
-                console.log ($scope.identity.profile)
                 $http.get('/api/lmn/groupmembership/groups').then (resp) ->
                     $scope.groups = resp.data[0]
                     $scope.identity.isAdmin = resp.data[1]
                     $scope.classes = $scope.groups.filter($scope.filterGroupType('schoolclass'))
                     $scope.classes = $scope.classes.filter($scope.filterMembership(true))
-                #get sessions
-                $http.post('/api/lmn/session/sessions', {action: 'get-sessions', username: username}).then (resp) ->
+
+                $http.get('/api/lmn/session/sessions').then (resp) ->
                     if resp.data.length is 0
                         $scope.sessions = resp.data
                         $scope.info.message = gettext("There are no sessions yet. Create a session using the 'New Session' button at the top!")
-                        console.log (resp.data)
-                        #console.log ('no sessions')
                     else
-                        #console.log ('sessions found')
                         $scope.visible.sessiontable = 'show'
                         $scope.sessions = resp.data
 
@@ -427,7 +423,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                         notify.error gettext(testChar)
                         return
                     $http.post('/api/lmn/session/sessions', {action: 'rename-session', session: session, comment: msg.value}).then (resp) ->
-                        $scope.getSessions($scope.identity.user)
+                        $scope.getSessions()
                         $scope.currentSession.name = ''
                         $scope.sessionLoaded = false
                         $scope.currentSession.comment = ''
@@ -541,7 +537,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                 # emit wait process is done
                 $rootScope.$emit('updateWaiting', 'done')
                 $scope.new-sessions = resp.data
-                await $scope.getSessions($scope.identity.user)
+                await $scope.getSessions()
                 notify.success gettext('Session generated')
                 # get new created sessionID
                 for session in $scope.sessions
@@ -642,7 +638,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                     notify.success gettext($scope.output)
 
     $scope.cancel = (username,participants, session) ->
-        $scope.getSessions($scope.identity.user)
+        $scope.getSessions()
         $scope.sessionLoaded = false
         $scope.info.message = ''
         $scope.participants = ''
@@ -775,16 +771,13 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                 messagebox.show(title: gettext('Not implemented'), positive: 'OK')
 
     $scope.$watch 'identity.user', ->
-        #console.log ($scope.identity.user)
         if $scope.identity.user is undefined
             return
         if $scope.identity.user is null
             return
         if $scope.identity.user is 'root'
-            # $scope.identity.user = 'bruce'
             return
-        $scope.getSessions($scope.identity.user)
-        #return
+        $scope.getSessions()
 
 angular.module('lmn.session').controller 'LMNRoomDetailsController', ($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, usersInRoom) ->
         $scope.usersInRoom = usersInRoom

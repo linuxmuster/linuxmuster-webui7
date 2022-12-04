@@ -348,7 +348,7 @@
           $scope.visible.mainpage = 'show';
           $scope.sessionLoaded = false;
           $scope.info.message = '';
-          $scope.getSessions($scope.identity.user);
+          $scope.getSessions();
           $scope.currentSession.name = '';
           return notify.success(gettext(resp.data));
         });
@@ -372,7 +372,7 @@
         }).then(function(resp) {
           var sessions;
           $scope.new - (sessions = resp.data);
-          $scope.getSessions($scope.identity.user);
+          $scope.getSessions();
           notify.success(gettext('Session Created'));
           // Reset alle messages and information to show session table
           $scope.info.message = '';
@@ -383,7 +383,7 @@
         });
       });
     };
-    $scope.getSessions = function(username) {
+    $scope.getSessions = function() {
       // TODO Figure out why this only works correctly if defined in this function (translation string etc.)
       // translationstrings
       $scope.translation = {
@@ -478,25 +478,17 @@
         }
       };
       //get groups
-      console.log($scope.identity.profile);
       $http.get('/api/lmn/groupmembership/groups').then(function(resp) {
         $scope.groups = resp.data[0];
         $scope.identity.isAdmin = resp.data[1];
         $scope.classes = $scope.groups.filter($scope.filterGroupType('schoolclass'));
         return $scope.classes = $scope.classes.filter($scope.filterMembership(true));
       });
-      //get sessions
-      return $http.post('/api/lmn/session/sessions', {
-        action: 'get-sessions',
-        username: username
-      }).then(function(resp) {
+      return $http.get('/api/lmn/session/sessions').then(function(resp) {
         if (resp.data.length === 0) {
           $scope.sessions = resp.data;
-          $scope.info.message = gettext("There are no sessions yet. Create a session using the 'New Session' button at the top!");
-          return console.log(resp.data);
+          return $scope.info.message = gettext("There are no sessions yet. Create a session using the 'New Session' button at the top!");
         } else {
-          //console.log ('sessions found')
-          //console.log ('no sessions')
           $scope.visible.sessiontable = 'show';
           return $scope.sessions = resp.data;
         }
@@ -578,7 +570,7 @@
           session: session,
           comment: msg.value
         }).then(function(resp) {
-          $scope.getSessions($scope.identity.user);
+          $scope.getSessions();
           $scope.currentSession.name = '';
           $scope.sessionLoaded = false;
           $scope.currentSession.comment = '';
@@ -747,7 +739,7 @@
           // emit wait process is done
           $rootScope.$emit('updateWaiting', 'done');
           $scope.new - (sessions = resp.data);
-          await $scope.getSessions($scope.identity.user);
+          await $scope.getSessions();
           notify.success(gettext('Session generated'));
           ref = $scope.sessions;
           // get new created sessionID
@@ -899,7 +891,7 @@
       });
     };
     $scope.cancel = function(username, participants, session) {
-      $scope.getSessions($scope.identity.user);
+      $scope.getSessions();
       $scope.sessionLoaded = false;
       $scope.info.message = '';
       $scope.participants = '';
@@ -1105,7 +1097,6 @@
       });
     };
     return $scope.$watch('identity.user', function() {
-      //console.log ($scope.identity.user)
       if ($scope.identity.user === void 0) {
         return;
       }
@@ -1115,12 +1106,10 @@
       if ($scope.identity.user === 'root') {
         return;
       }
-      // $scope.identity.user = 'bruce'
-      return $scope.getSessions($scope.identity.user);
+      return $scope.getSessions();
     });
   });
 
-  //return
   angular.module('lmn.session').controller('LMNRoomDetailsController', function($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, usersInRoom) {
     $scope.usersInRoom = usersInRoom;
     return $scope.close = function() {

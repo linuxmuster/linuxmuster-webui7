@@ -234,7 +234,7 @@
                 </ul>
             </div>
             <button style="display:{{visible.participanttable}};" ng:click="saveApply(identity.user,participants,currentSession.name,currentSession.comment)" ng:show="currentSession.name != ''" class="btn btn-lmn pull-right" translate>Save &amp; apply</button>
-            <button ng:click="cancel(identity.user,currentSession.name)" ng:show="currentSession.name != ''" class="btn btn-lmn pull-right" translate>Close</button>
+            <button ng:click="cancel()" ng:show="currentSession.name != ''" class="btn btn-lmn pull-right" translate>Close</button>
         </div>
     </floating-toolbar>
 

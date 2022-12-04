@@ -2,7 +2,7 @@ from concurrent import futures
 from time import localtime, strftime  # needed for timestamp in collect transfer
 
 from jadi import component
-from aj.api.http import url, HttpPlugin
+from aj.api.http import get, post, put, patch, delete, url, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue
@@ -13,37 +13,38 @@ class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
 
-    @url(r'/api/lmn/session/sessions')
+    @get(r'/api/lmn/session/sessions')
+    @authorize('lm:users:students:read')
+    @endpoint(api=True)
+    def handle_api_get_sessions(self, http_context):
+        supervisor = self.context.identity
+        try:
+            sophomorixCommand = ['sophomorix-session', '-i', '-jj', '--supervisor', supervisor]
+            sessions = lmn_getSophomorixValue(sophomorixCommand, '')
+        except Exception as e:
+            raise EndpointError(e)
+
+        sessionsList = []
+        if sessions['SESSIONCOUNT'] == 0:
+            return []
+
+        for session in sessions['SUPERVISOR'][supervisor]['sophomorixSessions']:
+            sessionJson = {}
+            sessionJson['ID'] = session
+            sessionJson['COMMENT'] = sessions['SUPERVISOR'][supervisor]['sophomorixSessions'][session]['COMMENT']
+            if 'PARTICIPANT_COUNT' not in sessions['SUPERVISOR'][supervisor]['sophomorixSessions'][session]:
+                sessionJson['PARTICIPANT_COUNT'] = 0
+            else:
+                sessionJson['PARTICIPANT_COUNT'] = sessions['SUPERVISOR'][supervisor]['sophomorixSessions'][session]['PARTICIPANT_COUNT']
+            sessionsList.append(sessionJson)
+        return sessionsList
+
+    @post(r'/api/lmn/session/sessions')
     @endpoint(api=True)
     def handle_api_session_sessions(self, http_context):
         action = http_context.json_body()['action']
-        if action == 'get-sessions':
-            supervisor = http_context.json_body()['username']
-            with authorize('lm:users:students:read'):
-                try:
-                    sophomorixCommand = ['sophomorix-session', '-i', '-jj', '--supervisor', supervisor]
-                    sessions = lmn_getSophomorixValue(sophomorixCommand, '')
-                # Most likeley key error 'cause no sessions for this user exist
-                except Exception as e:
-                    raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(e))
-                    return 0
-            sessionsList = []
-            if supervisor not in sessions['SUPERVISOR_LIST']:
-                return sessionsList
-
-            for session in sessions['SUPERVISOR'][supervisor]['sophomorixSessions']:
-                sessionJson = {}
-                sessionJson['ID'] = session
-                sessionJson['COMMENT'] = sessions['SUPERVISOR'][supervisor]['sophomorixSessions'][session]['COMMENT']
-                if 'PARTICIPANT_COUNT' not in sessions['SUPERVISOR'][supervisor]['sophomorixSessions'][session]:
-                    sessionJson['PARTICIPANT_COUNT'] = 0
-                else:
-                    sessionJson['PARTICIPANT_COUNT'] = sessions['SUPERVISOR'][supervisor]['sophomorixSessions'][session]['PARTICIPANT_COUNT']
-                sessionsList.append(sessionJson)
-            return sessionsList
         if action == 'get-participants':
             participantList = []
-            supervisor = http_context.json_body()['username']
             session = http_context.json_body()['session']
 
             with authorize('lm:users:students:read'):

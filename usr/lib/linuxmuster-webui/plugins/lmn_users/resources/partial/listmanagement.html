@@ -105,7 +105,7 @@
 
         <div class="floating-toolbar-padder"></div>
         <floating-toolbar>
-            <button ng:click="students_backups()" class="btn btn-lmn pull-right">
+            <button ng:click="backups('students')" class="btn btn-lmn pull-right">
                 <i class="fa fa-history"></i>
             </button>
             <button ng:click="students_save()" class="btn btn-lmn" translate>Save</button>
@@ -117,13 +117,10 @@
                 </button>
                 <ul uib-dropdown-menu class="dropdown-menu-left">
                     <li>
-                        <a ng:click="students_editCSV()" translate>Edit CSV</a>
+                        <a ng:click="editCSV('students')" translate>Edit CSV</a>
                     </li>
                     <li>
-                        <a ng:click="confirmUpload('normal', 'students')" translate>Upload CSV</a>
-                    </li>
-                    <li>
-                        <a ng:click="confirmUpload('custom', 'students')" translate>Upload custom CSV</a>
+                        <a ng:click="confirmUpload('students')" translate>Upload CSV</a>
                     </li>
                 </ul>
                 <br />
@@ -226,7 +223,7 @@
         <div class="floating-toolbar-padder"></div>
 
         <floating-toolbar>
-            <button ng:click="teachers_backups()" class="btn btn-lmn pull-right">
+            <button ng:click="backups('teachers')" class="btn btn-lmn pull-right">
                 <i class="fa fa-history"></i>
             </button>
             <button ng:click="teachers_save()" class="btn btn-lmn" translate>Save</button>
@@ -238,13 +235,10 @@
                 </button>
                 <ul uib-dropdown-menu class="dropdown-menu-left">
                     <li>
-                        <a ng:click="teachers_editCSV()" translate>Edit CSV</a>
+                        <a ng:click="editCSV('teachers')" translate>Edit CSV</a>
                     </li>
                     <li>
-                        <a ng:click="confirmUpload('normal', 'teachers')" translate>Upload CSV</a>
-                    </li>
-                    <li>
-                        <a ng:click="confirmUpload('custom', 'teachers')" translate>Upload custom CSV</a>
+                        <a ng:click="confirmUpload('teachers')" translate>Upload CSV</a>
                     </li>
                 </ul>
                 <br />
@@ -351,12 +345,12 @@
         <div class="floating-toolbar-padder"></div>
 
         <floating-toolbar>
-            <button ng:click="extrastudents_backups()" class="btn btn-lmn pull-right">
+            <button ng:click="backups('extrastudents')" class="btn btn-lmn pull-right">
                 <i class="fa fa-history"></i>
             </button>
             <button ng:click="extrastudents_save()" class="btn btn-lmn" translate>Save</button>
             <button ng:click="saveAndCheck('extrastudents')" class="btn btn-lmn" translate>Save &amp; check</button>
-            <button ng:click="extrastudents_editCSV()" class="btn btn-lmn" translate>Edit CSV</button>
+            <button ng:click="editCSV('extrastudents')" class="btn btn-lmn" translate>Edit CSV</button>
         </floating-toolbar>
     </div>
     </uib:tab>
@@ -441,12 +435,12 @@
         <div class="floating-toolbar-padder"></div>
 
         <floating-toolbar>
-            <button ng:click="courses_backups()" class="btn btn-lmn pull-right">
+            <button ng:click="backups('extraclasses)" class="btn btn-lmn pull-right">
                 <i class="fa fa-history"></i>
             </button>
             <button ng:click="courses_save()" class="btn btn-lmn" translate>Save</button>
             <button ng:click="saveAndCheck('courses')" class="btn btn-lmn" translate>Save &amp; check</button>
-            <button ng:click="courses_editCSV()" class="btn btn-lmn" translate>Edit CSV</button>
+            <button ng:click="editCSV(extraclasses)" class="btn btn-lmn" translate>Edit CSV</button>
         </floating-toolbar>
     </div>
 

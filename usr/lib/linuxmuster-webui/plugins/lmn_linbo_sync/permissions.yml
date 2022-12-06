@@ -8,3 +8,13 @@ schooladministrator:
 - 'lm:sync:online: true'
 - 'lm:sync:sync: true'
 - 'sidebar:view:/view/lmn/linbo_sync: true'
+student:
+- 'lm:sync:list: false'
+- 'lm:sync:online: false'
+- 'lm:sync:sync: false'
+- 'sidebar:view:/view/lmn/linbo_sync: false'
+teacher:
+- 'lm:sync:list: false'
+- 'lm:sync:online: false'
+- 'lm:sync:sync: false'
+- 'sidebar:view:/view/lmn/linbo_sync: false'

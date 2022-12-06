@@ -1,37 +1,30 @@
-angular.module('lmn.users').controller 'LMNUsersShowPasswordController', ($scope, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, user, type) ->
-    $scope.username = user[0]
-    $scope.type = type
+angular.module('lmn.users').controller 'LMNUsersShowPasswordController', ($scope, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, username) ->
+    $scope.username = username
 
-    $http.post('/api/lm/users/password', {users: user, action: 'get'}).then (resp) ->
-        password = resp.data
-        $scope.password = password
-        $http.get('/api/lm/users/test-first-password/' + user).then (response) ->
+    $http.get('/api/lmn/users/passwords/' + $scope.username).then (resp) ->
+        $scope.password = resp.data
+        $http.get("/api/lmn/users/#{$scope.username}/first-password-set").then (response) ->
             if response.data == true
                 $scope.passwordStatus = gettext('Still Set')
+                $scope.passwordStatusColor = 'green'
             else
                 $scope.passwordStatus = gettext('Changed from user')
-          #messagebox.show(title: msg, text: resp.data, positive: 'OK')
-
-    #$http.post('/api/lm/users/password', {users: user, action: 'get'}).then (resp) ->
+                $scope.passwordStatusColor = 'red'
 
     $scope.close = () ->
-        $uibModalInstance.dismiss()
+        $uibModalInstance.close()
 
-angular.module('lmn.users').controller 'LMNUsersCustomPasswordController', ($scope, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, users, type, validation) ->
-    $scope.username = users
-    $scope.action = type
+angular.module('lmn.users').controller 'LMNUsersCustomPasswordController', ($scope, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, users, pwtype, validation) ->
+    $scope.users = users
+    # Single user
+    if not Array.isArray(users)
+        $scope.users = [users]
+    $scope.pwtype = if (pwtype == 'current') then pwtype else 'first'
+    $scope.userpw = ""
 
-    $scope.save = (userpw) ->
-        if not type?
-            action = 'set'
-        else
-            if type == 'actual'
-                action = 'set-actual'
-            else
-                action = 'set'
-
+    $scope.save = () ->
         if not $scope.userpw
-            notify.error gettext("You have to enter a password")
+            notify.error(gettext("You have to enter a password"))
             return
 
         test = validation.isValidPassword($scope.userpw)
@@ -39,12 +32,13 @@ angular.module('lmn.users').controller 'LMNUsersCustomPasswordController', ($sco
            notify.error gettext(test)
            return
         else
-            $http.post('/api/lm/users/password', {users: (x['sAMAccountName'] for x in users), action: action, password: $scope.userpw, type: type}).then (resp) ->
-                notify.success gettext('New password set')
-        $uibModalInstance.dismiss()
+            usernames = $scope.users.flatMap((x) => x.sAMAccountName).join(',').trim()
+            $http.post("/api/lmn/users/passwords/set-#{$scope.pwtype}", {users: usernames, password: $scope.userpw}).then (resp) ->
+                notify.success(gettext('New password set'))
+        $scope.close()
 
     $scope.close = () ->
-        $uibModalInstance.dismiss()
+        $uibModalInstance.close()
 
 angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, id, role, identity, customFields) ->
 
@@ -102,7 +96,7 @@ angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $rou
     $scope.hidetext = gettext("Hide")
     $scope.showtext = gettext("Show")
 
-    $http.post('/api/lm/sophomorixUsers/'+role, {action: 'get-specified', user: id}).then (resp) ->
+    $http.get("/api/lmn/sophomorixUsers/#{role}/#{id}").then (resp) ->
         $scope.userDetails = resp.data[0]
         $scope.groups = []
         for dn in $scope.userDetails['memberOf']
@@ -110,7 +104,7 @@ angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $rou
             category = dn.split(',')[1].split('=')[1]
             $scope.groups.push({'cn':cn, 'category':category})
 
-    $http.get("/api/lmn/quota/#{id}").then (resp) ->
+    $http.get("/api/lmn/quota/user/#{id}").then (resp) ->
         $scope.quotas = []
 
         for share, values of resp.data['QUOTA_USAGE_BY_SHARE']
@@ -132,63 +126,30 @@ angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $rou
                     type = "danger"
                 $scope.quotas.push({'share':share, 'total':total + " MiB", 'used':used, 'usage':usage, 'type':type})
 
-    $scope.editCustom = (n) ->
-        value = $scope.userDetails['sophomorixCustom'+n]
-        messagebox.prompt(gettext('New value'), value).then (msg) ->
-            $http.post("/api/lm/custom", {index: n, value: msg.value, user: id}).then () ->
-                if msg.value
-                    $scope.userDetails['sophomorixCustom'+n] = msg.value
-                else
-                    $scope.userDetails['sophomorixCustom'+n] = 'null'
-                notify.success(gettext("Value updated !"))
-            , () ->
-                notify.error(gettext("Error, please verify the user and/or your values."))
+    $scope.editCustom = (index) ->
+        value = $scope.userDetails['sophomorixCustom' + index]
+        customFields.editCustom($scope.id, value, index).then (resp) ->
+            $scope.userDetails['sophomorixCustom' + index] = resp
 
-    $scope.removeCustomMulti = (n, value) ->
-        messagebox.show(
-            title: gettext('Remove custom field value'),
-            text: gettext('Do you really want to remove ') + value + ' ?',
-            positive: gettext('OK'),
-            negative: gettext('Cancel')
-        ).then (msg) ->
-            $http.post("/api/lm/custommulti/remove", {index: n, value: value, user: id}).then () ->
-                position = $scope.userDetails['sophomorixCustomMulti'+n].indexOf(value)
-                $scope.userDetails['sophomorixCustomMulti'+n].splice(position, 1)
-                notify.success(gettext("Value removed !"))
-            , () ->
-                notify.error(gettext("Error, please verify the user and/or your values."))
+    $scope.removeCustomMulti = (index, value) ->
+        customFields.removeCustomMulti($scope.id, value, index).then () ->
+            position = $scope.userDetails['sophomorixCustomMulti' + index].indexOf(value)
+            $scope.userDetails['sophomorixCustomMulti' + index].splice(position, 1)
 
-    $scope.addCustomMulti = (n) ->
-        messagebox.prompt(gettext('New value')).then (msg) ->
-            $http.post("/api/lm/custommulti/add", {index: n, value: msg.value, user: id}).then () ->
-                if msg.value
-                    $scope.userDetails['sophomorixCustomMulti'+n].push(msg.value)
-                    notify.success(gettext("Value added !"))
-            , () ->
-                notify.error(gettext("Error, please verify the user and/or your values."))
+    $scope.addCustomMulti = (index) ->
+        customFields.addCustomMulti($scope.id, index).then (resp) ->
+            if resp
+                $scope.userDetails['sophomorixCustomMulti' + index].push(resp)
 
     $scope.removeProxyAddresses = (value) ->
-        messagebox.show(
-            title: gettext('Remove proxy address'),
-            text: gettext('Do you really want to remove ') + value + ' ?',
-            positive: gettext('OK'),
-            negative: gettext('Cancel')
-        ).then (msg) ->
-            $http.post("/api/lm/changeProxyAddresses", {action: 'remove', address: value, user: id}).then () ->
-                position = $scope.userDetails['proxyAddresses'].indexOf(value)
-                $scope.userDetails['proxyAddresses'].splice(position, 1)
-                notify.success(gettext("Value removed !"))
-            , () ->
-                notify.error(gettext("Error, please verify the user and/or your values."))
+        customFields.removeProxyAddresses($scope.id, value).then () ->
+            position = $scope.userDetails['proxyAddresses'].indexOf(value)
+            $scope.userDetails['proxyAddresses'].splice(position, 1)
 
-    $scope.addProxyAddresses = (n) ->
-        messagebox.prompt(gettext('New address')).then (msg) ->
-            $http.post("/api/lm/changeProxyAddresses", {action: 'add', address: msg.value, user: id}).then () ->
-                if msg.value
-                    $scope.userDetails['proxyAddresses'].push(msg.value)
-                notify.success(gettext("Address added !"))
-            , () ->
-                notify.error(gettext("Error, please verify the user and/or your values."))
+    $scope.addProxyAddresses = () ->
+        customFields.addProxyAddresses($scope.id).then (resp) ->
+            if resp
+                $scope.userDetails['proxyAddresses'].push(resp)
 
     $scope.close = () ->
         $uibModalInstance.dismiss()
@@ -253,66 +214,54 @@ angular.module('lmn.users').controller 'LMUsersSortListModalController', ($scope
 
     $scope.rebuildCSV()
 
-angular.module('lmn.users').controller 'LMUsersUploadModalController', ($scope, $window, $http, $uibModalInstance, messagebox, notify, $uibModal, gettext, filesystem, userlist) ->
+angular.module('lmn.users').controller 'LMUsersUploadModalController', ($scope, $window, $http, $uibModalInstance, messagebox, notify, $uibModal, gettext, filesystem, role, parent) ->
     $scope.path = "/tmp/"
-    $scope.onUploadBegin = ($flow) ->
+    $scope.parent = parent
+    $scope.role = role
+    $scope.csv_name = "#{role}.csv"
+
+    $scope.upload = ($flow, check=true) ->
         $uibModalInstance.close()
         msg = messagebox.show({progress: true})
         filesystem.startFlowUpload($flow, $scope.path).then(() ->
             notify.success(gettext('Uploaded'))
             filename = $flow["files"][0]["name"]
-            $http.post('/api/lmn/sophomorixUsers/import-list', {action: 'get', path: $scope.path+filename, userlist: userlist}).then (resp) ->
-                userListCSV = resp.data
-                #console.log (userListCSV)
-                # console.log (resp['data'])
-                $uibModal.open(
-                             templateUrl: '/lmn_users:resources/partial/sortList.modal.html'
-                             controller: 'LMUsersSortListModalController'
-                             resolve:
-                                userListCSV: () -> userListCSV
-                                userlist: () -> userlist
-                          ).result.then (result) ->
-                             #console.log (result)
-                             $http.post("/api/lmn/sophomorixUsers/import-list", {action: 'save', data: result, userlist: userlist}).then (resp) ->
-                                #console.log (resp['data'])
-                                if resp['data'][0] == 'ERROR'
-                                    notify.error (resp['data'][1])
-                                if resp['data'][0] == 'LOG'
-                                    notify.success gettext(resp['data'][1])
-                                # TODO: it would be better to reload just the content frame. Currently I dont know how to set the route to reload it
-                                $window.location.reload()
-                                msg.close()
-                                notify.success gettext('Saved')
-
-                msg.close()
-        , null, (progress) ->
-          msg.messagebox.title = "Uploading: #{Math.floor(100 * progress)}%"
-        )
-
-
-    $scope.close = () ->
-        $uibModalInstance.close()
-
-angular.module('lmn.users').controller 'LMUsersUploadCustomModalController', ($scope, $window, $http, $uibModalInstance, messagebox, notify, $uibModal, gettext, filesystem, userlist) ->
-    $scope.path = "/tmp/"
-    $scope.onUploadBegin = ($flow) ->
-        $uibModalInstance.close()
-        msg = messagebox.show({progress: true})
-        filesystem.startFlowUpload($flow, $scope.path).then(() ->
-            notify.success(gettext('Uploaded'))
-            filename = $flow["files"][0]["name"]
-            $http.post('/api/lm/filterCustomCSV', {tmp_path: $scope.path + filename, userlist: userlist}).then (resp) ->
-                if resp['data'][0] == 'ERROR'
-                    notify.error (resp['data'][1])
-                if resp['data'][0] == 'LOG'
-                    notify.success gettext(resp['data'][1])
-                $window.location.reload()
-                msg.close()
-                notify.success gettext('Saved')
+            if check
+                $scope.checkColumns(filename)
+            else
+                $scope.saveCSV(filename)
+            msg.close()
         , null, (progress) ->
             msg.messagebox.title = "Uploading: #{Math.floor(100 * progress)}%"
         )
 
+    $scope.checkColumns = (filename) ->
+        $http.post('/api/lmn/users/lists/import', {action: 'get', path: $scope.path+filename, userlist: $scope.csv_name}).then (resp) ->
+            userListCSV = resp.data
+            $uibModal.open(
+                templateUrl: '/lmn_users:resources/partial/sortList.modal.html'
+                controller: 'LMUsersSortListModalController'
+                resolve:
+                    userListCSV: () -> userListCSV
+                    userlist: () -> $scope.csv_name
+            ).result.then (result) ->
+                 $http.post("/api/lmn/users/lists/import", {action: 'save', data: result, userlist: $scope.csv_name}).then (resp) ->
+                    #console.log (resp['data'])
+                    if resp['data'][0] == 'ERROR'
+                        notify.error (resp['data'][1])
+                    if resp['data'][0] == 'LOG'
+                        $scope.parent["get#{$scope.role}"](force:true)
+                        notify.success gettext(resp['data'][1])
+                        notify.success gettext('Saved')
+
+    $scope.saveCSV = (filename) ->
+        $http.post('/api/lmn/users/lists/csv', {tmp_path: $scope.path + filename, userlist: $scope.csv_name}).then (resp) ->
+            if resp['data'][0] == 'ERROR'
+                notify.error (resp['data'][1])
+            if resp['data'][0] == 'LOG'
+                $scope.parent["get#{$scope.role}"](force:true)
+                notify.success gettext(resp['data'][1])
+                notify.success gettext('Saved')
 
     $scope.close = () ->
         $uibModalInstance.close()
@@ -326,7 +275,7 @@ angular.module('lmn.users').controller 'LMNUsersAddAdminController', ($scope, $r
             return
         else
             notify.success gettext('Adding administrator...')
-            $http.post('/api/lm/users/change-'+role, {action: 'create' ,users: username}).then (resp) ->
+            $http.post("/api/lmn/sophomorixUsers/#{role}s", {users: username}).then (resp) ->
                 # console.log (resp.data)
                 if resp['data'][0] == 'ERROR'
                     notify.error (resp['data'][1])

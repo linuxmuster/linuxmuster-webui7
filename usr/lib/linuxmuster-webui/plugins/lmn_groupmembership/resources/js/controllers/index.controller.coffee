@@ -86,7 +86,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
       dict['type'] == val
 
   $scope.getGroups = (username) ->
-    $http.post('/api/lmn/groupmembership', {action: 'list-groups', username: username, profil: $scope.identity.profile}).then (resp) ->
+    $http.get('/api/lmn/groupmembership/groups').then (resp) ->
       $scope.groups = resp.data[0]
       $scope.identity.isAdmin = resp.data[1]
       $scope.classes = $scope.groups.filter($scope.filterGroupType('schoolclass'))
@@ -101,7 +101,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
       if test != true
         notify.error gettext(test)
         return
-      $http.post('/api/lmn/groupmembership', {action: 'create-project', username:$scope.identity.user, project: msg.value, profil: $scope.identity.profile}).then (resp) ->
+      $http.post('/api/lmn/groupmembership/projects/' + msg.value).then (resp) ->
         if resp.data[0] is 'ERROR'
             notify.error gettext(resp.data[1])
         else
@@ -142,7 +142,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
               for project in $scope.projects
                   all_groups += project.groupname + ','
 
-          $http.post('/api/lmn/groupmembership/reset', {type: type, all_groups: all_groups}).then (resp) ->
+          $http.post('/api/lmn/groupmembership/resetadmins', {type: type, all_groups: all_groups}).then (resp) ->
               notify.success gettext('Admin membership reset')
           .finally () ->
               msg.close()
@@ -170,7 +170,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
         $scope.changeMaillist = () ->
             $scope.changeState = true
             option = if $scope.maillist then '--maillist' else '--nomaillist'
-            $http.post('/api/lmn/changeGroup', {option: option, group: $scope.groupName, type: $scope.type}).then (resp) ->
+            $http.post('/api/lmn/groupmembership/groupoptions/' + $scope.groupName, {option: option, type: $scope.type}).then (resp) ->
                 if resp['data'][0] == 'ERROR'
                     notify.error (resp['data'][1])
                 if resp['data'][0] == 'LOG'
@@ -180,7 +180,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
         $scope.changeJoin = () ->
             $scope.changeState = true
             option = if $scope.joinable then '--join' else '--nojoin'
-            $http.post('/api/lmn/changeGroup', {option: option, group: $scope.groupName, type: $scope.type}).then (resp) ->
+            $http.post('/api/lmn/groupmembership/groupoptions/' + $scope.groupName, {option: option, type: $scope.type}).then (resp) ->
                 if resp['data'][0] == 'ERROR'
                     notify.error (resp['data'][1])
                 if resp['data'][0] == 'LOG'
@@ -190,7 +190,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
         $scope.changeHide = () ->
             $scope.changeState = true
             option = if $scope.hidden then '--hide' else '--nohide'
-            $http.post('/api/lmn/changeGroup', {option: option, group: $scope.groupName, type: $scope.type}).then (resp) ->
+            $http.post('/api/lmn/groupmembership/groupoptions/' + $scope.groupName, {option: option, type: $scope.type}).then (resp) ->
                 if resp['data'][0] == 'ERROR'
                     notify.error (resp['data'][1])
                 if resp['data'][0] == 'LOG'
@@ -200,7 +200,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
         $scope.killProject = (project) ->
              messagebox.show(text: "Do you really want to delete '#{project}'? This can't be undone!", positive: 'Delete', negative: 'Cancel').then () ->
                 msg = messagebox.show(progress: true)
-                $http.post('/api/lmn/groupmembership', {action: 'kill-project', username:$scope.identity.user, project: project, profil: $scope.identity.profile}).then (resp) ->
+                $http.delete('/api/lmn/groupmembership/projects/' + project).then (resp) ->
                     if resp['data'][0] == 'ERROR'
                         notify.error (resp['data'][1])
                     if resp['data'][0] == 'LOG'
@@ -233,7 +233,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
         $scope.getGroupDetails = (group) ->
             groupType = group[0]
             groupName = group[1]
-            $http.post('/api/lmn/groupmembership/details', {action: 'get-specified', groupType: groupType, groupName: groupName}).then (resp) ->
+            $http.get('/api/lmn/groupmembership/groups/' + groupName).then (resp) ->
                 $scope.groupName    = groupName
                 $scope.groupDetails = resp.data['GROUP'][groupName]
                 $scope.adminList = resp.data['GROUP'][groupName]['sophomorixAdmins']
@@ -292,6 +292,11 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
         $scope.filterLogin = (membersArray, login) ->
             return membersArray.filter((u) -> u.login == login).length == 0
 
+        $scope.removeTeacherClass = (user) ->
+            # Temporary wrapper to remove a teacher as member and admin from a class, to avoid conflicts
+            $scope.removeMember(user)
+            $scope.removeAdmin(user)
+
         $scope.addMember = (user) ->
             entity = ''
             if Array.isArray(user)
@@ -345,8 +350,14 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
                     notify.success gettext(resp['data'][1])
                     if Array.isArray(user)
                         $scope.admins = $scope.admins.concat(user.filter((u) -> $scope.admins.indexOf(u) < 0))
+                        if $scope.type == 'class'
+                            # Teachers are shown as members ...
+                            $scope.members = $scope.members.concat(user.filter((u) -> $scope.members.indexOf(u) < 0))
                     else
                         $scope.admins.push(user)
+                        if $scope.type == 'class'
+                            # Teachers are shown as members ...
+                            $scope.members.push(user)
                 $scope.changeState = false
 
         $scope.removeAdmin = (user) ->
@@ -468,6 +479,9 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
 
         $scope.addEntities = () ->
             $scope.UserSearchVisible = false
+            if $scope.type == 'class'
+                # Only teachers which are always admins in classes
+                $scope._.addasadmin = true
             if $scope._.addasadmin
                 $scope.addAdmin($scope._.newUser)
                 $scope.addAdminGroup($scope._.newGroup)
@@ -486,16 +500,16 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
         }
 
         $scope.findUsers = (q) ->
-            return $http.post("/api/lm/find-users", {login:q, type:'user'}).then (resp) ->
+            return $http.post("/api/lmn/find/user", {name:q}).then (resp) ->
                 return resp.data
         $scope.findTeachers = (q) ->
-            return $http.post("/api/lm/find-users", {login:q, type:'teacher'}).then (resp) ->
+            return $http.get("/api/lmn/find/teacher/" + q).then (resp) ->
                 return resp.data
         $scope.findGroups = (q) ->
-            return $http.post("/api/lm/find-users", {login:q, type:'group'}).then (resp) ->
+            return $http.get("/api/lmn/find/group/" + q).then (resp) ->
                 return resp.data
         $scope.findUsersGroup = (q) ->
-            return $http.post("/api/lm/find-users", {login:q, type:'usergroup'}).then (resp) ->
+            return $http.get("/api/lmn/find/usergroup/" + q).then (resp) ->
                 return resp.data
 
         $scope.groupType = groupType

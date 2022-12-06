@@ -117,11 +117,7 @@
       };
     };
     $scope.getGroups = function(username) {
-      return $http.post('/api/lmn/groupmembership', {
-        action: 'list-groups',
-        username: username,
-        profil: $scope.identity.profile
-      }).then(function(resp) {
+      return $http.get('/api/lmn/groupmembership/groups').then(function(resp) {
         $scope.groups = resp.data[0];
         $scope.identity.isAdmin = resp.data[1];
         $scope.classes = $scope.groups.filter($scope.filterGroupType('schoolclass'));
@@ -140,12 +136,7 @@
           notify.error(gettext(test));
           return;
         }
-        return $http.post('/api/lmn/groupmembership', {
-          action: 'create-project',
-          username: $scope.identity.user,
-          project: msg.value,
-          profil: $scope.identity.profile
-        }).then(function(resp) {
+        return $http.post('/api/lmn/groupmembership/projects/' + msg.value).then(function(resp) {
           if (resp.data[0] === 'ERROR') {
             return notify.error(gettext(resp.data[1]));
           } else {
@@ -211,7 +202,7 @@
             all_groups += project.groupname + ',';
           }
         }
-        return $http.post('/api/lmn/groupmembership/reset', {
+        return $http.post('/api/lmn/groupmembership/resetadmins', {
           type: type,
           all_groups: all_groups
         }).then(function(resp) {
@@ -246,9 +237,8 @@
       var option;
       $scope.changeState = true;
       option = $scope.maillist ? '--maillist' : '--nomaillist';
-      return $http.post('/api/lmn/changeGroup', {
+      return $http.post('/api/lmn/groupmembership/groupoptions/' + $scope.groupName, {
         option: option,
-        group: $scope.groupName,
         type: $scope.type
       }).then(function(resp) {
         if (resp['data'][0] === 'ERROR') {
@@ -264,9 +254,8 @@
       var option;
       $scope.changeState = true;
       option = $scope.joinable ? '--join' : '--nojoin';
-      return $http.post('/api/lmn/changeGroup', {
+      return $http.post('/api/lmn/groupmembership/groupoptions/' + $scope.groupName, {
         option: option,
-        group: $scope.groupName,
         type: $scope.type
       }).then(function(resp) {
         if (resp['data'][0] === 'ERROR') {
@@ -282,9 +271,8 @@
       var option;
       $scope.changeState = true;
       option = $scope.hidden ? '--hide' : '--nohide';
-      return $http.post('/api/lmn/changeGroup', {
+      return $http.post('/api/lmn/groupmembership/groupoptions/' + $scope.groupName, {
         option: option,
-        group: $scope.groupName,
         type: $scope.type
       }).then(function(resp) {
         if (resp['data'][0] === 'ERROR') {
@@ -306,12 +294,7 @@
         msg = messagebox.show({
           progress: true
         });
-        return $http.post('/api/lmn/groupmembership', {
-          action: 'kill-project',
-          username: $scope.identity.user,
-          project: project,
-          profil: $scope.identity.profile
-        }).then(function(resp) {
+        return $http.delete('/api/lmn/groupmembership/projects/' + project).then(function(resp) {
           if (resp['data'][0] === 'ERROR') {
             notify.error(resp['data'][1]);
           }
@@ -351,11 +334,7 @@
     $scope.getGroupDetails = function(group) {
       groupType = group[0];
       groupName = group[1];
-      return $http.post('/api/lmn/groupmembership/details', {
-        action: 'get-specified',
-        groupType: groupType,
-        groupName: groupName
-      }).then(function(resp) {
+      return $http.get('/api/lmn/groupmembership/groups/' + groupName).then(function(resp) {
         var admin, i, len, member, name, ref, ref1;
         $scope.groupName = groupName;
         $scope.groupDetails = resp.data['GROUP'][groupName];
@@ -421,6 +400,11 @@
       return membersArray.filter(function(u) {
         return u.login === login;
       }).length === 0;
+    };
+    $scope.removeTeacherClass = function(user) {
+      // Temporary wrapper to remove a teacher as member and admin from a class, to avoid conflicts
+      $scope.removeMember(user);
+      return $scope.removeAdmin(user);
     };
     $scope.addMember = function(user) {
       var entity, i, len, u;
@@ -517,8 +501,18 @@
             $scope.admins = $scope.admins.concat(user.filter(function(u) {
               return $scope.admins.indexOf(u) < 0;
             }));
+            if ($scope.type === 'class') {
+              // Teachers are shown as members ...
+              $scope.members = $scope.members.concat(user.filter(function(u) {
+                return $scope.members.indexOf(u) < 0;
+              }));
+            }
           } else {
             $scope.admins.push(user);
+            if ($scope.type === 'class') {
+              // Teachers are shown as members ...
+              $scope.members.push(user);
+            }
           }
         }
         return $scope.changeState = false;
@@ -710,6 +704,10 @@
     });
     $scope.addEntities = function() {
       $scope.UserSearchVisible = false;
+      if ($scope.type === 'class') {
+        // Only teachers which are always admins in classes
+        $scope._.addasadmin = true;
+      }
       if ($scope._.addasadmin) {
         $scope.addAdmin($scope._.newUser);
         $scope.addAdminGroup($scope._.newGroup);
@@ -727,34 +725,24 @@
       "group": gettext("Type the group name, e.g. p_wifi")
     };
     $scope.findUsers = function(q) {
-      return $http.post("/api/lm/find-users", {
-        login: q,
-        type: 'user'
+      return $http.post("/api/lmn/find/user", {
+        name: q
       }).then(function(resp) {
         return resp.data;
       });
     };
     $scope.findTeachers = function(q) {
-      return $http.post("/api/lm/find-users", {
-        login: q,
-        type: 'teacher'
-      }).then(function(resp) {
+      return $http.get("/api/lmn/find/teacher/" + q).then(function(resp) {
         return resp.data;
       });
     };
     $scope.findGroups = function(q) {
-      return $http.post("/api/lm/find-users", {
-        login: q,
-        type: 'group'
-      }).then(function(resp) {
+      return $http.get("/api/lmn/find/group/" + q).then(function(resp) {
         return resp.data;
       });
     };
     $scope.findUsersGroup = function(q) {
-      return $http.post("/api/lm/find-users", {
-        login: q,
-        type: 'usergroup'
-      }).then(function(resp) {
+      return $http.get("/api/lmn/find/usergroup/" + q).then(function(resp) {
         return resp.data;
       });
     };

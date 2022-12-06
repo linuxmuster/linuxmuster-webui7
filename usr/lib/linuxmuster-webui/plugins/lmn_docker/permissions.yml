@@ -6,3 +6,11 @@ schooladministrator:
 - 'lm:docker:change: true'
 - 'lm:docker:list: true'
 - 'sidebar:view:/view/lm/docker: true'
+student:
+- 'lm:docker:change: false'
+- 'lm:docker:list: false'
+- 'sidebar:view:/view/lm/docker: false'
+teacher:
+- 'lm:docker:change: false'
+- 'lm:docker:list: false'
+- 'sidebar:view:/view/lm/docker: false'

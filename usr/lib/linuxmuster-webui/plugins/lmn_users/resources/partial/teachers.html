@@ -48,7 +48,7 @@
         </div>
 
 
-        <table class="table" style="width:100%">
+        <table class="table" style="width:100%" ng:class="{'lmn-blurred': blurred}">
             <tr>
                 <th><span checkbox ng:model="all_selected" ng:change="selectAll(query)"></span></th>
                 <th width="120">
@@ -121,28 +121,28 @@
                         </button>
                         <ul uib-dropdown-menu class="dropdown-menu-right" style=" margin-bottom: -30px; margin-right: 40px; z-index: 4000;">
                             <li>
-                                <a ng:click="showInitialPassword([teacher])" translate>
+                                <a ng:click="showFirstPassword(teacher.sAMAccountName)" translate>
                                     Show initial password
                                 </a>
                             </li>
                             <li>
-                                <a ng:click="setInitialPassword([teacher])" translate>
+                                <a ng:click="resetFirstPassword(teacher.sAMAccountName)" translate>
                                     Restore initial password
                                 </a>
                             </li>
                             <li>
-                                <a ng:click="setRandomPassword([teacher])" translate>
+                                <a ng:click="setRandomFirstPassword(teacher.sAMAccountName)" translate>
                                     Set random initial password
                                 </a>
                             </li>
                             <li>
-                                <a ng:click="setCustomPassword([teacher], 'initial')" translate>
-                                    Set custom initial password
+                                <a ng:click="setCustomPassword(teacher, 'first')" translate>
+                                    Set custom first password
                                 </a>
                             </li>
                             <li>
-                                <a ng:click="setCustomPassword([teacher], 'actual')" translate>
-                                    Set actual user password
+                                <a ng:click="setCustomPassword(teacher, 'current')" translate>
+                                    Set current user password
                                 </a>
                             </li>
                         </ul>
@@ -172,13 +172,13 @@
                 </button>
                 <ul uib-dropdown-menu class="dropdown-menu-left">
                     <li>
-                        <a ng:click="batchSetInitialPassword()" translate>Set initial password</a>
+                        <a ng:click="batchResetFirstPassword()" translate>Set initial password</a>
                     </li>
                     <li>
-                        <a ng:click="batchSetRandomPassword()" translate>Set random password</a>
+                        <a ng:click="batchSetRandomFirstPassword()" translate>Set random password</a>
                     </li>
                     <li>
-                        <a ng:click="batchSetCustomPassword()" translate>Set custom password</a>
+                        <a ng:click="batchSetCustomFirstPassword()" translate>Set custom password</a>
                     </li>
                     <li>
                         <a ng:click="printSelectedPasswords()" translate>Print passwords</a>

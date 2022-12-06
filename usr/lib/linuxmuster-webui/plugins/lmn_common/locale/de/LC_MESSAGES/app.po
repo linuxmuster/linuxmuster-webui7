@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-25 18:56+0200\n"
-"PO-Revision-Date: 2022-07-31 17:11\n"
+"POT-Creation-Date: 2022-08-29 22:09+0200\n"
+"PO-Revision-Date: 2022-08-29 20:15\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -87,7 +87,7 @@ msgstr "Schulkonsole"
 msgid "Session time : {{ counter[0] }}:{{ counter[1] }}:{{ counter[2] }}"
 msgstr "Sitzungszeit: {{ counter[0] }}:{{ counter[1] }}:{{ counter[2] }}"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/lmnfile.py:163
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/lmnfile.py:166
 msgid "Access refused."
 msgstr "Zugriff verweigert."
 

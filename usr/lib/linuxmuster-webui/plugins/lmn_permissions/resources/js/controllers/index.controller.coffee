@@ -9,7 +9,7 @@ angular.module('lmn.permissions').controller 'PermissionListIndexController', ($
 
 
     $scope.roles = ['globaladministrator', 'schooladministrator', 'teacher', 'student']
-    $http.get('/api/permissions').then (resp) ->
+    $http.get('/api/lmn/permissions').then (resp) ->
 
         $scope.pluginObj = resp.data[0]
         # To iterate in alphabetical order
@@ -37,13 +37,24 @@ angular.module('lmn.permissions').controller 'PermissionListIndexController', ($
             return "Netzint"
         return "Ajenti"
 
-    $scope.label_color = (provider) ->
+    $scope.providerLogo = (provider) ->
         if provider == "Linuxmuster.net"
-            return "warning"
+            return "logo-x.png"
         if provider == "Netzint"
-            return "info"
+            return "logo-ni.png"
         if provider == "Ajenti"
-            return "default"
+            return "logo-ajenti.png"
+
+    $scope.methodLabelClass = (method) ->
+        if method == "get"
+            return "success"
+        if method == "post"
+            return "primary"
+        if method == "put"
+            return "info"
+        if method == "delete" || method == "patch"
+            return "danger"
+        return "default"
 
     $scope.iconify = (bool) ->
         if typeof(bool) == "undefined"
@@ -104,7 +115,7 @@ angular.module('lmn.permissions').controller 'PermissionListIndexController', ($
         return true
 
     $scope.export = () ->
-        $http.post('/api/permissions/export', {
+        $http.post('/api/lmn/permissions/export', {
             'api': $scope.apiPermissions,
             'sidebar': $scope.sidebarPermissions,
             'pluginDict': $scope.pluginObj,

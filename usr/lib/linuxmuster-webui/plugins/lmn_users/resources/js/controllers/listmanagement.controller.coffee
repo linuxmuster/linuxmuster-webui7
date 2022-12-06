@@ -11,12 +11,6 @@ angular.module('lmn.users').controller 'LMUsersListManagementController', ($scop
     $scope.activeTab = 0
     $scope.tabs = ['students', 'teachers', 'extrastudents']
 
-    lmn_get_school_configpath = (school) -> 
-        #"This is an example of a function"
-        if school == "default-school"
-            return '/etc/linuxmuster/sophomorix/default-school/'
-        else
-            return '/etc/linuxmuster/sophomorix/'+school+'/'+school+'.'
 
     $scope.students_sorts = [
         {
@@ -193,7 +187,7 @@ angular.module('lmn.users').controller 'LMUsersListManagementController', ($scop
 
     $scope.teachers_add = () ->
         if $scope.teachers.length > 0
-                $scope.paging.page_teachers = Math.floor(($scope.teachers.length - 1) / $scope.paging.pageSize) + 1
+            $scope.paging.page_teachers = Math.floor(($scope.teachers.length - 1) / $scope.paging.pageSize) + 1
             $scope.teachers_filter = ''
             $scope.teachers.push {class: 'Lehrer', _isNew: true}
 
@@ -236,53 +230,31 @@ angular.module('lmn.users').controller 'LMUsersListManagementController', ($scop
             $scope.cleanupEmptyRow(index, "courses")
         $scope.courses.remove(course)
 
-    $scope.getstudents = () ->
-        if !$scope.students
-            $http.get("/api/lm/users/students-list").then (resp) ->
+    $scope.getstudents = (force=false) ->
+        if !$scope.students || force
+            $http.get("/api/lmn/users/lists/students").then (resp) ->
                 $scope.students = resp.data
 
-
-    $scope.getteachers = () ->
-        if !$scope.teachers
-            $http.get("/api/lm/users/teachers-list").then (resp) ->
+    $scope.getteachers = (force=false) ->
+        if !$scope.teachers || force
+            $http.get("/api/lmn/users/lists/teachers").then (resp) ->
                 $scope.teachers = resp.data
 
-
-    $scope.getextrastudents = () ->
-        if !$scope.extrastudents
-            $http.get("/api/lm/users/extra-students").then (resp) ->
+    $scope.getextrastudents = (force=false) ->
+        if !$scope.extrastudents || force
+            $http.get("/api/lmn/users/lists/extrastudents").then (resp) ->
                     $scope.extrastudents = resp.data
 
-    $scope.getcourses = () ->
-        if !$scope.courses
-            $http.get('/api/lm/schoolsettings').then (resp) ->
+    $scope.getcourses = (force=false) ->
+        if !$scope.courses || force
+            $http.get('/api/lmn/schoolsettings').then (resp) ->
                 $scope.courses_encoding = lmEncodingMap[resp.data.encoding_courses_extra] or 'ISO8859-1'
-                $http.get("/api/lm/users/extra-courses?encoding=#{$scope.courses_encoding}").then (resp) ->
+                $http.get("/api/lmn/users/lists/extraclasses?encoding=#{$scope.courses_encoding}").then (resp) ->
                     $scope.courses = resp.data
 
-
-
-    $scope.students_editCSV = () ->
-        path = lmn_get_school_configpath($scope.identity.profile.activeSchool)+'students.csv'
-        lmFileEditor.show(path, $scope.students_encoding).then () ->
+    $scope.editCSV = (role) ->
+        lmFileEditor.show("#{$scope.configpath}#{role}.csv", '').then () ->
             $route.reload()
-
-    $scope.teachers_editCSV = () ->
-        path = lmn_get_school_configpath($scope.identity.profile.activeSchool)+'teachers.csv'
-        lmFileEditor.show(path, $scope.teachers_encoding).then () ->
-            $route.reload()
-
-
-    $scope.extrastudents_editCSV = () ->
-        path = lmn_get_school_configpath($scope.identity.profile.activeSchool)+'extrastudents.csv'
-        lmFileEditor.show(path, $scope.extrastudents_encoding).then () ->
-            $route.reload()
-
-    $scope.courses_editCSV = () ->
-        path = lmn_get_school_configpath($scope.identity.profile.activeSchool)+'extraclasses.csv'
-        lmFileEditor.show(path, $scope.courses_encoding).then () ->
-            $route.reload()
-
 
     $scope.students_save = () ->
         if $scope.numErrors()
@@ -293,8 +265,8 @@ angular.module('lmn.users').controller 'LMUsersListManagementController', ($scop
             return
         $scope.show_errors = false
         $scope.students_first_save = false
-        return $http.post("/api/lm/users/students-list?encoding=#{$scope.students_encoding}", $scope.students).then () ->
-            notify.success gettext('Saved')
+        return $http.post("/api/lmn/users/lists/students?encoding=#{$scope.students_encoding}", $scope.students).then () ->
+            notify.success(gettext('Saved'))
 
     $scope.teachers_save = () ->
         if $scope.numErrors()
@@ -305,7 +277,7 @@ angular.module('lmn.users').controller 'LMUsersListManagementController', ($scop
            return
         $scope.show_errors = false
         $scope.teachers_first_save = false
-        return $http.post("/api/lm/users/teachers-list?encoding=#{$scope.teachers_encoding}", $scope.teachers).then () ->
+        return $http.post("/api/lmn/users/lists/teachers?encoding=#{$scope.teachers_encoding}", $scope.teachers).then () ->
            notify.success gettext('Saved')
 
     $scope.extrastudents_save = () ->
@@ -317,8 +289,8 @@ angular.module('lmn.users').controller 'LMUsersListManagementController', ($scop
            return
         $scope.show_errors = false
         $scope.extrastudents_first_save = false
-        return $http.post("/api/lm/users/extra-students?encoding=#{$scope.extrastudents_encoding}", $scope.extrastudents).then () ->
-           notify.success 'Saved'
+        return $http.post("/api/lmn/users/lists/extrastudents?encoding=#{$scope.extrastudents_encoding}", $scope.extrastudents).then () ->
+           notify.success(gettext('Saved'))
 
     $scope.courses_save = () ->
         if $scope.numErrors()
@@ -329,40 +301,21 @@ angular.module('lmn.users').controller 'LMUsersListManagementController', ($scop
            return
         $scope.show_errors = false
         $scope.courses_first_save = false
-        return $http.post("/api/lm/users/extra-courses?encoding=#{$scope.courses_encoding}", $scope.courses).then () ->
+        return $http.post("/api/lmn/users/lists/extraclasses?encoding=#{$scope.courses_encoding}", $scope.courses).then () ->
            notify.success gettext('Saved')
 
-    $scope.confirmUpload = (type, role) ->
-        if (type == "custom")
-            templateUrl = '/lmn_users:resources/partial/uploadcustom.modal.html'
-            controller = 'LMUsersUploadCustomModalController'
-        else
-            templateUrl = '/lmn_users:resources/partial/upload.modal.html'
-            controller = 'LMUsersUploadModalController'
-
+    $scope.confirmUpload = (role) ->
         $uibModal.open(
-            templateUrl: templateUrl
-            controller: controller
+            templateUrl: '/lmn_users:resources/partial/upload.modal.html'
+            controller: 'LMUsersUploadModalController'
             backdrop: 'static'
             resolve:
-                userlist: () -> role + '.csv'
+                role: () -> role
+                parent: () -> $scope
         )
 
-    $scope.students_backups = () ->
-        path = lmn_get_school_configpath($scope.identity.profile.activeSchool)+'students.csv'
-        lmFileBackups.show(path, $scope.students_encoding)
-
-    $scope.teachers_backups = () ->
-        path = lmn_get_school_configpath($scope.identity.profile.activeSchool)+'teachers.csv'
-        lmFileBackups.show(path, $scope.teachers_encoding)
-
-    $scope.extrastudents_backups = () ->
-        path = lmn_get_school_configpath($scope.identity.profile.activeSchool)+'extrastudents.csv'
-        lmFileBackups.show(path, $scope.extrastudents_encoding)
-
-    $scope.courses_backups = () ->
-        path = lmn_get_school_configpath($scope.identity.profile.activeSchool)+'extraclasses.csv'
-        lmFileBackups.show(path, $scope.courses_encoding)
+    $scope.backups = (role) ->
+        lmFileBackups.show("#{$scope.configpath}#{role}.csv", '')
 
     # general functions
 
@@ -453,7 +406,11 @@ angular.module('lmn.users').controller 'LMUsersListManagementController', ($scop
            return
         
         $http.get("/api/lmn/activeschool").then (resp) ->
-            $scope.identity.profile.activeSchool = resp.data
+            $scope.school = resp.data
+            if $scope.school == "default-school"
+                $scope.configpath = '/etc/linuxmuster/sophomorix/default-school/'
+            else
+                $scope.configpath = "/etc/linuxmuster/sophomorix/#{$scope.school}/#{$scope.school}."
 
     # Loading first tab
     $scope.getstudents()
@@ -469,7 +426,7 @@ angular.module('lmn.users').controller 'LMUsersListManagementController', ($scop
             return true
 
         if (key == 'B' && event.ctrlKey)
-            $scope[current_tab + "_backups"]()
+            $scope.backups(current_tab)
             return true
 
         return false

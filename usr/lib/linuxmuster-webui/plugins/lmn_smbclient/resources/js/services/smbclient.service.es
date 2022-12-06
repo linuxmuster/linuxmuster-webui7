@@ -6,7 +6,7 @@ angular.module('lmn.smbclient').service('smbclient', function($rootScope, $http,
         $http.post(`/api/lmn/smbclient/list`, {'path': path}).then(response => response.data)
 
     this.delete_file = (path) =>
-        $http.post(`/api/lmn/smbclient/file`, {'path': path}).then(response => response.data)
+        $http.post(`/api/lmn/smbclient/unlink`, {'path': path}).then(response => response.data)
 
     this.move = (src, dst) => {
         return $http.post(`/api/lmn/smbclient/move`, {'src': src, 'dst':dst}).then((response) => {
@@ -27,16 +27,16 @@ angular.module('lmn.smbclient').service('smbclient', function($rootScope, $http,
     };
 
     this.delete_dir = (path) =>
-        $http.post(`/api/lmn/smbclient/dir`, {'path':path}).then(response => response.data)
+        $http.post(`/api/lmn/smbclient/rmdir`, {'path':path}).then(response => response.data)
 
     this.stat = (path) =>
         $http.get(`/api/lmn/smbclient/stat/${path}`).then(response => response.data)
 
     this.createFile = (path) =>
-        $http.post(`/api/lmn/smbclient/create-file`, {'path':path}).then(response => response.data)
+        $http.post(`/api/lmn/smbclient/file`, {'path':path}).then(response => response.data)
 
     this.createDirectory = (path) =>
-        $http.post(`/api/lmn/smbclient/create-directory`, {'path':path}).then(response => response.data)
+        $http.post(`/api/lmn/smbclient/directory`, {'path':path}).then(response => response.data)
 
     this.startFlowUpload = ($flow, path) => {
         q = $q.defer()

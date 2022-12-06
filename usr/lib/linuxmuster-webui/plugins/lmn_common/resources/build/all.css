@@ -68,6 +68,9 @@ span.cardlist div.cardbtn button.cardbtn {
 .color-orange {
   color: #ff8f00;
 }
+.color-theme {
+  color: #233c4c;
+}
 .uploads {
   margin: 10px 20px;
   padding: 20px 50px;
@@ -348,6 +351,12 @@ tr.leaders td span + span {
 }
 dialog .modal {
   z-index: 2000;
+}
+.lmn-blurred,
+.lmn-blurred .label,
+.lmn-blurred a {
+  color: transparent;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 /* Floating toolbar
 ---------------------------- */

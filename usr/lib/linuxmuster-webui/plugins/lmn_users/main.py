@@ -98,22 +98,22 @@ class Permissions (PermissionProvider):
                 'default': False,
             },
             {
-                'id': 'lm:users:extra-students:read',
+                'id': 'lm:users:extrastudents:read',
                 'name': _('Read extra students'), # skipcq: PYL-E0602
                 'default': False,
             },
             {
-                'id': 'lm:users:extra-students:write',
+                'id': 'lm:users:extrastudents:write',
                 'name': _('Write extra students'), # skipcq: PYL-E0602
                 'default': False,
             },
             {
-                'id': 'lm:users:extra-courses:read',
+                'id': 'lm:users:extraclasses:read',
                 'name': _('Read extra courses'), # skipcq: PYL-E0602
                 'default': False,
             },
             {
-                'id': 'lm:users:extra-courses:write',
+                'id': 'lm:users:extraclasses:write',
                 'name': _('Write extra courses'), # skipcq: PYL-E0602
                 'default': False,
             },

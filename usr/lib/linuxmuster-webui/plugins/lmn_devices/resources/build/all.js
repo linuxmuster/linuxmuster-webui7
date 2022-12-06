@@ -19,7 +19,7 @@
     $scope.showLog = function() {
       return $scope.logVisible = !$scope.logVisible;
     };
-    $http.get('/api/lm/devices/import').then(function(resp) {
+    $http.post('/api/lmn/devices/import').then(function(resp) {
       $scope.isWorking = false;
       return notify.success(gettext('Import complete'));
     }).catch(function(resp) {
@@ -112,7 +112,10 @@
       {
         name: gettext('IP'),
         fx: function(x) {
-          return x.ip;
+          return x.ip.split(".").map(function(num) {
+            return num.padStart(3,
+      '0');
+          }).join(".");
         }
       }
     ];
@@ -234,7 +237,7 @@
       }
       $scope.show_errors = false;
       $scope.devices_form.$setPristine();
-      return $http.post('/api/lm/devices', $scope.devices).then(function() {
+      return $http.post('/api/lmn/devices', $scope.devices).then(function() {
         var device, i, len, ref;
         ref = $scope.devices;
         // Reset all isNew tags
@@ -282,7 +285,7 @@
 
       }
     });
-    $http.get('/api/lm/linbo4/groups').then(function(resp) {
+    $http.get('/api/lmn/linbo4/groups').then(function(resp) {
       return $scope.linbo_groups = resp.data;
     });
     $http.get("/api/lmn/activeschool").then(function(resp) {
@@ -295,7 +298,7 @@
         return $scope.path = '/etc/linuxmuster/sophomorix/' + school + '/' + school + '.devices.csv';
       }
     });
-    $http.get('/api/lm/devices').then(function(resp) {
+    $http.get('/api/lmn/devices').then(function(resp) {
       $scope.devices = resp.data;
       $scope.devices_without_comment = $scope.devices.filter(function(dict) {
         return dict['room'][0] !== '#';

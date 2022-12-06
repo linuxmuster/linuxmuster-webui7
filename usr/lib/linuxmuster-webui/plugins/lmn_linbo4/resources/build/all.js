@@ -21,7 +21,7 @@
     $scope.showLog = function() {
       return $scope.logVisible = !$scope.logVisible;
     };
-    $http.get('/api/lm/devices/import').then(function(resp) {
+    $http.post('/api/lmn/devices/import').then(function(resp) {
       $scope.isWorking = false;
       return notify.success(gettext('Import complete'));
     }).catch(function(resp) {
@@ -51,7 +51,7 @@
   angular.module('lmn.linbo4').controller('LMLINBO4PartitionModalController', function($scope, $uibModalInstance, $http, partition, messagebox, os) {
     $scope.partition = partition;
     $scope.os = os;
-    $http.get('/api/lm/linbo4/icons').then(function(resp) {
+    $http.get('/api/lmn/linbo4/icons').then(function(resp) {
       $scope.icons = resp.data;
       $scope.image_extension = 'svg';
       $scope.show_png_warning = false;
@@ -61,7 +61,7 @@
         }
       }
     });
-    $http.get('/api/lm/linbo4/images').then(function(resp) {
+    $http.get('/api/lmn/linbo4/images').then(function(resp) {
       var i, len, oses;
       $scope.images = [];
       oses = resp.data;
@@ -69,8 +69,10 @@
         os = oses[i];
         $scope.images.push(os.name + '.qcow2');
       }
-      if ($scope.images.indexOf($scope.os.BaseImage) < 0) {
-        return $scope.images.push($scope.os.BaseImage);
+      if ($scope.os !== null) {
+        if ($scope.images.indexOf($scope.os.BaseImage) < 0) {
+          return $scope.images.push($scope.os.BaseImage);
+        }
       }
     });
     $scope.addNewImage = function() {
@@ -134,7 +136,7 @@
       }
       return results;
     })();
-    $http.get('/api/lm/linbo4/examples-regs').then(function(resp) {
+    $http.get('/api/lmn/linbo4/examples/reg').then(function(resp) {
       return $scope.exampleRegs = resp.data;
     });
     $scope.setExampleReg = function(name) {
@@ -142,10 +144,10 @@
         return $scope.image.reg = content;
       });
     };
-    $http.get('/api/lm/linbo4/examples-postsyncs').then(function(resp) {
+    $http.get('/api/lmn/linbo4/examples/postsync').then(function(resp) {
       return $scope.examplePostsyncs = resp.data;
     });
-    $http.get('/api/lm/linbo4/examples-prestart').then(function(resp) {
+    $http.get('/api/lmn/linbo4/examples/prestart').then(function(resp) {
       return $scope.examplePrestarts = resp.data;
     });
     $scope.setExamplePostsync = function(name) {
@@ -186,7 +188,7 @@
     $scope.colors = ['white', 'black', 'lightCyan', 'cyan', 'darkCyan', 'orange', 'red', 'darkRed', 'pink', 'magenta', 'darkMagenta', 'lightGreen', 'green', 'darkGreen', 'lightYellow', 'yellow', 'gold', 'lightBlue', 'blue', 'darkBlue', 'lightGray', 'gray', 'darkGray'];
     $scope.disks = [];
     diskMap = {};
-    $http.get('/api/lm/linbo4/images').then(function(resp) {
+    $http.get('/api/lmn/linbo4/images').then(function(resp) {
       return $scope.oses = resp.data;
     });
     ref = $scope.config.partitions;
@@ -638,9 +640,9 @@
         return event.preventDefault();
       }
     });
-    $http.get('/api/lm/linbo4/configs').then(function(resp) {
+    $http.get('/api/lmn/linbo4/configs').then(function(resp) {
       $scope.configs = resp.data;
-      return $http.get('/api/lm/linbo4/images').then(function(resp) {
+      return $http.get('/api/lmn/linbo4/images').then(function(resp) {
         var backup, config, date, i, image, len, ref, ref1, results;
         $scope.images = resp.data;
         ref = $scope.images;
@@ -673,7 +675,7 @@
         return results;
       });
     });
-    $http.get('/api/lm/linbo4/examples').then(function(resp) {
+    $http.get('/api/lmn/linbo4/examples/config').then(function(resp) {
       return $scope.examples = resp.data;
     });
     $scope.importDevices = function() {
@@ -704,11 +706,11 @@
             }
           }
           if (example) {
-            return $http.get(`/api/lm/linbo4/config/examples/${example}`).then(function(resp) {
+            return $http.get(`/api/lmn/linbo4/config/examples/${example}`).then(function(resp) {
               resp.data['config']['LINBO']['Group'] = newName;
-              return $http.get("/api/lm/read-config-setup").then(function(setup) {
+              return $http.get("/api/lmn/read-config-setup").then(function(setup) {
                 resp.data['config']['LINBO']['Server'] = setup.data['setup']['serverip'];
-                return $http.post(`/api/lm/linbo4/config/start.conf.${newName}`, resp.data).then(function() {
+                return $http.post(`/api/lmn/linbo4/config/start.conf.${newName}`, resp.data).then(function() {
                   $scope.config_change = true;
                   return $scope.configs.push({
                     'file': "start.conf." + newName,
@@ -718,7 +720,7 @@
               });
             });
           } else {
-            return $http.post(`/api/lm/linbo4/config/start.conf.${newName}`, {
+            return $http.post(`/api/lmn/linbo4/config/start.conf.${newName}`, {
               config: {
                 LINBO: {
                   Group: newName
@@ -744,7 +746,7 @@
         positive: 'Delete',
         negative: 'Cancel'
       }).then(function() {
-        return $http.delete(`/api/lm/linbo4/config/${configName}`).then(function() {
+        return $http.delete(`/api/lmn/linbo4/config/${configName}`).then(function() {
           var config, i, index, len, ref;
           $scope.config_change = true;
           ref = $scope.configs;
@@ -764,12 +766,12 @@
       return messagebox.prompt('New name', newName).then(function(msg) {
         newName = msg.value;
         if (newName) {
-          return $http.get(`/api/lm/linbo4/config/${configName}`).then(function(resp) {
+          return $http.get(`/api/lmn/linbo4/config/${configName}`).then(function(resp) {
             resp.data.config.LINBO.Group = newName;
-            return $http.post(`/api/lm/linbo4/config/start.conf.${newName}`, resp.data).then(function() {
+            return $http.post(`/api/lmn/linbo4/config/start.conf.${newName}`, resp.data).then(function() {
               var config, i, index, len, newConfig, ref, results;
               if (deleteOriginal) {
-                $http.delete(`/api/lm/linbo4/config/${configName}`).then(function() {
+                $http.delete(`/api/lmn/linbo4/config/${configName}`).then(function() {
                   return $scope.config_change = true;
                 });
               } else {
@@ -807,10 +809,10 @@
       });
     };
     $scope.editConfig = function(configName) {
-      return $http.get(`/api/lm/linbo4/config/${configName}`).then(function(resp) {
+      return $http.get(`/api/lmn/linbo4/config/${configName}`).then(function(resp) {
         var config;
         config = resp.data;
-        return $http.get(`/api/lm/linbo4/vdi/${configName}.vdi`).then(function(resp) {
+        return $http.get(`/api/lmn/linbo4/vdi/${configName}.vdi`).then(function(resp) {
           var vdiconfig;
           vdiconfig = resp.data;
           return $uibModal.open({
@@ -829,12 +831,12 @@
             // result = [config, vdiconfig, config_change]
             // Config changed ?
             if (result[2] === true) {
-              $http.post(`/api/lm/linbo4/config/${configName}`, result[0]).then(function(resp) {
+              $http.post(`/api/lmn/linbo4/config/${configName}`, result[0]).then(function(resp) {
                 notify.success(`${configName} ` + gettext('saved'));
                 return $scope.config_change = true;
               });
             }
-            return $http.post(`/api/lm/linbo4/vdi/${configName}.vdi`, result[1]).then(function(resp) {
+            return $http.post(`/api/lmn/linbo4/vdi/${configName}.vdi`, result[1]).then(function(resp) {
               return notify.success(gettext('VDI config saved'));
             });
           });
@@ -844,7 +846,7 @@
     $scope.restartServices = function() {
       // Restart torrent and multicast services and redirect to images tab
       toaster.pop('info', gettext("Restarting multicast and torrent services, please wait ..."), '', 7000);
-      return $http.get('/api/lm/linbo4/restart-services').then(function(resp) {
+      return $http.get('/api/lmn/linbo4/restart-services').then(function(resp) {
         notify.success(gettext('Multicast and torrent services restarted'));
         $location.hash("images");
         return $route.reload();
@@ -858,7 +860,7 @@
         positive: 'Delete',
         negative: 'Cancel'
       }).then(function() {
-        return $http.delete(`/api/lm/linbo4/image/${image.name}`).then(function() {
+        return $http.delete(`/api/lmn/linbo4/images/${image.name}`).then(function() {
           $scope.restartServices();
           return $location.hash("images");
         }).catch(function(err) {
@@ -872,7 +874,7 @@
         positive: 'Delete',
         negative: 'Cancel'
       }).then(function() {
-        return $http.post(`/api/lm/linbo4/deleteBackupImage/${image.name}`, {
+        return $http.post(`/api/lmn/linbo4/deleteBackupImage/${image.name}`, {
           date: date
         }).then(function() {
           return $scope.restartServices();
@@ -903,7 +905,7 @@
         ref = $scope.images_selected;
         for (i = 0, len = ref.length; i < len; i++) {
           image = ref[i];
-          promises.push($http.delete(`/api/lm/linbo4/image/${image.name}`));
+          promises.push($http.delete(`/api/lmn/linbo4/images/${image.name}`));
         }
         return $q.all(promises).then(function() {
           $scope.restartServices();
@@ -928,7 +930,7 @@
         new_name = msg.value;
         validName = validation.isValidImage(new_name);
         if (validName === true) {
-          return $http.post(`/api/lm/linbo4/renameImage/${image.name}`, {
+          return $http.post(`/api/lmn/linbo4/renameImage/${image.name}`, {
             new_name: new_name
           }).then(function(resp) {
             return $scope.restartServices();
@@ -944,7 +946,7 @@
         positive: 'Restore',
         negative: 'Cancel'
       }).then(function() {
-        return $http.post(`/api/lm/linbo4/restoreBackupImage/${image.name}`, {
+        return $http.post(`/api/lmn/linbo4/restoreBackupImage/${image.name}`, {
           date: date
         }).then(function(resp) {
           return $scope.restartServices();
@@ -967,7 +969,7 @@
       }).result.then(function(result) {
         angular.copy(result, image);
         if (image.backup) {
-          return $http.post(`/api/lm/linbo4/saveBackupImage/${image.name}`, {
+          return $http.post(`/api/lmn/linbo4/saveBackupImage/${image.name}`, {
             data: result,
             timestamp: image.timestamp
           }).then(function(resp) {
@@ -975,7 +977,7 @@
             return $scope.restartServices();
           });
         } else {
-          return $http.post(`/api/lm/linbo4/image/${image.name}`, result).then(function(resp) {
+          return $http.post(`/api/lmn/linbo4/images/${image.name}`, result).then(function(resp) {
             notify.success(gettext('Saved'));
             return $scope.restartServices();
           });

@@ -56,7 +56,7 @@ angular.module('lmn.common').controller 'lmFileBackupsModalController', ($scope,
     $scope.loadBackupFiles()            
 
     $scope.diff = (backup) ->
-        $http.post('/api/lm/diff', {file1:path, file2: dir + '/' + backup.name}).then (resp) ->
+        $http.post('/api/lmn/diff', {file1:path, file2: dir + '/' + backup.name}).then (resp) ->
             $scope.backup_diff = resp.data
             lmFileBackupsDiff.show($scope.path, $scope.backup_diff)
 
@@ -73,7 +73,7 @@ angular.module('lmn.common').controller 'lmFileBackupsModalController', ($scope,
             dict.name == name
     
     $scope.onlyremove = (backup) ->
-        $http.post('/api/lm/remove-file', {filepath: dir + '/' + backup.name}).then (resp) ->
+        $http.post('/api/lmn/remove-file', {filepath: dir + '/' + backup.name}).then (resp) ->
             pos = $scope.backups.findIndex($scope.findbackup(backup.name))
             delete $scope.backups[pos]
 

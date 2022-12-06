@@ -8,21 +8,21 @@ angular.module('lmn.docker', ['core']);
 angular.module('lmn.docker').config(function ($routeProvider) {
     $routeProvider.when('/view/lm/docker', {
         templateUrl: '/lmn_docker:resources/partial/index.html',
-        controller: 'DockerIndexController'
+        controller: 'DockerLMNIndexController'
     });
 });
 
 
 'use strict';
 
-angular.module('lmn.docker').controller('DockerIndexController', function ($scope, $http, $interval, messagebox, pageTitle, gettext, notify) {
+angular.module('lmn.docker').controller('DockerLMNIndexController', function ($scope, $http, $interval, messagebox, pageTitle, gettext, notify) {
     pageTitle.set('Docker');
     $scope.container_stats = [];
     $scope.images = [];
     $scope.ready = false;
     $scope.imagesReady = false;
 
-    $http.get('/api/lm/docker/which').then(function () {
+    $http.get('/api/lmn/docker/which').then(function () {
         $scope.getResources();
         $scope.start_refresh();
         $scope.installed = true;
@@ -35,14 +35,14 @@ angular.module('lmn.docker').controller('DockerIndexController', function ($scop
         if ($scope.refresh === undefined) $scope.refresh = $interval($scope.getResources, 5000, 0);
     };
     $scope.getResources = function () {
-        $http.get('/api/lm/docker/get_resources', { ignoreLoadingBar: true }).then(function (resp) {
+        $http.get('/api/lmn/docker/containers', { ignoreLoadingBar: true }).then(function (resp) {
             $scope.ready = true;
             $scope.container_stats = resp.data;
         });
     };
 
-    $scope.getDetails = function (container) {
-        $http.post('/api/lm/docker/get_details', { container: container }).then(function (resp) {
+    $scope.getDetails = function (container_id) {
+        $http.get('/api/lmn/docker/container/' + container_id).then(function (resp) {
             $scope.details = resp.data;
             $scope.showDetails = true;
         });
@@ -52,25 +52,25 @@ angular.module('lmn.docker').controller('DockerIndexController', function ($scop
         return $scope.showDetails = false;
     };
 
-    $scope.stop = function (container) {
-        $http.post('/api/lm/docker/container_command', { container: container, control: 'stop' }).then(function () {
+    $scope.stop = function (container_id) {
+        $http.post('/api/lmn/docker/container_command', { container_id: container_id, control: 'stop' }).then(function () {
             return notify.success(gettext('Stop command successfully sent.'));
         });
     };
 
-    $scope.start = function (container) {
-        $http.post('/api/lm/docker/container_command', { container: container, control: 'start' }).then(function () {
+    $scope.start = function (container_id) {
+        $http.post('/api/lmn/docker/container_command', { container_id: container_id, control: 'start' }).then(function () {
             return notify.success(gettext('Start command successfully sent.'));
         });
     };
 
-    $scope.remove = function (container) {
+    $scope.remove = function (container_id) {
         messagebox.show({
             text: gettext('Really remove this container?'),
             positive: gettext('Remove'),
             negative: gettext('Cancel')
         }).then(function () {
-            $http.post('/api/lm/docker/container_command', { container: container, control: 'rm' }).then(function () {
+            $http.post('/api/lmn/docker/container_command', { container_id: container_id, control: 'rm' }).then(function () {
                 return notify.success(gettext('Remove command successfully sent.'));
             });
         });
@@ -79,22 +79,22 @@ angular.module('lmn.docker').controller('DockerIndexController', function ($scop
     $scope.getImages = function () {
         $interval.cancel($scope.refresh);
         delete $scope.refresh;
-        $http.post('/api/lm/docker/list_images').then(function (resp) {
+        $http.get('/api/lmn/docker/images').then(function (resp) {
             $scope.images = resp.data;console.log($scope.images);
             $scope.imagesReady = true;
         });
     };
 
-    $scope.removeImage = function (image) {
+    $scope.removeImage = function (image_id) {
         messagebox.show({
             text: gettext('Really remove this image?'),
             positive: gettext('Remove'),
             negative: gettext('Cancel')
         }).then(function () {
-            $http.post('/api/lm/docker/remove_image', { image: image }).then(function () {
+            $http.delete('/api/lmn/docker/image/' + image_id).then(function () {
                 notify.success(gettext('Remove command successfully sent.'));
                 for (var i = 0; i < $scope.images.length; i++) {
-                    if ($scope.images[i].hash == image) $scope.images.splice(i, 1);
+                    if ($scope.images[i].hash == image_id) $scope.images.splice(i, 1);
                 }
             }, function (err) {
                 return notify.error(err.data.message);

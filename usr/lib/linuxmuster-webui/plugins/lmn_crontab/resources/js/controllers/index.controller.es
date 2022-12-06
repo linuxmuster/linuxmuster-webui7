@@ -46,7 +46,7 @@ angular.module('lmn.crontab').controller('CrontabIndexController', function($sco
         $scope.crontab[type].splice(position, 1);
     }
 
-    $http.get('/api/lm/get_crontab').then( (resp) => {
+    $http.get('/api/lmn/crontab').then( (resp) => {
         $scope.crontab = resp.data[0];
         $scope.school = resp.data[1];
     });
@@ -68,7 +68,7 @@ angular.module('lmn.crontab').controller('CrontabIndexController', function($sco
     }
 
     $scope.save = () => {
-        $http.post('/api/lm/save_crontab', {'crontab': $scope.crontab}).then((resp) => {
+        $http.post('/api/lmn/crontab', {'crontab': $scope.crontab}).then((resp) => {
             notify.success(gettext('Crontab successfully saved !'));
         }, error => {
             $log.log('Failed to save crontab', error);

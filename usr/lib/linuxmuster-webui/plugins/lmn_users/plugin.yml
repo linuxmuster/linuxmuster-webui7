@@ -8,6 +8,7 @@ icon: users
 dependencies:
     - !PluginDependency { plugin_name: core }
     - !PluginDependency { plugin_name: lmn_common }
+    - !PluginDependency { plugin_name: lmn_quotas }
 resources:
     - 'resources/js/module.coffee'
     - 'resources/js/controllers/teachers.controller.coffee'
@@ -21,6 +22,8 @@ resources:
     - 'resources/js/controllers/checkModal.controller.coffee'
     - 'resources/js/controllers/usersCommon.controller.coffee'
     - 'resources/js/controllers/listmanagement.controller.coffee'
+    - 'resources/js/services/userPassword.es'
+    - 'resources/js/services/customFields.es'
     - 'resources/partial/listmanagement.html'
     - 'resources/partial/extra-students.html'
     - 'resources/partial/extra-courses.html'
@@ -28,7 +31,6 @@ resources:
     - 'resources/partial/print-passwords.options.modal.html'
     - 'resources/partial/apply.modal.html'
     - 'resources/partial/upload.modal.html'
-    - 'resources/partial/uploadcustom.modal.html'
     - 'resources/partial/sortList.modal.html'
     - 'resources/partial/check.modal.html'
     - 'resources/partial/result.modal.html'

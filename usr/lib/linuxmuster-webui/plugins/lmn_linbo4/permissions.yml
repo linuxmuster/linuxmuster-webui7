@@ -10,3 +10,15 @@ schooladministrator:
 - 'lm:linbo:icons: true'
 - 'lm:linbo:images: true'
 - 'sidebar:view:/view/lm/linbo4: true'
+student:
+- 'lm:linbo:configs: false'
+- 'lm:linbo:examples: false'
+- 'lm:linbo:icons: false'
+- 'lm:linbo:images: false'
+- 'sidebar:view:/view/lm/linbo4: false'
+teacher:
+- 'lm:linbo:configs: false'
+- 'lm:linbo:examples: false'
+- 'lm:linbo:icons: false'
+- 'lm:linbo:images: false'
+- 'sidebar:view:/view/lm/linbo4: false'

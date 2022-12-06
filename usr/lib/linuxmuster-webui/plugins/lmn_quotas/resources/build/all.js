@@ -19,7 +19,7 @@
   angular.module('lmn.quotas').controller('LMQuotasApplyModalController', function($scope, $http, $uibModalInstance, $window, gettext, notify) {
     $scope.logVisible = true;
     $scope.isWorking = true;
-    $http.get('/api/lm/quotas/apply').then(function() {
+    $http.post('/api/lmn/quota/apply').then(function() {
       $scope.isWorking = false;
       return notify.success(gettext('Update complete'));
     }).catch(function(resp) {
@@ -91,13 +91,13 @@
     $scope.get_class_quota = function() {
       if (!$scope.groupquota) {
         wait.modal(gettext("Retrieving groups quotas ..."), 'progressbar');
-        return $http.get('/api/lm/quotas/group').then(function(resp) {
+        return $http.get('/api/lmn/quota/groups').then(function(resp) {
           $scope.groupquota = resp.data;
           return $rootScope.$emit('updateWaiting', 'done');
         });
       }
     };
-    $http.get('/api/lm/quotas').then(function(resp) {
+    $http.get('/api/lmn/quota/quotas').then(function(resp) {
       $scope.non_default = resp.data[0];
       return $scope.settings = resp.data[1];
     });
@@ -128,7 +128,7 @@
     $scope.findUsers = function(q) {
       var role;
       role = $scope.tabs[$scope.activeTab];
-      return $http.post("/api/lm/ldap-search", {
+      return $http.post("/api/lmn/ldap-search", {
         role: role,
         login: q
       }).then(function(resp) {
@@ -197,7 +197,7 @@
     };
     $scope.saveApply = function() {
       wait.modal(gettext("Saving quotas ..."), 'progressbar');
-      return $http.post('/api/lm/quotas/save', {
+      return $http.post('/api/lmn/quota/save', {
         users: $scope.toChange,
         groups: $scope.groupsToChange
       }).then(function() {

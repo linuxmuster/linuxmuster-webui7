@@ -5,7 +5,7 @@ API to load device file and run importing.
 import subprocess
 from jadi import component
 import os
-from aj.api.http import url, HttpPlugin
+from aj.api.http import get, post, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
 from aj.plugins.lmn_common.lmnfile import LMNFile
 from aj.auth import authorize
@@ -14,28 +14,7 @@ from aj.auth import authorize
 class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
-
-    @url(r'/api/lm/devices')
-    @authorize('lm:devices')
-    @endpoint(api=True)
-    def handle_api_devices(self, http_context):
-        """
-        Read and write the devices file.
-        Method GET.
-        Method POST.
-
-        :param http_context: HttpContext
-        :type http_context: HttpContext
-        :return: Content of config file in read mode.
-        :rtype: string
-        """
-
-        path = f'{self.context.schoolmgr.configpath}devices.csv'
-
-        if os.path.isfile(path) is False:
-            os.mknod(path)
-
-        fieldnames = [
+        self.fieldnames = [
             'room',
             'hostname',
             'group',
@@ -53,19 +32,54 @@ class Handler(HttpPlugin):
             'sophomorixComment',
             'options',
         ]
-        if http_context.method == 'GET':
-            with LMNFile(path, 'r', fieldnames=fieldnames) as devices:
-                return devices.read()
 
-        if http_context.method == 'POST':
-            data = http_context.json_body()
-            for item in data:
-                item.pop('_isNew', None)
-                item.pop('null', None)
-            with LMNFile(path, 'w', fieldnames=fieldnames) as f:
-                f.write(data)
+    @get(r'/api/lmn/devices')
+    @authorize('lm:devices')
+    @endpoint(api=True)
+    def handle_api_get_devices(self, http_context):
+        """
+        Get all devices registered in devices.csv.
 
-    @url(r'/api/lm/devices/import')
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: Content of config file in read mode.
+        :rtype: string
+        """
+
+        path = f'{self.context.schoolmgr.configpath}devices.csv'
+
+        if os.path.isfile(path) is False:
+            os.mknod(path)
+
+        with LMNFile(path, 'r', fieldnames=self.fieldnames) as devices:
+            return devices.read()
+
+    @post(r'/api/lmn/devices')
+    @authorize('lm:devices')
+    @endpoint(api=True)
+    def handle_api_post_devices(self, http_context):
+        """
+        Write all devices in devices.csv.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: Content of config file in read mode.
+        :rtype: string
+        """
+
+        path = f'{self.context.schoolmgr.configpath}devices.csv'
+
+        if os.path.isfile(path) is False:
+            os.mknod(path)
+
+        data = http_context.json_body()
+        for item in data:
+            item.pop('_isNew', None)
+            item.pop('null', None)
+        with LMNFile(path, 'w', fieldnames=self.fieldnames) as f:
+            f.write(data)
+
+    @post(r'/api/lmn/devices/import')
     @authorize('lm:devices:import')
     @endpoint(api=True)
     def handle_api_devices_import(self, http_context):
@@ -75,6 +89,7 @@ class Handler(HttpPlugin):
         :param http_context: HttpContext
         :type http_context: HttpContext
         """
+
         school = self.context.schoolmgr.school
         try:
             subprocess.check_call('linuxmuster-import-devices -s '+ school +' > /tmp/import_devices.log', shell=True)

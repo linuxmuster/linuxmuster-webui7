@@ -23,7 +23,7 @@ angular.module('lmn.permissions').config(function ($routeProvider) {
     };
     $scope.columns = ['globaladministrator', 'schooladministrator', 'teacher', 'student', 'default'];
     $scope.roles = ['globaladministrator', 'schooladministrator', 'teacher', 'student'];
-    $http.get('/api/permissions').then(function(resp) {
+    $http.get('/api/lmn/permissions').then(function(resp) {
       var details, i, len, ref, ref1, url;
       $scope.pluginObj = resp.data[0];
       // To iterate in alphabetical order
@@ -60,16 +60,31 @@ angular.module('lmn.permissions').config(function ($routeProvider) {
       }
       return "Ajenti";
     };
-    $scope.label_color = function(provider) {
+    $scope.providerLogo = function(provider) {
       if (provider === "Linuxmuster.net") {
-        return "warning";
+        return "logo-x.png";
       }
       if (provider === "Netzint") {
-        return "info";
+        return "logo-ni.png";
       }
       if (provider === "Ajenti") {
-        return "default";
+        return "logo-ajenti.png";
       }
+    };
+    $scope.methodLabelClass = function(method) {
+      if (method === "get") {
+        return "success";
+      }
+      if (method === "post") {
+        return "primary";
+      }
+      if (method === "put") {
+        return "info";
+      }
+      if (method === "delete" || method === "patch") {
+        return "danger";
+      }
+      return "default";
     };
     $scope.iconify = function(bool) {
       if (typeof bool === "undefined") {
@@ -142,7 +157,7 @@ angular.module('lmn.permissions').config(function ($routeProvider) {
       return true;
     };
     return $scope.export = function() {
-      return $http.post('/api/permissions/export', {
+      return $http.post('/api/lmn/permissions/export', {
         'api': $scope.apiPermissions,
         'sidebar': $scope.sidebarPermissions,
         'pluginDict': $scope.pluginObj

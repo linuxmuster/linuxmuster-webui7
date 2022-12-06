@@ -15,7 +15,7 @@ angular.module('lmn.clients').controller('Lmn_clientsIndexController', function(
     };
 
     $scope.saveScript = (script) => {
-        $http.post('/api/lmn/client/script', {'path':script.path, 'content':script.content}).then(() => {
+        $http.post('/api/lmn/clients/scripts', {'path':script.path, 'content':script.content}).then(() => {
                 $scope.scriptToEdit = '';
                 notify.success(gettext('Script saved !'));
             }, () => notify.error(gettext('Error while saving script'))

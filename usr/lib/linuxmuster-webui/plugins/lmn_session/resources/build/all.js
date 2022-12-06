@@ -536,7 +536,7 @@
         }
       });
     };
-    $scope.renameSession = function(username, session, comment) {
+    $scope.renameSession = function(session, comment) {
       if (session === '') {
         messagebox.show({
           title: gettext('No Session selected'),

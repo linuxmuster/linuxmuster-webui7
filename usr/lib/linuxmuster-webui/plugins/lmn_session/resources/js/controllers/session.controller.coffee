@@ -404,28 +404,26 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                      usersInRoom: () -> usersInRoom
                 )
 
-
-
-    $scope.renameSession = (username, session, comment) ->
-                if session is ''
-                    messagebox.show(title: gettext('No Session selected'), text: gettext('You have to select a session first.'), positive: 'OK')
-                    return
-                messagebox.prompt(gettext('Session Name'), comment).then (msg) ->
-                    if not msg.value
-                        return
-                    testChar = validation.isValidLinboConf(msg.value)
-                    if testChar != true
-                        notify.error gettext(testChar)
-                        return
-                    $http.post('/api/lmn/session/sessions', {action: 'rename-session', session: session, comment: msg.value}).then (resp) ->
-                        $scope.getSessions()
-                        $scope.currentSession.name = ''
-                        $scope.sessionLoaded = false
-                        $scope.currentSession.comment = ''
-                        $scope.visible.sessiontable = 'none'
-                        $scope.visible.participanttable = 'none'
-                        $scope.info.message = ''
-                        notify.success gettext('Session Renamed')
+    $scope.renameSession = (session, comment) ->
+        if session is ''
+            messagebox.show(title: gettext('No Session selected'), text: gettext('You have to select a session first.'), positive: 'OK')
+            return
+        messagebox.prompt(gettext('Session Name'), comment).then (msg) ->
+            if not msg.value
+                return
+            testChar = validation.isValidLinboConf(msg.value)
+            if testChar != true
+                notify.error gettext(testChar)
+                return
+            $http.post('/api/lmn/session/sessions', {action: 'rename-session', session: session, comment: msg.value}).then (resp) ->
+                $scope.getSessions()
+                $scope.currentSession.name = ''
+                $scope.sessionLoaded = false
+                $scope.currentSession.comment = ''
+                $scope.visible.sessiontable = 'none'
+                $scope.visible.participanttable = 'none'
+                $scope.info.message = ''
+                notify.success gettext('Session Renamed')
 
     $scope.getParticipants = (session) ->
         $scope.visible.sessiontable = 'none'

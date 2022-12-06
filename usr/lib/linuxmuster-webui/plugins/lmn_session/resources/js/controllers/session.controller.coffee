@@ -428,23 +428,23 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                         notify.success gettext('Session Renamed')
 
     $scope.getParticipants = (session) ->
-                $scope.visible.sessiontable = 'none'
-                $scope.resetClass()
-                # Reset select all checkboxes when loading participants
-                angular.forEach $scope.fields, (field) ->
-                    field.checkboxStatus = false
-                $http.get("/api/lmn/session/sessions/#{session}").then (resp) ->
-                    $scope.visible.sessionname = 'show'
-                    $scope.sessionLoaded = 'true'
-                    $scope.filter = ''
-                    $scope.visible.mainpage = 'none'
-                    $scope.participants = resp.data
-                    if $scope.participants == 'empty'
-                       $scope.visible.participanttable = 'none'
-                       $scope.info.message = gettext('This session appears to be empty. Start adding users by using the top search bar!')
-                    else
-                        $scope.info.message = ''
-                        $scope.visible.participanttable = 'show'
+        $scope.visible.sessiontable = 'none'
+        $scope.resetClass()
+        # Reset select all checkboxes when loading participants
+        angular.forEach $scope.fields, (field) ->
+            field.checkboxStatus = false
+        $http.get("/api/lmn/session/sessions/#{session}").then (resp) ->
+            $scope.visible.sessionname = 'show'
+            $scope.sessionLoaded = 'true'
+            $scope.filter = ''
+            $scope.visible.mainpage = 'none'
+            $scope.participants = resp.data
+            if $scope.participants == 'empty'
+               $scope.visible.participanttable = 'none'
+               $scope.info.message = gettext('This session appears to be empty. Start adding users by using the top search bar!')
+            else
+                $scope.info.message = ''
+                $scope.visible.participanttable = 'show'
 
     $scope.findUsers = (q) ->
                 return $http.post("/api/lmn/session/user-search", {q:q}).then (resp) ->
@@ -509,9 +509,9 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                 if participants[participant]['sophomorixRole'] != 'teacher'
                     participantsArray.push participant
             #$rootScope.$emit('updateWaiting', 'done')
-            generateSession(participantsArray, sessionID, sessionComment, sessionExist)
+            $scope.generateSession(participantsArray, sessionID, sessionComment, sessionExist)
 
-    generateSession =  (participants,sessionID, sessionComment, sessionExist) ->
+    $scope.generateSession =  (participants,sessionID, sessionComment, sessionExist) ->
         #wait.modal(gettext('Generating session...'), 'spinner')
         # fix existing session
         if sessionExist == true

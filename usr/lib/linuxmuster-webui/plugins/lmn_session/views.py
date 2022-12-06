@@ -97,16 +97,17 @@ class Handler(HttpPlugin):
             raise Exception('Error:\n' + str(e))
 
     @post(r'/api/lmn/session/sessions')
+    @authorize('lm:users:students:read')
     @endpoint(api=True)
     def handle_api_session_sessions(self, http_context):
         action = http_context.json_body()['action']
         if action == 'rename-session':
             session = http_context.json_body()['session']
             comment = http_context.json_body()['comment']
-            with authorize('lm:users:students:read'):
-                sophomorixCommand = ['sophomorix-session', '-j', '--session', session, '--comment', comment]
-                result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
-                return result
+            sophomorixCommand = ['sophomorix-session', '-j', '--session', session, '--comment', comment]
+            result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
+            return result
+
         if action == 'update-session':
             supervisor = http_context.json_body()['username']
             sessionID = http_context.json_body()['sessionID']
@@ -116,22 +117,10 @@ class Handler(HttpPlugin):
                 sophomorixCommand = ['sophomorix-session', '--session', sessionID, '--supervisor', supervisor,  '-j', '--participants', participants]
             else:
                 sophomorixCommand = ['sophomorix-session', '--session', sessionID, '--supervisor', supervisor,  '-j', '--participants', '']
-            with authorize('lm:users:students:read'):
-                result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
-                return result
-        if action == 'save-session':
-            def checkIfUserInManagementGroup(participant, participantBasename, managementgroup, managementList, noManagementList):
-                try:
-                    boolean = participant[managementgroup]
-                    if (boolean is True) or (boolean == 'TRUE'):
-                        managementList.append(participantBasename)
-                    else:
-                        noManagementList.append(participantBasename)
-                except KeyError:
-                    noManagementList.append(participantBasename)
-                    pass
-                return 0
+            result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
+            return result
 
+        if action == 'save-session':
             session = http_context.json_body()['session']
             sessionName = http_context.json_body()['sessionName']
             supervisor = http_context.json_body()['username']
@@ -140,100 +129,64 @@ class Handler(HttpPlugin):
             now = strftime("%Y%m%d_%H-%M-%S", localtime())
 
             examModeList, noExamModeList, wifiList, noWifiList, internetList, noInternetList, intranetList, noIntranetList, webfilterList, noWebfilterList, printingList, noPrintingList = [], [], [], [], [], [], [], [], [], [], [], []
-            # Remove -exam in username to keep username as it is insead of saving -exam usernames in session
-            for participant in participants:
-                if participant['sAMAccountName'].endswith('-exam'):
-                    participantBasename = participant['sAMAccountName'].replace('-exam', '')
-                else:
-                    participantBasename = str(participant['sAMAccountName'])
-                    # participant['sAMAccountName']
 
-                # Fill lists from WebUI Output -> Create csv of session members
-                # This will executed on every save
-                participantsList.append(participantBasename)
+            for participant in participants:
+                name = participant['sAMAccountName'].replace('-exam', '')
+                participantsList.append(name)
+
                 # Only check for exammode if this value was changed in WEBUI
                 if participant['exammode-changed'] is True:
-                    checkIfUserInManagementGroup(participant, participantBasename, 'exammode_boolean', examModeList, noExamModeList)
+                    examModeList.append(name) if participant['exammode_boolean'] is True else noExamModeList.append(name)
+
                 # Only check for managementgroups if this value was changed in WEBUI
                 if participant['changed'] is True:
-                    checkIfUserInManagementGroup(participant, participant['sAMAccountName'], 'group_wifiaccess', wifiList, noWifiList)
-                    checkIfUserInManagementGroup(participant, participant['sAMAccountName'], 'group_internetaccess', internetList, noInternetList)
-                    checkIfUserInManagementGroup(participant, participant['sAMAccountName'], 'group_intranetaccess', intranetList, noIntranetList)
-                    checkIfUserInManagementGroup(participant, participant['sAMAccountName'], 'group_webfilter', webfilterList, noWebfilterList)
-                    checkIfUserInManagementGroup(participant, participant['sAMAccountName'], 'group_printing', printingList, noPrintingList)
-                #i = i + 1
-
-            # Create CSV lists we need for sophomorix
-            participantsCSV = ",".join(participantsList)
-            examModeListCSV = ",".join(examModeList)
-            noExamModeListCSV = ",".join(noExamModeList)
-            wifiListCSV = ",".join(wifiList)
-            noWifiListCSV = ",".join(noWifiList)
-            internetListCSV = ",".join(internetList)
-            noInternetListCSV = ",".join(noInternetList)
-            intranetListCSV = ",".join(intranetList)
-            noIntranetListCSV = ",".join(noIntranetList)
-            webfilterListCSV = ",".join(webfilterList)
-            noWebfilterListCSV = ",".join(noWebfilterList)
-            printingListCSV = ",".join(printingList)
-            noPrintingListCSV = ",".join(noPrintingList)
+                    wifiList.append(name) if participant['group_wifiaccess'] is True else noWifiList.append(name)
+                    internetList.append(name) if participant['group_internetaccess'] is True else noInternetList.append(name)
+                    intranetList.append(name) if participant['group_intranetaccess'] is True else noIntranetList.append(name)
+                    webfilterList.append(name) if participant['group_webfilter'] is True else noWebfilterList.append(name)
+                    printingList.append(name) if participant['group_printing'] is True else noPrintingList.append(name)
 
             # Set managementgroups
             try:
                 sophomorixCommand = ['sophomorix-managementgroup']
-
-                if wifiListCSV:
-                    sophomorixCommand += ['--wifi', wifiListCSV]
-                if noWifiListCSV:
-                    sophomorixCommand += ['--nowifi', noWifiListCSV]
-                if internetListCSV:
-                    sophomorixCommand += ['--internet', internetListCSV]
-                if noInternetListCSV:
-                    sophomorixCommand += ['--nointernet', noInternetListCSV]
-                if intranetListCSV:
-                    sophomorixCommand += ['--intranet', intranetListCSV]
-                if noIntranetListCSV:
-                    sophomorixCommand += ['--nointranet', noIntranetListCSV]
-                if webfilterListCSV:
-                    sophomorixCommand += ['--webfilter', webfilterListCSV]
-                if noWebfilterListCSV:
-                    sophomorixCommand += ['--nowebfilter', noWebfilterListCSV]
-                if printingListCSV:
-                    sophomorixCommand += ['--printing', printingListCSV]
-                if noPrintingListCSV:
-                    sophomorixCommand += ['--noprinting', noPrintingListCSV]
-
+                sophomorixCommand += ['--wifi', ','.join(wifiList)] if wifiList else []
+                sophomorixCommand += ['--nowifi', ','.join(noWifiList)] if noWifiList else []
+                sophomorixCommand += ['--internet', ','.join(internetList)] if internetList else []
+                sophomorixCommand += ['--nointernet', ','.join(noInternetList)] if noInternetList else []
+                sophomorixCommand += ['--intranet', ','.join(intranetList)] if intranetList else []
+                sophomorixCommand += ['--nointranet', ','.join(noIntranetList)] if noIntranetList else []
+                sophomorixCommand += ['--webfilter', ','.join(webfilterList)] if webfilterList else []
+                sophomorixCommand += ['--nowebfilter', ','.join(noWebfilterList)] if noWebfilterList else []
+                sophomorixCommand += ['--printing', ','.join(printingList)] if printingList else []
+                sophomorixCommand += ['--noprinting', ','.join(noPrintingList)] if noPrintingList else []
                 sophomorixCommand += ['-jj']
 
-                result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
+                lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
             except Exception as e:
-                raise Exception('Error:\n' + ' '.join(sophomorixCommand) + "\n Error was: " + str(e))
-            # Save session members
+                raise Exception(f'Error:\n{" ".join(sophomorixCommand)}\n Error was: {e}')
 
+            # Save session members
             try:
-                sophomorixCommand = ['sophomorix-session', '--session', session,  '-j', '--participants', participantsCSV]
+                sophomorixCommand = ['sophomorix-session', '--session', session,  '-j', '--participants', ','.join(participants)]
                 result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
             except Exception:
-                raise Exception('Error:\n' + str('sophomorix-session --session ' + session + ' -j --participants ' + participantsCSV))
+                raise Exception(f'Error:\nsophomorix-session --session {session} -j --participants {",".join(participants)}')
             # Put chosen members in exam mode
             try:
-                if examModeListCSV != "":
-                    sophomorixCommand = ['sophomorix-exam-mode', '--set', '--supervisor', supervisor, '-j', '--participants', examModeListCSV]
+                if examModeList:
+                    sophomorixCommand = ['sophomorix-exam-mode', '--set', '--supervisor', supervisor, '-j', '--participants', ','.join(examModeList)]
                     result = lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
             except Exception:
-                raise Exception('Error:\n' + str('sophomorix-exam-mode --set --supervisor ' + supervisor + ' -j --participants ' + examModeListCSV))
+                raise Exception(f'Error:\nsophomorix-exam-mode --set --supervisor {supervisor} -j --participants {",".join(examModeList)}')
             # Remove chosen members from exam mode
             try:
-                if noExamModeListCSV != "":
-                    sophomorixCommand = ['sophomorix-exam-mode', '--unset', '--subdir', 'transfer/collected/'+now+'-'+sessionName+'/exam', '-j', '--participants', noExamModeListCSV]
+                if noExamModeList:
+                    sophomorixCommand = ['sophomorix-exam-mode', '--unset', '--subdir', f'transfer/collected/{now}-{sessionName}/exam', '-j', '--participants', ','.join(noExamModeList)]
                     result = lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
             except Exception:
-                raise Exception('Error:\n' + str('sophomorix-exam-mode --unset --subdir ' + session + ' -j --participants ' + noExamModeListCSV))
+                raise Exception(f'Error:\nsophomorix-exam-mode --unset --subdir {session} -j --participants {",".join(noExamModeList)}')
             return result
-
-        if http_context.method == 'POST':
-            with authorize('lm:users:students:write'):
-                return 0
+        return 0
 
     @url(r'/api/lmn/session/getUserInRoom')
     @endpoint(api=True)

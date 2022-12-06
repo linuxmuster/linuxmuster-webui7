@@ -143,7 +143,7 @@
   });
 
   angular.module('lmn.session').controller('LMNSessionController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem, validation, $rootScope, wait, userPassword) {
-    var generateSession, typeIsArray, validateResult;
+    var typeIsArray, validateResult;
     pageTitle.set(gettext('Session'));
     $scope.generateSessionMouseover = gettext('Regenerate this session');
     $scope.startGeneratedSessionMouseover = gettext('Start this session unchanged (may not be up to date)');
@@ -688,10 +688,10 @@
           }
         }
         //$rootScope.$emit('updateWaiting', 'done')
-        return generateSession(participantsArray, sessionID, sessionComment, sessionExist);
+        return $scope.generateSession(participantsArray, sessionID, sessionComment, sessionExist);
       });
     };
-    generateSession = function(participants, sessionID, sessionComment, sessionExist) {
+    $scope.generateSession = function(participants, sessionID, sessionComment, sessionExist) {
       //wait.modal(gettext('Generating session...'), 'spinner')
       // fix existing session
       if (sessionExist === true) {

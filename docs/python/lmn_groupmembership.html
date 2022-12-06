@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>API: aj.plugins.lmn_groupmembership &mdash; linuxmuster-webui7 7.1.0 documentation</title>
+  <title>API: aj.plugins.lmn_groupmembership &mdash; linuxmuster-webui7 7.1.38 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                7.1.0
+                7.1.38
               </div>
             
           
@@ -97,11 +97,12 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="lmn_auth.html">API: aj.plugins.lmn_auth</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_common.html">API: aj.plugins.lmn_common</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_crontab.html">API: aj.plugins.lmn_crontab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_devices.html">API: aj.plugins.lmn_devices</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_dhcp.html">API: aj.plugins.lmn_dhcp</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_docker.html">API: aj.plugins.lmn_docker</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">API: aj.plugins.lmn_groupmembership</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#module-aj.plugins.lmn_groupmembership.views">LMN Groupmembership Views</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lmn-groupmembership-views">LMN Groupmembership Views</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_landingpage.html">API: aj.plugins.lmn_landingpage</a></li>
@@ -180,112 +181,8 @@
             
   <div class="section" id="api-aj-plugins-lmn-groupmembership">
 <h1>API: aj.plugins.lmn_groupmembership<a class="headerlink" href="#api-aj-plugins-lmn-groupmembership" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="module-aj.plugins.lmn_groupmembership.views">
-<span id="lmn-groupmembership-views"></span><h2>LMN Groupmembership Views<a class="headerlink" href="#module-aj.plugins.lmn_groupmembership.views" title="Permalink to this headline">¶</a></h2>
-<p>Tool to manage the groups (class, projects, printers ) in a linuxmuster
-environment.</p>
-<dl class="py class">
-<dt id="aj.plugins.lmn_groupmembership.views.Handler">
-<em class="property">class </em><code class="sig-prename descclassname">aj.plugins.lmn_groupmembership.views.</code><code class="sig-name descname">Handler</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_groupmembership/views.html#Handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_groupmembership.views.Handler" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="py method">
-<dt id="aj.plugins.lmn_groupmembership.views.Handler.handle_api_groupmembership_details">
-<code class="sig-name descname">handle_api_groupmembership_details</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">http_context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_groupmembership/views.html#Handler.handle_api_groupmembership_details"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_groupmembership.views.Handler.handle_api_groupmembership_details" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the group informations of a specified group.
-Method POST.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Group informations in LDAP ( name, owner, … )</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)">dict</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="aj.plugins.lmn_groupmembership.views.Handler.handle_api_groups">
-<code class="sig-name descname">handle_api_groups</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">http_context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_groupmembership/views.html#Handler.handle_api_groups"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_groupmembership.views.Handler.handle_api_groups" title="Permalink to this definition">¶</a></dt>
-<dd><p>Performs diverses actions on groups, like list all groups, kill and create.
-Method POST.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>List of groups or result for actions kill and create</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)">dict</a> or <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)">tuple</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="aj.plugins.lmn_groupmembership.views.Handler.handle_api_reset">
-<code class="sig-name descname">handle_api_reset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">http_context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_groupmembership/views.html#Handler.handle_api_reset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_groupmembership.views.Handler.handle_api_reset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reset the admins of all projects or classes.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="aj.plugins.lmn_groupmembership.views.Handler.handle_api_search_project">
-<code class="sig-name descname">handle_api_search_project</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">http_context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_groupmembership/views.html#Handler.handle_api_search_project"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_groupmembership.views.Handler.handle_api_search_project" title="Permalink to this definition">¶</a></dt>
-<dd><p>Perform partial searchs in projects in the LDAP tree, per user or per
-group.
-Method POST.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>List of search results</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)">list</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="aj.plugins.lmn_groupmembership.views.Handler.handle_api_set_group">
-<code class="sig-name descname">handle_api_set_group</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">http_context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_groupmembership/views.html#Handler.handle_api_set_group"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_groupmembership.views.Handler.handle_api_set_group" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles join and hide options for a group.
-Method POST.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Results of the operation</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)">tuple</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="aj.plugins.lmn_groupmembership.views.Handler.handle_api_set_members">
-<code class="sig-name descname">handle_api_set_members</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">http_context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_groupmembership/views.html#Handler.handle_api_set_members"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_groupmembership.views.Handler.handle_api_set_members" title="Permalink to this definition">¶</a></dt>
-<dd><p>Manages the members of a project (add, remove, …).
-Method POST.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Result of the operation</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)">tuple</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
+<div class="section" id="lmn-groupmembership-views">
+<h2>LMN Groupmembership Views<a class="headerlink" href="#lmn-groupmembership-views" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -310,7 +207,7 @@ Method POST.</p>
   <div role="contentinfo">
     <p>
         
-        &copy; Copyright Andreas Till &amp; Arnaud Kientz - 2021
+        &copy; Copyright Andreas Till &amp; Arnaud Kientz - 2022
 
     </p>
   </div>

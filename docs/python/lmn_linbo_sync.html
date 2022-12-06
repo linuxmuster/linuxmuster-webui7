@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>API: aj.plugins.lmn_linbo_sync &mdash; linuxmuster-webui7 7.1.0 documentation</title>
+  <title>API: aj.plugins.lmn_linbo_sync &mdash; linuxmuster-webui7 7.1.38 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                7.1.0
+                7.1.38
               </div>
             
           
@@ -89,10 +89,15 @@
               
             
             
-              <p class="caption"><span class="caption-text">Python API</span></p>
+              <p class="caption"><span class="caption-text">Plugins</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../plugins/lmn_auth.html">Plugin lmn_auth</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Python API</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="lmn_auth.html">API: aj.plugins.lmn_auth</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_common.html">API: aj.plugins.lmn_common</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_crontab.html">API: aj.plugins.lmn_crontab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_devices.html">API: aj.plugins.lmn_devices</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_dhcp.html">API: aj.plugins.lmn_dhcp</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_docker.html">API: aj.plugins.lmn_docker</a></li>
@@ -101,8 +106,8 @@
 <li class="toctree-l1"><a class="reference internal" href="lmn_linbo.html">API: aj.plugins.lmn_linbo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_linbo4.html">API: aj.plugins.lmn_linbo4</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">API: aj.plugins.lmn_linbo_sync</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#module-aj.plugins.lmn_linbo_sync.api">LMN Linbo Sync Api</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-aj.plugins.lmn_linbo_sync.views">LMN Linbo Sync Views</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lmn-linbo-sync-api">LMN Linbo Sync Api</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lmn-linbo-sync-views">LMN Linbo Sync Views</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_quotas.html">API: aj.plugins.lmn_quotas</a></li>
@@ -177,195 +182,11 @@
             
   <div class="section" id="api-aj-plugins-lmn-linbo-sync">
 <h1>API: aj.plugins.lmn_linbo_sync<a class="headerlink" href="#api-aj-plugins-lmn-linbo-sync" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="module-aj.plugins.lmn_linbo_sync.api">
-<span id="lmn-linbo-sync-api"></span><h2>LMN Linbo Sync Api<a class="headerlink" href="#module-aj.plugins.lmn_linbo_sync.api" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="aj.plugins.lmn_linbo_sync.api.group_os">
-<code class="sig-prename descclassname">aj.plugins.lmn_linbo_sync.api.</code><code class="sig-name descname">group_os</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">workstations</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_linbo_sync/api.html#group_os"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_linbo_sync.api.group_os" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get all os infos from linbo config file and inject it in workstations dict.
-The workstations dict is set in the function list_workstations().</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>workstations</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Dict containing all workstations</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Completed workstations dict with linbo informations</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)">dict</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt id="aj.plugins.lmn_linbo_sync.api.last_sync">
-<code class="sig-prename descclassname">aj.plugins.lmn_linbo_sync.api.</code><code class="sig-name descname">last_sync</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">workstation</span></em>, <em class="sig-param"><span class="n">image</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_linbo_sync/api.html#last_sync"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_linbo_sync.api.last_sync" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the date of the last sync date for a workstation w.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>w</strong> (<em>string</em>) – Workstation</p></li>
-<li><p><strong>image</strong> (<em>string</em>) – Name of the image file</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Last synchronisation time</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>datetime</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt id="aj.plugins.lmn_linbo_sync.api.last_sync_all">
-<code class="sig-prename descclassname">aj.plugins.lmn_linbo_sync.api.</code><code class="sig-name descname">last_sync_all</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">workstations</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_linbo_sync/api.html#last_sync_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_linbo_sync.api.last_sync_all" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add last synchronisation informations into the workstations dict,
-and status attribute to use as class for bootstrap.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>workstations</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Dict of workstations set in list_workstations().</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Completed dict of workstations</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)">dict</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt id="aj.plugins.lmn_linbo_sync.api.list_workstations">
-<code class="sig-prename descclassname">aj.plugins.lmn_linbo_sync.api.</code><code class="sig-name descname">list_workstations</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_linbo_sync/api.html#list_workstations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_linbo_sync.api.list_workstations" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generate a dict with workstations and parameters out of devices file</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Dict with all linbo informations for all workstations.</p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)">dict</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt id="aj.plugins.lmn_linbo_sync.api.read_config">
-<code class="sig-prename descclassname">aj.plugins.lmn_linbo_sync.api.</code><code class="sig-name descname">read_config</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">group</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_linbo_sync/api.html#read_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_linbo_sync.api.read_config" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the os config from linbo config file start.conf.&lt;group&gt;</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>group</strong> (<em>string</em>) – Linbo group</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Config as list of dict</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>list of dict</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt id="aj.plugins.lmn_linbo_sync.api.run">
-<code class="sig-prename descclassname">aj.plugins.lmn_linbo_sync.api.</code><code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">command</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_linbo_sync/api.html#run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_linbo_sync.api.run" title="Permalink to this definition">¶</a></dt>
-<dd><p>Run linbo command.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>command</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – Linbo command</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Error as string if down, or 0 if successfull</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string or integer</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt id="aj.plugins.lmn_linbo_sync.api.test_online">
-<code class="sig-prename descclassname">aj.plugins.lmn_linbo_sync.api.</code><code class="sig-name descname">test_online</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">host</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_linbo_sync/api.html#test_online"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_linbo_sync.api.test_online" title="Permalink to this definition">¶</a></dt>
-<dd><p>Launch a nmap on a host to test if the os is up, and return OS type.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>host</strong> (<em>string</em>) – Hostname</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>OS type</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
-</dd>
-</dl>
-</dd></dl>
-
+<div class="section" id="lmn-linbo-sync-api">
+<h2>LMN Linbo Sync Api<a class="headerlink" href="#lmn-linbo-sync-api" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-aj.plugins.lmn_linbo_sync.views">
-<span id="lmn-linbo-sync-views"></span><h2>LMN Linbo Sync Views<a class="headerlink" href="#module-aj.plugins.lmn_linbo_sync.views" title="Permalink to this headline">¶</a></h2>
-<p>Module to drive some workstations through linbo.</p>
-<dl class="py class">
-<dt id="aj.plugins.lmn_linbo_sync.views.Handler">
-<em class="property">class </em><code class="sig-prename descclassname">aj.plugins.lmn_linbo_sync.views.</code><code class="sig-name descname">Handler</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_linbo_sync/views.html#Handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_linbo_sync.views.Handler" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="py method">
-<dt id="aj.plugins.lmn_linbo_sync.views.Handler.handle_api_linbo_sync">
-<code class="sig-name descname">handle_api_linbo_sync</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">http_context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_linbo_sync/views.html#Handler.handle_api_linbo_sync"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_linbo_sync.views.Handler.handle_api_linbo_sync" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the last synchronisation date from all workstations.
-Method GET.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Workstations dict with all linbo informations</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)">dict</a> or <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)">list</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="aj.plugins.lmn_linbo_sync.views.Handler.handle_api_sync_workstation">
-<code class="sig-name descname">handle_api_sync_workstation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">http_context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_linbo_sync/views.html#Handler.handle_api_sync_workstation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_linbo_sync.views.Handler.handle_api_sync_workstation" title="Permalink to this definition">¶</a></dt>
-<dd><p>Connector to launch a linbo command.
-Method POST.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Error as string if down, or 0 if successfull</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string or integer 0</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="aj.plugins.lmn_linbo_sync.views.Handler.handle_api_workstations_online">
-<code class="sig-name descname">handle_api_workstations_online</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">http_context</span></em>, <em class="sig-param"><span class="n">host</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_linbo_sync/views.html#Handler.handle_api_workstations_online"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_linbo_sync.views.Handler.handle_api_workstations_online" title="Permalink to this definition">¶</a></dt>
-<dd><p>Connector to test if a host is online.
-Method GET.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p></li>
-<li><p><strong>host</strong> (<em>string</em>) – Hostname</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>OS type if online, or off</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
+<div class="section" id="lmn-linbo-sync-views">
+<h2>LMN Linbo Sync Views<a class="headerlink" href="#lmn-linbo-sync-views" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -390,7 +211,7 @@ Method GET.</p>
   <div role="contentinfo">
     <p>
         
-        &copy; Copyright Andreas Till &amp; Arnaud Kientz - 2021
+        &copy; Copyright Andreas Till &amp; Arnaud Kientz - 2022
 
     </p>
   </div>

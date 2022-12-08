@@ -3,6 +3,8 @@
 
 import os
 import sys
+
+sys.path.append('../../ajenti/ajenti-core')
 import aj
 import aj.api
 import aj.config
@@ -18,7 +20,8 @@ import sphinx_rtd_theme
 # Fix gettext syntax
 builtins._ = lambda x:x
 
-aj_plugin_path = aj.__path__[0][:-3]
+#aj_plugin_path = aj.__path__[0][:-3]
+aj_plugin_path = '../../ajenti/plugins'
 lm_plugin_path = '../usr/lib/linuxmuster-webui/plugins' # Path relative to docs sources
 
 aj.context = aj.api.Context()

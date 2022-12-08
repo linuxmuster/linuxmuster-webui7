@@ -99,7 +99,7 @@
 <li class="toctree-l1"><a class="reference internal" href="lmn_common.html">API: aj.plugins.lmn_common</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_crontab.html">API: aj.plugins.lmn_crontab</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">API: aj.plugins.lmn_devices</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#lmn-devices-views">LMN Devices Views</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-aj.plugins.lmn_devices.views">LMN Devices Views</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_dhcp.html">API: aj.plugins.lmn_dhcp</a></li>
@@ -181,8 +181,59 @@
             
   <div class="section" id="api-aj-plugins-lmn-devices">
 <h1>API: aj.plugins.lmn_devices<a class="headerlink" href="#api-aj-plugins-lmn-devices" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="lmn-devices-views">
-<h2>LMN Devices Views<a class="headerlink" href="#lmn-devices-views" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-aj.plugins.lmn_devices.views">
+<span id="lmn-devices-views"></span><h2>LMN Devices Views<a class="headerlink" href="#module-aj.plugins.lmn_devices.views" title="Permalink to this headline">¶</a></h2>
+<p>API to load device file and run importing.</p>
+<dl class="py class">
+<dt id="aj.plugins.lmn_devices.views.Handler">
+<em class="property">class </em><code class="sig-prename descclassname">aj.plugins.lmn_devices.views.</code><code class="sig-name descname">Handler</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_devices/views.html#Handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_devices.views.Handler" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="aj.plugins.lmn_devices.views.Handler.handle_api_devices_import">
+<code class="sig-name descname">handle_api_devices_import</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">http_context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_devices/views.html#Handler.handle_api_devices_import"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_devices.views.Handler.handle_api_devices_import" title="Permalink to this definition">¶</a></dt>
+<dd><p>Launch the import of the devices in the system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="aj.plugins.lmn_devices.views.Handler.handle_api_get_devices">
+<code class="sig-name descname">handle_api_get_devices</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">http_context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_devices/views.html#Handler.handle_api_get_devices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_devices.views.Handler.handle_api_get_devices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all devices registered in devices.csv.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Content of config file in read mode.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="aj.plugins.lmn_devices.views.Handler.handle_api_post_devices">
+<code class="sig-name descname">handle_api_post_devices</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">http_context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_devices/views.html#Handler.handle_api_post_devices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_devices.views.Handler.handle_api_post_devices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write all devices in devices.csv.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Content of config file in read mode.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 </div>
 

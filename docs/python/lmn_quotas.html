@@ -107,7 +107,7 @@
 <li class="toctree-l1"><a class="reference internal" href="lmn_linbo4.html">API: aj.plugins.lmn_linbo4</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_linbo_sync.html">API: aj.plugins.lmn_linbo_sync</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">API: aj.plugins.lmn_quotas</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#lmn-quotas-views">LMN Quotas Views</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-aj.plugins.lmn_quotas.views">LMN Quotas Views</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_session.html">API: aj.plugins.lmn_session</a></li>
@@ -181,8 +181,125 @@
             
   <div class="section" id="api-aj-plugins-lmn-quotas">
 <h1>API: aj.plugins.lmn_quotas<a class="headerlink" href="#api-aj-plugins-lmn-quotas" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="lmn-quotas-views">
-<h2>LMN Quotas Views<a class="headerlink" href="#lmn-quotas-views" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-aj.plugins.lmn_quotas.views">
+<span id="lmn-quotas-views"></span><h2>LMN Quotas Views<a class="headerlink" href="#module-aj.plugins.lmn_quotas.views" title="Permalink to this headline">¶</a></h2>
+<p>Manage per user or group quota configuration.</p>
+<dl class="py class">
+<dt id="aj.plugins.lmn_quotas.views.Handler">
+<em class="property">class </em><code class="sig-prename descclassname">aj.plugins.lmn_quotas.views.</code><code class="sig-name descname">Handler</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_quotas/views.html#Handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_quotas.views.Handler" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="aj.plugins.lmn_quotas.views.Handler.handle_api_apply">
+<code class="sig-name descname">handle_api_apply</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">http_context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_quotas/views.html#Handler.handle_api_apply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_quotas.views.Handler.handle_api_apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply new quota configuration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="aj.plugins.lmn_quotas.views.Handler.handle_api_class_quotas">
+<code class="sig-name descname">handle_api_class_quotas</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">http_context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_quotas/views.html#Handler.handle_api_class_quotas"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_quotas.views.Handler.handle_api_class_quotas" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get quotas for projects and classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dict with all quotas informations</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="aj.plugins.lmn_quotas.views.Handler.handle_api_ldap_search">
+<code class="sig-name descname">handle_api_ldap_search</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">http_context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_quotas/views.html#Handler.handle_api_ldap_search"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_quotas.views.Handler.handle_api_ldap_search" title="Permalink to this definition">¶</a></dt>
+<dd><p>Query usernames for filter in frontend.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of usernames with details, one user per dict</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list of dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="aj.plugins.lmn_quotas.views.Handler.handle_api_quota">
+<code class="sig-name descname">handle_api_quota</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">http_context</span></em>, <em class="sig-param"><span class="n">user</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_quotas/views.html#Handler.handle_api_quota"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_quotas.views.Handler.handle_api_quota" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get quota informations from user through sophomorix-query.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p></li>
+<li><p><strong>user</strong> (<em>string</em>) – User login</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>All quotas informations from user</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="aj.plugins.lmn_quotas.views.Handler.handle_api_quotas">
+<code class="sig-name descname">handle_api_quotas</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">http_context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_quotas/views.html#Handler.handle_api_quotas"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_quotas.views.Handler.handle_api_quotas" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all quotas informations from <cite>school.conf</cite> and LDAP tree.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>All quotas informations</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list of dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="aj.plugins.lmn_quotas.views.Handler.handle_api_save_quotas">
+<code class="sig-name descname">handle_api_save_quotas</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">http_context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_quotas/views.html#Handler.handle_api_save_quotas"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_quotas.views.Handler.handle_api_save_quotas" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register the new quota values through sophomorix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="aj.plugins.lmn_quotas.views.Handler.handle_group_quota">
+<code class="sig-name descname">handle_group_quota</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">http_context</span></em>, <em class="sig-param"><span class="n">user</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_quotas/views.html#Handler.handle_group_quota"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_quotas.views.Handler.handle_group_quota" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get samba share limits for a group list. Prepare type key for style
+(danger, warning, success) to display status.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>All quotas for specified users</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 </div>
 

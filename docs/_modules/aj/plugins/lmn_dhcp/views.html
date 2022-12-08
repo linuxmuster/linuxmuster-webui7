@@ -180,7 +180,7 @@
 <span class="kn">from</span> <span class="nn">jadi</span> <span class="kn">import</span> <span class="n">component</span>
 <span class="kn">from</span> <span class="nn">isc_dhcp_leases</span> <span class="kn">import</span> <span class="n">Lease</span><span class="p">,</span> <span class="n">IscDhcpLeases</span>
 
-<span class="kn">from</span> <span class="nn">aj.api.http</span> <span class="kn">import</span> <span class="n">url</span><span class="p">,</span> <span class="n">HttpPlugin</span>
+<span class="kn">from</span> <span class="nn">aj.api.http</span> <span class="kn">import</span> <span class="n">get</span><span class="p">,</span> <span class="n">post</span><span class="p">,</span> <span class="n">HttpPlugin</span>
 <span class="kn">from</span> <span class="nn">aj.auth</span> <span class="kn">import</span> <span class="n">authorize</span>
 <span class="kn">from</span> <span class="nn">aj.api.endpoint</span> <span class="kn">import</span> <span class="n">endpoint</span><span class="p">,</span> <span class="n">EndpointError</span>
 <span class="kn">from</span> <span class="nn">aj.plugins.lmn_common.lmnfile</span> <span class="kn">import</span> <span class="n">LMNFile</span>
@@ -210,13 +210,12 @@
             <span class="s1">&#39;options&#39;</span><span class="p">,</span>
         <span class="p">]</span>
 
-<div class="viewcode-block" id="Handler.handle_api_get_dhcp"><a class="viewcode-back" href="../../../../python/lmn_dhcp.html#aj.plugins.lmn_dhcp.views.Handler.handle_api_get_dhcp">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/get-dhcp&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_get_dhcp"><a class="viewcode-back" href="../../../../python/lmn_dhcp.html#aj.plugins.lmn_dhcp.views.Handler.handle_api_get_dhcp">[docs]</a>    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/dhcp/leases&#39;</span><span class="p">)</span>
     <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:devices&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_get_dhcp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Read dhcp lease file and sort it for each LMN devices.</span>
-<span class="sd">        Method GET.</span>
 
 <span class="sd">        :param http_context: HttpContext</span>
 <span class="sd">        :type http_context: HttpContext</span>
@@ -226,35 +225,33 @@
 
         <span class="n">pathLease</span> <span class="o">=</span> <span class="s1">&#39;/var/lib/dhcp/dhcpd.leases&#39;</span>
 
-        <span class="k">if</span> <span class="n">http_context</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;GET&#39;</span><span class="p">:</span>
-            <span class="n">leases</span> <span class="o">=</span> <span class="n">IscDhcpLeases</span><span class="p">(</span><span class="n">pathLease</span><span class="p">)</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="k">for</span> <span class="n">mac</span><span class="p">,</span> <span class="n">details</span> <span class="ow">in</span> <span class="n">leases</span><span class="o">.</span><span class="n">get_current</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
-                    <span class="s1">&#39;mac&#39;</span><span class="p">:</span> <span class="n">mac</span><span class="p">,</span>
-                    <span class="s1">&#39;ip&#39;</span><span class="p">:</span> <span class="n">details</span><span class="o">.</span><span class="n">ip</span><span class="p">,</span>
-                    <span class="s1">&#39;starts&#39;</span><span class="p">:</span> <span class="n">details</span><span class="o">.</span><span class="n">start</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%A, </span><span class="si">%d</span><span class="s2">. %B %Y %H:%M:%S&quot;</span><span class="p">),</span>
-                    <span class="s1">&#39;ends&#39;</span><span class="p">:</span> <span class="n">details</span><span class="o">.</span><span class="n">end</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%A, </span><span class="si">%d</span><span class="s2">. %B %Y %H:%M:%S&quot;</span><span class="p">),</span>
-                <span class="p">})</span>
+        <span class="n">leases</span> <span class="o">=</span> <span class="n">IscDhcpLeases</span><span class="p">(</span><span class="n">pathLease</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">mac</span><span class="p">,</span> <span class="n">details</span> <span class="ow">in</span> <span class="n">leases</span><span class="o">.</span><span class="n">get_current</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                <span class="s1">&#39;mac&#39;</span><span class="p">:</span> <span class="n">mac</span><span class="p">,</span>
+                <span class="s1">&#39;ip&#39;</span><span class="p">:</span> <span class="n">details</span><span class="o">.</span><span class="n">ip</span><span class="p">,</span>
+                <span class="s1">&#39;starts&#39;</span><span class="p">:</span> <span class="n">details</span><span class="o">.</span><span class="n">start</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%A, </span><span class="si">%d</span><span class="s2">. %B %Y %H:%M:%S&quot;</span><span class="p">),</span>
+                <span class="s1">&#39;ends&#39;</span><span class="p">:</span> <span class="n">details</span><span class="o">.</span><span class="n">end</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%A, </span><span class="si">%d</span><span class="s2">. %B %Y %H:%M:%S&quot;</span><span class="p">),</span>
+            <span class="p">})</span>
 
-            <span class="n">used</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="k">with</span> <span class="n">LMNFile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">fieldnames</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fieldnames</span><span class="p">)</span> <span class="k">as</span> <span class="n">devices</span><span class="p">:</span>
-                <span class="k">for</span> <span class="n">host</span> <span class="ow">in</span> <span class="n">devices</span><span class="o">.</span><span class="n">read</span><span class="p">():</span>
-                    <span class="k">if</span> <span class="n">host</span><span class="p">[</span><span class="s2">&quot;hostname&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">host</span><span class="p">[</span><span class="s2">&quot;mac&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
-                        <span class="n">used</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
-                            <span class="s1">&#39;mac&#39;</span><span class="p">:</span><span class="n">host</span><span class="p">[</span><span class="s1">&#39;mac&#39;</span><span class="p">],</span>
-                            <span class="s1">&#39;ip&#39;</span><span class="p">:</span> <span class="n">host</span><span class="p">[</span><span class="s1">&#39;ip&#39;</span><span class="p">],</span>
-                            <span class="s1">&#39;hostname&#39;</span><span class="p">:</span> <span class="n">host</span><span class="p">[</span><span class="s1">&#39;hostname&#39;</span><span class="p">],</span>
-                        <span class="p">})</span>
-            <span class="k">return</span> <span class="n">data</span><span class="p">,</span> <span class="n">used</span></div>
+        <span class="n">used</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">with</span> <span class="n">LMNFile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">fieldnames</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fieldnames</span><span class="p">)</span> <span class="k">as</span> <span class="n">devices</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">host</span> <span class="ow">in</span> <span class="n">devices</span><span class="o">.</span><span class="n">read</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">host</span><span class="p">[</span><span class="s2">&quot;hostname&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">host</span><span class="p">[</span><span class="s2">&quot;mac&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">used</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                        <span class="s1">&#39;mac&#39;</span><span class="p">:</span><span class="n">host</span><span class="p">[</span><span class="s1">&#39;mac&#39;</span><span class="p">],</span>
+                        <span class="s1">&#39;ip&#39;</span><span class="p">:</span> <span class="n">host</span><span class="p">[</span><span class="s1">&#39;ip&#39;</span><span class="p">],</span>
+                        <span class="s1">&#39;hostname&#39;</span><span class="p">:</span> <span class="n">host</span><span class="p">[</span><span class="s1">&#39;hostname&#39;</span><span class="p">],</span>
+                    <span class="p">})</span>
+        <span class="k">return</span> <span class="n">data</span><span class="p">,</span> <span class="n">used</span></div>
 
-<div class="viewcode-block" id="Handler.handle_api_register_dhcp"><a class="viewcode-back" href="../../../../python/lmn_dhcp.html#aj.plugins.lmn_dhcp.views.Handler.handle_api_register_dhcp">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/register-dhcp&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_register_dhcp"><a class="viewcode-back" href="../../../../python/lmn_dhcp.html#aj.plugins.lmn_dhcp.views.Handler.handle_api_register_dhcp">[docs]</a>    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/dhcp/register&#39;</span><span class="p">)</span>
     <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:devices:import&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_register_dhcp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        When a new device get an ip through dhcp, this method allows to register it in the LMN devices file.</span>
-<span class="sd">        Method POST.</span>
 
 <span class="sd">        :param http_context: HttpContext</span>
 <span class="sd">        :type http_context: HttpContext</span>
@@ -262,13 +259,12 @@
 <span class="sd">        :rtype: bool</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">if</span> <span class="n">http_context</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
-            <span class="n">new_device</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;device&#39;</span><span class="p">]</span>
-            <span class="k">with</span> <span class="n">LMNFile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;w+&#39;</span><span class="p">,</span> <span class="n">fieldnames</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fieldnames</span><span class="p">)</span> <span class="k">as</span> <span class="n">devices</span><span class="p">:</span>
-                <span class="n">content</span> <span class="o">=</span> <span class="n">devices</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-                <span class="n">content</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_device</span><span class="p">)</span>
-                <span class="n">devices</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
-            <span class="k">return</span> <span class="kc">True</span></div></div>
+        <span class="n">new_device</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;device&#39;</span><span class="p">]</span>
+        <span class="k">with</span> <span class="n">LMNFile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;w+&#39;</span><span class="p">,</span> <span class="n">fieldnames</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fieldnames</span><span class="p">)</span> <span class="k">as</span> <span class="n">devices</span><span class="p">:</span>
+            <span class="n">content</span> <span class="o">=</span> <span class="n">devices</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="n">content</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_device</span><span class="p">)</span>
+            <span class="n">devices</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span></div></div>
 </pre></div>
 
            </div>

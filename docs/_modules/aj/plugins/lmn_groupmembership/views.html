@@ -180,11 +180,10 @@
 
 <span class="c1"># coding=utf-8</span>
 <span class="kn">from</span> <span class="nn">jadi</span> <span class="kn">import</span> <span class="n">component</span>
-<span class="kn">from</span> <span class="nn">aj.api.http</span> <span class="kn">import</span> <span class="n">url</span><span class="p">,</span> <span class="n">HttpPlugin</span>
+<span class="kn">from</span> <span class="nn">aj.api.http</span> <span class="kn">import</span> <span class="n">get</span><span class="p">,</span> <span class="n">post</span><span class="p">,</span> <span class="n">delete</span><span class="p">,</span> <span class="n">HttpPlugin</span>
 <span class="kn">from</span> <span class="nn">aj.api.endpoint</span> <span class="kn">import</span> <span class="n">endpoint</span>
-<span class="kn">from</span> <span class="nn">aj.auth</span> <span class="kn">import</span> <span class="n">authorize</span>
+<span class="kn">from</span> <span class="nn">aj.auth</span> <span class="kn">import</span> <span class="n">authorize</span><span class="p">,</span> <span class="n">AuthenticationService</span>
 <span class="kn">from</span> <span class="nn">aj.plugins.lmn_common.api</span> <span class="kn">import</span> <span class="n">lmn_getSophomorixValue</span>
-<span class="kn">from</span> <span class="nn">aj.plugins.lmn_common.multischool</span> <span class="kn">import</span> <span class="n">School</span>
 
 
 <div class="viewcode-block" id="Handler"><a class="viewcode-back" href="../../../../python/lmn_groupmembership.html#aj.plugins.lmn_groupmembership.views.Handler">[docs]</a><span class="nd">@component</span><span class="p">(</span><span class="n">HttpPlugin</span><span class="p">)</span>
@@ -192,40 +191,12 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">context</span>
 
-<div class="viewcode-block" id="Handler.handle_api_groupmembership_details"><a class="viewcode-back" href="../../../../python/lmn_groupmembership.html#aj.plugins.lmn_groupmembership.views.Handler.handle_api_groupmembership_details">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/groupmembership/details&#39;</span><span class="p">)</span>
-    <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lmn:groupmemberships:write&#39;</span><span class="p">)</span>
-    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">handle_api_groupmembership_details</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get the group informations of a specified group.</span>
-<span class="sd">        Method POST.</span>
-
-<span class="sd">        :param http_context: HttpContext</span>
-<span class="sd">        :type http_context: HttpContext</span>
-<span class="sd">        :return: Group informations in LDAP ( name, owner, ... )</span>
-<span class="sd">        :rtype: dict</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="n">action</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;action&#39;</span><span class="p">]</span>
-
-        <span class="k">if</span> <span class="n">http_context</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
-            <span class="k">with</span> <span class="n">authorize</span><span class="p">(</span><span class="s1">&#39;lmn:groupmemberships:write&#39;</span><span class="p">):</span>
-                <span class="k">if</span> <span class="n">action</span> <span class="o">==</span> <span class="s1">&#39;get-specified&#39;</span><span class="p">:</span>
-                    <span class="n">groupName</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;groupName&#39;</span><span class="p">]</span>
-                    <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-query&#39;</span><span class="p">,</span> <span class="s1">&#39;--group-members&#39;</span><span class="p">,</span> <span class="s1">&#39;--group-full&#39;</span><span class="p">,</span> <span class="s1">&#39;--sam&#39;</span><span class="p">,</span> <span class="n">groupName</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
-                    <span class="n">groupDetails</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
-                    <span class="k">if</span> <span class="ow">not</span> <span class="s1">&#39;MEMBERS&#39;</span> <span class="ow">in</span> <span class="n">groupDetails</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-                        <span class="n">groupDetails</span><span class="p">[</span><span class="s1">&#39;MEMBERS&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-
-            <span class="k">return</span> <span class="n">groupDetails</span></div>
-
-<div class="viewcode-block" id="Handler.handle_api_groups"><a class="viewcode-back" href="../../../../python/lmn_groupmembership.html#aj.plugins.lmn_groupmembership.views.Handler.handle_api_groups">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/groupmembership&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_list_groups"><a class="viewcode-back" href="../../../../python/lmn_groupmembership.html#aj.plugins.lmn_groupmembership.views.Handler.handle_api_list_groups">[docs]</a>    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/groupmembership/groups&#39;</span><span class="p">)</span>
     <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lmn:groupmembership&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">handle_api_groups</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">handle_api_list_groups</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Performs diverses actions on groups, like list all groups, kill and create.</span>
-<span class="sd">        Method POST.</span>
+<span class="sd">        List all groups.</span>
 
 <span class="sd">        :param http_context: HttpContext</span>
 <span class="sd">        :type http_context: HttpContext</span>
@@ -233,91 +204,134 @@
 <span class="sd">        :rtype: dict or tuple</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="c1"># TODO : this need to be splitted into atomic functions/tasks.</span>
-
-        <span class="n">schoolname</span> <span class="o">=</span> <span class="n">School</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span><span class="o">.</span><span class="n">school</span> 
-        <span class="n">username</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;username&#39;</span><span class="p">]</span>
-        <span class="n">action</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;action&#39;</span><span class="p">]</span>
-        <span class="n">user_details</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;profil&#39;</span><span class="p">]</span>
+        <span class="n">schoolname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">school</span>
+        <span class="n">username</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">identity</span>
+        <span class="n">user_details</span> <span class="o">=</span> <span class="n">AuthenticationService</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span><span class="o">.</span><span class="n">get_provider</span><span class="p">()</span><span class="o">.</span><span class="n">get_profile</span><span class="p">(</span><span class="n">username</span><span class="p">)</span>
         <span class="n">isAdmin</span> <span class="o">=</span> <span class="s2">&quot;administrator&quot;</span> <span class="ow">in</span> <span class="n">user_details</span><span class="p">[</span><span class="s1">&#39;sophomorixRole&#39;</span><span class="p">]</span>
 
-        <span class="k">if</span> <span class="n">http_context</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">action</span> <span class="o">==</span> <span class="s1">&#39;list-groups&#39;</span><span class="p">:</span>
-                <span class="n">membershipList</span> <span class="o">=</span> <span class="p">[]</span>
-                <span class="n">usergroups</span> <span class="o">=</span> <span class="p">[]</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">isAdmin</span><span class="p">:</span>
-                    <span class="c1"># get groups specified user is member of</span>
-                    <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">user_details</span><span class="p">[</span><span class="s1">&#39;memberOf&#39;</span><span class="p">]:</span>
-                        <span class="n">usergroups</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">group</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">membershipList</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">usergroups</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">isAdmin</span><span class="p">:</span>
+            <span class="c1"># get groups specified user is member of</span>
+            <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">user_details</span><span class="p">[</span><span class="s1">&#39;memberOf&#39;</span><span class="p">]:</span>
+                <span class="n">usergroups</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">group</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
 
-                <span class="c1"># get all available classes and projects</span>
-                <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-query&#39;</span><span class="p">,</span> <span class="s1">&#39;--class&#39;</span><span class="p">,</span> <span class="s1">&#39;--project&#39;</span><span class="p">,</span> <span class="s1">&#39;--schoolbase&#39;</span><span class="p">,</span> <span class="n">schoolname</span><span class="p">,</span> <span class="s1">&#39;--group-full&#39;</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
-                <span class="n">groups</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
-                <span class="c1"># get all available groups TODO</span>
+        <span class="c1"># get all available classes and projects</span>
+        <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-query&#39;</span><span class="p">,</span> <span class="s1">&#39;--class&#39;</span><span class="p">,</span> <span class="s1">&#39;--project&#39;</span><span class="p">,</span> <span class="s1">&#39;--schoolbase&#39;</span><span class="p">,</span> <span class="n">schoolname</span><span class="p">,</span> <span class="s1">&#39;--group-full&#39;</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
+        <span class="n">groups</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="c1"># get all available groups TODO</span>
 
-                <span class="c1"># build membershipList with membership status</span>
-                <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">groups</span><span class="p">[</span><span class="s1">&#39;LISTS&#39;</span><span class="p">][</span><span class="s1">&#39;GROUP&#39;</span><span class="p">]:</span>
-                    <span class="n">membershipDict</span> <span class="o">=</span> <span class="p">{}</span>
-                    <span class="n">groupDetails</span> <span class="o">=</span> <span class="n">groups</span><span class="p">[</span><span class="s1">&#39;GROUP&#39;</span><span class="p">][</span><span class="n">group</span><span class="p">]</span>
+        <span class="c1"># build membershipList with membership status</span>
+        <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">groups</span><span class="p">[</span><span class="s1">&#39;LISTS&#39;</span><span class="p">][</span><span class="s1">&#39;GROUP&#39;</span><span class="p">]:</span>
+            <span class="n">membershipDict</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">groupDetails</span> <span class="o">=</span> <span class="n">groups</span><span class="p">[</span><span class="s1">&#39;GROUP&#39;</span><span class="p">][</span><span class="n">group</span><span class="p">]</span>
 
-                    <span class="k">if</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">usergroups</span> <span class="ow">or</span> <span class="n">isAdmin</span> <span class="ow">or</span> <span class="n">groupDetails</span><span class="p">[</span><span class="s1">&#39;sophomorixHidden&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;FALSE&quot;</span><span class="p">:</span>
-                        <span class="n">membershipDict</span><span class="p">[</span><span class="s1">&#39;groupname&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">group</span>
-                        <span class="n">membershipDict</span><span class="p">[</span><span class="s1">&#39;membership&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">usergroups</span> <span class="ow">or</span> <span class="n">isAdmin</span>
-                        <span class="n">membershipDict</span><span class="p">[</span><span class="s1">&#39;admin&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">username</span> <span class="ow">in</span> <span class="n">groupDetails</span><span class="p">[</span><span class="s1">&#39;sophomorixAdmins&#39;</span><span class="p">]</span> <span class="ow">or</span> <span class="n">isAdmin</span>
-                        <span class="n">membershipDict</span><span class="p">[</span><span class="s1">&#39;joinable&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">groupDetails</span><span class="p">[</span><span class="s1">&#39;sophomorixJoinable&#39;</span><span class="p">]</span>
-                        <span class="n">membershipDict</span><span class="p">[</span><span class="s1">&#39;DN&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">groupDetails</span><span class="p">[</span><span class="s1">&#39;DN&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">usergroups</span> <span class="ow">or</span> <span class="n">isAdmin</span> <span class="ow">or</span> <span class="n">groupDetails</span><span class="p">[</span><span class="s1">&#39;sophomorixHidden&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;FALSE&quot;</span><span class="p">:</span>
+                <span class="n">membershipDict</span><span class="p">[</span><span class="s1">&#39;groupname&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">group</span>
+                <span class="n">membershipDict</span><span class="p">[</span><span class="s1">&#39;membership&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">usergroups</span> <span class="ow">or</span> <span class="n">isAdmin</span>
+                <span class="n">membershipDict</span><span class="p">[</span><span class="s1">&#39;admin&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">username</span> <span class="ow">in</span> <span class="n">groupDetails</span><span class="p">[</span><span class="s1">&#39;sophomorixAdmins&#39;</span><span class="p">]</span> <span class="ow">or</span> <span class="n">isAdmin</span>
+                <span class="n">membershipDict</span><span class="p">[</span><span class="s1">&#39;joinable&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">groupDetails</span><span class="p">[</span><span class="s1">&#39;sophomorixJoinable&#39;</span><span class="p">]</span>
+                <span class="n">membershipDict</span><span class="p">[</span><span class="s1">&#39;DN&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">groupDetails</span><span class="p">[</span><span class="s1">&#39;DN&#39;</span><span class="p">]</span>
 
-                        <span class="c1"># Project name always starts with p_, but not classname</span>
-                        <span class="k">if</span> <span class="n">group</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;p_&quot;</span><span class="p">:</span>
-                            <span class="n">membershipDict</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;project&#39;</span>
-                            <span class="n">membershipDict</span><span class="p">[</span><span class="s1">&#39;typename&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Project&#39;</span>
-                        <span class="k">else</span><span class="p">:</span>
-                            <span class="n">membershipDict</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;schoolclass&#39;</span>
-                            <span class="n">membershipDict</span><span class="p">[</span><span class="s1">&#39;typename&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Class&#39;</span>
+                <span class="c1"># Project name always starts with p_, but not classname</span>
+                <span class="k">if</span> <span class="n">group</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;p_&quot;</span><span class="p">:</span>
+                    <span class="n">membershipDict</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;project&#39;</span>
+                    <span class="n">membershipDict</span><span class="p">[</span><span class="s1">&#39;typename&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Project&#39;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">membershipDict</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;schoolclass&#39;</span>
+                    <span class="n">membershipDict</span><span class="p">[</span><span class="s1">&#39;typename&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Class&#39;</span>
 
-                        <span class="n">membershipList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">membershipDict</span><span class="p">)</span>
+                <span class="n">membershipList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">membershipDict</span><span class="p">)</span>
 
-                <span class="c1">#get printers</span>
-                <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-query&#39;</span><span class="p">,</span> <span class="s1">&#39;--printergroup&#39;</span><span class="p">,</span> <span class="s1">&#39;--schoolbase&#39;</span><span class="p">,</span> <span class="n">schoolname</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
-                <span class="n">printergroups</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;LISTS/GROUP&#39;</span><span class="p">)</span>
+        <span class="c1">#get printers</span>
+        <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-query&#39;</span><span class="p">,</span> <span class="s1">&#39;--printergroup&#39;</span><span class="p">,</span> <span class="s1">&#39;--schoolbase&#39;</span><span class="p">,</span> <span class="n">schoolname</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
+        <span class="n">printergroups</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;LISTS/GROUP&#39;</span><span class="p">)</span>
 
-                <span class="k">for</span> <span class="n">printergroup</span> <span class="ow">in</span> <span class="n">printergroups</span><span class="p">:</span>
-                  <span class="k">if</span> <span class="n">printergroup</span> <span class="ow">in</span> <span class="n">usergroups</span> <span class="ow">or</span> <span class="n">isAdmin</span><span class="p">:</span>
-                    <span class="n">membershipList</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;printergroup&#39;</span><span class="p">,</span> <span class="s1">&#39;typename&#39;</span><span class="p">:</span> <span class="s1">&#39;Printer&#39;</span><span class="p">,</span> <span class="s1">&#39;groupname&#39;</span><span class="p">:</span> <span class="n">printergroup</span><span class="p">,</span> <span class="s1">&#39;membership&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span>
-                  <span class="k">else</span><span class="p">:</span>
-                    <span class="n">membershipList</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;printergroup&#39;</span><span class="p">,</span> <span class="s1">&#39;typename&#39;</span><span class="p">:</span> <span class="s1">&#39;Printer&#39;</span><span class="p">,</span> <span class="s1">&#39;groupname&#39;</span><span class="p">:</span> <span class="n">printergroup</span><span class="p">,</span> <span class="s1">&#39;membership&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">})</span>
-                <span class="k">return</span> <span class="n">membershipList</span><span class="p">,</span> <span class="n">isAdmin</span><span class="p">,</span> <span class="n">user_details</span>
+        <span class="k">for</span> <span class="n">printergroup</span> <span class="ow">in</span> <span class="n">printergroups</span><span class="p">:</span>
+          <span class="k">if</span> <span class="n">printergroup</span> <span class="ow">in</span> <span class="n">usergroups</span> <span class="ow">or</span> <span class="n">isAdmin</span><span class="p">:</span>
+            <span class="n">membershipList</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;printergroup&#39;</span><span class="p">,</span> <span class="s1">&#39;typename&#39;</span><span class="p">:</span> <span class="s1">&#39;Printer&#39;</span><span class="p">,</span> <span class="s1">&#39;groupname&#39;</span><span class="p">:</span> <span class="n">printergroup</span><span class="p">,</span> <span class="s1">&#39;membership&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span>
+          <span class="k">else</span><span class="p">:</span>
+            <span class="n">membershipList</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;printergroup&#39;</span><span class="p">,</span> <span class="s1">&#39;typename&#39;</span><span class="p">:</span> <span class="s1">&#39;Printer&#39;</span><span class="p">,</span> <span class="s1">&#39;groupname&#39;</span><span class="p">:</span> <span class="n">printergroup</span><span class="p">,</span> <span class="s1">&#39;membership&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">})</span>
+        <span class="k">return</span> <span class="n">membershipList</span><span class="p">,</span> <span class="n">isAdmin</span><span class="p">,</span> <span class="n">user_details</span></div>
 
-            <span class="k">if</span> <span class="n">action</span> <span class="o">==</span> <span class="s1">&#39;kill-project&#39;</span><span class="p">:</span>
-                <span class="n">project</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;project&#39;</span><span class="p">]</span>
-                <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-project&#39;</span><span class="p">,</span> <span class="s1">&#39;-i&#39;</span><span class="p">,</span> <span class="s1">&#39;-p&#39;</span><span class="p">,</span> <span class="n">project</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
-                <span class="n">groupAdmins</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;GROUPS/&#39;</span><span class="o">+</span><span class="n">project</span><span class="o">+</span><span class="s1">&#39;/sophomorixAdmins&#39;</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">username</span> <span class="ow">in</span> <span class="n">groupAdmins</span> <span class="ow">or</span> <span class="n">username</span> <span class="o">==</span> <span class="s1">&#39;global-admin&#39;</span><span class="p">:</span>
-                    <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-project&#39;</span><span class="p">,</span> <span class="s1">&#39;--kill&#39;</span><span class="p">,</span> <span class="s1">&#39;-p&#39;</span><span class="p">,</span> <span class="n">project</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
-                    <span class="n">result</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;OUTPUT/0&#39;</span><span class="p">)</span>
-                    <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;TYPE&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;ERROR&quot;</span><span class="p">:</span>
-                        <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;TYPE&#39;</span><span class="p">][</span><span class="s1">&#39;LOG&#39;</span><span class="p">]</span>
-                    <span class="c1"># Try to return last result to frontend</span>
-                    <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;TYPE&#39;</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;LOG&#39;</span><span class="p">]</span>
-                <span class="c1"># TODO: This should be done by sophomorix</span>
-                <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;ERROR&#39;</span><span class="p">,</span> <span class="s1">&#39;Permission Denied&#39;</span><span class="p">]</span>
+<div class="viewcode-block" id="Handler.handle_api_groupmembership_details"><a class="viewcode-back" href="../../../../python/lmn_groupmembership.html#aj.plugins.lmn_groupmembership.views.Handler.handle_api_groupmembership_details">[docs]</a>    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/groupmembership/groups/(?P&lt;groupName&gt;.+)&#39;</span><span class="p">)</span>
+    <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lmn:groupmemberships:write&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">handle_api_groupmembership_details</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">,</span> <span class="n">groupName</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the group informations of a specified group.</span>
 
-            <span class="k">if</span> <span class="n">action</span> <span class="o">==</span> <span class="s1">&#39;create-project&#39;</span><span class="p">:</span>
-                <span class="c1">## Projectname must be in lowercase to avoid conflicts</span>
-                <span class="n">project</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;project&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-                <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-project&#39;</span><span class="p">,</span>  <span class="s1">&#39;--admins&#39;</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="s1">&#39;--create&#39;</span><span class="p">,</span> <span class="s1">&#39;-p&#39;</span><span class="p">,</span> <span class="n">project</span><span class="p">,</span> <span class="s1">&#39;--school&#39;</span><span class="p">,</span> <span class="n">schoolname</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
-                <span class="n">result</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;OUTPUT/0&#39;</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;TYPE&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;ERROR&quot;</span><span class="p">:</span>
-                    <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;TYPE&#39;</span><span class="p">],</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;MESSAGE_EN&#39;</span><span class="p">]</span>
-                <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;TYPE&#39;</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;LOG&#39;</span><span class="p">]</span></div>
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :return: Group informations in LDAP ( name, owner, ... )</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="Handler.handle_api_set_group"><a class="viewcode-back" href="../../../../python/lmn_groupmembership.html#aj.plugins.lmn_groupmembership.views.Handler.handle_api_set_group">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/changeGroup&#39;</span><span class="p">)</span>
+        <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-query&#39;</span><span class="p">,</span> <span class="s1">&#39;--group-members&#39;</span><span class="p">,</span> <span class="s1">&#39;--group-full&#39;</span><span class="p">,</span> <span class="s1">&#39;--sam&#39;</span><span class="p">,</span> <span class="n">groupName</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
+        <span class="n">groupDetails</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="s1">&#39;MEMBERS&#39;</span> <span class="ow">in</span> <span class="n">groupDetails</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">groupDetails</span><span class="p">[</span><span class="s1">&#39;MEMBERS&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">return</span> <span class="n">groupDetails</span></div>
+
+<div class="viewcode-block" id="Handler.handle_api_kill_project"><a class="viewcode-back" href="../../../../python/lmn_groupmembership.html#aj.plugins.lmn_groupmembership.views.Handler.handle_api_kill_project">[docs]</a>    <span class="nd">@delete</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/groupmembership/projects/(?P&lt;project&gt;.+)&#39;</span><span class="p">)</span>
     <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lmn:groupmembership&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">handle_api_set_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">handle_api_kill_project</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">,</span> <span class="n">project</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Handles join and hide options for a group.</span>
-<span class="sd">        Method POST.</span>
+<span class="sd">        Kill specified project.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :return: List of groups or result for actions kill and create</span>
+<span class="sd">        :rtype: dict or tuple</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">username</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">identity</span>
+        <span class="n">user_details</span> <span class="o">=</span> <span class="n">AuthenticationService</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span><span class="o">.</span><span class="n">get_provider</span><span class="p">()</span><span class="o">.</span><span class="n">get_profile</span><span class="p">(</span><span class="n">username</span><span class="p">)</span>
+
+        <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-project&#39;</span><span class="p">,</span> <span class="s1">&#39;-i&#39;</span><span class="p">,</span> <span class="s1">&#39;-p&#39;</span><span class="p">,</span> <span class="n">project</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
+        <span class="n">groupAdmins</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;GROUPS/</span><span class="si">{</span><span class="n">project</span><span class="si">}</span><span class="s1">/sophomorixAdmins&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">username</span> <span class="ow">in</span> <span class="n">groupAdmins</span> <span class="ow">or</span> <span class="n">user_details</span><span class="p">[</span><span class="s1">&#39;sophomorixRole&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;globaladministrator&#39;</span><span class="p">,</span> <span class="s1">&#39;schooladministrator&#39;</span><span class="p">]:</span>
+            <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-project&#39;</span><span class="p">,</span> <span class="s1">&#39;--kill&#39;</span><span class="p">,</span> <span class="s1">&#39;-p&#39;</span><span class="p">,</span> <span class="n">project</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;OUTPUT/0&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;TYPE&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;ERROR&quot;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;TYPE&#39;</span><span class="p">][</span><span class="s1">&#39;LOG&#39;</span><span class="p">]</span>
+            <span class="c1"># Try to return last result to frontend</span>
+            <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;TYPE&#39;</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;LOG&#39;</span><span class="p">]</span>
+        <span class="c1"># TODO: This should be done by sophomorix</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;ERROR&#39;</span><span class="p">,</span> <span class="s1">&#39;Permission Denied&#39;</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Handler.handle_api_create_project"><a class="viewcode-back" href="../../../../python/lmn_groupmembership.html#aj.plugins.lmn_groupmembership.views.Handler.handle_api_create_project">[docs]</a>    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/groupmembership/projects/(?P&lt;project&gt;.+)&#39;</span><span class="p">)</span>
+    <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lmn:groupmembership&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">handle_api_create_project</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">,</span> <span class="n">project</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a project.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :return: List of groups or result for actions kill and create</span>
+<span class="sd">        :rtype: dict or tuple</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">schoolname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">school</span>
+        <span class="n">username</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">identity</span>
+
+        <span class="c1">## Projectname must be in lowercase to avoid conflicts</span>
+        <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-project&#39;</span><span class="p">,</span>  <span class="s1">&#39;--admins&#39;</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="s1">&#39;--create&#39;</span><span class="p">,</span> <span class="s1">&#39;-p&#39;</span><span class="p">,</span> <span class="n">project</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="s1">&#39;--school&#39;</span><span class="p">,</span> <span class="n">schoolname</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;OUTPUT/0&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;TYPE&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;ERROR&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;TYPE&#39;</span><span class="p">],</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;MESSAGE_EN&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;TYPE&#39;</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;LOG&#39;</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Handler.handle_api_set_group"><a class="viewcode-back" href="../../../../python/lmn_groupmembership.html#aj.plugins.lmn_groupmembership.views.Handler.handle_api_set_group">[docs]</a>    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/groupmembership/groupoptions/(?P&lt;group&gt;.+)&#39;</span><span class="p">)</span>
+    <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lmn:groupmembership&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">handle_api_set_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Handles join, hide, maillist options for a group.</span>
 
 <span class="sd">        :param http_context: HttpContext</span>
 <span class="sd">        :type http_context: HttpContext</span>
@@ -325,24 +339,22 @@
 <span class="sd">        :rtype: tuple</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">if</span> <span class="n">http_context</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
-            <span class="n">option</span>  <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;option&#39;</span><span class="p">]</span>
-            <span class="n">group</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;group&#39;</span><span class="p">]</span>
-            <span class="n">groupType</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span>
+        <span class="n">option</span>  <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;option&#39;</span><span class="p">]</span>
+        <span class="n">groupType</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span>
 
-            <span class="k">if</span> <span class="n">groupType</span> <span class="o">==</span> <span class="s2">&quot;project&quot;</span><span class="p">:</span>
-                <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-project&#39;</span><span class="p">,</span>  <span class="n">option</span><span class="p">,</span> <span class="s1">&#39;--project&#39;</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="c1"># Class</span>
-                <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-class&#39;</span><span class="p">,</span>  <span class="n">option</span><span class="p">,</span> <span class="s1">&#39;--class&#39;</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">groupType</span> <span class="o">==</span> <span class="s2">&quot;project&quot;</span><span class="p">:</span>
+            <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-project&#39;</span><span class="p">,</span>  <span class="n">option</span><span class="p">,</span> <span class="s1">&#39;--project&#39;</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Class</span>
+            <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-class&#39;</span><span class="p">,</span>  <span class="n">option</span><span class="p">,</span> <span class="s1">&#39;--class&#39;</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
 
-            <span class="n">result</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;OUTPUT/0&#39;</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;OUTPUT/0&#39;</span><span class="p">)</span>
 
-            <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;TYPE&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;ERROR&quot;</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;TYPE&#39;</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;MESSAGE_EN&#39;</span><span class="p">]</span>
-            <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;TYPE&#39;</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;LOG&#39;</span><span class="p">]</span></div>
+        <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;TYPE&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;ERROR&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;TYPE&#39;</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;MESSAGE_EN&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;TYPE&#39;</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;LOG&#39;</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="Handler.handle_api_set_members"><a class="viewcode-back" href="../../../../python/lmn_groupmembership.html#aj.plugins.lmn_groupmembership.views.Handler.handle_api_set_members">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/groupmembership/membership&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_set_members"><a class="viewcode-back" href="../../../../python/lmn_groupmembership.html#aj.plugins.lmn_groupmembership.views.Handler.handle_api_set_members">[docs]</a>    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/groupmembership/membership&#39;</span><span class="p">)</span>
     <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lmn:groupmembership&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_set_members</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
@@ -356,57 +368,59 @@
 <span class="sd">        :rtype: tuple</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">if</span> <span class="n">http_context</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
-            <span class="n">action</span>  <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;action&#39;</span><span class="p">]</span>
-            <span class="n">groupname</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;groupname&#39;</span><span class="p">]</span>
-            <span class="n">entity</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;entity&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">objtype</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span>
-            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-                <span class="n">objtype</span> <span class="o">=</span> <span class="s1">&#39;project&#39;</span>
+        <span class="c1"># TODO : missing body in delete request method to do it properly ...</span>
 
-            <span class="n">possible_actions</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="s1">&#39;removemembers&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;addmembers&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;addadmins&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;removeadmins&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;addmembergroups&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;removemembergroups&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;addadmingroups&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;removeadmingroups&#39;</span><span class="p">,</span>
+        <span class="n">action</span>  <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;action&#39;</span><span class="p">]</span>
+        <span class="n">groupname</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;groupname&#39;</span><span class="p">]</span>
+        <span class="n">entity</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;entity&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">objtype</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="n">objtype</span> <span class="o">=</span> <span class="s1">&#39;project&#39;</span>
 
-            <span class="p">]</span>
+        <span class="n">possible_actions</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s1">&#39;removemembers&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;addmembers&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;addadmins&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;removeadmins&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;addmembergroups&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;removemembergroups&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;addadmingroups&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;removeadmingroups&#39;</span><span class="p">,</span>
 
-            <span class="k">if</span> <span class="n">action</span> <span class="ow">in</span> <span class="n">possible_actions</span><span class="p">:</span>
-                <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-&#39;</span><span class="o">+</span><span class="n">objtype</span><span class="p">,</span>  <span class="s1">&#39;--&#39;</span><span class="o">+</span><span class="n">action</span><span class="p">,</span> <span class="n">entity</span><span class="p">,</span> <span class="s1">&#39;--&#39;</span><span class="o">+</span><span class="n">objtype</span><span class="p">,</span> <span class="n">groupname</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
-                <span class="n">result</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;OUTPUT/0&#39;</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;TYPE&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;ERROR&quot;</span><span class="p">:</span>
-                    <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;TYPE&#39;</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;MESSAGE_EN&#39;</span><span class="p">]</span>
-                <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;TYPE&#39;</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;LOG&#39;</span><span class="p">]</span></div>
+        <span class="p">]</span>
 
-<div class="viewcode-block" id="Handler.handle_api_reset"><a class="viewcode-back" href="../../../../python/lmn_groupmembership.html#aj.plugins.lmn_groupmembership.views.Handler.handle_api_reset">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/groupmembership/reset&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">action</span> <span class="ow">in</span> <span class="n">possible_actions</span><span class="p">:</span>
+            <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-&#39;</span><span class="o">+</span><span class="n">objtype</span><span class="p">,</span>  <span class="s1">&#39;--&#39;</span><span class="o">+</span><span class="n">action</span><span class="p">,</span> <span class="n">entity</span><span class="p">,</span> <span class="s1">&#39;--&#39;</span><span class="o">+</span><span class="n">objtype</span><span class="p">,</span> <span class="n">groupname</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;OUTPUT/0&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;TYPE&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;ERROR&quot;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;TYPE&#39;</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;MESSAGE_EN&#39;</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;TYPE&#39;</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;LOG&#39;</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Handler.handle_api_reset"><a class="viewcode-back" href="../../../../python/lmn_groupmembership.html#aj.plugins.lmn_groupmembership.views.Handler.handle_api_reset">[docs]</a>    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/groupmembership/resetadmins&#39;</span><span class="p">)</span>
     <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lmn:groupmembership&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_reset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Reset the admins of all projects or classes.&quot;&quot;&quot;</span>
+
         <span class="nb">type</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span>
         <span class="n">all_groups</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;all_groups&#39;</span><span class="p">]</span>
-        <span class="n">select</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span> <span class="o">+</span> <span class="nb">type</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># -c for class and -p for project</span>
+        <span class="n">select</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;-</span><span class="si">{</span><span class="nb">type</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span>  <span class="c1"># -c for class and -p for project</span>
 
-        <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-&#39;</span><span class="o">+</span><span class="nb">type</span><span class="p">,</span>  <span class="n">select</span><span class="p">,</span> <span class="n">all_groups</span><span class="p">,</span> <span class="s1">&#39;--admins&#39;</span><span class="p">,</span> <span class="s1">&#39;&quot;&quot;&#39;</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
+        <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;sophomorix-</span><span class="si">{</span><span class="nb">type</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>  <span class="n">select</span><span class="p">,</span> <span class="n">all_groups</span><span class="p">,</span> <span class="s1">&#39;--admins&#39;</span><span class="p">,</span> <span class="s1">&#39;&quot;&quot;&#39;</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;OUTPUT/0&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;TYPE&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;ERROR&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;TYPE&#39;</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;MESSAGE_EN&#39;</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;TYPE&#39;</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;LOG&#39;</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="Handler.handle_api_search_project"><a class="viewcode-back" href="../../../../python/lmn_groupmembership.html#aj.plugins.lmn_groupmembership.views.Handler.handle_api_search_project">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lm/find-users&#39;</span><span class="p">)</span>
+    <span class="c1"># TODO : Duplicate with ldap-search in lmn_quotas ?</span>
+
+<div class="viewcode-block" id="Handler.handle_api_find_user"><a class="viewcode-back" href="../../../../python/lmn_groupmembership.html#aj.plugins.lmn_groupmembership.views.Handler.handle_api_find_user">[docs]</a>    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/find/user&#39;</span><span class="p">)</span>
     <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lmn:groupmembership&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">handle_api_search_project</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">handle_api_find_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Perform partial searchs in projects in the LDAP tree, per user or per</span>
-<span class="sd">        group.</span>
-<span class="sd">        Method POST.</span>
+<span class="sd">        Search for an user.</span>
 
 <span class="sd">        :param http_context: HttpContext</span>
 <span class="sd">        :type http_context: HttpContext</span>
@@ -414,48 +428,150 @@
 <span class="sd">        :rtype: list</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">if</span> <span class="n">http_context</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
+        <span class="c1"># TODO : should be get request, but passing the name in the url</span>
+        <span class="c1"># gives some encoding problems</span>
 
-            <span class="c1"># Problem with unicode In&amp;egraves --&gt; In\xe8s (py) --&gt; In\ufffds (replace)</span>
-            <span class="c1"># Should be In&amp;egraves --&gt; Ines ( sophomorix supports this )</span>
-            <span class="c1"># login = http_context.json_body()[&#39;login&#39;].decode(&#39;utf-8&#39;, &#39;replace&#39;)</span>
+        <span class="c1"># Problem with unicode In&amp;egraves --&gt; In\xe8s (py) --&gt; In\ufffds (replace)</span>
+        <span class="c1"># Should be In&amp;egraves --&gt; Ines ( sophomorix supports this )</span>
+        <span class="c1"># login = http_context.json_body()[&#39;login&#39;].decode(&#39;utf-8&#39;, &#39;replace&#39;)</span>
 
-            <span class="n">login</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;login&#39;</span><span class="p">]</span>
-            <span class="n">objtype</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span>
-            <span class="n">resultArray</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">resultArray</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
 
-            <span class="k">try</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">objtype</span> <span class="o">==</span> <span class="s1">&#39;user&#39;</span><span class="p">:</span>
-                    <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-query&#39;</span><span class="p">,</span> <span class="s1">&#39;--anyname&#39;</span><span class="p">,</span> <span class="n">login</span><span class="o">+</span><span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
-                    <span class="n">result</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;USER&#39;</span><span class="p">)</span>
-                <span class="k">elif</span> <span class="n">objtype</span> <span class="o">==</span> <span class="s1">&#39;teacher&#39;</span><span class="p">:</span>
-                    <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-query&#39;</span><span class="p">,</span> <span class="s1">&#39;--anyname&#39;</span><span class="p">,</span>
-                                         <span class="n">login</span> <span class="o">+</span> <span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="s1">&#39;--teacher&#39;</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
-                    <span class="n">result</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span>
-                                                    <span class="s1">&#39;USER&#39;</span><span class="p">)</span>
-                <span class="k">elif</span> <span class="n">objtype</span> <span class="o">==</span> <span class="s1">&#39;usergroup&#39;</span><span class="p">:</span>
-                    <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-query&#39;</span><span class="p">,</span> <span class="s1">&#39;--sam&#39;</span><span class="p">,</span> <span class="n">login</span><span class="o">+</span><span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="s1">&#39;--group-members&#39;</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
-                    <span class="n">result</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;MEMBERS&#39;</span><span class="p">)</span>
-                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
-                        <span class="k">return</span> <span class="p">[]</span>
-                    <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="n">login</span><span class="p">]</span>
-                <span class="k">elif</span> <span class="n">objtype</span> <span class="o">==</span> <span class="s1">&#39;group&#39;</span><span class="p">:</span>
-                    <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-query&#39;</span><span class="p">,</span> <span class="s1">&#39;--anyname&#39;</span><span class="p">,</span> <span class="n">login</span><span class="o">+</span><span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
-                    <span class="n">result</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;LISTS&#39;</span><span class="p">)</span>
-                    <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;GROUP&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;ROOM&#39;</span><span class="p">]</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-query&#39;</span><span class="p">,</span> <span class="s1">&#39;--anyname&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">*&#39;</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;USER&#39;</span><span class="p">)</span>
 
-                <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">details</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">details</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">resultArray</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                        <span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">details</span><span class="p">[</span><span class="s1">&#39;sophomorixAdminClass&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">details</span><span class="p">[</span><span class="s1">&#39;sn&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">details</span><span class="p">[</span><span class="s1">&#39;givenName&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                        <span class="s1">&#39;sn&#39;</span><span class="p">:</span> <span class="n">details</span><span class="p">[</span><span class="s1">&#39;sn&#39;</span><span class="p">],</span>
+                        <span class="s1">&#39;givenName&#39;</span><span class="p">:</span> <span class="n">details</span><span class="p">[</span><span class="s1">&#39;givenName&#39;</span><span class="p">],</span>
+                        <span class="s1">&#39;login&#39;</span><span class="p">:</span> <span class="n">details</span><span class="p">[</span><span class="s1">&#39;sAMAccountName&#39;</span><span class="p">],</span>
+                        <span class="s1">&#39;sophomorixAdminClass&#39;</span><span class="p">:</span> <span class="n">details</span><span class="p">[</span><span class="s1">&#39;sophomorixAdminClass&#39;</span><span class="p">],</span>
+                        <span class="s1">&#39;sophomorixRole&#39;</span><span class="p">:</span> <span class="n">details</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;sophomorixRole&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span>
+                        <span class="p">})</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="c1"># Ignore SophomorixValue errors</span>
+            <span class="k">pass</span>
+        <span class="k">return</span> <span class="n">resultArray</span></div>
+
+<div class="viewcode-block" id="Handler.handle_api_find_teacher"><a class="viewcode-back" href="../../../../python/lmn_groupmembership.html#aj.plugins.lmn_groupmembership.views.Handler.handle_api_find_teacher">[docs]</a>    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/find/teacher/(?P&lt;login&gt;.+)&#39;</span><span class="p">)</span>
+    <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lmn:groupmembership&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">handle_api_find_teacher</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">,</span> <span class="n">login</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Search for an teacher.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :return: List of search results</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">resultArray</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-query&#39;</span><span class="p">,</span> <span class="s1">&#39;--anyname&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">login</span><span class="si">}</span><span class="s1">*&#39;</span><span class="p">,</span> <span class="s1">&#39;--teacher&#39;</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span><span class="s1">&#39;USER&#39;</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">details</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">resultArray</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                        <span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">details</span><span class="p">[</span><span class="s1">&#39;sophomorixAdminClass&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">details</span><span class="p">[</span><span class="s1">&#39;sn&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">details</span><span class="p">[</span><span class="s1">&#39;givenName&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                        <span class="s1">&#39;sn&#39;</span><span class="p">:</span> <span class="n">details</span><span class="p">[</span><span class="s1">&#39;sn&#39;</span><span class="p">],</span>
+                        <span class="s1">&#39;givenName&#39;</span><span class="p">:</span> <span class="n">details</span><span class="p">[</span><span class="s1">&#39;givenName&#39;</span><span class="p">],</span>
+                        <span class="s1">&#39;login&#39;</span><span class="p">:</span> <span class="n">details</span><span class="p">[</span><span class="s1">&#39;sAMAccountName&#39;</span><span class="p">],</span>
+                        <span class="s1">&#39;sophomorixAdminClass&#39;</span><span class="p">:</span> <span class="n">details</span><span class="p">[</span><span class="s1">&#39;sophomorixAdminClass&#39;</span><span class="p">],</span>
+                        <span class="s1">&#39;sophomorixRole&#39;</span><span class="p">:</span> <span class="n">details</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;sophomorixRole&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span>
+                        <span class="p">})</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="c1"># Ignore SophomorixValue errors</span>
+            <span class="k">pass</span>
+        <span class="k">return</span> <span class="n">resultArray</span></div>
+
+<div class="viewcode-block" id="Handler.handle_api_find_usergroup"><a class="viewcode-back" href="../../../../python/lmn_groupmembership.html#aj.plugins.lmn_groupmembership.views.Handler.handle_api_find_usergroup">[docs]</a>    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/find/usergroup/(?P&lt;group&gt;.+)&#39;</span><span class="p">)</span>
+    <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lmn:groupmembership&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">handle_api_find_usergroup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">,</span> <span class="n">group</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Search for members in a group</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :return: List of search results</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">resultArray</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-query&#39;</span><span class="p">,</span> <span class="s1">&#39;--sam&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">group</span><span class="si">}</span><span class="s1">*&#39;</span><span class="p">,</span> <span class="s1">&#39;--group-members&#39;</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;MEMBERS&#39;</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">classe</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">details</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="n">classe</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                     <span class="n">resultArray</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
-                            <span class="s1">&#39;label&#39;</span><span class="p">:</span><span class="n">details</span><span class="p">[</span><span class="s1">&#39;sophomorixAdminClass&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">details</span><span class="p">[</span><span class="s1">&#39;sn&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">details</span><span class="p">[</span><span class="s1">&#39;givenName&#39;</span><span class="p">],</span>
+                            <span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">details</span><span class="p">[</span><span class="s1">&#39;sophomorixAdminClass&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">details</span><span class="p">[</span><span class="s1">&#39;sn&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">details</span><span class="p">[</span><span class="s1">&#39;givenName&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
                             <span class="s1">&#39;sn&#39;</span><span class="p">:</span> <span class="n">details</span><span class="p">[</span><span class="s1">&#39;sn&#39;</span><span class="p">],</span>
                             <span class="s1">&#39;givenName&#39;</span><span class="p">:</span> <span class="n">details</span><span class="p">[</span><span class="s1">&#39;givenName&#39;</span><span class="p">],</span>
                             <span class="s1">&#39;login&#39;</span><span class="p">:</span> <span class="n">details</span><span class="p">[</span><span class="s1">&#39;sAMAccountName&#39;</span><span class="p">],</span>
                             <span class="s1">&#39;sophomorixAdminClass&#39;</span><span class="p">:</span> <span class="n">details</span><span class="p">[</span><span class="s1">&#39;sophomorixAdminClass&#39;</span><span class="p">],</span>
+                            <span class="s1">&#39;sophomorixRole&#39;</span><span class="p">:</span> <span class="n">details</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;sophomorixRole&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span>
                             <span class="p">})</span>
-            <span class="k">except</span><span class="p">:</span>
-                <span class="c1"># Ignore SophomorixValue errors</span>
-                <span class="k">pass</span>
-            <span class="k">return</span> <span class="n">resultArray</span></div></div>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="c1"># Ignore SophomorixValue errors</span>
+            <span class="k">pass</span>
+        <span class="k">return</span> <span class="n">resultArray</span></div>
+
+<div class="viewcode-block" id="Handler.handle_api_find_group"><a class="viewcode-back" href="../../../../python/lmn_groupmembership.html#aj.plugins.lmn_groupmembership.views.Handler.handle_api_find_group">[docs]</a>    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/find/group/(?P&lt;group&gt;.+)&#39;</span><span class="p">)</span>
+    <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lmn:groupmembership&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">handle_api_find_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">,</span> <span class="n">group</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Search for members in a group</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :return: List of search results</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">resultArray</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-query&#39;</span><span class="p">,</span> <span class="s1">&#39;--anyname&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">group</span><span class="si">}</span><span class="s1">*&#39;</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;LISTS&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;GROUP&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;ROOM&#39;</span><span class="p">]</span>
+
+        <span class="k">except</span><span class="p">:</span>
+            <span class="c1"># Ignore SophomorixValue errors</span>
+            <span class="k">pass</span>
+        <span class="k">return</span> <span class="n">resultArray</span></div>
+
+<div class="viewcode-block" id="Handler.handle_api_find_computer"><a class="viewcode-back" href="../../../../python/lmn_groupmembership.html#aj.plugins.lmn_groupmembership.views.Handler.handle_api_find_computer">[docs]</a>    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/find/computer/(?P&lt;computer&gt;.+)&#39;</span><span class="p">)</span>
+    <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lmn:groupmembership&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">handle_api_find_computer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">,</span> <span class="n">computer</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Search for computers.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :return: List of search results</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">resultArray</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sophomorix-query&#39;</span><span class="p">,</span> <span class="s1">&#39;--sam&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">computer</span><span class="si">}</span><span class="s1">*&#39;</span><span class="p">,</span> <span class="s1">&#39;-jj&#39;</span><span class="p">]</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;LISTS&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;COMPUTER&#39;</span><span class="p">]</span>
+
+        <span class="k">except</span><span class="p">:</span>
+            <span class="c1"># Ignore SophomorixValue errors</span>
+            <span class="k">pass</span>
+        <span class="k">return</span> <span class="n">resultArray</span></div></div>
 </pre></div>
 
            </div>

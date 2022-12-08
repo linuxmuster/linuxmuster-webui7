@@ -100,7 +100,7 @@
 <li class="toctree-l1"><a class="reference internal" href="lmn_crontab.html">API: aj.plugins.lmn_crontab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_devices.html">API: aj.plugins.lmn_devices</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">API: aj.plugins.lmn_dhcp</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#lmn-dhcp-views">LMN Dhcp Views</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-aj.plugins.lmn_dhcp.views">LMN Dhcp Views</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_docker.html">API: aj.plugins.lmn_docker</a></li>
@@ -181,8 +181,48 @@
             
   <div class="section" id="api-aj-plugins-lmn-dhcp">
 <h1>API: aj.plugins.lmn_dhcp<a class="headerlink" href="#api-aj-plugins-lmn-dhcp" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="lmn-dhcp-views">
-<h2>LMN Dhcp Views<a class="headerlink" href="#lmn-dhcp-views" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-aj.plugins.lmn_dhcp.views">
+<span id="lmn-dhcp-views"></span><h2>LMN Dhcp Views<a class="headerlink" href="#module-aj.plugins.lmn_dhcp.views" title="Permalink to this headline">¶</a></h2>
+<p>Module to handle dchp leases and eventually add a new device.</p>
+<dl class="py class">
+<dt id="aj.plugins.lmn_dhcp.views.Handler">
+<em class="property">class </em><code class="sig-prename descclassname">aj.plugins.lmn_dhcp.views.</code><code class="sig-name descname">Handler</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_dhcp/views.html#Handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_dhcp.views.Handler" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="aj.plugins.lmn_dhcp.views.Handler.handle_api_get_dhcp">
+<code class="sig-name descname">handle_api_get_dhcp</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">http_context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_dhcp/views.html#Handler.handle_api_get_dhcp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_dhcp.views.Handler.handle_api_get_dhcp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read dhcp lease file and sort it for each LMN devices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>All lease and LMN devices ip details</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple of dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="aj.plugins.lmn_dhcp.views.Handler.handle_api_register_dhcp">
+<code class="sig-name descname">handle_api_register_dhcp</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">http_context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_dhcp/views.html#Handler.handle_api_register_dhcp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_dhcp.views.Handler.handle_api_register_dhcp" title="Permalink to this definition">¶</a></dt>
+<dd><p>When a new device get an ip through dhcp, this method allows to register it in the LMN devices file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Success</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 </div>
 

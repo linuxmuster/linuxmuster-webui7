@@ -186,7 +186,8 @@
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pformat</span>
 <span class="kn">from</span> <span class="nn">.lmnfile</span> <span class="kn">import</span> <span class="n">LMNFile</span>
-
+<span class="kn">from</span> <span class="nn">configparser</span> <span class="kn">import</span> <span class="n">SafeConfigParser</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
 
 <span class="c1"># Load Webui settings</span>
 <span class="n">config_path</span> <span class="o">=</span> <span class="s1">&#39;/etc/linuxmuster/webui/config.yml&#39;</span>
@@ -199,30 +200,21 @@
     <span class="n">ldap_config</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Without config.yml the users will not be able to login.&quot;</span><span class="p">)</span>
 
+<span class="c1"># Load samba domain</span>
+<span class="n">smbconf</span> <span class="o">=</span> <span class="n">SafeConfigParser</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">smbconf</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;/etc/samba/smb.conf&#39;</span><span class="p">)</span>
+    <span class="n">samba_realm</span> <span class="o">=</span> <span class="n">smbconf</span><span class="p">[</span><span class="s2">&quot;global&quot;</span><span class="p">][</span><span class="s2">&quot;realm&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="n">samba_domain</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">smbconf</span><span class="p">[</span><span class="s2">&quot;global&quot;</span><span class="p">][</span><span class="s2">&quot;netbios name&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="n">samba_realm</span><span class="si">}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Can not read realm and domain from smb.conf&quot;</span><span class="p">)</span>
+    <span class="n">samba_domain</span><span class="p">,</span> <span class="n">samba_realm</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span>
+
 <span class="c1"># Fix missing entries in the lmconfig. Should be later refactored</span>
 <span class="c1"># and the config file should be splitted</span>
 <span class="c1"># Main linuxmuster config entry</span>
 <span class="n">lmconfig</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;linuxmuster&#39;</span><span class="p">,</span> <span class="p">{})</span>
-<span class="n">lmconfig</span><span class="p">[</span><span class="s1">&#39;linuxmuster&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;initialized&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
-<span class="n">lmconfig</span><span class="p">[</span><span class="s1">&#39;linuxmuster&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;is-configured&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
-<span class="n">lmconfig</span><span class="p">[</span><span class="s1">&#39;linuxmuster&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;provision&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
 <span class="n">lmconfig</span><span class="p">[</span><span class="s1">&#39;linuxmuster&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;ldap&#39;</span><span class="p">,</span> <span class="p">{})</span>
-<span class="c1"># Proxyaddresses, e.g. multivalue emails</span>
-<span class="n">lmconfig</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;proxyAddresses&#39;</span><span class="p">,</span> <span class="p">{})</span>
-<span class="n">lmconfig</span><span class="p">[</span><span class="s1">&#39;proxyAddresses&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;students&#39;</span><span class="p">,</span> <span class="p">{})</span>
-<span class="n">lmconfig</span><span class="p">[</span><span class="s1">&#39;proxyAddresses&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;teachers&#39;</span><span class="p">,</span> <span class="p">{})</span>
-<span class="c1"># Custom fields with individual values</span>
-<span class="n">lmconfig</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;custom&#39;</span><span class="p">,</span> <span class="p">{})</span>
-<span class="n">lmconfig</span><span class="p">[</span><span class="s1">&#39;custom&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;students&#39;</span><span class="p">,</span> <span class="p">{})</span>
-<span class="n">lmconfig</span><span class="p">[</span><span class="s1">&#39;custom&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;teachers&#39;</span><span class="p">,</span> <span class="p">{})</span>
-<span class="c1"># Custom fields with multi values</span>
-<span class="n">lmconfig</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;customMulti&#39;</span><span class="p">,</span> <span class="p">{})</span>
-<span class="n">lmconfig</span><span class="p">[</span><span class="s1">&#39;customMulti&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;students&#39;</span><span class="p">,</span> <span class="p">{})</span>
-<span class="n">lmconfig</span><span class="p">[</span><span class="s1">&#39;customMulti&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;teachers&#39;</span><span class="p">,</span> <span class="p">{})</span>
-<span class="c1"># Choice of custom fields to display on user page</span>
-<span class="n">lmconfig</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;customDisplay&#39;</span><span class="p">,</span> <span class="p">{})</span>
-<span class="n">lmconfig</span><span class="p">[</span><span class="s1">&#39;customDisplay&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;students&#39;</span><span class="p">,</span> <span class="p">{})</span>
-<span class="n">lmconfig</span><span class="p">[</span><span class="s1">&#39;customDisplay&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;teachers&#39;</span><span class="p">,</span> <span class="p">{})</span>
 <span class="c1"># Templates for password printing</span>
 <span class="n">lmconfig</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;passwordTemplates&#39;</span><span class="p">,</span> <span class="p">{})</span>
 
@@ -236,35 +228,24 @@
 <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
     <span class="n">lmsetup_schoolname</span> <span class="o">=</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="lmn_get_school_configpath"><a class="viewcode-back" href="../../../../python/lmn_common.html#aj.plugins.lmn_common.api.lmn_get_school_configpath">[docs]</a><span class="k">def</span> <span class="nf">lmn_get_school_configpath</span><span class="p">(</span><span class="n">school</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Return the default absolute path for config files in multischool env.</span>
-
-<span class="sd">    :param school: school shortname</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">school</span> <span class="o">==</span> <span class="s2">&quot;default-school&quot;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s1">&#39;/etc/linuxmuster/sophomorix/default-school/&#39;</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;/etc/linuxmuster/sophomorix/</span><span class="si">{</span><span class="n">school</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">school</span><span class="si">}</span><span class="s1">.&#39;</span></div>
-
 <div class="viewcode-block" id="SophomorixProcess"><a class="viewcode-back" href="../../../../python/lmn_common.html#aj.plugins.lmn_common.api.SophomorixProcess">[docs]</a><span class="k">class</span> <span class="nc">SophomorixProcess</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Worker for processing sophomorix commands.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">sensitive</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stderr</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">command</span> <span class="o">=</span> <span class="n">command</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sensitive</span> <span class="o">=</span> <span class="n">sensitive</span>
         <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
 <div class="viewcode-block" id="SophomorixProcess.run"><a class="viewcode-back" href="../../../../python/lmn_common.html#aj.plugins.lmn_common.api.SophomorixProcess.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">p</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sensitive</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sensitive</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">stderr</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span></div></div>
 
 
-<div class="viewcode-block" id="lmn_getSophomorixValue"><a class="viewcode-back" href="../../../../python/lmn_common.html#aj.plugins.lmn_common.api.lmn_getSophomorixValue">[docs]</a><span class="k">def</span> <span class="nf">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="n">jsonpath</span><span class="p">,</span> <span class="n">ignoreErrors</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="lmn_getSophomorixValue"><a class="viewcode-back" href="../../../../python/lmn_common.html#aj.plugins.lmn_common.api.lmn_getSophomorixValue">[docs]</a><span class="k">def</span> <span class="nf">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="n">jsonpath</span><span class="p">,</span> <span class="n">ignoreErrors</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sensitive</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Connector to all sophomorix commands. Run a sophomorix command with -j</span>
 <span class="sd">    option (output as json) through a SophomorixProcess and parse the results.</span>
@@ -286,14 +267,17 @@
         <span class="n">sophomorixCommand</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sudo&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">sophomorixCommand</span>
 
     <span class="c1"># New Thread for one process to avoid conflicts</span>
-    <span class="n">t</span> <span class="o">=</span> <span class="n">SophomorixProcess</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">SophomorixProcess</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="n">sensitive</span><span class="o">=</span><span class="n">sensitive</span><span class="p">)</span>
     <span class="n">t</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
     <span class="n">t</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sophomorix command time : </span><span class="si">{</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">s</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="c1"># Cleanup stderr output</span>
     <span class="c1"># output = t.stderr.replace(&#39;:null,&#39;, &quot;:\&quot;null\&quot;,&quot;)</span>
     <span class="c1"># TODO: Maybe sophomorix should provide the null value  in  a python usable format</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
     <span class="n">output</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;:null&#39;</span><span class="p">,</span> <span class="s2">&quot;:</span><span class="se">\&quot;</span><span class="s2">null</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="n">output</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;:null}&#39;</span><span class="p">,</span> <span class="s2">&quot;:</span><span class="se">\&quot;</span><span class="s2">null</span><span class="se">\&quot;</span><span class="s2">}&quot;</span><span class="p">)</span>
     <span class="n">output</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;:null]&#39;</span><span class="p">,</span> <span class="s2">&quot;:</span><span class="se">\&quot;</span><span class="s2">null</span><span class="se">\&quot;</span><span class="s2">]&quot;</span><span class="p">)</span>
@@ -303,11 +287,14 @@
     <span class="n">output</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;# JSON-end&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">output</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;# JSON-begin&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">output</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;# JSON-begin&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sophomorix filter result time : </span><span class="si">{</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">s</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="c1"># Convert str to dict</span>
     <span class="n">jsonDict</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">if</span> <span class="n">output</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
         <span class="n">jsonDict</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sophomorix convert to dict time : </span><span class="si">{</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">s</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
@@ -321,7 +308,9 @@
 
     <span class="k">if</span> <span class="n">ignoreErrors</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
             <span class="n">resultString</span> <span class="o">=</span> <span class="n">dpath</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">jsonDict</span><span class="p">,</span> <span class="n">jsonpath</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sophomorix search in dict time : </span><span class="si">{</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">s</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
                 <span class="s1">&#39;Sophomorix Value error !</span><span class="se">\n\n</span><span class="s1">&#39;</span>

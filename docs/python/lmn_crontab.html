@@ -98,8 +98,8 @@
 <li class="toctree-l1"><a class="reference internal" href="lmn_auth.html">API: aj.plugins.lmn_auth</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_common.html">API: aj.plugins.lmn_common</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">API: aj.plugins.lmn_crontab</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#lmn-crontab-manager">LMN Crontab Manager</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#lmn-crontab-views">LMN Crontab Views</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-aj.plugins.lmn_crontab.manager">LMN Crontab Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-aj.plugins.lmn_crontab.views">LMN Crontab Views</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_devices.html">API: aj.plugins.lmn_devices</a></li>
@@ -182,11 +182,77 @@
             
   <div class="section" id="api-aj-plugins-lmn-crontab">
 <h1>API: aj.plugins.lmn_crontab<a class="headerlink" href="#api-aj-plugins-lmn-crontab" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="lmn-crontab-manager">
-<h2>LMN Crontab Manager<a class="headerlink" href="#lmn-crontab-manager" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-aj.plugins.lmn_crontab.manager">
+<span id="lmn-crontab-manager"></span><h2>LMN Crontab Manager<a class="headerlink" href="#module-aj.plugins.lmn_crontab.manager" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="aj.plugins.lmn_crontab.manager.CronManager">
+<em class="property">class </em><code class="sig-prename descclassname">aj.plugins.lmn_crontab.manager.</code><code class="sig-name descname">CronManager</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_crontab/manager.html#CronManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_crontab.manager.CronManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Manage crontab file from user.</p>
+<dl class="py method">
+<dt id="aj.plugins.lmn_crontab.manager.CronManager.load_tab">
+<code class="sig-name descname">load_tab</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_crontab/manager.html#CronManager.load_tab"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_crontab.manager.CronManager.load_tab" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load crontab file from user.
+:param user: user
+:type user: string
+:return: CrontabConfig
+:rtype: object</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="aj.plugins.lmn_crontab.manager.CronManager.save_tab">
+<code class="sig-name descname">save_tab</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user</span></em>, <em class="sig-param"><span class="n">config</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_crontab/manager.html#CronManager.save_tab"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_crontab.manager.CronManager.save_tab" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save new crontab data into crontab file.
+:param user: user
+:type user: string
+:param config: CrontabConfig
+:type config: CrontabConfig</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="lmn-crontab-views">
-<h2>LMN Crontab Views<a class="headerlink" href="#lmn-crontab-views" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-aj.plugins.lmn_crontab.views">
+<span id="lmn-crontab-views"></span><h2>LMN Crontab Views<a class="headerlink" href="#module-aj.plugins.lmn_crontab.views" title="Permalink to this headline">¶</a></h2>
+<p>Module to handle an user crontab file.</p>
+<dl class="py class">
+<dt id="aj.plugins.lmn_crontab.views.Handler">
+<em class="property">class </em><code class="sig-prename descclassname">aj.plugins.lmn_crontab.views.</code><code class="sig-name descname">Handler</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_crontab/views.html#Handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_crontab.views.Handler" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="aj.plugins.lmn_crontab.views.Handler.handle_api_get_crontab">
+<code class="sig-name descname">handle_api_get_crontab</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">http_context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_crontab/views.html#Handler.handle_api_get_crontab"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_crontab.views.Handler.handle_api_get_crontab" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the cron content through ConManager and store it in a dict.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Cron jobs</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="aj.plugins.lmn_crontab.views.Handler.handle_api_save_crontab">
+<code class="sig-name descname">handle_api_save_crontab</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">http_context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_crontab/views.html#Handler.handle_api_save_crontab"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_crontab.views.Handler.handle_api_save_crontab" title="Permalink to this definition">¶</a></dt>
+<dd><p>Store cron data from frontend in a cron file through CronManager.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if successfull</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 </div>
 

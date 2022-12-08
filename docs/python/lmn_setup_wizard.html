@@ -110,7 +110,7 @@
 <li class="toctree-l1"><a class="reference internal" href="lmn_session.html">API: aj.plugins.lmn_session</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_settings.html">API: aj.plugins.lmn_settings</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">API: aj.plugins.lmn_setup_wizard</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#lmn-setup-wizard-views">LMN Setup Wizard Views</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-aj.plugins.lmn_setup_wizard.views">LMN Setup Wizard Views</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_users.html">API: aj.plugins.lmn_users</a></li>
@@ -181,8 +181,71 @@
             
   <div class="section" id="api-aj-plugins-lmn-setup-wizard">
 <h1>API: aj.plugins.lmn_setup_wizard<a class="headerlink" href="#api-aj-plugins-lmn-setup-wizard" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="lmn-setup-wizard-views">
-<h2>LMN Setup Wizard Views<a class="headerlink" href="#lmn-setup-wizard-views" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-aj.plugins.lmn_setup_wizard.views">
+<span id="lmn-setup-wizard-views"></span><h2>LMN Setup Wizard Views<a class="headerlink" href="#module-aj.plugins.lmn_setup_wizard.views" title="Permalink to this headline">¶</a></h2>
+<p>Handles <cite>setup.ini</cite> file and finish the install process.</p>
+<dl class="py class">
+<dt id="aj.plugins.lmn_setup_wizard.views.Handler">
+<em class="property">class </em><code class="sig-prename descclassname">aj.plugins.lmn_setup_wizard.views.</code><code class="sig-name descname">Handler</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_setup_wizard/views.html#Handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_setup_wizard.views.Handler" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="aj.plugins.lmn_setup_wizard.views.Handler.handle_api_is_configured">
+<code class="sig-name descname">handle_api_is_configured</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">http_context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_setup_wizard/views.html#Handler.handle_api_is_configured"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_setup_wizard.views.Handler.handle_api_is_configured" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test if linuxmuster was already configured by checking if the file
+<cite>/var/lib/linuxmuster/setup.ini</cite> exists.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Existence of <cite>setup.ini</cite></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="aj.plugins.lmn_setup_wizard.views.Handler.handle_api_provision">
+<code class="sig-name descname">handle_api_provision</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">http_context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_setup_wizard/views.html#Handler.handle_api_provision"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_setup_wizard.views.Handler.handle_api_provision" title="Permalink to this definition">¶</a></dt>
+<dd><p>Launch <cite>linuxmuster-setup</cite> to configure all services.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="aj.plugins.lmn_setup_wizard.views.Handler.handle_api_read_setup">
+<code class="sig-name descname">handle_api_read_setup</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">http_context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_setup_wizard/views.html#Handler.handle_api_read_setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_setup_wizard.views.Handler.handle_api_read_setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read settings from <cite>/tmp/setup.ini</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>All setup settings</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="aj.plugins.lmn_setup_wizard.views.Handler.handle_api_write_setup">
+<code class="sig-name descname">handle_api_write_setup</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">http_context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_setup_wizard/views.html#Handler.handle_api_write_setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_setup_wizard.views.Handler.handle_api_write_setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write setup config into <cite>/tmp/setup.ini</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 </div>
 

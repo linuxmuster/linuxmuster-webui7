@@ -179,22 +179,15 @@
 
 <span class="c1"># coding=utf-8</span>
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">unicodecsv</span> <span class="k">as</span> <span class="nn">csv</span>
 <span class="kn">import</span> <span class="nn">subprocess</span>
-<span class="kn">import</span> <span class="nn">filecmp</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 <span class="kn">from</span> <span class="nn">jadi</span> <span class="kn">import</span> <span class="n">component</span>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
-<span class="kn">from</span> <span class="nn">configparser</span> <span class="kn">import</span> <span class="n">ConfigParser</span>
 
-<span class="kn">from</span> <span class="nn">aj.api.http</span> <span class="kn">import</span> <span class="n">url</span><span class="p">,</span> <span class="n">HttpPlugin</span>
+<span class="kn">from</span> <span class="nn">aj.api.http</span> <span class="kn">import</span> <span class="n">get</span><span class="p">,</span> <span class="n">post</span><span class="p">,</span> <span class="n">HttpPlugin</span>
 <span class="kn">from</span> <span class="nn">aj.api.endpoint</span> <span class="kn">import</span> <span class="n">endpoint</span><span class="p">,</span> <span class="n">EndpointError</span>
 <span class="kn">from</span> <span class="nn">aj.auth</span> <span class="kn">import</span> <span class="n">authorize</span>
 <span class="kn">from</span> <span class="nn">aj.plugins.lmn_common.lmnfile</span> <span class="kn">import</span> <span class="n">LMNFile</span>
-<span class="kn">from</span> <span class="nn">aj.plugins.lmn_common.api</span> <span class="kn">import</span> <span class="n">lmn_get_school_configpath</span>
-<span class="kn">from</span> <span class="nn">aj.plugins.lmn_common.multischool</span> <span class="kn">import</span> <span class="n">School</span>
-<span class="kn">from</span> <span class="nn">aj.plugins.lmn_common.api</span> <span class="kn">import</span> <span class="n">lmconfig</span>
 
 
 <div class="viewcode-block" id="Handler"><a class="viewcode-back" href="../../../../python/lmn_settings.html#aj.plugins.lmn_settings.views.Handler">[docs]</a><span class="nd">@component</span><span class="p">(</span><span class="n">HttpPlugin</span><span class="p">)</span>
@@ -212,13 +205,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">context</span>
 
 
-<div class="viewcode-block" id="Handler.handle_api_session_sessions"><a class="viewcode-back" href="../../../../python/lmn_settings.html#aj.plugins.lmn_settings.views.Handler.handle_api_session_sessions">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/schoolsettings/determine-encoding&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_session_sessions"><a class="viewcode-back" href="../../../../python/lmn_settings.html#aj.plugins.lmn_settings.views.Handler.handle_api_session_sessions">[docs]</a>    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/schoolsettings/determine-encoding&#39;</span><span class="p">)</span>
     <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:schoolsettings&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_session_sessions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Determine encoding using sophomorix-check.</span>
-<span class="sd">        Method POST.</span>
 
 <span class="sd">        :param http_context: HttpContext</span>
 <span class="sd">        :type http_context: HttpContext</span>
@@ -235,14 +227,12 @@
         <span class="k">return</span> <span class="kc">None</span></div>
 
 
-<div class="viewcode-block" id="Handler.handle_api_settings"><a class="viewcode-back" href="../../../../python/lmn_settings.html#aj.plugins.lmn_settings.views.Handler.handle_api_settings">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lm/schoolsettings&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_get_schoolsettings"><a class="viewcode-back" href="../../../../python/lmn_settings.html#aj.plugins.lmn_settings.views.Handler.handle_api_get_schoolsettings">[docs]</a>    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/schoolsettings&#39;</span><span class="p">)</span>
     <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:schoolsettings&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">handle_api_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">handle_api_get_schoolsettings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Read and write the config file `school.conf`.</span>
-<span class="sd">        Method GET: read the file.</span>
-<span class="sd">        Method POST: write the new content.</span>
+<span class="sd">        Read the config file `school.conf`.</span>
 
 <span class="sd">        :param http_context: HttpContext</span>
 <span class="sd">        :type http_context: HttpContext</span>
@@ -250,28 +240,43 @@
 <span class="sd">        :rtype: dict in read mode</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">school</span> <span class="o">=</span> <span class="n">School</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span><span class="o">.</span><span class="n">school</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="n">lmn_get_school_configpath</span><span class="p">(</span><span class="n">school</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;school.conf&#39;</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">configpath</span><span class="si">}</span><span class="s1">school.conf&#39;</span>
         <span class="c1"># Update each time the config_obj because it may have changed</span>
         <span class="k">with</span> <span class="n">LMNFile</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">config_obj</span> <span class="o">=</span> <span class="n">f</span>
 
-        <span class="k">if</span> <span class="n">http_context</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;GET&#39;</span><span class="p">:</span>
-            <span class="c1"># Just export ConfigObj as dict for angularjs</span>
-            <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config_obj</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="c1"># Just export ConfigObj as dict for angularjs</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config_obj</span><span class="o">.</span><span class="n">data</span><span class="p">)</span></div>
 
-        <span class="k">if</span> <span class="n">http_context</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()</span>
-            <span class="k">if</span> <span class="s1">&#39;admins_print&#39;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
-                <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">EMAIL_MAPPING</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                    <span class="n">data</span><span class="p">[</span><span class="s1">&#39;admins_print&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;admins_print&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_write_schoolsettings"><a class="viewcode-back" href="../../../../python/lmn_settings.html#aj.plugins.lmn_settings.views.Handler.handle_api_write_schoolsettings">[docs]</a>    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/schoolsettings&#39;</span><span class="p">)</span>
+    <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:schoolsettings&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">handle_api_write_schoolsettings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Write the config file `school.conf`.</span>
 
-            <span class="bp">self</span><span class="o">.</span><span class="n">config_obj</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :return: Settings in read mode</span>
+<span class="sd">        :rtype: dict in read mode</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
-            <span class="c1"># Update setup.ini with new schoolname</span>
-            <span class="k">with</span> <span class="n">LMNFile</span><span class="p">(</span><span class="s1">&#39;/var/lib/linuxmuster/setup.ini&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">s</span><span class="p">:</span>
-                <span class="n">s</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;setup&#39;</span><span class="p">][</span><span class="s1">&#39;schoolname&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;school&#39;</span><span class="p">][</span><span class="s1">&#39;SCHOOL_LONGNAME&#39;</span><span class="p">]</span>
-                <span class="n">s</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">data</span><span class="p">)</span></div>
+        <span class="n">path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">configpath</span><span class="si">}</span><span class="s1">school.conf&#39;</span>
+        <span class="c1"># Update each time the config_obj because it may have changed</span>
+        <span class="k">with</span> <span class="n">LMNFile</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">config_obj</span> <span class="o">=</span> <span class="n">f</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()</span>
+        <span class="k">if</span> <span class="s1">&#39;admins_print&#39;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">EMAIL_MAPPING</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">data</span><span class="p">[</span><span class="s1">&#39;admins_print&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;admins_print&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">config_obj</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="c1"># Update setup.ini with new schoolname</span>
+        <span class="k">with</span> <span class="n">LMNFile</span><span class="p">(</span><span class="s1">&#39;/var/lib/linuxmuster/setup.ini&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">s</span><span class="p">:</span>
+            <span class="n">s</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;setup&#39;</span><span class="p">][</span><span class="s1">&#39;schoolname&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;school&#39;</span><span class="p">][</span><span class="s1">&#39;SCHOOL_LONGNAME&#39;</span><span class="p">]</span>
+            <span class="n">s</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">data</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_filter_templates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">school</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -300,13 +305,12 @@
         <span class="p">}</span>
         <span class="k">return</span> <span class="n">template</span>
 
-<div class="viewcode-block" id="Handler.handle_api_latex_template"><a class="viewcode-back" href="../../../../python/lmn_settings.html#aj.plugins.lmn_settings.views.Handler.handle_api_latex_template">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lm/schoolsettings/latex-templates&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_latex_template"><a class="viewcode-back" href="../../../../python/lmn_settings.html#aj.plugins.lmn_settings.views.Handler.handle_api_latex_template">[docs]</a>    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/schoolsettings/latex-templates&#39;</span><span class="p">)</span>
     <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:schoolsettings&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_latex_template</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get list of latex templates for printing with sophomorix.</span>
-<span class="sd">        Method GET.</span>
 
 <span class="sd">        :param http_context: HttpContext</span>
 <span class="sd">        :type http_context: HttpContext</span>
@@ -327,7 +331,7 @@
                     <span class="n">templates_individual</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">template</span><span class="p">)</span>
 
         <span class="c1"># School defined templates</span>
-        <span class="n">school</span> <span class="o">=</span> <span class="n">School</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span><span class="o">.</span><span class="n">school</span>
+        <span class="n">school</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">school</span>
         <span class="n">custom_templates_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;/etc/linuxmuster/sophomorix/</span><span class="si">{</span><span class="n">school</span><span class="si">}</span><span class="s1">/latex-templates/&#39;</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">custom_templates_path</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">glob</span><span class="p">(</span><span class="n">custom_templates_path</span> <span class="o">+</span> <span class="s2">&quot;*tex&quot;</span><span class="p">):</span>
@@ -342,37 +346,12 @@
 
         <span class="k">return</span> <span class="n">templates_individual</span><span class="p">,</span> <span class="n">templates_multiple</span></div>
 
-<div class="viewcode-block" id="Handler.handle_api_school_share"><a class="viewcode-back" href="../../../../python/lmn_settings.html#aj.plugins.lmn_settings.views.Handler.handle_api_school_share">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lm/schoolsettings/school-share&#39;</span><span class="p">)</span>
-    <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:schoolsettings&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_get_subnet"><a class="viewcode-back" href="../../../../python/lmn_settings.html#aj.plugins.lmn_settings.views.Handler.handle_api_get_subnet">[docs]</a>    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/subnets&#39;</span><span class="p">)</span>
+    <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:globalsettings&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">handle_api_school_share</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">handle_api_get_subnet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        DEPRECATED, not used anymore. Adapt owner and group rights</span>
-<span class="sd">        on a share directory.</span>
-
-<span class="sd">        :param http_context: HttpContext</span>
-<span class="sd">        :type http_context: HttpContext</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="n">school</span> <span class="o">=</span> <span class="s1">&#39;default-school&#39;</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;/srv/samba/schools/&#39;</span><span class="o">+</span><span class="n">school</span><span class="o">+</span><span class="s1">&#39;/share&#39;</span>
-        <span class="k">if</span> <span class="n">http_context</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;GET&#39;</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">st_mode</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">st_mode</span> <span class="o">&amp;</span> <span class="mo">0o3777</span> <span class="o">==</span> <span class="mo">0o3777</span>
-
-        <span class="k">if</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">():</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">chmod</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="mo">0o3777</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">chmod</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="mo">0o0700</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="Handler.handle_api_subnet"><a class="viewcode-back" href="../../../../python/lmn_settings.html#aj.plugins.lmn_settings.views.Handler.handle_api_subnet">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lm/subnets&#39;</span><span class="p">)</span>
-    <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:schoolsettings&#39;</span><span class="p">)</span>
-    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">handle_api_subnet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Manage `subnets.csv` config file for subnets.</span>
-<span class="sd">        Method GET: read content.</span>
-<span class="sd">        Method POST: write new content.</span>
+<span class="sd">        Get `subnets.csv` config file for subnets.</span>
 
 <span class="sd">        :param http_context: HttpContext</span>
 <span class="sd">        :type http_context: HttpContext</span>
@@ -380,37 +359,27 @@
 <span class="sd">        :rtype: dict</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="c1"># TODO : school = &#39;default-school&#39;</span>
         <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;/etc/linuxmuster/subnets.csv&#39;</span>
         <span class="n">fieldnames</span> <span class="o">=</span> <span class="p">[</span>
             <span class="s1">&#39;network&#39;</span><span class="p">,</span>
             <span class="s1">&#39;routerIp&#39;</span><span class="p">,</span>
             <span class="s1">&#39;beginRange&#39;</span><span class="p">,</span>
             <span class="s1">&#39;endRange&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;nameServer&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;nextServer&#39;</span><span class="p">,</span>
             <span class="s1">&#39;setupFlag&#39;</span><span class="p">,</span>
         <span class="p">]</span>
-        <span class="k">if</span> <span class="n">http_context</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;GET&#39;</span><span class="p">:</span>
-            <span class="k">with</span> <span class="n">LMNFile</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">fieldnames</span><span class="o">=</span><span class="n">fieldnames</span><span class="p">)</span> <span class="k">as</span> <span class="n">s</span><span class="p">:</span>
-                <span class="n">subnets</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">subnets</span>
 
-        <span class="k">if</span> <span class="n">http_context</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()</span>
-            <span class="k">with</span> <span class="n">LMNFile</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">fieldnames</span><span class="o">=</span><span class="n">fieldnames</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">LMNFile</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">fieldnames</span><span class="o">=</span><span class="n">fieldnames</span><span class="p">)</span> <span class="k">as</span> <span class="n">s</span><span class="p">:</span>
+            <span class="n">subnets</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">subnets</span></div>
 
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">subprocess</span><span class="o">.</span><span class="n">check_call</span><span class="p">(</span><span class="s1">&#39;linuxmuster-import-subnets &gt; /tmp/import_devices.log&#39;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">EndpointError</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span></div>
-
-<div class="viewcode-block" id="Handler.handle_api_read_custom_config"><a class="viewcode-back" href="../../../../python/lmn_settings.html#aj.plugins.lmn_settings.views.Handler.handle_api_read_custom_config">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lm/read_custom_config&#39;</span><span class="p">)</span>
-    <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:schoolsettings&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_write_subnet"><a class="viewcode-back" href="../../../../python/lmn_settings.html#aj.plugins.lmn_settings.views.Handler.handle_api_write_subnet">[docs]</a>    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/subnets&#39;</span><span class="p">)</span>
+    <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:globalsettings&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">handle_api_read_custom_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">handle_api_write_subnet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Read webui yaml config and return the settings for custom fields.</span>
-<span class="sd">        Method GET: read content.</span>
+<span class="sd">        Write `subnets.csv` config file for subnets.</span>
 
 <span class="sd">        :param http_context: HttpContext</span>
 <span class="sd">        :type http_context: HttpContext</span>
@@ -418,23 +387,116 @@
 <span class="sd">        :rtype: dict</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">if</span> <span class="n">http_context</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;GET&#39;</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span>
-                <span class="s1">&#39;custom&#39;</span><span class="p">:</span> <span class="n">lmconfig</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;custom&#39;</span><span class="p">,</span> <span class="p">{}),</span>
-                <span class="s1">&#39;customMulti&#39;</span><span class="p">:</span> <span class="n">lmconfig</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;customMulti&#39;</span><span class="p">,</span> <span class="p">{}),</span>
-                <span class="s1">&#39;customDisplay&#39;</span><span class="p">:</span> <span class="n">lmconfig</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;customDisplay&#39;</span><span class="p">,</span> <span class="p">{}),</span>
-                <span class="s1">&#39;proxyAddresses&#39;</span><span class="p">:</span> <span class="n">lmconfig</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;proxyAddresses&#39;</span><span class="p">,</span> <span class="p">{}),</span>
-                <span class="s1">&#39;passwordTemplates&#39;</span><span class="p">:</span> <span class="n">lmconfig</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;passwordTemplates&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;multiple&#39;</span><span class="p">:</span> <span class="p">{},</span> <span class="s1">&#39;individual&#39;</span><span class="p">:</span> <span class="p">{}}),</span>
-            <span class="p">}</span></div>
+        <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;/etc/linuxmuster/subnets.csv&#39;</span>
+        <span class="n">fieldnames</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s1">&#39;network&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;routerIp&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;beginRange&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;endRange&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;nameServer&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;nextServer&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;setupFlag&#39;</span><span class="p">,</span>
+        <span class="p">]</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()</span>
+        <span class="k">with</span> <span class="n">LMNFile</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">fieldnames</span><span class="o">=</span><span class="n">fieldnames</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">subprocess</span><span class="o">.</span><span class="n">check_call</span><span class="p">(</span><span class="s1">&#39;linuxmuster-import-subnets &gt; /tmp/import_devices.log&#39;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">EndpointError</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Handler.handle_api_read_custom_config"><a class="viewcode-back" href="../../../../python/lmn_settings.html#aj.plugins.lmn_settings.views.Handler.handle_api_read_custom_config">[docs]</a>    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/config/customfields/(?P&lt;role&gt;.*)&#39;</span><span class="p">)</span>
+    <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:schoolsettings&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">handle_api_read_custom_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read webui yaml config and return the settings for custom fields.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :return: Settings in read mode</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="nf">ensure_config_structure</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+            <span class="n">base_custom_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;show&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;editable&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">}</span>
+            <span class="n">base_role_dict</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span><span class="n">base_custom_dict</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+            <span class="p">}</span>
+            <span class="n">base_config_dict</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;globaladministrators&#39;</span><span class="p">:</span> <span class="p">{},</span>
+                <span class="s1">&#39;schooladministrators&#39;</span><span class="p">:</span> <span class="p">{},</span>
+                <span class="s1">&#39;teachers&#39;</span><span class="p">:</span> <span class="p">{},</span>
+                <span class="s1">&#39;students&#39;</span><span class="p">:</span> <span class="p">{},</span>
+            <span class="p">}</span>
+
+            <span class="k">if</span> <span class="n">role</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">role</span> <span class="ow">in</span> <span class="n">base_config_dict</span><span class="p">:</span>
+                    <span class="n">role_dict</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">role</span><span class="p">,</span> <span class="p">{})</span>
+
+                    <span class="k">if</span> <span class="n">role_dict</span><span class="p">:</span>
+                        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+                            <span class="n">idx</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+                            <span class="n">role_dict</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">role_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">base_custom_dict</span><span class="p">)</span>
+                            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">base_custom_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                                <span class="n">role_dict</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">role_dict</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+                        <span class="n">base_config_dict</span><span class="p">[</span><span class="n">role</span><span class="p">]</span> <span class="o">=</span> <span class="n">role_dict</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">base_config_dict</span><span class="p">[</span><span class="n">role</span><span class="p">]</span> <span class="o">=</span> <span class="n">base_role_dict</span>
+                <span class="k">return</span> <span class="n">base_config_dict</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">role_dict</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">role</span><span class="p">,</span> <span class="p">{})</span>
+
+                <span class="k">if</span> <span class="n">role_dict</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+                        <span class="n">idx</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+                        <span class="n">role_dict</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">role_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">base_custom_dict</span><span class="p">)</span>
+                        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">base_custom_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                            <span class="n">role_dict</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">role_dict</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+                    <span class="k">return</span> <span class="n">role_dict</span>
+                <span class="k">return</span> <span class="n">base_role_dict</span>
 
 
-<div class="viewcode-block" id="Handler.handle_api_save_custom_config"><a class="viewcode-back" href="../../../../python/lmn_settings.html#aj.plugins.lmn_settings.views.Handler.handle_api_save_custom_config">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lm/save_custom_config&#39;</span><span class="p">)</span>
+        <span class="n">school</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">school</span>
+        <span class="n">custom_config_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;/etc/linuxmuster/sophomorix/</span><span class="si">{</span><span class="n">school</span><span class="si">}</span><span class="s1">/custom_fields.yml&#39;</span>
+        <span class="n">custom_config</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">custom_config_path</span><span class="p">):</span>
+            <span class="k">with</span> <span class="n">LMNFile</span><span class="p">(</span><span class="n">custom_config_path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">config</span><span class="p">:</span>
+                <span class="n">custom_config</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+        <span class="n">password_templates</span> <span class="o">=</span> <span class="n">custom_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;passwordTemplates&#39;</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="n">password_templates</span><span class="p">[</span><span class="s1">&#39;multiple&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">password_templates</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;multiple&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">password_templates</span><span class="p">[</span><span class="s1">&#39;individual&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">password_templates</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;individual&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+        <span class="n">config_dict</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;custom&#39;</span><span class="p">:</span> <span class="n">ensure_config_structure</span><span class="p">(</span><span class="n">custom_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;custom&#39;</span><span class="p">,</span> <span class="p">{})),</span>
+            <span class="s1">&#39;customMulti&#39;</span><span class="p">:</span> <span class="n">ensure_config_structure</span><span class="p">(</span><span class="n">custom_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;customMulti&#39;</span><span class="p">,</span> <span class="p">{})),</span>
+            <span class="s1">&#39;customDisplay&#39;</span><span class="p">:</span> <span class="n">custom_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;customDisplay&#39;</span><span class="p">,</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="s1">&#39;&#39;</span><span class="p">}),</span>
+            <span class="s1">&#39;proxyAddresses&#39;</span><span class="p">:</span> <span class="n">ensure_config_structure</span><span class="p">(</span><span class="n">custom_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;proxyAddresses&#39;</span><span class="p">,</span> <span class="p">{})),</span>
+            <span class="s1">&#39;passwordTemplates&#39;</span><span class="p">:</span> <span class="n">password_templates</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="n">role</span><span class="p">:</span>
+            <span class="n">role_dict</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;custom&#39;</span><span class="p">:</span> <span class="n">ensure_config_structure</span><span class="p">(</span><span class="n">config_dict</span><span class="p">[</span><span class="s1">&#39;custom&#39;</span><span class="p">],</span> <span class="n">role</span><span class="p">),</span>
+                <span class="s1">&#39;customMulti&#39;</span><span class="p">:</span> <span class="n">ensure_config_structure</span><span class="p">(</span><span class="n">config_dict</span><span class="p">[</span><span class="s1">&#39;customMulti&#39;</span><span class="p">],</span> <span class="n">role</span><span class="p">),</span>
+                <span class="s1">&#39;customDisplay&#39;</span><span class="p">:</span> <span class="n">config_dict</span><span class="p">[</span><span class="s1">&#39;customDisplay&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">role</span><span class="p">,</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="s1">&#39;&#39;</span><span class="p">}),</span>
+                <span class="s1">&#39;proxyAddresses&#39;</span><span class="p">:</span> <span class="n">ensure_config_structure</span><span class="p">(</span><span class="n">config_dict</span><span class="p">[</span><span class="s1">&#39;proxyAddresses&#39;</span><span class="p">],</span> <span class="n">role</span><span class="p">),</span>
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="n">role_dict</span>
+        <span class="k">return</span> <span class="n">config_dict</span></div>
+
+
+<div class="viewcode-block" id="Handler.handle_api_save_custom_config"><a class="viewcode-back" href="../../../../python/lmn_settings.html#aj.plugins.lmn_settings.views.Handler.handle_api_save_custom_config">[docs]</a>    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/config/customfields&#39;</span><span class="p">)</span>
     <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:schoolsettings&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_save_custom_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Save customs sophomorix fields settings in the webui yaml config.</span>
-<span class="sd">        Method POST.</span>
 
 <span class="sd">        :param http_context: HttpContext</span>
 <span class="sd">        :type http_context: HttpContext</span>
@@ -442,15 +504,62 @@
 <span class="sd">        :rtype:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">if</span> <span class="n">http_context</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
-            <span class="n">custom_config</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;config&#39;</span><span class="p">]</span>
-            <span class="n">lmconfig</span><span class="p">[</span><span class="s1">&#39;custom&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">custom_config</span><span class="p">[</span><span class="s1">&#39;custom&#39;</span><span class="p">]</span>
-            <span class="n">lmconfig</span><span class="p">[</span><span class="s1">&#39;customMulti&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">custom_config</span><span class="p">[</span><span class="s1">&#39;customMulti&#39;</span><span class="p">]</span>
-            <span class="n">lmconfig</span><span class="p">[</span><span class="s1">&#39;customDisplay&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">custom_config</span><span class="p">[</span><span class="s1">&#39;customDisplay&#39;</span><span class="p">]</span>
-            <span class="n">lmconfig</span><span class="p">[</span><span class="s1">&#39;proxyAddresses&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">custom_config</span><span class="p">[</span><span class="s1">&#39;proxyAddresses&#39;</span><span class="p">]</span>
-            <span class="n">lmconfig</span><span class="p">[</span><span class="s1">&#39;passwordTemplates&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">custom_config</span><span class="p">[</span><span class="s1">&#39;passwordTemplates&#39;</span><span class="p">]</span>
-            <span class="k">with</span> <span class="n">LMNFile</span><span class="p">(</span><span class="s1">&#39;/etc/linuxmuster/webui/config.yml&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">webui</span><span class="p">:</span>
-                <span class="n">webui</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">lmconfig</span><span class="p">)</span></div></div>
+        <span class="n">custom_config</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;config&#39;</span><span class="p">]</span>
+        <span class="n">school</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">school</span>
+        <span class="n">custom_config_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;/etc/linuxmuster/sophomorix/</span><span class="si">{</span><span class="n">school</span><span class="si">}</span><span class="s1">/custom_fields.yml&#39;</span>
+        <span class="k">with</span> <span class="n">LMNFile</span><span class="p">(</span><span class="n">custom_config_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">config</span><span class="p">:</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">custom_config</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Handler.handle_api_get_holidays"><a class="viewcode-back" href="../../../../python/lmn_settings.html#aj.plugins.lmn_settings.views.Handler.handle_api_get_holidays">[docs]</a>    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/holidays&#39;</span><span class="p">)</span>
+    <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:schoolsettings&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">handle_api_get_holidays</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get `holidays.yml` config file for holidays.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :return: Settings in read mode</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">school</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">school</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;/etc/linuxmuster/sophomorix/</span><span class="si">{</span><span class="n">school</span><span class="si">}</span><span class="s1">/holidays.yml&#39;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">LMNFile</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">s</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[{</span>
+                    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+                    <span class="s1">&#39;start&#39;</span><span class="p">:</span> <span class="n">dates</span><span class="p">[</span><span class="s1">&#39;start&#39;</span><span class="p">],</span>
+                    <span class="s1">&#39;end&#39;</span><span class="p">:</span> <span class="n">dates</span><span class="p">[</span><span class="s1">&#39;end&#39;</span><span class="p">],</span>
+                <span class="p">}</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">dates</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span></div>
+
+<div class="viewcode-block" id="Handler.handle_api_write_holidays"><a class="viewcode-back" href="../../../../python/lmn_settings.html#aj.plugins.lmn_settings.views.Handler.handle_api_write_holidays">[docs]</a>    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/holidays&#39;</span><span class="p">)</span>
+    <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:schoolsettings&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">handle_api_write_holidays</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Write `holidays.yml` config file for holidays.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :return: Settings in read mode</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">school</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">school</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;/etc/linuxmuster/sophomorix/</span><span class="si">{</span><span class="n">school</span><span class="si">}</span><span class="s1">/holidays.yml&#39;</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()</span>
+        <span class="n">holidays</span> <span class="o">=</span> <span class="p">{</span><span class="n">holiday</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]:</span> <span class="p">{</span>
+            <span class="s1">&#39;start&#39;</span><span class="p">:</span> <span class="n">holiday</span><span class="p">[</span><span class="s1">&#39;start&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;end&#39;</span><span class="p">:</span> <span class="n">holiday</span><span class="p">[</span><span class="s1">&#39;end&#39;</span><span class="p">]}</span>
+            <span class="k">for</span> <span class="n">holiday</span> <span class="ow">in</span> <span class="n">data</span>
+        <span class="p">}</span>
+        <span class="k">with</span> <span class="n">LMNFile</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">holidays</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>

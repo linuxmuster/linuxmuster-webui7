@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>aj.plugins.lmn_common.lmnfile &mdash; linuxmuster-webui7 7.1.0 documentation</title>
+  <title>aj.plugins.lmn_common.lmnfile &mdash; linuxmuster-webui7 7.1.38 documentation</title>
   
 
   
@@ -62,7 +62,7 @@
             
             
               <div class="version">
-                7.1.0
+                7.1.38
               </div>
             
           
@@ -189,6 +189,9 @@
 <span class="kn">from</span> <span class="nn">configobj</span> <span class="kn">import</span> <span class="n">ConfigObj</span>
 
 
+<span class="c1"># Allow 1 MiB for csv</span>
+<span class="n">csv</span><span class="o">.</span><span class="n">field_size_limit</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="mi">20</span><span class="p">)</span>
+
 <span class="n">ALLOWED_PATHS</span> <span class="o">=</span> <span class="p">[</span>
                 <span class="c1"># Webui settings</span>
                 <span class="s1">&#39;/etc/linuxmuster/webui/config.yml&#39;</span><span class="p">,</span>
@@ -198,10 +201,14 @@
                 <span class="s1">&#39;/srv/linbo&#39;</span><span class="p">,</span>
                 <span class="c1"># used in lmn_settings for subnets configuration</span>
                 <span class="s1">&#39;/etc/linuxmuster/subnets.csv&#39;</span><span class="p">,</span>
+                <span class="c1"># used in lmn_settings for holidays configuration</span>
+                <span class="s1">&#39;/etc/linuxmuster/holidays.yml&#39;</span><span class="p">,</span>
                 <span class="c1"># used in lmn_settings</span>
                 <span class="s1">&#39;/var/lib/linuxmuster/setup.ini&#39;</span><span class="p">,</span>
                 <span class="c1"># user in setup wizard during install</span>
                 <span class="s1">&#39;/tmp/setup.ini&#39;</span><span class="p">,</span>
+                <span class="c1"># used in lmn_permissions</span>
+                <span class="s1">&#39;/usr/lib/linuxmuster-webui/plugins&#39;</span><span class="p">,</span>
                 <span class="p">]</span>
 
 <span class="n">EMPTY_LINE_MARKER</span> <span class="o">=</span> <span class="s1">&#39;###EMPTY#LINE&#39;</span>
@@ -377,6 +384,9 @@
 
     <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">geteuid</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># Creating empty file if it does not exist</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">):</span>
+                <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
             <span class="n">os</span><span class="o">.</span><span class="n">chmod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">,</span> <span class="mi">384</span><span class="p">)</span>  <span class="c1"># 0o600</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">opened</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="s1">&#39;r&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="ow">or</span> <span class="s1">&#39;+&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="p">:</span>
@@ -440,7 +450,7 @@
             <span class="p">)</span>
             <span class="k">for</span> <span class="n">elt</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
                 <span class="n">first_field</span> <span class="o">=</span> <span class="n">elt</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">fieldnames</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
-                <span class="k">if</span> <span class="n">first_field</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span> <span class="ow">or</span> <span class="n">first_field</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;#&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">first_field</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">EMPTY_LINE_MARKER</span><span class="p">]:</span>
                     <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">first_field</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">EMPTY_LINE_MARKER</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">elt</span><span class="p">)</span>
@@ -576,7 +586,7 @@
   <div role="contentinfo">
     <p>
         
-        &copy; Copyright Andreas Till &amp; Arnaud Kientz - 2021
+        &copy; Copyright Andreas Till &amp; Arnaud Kientz - 2022
 
     </p>
   </div>

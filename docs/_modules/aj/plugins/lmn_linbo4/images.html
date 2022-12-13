@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>aj.plugins.lmn_linbo4.images &mdash; linuxmuster-webui7 7.1.0 documentation</title>
+  <title>aj.plugins.lmn_linbo4.images &mdash; linuxmuster-webui7 7.1.38 documentation</title>
   
 
   
@@ -62,7 +62,7 @@
             
             
               <div class="version">
-                7.1.0
+                7.1.38
               </div>
             
           
@@ -181,16 +181,20 @@
 
 <span class="kn">from</span> <span class="nn">jadi</span> <span class="kn">import</span> <span class="n">service</span>
 <span class="kn">from</span> <span class="nn">aj.plugins.lmn_common.lmnfile</span> <span class="kn">import</span> <span class="n">LMNFile</span>
+<span class="kn">from</span> <span class="nn">aj.api.endpoint</span> <span class="kn">import</span> <span class="n">EndpointError</span>
+
 
 <span class="n">LINBO_PATH</span> <span class="o">=</span> <span class="s1">&#39;/srv/linbo/images&#39;</span>
+<span class="n">TIMESTAMP_FMT</span> <span class="o">=</span> <span class="s1">&#39;%Y%m</span><span class="si">%d</span><span class="s1">%H%M&#39;</span>
+<span class="n">DATE_UI_FMT</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%d</span><span class="s1">/%m/%Y %H:%M&#39;</span>
+
 
 <span class="c1"># Filenames like ubuntu.qcow2.desc</span>
 <span class="n">EXTRA_IMAGE_FILES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;desc&#39;</span><span class="p">,</span> <span class="s1">&#39;info&#39;</span><span class="p">,</span>  <span class="s1">&#39;vdi&#39;</span><span class="p">]</span>
-<span class="n">EXTRA_NONEDITABLE_IMAGE_FILES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;torrent&#39;</span><span class="p">]</span>
+<span class="n">EXTRA_NONEDITABLE_IMAGE_FILES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;torrent&#39;</span><span class="p">,</span> <span class="s1">&#39;macct&#39;</span><span class="p">]</span>
 
 <span class="c1"># Filenames like ubuntu.reg</span>
 <span class="n">EXTRA_COMMON_FILES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;reg&#39;</span><span class="p">,</span> <span class="s1">&#39;postsync&#39;</span><span class="p">,</span> <span class="s1">&#39;prestart&#39;</span><span class="p">]</span>
-<span class="n">EXTRA_NONEDITABLE_COMMON_FILES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;macct&#39;</span><span class="p">]</span>
 
 <span class="n">EXTRA_PERMISSIONS_MAPPING</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;desc&#39;</span><span class="p">:</span> <span class="mo">0o664</span><span class="p">,</span>
@@ -204,10 +208,10 @@
 <span class="n">IMAGE</span> <span class="o">=</span> <span class="s2">&quot;qcow2&quot;</span>
 
 <span class="k">def</span> <span class="nf">date2timestamp</span><span class="p">(</span><span class="n">date</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">%d</span><span class="s1">/%m/%Y %H:%M&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y%m</span><span class="si">%d</span><span class="s1">%H%M&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="n">DATE_UI_FMT</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">TIMESTAMP_FMT</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">timestamp2date</span><span class="p">(</span><span class="n">timestamp</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">timestamp</span><span class="p">,</span> <span class="s1">&#39;%Y%m</span><span class="si">%d</span><span class="s1">%H%M&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">/%m/%Y %H:%M&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">timestamp</span><span class="p">,</span> <span class="n">TIMESTAMP_FMT</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">DATE_UI_FMT</span><span class="p">)</span>
 
 <div class="viewcode-block" id="LinboImage"><a class="viewcode-back" href="../../../../python/lmn_linbo4.html#aj.plugins.lmn_linbo4.images.LinboImage">[docs]</a><span class="k">class</span> <span class="nc">LinboImage</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -246,7 +250,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">date</span> <span class="o">=</span> <span class="n">timestamp2date</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">LINBO_PATH</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">date</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_timestamp</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">date</span> <span class="o">=</span> <span class="n">timestamp2date</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="p">))</span><span class="o">.</span><span class="n">st_size</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">extras</span> <span class="o">=</span> <span class="p">{}</span>
@@ -270,7 +275,6 @@
                         <span class="k">pass</span>
                     <span class="n">os</span><span class="o">.</span><span class="n">chmod</span><span class="p">(</span><span class="n">extra_file</span><span class="p">,</span> <span class="n">EXTRA_PERMISSIONS_MAPPING</span><span class="p">[</span><span class="n">extra</span><span class="p">])</span>
 
-
         <span class="k">for</span> <span class="n">extra</span> <span class="ow">in</span> <span class="n">EXTRA_COMMON_FILES</span><span class="p">:</span>
             <span class="n">extra_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">extra</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">extra_file</span><span class="p">):</span>
@@ -278,6 +282,18 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">extras</span><span class="p">[</span><span class="n">extra</span><span class="p">]</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">extras</span><span class="p">[</span><span class="n">extra</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+    <span class="k">def</span> <span class="nf">get_timestamp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">info_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="si">}</span><span class="s2">.info&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">info_path</span><span class="p">):</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">info_path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">info</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">info</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="s1">&#39;timestamp&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                        <span class="c1"># Support timestamp=2021..</span>
+                        <span class="c1"># and timestamp=&quot;2021...&quot;</span>
+                        <span class="k">return</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Can not find timestamp for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="si">}</span><span class="s2">, using current time as timestamp !&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">TIMESTAMP_FMT</span><span class="p">)</span>
 
 <div class="viewcode-block" id="LinboImage.delete_files"><a class="viewcode-back" href="../../../../python/lmn_linbo4.html#aj.plugins.lmn_linbo4.images.LinboImage.delete_files">[docs]</a>    <span class="k">def</span> <span class="nf">delete_files</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -295,7 +311,7 @@
             <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
                 <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
 
-        <span class="k">for</span> <span class="n">extra</span> <span class="ow">in</span> <span class="n">EXTRA_COMMON_FILES</span> <span class="o">+</span> <span class="n">EXTRA_NONEDITABLE_COMMON_FILES</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">extra</span> <span class="ow">in</span> <span class="n">EXTRA_COMMON_FILES</span><span class="p">:</span>
             <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">extra</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
                 <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></div>
@@ -309,7 +325,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_torrent_stop</span><span class="p">()</span>
 
         <span class="c1"># Remove directory</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">rmdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span></div>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">rmdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">EndpointError</span><span class="p">(</span><span class="n">e</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="LinboImage.rename"><a class="viewcode-back" href="../../../../python/lmn_linbo4.html#aj.plugins.lmn_linbo4.images.LinboImage.rename">[docs]</a>    <span class="k">def</span> <span class="nf">rename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_name</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -325,7 +344,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_torrent_stop</span><span class="p">()</span>
 
         <span class="c1"># Rename extra files</span>
-        <span class="k">for</span> <span class="n">extra</span> <span class="ow">in</span> <span class="n">EXTRA_IMAGE_FILES</span> <span class="o">+</span> <span class="n">EXTRA_NONEDITABLE_IMAGE_FILES</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">extra</span> <span class="ow">in</span> <span class="n">EXTRA_IMAGE_FILES</span><span class="p">:</span>
             <span class="n">actual</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">extra</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">actual</span><span class="p">):</span>
                 <span class="c1"># Replace image name in .info file</span>
@@ -425,6 +444,12 @@
 
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">backup_path</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">timestamp</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">backup_path</span><span class="p">):</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="c1"># Is it a valid timestamp ?</span>
+                    <span class="n">timestamp2date</span><span class="p">(</span><span class="n">timestamp</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                    <span class="c1"># Not a backup done with Linbo, passing</span>
+                    <span class="k">continue</span>
                 <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">backup_path</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">)):</span>
                     <span class="k">if</span> <span class="n">file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;.</span><span class="si">{</span><span class="n">IMAGE</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">):</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">backups</span><span class="p">[</span><span class="n">timestamp2date</span><span class="p">(</span><span class="n">timestamp</span><span class="p">)]</span> <span class="o">=</span> <span class="n">LinboImage</span><span class="p">(</span>
@@ -462,7 +487,10 @@
             <span class="n">backup</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">backup_path</span><span class="p">):</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">rmdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">backup_path</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">rmdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">backup_path</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">EndpointError</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span></div>
 
@@ -548,10 +576,29 @@
         <span class="k">if</span> <span class="n">group</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">linboImageGroups</span><span class="p">:</span>
             <span class="n">imageGroup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">linboImageGroups</span><span class="p">[</span><span class="n">group</span><span class="p">]</span>
             <span class="k">if</span> <span class="n">date</span> <span class="ow">in</span> <span class="n">imageGroup</span><span class="o">.</span><span class="n">backups</span><span class="p">:</span>
-                <span class="n">imageGroup</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">delete_files</span><span class="p">()</span>
+                <span class="n">timestamp</span> <span class="o">=</span> <span class="n">imageGroup</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">timestamp</span>
+                <span class="n">new_backup_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                    <span class="n">imageGroup</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">path</span><span class="p">,</span>
+                    <span class="s1">&#39;backups&#39;</span><span class="p">,</span>
+                    <span class="n">timestamp</span>
+                <span class="p">)</span>
+
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">new_backup_dir</span><span class="p">):</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">new_backup_dir</span><span class="p">)</span>
+
+                <span class="c1"># Move base image to backup/timestamp</span>
+                <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">imageGroup</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">path</span><span class="p">):</span>
+                    <span class="c1"># Avoid copying backups dir in itself</span>
+                    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">imageGroup</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">file</span><span class="p">)):</span>
+                        <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">imageGroup</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">file</span><span class="p">),</span>
+                                <span class="n">new_backup_dir</span><span class="p">)</span>
+
+                <span class="c1"># Move backup to base image</span>
                 <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">imageGroup</span><span class="o">.</span><span class="n">backups</span><span class="p">[</span><span class="n">date</span><span class="p">]</span><span class="o">.</span><span class="n">path</span><span class="p">):</span>
                     <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">imageGroup</span><span class="o">.</span><span class="n">backups</span><span class="p">[</span><span class="n">date</span><span class="p">]</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">file</span><span class="p">),</span>
                                 <span class="n">imageGroup</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+
+                <span class="c1"># Cleanup and reload</span>
                 <span class="n">imageGroup</span><span class="o">.</span><span class="n">backups</span><span class="p">[</span><span class="n">date</span><span class="p">]</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">linboImageGroups</span><span class="p">[</span><span class="n">group</span><span class="p">]</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
                 <span class="n">imageGroup</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">_torrent_create</span><span class="p">()</span></div>
@@ -591,7 +638,7 @@
   <div role="contentinfo">
     <p>
         
-        &copy; Copyright Andreas Till &amp; Arnaud Kientz - 2021
+        &copy; Copyright Andreas Till &amp; Arnaud Kientz - 2022
 
     </p>
   </div>

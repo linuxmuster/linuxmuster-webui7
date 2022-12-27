@@ -2,7 +2,7 @@ from concurrent import futures
 from time import localtime, strftime  # needed for timestamp in collect transfer
 
 from jadi import component
-from aj.api.http import get, post, put, patch, delete, url, HttpPlugin
+from aj.api.http import get, post, put, patch, delete, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue

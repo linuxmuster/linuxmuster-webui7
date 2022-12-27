@@ -140,7 +140,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
     # Websession part
 
     $scope.getWebConferenceEnabled = () ->
-        $http.get('/api/lmn/websession/getWebConferenceEnabled').then (resp) ->
+        $http.get('/api/lmn/websession/webConferenceEnabled').then (resp) ->
             if resp.data == true
                 $scope.websessionEnabled = true
                 $scope.websessionGetStatus()
@@ -150,7 +150,8 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
     $scope.websessionIsRunning = false
 
     $scope.websessionGetStatus = () ->
-        $http.post('/api/lmn/websession/getWebConferenceByName', {sessionname: $scope.currentSession.comment + "-" + $scope.currentSession.name}).then (resp) ->
+        sessionname = $scope.currentSession.comment + "-" + $scope.currentSession.name
+        $http.get("/api/lmn/websession/webConference/#{sessionname}").then (resp) ->
             if resp.data["status"] is "SUCCESS"
                 if resp.data["data"]["status"] == "started"
                     $scope.websessionIsRunning = true
@@ -170,7 +171,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
 
     $scope.websessionStop = () ->
         $http.post('/api/lmn/websession/endWebConference', {id: $scope.websessionID, moderatorpw: $scope.websessionModeratorPW}).then (resp) ->
-            $http.post('/api/lmn/websession/deleteWebConference', {id: $scope.websessionID}).then (resp) ->
+            $http.delete("/api/lmn/websession/webConference/#{$scope.websessionID}").then (resp) ->
                 if resp.data["status"] == "SUCCESS"
                     notify.success gettext("Successfully stopped!")
                     $scope.websessionIsRunning = false
@@ -182,7 +183,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
         for participant in $scope.participants
             tempparticipants.push(participant.sAMAccountName)
 
-        $http.post('/api/lmn/websession/createWebConference', {sessionname: $scope.currentSession.comment + "-" + $scope.currentSession.name, sessiontype: "private", sessionpassword: "", moderator: $scope.identity.user, participants: tempparticipants}).then (resp) ->
+        $http.post('/api/lmn/websession/webConferences', {sessionname: $scope.currentSession.comment + "-" + $scope.currentSession.name, sessiontype: "private", sessionpassword: "", participants: tempparticipants}).then (resp) ->
             if resp.data["status"] is "SUCCESS"
                 $scope.websessionID = resp.data["id"]
                 $scope.websessionAttendeePW = resp.data["attendeepw"]

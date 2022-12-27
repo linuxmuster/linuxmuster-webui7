@@ -8,16 +8,15 @@ angular.module('lmn.websession').controller 'LMNWebsessionController', ($rootSco
     pageTitle.set(gettext('Websession'))
 
     $scope.getWebConferenceEnabled = () ->
-        $http.get('/api/lmn/websession/getWebConferenceEnabled').then (resp) ->
+        $http.get('/api/lmn/websession/webConferenceEnabled').then (resp) ->
             if resp.data == true
                 $scope.enabled = true
                 $scope.getWebConferences()
             else
                 $scope.enabled = false;
-            
 
     $scope.getWebConferences = () ->
-        $http.post('/api/lmn/websession/getWebConferences', {username: $scope.identity.user}).then (resp) ->
+        $http.get('/api/lmn/websession/webConferences').then (resp) ->
             $scope.myWebsessions = resp.data
 
     $scope.createWebsession = () ->
@@ -55,7 +54,7 @@ angular.module('lmn.websession').controller 'LMNWebsessionController', ($rootSco
 
     $scope.deleteWebsession = (id) ->
         messagebox.show(text: "Delete #{id}?", positive: 'Delete', negative: 'Cancel').then () ->
-            $http.post('/api/lmn/websession/deleteWebConference', {id: id}).then (resp) ->
+            $http.delete("/api/lmn/websession/webConference/#{$scope.websessionID}").then (resp) ->
                 $scope.refreshSessionList()
                 if resp.data["status"] == "SUCCESS"
                     notify.success gettext("Successfully removed!")
@@ -129,18 +128,18 @@ angular.module('lmn.websession').controller 'LMNCreateWebsessionModalController'
         for participant in $scope.participants
             tempparticipants.push(participant.sAMAccountName)
 
-        $http.post('/api/lmn/websession/createWebConference', {sessionname: $scope.sessionname, sessiontype: $scope.sessiontype, sessionpassword: $scope.sessionpassword, moderator: $scope.identity.user, participants: tempparticipants}).then (resp) ->
+        $http.post('/api/lmn/websession/webConferences', {sessionname: $scope.sessionname, sessiontype: $scope.sessiontype, sessionpassword: $scope.sessionpassword, participants: tempparticipants}).then (resp) ->
             if resp.data["status"] != "SUCCESS"
                 notify.error gettext("Create session failed! Try again later!")
             $uibModalInstance.dismiss()
 
     $scope.findUsers = (q) ->
-        return $http.post("/api/lmn/websession/user-search", {q:q}).then (resp) ->
+        return $http.gett("/api/lmn/session/user-search/#{q}").then (resp) ->
             $scope.users = resp.data
             return resp.data
 
     $scope.findSchoolClasses = (q) ->
-        return $http.get("/api/lmn/websession/schoolClass-search?q=#{q}").then (resp) ->
+        return $http.get("/api/lmn/session/schoolClass-search/#{q}").then (resp) ->
             $scope.class = resp.data
             return resp.data
 

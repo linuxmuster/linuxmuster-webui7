@@ -171,7 +171,7 @@
     };
     // Websession part
     $scope.getWebConferenceEnabled = function() {
-      return $http.get('/api/lmn/websession/getWebConferenceEnabled').then(function(resp) {
+      return $http.get('/api/lmn/websession/webConferenceEnabled').then(function(resp) {
         if (resp.data === true) {
           $scope.websessionEnabled = true;
           return $scope.websessionGetStatus();
@@ -182,9 +182,9 @@
     };
     $scope.websessionIsRunning = false;
     $scope.websessionGetStatus = function() {
-      return $http.post('/api/lmn/websession/getWebConferenceByName', {
-        sessionname: $scope.currentSession.comment + "-" + $scope.currentSession.name
-      }).then(function(resp) {
+      var sessionname;
+      sessionname = $scope.currentSession.comment + "-" + $scope.currentSession.name;
+      return $http.get(`/api/lmn/websession/webConference/${sessionname}`).then(function(resp) {
         if (resp.data["status"] === "SUCCESS") {
           if (resp.data["data"]["status"] === "started") {
             $scope.websessionIsRunning = true;
@@ -211,9 +211,7 @@
         id: $scope.websessionID,
         moderatorpw: $scope.websessionModeratorPW
       }).then(function(resp) {
-        return $http.post('/api/lmn/websession/deleteWebConference', {
-          id: $scope.websessionID
-        }).then(function(resp) {
+        return $http.delete(`/api/lmn/websession/webConference/${$scope.websessionID}`).then(function(resp) {
           if (resp.data["status"] === "SUCCESS") {
             notify.success(gettext("Successfully stopped!"));
             return $scope.websessionIsRunning = false;
@@ -231,11 +229,10 @@
         participant = ref[i];
         tempparticipants.push(participant.sAMAccountName);
       }
-      return $http.post('/api/lmn/websession/createWebConference', {
+      return $http.post('/api/lmn/websession/webConferences', {
         sessionname: $scope.currentSession.comment + "-" + $scope.currentSession.name,
         sessiontype: "private",
         sessionpassword: "",
-        moderator: $scope.identity.user,
         participants: tempparticipants
       }).then(function(resp) {
         if (resp.data["status"] === "SUCCESS") {

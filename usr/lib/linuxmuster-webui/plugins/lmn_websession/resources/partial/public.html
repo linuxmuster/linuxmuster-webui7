@@ -70,7 +70,7 @@
     var sessionname = window.location.href.split("/").slice(-1)[0];
 
     var xhr1 = new XMLHttpRequest();
-    var url = "/api/lmn/websession/getSessionName";
+    var url = "/api/lmn/websession/session/name";
     xhr1.open("POST", url, true);
     xhr1.setRequestHeader("Content-Type", "application/json");
     xhr1.onreadystatechange = function () {
@@ -89,7 +89,7 @@
     xhr1.send(data);
 
     var xhr = new XMLHttpRequest();
-    var url = "/api/lmn/websession/hasPassword";
+    var url = "/api/lmn/websession/session/hasPassword/";
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.onreadystatechange = function () {
@@ -107,7 +107,7 @@
 
     function getState() {
         var xhr = new XMLHttpRequest();
-        var url = "/api/lmn/websession/isRunning";
+        var url = "/api/lmn/websession/session/isRunning";
         xhr.open("POST", url, true);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.onreadystatechange = function () {
@@ -132,7 +132,7 @@
         var password = document.getElementById("password").value
 
         var xhr = new XMLHttpRequest();
-        var url = "/api/lmn/websession/checkPassword";
+        var url = "/api/lmn/websession/session/checkPassword";
         xhr.open("POST", url, true);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.onreadystatechange = function () {

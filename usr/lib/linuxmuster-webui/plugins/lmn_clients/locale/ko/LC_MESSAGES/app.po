@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-29 22:09+0200\n"
-"PO-Revision-Date: 2022-08-29 20:15\n"
+"POT-Creation-Date: 2022-12-27 15:03+0100\n"
+"PO-Revision-Date: 2022-12-27 14:21\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -19,58 +19,79 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:45
 msgid "Close"
-msgstr ""
+msgstr "닫기"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:4
 msgid "Custom scripts"
+msgstr "나만의 명령어"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:64
+msgid "Disable"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:49
 msgid "Drives"
-msgstr ""
+msgstr "드라이브"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:38
 msgid "Edit custom script"
+msgstr "나만의 명령어 수정"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:61
+msgid "Label"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:63
+msgid "Letter"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:44
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:87
 msgid "Save"
+msgstr "저장"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:62
+msgid "Show letter"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:9
 msgid "The following scripts are executed by Samba when the client boots, in root context, and after the\n"
 "                    execution of the postsync script of Linbo. <br>This must be handled with caution."
+msgstr "루트의 내용에서 클라이언트가 부팅될 때,                     Linbo의 postsync명령어 실행후에  다음의 명령어들은 Samba에 의해 실행됩니다. <br> 이것은 주의를 갖고 처리해야 합니다."
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:53
+msgid "Unable to find a Drives.xml in your policy directory. Does the file really exists ?"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_clients/views.py:34
 msgid "Unable to determine samba domain"
-msgstr ""
+msgstr "삼바 도메인을 확인할 수 없습니다."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_clients/views.py:130
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/views.py:128
 msgid "Drives.xml not found !"
-msgstr ""
+msgstr "Drives.xml을 찾을 수 없습니다!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_clients/main.py:16
 msgid "Client configuration"
-msgstr ""
+msgstr "사용자 환경설정"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_clients/main.py:29
 msgid "Configure clients features"
-msgstr ""
+msgstr "사용자 환경을 설정하세요."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/js/controllers/index.controller.es:2
 msgid "Lmn_clients"
-msgstr ""
+msgstr "Lmn_사용자"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/js/controllers/index.controller.es:20
 msgid "Script saved !"
-msgstr ""
+msgstr "스크립트가 저장되었습니다!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/js/controllers/index.controller.es:21
 msgid "Error while saving script"
-msgstr ""
+msgstr "스크립트를 저장하는 도중 에러가 발생했습니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/js/controllers/index.controller.es:45
 msgid "Saved !"
-msgstr ""
+msgstr "저장되었습니다!"
 

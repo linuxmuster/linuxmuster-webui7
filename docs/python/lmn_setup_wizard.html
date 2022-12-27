@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>API: aj.plugins.lmn_setup_wizard &mdash; linuxmuster-webui7 7.1.0 documentation</title>
+  <title>API: aj.plugins.lmn_setup_wizard &mdash; linuxmuster-webui7 7.1.38 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                7.1.0
+                7.1.38
               </div>
             
           
@@ -89,14 +89,23 @@
               
             
             
-              <p class="caption"><span class="caption-text">Python API</span></p>
+              <p class="caption"><span class="caption-text">Plugins</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../plugins/lmn_auth.html">Plugin lmn_auth</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Python API</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="lmn_auth.html">API: aj.plugins.lmn_auth</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_common.html">API: aj.plugins.lmn_common</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_crontab.html">API: aj.plugins.lmn_crontab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_devices.html">API: aj.plugins.lmn_devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_dhcp.html">API: aj.plugins.lmn_dhcp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_docker.html">API: aj.plugins.lmn_docker</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_groupmembership.html">API: aj.plugins.lmn_groupmembership</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_landingpage.html">API: aj.plugins.lmn_landingpage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_linbo.html">API: aj.plugins.lmn_linbo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_linbo4.html">API: aj.plugins.lmn_linbo4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmn_linbo_sync.html">API: aj.plugins.lmn_linbo_sync</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_quotas.html">API: aj.plugins.lmn_quotas</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_session.html">API: aj.plugins.lmn_session</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_settings.html">API: aj.plugins.lmn_settings</a></li>
@@ -191,19 +200,7 @@
 <dd class="field-even"><p>Existence of <cite>setup.ini</cite></p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="aj.plugins.lmn_setup_wizard.views.Handler.handle_api_log">
-<code class="sig-name descname">handle_api_log</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">http_context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_setup_wizard/views.html#Handler.handle_api_log"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_setup_wizard.views.Handler.handle_api_log" title="Permalink to this definition">¶</a></dt>
-<dd><p>Write setup config into <cite>/tmp/setup.ini</cite>.
-Method POST.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -220,10 +217,9 @@ Method POST.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="aj.plugins.lmn_setup_wizard.views.Handler.handle_api_read_log">
-<code class="sig-name descname">handle_api_read_log</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">http_context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_setup_wizard/views.html#Handler.handle_api_read_log"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_setup_wizard.views.Handler.handle_api_read_log" title="Permalink to this definition">¶</a></dt>
-<dd><p>Read settings from <cite>/tmp/setup.ini</cite>.
-Method GET.</p>
+<dt id="aj.plugins.lmn_setup_wizard.views.Handler.handle_api_read_setup">
+<code class="sig-name descname">handle_api_read_setup</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">http_context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_setup_wizard/views.html#Handler.handle_api_read_setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_setup_wizard.views.Handler.handle_api_read_setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read settings from <cite>/tmp/setup.ini</cite>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
@@ -232,15 +228,15 @@ Method GET.</p>
 <dd class="field-even"><p>All setup settings</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)">dict</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt id="aj.plugins.lmn_setup_wizard.views.Handler.handle_api_restart">
-<code class="sig-name descname">handle_api_restart</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">http_context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_setup_wizard/views.html#Handler.handle_api_restart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_setup_wizard.views.Handler.handle_api_restart" title="Permalink to this definition">¶</a></dt>
-<dd><p>Restart webui service after setup is finished (to switch to https).</p>
+<dt id="aj.plugins.lmn_setup_wizard.views.Handler.handle_api_write_setup">
+<code class="sig-name descname">handle_api_write_setup</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">http_context</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_setup_wizard/views.html#Handler.handle_api_write_setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aj.plugins.lmn_setup_wizard.views.Handler.handle_api_write_setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write setup config into <cite>/tmp/setup.ini</cite>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
@@ -274,7 +270,7 @@ Method GET.</p>
   <div role="contentinfo">
     <p>
         
-        &copy; Copyright Andreas Till &amp; Arnaud Kientz - 2021
+        &copy; Copyright Andreas Till &amp; Arnaud Kientz - 2022
 
     </p>
   </div>

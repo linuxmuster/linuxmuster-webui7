@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-29 22:09+0200\n"
-"PO-Revision-Date: 2022-08-29 20:15\n"
+"POT-Creation-Date: 2022-12-27 15:03+0100\n"
+"PO-Revision-Date: 2022-12-27 14:21\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -25,6 +25,10 @@ msgstr "Fermer"
 msgid "Custom scripts"
 msgstr "Scripts personnalisés"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:64
+msgid "Disable"
+msgstr "Désactiver"
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:49
 msgid "Drives"
 msgstr "Lecteurs"
@@ -33,9 +37,22 @@ msgstr "Lecteurs"
 msgid "Edit custom script"
 msgstr "Modifier le script personnalisé"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:61
+msgid "Label"
+msgstr "Étiquette"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:63
+msgid "Letter"
+msgstr "Lettre"
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:44
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:87
 msgid "Save"
 msgstr "Sauvegarder"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:62
+msgid "Show letter"
+msgstr "Afficher la lettre"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:9
 msgid "The following scripts are executed by Samba when the client boots, in root context, and after the\n"
@@ -43,11 +60,15 @@ msgid "The following scripts are executed by Samba when the client boots, in roo
 msgstr "Les scripts suivants sont exécutés par Samba lorsque le client démarre, dans le contexte racine et après l'exécution\n"
 "                    du script postsync de Linbo. <br>Ceci doit être traité avec prudence."
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:53
+msgid "Unable to find a Drives.xml in your policy directory. Does the file really exists ?"
+msgstr "Impossible de trouver un Drives.xml dans votre répertoire de règles. Le fichier existe-t-il vraiment ?"
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_clients/views.py:34
 msgid "Unable to determine samba domain"
 msgstr "Impossible de déterminer le domaine samba"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_clients/views.py:130
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/views.py:128
 msgid "Drives.xml not found !"
 msgstr "Drives.xml introuvable !"
 

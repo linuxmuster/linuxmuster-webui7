@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>aj.plugins.lmn_crontab.views &mdash; linuxmuster-webui7 7.1.0 documentation</title>
+  <title>aj.plugins.lmn_crontab.views &mdash; linuxmuster-webui7 7.1.38 documentation</title>
   
 
   
@@ -62,7 +62,7 @@
             
             
               <div class="version">
-                7.1.0
+                7.1.38
               </div>
             
           
@@ -179,98 +179,124 @@
 
 <span class="kn">from</span> <span class="nn">jadi</span> <span class="kn">import</span> <span class="n">component</span>
 
-<span class="kn">from</span> <span class="nn">aj.api.http</span> <span class="kn">import</span> <span class="n">url</span><span class="p">,</span> <span class="n">HttpPlugin</span>
-<span class="kn">from</span> <span class="nn">aj.auth</span> <span class="kn">import</span> <span class="n">authorize</span>
+<span class="kn">from</span> <span class="nn">aj.api.http</span> <span class="kn">import</span> <span class="n">get</span><span class="p">,</span> <span class="n">post</span><span class="p">,</span> <span class="n">HttpPlugin</span>
+<span class="kn">from</span> <span class="nn">aj.auth</span> <span class="kn">import</span> <span class="n">authorize</span><span class="p">,</span> <span class="n">AuthenticationService</span>
 <span class="kn">from</span> <span class="nn">aj.api.endpoint</span> <span class="kn">import</span> <span class="n">endpoint</span><span class="p">,</span> <span class="n">EndpointError</span>
 <span class="kn">from</span> <span class="nn">aj.plugins.lmn_crontab.manager</span> <span class="kn">import</span> <span class="n">CronManager</span>
 <span class="kn">from</span> <span class="nn">reconfigure.items.crontab</span> <span class="kn">import</span> <span class="n">CrontabNormalTaskData</span><span class="p">,</span> <span class="n">CrontabSpecialTaskData</span><span class="p">,</span> <span class="n">CrontabEnvSettingData</span>
+
+<span class="n">HOLIDAY_PREFIX_TEST</span> <span class="o">=</span> <span class="s1">&#39;/usr/sbin/linuxmuster-holiday &#39;</span>
 
 <div class="viewcode-block" id="Handler"><a class="viewcode-back" href="../../../../python/lmn_crontab.html#aj.plugins.lmn_crontab.views.Handler">[docs]</a><span class="nd">@component</span><span class="p">(</span><span class="n">HttpPlugin</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">Handler</span><span class="p">(</span><span class="n">HttpPlugin</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">context</span>
 
-<div class="viewcode-block" id="Handler.handle_api_get_crontab"><a class="viewcode-back" href="../../../../python/lmn_crontab.html#aj.plugins.lmn_crontab.views.Handler.handle_api_get_crontab">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/get_crontab&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_get_crontab"><a class="viewcode-back" href="../../../../python/lmn_crontab.html#aj.plugins.lmn_crontab.views.Handler.handle_api_get_crontab">[docs]</a>    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/crontab&#39;</span><span class="p">)</span>
     <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:crontab:read&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_get_crontab</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the cron content through ConManager and store it in a dict.</span>
-<span class="sd">        Method GET.</span>
+
 <span class="sd">        :param http_context: HttpContext</span>
 <span class="sd">        :type http_context: HttpContext</span>
 <span class="sd">        :return: Cron jobs</span>
 <span class="sd">        :rtype: dict</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">if</span> <span class="n">http_context</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;GET&#39;</span><span class="p">:</span>
-            <span class="n">prepend_holiday</span> <span class="o">=</span> <span class="s1">&#39;TestHolidays &amp;&amp; &#39;</span>
-            <span class="n">user</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">identity</span>
-            <span class="n">crontab</span> <span class="o">=</span> <span class="n">CronManager</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span><span class="o">.</span><span class="n">load_tab</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
-            <span class="n">crontab_dict</span> <span class="o">=</span> <span class="n">crontab</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
-            <span class="k">for</span> <span class="n">job</span> <span class="ow">in</span> <span class="n">crontab_dict</span><span class="p">[</span><span class="s1">&#39;normal_tasks&#39;</span><span class="p">]:</span>
-                <span class="k">if</span> <span class="n">job</span><span class="p">[</span><span class="s1">&#39;command&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">prepend_holiday</span><span class="p">):</span>
-                    <span class="n">job</span><span class="p">[</span><span class="s1">&#39;disable_holiday&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
-                    <span class="n">job</span><span class="p">[</span><span class="s1">&#39;command&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">job</span><span class="p">[</span><span class="s1">&#39;command&#39;</span><span class="p">][</span><span class="nb">len</span><span class="p">(</span><span class="n">prepend_holiday</span><span class="p">):]</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">job</span><span class="p">[</span><span class="s1">&#39;disable_holiday&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
-            <span class="k">for</span> <span class="n">job</span> <span class="ow">in</span> <span class="n">crontab_dict</span><span class="p">[</span><span class="s1">&#39;special_tasks&#39;</span><span class="p">]:</span>
-                <span class="k">if</span> <span class="n">job</span><span class="p">[</span><span class="s1">&#39;command&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">prepend_holiday</span><span class="p">):</span>
-                    <span class="n">job</span><span class="p">[</span><span class="s1">&#39;disable_holiday&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
-                    <span class="n">job</span><span class="p">[</span><span class="s1">&#39;command&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">job</span><span class="p">[</span><span class="s1">&#39;command&#39;</span><span class="p">][</span><span class="nb">len</span><span class="p">(</span><span class="n">prepend_holiday</span><span class="p">):]</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">job</span><span class="p">[</span><span class="s1">&#39;disable_holiday&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
-            <span class="k">return</span> <span class="n">crontab_dict</span></div>
+        <span class="n">school</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">school</span>
 
-<div class="viewcode-block" id="Handler.handle_api_save_crontab"><a class="viewcode-back" href="../../../../python/lmn_crontab.html#aj.plugins.lmn_crontab.views.Handler.handle_api_save_crontab">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/save_crontab&#39;</span><span class="p">)</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">identity</span>
+        <span class="n">profil</span> <span class="o">=</span> <span class="n">AuthenticationService</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span><span class="o">.</span><span class="n">get_provider</span><span class="p">()</span><span class="o">.</span><span class="n">get_profile</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">profil</span><span class="p">[</span><span class="s1">&#39;sophomorixRole&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;globaladministrator&#39;</span><span class="p">:</span>
+            <span class="c1"># Load global-admin crontab for all global admins</span>
+            <span class="n">crontab</span> <span class="o">=</span> <span class="n">CronManager</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span><span class="o">.</span><span class="n">load_tab</span><span class="p">(</span><span class="s1">&#39;global-admin&#39;</span><span class="p">)</span>
+            <span class="n">crontab_dict</span> <span class="o">=</span> <span class="n">crontab</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+
+            <span class="k">for</span> <span class="n">job</span> <span class="ow">in</span> <span class="n">crontab_dict</span><span class="p">[</span><span class="s1">&#39;normal_tasks&#39;</span><span class="p">]:</span>
+                <span class="n">job</span><span class="p">[</span><span class="s1">&#39;school&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;default-school&#39;</span>
+                <span class="k">if</span> <span class="n">job</span><span class="p">[</span><span class="s1">&#39;command&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">HOLIDAY_PREFIX_TEST</span><span class="p">):</span>
+                    <span class="n">job</span><span class="p">[</span><span class="s1">&#39;disable_holiday&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="n">holiday_command</span><span class="p">,</span> <span class="n">job</span><span class="p">[</span><span class="s1">&#39;command&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">job</span><span class="p">[</span><span class="s1">&#39;command&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;&amp;&amp;&#39;</span><span class="p">)</span>
+                    <span class="c1"># School option used, we can extract the school</span>
+                    <span class="k">if</span> <span class="s1">&#39;-s&#39;</span> <span class="ow">in</span> <span class="n">holiday_command</span><span class="p">:</span>
+                        <span class="n">job</span><span class="p">[</span><span class="s1">&#39;school&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">holiday_command</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">job</span><span class="p">[</span><span class="s1">&#39;disable_holiday&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+
+            <span class="k">for</span> <span class="n">job</span> <span class="ow">in</span> <span class="n">crontab_dict</span><span class="p">[</span><span class="s1">&#39;special_tasks&#39;</span><span class="p">]:</span>
+                <span class="n">job</span><span class="p">[</span><span class="s1">&#39;school&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;default-school&#39;</span>
+                <span class="k">if</span> <span class="n">job</span><span class="p">[</span><span class="s1">&#39;command&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">HOLIDAY_PREFIX_TEST</span><span class="p">):</span>
+                    <span class="n">job</span><span class="p">[</span><span class="s1">&#39;disable_holiday&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="n">holiday_command</span><span class="p">,</span> <span class="n">job</span><span class="p">[</span><span class="s1">&#39;command&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">job</span><span class="p">[</span><span class="s1">&#39;command&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;&amp;&amp;&#39;</span><span class="p">)</span>
+                    <span class="c1"># School option used, we can extract the school</span>
+                    <span class="k">if</span> <span class="s1">&#39;-s&#39;</span> <span class="ow">in</span> <span class="n">holiday_command</span><span class="p">:</span>
+                        <span class="n">job</span><span class="p">[</span><span class="s1">&#39;school&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">holiday_command</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">job</span><span class="p">[</span><span class="s1">&#39;disable_holiday&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+
+            <span class="k">return</span> <span class="n">crontab_dict</span><span class="p">,</span> <span class="n">school</span></div>
+
+<div class="viewcode-block" id="Handler.handle_api_save_crontab"><a class="viewcode-back" href="../../../../python/lmn_crontab.html#aj.plugins.lmn_crontab.views.Handler.handle_api_save_crontab">[docs]</a>    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/crontab&#39;</span><span class="p">)</span>
     <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:crontab:write&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_save_crontab</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Store cron data from frontend in a cron file through CronManager.</span>
-<span class="sd">        Method POST.</span>
+
 <span class="sd">        :param http_context: HttpContext</span>
 <span class="sd">        :type http_context: HttpContext</span>
 <span class="sd">        :return: True if successfull</span>
 <span class="sd">        :rtype: bool</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">http_context</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
-            <span class="k">def</span> <span class="nf">setTask</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
-                <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">                Utility to convert angular values in Python Crontab objects.</span>
-<span class="sd">                :param obj: Crontab object</span>
-<span class="sd">                :type obj: object</span>
-<span class="sd">                :param values: Crontab values as dict</span>
-<span class="sd">                :type values: dict</span>
-<span class="sd">                :return: Crontab object</span>
-<span class="sd">                :rtype: object</span>
-<span class="sd">                &quot;&quot;&quot;</span>
-                <span class="k">if</span> <span class="s1">&#39;disable_holiday&#39;</span> <span class="ow">in</span> <span class="n">values</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="n">values</span><span class="p">[</span><span class="s1">&#39;disable_holiday&#39;</span><span class="p">]:</span>
-                        <span class="n">values</span><span class="p">[</span><span class="s1">&#39;command&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;TestHolidays &amp;&amp; &#39;</span> <span class="o">+</span> <span class="n">values</span><span class="p">[</span><span class="s1">&#39;command&#39;</span><span class="p">]</span>
-                    <span class="k">del</span> <span class="n">values</span><span class="p">[</span><span class="s1">&#39;disable_holiday&#39;</span><span class="p">]</span>
 
-                <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">values</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                    <span class="nb">setattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
-                <span class="k">return</span> <span class="n">obj</span>
+        <span class="k">def</span> <span class="nf">setTask</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Utility to convert angular values in Python Crontab objects.</span>
+<span class="sd">            :param obj: Crontab object</span>
+<span class="sd">            :type obj: object</span>
+<span class="sd">            :param values: Crontab values as dict</span>
+<span class="sd">            :type values: dict</span>
+<span class="sd">            :return: Crontab object</span>
+<span class="sd">            :rtype: object</span>
+<span class="sd">            &quot;&quot;&quot;</span>
 
-            <span class="c1"># Create empty config</span>
-            <span class="n">user</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">identity</span>
-            <span class="n">crontab</span> <span class="o">=</span> <span class="n">CronManager</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span><span class="o">.</span><span class="n">load_tab</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-            <span class="n">new_crontab</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;crontab&#39;</span><span class="p">]</span>
-            <span class="k">for</span> <span class="n">_type</span><span class="p">,</span> <span class="n">values_list</span> <span class="ow">in</span> <span class="n">new_crontab</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                <span class="k">for</span> <span class="n">values</span> <span class="ow">in</span> <span class="n">values_list</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="n">_type</span> <span class="o">==</span> <span class="s1">&#39;normal_tasks&#39;</span><span class="p">:</span>
-                        <span class="n">crontab</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">normal_tasks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">setTask</span><span class="p">(</span><span class="n">CrontabNormalTaskData</span><span class="p">(),</span> <span class="n">values</span><span class="p">))</span>
-                    <span class="k">elif</span> <span class="n">_type</span> <span class="o">==</span> <span class="s1">&#39;special_tasks&#39;</span><span class="p">:</span>
-                        <span class="n">crontab</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">special_tasks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">setTask</span><span class="p">(</span><span class="n">CrontabSpecialTaskData</span><span class="p">(),</span> <span class="n">values</span><span class="p">))</span>
-                    <span class="k">elif</span> <span class="n">_type</span> <span class="o">==</span> <span class="s1">&#39;env_settings&#39;</span><span class="p">:</span>
-                        <span class="n">crontab</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">env_settings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">setTask</span><span class="p">(</span><span class="n">CrontabEnvSettingData</span><span class="p">(),</span> <span class="n">values</span><span class="p">))</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">CronManager</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span><span class="o">.</span><span class="n">save_tab</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">crontab</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s1">&#39;disable_holiday&#39;</span> <span class="ow">in</span> <span class="n">values</span><span class="p">:</span>
+                <span class="n">school</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">school</span>
+                <span class="k">if</span> <span class="n">values</span><span class="p">[</span><span class="s1">&#39;disable_holiday&#39;</span><span class="p">]:</span>
+                    <span class="n">school</span> <span class="o">=</span> <span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;school&#39;</span><span class="p">,</span> <span class="n">school</span><span class="p">)</span>
+                    <span class="n">values</span><span class="p">[</span><span class="s1">&#39;command&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">HOLIDAY_PREFIX_TEST</span><span class="si">}</span><span class="s1"> -s </span><span class="si">{</span><span class="n">school</span><span class="si">}</span><span class="s1"> &amp;&amp; </span><span class="si">{</span><span class="n">values</span><span class="p">[</span><span class="s2">&quot;command&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span>
+                <span class="k">del</span> <span class="n">values</span><span class="p">[</span><span class="s1">&#39;disable_holiday&#39;</span><span class="p">]</span>
+                <span class="k">del</span> <span class="n">values</span><span class="p">[</span><span class="s1">&#39;school&#39;</span><span class="p">]</span>
+
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">values</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">obj</span>
+
+        <span class="c1"># Create empty config</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">identity</span>
+        <span class="n">crontab</span> <span class="o">=</span> <span class="n">CronManager</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span><span class="o">.</span><span class="n">load_tab</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">new_crontab</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;crontab&#39;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">_type</span><span class="p">,</span> <span class="n">values_list</span> <span class="ow">in</span> <span class="n">new_crontab</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">values</span> <span class="ow">in</span> <span class="n">values_list</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">_type</span> <span class="o">==</span> <span class="s1">&#39;normal_tasks&#39;</span><span class="p">:</span>
+                    <span class="n">crontab</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">normal_tasks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">setTask</span><span class="p">(</span><span class="n">CrontabNormalTaskData</span><span class="p">(),</span> <span class="n">values</span><span class="p">))</span>
+                <span class="k">elif</span> <span class="n">_type</span> <span class="o">==</span> <span class="s1">&#39;special_tasks&#39;</span><span class="p">:</span>
+                    <span class="n">crontab</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">special_tasks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">setTask</span><span class="p">(</span><span class="n">CrontabSpecialTaskData</span><span class="p">(),</span> <span class="n">values</span><span class="p">))</span>
+                <span class="k">elif</span> <span class="n">_type</span> <span class="o">==</span> <span class="s1">&#39;env_settings&#39;</span><span class="p">:</span>
+                    <span class="n">crontab</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">env_settings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">setTask</span><span class="p">(</span><span class="n">CrontabEnvSettingData</span><span class="p">(),</span> <span class="n">values</span><span class="p">))</span>
+
+        <span class="n">profil</span> <span class="o">=</span> <span class="n">AuthenticationService</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span><span class="o">.</span><span class="n">get_provider</span><span class="p">()</span><span class="o">.</span><span class="n">get_profile</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">profil</span><span class="p">[</span><span class="s1">&#39;sophomorixRole&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;globaladministrator&#39;</span><span class="p">:</span>
+                <span class="n">CronManager</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span><span class="o">.</span><span class="n">save_tab</span><span class="p">(</span><span class="s1">&#39;global-admin&#39;</span><span class="p">,</span> <span class="n">crontab</span><span class="p">)</span>
                 <span class="k">return</span> <span class="kc">True</span>
-            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">EndpointError</span><span class="p">(</span><span class="n">e</span><span class="p">)</span></div></div>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">EndpointError</span><span class="p">(</span><span class="n">e</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>
@@ -284,7 +310,7 @@
   <div role="contentinfo">
     <p>
         
-        &copy; Copyright Andreas Till &amp; Arnaud Kientz - 2021
+        &copy; Copyright Andreas Till &amp; Arnaud Kientz - 2022
 
     </p>
   </div>

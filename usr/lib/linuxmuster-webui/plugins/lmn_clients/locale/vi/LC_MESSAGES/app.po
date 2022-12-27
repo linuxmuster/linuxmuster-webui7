@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-29 22:09+0200\n"
-"PO-Revision-Date: 2022-08-29 20:15\n"
+"POT-Creation-Date: 2022-12-27 15:03+0100\n"
+"PO-Revision-Date: 2022-12-27 14:21\n"
 "Last-Translator: \n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -25,6 +25,10 @@ msgstr ""
 msgid "Custom scripts"
 msgstr ""
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:64
+msgid "Disable"
+msgstr ""
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:49
 msgid "Drives"
 msgstr ""
@@ -33,8 +37,21 @@ msgstr ""
 msgid "Edit custom script"
 msgstr ""
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:61
+msgid "Label"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:63
+msgid "Letter"
+msgstr ""
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:44
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:87
 msgid "Save"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:62
+msgid "Show letter"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:9
@@ -42,11 +59,15 @@ msgid "The following scripts are executed by Samba when the client boots, in roo
 "                    execution of the postsync script of Linbo. <br>This must be handled with caution."
 msgstr ""
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:53
+msgid "Unable to find a Drives.xml in your policy directory. Does the file really exists ?"
+msgstr ""
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_clients/views.py:34
 msgid "Unable to determine samba domain"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_clients/views.py:130
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/views.py:128
 msgid "Drives.xml not found !"
 msgstr ""
 

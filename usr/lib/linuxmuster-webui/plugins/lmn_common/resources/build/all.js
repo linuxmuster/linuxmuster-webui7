@@ -449,7 +449,7 @@ angular.module('core').directive('teacherAccess', function (identity) {
     this.isStrongPwd = function(password) {
       var error_msg, regExp, validPassword;
       error_msg = gettext('Passwords must contain at least one lowercase, one uppercase, one special char or number, and at least 7 chars');
-      regExp = /(?=.*[a-z])(?=.*[A-Z])(?=.*[?!@#$%&*()]|(?=.*\d)).{7,}/;
+      regExp = /(?=.*[a-z])(?=.*[A-Z])(?=.*[?!@#§+\-$%&*{}()]|(?=.*\d)).{7,}/;
       validPassword = regExp.test(password);
       if (!validPassword) {
         return error_msg;

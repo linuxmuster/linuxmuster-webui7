@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>aj.plugins.lmn_linbo_sync.views &mdash; linuxmuster-webui7 7.1.0 documentation</title>
+  <title>aj.plugins.lmn_linbo_sync.views &mdash; linuxmuster-webui7 7.1.38 documentation</title>
   
 
   
@@ -62,7 +62,7 @@
             
             
               <div class="version">
-                7.1.0
+                7.1.38
               </div>
             
           
@@ -177,24 +177,17 @@
 <span class="sd">Module to drive some workstations through linbo.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">subprocess</span>
-<span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 <span class="kn">from</span> <span class="nn">jadi</span> <span class="kn">import</span> <span class="n">component</span>
 
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;/srv/tmp&#39;</span><span class="p">)</span>
 
-<span class="kn">from</span> <span class="nn">aj.api.http</span> <span class="kn">import</span> <span class="n">url</span><span class="p">,</span> <span class="n">HttpPlugin</span>
+<span class="kn">from</span> <span class="nn">aj.api.http</span> <span class="kn">import</span> <span class="n">get</span><span class="p">,</span> <span class="n">post</span><span class="p">,</span> <span class="n">HttpPlugin</span>
 <span class="kn">from</span> <span class="nn">aj.auth</span> <span class="kn">import</span> <span class="n">authorize</span>
 <span class="kn">from</span> <span class="nn">aj.api.endpoint</span> <span class="kn">import</span> <span class="n">endpoint</span><span class="p">,</span> <span class="n">EndpointError</span>
 <span class="kn">from</span> <span class="nn">aj.plugins.lmn_linbo_sync</span> <span class="kn">import</span> <span class="n">api</span>
 
 <span class="c1">## TODO</span>
-<span class="c1"># Add initcache and partition</span>
-<span class="c1"># Add option -p</span>
-<span class="c1"># Delete option -w if timeout is 0</span>
 <span class="c1"># Better icons and design</span>
 <span class="c1"># Force some options even if not present in start.conf ?</span>
 
@@ -203,13 +196,12 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">context</span>
 
-<div class="viewcode-block" id="Handler.handle_api_linbo_sync"><a class="viewcode-back" href="../../../../python/lmn_linbo_sync.html#aj.plugins.lmn_linbo_sync.views.Handler.handle_api_linbo_sync">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lm/linbo/SyncList&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_linbo_sync"><a class="viewcode-back" href="../../../../python/lmn_linbo_sync.html#aj.plugins.lmn_linbo_sync.views.Handler.handle_api_linbo_sync">[docs]</a>    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/linbosync/last_syncs&#39;</span><span class="p">)</span>
     <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:sync:list&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_linbo_sync</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the last synchronisation date from all workstations.</span>
-<span class="sd">        Method GET.</span>
 
 <span class="sd">        :param http_context: HttpContext</span>
 <span class="sd">        :type http_context: HttpContext</span>
@@ -217,22 +209,22 @@
 <span class="sd">        :rtype: dict or list</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">if</span> <span class="n">http_context</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;GET&#39;</span><span class="p">:</span>
-            <span class="n">workstations</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">list_workstations</span><span class="p">()</span>
-            <span class="n">api</span><span class="o">.</span><span class="n">last_sync_all</span><span class="p">(</span><span class="n">workstations</span><span class="p">)</span>
+        <span class="n">configpath</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">configpath</span><span class="si">}</span><span class="s1">devices.csv&#39;</span>
+        <span class="n">school</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">school</span>
+        <span class="n">workstations</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">list_workstations</span><span class="p">(</span><span class="n">configpath</span><span class="p">,</span> <span class="n">school</span><span class="p">)</span>
+        <span class="n">api</span><span class="o">.</span><span class="n">last_sync_all</span><span class="p">(</span><span class="n">workstations</span><span class="p">)</span>
 
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">workstations</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">workstations</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;none&quot;</span><span class="p">]</span></div>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">workstations</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">workstations</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;none&quot;</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="Handler.handle_api_workstations_online"><a class="viewcode-back" href="../../../../python/lmn_linbo_sync.html#aj.plugins.lmn_linbo_sync.views.Handler.handle_api_workstations_online">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lm/linbo/isOnline/(?P&lt;host&gt;[\w\-]+)&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_workstations_online"><a class="viewcode-back" href="../../../../python/lmn_linbo_sync.html#aj.plugins.lmn_linbo_sync.views.Handler.handle_api_workstations_online">[docs]</a>    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/linbosync/isOnline/(?P&lt;host&gt;[\w\-]+)&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:sync:online&#39;</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_workstations_online</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">,</span> <span class="n">host</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Connector to test if a host is online.</span>
-<span class="sd">        Method GET.</span>
 
 <span class="sd">        :param http_context: HttpContext</span>
 <span class="sd">        :type http_context: HttpContext</span>
@@ -242,16 +234,14 @@
 <span class="sd">        :rtype: string</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">if</span> <span class="n">http_context</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;GET&#39;</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">api</span><span class="o">.</span><span class="n">test_online</span><span class="p">(</span><span class="n">host</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">api</span><span class="o">.</span><span class="n">test_online</span><span class="p">(</span><span class="n">host</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Handler.handle_api_sync_workstation"><a class="viewcode-back" href="../../../../python/lmn_linbo_sync.html#aj.plugins.lmn_linbo_sync.views.Handler.handle_api_sync_workstation">[docs]</a>    <span class="nd">@url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lm/linbo/run&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="Handler.handle_api_sync_workstation"><a class="viewcode-back" href="../../../../python/lmn_linbo_sync.html#aj.plugins.lmn_linbo_sync.views.Handler.handle_api_sync_workstation">[docs]</a>    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/linbosync/run&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:sync:sync&#39;</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_sync_workstation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Connector to launch a linbo command.</span>
-<span class="sd">        Method POST.</span>
 
 <span class="sd">        :param http_context: HttpContext</span>
 <span class="sd">        :type http_context: HttpContext</span>
@@ -259,12 +249,14 @@
 <span class="sd">        :rtype: string or integer 0</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">action</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;action&#39;</span><span class="p">]</span>
+        <span class="n">cmd_parameters</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;cmd_parameters&#39;</span><span class="p">]</span>
+        <span class="n">school</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">school</span>
+        <span class="n">configpath</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">configpath</span><span class="si">}</span><span class="s1">devices.csv&#39;</span>
 
-        <span class="k">if</span> <span class="n">http_context</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">action</span> <span class="o">==</span> <span class="s1">&#39;run-linbo&#39;</span><span class="p">:</span>
-                <span class="n">cmd</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;cmd&#39;</span><span class="p">]</span>
-                <span class="k">return</span> <span class="n">api</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cmd</span><span class="o">.</span><span class="n">split</span><span class="p">())</span></div></div>
+        <span class="n">cmd_parameters</span><span class="p">[</span><span class="s1">&#39;school&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">school</span>
+        <span class="n">cmd_parameters</span><span class="p">[</span><span class="s1">&#39;configpath&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">configpath</span>
+
+        <span class="k">return</span> <span class="n">api</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cmd_parameters</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>
@@ -278,7 +270,7 @@
   <div role="contentinfo">
     <p>
         
-        &copy; Copyright Andreas Till &amp; Arnaud Kientz - 2021
+        &copy; Copyright Andreas Till &amp; Arnaud Kientz - 2022
 
     </p>
   </div>

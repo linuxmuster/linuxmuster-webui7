@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-25 18:56+0200\n"
-"PO-Revision-Date: 2022-08-29 20:15\n"
+"PO-Revision-Date: 2022-12-27 14:21\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -19,13 +19,13 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/tasks.py:9
 msgid "Delete Samba files"
-msgstr ""
+msgstr "Samaba 파일 삭제"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/resources/js/services/smbclient.service.es:13
 msgid " moved!"
-msgstr ""
+msgstr " 이동 완료!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/resources/js/services/smbclient.service.es:22
 msgid " copied!"
-msgstr ""
+msgstr " 복사됨!"
 

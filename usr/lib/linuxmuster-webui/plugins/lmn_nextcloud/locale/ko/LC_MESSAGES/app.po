@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-26 21:41+0200\n"
-"PO-Revision-Date: 2022-08-29 20:15\n"
+"PO-Revision-Date: 2022-12-27 14:21\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -19,9 +19,9 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_nextcloud/resources/partial/index.html:4
 msgid "URL not found or not valid! Please check config file."
-msgstr ""
+msgstr "URL을 찾을 수 없거나 유효하지 않습니다! config 파일을 확인하십시오."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_nextcloud/resources/js/controllers/index.controller.es:2
 msgid "Nextcloud"
-msgstr ""
+msgstr "Nextcloud"
 

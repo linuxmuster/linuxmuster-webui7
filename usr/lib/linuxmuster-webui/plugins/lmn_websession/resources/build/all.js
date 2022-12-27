@@ -16,7 +16,7 @@
   angular.module('lmn.websession').controller('LMNWebsessionController', function($rootScope, $scope, $window, $http, $uibModal, $location, gettext, notify, pageTitle, messagebox) {
     pageTitle.set(gettext('Websession'));
     $scope.getWebConferenceEnabled = function() {
-      return $http.get('/api/lmn/websession/getWebConferenceEnabled').then(function(resp) {
+      return $http.get('/api/lmn/websession/webConferenceEnabled').then(function(resp) {
         if (resp.data === true) {
           $scope.enabled = true;
           return $scope.getWebConferences();
@@ -26,9 +26,7 @@
       });
     };
     $scope.getWebConferences = function() {
-      return $http.post('/api/lmn/websession/getWebConferences', {
-        username: $scope.identity.user
-      }).then(function(resp) {
+      return $http.get('/api/lmn/websession/webConferences').then(function(resp) {
         return $scope.myWebsessions = resp.data;
       });
     };
@@ -94,9 +92,7 @@
         positive: 'Delete',
         negative: 'Cancel'
       }).then(function() {
-        return $http.post('/api/lmn/websession/deleteWebConference', {
-          id: id
-        }).then(function(resp) {
+        return $http.delete(`/api/lmn/websession/webConference/${$scope.websessionID}`).then(function(resp) {
           $scope.refreshSessionList();
           if (resp.data["status"] === "SUCCESS") {
             return notify.success(gettext("Successfully removed!"));
@@ -184,11 +180,10 @@
         participant = ref[i];
         tempparticipants.push(participant.sAMAccountName);
       }
-      return $http.post('/api/lmn/websession/createWebConference', {
+      return $http.post('/api/lmn/websession/webConferences', {
         sessionname: $scope.sessionname,
         sessiontype: $scope.sessiontype,
         sessionpassword: $scope.sessionpassword,
-        moderator: $scope.identity.user,
         participants: tempparticipants
       }).then(function(resp) {
         if (resp.data["status"] !== "SUCCESS") {
@@ -198,15 +193,13 @@
       });
     };
     $scope.findUsers = function(q) {
-      return $http.post("/api/lmn/websession/user-search", {
-        q: q
-      }).then(function(resp) {
+      return $http.gett(`/api/lmn/session/user-search/${q}`).then(function(resp) {
         $scope.users = resp.data;
         return resp.data;
       });
     };
     $scope.findSchoolClasses = function(q) {
-      return $http.get(`/api/lmn/websession/schoolClass-search?q=${q}`).then(function(resp) {
+      return $http.get(`/api/lmn/session/schoolClass-search/${q}`).then(function(resp) {
         $scope.class = resp.data;
         return resp.data;
       });

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-24 11:51+0200\n"
-"PO-Revision-Date: 2022-08-29 20:15\n"
+"POT-Creation-Date: 2022-12-27 15:03+0100\n"
+"PO-Revision-Date: 2022-12-27 14:21\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -19,123 +19,123 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:77
 msgid "<i class=\"fas fa-clock\"></i>  Boot timeout (in seconds):"
-msgstr ""
+msgstr "<i class=\"fas fa-clock\"></i> 부팅 시간초과(초):"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:96
 msgid "<i class=\"fas fa-directions\"></i>  Bypass autostart"
-msgstr ""
+msgstr "<i class=\"fas fa-directions\"></i> 건너뛰기 자동시작"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:43
 msgid "<i class=\"fas fa-eraser\"></i>  Format"
-msgstr ""
+msgstr "<i class=\"fas fa-eraser\"></i>포멧"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:88
 msgid "<i class=\"fas fa-eraser\"></i>  Partition"
-msgstr ""
+msgstr "<i class=\"fas fa-eraser\"></i>파티션"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:55
 msgid "<i class=\"fas fa-exclamation-triangle\"></i>  New"
-msgstr ""
+msgstr "<i class=\"fas fa-exclamation-triangle\"></i>새로운 것"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:107
 msgid "<i class=\"fas fa-info-circle\"></i>\n"
 "                To apply a linbo-remote command, you have to select at least one client and one command."
-msgstr ""
+msgstr "<i class=\"fas fa-info-circle\"></i>                원격 linbo 명령어를 적용하려면, 최소 하나의 클라이언트와 명령어를 선택해야 합니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:72
 msgid "<i class=\"fas fa-lightbulb\"></i>  Wake on lan"
-msgstr ""
+msgstr "<i class=\"fas fa-lightbulb\"></i>lan 깨우기"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:51
 msgid "<i class=\"fas fa-play\"></i>  Start"
-msgstr ""
+msgstr "<i class=\"fas fa-play\"></i>시작"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:100
 msgid "<i class=\"fas fa-plug\"></i>  Use Prestart"
-msgstr ""
+msgstr "<i class=\"fas fa-plug\"></i>Prestart사용"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:64
 msgid "<i class=\"fas fa-power-off\"></i>  Halt"
-msgstr ""
+msgstr "<i class=\"fas fa-power-off\"></i>멈추기"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:68
 msgid "<i class=\"fas fa-sync\"></i>  Reboot"
-msgstr ""
+msgstr "<i class=\"fas fa-sync\"></i>리부팅"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:47
 msgid "<i class=\"fas fa-sync-alt\"></i>  Sync"
-msgstr ""
+msgstr "<i class=\"fas fa-sync-alt\"></i>동기화"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:92
 msgid "<i class=\"fas fa-terminal\"></i>  Disable GUI"
-msgstr ""
+msgstr "<i class=\"fas fa-terminal\"></i>GUI 비활성화"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:117
 msgid "Apply"
-msgstr ""
+msgstr "적용하기"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:116
 msgid "Check online"
-msgstr ""
+msgstr "온라인으로 확인"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:87
 msgid "Global options"
-msgstr ""
+msgstr "전제 옵션"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:12
 msgid "Hostname"
-msgstr ""
+msgstr "호스트이름"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:13
 msgid "IP"
-msgstr ""
+msgstr "IP"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:15
 msgid "Last sync"
-msgstr ""
+msgstr "최근 동기화"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:14
 msgid "Mac address"
-msgstr ""
+msgstr "Mac 주소"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:27
 msgid "No date found."
-msgstr ""
+msgstr "날짜를 확인할 수 없습니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:16
 msgid "Online ?"
-msgstr ""
+msgstr "온라인?"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:63
 msgid "Power management"
-msgstr ""
+msgstr "전력 관리"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:112
 msgid "Result command"
-msgstr ""
+msgstr "명령어로 인한 결과 발생"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:38
 msgid "Run linbo-remote command"
-msgstr ""
+msgstr "원격 linbo 명령어 실행"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/main.py:17
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/js/controllers/index.controller.coffee:2
 msgid "Linbo synchronization"
-msgstr ""
+msgstr "Linbo 동기화"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/main.py:31
 msgid "List of last sync workstations"
-msgstr ""
+msgstr "가장 마지막에 동기화된 작업소 리스트"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/main.py:36
 msgid "Test if workstation is up"
-msgstr ""
+msgstr "작업소가 아직 실행되고 있는지 테스트"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/main.py:41
 msgid "Synchronize first OS from workstation"
-msgstr ""
+msgstr "저장소로부터 첫번째 운영체제 동기화"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/js/controllers/index.controller.coffee:186
-msgid "Command successfully sent : "
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/js/controllers/index.controller.coffee:239
+msgid "Command successfully sent: "
 msgstr ""
 

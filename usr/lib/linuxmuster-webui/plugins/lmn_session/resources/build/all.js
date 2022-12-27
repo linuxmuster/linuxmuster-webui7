@@ -143,7 +143,7 @@
   });
 
   angular.module('lmn.session').controller('LMNSessionController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem, validation, $rootScope, wait, userPassword) {
-    var generateSession, typeIsArray, validateResult;
+    var typeIsArray, validateResult;
     pageTitle.set(gettext('Session'));
     $scope.generateSessionMouseover = gettext('Regenerate this session');
     $scope.startGeneratedSessionMouseover = gettext('Start this session unchanged (may not be up to date)');
@@ -171,7 +171,7 @@
     };
     // Websession part
     $scope.getWebConferenceEnabled = function() {
-      return $http.get('/api/lmn/websession/getWebConferenceEnabled').then(function(resp) {
+      return $http.get('/api/lmn/websession/webConferenceEnabled').then(function(resp) {
         if (resp.data === true) {
           $scope.websessionEnabled = true;
           return $scope.websessionGetStatus();
@@ -182,9 +182,9 @@
     };
     $scope.websessionIsRunning = false;
     $scope.websessionGetStatus = function() {
-      return $http.post('/api/lmn/websession/getWebConferenceByName', {
-        sessionname: $scope.currentSession.comment + "-" + $scope.currentSession.name
-      }).then(function(resp) {
+      var sessionname;
+      sessionname = $scope.currentSession.comment + "-" + $scope.currentSession.name;
+      return $http.get(`/api/lmn/websession/webConference/${sessionname}`).then(function(resp) {
         if (resp.data["status"] === "SUCCESS") {
           if (resp.data["data"]["status"] === "started") {
             $scope.websessionIsRunning = true;
@@ -211,9 +211,7 @@
         id: $scope.websessionID,
         moderatorpw: $scope.websessionModeratorPW
       }).then(function(resp) {
-        return $http.post('/api/lmn/websession/deleteWebConference', {
-          id: $scope.websessionID
-        }).then(function(resp) {
+        return $http.delete(`/api/lmn/websession/webConference/${$scope.websessionID}`).then(function(resp) {
           if (resp.data["status"] === "SUCCESS") {
             notify.success(gettext("Successfully stopped!"));
             return $scope.websessionIsRunning = false;
@@ -231,11 +229,10 @@
         participant = ref[i];
         tempparticipants.push(participant.sAMAccountName);
       }
-      return $http.post('/api/lmn/websession/createWebConference', {
+      return $http.post('/api/lmn/websession/webConferences', {
         sessionname: $scope.currentSession.comment + "-" + $scope.currentSession.name,
         sessiontype: "private",
         sessionpassword: "",
-        moderator: $scope.identity.user,
         participants: tempparticipants
       }).then(function(resp) {
         if (resp.data["status"] === "SUCCESS") {
@@ -322,7 +319,7 @@
         });
       }
     };
-    $scope.killSession = function(username, session, comment) {
+    $scope.killSession = function(session, comment) {
       if (session === '') {
         messagebox.show({
           title: gettext('No Session selected'),
@@ -337,24 +334,20 @@
         negative: gettext('Cancel')
       }).then(function() {
         wait.modal(gettext('Deleting session...'), 'spinner');
-        return $http.post('/api/lmn/session/sessions', {
-          action: 'kill-sessions',
-          session: session
-        }).then(function(resp) {
+        return $http.delete(`/api/lmn/session/sessions/${session}`).then(function(resp) {
           $rootScope.$emit('updateWaiting', 'done');
-          //notify.success gettext('Session Deleted')
           $scope.visible.sessionname = 'none';
           $scope.visible.participanttable = 'none';
           $scope.visible.mainpage = 'show';
           $scope.sessionLoaded = false;
           $scope.info.message = '';
-          $scope.getSessions($scope.identity.user);
+          $scope.getSessions();
           $scope.currentSession.name = '';
           return notify.success(gettext(resp.data));
         });
       });
     };
-    $scope.newSession = function(username) {
+    $scope.newSession = function() {
       return messagebox.prompt(gettext('Session Name'), '').then(function(msg) {
         var testChar;
         if (!msg.value) {
@@ -365,14 +358,8 @@
           notify.error(gettext(testChar));
           return;
         }
-        return $http.post('/api/lmn/session/sessions', {
-          action: 'new-session',
-          username: username,
-          comment: msg.value
-        }).then(function(resp) {
-          var sessions;
-          $scope.new - (sessions = resp.data);
-          $scope.getSessions($scope.identity.user);
+        return $http.put(`/api/lmn/session/sessions/${msg.value}`, {}).then(function(resp) {
+          $scope.getSessions();
           notify.success(gettext('Session Created'));
           // Reset alle messages and information to show session table
           $scope.info.message = '';
@@ -383,7 +370,7 @@
         });
       });
     };
-    $scope.getSessions = function(username) {
+    $scope.getSessions = function() {
       // TODO Figure out why this only works correctly if defined in this function (translation string etc.)
       // translationstrings
       $scope.translation = {
@@ -478,25 +465,17 @@
         }
       };
       //get groups
-      console.log($scope.identity.profile);
       $http.get('/api/lmn/groupmembership/groups').then(function(resp) {
         $scope.groups = resp.data[0];
         $scope.identity.isAdmin = resp.data[1];
         $scope.classes = $scope.groups.filter($scope.filterGroupType('schoolclass'));
         return $scope.classes = $scope.classes.filter($scope.filterMembership(true));
       });
-      //get sessions
-      return $http.post('/api/lmn/session/sessions', {
-        action: 'get-sessions',
-        username: username
-      }).then(function(resp) {
+      return $http.get('/api/lmn/session/sessions').then(function(resp) {
         if (resp.data.length === 0) {
           $scope.sessions = resp.data;
-          $scope.info.message = gettext("There are no sessions yet. Create a session using the 'New Session' button at the top!");
-          return console.log(resp.data);
+          return $scope.info.message = gettext("There are no sessions yet. Create a session using the 'New Session' button at the top!");
         } else {
-          //console.log ('sessions found')
-          //console.log ('no sessions')
           $scope.visible.sessiontable = 'show';
           return $scope.sessions = resp.data;
         }
@@ -527,11 +506,8 @@
         }
       });
     };
-    $scope.showRoomDetails = function(username) {
-      return $http.post('/api/lmn/session/getUserInRoom', {
-        action: 'get-my-room',
-        username: username
-      }).then(function(resp) {
+    $scope.showRoomDetails = function() {
+      return $http.get('/api/lmn/session/userInRoom').then(function(resp) {
         var usersInRoom;
         if (resp.data === 0) {
           return messagebox.show({
@@ -554,7 +530,7 @@
         }
       });
     };
-    $scope.renameSession = function(username, session, comment) {
+    $scope.renameSession = function(session, comment) {
       if (session === '') {
         messagebox.show({
           title: gettext('No Session selected'),
@@ -578,7 +554,7 @@
           session: session,
           comment: msg.value
         }).then(function(resp) {
-          $scope.getSessions($scope.identity.user);
+          $scope.getSessions();
           $scope.currentSession.name = '';
           $scope.sessionLoaded = false;
           $scope.currentSession.comment = '';
@@ -589,18 +565,14 @@
         });
       });
     };
-    $scope.getParticipants = function(username, session) {
+    $scope.getParticipants = function(session) {
       $scope.visible.sessiontable = 'none';
       $scope.resetClass();
       // Reset select all checkboxes when loading participants
       angular.forEach($scope.fields, function(field) {
         return field.checkboxStatus = false;
       });
-      return $http.post('/api/lmn/session/sessions', {
-        action: 'get-participants',
-        username: username,
-        session: session
-      }).then(function(resp) {
+      return $http.get(`/api/lmn/session/sessions/${session}`).then(function(resp) {
         $scope.visible.sessionname = 'show';
         $scope.sessionLoaded = 'true';
         $scope.filter = '';
@@ -616,17 +588,14 @@
       });
     };
     $scope.findUsers = function(q) {
-      return $http.post("/api/lmn/session/user-search", {
-        q: q
-      }).then(function(resp) {
+      return $http.get(`/api/lmn/session/user-search/${q}`).then(function(resp) {
         $scope.users = resp.data;
         return resp.data;
       });
     };
     $scope.findSchoolClasses = function(q) {
-      return $http.get(`/api/lmn/session/schoolClass-search?q=${q}`).then(function(resp) {
+      return $http.get(`/api/lmn/session/schoolClass-search/${q}`).then(function(resp) {
         $scope.class = resp.data;
-        //console.log resp.data
         return resp.data;
       });
     };
@@ -650,15 +619,12 @@
         // open existing session
         $scope.currentSession.name = sessionID;
         $scope.currentSession.comment = sessionComment;
-        $scope.getParticipants($scope.identity.user, sessionID);
+        $scope.getParticipants(sessionID);
         return $scope.getWebConferenceEnabled();
       }
     };
-    $scope.generateRoomSession = function(user) {
-      return $http.post('/api/lmn/session/getUserInRoom', {
-        action: 'get-my-room',
-        username: user
-      }).then(function(resp) {
+    $scope.generateRoomSession = function() {
+      return $http.get('/api/lmn/session/userInRoom').then(function(resp) {
         var i, len, ref, session, sessionComment, sessionExist, sessionID, usersInRoom;
         if (resp.data === 0) {
           return messagebox.show({
@@ -710,10 +676,10 @@
           }
         }
         //$rootScope.$emit('updateWaiting', 'done')
-        return generateSession(participantsArray, sessionID, sessionComment, sessionExist);
+        return $scope.generateSession(participantsArray, sessionID, sessionComment, sessionExist);
       });
     };
-    generateSession = function(participants, sessionID, sessionComment, sessionExist) {
+    $scope.generateSession = function(participants, sessionID, sessionComment, sessionExist) {
       //wait.modal(gettext('Generating session...'), 'spinner')
       // fix existing session
       if (sessionExist === true) {
@@ -730,24 +696,20 @@
           // open new created session
           $scope.currentSession.name = sessionID;
           $scope.currentSession.comment = sessionComment;
-          $scope.getParticipants($scope.identity.user, sessionID);
+          $scope.getParticipants(sessionID);
           return $scope.getWebConferenceEnabled();
         });
       }
       // create new session
       if (sessionExist === false) {
         // create new specified session
-        return $http.post('/api/lmn/session/sessions', {
-          action: 'new-session',
-          username: $scope.identity.user,
-          comment: sessionComment,
+        return $http.put(`/api/lmn/session/sessions/${sessionComment}`, {
           participants: participants
         }).then(async function(resp) {
-          var i, len, ref, session, sessions;
+          var i, len, ref, session;
           // emit wait process is done
           $rootScope.$emit('updateWaiting', 'done');
-          $scope.new - (sessions = resp.data);
-          await $scope.getSessions($scope.identity.user);
+          await $scope.getSessions();
           notify.success(gettext('Session generated'));
           ref = $scope.sessions;
           // get new created sessionID
@@ -760,7 +722,7 @@
           // open new created session
           $scope.currentSession.name = sessionID;
           $scope.currentSession.comment = sessionComment;
-          $scope.getParticipants($scope.identity.user, sessionID);
+          $scope.getParticipants(sessionID);
           return $scope.getWebConferenceEnabled();
         });
       }
@@ -873,13 +835,11 @@
       }).then(function(resp) {});
     };
     $scope.endExam = function(participant, supervisor, session, sessionName) {
-      return $http.post('/api/lmn/session/sessions', {
-        action: 'end-exam',
+      return $http.patch(`/api/lmn/session/exam/${sessionName}`, {
         supervisor: supervisor,
-        participant: participant,
-        sessionName: sessionName
+        participant: participant
       }).then(function(resp) {
-        return $scope.getParticipants(supervisor, session);
+        return $scope.getParticipants(session);
       });
     };
     $scope.saveApply = function(username, participants, session, sessionName) {
@@ -894,12 +854,12 @@
         // emit process is done
         $rootScope.$emit('updateWaiting', 'done');
         $scope.output = resp.data;
-        $scope.getParticipants(username, session);
+        $scope.getParticipants(session);
         return notify.success(gettext($scope.output));
       });
     };
     $scope.cancel = function(username, participants, session) {
-      $scope.getSessions($scope.identity.user);
+      $scope.getSessions();
       $scope.sessionLoaded = false;
       $scope.info.message = '';
       $scope.participants = '';
@@ -1105,7 +1065,6 @@
       });
     };
     return $scope.$watch('identity.user', function() {
-      //console.log ($scope.identity.user)
       if ($scope.identity.user === void 0) {
         return;
       }
@@ -1115,12 +1074,10 @@
       if ($scope.identity.user === 'root') {
         return;
       }
-      // $scope.identity.user = 'bruce'
-      return $scope.getSessions($scope.identity.user);
+      return $scope.getSessions();
     });
   });
 
-  //return
   angular.module('lmn.session').controller('LMNRoomDetailsController', function($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, usersInRoom) {
     $scope.usersInRoom = usersInRoom;
     return $scope.close = function() {

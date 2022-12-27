@@ -20,9 +20,13 @@ if os.path.isfile(config_path):
     with LMNFile(config_path, 'r') as webui:
         lmconfig = webui.read()
         ldap_config = lmconfig['linuxmuster']['ldap']
+        pwreset_config = lmconfig['linuxmuster'].get('pw_reset', {})
+        pwreset_config['activate'] = pwreset_config.get('activate', False)
+        pwreset_config['ldap_mail_field'] = pwreset_config.get('ldap_mail_field', False)
 else:
     lmconfig = {}
     ldap_config = {}
+    pwreset_config = {}
     logging.error("Without config.yml the users will not be able to login.")
 
 # Load samba domain

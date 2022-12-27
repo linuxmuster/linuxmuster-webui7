@@ -1,3 +1,9 @@
+linuxmuster-webui7 (17.1.38.5) lmn71-testing; urgency=low
+
+  * Merged lmn71-testing in lmn71
+
+ -- Andreas Till <andreas.till@netzint.de>  Tue, 27 Dec 2022 12:07:50 +0200
+
 linuxmuster-webui7 (17.1.38.4) lmn71-testing; urgency=low
 
   * Fixed Session collect files empty transfer folder issue

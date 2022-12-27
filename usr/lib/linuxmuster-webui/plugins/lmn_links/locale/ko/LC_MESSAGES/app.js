@@ -1,1 +1,1 @@
-{"": "", "Currently no links defined!": "", "Open": "", "Links": ""}
+{"": "", "Currently no links defined!": "\ub9c1\ud06c\uac00 \ud604\uc7ac \uc815\uc758\ub418\uc9c0 \uc54a\uc558\uc2b5\ub2c8\ub2e4!", "Open": "\uc5f4\uae30", "Links": "\ub9c1\ud06c"}

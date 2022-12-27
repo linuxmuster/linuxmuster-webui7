@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-06 12:54+0100\n"
-"PO-Revision-Date: 2022-08-29 20:15\n"
+"POT-Creation-Date: 2022-12-27 15:03+0100\n"
+"PO-Revision-Date: 2022-12-27 14:21\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -19,112 +19,112 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:65
 msgid "Close"
-msgstr ""
+msgstr "닫기"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:14
 msgid "Cpu usage"
-msgstr ""
+msgstr "CPU 사용량"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:74
 msgid "Created"
-msgstr ""
+msgstr "생성됨"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:47
 msgid "Created at"
-msgstr ""
+msgstr "생성 위치"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:6
 msgid "Docker is not installed on this host."
-msgstr ""
+msgstr "이 호스트에서 Docker가 설치되어 있지 않습니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:43
 msgid "Full id"
-msgstr ""
+msgstr "전체 id"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:51
 msgid "IP"
-msgstr ""
+msgstr "IP"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:13
 msgid "Memory usage"
-msgstr ""
+msgstr "메모리 사용량"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:12
 msgid "Name (Hash)"
-msgstr ""
+msgstr "이름 (해시)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:15
 msgid "Network used"
-msgstr ""
+msgstr "사용된 네트워크"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:9
 msgid "No container on this host."
-msgstr ""
+msgstr "이 호스트에 컨테이너가 없습니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:70
 msgid "No docker images on this host."
-msgstr ""
+msgstr "이 호스트에 docker이미지가 없습니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:55
 msgid "Ports"
-msgstr ""
+msgstr "포트"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:73
 msgid "Repository"
-msgstr ""
+msgstr "저장소"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:76
 msgid "Size"
-msgstr ""
+msgstr "크기"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:75
 msgid "Tag"
-msgstr ""
+msgstr "태그"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/partial/index.html:59
 msgid "Volumes"
-msgstr ""
+msgstr "볼륨"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_docker/views.py:36
+#: usr/lib/linuxmuster-webui/plugins/lmn_docker/views.py:37
 msgid "Docker is not installed on this host"
-msgstr ""
+msgstr "이 호스트에서 Docker가 설치되어 있지 않습니다"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/main.py:28
 msgid "List image and running containers"
-msgstr ""
+msgstr "이미지와 실행중인 컨테이너들을 나열시키기"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/main.py:33
 msgid "Remove images and change running containers"
-msgstr ""
+msgstr "이미지를 제거하고 실행중인 컨테이너들을 바꿉니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/js/controllers/index.controller.es:41
 msgid "Stop command successfully sent."
-msgstr ""
+msgstr "성공적으로 전송된 명령어를 멈추기"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/js/controllers/index.controller.es:46
 msgid "Start command successfully sent."
-msgstr ""
+msgstr "성공적으로 전송된 명령어를 시작하기"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/js/controllers/index.controller.es:51
 msgid "Really remove this container?"
-msgstr ""
+msgstr "정말로 이 컨테이너를 삭제하시겠습니까?"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/js/controllers/index.controller.es:52
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/js/controllers/index.controller.es:72
 msgid "Remove"
-msgstr ""
+msgstr "제거"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/js/controllers/index.controller.es:53
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/js/controllers/index.controller.es:73
 msgid "Cancel"
-msgstr ""
+msgstr "취소"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/js/controllers/index.controller.es:56
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/js/controllers/index.controller.es:76
 msgid "Remove command successfully sent."
-msgstr ""
+msgstr "성공적으로 전송된 명령어를 제거하기"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_docker/resources/js/controllers/index.controller.es:71
 msgid "Really remove this image?"
-msgstr ""
+msgstr "정말로 이 이미지를 삭제하시겠습니까?"
 

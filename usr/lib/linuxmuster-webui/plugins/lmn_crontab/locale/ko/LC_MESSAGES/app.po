@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-03-23 16:24+0100\n"
-"PO-Revision-Date: 2022-08-29 20:15\n"
+"PO-Revision-Date: 2022-12-27 14:21\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -21,145 +21,145 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:42
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:73
 msgid "Add"
-msgstr ""
+msgstr "추가"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:141
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:161
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:177
 msgid "Cancel"
-msgstr ""
+msgstr "취소"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:129
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:149
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:16
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:51
 msgid "Command"
-msgstr ""
+msgstr "명령어"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:133
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:153
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:173
 msgid "Comment"
-msgstr ""
+msgstr "코멘트"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:13
 msgid "Day (month)"
-msgstr ""
+msgstr "날짜(월)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:15
 msgid "Day (week)"
-msgstr ""
+msgstr "날짜(주)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:117
 msgid "Day of the month"
-msgstr ""
+msgstr "월 중 특정 일"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:125
 msgid "Day of the week"
-msgstr ""
+msgstr "주간"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:10
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:138
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:158
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:49
 msgid "Disable holidays"
-msgstr ""
+msgstr "공휴일 설정 취소"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:75
 msgid "Environment variables"
-msgstr ""
+msgstr "환경 변수"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:113
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:12
 msgid "Hour"
-msgstr ""
+msgstr "시"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:5
 msgid "Jobs"
-msgstr ""
+msgstr "직업"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:109
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:11
 msgid "Minute"
-msgstr ""
+msgstr "분"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:105
 msgid "Modify"
-msgstr ""
+msgstr "수정"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:121
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:14
 msgid "Month"
-msgstr ""
+msgstr "달"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:165
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:80
 msgid "Name"
-msgstr ""
+msgstr "이름"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:142
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:162
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:178
 msgid "OK"
-msgstr ""
+msgstr "확인"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:183
 msgid "Save"
-msgstr ""
+msgstr "저장"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:145
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:44
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:50
 msgid "Special"
-msgstr ""
+msgstr "특수"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:7
 msgid "There is no cronjob."
-msgstr ""
+msgstr "크론잡이 없습니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:46
 msgid "There is no special task."
-msgstr ""
+msgstr "특수한 과업이 없습니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:77
 msgid "There is no variables environment set."
-msgstr ""
+msgstr "환경변수 집합이 없습니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:169
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:81
 msgid "Value"
-msgstr ""
+msgstr "값"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/main.py:28
 msgid "Get the crontab command of the user"
-msgstr ""
+msgstr "사용자의 crontab 커멘드를 가져오기"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/main.py:33
 msgid "Modify the crontab of the user"
-msgstr ""
+msgstr "사용자의 crontab를 수정하기"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/js/controllers/index.controller.es:2
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/js/controllers/index.controller.es:4
 msgid "Cron"
-msgstr ""
+msgstr "크론"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/js/controllers/index.controller.es:32
 msgid "normal task"
-msgstr ""
+msgstr "일반적인 할일"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/js/controllers/index.controller.es:33
 msgid "special task"
-msgstr ""
+msgstr "특수적으로 처리해야 할 일"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/js/controllers/index.controller.es:34
 msgid "environment variable"
-msgstr ""
+msgstr "환경 변수"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/js/controllers/index.controller.es:72
 msgid "Crontab successfully saved !"
-msgstr ""
+msgstr "Crontab이 성공적으로 저장되었습니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/js/controllers/index.controller.es:75
 msgid "Failed to save crontab"
-msgstr ""
+msgstr "crontab를 저장하는데 실패하였습니다."
 

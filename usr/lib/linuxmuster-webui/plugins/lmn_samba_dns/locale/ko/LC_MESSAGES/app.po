@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-06 12:55+0100\n"
-"PO-Revision-Date: 2022-08-29 20:15\n"
+"PO-Revision-Date: 2022-12-27 14:21\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -19,105 +19,105 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:43
 msgid "Add an entry"
-msgstr ""
+msgstr "항목 추가"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:63
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:84
 msgid "Close"
-msgstr ""
+msgstr "닫기"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:18
 msgid "Host"
-msgstr ""
+msgstr "호스트"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:68
 msgid "Modify DNS entry"
-msgstr ""
+msgstr "DNS 진입점 수정"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:47
 msgid "New DNS entry"
-msgstr ""
+msgstr "새로운 DNS 진입점"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:57
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:78
 msgid "Priority :"
-msgstr ""
+msgstr "우선순위 :"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:62
 msgid "Save"
-msgstr ""
+msgstr "저장"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:51
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:72
 msgid "Subdomain :"
-msgstr ""
+msgstr "서브도메인 :"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:15
 msgid "Subdomains"
-msgstr ""
+msgstr "서브도메인"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:20
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:6
 msgid "TTL"
-msgstr ""
+msgstr "TTL"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:19
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:5
 msgid "Type"
-msgstr ""
+msgstr "유형"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:53
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:74
 msgid "Type :"
-msgstr ""
+msgstr "유형 :"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:83
 msgid "Update"
-msgstr ""
+msgstr "업데이트"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:21
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:7
 msgid "Value"
-msgstr ""
+msgstr "값"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:55
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:76
 msgid "Value :"
-msgstr ""
+msgstr "값 :"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:2
 msgid "Zone informations"
-msgstr ""
+msgstr "정보를 위한 공간으로 지정"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/main.py:29
 msgid "Show the DNS in Samba"
-msgstr ""
+msgstr "Samba에서 DNS 보기"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/main.py:34
 msgid "Change the DNS in Samba"
-msgstr ""
+msgstr "Samba에서 DNS 수정하기"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/js/controllers/index.controller.es:2
 msgid "Samba_dns"
-msgstr ""
+msgstr "Samba_dns"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/js/controllers/index.controller.es:5
 msgid "Modify this entry"
-msgstr ""
+msgstr "이 진입점 수정"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/js/controllers/index.controller.es:6
 msgid "Delete this entry"
-msgstr ""
+msgstr "이 진입점 삭제"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/js/controllers/index.controller.es:29
 msgid "Entry deleted !"
-msgstr ""
+msgstr "진입점 삭제됨"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/js/controllers/index.controller.es:50
 msgid "Entry updated !"
-msgstr ""
+msgstr "진입점 업데이트됨!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/js/controllers/index.controller.es:62
 msgid "Entry saved !"
-msgstr ""
+msgstr "진입점 저장됨!"
 

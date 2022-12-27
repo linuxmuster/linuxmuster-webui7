@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-30 19:02+0200\n"
-"PO-Revision-Date: 2022-08-29 20:15\n"
+"POT-Creation-Date: 2022-12-27 15:03+0100\n"
+"PO-Revision-Date: 2022-12-27 14:21\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -19,166 +19,109 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:26
 msgid "Account Information"
-msgstr ""
+msgstr "계좌 정보"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:17
 msgid "But keep in mind:"
-msgstr ""
+msgstr "그러나 주의하십시오:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:97
 msgid "Change my data"
-msgstr ""
+msgstr "내 데이터 변경"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:34
 msgid "Change password"
-msgstr ""
+msgstr "비밀번호 변경"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/customFields.modal.html:73
 msgid "Close"
-msgstr ""
+msgstr "닫기"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:59
 msgid "Cloudquota Calculated in MB:"
-msgstr ""
+msgstr "Cloudquota가 MB에서 계산되었습니다:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:66
 msgid "Groups"
-msgstr ""
+msgstr "그룹"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:10
 msgid "Hello {{user.givenName}} {{user.sn}},"
-msgstr ""
+msgstr "안녕하세요 {{user.givenName}} {{user.sn}},"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:30
 msgid "Mail:"
-msgstr ""
+msgstr "메일:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:60
 msgid "Mailquota Calculated in MB:"
-msgstr ""
+msgstr "Mailquota가 MB에서 계산되었습니다:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:80
 msgid "My informations"
-msgstr ""
+msgstr "내 정보"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:29
 msgid "Name:"
-msgstr ""
+msgstr "이름:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/customFields.modal.html:13
 msgid "Properties"
-msgstr ""
+msgstr "속성"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:42
 msgid "Quotas"
-msgstr ""
+msgstr "할당량"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:32
 msgid "Role:"
-msgstr ""
+msgstr "역할:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:31
 msgid "School:"
-msgstr ""
+msgstr "학교:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:16
 msgid "Use the sidebar to navigate through the options."
-msgstr ""
+msgstr "사이드바를 사용하여 옵션을 탐색하십시오."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/customFields.modal.html:3
 msgid "User Details"
-msgstr ""
+msgstr "사용자 상세정보"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:2
 msgid "Welcome to Linuxmuster.net version 7!"
-msgstr ""
+msgstr "Linuxmuster.net version 7에 오신걸 환영합니다!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:18
 msgid "With great power comes great responsibility!"
-msgstr ""
+msgstr "큰 힘에는 큰 책임이 따릅니다!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:13
 msgid "use the sidebar to navigate through the options. You can start by using the Enroll module to subscribe to your classes."
-msgstr ""
+msgstr "사이드바를 사용하여 옵션을 탐색하십시오. 등록 모듈을 이용하여 학급을 가입시켜 시작하실 수 있습니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:7
 msgid "Home"
-msgstr ""
+msgstr "홈"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:25
 msgid "NO LIMIT"
-msgstr ""
+msgstr "무제한"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:75
 msgid "Class"
-msgstr ""
+msgstr "학급"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:77
 msgid "Teachers"
-msgstr ""
+msgstr "교사"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:79
 msgid "Printers"
-msgstr ""
+msgstr "프린터"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:81
 msgid "Project"
-msgstr ""
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:96
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:123
-msgid "New value"
-msgstr ""
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:102
-msgid "Value updated !"
-msgstr ""
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:104
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:119
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:130
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:144
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:154
-msgid "Error, please verify the user and/or your values."
-msgstr ""
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:109
-msgid "Remove custom field value"
-msgstr ""
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:110
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:135
-msgid "Do you really want to remove "
-msgstr ""
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:111
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:136
-msgid "OK"
-msgstr ""
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:112
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:137
-msgid "Cancel"
-msgstr ""
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:117
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:142
-msgid "Value removed !"
-msgstr ""
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:127
-msgid "Value added !"
-msgstr ""
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:134
-msgid "Remove proxy address"
-msgstr ""
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:148
-msgid "New address"
-msgstr ""
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:152
-msgid "Address added !"
-msgstr ""
+msgstr "프로젝트"
 

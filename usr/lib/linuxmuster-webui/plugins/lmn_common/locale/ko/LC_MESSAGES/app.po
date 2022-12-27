@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-29 22:09+0200\n"
-"PO-Revision-Date: 2022-08-29 20:15\n"
+"PO-Revision-Date: 2022-12-27 14:21\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -19,105 +19,105 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:155
 msgid "A bootstrap error has occured"
-msgstr ""
+msgstr "부트스트랩 오류가 발생하였습니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/lmFileBackups.modal.html:2
 msgid "Backups"
-msgstr ""
+msgstr "백업"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/lmFileEditor.modal.html:18
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/lmFileBackups.coffee:83
 msgid "Cancel"
-msgstr ""
+msgstr "취소"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/lmFileBackups.modal.html:26
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/lmFileBackupsDiff.modal.html:19
 msgid "Close"
-msgstr ""
+msgstr "닫기"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/lmFileBackupsDiff.modal.html:2
 msgid "Differences"
-msgstr ""
+msgstr "차이점"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/lmFileEditor.modal.html:17
 msgid "Download CSV"
-msgstr ""
+msgstr "CSV 다운로드"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/lmFileEditor.modal.html:5
 msgid "Drop a CSV file here to import"
-msgstr ""
+msgstr "업로드 할 CSV 파일을 여기에 드래그 하여 놓습니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:138
 msgid "Enter"
-msgstr ""
+msgstr "입력"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:95
 msgid "Log out"
-msgstr ""
+msgstr "로그아웃"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/lmFileBackups.modal.html:5
 msgid "No backups available"
-msgstr ""
+msgstr "사용 가능 백업 없음"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/lmFileBackupsDiff.modal.html:5
 msgid "No differences detected"
-msgstr ""
+msgstr "변화가 감지되지 않았습니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:179
 msgid "OK"
-msgstr ""
+msgstr "확인"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:158
 msgid "Please see browser console"
-msgstr ""
+msgstr "브라우저 콘솔을 참조하십시오."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:134
 msgid "Quick search"
-msgstr ""
+msgstr "빠른 검색"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/lmFileEditor.modal.html:16
 msgid "Save"
-msgstr ""
+msgstr "저장"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:52
 msgid "School Console"
-msgstr ""
+msgstr "학교 콘솔"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:105
 msgid "Session time : {{ counter[0] }}:{{ counter[1] }}:{{ counter[2] }}"
-msgstr ""
+msgstr "세션 시간 : {{ counter[0] }}:{{ counter[1] }}:{{ counter[2] }}"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/lmnfile.py:166
 msgid "Access refused."
-msgstr ""
+msgstr "접근이 제한되었습니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:15
 msgid "User Management"
-msgstr ""
+msgstr "사용자 관리"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:22
 msgid "List Management"
-msgstr ""
+msgstr "목록 관리"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:29
 msgid "Quota"
-msgstr ""
+msgstr "할당량"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:36
 msgid "Device Management"
-msgstr ""
+msgstr "장치 관리"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:43
 msgid "Classroom"
-msgstr ""
+msgstr "교실"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:50
 msgid "Settings"
-msgstr ""
+msgstr "설정"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/main.py:57
 msgid "Global Settings"
-msgstr ""
+msgstr "전역 설정"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/directives/upload.coffee:46
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/directives/upload.coffee:49
@@ -126,133 +126,133 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/directives/upload.coffee:140
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/directives/upload.coffee:143
 msgid "Uploaded"
-msgstr ""
+msgstr "업로드됨"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/notused/sophComment.service.coffee:4
 #, javascript-format
 msgid "Adding user %s."
-msgstr ""
+msgstr "%s 유저를 추가하는 중입니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/notused/sophComment.service.coffee:5
 #, javascript-format
 msgid "Updating user %s."
-msgstr ""
+msgstr "%s 유저를 갱신하는 중입니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/notused/sophComment.service.coffee:6
 #, javascript-format
 msgid "Deleting user %s."
-msgstr ""
+msgstr "%s유저를 삭제하는 중입니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/notused/sophComment.service.coffee:7
 #, javascript-format
 msgid "Adding examuser %s."
-msgstr ""
+msgstr "%s 작업 사용자를 추가하는 중입니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/notused/sophComment.service.coffee:8
 #, javascript-format
 msgid "Deleting examuser %s."
-msgstr ""
+msgstr "%s 작업 사용자를 제거하는 중입니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/notused/sophComment.service.coffee:9
 #, javascript-format
 msgid "Adding computer %s."
-msgstr ""
+msgstr "%s 컴퓨터를 추가하는 중입니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/notused/sophComment.service.coffee:10
 #, javascript-format
 msgid "Deleting computer %s."
-msgstr ""
+msgstr "%s 컴퓨터를 삭제하는 중입니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/notused/sophComment.service.coffee:11
 #, javascript-format
 msgid "Collecting data (copy): %s."
-msgstr ""
+msgstr "데이터를 수집중입니다(복사): %s"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/notused/sophComment.service.coffee:12
 #, javascript-format
 msgid "Collecting data (move): %s."
-msgstr ""
+msgstr "데이터를 수집중입니다(이동): %s"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/notused/sophComment.service.coffee:13
 #, javascript-format
 msgid "Copying files to user %s."
-msgstr ""
+msgstr "파일을 %s 사용자에게 복사하고 있습니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/notused/sophComment.service.coffee:14
 #, javascript-format
 msgid "Copying files: %s."
-msgstr ""
+msgstr "파일을 복사중입니다: %s"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:13
 msgid "Passwords must contain at least one lowercase, one uppercase, one special char or number, and at least 7 chars"
-msgstr ""
+msgstr "비밀번호는 최소 하나의 소문자, 하나의 대문자, 하나의 특수문자 또는 숫자를 포함해야 하고, 적어도 문자가 7개 이상이여야 합니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:22
 msgid "Password is not valid. Password can only contains a-zA-Z0-9?!@#§+-$%&*{}()]["
-msgstr ""
+msgstr "비밀번호가 유효하지 않습니다. 비밀번호는 a-zA-Z0-9?!@#§+-$%&*{}()][ 만 포함할 수 있습니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:42
 msgid " can only contain lowercase chars or numbers"
-msgstr ""
+msgstr " 은(는) 소문자 또는 숫자만 포함할 수 있습니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:51
 msgid " can only contain alphanumeric chars or _+-"
-msgstr ""
+msgstr " 은(는) 글자와 숫자 또는 _+-만 포함할 수 있습니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:60
 msgid " can only contain alphanumeric chars or -"
-msgstr ""
+msgstr " 은(는) 글자와 숫자 또는 -만 포함할 수 있습니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:69
 msgid " can only contain alphanumeric chars or -, space and _"
-msgstr ""
+msgstr " 은(는) 글자와 숫자 또는 -, 스페이스 그리고 _만 포함할 수 있습니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:78
 msgid " can only contain alphanumeric chars"
-msgstr ""
+msgstr " 은(는) 글자와 숫자만 포함할 수 있습니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:87
 msgid " is not a valid number"
-msgstr ""
+msgstr " 은(는) 유효한 숫자가 아닙니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:98
 msgid " is not a valid date"
-msgstr ""
+msgstr " 은(는) 유효한 날짜가 아닙니다"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:108
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:136
 msgid " is not valid or duplicated"
-msgstr ""
+msgstr " 은(는) 유효하지 않거나 중복되었습니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:145
 msgid " does not contain valid chars, is duplicated or too long (>15 chars)"
-msgstr ""
+msgstr " 유효한 문자를 포함하지 않았고, 중복되었거나 또는 너무 길다.(>15문자)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:156
 msgid " does not contain valid chars or is duplicated"
-msgstr ""
+msgstr " 은(는) 유효한 문자를 포함하지 않았거나 또는 중복되었다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:169
 msgid " is not a valid role"
-msgstr ""
+msgstr " 은(는) 유효한 역할이 아닙니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:192
 msgid " is not a valid domain"
-msgstr ""
+msgstr " 은(는) 유효한 도메인이 아닙니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/lmFileBackups.coffee:41
 msgid "Restore"
-msgstr ""
+msgstr "복원"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/lmFileBackups.coffee:42
 msgid "Show differences"
-msgstr ""
+msgstr "변경 사항 보기"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/lmFileBackups.coffee:82
 msgid "Do you really want to delete"
-msgstr ""
+msgstr "정말로 삭제 하시겠습니까?"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/lmFileBackups.coffee:83
 msgid "Confirmation"
-msgstr ""
+msgstr "승인"
 

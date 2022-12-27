@@ -390,8 +390,8 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
             groupName: () -> groupName
        )
 
-    $scope.showRoomDetails = (username) ->
-        $http.post('/api/lmn/session/getUserInRoom', {action: 'get-my-room', username: username}).then (resp) ->
+    $scope.showRoomDetails = () ->
+        $http.get('/api/lmn/session/userInRoom').then (resp) ->
             if resp.data == 0
                 messagebox.show(title: gettext('Info'), text: gettext('Currenty its not possible to determine your room, try to login into your computer again.'), positive: 'OK')
             else
@@ -445,15 +445,14 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                 $scope.visible.participanttable = 'show'
 
     $scope.findUsers = (q) ->
-                return $http.post("/api/lmn/session/user-search", {q:q}).then (resp) ->
-                            $scope.users = resp.data
-                            return resp.data
+        return $http.get("/api/lmn/session/user-search/#{q}").then (resp) ->
+            $scope.users = resp.data
+            return resp.data
 
     $scope.findSchoolClasses = (q) ->
-                return $http.get("/api/lmn/session/schoolClass-search?q=#{q}").then (resp) ->
-                            $scope.class = resp.data
-                            #console.log resp.data
-                            return resp.data
+        return $http.get("/api/lmn/session/schoolClass-search/#{q}").then (resp) ->
+            $scope.class = resp.data
+            return resp.data
 
 
     $scope.loadGeneratedSession = (classname) ->
@@ -473,8 +472,8 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
             $scope.getParticipants(sessionID)
             $scope.getWebConferenceEnabled()
 
-    $scope.generateRoomSession = (user) ->
-        $http.post('/api/lmn/session/getUserInRoom', {action: 'get-my-room', username: user}).then (resp) ->
+    $scope.generateRoomSession = () ->
+        $http.get('/api/lmn/session/userInRoom').then (resp) ->
             if resp.data == 0
                 messagebox.show(title: gettext('Info'), text: gettext('Currenty its not possible to determine your room, try to login into your computer again.'), positive: 'OK')
             else

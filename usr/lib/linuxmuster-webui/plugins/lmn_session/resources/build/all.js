@@ -509,11 +509,8 @@
         }
       });
     };
-    $scope.showRoomDetails = function(username) {
-      return $http.post('/api/lmn/session/getUserInRoom', {
-        action: 'get-my-room',
-        username: username
-      }).then(function(resp) {
+    $scope.showRoomDetails = function() {
+      return $http.get('/api/lmn/session/userInRoom').then(function(resp) {
         var usersInRoom;
         if (resp.data === 0) {
           return messagebox.show({
@@ -594,17 +591,14 @@
       });
     };
     $scope.findUsers = function(q) {
-      return $http.post("/api/lmn/session/user-search", {
-        q: q
-      }).then(function(resp) {
+      return $http.get(`/api/lmn/session/user-search/${q}`).then(function(resp) {
         $scope.users = resp.data;
         return resp.data;
       });
     };
     $scope.findSchoolClasses = function(q) {
-      return $http.get(`/api/lmn/session/schoolClass-search?q=${q}`).then(function(resp) {
+      return $http.get(`/api/lmn/session/schoolClass-search/${q}`).then(function(resp) {
         $scope.class = resp.data;
-        //console.log resp.data
         return resp.data;
       });
     };
@@ -632,11 +626,8 @@
         return $scope.getWebConferenceEnabled();
       }
     };
-    $scope.generateRoomSession = function(user) {
-      return $http.post('/api/lmn/session/getUserInRoom', {
-        action: 'get-my-room',
-        username: user
-      }).then(function(resp) {
+    $scope.generateRoomSession = function() {
+      return $http.get('/api/lmn/session/userInRoom').then(function(resp) {
         var i, len, ref, session, sessionComment, sessionExist, sessionID, usersInRoom;
         if (resp.data === 0) {
           return messagebox.show({

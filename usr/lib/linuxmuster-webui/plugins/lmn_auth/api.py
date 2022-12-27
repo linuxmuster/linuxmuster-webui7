@@ -386,7 +386,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
         return False
 
     def check_password_complexity(self, password):
-        strong_pw = re.match('(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*()]|(?=.*\d)).{7,}', password)
+        strong_pw = re.match('(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*()\+{}\-\[\]]|(?=.*\d)).{7,}', password)
         valid_pw = re.match('^[a-zA-Z0-9!@#§+\-$%&*{}()\]\[]+$', password)
         if valid_pw and strong_pw:
             return True

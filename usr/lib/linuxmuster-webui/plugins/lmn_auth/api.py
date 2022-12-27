@@ -20,7 +20,7 @@ import logging
 from jadi import component, service
 from aj.auth import AuthenticationProvider, OSAuthenticationProvider, AuthenticationService
 from aj.config import UserConfigProvider
-from aj.plugins.lmn_common.api import ldap_config as params, lmsetup_schoolname
+from aj.plugins.lmn_common.api import ldap_config as params, lmsetup_schoolname, pwreset_config
 from aj.plugins.lmn_common.multischool import SchoolManager
 from aj.api.endpoint import EndpointError
 
@@ -32,7 +32,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
     id = 'lm'
     name = _('Linux Muster LDAP') # skipcq: PYL-E0602
-    pw_reset = False
+    pw_reset = pwreset_config['activate']
 
     def __init__(self, context):
         self.context = context
@@ -349,7 +349,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
     def check_mail(self, mail):
         # Search in the mail field, this must be discuted with others devs
-        ldap_filter = """(&
+        ldap_filter = f"""(&
                             (objectClass=user)
                             (|
                                 (sophomorixRole=globaladministrator)
@@ -357,7 +357,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
                                 (sophomorixRole=teacher)
                                 (sophomorixRole=student)
                             )
-                            (mail=%s)
+                            ({pwreset_config['ldap_mail_field']}=%s)
                         )"""
 
         # Apply escape chars on mail value

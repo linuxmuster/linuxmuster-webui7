@@ -12,14 +12,19 @@ from aj.plugins.lmn_common.api import samba_realm, lmn_getSophomorixValue
 class Drives:
     """Object to store data from dDrives.xml"""
 
-    def __init__(self, path):
-        self.path = path
-        self.drives = []
+    def __init__(self, policy):
+        self.policy = policy
+        self.path = f'/var/lib/samba/sysvol/{samba_realm}/Policies/{self.policy}/User/Preferences/Drives/Drives.xml'
         self.usedLetters = []
         self.load()
 
     def load(self):
-        self.tree = ElementTree.parse(self.path)
+        self.drives = []
+
+        try:
+            self.tree = ElementTree.parse(self.path)
+        except FileNotFoundError:
+            return
 
         for drive in self.tree.findall('Drive'):
             drive_attr = {'properties': {}}
@@ -44,6 +49,7 @@ class Drives:
                         drive.set('disabled', str(int(newDrive['disabled'])))
 
         self.tree.write(self.path, encoding='utf-8', xml_declaration=True)
+        self.load()
 
 class SchoolManager:
     def __init__(self):
@@ -134,7 +140,7 @@ class SchoolManager:
         """
 
         xml_path = f'/var/lib/samba/sysvol/{samba_realm}/Policies/{self.policy}/User/Preferences/Drives/Drives.xml'
-        self.Drives = Drives(xml_path)
+        self.Drives = Drives(self.policy)
 
     def get_share_prefix(self):
 

@@ -79,6 +79,7 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_get_samba_drives(self, http_context):
 
+        self.context.schoolmgr.Drives.load()
         drives = self.context.schoolmgr.Drives.drives
         usedLetters = self.context.schoolmgr.Drives.usedLetters
 

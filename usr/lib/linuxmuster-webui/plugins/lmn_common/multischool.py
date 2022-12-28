@@ -20,6 +20,7 @@ class Drives:
 
     def load(self):
         self.drives = []
+        self.drives_dict = {}
 
         try:
             self.tree = ElementTree.parse(self.path)
@@ -36,6 +37,11 @@ class Drives:
                 self.usedLetters.append(drive_attr['properties']['letter'])
 
             self.drives.append(drive_attr)
+            self.drives_dict[drive_attr['properties']['label']] = {
+                'userLetter': drive_attr['properties']['useLetter'],
+                'letter': drive_attr['properties']['letter'],
+                'disabled': drive_attr['disabled']
+            }
 
     def save(self, content):
         self.tree.write(f'{self.path}.bak', encoding='utf-8', xml_declaration=True)
@@ -227,15 +233,21 @@ class SchoolManager:
             ],
             'teacher': [
                 home,
-                students,
-                program,
-                share,
             ],
             'student': [
                 home,
-                share,
-                program,
             ]
         }
+
+        # Use GPO to determine if the share should be shown
+        # Must be rewritten
+        if not self.Drives.drives_dict['Programs']['disabled']:
+            shares['teacher'].append(program)
+            shares['student'].append(program)
+        if not self.Drives.drives_dict['Shares']['disabled']:
+            shares['teacher'].append(share)
+            shares['student'].append(share)
+        if not self.Drives.drives_dict['Students-Home']['disabled']:
+            shares['teacher'].append(students)
 
         return shares[role]

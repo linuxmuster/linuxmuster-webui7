@@ -1,3 +1,14 @@
+linuxmuster-webui7 (17.1.38.8) lmn72-testing; urgency=low
+
+  * Add missing chars for strong password. See #254.
+  * Load GPOs at login.
+  * Right config api URL.
+  * Display samba shares only if enabled in the GPO. Fix #247
+  * Harden use of custom fields.
+  * Add permissions for custom fields.
+
+ -- Andreas Till <andreas.till@netzint.de>  Thu, 29 Dec 2022 14:44:31 +0200
+
 linuxmuster-webui7 (17.1.38.6) lmn71-testing; urgency=low
 
   * Updaded Upstream

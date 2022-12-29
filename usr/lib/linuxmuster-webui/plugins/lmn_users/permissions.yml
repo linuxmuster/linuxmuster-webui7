@@ -1,6 +1,8 @@
 globaladministrator:
 - 'lm:users:apply: true'
 - 'lm:users:check: true'
+- 'lm:users:customfields:read: true'
+- 'lm:users:customfields:write: true'
 - 'lm:users:extraclasses:read: true'
 - 'lm:users:extraclasses:write: true'
 - 'lm:users:extrastudents:read: true'
@@ -26,6 +28,8 @@ globaladministrator:
 schooladministrator:
 - 'lm:users:apply: true'
 - 'lm:users:check: true'
+- 'lm:users:customfields:read: true'
+- 'lm:users:customfields:write: true'
 - 'lm:users:extraclasses:read: true'
 - 'lm:users:extraclasses:write: true'
 - 'lm:users:extrastudents:read: true'
@@ -48,6 +52,8 @@ schooladministrator:
 student:
 - 'lm:users:apply: false'
 - 'lm:users:check: false'
+- 'lm:users:customfields:read: true'
+- 'lm:users:customfields:write: true'
 - 'lm:users:globaladmins:create: false'
 - 'lm:users:passwords: false'
 - 'lm:users:schooladmins:create: false'
@@ -61,6 +67,8 @@ student:
 teacher:
 - 'lm:users:apply: false'
 - 'lm:users:check: false'
+- 'lm:users:customfields:read: true'
+- 'lm:users:customfields:write: true'
 - 'lm:users:extraclasses:read: false'
 - 'lm:users:extrastudents:read: false'
 - 'lm:users:globaladmins:create: false'

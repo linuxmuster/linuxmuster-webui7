@@ -26,7 +26,7 @@ angular.module('lmn.common').service('customFields', function($http, messagebox,
     this.isListAttr = (attr) => this.customLists.includes(attr);
 
     this.load_display = (role) => {
-        return $http.get(`/api/lmn/read_custom_config/${role}`).then(response => {
+        return $http.get(`/api/lmn/config/customfields/${role}`).then(response => {
             // Filter title per display
             config = {
                 'customDisplay': response.data.customDisplay,

@@ -2,6 +2,8 @@
 API for custom fields management.
 """
 
+import os
+
 from jadi import component
 from aj.api.http import get, post, patch, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
@@ -27,6 +29,9 @@ class Handler(HttpPlugin):
         :rtype: dict
         """
 
+        if os.getuid() != 0 and user != self.context.identity:
+            return
+
         value = http_context.json_body()['value']
 
         try:
@@ -48,6 +53,9 @@ class Handler(HttpPlugin):
         :return: All quotas for specified users
         :rtype: dict
         """
+
+        if os.getuid() != 0 and user != self.context.identity:
+            return
 
         value = http_context.json_body()['value']
 
@@ -71,6 +79,9 @@ class Handler(HttpPlugin):
         :rtype: dict
         """
 
+        if os.getuid() != 0 and user != self.context.identity:
+            return
+
         value = http_context.json_body()['value']
 
         try:
@@ -93,6 +104,9 @@ class Handler(HttpPlugin):
         :rtype: dict
         """
 
+        if os.getuid() != 0 and user != self.context.identity:
+            return
+
         address = http_context.json_body()['address']
 
         try:
@@ -114,6 +128,9 @@ class Handler(HttpPlugin):
         :return: All quotas for specified users
         :rtype: dict
         """
+
+        if os.getuid() != 0 and user != self.context.identity:
+            return
 
         address = http_context.json_body()['address']
 

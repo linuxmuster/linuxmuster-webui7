@@ -54,7 +54,11 @@ jobs:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
           draft: false
+<<<<<<< HEAD
+          prerelease: false
+=======
           prerelease: "true"
+>>>>>>> test-lmn72-testing
           body_path: ./current-changes
 
       - name: Delete current changes file

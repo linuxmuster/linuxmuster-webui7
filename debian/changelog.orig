@@ -1,14 +1,73 @@
-linuxmuster-webui7 (17.1.26) lmn71; urgency=low
+<<<<<<< HEAD
+linuxmuster-webui7 (17.1.38.8) lmn72-testing; urgency=low
 
-  *  Merged upstream
+  * Add missing chars for strong password. See #254.
+  * Load GPOs at login.
+  * Right config api URL.
+  * Display samba shares only if enabled in the GPO. Fix #247
+  * Harden use of custom fields.
+  * Add permissions for custom fields.
 
- -- Andreas Till <andreas.till@netzint.de>  Sat, 30 Jul 2022 15:19:58 +0200
+ -- Andreas Till <andreas.till@netzint.de>  Thu, 29 Dec 2022 14:44:31 +0200
 
-linuxmuster-webui7 (17.1.25) lmn71; urgency=low
+linuxmuster-webui7 (17.1.38.6) lmn71-testing; urgency=low
 
-  * Merged to netzint
+  * Updaded Upstream
 
- -- Andreas Till <andreas.till@netzint.de>  Thu, 11 Aug 2022 18:50:15 +0200
+ -- Andreas Till <andreas.till@netzint.de>  Tue, 27 Dec 2022 18:32:21 +0200
+
+linuxmuster-webui7 (17.1.38.4) lmn71-testing; urgency=low
+
+  * Fixed Session collect files empty transfer folder issue
+  * merged upstream content
+
+ -- Andreas Till <andreas.till@netzint.de>  Thu, 01 Dec 2022 17:51:38 +0200
+
+linuxmuster-webui7 (17.1.38.3) lmn71-testing; urgency=low
+
+  * Fixed Homeplugin when using dfs
+
+ -- Andreas Till <andreas.till@netzint.de>  Thu, 29 Sep 2022 19:55:02 +0200
+
+linuxmuster-webui7 (17.1.38.2) lmn71-testing; urgency=low
+
+  * Add multischool support in linbo-remote
+  * sort padded ips
+  * Consider firstname when sorting per lastname
+
+ -- Andreas Till <andreas.till@netzint.de>  Thu, 29 Sep 2022 18:44:08 +0200
+
+linuxmuster-webui7 (17.1.38.1) lmn71-testing; urgency=medium
+  * [devices] Filter leading zeros in IPs too
+  * [home] Fix students home path
+  * [clients] Fix script list in linux
+  * [common] Rise field limit for csv
+  * [groupmembership] Better projects alignment 
+  * [users] Add user ID to user details 
+=======
+linuxmuster-webui7 (7.2.2) lmn72; urgency=medium
+
+  * Fix gevent version for Python 3.10 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 29 Aug 2022 18:09:07 +0200
+
+linuxmuster-webui7 (7.2.1) lmn72; urgency=medium
+
+  * Build package for Ubuntu 22.04
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 24 Jun 2022 15:16:34 +0200
+>>>>>>> test-lmn72-testing
+
+linuxmuster-webui7 (7.1.38) lmn71; urgency=medium
+
+  * [devices] Filter leading zeros in IPs too
+  * [home] Fix students home path
+  * [clients] Fix script list in linux
+  * [common] Rise field limit for csv
+  * [groupmembership] Better projects alignment 
+  * [users] Add user ID to user details 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 29 Aug 2022 22:23:47 +0200
 
 linuxmuster-webui7 (7.1.37) lmn71; urgency=medium
 
@@ -102,6 +161,12 @@ linuxmuster-webui7 (7.1.27) lmn71; urgency=medium
 
  -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 25 Jul 2022 19:52:37 +0200
 
+linuxmuster-webui7 (17.1.26) lmn71; urgency=low
+
+  *  Merged upstream
+
+ -- Andreas Till <andreas.till@netzint.de>  Sat, 30 Jul 2022 15:19:58 +0200
+
 linuxmuster-webui7 (7.1.26) lmn71; urgency=medium
 
   * Upgrade Ajenti 2.2.0
@@ -112,6 +177,12 @@ linuxmuster-webui7 (7.1.26) lmn71; urgency=medium
   * Prepare container for iframes
 
  -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 16 Jul 2022 11:50:36 +0200
+
+linuxmuster-webui7 (17.1.25) lmn71; urgency=low
+
+  * Merged to netzint
+
+ -- Andreas Till <andreas.till@netzint.de>  Thu, 11 Aug 2022 18:50:15 +0200
 
 linuxmuster-webui7 (17.1.25) lmn71; urgency=low
 

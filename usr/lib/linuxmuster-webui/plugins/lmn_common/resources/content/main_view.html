@@ -85,6 +85,11 @@
                                     <i class="fa fa-fw fa-{{item.icon}}"></i> {{ item.name }}
                                 </a>
                             </li>
+                            <li>
+                                <a ng:click="identity.manage_totp()">
+                                    <i class="fas fa-lock"></i> <span translate>TFA</span>
+                                </a>
+                            </li>
 <!--                            <li>-->
 <!--                                <a ng:click="identity.elevate()" ng:show="identity.effective != 0 && identity.elevation_allowed">-->
 <!--                                    <i class="fa fa-fw fa-angle-double-up"></i> <span translate>Elevate</span>-->

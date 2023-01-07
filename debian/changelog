@@ -1,3 +1,23 @@
+linuxmuster-webui7 (7.2.3) lmn72; urgency=medium
+
+  * Add python3-jinja2 to dependency
+  * Add missing chars for passwords. Fix #254.
+  * Fix looking for dfs proxies
+  * [Clients] Edit Drives.xml Fix #228
+  * [Devices] Sort by padded ips. Fix #249
+  * [Groupmembership] Fix double teacher role
+  * [Groupmembership] Refresh members list when adding a teacher in class
+  * [Groupmembership] Always add teachers as admins in classes
+  * [Landingpage] Fix injector error
+  * [Linbo-sync] Add support for multischool. Fix #250
+  * [Session] Sort username by lastname and firstname. Fix #127
+  * [Session] Add button to directly rename/delete a session
+  * [Smbclient] Use samba realm instead of samba domain to access samba shares
+  * [Users] Better handle some errors on sophomorix-check and encoding detecting
+  * [Users] Blur background if modal window with password is shown
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 07 Jan 2023 10:37:16 +0100
+
 linuxmuster-webui7 (7.2.2) lmn72; urgency=medium
 
   * Fix gevent version for Python 3.10 

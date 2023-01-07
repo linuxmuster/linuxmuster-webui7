@@ -30,6 +30,12 @@ linuxmuster-webui7 (7.2.1) lmn72; urgency=medium
 
  -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 24 Jun 2022 15:16:34 +0200
 
+linuxmuster-webui7 (7.1.40) lmn71; urgency=medium
+
+  * Upgrade to Ajenti 2.2.3 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 07 Jan 2023 10:45:25 +0100
+
 linuxmuster-webui7 (7.1.39) lmn71; urgency=medium
 
   * Add python3-jinja2 to dependency

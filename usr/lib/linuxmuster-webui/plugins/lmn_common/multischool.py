@@ -241,13 +241,25 @@ class SchoolManager:
 
         # Use GPO to determine if the share should be shown
         # Must be rewritten
-        if not self.Drives.drives_dict['Programs']['disabled']:
-            shares['teacher'].append(program)
-            shares['student'].append(program)
-        if not self.Drives.drives_dict['Shares']['disabled']:
-            shares['teacher'].append(share)
-            shares['student'].append(share)
-        if not self.Drives.drives_dict['Students-Home']['disabled']:
-            shares['teacher'].append(students)
+        try:
+            if not self.Drives.drives_dict['Programs']['disabled']:
+                shares['teacher'].append(program)
+                shares['student'].append(program)
+        except KeyError:
+            # Programs not in Drives.xml, ignoring
+            pass
+        try:
+            if not self.Drives.drives_dict['Shares']['disabled']:
+                shares['teacher'].append(share)
+                shares['student'].append(share)
+        except KeyError:
+            # Shares not in Drives.xml, ignoring
+            pass
+        try:
+            if not self.Drives.drives_dict['Students-Home']['disabled']:
+                shares['teacher'].append(students)
+        except KeyError:
+            # Students-Home not in Drives.xml ?? Ignoring
+            pass
 
         return shares[role]

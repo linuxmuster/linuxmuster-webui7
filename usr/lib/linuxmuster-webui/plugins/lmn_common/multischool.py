@@ -34,14 +34,18 @@ class Drives:
                 drive_attr['properties']['useLetter'] = bool(int(prop.get('useLetter', '0')))
                 drive_attr['properties']['letter'] = prop.get('letter', '')
                 drive_attr['properties']['label'] = prop.get('label', 'Unknown')
+                drive_attr['properties']['path'] = prop.get('path', None)
                 self.usedLetters.append(drive_attr['properties']['letter'])
 
             self.drives.append(drive_attr)
-            self.drives_dict[drive_attr['properties']['label']] = {
-                'userLetter': drive_attr['properties']['useLetter'],
-                'letter': drive_attr['properties']['letter'],
-                'disabled': drive_attr['disabled']
-            }
+            if drive_attr['properties']['path'] is not None:
+                drive_id = drive_attr['properties']['path'].split('\\')[-1]
+                self.drives_dict[drive_id] = {
+                    'userLetter': drive_attr['properties']['useLetter'],
+                    'letter': drive_attr['properties']['letter'],
+                    'disabled': drive_attr['disabled'],
+                    'label': drive_attr['properties']['label'],
+                }
 
     def save(self, content):
         self.tree.write(f'{self.path}.bak', encoding='utf-8', xml_declaration=True)
@@ -242,21 +246,21 @@ class SchoolManager:
         # Use GPO to determine if the share should be shown
         # Must be rewritten
         try:
-            if not self.Drives.drives_dict['Programs']['disabled']:
+            if not self.Drives.drives_dict['program']['disabled']:
                 shares['teacher'].append(program)
                 shares['student'].append(program)
         except KeyError:
             # Programs not in Drives.xml, ignoring
             pass
         try:
-            if not self.Drives.drives_dict['Shares']['disabled']:
+            if not self.Drives.drives_dict['share']['disabled']:
                 shares['teacher'].append(share)
                 shares['student'].append(share)
         except KeyError:
             # Shares not in Drives.xml, ignoring
             pass
         try:
-            if not self.Drives.drives_dict['Students-Home']['disabled']:
+            if not self.Drives.drives_dict['students']['disabled']:
                 shares['teacher'].append(students)
         except KeyError:
             # Students-Home not in Drives.xml ?? Ignoring

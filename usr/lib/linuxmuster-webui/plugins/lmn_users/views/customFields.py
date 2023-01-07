@@ -2,6 +2,8 @@
 API for custom fields management.
 """
 
+import os
+
 from jadi import component
 from aj.api.http import get, post, patch, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
@@ -15,7 +17,7 @@ class Handler(HttpPlugin):
         self.context = context
 
     @post(r'/api/lmn/users/(?P<user>[a-z0-9\-]*)/custom/(?P<index>[1-5])')
-    @authorize('lm:users:passwords')
+    @authorize('lm:users:customfields:write')
     @endpoint(api=True)
     def handle_update_custom(self, http_context, user, index):
         """
@@ -27,6 +29,9 @@ class Handler(HttpPlugin):
         :rtype: dict
         """
 
+        if os.getuid() != 0 and user != self.context.identity:
+            return
+
         value = http_context.json_body()['value']
 
         try:
@@ -37,7 +42,7 @@ class Handler(HttpPlugin):
             raise EndpointError(None)
 
     @post(r'/api/lmn/users/(?P<user>[a-z0-9\-]*)/custommulti/(?P<index>[1-5])')
-    @authorize('lm:users:passwords')
+    @authorize('lm:users:customfields:write')
     @endpoint(api=True)
     def handle_custom_mutli_add(self, http_context, user, index):
         """
@@ -49,6 +54,9 @@ class Handler(HttpPlugin):
         :rtype: dict
         """
 
+        if os.getuid() != 0 and user != self.context.identity:
+            return
+
         value = http_context.json_body()['value']
 
         try:
@@ -59,7 +67,7 @@ class Handler(HttpPlugin):
             raise EndpointError(None)
 
     @patch(r'/api/lmn/users/(?P<user>[a-z0-9\-]*)/custommulti/(?P<index>[1-5])')
-    @authorize('lm:users:passwords')
+    @authorize('lm:users:customfields:write')
     @endpoint(api=True)
     def handle_custom_multi_remove(self, http_context, user, index):
         """
@@ -71,6 +79,9 @@ class Handler(HttpPlugin):
         :rtype: dict
         """
 
+        if os.getuid() != 0 and user != self.context.identity:
+            return
+
         value = http_context.json_body()['value']
 
         try:
@@ -81,7 +92,7 @@ class Handler(HttpPlugin):
             raise EndpointError(None)
 
     @post(r'/api/lmn/users/(?P<user>[a-z0-9\-]*)/proxyaddresses')
-    @authorize('lm:users:passwords')
+    @authorize('lm:users:customfields:write')
     @endpoint(api=True)
     def handle_add_proxy_addresses(self, http_context, user):
         """
@@ -93,6 +104,9 @@ class Handler(HttpPlugin):
         :rtype: dict
         """
 
+        if os.getuid() != 0 and user != self.context.identity:
+            return
+
         address = http_context.json_body()['address']
 
         try:
@@ -103,7 +117,7 @@ class Handler(HttpPlugin):
             raise EndpointError(None)
 
     @patch(r'/api/lmn/users/(?P<user>[a-z0-9\-]*)/proxyaddresses')
-    @authorize('lm:users:passwords')
+    @authorize('lm:users:customfields:write')
     @endpoint(api=True)
     def handle_remove_proxy_addresses(self, http_context, user):
         """
@@ -114,6 +128,9 @@ class Handler(HttpPlugin):
         :return: All quotas for specified users
         :rtype: dict
         """
+
+        if os.getuid() != 0 and user != self.context.identity:
+            return
 
         address = http_context.json_body()['address']
 
@@ -126,6 +143,7 @@ class Handler(HttpPlugin):
             raise EndpointError(None)
 
     @get(r'/api/lmn/users/(?P<user>[a-z0-9\-]*)/customfields')
+    @authorize('lm:users:customfields:read')
     @endpoint(api=True)
     def handle_get_custom_fields(self, http_context, user):
         """

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-26 21:41+0200\n"
-"PO-Revision-Date: 2022-08-29 20:15\n"
+"PO-Revision-Date: 2022-12-27 14:21\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -19,157 +19,157 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:23
 msgid "(Already used)"
-msgstr ""
+msgstr "(이미 사용됨)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:2
 msgid "Add device"
-msgstr ""
+msgstr "기기 추가"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/index.html:17
 msgid "Already registered!"
-msgstr ""
+msgstr "이미 가입된 계정입니다!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:33
 msgid "Already used"
-msgstr ""
+msgstr "이미 사용됨"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:69
 msgid "BYOD"
-msgstr ""
+msgstr "기기 불러오기(Bring Your Own Device의 약자)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:84
 msgid "Cancel"
-msgstr ""
+msgstr "취소"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/index.html:4
 msgid "DHCP Leases"
-msgstr ""
+msgstr "DHCP 대여"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:74
 msgid "Domain-Controller"
-msgstr ""
+msgstr "도메인 관리사"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/index.html:10
 msgid "End"
-msgstr ""
+msgstr "끝"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:63
 msgid "Faculty-Teachercomputer"
-msgstr ""
+msgstr "시설에 있는 선생님의 컴퓨터"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:41
 msgid "Group:"
-msgstr ""
+msgstr "그룹:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:32
 msgid "Hostname"
-msgstr ""
+msgstr "호스트이름"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/index.html:8
 msgid "IP"
-msgstr ""
+msgstr "IP"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:72
 msgid "IP-Only"
-msgstr ""
+msgstr "IP만"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:50
 msgid "Linbo-PXE"
-msgstr ""
+msgstr "Linbo-PXE"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:51
 msgid "Linbo-PXE + OPSI-MGMT"
-msgstr ""
+msgstr "Linbo-PXE + OPSI-MGMT"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/index.html:7
 msgid "Mac address"
-msgstr ""
+msgstr "Mac 주소"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:15
 msgid "Mac:"
-msgstr ""
+msgstr "Mac:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:73
 msgid "Mobile"
-msgstr ""
+msgstr "모바일"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:49
 msgid "No PXE"
-msgstr ""
+msgstr "PXE 제외"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:52
 msgid "OPSI-PXE"
-msgstr ""
+msgstr "OPSI-PXE"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:47
 msgid "PXE Boot:"
-msgstr ""
+msgstr "PXE 부팅:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:67
 msgid "Printer"
-msgstr ""
+msgstr "프린터"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:9
 msgid "Room:"
-msgstr ""
+msgstr "방:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:82
 msgid "Save"
-msgstr ""
+msgstr "저장"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:83
 msgid "Save & import"
-msgstr ""
+msgstr "저장 및 불러오기"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:64
 msgid "Server"
-msgstr ""
+msgstr "서버"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:58
 msgid "Sophomorix role:"
-msgstr ""
+msgstr "소포모릭스 역할:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:62
 msgid "Staffcomputer"
-msgstr ""
+msgstr "직원 컴퓨터"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/index.html:9
 msgid "Start"
-msgstr ""
+msgstr "시작"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:66
 msgid "Switch"
-msgstr ""
+msgstr "스위치"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:68
 msgid "Thinclient"
-msgstr ""
+msgstr "씬 클라이언트(컴퓨터용어)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:70
 msgid "VOIP"
-msgstr ""
+msgstr "VoIP 소프트웨어"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:71
 msgid "WLan"
-msgstr ""
+msgstr "WLan"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:60
 msgid "classroom-studentcomputer"
-msgstr ""
+msgstr "교실-학생 컴퓨터"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:61
 msgid "classroom-teachercomputer"
-msgstr ""
+msgstr "교실-선생님 컴퓨터"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/partial/addDevice.modal.html:65
 msgid "router"
-msgstr ""
+msgstr "라우터"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/js/controllers/index.controller.es:2
 msgid "DHCP"
-msgstr ""
+msgstr "DHCP"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/js/controllers/index.controller.es:78
 msgid "Device successfully saved in devices.csv!"
-msgstr ""
+msgstr "장치가 성공적으로 devices.csv에 저장되었습니다!"
 

@@ -2595,7 +2595,7 @@ angular.module('lmn.common').service('customFields', function ($http, messagebox
     };
 
     this.load_display = function (role) {
-        return $http.get('/api/lmn/read_custom_config/' + role).then(function (response) {
+        return $http.get('/api/lmn/config/customfields/' + role).then(function (response) {
             // Filter title per display
             config = {
                 'customDisplay': response.data.customDisplay,

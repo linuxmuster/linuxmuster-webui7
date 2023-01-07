@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-25 18:56+0200\n"
-"PO-Revision-Date: 2022-08-29 20:15\n"
+"PO-Revision-Date: 2022-12-27 14:21\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -19,274 +19,274 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:510
 msgid "<b>Template for multiple passwords entries on one page:</b>"
-msgstr ""
+msgstr "<b>하나의 페이지에서 복수의 비밀번호 엔트리를 위한 템플릿:</b>"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:516
 msgid "<b>Template for one password entry per page:</b>"
-msgstr ""
+msgstr "<b>페이지마다 하나의 비밀번호를 위한 템플릿:</b>"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:104
 msgid "<i class=\"fa fa-warning \"></i>\n"
 "                Change this values with high precaution ! A wrong value may completely block your network !"
-msgstr ""
+msgstr "<i class=\"fa fa-warning \">                중요한 예방을 위해 이 값을 변경하세요 ! 틀린 값은 당신의 네트워크를 완전히 막을 수도 있습니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:147
 msgid "Add a subnet"
-msgstr ""
+msgstr "서브넷 추가"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:793
 msgid "Add holidays"
-msgstr ""
+msgstr "공휴일 추가"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:378
 msgid "Admin description"
-msgstr ""
+msgstr "관리자 서술"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:112
 msgid "Begin lease range"
-msgstr ""
+msgstr "임대 범위 시작"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:529
 msgid "Choose a role to configure"
-msgstr ""
+msgstr "환경 설정을 위해 역할을 고르세요"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:334
 msgid "Cloudquota Percentage"
-msgstr ""
+msgstr "Cloudquota 퍼센트"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:398
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:418
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:438
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:458
 msgid "Comment"
-msgstr ""
+msgstr "설명"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:763
 msgid "Configuration of holidays"
-msgstr ""
+msgstr "공휴일 구성"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:524
 msgid "Custom fields"
-msgstr ""
+msgstr "사용자 지정 필드"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:265
 msgid "Customs filters"
-msgstr ""
+msgstr "커스텀 필터"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:248
 msgid "Detected encoding"
-msgstr ""
+msgstr "탐지된 인코딩"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:23
 msgid "Email Domain"
-msgstr ""
+msgstr "이메일 영역"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:156
 msgid "Enable email relay for notification"
-msgstr ""
+msgstr "알림을 위해 이메일 전달 활성화"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:216
 msgid "Encoding"
-msgstr ""
+msgstr "인코딩"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:772
 msgid "End"
-msgstr ""
+msgstr "끝"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:113
 msgid "End lease range"
-msgstr ""
+msgstr "임대 범위 종료"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:120
 msgid "Firstname Chars"
-msgstr ""
+msgstr "이름 문자"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:51
 msgid "Force SSL"
-msgstr ""
+msgstr "SSL 활성화"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:7
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:11
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:8
 msgid "General"
-msgstr ""
+msgstr "일반적"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:534
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:679
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:747
 msgid "Global administrators"
-msgstr ""
+msgstr "전체 관리자"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:762
 msgid "Holidays"
-msgstr ""
+msgstr "휴일"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:506
 msgid "If you want to use your own latex template, please store it in the directory /etc/linuxmuster/sophomorix/SCHOOL/latex-templates/. More informations about it <a href=\"https://github.com/linuxmuster/sophomorix4/blob/bionic/sophomorix-samba/lang/latex/README.latextemplates\">in sophomorix's wiki</a>."
-msgstr ""
+msgstr "당신의 가장 최근 템플릿을 사용하고 싶으면, /etc/linuxmuster/sophomorix/SCHOOL/latex-templates/디렉토리에 저장하세요. 더 많은 정보는 <a href=\"https://github.com/linuxmuster/sophomorix4/blob/bionic/sophomorix-samba/lang/latex/README.latextemplates\">sophomorix's wiki</a>에 있습니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:111
 msgid "Ip router"
-msgstr ""
+msgstr "IP 라우터"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:267
 msgid "It's possible to apply a filter script to your newly exported csv file. You must give here the absolute path of the script and the script must be executable.<br>Please read the full documentation in <a href=\"https://github.com/linuxmuster/sophomorix4/wiki/Export-and-Filters#filters\">sophomorix's wiki</a> about it."
-msgstr ""
+msgstr "새로 내보낸 csv 파일에 필터 스크립트를 적용할 수 있습니다. 스크립트의 절대 경로를 제공해야 하며 스크립트가 실행 가능해야 합니다. <br><a href=\"https://github.com/linuxmuster/sophomorix4/wiki/Export-and-Filters#filters\">sophomorix's wiki</a>의 전체 문서를 읽어보세요."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:14
 msgid "Language"
-msgstr ""
+msgstr "언어"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:505
 msgid "Latex templates"
-msgstr ""
+msgstr "최신 템플릿"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:227
 msgid "List encoding"
-msgstr ""
+msgstr "인코딩 나열"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:103
 msgid "List of subnets"
-msgstr ""
+msgstr "서브넷 나열"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:80
 msgid "Listimport"
-msgstr ""
+msgstr "불러온 파일 나열하기"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:348
 msgid "Mailquota Default in MiB"
-msgstr ""
+msgstr "MiB의 메일 기본 할당량"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:20
 msgid "Max session time"
-msgstr ""
+msgstr "최대 세션 시간"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:426
 msgid "Moodle"
-msgstr ""
+msgstr "Moodle"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:770
 msgid "Name"
-msgstr ""
+msgstr "이름"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:110
 msgid "Network / Prefix"
-msgstr ""
+msgstr "네트워크 / 접두 표현"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:73
 msgid "New domain"
-msgstr ""
+msgstr "새로운 도메인"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:90
 msgid "New proxy"
-msgstr ""
+msgstr "새로운 프록시"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:766
 msgid "No holidays found!"
-msgstr ""
+msgstr "공휴일을 찾을 수 없습니다!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:134
 msgid "Password Length"
-msgstr ""
+msgstr "비밀번호 길이"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:148
 msgid "Password length"
-msgstr ""
+msgstr "비밀번호 길이"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:365
 msgid "Password printing data"
-msgstr ""
+msgstr "암호 인쇄 데이터"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:278
 msgid "Path to filter script"
-msgstr ""
+msgstr "스크립터를 필터링하기 위한 경로"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:176
 msgid "Port"
-msgstr ""
+msgstr "포트"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:43
 msgid "Primary Group Adminclass"
-msgstr ""
+msgstr "기분 그룹 관리 클래스"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:59
 msgid "Primary Group Project"
-msgstr ""
+msgstr "주요 그룹 프로젝트"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:51
 msgid "Primary Group Teacherclass"
-msgstr ""
+msgstr "주요 그룹 교사 클래스"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:363
 msgid "Printing data"
-msgstr ""
+msgstr "데이터 인쇄"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:66
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:70
 msgid "Printserver"
-msgstr ""
+msgstr "프린트 서버"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:294
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:296
 msgid "Quota"
-msgstr ""
+msgstr "할당량"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:306
 msgid "Quota Default Global in MiB"
-msgstr ""
+msgstr "MiB의 전체 기본 할당량"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:320
 msgid "Quota Default School in MiB"
-msgstr ""
+msgstr "MiB의 학교 기본 할당량"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:162
 msgid "Random password"
-msgstr ""
+msgstr "랜덤 비밀번호"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:190
 msgid "Removal after departure (days)"
-msgstr ""
+msgstr "도착 후에 제거(일)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:204
 msgid "Replace slash(/) in classname by hypen(-)"
-msgstr ""
+msgstr "학급 이름의 슬래시(/) 를 하이픈(-) 으로 대체하세요"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:226
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:229
 msgid "Restart WebUI"
-msgstr ""
+msgstr "WebUI를 재시작하세요"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:92
 msgid "Reverse Surname and Firstname in username"
-msgstr ""
+msgstr "사용자 이름의 성과 이름의 위치를 바꾸세요"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:27
 msgid "Role Students"
-msgstr ""
+msgstr "학생 역할"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:35
 msgid "Role Teachers"
-msgstr ""
+msgstr "교사 역할"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:171
 msgid "SMTP host"
-msgstr ""
+msgstr "SMTP 호스트"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:193
 msgid "SMTP password"
-msgstr ""
+msgstr "SMTP 암호"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:187
 msgid "SMTP user"
-msgstr ""
+msgstr "SMTP 사용자"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:43
 msgid "SSL FQDN certificate file"
-msgstr ""
+msgstr "SSL FQDN 인증서 파일"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:34
 msgid "SSL certificate file"
-msgstr ""
+msgstr "SSL 인증서 파일"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:225
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:228
@@ -295,60 +295,60 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:805
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:806
 msgid "Save"
-msgstr ""
+msgstr "저장"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:802
 msgid "Save &amp; Apply Quota"
-msgstr ""
+msgstr "&amp; 저장 후 할당량 적용"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:227
 msgid "Save &amp; Apply Subnets"
-msgstr ""
+msgstr "&amp; 저장 후 서브넷 적용"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:801
 msgid "Save &amp; check"
-msgstr ""
+msgstr "&amp; 저장후 체크"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:533
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:633
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:748
 msgid "School administrators"
-msgstr ""
+msgstr "학교 관리자"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:386
 msgid "School landing page"
-msgstr ""
+msgstr "학교 방문 페이지"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:370
 msgid "School name"
-msgstr ""
+msgstr "학교 이름"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:302
 msgid "Schooladministrator"
-msgstr ""
+msgstr "학교 관리자"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:15
 msgid "Schoolname"
-msgstr ""
+msgstr "학교 이름"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:114
 msgid "Setup flag"
-msgstr ""
+msgstr "설정 표시"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:546
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:592
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:638
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:684
 msgid "Show in user details"
-msgstr ""
+msgstr "사용자 세부 정보 보기"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:150
 msgid "Smtp relay"
-msgstr ""
+msgstr "Smtp 전달"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:771
 msgid "Start"
-msgstr ""
+msgstr "시작"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:300
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:531
@@ -356,15 +356,15 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:732
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:86
 msgid "Students"
-msgstr ""
+msgstr "학생"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:100
 msgid "Subnets"
-msgstr ""
+msgstr "서브넷"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:106
 msgid "Surname Characters"
-msgstr ""
+msgstr "(이름에서) 성"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:301
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:532
@@ -372,68 +372,68 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:731
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:87
 msgid "Teachers"
-msgstr ""
+msgstr "교사"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:209
 msgid "Template email reset"
-msgstr ""
+msgstr "템플릿 이메일 재설정"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:165
 msgid "The smtp.yml config file seems to be empty. Currently it's ont possible to send emails with this configuration."
-msgstr ""
+msgstr "smtp.yml 구성 파일이 비어 있는 것 같습니다. 현재 이 구성으로 이메일을 보낼 수 없습니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:545
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:591
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:637
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:683
 msgid "Title"
-msgstr ""
+msgstr "제목"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:176
 msgid "Tolerance after departure (days)"
-msgstr ""
+msgstr "출발 후 허용 오차(일)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:61
 msgid "Trusted domains"
-msgstr ""
+msgstr "신뢰할 수 있는 도메인"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:78
 msgid "Trusted proxies"
-msgstr ""
+msgstr "신뢰할 수 있는 프록시"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:390
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:410
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:430
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:450
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:547
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:593
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:639
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:685
 msgid "User can edit"
-msgstr ""
+msgstr "유저가 수정 가능"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:82
 msgid "Username and Passwords"
-msgstr ""
+msgstr "사용자 이름 및 암호"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:446
 msgid "Webmail"
-msgstr ""
+msgstr "웹메일"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:406
 msgid "Webui"
-msgstr ""
+msgstr "웹 UI"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:727
 msgid "Which custom values display on user's lists ?"
-msgstr ""
+msgstr "사용자 목록에 표시되는 사용자 커스텀 값은 무엇입니까?"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:73
 msgid "default: server"
-msgstr ""
+msgstr "기본값: 서버"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:30
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:38
@@ -441,84 +441,88 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:54
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:62
 msgid "e.g.: linuxmuster.net"
-msgstr ""
+msgstr "e.g.: linuxmuster.net"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:88
 msgid "extrastudents"
-msgstr ""
+msgstr "추가학생"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:273
 msgid "extrastudents.csv"
-msgstr ""
+msgstr "extrastudents.csv"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:222
 msgid "extrastudents.csv encoding"
-msgstr ""
+msgstr "extrastudents.csv 인코딩"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:271
 msgid "students.csv"
-msgstr ""
+msgstr "students.csv"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:220
 msgid "students.csv encoding"
-msgstr ""
+msgstr "students.csv 인코딩중"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:272
 msgid "teachers.csv"
-msgstr ""
+msgstr "teachers.csv"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:221
 msgid "teachers.csv encoding"
-msgstr ""
+msgstr "teachers.csv 인코딩중"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/main.py:15
 msgid "School Settings"
-msgstr ""
+msgstr "학교 설정"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/main.py:23
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:2
 msgid "Global Settings"
-msgstr ""
+msgstr "전역 설정"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/main.py:38
 msgid "Configure school settings"
-msgstr ""
+msgstr "학교 구성 설정"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/main.py:43
 msgid "Configure global settings"
-msgstr ""
+msgstr "전체 구성 설정"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:17
 msgid "If Ajenti is installed behind a proxy, oder reachable by a fqdn other than provided by the host,\n"
 "you can then specify the other domains here, and by this way avoiding some resources loading problems."
-msgstr ""
+msgstr "Agenti가 프록시 뒤에 설치되어 있는 경우 호스트에서 제공한 것이 아닌 fqdn에서 연결할 수 있습니다.\n"
+"그런 다음 여기서 다른 도메인을 지정하여 리소스 로드 문제를 방지할 수 있습니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:22
 msgid "If Ajenti is installed behind one or more proxies, specify the ip of these proxies here, in order to\n"
 "get the real client ip address."
-msgstr ""
+msgstr "Ajenti가 하나 이상의 프록시 뒤에 설치된 경우, 실제 클라이언트 IP 주소를 가져오기 위해 여기에 이러한 프록시의 ip를 지정하세요."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:27
 msgid "This certificate is the default certificate used to create client certificate and to provide https connection.\n"
 "Using a Let's Encrypt certificate here will break the client certificate generator.\n"
 "Using a self-generated certificate is fine here."
-msgstr ""
+msgstr "이 인증서는 클라이언트 인증서를 만들고 https 연결을 제공하는 데 사용되는 기본 인증서입니다.\n"
+"여기서 Let's Encrypt 인증서를 사용하면 클라이언트 인증서 생성기가 손상됩니다.\n"
+"여기서는 자체 생성된 인증서를 사용해도 됩니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:33
 msgid "If you have a special certificate for your domain, like a Let's Encrypt certificate, put it there.\n"
 "If you are not sure, just use the same certificate as the one above."
-msgstr ""
+msgstr "Let's Encrypt 인증서와 같은 도메인에 대한 특수 인증서가 있는 경우 해당 인증서를 넣습니다.\n"
+"확실하지 않다면 위의 인증서와 동일한 인증서를 사용하십시오."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:41
 msgid "Are you sure you want to delete permanently this subnet ?"
-msgstr ""
+msgstr "이 서브넷을 정말 영구적으로 삭제 하시겠습니까?"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:42
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:73
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:86
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:98
 msgid "Delete"
-msgstr ""
+msgstr "삭제"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:43
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:74
@@ -526,7 +530,7 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:130
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:99
 msgid "Cancel"
-msgstr ""
+msgstr "취소"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:53
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:109
@@ -535,77 +539,77 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:139
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:162
 msgid "Saved"
-msgstr ""
+msgstr "저장 완료"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:114
 msgid "Global config saved"
-msgstr ""
+msgstr "전역 설정 저장됨"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:116
 msgid "Could not save global config"
-msgstr ""
+msgstr "전역 설정을 저장할 수 없습니다"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:120
 msgid "Smtp config saved"
-msgstr ""
+msgstr "Smtp config 저장 완료"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:122
 msgid "Could not save smtp config"
-msgstr ""
+msgstr "smtp config를 저장할 수 없습니다"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:127
 msgid "Self-signed certificate"
-msgstr ""
+msgstr "자체 서명된 인증서"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:128
 msgid "Generating a new certificate will void all existing client authentication certificates!"
-msgstr ""
+msgstr "새 인증서를 생성 하는 것은 모든 기존 클라이언트 인증 인증서 무효화 시킵니다!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:129
 msgid "Generate"
-msgstr ""
+msgstr "생성"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:133
 msgid "Generating certificate"
-msgstr ""
+msgstr "인증서 생성중"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:133
 msgid "Please wait"
-msgstr ""
+msgstr "잠시만 기다려 주세요"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:135
 msgid "Certificate successfully generated"
-msgstr ""
+msgstr "인증서가 성공적으로 생성되었습니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:141
 msgid "Certificate generation failed"
-msgstr ""
+msgstr "인증서 생성 실패"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:8
 msgid "Settings"
-msgstr ""
+msgstr "설정"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:11
 msgid "Remove"
-msgstr ""
+msgstr "제거"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:18
 msgid "Minimal"
-msgstr ""
+msgstr "최소"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:19
 msgid "Average"
-msgstr ""
+msgstr "평균"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:20
 msgid "Maximal"
-msgstr ""
+msgstr "최대"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:97
 msgid "Are you sure you want to delete permanently these holidays ?"
-msgstr ""
+msgstr "이 공휴일을 정말 영구적으로 삭제 하시겠습니까?"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:136
 msgid "Please first correct the mal formated fields."
-msgstr ""
+msgstr "먼저 형식이 잘못된 필드를 수정하십시오."
 

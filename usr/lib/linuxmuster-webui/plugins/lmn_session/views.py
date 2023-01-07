@@ -2,7 +2,7 @@ from concurrent import futures
 from time import localtime, strftime  # needed for timestamp in collect transfer
 
 from jadi import component
-from aj.api.http import get, post, put, patch, delete, url, HttpPlugin
+from aj.api.http import get, post, put, patch, delete, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue
@@ -188,55 +188,51 @@ class Handler(HttpPlugin):
             return result
         return 0
 
-    @url(r'/api/lmn/session/getUserInRoom')
+    @get(r'/api/lmn/session/userInRoom')
+    @authorize('lm:users:students:read')
     @endpoint(api=True)
     def handle_api_get_user_in_room(self, http_context):
-        if http_context.method == 'POST':
-            schoolname = self.context.schoolmgr.school
-            action = http_context.json_body()['action']
-            username = http_context.json_body()['username']
-            with authorize('lm:users:students:read'):
-                if action == 'get-my-room':
-                    try:
-                        sophomorixCommand = ['sophomorix-query', '-jj', '--smbstatus', '--schoolbase', schoolname, '--query-user', username]
-                        response = lmn_getSophomorixValue(sophomorixCommand, '')
-                        # remove our own
-                        room = response[username]['ROOM']
-                        response.pop(username, None)
-                        return {
-                            "usersList": list(response.keys()),
-                            "room": room,
-                            "objects": response,
-                        }
-                    except IndexError as e :
-                        return 0
-
-
-    @url(r'/api/lmn/session/user-search')
-    @endpoint(api=True)
-    def handle_api_ldap_user_search(self, http_context):
         schoolname = self.context.schoolmgr.school
-        with authorize('lm:users:students:read'):
-            try:
-                sophomorixCommand = ['sophomorix-query', '-jj', '--schoolbase', schoolname, '--student', '--user-basic', '--anyname', '*'+http_context.json_body()['q']+'*']
-                users = lmn_getSophomorixValue(sophomorixCommand, 'USER', True)
-            except Exception:
-                return 0
+        username = self.context.identity
+        try:
+            sophomorixCommand = ['sophomorix-query', '-jj', '--smbstatus', '--schoolbase', schoolname, '--query-user', username]
+            response = lmn_getSophomorixValue(sophomorixCommand, '')
+            # remove our own
+            room = response[username]['ROOM']
+            response.pop(username, None)
+            return {
+                "usersList": list(response.keys()),
+                "room": room,
+                "objects": response,
+            }
+        except IndexError as e :
+            return 0
+
+    @get(r'/api/lmn/session/user-search/(?P<query>.*)')
+    @authorize('lm:users:students:read')
+    @endpoint(api=True)
+    def handle_api_ldap_user_search(self, http_context, query=''):
+        schoolname = self.context.schoolmgr.school
+        try:
+            sophomorixCommand = ['sophomorix-query', '-jj', '--schoolbase', schoolname, '--student', '--user-basic', '--anyname', f'*{query}*']
+            users = lmn_getSophomorixValue(sophomorixCommand, 'USER', True)
+        except Exception:
+            return 0
         userList = []
         for user in users:
             userList.append(users[user])
         return userList
 
-    @url(r'/api/lmn/session/schoolClass-search')
+    @get(r'/api/lmn/session/schoolClass-search/(?P<query>.*)')
+    @authorize('lm:users:students:read')
     @endpoint(api=True)
-    def handle_api_ldap_group_search(self, http_context):
+    def handle_api_ldap_group_search(self, http_context, query=''):
         schoolname = self.context.schoolmgr.school
-        with authorize('lm:users:students:read'):
-            try:
-                sophomorixCommand = ['sophomorix-query', '-jj', '--schoolbase', schoolname, '--class', '--group-members', '--user-full', '--sam', '*'+http_context.query['q']+'*']
-                schoolClasses = lmn_getSophomorixValue(sophomorixCommand, 'MEMBERS', True)
-            except Exception:
-                return 0
+        try:
+            sophomorixCommand = ['sophomorix-query', '-jj', '--schoolbase', schoolname, '--class', '--group-members', '--user-full', '--sam', f'*{query}*']
+            schoolClasses = lmn_getSophomorixValue(sophomorixCommand, 'MEMBERS', True)
+        except Exception:
+            return 0
         schoolClassList = []
         for schoolClass in schoolClasses:
             schoolClassJson = {}
@@ -245,21 +241,20 @@ class Handler(HttpPlugin):
             schoolClassList.append(schoolClassJson)
         return schoolClassList
 
-    @url(r'/api/lmn/session/moveFileToHome')  ## TODO authorize
+    @post(r'/api/lmn/session/moveFileToHome')  ## TODO authorize
     @endpoint(api=True)
     def handle_api_create_dir(self, http_context):
         """Create directory with given path, ignoring errors"""
-        if http_context.method == 'POST':
-            user = http_context.json_body()['user']
-            filepath = http_context.json_body()['filepath']
-            subdir = http_context.json_body()['subdir']
-            try:
-                sophomorixCommand = ['sophomorix-transfer', '--from-unix-path', filepath, '--to-user', user, '--subdir', subdir, '-jj']
-                return lmn_getSophomorixValue(sophomorixCommand, '', True)
-            except Exception:
-                return 0
+        user = http_context.json_body()['user']
+        filepath = http_context.json_body()['filepath']
+        subdir = http_context.json_body()['subdir']
+        try:
+            sophomorixCommand = ['sophomorix-transfer', '--from-unix-path', filepath, '--to-user', user, '--subdir', subdir, '-jj']
+            return lmn_getSophomorixValue(sophomorixCommand, '', True)
+        except Exception:
+            return 0
 
-    @url(r'/api/lmn/session/trans-list-files')
+    @post(r'/api/lmn/session/trans-list-files')
     @endpoint(api=True)
     def handle_api_session_file_trans_list(self, http_context):
         user = http_context.json_body()['user']
@@ -270,9 +265,8 @@ class Handler(HttpPlugin):
         subfolderPath = ''
         if 'subfolderPath' in http_context.json_body():
             subfolderPath = http_context.json_body()['subfolderPath']
-        sophomorixCommand = ['sophomorix-transfer', '-j', '--list-home-dir', user, '--subdir', '/transfer/'+subfolderPath]
+        sophomorixCommand = ['sophomorix-transfer', '-j', '--list-home-dir', user, '--subdir', f'/transfer/{subfolderPath}']
         availableFiles = lmn_getSophomorixValue(sophomorixCommand, 'sAMAccountName/'+user)
-        #raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(availableFiles))
         availableFilesList = []
         if availableFiles['COUNT']['files'] == 0 and availableFiles['COUNT']['directories'] == 0:
             return availableFiles, []
@@ -280,7 +274,7 @@ class Handler(HttpPlugin):
             availableFilesList.append(availableFile)
         return availableFiles, availableFilesList
 
-    @url(r'/api/lmn/session/trans')
+    @post(r'/api/lmn/session/trans')
     @endpoint(api=True)
     def handle_api_session_file_trans(self, http_context):
         senders = http_context.json_body()['senders']
@@ -375,7 +369,7 @@ class Handler(HttpPlugin):
                             returnMessage = list(returnMessage)[-1]
                 except Exception as e:
                     raise Exception('Something went wrong. Error:\n' + str(e))
-        # TODO: Fifure out why return message changed
+        # TODO: Figure out why return message changed
         #if returnMessage['TYPE'] == "ERROR":
         ##    return returnMessage['TYPE']['LOG']
         #return returnMessage['TYPE'], returnMessage['LOG']

@@ -171,7 +171,7 @@
     };
     // Websession part
     $scope.getWebConferenceEnabled = function() {
-      return $http.get('/api/lmn/websession/getWebConferenceEnabled').then(function(resp) {
+      return $http.get('/api/lmn/websession/webConferenceEnabled').then(function(resp) {
         if (resp.data === true) {
           $scope.websessionEnabled = true;
           return $scope.websessionGetStatus();
@@ -182,9 +182,9 @@
     };
     $scope.websessionIsRunning = false;
     $scope.websessionGetStatus = function() {
-      return $http.post('/api/lmn/websession/getWebConferenceByName', {
-        sessionname: $scope.currentSession.comment + "-" + $scope.currentSession.name
-      }).then(function(resp) {
+      var sessionname;
+      sessionname = $scope.currentSession.comment + "-" + $scope.currentSession.name;
+      return $http.get(`/api/lmn/websession/webConference/${sessionname}`).then(function(resp) {
         if (resp.data["status"] === "SUCCESS") {
           if (resp.data["data"]["status"] === "started") {
             $scope.websessionIsRunning = true;
@@ -211,9 +211,7 @@
         id: $scope.websessionID,
         moderatorpw: $scope.websessionModeratorPW
       }).then(function(resp) {
-        return $http.post('/api/lmn/websession/deleteWebConference', {
-          id: $scope.websessionID
-        }).then(function(resp) {
+        return $http.delete(`/api/lmn/websession/webConference/${$scope.websessionID}`).then(function(resp) {
           if (resp.data["status"] === "SUCCESS") {
             notify.success(gettext("Successfully stopped!"));
             return $scope.websessionIsRunning = false;
@@ -231,11 +229,10 @@
         participant = ref[i];
         tempparticipants.push(participant.sAMAccountName);
       }
-      return $http.post('/api/lmn/websession/createWebConference', {
+      return $http.post('/api/lmn/websession/webConferences', {
         sessionname: $scope.currentSession.comment + "-" + $scope.currentSession.name,
         sessiontype: "private",
         sessionpassword: "",
-        moderator: $scope.identity.user,
         participants: tempparticipants
       }).then(function(resp) {
         if (resp.data["status"] === "SUCCESS") {
@@ -509,11 +506,8 @@
         }
       });
     };
-    $scope.showRoomDetails = function(username) {
-      return $http.post('/api/lmn/session/getUserInRoom', {
-        action: 'get-my-room',
-        username: username
-      }).then(function(resp) {
+    $scope.showRoomDetails = function() {
+      return $http.get('/api/lmn/session/userInRoom').then(function(resp) {
         var usersInRoom;
         if (resp.data === 0) {
           return messagebox.show({
@@ -594,17 +588,14 @@
       });
     };
     $scope.findUsers = function(q) {
-      return $http.post("/api/lmn/session/user-search", {
-        q: q
-      }).then(function(resp) {
+      return $http.get(`/api/lmn/session/user-search/${q}`).then(function(resp) {
         $scope.users = resp.data;
         return resp.data;
       });
     };
     $scope.findSchoolClasses = function(q) {
-      return $http.get(`/api/lmn/session/schoolClass-search?q=${q}`).then(function(resp) {
+      return $http.get(`/api/lmn/session/schoolClass-search/${q}`).then(function(resp) {
         $scope.class = resp.data;
-        //console.log resp.data
         return resp.data;
       });
     };
@@ -632,11 +623,8 @@
         return $scope.getWebConferenceEnabled();
       }
     };
-    $scope.generateRoomSession = function(user) {
-      return $http.post('/api/lmn/session/getUserInRoom', {
-        action: 'get-my-room',
-        username: user
-      }).then(function(resp) {
+    $scope.generateRoomSession = function() {
+      return $http.get('/api/lmn/session/userInRoom').then(function(resp) {
         var i, len, ref, session, sessionComment, sessionExist, sessionID, usersInRoom;
         if (resp.data === 0) {
           return messagebox.show({

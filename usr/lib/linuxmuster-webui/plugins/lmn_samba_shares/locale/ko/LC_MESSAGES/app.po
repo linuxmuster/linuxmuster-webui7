@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-31 19:09+0200\n"
-"PO-Revision-Date: 2022-08-29 20:15\n"
+"PO-Revision-Date: 2022-12-27 14:21\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -19,15 +19,15 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/properties.html:49
 msgid "Access"
-msgstr ""
+msgstr "접근"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/properties.html:161
 msgid "All"
-msgstr ""
+msgstr "전체"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/properties.html:187
 msgid "Apply"
-msgstr ""
+msgstr "적용하기"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:115
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:128
@@ -36,228 +36,228 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:191
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:212
 msgid "Cancel"
-msgstr ""
+msgstr "취소"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/properties.html:115
 msgid "Change permissions"
-msgstr ""
+msgstr "권한 변경"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:134
 msgid "Clipboard"
-msgstr ""
+msgstr "클립보드"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:156
 msgid "Close"
-msgstr ""
+msgstr "닫기"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:100
 msgid "Copy"
-msgstr ""
+msgstr "복사"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:114
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:127
 msgid "Create"
-msgstr ""
+msgstr "새로 만들기"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:99
 msgid "Cut"
-msgstr ""
+msgstr "잘라내기"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/properties.html:32
 msgid "DIRECTORY"
-msgstr ""
+msgstr "디렉토리"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:101
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:173
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:190
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:211
 msgid "Delete"
-msgstr ""
+msgstr "삭제"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:124
 msgid "Directory name"
-msgstr ""
+msgstr "디렉토리 이름"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/properties.html:70
 msgid "EXECUTE"
-msgstr ""
+msgstr "실행하기"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/properties.html:123
 msgid "Edit in Notepad"
-msgstr ""
+msgstr "메모장에서 편집"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/properties.html:173
 msgid "Extra"
-msgstr ""
+msgstr "기타"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/properties.html:37
 msgid "FILE"
-msgstr ""
+msgstr "파일"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:111
 msgid "File name"
-msgstr ""
+msgstr "파일 이름"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/properties.html:18
 msgid "Full path"
-msgstr ""
+msgstr "전체 경로"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/properties.html:100
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/properties.html:149
 msgid "Group"
-msgstr ""
+msgstr "그룹"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/properties.html:43
 msgid "LINK"
-msgstr ""
+msgstr "링크"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/properties.html:108
 msgid "Mode"
-msgstr ""
+msgstr "모드"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/properties.html:84
 msgid "Modified"
-msgstr ""
+msgstr "수정됨"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/properties.html:10
 msgid "Name"
-msgstr ""
+msgstr "이름"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:121
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:87
 msgid "New directory"
-msgstr ""
+msgstr "새 디렉터리"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:108
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:86
 msgid "New file"
-msgstr ""
+msgstr "새 파일"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/properties.html:92
 msgid "Owner"
-msgstr ""
+msgstr "소유자"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:91
 msgid "Paste here"
-msgstr ""
+msgstr "여기에 붙여넣기"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/properties.html:132
 msgid "Permission bits"
-msgstr ""
+msgstr "권한 비트"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/properties.html:56
 msgid "READ"
-msgstr ""
+msgstr "읽기"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:139
 msgid "Remove"
-msgstr ""
+msgstr "제거"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:155
 msgid "Remove all items"
-msgstr ""
+msgstr "전체 삭제"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/properties.html:76
 msgid "Size"
-msgstr ""
+msgstr "크기"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/properties.html:26
 msgid "Type"
-msgstr ""
+msgstr "타입"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:89
 msgid "Upload"
-msgstr ""
+msgstr "업로드"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:47
 msgid "Uploading ..."
-msgstr ""
+msgstr "업로드중..."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/properties.html:137
 msgid "User"
-msgstr ""
+msgstr "사용자"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/properties.html:63
 msgid "WRITE"
-msgstr ""
+msgstr "쓰기"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:96
 msgid "items selected"
-msgstr ""
+msgstr "항목이 선택됨"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/main.py:15
 msgid "My files"
-msgstr ""
+msgstr "내 파일"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/properties.controller.es:15
 msgid "Could not read file information"
-msgstr ""
+msgstr "파일 정보를 읽을 수 없습니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/properties.controller.es:29
 msgid "File mode saved"
-msgstr ""
+msgstr "파일 모드가 저장되었습니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:2
 msgid "Samba shares"
-msgstr ""
+msgstr "Samba가 공유되었음"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:75
 msgid "Could not load directory : "
-msgstr ""
+msgstr "디렉토리를 불러올 수 없습니다 : "
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:89
 msgid "New name :"
-msgstr ""
+msgstr "새 이름 :"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:92
 msgid " renamed to "
-msgstr ""
+msgstr " 이름이 로 수정되었습니다"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:95
 msgid "Error during renaming: "
-msgstr ""
+msgstr "이름 수정동안 에러 발생 : "
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:118
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:138
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:222
 msgid "Can not cut/copy or delete non empty directories !"
-msgstr ""
+msgstr "비어 있지 않은 디렉토리를 잘라내기/ 복사 또는 삭제할 수 없습니다!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:172
 msgid "Do you really want to delete this file?"
-msgstr ""
+msgstr "정말로 이 파일을 제거할까요?"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:177
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:215
 msgid " deleted !"
-msgstr ""
+msgstr " 삭제됨!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:180
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:218
 msgid "Error during deleting : "
-msgstr ""
+msgstr "삭제하는 동안 에러 발생 : "
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:189
 msgid "Delete selected items?"
-msgstr ""
+msgstr "선택한 항목을 삭제할까요?"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:210
 msgid "Do you really want to delete this directory?"
-msgstr ""
+msgstr "정말로 이 디렉토리를 제거할까요?"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:254
 msgid "Could not create file"
-msgstr ""
+msgstr "파일을 생성할 수 없습니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:274
 msgid "Could not create directory"
-msgstr ""
+msgstr "디렉토리를 만들 수 없습니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:282
 msgid "File not found, may be due to special chars in the file name."
-msgstr ""
+msgstr "파일을 찾을 수 없습니다. 아마도 파일 이름에 있는 특수 문자가 원인일 수 있습니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:307
 msgid "Uploaded "
-msgstr ""
+msgstr "업로드됨 "
 

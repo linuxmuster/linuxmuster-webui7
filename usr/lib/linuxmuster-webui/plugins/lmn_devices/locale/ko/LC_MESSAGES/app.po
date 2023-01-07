@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-31 19:05+0200\n"
-"PO-Revision-Date: 2022-08-29 20:15\n"
+"PO-Revision-Date: 2022-12-27 14:21\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -19,228 +19,228 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:151
 msgid "Add a device"
-msgstr ""
+msgstr "기기 추가"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:102
 msgid "BYOD"
-msgstr ""
+msgstr "기기 불러오기(Bring Your Own Device의 약자)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/apply.modal.html:11
 msgid "Close"
-msgstr ""
+msgstr "닫기"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/apply.modal.html:10
 msgid "Details"
-msgstr ""
+msgstr "상세 정보"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:107
 msgid "Domain-Controller"
-msgstr ""
+msgstr "도메인 관리사"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:162
 msgid "Edit CSV"
-msgstr ""
+msgstr "CSV 수정"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:96
 msgid "Faculty-Teachercomputer"
-msgstr ""
+msgstr "시설에 있는 선생님의 컴퓨터"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:30
 msgid "Fields"
-msgstr ""
+msgstr "영역"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/apply.modal.html:9
 msgid "Hide details"
-msgstr ""
+msgstr "세부 정보 숨기기"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:105
 msgid "IP-Only"
-msgstr ""
+msgstr "IP만"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/apply.modal.html:2
 msgid "Importing device"
-msgstr ""
+msgstr "기기 추가"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:116
 msgid "Linbo-PXE"
-msgstr ""
+msgstr "Linbo-PXE"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:117
 msgid "Linbo-PXE + OPSI-MGMT"
-msgstr ""
+msgstr "Linbo-PXE + OPSI-MGMT"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:106
 msgid "Mobile"
-msgstr ""
+msgstr "모바일"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:115
 msgid "No PXE"
-msgstr ""
+msgstr "PXE 제외"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:118
 msgid "OPSI-PXE"
-msgstr ""
+msgstr "OPSI-PXE"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:100
 msgid "Printer"
-msgstr ""
+msgstr "프린터"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:40
 msgid "Rows"
-msgstr ""
+msgstr "가로 행"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:160
 msgid "Save"
-msgstr ""
+msgstr "저장"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:161
 msgid "Save &amp; import"
-msgstr ""
+msgstr "&amp; 저장 후 불러오기"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:97
 msgid "Server"
-msgstr ""
+msgstr "서버"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:95
 msgid "Staffcomputer"
-msgstr ""
+msgstr "직원 컴퓨터"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:99
 msgid "Switch"
-msgstr ""
+msgstr "스위치"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:101
 msgid "Thinclient"
-msgstr ""
+msgstr "씬 클라이언트(컴퓨터용어)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:103
 msgid "VOIP"
-msgstr ""
+msgstr "VoIP 소프트웨어"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:104
 msgid "WLan"
-msgstr ""
+msgstr "WLan"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:93
 msgid "classroom-studentcomputer"
-msgstr ""
+msgstr "교실-학생 컴퓨터"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:94
 msgid "classroom-teachercomputer"
-msgstr ""
+msgstr "교실-선생님 컴퓨터"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:9
 msgid "empty cells"
-msgstr ""
+msgstr "셸 비우기"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/partial/index.html:98
 msgid "router"
-msgstr ""
+msgstr "라우터"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/main.py:15
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:27
 msgid "Devices"
-msgstr ""
+msgstr "장치"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/main.py:30
 msgid "Read/write devices"
-msgstr ""
+msgstr "장치 읽기/쓰기"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/main.py:35
 msgid "Import device"
-msgstr ""
+msgstr "기기 추가"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:15
 msgid "Import complete"
-msgstr ""
+msgstr "불러오기 완료"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:17
 msgid "Import failed"
-msgstr ""
+msgstr "불러오기 실패"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:34
 msgid "Duplicate"
-msgstr ""
+msgstr "복제하기"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:35
 msgid "Remove"
-msgstr ""
+msgstr "제거"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:39
 msgid "Changes are not saved, continue anyway ?"
-msgstr ""
+msgstr "변경사항이 저장되지 않았는데, 그대로 진행하시겠습니까?"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:80
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:137
 msgid "Room"
-msgstr ""
+msgstr "방"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:84
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:143
 msgid "Group"
-msgstr ""
+msgstr "그룹"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:88
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:140
 msgid "Hostname"
-msgstr ""
+msgstr "호스트이름"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:92
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:146
 msgid "MAC"
-msgstr ""
+msgstr "MAC"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:96
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:149
 msgid "IP"
-msgstr ""
+msgstr "IP"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:152
 msgid "Office Key"
-msgstr ""
+msgstr "오피스 키"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:155
 msgid "Windows Key"
-msgstr ""
+msgstr "윈도우 키"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:158
 msgid "DHCP-Options"
-msgstr ""
+msgstr "DHCP 설정"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:161
 msgid "Sophomorix-Role"
-msgstr ""
+msgstr "소포모릭스 역할"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:164
 msgid "LMN-Reserved 10"
-msgstr ""
+msgstr "LMN-Reserved 10"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:167
 msgid "PXE"
-msgstr ""
+msgstr "PXE"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:170
 msgid "LMN-Reserved 12"
-msgstr ""
+msgstr "LMN-Reserved 12"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:173
 msgid "LMN-Reserved 13"
-msgstr ""
+msgstr "LMN-Reserved 13"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:176
 msgid "LMN-Reserved 14"
-msgstr ""
+msgstr "LMN-Reserved 14"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:179
 msgid "Sophomorix-Comment"
-msgstr ""
+msgstr "소포모릭스 커멘트"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:196
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:211
 msgid "Please check the errors."
-msgstr ""
+msgstr "오류를 확인하십시오."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_devices/resources/js/controllers/index.controller.coffee:204
 msgid "Saved"
-msgstr ""
+msgstr "저장 완료"
 

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-28 11:31+0100\n"
-"PO-Revision-Date: 2022-08-29 20:15\n"
+"POT-Creation-Date: 2022-12-27 15:04+0100\n"
+"PO-Revision-Date: 2022-12-27 14:21\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -126,43 +126,43 @@ msgid "no password"
 msgstr "aucun mot de passe"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:8
-#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:110
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:109
 msgid "Websession"
 msgstr "Session web"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:30
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:29
 msgid "Created successfully!"
 msgstr "Création réussie!"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:39
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:38
 msgid "Cannot start websession! Try to reload page!"
 msgstr "Impossible de démarrer la session web! Essayez de recharger la page !"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:51
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:50
 msgid "Stopped successfully!"
 msgstr "Arrêté avec succès !"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:53
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:52
 msgid "Cannot stop websession! Try to reload page!"
 msgstr "Impossible d'arrêter la session web! Essayez de recharger la page !"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:61
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:60
 msgid "Successfully removed!"
 msgstr "Supprimé avec succès !"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:63
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:62
 msgid "Cannot delete entry!"
 msgstr "Impossible de supprimer l'entrée !"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:75
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:74
 msgid "Copied!"
 msgstr "Copié !"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:125
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:124
 msgid "You have to enter a name!"
 msgstr "Vous devez entrer un nom !"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:134
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:133
 msgid "Create session failed! Try again later!"
 msgstr "La création de la session a échoué! Réessayez plus tard!"
 

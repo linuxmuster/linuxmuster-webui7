@@ -1,1 +1,1 @@
-{"": "", "URL not found or not valid! Please check config file.": "", "Nextcloud": ""}
+{"": "", "URL not found or not valid! Please check config file.": "URL\uc744 \ucc3e\uc744 \uc218 \uc5c6\uac70\ub098 \uc720\ud6a8\ud558\uc9c0 \uc54a\uc2b5\ub2c8\ub2e4! config \ud30c\uc77c\uc744 \ud655\uc778\ud558\uc2ed\uc2dc\uc624.", "Nextcloud": "Nextcloud"}

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-30 19:02+0200\n"
-"PO-Revision-Date: 2022-08-29 20:15\n"
+"POT-Creation-Date: 2022-12-27 15:03+0100\n"
+"PO-Revision-Date: 2022-12-27 14:21\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -124,61 +124,4 @@ msgstr "Imprimantes"
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:81
 msgid "Project"
 msgstr "Projets"
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:96
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:123
-msgid "New value"
-msgstr "Nouvelle valeur"
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:102
-msgid "Value updated !"
-msgstr "Valeur mise à jour !"
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:104
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:119
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:130
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:144
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:154
-msgid "Error, please verify the user and/or your values."
-msgstr "Erreur, veuillez vérifier l'utilisateur et/ou vos valeurs."
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:109
-msgid "Remove custom field value"
-msgstr "Supprimer la valeur du champ personnalisé"
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:110
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:135
-msgid "Do you really want to remove "
-msgstr "Voulez-vous vraiment supprimer "
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:111
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:136
-msgid "OK"
-msgstr "Ok"
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:112
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:137
-msgid "Cancel"
-msgstr "Annuler"
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:117
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:142
-msgid "Value removed !"
-msgstr "Valeur retirée !"
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:127
-msgid "Value added !"
-msgstr "Valeur ajoutée !"
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:134
-msgid "Remove proxy address"
-msgstr "Supprimer l'adresse"
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:148
-msgid "New address"
-msgstr "Nouvelle adresse"
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:152
-msgid "Address added !"
-msgstr "Adresse ajoutée !"
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webui\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-24 11:51+0200\n"
+"POT-Creation-Date: 2022-12-27 15:03+0100\n"
 "PO-Revision-Date: 2016-11-01 18:53-0400\n"
 "Last-Translator: eugenepankov <john.pankov@gmail.com>\n"
 "Language-Team: Lithuanian\n"
@@ -137,6 +137,6 @@ msgstr ""
 msgid "Synchronize first OS from workstation"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/js/controllers/index.controller.coffee:186
-msgid "Command successfully sent : "
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/js/controllers/index.controller.coffee:239
+msgid "Command successfully sent: "
 msgstr ""

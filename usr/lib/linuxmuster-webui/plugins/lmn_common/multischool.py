@@ -4,11 +4,60 @@ import logging
 from io import StringIO
 from configobj import ConfigObj
 from subprocess import check_output
+import xml.etree.ElementTree as ElementTree
 
-from aj.plugins.lmn_common.api import samba_realm
+from aj.plugins.lmn_common.api import samba_realm, lmn_getSophomorixValue
 
 
-class SchoolManager():
+class Drives:
+    """Object to store data from dDrives.xml"""
+
+    def __init__(self, policy):
+        self.policy = policy
+        self.path = f'/var/lib/samba/sysvol/{samba_realm}/Policies/{self.policy}/User/Preferences/Drives/Drives.xml'
+        self.usedLetters = []
+        self.load()
+
+    def load(self):
+        self.drives = []
+        self.drives_dict = {}
+
+        try:
+            self.tree = ElementTree.parse(self.path)
+        except FileNotFoundError:
+            return
+
+        for drive in self.tree.findall('Drive'):
+            drive_attr = {'properties': {}}
+            drive_attr['disabled'] = bool(int(drive.attrib.get('disabled', '0')))
+            for prop in drive.findall('Properties'):
+                drive_attr['properties']['useLetter'] = bool(int(prop.get('useLetter', '0')))
+                drive_attr['properties']['letter'] = prop.get('letter', '')
+                drive_attr['properties']['label'] = prop.get('label', 'Unknown')
+                self.usedLetters.append(drive_attr['properties']['letter'])
+
+            self.drives.append(drive_attr)
+            self.drives_dict[drive_attr['properties']['label']] = {
+                'userLetter': drive_attr['properties']['useLetter'],
+                'letter': drive_attr['properties']['letter'],
+                'disabled': drive_attr['disabled']
+            }
+
+    def save(self, content):
+        self.tree.write(f'{self.path}.bak', encoding='utf-8', xml_declaration=True)
+
+        for drive in self.tree.findall('Drive'):
+            for prop in drive.findall('Properties'):
+                for newDrive in content:
+                    if newDrive['properties']['label'] == prop.get('label', 'Unknown'):
+                        prop.set('letter', newDrive['properties']['letter'])
+                        prop.set('useLetter', str(int(newDrive['properties']['useLetter'])))
+                        drive.set('disabled', str(int(newDrive['disabled'])))
+
+        self.tree.write(self.path, encoding='utf-8', xml_declaration=True)
+        self.load()
+
+class SchoolManager:
     def __init__(self):
         self.school = 'default-school'
         self.load()
@@ -19,6 +68,8 @@ class SchoolManager():
         self.load_holidays()
         self.load_school_dfs_shares()
         self.get_share_prefix()
+        self.load_gpo_list()
+        self.load_drives()
 
     def switch(self, school):
         # Switch to another school
@@ -74,6 +125,28 @@ class SchoolManager():
                     self.dfs[share_name] = {
                         'dfs_proxy': dfs_proxy.replace('/', '\\'),
                     }
+
+    def load_gpo_list(self):
+        """
+        Load all GPO policies
+        """
+
+        result = check_output(['samba-tool', 'gpo', 'listall'], shell=False).decode().splitlines()
+        for entry in result:
+            if 'GPO' in entry:
+                policy = entry.split(":")[-1].strip()
+            elif 'display name' in entry:
+                if entry.split(":")[-1].strip() == self.school:
+                    self.policy = policy
+                    break
+
+    def load_drives(self):
+        """
+        Load Drives.xml content from school policies
+        """
+
+        xml_path = f'/var/lib/samba/sysvol/{samba_realm}/Policies/{self.policy}/User/Preferences/Drives/Drives.xml'
+        self.Drives = Drives(self.policy)
 
     def get_share_prefix(self):
 
@@ -160,15 +233,21 @@ class SchoolManager():
             ],
             'teacher': [
                 home,
-                students,
-                program,
-                share,
             ],
             'student': [
                 home,
-                share,
-                program,
             ]
         }
+
+        # Use GPO to determine if the share should be shown
+        # Must be rewritten
+        if not self.Drives.drives_dict['Programs']['disabled']:
+            shares['teacher'].append(program)
+            shares['student'].append(program)
+        if not self.Drives.drives_dict['Shares']['disabled']:
+            shares['teacher'].append(share)
+            shares['student'].append(share)
+        if not self.Drives.drives_dict['Students-Home']['disabled']:
+            shares['teacher'].append(students)
 
         return shares[role]

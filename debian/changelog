@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.1.42) lmn71; urgency=medium
+
+  * [Settings] Fix typo in saving smtp config. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 08 Jan 2023 14:38:11 +0100
+
 linuxmuster-webui7 (7.1.41) lmn71; urgency=medium
 
   * [Smbclient] Use directory names instead of label names for GPO.

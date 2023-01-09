@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.2.7) lmn72; urgency=medium
+
+  * [Session] Fix user list in exam modus. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 09 Jan 2023 14:07:07 +0100
+
 linuxmuster-webui7 (7.2.6) lmn72; urgency=medium
 
   * [Settings] Fix typo in saving smtp config.  

@@ -152,4 +152,14 @@ class Permissions (PermissionProvider):
                 'name': _('Delete global admins'), # skipcq: PYL-E0602
                 'default': False,
             },
+            {
+                'id': 'lm:users:customfields:write',
+                'name': _('Change own custom fields values'),  # skipcq: PYL-E0602
+                'default': False,
+            },
+            {
+                'id': 'lm:users:customfields:read',
+                'name': _('Read custom fields values'),  # skipcq: PYL-E0602
+                'default': False,
+            },
         ]

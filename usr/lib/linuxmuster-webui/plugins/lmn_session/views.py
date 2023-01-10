@@ -167,10 +167,10 @@ class Handler(HttpPlugin):
 
             # Save session members
             try:
-                sophomorixCommand = ['sophomorix-session', '--session', session,  '-j', '--participants', ','.join(participants)]
+                sophomorixCommand = ['sophomorix-session', '--session', session,  '-j', '--participants', ','.join(participantsList)]
                 result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
             except Exception:
-                raise Exception(f'Error:\nsophomorix-session --session {session} -j --participants {",".join(participants)}')
+                raise Exception(f'Error:\nsophomorix-session --session {session} -j --participants {",".join(participantsList)}')
             # Put chosen members in exam mode
             try:
                 if examModeList:

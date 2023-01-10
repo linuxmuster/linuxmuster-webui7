@@ -109,7 +109,7 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope,
        }
     });
 
-    $scope.save = () =>
+    $scope.save = () => {
         config.save().then(data =>
             notify.success(gettext('Global config saved'))
         ).catch(() =>
@@ -121,6 +121,7 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope,
             ).catch(() =>
                 notify.error(gettext('Could not save smtp config')));
         }
+    }
 
     $scope.createNewServerCertificate = () =>
        messagebox.show({

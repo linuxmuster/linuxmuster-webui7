@@ -79,32 +79,13 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_get_samba_drives(self, http_context):
 
-        school = self.context.schoolmgr.school
-        sophomorixCommand = ['sophomorix-school', '--gpo-listall', '-j']
-        policy = lmn_getSophomorixValue(sophomorixCommand, f'LOOKUP/by_display_name/sophomorix:school:{school}')
-        xml_path = f'/var/lib/samba/sysvol/{samba_realm}/Policies/{policy}/User/Preferences/Drives/Drives.xml'
-
-        try:
-            tree = ElementTree.parse(xml_path)
-        except FileNotFoundError:
-            return [], []
-
-        drives = []
-        usedLetter = []
-        for drive in tree.findall('Drive'):
-            drive_attr = {'properties': {}}
-            drive_attr['disabled'] = bool(int(drive.attrib.get('disabled', '0')))
-            for prop in drive.findall('Properties'):
-                drive_attr['properties']['useLetter'] = bool(int(prop.get('useLetter', '0')))
-                drive_attr['properties']['letter'] = prop.get('letter', '')
-                drive_attr['properties']['label'] = prop.get('label', 'Unknown')
-                usedLetter.append(drive_attr['properties']['letter'])
-
-            drives.append(drive_attr)
+        self.context.schoolmgr.Drives.load()
+        drives = self.context.schoolmgr.Drives.drives
+        usedLetters = self.context.schoolmgr.Drives.usedLetters
 
         availableDriveLetters = [ {
             'letter': l,
-            'active': False if l not in usedLetter else True,
+            'active': False if l not in usedLetters else True,
             }
             for l in list(string.ascii_letters[26:])
         ]
@@ -116,26 +97,6 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_post_samba_drives(self, http_context):
 
-        school = self.context.schoolmgr.school
-        sophomorixCommand = ['sophomorix-school', '--gpo-listall', '-j']
-        policy = lmn_getSophomorixValue(sophomorixCommand, f'LOOKUP/by_display_name/sophomorix:school:{school}')
-        xml_path = f'/var/lib/samba/sysvol/{samba_realm}/Policies/{policy}/User/Preferences/Drives/Drives.xml'
-
         drives_config = http_context.json_body()['drives']
-        try:
-            tree = ElementTree.parse(xml_path)
-        except FileNotFoundError:
-            raise EndpointError(_('Drives.xml not found !'))
+        self.context.schoolmgr.Drives.save(drives_config)
 
-        # Backup
-        tree.write(f'{xml_path}.bak', encoding='utf-8', xml_declaration=True)
-
-        for drive in tree.findall('Drive'):
-            for prop in drive.findall('Properties'):
-                for newDrive in drives_config:
-                    if newDrive['properties']['label'] == prop.get('label', 'Unknown'):
-                        prop.set('letter', newDrive['properties']['letter'])
-                        prop.set('useLetter', str(int(newDrive['properties']['useLetter'])))
-                        drive.set('disabled', str(int(newDrive['disabled'])))
-
-        tree.write(xml_path, encoding='utf-8', xml_declaration=True)

@@ -322,20 +322,20 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', function
     });
 
     $scope.save = function () {
-        return config.save().then(function (data) {
+        config.save().then(function (data) {
             return notify.success(gettext('Global config saved'));
         }).catch(function () {
             return notify.error(gettext('Could not save global config'));
         });
-    };
 
-    if ($scope.smtp_config) {
-        config.setSmtpConfig($scope.smtp_config).then(function (data) {
-            return notify.success(gettext('Smtp config saved'));
-        }).catch(function () {
-            return notify.error(gettext('Could not save smtp config'));
-        });
-    }
+        if ($scope.smtp_config) {
+            config.setSmtpConfig($scope.smtp_config).then(function (data) {
+                return notify.success(gettext('Smtp config saved'));
+            }).catch(function () {
+                return notify.error(gettext('Could not save smtp config'));
+            });
+        }
+    };
 
     $scope.createNewServerCertificate = function () {
         return messagebox.show({

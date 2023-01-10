@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.2.8) lmn72; urgency=medium
+
+  * [Users] Fix pdf passwords generation. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Tue, 10 Jan 2023 15:02:20 +0100
+
 linuxmuster-webui7 (7.2.7) lmn72; urgency=medium
 
   * [Session] Fix user list in exam modus. 

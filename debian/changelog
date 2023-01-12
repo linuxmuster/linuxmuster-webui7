@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.2.9) lmn72; urgency=medium
+
+  * Update cryptography version 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Thu, 12 Jan 2023 17:00:30 +0100
+
 linuxmuster-webui7 (7.2.8) lmn72; urgency=medium
 
   * [Users] Fix pdf passwords generation. 

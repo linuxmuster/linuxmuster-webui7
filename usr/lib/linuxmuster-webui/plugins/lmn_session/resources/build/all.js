@@ -646,7 +646,7 @@
             }
           }
           wait.modal(gettext('Generating session...'), 'spinner');
-          return generateSession(usersInRoom, sessionID, sessionComment, sessionExist);
+          return $scope.generateSession(usersInRoom, sessionID, sessionComment, sessionExist);
         }
       });
     };

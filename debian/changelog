@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.1.45) lmn71; urgency=medium
+
+  * [Session] Fix session for actual room. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Thu, 12 Jan 2023 20:19:34 +0100
+
 linuxmuster-webui7 (7.1.44) lmn71; urgency=medium
 
   * [Users] Fix pdf passwords generation. 

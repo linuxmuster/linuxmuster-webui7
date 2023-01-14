@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.1.46) lmn71; urgency=medium
+
+  * [Users] Fix adding teachers in empty list. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 14 Jan 2023 10:40:11 +0100
+
 linuxmuster-webui7 (7.1.45) lmn71; urgency=medium
 
   * [Session] Fix session for actual room. 

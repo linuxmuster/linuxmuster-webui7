@@ -11,10 +11,7 @@ def xml_propfind_response(r):
         'getcontenttype'
     }
 
-
-
-
-    root = etree.Element("{DAV:}multistatus", nsmap={"d": "DAV"})
+    root = etree.Element("{DAV:}multistatus", nsmap={"d": "DAV:"})
 
     for path, details in r.items():
         response = etree.SubElement(root, "{DAV:}response")

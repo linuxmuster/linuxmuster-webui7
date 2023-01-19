@@ -9,6 +9,7 @@ import smbclient
 from smbprotocol.exceptions import SMBOSError, NotFound, SMBAuthenticationError, InvalidParameter
 from spnego.exceptions import BadMechanismError
 from jadi import component
+import xml.etree.ElementTree as ElementTree
 
 from aj.api.http import url, get, post, mkcol, options, propfind, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
@@ -35,12 +36,18 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_webdav_propfind(self, http_context, path=''):
         user = self.context.identity
+        print(http_context.body)
         profil = AuthenticationService.get(self.context).get_provider().get_profile(user)
         role = profil['sophomorixRole']
         adminclass = profil['sophomorixAdminClass']
         baseShare = f'\\\\{samba_realm}\\{self.context.schoolmgr.school}\\'
 
-        # READ XML body
+        # READ XML body for requested properties
+        if b'<?xml' in http_context.body:
+            tree = ElementTree.fromstring(http_context.body)
+            requested_properties = {p.tag for p in tree.findall('.//{DAV:}prop/*')}
+            requested_properties = {r.replace('{DAV:}', '') for r in requested_properties}
+            print(requested_properties)
 
         items = {}
 

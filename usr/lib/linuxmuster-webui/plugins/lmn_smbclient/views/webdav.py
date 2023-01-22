@@ -29,8 +29,16 @@ class Handler(HttpPlugin):
     def handle_api_webdav_get(self, http_context, path=''):
         baseShare = f'\\\\{samba_realm}\\{self.context.schoolmgr.school}\\'
         path = path.replace('/', '\\')
-        with smbclient.open_file(f'{baseShare}{path}', 'rb') as f:
-            return f.read()
+        try:
+            with smbclient.open_file(f'{baseShare}{path}', 'rb') as f:
+                return f.read()
+        except (ValueError, SMBOSError, NotFound) as e:
+            http_context.respond_not_found()
+            return ''
+        except InvalidParameter as e:
+            #raise EndpointError(f'Problem with path {path} : {e}')
+            http_context.respond_server_error()
+            return ''
 
     @options(r'/api/lmn/webdav/(?P<path>.*)')
     @endpoint(api=True)

@@ -8,7 +8,8 @@ def xml_propfind_response(r):
         'quota-available-bytes',
         'getetag',
         'getcontentlength',
-        'getcontenttype'
+        'getcontenttype',
+        'displayname',
     }
 
     root = etree.Element("{DAV:}multistatus", nsmap={"d": "DAV:"})

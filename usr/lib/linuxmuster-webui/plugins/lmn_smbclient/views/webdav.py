@@ -24,6 +24,14 @@ class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
 
+    @get(r'/api/lmn/webdav/(?P<path>.*)')
+    @endpoint(api=True)
+    def handle_api_webdav_get(self, http_context, path=''):
+        baseShare = f'\\\\{samba_realm}\\{self.context.schoolmgr.school}\\'
+        path = path.replace('/', '\\')
+        with smbclient.open_file(f'{baseShare}{path}', 'rb') as f:
+            return f.read()
+
     @options(r'/api/lmn/webdav/(?P<path>.*)')
     @endpoint(api=True)
     def handle_api_webdav_options(self, http_context, path=''):
@@ -41,6 +49,8 @@ class Handler(HttpPlugin):
         role = profil['sophomorixRole']
         adminclass = profil['sophomorixAdminClass']
         baseShare = f'\\\\{samba_realm}\\{self.context.schoolmgr.school}\\'
+
+        baseUrl = "/api/lmn/webdav/"
 
         # READ XML body for requested properties
         if b'<?xml' in http_context.body:
@@ -61,13 +71,17 @@ class Handler(HttpPlugin):
 
                 raw_etag = f"{smb_file.name}-{stat.st_size}-{stat.st_mtime}".encode()
                 etag = hashlib.md5(raw_etag).hexdigest()
+                if share['name'] == "Home":
+                    item_path = item_path.split('/')[0]
 
-                items[item_path] = {
+                items[f'{baseUrl}{item_path}/'] = {
                         'isDir': True,
                         'getlastmodified': datetime.fromtimestamp(stat.st_mtime).strftime("%a, %d %b %Y  %H:%M:%S %Z"),
                         'getcontentlength': str(stat.st_size),
                         'getcontenttype': None,
                         'getetag': etag,
+                        'displayname': share['name'],
+
                     }
 
         else:
@@ -89,12 +103,13 @@ class Handler(HttpPlugin):
                     if ext in content_mimetypes:
                         content_type = content_mimetypes[ext]
 
-                    items[item_path] = {
+                    items[f'{baseUrl}{item_path}'] = {
                         'isDir': item.is_dir(),
                         'getlastmodified': datetime.fromtimestamp(stat.st_mtime).strftime("%a, %d %b %Y  %H:%M:%S %Z"),
                         'getcontentlength': str(stat.st_size),
                         'getcontenttype': None if item.is_dir() else content_type,
                         'getetag': etag,
+                        'displayname': item.name,
                     }
 
             except (BadMechanismError, SMBAuthenticationError) as e:
@@ -102,5 +117,18 @@ class Handler(HttpPlugin):
             except InvalidParameter as e:
                  raise EndpointError("This server does not support this feature actually, but it will come soon!")
 
+        http_context.respond('207 Multi-Status')
         return xml_propfind_response(items)
 
+    @mkcol(r'/api/lmn/webdav/(?P<path>.*)')
+    @endpoint(api=True)
+    def handle_api_dav_create_directory(self, http_context, path=''):
+        baseShare = f'\\\\{samba_realm}\\{self.context.schoolmgr.school}\\'
+        path = path.replace('/', '\\')
+        try:
+            smbclient.makedirs(f'{baseShare}{path}')
+        except (ValueError, SMBOSError, NotFound) as e:
+            raise EndpointError(e)
+        except InvalidParameter as e:
+            raise EndpointError(f'Problem with path {path} : {e}')
+        return ''

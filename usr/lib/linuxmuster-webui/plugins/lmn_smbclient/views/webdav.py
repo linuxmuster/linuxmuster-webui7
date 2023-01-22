@@ -52,7 +52,6 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_webdav_propfind(self, http_context, path=''):
         user = self.context.identity
-        print(http_context.body)
         profil = AuthenticationService.get(self.context).get_provider().get_profile(user)
         role = profil['sophomorixRole']
         adminclass = profil['sophomorixAdminClass']
@@ -65,7 +64,6 @@ class Handler(HttpPlugin):
             tree = ElementTree.fromstring(http_context.body)
             requested_properties = {p.tag for p in tree.findall('.//{DAV:}prop/*')}
             requested_properties = {r.replace('{DAV:}', '') for r in requested_properties}
-            print(requested_properties)
 
         items = {}
 
@@ -93,12 +91,11 @@ class Handler(HttpPlugin):
                     }
 
         else:
-            path = path.replace('/', '\\')
-            smb_path = f"{baseShare}{path}"
+            url_path = path.replace('/', '\\')
+            smb_path = f"{baseShare}{url_path}"
 
             try:
                 for item in smbclient.scandir(smb_path):
-                    print(item)
                     item_path = os.path.join(path, item.name).replace('\\', '/') # TODO
 
                     stat = item.stat()

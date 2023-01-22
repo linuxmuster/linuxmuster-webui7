@@ -12,7 +12,7 @@ from spnego.exceptions import BadMechanismError
 from jadi import component
 import xml.etree.ElementTree as ElementTree
 
-from aj.api.http import url, get, post, mkcol, options, propfind, HttpPlugin
+from aj.api.http import url, get, post, mkcol, options, propfind, delete, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
 from aj.auth import authorize, AuthenticationService
 from aj.plugins.lmn_common.mimetypes import content_mimetypes
@@ -33,6 +33,23 @@ class Handler(HttpPlugin):
         try:
             with smbclient.open_file(f'{baseShare}{path}', 'rb') as f:
                 return f.read()
+        except (ValueError, SMBOSError, NotFound) as e:
+            http_context.respond_not_found()
+            return ''
+        except InvalidParameter as e:
+            #raise EndpointError(f'Problem with path {path} : {e}')
+            http_context.respond_server_error()
+            return ''
+
+    @delete(r'/api/lmn/webdav/(?P<path>.*)')
+    @endpoint(api=True)
+    def handle_api_webdav_delete(self, http_context, path=''):
+        baseShare = f'\\\\{samba_realm}\\{self.context.schoolmgr.school}\\'
+        path = path.replace('/', '\\')
+        try:
+            smbclient.unlink(f'{baseShare}{path}')
+            http_context.respond('204 No Content')
+            return ''
         except (ValueError, SMBOSError, NotFound) as e:
             http_context.respond_not_found()
             return ''
@@ -111,7 +128,7 @@ class Handler(HttpPlugin):
 
                     items[f'{baseUrl}{item_path}'] = {
                         'isDir': item.is_dir(),
-                        'getlastmodified': datetime.fromtimestamp(stat.st_mtime, tz=tzlocal()).strftime("%a, %d %b %Y  %H:%M:%S %Z"),
+                        'getlastmodified': datetime.fromtimestamp(stat.st_mtime, tz=tzlocal()).strftime("%a, %d %b %Y %H:%M:%S %Z"),
                         'getcontentlength': str(stat.st_size),
                         'getcontenttype': None if item.is_dir() else content_type,
                         'getetag': etag,

@@ -122,6 +122,9 @@ class Handler(HttpPlugin):
                  raise EndpointError(f"There's a problem with the kerberos authentication : {e}")
             except InvalidParameter as e:
                  raise EndpointError("This server does not support this feature actually, but it will come soon!")
+            except SMBOSError as e:
+                http_context.respond_not_found()
+                return ''
 
         http_context.respond('207 Multi-Status')
         return xml_propfind_response(items)

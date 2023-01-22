@@ -5,6 +5,7 @@ Tools to handle files, directories and uploads.
 import os
 import hashlib
 from datetime import datetime
+from dateutil.tz import tzlocal
 import smbclient
 from smbprotocol.exceptions import SMBOSError, NotFound, SMBAuthenticationError, InvalidParameter
 from spnego.exceptions import BadMechanismError
@@ -110,7 +111,7 @@ class Handler(HttpPlugin):
 
                     items[f'{baseUrl}{item_path}'] = {
                         'isDir': item.is_dir(),
-                        'getlastmodified': datetime.fromtimestamp(stat.st_mtime).strftime("%a, %d %b %Y  %H:%M:%S %Z"),
+                        'getlastmodified': datetime.fromtimestamp(stat.st_mtime, tz=tzlocal()).strftime("%a, %d %b %Y  %H:%M:%S %Z"),
                         'getcontentlength': str(stat.st_size),
                         'getcontenttype': None if item.is_dir() else content_type,
                         'getetag': etag,

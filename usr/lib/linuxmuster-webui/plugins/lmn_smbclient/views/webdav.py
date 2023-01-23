@@ -68,7 +68,7 @@ class Handler(HttpPlugin):
         return ''
 
     @propfind(r'/api/lmn/webdav/(?P<path>.*)')
-    @endpoint(api=True)
+    @endpoint()
     def handle_api_webdav_propfind(self, http_context, path=''):
         user = self.context.identity
         profil = AuthenticationService.get(self.context).get_provider().get_profile(user)
@@ -155,6 +155,7 @@ class Handler(HttpPlugin):
                 return ''
 
         http_context.respond('207 Multi-Status')
+        http_context.add_header('Content-Type', 'application/xml')
         return xml_propfind_response(items)
 
     @mkcol(r'/api/lmn/webdav/(?P<path>.*)')

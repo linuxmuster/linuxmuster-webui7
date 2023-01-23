@@ -6,6 +6,7 @@ import os
 import hashlib
 from datetime import datetime
 from dateutil.tz import tzlocal
+import pytz
 import smbclient
 from smbprotocol.exceptions import SMBOSError, NotFound, SMBAuthenticationError, InvalidParameter
 from spnego.exceptions import BadMechanismError
@@ -84,6 +85,8 @@ class Handler(HttpPlugin):
             requested_properties = {r.replace('{DAV:}', '') for r in requested_properties}
 
         items = {}
+        import locale
+        locale.setlocale(locale.LC_ALL, 'C')
 
         if not path:
             # / is asked, must give the list of shares
@@ -98,9 +101,13 @@ class Handler(HttpPlugin):
                 if share['name'] == "Home":
                     item_path = item_path.split('/')[0]
 
+                # Convert modified time to GMT
+                local_mtime = datetime.fromtimestamp(stat.st_mtime, tz=tzlocal())
+                gmt_mtime = local_mtime.astimezone(pytz.timezone("Etc/GMT"))
+
                 items[f'{baseUrl}{item_path}/'] = {
                         'isDir': True,
-                        'getlastmodified': datetime.fromtimestamp(stat.st_mtime).strftime("%a, %d %b %Y  %H:%M:%S %Z"),
+                        'getlastmodified': gmt_mtime.strftime("%a, %d %b %Y %H:%M:%S %Z"),
                         'getcontentlength': str(stat.st_size),
                         'getcontenttype': None,
                         'getetag': etag,
@@ -126,9 +133,13 @@ class Handler(HttpPlugin):
                     if ext in content_mimetypes:
                         content_type = content_mimetypes[ext]
 
+                    # Convert modified time to GMT
+                    local_mtime = datetime.fromtimestamp(stat.st_mtime, tz=tzlocal())
+                    gmt_mtime = local_mtime.astimezone(pytz.timezone("Etc/GMT"))
+
                     items[f'{baseUrl}{item_path}'] = {
                         'isDir': item.is_dir(),
-                        'getlastmodified': datetime.fromtimestamp(stat.st_mtime, tz=tzlocal()).strftime("%a, %d %b %Y %H:%M:%S %Z"),
+                        'getlastmodified': gmt_mtime.strftime("%a, %d %b %Y %H:%M:%S %Z"),
                         'getcontentlength': str(stat.st_size),
                         'getcontenttype': None if item.is_dir() else content_type,
                         'getetag': etag,

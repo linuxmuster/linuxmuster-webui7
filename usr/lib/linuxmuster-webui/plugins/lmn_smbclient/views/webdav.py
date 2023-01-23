@@ -27,20 +27,43 @@ class Handler(HttpPlugin):
         self.context = context
 
     @get(r'/api/lmn/webdav/(?P<path>.*)')
-    @endpoint(api=True)
+    @endpoint(page=True)
     def handle_api_webdav_get(self, http_context, path=''):
         baseShare = f'\\\\{samba_realm}\\{self.context.schoolmgr.school}\\'
-        path = path.replace('/', '\\')
+
+        if '..' in path:
+            return http_context.respond_forbidden()
+
+        name = path.split('/')[-1]
+        ext = os.path.splitext(name)[1]
+
+        smb_path = path.replace('/', '\\')
+        smb_path = f'{baseShare}{smb_path}'
+
         try:
-            with smbclient.open_file(f'{baseShare}{path}', 'rb') as f:
-                return f.read()
-        except (ValueError, SMBOSError, NotFound) as e:
+            smbclient.path.isfile(smb_path)
+            # Head request to handle 404 in Angular
+            if http_context.method == 'HEAD':
+                http_context.respond('200 OK')
+                return ''
+        except (ValueError, SMBOSError, NotFound):
             http_context.respond_not_found()
             return ''
-        except InvalidParameter as e:
-            #raise EndpointError(f'Problem with path {path} : {e}')
-            http_context.respond_server_error()
+
+        if ext in content_mimetypes:
+            http_context.add_header('Content-Type', content_mimetypes[ext])
+        else:
+            http_context.add_header('Content-Type', 'application/octet-stream')
+
+        try:
+            content = smbclient.open_file(smb_path, 'rb').read()
+        except (ValueError, SMBOSError, NotFound):
+            http_context.respond_not_found()
             return ''
+
+        http_context.add_header('Content-Disposition', (f'attachment; filename={name}'))
+
+        yield http_context.gzip(content)
 
     @delete(r'/api/lmn/webdav/(?P<path>.*)')
     @endpoint(api=True)

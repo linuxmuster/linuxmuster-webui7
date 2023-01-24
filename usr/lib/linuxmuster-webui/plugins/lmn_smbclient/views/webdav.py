@@ -101,6 +101,12 @@ class Handler(HttpPlugin):
 
         baseUrl = "/api/lmn/webdav/"
 
+        def _make_gmt_time(timestamp):
+            # Convert modified time to GMT
+            local_time = datetime.fromtimestamp(stat.st_mtime, tz=tzlocal())
+            gmt_time = local_time.astimezone(pytz.timezone("Etc/GMT"))
+            return gmt_time.strftime("%a, %d %b %Y %H:%M:%S %Z")
+
         # READ XML body for requested properties
         if b'<?xml' in http_context.body:
             tree = ElementTree.fromstring(http_context.body)
@@ -124,13 +130,10 @@ class Handler(HttpPlugin):
                 if share['name'] == "Home":
                     item_path = item_path.split('/')[0]
 
-                # Convert modified time to GMT
-                local_mtime = datetime.fromtimestamp(stat.st_mtime, tz=tzlocal())
-                gmt_mtime = local_mtime.astimezone(pytz.timezone("Etc/GMT"))
-
                 items[f'{baseUrl}{item_path}/'] = {
                         'isDir': True,
-                        'getlastmodified': gmt_mtime.strftime("%a, %d %b %Y %H:%M:%S %Z"),
+                        'getlastmodified': _make_gmt_time(stat.st_mtime),
+                        'creationdate': _make_gmt_time(stat.st_ctime),
                         'getcontentlength': str(stat.st_size),
                         'getcontenttype': None,
                         'getetag': etag,
@@ -156,13 +159,10 @@ class Handler(HttpPlugin):
                     if ext in content_mimetypes:
                         content_type = content_mimetypes[ext]
 
-                    # Convert modified time to GMT
-                    local_mtime = datetime.fromtimestamp(stat.st_mtime, tz=tzlocal())
-                    gmt_mtime = local_mtime.astimezone(pytz.timezone("Etc/GMT"))
-
                     items[f'{baseUrl}{item_path}'] = {
                         'isDir': item.is_dir(),
-                        'getlastmodified': gmt_mtime.strftime("%a, %d %b %Y %H:%M:%S %Z"),
+                        'getlastmodified': _make_gmt_time(stat.st_mtime),
+                        'creationdate': _make_gmt_time(stat.st_ctime),
                         'getcontentlength': str(stat.st_size),
                         'getcontenttype': None if item.is_dir() else content_type,
                         'getetag': etag,

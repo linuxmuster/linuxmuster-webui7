@@ -3,6 +3,7 @@ import lxml.etree as etree
 
 def xml_propfind_response(r):
     valid_properties = {
+        # 'resourcetype', # --> collection or not
         'getlastmodified',
         'quota-used-bytes',
         'quota-available-bytes',
@@ -10,7 +11,12 @@ def xml_propfind_response(r):
         'getcontentlength',
         'getcontenttype',
         'displayname',
+        'creationdate',
     }
+    # Missing:
+    # - getcontentlanguage
+    # - lockdiscovery
+    # - supportedlock
 
     root = etree.Element("{DAV:}multistatus", nsmap={"d": "DAV:"})
 

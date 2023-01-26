@@ -108,7 +108,7 @@ class Handler(HttpPlugin):
 
         items = {}
         locale.setlocale(locale.LC_ALL, 'C')
-        response = WebdavXMLResponse()
+        response = WebdavXMLResponse(requested_properties)
 
         if not path:
             # / is asked, must give the list of shares

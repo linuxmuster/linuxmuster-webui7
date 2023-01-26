@@ -25,8 +25,8 @@ class WebdavXMLResponse:
     # - lockdiscovery
     # - supportedlock
 
-    def __init__(self):
-        pass
+    def __init__(self, requested_properties):
+        self.requested_properties = requested_properties.intersection(self.valid_properties)
 
     def make_propfind_response(self, items):
         xml_root = etree.Element("{DAV:}multistatus", nsmap={"d": "DAV:"})
@@ -52,7 +52,7 @@ class WebdavXMLResponse:
         status_404.text = "HTTP/1.1 404 Not Found"
 
         # TODO: replace valid_properties with requested prop
-        for prop in self.valid_properties:
+        for prop in self.requested_properties:
             value = properties.get(prop, None)
             if value is None:
                 etree.SubElement(prop_404, f"{{DAV:}}{prop}")

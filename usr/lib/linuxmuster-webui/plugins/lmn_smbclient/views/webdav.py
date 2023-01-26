@@ -3,10 +3,8 @@ Tools to handle files, directories and uploads.
 """
 
 import os
-import hashlib
-from datetime import datetime
-from dateutil.tz import tzlocal
-import pytz
+from urllib.parse import quote, unquote
+import locale
 import smbclient
 from smbprotocol.exceptions import SMBOSError, NotFound, SMBAuthenticationError, InvalidParameter
 from spnego.exceptions import BadMechanismError
@@ -17,7 +15,7 @@ from aj.api.http import url, get, post, mkcol, options, propfind, delete, HttpPl
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
 from aj.auth import authorize, AuthenticationService
 from aj.plugins.lmn_common.mimetypes import content_mimetypes
-from aj.plugins.lmn_smbclient.davxml import xml_propfind_response
+from aj.plugins.lmn_smbclient.davxml import WebdavXMLResponse
 from aj.plugins.lmn_common.api import samba_realm
 
 
@@ -34,6 +32,7 @@ class Handler(HttpPlugin):
         if '..' in path:
             return http_context.respond_forbidden()
 
+        path = unquote(path)
         name = path.split('/')[-1]
         ext = os.path.splitext(name)[1]
 
@@ -101,12 +100,6 @@ class Handler(HttpPlugin):
 
         baseUrl = "/api/lmn/webdav/"
 
-        def _make_gmt_time(timestamp):
-            # Convert modified time to GMT
-            local_time = datetime.fromtimestamp(stat.st_mtime, tz=tzlocal())
-            gmt_time = local_time.astimezone(pytz.timezone("Etc/GMT"))
-            return gmt_time.strftime("%a, %d %b %Y %H:%M:%S %Z")
-
         # READ XML body for requested properties
         if b'<?xml' in http_context.body:
             tree = ElementTree.fromstring(http_context.body)
@@ -114,60 +107,40 @@ class Handler(HttpPlugin):
             requested_properties = {r.replace('{DAV:}', '') for r in requested_properties}
 
         items = {}
-        import locale
         locale.setlocale(locale.LC_ALL, 'C')
+        response = WebdavXMLResponse()
 
         if not path:
             # / is asked, must give the list of shares
             shares = self.context.schoolmgr.get_shares(user, role, adminclass)
             for share in shares:
-                smb_file = smbclient._os.SMBDirEntry.from_path(share['path'])
-                stat = smb_file.stat()
-                item_path = share['path'].replace(baseShare, '').replace('\\', '/') # TODO
+                item = smbclient._os.SMBDirEntry.from_path(share['path'])
 
-                raw_etag = f"{smb_file.name}-{stat.st_size}-{stat.st_mtime}".encode()
-                etag = hashlib.md5(raw_etag).hexdigest()
+                item_path = share['path'].replace(baseShare, '').replace('\\', '/') # TODO
                 if share['name'] == "Home":
                     item_path = item_path.split('/')[0]
 
-                items[f'{baseUrl}{item_path}/'] = {
-                        'isDir': True,
-                        'getlastmodified': _make_gmt_time(stat.st_mtime),
-                        'creationdate': _make_gmt_time(stat.st_ctime),
-                        'getcontentlength': str(stat.st_size),
-                        'getcontenttype': None,
-                        'getetag': etag,
-                        'displayname': share['name'],
-
-                    }
-
+                href = quote(f'{baseUrl}{item_path}/', encoding='latin-1')
+                items[href] = response.convert_samba_entry_properties(item)
+                items[href]['displayname'] = share['name']
         else:
             url_path = path.replace('/', '\\')
             smb_path = f"{baseShare}{url_path}"
+            smb_entity = smbclient._os.SMBDirEntry.from_path(smb_path)
 
             try:
-                for item in smbclient.scandir(smb_path):
-                    item_path = os.path.join(path, item.name).replace('\\', '/') # TODO
-
-                    stat = item.stat()
-
-                    raw_etag = f"{item.name}-{stat.st_size}-{stat.st_mtime}".encode()
-                    etag = hashlib.md5(raw_etag).hexdigest()
-
-                    ext = os.path.splitext(item.name)[1]
-                    content_type = "application/octet-stream"
-                    if ext in content_mimetypes:
-                        content_type = content_mimetypes[ext]
-
-                    items[f'{baseUrl}{item_path}'] = {
-                        'isDir': item.is_dir(),
-                        'getlastmodified': _make_gmt_time(stat.st_mtime),
-                        'creationdate': _make_gmt_time(stat.st_ctime),
-                        'getcontentlength': str(stat.st_size),
-                        'getcontenttype': None if item.is_dir() else content_type,
-                        'getetag': etag,
-                        'displayname': item.name,
-                    }
+                if smb_entity.is_dir():
+                    # Listing a directory
+                    for item in smbclient.scandir(smb_path):
+                        item_path = os.path.join(path, item.name).replace('\\', '/') # TODO
+                        href = quote(f'{baseUrl}{item_path}', encoding='latin-1')
+                        items[href] = response.convert_samba_entry_properties(item)
+                else:
+                    # Request only the properties of one single file
+                    item = smb_entity
+                    item_path = path.replace('\\', '/') # TODO
+                    href = quote(f'{baseUrl}{item_path}', encoding='latin-1')
+                    items[href] = response.convert_samba_entry_properties(item)
 
             except (BadMechanismError, SMBAuthenticationError) as e:
                  raise EndpointError(f"There's a problem with the kerberos authentication : {e}")
@@ -179,7 +152,8 @@ class Handler(HttpPlugin):
 
         http_context.respond('207 Multi-Status')
         http_context.add_header('Content-Type', 'application/xml')
-        return xml_propfind_response(items)
+
+        return response.make_propfind_response(items)
 
     @mkcol(r'/api/lmn/webdav/(?P<path>.*)')
     @endpoint(api=True)

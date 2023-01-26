@@ -1,4 +1,12 @@
+import hashlib
+import os
+import pytz
+from dateutil.tz import tzlocal
 import lxml.etree as etree
+from datetime import datetime
+
+from aj.plugins.lmn_common.mimetypes import content_mimetypes
+
 
 class WebdavXMLResponse:
     valid_properties = {
@@ -55,3 +63,30 @@ class WebdavXMLResponse:
         isdir = etree.SubElement(prop_200, f"{{DAV:}}resourcetype")
         if properties['isDir']:
             etree.SubElement(isdir, f"{{DAV:}}collection")
+
+    def _make_gmt_time(self, timestamp):
+        # Convert modified time to GMT
+        local_time = datetime.fromtimestamp(timestamp, tz=tzlocal())
+        gmt_time = local_time.astimezone(pytz.timezone("Etc/GMT"))
+        return gmt_time.strftime("%a, %d %b %Y %H:%M:%S %Z")
+
+    def convert_samba_entry_properties(self, item):
+        stat = item.stat()
+
+        raw_etag = f"{item.name}-{stat.st_size}-{stat.st_mtime}".encode()
+        etag = hashlib.md5(raw_etag).hexdigest()
+
+        ext = os.path.splitext(item.name)[1]
+        content_type = "application/octet-stream"
+        if ext in content_mimetypes:
+            content_type = content_mimetypes[ext]
+
+        return {
+            'isDir': item.is_dir(),
+            'getlastmodified': self._make_gmt_time(stat.st_mtime),
+            'creationdate': self._make_gmt_time(stat.st_ctime),
+            'getcontentlength': str(stat.st_size),
+            'getcontenttype': None if item.is_dir() else content_type,
+            'getetag': etag,
+            'displayname': item.name,
+        }

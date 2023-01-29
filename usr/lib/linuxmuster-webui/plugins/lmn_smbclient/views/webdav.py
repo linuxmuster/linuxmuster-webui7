@@ -30,7 +30,7 @@ class Handler(HttpPlugin):
         # Dirty fix for it
         return path.encode('latin-1').decode('utf-8')
 
-    @get(r'/api/lmn/webdav/(?P<path>.*)')
+    @get(r'/webdav/(?P<path>.*)')
     @endpoint(page=True)
     def handle_api_webdav_get(self, http_context, path=''):
         if '..' in path:
@@ -106,7 +106,7 @@ class Handler(HttpPlugin):
             return ''
 
 
-    @delete(r'/api/lmn/webdav/(?P<path>.*)')
+    @delete(r'/webdav/(?P<path>.*)')
     @endpoint(api=True)
     def handle_api_webdav_delete(self, http_context, path=''):
 
@@ -124,7 +124,7 @@ class Handler(HttpPlugin):
             http_context.respond_server_error()
             return ''
 
-    @options(r'/api/lmn/webdav/(?P<path>.*)')
+    @options(r'/webdav/(?P<path>.*)')
     @endpoint(api=True, auth=False)
     def handle_api_webdav_options(self, http_context, path=''):
         http_context.add_header("Allow", "OPTIONS, GET, HEAD, POST, DELETE, COPY, MOVE")
@@ -132,7 +132,7 @@ class Handler(HttpPlugin):
         http_context.add_header("DAV", "1, 3")
         return ''
 
-    @propfind(r'/api/lmn/webdav/(?P<path>.*)')
+    @propfind(r'/webdav/(?P<path>.*)')
     @endpoint()
     def handle_api_webdav_propfind(self, http_context, path=''):
         user = self.context.identity
@@ -140,7 +140,7 @@ class Handler(HttpPlugin):
         role = profil['sophomorixRole']
         adminclass = profil['sophomorixAdminClass']
 
-        baseUrl = "/api/lmn/webdav/"
+        baseUrl = "/webdav/"
 
         # READ XML body for requested properties
         if b'<?xml' in http_context.body:
@@ -201,7 +201,7 @@ class Handler(HttpPlugin):
 
         return response.make_propfind_response(items)
 
-    @mkcol(r'/api/lmn/webdav/(?P<path>.*)')
+    @mkcol(r'/webdav/(?P<path>.*)')
     @endpoint(api=True)
     def handle_api_dav_create_directory(self, http_context, path=''):
         if '..' in path:

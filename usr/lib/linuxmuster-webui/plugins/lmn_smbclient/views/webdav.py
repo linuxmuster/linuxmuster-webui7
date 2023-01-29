@@ -45,10 +45,14 @@ class Handler(HttpPlugin):
 
         try:
             smbclient.path.isfile(smb_path)
-            # Head request to handle 404 in Angular
+            # Head request to handle 404
             if http_context.method == 'HEAD':
-                http_context.respond('200 OK')
-                return ''
+                if smbclient.path.isfile(smb_path):
+                    http_context.respond_ok()
+                    return ''
+                else:
+                    http_context.respond_not_found()
+                    return ''
         except (ValueError, SMBOSError, NotFound):
             http_context.respond_not_found()
             return ''
@@ -141,8 +145,12 @@ class Handler(HttpPlugin):
         # READ XML body for requested properties
         if b'<?xml' in http_context.body:
             tree = ElementTree.fromstring(http_context.body)
-            requested_properties = {p.tag for p in tree.findall('.//{DAV:}prop/*')}
-            requested_properties = {r.replace('{DAV:}', '') for r in requested_properties}
+            allprop = tree.findall('.//{DAV:}allprop')
+            if allprop:
+                requested_properties = None
+            else:
+                requested_properties = {p.tag for p in tree.findall('.//{DAV:}prop/*')}
+                requested_properties = {r.replace('{DAV:}', '') for r in requested_properties}
 
         items = {}
         locale.setlocale(locale.LC_ALL, 'C')

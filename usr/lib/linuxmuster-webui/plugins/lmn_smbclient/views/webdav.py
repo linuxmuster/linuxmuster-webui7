@@ -11,12 +11,11 @@ from spnego.exceptions import BadMechanismError
 from jadi import component
 import xml.etree.ElementTree as ElementTree
 
-from aj.api.http import url, get, post, mkcol, options, propfind, delete, HttpPlugin
+from aj.api.http import url, get, post, mkcol, options, copy, move, propfind, delete, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
 from aj.auth import authorize, AuthenticationService
 from aj.plugins.lmn_common.mimetypes import content_mimetypes
 from aj.plugins.lmn_smbclient.davxml import WebdavXMLResponse
-from aj.plugins.lmn_common.api import samba_realm
 
 
 @component(HttpPlugin)
@@ -27,8 +26,6 @@ class Handler(HttpPlugin):
     @get(r'/api/lmn/webdav/(?P<path>.*)')
     @endpoint(page=True)
     def handle_api_webdav_get(self, http_context, path=''):
-        baseShare = f'\\\\{samba_realm}\\{self.context.schoolmgr.school}\\'
-
         if '..' in path:
             return http_context.respond_forbidden()
 
@@ -37,7 +34,7 @@ class Handler(HttpPlugin):
         ext = os.path.splitext(name)[1]
 
         smb_path = path.replace('/', '\\')
-        smb_path = f'{baseShare}{smb_path}'
+        smb_path = f'{self.context.schoolmgr.schoolShare}{smb_path}'
 
         try:
             smbclient.path.isfile(smb_path)
@@ -67,10 +64,9 @@ class Handler(HttpPlugin):
     @delete(r'/api/lmn/webdav/(?P<path>.*)')
     @endpoint(api=True)
     def handle_api_webdav_delete(self, http_context, path=''):
-        baseShare = f'\\\\{samba_realm}\\{self.context.schoolmgr.school}\\'
         path = path.replace('/', '\\')
         try:
-            smbclient.unlink(f'{baseShare}{path}')
+            smbclient.unlink(f'{self.context.schoolmgr.schoolShare}{path}')
             http_context.respond('204 No Content')
             return ''
         except (ValueError, SMBOSError, NotFound) as e:
@@ -82,9 +78,9 @@ class Handler(HttpPlugin):
             return ''
 
     @options(r'/api/lmn/webdav/(?P<path>.*)')
-    @endpoint(api=True)
+    @endpoint(api=True, auth=False)
     def handle_api_webdav_options(self, http_context, path=''):
-        http_context.add_header("Allow", "OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, COPY, MOVE")
+        http_context.add_header("Allow", "OPTIONS, GET, HEAD, POST, DELETE, COPY, MOVE")
         http_context.add_header("Allow", "MKCOL, PROPFIND")
         http_context.add_header("DAV", "1, 3")
         return ''
@@ -96,7 +92,6 @@ class Handler(HttpPlugin):
         profil = AuthenticationService.get(self.context).get_provider().get_profile(user)
         role = profil['sophomorixRole']
         adminclass = profil['sophomorixAdminClass']
-        baseShare = f'\\\\{samba_realm}\\{self.context.schoolmgr.school}\\'
 
         baseUrl = "/api/lmn/webdav/"
 
@@ -116,7 +111,7 @@ class Handler(HttpPlugin):
             for share in shares:
                 item = smbclient._os.SMBDirEntry.from_path(share['path'])
 
-                item_path = share['path'].replace(baseShare, '').replace('\\', '/') # TODO
+                item_path = share['path'].replace(self.context.schoolmgr.schoolShare, '').replace('\\', '/') # TODO
                 if share['name'] == "Home":
                     item_path = item_path.split('/')[0]
 
@@ -125,7 +120,7 @@ class Handler(HttpPlugin):
                 items[href]['displayname'] = share['name']
         else:
             url_path = path.replace('/', '\\')
-            smb_path = f"{baseShare}{url_path}"
+            smb_path = f"{self.context.schoolmgr.schoolShare}{url_path}"
             smb_entity = smbclient._os.SMBDirEntry.from_path(smb_path)
 
             try:
@@ -158,10 +153,12 @@ class Handler(HttpPlugin):
     @mkcol(r'/api/lmn/webdav/(?P<path>.*)')
     @endpoint(api=True)
     def handle_api_dav_create_directory(self, http_context, path=''):
-        baseShare = f'\\\\{samba_realm}\\{self.context.schoolmgr.school}\\'
+        if '..' in path:
+            return http_context.respond_forbidden()
+
         path = path.replace('/', '\\')
         try:
-            smbclient.makedirs(f'{baseShare}{path}')
+            smbclient.makedirs(f'{self.context.schoolmgr.schoolShare}{path}')
         except (ValueError, SMBOSError, NotFound) as e:
             raise EndpointError(e)
         except InvalidParameter as e:

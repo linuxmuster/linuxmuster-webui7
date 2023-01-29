@@ -5,6 +5,8 @@ Tools to handle files, directories and uploads.
 import os
 from urllib.parse import quote, unquote
 import locale
+import gevent
+import logging
 import smbclient
 from smbprotocol.exceptions import SMBOSError, NotFound, SMBAuthenticationError, InvalidParameter
 from spnego.exceptions import BadMechanismError
@@ -51,15 +53,49 @@ class Handler(HttpPlugin):
         else:
             http_context.add_header('Content-Type', 'application/octet-stream')
 
+        http_range = http_context.env.get('HTTP_RANGE', None)
+        http_context.add_header('Accept-Ranges', 'bytes')
+
         try:
-            content = smbclient.open_file(smb_path, 'rb').read()
-        except (ValueError, SMBOSError, NotFound):
+            if http_range and http_range.startswith('bytes'):
+                rsize = smbclient.stat(smb_path).st_size
+                range_from, range_to = http_range.split('=')[1].split('-')
+                range_from = int(range_from) if range_from else 0
+                range_to = int(range_to) if range_to else (rsize - 1)
+            else:
+                range_from = 0
+                range_to = 999999999
+
+            if range_from:
+                http_context.add_header('Content-Length', str(range_to - range_from + 1))
+                http_context.add_header('Content-Range',
+                                f'bytes {range_from:d}-{range_to:d}/{rsize}')
+                http_context.respond('206 Partial Content')
+            else:
+                http_context.respond_ok()
+
+            http_context.add_header('Content-Disposition', (f'attachment; filename={name}'))
+
+            fd = smbclient._os.open_file(smb_path, 'rb')
+            fd.seek(range_from or 0, smbclient._os.os.SEEK_SET)
+            bufsize = 100 * 1024
+            read = range_from
+            buf = 1
+            while buf:
+                buf = fd.read(bufsize)
+                gevent.sleep(0)
+                if read + len(buf) > range_to:
+                    buf = buf[:range_to + 1 - read]
+                yield buf
+                read += len(buf)
+                if read >= range_to:
+                    break
+            fd.close()
+        except (ValueError, SMBOSError, NotFound) as e:
+            logging.error(e)
             http_context.respond_not_found()
             return ''
 
-        http_context.add_header('Content-Disposition', (f'attachment; filename={name}'))
-
-        yield http_context.gzip(content)
 
     @delete(r'/api/lmn/webdav/(?P<path>.*)')
     @endpoint(api=True)

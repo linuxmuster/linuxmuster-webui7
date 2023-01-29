@@ -25,13 +25,18 @@ class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
 
+    def _convert_path(self, path):
+        # In gevent, headers are decoded with latin-1
+        # Dirty fix for it
+        return path.encode('latin-1').decode('utf-8')
+
     @get(r'/api/lmn/webdav/(?P<path>.*)')
     @endpoint(page=True)
     def handle_api_webdav_get(self, http_context, path=''):
         if '..' in path:
             return http_context.respond_forbidden()
 
-        path = unquote(path)
+        path = self._convert_path(unquote(path))
         name = path.split('/')[-1]
         ext = os.path.splitext(name)[1]
 
@@ -100,7 +105,9 @@ class Handler(HttpPlugin):
     @delete(r'/api/lmn/webdav/(?P<path>.*)')
     @endpoint(api=True)
     def handle_api_webdav_delete(self, http_context, path=''):
-        path = path.replace('/', '\\')
+
+        path = self._convert_path(path).replace('/', '\\')
+
         try:
             smbclient.unlink(f'{self.context.schoolmgr.schoolShare}{path}')
             http_context.respond('204 No Content')
@@ -151,11 +158,11 @@ class Handler(HttpPlugin):
                 if share['name'] == "Home":
                     item_path = item_path.split('/')[0]
 
-                href = quote(f'{baseUrl}{item_path}/', encoding='latin-1')
+                href = quote(f'{baseUrl}{item_path}/', encoding='utf-8')
                 items[href] = response.convert_samba_entry_properties(item)
                 items[href]['displayname'] = share['name']
         else:
-            url_path = path.replace('/', '\\')
+            url_path = self._convert_path(path).replace('/', '\\')
             smb_path = f"{self.context.schoolmgr.schoolShare}{url_path}"
             smb_entity = smbclient._os.SMBDirEntry.from_path(smb_path)
 
@@ -164,13 +171,13 @@ class Handler(HttpPlugin):
                     # Listing a directory
                     for item in smbclient.scandir(smb_path):
                         item_path = os.path.join(path, item.name).replace('\\', '/') # TODO
-                        href = quote(f'{baseUrl}{item_path}', encoding='latin-1')
+                        href = quote(f'{baseUrl}{item_path}', encoding='utf-8')
                         items[href] = response.convert_samba_entry_properties(item)
                 else:
                     # Request only the properties of one single file
                     item = smb_entity
                     item_path = path.replace('\\', '/') # TODO
-                    href = quote(f'{baseUrl}{item_path}', encoding='latin-1')
+                    href = quote(f'{baseUrl}{item_path}', encoding='utf-8')
                     items[href] = response.convert_samba_entry_properties(item)
 
             except (BadMechanismError, SMBAuthenticationError) as e:
@@ -182,7 +189,7 @@ class Handler(HttpPlugin):
                 return ''
 
         http_context.respond('207 Multi-Status')
-        http_context.add_header('Content-Type', 'application/xml')
+        http_context.add_header('Content-Type', 'application/xml; charset="utf-8"')
 
         return response.make_propfind_response(items)
 
@@ -192,7 +199,7 @@ class Handler(HttpPlugin):
         if '..' in path:
             return http_context.respond_forbidden()
 
-        path = path.replace('/', '\\')
+        path = self._convert_path(path).replace('/', '\\')
         try:
             smbclient.makedirs(f'{self.context.schoolmgr.schoolShare}{path}')
         except (ValueError, SMBOSError, NotFound) as e:

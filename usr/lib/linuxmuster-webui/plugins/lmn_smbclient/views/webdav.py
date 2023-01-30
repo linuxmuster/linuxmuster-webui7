@@ -107,7 +107,7 @@ class Handler(HttpPlugin):
 
 
     @delete(r'/webdav/(?P<path>.*)')
-    @endpoint(api=True)
+    @endpoint()
     def handle_api_webdav_delete(self, http_context, path=''):
 
         path = self._convert_path(path).replace('/', '\\')
@@ -214,4 +214,41 @@ class Handler(HttpPlugin):
             raise EndpointError(e)
         except InvalidParameter as e:
             raise EndpointError(f'Problem with path {path} : {e}')
+        return ''
+
+    @move(r'/webdav/(?P<path>.*)')
+    @endpoint()
+    def handle_api_dav_move(self, http_context, path=''):
+        if '..' in path:
+            return http_context.respond_forbidden()
+        try:
+            src = self._convert_path(path).replace('/', '\\')
+            src = f'{self.context.schoolmgr.schoolShare}{src}'
+
+            if not smbclient._os.SMBDirEntry.from_path(src).is_dir():
+                env = http_context.env
+                dst = env.get('HTTP_DESTINATION', None)
+                host = f"{env['wsgi.url_scheme']}://{env['HTTP_HOST']}/webdav/"
+                dst = dst.replace(host, '')  # Delete host domain
+                dst = dst.replace('/', '\\')
+                dst = f'{self.context.schoolmgr.schoolShare}{dst}'
+
+                overwrite = http_context.env.get('Overwrite', None) != 'F'
+                if not smbclient.path.isfile(dst):
+                    smbclient.rename(src, dst)
+                    http_context.respond('204 No Content')
+                elif smbclient.path.isfile(dst) and overwrite:
+                    smbclient.rename(src, dst)
+                    http_context.respond('204 No Content')
+                elif smbclient.path.isfile(dst):
+                    http_context.respond('412 Precondition Failed')
+            else:
+                # Not implemented for directories yet
+                http_context.respond('501 Not Implemented')
+        except (ValueError, SMBOSError, NotFound) as e:
+            http_context.respond_not_found()
+        except InvalidParameter as e:
+            #raise EndpointError(f'Problem with path {path} : {e}')
+            http_context.respond_server_error()
+
         return ''

@@ -13,7 +13,7 @@ from spnego.exceptions import BadMechanismError
 from jadi import component
 import xml.etree.ElementTree as ElementTree
 
-from aj.api.http import url, get, post, mkcol, options, copy, move, propfind, delete, HttpPlugin
+from aj.api.http import url, get, post, mkcol, options, copy, move, put, propfind, delete, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
 from aj.auth import authorize, AuthenticationService
 from aj.plugins.lmn_common.mimetypes import content_mimetypes
@@ -111,18 +111,20 @@ class Handler(HttpPlugin):
     def handle_api_webdav_delete(self, http_context, path=''):
 
         path = self._convert_path(path).replace('/', '\\')
+        path = f'{self.context.schoolmgr.schoolShare}{path}'
 
         try:
-            smbclient.unlink(f'{self.context.schoolmgr.schoolShare}{path}')
+            if smbclient._os.SMBDirEntry.from_path(path).is_dir():
+                smbclient.rmdir(path)
+            else:
+                smbclient.unlink(path)
             http_context.respond('204 No Content')
-            return ''
         except (ValueError, SMBOSError, NotFound) as e:
             http_context.respond_not_found()
-            return ''
         except InvalidParameter as e:
-            #raise EndpointError(f'Problem with path {path} : {e}')
             http_context.respond_server_error()
-            return ''
+        
+        return ''
 
     @options(r'/webdav/(?P<path>.*)')
     @endpoint(api=True, auth=False)
@@ -188,10 +190,9 @@ class Handler(HttpPlugin):
                     href = quote(f'{baseUrl}{item_path}', encoding='utf-8')
                     items[href] = response.convert_samba_entry_properties(item)
 
-            except (BadMechanismError, SMBAuthenticationError) as e:
-                 raise EndpointError(f"There's a problem with the kerberos authentication : {e}")
-            except InvalidParameter as e:
-                 raise EndpointError("This server does not support this feature actually, but it will come soon!")
+            except (BadMechanismError, SMBAuthenticationError, InvalidParameter) as e:
+                 http_context.respond_server_error()
+                 return ''
             except SMBOSError as e:
                 http_context.respond_not_found()
                 return ''
@@ -202,7 +203,7 @@ class Handler(HttpPlugin):
         return response.make_propfind_response(items)
 
     @mkcol(r'/webdav/(?P<path>.*)')
-    @endpoint(api=True)
+    @endpoint()
     def handle_api_dav_create_directory(self, http_context, path=''):
         if '..' in path:
             return http_context.respond_forbidden()
@@ -210,10 +211,12 @@ class Handler(HttpPlugin):
         path = self._convert_path(path).replace('/', '\\')
         try:
             smbclient.makedirs(f'{self.context.schoolmgr.schoolShare}{path}')
+            http_context.add_header("201 Created")
         except (ValueError, SMBOSError, NotFound) as e:
-            raise EndpointError(e)
+            http_context.respond_not_found()
         except InvalidParameter as e:
-            raise EndpointError(f'Problem with path {path} : {e}')
+            http_context.respond_server_error()
+
         return ''
 
     @move(r'/webdav/(?P<path>.*)')
@@ -248,7 +251,61 @@ class Handler(HttpPlugin):
         except (ValueError, SMBOSError, NotFound) as e:
             http_context.respond_not_found()
         except InvalidParameter as e:
-            #raise EndpointError(f'Problem with path {path} : {e}')
+            http_context.respond_server_error()
+
+        return ''
+
+    @copy(r'/webdav/(?P<path>.*)')
+    @endpoint()
+    def handle_api_dav_copy(self, http_context, path=''):
+        if '..' in path:
+            return http_context.respond_forbidden()
+        try:
+            src = self._convert_path(path).replace('/', '\\')
+            src = f'{self.context.schoolmgr.schoolShare}{src}'
+
+            if not smbclient._os.SMBDirEntry.from_path(src).is_dir():
+                env = http_context.env
+                dst = env.get('HTTP_DESTINATION', None)
+                host = f"{env['wsgi.url_scheme']}://{env['HTTP_HOST']}/webdav/"
+                dst = dst.replace(host, '')  # Delete host domain
+                dst = dst.replace('/', '\\')
+                dst = f'{self.context.schoolmgr.schoolShare}{dst}'
+
+                overwrite = http_context.env.get('Overwrite', None) != 'F'
+                if not smbclient.path.isfile(dst):
+                    smbclient.copyfile(src, dst)
+                    http_context.respond('204 No Content')
+                elif smbclient.path.isfile(dst) and overwrite:
+                    smbclient.copyfile(src, dst)
+                    http_context.respond('204 No Content')
+                elif smbclient.path.isfile(dst):
+                    http_context.respond('412 Precondition Failed')
+            else:
+                # Not implemented for directories yet
+                http_context.respond('501 Not Implemented')
+        except (ValueError, SMBOSError, NotFound) as e:
+            http_context.respond_not_found()
+        except InvalidParameter as e:
+            http_context.respond_server_error()
+
+        return ''
+
+    @put(r'/webdav/(?P<path>.*)')
+    @endpoint()
+    def handle_api_dav_put(self, http_context, path=''):
+        if '..' in path:
+            return http_context.respond_forbidden()
+        try:
+            dst = self._convert_path(path).replace('/', '\\')
+            dst = f'{self.context.schoolmgr.schoolShare}{dst}'
+            if not smbclient.path.isfile(dst):
+                with smbclient.open_file(dst, mode='wb') as f:
+                    f.write(http_context.body)
+                http_context.respond_ok()
+        except (ValueError, SMBOSError, NotFound) as e:
+            http_context.respond_not_found()
+        except InvalidParameter as e:
             http_context.respond_server_error()
 
         return ''

@@ -123,13 +123,13 @@ class Handler(HttpPlugin):
             http_context.respond_not_found()
         except InvalidParameter as e:
             http_context.respond_server_error()
-        
+
         return ''
 
     @options(r'/webdav/(?P<path>.*)')
     @endpoint(api=True, auth=False)
     def handle_api_webdav_options(self, http_context, path=''):
-        http_context.add_header("Allow", "OPTIONS, GET, HEAD, POST, DELETE, COPY, MOVE")
+        http_context.add_header("Allow", "OPTIONS, GET, HEAD, PUT, DELETE, COPY, MOVE")
         http_context.add_header("Allow", "MKCOL, PROPFIND")
         http_context.add_header("DAV", "1, 3")
         return ''

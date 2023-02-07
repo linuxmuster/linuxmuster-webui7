@@ -101,8 +101,10 @@ class Handler(HttpPlugin):
                     break
             fd.close()
         except (ValueError, SMBOSError, NotFound) as e:
-            logging.error(e)
-            http_context.respond_not_found()
+            if 'STATUS_ACCESS_DENIED' in e.strerror:
+                http_context.respond_forbidden()
+            else:
+                http_context.respond_not_found()
             return ''
 
 
@@ -120,7 +122,10 @@ class Handler(HttpPlugin):
                 smbclient.unlink(path)
             http_context.respond('204 No Content')
         except (ValueError, SMBOSError, NotFound) as e:
-            http_context.respond_not_found()
+            if 'STATUS_ACCESS_DENIED' in e.strerror:
+                http_context.respond_forbidden()
+            else:
+                http_context.respond_not_found()
         except InvalidParameter as e:
             http_context.respond_server_error()
 
@@ -194,7 +199,10 @@ class Handler(HttpPlugin):
                  http_context.respond_server_error()
                  return ''
             except SMBOSError as e:
-                http_context.respond_not_found()
+                if 'STATUS_ACCESS_DENIED' in e.strerror:
+                    http_context.respond_forbidden()
+                else:
+                    http_context.respond_not_found()
                 return ''
 
         http_context.respond('207 Multi-Status')
@@ -213,7 +221,10 @@ class Handler(HttpPlugin):
             smbclient.makedirs(f'{self.context.schoolmgr.schoolShare}{path}')
             http_context.add_header("201 Created")
         except (ValueError, SMBOSError, NotFound) as e:
-            http_context.respond_not_found()
+            if 'STATUS_ACCESS_DENIED' in e.strerror:
+                http_context.respond_forbidden()
+            else:
+                http_context.respond_not_found()
         except InvalidParameter as e:
             http_context.respond_server_error()
 
@@ -249,7 +260,10 @@ class Handler(HttpPlugin):
                 # Not implemented for directories yet
                 http_context.respond('501 Not Implemented')
         except (ValueError, SMBOSError, NotFound) as e:
-            http_context.respond_not_found()
+            if 'STATUS_ACCESS_DENIED' in e.strerror:
+                http_context.respond_forbidden()
+            else:
+                http_context.respond_not_found()
         except InvalidParameter as e:
             http_context.respond_server_error()
 
@@ -285,7 +299,10 @@ class Handler(HttpPlugin):
                 # Not implemented for directories yet
                 http_context.respond('501 Not Implemented')
         except (ValueError, SMBOSError, NotFound) as e:
-            http_context.respond_not_found()
+            if 'STATUS_ACCESS_DENIED' in e.strerror:
+                http_context.respond_forbidden()
+            else:
+                http_context.respond_not_found()
         except InvalidParameter as e:
             http_context.respond_server_error()
 
@@ -304,7 +321,10 @@ class Handler(HttpPlugin):
                     f.write(http_context.body)
                 http_context.respond_ok()
         except (ValueError, SMBOSError, NotFound) as e:
-            http_context.respond_not_found()
+            if 'STATUS_ACCESS_DENIED' in e.strerror:
+                http_context.respond_forbidden()
+            else:
+                http_context.respond_not_found()
         except InvalidParameter as e:
             http_context.respond_server_error()
 

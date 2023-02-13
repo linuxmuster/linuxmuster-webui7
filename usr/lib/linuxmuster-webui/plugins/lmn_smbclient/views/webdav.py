@@ -6,7 +6,6 @@ import os
 from urllib.parse import quote, unquote
 import locale
 import gevent
-import logging
 import smbclient
 from smbprotocol.exceptions import SMBOSError, NotFound, SMBAuthenticationError, InvalidParameter
 from spnego.exceptions import BadMechanismError

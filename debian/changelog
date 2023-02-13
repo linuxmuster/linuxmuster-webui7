@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.1.47) lmn71; urgency=medium
+
+  * [Smbclient] Preparation for webdav support. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 13 Feb 2023 20:59:07 +0100
+
 linuxmuster-webui7 (7.1.46) lmn71; urgency=medium
 
   * [Users] Fix adding teachers in empty list. 

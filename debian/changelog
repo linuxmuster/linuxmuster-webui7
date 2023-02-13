@@ -1,3 +1,10 @@
+linuxmuster-webui7 (7.2.13) lmn72; urgency=medium
+
+  * Upgrade Ajenti 2.2.4
+  * Fix wrong dependency on dateutil. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 13 Feb 2023 21:40:04 +0100
+
 linuxmuster-webui7 (7.2.12) lmn72; urgency=medium
 
   * Upgrade cryptography.

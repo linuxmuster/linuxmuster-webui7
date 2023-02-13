@@ -5,6 +5,7 @@ Tools to handle files, directories and uploads.
 import os
 import re
 import smbclient
+from urllib.parse import quote, unquote
 from smbprotocol.exceptions import SMBOSError, NotFound, SMBAuthenticationError, InvalidParameter
 from spnego.exceptions import BadMechanismError
 from jadi import component
@@ -79,6 +80,7 @@ class Handler(HttpPlugin):
                 data = {
                     'name': item.name,
                     'path': item_path,
+                    'download_url': quote(item_path.encode('latin-1')),
                     'unixPath': SMB2UnixPath(item_path),
                     'isDir': item.is_dir(),
                     'isFile': item.is_file(),
@@ -425,7 +427,7 @@ class Handler(HttpPlugin):
     @get(r'/api/lmn/smbclient/download')
     @endpoint(page=True)
     def handle_smb_download(self, http_context):
-        path = http_context.query.get('path', None)
+        path = unquote(http_context.query.get('path', None))
 
         if '..' in path:
             return http_context.respond_forbidden()

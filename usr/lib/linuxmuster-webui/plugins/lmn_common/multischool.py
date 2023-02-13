@@ -64,6 +64,7 @@ class Drives:
 class SchoolManager:
     def __init__(self):
         self.school = 'default-school'
+        self.schoolShare = f'\\\\{samba_realm}\\{self.school}\\'
         self.load()
 
     def load(self):
@@ -79,6 +80,7 @@ class SchoolManager:
         # Switch to another school
         if school != self.school:
             self.school = school
+            self.schoolShare = f'\\\\{samba_realm}\\{self.school}\\'
             self.load()
 
     def load_custom_fields(self):

@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.1.50) lmn71; urgency=medium
+
+  * Add missing dependency pytz. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 13 Feb 2023 22:36:10 +0100
+
 linuxmuster-webui7 (7.1.49) lmn71; urgency=medium
 
   * Upgrade Ajenti 2.2.4

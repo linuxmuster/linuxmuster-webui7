@@ -9,7 +9,6 @@ ajenti.plugin.settings==0.33
 ajenti.plugin.session-list==0.6
 configparser==3.5.0
 cryptography==39.0.1
-dateutil
 dpath==2.0.6         # used for getSophomorixValue
 gssapi==1.7.3
 isc_dhcp_leases
@@ -18,6 +17,7 @@ paramiko==2.10.1
 pyspnego==0.5.2
 python-ldap
 python-magic==0.4.15 # used to determine encoding in linbo files and csv uploads
+python-dateutil
 requests
 reconfigure
 scrypt

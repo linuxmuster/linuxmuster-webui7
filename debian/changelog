@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.1.48) lmn71; urgency=medium
+
+  * Upgrade cryptography. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 13 Feb 2023 21:02:51 +0100
+
 linuxmuster-webui7 (7.1.47) lmn71; urgency=medium
 
   * [Smbclient] Preparation for webdav support. 

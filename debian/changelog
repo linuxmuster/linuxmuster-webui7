@@ -1,3 +1,10 @@
+linuxmuster-webui7 (7.2.12) lmn72; urgency=medium
+
+  * Upgrade cryptography.
+  * [Smbclient] Preparation for webdav support.  
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 13 Feb 2023 21:06:36 +0100
+
 linuxmuster-webui7 (7.2.11) lmn72; urgency=medium
 
   * [Users] Fix adding teachers in empty list. 

@@ -1,3 +1,196 @@
+linuxmuster-webui7 (17.2.15) lmn72-testing; urgency=low
+
+  * Merged 7.2.14 from Upstream
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri, 17 Feb 2023 10:40:19 +0200
+
+linuxmuster-webui7 (7.2.14) lmn72; urgency=medium
+
+  * Add missing dependency pytz. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 13 Feb 2023 22:37:47 +0100
+
+linuxmuster-webui7 (7.2.13) lmn72; urgency=medium
+
+  * Upgrade Ajenti 2.2.4
+  * Fix wrong dependency on dateutil. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 13 Feb 2023 21:40:04 +0100
+
+linuxmuster-webui7 (7.2.12) lmn72; urgency=medium
+
+  * Upgrade cryptography.
+  * [Smbclient] Preparation for webdav support.  
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 13 Feb 2023 21:06:36 +0100
+
+linuxmuster-webui7 (7.2.11) lmn72; urgency=medium
+
+  * [Users] Fix adding teachers in empty list. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 14 Jan 2023 10:42:10 +0100
+
+linuxmuster-webui7 (7.2.10) lmn72; urgency=medium
+
+  * [Session] Fix session for actual room. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Thu, 12 Jan 2023 20:21:54 +0100
+
+linuxmuster-webui7 (7.2.9) lmn72; urgency=medium
+
+  * Update cryptography version 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Thu, 12 Jan 2023 17:00:30 +0100
+
+linuxmuster-webui7 (7.2.8) lmn72; urgency=medium
+
+  * [Users] Fix pdf passwords generation. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Tue, 10 Jan 2023 15:02:20 +0100
+
+linuxmuster-webui7 (7.2.7) lmn72; urgency=medium
+
+  * [Session] Fix user list in exam modus. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 09 Jan 2023 14:07:07 +0100
+
+linuxmuster-webui7 (7.2.6) lmn72; urgency=medium
+
+  * [Settings] Fix typo in saving smtp config.  
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 08 Jan 2023 14:40:02 +0100
+
+linuxmuster-webui7 (7.2.5) lmn72; urgency=medium
+
+  * [Smbclient] Use directory names instead of label names for GPO. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 07 Jan 2023 17:08:36 +0100
+
+linuxmuster-webui7 (7.2.4) lmn72; urgency=medium
+
+  * Upgrade to Ajenti 2.2.3 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 07 Jan 2023 10:47:04 +0100
+
+linuxmuster-webui7 (7.2.3) lmn72; urgency=medium
+
+  * Add python3-jinja2 to dependency
+  * Add missing chars for passwords. Fix #254.
+  * Fix looking for dfs proxies
+  * [Clients] Edit Drives.xml Fix #228
+  * [Devices] Sort by padded ips. Fix #249
+  * [Groupmembership] Fix double teacher role
+  * [Groupmembership] Refresh members list when adding a teacher in class
+  * [Groupmembership] Always add teachers as admins in classes
+  * [Landingpage] Fix injector error
+  * [Linbo-sync] Add support for multischool. Fix #250
+  * [Session] Sort username by lastname and firstname. Fix #127
+  * [Session] Add button to directly rename/delete a session
+  * [Smbclient] Use samba realm instead of samba domain to access samba shares
+  * [Users] Better handle some errors on sophomorix-check and encoding detecting
+  * [Users] Blur background if modal window with password is shown
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 07 Jan 2023 10:37:16 +0100
+
+linuxmuster-webui7 (7.2.2) lmn72; urgency=medium
+
+  * Fix gevent version for Python 3.10 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 29 Aug 2022 18:09:07 +0200
+
+linuxmuster-webui7 (7.2.1) lmn72; urgency=medium
+
+  * Build package for Ubuntu 22.04
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 24 Jun 2022 15:16:34 +0200
+
+linuxmuster-webui7 (7.1.50) lmn71; urgency=medium
+
+  * Add missing dependency pytz. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 13 Feb 2023 22:36:10 +0100
+
+linuxmuster-webui7 (7.1.49) lmn71; urgency=medium
+
+  * Upgrade Ajenti 2.2.4
+  * Fix wrong dependency on dateutil. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 13 Feb 2023 21:37:07 +0100
+
+linuxmuster-webui7 (7.1.48) lmn71; urgency=medium
+
+  * Upgrade cryptography. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 13 Feb 2023 21:02:51 +0100
+
+linuxmuster-webui7 (7.1.47) lmn71; urgency=medium
+
+  * [Smbclient] Preparation for webdav support. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 13 Feb 2023 20:59:07 +0100
+
+linuxmuster-webui7 (7.1.46) lmn71; urgency=medium
+
+  * [Users] Fix adding teachers in empty list. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 14 Jan 2023 10:40:11 +0100
+
+linuxmuster-webui7 (7.1.45) lmn71; urgency=medium
+
+  * [Session] Fix session for actual room. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Thu, 12 Jan 2023 20:19:34 +0100
+
+linuxmuster-webui7 (7.1.44) lmn71; urgency=medium
+
+  * [Users] Fix pdf passwords generation. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Tue, 10 Jan 2023 14:57:57 +0100
+
+linuxmuster-webui7 (7.1.43) lmn71; urgency=medium
+
+  * [Session] Fix user list in exam modus. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 09 Jan 2023 14:05:24 +0100
+
+linuxmuster-webui7 (7.1.42) lmn71; urgency=medium
+
+  * [Settings] Fix typo in saving smtp config. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 08 Jan 2023 14:38:11 +0100
+
+linuxmuster-webui7 (7.1.41) lmn71; urgency=medium
+
+  * [Smbclient] Use directory names instead of label names for GPO.
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 07 Jan 2023 17:04:30 +0100
+
+linuxmuster-webui7 (7.1.40) lmn71; urgency=medium
+
+  * Upgrade to Ajenti 2.2.3 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 07 Jan 2023 10:45:25 +0100
+
+linuxmuster-webui7 (7.1.39) lmn71; urgency=medium
+
+  * Add python3-jinja2 to dependency
+  * Add missing chars for passwords. Fix #254.
+  * Fix looking for dfs proxies
+  * [Clients] Edit Drives.xml Fix #228
+  * [Devices] Sort by padded ips. Fix #249
+  * [Groupmembership] Fix double teacher role
+  * [Groupmembership] Refresh members list when adding a teacher in class
+  * [Groupmembership] Always add teachers as admins in classes
+  * [Landingpage] Fix injector error
+  * [Linbo-sync] Add support for multischool. Fix #250
+  * [Session] Sort username by lastname and firstname. Fix #127
+  * [Session] Add button to directly rename/delete a session
+  * [Smbclient] Use samba realm instead of samba domain to access samba shares
+  * [Users] Better handle some errors on sophomorix-check and encoding detecting
+  * [Users] Blur background if modal window with password is shown
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 07 Jan 2023 10:29:01 +0100
+
 linuxmuster-webui7 (17.1.38.8) lmn72-testing; urgency=low
 
   * Add missing chars for strong password. See #254.

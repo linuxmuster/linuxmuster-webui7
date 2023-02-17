@@ -54,7 +54,11 @@ jobs:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
           draft: false
+<<<<<<< HEAD
+          prerelease: false
+=======
           prerelease: "true"
+>>>>>>> upstream-lmn72
           body_path: ./current-changes
 
       - name: Delete current changes file

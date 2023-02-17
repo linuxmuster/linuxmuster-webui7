@@ -188,8 +188,8 @@ angular.module('lmn.users').controller 'LMUsersListManagementController', ($scop
     $scope.teachers_add = () ->
         if $scope.teachers.length > 0
             $scope.paging.page_teachers = Math.floor(($scope.teachers.length - 1) / $scope.paging.pageSize) + 1
-            $scope.teachers_filter = ''
-            $scope.teachers.push {class: 'Lehrer', _isNew: true}
+        $scope.teachers_filter = ''
+        $scope.teachers.push {class: 'Lehrer', _isNew: true}
 
     $scope.extrastudents_add = () ->
        if $scope.extrastudents.length > 0

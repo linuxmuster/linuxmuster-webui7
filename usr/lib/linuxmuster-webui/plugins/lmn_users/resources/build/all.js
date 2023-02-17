@@ -2186,12 +2186,12 @@
     $scope.teachers_add = function() {
       if ($scope.teachers.length > 0) {
         $scope.paging.page_teachers = Math.floor(($scope.teachers.length - 1) / $scope.paging.pageSize) + 1;
-        $scope.teachers_filter = '';
-        return $scope.teachers.push({
-          class: 'Lehrer',
-          _isNew: true
-        });
       }
+      $scope.teachers_filter = '';
+      return $scope.teachers.push({
+        class: 'Lehrer',
+        _isNew: true
+      });
     };
     $scope.extrastudents_add = function() {
       if ($scope.extrastudents.length > 0) {

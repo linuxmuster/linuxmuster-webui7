@@ -54,7 +54,7 @@ jobs:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
           draft: false
-          prerelease: "true"
+          prerelease: false
           body_path: ./current-changes
 
       - name: Delete current changes file

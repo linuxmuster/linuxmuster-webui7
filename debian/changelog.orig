@@ -1,50 +1,10 @@
 <<<<<<< HEAD
-linuxmuster-webui7 (17.1.38.8) lmn72-testing; urgency=low
+linuxmuster-webui7 (17.2.15) lmn72-testing; urgency=low
 
-  * Add missing chars for strong password. See #254.
-  * Load GPOs at login.
-  * Right config api URL.
-  * Display samba shares only if enabled in the GPO. Fix #247
-  * Harden use of custom fields.
-  * Add permissions for custom fields.
+  * Merged 7.2.14 from Upstream
 
- -- Andreas Till <andreas.till@netzint.de>  Thu, 29 Dec 2022 14:44:31 +0200
+ -- Andreas Till <andreas.till@netzint.de>  Fri, 17 Feb 2023 10:40:19 +0200
 
-linuxmuster-webui7 (17.1.38.6) lmn71-testing; urgency=low
-
-  * Updaded Upstream
-
- -- Andreas Till <andreas.till@netzint.de>  Tue, 27 Dec 2022 18:32:21 +0200
-
-linuxmuster-webui7 (17.1.38.4) lmn71-testing; urgency=low
-
-  * Fixed Session collect files empty transfer folder issue
-  * merged upstream content
-
- -- Andreas Till <andreas.till@netzint.de>  Thu, 01 Dec 2022 17:51:38 +0200
-
-linuxmuster-webui7 (17.1.38.3) lmn71-testing; urgency=low
-
-  * Fixed Homeplugin when using dfs
-
- -- Andreas Till <andreas.till@netzint.de>  Thu, 29 Sep 2022 19:55:02 +0200
-
-linuxmuster-webui7 (17.1.38.2) lmn71-testing; urgency=low
-
-  * Add multischool support in linbo-remote
-  * sort padded ips
-  * Consider firstname when sorting per lastname
-
- -- Andreas Till <andreas.till@netzint.de>  Thu, 29 Sep 2022 18:44:08 +0200
-
-linuxmuster-webui7 (17.1.38.1) lmn71-testing; urgency=medium
-  * [devices] Filter leading zeros in IPs too
-  * [home] Fix students home path
-  * [clients] Fix script list in linux
-  * [common] Rise field limit for csv
-  * [groupmembership] Better projects alignment 
-  * [users] Add user ID to user details 
-=======
 linuxmuster-webui7 (7.2.14) lmn72; urgency=medium
 
   * Add missing dependency pytz. 
@@ -132,6 +92,13 @@ linuxmuster-webui7 (7.2.3) lmn72; urgency=medium
   * [Users] Blur background if modal window with password is shown
 
  -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 07 Jan 2023 10:37:16 +0100
+=======
+linuxmuster-webui7 (17.2.2) lmn72; urgency=low
+
+  * Merged Upstream 
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri, 30 Dec 2022 10:58:21 +0200
+>>>>>>> 8cbc3e6257c4c925fe866f1086e6233a60c54861
 
 linuxmuster-webui7 (7.2.2) lmn72; urgency=medium
 
@@ -144,6 +111,7 @@ linuxmuster-webui7 (7.2.1) lmn72; urgency=medium
   * Build package for Ubuntu 22.04
 
  -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 24 Jun 2022 15:16:34 +0200
+<<<<<<< HEAD
 
 linuxmuster-webui7 (7.1.50) lmn71; urgency=medium
 
@@ -231,7 +199,55 @@ linuxmuster-webui7 (7.1.39) lmn71; urgency=medium
   * [Users] Blur background if modal window with password is shown
 
  -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 07 Jan 2023 10:29:01 +0100
->>>>>>> upstream-lmn72
+
+=======
+ 
+>>>>>>> 8cbc3e6257c4c925fe866f1086e6233a60c54861
+linuxmuster-webui7 (17.1.38.8) lmn72-testing; urgency=low
+
+  * Add missing chars for strong password. See #254.
+  * Load GPOs at login.
+  * Right config api URL.
+  * Display samba shares only if enabled in the GPO. Fix #247
+  * Harden use of custom fields.
+  * Add permissions for custom fields.
+
+ -- Andreas Till <andreas.till@netzint.de>  Thu, 29 Dec 2022 14:44:31 +0200
+
+linuxmuster-webui7 (17.1.38.6) lmn71-testing; urgency=low
+
+  * Updaded Upstream
+
+ -- Andreas Till <andreas.till@netzint.de>  Tue, 27 Dec 2022 18:32:21 +0200
+
+linuxmuster-webui7 (17.1.38.4) lmn71-testing; urgency=low
+
+  * Fixed Session collect files empty transfer folder issue
+  * merged upstream content
+
+ -- Andreas Till <andreas.till@netzint.de>  Thu, 01 Dec 2022 17:51:38 +0200
+
+linuxmuster-webui7 (17.1.38.3) lmn71-testing; urgency=low
+
+  * Fixed Homeplugin when using dfs
+
+ -- Andreas Till <andreas.till@netzint.de>  Thu, 29 Sep 2022 19:55:02 +0200
+
+linuxmuster-webui7 (17.1.38.2) lmn71-testing; urgency=low
+
+  * Add multischool support in linbo-remote
+  * sort padded ips
+  * Consider firstname when sorting per lastname
+
+ -- Andreas Till <andreas.till@netzint.de>  Thu, 29 Sep 2022 18:44:08 +0200
+
+linuxmuster-webui7 (17.1.38.1) lmn71-testing; urgency=medium
+  * [devices] Filter leading zeros in IPs too
+  * [home] Fix students home path
+  * [clients] Fix script list in linux
+  * [common] Rise field limit for csv
+  * [groupmembership] Better projects alignment 
+  * [users] Add user ID to user details 
 
 linuxmuster-webui7 (7.1.38) lmn71; urgency=medium
 

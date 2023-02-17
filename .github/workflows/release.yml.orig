@@ -58,7 +58,11 @@ jobs:
           prerelease: false
 =======
           prerelease: "true"
+<<<<<<< HEAD
 >>>>>>> upstream-lmn72
+=======
+>>>>>>> test-lmn72-testing
+>>>>>>> 8cbc3e6257c4c925fe866f1086e6233a60c54861
           body_path: ./current-changes
 
       - name: Delete current changes file

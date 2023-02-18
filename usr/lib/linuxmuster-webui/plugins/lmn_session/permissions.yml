@@ -1,9 +1,13 @@
 globaladministrator:
 - 'sidebar:view:/view/lmn/session: false'
+- 'sidebar:view:/view/lmn/sessionsList: false'
 schooladministrator:
 - 'sidebar:view:/view/lmn/session: false'
+- 'sidebar:view:/view/lmn/sessionsList: false'
 student:
 - 'sidebar:view:/view/lmn/session: false'
+- 'sidebar:view:/view/lmn/sessionsList: false'
 teacher:
 - 'lmn:session:trans: true'
 - 'sidebar:view:/view/lmn/session: true'
+- 'sidebar:view:/view/lmn/sessionsList: true'

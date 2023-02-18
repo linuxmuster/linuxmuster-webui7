@@ -1,9 +1,7 @@
 import requests
 import hashlib
-import logging
 import json
 import xmltodict
-import subprocess
 import yaml
 import os
 
@@ -16,10 +14,10 @@ class ConfigLoader():
         return self.path
 
     def load(self):
-        if os.path.exists(self.path) == False:
+        if not os.path.exists(self.path):
             return { "status": "error", "message": "Configfile not found!" }
         else:
-            return { "status": "success", "data": yaml.load(open(self.path)) }
+            return { "status": "success", "data": yaml.load(open(self.path), Loader=yaml.SafeLoader) }
 
     def save(self):
         with open(self.path, 'w') as f:

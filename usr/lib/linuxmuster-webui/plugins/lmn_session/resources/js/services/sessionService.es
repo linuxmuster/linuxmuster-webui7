@@ -1,4 +1,4 @@
-angular.module('lmn.session').service('lmnSession', function($http, $uibModal, $q, messagebox, validation, notify, gettext) {
+angular.module('lmn.session').service('lmnSession', function($http, $uibModal, $q, $location, messagebox, validation, notify, gettext) {
 
     this.sessions = [];
 
@@ -26,6 +26,11 @@ angular.module('lmn.session').service('lmnSession', function($http, $uibModal, $
         }));
 
         return $q.all(promiseList).then(() => {return [this.classes, this.sessions]});
+    }
+
+    this.start = (session) => {
+        this.current = session;console.warn(this.current);
+        $location.path('/view/lmn/session');
     }
 
     this.new = () => {
@@ -75,6 +80,12 @@ angular.module('lmn.session').service('lmnSession', function($http, $uibModal, $
             return $http.delete(`/api/lmn/session/sessions/${sessionID}`).then((resp) => {
                 notify.success(gettext(resp.data));
             });
+        });
+    }
+
+    this.getParticipants = (session) => {
+        return $http.get(`/api/lmn/session/sessions/${session}`).then((resp) => {
+            return resp.data;
         });
     }
 

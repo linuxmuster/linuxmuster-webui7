@@ -1,8 +1,8 @@
 angular.module('lmn.quotas').config ($routeProvider) ->
-    $routeProvider.when '/view/lm/quotas',
+    $routeProvider.when '/view/lmn/quotas',
         controller: 'LMQuotasController'
         templateUrl: '/lmn_quotas:resources/partial/index.html'
-    $routeProvider.when '/view/lm/quotas-disabled',
+    $routeProvider.when '/view/lmn/quotas-disabled',
         templateUrl: '/lmn_quotas:resources/partial/disabled.html'
 
 

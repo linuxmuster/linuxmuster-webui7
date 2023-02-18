@@ -1,16 +1,16 @@
 globaladministrator:
 - 'lm:samba_dns:read: true'
 - 'lm:samba_dns:write: true'
-- 'sidebar:view:/view/lm/samba_dns: true'
+- 'sidebar:view:/view/lmn/samba_dns: true'
 schooladministrator:
 - 'lm:samba_dns:read: true'
 - 'lm:samba_dns:write: true'
-- 'sidebar:view:/view/lm/samba_dns: true'
+- 'sidebar:view:/view/lmn/samba_dns: true'
 student:
 - 'lm:samba_dns:read: false'
 - 'lm:samba_dns:write: false'
-- 'sidebar:view:/view/lm/samba_dns: false'
+- 'sidebar:view:/view/lmn/samba_dns: false'
 teacher:
 - 'lm:samba_dns:read: false'
 - 'lm:samba_dns:write: false'
-- 'sidebar:view:/view/lm/samba_dns: false'
+- 'sidebar:view:/view/lmn/samba_dns: false'

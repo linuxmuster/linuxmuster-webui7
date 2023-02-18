@@ -1,5 +1,5 @@
 angular.module('lmn.settings').config ($routeProvider) ->
-    $routeProvider.when '/view/lm/schoolsettings',
+    $routeProvider.when '/view/lmn/schoolsettings',
         controller: 'LMSettingsController'
         templateUrl: '/lmn_settings:resources/partial/index.html'
 

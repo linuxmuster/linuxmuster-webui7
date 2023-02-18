@@ -1,5 +1,5 @@
 angular.module('lmn.users').config ($routeProvider) ->
-    $routeProvider.when '/view/lm/users/listmanagement',
+    $routeProvider.when '/view/lmn/users/listmanagement',
        controller: 'LMUsersListManagementController'
        templateUrl: '/lmn_users:resources/partial/listmanagement.html'
 

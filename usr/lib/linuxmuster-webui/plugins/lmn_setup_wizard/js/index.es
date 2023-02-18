@@ -7,7 +7,7 @@ angular.module('lmn.setup_wizard').run(($http, $location, identity) => {
       if (identity.user) {
         $http.get('/api/lmn/setup-wizard/is-configured').then(response => {
           if (!response.data) {
-            $location.path('/view/lm/init/welcome')
+            $location.path('/view/lmn/init/welcome')
           }
         })
       }

@@ -14,35 +14,35 @@ class ItemProvider(SidebarItemProvider):
                 'attach': 'category:usermanagement',
                 'name': _('Teachers'), # skipcq: PYL-E0602
                 'icon': 'user-tie',
-                'url': '/view/lm/users/teachers',
+                'url': '/view/lmn/users/teachers',
                 'weight': 15,
             },
             {
                 'attach': 'category:usermanagement',
                 'name': _('Students'), # skipcq: PYL-E0602
                 'icon': 'user-graduate',
-                'url': '/view/lm/users/students',
+                'url': '/view/lmn/users/students',
                 'weight': 15,
             },
             {
                 'attach': 'category:usermanagement',
                 'name': _('School-Admins'), # skipcq: PYL-E0602
                 'icon': 'user-ninja',
-                'url': '/view/lm/users/schooladmins',
+                'url': '/view/lmn/users/schooladmins',
                 'weight': 20,
             },
             {
                 'attach': 'category:usermanagement',
                 'name': _('Global-Admins'), # skipcq: PYL-E0602
                 'icon': 'user-astronaut',
-                'url': '/view/lm/users/globaladmins',
+                'url': '/view/lmn/users/globaladmins',
                 'weight': 21,
             },
             {
                 'attach': 'category:usermanagement',
                 'name': _('Listmanagement'), # skipcq: PYL-E0602
                 'icon': 'list',
-                'url': '/view/lm/users/listmanagement',
+                'url': '/view/lmn/users/listmanagement',
                 'weight': 21,
             }
         ]

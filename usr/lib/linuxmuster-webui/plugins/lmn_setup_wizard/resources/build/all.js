@@ -7,7 +7,7 @@ angular.module('lmn.setup_wizard').run(function ($http, $location, identity) {
     if (identity.user) {
       $http.get('/api/lmn/setup-wizard/is-configured').then(function (response) {
         if (!response.data) {
-          $location.path('/view/lm/init/welcome');
+          $location.path('/view/lmn/init/welcome');
         }
       });
     }
@@ -18,43 +18,43 @@ angular.module('lmn.setup_wizard').run(function ($http, $location, identity) {
 'use strict';
 
 angular.module('lmn.setup_wizard').config(function ($routeProvider) {
-    $routeProvider.when('/view/lm/init/welcome', {
+    $routeProvider.when('/view/lmn/init/welcome', {
         templateUrl: '/lmn_setup_wizard:partial/init-welcome.html',
         controller: 'InitWelcomeController',
         controllerAs: '$ctrl'
     });
 
-    $routeProvider.when('/view/lm/init/school', {
+    $routeProvider.when('/view/lmn/init/school', {
         templateUrl: '/lmn_setup_wizard:partial/init-school.html',
         controller: 'InitSchoolController',
         controllerAs: '$ctrl'
     });
 
-    $routeProvider.when('/view/lm/init/account', {
+    $routeProvider.when('/view/lmn/init/account', {
         templateUrl: '/lmn_setup_wizard:partial/init-account.html',
         controller: 'InitAccountController',
         controllerAs: '$ctrl'
     });
 
-    $routeProvider.when('/view/lm/init/externalservices', {
+    $routeProvider.when('/view/lmn/init/externalservices', {
         templateUrl: '/lmn_setup_wizard:partial/init-externalServices.html',
         controller: 'InitExternalServicesController',
         controllerAs: '$ctrl'
     });
 
-    $routeProvider.when('/view/lm/init/summary', {
+    $routeProvider.when('/view/lmn/init/summary', {
         templateUrl: '/lmn_setup_wizard:partial/init-summary.html',
         controller: 'InitSummaryController',
         controllerAs: '$ctrl'
     });
 
-    $routeProvider.when('/view/lm/init/done', {
+    $routeProvider.when('/view/lmn/init/done', {
         templateUrl: '/lmn_setup_wizard:partial/init-done.html',
         controller: 'InitDoneController',
         controllerAs: '$ctrl'
     });
 
-    $routeProvider.when('/view/lm/init/setup', {
+    $routeProvider.when('/view/lmn/init/setup', {
         templateUrl: '/lmn_setup_wizard:partial/init-setup.html',
         controller: 'InitSetupController',
         controllerAs: '$ctrl'
@@ -82,7 +82,7 @@ angular.module('lmn.setup_wizard').controller('InitWelcomeController', function 
             return;
         }
         await _this.config.save();
-        $location.path('/view/lm/init/school');
+        $location.path('/view/lmn/init/school');
     };
 });
 
@@ -143,7 +143,7 @@ angular.module('lmn.setup_wizard').controller('InitSchoolController', function (
         }
 
         await $http.post('/api/lmn/setup-wizard/setup', _this2.ini);
-        $location.path('/view/lm/init/account');
+        $location.path('/view/lmn/init/account');
     };
 });
 
@@ -183,7 +183,7 @@ angular.module('lmn.setup_wizard').controller('InitAccountController', function 
             return;
         }
         $http.post('/api/lmn/setup-wizard/setup', _this3.ini).then(function () {
-            return $location.path('/view/lm/init/externalservices');
+            return $location.path('/view/lmn/init/externalservices');
         });
     };
 });
@@ -221,7 +221,7 @@ angular.module('lmn.setup_wizard').controller('InitExternalServicesController', 
             }
         }
         $http.post('/api/lmn/setup-wizard/setup', _this4.ini).then(function () {
-            return $location.path('/view/lm/init/summary');
+            return $location.path('/view/lmn/init/summary');
         });
     };
 });
@@ -237,7 +237,7 @@ angular.module('lmn.setup_wizard').controller('InitSummaryController', function 
 
     this.finish = function () {
         $http.post('/api/lmn/setup-wizard/setup', _this5.ini).then(function () {
-            return $location.path('/view/lm/init/setup');
+            return $location.path('/view/lmn/init/setup');
         });
     };
 });
@@ -254,7 +254,7 @@ angular.module('lmn.setup_wizard').controller('InitSetupController', function ($
         _this6.isWorking = true;
     });
     this.finish = function () {
-        return $location.path('/view/lm/init/done');
+        return $location.path('/view/lmn/init/done');
     };
 });
 

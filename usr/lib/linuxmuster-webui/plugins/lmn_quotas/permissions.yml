@@ -2,19 +2,19 @@ globaladministrator:
 - 'lm:quotas:apply: true'
 - 'lm:quotas:configure: true'
 - 'lm:quotas:ldap-search: true'
-- 'sidebar:view:/view/lm/quotas: true'
+- 'sidebar:view:/view/lmn/quotas: true'
 schooladministrator:
 - 'lm:quotas:apply: true'
 - 'lm:quotas:configure: true'
 - 'lm:quotas:ldap-search: true'
-- 'sidebar:view:/view/lm/quotas: true'
+- 'sidebar:view:/view/lmn/quotas: true'
 student:
 - 'lm:quotas:apply: false'
 - 'lm:quotas:configure: false'
 - 'lm:quotas:ldap-search: false'
-- 'sidebar:view:/view/lm/quotas: false'
+- 'sidebar:view:/view/lmn/quotas: false'
 teacher:
 - 'lm:quotas:apply: false'
 - 'lm:quotas:configure: false'
 - 'lm:quotas:ldap-search: false'
-- 'sidebar:view:/view/lm/quotas: false'
+- 'sidebar:view:/view/lmn/quotas: false'

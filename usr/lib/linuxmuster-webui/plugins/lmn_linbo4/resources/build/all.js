@@ -9,7 +9,7 @@
   var indexOf = [].indexOf;
 
   angular.module('lmn.linbo4').config(function($routeProvider) {
-    return $routeProvider.when('/view/lm/linbo4', {
+    return $routeProvider.when('/view/lmn/linbo4', {
       controller: 'LMLINBO4Controller',
       templateUrl: '/lmn_linbo4:resources/partial/index.html'
     });

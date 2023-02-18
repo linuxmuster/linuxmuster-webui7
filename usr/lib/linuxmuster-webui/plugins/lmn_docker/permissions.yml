@@ -1,16 +1,16 @@
 globaladministrator:
 - 'lm:docker:change: true'
 - 'lm:docker:list: true'
-- 'sidebar:view:/view/lm/docker: true'
+- 'sidebar:view:/view/lmn/docker: true'
 schooladministrator:
 - 'lm:docker:change: true'
 - 'lm:docker:list: true'
-- 'sidebar:view:/view/lm/docker: true'
+- 'sidebar:view:/view/lmn/docker: true'
 student:
 - 'lm:docker:change: false'
 - 'lm:docker:list: false'
-- 'sidebar:view:/view/lm/docker: false'
+- 'sidebar:view:/view/lmn/docker: false'
 teacher:
 - 'lm:docker:change: false'
 - 'lm:docker:list: false'
-- 'sidebar:view:/view/lm/docker: false'
+- 'sidebar:view:/view/lmn/docker: false'

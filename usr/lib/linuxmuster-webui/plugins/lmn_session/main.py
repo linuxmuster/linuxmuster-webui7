@@ -21,7 +21,7 @@ class ItemProvider(SidebarItemProvider):
             'attach': 'category:class',
             'name': _('Print Passwords'),
             'icon': 'key',
-            'url': '/view/lm/users/print-passwords',
+            'url': '/view/lmn/users/print-passwords',
             'weight': 40,
             }
         ]

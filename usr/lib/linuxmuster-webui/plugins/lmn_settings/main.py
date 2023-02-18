@@ -14,7 +14,7 @@ class ItemProvider(SidebarItemProvider):
                 'attach': 'category:schoolsettingsdefaults',
                 'name': _('School Settings'), # skipcq: PYL-E0602
                 'icon': 'sliders-h',
-                'url': '/view/lm/schoolsettings',
+                'url': '/view/lmn/schoolsettings',
                 'children': [],
                 'weight': 40,
             },
@@ -22,7 +22,7 @@ class ItemProvider(SidebarItemProvider):
                 'attach': 'category:schoolsettingsdefaults',
                 'name': _('Global Settings'), # skipcq: PYL-E0602
                 'icon': 'cogs',
-                'url': '/view/lm/globalsettings',
+                'url': '/view/lmn/globalsettings',
                 'children': [],
                 'weight': 55,
             },

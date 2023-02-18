@@ -1,5 +1,5 @@
 angular.module('lmn.linbo4').config ($routeProvider) ->
-    $routeProvider.when '/view/lm/linbo4',
+    $routeProvider.when '/view/lmn/linbo4',
         controller: 'LMLINBO4Controller'
         templateUrl: '/lmn_linbo4:resources/partial/index.html'
 

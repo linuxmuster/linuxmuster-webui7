@@ -9,7 +9,7 @@ angular.module('lmn.common').service('lmfilesystem', function($rootScope, $http,
        $flow.on('complete', async () => {
           $flow.off('complete')
           $flow.off('fileProgress')
-          let response = await $http.post(`/api/lm/filesystem/userupload`, {
+          let response = await $http.post(`/api/lmn/filesystem/userupload`, {
              id: $flow.files[0].uniqueIdentifier, path, name: $flow.files[0].name
           })
           $rootScope.$apply(() => {

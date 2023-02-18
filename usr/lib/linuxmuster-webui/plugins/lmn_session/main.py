@@ -14,7 +14,7 @@ class ItemProvider(SidebarItemProvider):
             'attach': 'category:class',
             'name': _('Session'),
             'icon': 'chalkboard-teacher',
-            'url': '/view/lmn/session',
+            'url': '/view/lmn/sessionsList',
             'weight': 20,
             },
             {

@@ -1,14 +1,11 @@
 <br/>
 <div samba-access>
+
+    <progress-spinner ng:show="participants.length == 0 || changeState == true"></progress-spinner>
+
     <div class="input-group">
         <input type="text" style="width:70%" placeholder={{translation.addStudent}} ng:model="_.addParticipant" ng-readonly=!sessionLoaded typeahead-editable=false typeahead-min-length="2" uib-typeahead="user as user.sophomorixAdminClass+' '+user.givenName+ ' '+user.sn+ ' '+user.sAMAccountName  for user in findUsers($viewValue) | limitTo:10" class="form-control" />
         <input type="text" style="width:30%" placeholder={{translation.addClass}} ng:model="_.addSchoolClass" ng-readonly=!sessionLoaded typeahead-editable=false typeahead-min-length="1" uib-typeahead="schoolClass as schoolClass.sophomorixAdminClass for schoolClass in findSchoolClasses($viewValue) | limitTo:10" class="form-control" />
-        <oi-select
-               oi-options="list.id as list.description for list in lists"
-               ng-model="tags"
-               multiple
-               placeholder="Select">
-        </oi-select>
 
         <div uib-dropdown class="input-group-btn" >
             <button class="btn btn-default"  uib-dropdown-toggle>
@@ -89,7 +86,8 @@
         <tr>
             <th ng:repeat="(id, field) in fields" ng:if="field.visible"><div title="{{field.title}}" class="{{field.icon}}" style="font-size:20px;"></div> <br>{{field.name}}
                 <span checkbox style="float:right;" id="{{id}}.all" ng:if="field.examBox" ng-click="selectAll('exammode')" ng:model=field.checkboxStatus>"</span>
-                <span checkbox style="float:right;" id="{{id}}.all" ng:if="field.checkboxAll" ng-click="selectAll(id)" ng:model=field.checkboxStatus>"</span></th>
+                <span checkbox style="float:right;" id="{{id}}.all" ng:if="field.checkboxAll" ng-click="setManagementGroupAll(id)" ng:model=field.checkboxStatus>"</span>
+            </th>
             <th></th>
             <th></th>
         </tr>
@@ -142,20 +140,20 @@
                         </li>
                     </ul>
             </td>
-            <td width="1" style="text-align:center;" ng:show=fields.wifiaccess.visible>
-                <span checkbox id="{{participant.sAMAccountName}}.wifiaccess" ng-click="changeClass('wifiaccess', participant)" ng:model="participant.group_wifiaccess">"</span>
+            <td width="1" style="text-align:center;" ng:show=fields.wifi.visible>
+                <span checkbox id="{{participant.sAMAccountName}}.wifiaccess" ng-click="setManagementGroup('wifi', participant)" ng:model="participant.wifi"></span>
             </td>
-            <td width="1" style="text-align:center;" ng:show=fields.internetaccess.visible>
-                <span checkbox id="{{participant.sAMAccountName}}.internetaccess" ng-click="changeClass('internetaccess', participant)" ng:model="participant.group_internetaccess"></span>
+            <td width="1" style="text-align:center;" ng:show=fields.internet.visible>
+                <span checkbox id="{{participant.sAMAccountName}}.internetaccess" ng-click="setManagementGroup('internet', participant)" ng:model="participant.internet"></span>
             </td>
-            <td width="1" style="text-align:center;" ng:show=fields.intranetaccess.visible>
-                <span checkbox id="{{participant.sAMAccountName}}.intranetaccess" ng-click="changeClass('intranetaccess', participant)" ng:model="participant.group_intranetaccess"></span>
+            <td width="1" style="text-align:center;" ng:show=fields.intranet.visible>
+                <span checkbox id="{{participant.sAMAccountName}}.intranetaccess" ng-click="setManagementGroup('intranet', participant)" ng:model="participant.intranet"></span>
             </td>
             <td width="1" style="text-align:center;" ng:show=fields.webfilter.visible>
-                <span checkbox id="{{participant.sAMAccountName}}.webfilter" ng-click="changeClass('webfilter', participant)" ng:model="participant.group_webfilter"></span>
+                <span checkbox id="{{participant.sAMAccountName}}.webfilter" ng-click="setManagementGroup('webfilter', participant)" ng:model="participant.webfilter"></span>
             </td>
             <td width="1" style="text-align:center;" ng:show=fields.printing.visible>
-                <span checkbox id="{{participant.sAMAccountName}}.printing" ng-click="changeClass('printing', participant)" ng:model="participant.group_printing" ></span>
+                <span checkbox id="{{participant.sAMAccountName}}.printing" ng-click="setManagementGroup('printing', participant)" ng:model="participant.printing" ></span>
             </td>
             <td width="1">
                 <span  uib-dropdown class="dropup" >

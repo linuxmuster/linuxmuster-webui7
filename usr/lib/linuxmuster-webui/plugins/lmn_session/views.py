@@ -43,6 +43,14 @@ class Handler(HttpPlugin):
     @authorize('lm:users:students:read')
     @endpoint(api=True)
     def handle_api_get_session(self, http_context, session=None):
+
+        def convert_bool(value):
+            if value == 'TRUE':
+                return True
+            if value == 'FALSE':
+                return False
+            return value
+
         participantList = []
         try:
             sophomorixCommand = ['sophomorix-session', '-i', '-jj', '--session', session]
@@ -51,11 +59,21 @@ class Handler(HttpPlugin):
                 details['sAMAccountName'] = user
                 details['changed'] = False
                 details['exammode-changed'] = False
+                details['internet'] = details['group_internetaccess']
+                details['intranet'] = details['group_intranetaccess']
+                details['wifi'] = details['group_wifiaccess']
+                details['webfilter'] = details['group_webfilter']
+                details['printing'] = details['group_printing']
+
+                del details['group_internetaccess']
+                del details['group_intranetaccess']
+                del details['group_wifiaccess']
+                del details['group_webfilter']
+                del details['group_printing']
+
                 for key,value in details.items():
-                    if value == 'TRUE':
-                        details[key] = True
-                    elif value == 'FALSE':
-                        details[key] = False
+                    details[key] = convert_bool(value)
+
                 participantList.append(details)
         except KeyError:
             participantList = 'empty'
@@ -95,6 +113,25 @@ class Handler(HttpPlugin):
             lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
         except Exception as e:
             raise Exception('Error:\n' + str(e))
+
+    @post(r'/api/lmn/managementgroup')
+    @authorize('lm:users:students:read')
+    @endpoint(api=True)
+    def handle_api_management_group(self, http_context):
+        users = http_context.json_body()['users']
+        usersList = ','.join(users) if len(users) > 1 else users[0]
+        group = http_context.json_body()['group']
+
+        groups = ['wifi', 'internet', 'intranet', 'webfilter', 'printing']
+        valid_groups = groups + [f'no{g}' for g in groups]
+        if group not in valid_groups:
+            return
+
+        try:
+            sophomorixCommand = ['sophomorix-managementgroup', f'--{group}', usersList, '-jj']
+            lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
+        except Exception as e:
+            raise Exception(f'Error:\n{" ".join(sophomorixCommand)}\n Error was: {e}')
 
     @post(r'/api/lmn/session/sessions')
     @authorize('lm:users:students:read')

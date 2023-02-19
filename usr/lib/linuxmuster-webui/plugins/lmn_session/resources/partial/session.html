@@ -21,30 +21,31 @@
             </ul>
         </div>
 
-        <div uib-dropdown class="input-group-btn" auto-close="outsideClick">
+        <div uib-dropdown class="input-group-btn" auto-close="outsideClick" ng:show="!session.generated">
             <button class="btn btn-default" uib-dropdown-toggle>
                 <span translate>Edit Session</span>
                 <span class="caret"></span>
             </button>
             <ul uib-dropdown-menu class="dropdown-menu-right" >
                 <li>
-
-                    <a ng:click="newSession()" translate>
-                        New Session
-                    </a>
-                </li>
-                <li>
-
-                    <a ng:click="renameSession(currentSession.name, currentSession.comment)" translate>
+                    <a ng:click="renameSession()" translate>
                         Rename Session
                     </a>
                 </li>
                 <li>
-                    <a ng:click="killSession(currentSession.name, currentSession.comment)" translate>
+                    <a ng:click="killSession()" translate>
                         Delete Session
                     </a>
             </ul>
         </div>
+
+        <div ng:show="session.generated" class="input-group-btn">
+            <button class="btn btn-default" ng:click="saveAsSession()">
+                <i class="fas fa-save"></i>
+                <span translate>Save session as</span>
+            </button>
+        </div>
+
         <!-- Sessions dropdown -->
         <div uib-dropdown class="input-group-btn" auto-close="outsideClick">
             <button class="btn btn-default" uib-dropdown-toggle>

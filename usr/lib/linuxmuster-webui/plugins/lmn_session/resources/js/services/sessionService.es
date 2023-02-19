@@ -52,7 +52,7 @@ angular.module('lmn.session').service('lmnSession', function($http, $uibModal, $
         });
     }
 
-    this.new = () => {
+    this.new = (participants = []) => {
         return messagebox.prompt(gettext('Session Name'), '').then((msg) => {
             if (!msg.value) {return}
 
@@ -62,7 +62,7 @@ angular.module('lmn.session').service('lmnSession', function($http, $uibModal, $
                 return
             }
 
-            return $http.put(`/api/lmn/session/sessions/${msg.value}`, {}).then((resp) => {
+            return $http.put(`/api/lmn/session/sessions/${msg.value}`, {participants: participants}).then((resp) => {
                 notify.success(gettext('Session Created'));
             });
         });

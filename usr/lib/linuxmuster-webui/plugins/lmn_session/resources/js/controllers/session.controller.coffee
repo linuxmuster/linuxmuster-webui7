@@ -135,6 +135,20 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
             notify.success("Group #{group} changed for #{usersList.join()}")
             $scope.changeState = false
 
+    $scope.renameSession = () ->
+        lmnSession.rename($scope.session.ID, $scope.session.COMMENT).then (resp) ->
+            $scope.session.COMMENT = resp
+
+    $scope.killSession = () ->
+        lmnSession.kill($scope.session.ID, $scope.session.COMMENT).then () ->
+            $scope.backToSessionList()
+
+    $scope.saveAsSession = () ->
+        lmnSession.new($scope.session.participants).then () ->
+            # TODO : would be better to get the session id and simply set the current session
+            # instead of going back to the sessions list
+            # But for this sophomorix needs to return the session id when creating a new one
+            $scope.backToSessionList()
 
     $scope.showGroupDetails = (index, groupType, groupName) ->
        $uibModal.open(

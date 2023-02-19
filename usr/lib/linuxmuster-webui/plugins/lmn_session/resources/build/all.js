@@ -83,6 +83,8 @@ angular.module('lmn.session').service('lmnSession', function ($http, $uibModal, 
     };
 
     this.new = function () {
+        var participants = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+
         return messagebox.prompt(gettext('Session Name'), '').then(function (msg) {
             if (!msg.value) {
                 return;
@@ -94,7 +96,7 @@ angular.module('lmn.session').service('lmnSession', function ($http, $uibModal, 
                 return;
             }
 
-            return $http.put('/api/lmn/session/sessions/' + msg.value, {}).then(function (resp) {
+            return $http.put('/api/lmn/session/sessions/' + msg.value, { participants: participants }).then(function (resp) {
                 notify.success(gettext('Session Created'));
             });
         });
@@ -308,6 +310,24 @@ angular.module('lmn.session').service('lmnSession', function ($http, $uibModal, 
       }).then(function(resp) {
         notify.success(`Group ${group} changed for ${usersList.join()}`);
         return $scope.changeState = false;
+      });
+    };
+    $scope.renameSession = function() {
+      return lmnSession.rename($scope.session.ID, $scope.session.COMMENT).then(function(resp) {
+        return $scope.session.COMMENT = resp;
+      });
+    };
+    $scope.killSession = function() {
+      return lmnSession.kill($scope.session.ID, $scope.session.COMMENT).then(function() {
+        return $scope.backToSessionList();
+      });
+    };
+    $scope.saveAsSession = function() {
+      return lmnSession.new($scope.session.participants).then(function() {
+        // TODO : would be better to get the session id and simply set the current session
+        // instead of going back to the sessions list
+        // But for this sophomorix needs to return the session id when creating a new one
+        return $scope.backToSessionList();
       });
     };
     $scope.showGroupDetails = function(index, groupType, groupName) {

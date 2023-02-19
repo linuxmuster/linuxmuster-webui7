@@ -1,7 +1,24 @@
-angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem, validation, $rootScope, wait, userPassword, lmnSession) ->
+angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http, $location, $route, $uibModal, $window, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem, validation, $rootScope, wait, userPassword, lmnSession) ->
     pageTitle.set(gettext('Session'))
 
     $scope.changeState = false
+
+    $window.onbeforeunload = (event) ->
+        # Confirm before page reload
+        return "Eventually not refreshing"
+
+    $scope.$on("$destroy", () ->
+        # Avoid confirmation on others controllers
+        $window.onbeforeunload = undefined
+    )
+
+    $scope.$on("$locationChangeStart", (event) ->
+        if $scope.currentSession.ID != ''
+            if !confirm(gettext('Do you really want to quit this session ? You can restart it later if you want.'))
+                event.preventDefault()
+                return
+        $window.onbeforeunload = undefined
+    )
 
     $scope.translation ={
         addStudent: gettext('Add Student')
@@ -81,8 +98,11 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
     }
 
     $scope.currentSession = lmnSession.current
-    lmnSession.getParticipants(lmnSession.current.ID).then (resp) ->
-        $scope.participants = resp
+    if $scope.currentSession.ID == ''
+        $location.path('/view/lmn/sessionsList')
+    else
+        lmnSession.getParticipants(lmnSession.current.ID).then (resp) ->
+            $scope.participants = resp
 
     $scope.setManagementGroup = (group, participant) ->
         $scope.changeState = true

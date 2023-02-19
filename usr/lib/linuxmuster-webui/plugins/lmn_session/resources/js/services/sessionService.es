@@ -3,8 +3,8 @@ angular.module('lmn.session').service('lmnSession', function($http, $uibModal, $
     this.sessions = [];
 
     this.current = {
-        'id': '',
-        'comment': '',
+        'ID': '',
+        'COMMENT': '',
         'participants': []
     };
 

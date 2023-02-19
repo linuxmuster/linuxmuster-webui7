@@ -1,7 +1,7 @@
 <br/>
 <div samba-access>
 
-    <progress-spinner ng:show="participants.length == 0 || changeState == true"></progress-spinner>
+    <progress-spinner ng:show="session.participants.length == 0 || changeState == true"></progress-spinner>
 
     <div class="input-group">
         <input type="text" style="width:70%" placeholder={{translation.addStudent}} ng:model="_.addParticipant" ng-readonly=!sessionLoaded typeahead-editable=false typeahead-min-length="2" uib-typeahead="user as user.sophomorixAdminClass+' '+user.givenName+ ' '+user.sn+ ' '+user.sAMAccountName  for user in findUsers($viewValue) | limitTo:10" class="form-control" />
@@ -91,7 +91,7 @@
             <th></th>
             <th></th>
         </tr>
-        <tr style="display:;"  ng:repeat="participant in participants|orderBy:[sort.fx]">
+        <tr style="display:;"  ng:repeat="participant in session.participants|orderBy:[sort.fx]">
             <td class="ng-binding">
                 <a>
                     <b> {{participant.sn}}, {{participant.givenName}} </b>
@@ -209,7 +209,7 @@
                     <i class="fa fa-file"></i> <span translate>Share</span><i class="fa fa-caret-up"></i>
                 </button>
                 <ul uib-dropdown-menu class="scrollable">
-                    <li><a ng:click="shareTrans('share', [identity.user], participants, currentSession.comment)" translate>Share file(s) from transfer directory with whole session</a></li>
+                    <li><a ng:click="shareTrans('share', [identity.user], session.participants, currentSession.comment)" translate>Share file(s) from transfer directory with whole session</a></li>
                 </ul>
             </div>
             <div style="display:{{visible.participanttable}};" uib-dropdown ng:show="currentSession.name != ''" class="dropup">
@@ -218,13 +218,12 @@
                 </button>
                 <ul uib-dropdown-menu class="scrollable">
                     <!--                        <li><a flow-btn class="btn btn-default btn-flat" test-bind="uploadButton" translate>Upload file to share</a></li>-->
-                    <li><a ng:click="collectTrans('copy', participants, [identity.user], currentSession.comment)" translate>Copy transfer directory from whole session</a></li>
-                    <li><a ng:click="collectTrans('move', participants, [identity.user], currentSession.comment)" translate>Move transfer directory from whole session</a></li>
+                    <li><a ng:click="collectTrans('copy', session.participants, [identity.user], currentSession.comment)" translate>Copy transfer directory from whole session</a></li>
+                    <li><a ng:click="collectTrans('move', session.participants, [identity.user], currentSession.comment)" translate>Move transfer directory from whole session</a></li>
                     <!--   <li ng:repeat="example in examples"><a ng:click="createConfig(example)">{{example}}</a></li>-->
                 </ul>
             </div>
-            <button style="display:{{visible.participanttable}};" ng:click="saveApply(identity.user,participants,currentSession.name,currentSession.comment)" ng:show="currentSession.name != ''" class="btn btn-lmn pull-right" translate>Save &amp; apply</button>
-            <button ng:click="cancel()" ng:show="currentSession.name != ''" class="btn btn-lmn pull-right" translate>Close</button>
+            <button ng:click="backToSessionList()" class="btn btn-lmn pull-right" translate>Close</button>
         </div>
     </floating-toolbar>
 </div>

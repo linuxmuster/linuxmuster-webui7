@@ -1,4 +1,5 @@
 from concurrent import futures
+import logging
 from time import localtime, strftime  # needed for timestamp in collect transfer
 
 from jadi import component
@@ -75,8 +76,8 @@ class Handler(HttpPlugin):
                     details[key] = convert_bool(value)
 
                 participantList.append(details)
-        except KeyError:
-            participantList = 'empty'
+        except KeyError as e:
+            logging.info(f"No participants found in {e}")
         return participantList
 
     @get(r'/api/lmn/session/group/(?P<group>[\w\+\-]*)')
@@ -100,8 +101,8 @@ class Handler(HttpPlugin):
 
                 if details['sophomorixRole'] == 'student':
                     participantList.append(details)
-        except KeyError:
-            participantList = 'empty'
+        except KeyError as e:
+            logging.info(f"No participants found in {e}")
         return participantList
 
     @put(r'/api/lmn/session/sessions/(?P<session>[\w\+\-]*)')

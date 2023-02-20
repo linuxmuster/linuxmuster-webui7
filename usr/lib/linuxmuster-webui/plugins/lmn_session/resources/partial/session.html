@@ -71,7 +71,7 @@
         <span style="float: right;"> <h6 style="display:{{visible.sessionname}}">{{currentSession.name}}</h6></span>
     </div>
 
-    <div class="alert alert-info" translate>
+    <div class="alert alert-info" ng:show="session.participants.length == 0" translate>
         There's currently no student in this course. You can add these with the input above.
     </div>
 

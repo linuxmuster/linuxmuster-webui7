@@ -72,7 +72,7 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
     if jsonpath == '':
         if not keys:
             return jsonDict
-        return jsonDict.keys()
+        return list(jsonDict.keys())
 
     if ignoreErrors is False:
         try:
@@ -84,7 +84,7 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
         resultDict = dpath.util.get(jsonDict, jsonpath)
     if not keys:
         return resultDict
-    return resultDict.keys()
+    return sorted(list(resultDict.keys()))
 
 def main(argv):
     jsonpath = ''

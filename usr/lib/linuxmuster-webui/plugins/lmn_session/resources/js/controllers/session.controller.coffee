@@ -4,6 +4,8 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
     $scope.changeState = false
 
     $window.onbeforeunload = (event) ->
+        if $scope.session.ID == '' or $scope.session.participants.length == 0
+            return
         # Confirm before page reload
         return "Eventually not refreshing"
 
@@ -13,7 +15,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
     )
 
     $scope.$on("$locationChangeStart", (event) ->
-        if $scope.session.ID != ''
+        if $scope.session.ID != '' and $scope.session.participants.length > 0
             if !confirm(gettext('Do you really want to quit this session ? You can restart it later if you want.'))
                 event.preventDefault()
                 return

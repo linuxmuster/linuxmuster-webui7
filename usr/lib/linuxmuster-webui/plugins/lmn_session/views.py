@@ -236,11 +236,11 @@ class Handler(HttpPlugin):
             room = response[username]['ROOM']
             response.pop(username, None)
             return {
-                "usersList": list(response.keys()),
-                "room": room,
+                "usersList": response.keys(),
+                "name": room,
                 "objects": response,
             }
-        except IndexError as e :
+        except IndexError as e:
             return 0
 
     @get(r'/api/lmn/session/user-search/(?P<query>.*)')

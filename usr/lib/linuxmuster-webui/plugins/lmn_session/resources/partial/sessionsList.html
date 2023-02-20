@@ -17,16 +17,23 @@
     <div class="list-group">
         <h4 translate>This Room</h4>
 
-        <div class="flex-container lmn-container-list" >
-
+        <div class="alert alert-info" ng:show="room.usersList.length == 0">
+            <span translate>
+                Currenty it's not possible to determine your room, are you logged on a school computer ?
+            </span>
+        </div>
+        <div class="flex-container lmn-container-list" ng:show="room.usersList.length > 0">
             <div class="list-group-item">
                 <div>
                     <span style="float:right;width:50%;">
                         <div class="session_container">
-                            <a href="#" ng-click='showRoomDetails()'><span style="overflow:hidden;width:100%;" translate>This Room</span></a>
+                            <a href="#">
+                                <span style="overflow:hidden;width:100%;">
+                                    {{room.name}} ({{room.usersList.length}} users)
+                                </span>
+                            </a>
                             <div class="session_hr"></div>
-                            <br>
-
+                            <br />
                         </div>
                     </span>
                     <span style="float:left;width:50%">

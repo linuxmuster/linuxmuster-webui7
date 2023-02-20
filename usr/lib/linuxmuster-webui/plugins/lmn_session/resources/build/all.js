@@ -75,11 +75,8 @@ angular.module('lmn.session').service('lmnSession', function ($http, $uibModal, 
             'participants': participants
         };
         _this.current = generatedSession;
-        $http.get('/api/lmn/session/group/' + groupname).then(function (resp) {
-            _this.current.participants = resp.data;
-            _this.current.generated = true;
-            $location.path('/view/lmn/session');
-        });
+        _this.current.generated = true;
+        $location.path('/view/lmn/session');
     };
 
     this.new = function () {
@@ -900,40 +897,16 @@ angular.module('lmn.session').service('lmnSession', function ($http, $uibModal, 
     $scope.generateSessionMouseover = gettext('Regenerate this session');
     $scope.startGeneratedSessionMouseover = gettext('Start this session unchanged (may not be up to date)');
     $scope.generateRoomsessionMouseover = gettext('Start session containing all users in this room');
-    $scope.checkboxModel = {
-      value1: false,
-      value2: true
-    };
-    $scope.visible = {
-      participanttable: 'none',
-      sessiontable: 'none',
-      sessionname: 'none',
-      mainpage: 'show'
-    };
-    $scope.info = {
-      message: ''
-    };
-    $scope._ = {
-      addParticipant: null,
-      addClass: null
-    };
     $scope.room = {
       "usersList": [],
       'name': '',
-      'objects': ''
+      'objects': {}
     };
     $http.get('/api/lmn/session/userInRoom').then(function(resp) {
       if (resp.data !== 0) {
         return $scope.room = resp.data;
       }
     });
-    $scope.resetClass = function() {
-      var result;
-      result = document.getElementsByClassName("changed");
-      while (result.length) {
-        result[0].className = result[0].className.replace(/(?:^|\s)changed(?!\S)/g, '');
-      }
-    };
     $scope.renameSession = function(session) {
       return lmnSession.rename(session.ID, session.COMMENT).then(function(resp) {
         return session.COMMENT = resp;
@@ -954,32 +927,26 @@ angular.module('lmn.session').service('lmnSession', function ($http, $uibModal, 
     $scope.getSessions = function() {
       return lmnSession.load().then(function(resp) {
         $scope.classes = resp[0];
+        console.log($scope.classes);
         return $scope.sessions = resp[1];
-      });
-    };
-    $scope.showGroupDetails = function(index, groupType, groupName) {
-      return $uibModal.open({
-        templateUrl: '/lmn_groupmembership:resources/partial/groupDetails.modal.html',
-        controller: 'LMNGroupDetailsController',
-        size: 'lg',
-        resolve: {
-          groupType: function() {
-            return groupType;
-          },
-          groupName: function() {
-            return groupName;
-          }
-        }
       });
     };
     $scope.start = function(session) {
       return lmnSession.start(session);
     };
-    $scope.startGroup = function(groupname) {
-      return $http.get(`/api/lmn/session/group/${groupname}`).then(function(resp) {
-        // get participants from specified class
-        return lmnSession.startGenerated(groupname, resp.data);
-      });
+    $scope.startGenerated = function(groupname) {
+      if (groupname === 'this_room') {
+        return $http.post("/api/lmn/session/userinfo", {
+          users: $scope.room.usersList
+        }).then(function(resp) {
+          return lmnSession.startGenerated('this_room', resp.data);
+        });
+      } else {
+        return $http.get(`/api/lmn/session/group/${groupname}`).then(function(resp) {
+          // get participants from specified class
+          return lmnSession.startGenerated(groupname, resp.data);
+        });
+      }
     };
     return $scope.$watch('identity.user', function() {
       if ($scope.identity.user === void 0) {
@@ -995,12 +962,11 @@ angular.module('lmn.session').service('lmnSession', function ($http, $uibModal, 
     });
   });
 
-  angular.module('lmn.session').controller('LMNRoomDetailsController', function($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, usersInRoom) {
-    $scope.usersInRoom = usersInRoom;
-    return $scope.close = function() {
-      return $uibModalInstance.dismiss();
-    };
-  });
+  //angular.module('lmn.session').controller 'LMNRoomDetailsController', ($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, usersInRoom) ->
+//        $scope.usersInRoom = usersInRoom
+
+//        $scope.close = () ->
+//            $uibModalInstance.dismiss()
 
 }).call(this);
 

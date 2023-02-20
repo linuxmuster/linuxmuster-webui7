@@ -29,15 +29,18 @@
                         <div class="session_container">
                             <a href="#">
                                 <span style="overflow:hidden;width:100%;">
-                                    {{room.name}} ({{room.usersList.length}} users)
+                                    {{room.name}}
                                 </span>
                             </a>
                             <div class="session_hr"></div>
                             <br />
+                            <i class="fa fa-users"></i>
+                            <span>{{room.usersList.length}}</span>
+                            <br />
                         </div>
                     </span>
                     <span style="float:left;width:50%">
-                        <div class="session_image session_image_room" ng:click="generateRoomSession()" title="{{generateRoomsessionMouseover}}">
+                        <div class="session_image session_image_room" ng:click="startGenerated('this_room')" title="{{generateRoomsessionMouseover}}">
                             <span class="fas fa-history session_image_btn"></span>
                         </div>
                     </span>
@@ -55,13 +58,20 @@
                 <div>
                     <span style="float:right;width:50%;">
                         <div class="session_container">
-                            <a href="#" ng-click='showGroupDetails($index, class.type, class.groupname)'><span style="overflow:hidden;width:100%;">{{class.groupname}}</span></a>
+                            <a href="#">
+                                <span style="overflow:hidden;width:100%;">
+                                    {{class.groupname}}
+                                </span>
+                            </a>
                             <div class="session_hr"></div>
-                            <br>
+                            <br />
+                            <i class="fa fa-users"></i>
+                            <span>{{class.members.length}}</span>
+                            <br />
                         </div>
                     </span>
                     <span style="float:left;width:50%">
-                        <div class="session_image session_image_classes" ng:click="startGroup(class.groupname)" title="{{generateSessionMouseover}}">
+                        <div class="session_image session_image_classes" ng:click="startGenerated(class.groupname)" title="{{generateSessionMouseover}}">
                             <span class="fas fa-history session_image_btn"></span>
                         </div>
                     </span>

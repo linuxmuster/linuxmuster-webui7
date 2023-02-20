@@ -57,6 +57,7 @@ class Handler(HttpPlugin):
                 membershipDict['admin'] = username in groupDetails['sophomorixAdmins'] or isAdmin
                 membershipDict['joinable'] = groupDetails['sophomorixJoinable']
                 membershipDict['DN'] = groupDetails['DN']
+                membershipDict['members'] = groupDetails['sophomorixMembers']
 
                 # Project name always starts with p_, but not classname
                 if group[:2] == "p_":

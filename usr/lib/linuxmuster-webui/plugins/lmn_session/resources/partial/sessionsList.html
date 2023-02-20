@@ -1,5 +1,6 @@
 <br/>
 <div samba-access>
+
     <div class="input-group">
         <input ng:model="filter" type="search" autofocus class="form-control" placeholder="Filter"/>
 
@@ -13,11 +14,13 @@
 
     <br />
 
+    <progress-spinner ng:show="loading"></progress-spinner>
+
     <!-- Room -->
     <div class="list-group">
         <h4 translate>This Room</h4>
 
-        <div class="alert alert-info" ng:show="room.usersList.length == 0">
+        <div class="alert alert-info" ng:show="room.usersList.length == 0 && !loading">
             <span translate>
                 Currenty it's not possible to determine your room, are you logged on a school computer ?
             </span>

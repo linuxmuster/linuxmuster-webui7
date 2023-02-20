@@ -152,6 +152,9 @@ angular.module('lmn.session').service('lmnSession', function ($http, $uibModal, 
     pageTitle.set(gettext('Session'));
     $scope.changeState = false;
     $window.onbeforeunload = function(event) {
+      if ($scope.session.ID === '' || $scope.session.participants.length === 0) {
+        return;
+      }
       // Confirm before page reload
       return "Eventually not refreshing";
     };
@@ -160,7 +163,7 @@ angular.module('lmn.session').service('lmnSession', function ($http, $uibModal, 
       return $window.onbeforeunload = void 0;
     });
     $scope.$on("$locationChangeStart", function(event) {
-      if ($scope.session.ID !== '') {
+      if ($scope.session.ID !== '' && $scope.session.participants.length > 0) {
         if (!confirm(gettext('Do you really want to quit this session ? You can restart it later if you want.'))) {
           event.preventDefault();
           return;
@@ -897,6 +900,7 @@ angular.module('lmn.session').service('lmnSession', function ($http, $uibModal, 
     $scope.generateSessionMouseover = gettext('Regenerate this session');
     $scope.startGeneratedSessionMouseover = gettext('Start this session unchanged (may not be up to date)');
     $scope.generateRoomsessionMouseover = gettext('Start session containing all users in this room');
+    $scope.loading = true;
     $scope.room = {
       "usersList": [],
       'name': '',
@@ -904,8 +908,9 @@ angular.module('lmn.session').service('lmnSession', function ($http, $uibModal, 
     };
     $http.get('/api/lmn/session/userInRoom').then(function(resp) {
       if (resp.data !== 0) {
-        return $scope.room = resp.data;
+        $scope.room = resp.data;
       }
+      return $scope.loading = false;
     });
     $scope.renameSession = function(session) {
       return lmnSession.rename(session.ID, session.COMMENT).then(function(resp) {
@@ -927,7 +932,6 @@ angular.module('lmn.session').service('lmnSession', function ($http, $uibModal, 
     $scope.getSessions = function() {
       return lmnSession.load().then(function(resp) {
         $scope.classes = resp[0];
-        console.log($scope.classes);
         return $scope.sessions = resp[1];
       });
     };

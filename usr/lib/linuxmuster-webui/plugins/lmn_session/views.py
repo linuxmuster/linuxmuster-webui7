@@ -105,6 +105,33 @@ class Handler(HttpPlugin):
             logging.info(f"No participants found in {e}")
         return participantList
 
+    # TODO : post is wrong here
+    @post(r'/api/lmn/session/userinfo')
+    @authorize('lm:users:students:read')
+    @endpoint(api=True)
+    def handle_api_userinfo(self, http_context):
+
+        result = []
+
+        def get_user_info(user):
+            sophomorixCommand = ['sophomorix-query', '--user-full', '--sam', user, '-jj']
+            details = lmn_getSophomorixValue(sophomorixCommand, f'USER/{user}', True)
+            details['changed'] = False
+            details['exammode-changed'] = False
+            # TODO : default values ?
+            details['internet'] = True
+            details['intranet'] = True
+            details['wifi'] = True
+            details['webfilter'] = True
+            details['printing'] = True
+
+            result.append(details)
+
+        users = http_context.json_body()['users']
+        with futures.ThreadPoolExecutor() as executor:
+            infos = executor.map(get_user_info, users)
+        return(result)
+
     @put(r'/api/lmn/session/sessions/(?P<session>[\w\+\-]*)')
     @authorize('lm:users:students:read')
     @endpoint(api=True)

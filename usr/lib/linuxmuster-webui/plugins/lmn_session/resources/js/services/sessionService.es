@@ -45,11 +45,8 @@ angular.module('lmn.session').service('lmnSession', function($http, $uibModal, $
             'participants': participants
         };
         this.current = generatedSession;
-        $http.get(`/api/lmn/session/group/${groupname}`).then((resp) => {
-            this.current.participants = resp.data;
-            this.current.generated = true;
-            $location.path('/view/lmn/session');
-        });
+        this.current.generated = true;
+        $location.path('/view/lmn/session');
     }
 
     this.new = (participants = []) => {

@@ -1,4 +1,4 @@
-angular.module('lmn.session').controller 'LMNSessionsListController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem, validation, $rootScope, wait, lmnSession) ->
+angular.module('lmn.session_new').controller 'LMNSessionsListController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem, validation, $rootScope, wait, lmnSession) ->
     pageTitle.set(gettext('Sessions list'))
 
     $scope.generateSessionMouseover = gettext('Regenerate this session')
@@ -55,7 +55,7 @@ angular.module('lmn.session').controller 'LMNSessionsListController', ($scope, $
             return
         $scope.getSessions()
 
-#angular.module('lmn.session').controller 'LMNRoomDetailsController', ($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, usersInRoom) ->
+#angular.module('lmn.session_new').controller 'LMNRoomDetailsController', ($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, usersInRoom) ->
 #        $scope.usersInRoom = usersInRoom
 #
 #        $scope.close = () ->

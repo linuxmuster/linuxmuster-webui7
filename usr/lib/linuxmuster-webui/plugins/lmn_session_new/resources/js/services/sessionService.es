@@ -1,4 +1,4 @@
-angular.module('lmn.session').service('lmnSession', function($http, $uibModal, $q, $location, messagebox, validation, notify, gettext) {
+angular.module('lmn.session_new').service('lmnSession', function($http, $uibModal, $q, $location, messagebox, validation, notify, gettext) {
 
     this.sessions = [];
 

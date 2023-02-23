@@ -1,4 +1,4 @@
-angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http, $location, $route, $uibModal, $window, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem, validation, $rootScope, wait, userPassword, lmnSession) ->
+angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $http, $location, $route, $uibModal, $window, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem, validation, $rootScope, wait, userPassword, lmnSession) ->
     pageTitle.set(gettext('Session'))
 
     $scope.changeState = false
@@ -169,7 +169,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
             else
                 usersInRoom=resp.data
                 $uibModal.open(
-                   templateUrl: '/lmn_session:resources/partial/roomDetails.modal.html'
+                   templateUrl: '/lmn_session_new:resources/partial/roomDetails.modal.html'
                    controller:  'LMNRoomDetailsController'
                    size: 'lg'
                    resolve:
@@ -328,7 +328,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
         receivers = participantsArray
 
         $uibModal.open(
-           templateUrl: '/lmn_session:resources/partial/selectFile.modal.html'
+           templateUrl: '/lmn_session_new:resources/partial/selectFile.modal.html'
            controller: 'LMNSessionFileSelectModalController'
            resolve:
               action: () -> 'share'
@@ -362,7 +362,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
         transTitle = 'transfer'
         #console.log (bulkMode)
         $uibModal.open(
-           templateUrl: '/lmn_session:resources/partial/selectFile.modal.html'
+           templateUrl: '/lmn_session_new:resources/partial/selectFile.modal.html'
            controller: 'LMNSessionFileSelectModalController'
            resolve:
               action: () -> 'collect'
@@ -452,13 +452,13 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
 
 # Websession part
 
-angular.module('lmn.session').controller 'LMNRoomDetailsController', ($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, usersInRoom) ->
+angular.module('lmn.session_new').controller 'LMNRoomDetailsController', ($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, usersInRoom) ->
         $scope.usersInRoom = usersInRoom
 
         $scope.close = () ->
             $uibModalInstance.dismiss()
 
-angular.module('lmn.session').controller 'LMNSessionFileSelectModalController', ($scope, $uibModalInstance, gettext, notify, $http, bulkMode, senders, receivers, action, command, sessionComment, messagebox) ->
+angular.module('lmn.session_new').controller 'LMNSessionFileSelectModalController', ($scope, $uibModalInstance, gettext, notify, $http, bulkMode, senders, receivers, action, command, sessionComment, messagebox) ->
     $scope.bulkMode = bulkMode
     $scope.senders = senders
     $scope.receivers = receivers

@@ -1,9 +1,9 @@
-name: lmn_session
+name: lmn_session_new
 author: Linuxmuster.net
 email: andreas.till@netzint.de
 url: https://linuxmuster.net
 version: '0.7'
-title: 'Session'
+title: 'Session new'
 icon: chalkboard-teacher
 dependencies:
     - !PluginDependency { plugin_name: core}
@@ -19,5 +19,5 @@ resources:
     - 'resources/partial/selectFile.modal.html'
     - 'resources/partial/roomDetails.modal.html'
     - 'resources/styles.less'
-    - 'ng:lmn.session'
+    - 'ng:lmn.session_new'
 

@@ -12,7 +12,7 @@ class ItemProvider(SidebarItemProvider):
         return [
             {
             'attach': 'category:class',
-            'name': _('Session'),
+            'name': _('Session-new BETA'),
             'icon': 'chalkboard-teacher',
             'url': '/view/lmn/sessionsList',
             'weight': 20,

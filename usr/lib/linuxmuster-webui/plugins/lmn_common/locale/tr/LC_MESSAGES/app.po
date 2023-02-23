@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-29 22:09+0200\n"
-"PO-Revision-Date: 2022-12-27 14:21\n"
+"POT-Creation-Date: 2023-02-23 15:10+0100\n"
+"PO-Revision-Date: 2023-02-23 14:41\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Crowdin-File: /2.0/lmn_common.po\n"
 "X-Crowdin-File-ID: 96\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:155
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:160
 msgid "A bootstrap error has occured"
 msgstr "Bir önyükleme hatası oluştu"
 
@@ -47,11 +47,11 @@ msgstr "CSV Dosyasını İndir"
 msgid "Drop a CSV file here to import"
 msgstr "CSV dosyasını içe aktarmak için dosyayı sürükleyip bırakın"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:138
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:143
 msgid "Enter"
 msgstr "Girin"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:95
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:100
 msgid "Log out"
 msgstr "Çıkış yap"
 
@@ -63,15 +63,15 @@ msgstr "Mevcut yedekleme bulunamadı"
 msgid "No differences detected"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:179
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:184
 msgid "OK"
 msgstr "Tamamdır"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:158
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:163
 msgid "Please see browser console"
 msgstr "Lütfen tarayıcı konsoluna bakınız"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:134
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:139
 msgid "Quick search"
 msgstr "Hızlı arama"
 
@@ -83,9 +83,13 @@ msgstr "Kaydet"
 msgid "School Console"
 msgstr "Okul Konsolu"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:105
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:110
 msgid "Session time : {{ counter[0] }}:{{ counter[1] }}:{{ counter[2] }}"
 msgstr "Oturum süresi : {{ counter[0] }}:{{ counter[1] }}:{{ counter[2] }}"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:90
+msgid "TFA"
+msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/lmnfile.py:166
 msgid "Access refused."

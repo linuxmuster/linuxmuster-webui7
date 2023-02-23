@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-27 15:03+0100\n"
-"PO-Revision-Date: 2022-12-27 14:21\n"
+"POT-Creation-Date: 2023-02-23 15:10+0100\n"
+"PO-Revision-Date: 2023-02-23 14:40\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -793,6 +793,14 @@ msgstr "Supprimer administrateur école"
 msgid "Delete global admins"
 msgstr "Supprimer les administrateurs globaux"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:157
+msgid "Change own custom fields values"
+msgstr "Modifier ses propres données"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:162
+msgid "Read custom fields values"
+msgstr "Lire les valeurs des champs personnalisés"
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:63
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:88
 msgid "New value"
@@ -805,6 +813,8 @@ msgstr "Valeur mise à jour !"
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:68
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:83
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:93
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:108
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:119
 msgid "Error, please verify the user and/or your values."
 msgstr "Erreur, veuillez vérifier l'utilisateur et/ou vos valeurs."
 
@@ -823,6 +833,7 @@ msgid "OK"
 msgstr "OK"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:81
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:106
 msgid "Value removed !"
 msgstr "Valeur retirée !"
 
@@ -838,6 +849,10 @@ msgstr "Supprimer l'adresse"
 msgid "New address"
 msgstr "Nouvelle adresse"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:116
+msgid "Address added !"
+msgstr "Adresse ajoutée !"
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/userPassword.es:17
 msgid "Initial password set"
 msgstr "Mot de passe initial configuré"
@@ -847,6 +862,7 @@ msgid "Random password set"
 msgstr "Mettre un mot de passe aléatoire"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/userPassword.es:56
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/userPassword.es:61
 msgid "Show bind user password"
 msgstr "Afficher le mot de passe du bind user"
 

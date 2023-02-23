@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-25 18:56+0200\n"
-"PO-Revision-Date: 2022-12-27 14:21\n"
+"POT-Creation-Date: 2023-02-23 15:10+0100\n"
+"PO-Revision-Date: 2023-02-23 14:40\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -527,7 +527,7 @@ msgstr "삭제"
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:43
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:74
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:87
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:130
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:131
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:99
 msgid "Cancel"
 msgstr "취소"
@@ -557,31 +557,31 @@ msgstr "Smtp config 저장 완료"
 msgid "Could not save smtp config"
 msgstr "smtp config를 저장할 수 없습니다"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:127
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:128
 msgid "Self-signed certificate"
 msgstr "자체 서명된 인증서"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:128
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:129
 msgid "Generating a new certificate will void all existing client authentication certificates!"
 msgstr "새 인증서를 생성 하는 것은 모든 기존 클라이언트 인증 인증서 무효화 시킵니다!"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:129
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:130
 msgid "Generate"
 msgstr "생성"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:133
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:134
 msgid "Generating certificate"
 msgstr "인증서 생성중"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:133
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:134
 msgid "Please wait"
 msgstr "잠시만 기다려 주세요"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:135
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:136
 msgid "Certificate successfully generated"
 msgstr "인증서가 성공적으로 생성되었습니다."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:141
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:142
 msgid "Certificate generation failed"
 msgstr "인증서 생성 실패"
 

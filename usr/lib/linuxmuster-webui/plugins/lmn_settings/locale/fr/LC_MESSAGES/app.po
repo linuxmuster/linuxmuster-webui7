@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-25 18:56+0200\n"
-"PO-Revision-Date: 2022-12-27 14:21\n"
+"POT-Creation-Date: 2023-02-23 15:10+0100\n"
+"PO-Revision-Date: 2023-02-23 14:40\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -528,7 +528,7 @@ msgstr "Supprimer"
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:43
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:74
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:87
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:130
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:131
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:99
 msgid "Cancel"
 msgstr "Annuler"
@@ -558,31 +558,31 @@ msgstr "Configuration Smtp enregistrée"
 msgid "Could not save smtp config"
 msgstr "Impossible d'enregistrer la configuration du smtp"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:127
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:128
 msgid "Self-signed certificate"
 msgstr "Certificat auto-signé"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:128
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:129
 msgid "Generating a new certificate will void all existing client authentication certificates!"
 msgstr "La génération d'un nouveau certificat annulera tous les certificats d'authentification client existants !"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:129
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:130
 msgid "Generate"
 msgstr "Générer"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:133
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:134
 msgid "Generating certificate"
 msgstr "Génération du certificat"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:133
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:134
 msgid "Please wait"
 msgstr "Veuillez patienter"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:135
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:136
 msgid "Certificate successfully generated"
 msgstr "Certificat généré avec succès"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:141
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:142
 msgid "Certificate generation failed"
 msgstr "La génération du certificat a échoué"
 

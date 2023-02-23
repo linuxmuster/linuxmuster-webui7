@@ -1,0 +1,9 @@
+globaladministrator:
+- 'sidebar:view:/view/lmn/oldsession: false'
+schooladministrator:
+- 'sidebar:view:/view/lmn/oldsession: false'
+student:
+- 'sidebar:view:/view/lmn/oldsession: false'
+teacher:
+- 'lmn:session:trans: true'
+- 'sidebar:view:/view/lmn/oldsession: true'

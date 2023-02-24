@@ -153,7 +153,6 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
 (function() {
   angular.module('lmn.session_new').controller('LMNSessionController', function($scope, $http, $location, $route, $uibModal, $window, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem, validation, $rootScope, wait, userPassword, lmnSession) {
     var typeIsArray, validateResult;
-    pageTitle.set(gettext('Session'));
     $scope.changeState = false;
     $scope.addParticipant = '';
     $scope.addSchoolClass = '';
@@ -272,6 +271,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       return $location.path('/view/lmn/sessionsList');
     };
     $scope.session = lmnSession.current;
+    pageTitle.set(gettext('Session') + " > " + $scope.session.COMMENT);
     if ($scope.session.ID === '') {
       $scope.backToSessionList();
     }

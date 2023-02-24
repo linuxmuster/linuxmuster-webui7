@@ -1,5 +1,4 @@
 angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $http, $location, $route, $uibModal, $window, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem, validation, $rootScope, wait, userPassword, lmnSession) ->
-    pageTitle.set(gettext('Session'))
 
     $scope.changeState = false
     $scope.addParticipant = ''
@@ -105,6 +104,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         $location.path('/view/lmn/sessionsList')
 
     $scope.session = lmnSession.current
+    pageTitle.set(gettext('Session') + " > " + $scope.session.COMMENT )
     if $scope.session.ID == ''
         $scope.backToSessionList()
 

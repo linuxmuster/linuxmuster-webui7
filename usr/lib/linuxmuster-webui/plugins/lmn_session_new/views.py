@@ -320,8 +320,9 @@ class Handler(HttpPlugin):
             schoolClassJson = {}
             schoolClassJson['sophomorixAdminClass'] = schoolClass
             schoolClassJson['members'] = schoolClasses[schoolClass]
+            schoolClassJson['count'] = len(schoolClasses[schoolClass])
             schoolClassList.append(schoolClassJson)
-        return schoolClassList
+        return sorted(schoolClassList, key=lambda d: d['sophomorixAdminClass'])
 
     @post(r'/api/lmn/session/moveFileToHome')  ## TODO authorize
     @endpoint(api=True)

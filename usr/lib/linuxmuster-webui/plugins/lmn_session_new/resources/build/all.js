@@ -297,7 +297,6 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     //            managementgroup = 'exammode_boolean'
     $scope.setManagementGroupAll = function(group) {
       var i, len, new_value, participant, ref, usersList;
-      console.log(group);
       $scope.changeState = true;
       usersList = [];
       new_value = !$scope.fields[group].checkboxStatus;
@@ -377,13 +376,11 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     };
     $scope.findUsers = function(q) {
       return $http.get(`/api/lmn/session/user-search/${q}`).then(function(resp) {
-        $scope.users = resp.data;
         return resp.data;
       });
     };
     $scope.findSchoolClasses = function(q) {
       return $http.get(`/api/lmn/session/schoolClass-search/${q}`).then(function(resp) {
-        $scope.class = resp.data;
         return resp.data;
       });
     };
@@ -494,7 +491,6 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       }
     };
     $scope.userInfo = function(user) {
-      console.log(user);
       return $uibModal.open({
         templateUrl: '/lmn_users:resources/partial/userDetails.modal.html',
         controller: 'LMNUserDetailsController',
@@ -573,7 +569,6 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
             session: sessioncomment
           }).then(function(resp) {
             $rootScope.$emit('updateWaiting', 'done');
-            console.log(resp);
             return validateResult(resp);
           });
         }
@@ -742,8 +737,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
                 return window.open(resp.data, '_blank');
               });
             } else {
-              notify.error(gettext('Cannot start websession! Try to reload page!'));
-              return console.log(resp.data);
+              return notify.error(gettext('Cannot start websession! Try to reload page!'));
             }
           });
         } else {
@@ -814,8 +808,6 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     };
     $scope.collect = function() {
       if (bulkMode === 'false') {
-        console.log(receivers[0]);
-        console.log(sessionComment);
         return $http.post('/api/lmn/session/trans-list-files', {
           user: senders,
           subfolderPath: receivers[0] + '_' + sessionComment

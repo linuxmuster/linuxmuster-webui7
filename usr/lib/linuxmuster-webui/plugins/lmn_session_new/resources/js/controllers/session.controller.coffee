@@ -123,7 +123,6 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
     #            managementgroup = 'exammode_boolean'
 
     $scope.setManagementGroupAll = (group) ->
-        console.log(group)
         $scope.changeState = true
         usersList = []
         new_value = !$scope.fields[group].checkboxStatus
@@ -180,12 +179,10 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
 
     $scope.findUsers = (q) ->
         return $http.get("/api/lmn/session/user-search/#{q}").then (resp) ->
-            $scope.users = resp.data
             return resp.data
 
     $scope.findSchoolClasses = (q) ->
         return $http.get("/api/lmn/session/schoolClass-search/#{q}").then (resp) ->
-            $scope.class = resp.data
             return resp.data
 
     $scope.$watch 'addParticipant', () ->
@@ -252,7 +249,6 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
             userPassword.setCustomPassword(user, pwtype)
 
     $scope.userInfo = (user) ->
-        console.log (user)
         $uibModal.open(
             templateUrl: '/lmn_users:resources/partial/userDetails.modal.html'
             controller: 'LMNUserDetailsController'
@@ -304,7 +300,6 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
                wait.modal(gettext('Sharing files...'), 'progressbar')
                $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers, files: result.files, session: sessioncomment}).then (resp) ->
                    $rootScope.$emit('updateWaiting', 'done')
-                   console.log (resp)
                    validateResult(resp)
 
 
@@ -408,7 +403,6 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
                             window.open(resp.data, '_blank')
                     else
                         notify.error gettext('Cannot start websession! Try to reload page!')
-                        console.log(resp.data)
             else
                 notify.error gettext("Create session failed! Try again later!")
 
@@ -459,8 +453,6 @@ angular.module('lmn.session_new').controller 'LMNSessionFileSelectModalControlle
 
     $scope.collect = () ->
         if bulkMode is 'false'
-            console.log (receivers[0])
-            console.log (sessionComment)
             $http.post('/api/lmn/session/trans-list-files', {user: senders, subfolderPath: receivers[0]+'_'+sessionComment}).then (resp) ->
                 $scope.files = resp['data'][0]
                 $scope.filesList = resp['data'][1]

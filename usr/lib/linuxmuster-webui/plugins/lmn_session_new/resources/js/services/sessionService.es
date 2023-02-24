@@ -2,13 +2,6 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
 
     this.sessions = [];
 
-    this.current = {
-        'ID': '',
-        'COMMENT': '',
-        'generated': false,
-        'participants': []
-    };
-
     this.load = () => {
         var promiseList = [];
         promiseList.push($http.get('/api/lmn/groupmembership/groups').then((resp) => {
@@ -37,6 +30,17 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
             $location.path('/view/lmn/session');
         });
     }
+
+    this.reset = () => {
+       this.current = {
+            'ID': '',
+            'COMMENT': '',
+            'generated': false,
+            'participants': []
+        };
+    }
+
+    this.reset();
 
     this.startGenerated = (groupname, participants) =>  {
         generatedSession = {

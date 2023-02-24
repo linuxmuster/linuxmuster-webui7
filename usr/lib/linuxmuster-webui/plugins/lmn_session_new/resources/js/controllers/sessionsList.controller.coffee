@@ -35,9 +35,11 @@ angular.module('lmn.session_new').controller 'LMNSessionsListController', ($scop
             $scope.sessions = resp[1]
 
     $scope.start = (session) ->
+        lmnSession.reset()
         lmnSession.start(session)
 
     $scope.startGenerated = (groupname) ->
+        lmnSession.reset()
         if groupname == 'this_room'
             $http.post("/api/lmn/session/userinfo", {users:$scope.room.usersList}).then (resp) ->
                 lmnSession.startGenerated('this_room', resp.data)

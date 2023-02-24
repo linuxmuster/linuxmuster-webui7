@@ -6,7 +6,7 @@
     <div class="alert alert-warning">This plugin is actually under heavy development and only published for tests purpose.</div>
 
     <div class="input-group">
-        <input type="text" style="width:70%" placeholder="{{translation.addStudent}}" ng:model="addParticipant" typeahead-editable=false typeahead-min-length="2" uib-typeahead="user as user.sophomorixAdminClass+' '+user.givenName+ ' '+user.sn+ ' '+user.sAMAccountName  for user in findUsers($viewValue) | limitTo:10" class="form-control" />
+        <input type="text" style="width:70%" placeholder="{{translation.addStudent}}" ng:model="addParticipant" typeahead-editable=false typeahead-min-length="2" uib-typeahead="user as user.sophomorixAdminClass+' '+user.sn+ ' '+user.givenName+ ' ('+user.sAMAccountName+')'  for user in findUsers($viewValue) | limitTo:10" class="form-control" />
         <input type="text" style="width:30%" placeholder="{{translation.addClass}}" ng:model="addSchoolClass" typeahead-editable=false typeahead-min-length="1" uib-typeahead="schoolClass as schoolClass.sophomorixAdminClass for schoolClass in findSchoolClasses($viewValue) | limitTo:10" class="form-control" />
 
         <div uib-dropdown class="input-group-btn" >

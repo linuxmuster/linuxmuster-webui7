@@ -303,7 +303,7 @@ class Handler(HttpPlugin):
         userList = []
         for user in users:
             userList.append(users[user])
-        return userList
+        return sorted(userList, key=lambda d: f"{d['sophomorixAdminClass']}{d['sn']}{d['givenName']}")
 
     @get(r'/api/lmn/session/schoolClass-search/(?P<query>.*)')
     @authorize('lm:users:students:read')

@@ -385,7 +385,24 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     };
     $scope.$watch('addParticipant', function() {
       console.warn($scope.addParticipant);
-      return $scope.addParticipant = '';
+      if ($scope.addParticipant) {
+        return $http.post('/api/lmn/session/userinfo', {
+          'users': [$scope.addParticipant.sAMAccountName]
+        }).then(function(resp) {
+          var new_participant;
+          new_participant = resp.data[0];
+          console.log(new_participant);
+          $scope.addParticipant = '';
+          if (!$scope.session.generated) {
+            // Real session: must be added in LDAP
+            $http.post('/api/lmn/session/participants', {
+              'users': [new_participant.sAMAccountName],
+              'session': $scope.session.ID
+            });
+          }
+          return $scope.session.participants.push(new_participant);
+        });
+      }
     });
     //    $scope.$watch '_.addSchoolClass', () ->
     //        if $scope._.addSchoolClass

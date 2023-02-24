@@ -189,8 +189,14 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
             return resp.data
 
     $scope.$watch 'addParticipant', () ->
-        console.warn($scope.addParticipant)
-        $scope.addParticipant = ''
+        if $scope.addParticipant
+            $http.post('/api/lmn/session/userinfo', {'users':[$scope.addParticipant.sAMAccountName]}).then (resp) ->
+                new_participant = resp.data[0]
+                $scope.addParticipant = ''
+                if !$scope.session.generated
+                    # Real session: must be added in LDAP
+                    $http.post('/api/lmn/session/participants', {'users':[new_participant.sAMAccountName], 'session': $scope.session.ID})
+                $scope.session.participants.push(new_participant)
 
 #    $scope.$watch '_.addSchoolClass', () ->
 #        if $scope._.addSchoolClass

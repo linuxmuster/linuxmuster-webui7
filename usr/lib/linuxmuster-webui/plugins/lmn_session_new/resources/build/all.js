@@ -151,6 +151,8 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     var typeIsArray, validateResult;
     pageTitle.set(gettext('Session'));
     $scope.changeState = false;
+    $scope.addParticipant = '';
+    $scope.addSchoolClass = '';
     $window.onbeforeunload = function(event) {
       if ($scope.session.ID === '' || $scope.session.participants.length === 0) {
         return;
@@ -381,65 +383,10 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         return resp.data;
       });
     };
-    //    $scope.$watch '_.addParticipant', () ->
-    //                # console.log $scope._.addParticipant
-    //                if $scope._.addParticipant
-    //                    if $scope.participants == 'empty'
-    //                                $scope.participants = []
-    //                    $scope.info.message = ''
-    //                    $scope.visible.participanttable = 'show'
-    //                    #console.log $scope._.addParticipant
-    //                    if $scope._.addParticipant.sophomorixRole is 'student'
-    //                        # Add Managementgroups list if missing. This happens when all managementgroup attributes are false, causing the json tree to skip this key
-    //                        if not $scope._.addParticipant.MANAGEMENTGROUPS?
-    //                                    $scope._.addParticipant.MANAGEMENTGROUPS = []
-    //                        #if not $scope._.addParticipant.changed?
-    //                        #            $scope._.addParticipant.changed = 'False'
-    //                        #if not $scope._.addParticipant.exammode-changed?
-    //                        #            $scope._.addParticipant.exammode-changed = 'False'
-    //                        $scope.participants.push {"sAMAccountName":$scope._.addParticipant.sAMAccountName,"givenName":$scope._.addParticipant.givenName,"sn":$scope._.addParticipant.sn,
-    //                        "sophomorixExamMode":$scope._.addParticipant.sophomorixExamMode,
-    //                        "group_webfilter":$scope._.addParticipant.MANAGEMENTGROUPS.webfilter,
-    //                        "group_intranetaccess":$scope._.addParticipant.MANAGEMENTGROUPS.intranet,
-    //                        "group_printing":$scope._.addParticipant.MANAGEMENTGROUPS.printing,
-    //                        "sophomorixStatus":"U","sophomorixRole":$scope._.addParticipant.sophomorixRole,
-    //                        "group_internetaccess":$scope._.addParticipant.MANAGEMENTGROUPS.internet,
-    //                        "sophomorixAdminClass":$scope._.addParticipant.sophomorixAdminClass,
-    //                        "user_existing":true,"group_wifiaccess":$scope._.addParticipant.MANAGEMENTGROUPS.wifi,
-    //                        "changed": false, "exammode-changed": false}
-    //                    # console.log ($scope.participants)
-    //                    $scope._.addParticipant = null
-
-    //    # TODO Figure out how to call the existing watch addParticipant function
-    //    $scope.addParticipant = (participant) ->
-    //        if participant
-    //            if $scope.participants == 'empty'
-    //                        $scope.participants = []
-    //            $scope.info.message = ''
-    //            $scope.visible.participanttable = 'show'
-    //            # console.log participant
-    //            # Only add Students
-    //            if participant.sophomorixRole is 'student'
-    //                # Add Managementgroups list if missing. This happens when all managementgroup attributes are false, causing the json tree to skip this key
-    //                if not participant.MANAGEMENTGROUPS?
-    //                            participant.MANAGEMENTGROUPS = []
-    //                #if not participant.changed?
-    //                #            participant.changed = 'False'
-    //                #if not participant.exammode-changed?
-    //                #            participant.exammode-changed = 'False'
-    //                # console.log ($scope.participants)
-    //                $scope.participants.push {"sAMAccountName":participant.sAMAccountName,"givenName":participant.givenName,"sn":participant.sn,
-    //                "sophomorixExamMode":participant.sophomorixExamMode,
-    //                "group_webfilter":participant.MANAGEMENTGROUPS.webfilter,
-    //                "group_intranetaccess":participant.MANAGEMENTGROUPS.intranet,
-    //                "group_printing":participant.MANAGEMENTGROUPS.printing,
-    //                "sophomorixStatus":"U","sophomorixRole":participant.sophomorixRole,
-    //                "group_internetaccess":participant.MANAGEMENTGROUPS.internet,
-    //                "sophomorixAdminClass":participant.sophomorixAdminClass,
-    //                "user_existing":true,"group_wifiaccess":participant.MANAGEMENTGROUPS.wifi,
-    //                "changed": false, "exammode-changed": false}
-    //            participant = null
-
+    $scope.$watch('addParticipant', function() {
+      console.warn($scope.addParticipant);
+      return $scope.addParticipant = '';
+    });
     //    $scope.$watch '_.addSchoolClass', () ->
     //        if $scope._.addSchoolClass
     //            members = $scope._.addSchoolClass.members
@@ -450,7 +397,17 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       var deleteIndex;
       deleteIndex = $scope.session.participants.indexOf(participant);
       if (deleteIndex !== -1) {
-        return $scope.session.participants.splice(deleteIndex, 1);
+        if ($scope.session.generated) {
+          // Not a real session, just removing from participants list displayed
+          return $scope.session.participants.splice(deleteIndex, 1);
+        } else {
+          return $http.patch('/api/lmn/session/participants', {
+            'users': [participant.sAMAccountName],
+            'session': $scope.session.ID
+          }).then(function() {
+            return $scope.session.participants.splice(deleteIndex, 1);
+          });
+        }
       }
     };
     $scope.changeExamSupervisor = function(participant, supervisor) {

@@ -14,7 +14,7 @@ class ItemProvider(SidebarItemProvider):
                 'attach': 'category:devicemanagement',
                 'name': _('Devices'), # skipcq: PYL-E0602
                 'icon': 'laptop',
-                'url': '/view/lm/devices',
+                'url': '/view/lmn/devices',
                 'weight': 10,
                 'children': [],
             },

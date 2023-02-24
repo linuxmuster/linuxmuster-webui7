@@ -64,15 +64,15 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
 
     # Option to only list keys on all levels
     keys = False
-    if len(jsonpath)>=1 and jsonpath[-1] is '-':
+    if len(jsonpath)>=1 and jsonpath[-1] == '-':
         jsonpath = jsonpath[:-1]
         keys = True
 
     ## Without key, simply return the dict
-    if jsonpath is '':
+    if jsonpath == '':
         if not keys:
             return jsonDict
-        return jsonDict.keys()
+        return list(jsonDict.keys())
 
     if ignoreErrors is False:
         try:
@@ -84,9 +84,10 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False):
         resultDict = dpath.util.get(jsonDict, jsonpath)
     if not keys:
         return resultDict
-    return resultDict.keys()
+    return sorted(list(resultDict.keys()))
 
 def main(argv):
+    jsonpath = ''
     try:
         opts, _ = getopt.getopt(argv,"hc:j:",["command=","jsonpath="])
     except getopt.GetoptError:
@@ -110,9 +111,7 @@ def main(argv):
                 print("Type not supported. Exiting")
                 sys.exit(2)
         elif opt in ("-j", "--jsonpath"):
-            if arg == "*":
-                jsonpath = ''
-            else:
+            if arg != "*":
                 jsonpath = arg
     if len(opts) >= 1:
         result = lmn_getSophomorixValue(sophomorixCommand, jsonpath)

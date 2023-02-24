@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-27 15:03+0100\n"
-"PO-Revision-Date: 2022-12-27 14:21\n"
+"POT-Creation-Date: 2023-02-23 15:10+0100\n"
+"PO-Revision-Date: 2023-02-23 14:40\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -67,10 +67,6 @@ msgstr "Impossible de trouver un Drives.xml dans votre répertoire de règles. L
 #: usr/lib/linuxmuster-webui/plugins/lmn_clients/views.py:34
 msgid "Unable to determine samba domain"
 msgstr "Impossible de déterminer le domaine samba"
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_clients/views.py:128
-msgid "Drives.xml not found !"
-msgstr "Drives.xml introuvable !"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_clients/main.py:16
 msgid "Client configuration"

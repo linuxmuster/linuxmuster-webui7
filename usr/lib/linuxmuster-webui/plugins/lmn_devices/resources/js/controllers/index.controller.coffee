@@ -1,5 +1,5 @@
 angular.module('lmn.devices').config ($routeProvider) ->
-    $routeProvider.when '/view/lm/devices',
+    $routeProvider.when '/view/lmn/devices',
         controller: 'LMDevicesController'
         templateUrl: '/lmn_devices:resources/partial/index.html'
 

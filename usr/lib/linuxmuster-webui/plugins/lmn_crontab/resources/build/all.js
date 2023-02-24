@@ -7,7 +7,7 @@ angular.module('lmn.crontab', ['core']);
 'use strict';
 
 angular.module('lmn.crontab').config(function ($routeProvider) {
-    $routeProvider.when('/view/lm/crontab', {
+    $routeProvider.when('/view/lmn/crontab', {
         templateUrl: '/lmn_crontab:resources/partial/index.html',
         controller: 'CrontabIndexController'
     });

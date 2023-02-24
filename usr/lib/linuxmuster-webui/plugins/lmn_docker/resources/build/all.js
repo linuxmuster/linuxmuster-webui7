@@ -6,7 +6,7 @@ angular.module('lmn.docker', ['core']);
 'use strict';
 
 angular.module('lmn.docker').config(function ($routeProvider) {
-    $routeProvider.when('/view/lm/docker', {
+    $routeProvider.when('/view/lmn/docker', {
         templateUrl: '/lmn_docker:resources/partial/index.html',
         controller: 'DockerLMNIndexController'
     });

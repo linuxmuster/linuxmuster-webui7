@@ -1,8 +1,8 @@
 globaladministrator:
-- 'sidebar:view:/view/lm/dhcp: true'
+- 'sidebar:view:/view/lmn/dhcp: true'
 schooladministrator:
-- 'sidebar:view:/view/lm/dhcp: true'
+- 'sidebar:view:/view/lmn/dhcp: true'
 student:
-- 'sidebar:view:/view/lm/dhcp: false'
+- 'sidebar:view:/view/lmn/dhcp: false'
 teacher:
-- 'sidebar:view:/view/lm/dhcp: false'
+- 'sidebar:view:/view/lmn/dhcp: false'

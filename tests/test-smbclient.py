@@ -8,7 +8,7 @@ import smbclient
 
 from smbprotocol.exceptions import SMBOSError
 from getpass import getpass
-from configparser import SafeConfigParser
+from configparser import ConfigParser
 
 
 def p(*args, end=""):
@@ -17,7 +17,7 @@ def p(*args, end=""):
 p("Samba domain to try (like server.linuxmuster.lan):")
 domain =input()
 
-smbconf = SafeConfigParser()
+smbconf = ConfigParser()
 try:
     smbconf.read('/etc/samba/smb.conf')
     samba_realm = smbconf["global"]["realm"].lower()

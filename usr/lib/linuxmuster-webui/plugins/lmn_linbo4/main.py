@@ -14,7 +14,7 @@ class ItemProvider(SidebarItemProvider):
                 'attach': 'category:devicemanagement',
                 'name': _('LINBO 4'),
                 'icon': 'laptop-medical',
-                'url': '/view/lm/linbo4',
+                'url': '/view/lmn/linbo4',
                 'weight': 15,
                 'children': [],
             },

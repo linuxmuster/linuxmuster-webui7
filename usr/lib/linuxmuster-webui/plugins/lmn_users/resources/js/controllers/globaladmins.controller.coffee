@@ -1,5 +1,5 @@
 angular.module('lmn.users').config ($routeProvider) ->
-    $routeProvider.when '/view/lm/users/globaladmins',
+    $routeProvider.when '/view/lmn/users/globaladmins',
         controller: 'LMUsersGloballadminsController'
         templateUrl: '/lmn_users:resources/partial/globaladmins.html'
 

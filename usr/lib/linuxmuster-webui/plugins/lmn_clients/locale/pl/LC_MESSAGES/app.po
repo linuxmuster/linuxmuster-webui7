@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-27 15:03+0100\n"
-"PO-Revision-Date: 2022-12-27 14:21\n"
+"POT-Creation-Date: 2023-02-23 15:10+0100\n"
+"PO-Revision-Date: 2023-02-23 14:40\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -65,10 +65,6 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_clients/views.py:34
 msgid "Unable to determine samba domain"
-msgstr ""
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_clients/views.py:128
-msgid "Drives.xml not found !"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_clients/main.py:16

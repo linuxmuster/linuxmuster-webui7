@@ -1,5 +1,5 @@
 angular.module('lmn.users').config ($routeProvider) ->
-    $routeProvider.when '/view/lm/users/students',
+    $routeProvider.when '/view/lmn/users/students',
         controller: 'LMUsersStudentsController'
         templateUrl: '/lmn_users:resources/partial/students.html'
 

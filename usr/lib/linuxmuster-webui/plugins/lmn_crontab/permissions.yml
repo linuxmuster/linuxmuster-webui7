@@ -1,16 +1,16 @@
 globaladministrator:
 - 'lm:crontab:read: true'
 - 'lm:crontab:write: true'
-- 'sidebar:view:/view/lm/crontab: true'
+- 'sidebar:view:/view/lmn/crontab: true'
 schooladministrator:
 - 'lm:crontab:read: false'
 - 'lm:crontab:write: false'
-- 'sidebar:view:/view/lm/crontab: false'
+- 'sidebar:view:/view/lmn/crontab: false'
 student:
 - 'lm:crontab:read: false'
 - 'lm:crontab:write: false'
-- 'sidebar:view:/view/lm/crontab: false'
+- 'sidebar:view:/view/lmn/crontab: false'
 teacher:
 - 'lm:crontab:read: false'
 - 'lm:crontab:write: false'
-- 'sidebar:view:/view/lm/crontab: false'
+- 'sidebar:view:/view/lmn/crontab: false'

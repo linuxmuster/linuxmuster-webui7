@@ -1,5 +1,5 @@
 angular.module('lmn.users').config ($routeProvider) ->
-    $routeProvider.when '/view/lm/users/print-passwords',
+    $routeProvider.when '/view/lmn/users/print-passwords',
         controller: 'LMUsersPrintPasswordsController'
         templateUrl: '/lmn_users:resources/partial/print-passwords.html'
 

@@ -13,7 +13,7 @@ class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
 
-    @get(r'/api/lmn/session/sessions')
+    @get(r'/api/lmn/oldsession/sessions')
     @authorize('lm:users:students:read')
     @endpoint(api=True)
     def handle_api_get_sessions(self, http_context):
@@ -39,7 +39,7 @@ class Handler(HttpPlugin):
             sessionsList.append(sessionJson)
         return sessionsList
 
-    @get(r'/api/lmn/session/sessions/(?P<session>[\w\+\-]*)')
+    @get(r'/api/lmn/oldsession/sessions/(?P<session>[\w\+\-]*)')
     @authorize('lm:users:students:read')
     @endpoint(api=True)
     def handle_api_get_session(self, http_context, session=None):
@@ -61,7 +61,7 @@ class Handler(HttpPlugin):
             participantList = 'empty'
         return participantList
 
-    @put(r'/api/lmn/session/sessions/(?P<session>[\w\+\-]*)')
+    @put(r'/api/lmn/oldsession/sessions/(?P<session>[\w\+\-]*)')
     @authorize('lm:users:students:read')
     @endpoint(api=True)
     def handle_api_put_session(self, http_context, session=None):
@@ -75,7 +75,7 @@ class Handler(HttpPlugin):
         result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
         return result
 
-    @delete(r'/api/lmn/session/sessions/(?P<session>[\w\+\-]*)')
+    @delete(r'/api/lmn/oldsession/sessions/(?P<session>[\w\+\-]*)')
     @authorize('lm:users:students:read')
     @endpoint(api=True)
     def handle_api_delete_session(self, http_context, session=None):
@@ -83,7 +83,7 @@ class Handler(HttpPlugin):
         result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
         return result
 
-    @patch(r'/api/lmn/session/exam/(?P<session>[\w\+\-]*)')
+    @patch(r'/api/lmn/oldsession/exam/(?P<session>[\w\+\-]*)')
     @authorize('lm:users:students:read')
     @endpoint(api=True)
     def handle_api_end_exam(self, http_context, session=None):
@@ -96,7 +96,7 @@ class Handler(HttpPlugin):
         except Exception as e:
             raise Exception('Error:\n' + str(e))
 
-    @post(r'/api/lmn/session/sessions')
+    @post(r'/api/lmn/oldsession/sessions')
     @authorize('lm:users:students:read')
     @endpoint(api=True)
     def handle_api_session_sessions(self, http_context):
@@ -188,7 +188,7 @@ class Handler(HttpPlugin):
             return result
         return 0
 
-    @get(r'/api/lmn/session/userInRoom')
+    @get(r'/api/lmn/oldsession/userInRoom')
     @authorize('lm:users:students:read')
     @endpoint(api=True)
     def handle_api_get_user_in_room(self, http_context):
@@ -208,7 +208,7 @@ class Handler(HttpPlugin):
         except IndexError as e :
             return 0
 
-    @get(r'/api/lmn/session/user-search/(?P<query>.*)')
+    @get(r'/api/lmn/oldsession/user-search/(?P<query>.*)')
     @authorize('lm:users:students:read')
     @endpoint(api=True)
     def handle_api_ldap_user_search(self, http_context, query=''):
@@ -223,7 +223,7 @@ class Handler(HttpPlugin):
             userList.append(users[user])
         return userList
 
-    @get(r'/api/lmn/session/schoolClass-search/(?P<query>.*)')
+    @get(r'/api/lmn/oldsession/schoolClass-search/(?P<query>.*)')
     @authorize('lm:users:students:read')
     @endpoint(api=True)
     def handle_api_ldap_group_search(self, http_context, query=''):
@@ -241,7 +241,7 @@ class Handler(HttpPlugin):
             schoolClassList.append(schoolClassJson)
         return schoolClassList
 
-    @post(r'/api/lmn/session/moveFileToHome')  ## TODO authorize
+    @post(r'/api/lmn/oldsession/moveFileToHome')  ## TODO authorize
     @endpoint(api=True)
     def handle_api_create_dir(self, http_context):
         """Create directory with given path, ignoring errors"""
@@ -254,7 +254,7 @@ class Handler(HttpPlugin):
         except Exception:
             return 0
 
-    @post(r'/api/lmn/session/trans-list-files')
+    @post(r'/api/lmn/oldsession/trans-list-files')
     @endpoint(api=True)
     def handle_api_session_file_trans_list(self, http_context):
         user = http_context.json_body()['user']
@@ -274,7 +274,7 @@ class Handler(HttpPlugin):
             availableFilesList.append(availableFile)
         return availableFiles, availableFilesList
 
-    @post(r'/api/lmn/session/trans')
+    @post(r'/api/lmn/oldsession/trans')
     @endpoint(api=True)
     def handle_api_session_file_trans(self, http_context):
         senders = http_context.json_body()['senders']

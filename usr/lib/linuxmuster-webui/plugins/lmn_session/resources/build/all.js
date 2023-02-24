@@ -50,7 +50,7 @@
       return $uibModalInstance.dismiss();
     };
     $scope.share = function() {
-      return $http.post('/api/lmn/session/trans-list-files', {
+      return $http.post('/api/lmn/oldsession/trans-list-files', {
         user: senders[0]
       }).then(function(resp) {
         $scope.files = resp['data'][0];
@@ -61,7 +61,7 @@
       if (bulkMode === 'false') {
         console.log(receivers[0]);
         console.log(sessionComment);
-        return $http.post('/api/lmn/session/trans-list-files', {
+        return $http.post('/api/lmn/oldsession/trans-list-files', {
           user: senders,
           subfolderPath: receivers[0] + '_' + sessionComment
         }).then(function(resp) {
@@ -124,7 +124,7 @@
       return $scope.share();
     } else {
       //$scope.setTransferPath($scope.identity.user)
-      //$http.post('/api/lmn/session/trans-list-files', {user: senders[0]}).then (resp) ->
+      //$http.post('/api/lmn/oldsession/trans-list-files', {user: senders[0]}).then (resp) ->
       //    $scope.files = resp['data'][0]
       //    $scope.filesList = resp['data'][1]
       return $scope.collect();
@@ -132,11 +132,11 @@
   });
 
   //if bulkMode is 'false'
-  //    $http.post('/api/lmn/session/trans-list-files', {user: senders}).then (resp) ->
+  //    $http.post('/api/lmn/oldsession/trans-list-files', {user: senders}).then (resp) ->
   //        $scope.files = resp['data'][0]
   //        $scope.filesList = resp['data'][1]
   angular.module('lmn.session').config(function($routeProvider) {
-    return $routeProvider.when('/view/lmn/session', {
+    return $routeProvider.when('/view/lmn/oldsession', {
       controller: 'LMNSessionController',
       templateUrl: '/lmn_session:resources/partial/session.html'
     });
@@ -334,7 +334,7 @@
         negative: gettext('Cancel')
       }).then(function() {
         wait.modal(gettext('Deleting session...'), 'spinner');
-        return $http.delete(`/api/lmn/session/sessions/${session}`).then(function(resp) {
+        return $http.delete(`/api/lmn/oldsession/sessions/${session}`).then(function(resp) {
           $rootScope.$emit('updateWaiting', 'done');
           $scope.visible.sessionname = 'none';
           $scope.visible.participanttable = 'none';
@@ -358,7 +358,7 @@
           notify.error(gettext(testChar));
           return;
         }
-        return $http.put(`/api/lmn/session/sessions/${msg.value}`, {}).then(function(resp) {
+        return $http.put(`/api/lmn/oldsession/sessions/${msg.value}`, {}).then(function(resp) {
           $scope.getSessions();
           notify.success(gettext('Session Created'));
           // Reset alle messages and information to show session table
@@ -471,7 +471,7 @@
         $scope.classes = $scope.groups.filter($scope.filterGroupType('schoolclass'));
         return $scope.classes = $scope.classes.filter($scope.filterMembership(true));
       });
-      return $http.get('/api/lmn/session/sessions').then(function(resp) {
+      return $http.get('/api/lmn/oldsession/sessions').then(function(resp) {
         if (resp.data.length === 0) {
           $scope.sessions = resp.data;
           return $scope.info.message = gettext("There are no sessions yet. Create a session using the 'New Session' button at the top!");
@@ -507,7 +507,7 @@
       });
     };
     $scope.showRoomDetails = function() {
-      return $http.get('/api/lmn/session/userInRoom').then(function(resp) {
+      return $http.get('/api/lmn/oldsession/userInRoom').then(function(resp) {
         var usersInRoom;
         if (resp.data === 0) {
           return messagebox.show({
@@ -549,7 +549,7 @@
           notify.error(gettext(testChar));
           return;
         }
-        return $http.post('/api/lmn/session/sessions', {
+        return $http.post('/api/lmn/oldsession/sessions', {
           action: 'rename-session',
           session: session,
           comment: msg.value
@@ -572,7 +572,7 @@
       angular.forEach($scope.fields, function(field) {
         return field.checkboxStatus = false;
       });
-      return $http.get(`/api/lmn/session/sessions/${session}`).then(function(resp) {
+      return $http.get(`/api/lmn/oldsession/sessions/${session}`).then(function(resp) {
         $scope.visible.sessionname = 'show';
         $scope.sessionLoaded = 'true';
         $scope.filter = '';
@@ -588,13 +588,13 @@
       });
     };
     $scope.findUsers = function(q) {
-      return $http.get(`/api/lmn/session/user-search/${q}`).then(function(resp) {
+      return $http.get(`/api/lmn/oldsession/user-search/${q}`).then(function(resp) {
         $scope.users = resp.data;
         return resp.data;
       });
     };
     $scope.findSchoolClasses = function(q) {
-      return $http.get(`/api/lmn/session/schoolClass-search/${q}`).then(function(resp) {
+      return $http.get(`/api/lmn/oldsession/schoolClass-search/${q}`).then(function(resp) {
         $scope.class = resp.data;
         return resp.data;
       });
@@ -624,7 +624,7 @@
       }
     };
     $scope.generateRoomSession = function() {
-      return $http.get('/api/lmn/session/userInRoom').then(function(resp) {
+      return $http.get('/api/lmn/oldsession/userInRoom').then(function(resp) {
         var i, len, ref, session, sessionComment, sessionExist, sessionID, usersInRoom;
         if (resp.data === 0) {
           return messagebox.show({
@@ -683,7 +683,7 @@
       //wait.modal(gettext('Generating session...'), 'spinner')
       // fix existing session
       if (sessionExist === true) {
-        $http.post('/api/lmn/session/sessions', {
+        $http.post('/api/lmn/oldsession/sessions', {
           action: 'update-session',
           username: $scope.identity.user,
           sessionID: sessionID,
@@ -703,7 +703,7 @@
       // create new session
       if (sessionExist === false) {
         // create new specified session
-        return $http.put(`/api/lmn/session/sessions/${sessionComment}`, {
+        return $http.put(`/api/lmn/oldsession/sessions/${sessionComment}`, {
           participants: participants
         }).then(async function(resp) {
           var i, len, ref, session;
@@ -828,14 +828,14 @@
       }
     };
     $scope.changeExamSupervisor = function(participant, supervisor) {
-      return $http.post('/api/lmn/session/sessions', {
+      return $http.post('/api/lmn/oldsession/sessions', {
         action: 'change-exam-supervisor',
         supervisor: supervisor,
         participant: participant
       }).then(function(resp) {});
     };
     $scope.endExam = function(participant, supervisor, session, sessionName) {
-      return $http.patch(`/api/lmn/session/exam/${sessionName}`, {
+      return $http.patch(`/api/lmn/oldsession/exam/${sessionName}`, {
         supervisor: supervisor,
         participant: participant
       }).then(function(resp) {
@@ -844,7 +844,7 @@
     };
     $scope.saveApply = function(username, participants, session, sessionName) {
       wait.modal(gettext('Changes are applied...'), 'progressbar');
-      return $http.post('/api/lmn/session/sessions', {
+      return $http.post('/api/lmn/oldsession/sessions', {
         action: 'save-session',
         username: username,
         participants: participants,
@@ -973,7 +973,7 @@
       }).result.then(function(result) {
         if (result.response === 'accept') {
           wait.modal(gettext('Sharing files...'), 'progressbar');
-          return $http.post('/api/lmn/session/trans', {
+          return $http.post('/api/lmn/oldsession/trans', {
             command: command,
             senders: senders,
             receivers: receivers,
@@ -1032,7 +1032,7 @@
           //return
           wait.modal(gettext('Collecting files...'), 'progressbar');
           if (command === 'copy') {
-            $http.post('/api/lmn/session/trans', {
+            $http.post('/api/lmn/oldsession/trans', {
               command: command,
               senders: senders,
               receivers: receivers,
@@ -1044,7 +1044,7 @@
             });
           }
           if (command === 'move') {
-            return $http.post('/api/lmn/session/trans', {
+            return $http.post('/api/lmn/oldsession/trans', {
               command: command,
               senders: senders,
               receivers: receivers,

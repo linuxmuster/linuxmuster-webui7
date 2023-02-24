@@ -1,20 +1,20 @@
 globaladministrator:
 - 'lm:globalsettings: true'
 - 'lm:schoolsettings: true'
-- 'sidebar:view:/view/lm/globalsettings: true'
-- 'sidebar:view:/view/lm/schoolsettings: true'
+- 'sidebar:view:/view/lmn/globalsettings: true'
+- 'sidebar:view:/view/lmn/schoolsettings: true'
 schooladministrator:
 - 'lm:globalsettings: false'
 - 'lm:schoolsettings: true'
-- 'sidebar:view:/view/lm/globalsettings: false'
-- 'sidebar:view:/view/lm/schoolsettings: true'
+- 'sidebar:view:/view/lmn/globalsettings: false'
+- 'sidebar:view:/view/lmn/schoolsettings: true'
 student:
 - 'lm:globalsettings: false'
 - 'lm:schoolsettings: false'
-- 'sidebar:view:/view/lm/globalsettings: false'
-- 'sidebar:view:/view/lm/schoolsettings: false'
+- 'sidebar:view:/view/lmn/globalsettings: false'
+- 'sidebar:view:/view/lmn/schoolsettings: false'
 teacher:
 - 'lm:globalsettings: false'
 - 'lm:schoolsettings: false'
-- 'sidebar:view:/view/lm/globalsettings: false'
-- 'sidebar:view:/view/lm/schoolsettings: false'
+- 'sidebar:view:/view/lmn/globalsettings: false'
+- 'sidebar:view:/view/lmn/schoolsettings: false'

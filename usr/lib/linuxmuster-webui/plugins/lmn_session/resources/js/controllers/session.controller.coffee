@@ -31,7 +31,7 @@ angular.module('lmn.session').controller 'LMNSessionFileSelectModalController', 
         $uibModalInstance.dismiss()
 
     $scope.share = () ->
-        $http.post('/api/lmn/session/trans-list-files', {user: senders[0]}).then (resp) ->
+        $http.post('/api/lmn/oldsession/trans-list-files', {user: senders[0]}).then (resp) ->
             $scope.files = resp['data'][0]
             $scope.filesList = resp['data'][1]
 
@@ -39,7 +39,7 @@ angular.module('lmn.session').controller 'LMNSessionFileSelectModalController', 
         if bulkMode is 'false'
             console.log (receivers[0])
             console.log (sessionComment)
-            $http.post('/api/lmn/session/trans-list-files', {user: senders, subfolderPath: receivers[0]+'_'+sessionComment}).then (resp) ->
+            $http.post('/api/lmn/oldsession/trans-list-files', {user: senders, subfolderPath: receivers[0]+'_'+sessionComment}).then (resp) ->
                 $scope.files = resp['data'][0]
                 $scope.filesList = resp['data'][1]
 
@@ -82,20 +82,20 @@ angular.module('lmn.session').controller 'LMNSessionFileSelectModalController', 
     if action is 'share'
         $scope.share()
         #$scope.setTransferPath($scope.identity.user)
-        #$http.post('/api/lmn/session/trans-list-files', {user: senders[0]}).then (resp) ->
+        #$http.post('/api/lmn/oldsession/trans-list-files', {user: senders[0]}).then (resp) ->
         #    $scope.files = resp['data'][0]
         #    $scope.filesList = resp['data'][1]
     else
         $scope.collect()
         #if bulkMode is 'false'
-        #    $http.post('/api/lmn/session/trans-list-files', {user: senders}).then (resp) ->
+        #    $http.post('/api/lmn/oldsession/trans-list-files', {user: senders}).then (resp) ->
         #        $scope.files = resp['data'][0]
         #        $scope.filesList = resp['data'][1]
 
 
 
 angular.module('lmn.session').config ($routeProvider) ->
-    $routeProvider.when '/view/lmn/session',
+    $routeProvider.when '/view/lmn/oldsession',
         controller: 'LMNSessionController'
         templateUrl: '/lmn_session:resources/partial/session.html'
 
@@ -252,7 +252,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
             return
         messagebox.show(text: gettext("Delete Session:  "+comment+" ?"), positive: gettext('Delete'), negative: gettext('Cancel')).then () ->
             wait.modal(gettext('Deleting session...'), 'spinner')
-            $http.delete("/api/lmn/session/sessions/#{session}").then (resp) ->
+            $http.delete("/api/lmn/oldsession/sessions/#{session}").then (resp) ->
                 $rootScope.$emit('updateWaiting', 'done')
                 $scope.visible.sessionname = 'none'
                 $scope.visible.participanttable = 'none'
@@ -271,7 +271,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
             if testChar != true
                 notify.error gettext(testChar)
                 return
-            $http.put("/api/lmn/session/sessions/#{msg.value}", {}).then (resp) ->
+            $http.put("/api/lmn/oldsession/sessions/#{msg.value}", {}).then (resp) ->
                 $scope.getSessions()
                 notify.success gettext('Session Created')
                 # Reset alle messages and information to show session table
@@ -365,7 +365,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
             $scope.classes = $scope.groups.filter($scope.filterGroupType('schoolclass'))
             $scope.classes = $scope.classes.filter($scope.filterMembership(true))
 
-        $http.get('/api/lmn/session/sessions').then (resp) ->
+        $http.get('/api/lmn/oldsession/sessions').then (resp) ->
             if resp.data.length is 0
                 $scope.sessions = resp.data
                 $scope.info.message = gettext("There are no sessions yet. Create a session using the 'New Session' button at the top!")
@@ -392,7 +392,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
        )
 
     $scope.showRoomDetails = () ->
-        $http.get('/api/lmn/session/userInRoom').then (resp) ->
+        $http.get('/api/lmn/oldsession/userInRoom').then (resp) ->
             if resp.data == 0
                 messagebox.show(title: gettext('Info'), text: gettext('Currenty its not possible to determine your room, try to login into your computer again.'), positive: 'OK')
             else
@@ -416,7 +416,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
             if testChar != true
                 notify.error gettext(testChar)
                 return
-            $http.post('/api/lmn/session/sessions', {action: 'rename-session', session: session, comment: msg.value}).then (resp) ->
+            $http.post('/api/lmn/oldsession/sessions', {action: 'rename-session', session: session, comment: msg.value}).then (resp) ->
                 $scope.getSessions()
                 $scope.currentSession.name = ''
                 $scope.sessionLoaded = false
@@ -432,7 +432,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
         # Reset select all checkboxes when loading participants
         angular.forEach $scope.fields, (field) ->
             field.checkboxStatus = false
-        $http.get("/api/lmn/session/sessions/#{session}").then (resp) ->
+        $http.get("/api/lmn/oldsession/sessions/#{session}").then (resp) ->
             $scope.visible.sessionname = 'show'
             $scope.sessionLoaded = 'true'
             $scope.filter = ''
@@ -446,12 +446,12 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                 $scope.visible.participanttable = 'show'
 
     $scope.findUsers = (q) ->
-        return $http.get("/api/lmn/session/user-search/#{q}").then (resp) ->
+        return $http.get("/api/lmn/oldsession/user-search/#{q}").then (resp) ->
             $scope.users = resp.data
             return resp.data
 
     $scope.findSchoolClasses = (q) ->
-        return $http.get("/api/lmn/session/schoolClass-search/#{q}").then (resp) ->
+        return $http.get("/api/lmn/oldsession/schoolClass-search/#{q}").then (resp) ->
             $scope.class = resp.data
             return resp.data
 
@@ -474,7 +474,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
             $scope.getWebConferenceEnabled()
 
     $scope.generateRoomSession = () ->
-        $http.get('/api/lmn/session/userInRoom').then (resp) ->
+        $http.get('/api/lmn/oldsession/userInRoom').then (resp) ->
             if resp.data == 0
                 messagebox.show(title: gettext('Info'), text: gettext('Currenty its not possible to determine your room, try to login into your computer again.'), positive: 'OK')
             else
@@ -513,7 +513,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
         #wait.modal(gettext('Generating session...'), 'spinner')
         # fix existing session
         if sessionExist == true
-            $http.post('/api/lmn/session/sessions', {action: 'update-session', username: $scope.identity.user, sessionID: sessionID, participants: participants}).then (resp) ->
+            $http.post('/api/lmn/oldsession/sessions', {action: 'update-session', username: $scope.identity.user, sessionID: sessionID, participants: participants}).then (resp) ->
                 # emit wait process is done
                 $rootScope.$emit('updateWaiting', 'done')
                 # refresh Session table
@@ -526,7 +526,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
         # create new session
         if sessionExist == false
             # create new specified session
-            $http.put("/api/lmn/session/sessions/#{sessionComment}", {participants: participants}).then (resp) ->
+            $http.put("/api/lmn/oldsession/sessions/#{sessionComment}", {participants: participants}).then (resp) ->
                 # emit wait process is done
                 $rootScope.$emit('updateWaiting', 'done')
                 await $scope.getSessions()
@@ -614,15 +614,15 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
             $scope.participants.splice(deleteIndex, 1)
 
     $scope.changeExamSupervisor = (participant, supervisor) ->
-        $http.post('/api/lmn/session/sessions', {action: 'change-exam-supervisor', supervisor: supervisor, participant: participant}).then (resp) ->
+        $http.post('/api/lmn/oldsession/sessions', {action: 'change-exam-supervisor', supervisor: supervisor, participant: participant}).then (resp) ->
 
     $scope.endExam = (participant, supervisor,session, sessionName) ->
-        $http.patch("/api/lmn/session/exam/#{sessionName}", {supervisor: supervisor, participant: participant}).then (resp) ->
+        $http.patch("/api/lmn/oldsession/exam/#{sessionName}", {supervisor: supervisor, participant: participant}).then (resp) ->
             $scope.getParticipants(session)
 
     $scope.saveApply = (username,participants, session, sessionName) ->
         wait.modal(gettext('Changes are applied...'), 'progressbar')
-        $http.post('/api/lmn/session/sessions', {action: 'save-session',username: username, participants: participants, session: session, sessionName: sessionName}).then (resp) ->
+        $http.post('/api/lmn/oldsession/sessions', {action: 'save-session',username: username, participants: participants, session: session, sessionName: sessionName}).then (resp) ->
             # emit process is done
             $rootScope.$emit('updateWaiting', 'done')
             $scope.output = resp.data
@@ -714,7 +714,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
         ).result.then (result) ->
            if result.response is 'accept'
                wait.modal(gettext('Sharing files...'), 'progressbar')
-               $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers, files: result.files, session: sessioncomment}).then (resp) ->
+               $http.post('/api/lmn/oldsession/trans', {command: command, senders: senders, receivers: receivers, files: result.files, session: sessioncomment}).then (resp) ->
                    $rootScope.$emit('updateWaiting', 'done')
                    console.log (resp)
                    validateResult(resp)
@@ -750,11 +750,11 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                 #return
                 wait.modal(gettext('Collecting files...'), 'progressbar')
                 if command is 'copy'
-                    $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers, files: result.files, session: sessioncomment}).then (resp) ->
+                    $http.post('/api/lmn/oldsession/trans', {command: command, senders: senders, receivers: receivers, files: result.files, session: sessioncomment}).then (resp) ->
                         $rootScope.$emit('updateWaiting', 'done')
                         validateResult(resp)
                 if command is 'move'
-                    $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers, files: result.files, session: sessioncomment}).then (resp) ->
+                    $http.post('/api/lmn/oldsession/trans', {command: command, senders: senders, receivers: receivers, files: result.files, session: sessioncomment}).then (resp) ->
                         $rootScope.$emit('updateWaiting', 'done')
                         validateResult(resp)
 

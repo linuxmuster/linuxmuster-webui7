@@ -90,7 +90,7 @@ angular.module('core').directive('sambaAccess', function (identity) {
     return {
         restrict: 'A',
         link: function link($scope, element, attr) {
-            var template = '\n                <div class="text-center root-access-blocker">\n                    <h1>\n                        <i class="fas fa-exclamation-triangle"></i>\n                    </h1>\n                    <h4 class="alert alert-danger" translate>\n                        You should not use WebUI as root user!<br />\n                        If this is your first time running WebUI, proceed through the <a href="/view/lm/init/welcome">setup wizard</a>.<br />\n                        Afterwards login using the global-admin account.\n                    </h4>\n                </div>';
+            var template = '\n                <div class="text-center root-access-blocker">\n                    <h1>\n                        <i class="fas fa-exclamation-triangle"></i>\n                    </h1>\n                    <h4 class="alert alert-danger" translate>\n                        You should not use WebUI as root user!<br />\n                        If this is your first time running WebUI, proceed through the <a href="/view/lmn/init/welcome">setup wizard</a>.<br />\n                        Afterwards login using the global-admin account.\n                    </h4>\n                </div>';
             identity.promise.then(function () {
                 if (!identity.profile.sophomorixRole) {
                     element.empty().append($(template));

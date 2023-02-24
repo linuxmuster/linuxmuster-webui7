@@ -14,7 +14,7 @@ class ItemProvider(SidebarItemProvider):
                 'attach': 'category:software',
                 'name': 'Docker',
                 'icon': 'fab fa-docker',
-                'url': '/view/lm/docker',
+                'url': '/view/lmn/docker',
                 'children': []
             }
         ]

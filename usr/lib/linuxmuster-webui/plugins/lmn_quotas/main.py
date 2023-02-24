@@ -14,7 +14,7 @@ class ItemProvider(SidebarItemProvider):
                 'attach': 'category:schoolsettingsdefaults',
                 'name': _('Extra-Quotas'), # skipcq: PYL-E0602
                 'icon': 'chart-pie',
-                'url': '/view/lm/quotas',
+                'url': '/view/lmn/quotas',
                 'children': [],
                 'weight': 30,
             },

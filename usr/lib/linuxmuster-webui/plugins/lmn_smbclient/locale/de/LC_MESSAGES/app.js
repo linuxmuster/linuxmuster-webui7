@@ -1,1 +1,1 @@
-{"": "", "Delete Samba files": "Samba-Dateien l\u00f6schen", "Uploaded ": "", " moved!": " verschoben!", " copied!": " kopiert!"}
+{"": "", "Delete Samba files": "Samba-Dateien l\u00f6schen", "Uploaded ": "Upload erfolgreich ", " moved!": " verschoben!", " copied!": " kopiert!"}

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-02-23 15:10+0100\n"
-"PO-Revision-Date: 2023-02-23 14:40\n"
+"PO-Revision-Date: 2023-02-24 09:26\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -89,7 +89,7 @@ msgstr "Sitzungszeit: {{ counter[0] }}:{{ counter[1] }}:{{ counter[2] }}"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:90
 msgid "TFA"
-msgstr ""
+msgstr "2FA"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/lmnfile.py:166
 msgid "Access refused."

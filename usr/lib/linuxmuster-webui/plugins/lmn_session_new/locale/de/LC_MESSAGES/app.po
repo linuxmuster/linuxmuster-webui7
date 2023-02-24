@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-02-23 15:10+0100\n"
-"PO-Revision-Date: 2023-02-23 14:40\n"
+"PO-Revision-Date: 2023-02-24 09:26\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -19,411 +19,411 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:100
 msgid "<a>Share</a>"
-msgstr ""
+msgstr "<a>Austeilen</a>"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/selectFile.modal.html:90
 msgid "All data are copied from the whole session"
-msgstr ""
+msgstr "Die Daten des kompletten Kurses wurden kopiert"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/selectFile.modal.html:93
 msgid "All data are moved from the whole session"
-msgstr ""
+msgstr "Die Daten des kompletten Kurses wurden verschoben"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/selectFile.modal.html:109
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/services/sessionService.es:95
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:516
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:532
 msgid "Cancel"
-msgstr ""
+msgstr "Abbrechen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/roomDetails.modal.html:30
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:221
 msgid "Close"
-msgstr ""
+msgstr "Schließen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:103
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:212
 msgid "Collect"
-msgstr ""
+msgstr "Einsammeln"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/selectFile.modal.html:7
 msgid "Collect files"
-msgstr ""
+msgstr "Dateien einsammeln"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/selectFile.modal.html:15
 msgid "Collect files from session"
-msgstr ""
+msgstr "Dateien des Kurses einsammeln"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/selectFile.modal.html:106
 msgid "Collect from Session"
-msgstr ""
+msgstr "Aus dem Kurs einsammeln"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/selectFile.modal.html:103
 msgid "Collect from User"
-msgstr ""
+msgstr "Vom Benutzer einsammeln"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:107
 msgid "Copy"
-msgstr ""
+msgstr "Kopieren"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:216
 msgid "Copy transfer directory from whole session"
-msgstr ""
+msgstr "Kopiere Transfer-Verzeichnisse des gesamten Kurses"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/sessionsList.html:26
 msgid "Currenty it's not possible to determine your room, are you logged on a school computer ?"
-msgstr ""
+msgstr "Es konnte nicht ermittelt werden, in welchem Raum Sie sich befinden. Sind Sie an einem Schulrechner angemeldet ?"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:38
 msgid "Delete Session"
-msgstr ""
+msgstr "Kurs löschen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:28
 msgid "Edit Session"
-msgstr ""
+msgstr "Kurs bearbeiten"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/roomDetails.modal.html:10
 msgid "Edit members"
-msgstr ""
+msgstr "Kursmitglieder bearbeiten"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:133
 msgid "End running exam"
-msgstr ""
+msgstr "Beende laufende Prüfung"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:112
 msgid "Move"
-msgstr ""
+msgstr "Verschieben"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:217
 msgid "Move transfer directory from whole session"
-msgstr ""
+msgstr "Verschiebe Transferverzeichnis des gesamten Kurses"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/sessionsList.html:59
 msgid "My Classes"
-msgstr ""
+msgstr "Meine Klassen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/sessionsList.html:90
 msgid "My Sessions"
-msgstr ""
+msgstr "Meine Kurse"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/sessionsList.html:12
 msgid "New Session"
-msgstr ""
+msgstr "Neuer Kurs"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/roomDetails.modal.html:21
 msgid "No User"
-msgstr ""
+msgstr "Kein Nutzer"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/selectFile.modal.html:50
 msgid "No files or directories found in transfer"
-msgstr ""
+msgstr "Das Transfer-Verzeichnis enthält weder Dateien noch Verzeichnisse"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:62
 msgid "Not running"
-msgstr ""
+msgstr "Gestoppt"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:33
 msgid "Rename Session"
-msgstr ""
+msgstr "Kurs umbenennen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:165
 msgid "Restore initial password"
-msgstr ""
+msgstr "Erstpasswort wiederherstellen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:61
 msgid "Running"
-msgstr ""
+msgstr "Aktiv"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:47
 msgid "Save session as"
-msgstr ""
+msgstr "Sitzung speichern als"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/selectFile.modal.html:30
 msgid "Select files you want to copy from <b>{{senders[0]['givenName']}} {{senders[0]['sn']}}</b>"
-msgstr ""
+msgstr "Wählen Sie Dateien, die Sie von <b>{{senders[0]['givenName']}} {{senders[0]['sn']}}</b> kopieren möchten"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/selectFile.modal.html:33
 msgid "Select files you want to move from <b>{{senders[0]['givenName']}} {{senders[0]['sn']}}</b>"
-msgstr ""
+msgstr "Wählen Sie Dateien, die Sie von <b>{{senders[0]['givenName']}} {{senders[0]['sn']}}</b> verschieben möchten"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/selectFile.modal.html:23
 msgid "Select files you want to share with <b>{{receivers[0]['givenName']}} {{receivers[0]['sn']}}</b>"
-msgstr ""
+msgstr "Wählen Sie Dateien, die Sie an <b>{{receivers[0]['givenName']}} {{receivers[0]['sn']}}</b> austeilen möchten"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/selectFile.modal.html:41
 msgid "Select files you want to share with Session"
-msgstr ""
+msgstr "Wählen Sie Dateien, die Sie mit an den Kurs austeilen möchten"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:180
 msgid "Set actual user password"
-msgstr ""
+msgstr "Benutzerpasswort festlegen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:175
 msgid "Set custom initial password"
-msgstr ""
+msgstr "Erstpasswort festlegen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:170
 msgid "Set random initial password"
-msgstr ""
+msgstr "Erstpasswort zufällig festlegen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/selectFile.modal.html:99
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:204
 msgid "Share"
-msgstr ""
+msgstr "Teilen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:207
 msgid "Share file(s) from transfer directory with whole session"
-msgstr ""
+msgstr "Datei(en) aus dem Transfer-Verzeichnis dem gesamten Kurs austeilen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/selectFile.modal.html:4
 msgid "Share files"
-msgstr ""
+msgstr "Dateien austeilen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/selectFile.modal.html:12
 msgid "Share files with session"
-msgstr ""
+msgstr "Dateien aus Transfer dem ganzen Kurs austeilen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:160
 msgid "Show initial password"
-msgstr ""
+msgstr "Erstpasswort anzeigen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:76
 msgid "There's currently no student in this course. You can add these with the input above."
-msgstr ""
+msgstr "Dieser Kurs hat noch keine Teilnehmer. Weiter oben finden Sie eine Möglichkeit, Teilnehmer hinzuzufügen."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/sessionsList.html:23
 msgid "This Room"
-msgstr ""
+msgstr "Dieser Raum"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/selectFile.modal.html:81
 msgid "Upload file"
-msgstr ""
+msgstr "Datei hochladen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/roomDetails.modal.html:17
 msgid "User"
-msgstr ""
+msgstr "Nutzer"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/roomDetails.modal.html:3
 msgid "User in room: {{usersInRoom.room}}"
-msgstr ""
+msgstr "Nutzer im Klassenzimmer: {{usersInRoom.room}}"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:185
 msgid "User information"
-msgstr ""
+msgstr "Nutzerinformation"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/roomDetails.modal.html:12
 msgid "Users logged in  in your room:"
-msgstr ""
+msgstr "Im Raum angemeldete Nutzer:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:56
 msgid "Websession"
-msgstr ""
+msgstr "Websitzung"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/roomDetails.modal.html:13
 msgid "user(s)"
-msgstr ""
+msgstr "Nutzer"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/main.py:15
 msgid "Session-new BETA"
-msgstr ""
+msgstr "Unterricht-neu BETA"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/main.py:22
 msgid "Print Passwords"
-msgstr ""
+msgstr "Passwörter drucken"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/main.py:36
 msgid "Write students"
-msgstr ""
+msgstr "Schreibe Schüler"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/main.py:41
 msgid "Transfer Files in Session"
-msgstr ""
+msgstr "Dateien des Kurses übertragen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/services/sessionService.es:23
 msgid "There are no sessions yet. Create a session using the 'New Session' button at the top!"
-msgstr ""
+msgstr "Es gibt noch keinen Kurs. Erstellen Sie einen Kurs mit dem Button 'Neuer Kurs' oben auf dieser Seite!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/services/sessionService.es:53
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/services/sessionService.es:74
 msgid "Session Name"
-msgstr ""
+msgstr "Kursname"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/services/sessionService.es:63
 msgid "Session Created"
-msgstr ""
+msgstr "Kurs erstellt"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/services/sessionService.es:70
 msgid "No Session selected"
-msgstr ""
+msgstr "Kein Kurs ausgewählt"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/services/sessionService.es:70
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/services/sessionService.es:91
 msgid "You have to select a session first."
-msgstr ""
+msgstr "Sie müssen zuerst einen Kurs auswählen."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/services/sessionService.es:83
 msgid "Session renamed"
-msgstr ""
+msgstr "Kurs umbenannt"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/services/sessionService.es:91
 msgid "No session selected"
-msgstr ""
+msgstr "Kein Kurs ausgewählt"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/services/sessionService.es:95
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:515
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:531
 msgid "Delete"
-msgstr ""
+msgstr "Löschen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:2
 msgid "Session"
-msgstr ""
+msgstr "Kurs"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:19
 msgid "Do you really want to quit this session ? You can restart it later if you want."
-msgstr ""
+msgstr "Möchten Sie diese Sitzung wirklich beenden ? Sie können sie später neu starten, wenn Sie möchten."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:26
 msgid "Add Student"
-msgstr ""
+msgstr "Schüler hinzufügen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:27
 msgid "Add Class"
-msgstr ""
+msgstr "Klasse hinzufügen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:32
 msgid "Lastname"
-msgstr ""
+msgstr "Nachname"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:36
 msgid "Login name"
-msgstr ""
+msgstr "Anmeldename"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:40
 msgid "Firstname"
-msgstr ""
+msgstr "Vorname"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:44
 msgid "Email"
-msgstr ""
+msgstr "E-Mail"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:54
 msgid "Userdata"
-msgstr ""
+msgstr "Nutzerdaten"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:57
 msgid "Transfer"
-msgstr ""
+msgstr "Übertragung"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:60
 msgid "Exam-Supervisor"
-msgstr ""
+msgstr "Prüfungsaufsicht"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:63
 msgid "sophomorixRole"
-msgstr ""
+msgstr "sophomorixRole"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:67
 msgid "Exam-Mode"
-msgstr ""
+msgstr "Prüfungsmodus"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:74
 msgid "Wifi-Access"
-msgstr ""
+msgstr "WLAN-Zugang"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:80
 msgid "Internet-Access"
-msgstr ""
+msgstr "Internetzugriff"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:86
 msgid "Intranet Access"
-msgstr ""
+msgstr "Intranetzugriff"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:91
 msgid "Webfilter"
-msgstr ""
+msgstr "Webfilter"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:97
 msgid "Printing"
-msgstr ""
+msgstr "Drucke..."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:168
 msgid "Info"
-msgstr ""
+msgstr "Info"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:168
 msgid "Currenty its not possible to determine your room, try to login into your computer again."
-msgstr ""
+msgstr "Es konnte nicht ermittelt werden, in welchem Raum Sie sich befinden. Bitte melden Sie sich noch einmal am Computer an."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:269
 msgid "User in exam"
-msgstr ""
+msgstr "Nutzer ist im Prüfungsmodus"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:269
 msgid "This user seems to be in exam. End exam mode before changing password!"
-msgstr ""
+msgstr "Für diesen Nutzer scheint der Prüfungsmodus aktiv zu sein. Beenden Sie den Prüfungsmodus um das Passwort ändern zu können!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:342
 msgid "Sharing files..."
-msgstr ""
+msgstr "Verteile Dateien..."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:377
 msgid "Collecting files..."
-msgstr ""
+msgstr "Sammle Dateien…"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:389
 msgid "Not implemented"
-msgstr ""
+msgstr "Nicht verfügbar"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:427
 msgid "Successfully stopped!"
-msgstr ""
+msgstr "Erfolgreich gestoppt!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:430
 msgid "Cannot stop entry!"
-msgstr ""
+msgstr "Konferenz kann nicht beendet werden!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:448
 msgid "Cannot start websession! Try to reload page!"
-msgstr ""
+msgstr "Web-Sitzung kann nicht gestartet werden! Möglicherweise hilft es, die Seite neu zu laden!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:451
 msgid "Create session failed! Try again later!"
-msgstr ""
+msgstr "Kurs konnte nicht erstellt werden! Versuchen Sie es später erneut!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:483
 msgid "Please select at least one file!"
-msgstr ""
+msgstr "Bitte wählen Sie mindestens eine Datei!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:514
 msgid "Are you sure you want to delete permanently the file "
-msgstr ""
+msgstr "Möchten Sie die Datei wirklich unwiderruflich löschen?"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:519
 msgid "File "
-msgstr ""
+msgstr "Datei "
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:530
 msgid "Are you sure you want to delete permanently this directory and its content: "
-msgstr ""
+msgstr "Sind Sie sicher, dass Sie dieses Verzeichnis und dessen Inhalt dauerhaft löschen wollen: "
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:535
 msgid "Directory "
-msgstr ""
+msgstr "Verzeichnis"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/sessionsList.controller.coffee:2
 msgid "Sessions list"
-msgstr ""
+msgstr "Kursliste"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/sessionsList.controller.coffee:4
 msgid "Regenerate this session"
-msgstr ""
+msgstr "Diesen Kurs neu erstellen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/sessionsList.controller.coffee:5
 msgid "Start this session unchanged (may not be up to date)"
-msgstr ""
+msgstr "Diesen Kurs unverändert starten (möglicherweise nicht auf dem neuesten Stand)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/sessionsList.controller.coffee:6
 msgid "Start session containing all users in this room"
-msgstr ""
+msgstr "Kurs mit allen Benutzern in diesem Raum starten"
 

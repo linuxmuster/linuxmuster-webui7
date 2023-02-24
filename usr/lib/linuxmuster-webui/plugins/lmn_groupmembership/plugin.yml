@@ -13,5 +13,4 @@ resources:
     - 'resources/js/controllers/index.controller.coffee'
     - 'resources/partial/index.html'
     - 'resources/partial/groupDetails.modal.html'
-    - 'resources/partial/editMembers.modal.html'
     - 'ng:lmn.groupmembership'

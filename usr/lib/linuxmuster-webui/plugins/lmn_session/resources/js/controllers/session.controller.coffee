@@ -776,16 +776,3 @@ angular.module('lmn.session').controller 'LMNOldRoomDetailsController', ($scope,
 
         $scope.close = () ->
             $uibModalInstance.dismiss()
-        #$scope.editGroupMembers = (groupName, groupDetails, admins, members) ->
-        #    $uibModal.open(
-        #        templateUrl: '/lmn_groupmembership:resources/partial/editMembers.modal.html'
-        #        controller:  'LMNGroupEditController'
-        #        size: 'lg'
-        #        resolve:
-        #           groupName: () -> groupName
-        #           groupDetails: () -> groupDetails
-        #           admins: () -> admins
-        #           members: () -> members
-        #    ).result.then (result)->
-        #        if result.response is 'refresh'
-        #            $scope.getGroupDetails ([groupType, groupName])

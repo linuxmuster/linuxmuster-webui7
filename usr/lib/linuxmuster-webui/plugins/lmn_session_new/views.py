@@ -187,6 +187,26 @@ class Handler(HttpPlugin):
         except Exception as e:
             raise Exception(f'Error:\n{" ".join(sophomorixCommand)}\n Error was: {e}')
 
+    @post(r'/api/lmn/session/participants')
+    @authorize('lm:users:students:read')
+    @endpoint(api=True)
+    def handle_api_session_add_particpants(self, http_context):
+        sessionID = http_context.json_body()['session']
+        users = ','.join(http_context.json_body()['users'])
+        sophomorixCommand = ['sophomorix-session', '-j', '--session', sessionID, '--add-participants', users]
+        result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
+        return result
+
+    @patch(r'/api/lmn/session/participants')
+    @authorize('lm:users:students:read')
+    @endpoint(api=True)
+    def handle_api_session_remove_particpants(self, http_context):
+        sessionID = http_context.json_body()['session']
+        users = ','.join(http_context.json_body()['users'])
+        sophomorixCommand = ['sophomorix-session', '-j', '--session', sessionID, '--remove-participants', users]
+        result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
+        return result
+
     @post(r'/api/lmn/session/sessions')
     @authorize('lm:users:students:read')
     @endpoint(api=True)

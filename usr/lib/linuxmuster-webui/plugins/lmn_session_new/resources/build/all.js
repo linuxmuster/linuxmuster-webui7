@@ -26,13 +26,6 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
 
     this.sessions = [];
 
-    this.current = {
-        'ID': '',
-        'COMMENT': '',
-        'generated': false,
-        'participants': []
-    };
-
     this.load = function () {
         var promiseList = [];
         promiseList.push($http.get('/api/lmn/groupmembership/groups').then(function (resp) {
@@ -67,6 +60,17 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
             $location.path('/view/lmn/session');
         });
     };
+
+    this.reset = function () {
+        _this.current = {
+            'ID': '',
+            'COMMENT': '',
+            'generated': false,
+            'participants': []
+        };
+    };
+
+    this.reset();
 
     this.startGenerated = function (groupname, participants) {
         generatedSession = {
@@ -384,14 +388,12 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       });
     };
     $scope.$watch('addParticipant', function() {
-      console.warn($scope.addParticipant);
       if ($scope.addParticipant) {
         return $http.post('/api/lmn/session/userinfo', {
           'users': [$scope.addParticipant.sAMAccountName]
         }).then(function(resp) {
           var new_participant;
           new_participant = resp.data[0];
-          console.log(new_participant);
           $scope.addParticipant = '';
           if (!$scope.session.generated) {
             // Real session: must be added in LDAP
@@ -404,12 +406,27 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         });
       }
     });
-    //    $scope.$watch '_.addSchoolClass', () ->
-    //        if $scope._.addSchoolClass
-    //            members = $scope._.addSchoolClass.members
-    //            for schoolClass,member of $scope._.addSchoolClass.members
-    //                $scope.addParticipant(member)
-    //            $scope._.addSchoolClass = null
+    $scope.$watch('addSchoolClass', function() {
+      var members;
+      if ($scope.addSchoolClass) {
+        members = Object.keys($scope.addSchoolClass.members);
+        return $http.post('/api/lmn/session/userinfo', {
+          'users': members
+        }).then(function(resp) {
+          var new_participants;
+          new_participants = resp.data;
+          $scope.addSchoolClass = '';
+          if (!$scope.session.generated) {
+            // Real session: must be added in LDAP
+            $http.post('/api/lmn/session/participants', {
+              'users': members,
+              'session': $scope.session.ID
+            });
+          }
+          return $scope.session.participants = $scope.session.participants.concat(new_participants);
+        });
+      }
+    });
     $scope.removeParticipant = function(participant) {
       var deleteIndex;
       deleteIndex = $scope.session.participants.indexOf(participant);
@@ -910,9 +927,11 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       });
     };
     $scope.start = function(session) {
+      lmnSession.reset();
       return lmnSession.start(session);
     };
     $scope.startGenerated = function(groupname) {
+      lmnSession.reset();
       if (groupname === 'this_room') {
         return $http.post("/api/lmn/session/userinfo", {
           users: $scope.room.usersList

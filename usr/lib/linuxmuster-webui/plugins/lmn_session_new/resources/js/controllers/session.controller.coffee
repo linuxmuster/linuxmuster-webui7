@@ -198,12 +198,16 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
                     $http.post('/api/lmn/session/participants', {'users':[new_participant.sAMAccountName], 'session': $scope.session.ID})
                 $scope.session.participants.push(new_participant)
 
-#    $scope.$watch '_.addSchoolClass', () ->
-#        if $scope._.addSchoolClass
-#            members = $scope._.addSchoolClass.members
-#            for schoolClass,member of $scope._.addSchoolClass.members
-#                $scope.addParticipant(member)
-#            $scope._.addSchoolClass = null
+    $scope.$watch 'addSchoolClass', () ->
+        if $scope.addSchoolClass
+            members = Object.keys($scope.addSchoolClass.members)
+            $http.post('/api/lmn/session/userinfo', {'users':members}).then (resp) ->
+                new_participants = resp.data
+                $scope.addSchoolClass = ''
+                if !$scope.session.generated
+                    # Real session: must be added in LDAP
+                    $http.post('/api/lmn/session/participants', {'users':members, 'session': $scope.session.ID})
+                $scope.session.participants = $scope.session.participants.concat(new_participants)
 
     $scope.removeParticipant = (participant) ->
         deleteIndex = $scope.session.participants.indexOf(participant)

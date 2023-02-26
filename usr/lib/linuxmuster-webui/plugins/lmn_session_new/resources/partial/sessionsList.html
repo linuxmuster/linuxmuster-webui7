@@ -3,15 +3,8 @@
 
     <div class="alert alert-warning">This plugin is actually under heavy development and only published for tests purpose.</div>
 
-    <div class="input-group">
-        <input ng:model="filter" type="search" autofocus class="form-control" placeholder="Filter"/>
-
-        <div class="input-group-btn">
-            <button class="btn btn-default" ng:click="newSession()">
-                <i class="fa fa-plus"></i>
-                <span translate>New group</span>
-            </button>
-        </div>
+    <div class="input-group" style="width:100%">
+        <input ng:model="filter" type="search" autofocus class="form-control" placeholder="Filter" />
     </div>
 
     <br />
@@ -126,4 +119,9 @@
                 </span>
             </div>
         </div>
+
+        <button class="btn btn-default" ng:click="newSession()">
+            <i class="fa fa-plus"></i>
+            <span translate>New group</span>
+        </button>
 </div>

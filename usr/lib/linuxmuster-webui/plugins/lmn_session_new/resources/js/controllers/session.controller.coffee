@@ -112,7 +112,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
     else if $scope.session.type == 'room'
         title = " > " + gettext("Room") + " #{$scope.session.COMMENT}"
     else
-        title = " > " + gettext("Session") + " #{$scope.session.COMMENT}"
+        title = " > " + gettext("Group") + " #{$scope.session.COMMENT}"
 
     pageTitle.set(gettext('Session') + title )
 

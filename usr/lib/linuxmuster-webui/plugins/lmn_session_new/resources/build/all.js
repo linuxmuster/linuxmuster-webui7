@@ -282,7 +282,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     } else if ($scope.session.type === 'room') {
       title = " > " + gettext("Room") + ` ${$scope.session.COMMENT}`;
     } else {
-      title = " > " + gettext("Session") + ` ${$scope.session.COMMENT}`;
+      title = " > " + gettext("Group") + ` ${$scope.session.COMMENT}`;
     }
     pageTitle.set(gettext('Session') + title);
     // Nothing defined, going back to session list
@@ -917,9 +917,8 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
 (function() {
   angular.module('lmn.session_new').controller('LMNSessionsListController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem, validation, $rootScope, wait, lmnSession) {
     pageTitle.set(gettext('Sessions list'));
-    $scope.generateSessionMouseover = gettext('Regenerate this session');
-    $scope.startGeneratedSessionMouseover = gettext('Start this session unchanged (may not be up to date)');
-    $scope.generateRoomsessionMouseover = gettext('Start session containing all users in this room');
+    $scope.startSchoolclassSessionMouseover = gettext('Start this session with all student in this schoolclass');
+    $scope.generateRoomSessionMouseover = gettext('Start session containing all users in this room');
     $scope.loading = true;
     $scope.room = {
       "usersList": [],

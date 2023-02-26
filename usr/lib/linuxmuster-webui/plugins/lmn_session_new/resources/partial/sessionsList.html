@@ -9,7 +9,7 @@
         <div class="input-group-btn">
             <button class="btn btn-default" ng:click="newSession()">
                 <i class="fa fa-plus"></i>
-                <span translate>New Session</span>
+                <span translate>New group</span>
             </button>
         </div>
     </div>
@@ -48,7 +48,7 @@
                         </div>
                     </span>
                     <span style="float:left;width:50%">
-                        <div class="session_image session_image_room" ng:click="startGenerated('this_room')" title="{{generateRoomsessionMouseover}}">
+                        <div class="session_image session_image_room" ng:click="startGenerated('this_room')" title="{{generateRoomSessionMouseover}}">
                             <span class="fas fa-history session_image_btn"></span>
                         </div>
                     </span>
@@ -84,7 +84,7 @@
                         </div>
                     </span>
                     <span style="float:left;width:50%">
-                        <div class="session_image session_image_classes" ng:click="startGenerated(class.groupname)" title="{{generateSessionMouseover}}">
+                        <div class="session_image session_image_classes" ng:click="startGenerated(class.groupname)" title="{{startSchoolclassSessionMouseover}}">
                             <span class="fas fa-history session_image_btn"></span>
                         </div>
                     </span>
@@ -99,7 +99,7 @@
     <div ng:show="sessions.length > 0"  class="list-group">
         <h3>
             <i class="far fa-list-alt"></i>
-            <span translate>My Sessions</span>
+            <span translate>My groups</span>
         </h3>
 
         <div class="flex-container lmn-container-list">

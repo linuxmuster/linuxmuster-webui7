@@ -17,7 +17,7 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_lmn_vdi_dashboard_session(self, http_context, group):
         username = self.context.identity
-        createSessionCommand = ['/usr/lib/linuxmuster-linbo-vdi/getConnection.py', group, username]
+        createSessionCommand = ['sudo', '/usr/lib/linuxmuster-linbo-vdi/getConnection.py', group, username]
         output = subprocess.check_output(createSessionCommand, shell=False)
         output = json.loads(output.decode())
         return output['configFile'].split("/")[3]
@@ -30,4 +30,4 @@ class Handler(HttpPlugin):
             return http_context.file(path, inline=False, name=b'vdi-session.vv')
         else:
             return http_context.respond_forbidden()
-        
+

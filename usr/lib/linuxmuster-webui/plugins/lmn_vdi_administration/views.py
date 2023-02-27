@@ -19,10 +19,10 @@ class Handler(HttpPlugin):
     def handle_api_lmn_vdi_administration_master(self, http_context):
 
         path = "/usr/lib/linuxmuster-linbo-vdi"
-        if os.path.isdir(path) == False:
+        if os.path.isdir(path) == False and os.path.islink(path) == False:
             return { "status": "error", "message": "VDI Tools not installed!" }
 
-        getVmStatesCommand=['/usr/lib/linuxmuster-linbo-vdi/getVmStates.py', '-master']
+        getVmStatesCommand=['sudo', '/usr/lib/linuxmuster-linbo-vdi/getVmStates.py', '-master']
         output = subprocess.check_output(getVmStatesCommand, shell=False)
         output_new = ""
         for line in output.decode().splitlines():
@@ -39,10 +39,10 @@ class Handler(HttpPlugin):
     def handle_api_lmn_vdi_administration_clone(self, http_context):
 
         path = "/usr/lib/linuxmuster-linbo-vdi"
-        if os.path.isdir(path) == False:
+        if os.path.isdir(path) == False and os.path.islink(path) == False:
             return { "status": "error", "message": "VDI Tools not installed!" }
 
-        getClonesCommand=['/usr/lib/linuxmuster-linbo-vdi/getVmStates.py', '-clones']
+        getClonesCommand=['sudo', '/usr/lib/linuxmuster-linbo-vdi/getVmStates.py', '-clones']
         output = subprocess.check_output(getClonesCommand, shell=False)
         output_new = ""
         for line in output.decode().splitlines():

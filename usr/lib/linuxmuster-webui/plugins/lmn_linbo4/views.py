@@ -123,7 +123,7 @@ class Handler(HttpPlugin):
             vdiSettings["memory"] = int(vdiSettings["memory"])
             vdiSettings["tag"] = int(vdiSettings["tag"])
             vdiSettings["minimum_vms"] = int(vdiSettings["minimum_vms"])
-            vdiSettings["maxmimum_vms"] = int(vdiSettings["maxmimum_vms"])
+            vdiSettings["maximum_vms"] = int(vdiSettings["maximum_vms"])
             vdiSettings["prestarted_vms"] = int(vdiSettings["prestarted_vms"])
             vdiSettings["timeout_building_master"] = int(vdiSettings["timeout_building_master"])
             vdiSettings["timeout_building_clone"] = int(vdiSettings["timeout_building_clone"])

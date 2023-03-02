@@ -1,3 +1,9 @@
+linuxmuster-webui7 (17.2.17) lmn72-testing; urgency=low
+
+  * Fixed mispelling maximum in linbo4 vdi part
+
+ -- Andreas Till <andreas.till@netzint.de>  Thu, 02 Mar 2023 17:49:08 +0200
+
 linuxmuster-webui7 (17.2.16) lmn72-testing; urgency=low
 
   *  Merged Upstream

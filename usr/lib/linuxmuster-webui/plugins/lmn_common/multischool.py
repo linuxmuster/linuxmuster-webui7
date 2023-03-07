@@ -7,6 +7,7 @@ from subprocess import check_output
 import xml.etree.ElementTree as ElementTree
 
 from aj.plugins.lmn_common.api import samba_realm, lmn_getSophomorixValue
+from aj.plugins.lmn_common.samba_tool import GPOS
 
 
 class Drives:
@@ -68,12 +69,12 @@ class SchoolManager:
         self.load()
 
     def load(self):
+        self.policy = GPOS[f"sophomorix:school:{self.school}"]['gpo']
         self.get_configpath()
         self.load_custom_fields()
         self.load_holidays()
         self.load_school_dfs_shares()
         self.get_share_prefix()
-        self.load_gpo_list()
         self.load_drives()
 
     def switch(self, school):
@@ -132,26 +133,11 @@ class SchoolManager:
                         'dfs_proxy': dfs_proxy.replace('/', '\\'),
                     }
 
-    def load_gpo_list(self):
-        """
-        Load all GPO policies
-        """
-
-        result = check_output(['samba-tool', 'gpo', 'listall'], shell=False).decode().splitlines()
-        for entry in result:
-            if 'GPO' in entry:
-                policy = entry.split(":")[-1].strip()
-            elif 'display name' in entry:
-                if entry.split(":")[-1].strip() == self.school:
-                    self.policy = policy
-                    break
-
     def load_drives(self):
         """
         Load Drives.xml content from school policies
         """
 
-        xml_path = f'/var/lib/samba/sysvol/{samba_realm}/Policies/{self.policy}/User/Preferences/Drives/Drives.xml'
         self.Drives = Drives(self.policy)
 
     def get_share_prefix(self):

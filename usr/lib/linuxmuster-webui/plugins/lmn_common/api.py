@@ -42,8 +42,8 @@ smbconf = SafeConfigParser()
 try:
     smbconf.read('/etc/samba/smb.conf')
     samba_realm = smbconf["global"]["realm"].lower()
-    samba_netbios = smbconf["global"]["netbios name"]
-    samba_domain = f'{samba_netbios}.{samba_realm}'.lower()
+    samba_netbios = smbconf["global"]["netbios name"].lower()
+    samba_domain = f'{samba_netbios}.{samba_realm}'
 except Exception:
     logging.error("Can not read realm and domain from smb.conf")
     samba_domain, samba_realm, samba_netbios = ['']*3

@@ -19,10 +19,18 @@ config_path = '/etc/linuxmuster/webui/config.yml'
 if os.path.isfile(config_path):
     with LMNFile(config_path, 'r') as webui:
         lmconfig = webui.read()
+
+        # LDAP config for auth
         ldap_config = lmconfig['linuxmuster']['ldap']
+
+        # Password reset configuration for restricted worker
         pwreset_config = lmconfig['linuxmuster'].get('pw_reset', {})
         pwreset_config['activate'] = pwreset_config.get('activate', False)
         pwreset_config['ldap_mail_field'] = pwreset_config.get('ldap_mail_field', False)
+
+        # Samba config to eventually override the share prefix
+        samba_override = lmconfig['linuxmuster'].get('samba', {})
+        samba_override['share_prefix'] = samba_override.get('share_prefix', '')
 else:
     lmconfig = {}
     ldap_config = {}
@@ -34,10 +42,11 @@ smbconf = SafeConfigParser()
 try:
     smbconf.read('/etc/samba/smb.conf')
     samba_realm = smbconf["global"]["realm"].lower()
-    samba_domain = f'{smbconf["global"]["netbios name"]}.{samba_realm}'.lower()
+    samba_netbios = smbconf["global"]["netbios name"]
+    samba_domain = f'{samba_netbios}.{samba_realm}'.lower()
 except Exception:
     logging.error("Can not read realm and domain from smb.conf")
-    samba_domain, samba_realm = '', ''
+    samba_domain, samba_realm, samba_netbios = ['']*3
 
 # Fix missing entries in the lmconfig. Should be later refactored
 # and the config file should be splitted

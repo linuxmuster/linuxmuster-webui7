@@ -11,7 +11,9 @@ from aj.plugins.lmn_common.samba_tool import GPOS
 
 
 class Drives:
-    """Object to store data from dDrives.xml"""
+    """
+    Object to store data from Drives.xml
+    """
 
     def __init__(self, policy):
         self.policy = policy
@@ -20,6 +22,11 @@ class Drives:
         self.load()
 
     def load(self):
+        """
+        Parse the Drives.xml in the policy directory in order to get all shares
+        properties.
+        """
+
         self.drives = []
         self.drives_dict = {}
 
@@ -49,6 +56,14 @@ class Drives:
                 }
 
     def save(self, content):
+        """
+        Save all configuration and properties from the drives and then reload
+        the configuration.
+
+        :param content: All drives configuration and properties
+        :type content: dict
+        """
+
         self.tree.write(f'{self.path}.bak', encoding='utf-8', xml_declaration=True)
 
         for drive in self.tree.findall('Drive'):
@@ -63,12 +78,22 @@ class Drives:
         self.load()
 
 class SchoolManager:
+    """
+    In a multischool environment, it's necessary to have the possibility
+    to switch between the differents schools configurations and specific options
+    """
+
     def __init__(self):
         self.school = 'default-school'
         self.schoolShare = f'\\\\{samba_realm}\\{self.school}\\'
         self.load()
 
     def load(self):
+        """
+        Main method of the object : load all schools specific options when
+        switching to another school.
+        """
+
         self.policy = GPOS[f"sophomorix:school:{self.school}"]['gpo']
         self.get_configpath()
         self.load_custom_fields()
@@ -78,13 +103,20 @@ class SchoolManager:
         self.load_drives()
 
     def switch(self, school):
-        # Switch to another school
+        """
+        Switch to another school and then reload all configurations.
+        """
+
         if school != self.school:
             self.school = school
             self.schoolShare = f'\\\\{samba_realm}\\{self.school}\\'
             self.load()
 
     def load_custom_fields(self):
+        """
+        Load custom fields configurations.
+        """
+
         config = f'/etc/linuxmuster/sophomorix/{self.school}/custom_fields.yml'
         self.custom_fields = {}
         if os.path.isfile(config):
@@ -95,6 +127,10 @@ class SchoolManager:
                 logging.error(f"Could not load custom fields config: {e}")
 
     def load_holidays(self):
+        """
+        Load holidays configurations.
+        """
+
         config = f'/etc/linuxmuster/sophomorix/{self.school}/holidays.yml'
         self.holidays = {}
         if os.path.isfile(config):

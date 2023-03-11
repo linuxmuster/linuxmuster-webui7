@@ -6,7 +6,7 @@ from configobj import ConfigObj
 from subprocess import check_output
 import xml.etree.ElementTree as ElementTree
 
-from aj.plugins.lmn_common.api import samba_realm, lmn_getSophomorixValue
+from aj.plugins.lmn_common.api import samba_realm, samba_netbios, samba_override, lmn_getSophomorixValue
 from aj.plugins.lmn_common.samba_tool import GPOS
 
 
@@ -180,13 +180,15 @@ class SchoolManager:
 
         if self.school in self.dfs.keys():
             self.share_prefix = self.dfs[self.school]['dfs_proxy']
+        elif samba_override['share_prefix']:
+            self.share_prefix = f'\\\\{samba_override["share_prefix"]}\\{self.school}'
         else:
-            self.share_prefix = f'\\\\{samba_realm}\\{self.school}'
+            self.share_prefix = f'\\\\{samba_netbios}\\{self.school}'
 
     def get_homepath(self, user, role, adminclass):
 
         if role == 'globaladministrator':
-            home_path = f'\\\\{samba_realm}\\linuxmuster-global\\management\\{user}'
+            home_path = f'\\\\{samba_netbios}\\linuxmuster-global\\management\\{user}'
         elif role == 'schooladministrator':
             home_path = f'{self.share_prefix}\\management\\{user}'
         elif role == "teacher":

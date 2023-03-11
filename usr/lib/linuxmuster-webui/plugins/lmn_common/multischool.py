@@ -185,22 +185,29 @@ class SchoolManager:
         else:
             self.share_prefix = f'\\\\{samba_netbios}\\{self.school}'
 
-    def get_homepath(self, user, role, adminclass):
+    def get_homepath(self, user_context):
 
-        if role == 'globaladministrator':
-            home_path = f'\\\\{samba_netbios}\\linuxmuster-global\\management\\{user}'
-        elif role == 'schooladministrator':
-            home_path = f'{self.share_prefix}\\management\\{user}'
-        elif role == "teacher":
-            home_path = f'{self.share_prefix}\\{role}s\\{user}'
+        if samba_override['share_prefix']:
+            user = user_context['user']
+            role = user_context['role']
+            adminclass = user_context['adminclass']
+            if role == 'globaladministrator':
+                home_path = f'\\\\{samba_override["share_prefix"]}\\linuxmuster-global\\management\\{user}'
+            elif role == 'schooladministrator':
+                home_path = f'{self.share_prefix}\\management\\{user}'
+            elif role == "teacher":
+                home_path = f'{self.share_prefix}\\{role}s\\{user}'
+            else:
+                home_path = f'{self.share_prefix}\\{role}s\\{adminclass}\\{user}'
         else:
-            home_path = f'{self.share_prefix}\\{role}s\\{adminclass}\\{user}'
+            home_path = user_context['home']
 
         return home_path
 
-    def get_shares(self, user, role, adminclass):
+    def get_shares(self, user_context):
 
-        home_path = self.get_homepath(user, role, adminclass)
+        home_path = self.get_homepath(user_context)
+        role = user_context['role']
 
         home = {
             'name' : 'Home',
@@ -210,7 +217,7 @@ class SchoolManager:
         }
         linuxmuster_global = {
             'name' : 'Linuxmuster-Global',
-            'path' : f'\\\\{samba_realm}\\linuxmuster-global',
+            'path' : f'\\\\{samba_netbios}\\linuxmuster-global',
             'icon' : 'fas fa-globe',
             'active': False,
         }

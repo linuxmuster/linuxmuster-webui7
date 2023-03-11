@@ -44,9 +44,13 @@ class Handler(HttpPlugin):
             user = self.context.identity
 
         profil = AuthenticationService.get(self.context).get_provider().get_profile(user)
-        role = profil['sophomorixRole']
-        adminclass = profil['sophomorixAdminClass']
-        return self.context.schoolmgr.get_shares(user, role, adminclass)
+        user_context = {
+            'user': user,
+            'role': profil['sophomorixRole'],
+            'adminclass': profil['sophomorixAdminClass'],
+            'home': profil['homeDirectory'],
+        }
+        return self.context.schoolmgr.get_shares(user_context)
 
     @post(r'/api/lmn/smbclient/list')
     @endpoint(api=True)

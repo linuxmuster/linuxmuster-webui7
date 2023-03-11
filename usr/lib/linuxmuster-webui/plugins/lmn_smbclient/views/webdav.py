@@ -143,8 +143,12 @@ class Handler(HttpPlugin):
     def handle_api_webdav_propfind(self, http_context, path=''):
         user = self.context.identity
         profil = AuthenticationService.get(self.context).get_provider().get_profile(user)
-        role = profil['sophomorixRole']
-        adminclass = profil['sophomorixAdminClass']
+        user_context = {
+            'user': user,
+            'role': profil['sophomorixRole'],
+            'adminclass': profil['sophomorixAdminClass'],
+            'home': profil['homeDirectory'],
+        }
 
         baseUrl = "/webdav/"
 
@@ -164,7 +168,7 @@ class Handler(HttpPlugin):
 
         if not path:
             # / is asked, must give the list of shares
-            shares = self.context.schoolmgr.get_shares(user, role, adminclass)
+            shares = self.context.schoolmgr.get_shares(user_context)
             for share in shares:
                 item = smbclient._os.SMBDirEntry.from_path(share['path'])
 

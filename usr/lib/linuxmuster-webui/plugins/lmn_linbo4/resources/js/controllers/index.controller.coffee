@@ -105,12 +105,23 @@ angular.module('lmn.linbo4').controller 'LMLINBO4ImageModalController', ($scope,
         $uibModalInstance.dismiss()
 
 
-angular.module('lmn.linbo4').controller 'LMLINBO4ConfigModalController', ($scope, $uibModal, $uibModalInstance, $timeout, $http, $log, gettext, messagebox, config, lmFileBackups, vdiconfig) ->
+angular.module('lmn.linbo4').controller 'LMLINBO4ConfigModalController', ($scope, $uibModal, $uibModalInstance, $timeout, $http, $log, gettext, messagebox, config, lmFileBackups, identity, vdiconfig) ->
     $scope.config = config
     $scope.vdiconfig = vdiconfig
     $scope.expert = false
+    $scope.privateConf = false
 
-    console.log($scope.vdiconfig)
+    if  'School' of config.config.LINBO
+        if config.config.LINBO.School != 'default-school'
+            $scope.privateConf = true
+
+    $scope.togglePrivateConf = () ->
+        if $scope.privateConf
+            $scope.privateConf = false
+            config.config.LINBO.School = 'default-school'
+        else
+            $scope.privateConf = true
+            config.config.LINBO.School = $scope.identity.profile.activeSchool 
 
     $scope.toggleExpert = () ->
         if $scope.expert
@@ -517,7 +528,7 @@ angular.module('lmn.linbo4').controller 'LMLINBO4ConfigModalController', ($scope
 
 
 
-angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http, $uibModal, $log, $route, $location, gettext, notify, pageTitle, tasks, messagebox, validation, toaster) ->
+angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http, $uibModal, $log, $route, $location, gettext, notify, pageTitle, tasks, messagebox, validation, toaster, identity) ->
     pageTitle.set(gettext('LINBO 4'))
 
     $scope.tabs = ['groups', 'images']
@@ -537,7 +548,13 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
     )
 
     $http.get('/api/lmn/linbo4/configs').then (resp) ->
-        $scope.configs = resp.data
+        allConfigNames = resp.data
+        $scope.configs = []
+        for configName in allConfigNames
+            if  'School' not of configName.settings || configName.settings.School in [identity.profile.activeSchool, 'default-school']
+                console.log(configName.settings.School)
+                $scope.configs.push configName
+
         $http.get('/api/lmn/linbo4/images').then (resp) ->
             $scope.images = resp.data
             for image in $scope.images
@@ -548,7 +565,7 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
                 image.used_in = []
                 for config in $scope.configs
                     if config.images.indexOf(image.name + '.qcow2') > -1
-                        image.used_in.push(config.file.split('.').slice(-1)[0])
+                            image.used_in.push(config.file.split('.').slice(-1)[0])
 
     $http.get('/api/lmn/linbo4/examples/config').then (resp) ->
         $scope.examples = resp.data

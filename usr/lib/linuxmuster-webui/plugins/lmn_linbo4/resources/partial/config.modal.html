@@ -61,6 +61,9 @@
                             <span checkbox ng:model="config.config.LINBO.AutoInitCache"
                                 text="{{'Auto update cache'|translate}}" />
                             <br />
+                            <span checkbox ng:model="privateConf" ng:change="togglePrivateConf()"
+                            text="{{'Only available for this school'|translate}} ({{identity.profile.activeSchool}})" />
+                            <br />
                         </td>
                         <td width="49%">
                             <label translate>Linbo GUI customization</label>

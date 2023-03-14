@@ -206,10 +206,6 @@ angular.module('lmn.linbo4').controller 'LMLINBO4ConfigModalController', ($scope
         disk.partitions.sort (a, b) -> if a.Dev > b.Dev then 1 else -1
 
     $scope.getAllInfo = () ->
-        console.log ($scope.disks)
-        console.log ($scope.config)
-        console.log ($scope.diskMap)
-
     $scope.updateDiskType = (disk) ->
         oldDiskName = disk.name
         newDiskType = disk.DiskType
@@ -222,7 +218,6 @@ angular.module('lmn.linbo4').controller 'LMLINBO4ConfigModalController', ($scope
                     continue
                 break
             disk.name = "/dev/sd#{disk.name}"
-            console.log (disk.name)
 
         if newDiskType == 'mmc'
             disk.name = '0'
@@ -232,7 +227,6 @@ angular.module('lmn.linbo4').controller 'LMLINBO4ConfigModalController', ($scope
                     continue
                 break
             disk.name = "/dev/mmcblk#{disk.name}p"
-            console.log (disk.name)
 
         if newDiskType == 'nvme'
             disk.name = '0'
@@ -242,7 +236,6 @@ angular.module('lmn.linbo4').controller 'LMLINBO4ConfigModalController', ($scope
                     continue
                 break
             disk.name = "/dev/nvme#{disk.name}n1p"
-            console.log (disk.name)
 
         #diskMap
         $scope.rebuildDisks()
@@ -505,7 +498,6 @@ angular.module('lmn.linbo4').controller 'LMLINBO4ConfigModalController', ($scope
             $scope.rebuildDisks()
 
     $scope.save = () ->
-        console.log(vdiconfig)
         $scope.config.partitions = []
         for disk in $scope.disks
             for partition in disk.partitions
@@ -552,7 +544,6 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
         $scope.configs = []
         for configName in allConfigNames
             if  'School' not of configName.settings || configName.settings.School in [identity.profile.activeSchool, 'default-school']
-                console.log(configName.settings.School)
                 $scope.configs.push configName
 
         $http.get('/api/lmn/linbo4/images').then (resp) ->

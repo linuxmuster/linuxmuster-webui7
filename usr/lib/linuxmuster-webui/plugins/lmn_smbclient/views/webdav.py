@@ -174,7 +174,7 @@ class Handler(HttpPlugin):
 
                 item_path = share['path'].replace(self.context.schoolmgr.schoolShare, '').replace('\\', '/') # TODO
                 if share['name'] == "Home":
-                    item_path = item_path.split('/')[0]
+                    item_path = item_path.rsplit('/', 1)[0]
 
                 href = quote(f'{baseUrl}{item_path}/', encoding='utf-8')
                 items[href] = response.convert_samba_entry_properties(item)

@@ -57,7 +57,9 @@ class Handler(HttpPlugin):
                 and os.path.isfile(path)
             ):
                 with LMNFile(path, 'r') as f:
-                    os_list = f.read().get('os', [])
+                    data = f.read()
+                    os_list = data.get('os', [])
+                    linbo_settings = data.get('config', [])['LINBO']
 
                 images = []
                 for OS in os_list:
@@ -68,6 +70,7 @@ class Handler(HttpPlugin):
                 r.append({
                         'file': file,
                         'images': images,
+                        'settings': linbo_settings
                 })
         return r
 

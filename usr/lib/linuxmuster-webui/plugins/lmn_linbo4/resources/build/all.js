@@ -168,12 +168,26 @@
     };
   });
 
-  angular.module('lmn.linbo4').controller('LMLINBO4ConfigModalController', function($scope, $uibModal, $uibModalInstance, $timeout, $http, $log, gettext, messagebox, config, lmFileBackups, vdiconfig) {
+  angular.module('lmn.linbo4').controller('LMLINBO4ConfigModalController', function($scope, $uibModal, $uibModalInstance, $timeout, $http, $log, gettext, messagebox, config, lmFileBackups, identity, vdiconfig) {
     var DiskType, _device, _partition, disk, diskMap, i, j, len, len1, ref, ref1;
     $scope.config = config;
     $scope.vdiconfig = vdiconfig;
     $scope.expert = false;
-    console.log($scope.vdiconfig);
+    $scope.privateConf = false;
+    if ('School' in config.config.LINBO) {
+      if (config.config.LINBO.School !== 'default-school') {
+        $scope.privateConf = true;
+      }
+    }
+    $scope.togglePrivateConf = function() {
+      if ($scope.privateConf) {
+        $scope.privateConf = false;
+        return config.config.LINBO.School = 'default-school';
+      } else {
+        $scope.privateConf = true;
+        return config.config.LINBO.School = $scope.identity.profile.activeSchool;
+      }
+    };
     $scope.toggleExpert = function() {
       if ($scope.expert) {
         return $scope.expert = false;
@@ -623,7 +637,7 @@
     };
   });
 
-  angular.module('lmn.linbo4').controller('LMLINBO4Controller', function($q, $scope, $http, $uibModal, $log, $route, $location, gettext, notify, pageTitle, tasks, messagebox, validation, toaster) {
+  angular.module('lmn.linbo4').controller('LMLINBO4Controller', function($q, $scope, $http, $uibModal, $log, $route, $location, gettext, notify, pageTitle, tasks, messagebox, validation, toaster, identity) {
     var tag;
     pageTitle.set(gettext('LINBO 4'));
     $scope.tabs = ['groups', 'images'];
@@ -641,28 +655,38 @@
       }
     });
     $http.get('/api/lmn/linbo4/configs').then(function(resp) {
-      $scope.configs = resp.data;
+      var allConfigNames, configName, i, len, ref;
+      allConfigNames = resp.data;
+      console.log(resp.data);
+      $scope.configs = [];
+      for (i = 0, len = allConfigNames.length; i < len; i++) {
+        configName = allConfigNames[i];
+        if (!('School' in configName.settings) || ((ref = configName.settings.School) === identity.profile.activeSchool || ref === 'default-school')) {
+          console.log(configName.settings.School);
+          $scope.configs.push(configName);
+        }
+      }
       return $http.get('/api/lmn/linbo4/images').then(function(resp) {
-        var backup, config, date, i, image, len, ref, ref1, results;
+        var backup, config, date, image, j, len1, ref1, ref2, results;
         $scope.images = resp.data;
-        ref = $scope.images;
+        ref1 = $scope.images;
         results = [];
-        for (i = 0, len = ref.length; i < len; i++) {
-          image = ref[i];
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          image = ref1[j];
           image.backups_list = [];
-          ref1 = image.backups;
-          for (date in ref1) {
-            backup = ref1[date];
+          ref2 = image.backups;
+          for (date in ref2) {
+            backup = ref2[date];
             backup.date = date;
             image.backups_list.push(backup);
           }
           image.used_in = [];
           results.push((function() {
-            var j, len1, ref2, results1;
-            ref2 = $scope.configs;
+            var k, len2, ref3, results1;
+            ref3 = $scope.configs;
             results1 = [];
-            for (j = 0, len1 = ref2.length; j < len1; j++) {
-              config = ref2[j];
+            for (k = 0, len2 = ref3.length; k < len2; k++) {
+              config = ref3[k];
               if (config.images.indexOf(image.name + '.qcow2') > -1) {
                 results1.push(image.used_in.push(config.file.split('.').slice(-1)[0]));
               } else {

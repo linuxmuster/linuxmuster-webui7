@@ -1,11 +1,18 @@
 <div class="modal-header">
     <h3>
-    <span translate>Group Details</span>
-    <span ng:show="groupDetails == null"> ...</span>
-    <span ng:show="groupDetails != null"> - {{groupDetails['description']}}</span></h3>
+        <span translate>Group Details</span>
+        <span ng:show="groupDetails == null"> ...</span>
+        <span ng:show="groupDetails != null"> - {{groupDetails['description']}}</span>
+    </h3>
 </div>
 <progress-spinner ng:show="groupDetails == null || changeState == true"></progress-spinner>
 <div style="padding: 0 20px;" ng:show="groupDetails != null">
+    <div class="alert alert-warning" ng:show="identity.isAdmin && type == 'class' && members.length == 0">
+        <a class="btn btn-danger pull-right" ng:click="killSchoolclass(groupDetails['description'])">
+            <i class="fa fa-trash"></i>
+        </a>
+        This class seems to be empty, do you want to delete it ?
+    </div>
     <br />
     <h4 translate> Properties</h4>
     <table class="table">

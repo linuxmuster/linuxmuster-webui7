@@ -215,6 +215,18 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
                 'remove' : gettext('Remove')
         }
 
+        $scope.killSchoolclass = (schoolclass) ->
+             messagebox.show(text: "Do you really want to delete '#{schoolclass}'? This can't be undone!", positive: 'Delete', negative: 'Cancel').then () ->
+                msg = messagebox.show(progress: true)
+                $http.delete('/api/lmn/groupmembership/schoolclass/' + schoolclass).then (resp) ->
+                    if resp['data'][0] == 'ERROR'
+                        notify.error (resp['data'][1])
+                    if resp['data'][0] == 'LOG'
+                        notify.success gettext(resp['data'][1])
+                        $uibModalInstance.close(response: 'refresh')
+                .finally () ->
+                    msg.close()
+
         $scope.formatDate = (date) ->
             if (date == "19700101000000.0Z")
                 return $scope.nevertext

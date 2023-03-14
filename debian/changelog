@@ -1,3 +1,9 @@
+linuxmuster-webui7 (17.2.18) lmn72-testing; urgency=low
+
+  * Reimplemented hiding linbo configs from other schools
+
+ -- Andreas Till <andreas.till@netzint.de>  Tue, 14 Mar 2023 16:08:08 +0200
+
 linuxmuster-webui7 (17.2.17) lmn72-testing; urgency=low
 
   * Fixed mispelling maximum in linbo4 vdi part

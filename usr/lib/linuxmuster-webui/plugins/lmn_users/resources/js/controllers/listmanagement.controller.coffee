@@ -353,10 +353,13 @@ angular.module('lmn.users').controller 'LMUsersListManagementController', ($scop
         # Ensure the login is not duplicated, but ignore empty login
         if filter == 'teachers'
             if val != ''
-                test = test && ($scope.teachers.filter(validation.findval('login', val)).length < 2)
+                if (!($scope.teachers.filter(validation.findval('login', val)).length < 2))
+                    test = test && gettext("Duplicate teachers login")
         else if filter == 'extrastudents'
             if val != ''
-                test = test && ($scope.extrastudents.filter(validation.findval('login', val)).length < 2)
+                # Test if duplicated
+                if (!($scope.extrastudents.filter(validation.findval('login', val)).length < 2))
+                    test = test && gettext("Duplicate extrastudents login")
 
         # Login for teachers may be empty
         if name == 'Login' and ( filter == 'teachers' or filter == 'extrastudents' ) and test == true

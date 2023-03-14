@@ -1,3 +1,9 @@
+linuxmuster-webui7 (17.2.18-1) lmn72-testing; urgency=low
+
+  * Removed unneccessary console logging in frontend
+
+ -- Andreas Till <andreas.till@netzint.de>  Tue, 14 Mar 2023 19:41:57 +0200
+
 linuxmuster-webui7 (17.2.18) lmn72-testing; urgency=low
 
   * Reimplemented hiding linbo configs from other schools

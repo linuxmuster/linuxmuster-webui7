@@ -57,7 +57,9 @@ class Handler(HttpPlugin):
                 and os.path.isfile(path)
             ):
                 with LMNFile(path, 'r') as f:
-                    os_list = f.read().get('os', [])
+                    data = f.read()
+                    os_list = data.get('os', [])
+                    linbo_settings = data.get('config', [])['LINBO']
 
                 images = []
                 for OS in os_list:
@@ -68,6 +70,7 @@ class Handler(HttpPlugin):
                 r.append({
                         'file': file,
                         'images': images,
+                        'settings': linbo_settings
                 })
         return r
 
@@ -123,7 +126,7 @@ class Handler(HttpPlugin):
             vdiSettings["memory"] = int(vdiSettings["memory"])
             vdiSettings["tag"] = int(vdiSettings["tag"])
             vdiSettings["minimum_vms"] = int(vdiSettings["minimum_vms"])
-            vdiSettings["maxmimum_vms"] = int(vdiSettings["maxmimum_vms"])
+            vdiSettings["maximum_vms"] = int(vdiSettings["maximum_vms"])
             vdiSettings["prestarted_vms"] = int(vdiSettings["prestarted_vms"])
             vdiSettings["timeout_building_master"] = int(vdiSettings["timeout_building_master"])
             vdiSettings["timeout_building_clone"] = int(vdiSettings["timeout_building_clone"])

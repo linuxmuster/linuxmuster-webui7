@@ -345,6 +345,8 @@ class Handler(HttpPlugin):
                 with smbclient.open_file(dst, mode='wb') as f:
                     f.write(content)
                 http_context.respond_ok()
+            else:
+                http_context.respond('412 Precondition Failed')
         except (ValueError, SMBOSError, NotFound) as e:
             if 'STATUS_ACCESS_DENIED' in e.strerror:
                 http_context.respond_forbidden()

@@ -19,9 +19,8 @@ from aj.plugins.lmn_common.mimetypes import content_mimetypes
 # TODO
 # - Better error management (directory not empty, errors in promise list, ... )
 # - Test encoding Windows
-# - symlink ?
 # - download selected resources as zip
-# - Method DELETE ?
+# - UPLOAD non empty directory
 
 @component(HttpPlugin)
 class Handler(HttpPlugin):
@@ -194,7 +193,24 @@ class Handler(HttpPlugin):
         dst = http_context.json_body()['dst']
 
         try:
-            smbclient.copyfile(src, dst)
+            if smbclient.path.isfile(src):
+                smbclient.copyfile(src, dst)
+            elif smbclient.path.isdir(src):
+                # First pass : create directory tree
+                for item in smbclient.walk(src):
+                    # item like (SMBPATH, [List of subdir], [List of files])
+                    smbpath = item[0]
+                    if smbclient.path.isdir(smbpath):
+                        smbpath = smbpath.replace(src, dst)
+                        smbclient.mkdir(smbpath)
+
+                # Second pass : copy all files
+                for item in smbclient.walk(src):
+                    smbpath = item[0]
+                    for file in item[2]:
+                        smbpathsrc = f"{smbpath}\\{file}"
+                        smbpathdst = smbpathsrc.replace(src, dst)
+                        smbclient.copyfile(smbpathsrc, smbpathdst)
         except (ValueError, SMBOSError, NotFound) as e:
             raise EndpointError(e)
 

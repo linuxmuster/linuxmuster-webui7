@@ -46,7 +46,7 @@ class Handler(HttpPlugin):
             smbclient.path.isfile(smb_path)
             # Head request to handle 404
             if http_context.method == 'HEAD':
-                if smbclient.path.isfile(smb_path):
+                if smbclient.path.isfile(smb_path) or smbclient.path.isdir(smb_path):
                     http_context.respond_ok()
                     return ''
                 else:

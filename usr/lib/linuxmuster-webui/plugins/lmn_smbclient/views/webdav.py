@@ -252,7 +252,14 @@ class Handler(HttpPlugin):
             overwrite = http_context.env.get('Overwrite', None) != 'F'
 
             if smbclient._os.SMBDirEntry.from_path(src).is_dir():
-                pass # TODO
+                if not smbclient.path.isdir(dst):
+                    smbclient.rename(src, dst)
+                    http_context.respond('201 Created')
+                elif smbclient.path.isdir(dst) and overwrite:
+                    smbclient.rename(src, dst)
+                    http_context.respond('204 No Content')
+                elif smbclient.path.isdir(dst):
+                    http_context.respond('412 Precondition Failed')
             else:
                 if not smbclient.path.isfile(dst):
                     smbclient.rename(src, dst)

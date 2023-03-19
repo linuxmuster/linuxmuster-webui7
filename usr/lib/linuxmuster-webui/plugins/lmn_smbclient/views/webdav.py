@@ -290,6 +290,7 @@ class Handler(HttpPlugin):
             env = http_context.env
             dst = env.get('HTTP_DESTINATION', None)
             host = f"{env['wsgi.url_scheme']}://{env['HTTP_HOST']}/webdav/"
+
             dst = dst.replace(host, '')  # Delete host domain
             dst = dst.replace('/', '\\')
             dst = f'{self.context.schoolmgr.schoolShare}{dst}'
@@ -297,7 +298,21 @@ class Handler(HttpPlugin):
             overwrite = http_context.env.get('Overwrite', None) != 'F'
 
             if smbclient._os.SMBDirEntry.from_path(src).is_dir():
-                pass # TODO
+                # First pass : create directory tree
+                for item in smbclient.walk(src):
+                    # item like (SMBPATH, [List of subdir], [List of files])
+                    smbpath = item[0]
+                    if smbclient.path.isdir(smbpath):
+                        smbpath = smbpath.replace(src, dst)
+                        smbclient.mkdir(smbpath)
+
+                # Second pass : copy all files
+                for item in smbclient.walk(src):
+                    smbpath = item[0]
+                    for file in item[2]:
+                        smbpathsrc = f"{smbpath}\\{file}"
+                        smbpathdst = smbpathsrc.replace(src, dst)
+                        smbclient.copyfile(smbpathsrc, smbpathdst)
             else:
                 if not smbclient.path.isfile(dst):
                     smbclient.copyfile(src, dst)
@@ -307,9 +322,6 @@ class Handler(HttpPlugin):
                     http_context.respond('204 No Content')
                 elif smbclient.path.isfile(dst):
                     http_context.respond('412 Precondition Failed')
-            else:
-                # Not implemented for directories yet
-                http_context.respond('501 Not Implemented')
         except (ValueError, SMBOSError, NotFound) as e:
             if 'STATUS_ACCESS_DENIED' in e.strerror:
                 http_context.respond_forbidden()

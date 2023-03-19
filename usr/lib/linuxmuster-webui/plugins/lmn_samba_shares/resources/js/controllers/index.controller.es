@@ -124,17 +124,7 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function($s
     $scope.doCopy = () => {
         for (let item of $scope.items) {
             if (item.selected) {
-                if (item.isDir) {
-                    $scope.isEmptyDir(item.path).then((resp) => {
-                        if (resp) {
-                            $scope.addClipboardOperation(item, 'copy');
-                        } else {
-                            notify.error(gettext("Can not cut/copy or delete non empty directories !"));
-                        };
-                    });
-                } else {
-                    $scope.addClipboardOperation(item, 'copy');
-                };
+                $scope.addClipboardOperation(item, 'copy');
             }
         }
         $scope.clear_selection();

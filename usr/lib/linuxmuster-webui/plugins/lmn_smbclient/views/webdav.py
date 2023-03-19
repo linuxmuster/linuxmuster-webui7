@@ -242,26 +242,26 @@ class Handler(HttpPlugin):
             src = self._convert_path(path).replace('/', '\\')
             src = f'{self.context.schoolmgr.schoolShare}{src}'
 
-            if not smbclient._os.SMBDirEntry.from_path(src).is_dir():
-                env = http_context.env
-                dst = env.get('HTTP_DESTINATION', None)
-                host = f"{env['wsgi.url_scheme']}://{env['HTTP_HOST']}/webdav/"
-                dst = dst.replace(host, '')  # Delete host domain
-                dst = dst.replace('/', '\\')
-                dst = f'{self.context.schoolmgr.schoolShare}{dst}'
+            env = http_context.env
+            dst = env.get('HTTP_DESTINATION', None)
+            host = f"{env['wsgi.url_scheme']}://{env['HTTP_HOST']}/webdav/"
+            dst = dst.replace(host, '')  # Delete host domain
+            dst = dst.replace('/', '\\')
+            dst = f'{self.context.schoolmgr.schoolShare}{dst}'
 
-                overwrite = http_context.env.get('Overwrite', None) != 'F'
+            overwrite = http_context.env.get('Overwrite', None) != 'F'
+
+            if smbclient._os.SMBDirEntry.from_path(src).is_dir():
+                pass # TODO
+            else:
                 if not smbclient.path.isfile(dst):
                     smbclient.rename(src, dst)
-                    http_context.respond('204 No Content')
+                    http_context.respond('201 Created')
                 elif smbclient.path.isfile(dst) and overwrite:
                     smbclient.rename(src, dst)
                     http_context.respond('204 No Content')
                 elif smbclient.path.isfile(dst):
                     http_context.respond('412 Precondition Failed')
-            else:
-                # Not implemented for directories yet
-                http_context.respond('501 Not Implemented')
         except (ValueError, SMBOSError, NotFound) as e:
             if 'STATUS_ACCESS_DENIED' in e.strerror:
                 http_context.respond_forbidden()

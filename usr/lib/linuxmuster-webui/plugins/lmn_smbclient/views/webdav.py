@@ -222,7 +222,7 @@ class Handler(HttpPlugin):
         path = self._convert_path(path).replace('/', '\\')
         try:
             smbclient.makedirs(f'{self.context.schoolmgr.schoolShare}{path}')
-            http_context.add_header("201 Created")
+            http_context.respond("201 Created")
         except (ValueError, SMBOSError, NotFound) as e:
             if 'STATUS_ACCESS_DENIED' in e.strerror:
                 http_context.respond_forbidden()

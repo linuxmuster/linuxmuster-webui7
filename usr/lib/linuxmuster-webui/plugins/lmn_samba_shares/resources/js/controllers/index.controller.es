@@ -78,12 +78,6 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function($s
             });
     };
 
-    $scope.isEmptyDir = (path) => {
-       return smbclient.list(path).then((data) => {
-           return data.items.length == 0;
-       });
-    };
-
     $scope.rename = (item) => {
         old_path = item.path;
         messagebox.prompt(gettext('New name :'), item.name).then( (msg) => {
@@ -203,24 +197,17 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function($s
         })
 
     $scope.delete_dir = (path) => {
-        // Directly delete a single directory
-        $scope.isEmptyDir(path).then((resp) => {
-            if (resp) {
-                messagebox.show({
-                    text: gettext("Do you really want to delete this directory?"),
-                    positive: gettext('Delete'),
-                    negative: gettext('Cancel')
-                }).then( () => {
-                    smbclient.delete_dir(path).then((data) => {
-                        notify.success(path + gettext(' deleted !'));
-                        $scope.reload();
-                    }, (resp) => {
-                        notify.error(gettext('Error during deleting : '), resp.data.message);
-                    });
-                });
-            } else {
-                notify.error(gettext("Can not cut/copy or delete non empty directories !"));
-            };
+        messagebox.show({
+            text: gettext("Do you really want to delete this directory?"),
+            positive: gettext('Delete'),
+            negative: gettext('Cancel')
+        }).then( () => {
+            smbclient.delete_dir(path).then((data) => {
+                notify.success(path + gettext(' deleted !'));
+                $scope.reload();
+            }, (resp) => {
+                notify.error(gettext('Error during deleting : '), resp.data.message);
+            });
         });
     };
 

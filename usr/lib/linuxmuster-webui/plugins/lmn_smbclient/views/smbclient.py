@@ -289,9 +289,13 @@ class Handler(HttpPlugin):
 
         user = self.context.identity
         profil = AuthenticationService.get(self.context).get_provider().get_profile(user)
-        role = profil['sophomorixRole']
-        adminclass = profil['sophomorixAdminClass']
-        home = self.context.schoolmgr.get_homepath(user, role, adminclass)
+        user_context = {
+            'user': user,
+            'role': profil['sophomorixRole'],
+            'adminclass': profil['sophomorixAdminClass'],
+            'home': profil['homeDirectory'],
+        }
+        home = self.context.schoolmgr.get_homepath(user_context)
         upload_dir = f'{home}\\.upload'
 
         if not smbclient.path.exists(upload_dir):
@@ -326,9 +330,13 @@ class Handler(HttpPlugin):
 
         user = self.context.identity
         profil = AuthenticationService.get(self.context).get_provider().get_profile(user)
-        role = profil['sophomorixRole']
-        adminclass = profil['sophomorixAdminClass']
-        home = self.context.schoolmgr.get_homepath(user, role, adminclass)
+        user_context = {
+            'user': user,
+            'role': profil['sophomorixRole'],
+            'adminclass': profil['sophomorixAdminClass'],
+            'home': profil['homeDirectory'],
+        }
+        home = self.context.schoolmgr.get_homepath(user_context)
         upload_dir = f'{home}\\.upload'
 
         if not smbclient.path.exists(upload_dir):
@@ -371,9 +379,13 @@ class Handler(HttpPlugin):
 
         user = self.context.identity
         profil = AuthenticationService.get(self.context).get_provider().get_profile(user)
-        role = profil['sophomorixRole']
-        adminclass = profil['sophomorixAdminClass']
-        home = self.context.schoolmgr.get_homepath(user, role, adminclass)
+        user_context = {
+            'user': user,
+            'role': profil['sophomorixRole'],
+            'adminclass': profil['sophomorixAdminClass'],
+            'home': profil['homeDirectory'],
+        }
+        home = self.context.schoolmgr.get_homepath(user_context)
         upload_dir = f'{home}/.upload'
 
         for file in files:

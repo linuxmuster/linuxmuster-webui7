@@ -135,18 +135,32 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function($s
         // Problem with error handling in promise list
         let items = angular.copy($scope.clipboard);
         promises = []
+        msgbox_promises = []
         for (let item of items) {
+            destination = $scope.current_path + '/' + item.item.name
             if (item.mode == 'copy') {
-                promises.push(smbclient.copy(item.item.path, $scope.current_path + '/' + item.item.name));
+                if (item.item.path == destination) {
+                    question = gettext('A file/directory with this name already exists, please give a new name :');
+                    msgbox_promises.push(messagebox.prompt(question, item.item.name).then( (msg) => {
+                        new_destination = $scope.current_path + '/' + msg.value;
+                        promises.push(smbclient.copy(item.item.path, new_destination));
+                    }));
+                } else {
+                    if (item.item.path != destination) {
+                        promises.push(smbclient.copy(item.item.path, destination));
+                    }
+                }
             }
             if (item.mode == 'move') {
                 promises.push(smbclient.move(item.item.path, $scope.current_path + '/' + item.item.name));
             }
         }
-        $q.all(promises).then(() => {
-            $scope.clear_selection();
-            $scope.clearClipboard();
-            $scope.reload();
+        $q.all(msgbox_promises).then(() => {
+            $q.all(promises).then(() => {
+                $scope.clear_selection();
+                $scope.clearClipboard();
+                $scope.reload();
+            });
         });
     };
 

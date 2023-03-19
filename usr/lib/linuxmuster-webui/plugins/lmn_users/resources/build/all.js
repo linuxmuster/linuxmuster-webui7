@@ -2405,6 +2405,7 @@
           }
           // Test if login == schoolclass
           if (name === 'Login') {
+            // Get all classes from extrastudents and students objects without duplicates
             schoolclasses_tmp = $scope.extrastudents.map(function(x) {
               return x.class;
             }).concat($scope.students.map(function(x) {

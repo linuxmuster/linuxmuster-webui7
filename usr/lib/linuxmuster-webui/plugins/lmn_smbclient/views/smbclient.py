@@ -214,7 +214,16 @@ class Handler(HttpPlugin):
         path = http_context.json_body()['path']
 
         try:
-            smbclient.rmdir(path)
+            # First pass : delete files
+            for item in smbclient.walk(path):
+                # item like (SMBPATH, [List of subdir], [List of files])
+                smbpath = item[0]
+                for file in item[2]:
+                    smbclient.unlink(f"{smbpath}\\{file}")
+
+            # Second pass : delete directories from bottom
+            for directory in smbclient.walk(path, topdown=False):
+                smbclient.rmdir(directory[0])
         except (ValueError, SMBOSError, NotFound) as e:
             raise EndpointError(e)
 

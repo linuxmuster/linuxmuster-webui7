@@ -1,7 +1,7 @@
 """
 Tools to handle files, directories and uploads.
 """
-
+import base64
 import os
 import re
 import smbclient
@@ -83,7 +83,7 @@ class Handler(HttpPlugin):
                 data = {
                     'name': item.name,
                     'path': item_path,
-                    'download_url': quote(item_path.encode('latin-1')),
+                    'download_url': base64.b64encode(item_path.encode('utf-8'), altchars=b'-_').decode(),
                     'unixPath': SMB2UnixPath(item_path),
                     'isDir': item.is_dir(),
                     'isFile': item.is_file(),
@@ -468,7 +468,8 @@ class Handler(HttpPlugin):
     @get(r'/api/lmn/smbclient/download')
     @endpoint(page=True)
     def handle_smb_download(self, http_context):
-        path = unquote(http_context.query.get('path', None))
+        q = http_context.query.get('path', None)
+        path = base64.b64decode(q, altchars=b'-_').decode('utf-8')
 
         if '..' in path:
             return http_context.respond_forbidden()
@@ -497,6 +498,6 @@ class Handler(HttpPlugin):
             http_context.respond_not_found()
             return
 
-        http_context.add_header('Content-Disposition', (f'attachment; filename={name}'))
+        http_context.add_header('Content-Disposition', (f'attachment; filename="{quote(name)}"'))
 
         yield http_context.gzip(content)

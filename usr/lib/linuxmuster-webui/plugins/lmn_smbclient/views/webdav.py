@@ -243,7 +243,7 @@ class Handler(HttpPlugin):
             src = f'{self.context.schoolmgr.schoolShare}{src}'
 
             env = http_context.env
-            dst = env.get('HTTP_DESTINATION', None)
+            dst = unquote(env.get('HTTP_DESTINATION', ''))
             host = f"{env['wsgi.url_scheme']}://{env['HTTP_HOST']}/webdav/"
             dst = dst.replace(host, '')  # Delete host domain
             dst = dst.replace('/', '\\')

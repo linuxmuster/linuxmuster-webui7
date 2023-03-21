@@ -212,26 +212,12 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function ($
         var _iteratorError5 = undefined;
 
         try {
-            var _loop = function _loop() {
-                var item = _step5.value;
-
-                if (item.selected) {
-                    if (item.isDir) {
-                        $scope.isEmptyDir(item.path).then(function (resp) {
-                            if (resp) {
-                                $scope.addClipboardOperation(item, 'move');
-                            } else {
-                                notify.error(gettext("Can not cut/copy or delete non empty directories !"));
-                            };
-                        });
-                    } else {
-                        $scope.addClipboardOperation(item, 'move');
-                    }
-                }
-            };
-
             for (var _iterator5 = $scope.items[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
-                _loop();
+                var _item = _step5.value;
+
+                if (_item.selected) {
+                    $scope.addClipboardOperation(_item, 'move');
+                }
             }
         } catch (err) {
             _didIteratorError5 = true;
@@ -258,10 +244,10 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function ($
 
         try {
             for (var _iterator6 = $scope.items[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
-                var _item = _step6.value;
+                var _item2 = _step6.value;
 
-                if (_item.selected) {
-                    $scope.addClipboardOperation(_item, 'copy');
+                if (_item2.selected) {
+                    $scope.addClipboardOperation(_item2, 'copy');
                 }
             }
         } catch (err) {
@@ -293,7 +279,7 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function ($
         var _iteratorError7 = undefined;
 
         try {
-            var _loop2 = function _loop2() {
+            var _loop = function _loop() {
                 var item = _step7.value;
 
                 destination = $scope.current_path + '/' + item.item.name;
@@ -316,7 +302,7 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function ($
             };
 
             for (var _iterator7 = items[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
-                _loop2();
+                _loop();
             }
         } catch (err) {
             _didIteratorError7 = true;
@@ -377,9 +363,9 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function ($
 
                 try {
                     for (var _iterator8 = items[Symbol.iterator](), _step8; !(_iteratorNormalCompletion8 = (_step8 = _iterator8.next()).done); _iteratorNormalCompletion8 = true) {
-                        var _item2 = _step8.value;
+                        var _item3 = _step8.value;
 
-                        promises.push(smbclient.delete_file(_item2.path));
+                        promises.push(smbclient.delete_file(_item3.path));
                     }
                 } catch (err) {
                     _didIteratorError8 = true;

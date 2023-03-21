@@ -83,6 +83,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
             'sophomorixCustomMulti3',
             'sophomorixCustomMulti4',
             'sophomorixCustomMulti5',
+            'sophomorixSessions',
         ]
 
         if context == "auth":

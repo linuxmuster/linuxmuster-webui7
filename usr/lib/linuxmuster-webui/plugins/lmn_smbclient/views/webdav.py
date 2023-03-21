@@ -111,6 +111,9 @@ class Handler(HttpPlugin):
     @endpoint()
     def handle_api_webdav_delete(self, http_context, path=''):
 
+        if '..' in path:
+            return http_context.respond_forbidden()
+
         path = self._convert_path(path).replace('/', '\\')
         path = f'{self.context.schoolmgr.schoolShare}{path}'
 
@@ -244,6 +247,10 @@ class Handler(HttpPlugin):
 
             env = http_context.env
             dst = unquote(env.get('HTTP_DESTINATION', ''))
+
+            if '..' in dst:
+                return http_context.respond_forbidden()
+
             host = f"{env['wsgi.url_scheme']}://{env['HTTP_HOST']}/webdav/"
             dst = dst.replace(host, '')  # Delete host domain
             dst = dst.replace('/', '\\')
@@ -289,6 +296,10 @@ class Handler(HttpPlugin):
             src = f'{self.context.schoolmgr.schoolShare}{src}'
             env = http_context.env
             dst = env.get('HTTP_DESTINATION', None)
+
+            if '..' in dst:
+                return http_context.respond_forbidden()
+
             host = f"{env['wsgi.url_scheme']}://{env['HTTP_HOST']}/webdav/"
 
             dst = dst.replace(host, '')  # Delete host domain

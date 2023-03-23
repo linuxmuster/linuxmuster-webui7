@@ -1,3 +1,10 @@
+linuxmuster-webui7 (7.1.51) lmn71; urgency=medium
+
+  * Fix status change in exam mode
+  * Fix missing config in custom fields display 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Thu, 23 Mar 2023 14:32:13 +0100
+
 linuxmuster-webui7 (7.1.50) lmn71; urgency=medium
 
   * Add missing dependency pytz. 

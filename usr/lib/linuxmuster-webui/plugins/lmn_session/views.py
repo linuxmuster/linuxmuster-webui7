@@ -131,6 +131,7 @@ class Handler(HttpPlugin):
             examModeList, noExamModeList, wifiList, noWifiList, internetList, noInternetList, intranetList, noIntranetList, webfilterList, noWebfilterList, printingList, noPrintingList = [], [], [], [], [], [], [], [], [], [], [], []
 
             for participant in participants:
+                accountName = participant['sAMAccountName']
                 name = participant['sAMAccountName'].replace('-exam', '')
                 participantsList.append(name)
 
@@ -140,11 +141,11 @@ class Handler(HttpPlugin):
 
                 # Only check for managementgroups if this value was changed in WEBUI
                 if participant['changed'] is True:
-                    wifiList.append(name) if participant['group_wifiaccess'] is True else noWifiList.append(name)
-                    internetList.append(name) if participant['group_internetaccess'] is True else noInternetList.append(name)
-                    intranetList.append(name) if participant['group_intranetaccess'] is True else noIntranetList.append(name)
-                    webfilterList.append(name) if participant['group_webfilter'] is True else noWebfilterList.append(name)
-                    printingList.append(name) if participant['group_printing'] is True else noPrintingList.append(name)
+                    wifiList.append(accountName) if participant['group_wifiaccess'] is True else noWifiList.append(accountName)
+                    internetList.append(accountName) if participant['group_internetaccess'] is True else noInternetList.append(accountName)
+                    intranetList.append(accountName) if participant['group_intranetaccess'] is True else noIntranetList.append(accountName)
+                    webfilterList.append(accountName) if participant['group_webfilter'] is True else noWebfilterList.append(accountName)
+                    printingList.append(accountName) if participant['group_printing'] is True else noPrintingList.append(accountName)
 
             # Set managementgroups
             try:

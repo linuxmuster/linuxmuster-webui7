@@ -36,7 +36,7 @@ angular.module('lmn.common').service('customFields', function($http, messagebox,
                 if (config['customDisplay'][idx] == 'proxyAddresses') {
                     config['customTitle'][idx] = response.data.proxyAddresses.title;
                 } else {
-                    position = config['customDisplay'][idx].slice(-1);
+                    position = (config['customDisplay'][idx] || '').slice(-1);
                     if (position == '') {
                         config['customTitle'][idx] = '';
                     } else if (this.isListAttr(config['customDisplay'][idx])) {

@@ -180,8 +180,11 @@
     <br />
 
     <div class="modal-footer">
-        <a class="btn btn-default btn-flat pull-left" ng:show="editGroup && type == 'project'" ng-click="killProject(groupName)" translate >Delete Project</a>
-        <a class="btn btn-default btn-flat pull-right" ng:click="close()" translate>Close</a>
-        <a class="btn btn-default btn-flat pull-right" ng:show="editGroup" ng:click="UserSearchVisible = true" translate>Add user or group</a>
+        <a class="btn btn-danger pull-left" ng:show="editGroup && type == 'project'" ng-click="killProject(groupName)" translate >
+            <i class="fa fa-trash"></i>
+            Delete Project
+        </a>
+        <a class="btn btn-default btn-lmn pull-right" ng:click="close()" translate>Close</a>
+        <a class="btn btn-default btn-lmn pull-right" ng:show="editGroup" ng:click="UserSearchVisible = true" translate>Add user or group</a>
     </div>
 </div>

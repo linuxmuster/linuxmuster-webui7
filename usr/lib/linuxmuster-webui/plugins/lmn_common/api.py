@@ -141,7 +141,7 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False, sens
         )
 
     # Without key, simply return the dict
-    if jsonpath is '':
+    if jsonpath == '':
         return jsonDict
 
     if ignoreErrors is False:

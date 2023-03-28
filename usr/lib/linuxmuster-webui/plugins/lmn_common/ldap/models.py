@@ -60,13 +60,12 @@ class LMNSchoolClass:
 
 @dataclass
 class LMNSession:
-    sid: datetime
+    sid: str
     name: str
     members: list
 
     def __post_init__(self):
-        if isinstance(self.sid, str):
-            self.sid = datetime.strptime(self.sid, '%Y-%m-%d_%H-%M-%S')
+        self.created = datetime.strptime(self.sid, '%Y-%m-%d_%H-%M-%S')
 
 @dataclass
 class LMNUser:

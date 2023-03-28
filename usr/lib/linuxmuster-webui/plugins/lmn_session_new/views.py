@@ -357,6 +357,73 @@ class Handler(HttpPlugin):
             availableFilesList.append(availableFile)
         return availableFiles, availableFilesList
 
+    @post(r'/api/lmn/session/share')
+    @authorize('lmn:session:trans')
+    @endpoint(api=True)
+    def handle_api_session_share(self, http_context):
+        sender = self.context.identity
+        receivers = http_context.json_body()['receivers']
+        files = http_context.json_body()['files']
+        session = http_context.json_body()['session']
+        now = strftime("%Y%m%d_%H-%M-%S", localtime())
+
+        def shareFiles(data):
+            file, receiver = data
+            sophomorixCommand = [
+                'sophomorix-transfer',
+                '-jj',
+                '--scopy',
+                '--from-user', sender,
+                '--to-user', receiver,
+                '--from-path', f'transfer/{file}',
+                '--to-path', f'transfer/{now}_{sender}_{session}/'
+            ]
+            return lmn_getSophomorixValue(sophomorixCommand, '')
+
+        try:
+            to_share = [(f,r) for f in files for r in receivers]
+            with futures.ThreadPoolExecutor() as executor:
+                returnMessage = executor.map(shareFiles, to_share)
+            print(returnMessage)
+        except Exception as e:
+            raise Exception('Something went wrong. Error:\n' + str(e))
+
+    @post(r'/api/lmn/session/collect')
+    @authorize('lmn:session:trans') # TODO
+    @endpoint(api=True)
+    def handle_api_session_collect(self, http_context):
+        receiver = self.context.identity
+        senders = http_context.json_body()['senders']
+        files = http_context.json_body()['files']
+        mode = http_context.json_body()['mode']
+        session = http_context.json_body()['session']
+        now = strftime("%Y%m%d_%H-%M-%S", localtime())
+
+        if mode not in ['scopy', 'move']:
+            return # TODO
+
+        def collectFiles(data):
+            file, sender = data
+            sophomorixCommand = [
+                'sophomorix-transfer',
+                '-jj',
+                f'--{mode}',
+                '--from-user', sender,
+                '--to-user', receiver,
+                '--from-path', f'transfer/{receiver}_{session}/{file}',
+                '--to-path', f'transfer/collected/{now}_{session}/'
+            ]
+            return lmn_getSophomorixValue(sophomorixCommand, '')
+
+        try:
+            to_collect = [(f,s) for f in files for s in senders]
+            with futures.ThreadPoolExecutor() as executor:
+                returnMessage = executor.map(collectFiles, to_collect)
+            print(returnMessage)
+        except Exception as e:
+            raise Exception('Something went wrong. Error:\n' + str(e))
+
+
     @post(r'/api/lmn/session/trans')
     @endpoint(api=True)
     def handle_api_session_file_trans(self, http_context):

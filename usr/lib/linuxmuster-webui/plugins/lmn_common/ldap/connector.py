@@ -1,22 +1,24 @@
 import ldap
 import ldap.filter
 from datetime import datetime
-from dataclasses import fields
+from dataclasses import fields, asdict
 
 from aj.plugins.lmn_common.api import ldap_config as params
 
 
 class LdapConnector:
 
-    def get_single(self, objectclass, ldap_filter):
+    def get_single(self, objectclass, ldap_filter, dict=True):
         result = self._request(ldap_filter)[0][1]
         d = {}
         for f in fields(objectclass):
             value = result.get(f.name, None)
             d[f.name] = self._filter_value(f, value)
+        if dict:
+            return asdict(objectclass(**d))
         return objectclass(**d)
         
-    def get_collection(self, objectclass, ldap_filter, sortkey=None):
+    def get_collection(self, objectclass, ldap_filter, dict=True, sortkey=None):
         result = self._request(ldap_filter)
         response = []
         for r in result:
@@ -25,7 +27,10 @@ class LdapConnector:
                 for f in fields(objectclass):
                     value = r[1].get(f.name, None)
                     d[f.name] = self._filter_value(f, value)
-                response.append(objectclass(**d))
+                if dict:
+                    response.append(asdict(objectclass(**d)))
+                else:
+                    response.append(objectclass(**d))
         if sortkey is not None:
             return sorted(response, key=lambda d: getattr(d, sortkey))
         return response

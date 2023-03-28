@@ -24,6 +24,7 @@ from aj.plugins.lmn_common.api import ldap_config as params, lmsetup_schoolname,
 from aj.plugins.lmn_common.multischool import SchoolManager
 from aj.api.endpoint import EndpointError
 
+
 @component(AuthenticationProvider)
 class LMAuthenticationProvider(AuthenticationProvider):
     """

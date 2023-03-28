@@ -112,4 +112,13 @@ class LMNUser:
     sophomorixWebuiPermissionsCalculated: list
     unixHomeDirectory: str
 
+@dataclass
+class LMNSession:
+    sid: datetime
+    name: str
+    members: list
+
+    def __post_init__(self):
+        if isinstance(self.sid, str):
+            self.sid = datetime.strptime(self.sid, '%Y-%m-%d_%H-%M-%S')
 

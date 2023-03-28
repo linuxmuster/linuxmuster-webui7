@@ -4,6 +4,7 @@ from datetime import datetime
 from dataclasses import fields, asdict
 
 from aj.plugins.lmn_common.api import ldap_config as params
+from aj.plugins.lmn_common.ldap.models import *
 
 
 class LdapConnector:
@@ -60,6 +61,16 @@ class LdapConnector:
         if field.type.__name__ == 'int':
             # Something like [b'20']
             return int(value[0].decode())
+
+        if field.type.__name__ == 'List':
+            # Creepy test
+            if 'LMNSession' in str(field.type.__args__[0]):
+                result = []
+                for v in value:
+                    data = v.decode().split(';')
+                    members = data[2].split(',')
+                    result.append(LMNSession(data[0], data[1], members))
+                return result
 
     def _request(self, ldap_filter):
         l = ldap.initialize("ldap://localhost:389/")

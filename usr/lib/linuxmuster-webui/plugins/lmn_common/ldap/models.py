@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from datetime import datetime
+from typing import List
 
 
 @dataclass
@@ -58,6 +59,16 @@ class LMNSchoolClass:
     sophomorixType: str
 
 @dataclass
+class LMNSession:
+    sid: datetime
+    name: str
+    members: list
+
+    def __post_init__(self):
+        if isinstance(self.sid, str):
+            self.sid = datetime.strptime(self.sid, '%Y-%m-%d_%H-%M-%S')
+
+@dataclass
 class LMNUser:
     cn: str
     displayName: str
@@ -101,7 +112,7 @@ class LMNUser:
     sophomorixRole: str
     sophomorixSchoolname: str
     sophomorixSchoolPrefix: str
-    sophomorixSessions: list
+    sophomorixSessions: List[LMNSession]
     sophomorixStatus: str
     sophomorixSurnameASCII: str
     sophomorixSurnameInitial: str
@@ -111,14 +122,4 @@ class LMNUser:
     sophomorixWebuiDashboard: list
     sophomorixWebuiPermissionsCalculated: list
     unixHomeDirectory: str
-
-@dataclass
-class LMNSession:
-    sid: datetime
-    name: str
-    members: list
-
-    def __post_init__(self):
-        if isinstance(self.sid, str):
-            self.sid = datetime.strptime(self.sid, '%Y-%m-%d_%H-%M-%S')
 

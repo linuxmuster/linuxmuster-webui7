@@ -7,37 +7,30 @@ from aj.api.http import get, post, put, patch, delete, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue
+from aj.plugins.lmn_common.ldap.requests import LMNLdapRequests
 
 
 @component(HttpPlugin)
 class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
+        self.lr = LMNLdapRequests()
 
     @get(r'/api/lmn/session/sessions')
     @authorize('lm:users:students:read')
     @endpoint(api=True)
     def handle_api_get_sessions(self, http_context):
         supervisor = self.context.identity
-        try:
-            sophomorixCommand = ['sophomorix-session', '-i', '-jj', '--supervisor', supervisor]
-            sessions = lmn_getSophomorixValue(sophomorixCommand, '')
-        except Exception as e:
-            raise EndpointError(e)
-
+        sessions = self.lr.get(f'/user/{supervisor}', dict=False).sophomorixSessions
         sessionsList = []
-        if sessions['SESSIONCOUNT'] == 0:
-            return []
-
-        for session in sessions['SUPERVISOR'][supervisor]['sophomorixSessions']:
-            sessionJson = {}
-            sessionJson['ID'] = session
-            sessionJson['COMMENT'] = sessions['SUPERVISOR'][supervisor]['sophomorixSessions'][session]['COMMENT']
-            if 'PARTICIPANT_COUNT' not in sessions['SUPERVISOR'][supervisor]['sophomorixSessions'][session]:
-                sessionJson['PARTICIPANT_COUNT'] = 0
-            else:
-                sessionJson['PARTICIPANT_COUNT'] = sessions['SUPERVISOR'][supervisor]['sophomorixSessions'][session]['PARTICIPANT_COUNT']
-            sessionsList.append(sessionJson)
+        for session in sessions:
+            s = {
+                'ID': session.sid,
+                'COMMENT': session.name,
+                'PARTICIPANT_COUNT': len(session.members),
+                'PARTICIPANTS': session.members
+            }
+            sessionsList.append(s)
         return sessionsList
 
     @get(r'/api/lmn/session/sessions/(?P<session>[\w\+\-]*)')

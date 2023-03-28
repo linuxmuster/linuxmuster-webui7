@@ -38,6 +38,9 @@ class LdapConnector:
     @staticmethod
     def _filter_value(field, value):
         # TODO : more exception catch on values
+        if value is None:
+            return None
+
         if field.type.__name__ == 'str':
             # Something like [b'']
             return value[0].decode() if value is not None else ''

@@ -749,7 +749,7 @@
             "sAMAccountName": $scope._.addParticipant.sAMAccountName,
             "givenName": $scope._.addParticipant.givenName,
             "sn": $scope._.addParticipant.sn,
-            "sophomorixExamMode": $scope._.addParticipant.sophomorixExamMode,
+            "sophomorixExamMode": $scope._.addParticipant.sophomorixExamMode || '---',
             "group_webfilter": $scope._.addParticipant.MANAGEMENTGROUPS.webfilter,
             "group_intranetaccess": $scope._.addParticipant.MANAGEMENTGROUPS.intranet,
             "group_printing": $scope._.addParticipant.MANAGEMENTGROUPS.printing,
@@ -760,7 +760,8 @@
             "user_existing": true,
             "group_wifiaccess": $scope._.addParticipant.MANAGEMENTGROUPS.wifi,
             "changed": false,
-            "exammode-changed": false
+            "exammode-changed": false,
+            "exammode_boolean": false
           });
         }
         // console.log ($scope.participants)

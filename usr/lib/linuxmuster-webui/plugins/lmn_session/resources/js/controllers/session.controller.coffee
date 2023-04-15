@@ -559,7 +559,7 @@ angular.module('lmn.session').controller 'LMNOldSessionController', ($scope, $ht
                         #if not $scope._.addParticipant.exammode-changed?
                         #            $scope._.addParticipant.exammode-changed = 'False'
                         $scope.participants.push {"sAMAccountName":$scope._.addParticipant.sAMAccountName,"givenName":$scope._.addParticipant.givenName,"sn":$scope._.addParticipant.sn,
-                        "sophomorixExamMode":$scope._.addParticipant.sophomorixExamMode,
+                        "sophomorixExamMode":$scope._.addParticipant.sophomorixExamMode || '---',
                         "group_webfilter":$scope._.addParticipant.MANAGEMENTGROUPS.webfilter,
                         "group_intranetaccess":$scope._.addParticipant.MANAGEMENTGROUPS.intranet,
                         "group_printing":$scope._.addParticipant.MANAGEMENTGROUPS.printing,
@@ -567,7 +567,7 @@ angular.module('lmn.session').controller 'LMNOldSessionController', ($scope, $ht
                         "group_internetaccess":$scope._.addParticipant.MANAGEMENTGROUPS.internet,
                         "sophomorixAdminClass":$scope._.addParticipant.sophomorixAdminClass,
                         "user_existing":true,"group_wifiaccess":$scope._.addParticipant.MANAGEMENTGROUPS.wifi,
-                        "changed": false, "exammode-changed": false}
+                        "changed": false, "exammode-changed": false, "exammode_boolean":false}
                     # console.log ($scope.participants)
                     $scope._.addParticipant = null
 

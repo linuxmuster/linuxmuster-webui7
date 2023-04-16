@@ -73,29 +73,15 @@ class Handler(HttpPlugin):
             logging.info(f"No participants found in {e}")
         return participantList
 
-    @get(r'/api/lmn/session/group/(?P<group>[\w\+\-]*)')
+    @get(r'/api/lmn/session/schoolclass/(?P<schoolclass>[\w\+\-]*)')
     @authorize('lm:users:students:read')
     @endpoint(api=True)
-    def handle_api_get_group(self, http_context, group=None):
-        participantList = []
-        try:
-            sophomorixCommand = ['sophomorix-query', '--group-members', '--user-full', '--sam', group, '-jj']
-            participants = lmn_getSophomorixValue(sophomorixCommand, f'MEMBERS/{group}', True)
-            for user,details in participants.items():
-                details['sAMAccountName'] = user
-                details['changed'] = False
-                details['exammode-changed'] = False
-                # TODO : default values ?
-                details['internet'] = True
-                details['intranet'] = True
-                details['wifi'] = True
-                details['webfilter'] = True
-                details['printing'] = True
+    def handle_api_get_group(self, http_context, schoolclass=None):
+        participantList = self.lr.get(f'/schoolclass/{schoolclass}/students')
+        for participant in participantList:
+            participant['changed'] = False
+            participant['exammode-changed'] = False
 
-                if details['sophomorixRole'] == 'student':
-                    participantList.append(details)
-        except KeyError as e:
-            logging.info(f"No participants found in {e}")
         return participantList
 
     # TODO : post is wrong here

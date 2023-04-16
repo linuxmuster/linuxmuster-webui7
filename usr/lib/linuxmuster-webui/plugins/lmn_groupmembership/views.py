@@ -5,6 +5,7 @@ environment.
 
 # coding=utf-8
 from jadi import component
+
 from aj.api.http import get, post, delete, HttpPlugin
 from aj.api.endpoint import endpoint
 from aj.auth import authorize, AuthenticationService

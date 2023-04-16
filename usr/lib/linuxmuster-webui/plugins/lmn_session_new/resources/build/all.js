@@ -968,8 +968,8 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
           return lmnSession.startGenerated($scope.room.name, resp.data, 'room');
         });
       } else {
-        return $http.get(`/api/lmn/session/group/${groupname}`).then(function(resp) {
-          // get participants from specified class
+        // get participants from specified class
+        return $http.get(`/api/lmn/session/schoolclass/${groupname}`).then(function(resp) {
           return lmnSession.startGenerated(groupname, resp.data, 'schoolclass');
         });
       }

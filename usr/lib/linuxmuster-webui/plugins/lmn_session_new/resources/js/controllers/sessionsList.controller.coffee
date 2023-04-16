@@ -44,8 +44,8 @@ angular.module('lmn.session_new').controller 'LMNSessionsListController', ($scop
             $http.post("/api/lmn/session/userinfo", {users:$scope.room.usersList}).then (resp) ->
                 lmnSession.startGenerated($scope.room.name, resp.data, 'room')
         else
-            $http.get("/api/lmn/session/group/#{groupname}").then (resp) ->
-                # get participants from specified class
+            # get participants from specified class
+            $http.get("/api/lmn/session/schoolclass/#{groupname}").then (resp) ->
                 lmnSession.startGenerated(groupname, resp.data, 'schoolclass')
 
     $scope.$watch 'identity.user', ->

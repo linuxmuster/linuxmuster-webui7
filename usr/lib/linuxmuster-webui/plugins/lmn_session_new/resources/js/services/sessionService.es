@@ -24,7 +24,7 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
 
     this.start = (session) => {
         this.current = session;
-        $http.get(`/api/lmn/session/sessions/${this.current.sid}`).then((resp) => {
+        $http.post('/api/lmn/session/userinfo', {'users': this.current.participants}).then((resp) => {
             this.current.participants = resp.data;
             this.current.generated = false;
             this.current.type = 'session';
@@ -107,6 +107,7 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
     }
 
     this.getParticipants = () => {
+        // TODO : URL does not exist anymore
         return $http.get(`/api/lmn/session/sessions/${this.current.sid}`).then((resp) => {
             return resp.data;
         });

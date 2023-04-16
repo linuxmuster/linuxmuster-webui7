@@ -33,46 +33,6 @@ class Handler(HttpPlugin):
             sessionsList.append(s)
         return sessionsList
 
-    @get(r'/api/lmn/session/sessions/(?P<session>[\w\+\-]*)')
-    @authorize('lm:users:students:read')
-    @endpoint(api=True)
-    def handle_api_get_session(self, http_context, session=None):
-
-        def convert_bool(value):
-            if value == 'TRUE':
-                return True
-            if value == 'FALSE':
-                return False
-            return value
-
-        participantList = []
-        try:
-            sophomorixCommand = ['sophomorix-session', '-i', '-jj', '--session', session]
-            participants = lmn_getSophomorixValue(sophomorixCommand, f'ID/{session}/PARTICIPANTS', True)
-            for user,details in participants.items():
-                details['sAMAccountName'] = user
-                details['changed'] = False
-                details['exammode-changed'] = False
-                details['internet'] = details['group_internetaccess']
-                details['intranet'] = details['group_intranetaccess']
-                details['wifi'] = details['group_wifiaccess']
-                details['webfilter'] = details['group_webfilter']
-                details['printing'] = details['group_printing']
-
-                del details['group_internetaccess']
-                del details['group_intranetaccess']
-                del details['group_wifiaccess']
-                del details['group_webfilter']
-                del details['group_printing']
-
-                for key,value in details.items():
-                    details[key] = convert_bool(value)
-
-                participantList.append(details)
-        except KeyError as e:
-            logging.info(f"No participants found in {e}")
-        return participantList
-
     @get(r'/api/lmn/session/schoolclass/(?P<schoolclass>[\w\+\-]*)')
     @authorize('lm:users:students:read')
     @endpoint(api=True)

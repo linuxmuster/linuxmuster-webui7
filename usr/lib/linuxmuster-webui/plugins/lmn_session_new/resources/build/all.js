@@ -54,7 +54,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
 
     this.start = function (session) {
         _this.current = session;
-        $http.get('/api/lmn/session/sessions/' + _this.current.sid).then(function (resp) {
+        $http.post('/api/lmn/session/userinfo', { 'users': _this.current.participants }).then(function (resp) {
             _this.current.participants = resp.data;
             _this.current.generated = false;
             _this.current.type = 'session';

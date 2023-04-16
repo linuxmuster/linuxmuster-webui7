@@ -97,7 +97,7 @@ class LMNSchoolClass:
 class LMNSession:
     sid: str
     name: str
-    members: list
+    participants: list
 
     def __post_init__(self):
         self.created = datetime.strptime(self.sid, '%Y-%m-%d_%H-%M-%S')

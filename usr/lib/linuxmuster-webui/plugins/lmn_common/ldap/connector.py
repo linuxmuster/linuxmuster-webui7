@@ -68,8 +68,8 @@ class LdapConnector:
                 result = []
                 for v in value:
                     data = v.decode().split(';')
-                    members = data[2].split(',')
-                    result.append(LMNSession(data[0], data[1], members))
+                    participants = data[2].split(',')
+                    result.append(LMNSession(data[0], data[1], participants))
                 return result
 
     def _request(self, ldap_filter):

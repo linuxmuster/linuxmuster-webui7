@@ -107,16 +107,9 @@ class Handler(HttpPlugin):
         result = []
 
         def get_user_info(user):
-            sophomorixCommand = ['sophomorix-query', '--user-full', '--sam', user, '-jj']
-            details = lmn_getSophomorixValue(sophomorixCommand, f'USER/{user}', True)
+            details = self.lr.get(f'/user/{user}')
             details['changed'] = False
             details['exammode-changed'] = False
-            # TODO : default values ?
-            details['internet'] = True
-            details['intranet'] = True
-            details['wifi'] = True
-            details['webfilter'] = True
-            details['printing'] = True
 
             result.append(details)
 

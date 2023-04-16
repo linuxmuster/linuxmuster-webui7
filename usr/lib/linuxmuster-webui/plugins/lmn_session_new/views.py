@@ -20,15 +20,15 @@ class Handler(HttpPlugin):
     @authorize('lm:users:students:read')
     @endpoint(api=True)
     def handle_api_get_sessions(self, http_context):
-        supervisor = self.context.identity
-        sessions = self.lr.get(f'/user/{supervisor}', dict=False).sophomorixSessions
+        user = self.context.identity
+        sessions = self.lr.get(f'/user/{user}', dict=False).sophomorixSessions
         sessionsList = []
         for session in sessions:
             s = {
-                'ID': session.sid,
-                'COMMENT': session.name,
-                'PARTICIPANT_COUNT': len(session.members),
-                'PARTICIPANTS': session.members
+                'sid': session.sid,
+                'name': session.name,
+                'participants_count': len(session.participants),
+                'participants': session.participants
             }
             sessionsList.append(s)
         return sessionsList

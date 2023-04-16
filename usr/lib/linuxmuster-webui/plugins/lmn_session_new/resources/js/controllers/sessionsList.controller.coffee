@@ -10,17 +10,18 @@ angular.module('lmn.session_new').controller 'LMNSessionsListController', ($scop
         'name': '',
         'objects': {},
     }
+
     $http.get('/api/lmn/session/userInRoom').then (resp) ->
         if resp.data != 0
             $scope.room = resp.data
         $scope.loading = false
 
     $scope.renameSession = (session) ->
-        lmnSession.rename(session.ID, session.COMMENT).then (resp) ->
-            session.COMMENT = resp
+        lmnSession.rename(session.sid, session.name).then (resp) ->
+            session.name = resp
 
     $scope.killSession = (session) ->
-        lmnSession.kill(session.ID, session.COMMENT).then () ->
+        lmnSession.kill(session.sid, session.name).then () ->
             position = $scope.sessions.indexOf(session)
             $scope.sessions.splice(position, 1)
 

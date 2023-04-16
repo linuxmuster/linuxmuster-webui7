@@ -5,7 +5,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
     $scope.addSchoolClass = ''
 
     $window.onbeforeunload = (event) ->
-        if $scope.session.ID == '' or $scope.session.participants.length == 0
+        if $scope.session.sid == '' or $scope.session.participants.length == 0
             return
         # Confirm before page reload
         return "Eventually not refreshing"
@@ -18,7 +18,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
     )
 
     $scope.$on("$locationChangeStart", (event) ->
-        if $scope.session.ID != '' and $scope.session.participants.length > 0
+        if $scope.session.sid != '' and $scope.session.participants.length > 0
             if !confirm(gettext('Do you really want to quit this session ? You can restart it later if you want.'))
                 event.preventDefault()
                 return
@@ -108,16 +108,16 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
     $scope.session = lmnSession.current
 
     if $scope.session.type == 'schoolclass'
-        title = " > " + gettext("Schoolclass") + " #{$scope.session.COMMENT}"
+        title = " > " + gettext("Schoolclass") + " #{$scope.session.name}"
     else if $scope.session.type == 'room'
-        title = " > " + gettext("Room") + " #{$scope.session.COMMENT}"
+        title = " > " + gettext("Room") + " #{$scope.session.name}"
     else
-        title = " > " + gettext("Group") + " #{$scope.session.COMMENT}"
+        title = " > " + gettext("Group") + " #{$scope.session.name}"
 
     pageTitle.set(gettext('Session') + title )
 
     # Nothing defined, going back to session list
-    if $scope.session.ID == ''
+    if $scope.session.sid == ''
         $scope.backToSessionList()
 
     $scope.updateParticipants = () ->
@@ -169,11 +169,11 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
             $scope.changeState = false
 
     $scope.renameSession = () ->
-        lmnSession.rename($scope.session.ID, $scope.session.COMMENT).then (resp) ->
-            $scope.session.COMMENT = resp
+        lmnSession.rename($scope.session.sid, $scope.session.name).then (resp) ->
+            $scope.session.name = resp
 
     $scope.killSession = () ->
-        lmnSession.kill($scope.session.ID, $scope.session.COMMENT).then () ->
+        lmnSession.kill($scope.session.sid, $scope.session.name).then () ->
             $scope.backToSessionList()
 
     $scope.saveAsSession = () ->
@@ -222,7 +222,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
                 $scope.addParticipant = ''
                 if !$scope.session.generated
                     # Real session: must be added in LDAP
-                    $http.post('/api/lmn/session/participants', {'users':[new_participant.sAMAccountName], 'session': $scope.session.ID})
+                    $http.post('/api/lmn/session/participants', {'users':[new_participant.sAMAccountName], 'session': $scope.session.sid})
                 $scope.session.participants.push(new_participant)
 
     $scope.$watch 'addSchoolClass', () ->
@@ -233,7 +233,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
                 $scope.addSchoolClass = ''
                 if !$scope.session.generated
                     # Real session: must be added in LDAP
-                    $http.post('/api/lmn/session/participants', {'users':members, 'session': $scope.session.ID})
+                    $http.post('/api/lmn/session/participants', {'users':members, 'session': $scope.session.sid})
                 $scope.session.participants = $scope.session.participants.concat(new_participants)
 
     $scope.removeParticipant = (participant) ->
@@ -243,7 +243,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
                 # Not a real session, just removing from participants list displayed
                 $scope.session.participants.splice(deleteIndex, 1)
             else
-                $http.patch('/api/lmn/session/participants', {'users':[participant.sAMAccountName], 'session': $scope.session.ID}).then () ->
+                $http.patch('/api/lmn/session/participants', {'users':[participant.sAMAccountName], 'session': $scope.session.sid}).then () ->
                     $scope.session.participants.splice(deleteIndex, 1)
 
     $scope.changeExamSupervisor = (participant, supervisor) ->
@@ -384,11 +384,11 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
                 $scope.websessionGetStatus()
             else
                 $scope.websessionEnabled = false;
-
+    $scope.getWebConferenceEnabled()
     $scope.websessionIsRunning = false
 
     $scope.websessionGetStatus = () ->
-        sessionname = $scope.session.COMMENT + "-" + $scope.session.ID
+        sessionname = $scope.session.name + "-" + $scope.session.sid
         $http.get("/api/lmn/websession/webConference/#{sessionname}").then (resp) ->
             if resp.data["status"] is "SUCCESS"
                 if resp.data["data"]["status"] == "started"
@@ -421,12 +421,12 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         for participant in $scope.session.participants
             tempparticipants.push(participant.sAMAccountName)
 
-        $http.post('/api/lmn/websession/webConferences', {sessionname: $scope.session.COMMENT + "-" + $scope.session.ID, sessiontype: "private", sessionpassword: "", participants: tempparticipants}).then (resp) ->
+        $http.post('/api/lmn/websession/webConferences', {sessionname: $scope.session.name + "-" + $scope.session.sid, sessiontype: "private", sessionpassword: "", participants: tempparticipants}).then (resp) ->
             if resp.data["status"] is "SUCCESS"
                 $scope.websessionID = resp.data["id"]
                 $scope.websessionAttendeePW = resp.data["attendeepw"]
                 $scope.websessionModeratorPW = resp.data["moderatorpw"]
-                $http.post('/api/lmn/websession/startWebConference', {sessionname: $scope.session.COMMENT + "-" + $scope.session.ID, id: $scope.websessionID, attendeepw: $scope.websessionAttendeePW, moderatorpw: $scope.websessionModeratorPW}).then (resp) ->
+                $http.post('/api/lmn/websession/startWebConference', {sessionname: $scope.session.name + "-" + $scope.session.sid, id: $scope.websessionID, attendeepw: $scope.websessionAttendeePW, moderatorpw: $scope.websessionModeratorPW}).then (resp) ->
                     if resp.data["returncode"] is "SUCCESS"
                         $http.post('/api/lmn/websession/joinWebConference', {id: $scope.websessionID, password: $scope.websessionModeratorPW, name: $scope.identity.profile.sn + ", " + $scope.identity.profile.givenName}).then (resp) ->
                             $scope.websessionIsRunning = true

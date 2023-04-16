@@ -24,7 +24,7 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
 
     this.start = (session) => {
         this.current = session;
-        $http.get(`/api/lmn/session/sessions/${this.current.ID}`).then((resp) => {
+        $http.get(`/api/lmn/session/sessions/${this.current.sid}`).then((resp) => {
             this.current.participants = resp.data;
             this.current.generated = false;
             this.current.type = 'session';
@@ -34,8 +34,8 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
 
     this.reset = () => {
        this.current = {
-            'ID': '',
-            'COMMENT': '',
+            'sid': '',
+            'name': '',
             'generated': false,
             'participants': [],
             'type': '',
@@ -46,8 +46,8 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
 
     this.startGenerated = (groupname, participants, session_type) =>  {
         generatedSession = {
-            'ID': Date.now(),
-            'COMMENT': `${groupname}`,
+            'sid': Date.now(),
+            'name': `${groupname}`,
             'participants': participants,
             'generated': true,
             'type': session_type, // May be room or schoolclass
@@ -107,7 +107,7 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
     }
 
     this.getParticipants = () => {
-        return $http.get(`/api/lmn/session/sessions/${this.current.ID}`).then((resp) => {
+        return $http.get(`/api/lmn/session/sessions/${this.current.sid}`).then((resp) => {
             return resp.data;
         });
     }

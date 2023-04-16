@@ -54,7 +54,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
 
     this.start = function (session) {
         _this.current = session;
-        $http.get('/api/lmn/session/sessions/' + _this.current.ID).then(function (resp) {
+        $http.get('/api/lmn/session/sessions/' + _this.current.sid).then(function (resp) {
             _this.current.participants = resp.data;
             _this.current.generated = false;
             _this.current.type = 'session';
@@ -64,8 +64,8 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
 
     this.reset = function () {
         _this.current = {
-            'ID': '',
-            'COMMENT': '',
+            'sid': '',
+            'name': '',
             'generated': false,
             'participants': [],
             'type': ''
@@ -76,8 +76,8 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
 
     this.startGenerated = function (groupname, participants, session_type) {
         generatedSession = {
-            'ID': Date.now(),
-            'COMMENT': '' + groupname,
+            'sid': Date.now(),
+            'name': '' + groupname,
             'participants': participants,
             'generated': true,
             'type': session_type // May be room or schoolclass
@@ -143,7 +143,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     };
 
     this.getParticipants = function () {
-        return $http.get('/api/lmn/session/sessions/' + _this.current.ID).then(function (resp) {
+        return $http.get('/api/lmn/session/sessions/' + _this.current.sid).then(function (resp) {
             return resp.data;
         });
     };
@@ -160,7 +160,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     $scope.addParticipant = '';
     $scope.addSchoolClass = '';
     $window.onbeforeunload = function(event) {
-      if ($scope.session.ID === '' || $scope.session.participants.length === 0) {
+      if ($scope.session.sid === '' || $scope.session.participants.length === 0) {
         return;
       }
       // Confirm before page reload
@@ -174,7 +174,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       return $window.onbeforeunload = void 0;
     });
     $scope.$on("$locationChangeStart", function(event) {
-      if ($scope.session.ID !== '' && $scope.session.participants.length > 0) {
+      if ($scope.session.sid !== '' && $scope.session.participants.length > 0) {
         if (!confirm(gettext('Do you really want to quit this session ? You can restart it later if you want.'))) {
           event.preventDefault();
           return;
@@ -278,15 +278,15 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     };
     $scope.session = lmnSession.current;
     if ($scope.session.type === 'schoolclass') {
-      title = " > " + gettext("Schoolclass") + ` ${$scope.session.COMMENT}`;
+      title = " > " + gettext("Schoolclass") + ` ${$scope.session.name}`;
     } else if ($scope.session.type === 'room') {
-      title = " > " + gettext("Room") + ` ${$scope.session.COMMENT}`;
+      title = " > " + gettext("Room") + ` ${$scope.session.name}`;
     } else {
-      title = " > " + gettext("Group") + ` ${$scope.session.COMMENT}`;
+      title = " > " + gettext("Group") + ` ${$scope.session.name}`;
     }
     pageTitle.set(gettext('Session') + title);
     // Nothing defined, going back to session list
-    if ($scope.session.ID === '') {
+    if ($scope.session.sid === '') {
       $scope.backToSessionList();
     }
     $scope.updateParticipants = function() {
@@ -355,12 +355,12 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       });
     };
     $scope.renameSession = function() {
-      return lmnSession.rename($scope.session.ID, $scope.session.COMMENT).then(function(resp) {
-        return $scope.session.COMMENT = resp;
+      return lmnSession.rename($scope.session.sid, $scope.session.name).then(function(resp) {
+        return $scope.session.name = resp;
       });
     };
     $scope.killSession = function() {
-      return lmnSession.kill($scope.session.ID, $scope.session.COMMENT).then(function() {
+      return lmnSession.kill($scope.session.sid, $scope.session.name).then(function() {
         return $scope.backToSessionList();
       });
     };
@@ -433,7 +433,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
             // Real session: must be added in LDAP
             $http.post('/api/lmn/session/participants', {
               'users': [new_participant.sAMAccountName],
-              'session': $scope.session.ID
+              'session': $scope.session.sid
             });
           }
           return $scope.session.participants.push(new_participant);
@@ -454,7 +454,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
             // Real session: must be added in LDAP
             $http.post('/api/lmn/session/participants', {
               'users': members,
-              'session': $scope.session.ID
+              'session': $scope.session.sid
             });
           }
           return $scope.session.participants = $scope.session.participants.concat(new_participants);
@@ -471,7 +471,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         } else {
           return $http.patch('/api/lmn/session/participants', {
             'users': [participant.sAMAccountName],
-            'session': $scope.session.ID
+            'session': $scope.session.sid
           }).then(function() {
             return $scope.session.participants.splice(deleteIndex, 1);
           });
@@ -699,10 +699,11 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         }
       });
     };
+    $scope.getWebConferenceEnabled();
     $scope.websessionIsRunning = false;
     $scope.websessionGetStatus = function() {
       var sessionname;
-      sessionname = $scope.session.COMMENT + "-" + $scope.session.ID;
+      sessionname = $scope.session.name + "-" + $scope.session.sid;
       return $http.get(`/api/lmn/websession/webConference/${sessionname}`).then(function(resp) {
         if (resp.data["status"] === "SUCCESS") {
           if (resp.data["data"]["status"] === "started") {
@@ -749,7 +750,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         tempparticipants.push(participant.sAMAccountName);
       }
       return $http.post('/api/lmn/websession/webConferences', {
-        sessionname: $scope.session.COMMENT + "-" + $scope.session.ID,
+        sessionname: $scope.session.name + "-" + $scope.session.sid,
         sessiontype: "private",
         sessionpassword: "",
         participants: tempparticipants
@@ -759,7 +760,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
           $scope.websessionAttendeePW = resp.data["attendeepw"];
           $scope.websessionModeratorPW = resp.data["moderatorpw"];
           return $http.post('/api/lmn/websession/startWebConference', {
-            sessionname: $scope.session.COMMENT + "-" + $scope.session.ID,
+            sessionname: $scope.session.name + "-" + $scope.session.sid,
             id: $scope.websessionID,
             attendeepw: $scope.websessionAttendeePW,
             moderatorpw: $scope.websessionModeratorPW
@@ -932,12 +933,12 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       return $scope.loading = false;
     });
     $scope.renameSession = function(session) {
-      return lmnSession.rename(session.ID, session.COMMENT).then(function(resp) {
-        return session.COMMENT = resp;
+      return lmnSession.rename(session.sid, session.name).then(function(resp) {
+        return session.name = resp;
       });
     };
     $scope.killSession = function(session) {
-      return lmnSession.kill(session.ID, session.COMMENT).then(function() {
+      return lmnSession.kill(session.sid, session.name).then(function() {
         var position;
         position = $scope.sessions.indexOf(session);
         return $scope.sessions.splice(position, 1);

@@ -90,7 +90,10 @@
 
     <table class="table" style="margin-bottom:60px;" ng:class="{'lmn-blurred': blurred}" ng:show="session.participants.length > 0">
         <tr>
-            <th ng:repeat="(id, field) in fields" ng:if="field.visible"><div title="{{field.title}}" class="{{field.icon}}" style="font-size:20px;"></div> <br>{{field.name}}
+            <th ng:repeat="(id, field) in fields" ng:if="field.visible">
+                <div title="{{field.title}}" class="{{field.icon}}" style="font-size:20px;"></div>
+                <br /> {{field.name}}
+                <span ng:if="id == 'sAMAccountName'" class="label label-info pull-right">{{session.participants.length}}</span>
                 <span checkbox style="float:right;" id="{{id}}.all" ng:if="field.examBox" ng-click="selectAll('exammode')" ng:model=field.checkboxStatus>"</span>
                 <span checkbox style="float:right;" id="{{id}}.all" ng:if="field.checkboxAll" ng-click="setManagementGroupAll(id)" ng:model=field.checkboxStatus>"</span>
             </th>

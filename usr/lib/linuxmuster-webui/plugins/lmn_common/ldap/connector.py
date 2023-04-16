@@ -70,7 +70,7 @@ class LdapConnector:
                 result = []
                 for v in value:
                     data = v.decode().split(';')
-                    participants = data[2].split(',')
+                    participants = data[2].split(',') if data[2] else []
                     result.append(LMNSession(data[0], data[1], participants))
                 return result
 

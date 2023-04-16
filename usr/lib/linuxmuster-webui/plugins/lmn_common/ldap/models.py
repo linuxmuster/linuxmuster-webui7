@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
 from typing import List
 import ldap
@@ -29,15 +29,6 @@ def extract_projects(membership):
                 projects.append(project)
     return projects
 
-def extract_management(membership):
-    management = []
-    for dn in membership:
-        if 'OU=Management' in dn:
-            group = extract_name(dn)
-            if group in ['internet', 'intranet', 'printing', 'webfilter', 'wifi']:
-                management.append(group)
-    return management
-
 @dataclass
 class LMNProject:
     cn: str
@@ -52,7 +43,7 @@ class LMNProject:
     sophomorixAddQuota: list
     sophomorixAdminGroups: list
     sophomorixAdmins: list
-    sophomorixCreationDate: datetime
+    sophomorixCreationDate: str # datetime
     sophomorixHidden: bool
     sophomorixJoinable: bool
     sophomorixMailAlias: bool
@@ -80,7 +71,7 @@ class LMNSchoolClass:
     sophomorixAddMailQuota: list
     sophomorixAddQuota: list
     sophomorixAdmins: list
-    sophomorixCreationDate: datetime
+    sophomorixCreationDate: str # datetime
     sophomorixHidden: bool
     sophomorixJoinable: bool
     sophomorixMailAlias: list
@@ -98,9 +89,6 @@ class LMNSession:
     sid: str
     name: str
     participants: list
-
-    def __post_init__(self):
-        self.created = datetime.strptime(self.sid, '%Y-%m-%d_%H-%M-%S')
 
 @dataclass
 class LMNUser:
@@ -122,7 +110,7 @@ class LMNUser:
     sophomorixBirthdate: str
     sophomorixCloudQuotaCalculated: list
     sophomorixComment: str
-    sophomorixCreationDate: datetime
+    sophomorixCreationDate: str # datetime
     sophomorixCustom1: str
     sophomorixCustom2: str
     sophomorixCustom3: str
@@ -133,7 +121,7 @@ class LMNUser:
     sophomorixCustomMulti3: list
     sophomorixCustomMulti4: list
     sophomorixCustomMulti5: list
-    sophomorixDeactivationDate: datetime
+    sophomorixDeactivationDate: str # datetime
     sophomorixExamMode: list
     sophomorixExitAdminClass: str
     sophomorixFirstnameASCII: str
@@ -150,15 +138,29 @@ class LMNUser:
     sophomorixStatus: str
     sophomorixSurnameASCII: str
     sophomorixSurnameInitial: str
-    sophomorixTolerationDate: datetime
+    sophomorixTolerationDate: str # datetime
     sophomorixUnid: str
     sophomorixUserToken: str
     sophomorixWebuiDashboard: list
     sophomorixWebuiPermissionsCalculated: list
     unixHomeDirectory: str
+    internet: bool = field(init=False)
+    intranet: bool = field(init=False)
+    printing: bool = field(init=False)
+    webfilter: bool = field(init=False)
+    wifi: bool = field(init=False)
+    projects: list = field(init=False)
+    schoolclasses: list = field(init=False)
+
+    def extract_management(self):
+        for group in ['internet', 'intranet', 'printing', 'webfilter', 'wifi']:
+            setattr(self, group, False)
+            for dn in self.memberOf:
+                if dn.startswith(f"CN={group},OU=Management"):
+                    setattr(self, group, True)
 
     def __post_init__(self):
         self.schoolclasses = extract_schoolclasses(self.memberOf)
         self.projects = extract_projects(self.memberOf)
-        self.management = extract_management(self.memberOf)
+        self.extract_management()
 

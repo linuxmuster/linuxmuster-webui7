@@ -11,27 +11,29 @@ class LdapConnector:
 
     def get_single(self, objectclass, ldap_filter, dict=True):
         result = self._request(ldap_filter)[0][1]
-        d = {}
-        for f in fields(objectclass):
-            value = result.get(f.name, None)
-            d[f.name] = self._filter_value(f, value)
+        data = {}
+        for field in fields(objectclass):
+            if field.init:
+                value = result.get(field.name, None)
+                data[field.name] = self._filter_value(field, value)
         if dict:
-            return asdict(objectclass(**d))
-        return objectclass(**d)
+            return asdict(objectclass(**data))
+        return objectclass(**data)
         
     def get_collection(self, objectclass, ldap_filter, dict=True, sortkey=None):
-        result = self._request(ldap_filter)
+        results = self._request(ldap_filter)
         response = []
-        for r in result:
-            if r[0] is not None:
-                d = {}
-                for f in fields(objectclass):
-                    value = r[1].get(f.name, None)
-                    d[f.name] = self._filter_value(f, value)
+        for result in results:
+            if result[0] is not None:
+                data = {}
+                for field in fields(objectclass):
+                    if field.init:
+                        value = result[1].get(field.name, None)
+                        data[field.name] = self._filter_value(field, value)
                 if dict:
-                    response.append(asdict(objectclass(**d)))
+                    response.append(asdict(objectclass(**data)))
                 else:
-                    response.append(objectclass(**d))
+                    response.append(objectclass(**data))
         if sortkey is not None:
             return sorted(response, key=lambda d: getattr(d, sortkey))
         return response
@@ -54,9 +56,9 @@ class LdapConnector:
             # Something like [b'FALSE']
             return value[0].capitalize() == b'True'
 
-        if field.type.__name__ == 'datetime':
+        # if field.type.__name__ == 'datetime':
             # Something like [b'20210520111726.0Z']
-            return datetime.strptime(value[0].decode(), '%Y%m%d%H%M%S.%fZ')
+            # return datetime.strptime(value[0].decode(), '%Y%m%d%H%M%S.%fZ')
 
         if field.type.__name__ == 'int':
             # Something like [b'20']

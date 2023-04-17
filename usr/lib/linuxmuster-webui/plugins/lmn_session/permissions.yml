@@ -5,5 +5,5 @@ schooladministrator:
 student:
 - 'sidebar:view:/view/lmn/oldsession: false'
 teacher:
-- 'lmn:session:trans: true'
+- 'lmn:oldsession:trans: true'
 - 'sidebar:view:/view/lmn/oldsession: true'

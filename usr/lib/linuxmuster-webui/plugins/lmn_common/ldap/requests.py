@@ -3,7 +3,6 @@ import re
 from aj.plugins.lmn_common.ldap.connector import LdapConnector
 from aj.plugins.lmn_common.ldap.models import *
 
-print(dir(LMNUser))
 
 def lmnapi(pattern):
     def decorator(f):

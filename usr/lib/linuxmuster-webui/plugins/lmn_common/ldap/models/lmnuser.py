@@ -66,11 +66,15 @@ class LMNUser:
     projects: list = field(init=False)
     schoolclasses: list = field(init=False)
 
-    def extract_name(self, dn):
+    def split_dn(self, dn):
         # 'CN=11c,OU=11c,OU=Students,OU=default-school,OU=SCHOOLS...' becomes :
-        # [[('CN', '11c', 1)], [('OU', '11c', 1)], [('OU', 'Students', 1)],...]
+        # [['CN', '11c'], ['OU', '11c'], ['OU', 'Students'],...]
+        return [node.split("=") for node in dn.split(',')]
+
+    def common_name(self, dn):
         try:
-            return ldap.dn.str2dn(dn)[0][0][1]
+            # [['CN', '11c'], ['OU', '11c'], ['OU', 'Students'],...]
+            return self.split_dn(dn)[0][1]
         except KeyError:
             return ''
 
@@ -78,7 +82,7 @@ class LMNUser:
         schoolclasses = []
         for dn in membership:
             if 'OU=Students' in dn:
-                schoolclass = self.extract_name(dn)
+                schoolclass = self.common_name(dn)
                 if schoolclass:
                     schoolclasses.append(schoolclass)
         return schoolclasses
@@ -87,7 +91,7 @@ class LMNUser:
         projects = []
         for dn in membership:
             if 'OU=Projects' in dn:
-                project = self.extract_name(dn)
+                project = self.common_name(dn)
                 if project:
                     projects.append(project)
         return projects

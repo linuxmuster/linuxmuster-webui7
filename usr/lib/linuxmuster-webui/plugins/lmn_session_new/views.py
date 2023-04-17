@@ -215,12 +215,18 @@ class Handler(HttpPlugin):
             room = response[username]['ROOM']
             response.pop(username, None)
             return {
-                "usersList": response.keys(),
+                "usersList": response.keys() if response else [],
                 "name": room,
                 "objects": response,
             }
         except IndexError as e:
-            return 0
+            # response is an empty dict, not able to detect the room
+            # or the other users in room
+            return {
+                "usersList": [],
+                "name": '',
+                "objects": {},
+            }
 
     @get(r'/api/lmn/session/user-search/(?P<query>.*)')
     @authorize('lm:users:students:read')

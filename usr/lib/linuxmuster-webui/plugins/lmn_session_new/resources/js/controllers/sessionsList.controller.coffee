@@ -5,15 +5,8 @@ angular.module('lmn.session_new').controller 'LMNSessionsListController', ($scop
     $scope.generateRoomSessionMouseover = gettext('Start session containing all users in this room')
     $scope.loading = true
 
-    $scope.room = {
-        "usersList": [],
-        'name': '',
-        'objects': {},
-    }
-
     $http.get('/api/lmn/session/userInRoom').then (resp) ->
-        if resp.data != 0
-            $scope.room = resp.data
+        $scope.room = resp.data
         $scope.loading = false
 
     $scope.renameSession = (session) ->

@@ -122,7 +122,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
 
     $scope.updateParticipants = () ->
         $http.get('/api/lmn/session/userInRoom').then (resp) ->
-            if resp.data != 0
+            if resp.data.usersList.length != 0
                 $http.post("/api/lmn/session/userinfo", {users:resp.data.usersList}).then (rp) ->
                     $scope.session.participants = rp.data
 
@@ -195,10 +195,10 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
 
     $scope.showRoomDetails = () ->
         $http.get('/api/lmn/session/userInRoom').then (resp) ->
-            if resp.data == 0
-                messagebox.show(title: gettext('Info'), text: gettext('Currenty its not possible to determine your room, try to login into your computer again.'), positive: 'OK')
+            if resp.data.name == ''
+                messagebox.show(title: gettext('Info'), text: gettext('Currently its not possible to determine your room, try to login into your computer again.'), positive: 'OK')
             else
-                usersInRoom=resp.data
+                usersInRoom = resp.data
                 $uibModal.open(
                    templateUrl: '/lmn_session_new:resources/partial/roomDetails.modal.html'
                    controller:  'LMNRoomDetailsController'

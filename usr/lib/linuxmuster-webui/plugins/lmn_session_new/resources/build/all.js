@@ -143,6 +143,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     };
 
     this.getParticipants = function () {
+        // TODO : URL does not exist anymore
         return $http.get('/api/lmn/session/sessions/' + _this.current.sid).then(function (resp) {
             return resp.data;
         });
@@ -291,7 +292,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     }
     $scope.updateParticipants = function() {
       return $http.get('/api/lmn/session/userInRoom').then(function(resp) {
-        if (resp.data !== 0) {
+        if (resp.data.usersList.length !== 0) {
           return $http.post("/api/lmn/session/userinfo", {
             users: resp.data.usersList
           }).then(function(rp) {
@@ -390,10 +391,10 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     $scope.showRoomDetails = function() {
       return $http.get('/api/lmn/session/userInRoom').then(function(resp) {
         var usersInRoom;
-        if (resp.data === 0) {
+        if (resp.data.name === '') {
           return messagebox.show({
             title: gettext('Info'),
-            text: gettext('Currenty its not possible to determine your room, try to login into your computer again.'),
+            text: gettext('Currently its not possible to determine your room, try to login into your computer again.'),
             positive: 'OK'
           });
         } else {
@@ -921,15 +922,8 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     $scope.startSchoolclassSessionMouseover = gettext('Start this session with all student in this schoolclass');
     $scope.generateRoomSessionMouseover = gettext('Start session containing all users in this room');
     $scope.loading = true;
-    $scope.room = {
-      "usersList": [],
-      'name': '',
-      'objects': {}
-    };
     $http.get('/api/lmn/session/userInRoom').then(function(resp) {
-      if (resp.data !== 0) {
-        $scope.room = resp.data;
-      }
+      $scope.room = resp.data;
       return $scope.loading = false;
     });
     $scope.renameSession = function(session) {

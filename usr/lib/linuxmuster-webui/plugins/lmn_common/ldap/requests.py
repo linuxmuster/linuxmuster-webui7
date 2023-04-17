@@ -5,6 +5,10 @@ from aj.plugins.lmn_common.ldap.models import *
 
 
 def lmnapi(pattern):
+    """
+    API decorator to associate with an URL.
+    """
+
     def decorator(f):
         f.url_pattern = re.compile(f'^{pattern}$')
         return f
@@ -16,6 +20,10 @@ class LMNLdapRequests:
         self.methods = [getattr(self,method) for method in dir(self) if method.startswith('get_')]
 
     def get(self, url, **kwargs):
+        """
+        Parse all urls and find the correct API to handle the request.
+        """
+
         for method in self.methods:
             match = method.url_pattern.match(url)
             if match:
@@ -26,6 +34,11 @@ class LMNLdapRequests:
     # SINGLE ENTRIES
     @lmnapi(r'/user/(?P<username>\w*)')
     def get_user(self, username, **kwargs):
+        """
+        Get all details from a specific user.
+        Return a LMNUser data object.
+        """
+
         ldap_filter = f"""(&
                                     (cn={username})
                                     (objectClass=user)
@@ -41,6 +54,10 @@ class LMNLdapRequests:
 
     @lmnapi(r'/schoolclass/(?P<schoolclass>\w*)')
     def get_schoolclass(self, schoolclass, **kwargs):
+        """
+        Get all details from a specific schoolclass.
+        Return a LMNSchoolClass data object
+        """
 
         ldap_filter = f"""(&(cn={schoolclass})(objectClass=group)(sophomorixType=adminclass))"""
 
@@ -49,6 +66,11 @@ class LMNLdapRequests:
     # COLLECTION OF ENTRIES
     @lmnapi(r'/schoolclass/(?P<schoolclass>[a-z0-9\-]*)/students')
     def get_all_students_from_schoolclass(self, schoolclass, **kwargs):
+        """
+        Get all students details from a specific schoolclass.
+        Return a list of LMNUser data objects.
+        """
+
         ldap_filter = f"""(&
                                     (objectClass=user)
                                     (sophomorixAdminClass={schoolclass})
@@ -59,6 +81,10 @@ class LMNLdapRequests:
 
     @lmnapi(r'/schoolclasses')
     def get_all_schoolclasses(self, **kwargs):
+        """
+        Get all schoolclasses details.
+        Return a list of LMNSchoolClass data objects.
+        """
 
         ldap_filter = """(&(objectClass=group)(sophomorixType=adminclass))"""
 
@@ -66,6 +92,10 @@ class LMNLdapRequests:
 
     @lmnapi(r'/role/(?P<role>.*)')
     def get_all_from_role(self, role='teacher', **kwargs):
+        """
+        Get all user from a same role.
+        Return a list of LMNUser data objects.
+        """
 
         ldap_filter = f"(&(objectClass=user)(sophomorixRole={role}))"
 

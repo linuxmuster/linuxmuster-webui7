@@ -10,6 +10,18 @@ from aj.plugins.lmn_common.ldap.models import *
 class LdapConnector:
 
     def get_single(self, objectclass, ldap_filter, dict=True):
+        """
+        Handle a single result from a ldap request (with required ldap filter)
+        and convert it in the given object class.
+
+        :param objectclass: dataclass like LMNUser
+        :type objectclass:
+        :param ldap_filter: A valid ldap filter
+        :type ldap_filter: basestring
+        :param dict: if True, returns a dict, else an object
+        :type dict: bool
+        """
+
         result = self._request(ldap_filter)[0][1]
         data = {}
         for field in fields(objectclass):
@@ -21,6 +33,20 @@ class LdapConnector:
         return objectclass(**data)
         
     def get_collection(self, objectclass, ldap_filter, dict=True, sortkey=None):
+        """
+        Handle multiples results from a ldap request (with required ldap filter)
+        and convert it in a list of given object class.
+
+        :param objectclass: dataclass like LMNUser
+        :type objectclass:
+        :param ldap_filter: A valid ldap filter
+        :type ldap_filter: basestring
+        :param dict: if True, returns a list of dict, else a list of objects
+        :type dict: bool
+        :param sortkey: if given, sorts the list with the given attribute
+        :type sortkey: basestring
+        """
+
         results = self._request(ldap_filter)
         response = []
         for result in results:
@@ -40,6 +66,12 @@ class LdapConnector:
 
     @staticmethod
     def _filter_value(field, value):
+        """
+        Middleware to decode values and convert it in an usable format (mostly
+        compatible with json). Parameter field is given in order to find out the
+        type of object.
+        """
+
         # TODO : more exception catch on values
         if value is None:
             return None
@@ -75,6 +107,15 @@ class LdapConnector:
                 return result
 
     def _request(self, ldap_filter):
+        """
+        Connect to ldap and perform the request.
+
+        :param ldap_filter: Valid ldap filter
+        :type ldap_filter: basestring
+        :return: Raw result of the request
+        :rtype: dict
+        """
+
         l = ldap.initialize("ldap://localhost:389/")
         l.set_option(ldap.OPT_REFERRALS, 0)
         l.protocol_version = ldap.VERSION3

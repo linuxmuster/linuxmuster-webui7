@@ -61,7 +61,10 @@ class LdapConnector:
                 else:
                     response.append(objectclass(**data))
         if sortkey is not None:
-            return sorted(response, key=lambda d: getattr(d, sortkey))
+            if dict:
+                return sorted(response, key=lambda d: d.get(sortkey, None))
+            else:
+                return sorted(response, key=lambda d: getattr(d, sortkey))
         return response
 
     @staticmethod

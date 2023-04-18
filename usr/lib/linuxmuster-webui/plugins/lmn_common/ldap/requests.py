@@ -90,6 +90,17 @@ class LMNLdapRequests:
 
         return self.lc.get_collection(LMNSchoolClass, ldap_filter, **kwargs)
 
+    @lmnapi(r'/projects')
+    def get_all_projects(self, **kwargs):
+        """
+        Get all projects details.
+        Return a list of LMNProject data objects.
+        """
+
+        ldap_filter = """(&(objectClass=group)(sophomorixType=project))"""
+
+        return self.lc.get_collection(LMNProject, ldap_filter, **kwargs)
+
     @lmnapi(r'/role/(?P<role>.*)')
     def get_all_from_role(self, role='teacher', **kwargs):
         """

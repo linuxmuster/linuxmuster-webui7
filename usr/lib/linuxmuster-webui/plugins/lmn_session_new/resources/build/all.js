@@ -28,27 +28,19 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
 
     this.load = function () {
         var promiseList = [];
-        promiseList.push($http.get('/api/lmn/groupmembership/groups').then(function (resp) {
-            var groups = resp.data[0];
-            _this.classes = groups.filter(function (elt) {
-                return elt.type == 'schoolclass';
-            });
-            _this.classes = _this.classes.filter(function (elt) {
-                return elt.membership == true;
-            });
+        promiseList.push($http.get('/api/lmn/session/schoolclasses').then(function (resp) {
+            _this.schoolclasses = resp.data;
         }));
 
         promiseList.push($http.get('/api/lmn/session/sessions').then(function (resp) {
+            _this.sessions = resp.data;
             if (resp.data.length == 0) {
-                _this.sessions = resp.data;
                 _this.info.message = gettext("There are no sessions yet. Create a session using the 'New Session' button at the top!");
-            } else {
-                _this.sessions = resp.data;
             }
         }));
 
         return $q.all(promiseList).then(function () {
-            return [_this.classes, _this.sessions];
+            return [_this.schoolclasses, _this.sessions];
         });
     };
 
@@ -945,7 +937,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     };
     $scope.getSessions = function() {
       return lmnSession.load().then(function(resp) {
-        $scope.classes = resp[0];
+        $scope.schoolclasses = resp[0];
         return $scope.sessions = resp[1];
       });
     };

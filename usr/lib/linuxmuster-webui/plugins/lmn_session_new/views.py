@@ -33,6 +33,23 @@ class Handler(HttpPlugin):
             sessionsList.append(s)
         return sessionsList
 
+    @get(r'/api/lmn/session/schoolclasses')
+    @authorize('lm:users:students:read')
+    @endpoint(api=True)
+    def handle_api_get_schoolclasses(self, http_context):
+        user = self.context.identity
+        schoolclasses = self.lr.get(f'/user/{user}', dict=False).schoolclasses
+        schoolclassesList = []
+        for schoolclass in schoolclasses:
+            details = self.lr.get(f'/schoolclass/{schoolclass}', dict=False)
+            s = {
+                'name': details.cn,
+                'participants_count': len(details.sophomorixMembers),
+                'participants': details.sophomorixMembers
+            }
+            schoolclassesList.append(s)
+        return schoolclassesList
+
     @get(r'/api/lmn/session/schoolclass/(?P<schoolclass>[\w\+\-]*)')
     @authorize('lm:users:students:read')
     @endpoint(api=True)

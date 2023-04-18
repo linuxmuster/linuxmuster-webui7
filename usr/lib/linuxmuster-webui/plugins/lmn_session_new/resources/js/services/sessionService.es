@@ -4,22 +4,18 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
 
     this.load = () => {
         var promiseList = [];
-        promiseList.push($http.get('/api/lmn/groupmembership/groups').then((resp) => {
-            var groups = resp.data[0];
-            this.classes = groups.filter((elt) => {return elt.type == 'schoolclass'});
-            this.classes = this.classes.filter((elt) => {return elt.membership == true});
+        promiseList.push($http.get('/api/lmn/session/schoolclasses').then((resp) => {
+            this.schoolclasses = resp.data;
         }));
 
         promiseList.push($http.get('/api/lmn/session/sessions').then((resp) => {
+            this.sessions = resp.data;
             if (resp.data.length == 0) {
-                this.sessions = resp.data;
                 this.info.message = gettext("There are no sessions yet. Create a session using the 'New Session' button at the top!");
-            } else {
-                    this.sessions = resp.data;
             }
         }));
 
-        return $q.all(promiseList).then(() => {return [this.classes, this.sessions]});
+        return $q.all(promiseList).then(() => {return [this.schoolclasses, this.sessions]});
     }
 
     this.start = (session) => {

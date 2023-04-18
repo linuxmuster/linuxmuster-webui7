@@ -90,6 +90,8 @@ class LdapConnector:
 
         if field.type.__name__ == 'bool':
             # Something like [b'FALSE']
+            if value is None:
+                return False
             return value[0].capitalize() == b'True'
 
         # if field.type.__name__ == 'datetime':
@@ -103,6 +105,8 @@ class LdapConnector:
             return int(value[0].decode())
 
         if field.type.__name__ == 'List':
+            if value is None:
+                return []
             # Creepy test
             if 'LMNSession' in str(field.type.__args__[0]):
                 result = []

@@ -120,6 +120,42 @@
             </div>
         </div>
 
+        <!-- projects -->
+        <div ng:show="projects.length > 0"  class="list-group">
+            <h3>
+                <i class="fas fa-users"></i>
+                <span translate>My Projects</span>
+            </h3>
+
+            <div class="flex-container lmn-container-list" >
+                <div class="list-group-item" ng:repeat="project in projects|filter:filter | orderBy: 'cn' :false" style="margin-bottom:10px;">
+                    <div>
+                    <span style="float:right;width:50%;">
+                        <div class="session_container">
+                            <a href="#">
+                                <span style="overflow:hidden;width:100%;">
+                                    {{project.name}}
+                                </span>
+                            </a>
+                            <div class="session_hr"></div>
+                            <br />
+                            <i class="fa fa-users"></i>
+                            <span>{{project.participants_count}}</span>
+                            <br />
+                        </div>
+                    </span>
+                        <span style="float:left;width:50%">
+                        <div class="session_image session_image_classes" ng:click="startGenerated(project.cn)" title="{{startSchoolclassSessionMouseover}}">
+                            <span class="fas fa-history session_image_btn"></span>
+                        </div>
+                    </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr />
+
         <button class="btn btn-default" ng:click="newSession()">
             <i class="fa fa-plus"></i>
             <span translate>New group</span>

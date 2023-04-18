@@ -32,6 +32,10 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
             _this.schoolclasses = resp.data;
         }));
 
+        promiseList.push($http.get('/api/lmn/session/projects').then(function (resp) {
+            _this.projects = resp.data;
+        }));
+
         promiseList.push($http.get('/api/lmn/session/sessions').then(function (resp) {
             _this.sessions = resp.data;
             if (resp.data.length == 0) {
@@ -40,7 +44,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         }));
 
         return $q.all(promiseList).then(function () {
-            return [_this.schoolclasses, _this.sessions];
+            return [_this.schoolclasses, _this.projects, _this.sessions];
         });
     };
 
@@ -938,7 +942,8 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     $scope.getSessions = function() {
       return lmnSession.load().then(function(resp) {
         $scope.schoolclasses = resp[0];
-        return $scope.sessions = resp[1];
+        $scope.projects = resp[1];
+        return $scope.sessions = resp[2];
       });
     };
     $scope.start = function(session) {

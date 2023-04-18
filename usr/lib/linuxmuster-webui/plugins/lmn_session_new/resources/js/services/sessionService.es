@@ -8,6 +8,10 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
             this.schoolclasses = resp.data;
         }));
 
+        promiseList.push($http.get('/api/lmn/session/projects').then((resp) => {
+            this.projects = resp.data;
+        }));
+
         promiseList.push($http.get('/api/lmn/session/sessions').then((resp) => {
             this.sessions = resp.data;
             if (resp.data.length == 0) {
@@ -15,7 +19,7 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
             }
         }));
 
-        return $q.all(promiseList).then(() => {return [this.schoolclasses, this.sessions]});
+        return $q.all(promiseList).then(() => {return [this.schoolclasses, this.projects, this.sessions]});
     }
 
     this.start = (session) => {

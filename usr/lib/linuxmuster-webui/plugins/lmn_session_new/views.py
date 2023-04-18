@@ -50,6 +50,23 @@ class Handler(HttpPlugin):
             schoolclassesList.append(s)
         return schoolclassesList
 
+    @get(r'/api/lmn/session/projects')
+    @authorize('lm:users:students:read')
+    @endpoint(api=True)
+    def handle_api_get_projects(self, http_context):
+        user = self.context.identity
+        projects = self.lr.get(f'/user/{user}', dict=False).projects
+        projectsList = []
+        for project in projects:
+            details = self.lr.get(f'/project/{project}', dict=False)
+            s = {
+                'name': details.cn,
+                'participants_count': len(details.sophomorixMembers),
+                'participants': details.sophomorixMembers
+            }
+            projectsList.append(s)
+        return projectsList
+
     @get(r'/api/lmn/session/schoolclass/(?P<schoolclass>[\w\+\-]*)')
     @authorize('lm:users:students:read')
     @endpoint(api=True)

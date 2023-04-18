@@ -25,7 +25,8 @@ angular.module('lmn.session_new').controller 'LMNSessionsListController', ($scop
     $scope.getSessions = () ->
         lmnSession.load().then (resp) ->
             $scope.schoolclasses = resp[0]
-            $scope.sessions = resp[1]
+            $scope.projects = resp[1]
+            $scope.sessions = resp[2]
 
     $scope.start = (session) ->
         lmnSession.reset()

@@ -63,6 +63,17 @@ class LMNLdapRequests:
 
         return self.lc.get_single(LMNSchoolClass, ldap_filter, **kwargs)
 
+    @lmnapi(r'/project/(?P<project>[a-z0-9_\-]*)')
+    def get_project(self, project, **kwargs):
+        """
+        Get all details from a specific project.
+        Return a LMNProject data object
+        """
+
+        ldap_filter = f"""(&(cn={project})(objectClass=group)(sophomorixType=project))"""
+
+        return self.lc.get_single(LMNProject, ldap_filter, **kwargs)
+
     # COLLECTION OF ENTRIES
     @lmnapi(r'/schoolclass/(?P<schoolclass>[a-z0-9\-]*)/students')
     def get_all_students_from_schoolclass(self, schoolclass, **kwargs):

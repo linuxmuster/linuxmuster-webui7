@@ -181,8 +181,9 @@
                 <b>{{globalbinduser.givenName}} {{globalbinduser.sn}}</b>
                 <br />
                 {{globalbinduser.DN}}
-                <div class="alert alert-info">
+                <div class="alert alert-info" ng:click="editComment(globalbinduser)">
                     {{globalbinduser.sophomorixComment}}
+                    <i class="fa fa-pencil pull-right"></i>
                 </div>
                 <br />
             </td>

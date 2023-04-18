@@ -64,7 +64,6 @@ angular.module('lmn.users').controller 'LMUsersGloballadminsController', ($scope
                     $route.reload()
                     notify.success gettext('User deleted')
 
-
     $scope.addGlobalAdmin = () ->
       $uibModal.open(
         templateUrl: '/lmn_users:resources/partial/addAdmin.modal.html'
@@ -73,8 +72,8 @@ angular.module('lmn.users').controller 'LMUsersGloballadminsController', ($scope
         resolve:
           role: () -> 'globaladmin'
       )
+
     $scope.userInfo = (user) ->
-      console.log (user)
       $uibModal.open(
         templateUrl: '/lmn_users:resources/partial/userDetails.modal.html'
         controller: 'LMNUserDetailsController'
@@ -83,6 +82,11 @@ angular.module('lmn.users').controller 'LMUsersGloballadminsController', ($scope
           id: () -> user[0]['sAMAccountName']
           role: () -> 'globaladmins'
           ).closed.then () ->
+                $route.reload()
+
+    $scope.editComment = (user) ->
+        messagebox.prompt(gettext('Edit comment'), user.sophomorixComment).then (msg) ->
+            $http.post("/api/lmn/sophomorixUsers/#{user.sAMAccountName}/comment", {comment: msg.value}).then (resp) ->
                 $route.reload()
 
     $scope.haveSelection = () ->

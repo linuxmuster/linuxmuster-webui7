@@ -180,8 +180,9 @@
             <td>
                 <b>{{schoolbinduser.givenName}} {{schoolbinduser.sn}}</b><br />
                 {{schoolbinduser.DN}}
-                <div class="alert alert-info">
+                <div class="alert alert-info" ng:click="editComment(schoolbinduser)"">
                     {{schoolbinduser.sophomorixComment}}
+                    <i class="fa fa-pencil pull-right"></i>
                 </div>
                 <br />
             </td>

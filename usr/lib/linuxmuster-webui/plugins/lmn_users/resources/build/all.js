@@ -507,6 +507,15 @@
         return $route.reload();
       });
     };
+    $scope.editComment = function(user) {
+      return messagebox.prompt(gettext('Edit comment'), user.sophomorixComment).then(function(msg) {
+        return $http.post(`/api/lmn/sophomorixUsers/${user.sAMAccountName}/comment`, {
+          comment: msg.value
+        }).then(function(resp) {
+          return $route.reload();
+        });
+      });
+    };
     $scope.haveSelection = function() {
       var i, len, ref, x;
       if ($scope.schooladmins) {
@@ -698,7 +707,6 @@
       });
     };
     $scope.userInfo = function(user) {
-      console.log(user);
       return $uibModal.open({
         templateUrl: '/lmn_users:resources/partial/userDetails.modal.html',
         controller: 'LMNUserDetailsController',
@@ -713,6 +721,15 @@
         }
       }).closed.then(function() {
         return $route.reload();
+      });
+    };
+    $scope.editComment = function(user) {
+      return messagebox.prompt(gettext('Edit comment'), user.sophomorixComment).then(function(msg) {
+        return $http.post(`/api/lmn/sophomorixUsers/${user.sAMAccountName}/comment`, {
+          comment: msg.value
+        }).then(function(resp) {
+          return $route.reload();
+        });
       });
     };
     $scope.haveSelection = function() {

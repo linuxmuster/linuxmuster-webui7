@@ -61,7 +61,7 @@ class LMNLdapRequests:
 
         ldap_filter = f"""(&(cn={schoolclass})(objectClass=group)(sophomorixType=adminclass))"""
 
-        return self.lc.get_single_entry(LMNSchoolClass, ldap_filter, **kwargs)
+        return self.lc.get_single(LMNSchoolClass, ldap_filter, **kwargs)
 
     # COLLECTION OF ENTRIES
     @lmnapi(r'/schoolclass/(?P<schoolclass>[a-z0-9\-]*)/students')

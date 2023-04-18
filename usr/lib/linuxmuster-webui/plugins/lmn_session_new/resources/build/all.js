@@ -73,10 +73,10 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     this.startGenerated = function (groupname, participants, session_type) {
         generatedSession = {
             'sid': Date.now(),
-            'name': '' + groupname,
+            'name': groupname,
             'participants': participants,
             'generated': true,
-            'type': session_type // May be room or schoolclass
+            'type': session_type // May be room or schoolclass or project
         };
         _this.current = generatedSession;
         $location.path('/view/lmn/session');
@@ -950,18 +950,20 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       lmnSession.reset();
       return lmnSession.start(session);
     };
-    $scope.startGenerated = function(groupname) {
+    $scope.startGenerated = function(group) {
       lmnSession.reset();
-      if (groupname === 'this_room') {
+      if (group === 'this_room') {
         return $http.post("/api/lmn/session/userinfo", {
           users: $scope.room.usersList
         }).then(function(resp) {
           return lmnSession.startGenerated($scope.room.name, resp.data, 'room');
         });
       } else {
-        // get participants from specified class
-        return $http.get(`/api/lmn/session/schoolclass/${groupname}`).then(function(resp) {
-          return lmnSession.startGenerated(groupname, resp.data, 'schoolclass');
+        // get participants from specified class or project
+        return $http.post("/api/lmn/session/userinfo", {
+          users: group.participants
+        }).then(function(resp) {
+          return lmnSession.startGenerated(group.name, resp.data, group.type);
         });
       }
     };

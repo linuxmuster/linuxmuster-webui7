@@ -28,7 +28,8 @@ class Handler(HttpPlugin):
                 'sid': session.sid,
                 'name': session.name,
                 'participants_count': len(session.participants),
-                'participants': session.participants
+                'participants': session.participants,
+                'type': 'session'
             }
             sessionsList.append(s)
         return sessionsList
@@ -45,7 +46,8 @@ class Handler(HttpPlugin):
             s = {
                 'name': details.cn,
                 'participants_count': len(details.sophomorixMembers),
-                'participants': details.sophomorixMembers
+                'participants': details.sophomorixMembers,
+                'type': 'schoolclass'
             }
             schoolclassesList.append(s)
         return schoolclassesList
@@ -62,21 +64,11 @@ class Handler(HttpPlugin):
             s = {
                 'name': details.cn,
                 'participants_count': len(details.sophomorixMembers),
-                'participants': details.sophomorixMembers
+                'participants': details.sophomorixMembers,
+                'type': 'project'
             }
             projectsList.append(s)
         return projectsList
-
-    @get(r'/api/lmn/session/schoolclass/(?P<schoolclass>[\w\+\-]*)')
-    @authorize('lm:users:students:read')
-    @endpoint(api=True)
-    def handle_api_get_group(self, http_context, schoolclass=None):
-        participantList = self.lr.get(f'/schoolclass/{schoolclass}/students')
-        for participant in participantList:
-            participant['changed'] = False
-            participant['exammode-changed'] = False
-
-        return participantList
 
     # TODO : post is wrong here
     @post(r'/api/lmn/session/userinfo')
@@ -90,7 +82,6 @@ class Handler(HttpPlugin):
             details = self.lr.get(f'/user/{user}')
             details['changed'] = False
             details['exammode-changed'] = False
-
             result.append(details)
 
         users = http_context.json_body()['users']

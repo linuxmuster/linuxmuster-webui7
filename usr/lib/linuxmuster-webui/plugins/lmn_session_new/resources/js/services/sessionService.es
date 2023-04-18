@@ -47,10 +47,10 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
     this.startGenerated = (groupname, participants, session_type) =>  {
         generatedSession = {
             'sid': Date.now(),
-            'name': `${groupname}`,
+            'name': groupname,
             'participants': participants,
             'generated': true,
-            'type': session_type, // May be room or schoolclass
+            'type': session_type, // May be room or schoolclass or project
         };
         this.current = generatedSession;
         $location.path('/view/lmn/session');

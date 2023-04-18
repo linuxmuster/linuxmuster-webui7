@@ -32,15 +32,15 @@ angular.module('lmn.session_new').controller 'LMNSessionsListController', ($scop
         lmnSession.reset()
         lmnSession.start(session)
 
-    $scope.startGenerated = (groupname) ->
+    $scope.startGenerated = (group) ->
         lmnSession.reset()
-        if groupname == 'this_room'
+        if group == 'this_room'
             $http.post("/api/lmn/session/userinfo", {users:$scope.room.usersList}).then (resp) ->
                 lmnSession.startGenerated($scope.room.name, resp.data, 'room')
         else
-            # get participants from specified class
-            $http.get("/api/lmn/session/schoolclass/#{groupname}").then (resp) ->
-                lmnSession.startGenerated(groupname, resp.data, 'schoolclass')
+            # get participants from specified class or project
+            $http.post("/api/lmn/session/userinfo", {users:group.participants}).then (resp) ->
+                lmnSession.startGenerated(group.name, resp.data, group.type)
 
     $scope.$watch 'identity.user', ->
         if $scope.identity.user is undefined

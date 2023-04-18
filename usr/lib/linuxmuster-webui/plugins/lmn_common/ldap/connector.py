@@ -76,15 +76,16 @@ class LdapConnector:
         """
 
         # TODO : more exception catch on values
-        if value is None:
-            return None
-
         if field.type.__name__ == 'str':
             # Something like [b'']
+            if value is None:
+                return ''
             return value[0].decode() if value is not None else ''
 
         if field.type.__name__ == 'list':
             # Something like [b'a', b'c']
+            if value is None:
+                return []
             return [v.decode() for v in value] if value is not None else []
 
         if field.type.__name__ == 'bool':
@@ -97,6 +98,8 @@ class LdapConnector:
 
         if field.type.__name__ == 'int':
             # Something like [b'20']
+            if value is None:
+                return 0
             return int(value[0].decode())
 
         if field.type.__name__ == 'List':
@@ -108,6 +111,9 @@ class LdapConnector:
                     participants = data[2].split(',') if data[2] else []
                     result.append(LMNSession(data[0], data[1], participants))
                 return result
+
+        if value is None:
+            return None
 
     def _request(self, ldap_filter):
         """

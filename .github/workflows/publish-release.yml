@@ -6,7 +6,7 @@ on:
 jobs:
   publish_latest_release_to_package_server:
     name: Publish latest release to package server
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Download assets from latest release
         uses: Itsblue/download-release-assets-action@v4

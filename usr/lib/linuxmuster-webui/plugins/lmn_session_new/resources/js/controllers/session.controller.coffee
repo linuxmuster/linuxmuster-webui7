@@ -158,8 +158,10 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         new_value = !$scope.fields[group].checkboxStatus
 
         for participant in $scope.session.participants
-            participant[group] = new_value
-            usersList.push(participant.sAMAccountName)
+            # Only change management group for student, and not others teachers
+            if participant.sophomorixRole == 'student'
+                participant[group] = new_value
+                usersList.push(participant.sAMAccountName)
 
         if new_value == false
             group = "no#{group}"

@@ -58,19 +58,12 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         transfer:
             visible: true
             name: gettext('Transfer')
-        examModeSupervisor:
+        workDirectory:
             visible: true
-            name: gettext('Exam-Supervisor')
+            name: gettext('')
         sophomorixRole:
             visible: false
             name: gettext('sophomorixRole')
-        exammode:
-            visible: true
-            icon:"fa fa-graduation-cap"
-            title: gettext('Exam-Mode')
-            checkboxAll: false
-            examBox: true
-            checkboxStatus: false
         wifi:
             visible: true
             icon:"fa fa-wifi"

@@ -52,7 +52,7 @@ class LMNLdapRequests:
 
         return self.lc.get_single(LMNUser, ldap_filter, **kwargs)
 
-    @lmnapi(r'/schoolclass/(?P<schoolclass>\w*)')
+    @lmnapi(r'/schoolclass/(?P<schoolclass>[\w ]*)')
     def get_schoolclass(self, schoolclass, **kwargs):
         """
         Get all details from a specific schoolclass.

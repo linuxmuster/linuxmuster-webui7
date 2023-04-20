@@ -183,6 +183,27 @@ class Handler(HttpPlugin):
         result = lmn_getSophomorixValue(sophomorixCommand, '')
         return result['COMMENT_EN']
 
+    @post(r'/api/lmn/sophomorixUsers/(?P<user>[a-z0-9\-]*)/comment')
+    @authorize('lm:users:schooladmins:create')
+    @endpoint(api=True)
+    def handle_api_users_add_comment(self, http_context, user):
+        """
+        Add user comment.
+
+        :param user: sAMAccountName to update
+        :type user: basestring
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: State of the command
+        :rtype: string
+        """
+
+        school = self.context.schoolmgr.school
+        comment = http_context.json_body()['comment']
+        sophomorixCommand = ['sophomorix-user', '-u', user, '--school', school, '--comment', comment, '-jj']
+        result = lmn_getSophomorixValue(sophomorixCommand, '')
+        return result['COMMENT_EN']
+
     @patch(r'/api/lmn/sophomorixUsers/schooladmins')
     @authorize('lm:users:schooladmins:delete')
     @endpoint(api=True)
@@ -220,7 +241,6 @@ class Handler(HttpPlugin):
         sophomorixCommand = ['sophomorix-admin', '--create-global-admin', user, '--random-passwd-save', '-jj']
         result = lmn_getSophomorixValue(sophomorixCommand, '')
         return result['COMMENT_EN']
-
 
     @patch(r'/api/lmn/sophomorixUsers/globaladmins')
     @authorize('lm:users:globaladmins:delete')

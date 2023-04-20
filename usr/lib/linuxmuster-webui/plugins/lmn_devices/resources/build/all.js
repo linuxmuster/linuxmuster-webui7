@@ -131,11 +131,8 @@
       return value.room && value.room[0] !== '#';
     };
     $scope.add = function() {
-      if ($scope.devices.length > 0) {
-        $scope.paging.page = Math.floor(($scope.devices.length - 1) / $scope.paging.pageSize) + 1;
-      }
       $scope.filter = '';
-      return $scope.devices.push({
+      $scope.devices.unshift({
         _isNew: true,
         room: '',
         hostname: '',
@@ -145,6 +142,8 @@
         sophomorixRole: 'classroom-studentcomputer',
         pxeFlag: '1'
       });
+      // Return to first page after adding the new device
+      return $scope.paging.page = 1;
     };
     $scope.duplicate = function(device) {
       var newDevice;

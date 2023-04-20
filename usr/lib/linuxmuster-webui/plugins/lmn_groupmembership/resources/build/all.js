@@ -314,6 +314,31 @@
       'removeFromAdmin': gettext('Remove from admin group'),
       'remove': gettext('Remove')
     };
+    $scope.killSchoolclass = function(schoolclass) {
+      return messagebox.show({
+        text: `Do you really want to delete '${schoolclass}'? This can't be undone!`,
+        positive: 'Delete',
+        negative: 'Cancel'
+      }).then(function() {
+        var msg;
+        msg = messagebox.show({
+          progress: true
+        });
+        return $http.delete('/api/lmn/groupmembership/schoolclass/' + schoolclass).then(function(resp) {
+          if (resp['data'][0] === 'ERROR') {
+            notify.error(resp['data'][1]);
+          }
+          if (resp['data'][0] === 'LOG') {
+            notify.success(gettext(resp['data'][1]));
+            return $uibModalInstance.close({
+              response: 'refresh'
+            });
+          }
+        }).finally(function() {
+          return msg.close();
+        });
+      });
+    };
     $scope.formatDate = function(date) {
       var day, hour, min, month, sec, year;
       if (date === "19700101000000.0Z") {

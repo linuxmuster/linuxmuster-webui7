@@ -352,11 +352,20 @@ angular.module('lmn.users').controller 'LMUsersListManagementController', ($scop
 
         # Ensure the login is not duplicated, but ignore empty login
         if filter == 'teachers'
-            if val != ''
-                test = test && ($scope.teachers.filter(validation.findval('login', val)).length < 2)
+            if val != '' and val != undefined
+                if (!($scope.teachers.filter(validation.findval('login', val)).length < 2))
+                    test = test && gettext("Duplicate teachers login")
         else if filter == 'extrastudents'
-            if val != ''
-                test = test && ($scope.extrastudents.filter(validation.findval('login', val)).length < 2)
+            if val != '' and val != undefined
+                # Test if duplicated
+                if (!($scope.extrastudents.filter(validation.findval('login', val)).length < 2))
+                    test = test && gettext("Duplicate extrastudents login")
+                # Test if login == schoolclass
+                if name == 'Login'
+                    # Get all classes from extrastudents and students objects without duplicates
+                    schoolclasses_tmp = $scope.extrastudents.map((x) -> x.class).concat($scope.students.map((x) -> x.class)).filter((v,i,a) -> a.indexOf(v) is i)
+                    if (schoolclasses_tmp.indexOf(val) >= 0)
+                        test = test && gettext("Conflict between login and class")
 
         # Login for teachers may be empty
         if name == 'Login' and ( filter == 'teachers' or filter == 'extrastudents' ) and test == true

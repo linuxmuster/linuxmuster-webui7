@@ -7,103 +7,68 @@ from aj.api.http import get, post, put, patch, delete, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue
+from aj.plugins.lmn_common.ldap.requests import LMNLdapRequests
 
 
 @component(HttpPlugin)
 class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
+        self.lr = LMNLdapRequests()
 
     @get(r'/api/lmn/session/sessions')
     @authorize('lm:users:students:read')
     @endpoint(api=True)
     def handle_api_get_sessions(self, http_context):
-        supervisor = self.context.identity
-        try:
-            sophomorixCommand = ['sophomorix-session', '-i', '-jj', '--supervisor', supervisor]
-            sessions = lmn_getSophomorixValue(sophomorixCommand, '')
-        except Exception as e:
-            raise EndpointError(e)
-
+        user = self.context.identity
+        sessions = self.lr.get(f'/user/{user}', dict=False).sophomorixSessions
         sessionsList = []
-        if sessions['SESSIONCOUNT'] == 0:
-            return []
-
-        for session in sessions['SUPERVISOR'][supervisor]['sophomorixSessions']:
-            sessionJson = {}
-            sessionJson['ID'] = session
-            sessionJson['COMMENT'] = sessions['SUPERVISOR'][supervisor]['sophomorixSessions'][session]['COMMENT']
-            if 'PARTICIPANT_COUNT' not in sessions['SUPERVISOR'][supervisor]['sophomorixSessions'][session]:
-                sessionJson['PARTICIPANT_COUNT'] = 0
-            else:
-                sessionJson['PARTICIPANT_COUNT'] = sessions['SUPERVISOR'][supervisor]['sophomorixSessions'][session]['PARTICIPANT_COUNT']
-            sessionsList.append(sessionJson)
+        for session in sessions:
+            s = {
+                'sid': session.sid,
+                'name': session.name,
+                'participants_count': len(session.participants),
+                'participants': session.participants,
+                'type': 'session'
+            }
+            sessionsList.append(s)
         return sessionsList
 
-    @get(r'/api/lmn/session/sessions/(?P<session>[\w\+\-]*)')
+    @get(r'/api/lmn/session/schoolclasses')
     @authorize('lm:users:students:read')
     @endpoint(api=True)
-    def handle_api_get_session(self, http_context, session=None):
+    def handle_api_get_schoolclasses(self, http_context):
+        user = self.context.identity
+        schoolclasses = self.lr.get(f'/user/{user}', dict=False).schoolclasses
+        schoolclassesList = []
+        for schoolclass in schoolclasses:
+            details = self.lr.get(f'/schoolclass/{schoolclass}', dict=False)
+            s = {
+                'name': details.cn,
+                'participants_count': len(details.sophomorixMembers),
+                'participants': details.sophomorixMembers,
+                'type': 'schoolclass'
+            }
+            schoolclassesList.append(s)
+        return schoolclassesList
 
-        def convert_bool(value):
-            if value == 'TRUE':
-                return True
-            if value == 'FALSE':
-                return False
-            return value
-
-        participantList = []
-        try:
-            sophomorixCommand = ['sophomorix-session', '-i', '-jj', '--session', session]
-            participants = lmn_getSophomorixValue(sophomorixCommand, f'ID/{session}/PARTICIPANTS', True)
-            for user,details in participants.items():
-                details['sAMAccountName'] = user
-                details['changed'] = False
-                details['exammode-changed'] = False
-                details['internet'] = details['group_internetaccess']
-                details['intranet'] = details['group_intranetaccess']
-                details['wifi'] = details['group_wifiaccess']
-                details['webfilter'] = details['group_webfilter']
-                details['printing'] = details['group_printing']
-
-                del details['group_internetaccess']
-                del details['group_intranetaccess']
-                del details['group_wifiaccess']
-                del details['group_webfilter']
-                del details['group_printing']
-
-                for key,value in details.items():
-                    details[key] = convert_bool(value)
-
-                participantList.append(details)
-        except KeyError as e:
-            logging.info(f"No participants found in {e}")
-        return participantList
-
-    @get(r'/api/lmn/session/group/(?P<group>[\w\+\-]*)')
+    @get(r'/api/lmn/session/projects')
     @authorize('lm:users:students:read')
     @endpoint(api=True)
-    def handle_api_get_group(self, http_context, group=None):
-        participantList = []
-        try:
-            sophomorixCommand = ['sophomorix-query', '--group-members', '--user-full', '--sam', group, '-jj']
-            participants = lmn_getSophomorixValue(sophomorixCommand, f'MEMBERS/{group}', True)
-            for user,details in participants.items():
-                details['sAMAccountName'] = user
-                details['changed'] = False
-                details['exammode-changed'] = False
-                # TODO : default values ?
-                details['internet'] = True
-                details['intranet'] = True
-                details['wifi'] = True
-                details['webfilter'] = True
-                details['printing'] = True
-
-                if details['sophomorixRole'] == 'student':
-                    participantList.append(details)
-        except KeyError as e:
-            logging.info(f"No participants found in {e}")
-        return participantList
+    def handle_api_get_projects(self, http_context):
+        user = self.context.identity
+        projects = self.lr.get(f'/user/{user}', dict=False).projects
+        projectsList = []
+        for project in projects:
+            details = self.lr.get(f'/project/{project}', dict=False)
+            s = {
+                'name': details.cn,
+                'participants_count': len(details.sophomorixMembers),
+                'participants': details.sophomorixMembers,
+                'type': 'project'
+            }
+            projectsList.append(s)
+        return projectsList
 
     # TODO : post is wrong here
     @post(r'/api/lmn/session/userinfo')
@@ -114,17 +79,9 @@ class Handler(HttpPlugin):
         result = []
 
         def get_user_info(user):
-            sophomorixCommand = ['sophomorix-query', '--user-full', '--sam', user, '-jj']
-            details = lmn_getSophomorixValue(sophomorixCommand, f'USER/{user}', True)
+            details = self.lr.get(f'/user/{user}')
             details['changed'] = False
             details['exammode-changed'] = False
-            # TODO : default values ?
-            details['internet'] = True
-            details['intranet'] = True
-            details['wifi'] = True
-            details['webfilter'] = True
-            details['printing'] = True
-
             result.append(details)
 
         users = http_context.json_body()['users']
@@ -186,6 +143,26 @@ class Handler(HttpPlugin):
             lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
         except Exception as e:
             raise Exception(f'Error:\n{" ".join(sophomorixCommand)}\n Error was: {e}')
+
+    @post(r'/api/lmn/session/participants')
+    @authorize('lm:users:students:read')
+    @endpoint(api=True)
+    def handle_api_session_add_particpants(self, http_context):
+        sessionID = http_context.json_body()['session']
+        users = ','.join(http_context.json_body()['users'])
+        sophomorixCommand = ['sophomorix-session', '-j', '--session', sessionID, '--add-participants', users]
+        result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
+        return result
+
+    @patch(r'/api/lmn/session/participants')
+    @authorize('lm:users:students:read')
+    @endpoint(api=True)
+    def handle_api_session_remove_particpants(self, http_context):
+        sessionID = http_context.json_body()['session']
+        users = ','.join(http_context.json_body()['users'])
+        sophomorixCommand = ['sophomorix-session', '-j', '--session', sessionID, '--remove-participants', users]
+        result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
+        return result
 
     @post(r'/api/lmn/session/sessions')
     @authorize('lm:users:students:read')
@@ -263,12 +240,18 @@ class Handler(HttpPlugin):
             room = response[username]['ROOM']
             response.pop(username, None)
             return {
-                "usersList": response.keys(),
+                "usersList": response.keys() if response else [],
                 "name": room,
                 "objects": response,
             }
         except IndexError as e:
-            return 0
+            # response is an empty dict, not able to detect the room
+            # or the other users in room
+            return {
+                "usersList": [],
+                "name": '',
+                "objects": {},
+            }
 
     @get(r'/api/lmn/session/user-search/(?P<query>.*)')
     @authorize('lm:users:students:read')
@@ -283,7 +266,7 @@ class Handler(HttpPlugin):
         userList = []
         for user in users:
             userList.append(users[user])
-        return userList
+        return sorted(userList, key=lambda d: f"{d['sophomorixAdminClass']}{d['sn']}{d['givenName']}")
 
     @get(r'/api/lmn/session/schoolClass-search/(?P<query>.*)')
     @authorize('lm:users:students:read')
@@ -300,8 +283,9 @@ class Handler(HttpPlugin):
             schoolClassJson = {}
             schoolClassJson['sophomorixAdminClass'] = schoolClass
             schoolClassJson['members'] = schoolClasses[schoolClass]
+            schoolClassJson['count'] = len(schoolClasses[schoolClass])
             schoolClassList.append(schoolClassJson)
-        return schoolClassList
+        return sorted(schoolClassList, key=lambda d: d['sophomorixAdminClass'])
 
     @post(r'/api/lmn/session/moveFileToHome')  ## TODO authorize
     @endpoint(api=True)
@@ -335,6 +319,73 @@ class Handler(HttpPlugin):
         for availableFile in availableFiles['TREE']:
             availableFilesList.append(availableFile)
         return availableFiles, availableFilesList
+
+    @post(r'/api/lmn/session/share')
+    @authorize('lmn:session:trans')
+    @endpoint(api=True)
+    def handle_api_session_share(self, http_context):
+        sender = self.context.identity
+        receivers = http_context.json_body()['receivers']
+        files = http_context.json_body()['files']
+        session = http_context.json_body()['session']
+        now = strftime("%Y%m%d_%H-%M-%S", localtime())
+
+        def shareFiles(data):
+            file, receiver = data
+            sophomorixCommand = [
+                'sophomorix-transfer',
+                '-jj',
+                '--scopy',
+                '--from-user', sender,
+                '--to-user', receiver,
+                '--from-path', f'transfer/{file}',
+                '--to-path', f'transfer/{now}_{sender}_{session}/'
+            ]
+            return lmn_getSophomorixValue(sophomorixCommand, '')
+
+        try:
+            to_share = [(f,r) for f in files for r in receivers]
+            with futures.ThreadPoolExecutor() as executor:
+                returnMessage = executor.map(shareFiles, to_share)
+            print(returnMessage)
+        except Exception as e:
+            raise Exception('Something went wrong. Error:\n' + str(e))
+
+    @post(r'/api/lmn/session/collect')
+    @authorize('lmn:session:trans') # TODO
+    @endpoint(api=True)
+    def handle_api_session_collect(self, http_context):
+        receiver = self.context.identity
+        senders = http_context.json_body()['senders']
+        files = http_context.json_body()['files']
+        mode = http_context.json_body()['mode']
+        session = http_context.json_body()['session']
+        now = strftime("%Y%m%d_%H-%M-%S", localtime())
+
+        if mode not in ['scopy', 'move']:
+            return # TODO
+
+        def collectFiles(data):
+            file, sender = data
+            sophomorixCommand = [
+                'sophomorix-transfer',
+                '-jj',
+                f'--{mode}',
+                '--from-user', sender,
+                '--to-user', receiver,
+                '--from-path', f'transfer/{receiver}_{session}/{file}',
+                '--to-path', f'transfer/collected/{now}_{session}/'
+            ]
+            return lmn_getSophomorixValue(sophomorixCommand, '')
+
+        try:
+            to_collect = [(f,s) for f in files for s in senders]
+            with futures.ThreadPoolExecutor() as executor:
+                returnMessage = executor.map(collectFiles, to_collect)
+            print(returnMessage)
+        except Exception as e:
+            raise Exception('Something went wrong. Error:\n' + str(e))
+
 
     @post(r'/api/lmn/session/trans')
     @endpoint(api=True)

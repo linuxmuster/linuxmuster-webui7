@@ -46,7 +46,7 @@ class Handler(HttpPlugin):
             smbclient.path.isfile(smb_path)
             # Head request to handle 404
             if http_context.method == 'HEAD':
-                if smbclient.path.isfile(smb_path):
+                if smbclient.path.isfile(smb_path) or smbclient.path.isdir(smb_path):
                     http_context.respond_ok()
                     return ''
                 else:
@@ -111,6 +111,9 @@ class Handler(HttpPlugin):
     @endpoint()
     def handle_api_webdav_delete(self, http_context, path=''):
 
+        if '..' in path:
+            return http_context.respond_forbidden()
+
         path = self._convert_path(path).replace('/', '\\')
         path = f'{self.context.schoolmgr.schoolShare}{path}'
 
@@ -143,8 +146,12 @@ class Handler(HttpPlugin):
     def handle_api_webdav_propfind(self, http_context, path=''):
         user = self.context.identity
         profil = AuthenticationService.get(self.context).get_provider().get_profile(user)
-        role = profil['sophomorixRole']
-        adminclass = profil['sophomorixAdminClass']
+        user_context = {
+            'user': user,
+            'role': profil['sophomorixRole'],
+            'adminclass': profil['sophomorixAdminClass'],
+            'home': profil['homeDirectory'],
+        }
 
         baseUrl = "/webdav/"
 
@@ -164,13 +171,13 @@ class Handler(HttpPlugin):
 
         if not path:
             # / is asked, must give the list of shares
-            shares = self.context.schoolmgr.get_shares(user, role, adminclass)
+            shares = self.context.schoolmgr.get_shares(user_context)
             for share in shares:
                 item = smbclient._os.SMBDirEntry.from_path(share['path'])
 
                 item_path = share['path'].replace(self.context.schoolmgr.schoolShare, '').replace('\\', '/') # TODO
                 if share['name'] == "Home":
-                    item_path = item_path.split('/')[0]
+                    item_path = item_path.rsplit('/', 1)[0]
 
                 href = quote(f'{baseUrl}{item_path}/', encoding='utf-8')
                 items[href] = response.convert_samba_entry_properties(item)
@@ -218,7 +225,7 @@ class Handler(HttpPlugin):
         path = self._convert_path(path).replace('/', '\\')
         try:
             smbclient.makedirs(f'{self.context.schoolmgr.schoolShare}{path}')
-            http_context.add_header("201 Created")
+            http_context.respond("201 Created")
         except (ValueError, SMBOSError, NotFound) as e:
             if 'STATUS_ACCESS_DENIED' in e.strerror:
                 http_context.respond_forbidden()
@@ -238,26 +245,37 @@ class Handler(HttpPlugin):
             src = self._convert_path(path).replace('/', '\\')
             src = f'{self.context.schoolmgr.schoolShare}{src}'
 
-            if not smbclient._os.SMBDirEntry.from_path(src).is_dir():
-                env = http_context.env
-                dst = env.get('HTTP_DESTINATION', None)
-                host = f"{env['wsgi.url_scheme']}://{env['HTTP_HOST']}/webdav/"
-                dst = dst.replace(host, '')  # Delete host domain
-                dst = dst.replace('/', '\\')
-                dst = f'{self.context.schoolmgr.schoolShare}{dst}'
+            env = http_context.env
+            dst = unquote(env.get('HTTP_DESTINATION', ''))
 
-                overwrite = http_context.env.get('Overwrite', None) != 'F'
-                if not smbclient.path.isfile(dst):
+            if '..' in dst:
+                return http_context.respond_forbidden()
+
+            host = f"{env['wsgi.url_scheme']}://{env['HTTP_HOST']}/webdav/"
+            dst = dst.replace(host, '')  # Delete host domain
+            dst = dst.replace('/', '\\')
+            dst = f'{self.context.schoolmgr.schoolShare}{dst}'
+
+            overwrite = http_context.env.get('Overwrite', None) != 'F'
+
+            if smbclient._os.SMBDirEntry.from_path(src).is_dir():
+                if not smbclient.path.isdir(dst):
+                    smbclient.rename(src, dst)
+                    http_context.respond('201 Created')
+                elif smbclient.path.isdir(dst) and overwrite:
                     smbclient.rename(src, dst)
                     http_context.respond('204 No Content')
+                elif smbclient.path.isdir(dst):
+                    http_context.respond('412 Precondition Failed')
+            else:
+                if not smbclient.path.isfile(dst):
+                    smbclient.rename(src, dst)
+                    http_context.respond('201 Created')
                 elif smbclient.path.isfile(dst) and overwrite:
                     smbclient.rename(src, dst)
                     http_context.respond('204 No Content')
                 elif smbclient.path.isfile(dst):
                     http_context.respond('412 Precondition Failed')
-            else:
-                # Not implemented for directories yet
-                http_context.respond('501 Not Implemented')
         except (ValueError, SMBOSError, NotFound) as e:
             if 'STATUS_ACCESS_DENIED' in e.strerror:
                 http_context.respond_forbidden()
@@ -276,27 +294,45 @@ class Handler(HttpPlugin):
         try:
             src = self._convert_path(path).replace('/', '\\')
             src = f'{self.context.schoolmgr.schoolShare}{src}'
+            env = http_context.env
+            dst = env.get('HTTP_DESTINATION', None)
 
-            if not smbclient._os.SMBDirEntry.from_path(src).is_dir():
-                env = http_context.env
-                dst = env.get('HTTP_DESTINATION', None)
-                host = f"{env['wsgi.url_scheme']}://{env['HTTP_HOST']}/webdav/"
-                dst = dst.replace(host, '')  # Delete host domain
-                dst = dst.replace('/', '\\')
-                dst = f'{self.context.schoolmgr.schoolShare}{dst}'
+            if '..' in dst:
+                return http_context.respond_forbidden()
 
-                overwrite = http_context.env.get('Overwrite', None) != 'F'
+            host = f"{env['wsgi.url_scheme']}://{env['HTTP_HOST']}/webdav/"
+
+            dst = dst.replace(host, '')  # Delete host domain
+            dst = dst.replace('/', '\\')
+            dst = f'{self.context.schoolmgr.schoolShare}{dst}'
+
+            overwrite = http_context.env.get('Overwrite', None) != 'F'
+
+            if smbclient._os.SMBDirEntry.from_path(src).is_dir():
+                # First pass : create directory tree
+                for item in smbclient.walk(src):
+                    # item like (SMBPATH, [List of subdir], [List of files])
+                    smbpath = item[0]
+                    if smbclient.path.isdir(smbpath):
+                        smbpath = smbpath.replace(src, dst)
+                        smbclient.mkdir(smbpath)
+
+                # Second pass : copy all files
+                for item in smbclient.walk(src):
+                    smbpath = item[0]
+                    for file in item[2]:
+                        smbpathsrc = f"{smbpath}\\{file}"
+                        smbpathdst = smbpathsrc.replace(src, dst)
+                        smbclient.copyfile(smbpathsrc, smbpathdst)
+            else:
                 if not smbclient.path.isfile(dst):
                     smbclient.copyfile(src, dst)
-                    http_context.respond('204 No Content')
+                    http_context.respond('201 Created')
                 elif smbclient.path.isfile(dst) and overwrite:
                     smbclient.copyfile(src, dst)
                     http_context.respond('204 No Content')
                 elif smbclient.path.isfile(dst):
                     http_context.respond('412 Precondition Failed')
-            else:
-                # Not implemented for directories yet
-                http_context.respond('501 Not Implemented')
         except (ValueError, SMBOSError, NotFound) as e:
             if 'STATUS_ACCESS_DENIED' in e.strerror:
                 http_context.respond_forbidden()
@@ -316,9 +352,12 @@ class Handler(HttpPlugin):
             dst = self._convert_path(path).replace('/', '\\')
             dst = f'{self.context.schoolmgr.schoolShare}{dst}'
             if not smbclient.path.isfile(dst):
+                content = http_context.body if http_context.body else b''
                 with smbclient.open_file(dst, mode='wb') as f:
-                    f.write(http_context.body)
+                    f.write(content)
                 http_context.respond_ok()
+            else:
+                http_context.respond('412 Precondition Failed')
         except (ValueError, SMBOSError, NotFound) as e:
             if 'STATUS_ACCESS_DENIED' in e.strerror:
                 http_context.respond_forbidden()

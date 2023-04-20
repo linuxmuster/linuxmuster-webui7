@@ -85,6 +85,10 @@ angular.module('lmn.users').controller 'LMUsersSchooladminsController', ($scope,
           ).closed.then () ->
                 $route.reload()
 
+    $scope.editComment = (user) ->
+        messagebox.prompt(gettext('Edit comment'), user.sophomorixComment).then (msg) ->
+            $http.post("/api/lmn/sophomorixUsers/#{user.sAMAccountName}/comment", {comment: msg.value}).then (resp) ->
+                $route.reload()
 
     $scope.haveSelection = () ->
         if $scope.schooladmins

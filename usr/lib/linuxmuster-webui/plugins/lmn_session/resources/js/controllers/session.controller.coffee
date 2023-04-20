@@ -1,4 +1,4 @@
-angular.module('lmn.session').controller 'LMNSessionFileSelectModalController', ($scope, $uibModalInstance, gettext, notify, $http, bulkMode, senders, receivers, action, command, sessionComment, messagebox) ->
+angular.module('lmn.session').controller 'LMNOldSessionFileSelectModalController', ($scope, $uibModalInstance, gettext, notify, $http, bulkMode, senders, receivers, action, command, sessionComment, messagebox) ->
     $scope.bulkMode = bulkMode
     $scope.senders = senders
     $scope.receivers = receivers
@@ -96,11 +96,11 @@ angular.module('lmn.session').controller 'LMNSessionFileSelectModalController', 
 
 angular.module('lmn.session').config ($routeProvider) ->
     $routeProvider.when '/view/lmn/oldsession',
-        controller: 'LMNSessionController'
+        controller: 'LMNOldSessionController'
         templateUrl: '/lmn_session:resources/partial/session.html'
 
 
-angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem, validation, $rootScope, wait, userPassword) ->
+angular.module('lmn.session').controller 'LMNOldSessionController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem, validation, $rootScope, wait, userPassword) ->
     pageTitle.set(gettext('Session'))
 
 
@@ -399,7 +399,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                 usersInRoom=resp.data
                 $uibModal.open(
                    templateUrl: '/lmn_session:resources/partial/roomDetails.modal.html'
-                   controller:  'LMNRoomDetailsController'
+                   controller:  'LMNOldRoomDetailsController'
                    size: 'lg'
                    resolve:
                      usersInRoom: () -> usersInRoom
@@ -559,7 +559,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                         #if not $scope._.addParticipant.exammode-changed?
                         #            $scope._.addParticipant.exammode-changed = 'False'
                         $scope.participants.push {"sAMAccountName":$scope._.addParticipant.sAMAccountName,"givenName":$scope._.addParticipant.givenName,"sn":$scope._.addParticipant.sn,
-                        "sophomorixExamMode":$scope._.addParticipant.sophomorixExamMode,
+                        "sophomorixExamMode":$scope._.addParticipant.sophomorixExamMode || '---',
                         "group_webfilter":$scope._.addParticipant.MANAGEMENTGROUPS.webfilter,
                         "group_intranetaccess":$scope._.addParticipant.MANAGEMENTGROUPS.intranet,
                         "group_printing":$scope._.addParticipant.MANAGEMENTGROUPS.printing,
@@ -567,7 +567,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
                         "group_internetaccess":$scope._.addParticipant.MANAGEMENTGROUPS.internet,
                         "sophomorixAdminClass":$scope._.addParticipant.sophomorixAdminClass,
                         "user_existing":true,"group_wifiaccess":$scope._.addParticipant.MANAGEMENTGROUPS.wifi,
-                        "changed": false, "exammode-changed": false}
+                        "changed": false, "exammode-changed": false, "exammode_boolean":false}
                     # console.log ($scope.participants)
                     $scope._.addParticipant = null
 
@@ -703,7 +703,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
 
         $uibModal.open(
            templateUrl: '/lmn_session:resources/partial/selectFile.modal.html'
-           controller: 'LMNSessionFileSelectModalController'
+           controller: 'LMNOldSessionFileSelectModalController'
            resolve:
               action: () -> 'share'
               bulkMode: () -> bulkMode
@@ -737,7 +737,7 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
         #console.log (bulkMode)
         $uibModal.open(
            templateUrl: '/lmn_session:resources/partial/selectFile.modal.html'
-           controller: 'LMNSessionFileSelectModalController'
+           controller: 'LMNOldSessionFileSelectModalController'
            resolve:
               action: () -> 'collect'
               bulkMode: () -> bulkMode
@@ -771,21 +771,8 @@ angular.module('lmn.session').controller 'LMNSessionController', ($scope, $http,
             return
         $scope.getSessions()
 
-angular.module('lmn.session').controller 'LMNRoomDetailsController', ($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, usersInRoom) ->
+angular.module('lmn.session').controller 'LMNOldRoomDetailsController', ($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, usersInRoom) ->
         $scope.usersInRoom = usersInRoom
 
         $scope.close = () ->
             $uibModalInstance.dismiss()
-        #$scope.editGroupMembers = (groupName, groupDetails, admins, members) ->
-        #    $uibModal.open(
-        #        templateUrl: '/lmn_groupmembership:resources/partial/editMembers.modal.html'
-        #        controller:  'LMNGroupEditController'
-        #        size: 'lg'
-        #        resolve:
-        #           groupName: () -> groupName
-        #           groupDetails: () -> groupDetails
-        #           admins: () -> admins
-        #           members: () -> members
-        #    ).result.then (result)->
-        #        if result.response is 'refresh'
-        #            $scope.getGroupDetails ([groupType, groupName])

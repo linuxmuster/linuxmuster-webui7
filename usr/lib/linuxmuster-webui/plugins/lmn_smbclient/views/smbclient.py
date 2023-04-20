@@ -1,7 +1,7 @@
 """
 Tools to handle files, directories and uploads.
 """
-
+import base64
 import os
 import re
 import smbclient
@@ -19,9 +19,8 @@ from aj.plugins.lmn_common.mimetypes import content_mimetypes
 # TODO
 # - Better error management (directory not empty, errors in promise list, ... )
 # - Test encoding Windows
-# - symlink ?
 # - download selected resources as zip
-# - Method DELETE ?
+# - UPLOAD non empty directory
 
 @component(HttpPlugin)
 class Handler(HttpPlugin):
@@ -44,9 +43,13 @@ class Handler(HttpPlugin):
             user = self.context.identity
 
         profil = AuthenticationService.get(self.context).get_provider().get_profile(user)
-        role = profil['sophomorixRole']
-        adminclass = profil['sophomorixAdminClass']
-        return self.context.schoolmgr.get_shares(user, role, adminclass)
+        user_context = {
+            'user': user,
+            'role': profil['sophomorixRole'],
+            'adminclass': profil['sophomorixAdminClass'],
+            'home': profil['homeDirectory'],
+        }
+        return self.context.schoolmgr.get_shares(user_context)
 
     @post(r'/api/lmn/smbclient/list')
     @endpoint(api=True)
@@ -80,7 +83,7 @@ class Handler(HttpPlugin):
                 data = {
                     'name': item.name,
                     'path': item_path,
-                    'download_url': quote(item_path.encode('latin-1')),
+                    'download_url': base64.b64encode(item_path.encode('utf-8'), altchars=b'-_').decode(),
                     'unixPath': SMB2UnixPath(item_path),
                     'isDir': item.is_dir(),
                     'isFile': item.is_file(),
@@ -190,7 +193,24 @@ class Handler(HttpPlugin):
         dst = http_context.json_body()['dst']
 
         try:
-            smbclient.copyfile(src, dst)
+            if smbclient.path.isfile(src):
+                smbclient.copyfile(src, dst)
+            elif smbclient.path.isdir(src):
+                # First pass : create directory tree
+                for item in smbclient.walk(src):
+                    # item like (SMBPATH, [List of subdir], [List of files])
+                    smbpath = item[0]
+                    if smbclient.path.isdir(smbpath):
+                        smbpath = smbpath.replace(src, dst)
+                        smbclient.mkdir(smbpath)
+
+                # Second pass : copy all files
+                for item in smbclient.walk(src):
+                    smbpath = item[0]
+                    for file in item[2]:
+                        smbpathsrc = f"{smbpath}\\{file}"
+                        smbpathdst = smbpathsrc.replace(src, dst)
+                        smbclient.copyfile(smbpathsrc, smbpathdst)
         except (ValueError, SMBOSError, NotFound) as e:
             raise EndpointError(e)
 
@@ -210,7 +230,16 @@ class Handler(HttpPlugin):
         path = http_context.json_body()['path']
 
         try:
-            smbclient.rmdir(path)
+            # First pass : delete files
+            for item in smbclient.walk(path):
+                # item like (SMBPATH, [List of subdir], [List of files])
+                smbpath = item[0]
+                for file in item[2]:
+                    smbclient.unlink(f"{smbpath}\\{file}")
+
+            # Second pass : delete directories from bottom
+            for directory in smbclient.walk(path, topdown=False):
+                smbclient.rmdir(directory[0])
         except (ValueError, SMBOSError, NotFound) as e:
             raise EndpointError(e)
 
@@ -285,9 +314,13 @@ class Handler(HttpPlugin):
 
         user = self.context.identity
         profil = AuthenticationService.get(self.context).get_provider().get_profile(user)
-        role = profil['sophomorixRole']
-        adminclass = profil['sophomorixAdminClass']
-        home = self.context.schoolmgr.get_homepath(user, role, adminclass)
+        user_context = {
+            'user': user,
+            'role': profil['sophomorixRole'],
+            'adminclass': profil['sophomorixAdminClass'],
+            'home': profil['homeDirectory'],
+        }
+        home = self.context.schoolmgr.get_homepath(user_context)
         upload_dir = f'{home}\\.upload'
 
         if not smbclient.path.exists(upload_dir):
@@ -322,9 +355,13 @@ class Handler(HttpPlugin):
 
         user = self.context.identity
         profil = AuthenticationService.get(self.context).get_provider().get_profile(user)
-        role = profil['sophomorixRole']
-        adminclass = profil['sophomorixAdminClass']
-        home = self.context.schoolmgr.get_homepath(user, role, adminclass)
+        user_context = {
+            'user': user,
+            'role': profil['sophomorixRole'],
+            'adminclass': profil['sophomorixAdminClass'],
+            'home': profil['homeDirectory'],
+        }
+        home = self.context.schoolmgr.get_homepath(user_context)
         upload_dir = f'{home}\\.upload'
 
         if not smbclient.path.exists(upload_dir):
@@ -367,9 +404,13 @@ class Handler(HttpPlugin):
 
         user = self.context.identity
         profil = AuthenticationService.get(self.context).get_provider().get_profile(user)
-        role = profil['sophomorixRole']
-        adminclass = profil['sophomorixAdminClass']
-        home = self.context.schoolmgr.get_homepath(user, role, adminclass)
+        user_context = {
+            'user': user,
+            'role': profil['sophomorixRole'],
+            'adminclass': profil['sophomorixAdminClass'],
+            'home': profil['homeDirectory'],
+        }
+        home = self.context.schoolmgr.get_homepath(user_context)
         upload_dir = f'{home}/.upload'
 
         for file in files:
@@ -427,7 +468,8 @@ class Handler(HttpPlugin):
     @get(r'/api/lmn/smbclient/download')
     @endpoint(page=True)
     def handle_smb_download(self, http_context):
-        path = unquote(http_context.query.get('path', None))
+        q = http_context.query.get('path', None)
+        path = base64.b64decode(q, altchars=b'-_').decode('utf-8')
 
         if '..' in path:
             return http_context.respond_forbidden()
@@ -456,6 +498,6 @@ class Handler(HttpPlugin):
             http_context.respond_not_found()
             return
 
-        http_context.add_header('Content-Disposition', (f'attachment; filename={name}'))
+        http_context.add_header('Content-Disposition', (f'attachment; filename="{quote(name)}"'))
 
         yield http_context.gzip(content)

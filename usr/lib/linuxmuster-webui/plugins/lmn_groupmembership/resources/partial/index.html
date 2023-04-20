@@ -59,7 +59,7 @@
                 <span translate> There are no schoolclasses available. Ask the administrator to import students</span>
             </div>
             <div class="flex-container lmn-container-list">
-                <div ng:repeat="classe in classes|orderBy:[sort.fx]:sortReverse|filter:filter">
+                <div ng:repeat="classe in classes|orderBy:[sort.fx]:sortReverse|filter:filter" style="padding-right:10px;border-right:solid 2px #ff8f00;">
                     <div ng-class="{'color-orange': classe.membership}">
                         <input id={{classe.groupname}} type="checkbox" ng-click='setMembership(classe)' ng-checked="classe.membership"></input>
                         <i class="fa fa-users"></i>
@@ -67,6 +67,7 @@
                             <span translate>Class</span>
                             <b style="word-wrap: break-word; -ms-word-break: break-all">{{classe.groupname}}</b>
                         </a>
+                        <span class="badge pull-right">{{classe.members.length}}</span>
                     </div>
                 </div>
             </div>
@@ -102,7 +103,7 @@
                 <span translate> There are no projects yet. You can create a new project using the menu bar.</span>
             </div>
             <div class="flex-container lmn-container-list" >
-                <div ng:repeat="project in projects|orderBy:[sort.fx]:sortReverse|filter:filter">
+                <div ng:repeat="project in projects|orderBy:[sort.fx]:sortReverse|filter:filter" style="padding-right:10px;border-right:solid 2px #ff8f00;">
                     <div ng:show="!projectIsHidden(project)" ng:class="{'color-orange': project.membership}" ng:style="!projectIsJoinable(project) && {'padding-left':'17px'}">
                         <input id={{project.groupname}} type="checkbox" ng:show="projectIsJoinable(project)" ng:click='setMembership(project)' ng:checked="project.membership">
                         <i class="fa fa-flask"></i>
@@ -110,6 +111,7 @@
                             <span translate>Project</span>
                             <b style="word-wrap: break-word; -ms-word-break: break-all">{{project.groupname}}</b>
                         </a>
+                        <span class="badge pull-right">{{project.members.length}}</span>
                     </div>
                 </div>
             </div>

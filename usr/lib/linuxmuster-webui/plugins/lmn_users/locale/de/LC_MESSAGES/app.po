@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-02-23 15:10+0100\n"
-"PO-Revision-Date: 2023-02-23 14:40\n"
+"PO-Revision-Date: 2023-02-24 09:26\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -796,11 +796,11 @@ msgstr "Globale Administratoren löschen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:157
 msgid "Change own custom fields values"
-msgstr ""
+msgstr "Meine Daten ändern"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:162
 msgid "Read custom fields values"
-msgstr ""
+msgstr "Benutzerdefinierte Felder lesen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:63
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:88
@@ -852,7 +852,7 @@ msgstr "Neue Adresse"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:116
 msgid "Address added !"
-msgstr ""
+msgstr "Adresse hinzugefügt!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/userPassword.es:17
 msgid "Initial password set"

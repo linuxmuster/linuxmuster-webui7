@@ -108,10 +108,8 @@ angular.module('lmn.devices').controller 'LMDevicesController', ($scope, $http, 
         return value.room and value.room[0] != '#'
 
     $scope.add = () ->
-        if $scope.devices.length > 0
-            $scope.paging.page = Math.floor(($scope.devices.length - 1) / $scope.paging.pageSize) + 1
         $scope.filter = ''
-        $scope.devices.push {
+        $scope.devices.unshift({
             _isNew: true,
             room: '',
             hostname: '',
@@ -120,7 +118,9 @@ angular.module('lmn.devices').controller 'LMDevicesController', ($scope, $http, 
             ip: '',
             sophomorixRole: 'classroom-studentcomputer',
             pxeFlag: '1',
-        }
+        })
+        # Return to first page after adding the new device
+        $scope.paging.page = 1
 
     $scope.duplicate = (device) ->
         newDevice = angular.copy(device)

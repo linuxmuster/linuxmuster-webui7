@@ -322,7 +322,7 @@ class Handler(HttpPlugin):
             ]
             return lmn_getSophomorixValue(sophomorixCommand, '')
 
-        with authorize('lmn:session:trans'):
+        with authorize('lmn:oldsession:trans'):
             if command == 'share':
                 try:
                     for sender in senders:

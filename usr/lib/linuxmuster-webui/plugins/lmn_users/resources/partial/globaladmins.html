@@ -168,7 +168,7 @@
         <tr>
             <th> </th>
             <th width="120" translate> Login</th>
-            <th translate> Name / DN </th>
+            <th translate> Name / DN / Comment </th>
             <th> </th>
             <th> </th>
         </tr>
@@ -178,8 +178,14 @@
                 <i>{{globalbinduser.sAMAccountName}}</i>
             </td>
             <td>
-                <b>{{globalbinduser.givenName}} {{globalbinduser.sn}}</b><br />
+                <b>{{globalbinduser.givenName}} {{globalbinduser.sn}}</b>
+                <br />
                 {{globalbinduser.DN}}
+                <div class="alert alert-info" ng:click="editComment(globalbinduser)">
+                    {{globalbinduser.sophomorixComment}}
+                    <i class="fa fa-pencil pull-right"></i>
+                </div>
+                <br />
             </td>
             <td width="1">
                 <button class="btn btn-default" ng:click="showBindPW(globalbinduser)" ng:show="globalbinduser.pw">

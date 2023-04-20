@@ -5,6 +5,7 @@ environment.
 
 # coding=utf-8
 from jadi import component
+
 from aj.api.http import get, post, delete, HttpPlugin
 from aj.api.endpoint import endpoint
 from aj.auth import authorize, AuthenticationService
@@ -373,6 +374,33 @@ class Handler(HttpPlugin):
             # Ignore SophomorixValue errors
             pass
         return resultArray
+
+    @delete(r'/api/lmn/groupmembership/schoolclass/(?P<schoolclass>.+)')
+    @authorize('lmn:groupmembership')
+    @endpoint(api=True)
+    def handle_api_kill_schoolclass(self, http_context, schoolclass=''):
+        """
+        Kill specified schoolclass.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: List of groups or result for actions kill and create
+        :rtype: dict or tuple
+        """
+
+        username = self.context.identity
+        user_details = AuthenticationService.get(self.context).get_provider().get_profile(username)
+        isAdmin = "administrator" in user_details['sophomorixRole']
+
+        if isAdmin:
+            sophomorixCommand = ['sophomorix-class', '--kill', '--class', schoolclass, '-jj']
+            result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
+            if result['TYPE'] == "ERROR":
+                return result['TYPE']['LOG']
+            # Try to return last result to frontend
+            return result['TYPE'], result['LOG']
+        # TODO: This should be done by sophomorix
+        return ['ERROR', 'Permission Denied']
 
     @get(r'/api/lmn/find/computer/(?P<computer>.+)')
     @authorize('lmn:groupmembership')

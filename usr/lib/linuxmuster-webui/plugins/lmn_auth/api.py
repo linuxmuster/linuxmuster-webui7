@@ -24,6 +24,7 @@ from aj.plugins.lmn_common.api import ldap_config as params, lmsetup_schoolname,
 from aj.plugins.lmn_common.multischool import SchoolManager
 from aj.api.endpoint import EndpointError
 
+
 @component(AuthenticationProvider)
 class LMAuthenticationProvider(AuthenticationProvider):
     """
@@ -83,6 +84,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
             'sophomorixCustomMulti3',
             'sophomorixCustomMulti4',
             'sophomorixCustomMulti5',
+            'sophomorixSessions',
         ]
 
         if context == "auth":
@@ -119,6 +121,14 @@ class LMAuthenticationProvider(AuthenticationProvider):
         return userAttrs
 
     def prepare_environment(self, username):
+        """
+        Perform some objects initialization (multischool environment, kerberos
+        ticket) before switching to worker.
+
+        :param username: sAMAccountName
+        :type username: string
+        """
+
         # Initialize school manager
         active_school = self.get_profile(username)['activeSchool']
         schoolmgr = SchoolManager()
@@ -348,7 +358,17 @@ class LMAuthenticationProvider(AuthenticationProvider):
             return {}
 
     def check_mail(self, mail):
-        # Search in the mail field, this must be discuted with others devs
+        """
+        Check if a given mail actually exists in the LDAP tree, in order to send
+        or not a password reset email.
+        The tested field must be given in the config file.
+
+        :param mail: Email of the user
+        :type mail: basestring
+        :return: Existing or not
+        :rtype: bool
+        """
+
         ldap_filter = f"""(&
                             (objectClass=user)
                             (|
@@ -386,6 +406,11 @@ class LMAuthenticationProvider(AuthenticationProvider):
         return False
 
     def check_password_complexity(self, password):
+        """
+        Check if a given password for a user for the password reset function
+        respects some standards.
+        """
+
         strong_pw = re.match('(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*()\+{}\-\[\]]|(?=.*\d)).{7,}', password)
         valid_pw = re.match('^[a-zA-Z0-9!@#§+\-$%&*{}()\]\[]+$', password)
         if valid_pw and strong_pw:
@@ -400,6 +425,11 @@ class LMAuthenticationProvider(AuthenticationProvider):
         return True
 
     def signout(self):
+        """
+        Perform some cleaning while destroying the session (removing the
+        kerberos ticket).
+        """
+
         uid = self.get_isolation_uid(self.context.identity)
 
         if uid == 0 and self.context.identity == 'root':
@@ -412,6 +442,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
 class UserLdapConfig(UserConfigProvider):
     """
     User config class compliant with linuxmuster.net LDAP config's scheme
+    TODO : currently not used, must be updated
     """
 
     id = 'lm'

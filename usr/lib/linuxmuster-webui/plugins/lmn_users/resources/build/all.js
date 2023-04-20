@@ -507,6 +507,15 @@
         return $route.reload();
       });
     };
+    $scope.editComment = function(user) {
+      return messagebox.prompt(gettext('Edit comment'), user.sophomorixComment).then(function(msg) {
+        return $http.post(`/api/lmn/sophomorixUsers/${user.sAMAccountName}/comment`, {
+          comment: msg.value
+        }).then(function(resp) {
+          return $route.reload();
+        });
+      });
+    };
     $scope.haveSelection = function() {
       var i, len, ref, x;
       if ($scope.schooladmins) {
@@ -698,7 +707,6 @@
       });
     };
     $scope.userInfo = function(user) {
-      console.log(user);
       return $uibModal.open({
         templateUrl: '/lmn_users:resources/partial/userDetails.modal.html',
         controller: 'LMNUserDetailsController',
@@ -713,6 +721,15 @@
         }
       }).closed.then(function() {
         return $route.reload();
+      });
+    };
+    $scope.editComment = function(user) {
+      return messagebox.prompt(gettext('Edit comment'), user.sophomorixComment).then(function(msg) {
+        return $http.post(`/api/lmn/sophomorixUsers/${user.sAMAccountName}/comment`, {
+          comment: msg.value
+        }).then(function(resp) {
+          return $route.reload();
+        });
       });
     };
     $scope.haveSelection = function() {
@@ -2367,7 +2384,7 @@
       return Object.keys(d).length;
     };
     $scope.validateField = function(name, val, isnew, ev, tab, filter = null) {
-      var errorClass, test;
+      var errorClass, schoolclasses_tmp, test;
       // TODO : what valid chars for class, name and course ?
       // Temporary solution : not filter these fields
       if ($scope[tab + "_first_save"]) {
@@ -2393,12 +2410,30 @@
       test = validation["isValid" + name](val);
       // Ensure the login is not duplicated, but ignore empty login
       if (filter === 'teachers') {
-        if (val !== '') {
-          test = test && ($scope.teachers.filter(validation.findval('login', val)).length < 2);
+        if (val !== '' && val !== void 0) {
+          if (!($scope.teachers.filter(validation.findval('login', val)).length < 2)) {
+            test = test && gettext("Duplicate teachers login");
+          }
         }
       } else if (filter === 'extrastudents') {
-        if (val !== '') {
-          test = test && ($scope.extrastudents.filter(validation.findval('login', val)).length < 2);
+        if (val !== '' && val !== void 0) {
+          if (!($scope.extrastudents.filter(validation.findval('login', val)).length < 2)) {
+            test = test && gettext("Duplicate extrastudents login");
+          }
+          // Test if login == schoolclass
+          if (name === 'Login') {
+            // Get all classes from extrastudents and students objects without duplicates
+            schoolclasses_tmp = $scope.extrastudents.map(function(x) {
+              return x.class;
+            }).concat($scope.students.map(function(x) {
+              return x.class;
+            })).filter(function(v, i, a) {
+              return a.indexOf(v) === i;
+            });
+            if (schoolclasses_tmp.indexOf(val) >= 0) {
+              test = test && gettext("Conflict between login and class");
+            }
+          }
         }
       }
       // Login for teachers may be empty
@@ -2608,7 +2643,7 @@ angular.module('lmn.common').service('customFields', function ($http, messagebox
                 if (config['customDisplay'][idx] == 'proxyAddresses') {
                     config['customTitle'][idx] = response.data.proxyAddresses.title;
                 } else {
-                    position = config['customDisplay'][idx].slice(-1);
+                    position = (config['customDisplay'][idx] || '').slice(-1);
                     if (position == '') {
                         config['customTitle'][idx] = '';
                     } else if (_this.isListAttr(config['customDisplay'][idx])) {

@@ -1,3 +1,32 @@
+linuxmuster-webui7 (17.2.19) lmn72-testing; urgency=low
+
+  * Merged 7.2.15 upstream
+
+ -- Andreas Till <andreas.till@netzint.de>  Thu, 20 Apr 2023 10:39:04 +0200
+
+linuxmuster-webui7 (7.2.15) lmn72; urgency=medium
+
+  * Upgrade some libraries for Python 3.10
+  * A lot of pre-work on new session plugin, currently disabled
+  * Add config entry for host in smbclient
+  * Test script for smbclient will now test all common hosts
+  * [smbclient] Load GPOS directly from samba
+  * [smbclient] Use homepath in LDAP
+  * [smbclient] Cut, copy, move, delete can now handle directories
+  * [smbclient] Fix download with special chars
+  * [users] Avoid conflict between extrastudent login and schoolclass
+  * [users] Fix missing config for custom fields display
+  * [groupmembership] Add schoolclass size
+  * [groupmembership] Add option to kill an empty schoolclass
+  * [vdi] Diverses fixs on run commands
+  * [linbo4] Hide configs from other schools in multischool env
+  * [webdav] Move directories
+  * [webdav] Fix diverse encoding issues
+  * [webdav] Better status codes for created entries
+  * [webdav] Allow cut, copy, delete on directories
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Thu, 23 Mar 2023 11:37:05 +0100
+
 linuxmuster-webui7 (17.2.18-1) lmn72-testing; urgency=low
 
   * Removed unneccessary console logging in frontend

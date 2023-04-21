@@ -84,23 +84,23 @@
         <span style="float: right;"> <h6 style="display:{{visible.sessionname}}">{{currentSession.name}}</h6></span>
     </div>
 
-    <div class="alert alert-info" ng:show="session.participants.length == 0" translate>
+    <div class="alert alert-info" ng:show="session.members.length == 0" translate>
         There's currently no student in this group. You can add these with the input above.
     </div>
 
-    <table class="table" style="margin-bottom:60px;" ng:class="{'lmn-blurred': blurred}" ng:show="session.participants.length > 0">
+    <table class="table" style="margin-bottom:60px;" ng:class="{'lmn-blurred': blurred}" ng:show="session.members.length > 0">
         <tr>
             <th ng:repeat="(id, field) in fields" ng:if="field.visible">
                 <div title="{{field.title}}" class="{{field.icon}}" style="font-size:20px;"></div>
                 <br /> {{field.name}}
-                <span ng:if="id == 'sAMAccountName'" class="label label-info pull-right">{{session.participants.length}}</span>
+                <span ng:if="id == 'sAMAccountName'" class="label label-info pull-right">{{session.members.length}}</span>
 <!--                <span checkbox style="float:right;" id="{{id}}.all" ng:if="field.examBox" ng-click="selectAll('exammode')" ng:model=field.checkboxStatus>"</span>-->
                 <span checkbox style="float:right;" id="{{id}}.all" ng:if="field.checkboxAll" ng-click="setManagementGroupAll(id)" ng:model=field.checkboxStatus>"</span>
             </th>
             <th></th>
             <th></th>
         </tr>
-        <tr style="display:;"  ng:repeat="participant in session.participants|orderBy:[sort.fx]">
+        <tr style="display:;"  ng:repeat="participant in session.members|orderBy:[sort.fx]">
             <td class="ng-binding">
                 <span class="label label-default pull-right">{{participant.sophomorixAdminClass}}</span>
                 <a>
@@ -243,7 +243,7 @@
                     <i class="fa fa-file"></i> <span translate>Share</span><i class="fa fa-caret-up"></i>
                 </button>
                 <ul uib-dropdown-menu class="scrollable">
-                    <li><a ng:click="shareTrans('share', [identity.user], session.participants, currentSession.comment)" translate>Share file(s) from transfer directory with all participants</a></li>
+                    <li><a ng:click="shareTrans('share', [identity.user], session.members, currentSession.comment)" translate>Share file(s) from transfer directory with all members</a></li>
                 </ul>
             </div>
             <div style="display:{{visible.participanttable}};" uib-dropdown ng:show="currentSession.name != ''" class="dropup">
@@ -252,8 +252,8 @@
                 </button>
                 <ul uib-dropdown-menu class="scrollable">
                     <!--                        <li><a flow-btn class="btn btn-default btn-flat" test-bind="uploadButton" translate>Upload file to share</a></li>-->
-                    <li><a ng:click="collectTrans('copy', session.participants, [identity.user], currentSession.comment)" translate>Copy transfer directory with all participants</a></li>
-                    <li><a ng:click="collectTrans('move', session.participants, [identity.user], currentSession.comment)" translate>Move transfer directory with all participants</a></li>
+                    <li><a ng:click="collectTrans('copy', session.members, [identity.user], currentSession.comment)" translate>Copy transfer directory with all members</a></li>
+                    <li><a ng:click="collectTrans('move', session.members, [identity.user], currentSession.comment)" translate>Move transfer directory with all members</a></li>
                 </ul>
             </div>
             <button ng:click="backToSessionList()" class="btn btn-lmn pull-right" translate>Close</button>

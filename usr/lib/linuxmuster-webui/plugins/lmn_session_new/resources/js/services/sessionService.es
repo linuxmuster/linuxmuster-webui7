@@ -24,8 +24,8 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
 
     this.start = (session) => {
         this.current = session;
-        $http.post('/api/lmn/session/userinfo', {'users': this.current.participants}).then((resp) => {
-            this.current.participants = resp.data;
+        $http.post('/api/lmn/session/userinfo', {'users': this.current.members}).then((resp) => {
+            this.current.members = resp.data;
             this.current.generated = false;
             this.current.type = 'session';
             $location.path('/view/lmn/session');
@@ -37,18 +37,18 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
             'sid': '',
             'name': '',
             'generated': false,
-            'participants': [],
+            'members': [],
             'type': '',
         };
     }
 
     this.reset();
 
-    this.startGenerated = (groupname, participants, session_type) =>  {
+    this.startGenerated = (groupname, members, session_type) =>  {
         generatedSession = {
             'sid': Date.now(),
             'name': groupname,
-            'participants': participants,
+            'members': members,
             'generated': true,
             'type': session_type, // May be room or schoolclass or project
         };
@@ -56,7 +56,7 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
         $location.path('/view/lmn/session');
     }
 
-    this.new = (participants = []) => {
+    this.new = (members = []) => {
         return messagebox.prompt(gettext('Session Name'), '').then((msg) => {
             if (!msg.value) {return}
 
@@ -66,7 +66,7 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
                 return
             }
 
-            return $http.put(`/api/lmn/session/sessions/${msg.value}`, {participants: participants}).then((resp) => {
+            return $http.put(`/api/lmn/session/sessions/${msg.value}`, {members: members}).then((resp) => {
                 notify.success(gettext('Session Created'));
             });
         });

@@ -50,8 +50,8 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
 
     this.start = function (session) {
         _this.current = session;
-        $http.post('/api/lmn/session/userinfo', { 'users': _this.current.participants }).then(function (resp) {
-            _this.current.participants = resp.data;
+        $http.post('/api/lmn/session/userinfo', { 'users': _this.current.members }).then(function (resp) {
+            _this.current.members = resp.data;
             _this.current.generated = false;
             _this.current.type = 'session';
             $location.path('/view/lmn/session');
@@ -63,18 +63,18 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
             'sid': '',
             'name': '',
             'generated': false,
-            'participants': [],
+            'members': [],
             'type': ''
         };
     };
 
     this.reset();
 
-    this.startGenerated = function (groupname, participants, session_type) {
+    this.startGenerated = function (groupname, members, session_type) {
         generatedSession = {
             'sid': Date.now(),
             'name': groupname,
-            'participants': participants,
+            'members': members,
             'generated': true,
             'type': session_type // May be room or schoolclass or project
         };
@@ -83,7 +83,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     };
 
     this.new = function () {
-        var participants = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+        var members = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 
         return messagebox.prompt(gettext('Session Name'), '').then(function (msg) {
             if (!msg.value) {
@@ -96,7 +96,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
                 return;
             }
 
-            return $http.put('/api/lmn/session/sessions/' + msg.value, { participants: participants }).then(function (resp) {
+            return $http.put('/api/lmn/session/sessions/' + msg.value, { members: members }).then(function (resp) {
                 notify.success(gettext('Session Created'));
             });
         });
@@ -157,7 +157,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     $scope.addParticipant = '';
     $scope.addSchoolClass = '';
     $window.onbeforeunload = function(event) {
-      if ($scope.session.sid === '' || $scope.session.participants.length === 0) {
+      if ($scope.session.sid === '' || $scope.session.members.length === 0) {
         return;
       }
       // Confirm before page reload
@@ -171,7 +171,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       return $window.onbeforeunload = void 0;
     });
     $scope.$on("$locationChangeStart", function(event) {
-      if ($scope.session.sid !== '' && $scope.session.participants.length > 0) {
+      if ($scope.session.sid !== '' && $scope.session.members.length > 0) {
         if (!confirm(gettext('Do you really want to quit this session ? You can restart it later if you want.'))) {
           event.preventDefault();
           return;
@@ -284,7 +284,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
           return $http.post("/api/lmn/session/userinfo", {
             users: resp.data.usersList
           }).then(function(rp) {
-            return $scope.session.participants = rp.data;
+            return $scope.session.members = rp.data;
           });
         }
       });
@@ -326,7 +326,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       $scope.changeState = true;
       usersList = [];
       new_value = !$scope.fields[group].checkboxStatus;
-      ref = $scope.session.participants;
+      ref = $scope.session.members;
       for (i = 0, len = ref.length; i < len; i++) {
         participant = ref[i];
         // Only change management group for student, and not others teachers
@@ -357,7 +357,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       });
     };
     $scope.saveAsSession = function() {
-      return lmnSession.new($scope.session.participants).then(function() {
+      return lmnSession.new($scope.session.members).then(function() {
         // TODO : would be better to get the session id and simply set the current session
         // instead of going back to the sessions list
         // But for this sophomorix needs to return the session id when creating a new one
@@ -428,7 +428,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
               'session': $scope.session.sid
             });
           }
-          return $scope.session.participants.push(new_participant);
+          return $scope.session.members.push(new_participant);
         });
       }
     });
@@ -449,23 +449,23 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
               'session': $scope.session.sid
             });
           }
-          return $scope.session.participants = $scope.session.participants.concat(new_participants);
+          return $scope.session.members = $scope.session.members.concat(new_participants);
         });
       }
     });
     $scope.removeParticipant = function(participant) {
       var deleteIndex;
-      deleteIndex = $scope.session.participants.indexOf(participant);
+      deleteIndex = $scope.session.members.indexOf(participant);
       if (deleteIndex !== -1) {
         if ($scope.session.generated) {
           // Not a real session, just removing from participants list displayed
-          return $scope.session.participants.splice(deleteIndex, 1);
+          return $scope.session.members.splice(deleteIndex, 1);
         } else {
           return $http.patch('/api/lmn/session/participants', {
             'users': [participant.sAMAccountName],
             'session': $scope.session.sid
           }).then(function() {
-            return $scope.session.participants.splice(deleteIndex, 1);
+            return $scope.session.members.splice(deleteIndex, 1);
           });
         }
       }
@@ -736,7 +736,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     return $scope.websessionStart = function() {
       var i, len, participant, ref, tempparticipants;
       tempparticipants = [];
-      ref = $scope.session.participants;
+      ref = $scope.session.members;
       for (i = 0, len = ref.length; i < len; i++) {
         participant = ref[i];
         tempparticipants.push(participant.sAMAccountName);
@@ -956,7 +956,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       } else {
         // get participants from specified class or project
         return $http.post("/api/lmn/session/userinfo", {
-          users: group.participants
+          users: group.members
         }).then(function(resp) {
           return lmnSession.startGenerated(group.name, resp.data, group.type);
         });

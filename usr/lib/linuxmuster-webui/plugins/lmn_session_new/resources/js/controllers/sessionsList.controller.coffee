@@ -39,7 +39,7 @@ angular.module('lmn.session_new').controller 'LMNSessionsListController', ($scop
                 lmnSession.startGenerated($scope.room.name, resp.data, 'room')
         else
             # get participants from specified class or project
-            $http.post("/api/lmn/session/userinfo", {users:group.participants}).then (resp) ->
+            $http.post("/api/lmn/session/userinfo", {users:group.members}).then (resp) ->
                 lmnSession.startGenerated(group.name, resp.data, group.type)
 
     $scope.$watch 'identity.user', ->

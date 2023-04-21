@@ -112,8 +112,9 @@ class LdapConnector:
                 result = []
                 for v in value:
                     data = v.decode().split(';')
-                    participants = data[2].split(',') if data[2] else []
-                    result.append(LMNSession(data[0], data[1], participants))
+                    members = data[2].split(',') if data[2] else []
+                    membersCount = len(members)
+                    result.append(LMNSession(data[0], data[1], members, membersCount))
                 return result
 
         if value is None:

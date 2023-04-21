@@ -258,14 +258,7 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_ldap_user_search(self, http_context, query=''):
         schoolname = self.context.schoolmgr.school
-        try:
-            sophomorixCommand = ['sophomorix-query', '-jj', '--schoolbase', schoolname, '--student', '--user-basic', '--anyname', f'*{query}*']
-            users = lmn_getSophomorixValue(sophomorixCommand, 'USER', True)
-        except Exception:
-            return 0
-        userList = []
-        for user in users:
-            userList.append(users[user])
+        userList = self.lr.get(f'/users/search/student/{query}')
         return sorted(userList, key=lambda d: f"{d['sophomorixAdminClass']}{d['sn']}{d['givenName']}")
 
     @get(r'/api/lmn/session/schoolClass-search/(?P<query>.*)')

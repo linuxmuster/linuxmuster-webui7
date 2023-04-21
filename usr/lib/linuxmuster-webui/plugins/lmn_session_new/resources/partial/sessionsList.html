@@ -120,6 +120,13 @@
             </div>
         </div>
 
+        <button class="btn btn-default" ng:click="newSession()">
+            <i class="fa fa-plus"></i>
+            <span translate>New group</span>
+        </button>
+
+        <hr />
+
         <!-- projects -->
         <div ng:show="projects.length > 0"  class="list-group">
             <h3>
@@ -154,10 +161,4 @@
             </div>
         </div>
 
-        <hr />
-
-        <button class="btn btn-default" ng:click="newSession()">
-            <i class="fa fa-plus"></i>
-            <span translate>New group</span>
-        </button>
 </div>

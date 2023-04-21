@@ -14,7 +14,7 @@ from aj.plugins.lmn_common.ldap.requests import LMNLdapRequests
 class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
-        self.lr = LMNLdapRequests()
+        self.lr = LMNLdapRequests(self.context)
 
     @get(r'/api/lmn/session/sessions')
     @authorize('lm:users:students:read')

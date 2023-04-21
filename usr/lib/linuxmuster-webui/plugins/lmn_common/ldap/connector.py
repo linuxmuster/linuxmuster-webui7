@@ -9,6 +9,9 @@ from aj.plugins.lmn_common.ldap.models import *
 
 class LdapConnector:
 
+    def __init__(self, context):
+        self.context = context
+
     def get_single(self, objectclass, ldap_filter, dict=True):
         """
         Handle a single result from a ldap request (with required ldap filter)

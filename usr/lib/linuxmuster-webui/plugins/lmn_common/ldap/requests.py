@@ -15,8 +15,9 @@ def lmnapi(pattern):
     return decorator
 
 class LMNLdapRequests:
-    def __init__(self):
-        self.lc = LdapConnector()
+    def __init__(self, context):
+        self.context = context
+        self.lc = LdapConnector(self.context)
         self.methods = [getattr(self,method) for method in dir(self) if method.startswith('get_')]
 
     def get(self, url, **kwargs):

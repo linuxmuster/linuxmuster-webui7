@@ -222,7 +222,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
 
     $scope.$watch 'addSchoolClass', () ->
         if $scope.addSchoolClass
-            members = Object.keys($scope.addSchoolClass.members)
+            members = $scope.addSchoolClass.sophomorixMembers
             $http.post('/api/lmn/session/userinfo', {'users':members}).then (resp) ->
                 new_participants = resp.data
                 $scope.addSchoolClass = ''

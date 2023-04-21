@@ -266,19 +266,7 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_ldap_group_search(self, http_context, query=''):
         schoolname = self.context.schoolmgr.school
-        try:
-            sophomorixCommand = ['sophomorix-query', '-jj', '--schoolbase', schoolname, '--class', '--group-members', '--user-full', '--sam', f'*{query}*']
-            schoolClasses = lmn_getSophomorixValue(sophomorixCommand, 'MEMBERS', True)
-        except Exception:
-            return 0
-        schoolClassList = []
-        for schoolClass in schoolClasses:
-            schoolClassJson = {}
-            schoolClassJson['sophomorixAdminClass'] = schoolClass
-            schoolClassJson['members'] = schoolClasses[schoolClass]
-            schoolClassJson['count'] = len(schoolClasses[schoolClass])
-            schoolClassList.append(schoolClassJson)
-        return sorted(schoolClassList, key=lambda d: d['sophomorixAdminClass'])
+        return self.lr.get(f'/schoolclasses/search/{query}', sortkey='cn')
 
     @post(r'/api/lmn/session/moveFileToHome')  ## TODO authorize
     @endpoint(api=True)

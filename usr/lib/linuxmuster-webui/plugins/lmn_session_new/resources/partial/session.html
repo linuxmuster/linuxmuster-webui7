@@ -7,7 +7,7 @@
 
     <div class="input-group">
         <input type="text" style="width:70%" placeholder="{{translation.addStudent}}" ng:model="addParticipant" typeahead-editable=false typeahead-min-length="2" uib-typeahead="user as user.sophomorixAdminClass+' '+user.sn+ ' '+user.givenName+ ' ('+user.sAMAccountName+')'  for user in findUsers($viewValue) | limitTo:10" class="form-control" />
-        <input type="text" style="width:30%" placeholder="{{translation.addClass}}" ng:model="addSchoolClass" typeahead-editable=false typeahead-min-length="1" uib-typeahead="schoolClass as schoolClass.sophomorixAdminClass+' ('+schoolClass.count+')' for schoolClass in findSchoolClasses($viewValue) | limitTo:10" class="form-control" />
+        <input type="text" style="width:30%" placeholder="{{translation.addClass}}" ng:model="addSchoolClass" typeahead-editable=false typeahead-min-length="1" uib-typeahead="schoolClass as schoolClass.cn+' ('+schoolClass.membersCount+')' for schoolClass in findSchoolClasses($viewValue) | limitTo:10" class="form-control" />
 
         <div uib-dropdown class="input-group-btn" >
             <button class="btn btn-default"  uib-dropdown-toggle>

@@ -435,7 +435,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     $scope.$watch('addSchoolClass', function() {
       var members;
       if ($scope.addSchoolClass) {
-        members = Object.keys($scope.addSchoolClass.members);
+        members = $scope.addSchoolClass.sophomorixMembers;
         return $http.post('/api/lmn/session/userinfo', {
           'users': members
         }).then(function(resp) {

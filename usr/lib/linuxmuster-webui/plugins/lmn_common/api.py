@@ -82,6 +82,12 @@ class SophomorixProcess(threading.Thread):
         p = subprocess.Popen(self.command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=False, sensitive=self.sensitive)
         self.stdout, self.stderr = p.communicate()
 
+def lmn_is_installed():
+    installed_file = '/usr/lib/linuxmuster-webui/etc/.installed'
+    if os.path.isfile(installed_file):
+        return True
+    return False
+        
 
 def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False, sensitive=False):
     """

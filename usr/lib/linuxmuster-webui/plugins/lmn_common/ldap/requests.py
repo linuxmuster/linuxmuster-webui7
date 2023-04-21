@@ -100,6 +100,17 @@ class LMNLdapRequests:
 
         return self.lc.get_collection(LMNSchoolClass, ldap_filter, **kwargs)
 
+    @lmnapi(r'/schoolclasses/search/(?P<query>\w*)')
+    def get_results_search_schoolclasses(self, query, **kwargs):
+        """
+        Get all details from a search about schoolclasses.
+        Return a list of LMNSchoolClass data objects.
+        """
+
+        ldap_filter = f"""(&(objectClass=group)(sophomorixType=adminclass)(cn=*{query}*))"""
+
+        return self.lc.get_collection(LMNSchoolClass, ldap_filter, **kwargs)
+
     @lmnapi(r'/projects')
     def get_all_projects(self, **kwargs):
         """

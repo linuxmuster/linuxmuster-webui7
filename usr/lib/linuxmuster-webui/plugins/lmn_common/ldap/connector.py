@@ -27,13 +27,18 @@ class LdapConnector:
 
         result = self._request(ldap_filter)[0][1]
         data = {}
-        for field in fields(objectclass):
-            if field.init:
-                value = result.get(field.name, None)
-                data[field.name] = self._filter_value(field, value)
-        if dict:
-            return asdict(objectclass(**data))
-        return objectclass(**data)
+        # TODO : not all requests are school oriented
+        school_node = f",OU={self.context.schoolmgr.school},"
+        dn = result.get('distinguishedName', [b''])[0].decode()
+        if school_node in dn:
+            for field in fields(objectclass):
+                if field.init:
+                    value = result.get(field.name, None)
+                    data[field.name] = self._filter_value(field, value)
+            if dict:
+                return asdict(objectclass(**data))
+            return objectclass(**data)
+        return {}
         
     def get_collection(self, objectclass, ldap_filter, dict=True, sortkey=None):
         """
@@ -55,14 +60,18 @@ class LdapConnector:
         for result in results:
             if result[0] is not None:
                 data = {}
-                for field in fields(objectclass):
-                    if field.init:
-                        value = result[1].get(field.name, None)
-                        data[field.name] = self._filter_value(field, value)
-                if dict:
-                    response.append(asdict(objectclass(**data)))
-                else:
-                    response.append(objectclass(**data))
+                # TODO : not all requests are school oriented
+                school_node = f",OU={self.context.schoolmgr.school},"
+                dn = result.get('distinguishedName', [b''])[0].decode()
+                if school_node in dn:
+                    for field in fields(objectclass):
+                        if field.init:
+                            value = result[1].get(field.name, None)
+                            data[field.name] = self._filter_value(field, value)
+                    if dict:
+                        response.append(asdict(objectclass(**data)))
+                    else:
+                        response.append(objectclass(**data))
         if sortkey is not None:
             if dict:
                 return sorted(response, key=lambda d: d.get(sortkey, None))

@@ -38,7 +38,6 @@ class LMNLdapRequests:
         Get all details from a specific user.
         Return a LMNUser data object.
         """
-
         ldap_filter = f"""(&
                                     (cn={username})
                                     (objectClass=user)
@@ -120,5 +119,39 @@ class LMNLdapRequests:
         """
 
         ldap_filter = f"(&(objectClass=user)(sophomorixRole={role}))"
+
+        return self.lc.get_collection(LMNUser, ldap_filter, **kwargs)
+
+    @lmnapi(r'/users/search/(?P<selection>\w*)/(?P<query>\w*)')
+    def get_results_search_user(self, query, selection=[], **kwargs):
+        """
+        Get all details from a search on a specific user login scheme and a
+        selection of roles.
+        Return a list of LMNUser data object.
+        """
+
+        role_filter = {
+            'all': """
+                    (sophomorixRole=globaladministrator)
+                    (sophomorixRole=schooladministrator)
+                    (sophomorixRole=teacher)
+                    (sophomorixRole=student)
+                """,
+            'admins': """
+                    (sophomorixRole=globaladministrator)
+                    (sophomorixRole=schooladministrator)
+                """,
+        }
+
+        for role in ['globaladministrator', 'schooladministrator', 'teacher', 'student']:
+            role_filter[role] = f'(sophomorixRole={role})'
+
+        ldap_filter = f"""(&
+                                    (sAMAccountName=*{query}*)
+                                    (objectClass=user)
+                                    (|
+                                        {role_filter[selection]}
+                                    )
+                                )"""
 
         return self.lc.get_collection(LMNUser, ldap_filter, **kwargs)

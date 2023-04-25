@@ -14,6 +14,6 @@ resources:
     - 'resources/js/routing.es'
     - 'resources/js/controllers/index.controller.es'
     - 'resources/partial/index.html'
-    - 'resources/styles.less'
+    - 'resources/styles.scss'
     - 'ng:lmn.vdi_dashboard'
 

@@ -1,9 +1,11 @@
 .session_table td {
   line-height: 33px !important;
 }
+
 .session_table:hover {
   background-color: #EFEFEF;
 }
+
 .websession_btn {
   border: 1px solid #eeeeee;
   background-color: white;

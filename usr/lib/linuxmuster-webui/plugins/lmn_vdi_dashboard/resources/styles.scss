@@ -1,25 +1,30 @@
-.changed {
-  color: green !important;
-  background-color: yellow !important;
+.changed{
+    color:green !important;
+    background-color:yellow !important;
 }
 
-.class-img-container {
-  position: relative;
+
+
+.class-img-container{
+position:relative;
 }
 
-.class-img-container .btn {
+.class-img-container .btn{
   position: absolute;
   bottom: 0;
   right: 0;
 }
 
-body::after {
-  position: absolute;
-  width: 0;
-  height: 0;
-  overflow: hidden;
-  z-index: -1;
-  content: url("/resources/lmn_common/resources/img/course_card_colored_darkblue_trans.png") url("/resources/lmn_common/resources/img/course_card_colored_orange_trans.png") url("/resources/lmn_common/resources/img/course_people_colored_darkblue_trans.png") url("/resources/lmn_common/resources/img/course_people_colored_orange_trans.png") url("/resources/lmn_common/resources/img/course_class_colored_darkblue_trans.png") url("/resources/lmn_common/resources/img/course_class_colored_orange_trans.png");
+
+
+body::after{
+   position:absolute; width:0; height:0; overflow:hidden; z-index:-1;
+   content: url('/resources/lmn_common/resources/img/course_card_colored_darkblue_trans.png')
+    url('/resources/lmn_common/resources/img/course_card_colored_orange_trans.png')
+    url('/resources/lmn_common/resources/img/course_people_colored_darkblue_trans.png')
+    url('/resources/lmn_common/resources/img/course_people_colored_orange_trans.png')
+    url('/resources/lmn_common/resources/img/course_class_colored_darkblue_trans.png')
+    url('/resources/lmn_common/resources/img/course_class_colored_orange_trans.png');
 }
 
 .session_container {
@@ -41,7 +46,7 @@ body::after {
 
 .session_hr {
   border-bottom: 1px solid #eeeeee;
-  width: 100%;
+  width:100%;
 }
 
 .session_image {
@@ -64,35 +69,35 @@ body::after {
 }
 
 .session_image_sessions {
-  background-image: url("/resources/lmn_common/resources/img/course_card_colored_darkblue_trans.png");
+  background-image: url('/resources/lmn_common/resources/img/course_card_colored_darkblue_trans.png');
 }
 
 .session_image_sessions:hover {
-  background-image: url("/resources/lmn_common/resources/img/course_card_colored_orange_trans.png");
+  background-image: url('/resources/lmn_common/resources/img/course_card_colored_orange_trans.png');
 }
 
 .session_image_classes {
   background-size: 55px 50px;
   background-position: 10px 10px;
-  background-image: url("/resources/lmn_common/resources/img/course_people_colored_darkblue_trans.png");
+  background-image: url('/resources/lmn_common/resources/img/course_people_colored_darkblue_trans.png');
 }
 
 .session_image_classes:hover {
   background-size: 55px 50px;
   background-position: 10px 10px;
-  background-image: url("/resources/lmn_common/resources/img/course_people_colored_orange_trans.png");
+  background-image: url('/resources/lmn_common/resources/img/course_people_colored_orange_trans.png');
 }
 
 .session_image_room {
   background-size: 55px 50px;
   background-position: 10px 10px;
-  background-image: url("/resources/lmn_common/resources/img/course_class_colored_darkblue_trans.png");
+  background-image: url('/resources/lmn_common/resources/img/course_class_colored_darkblue_trans.png');
 }
 
 .session_image_room:hover {
   background-size: 55px 50px;
   background-position: 10px 10px;
-  background-image: url("/resources/lmn_common/resources/img/course_class_colored_orange_trans.png");
+  background-image: url('/resources/lmn_common/resources/img/course_class_colored_orange_trans.png');
 }
 
 .session_image_btn {
@@ -107,4 +112,3 @@ body::after {
   top: 55px;
   left: 60px;
 }
-

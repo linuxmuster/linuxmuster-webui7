@@ -1,3 +1,9 @@
+linuxmuster-webui7 (17.1.45) lmn71; urgency=low
+
+  * Fixed handling permissions in session module during exam
+
+ -- Andreas Till <andreas.till@netzint.de>  Tue, 25 Apr 2023 17:34:25 +0200
+
 linuxmuster-webui7 (17.1.44) lmn71-testing; urgency=low
 
   * Merged from linxumuster/linuxmuster-webui7

@@ -126,13 +126,15 @@ class Handler(HttpPlugin):
             supervisor = http_context.json_body()['username']
             participants = http_context.json_body()['participants']
             participantsList = []
+            participantsUsernameList = []
             now = strftime("%Y%m%d_%H-%M-%S", localtime())
 
             examModeList, noExamModeList, wifiList, noWifiList, internetList, noInternetList, intranetList, noIntranetList, webfilterList, noWebfilterList, printingList, noPrintingList = [], [], [], [], [], [], [], [], [], [], [], []
 
             for participant in participants:
-                name = participant['sAMAccountName'].replace('-exam', '')
+                name = participant['sAMAccountName']
                 participantsList.append(name)
+                participantsUsernameList.append(name.replace('-exam', ''))
 
                 # Only check for exammode if this value was changed in WEBUI
                 if participant['exammode-changed'] is True:
@@ -167,7 +169,7 @@ class Handler(HttpPlugin):
 
             # Save session members
             try:
-                sophomorixCommand = ['sophomorix-session', '--session', session,  '-j', '--participants', ','.join(participantsList)]
+                sophomorixCommand = ['sophomorix-session', '--session', session,  '-j', '--participants', ','.join(participantsUsernameList)]
                 result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
             except Exception:
                 raise Exception(f'Error:\nsophomorix-session --session {session} -j --participants {",".join(participantsList)}')

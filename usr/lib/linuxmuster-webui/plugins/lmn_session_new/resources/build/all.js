@@ -153,11 +153,12 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
 (function() {
   angular.module('lmn.session_new').controller('LMNSessionController', function($scope, $http, $location, $route, $uibModal, $window, $interval, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem, validation, $rootScope, wait, userPassword, lmnSession) {
     var title, typeIsArray, validateResult;
-    $scope.changeState = false;
+    $scope.stateChanged = false;
+    $scope.sessionChanged = false;
     $scope.addParticipant = '';
     $scope.addSchoolClass = '';
     $window.onbeforeunload = function(event) {
-      if ($scope.session.sid === '' || $scope.session.members.length === 0) {
+      if (!$scope.sessionChanged) {
         return;
       }
       // Confirm before page reload
@@ -171,7 +172,8 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       return $window.onbeforeunload = void 0;
     });
     $scope.$on("$locationChangeStart", function(event) {
-      if ($scope.session.sid !== '' && $scope.session.members.length > 0) {
+      // TODO : handle logout if session is changed
+      if ($scope.sessionChanged) {
         if (!confirm(gettext('Do you really want to quit this session ? You can restart it later if you want.'))) {
           event.preventDefault();
           return;
@@ -303,7 +305,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     }
     $scope.setManagementGroup = function(group, participant) {
       var user;
-      $scope.changeState = true;
+      $scope.stateChanged = true;
       if (participant[group] === true) {
         group = `no${group}`;
       }
@@ -313,7 +315,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         users: user
       }).then(function(resp) {
         notify.success(`Group ${group} changed for ${user[0]}`);
-        return $scope.changeState = false;
+        return $scope.stateChanged = false;
       });
     };
     $scope.selectAll = function(id) {
@@ -323,7 +325,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     //            managementgroup = 'exammode_boolean'
     $scope.setManagementGroupAll = function(group) {
       var i, len, new_value, participant, ref, usersList;
-      $scope.changeState = true;
+      $scope.stateChanged = true;
       usersList = [];
       new_value = !$scope.fields[group].checkboxStatus;
       ref = $scope.session.members;
@@ -343,7 +345,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         users: usersList
       }).then(function(resp) {
         notify.success(`Group ${group} changed for ${usersList.join()}`);
-        return $scope.changeState = false;
+        return $scope.stateChanged = false;
       });
     };
     $scope.renameSession = function() {
@@ -358,6 +360,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     };
     $scope.saveAsSession = function() {
       return lmnSession.new($scope.session.members).then(function() {
+        $scope.sessionChanged = false;
         // TODO : would be better to get the session id and simply set the current session
         // instead of going back to the sessions list
         // But for this sophomorix needs to return the session id when creating a new one
@@ -427,6 +430,8 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
               'users': [new_participant.sAMAccountName],
               'session': $scope.session.sid
             });
+          } else {
+            $scope.sessionChanged = true;
           }
           return $scope.session.members.push(new_participant);
         });
@@ -448,6 +453,8 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
               'users': members,
               'session': $scope.session.sid
             });
+          } else {
+            $scope.sessionChanged = true;
           }
           return $scope.session.members = $scope.session.members.concat(new_participants);
         });
@@ -459,7 +466,8 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       if (deleteIndex !== -1) {
         if ($scope.session.generated) {
           // Not a real session, just removing from participants list displayed
-          return $scope.session.members.splice(deleteIndex, 1);
+          $scope.session.members.splice(deleteIndex, 1);
+          return $scope.sessionChanged = true;
         } else {
           return $http.patch('/api/lmn/session/participants', {
             'users': [participant.sAMAccountName],

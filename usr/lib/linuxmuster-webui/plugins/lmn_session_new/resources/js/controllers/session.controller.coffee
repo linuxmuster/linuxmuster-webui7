@@ -1,11 +1,12 @@
 angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $http, $location, $route, $uibModal, $window, $interval, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem, validation, $rootScope, wait, userPassword, lmnSession) ->
 
-    $scope.changeState = false
+    $scope.stateChanged = false
+    $scope.sessionChanged = false
     $scope.addParticipant = ''
     $scope.addSchoolClass = ''
 
     $window.onbeforeunload = (event) ->
-        if $scope.session.sid == '' or $scope.session.members.length == 0
+        if !$scope.sessionChanged
             return
         # Confirm before page reload
         return "Eventually not refreshing"
@@ -18,7 +19,8 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
     )
 
     $scope.$on("$locationChangeStart", (event) ->
-        if $scope.session.sid != '' and $scope.session.members.length > 0
+        # TODO : handle logout if session is changed
+        if $scope.sessionChanged
             if !confirm(gettext('Do you really want to quit this session ? You can restart it later if you want.'))
                 event.preventDefault()
                 return
@@ -132,13 +134,13 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         $scope.startRefresh()
 
     $scope.setManagementGroup = (group, participant) ->
-        $scope.changeState = true
+        $scope.stateChanged = true
         if participant[group] == true
             group = "no#{group}"
         user = [participant.sAMAccountName]
         $http.post('/api/lmn/managementgroup', {group:group, users:user}).then (resp) ->
             notify.success("Group #{group} changed for #{user[0]}")
-            $scope.changeState = false
+            $scope.stateChanged = false
 
     $scope.selectAll = (id) ->
         console.log('later')
@@ -146,7 +148,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
     #            managementgroup = 'exammode_boolean'
 
     $scope.setManagementGroupAll = (group) ->
-        $scope.changeState = true
+        $scope.stateChanged = true
         usersList = []
         new_value = !$scope.fields[group].checkboxStatus
 
@@ -161,7 +163,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
 
         $http.post('/api/lmn/managementgroup', {group:group, users:usersList}).then (resp) ->
             notify.success("Group #{group} changed for #{usersList.join()}")
-            $scope.changeState = false
+            $scope.stateChanged = false
 
     $scope.renameSession = () ->
         lmnSession.rename($scope.session.sid, $scope.session.name).then (resp) ->
@@ -173,6 +175,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
 
     $scope.saveAsSession = () ->
         lmnSession.new($scope.session.members).then () ->
+            $scope.sessionChanged = false
             # TODO : would be better to get the session id and simply set the current session
             # instead of going back to the sessions list
             # But for this sophomorix needs to return the session id when creating a new one
@@ -218,6 +221,8 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
                 if !$scope.session.generated
                     # Real session: must be added in LDAP
                     $http.post('/api/lmn/session/participants', {'users':[new_participant.sAMAccountName], 'session': $scope.session.sid})
+                else
+                    $scope.sessionChanged = true
                 $scope.session.members.push(new_participant)
 
     $scope.$watch 'addSchoolClass', () ->
@@ -229,6 +234,8 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
                 if !$scope.session.generated
                     # Real session: must be added in LDAP
                     $http.post('/api/lmn/session/participants', {'users':members, 'session': $scope.session.sid})
+                else
+                    $scope.sessionChanged = true
                 $scope.session.members = $scope.session.members.concat(new_participants)
 
     $scope.removeParticipant = (participant) ->
@@ -237,6 +244,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
             if $scope.session.generated
                 # Not a real session, just removing from participants list displayed
                 $scope.session.members.splice(deleteIndex, 1)
+                $scope.sessionChanged = true
             else
                 $http.patch('/api/lmn/session/participants', {'users':[participant.sAMAccountName], 'session': $scope.session.sid}).then () ->
                     $scope.session.members.splice(deleteIndex, 1)

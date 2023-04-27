@@ -2,9 +2,13 @@
 Tools to handle files, directories and uploads.
 """
 import base64
+import logging
 import os
 import re
+import subprocess
+import pexpect
 import smbclient
+import pwd
 from urllib.parse import quote, unquote
 from smbprotocol.exceptions import SMBOSError, NotFound, SMBAuthenticationError, InvalidParameter
 from spnego.exceptions import BadMechanismError
@@ -533,3 +537,29 @@ class Handler(HttpPlugin):
         http_context.add_header('Content-Disposition', (f'attachment; filename="{quote(name)}"'))
 
         yield http_context.gzip(content)
+
+    @post(r'/api/lmn/smbclient/refresh_krbcc')
+    @endpoint(api=True)
+    def handle_smb_refresh_krbcc(self, http_context):
+        username = self.context.identity
+        uid = pwd.getpwnam(username).pw_uid
+        pw = http_context.json_body()['pw']
+        subprocess.check_output(['/usr/bin/kdestroy', '-c', f'/tmp/krb5cc_{uid}'])
+        try:
+            child = pexpect.spawn('/usr/bin/kinit', ['-c', f'/tmp/krb5cc_{uid}', username])
+            child.expect('.*:', timeout=2)
+            child.sendline(pw)
+            child.expect(pexpect.EOF)
+            child.close()
+            exit_code = child.exitstatus
+            if exit_code:
+                logging.error(f"Was not able to initialize Kerberos ticket for {username}")
+                msg = f"{child.before.decode().strip()}"
+                logging.error(msg)
+                return {'type': "error", 'msg':msg}
+            # Be sure to reset all cache connection and reload the new ticket
+            smbclient.reset_connection_cache()
+            return {'type': "output", 'msg': _("Ticket successfully refreshed")}
+        except pexpect.exceptions.TIMEOUT:
+            logging.error(f"Was not able to initialize Kerberos ticket for {username}")
+            return {'type': "error", 'msg': _("Timeout while trying to get a kerberos ticket")}

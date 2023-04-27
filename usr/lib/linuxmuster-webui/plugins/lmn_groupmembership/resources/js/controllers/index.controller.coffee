@@ -3,7 +3,9 @@ angular.module('lmn.groupmembership').config ($routeProvider) ->
     controller: 'LMNGroupMembershipController'
     templateUrl: '/lmn_groupmembership:resources/partial/index.html'
 
-angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController', ($rootScope, $scope, $http, identity, $uibModal, gettext, notify, pageTitle, messagebox, validation) ->
+angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController', ($rootScope, $scope, $http, identity, $uibModal, gettext, notify, pageTitle, messagebox, validation, smbclient) ->
+
+  $scope.need_krbcc_refresh = false
 
   pageTitle.set(gettext('Enrolle'))
   $scope.types = {
@@ -78,8 +80,12 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
             group.membership = !group.membership
             $scope.changeState = false
             $rootScope.identity = identity
+            $scope.need_krbcc_refresh = true
             identity.init().then () ->
                 console.log("Identity renewed !")
+
+  $scope.refresh_krbcc = () ->
+    smbclient.refresh_krbcc().then(() -> $scope.need_krbcc_refresh = false)
 
   $scope.filterGroupType = (val) ->
     return (dict) ->

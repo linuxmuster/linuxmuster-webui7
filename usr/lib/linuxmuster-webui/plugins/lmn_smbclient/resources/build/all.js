@@ -5,7 +5,7 @@ angular.module('lmn.smbclient', ['core', 'flow']);
 
 'use strict';
 
-angular.module('lmn.smbclient').service('smbclient', function ($rootScope, $http, $q, gettext, notify) {
+angular.module('lmn.smbclient').service('smbclient', function ($rootScope, $http, $q, gettext, notify, messagebox) {
     this.shares = function (user) {
         return $http.get('/api/lmn/smbclient/shares/' + user).then(function (response) {
             return response.data;
@@ -147,6 +147,18 @@ angular.module('lmn.smbclient').service('smbclient', function ($rootScope, $http
         });
         $flow.upload();
         return q.promise;
+    };
+
+    this.refresh_krbcc = function () {
+        messagebox.prompt("Please give your password:").then(function (msg) {
+            $http.post('/api/lmn/smbclient/refresh_krbcc', { 'pw': msg.value }).then(function (resp) {
+                if (resp.data.type == "error") {
+                    notify.error(resp.data.msg);
+                } else {
+                    notify.success(resp.data.msg);
+                }
+            });
+        });
     };
 
     return this;

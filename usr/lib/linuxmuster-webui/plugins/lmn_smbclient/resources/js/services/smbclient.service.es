@@ -5,6 +5,9 @@ angular.module('lmn.smbclient').service('smbclient', function($rootScope, $http,
     this.list = (path) =>
         $http.post(`/api/lmn/smbclient/list`, {'path': path}).then(response => response.data)
 
+    this.listhome = (user) =>
+        $http.post(`/api/lmn/smbclient/listhome`, {'user': user}).then(response => response.data)
+
     this.delete_file = (path) =>
         $http.post(`/api/lmn/smbclient/unlink`, {'path': path}).then(response => response.data)
 

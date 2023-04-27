@@ -14,6 +14,7 @@ from aj.api.http import url, get, post, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
 from aj.auth import authorize, AuthenticationService
 from aj.plugins.lmn_common.mimetypes import content_mimetypes
+from aj.plugins.lmn_common.ldap.requests import LMNLdapRequests
 
 
 # TODO
@@ -26,6 +27,7 @@ from aj.plugins.lmn_common.mimetypes import content_mimetypes
 class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
+        self.lr = LMNLdapRequests(context)
 
     @get(r'/api/lmn/smbclient/shares/(?P<user>.+)')
     @endpoint(api=True)
@@ -55,7 +57,39 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_smb_list(self, http_context):
         """
-        Return a list of objects (files, directories, ...) in a specific samba share.
+        Return a list of objects (files, directories, ...) in a specific samba
+        share.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: All items with informations
+        :rtype: dict
+        """
+
+        path = http_context.json_body().get('path', None)
+        return self._smb_list_path(path)
+
+    @post(r'/api/lmn/smbclient/listhome')
+    @endpoint(api=True)
+    def handle_api_smb_listhome(self, http_context):
+        """
+        Return a list of objects (files, directories, ...) from a specific
+        user's home.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: All items with informations
+        :rtype: dict
+        """
+
+        user = http_context.json_body().get('user', self.context.identity)
+        homepath = self.lr.get(f'/user/{user}', dict=False).homeDirectory
+        return self._smb_list_path(homepath)
+
+
+    def _smb_list_path(self, path):
+        """
+        Return a list of objects (files, directories, ...) from a specific path.
 
         :param http_context: HttpContext
         :type http_context: HttpContext
@@ -72,8 +106,6 @@ class Handler(HttpPlugin):
                 root = f'/srv/samba/schools/{self.context.schoolmgr.school}'
 
             return os.path.join(root, *list(filter(None, path.split('/')))[2:])
-
-        path = http_context.json_body()['path']
 
         try:
             items = []

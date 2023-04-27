@@ -18,6 +18,12 @@ angular.module('lmn.smbclient').service('smbclient', function ($rootScope, $http
         });
     };
 
+    this.listhome = function (user) {
+        return $http.post('/api/lmn/smbclient/listhome', { 'user': user }).then(function (response) {
+            return response.data;
+        });
+    };
+
     this.delete_file = function (path) {
         return $http.post('/api/lmn/smbclient/unlink', { 'path': path }).then(function (response) {
             return response.data;

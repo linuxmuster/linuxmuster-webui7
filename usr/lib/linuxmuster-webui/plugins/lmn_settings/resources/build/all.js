@@ -346,13 +346,13 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', function
         }).then(function () {
             config.data.ssl.client_auth.force = false;
             notify.info(gettext('Generating certificate'), gettext('Please wait'));
-            return $http.get('/api/settings/generate-server-certificate').success(function (data) {
+            return $http.get('/api/settings/generate-server-certificate').then(function (resp) {
                 notify.success(gettext('Certificate successfully generated'));
                 config.data.ssl.enable = true;
-                config.data.ssl.certificate = data.path;
+                config.data.ssl.certificate = resp.data.path;
                 config.data.ssl.client_auth.certificates = [];
                 $scope.save();
-            }).error(function (err) {
+            }, function (err) {
                 return notify.error(gettext('Certificate generation failed'), err.message);
             });
         });

@@ -5,6 +5,7 @@
 .installed
 app.po~
 .crowdin.key
+.crowdin.token
 .vscode
 tests/e2e/authconfig.json
 docs/build/*

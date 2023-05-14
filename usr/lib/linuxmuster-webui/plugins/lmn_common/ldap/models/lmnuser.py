@@ -2,6 +2,7 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from typing import List
 import ldap
+import re
 from aj.plugins.lmn_common.ldap.models.lmnsession import LMNSession
 
 @dataclass
@@ -85,6 +86,7 @@ class LMNUser:
                 schoolclass = self.common_name(dn)
                 if schoolclass:
                     schoolclasses.append(schoolclass)
+        schoolclasses = sorted(schoolclasses, key=lambda s: int(re.findall(r'\d+', s)[0]))
         return schoolclasses
 
     def extract_projects(self, membership):
@@ -94,6 +96,7 @@ class LMNUser:
                 project = self.common_name(dn)
                 if project:
                     projects.append(project)
+        projects.sort()
         return projects
 
     def extract_management(self):

@@ -145,8 +145,8 @@ class LdapConnector:
         l = ldap.initialize("ldap://localhost:389/")
         l.set_option(ldap.OPT_REFERRALS, 0)
         l.protocol_version = ldap.VERSION3
-        l.bind_s(params['binddn'], params['bindpw'])
+        l.bind(params['binddn'], params['bindpw'])
         res = l.search_s(params['searchdn'], ldap.SCOPE_SUBTREE, ldap_filter, attrlist=['*'])
-        l.unbind_s()
+        l.unbind()
         return res
 

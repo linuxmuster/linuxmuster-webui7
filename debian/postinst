@@ -20,9 +20,9 @@ case "$1" in
         config_templates="$webuietc/config_templates"
 
         # circumvent missing .installed files in package. Can be removed later
-        if [ -f /etc/linuxmuster/.secret/administrator ]; then
-            touch $webuietc/.installed
-        fi
+        #if [ -f /etc/linuxmuster/.secret/administrator ]; then
+        #    touch $webuietc/.installed
+        #fi
 
         if [ ! -f $webuietc/.installed ];
         then

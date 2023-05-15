@@ -1,3 +1,9 @@
+linuxmuster-webui7 (17.2.19.1) lmn72-testing; urgency=low
+
+  * Added Multischool bugfixes and updated system dependencies
+
+ -- Andreas Till <andreas.till@netzint.de>  Mon, 15 May 2023 16:48:28 +0200
+
 linuxmuster-webui7 (17.2.19) lmn72-testing; urgency=low
 
   * Merged 7.2.15 upstream

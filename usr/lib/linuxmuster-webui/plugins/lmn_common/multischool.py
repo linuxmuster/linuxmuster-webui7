@@ -7,7 +7,6 @@ from subprocess import check_output
 import xml.etree.ElementTree as ElementTree
 
 from aj.plugins.lmn_common.api import samba_realm, samba_netbios, samba_override, lmn_getSophomorixValue
-from aj.plugins.lmn_common.samba_tool import GPOS
 
 
 class Drives:
@@ -86,7 +85,9 @@ class SchoolManager:
     def __init__(self):
         self.school = 'default-school'
         self.schoolShare = f'\\\\{samba_realm}\\{self.school}\\'
-        self.load()
+        if lmn_is_installed():
+            from aj.plugins.lmn_common.samba_tool import GPOS
+            self.load()
 
     def load(self):
         """

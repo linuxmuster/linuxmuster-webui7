@@ -1,3 +1,9 @@
+linuxmuster-webui7 (17.2.19.6) lmn72-testing; urgency=low
+
+  * Fixed handling of multischool.py schoolmanager when loading gpos
+
+ -- Andreas Till <andreas.till@netzint.de>  Mon, 15 May 2023 19:40:12 +0200
+
 linuxmuster-webui7 (17.2.19.5) lmn72-testing; urgency=low
 
   * Added another fix for .installed flag in setup process

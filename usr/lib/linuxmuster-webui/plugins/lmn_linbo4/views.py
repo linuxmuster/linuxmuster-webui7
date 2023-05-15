@@ -59,7 +59,7 @@ class Handler(HttpPlugin):
                 with LMNFile(path, 'r') as f:
                     data = f.read()
                     os_list = data.get('os', [])
-                    linbo_settings = data.get('config', [])['LINBO']
+                    linbo_settings = data.get('config', {}).get('LINBO', {})
 
                 images = []
                 for OS in os_list:

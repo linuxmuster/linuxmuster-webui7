@@ -20,7 +20,7 @@ import logging
 from jadi import component, service
 from aj.auth import AuthenticationProvider, OSAuthenticationProvider, AuthenticationService
 from aj.config import UserConfigProvider
-from aj.plugins.lmn_common.api import ldap_config as params, lmsetup_schoolname, pwreset_config
+from aj.plugins.lmn_common.api import ldap_config as params, lmsetup_schoolname, pwreset_config, lmn_is_installed
 from aj.plugins.lmn_common.multischool import SchoolManager
 from aj.api.endpoint import EndpointError
 
@@ -129,22 +129,23 @@ class LMAuthenticationProvider(AuthenticationProvider):
         :type username: string
         """
 
-        # Initialize school manager
-        active_school = self.get_profile(username)['activeSchool']
-        schoolmgr = SchoolManager()
-        schoolmgr.switch(active_school)
-        self.context.schoolmgr = schoolmgr
- 
-        # Permissions for kerberos ticket
-        uid = self.get_isolation_uid(username)
+        if if lmn_is_installed():
+            # Initialize school manager
+            active_school = self.get_profile(username)['activeSchool']
+            schoolmgr = SchoolManager()
+            schoolmgr.switch(active_school)
+            self.context.schoolmgr = schoolmgr
 
-        if os.path.isfile(f'/tmp/krb5cc_{uid}'):
-            os.unlink(f'/tmp/krb5cc_{uid}')
+            # Permissions for kerberos ticket
+            uid = self.get_isolation_uid(username)
 
-        if os.path.isfile(f'/tmp/krb5cc_{uid}{uid}'):
-            os.rename(f'/tmp/krb5cc_{uid}{uid}', f'/tmp/krb5cc_{uid}')
-            logging.warning(f"Changing kerberos ticket rights for {username}")
-            os.chown(f'/tmp/krb5cc_{uid}', uid, 100)
+            if os.path.isfile(f'/tmp/krb5cc_{uid}'):
+                os.unlink(f'/tmp/krb5cc_{uid}')
+
+            if os.path.isfile(f'/tmp/krb5cc_{uid}{uid}'):
+                os.rename(f'/tmp/krb5cc_{uid}{uid}', f'/tmp/krb5cc_{uid}')
+                logging.warning(f"Changing kerberos ticket rights for {username}")
+                os.chown(f'/tmp/krb5cc_{uid}', uid, 100)
 
     def _get_krb_ticket(self, username, password):
         """

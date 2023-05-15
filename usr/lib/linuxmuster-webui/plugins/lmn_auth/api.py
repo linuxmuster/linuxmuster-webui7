@@ -129,7 +129,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
         :type username: string
         """
 
-        if if lmn_is_installed():
+        if lmn_is_installed():
             # Initialize school manager
             active_school = self.get_profile(username)['activeSchool']
             schoolmgr = SchoolManager()

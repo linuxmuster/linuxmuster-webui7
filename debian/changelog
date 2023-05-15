@@ -1,3 +1,9 @@
+linuxmuster-webui7 (17.2.19.3) lmn72-testing; urgency=low
+
+  * Fixed typo in auth module
+
+ -- Andreas Till <andreas.till@netzint.de>  Mon, 15 May 2023 18:01:18 +0200
+
 linuxmuster-webui7 (17.2.19.2) lmn72-testing; urgency=low
 
   * Fixed to load kerberos environment and schoolmanager only if installed

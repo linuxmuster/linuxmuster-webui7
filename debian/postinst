@@ -79,7 +79,6 @@ EOF
             # generate permissions file
             /usr/bin/python3 $update_scripts/merge-permissions.py
 
-            touch $webuietc/.installed
             ipaddress=$(hostname --ip-address)
             msg "---------------------------------------------------------------
 linuxmuster-webui is now installed but not initialised!  http://$ipaddress

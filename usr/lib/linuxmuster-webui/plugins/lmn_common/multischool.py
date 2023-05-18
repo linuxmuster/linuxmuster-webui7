@@ -94,7 +94,7 @@ class SchoolManager:
         switching to another school.
         """
 
-        self.policy = GPOS[f"sophomorix:school:{self.school}"]['gpo']
+        self.policy = GPOS.get(f"sophomorix:school:{self.school}", {}).get('gpo', '')
         self.get_configpath()
         self.load_custom_fields()
         self.load_holidays()

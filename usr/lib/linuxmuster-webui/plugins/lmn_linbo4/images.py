@@ -53,7 +53,7 @@ class LinboImage:
 
     def _torrent_stop(self):
         try:
-            subprocess.check_call(['/usr/sbin/linbo-torrent', 'stop', f'{self.image}.torrent'])
+            subprocess.check_call(['/usr/sbin/linbo-torrent', 'stop', os.path.join(self.path, f'{self.image}.torrent')])
         except Exception as e:
             logging.error(f'Unable to stop torrent service for {self.image} : {e}')
 
@@ -152,11 +152,13 @@ class LinboImage:
 
     def delete(self):
         """
-        Completely remove an image an its directory.
+        Completely remove an image and its directory.
         """
 
+        if not self.backup:
+            self._torrent_stop()
+
         self.delete_files()
-        self._torrent_stop()
 
         if not self.diff:
             # Remove directory

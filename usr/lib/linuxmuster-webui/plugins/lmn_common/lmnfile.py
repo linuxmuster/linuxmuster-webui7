@@ -174,14 +174,14 @@ class LMNFile(metaclass=abc.ABCMeta):
         """
 
         if not os.path.isfile(self.file):
-            logging.info(f'Detected encoding for {self.file} : no file, using utf-8')
+            logging.debug(f'Detected encoding for {self.file} : no file, using utf-8')
             return 'utf-8'
         loader = magic.Magic(mime_encoding=True)
         encoding = loader.from_file(self.file)
         if 'ascii' in encoding or encoding == "binary":
-            logging.info(f'Detected encoding for {self.file} : ascii, but using utf-8')
+            logging.debug(f'Detected encoding for {self.file} : ascii, but using utf-8')
             return 'utf-8'
-        logging.info(f'Detected encoding for {self.file} : {encoding}')
+        logging.debug(f'Detected encoding for {self.file} : {encoding}')
         return encoding
 
 

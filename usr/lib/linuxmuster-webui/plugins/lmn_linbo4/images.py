@@ -327,11 +327,14 @@ class LinboImageGroup:
 
     def delete(self):
         """
-        Delete basic image, all backups and all config files.
+        Delete basic image, all backups, diff image and all config files.
         """
 
         for timestamp, backup in self.backups.items():
             backup.delete()
+
+        if self.diff:
+            self.diff.delete()
 
         if os.path.isdir(self.backup_path):
             try:

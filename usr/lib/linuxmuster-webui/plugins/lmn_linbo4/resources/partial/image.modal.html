@@ -40,7 +40,7 @@
                 </ul>
             </div>
         </uib:tab>
-        <uib:tab heading="{{'Postsync Script'|translate}}">
+        <uib:tab heading="{{'Postsync Script'|translate}}" ng:show="!image.diff">
             <br/>
             <ace-editor ng:model="image.postsync"></ace-editor>
             <div uib-dropdown>

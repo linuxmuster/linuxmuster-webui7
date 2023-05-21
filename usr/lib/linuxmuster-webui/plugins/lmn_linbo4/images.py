@@ -106,6 +106,8 @@ class LinboImage:
                     os.chmod(extra_file, EXTRA_PERMISSIONS_MAPPING[extra])
 
         for extra in EXTRA_COMMON_FILES:
+            if self.diff and extra == 'postsync':
+                continue
             extra_file = os.path.join(self.path, f"{self.name}.{extra}")
             if os.path.isfile(extra_file):
                 with LMNFile(extra_file, 'r') as f:
@@ -246,10 +248,11 @@ class LinboImage:
             'desc': self.extras['desc'],
             'info': self.extras['info'],
             'reg': self.extras['reg'],
-            'postsync': self.extras['postsync'],
+            'postsync': self.extras.get('postsync', ''),
             'vdi': self.extras['vdi'],
             'prestart': self.extras['prestart'],
             'backup': self.backup,
+            'diff': self.diff,
             'timestamp': self.timestamp,
             'date': self.date,
         }
@@ -453,8 +456,10 @@ class LinboImageManager:
                 self.linboImageGroups[group].load()
                 imageGroup.base._torrent_create()
 
-    def save_extras(self, group, data, timestamp=None):
+    def save_extras(self, group, data, timestamp=None, diff=False):
         """
+        Save extra files for a base image, a backup or a differential
+        image. timestamp and diff parameters excludes each other.
 
         :param group: Name of the linbo image
         :type group: str
@@ -462,6 +467,8 @@ class LinboImageManager:
         :type data: dict
         :param timestamp: timestamp of a backup
         :type timestamp: str
+        :param diff: data onlyc concern a diff image
+        :type diff: bool
         """
 
         if timestamp:
@@ -470,8 +477,9 @@ class LinboImageManager:
             date = 0
         if group in self.linboImageGroups:
             imageGroup = self.linboImageGroups[group]
-            if date in imageGroup.backups:
+            if diff:
+                imageGroup.diff.save_extras(data)
+            elif date in imageGroup.backups:
                 imageGroup.backups[date].save_extras(data)
             else:
                 imageGroup.base.save_extras(data)
-

@@ -197,8 +197,9 @@ class Handler(HttpPlugin):
     @authorize('lm:linbo:images')
     @endpoint(api=True)
     def handle_api_post_image(self, http_context, image=None):
-        data = http_context.json_body()
-        self.mgr.save_extras(image, data)
+        data = http_context.json_body()['data']
+        diff = http_context.json_body()['diff']
+        self.mgr.save_extras(image, data, diff=diff)
 
     @delete(r'/api/lmn/linbo4/images/(?P<image>.+)')
     @authorize('lm:linbo:images')
@@ -237,7 +238,7 @@ class Handler(HttpPlugin):
 
         data = http_context.json_body()['data']
         timestamp = http_context.json_body()['timestamp']
-        self.mgr.save_extras(image, data, timestamp)
+        self.mgr.save_extras(image, data, timestamp=timestamp)
 
     @delete(r'/api/lmn/linbo4/deleteDiffImage/(?P<image>.+)')
     @authorize('lm:linbo:images')

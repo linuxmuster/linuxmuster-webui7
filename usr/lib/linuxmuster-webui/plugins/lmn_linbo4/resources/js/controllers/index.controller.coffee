@@ -749,7 +749,7 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
                     notify.success gettext('Backup saved')
                     $scope.restartServices()
             else
-                $http.post("/api/lmn/linbo4/images/#{image.name}", result).then (resp) ->
+                $http.post("/api/lmn/linbo4/images/#{image.name}", {data: result, diff: image.diff}).then (resp) ->
                     notify.success gettext('Saved')
                     $scope.restartServices()
 

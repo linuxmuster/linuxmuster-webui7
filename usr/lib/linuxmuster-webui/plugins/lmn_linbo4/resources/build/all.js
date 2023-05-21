@@ -1004,7 +1004,10 @@
             return $scope.restartServices();
           });
         } else {
-          return $http.post(`/api/lmn/linbo4/images/${image.name}`, result).then(function(resp) {
+          return $http.post(`/api/lmn/linbo4/images/${image.name}`, {
+            data: result,
+            diff: image.diff
+          }).then(function(resp) {
             notify.success(gettext('Saved'));
             return $scope.restartServices();
           });

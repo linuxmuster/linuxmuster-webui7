@@ -10,7 +10,11 @@
             <th colspan="3" style="min-width:150px" translate>Actions</th>
         </tr>
         <tr>
-            <td><i class="fas fa-check" style="color:green;"></i></td>
+            <td>
+                <i translate>Base image</i>
+                <br />
+                <i class="fas fa-check" style="color:green;"></i>
+            </td>
             <td>
                 <b>{{image.name}}</b>
                 <br />
@@ -26,7 +30,11 @@
             <td> </td>
         </tr>
         <tr ng:repeat="backup in image.backups_list|orderBy:'-timestamp'">
-            <td translate><i>Backup</i></td>
+            <td>
+                <i translate>Backup</i>
+                <br />
+                <i class="fas fa-history" style="color:orange;"></i>
+            </td>
             <td>
                 <b>{{backup.date}}</b>
                 <br />

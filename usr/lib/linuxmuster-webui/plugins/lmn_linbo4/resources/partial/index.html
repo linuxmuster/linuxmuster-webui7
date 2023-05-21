@@ -82,7 +82,12 @@
                         <i>{{image.size|bytes}}</i>
                     </td>
                     <td>
-                        <b>{{image.diff.name}}</b>
+                        <b>
+                            {{image.diff.name}}
+                            <button class="btn btn-default btn-xs" ng:click="editImage(image.diff)" ng:show="image.diff.name">
+                                <i class="fa fa-cog fa-xs"></i>
+                            </button>
+                        </b>
                         <br />
                         <i>{{image.diff.size|bytes}}</i>
                     </td>

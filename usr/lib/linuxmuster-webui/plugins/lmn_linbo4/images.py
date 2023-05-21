@@ -31,6 +31,7 @@ EXTRA_PERMISSIONS_MAPPING = {
     'prestart': 0o664,
 }
 IMAGE = "qcow2"
+DIFF_IMAGE = "qdiff"
 
 def date2timestamp(date):
     return datetime.strptime(date, DATE_UI_FMT).strftime(TIMESTAMP_FMT)
@@ -43,9 +44,10 @@ class LinboImage:
     A class to manage a linbo image or a backup image
     """
 
-    def __init__(self, name, backup=False, timestamp=None):
+    def __init__(self, name, backup=False, timestamp=None, diff=False):
         self.name = name
         self.backup = backup
+        self.diff = diff
         self.timestamp = timestamp
         self.load_info()
 
@@ -68,7 +70,10 @@ class LinboImage:
         Prepare all variables to manage the image object ( path, name, extra files )
         """
 
-        self.image = f"{self.name}.{IMAGE}"
+        if self.diff:
+            self.image = f"{self.name}.{DIFF_IMAGE}"
+        else:
+            self.image = f"{self.name}.{IMAGE}"
 
         if self.backup:
             self.path = os.path.join(LINBO_PATH, self.name, 'backups', self.timestamp)
@@ -261,6 +266,7 @@ class LinboImageGroup:
         self.backups = {}
         self.base = LinboImage(self.name)
         self.get_backups()
+        self.get_diff()
 
     def get_backups(self):
         """
@@ -282,6 +288,16 @@ class LinboImageGroup:
                             backup=True,
                             timestamp=timestamp
                         )
+
+    def get_diff(self):
+        """
+        Browse current tree to find a differential image.
+        """
+
+        if os.path.exists(os.path.join(LINBO_PATH, self.name, f'{self.name}.{DIFF_IMAGE}')):
+            self.diff = LinboImage(self.name, diff=True)
+        else:
+            self.diff = None
 
     def rename(self, new_name):
         """
@@ -321,6 +337,7 @@ class LinboImageGroup:
 
     def to_dict(self):
         result = self.base.to_dict()
+        result['diff'] = self.diff.to_dict() if self.diff else {}
         result['backups'] = {
             timestamp: backup.to_dict()
             for timestamp, backup in self.backups.items()

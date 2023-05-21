@@ -83,16 +83,16 @@
                     </td>
                     <td>
                         <b>
-                            {{image.diff.name}}
-                            <button class="btn btn-default btn-xs" ng:click="editImage(image.diff)" ng:show="image.diff.name">
+                            {{image.diff_image.name}}
+                            <button class="btn btn-default btn-xs" ng:click="editImage(image.diff_image)" ng:show="image.diff_image.name">
                                 <i class="fa fa-cog fa-xs"></i>
                             </button>
-                            <button class="btn btn-default btn-xs" ng:click="deleteDiffImage(image.diff)" ng:show="image.diff.name">
+                            <button class="btn btn-default btn-xs" ng:click="deleteDiffImage(image.diff_image)" ng:show="image.diff_image.name">
                                 <i class="fa fa-trash-o fa-xs"></i>
                             </button>
                         </b>
                         <br />
-                        <i>{{image.diff.size|bytes}}</i>
+                        <i>{{image.diff_image.size|bytes}}</i>
                     </td>
                     <td>
                         <span ng:repeat="conf in image.used_in" class="label label-success" style="display:inline-block;">{{conf}}</span>

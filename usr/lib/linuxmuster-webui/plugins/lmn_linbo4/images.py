@@ -303,9 +303,9 @@ class LinboImageGroup:
         """
 
         if os.path.exists(os.path.join(LINBO_PATH, self.name, f'{self.name}.{DIFF_IMAGE}')):
-            self.diff = LinboImage(self.name, diff=True)
+            self.diff_image = LinboImage(self.name, diff=True)
         else:
-            self.diff = None
+            self.diff_image = None
 
     def rename(self, new_name):
         """
@@ -335,8 +335,8 @@ class LinboImageGroup:
         for timestamp, backup in self.backups.items():
             backup.delete()
 
-        if self.diff:
-            self.diff.delete()
+        if self.diff_image:
+            self.diff_image.delete()
 
         if os.path.isdir(self.backup_path):
             try:
@@ -348,7 +348,7 @@ class LinboImageGroup:
 
     def to_dict(self):
         result = self.base.to_dict()
-        result['diff'] = self.diff.to_dict() if self.diff else {}
+        result['diff_image'] = self.diff_image.to_dict() if self.diff_image else {}
         result['backups'] = {
             timestamp: backup.to_dict()
             for timestamp, backup in self.backups.items()

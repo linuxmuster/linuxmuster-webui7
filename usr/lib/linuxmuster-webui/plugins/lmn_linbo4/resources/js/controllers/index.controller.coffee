@@ -71,6 +71,7 @@ angular.module('lmn.linbo4').controller 'LMLINBO4BackupsModalController', ($scop
 
 angular.module('lmn.linbo4').controller 'LMLINBO4ImageModalController', ($scope, $uibModal, $uibModalInstance, $http, gettext, filesystem, messagebox, image, images) ->
     $scope.image = image
+    console.log(image)
     $scope.desc_textarea_rows = if $scope.image.desc then $scope.image.desc.split(/\r\n|\r|\n/).length + 1 else 1
     $scope.info_textarea_rows = if $scope.image.info then $scope.image.info.split(/\r\n|\r|\n/).length + 1 else 1
     $scope.imagesWithReg = (x for x in images when x.reg)

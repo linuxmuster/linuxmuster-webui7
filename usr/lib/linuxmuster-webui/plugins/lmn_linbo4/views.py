@@ -228,7 +228,7 @@ class Handler(HttpPlugin):
     def handle_api_delete_backup(self, http_context, image=None):
 
         date = http_context.json_body()['date']
-        self.mgr.delete(image, date)
+        self.mgr.delete(image, date=date)
 
     @post(r'/api/lmn/linbo4/saveBackupImage/(?P<image>.+)')
     @authorize('lm:linbo:images')
@@ -238,6 +238,13 @@ class Handler(HttpPlugin):
         data = http_context.json_body()['data']
         timestamp = http_context.json_body()['timestamp']
         self.mgr.save_extras(image, data, timestamp)
+
+    @delete(r'/api/lmn/linbo4/deleteDiffImage/(?P<image>.+)')
+    @authorize('lm:linbo:images')
+    @endpoint(api=True)
+    def handle_api_delete_diff(self, http_context, image=None):
+
+        self.mgr.delete(image, diff=True)
 
     @get(r'/api/lmn/linbo4/restart-services')
     @authorize('lm:linbo:configs')

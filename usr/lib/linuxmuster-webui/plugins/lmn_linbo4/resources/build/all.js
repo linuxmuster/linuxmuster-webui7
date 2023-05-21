@@ -870,7 +870,7 @@
     };
     $scope.deleteImage = function(image) {
       return messagebox.show({
-        text: `Delete '${image.name}'?`,
+        text: `Delete the full image '${image.name}'?`,
         positive: 'Delete',
         negative: 'Cancel'
       }).then(function() {
@@ -884,13 +884,26 @@
     };
     $scope.deleteBackupImage = function(image, date) {
       return messagebox.show({
-        text: `Delete '${image.name}'?`,
+        text: `Delete the backup '${image.name}'?`,
         positive: 'Delete',
         negative: 'Cancel'
       }).then(function() {
         return $http.post(`/api/lmn/linbo4/deleteBackupImage/${image.name}`, {
           date: date
         }).then(function() {
+          return $scope.restartServices();
+        }).catch(function(err) {
+          return notify.error(gettext("Failed to delete backup :") + err.data.message);
+        });
+      });
+    };
+    $scope.deleteDiffImage = function(image) {
+      return messagebox.show({
+        text: `Delete '${image.name}' differential image?`,
+        positive: 'Delete',
+        negative: 'Cancel'
+      }).then(function() {
+        return $http.delete(`/api/lmn/linbo4/deleteDiffImage/${image.name}`).then(function() {
           return $scope.restartServices();
         }).catch(function(err) {
           return notify.error(gettext("Failed to delete backup :") + err.data.message);

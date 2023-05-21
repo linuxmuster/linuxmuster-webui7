@@ -142,6 +142,8 @@ class LinboImage:
                 os.unlink(path)
 
         for extra in EXTRA_COMMON_FILES:
+            if self.diff and extra == 'postsync':
+                continue
             path = os.path.join(self.path, f"{self.name}.{extra}")
             if os.path.exists(path):
                 os.unlink(path)
@@ -154,11 +156,12 @@ class LinboImage:
         self.delete_files()
         self._torrent_stop()
 
-        # Remove directory
-        try:
-            os.rmdir(self.path)
-        except OSError as e:
-            raise EndpointError(e)
+        if not self.diff:
+            # Remove directory
+            try:
+                os.rmdir(self.path)
+            except OSError as e:
+                raise EndpointError(e)
 
     def rename(self, new_name):
         """
@@ -369,19 +372,24 @@ class LinboImageManager:
                     if file == f'{dir}.{IMAGE}':
                         self.linboImageGroups[dir] = LinboImageGroup(dir)
 
-    def delete(self, group, date=0):
+    def delete(self, group, date=0, diff=False):
         """
         Delete a whole image and its backups. If date is given, only delete an
-        associated backup.
+        associated backup. date and diff parameter excludes each other.
 
         :param group: Name of the linbo image
         :type group: str
         :param date: timestamp of a backup
         :type date: str
+        :param diff: only delete a differential image
+        :type diff: bool
         """
 
         if group in self.linboImageGroups:
-            if date in self.linboImageGroups[group].backups:
+            if diff:
+                # Only delete a differential image
+                self.linboImageGroups[group].diff.delete()
+            elif date in self.linboImageGroups[group].backups:
                 # The object to delete is only a backup
                 self.linboImageGroups[group].backups[date].delete()
                 self.linboImageGroups[group].load()

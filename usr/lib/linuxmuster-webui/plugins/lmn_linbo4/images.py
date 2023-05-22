@@ -199,7 +199,7 @@ class LinboImage:
 
                 os.rename(actual, os.path.join(self.path, f"{new_image_name}.{extra}"))
 
-        for extra in EXTRA_COMMON_FILES + EXTRA_NONEDITABLE_COMMON_FILES:
+        for extra in EXTRA_COMMON_FILES:
             actual = os.path.join(self.path, f"{self.name}.{extra}")
             if os.path.exists(actual):
                 os.rename(actual, os.path.join(self.path, f"{new_name}.{extra}"))

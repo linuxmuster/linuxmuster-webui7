@@ -351,13 +351,10 @@ class Handler(HttpPlugin):
         try:
             dst = self._convert_path(path).replace('/', '\\')
             dst = f'{self.context.schoolmgr.schoolShare}{dst}'
-            if not smbclient.path.isfile(dst):
-                content = http_context.body if http_context.body else b''
-                with smbclient.open_file(dst, mode='wb') as f:
-                    f.write(content)
-                http_context.respond_ok()
-            else:
-                http_context.respond('412 Precondition Failed')
+            content = http_context.body if http_context.body else b''
+            with smbclient.open_file(dst, mode='wb') as f:
+                f.write(content)
+            http_context.respond_ok()
         except (ValueError, SMBOSError, NotFound) as e:
             if 'STATUS_ACCESS_DENIED' in e.strerror:
                 http_context.respond_forbidden()

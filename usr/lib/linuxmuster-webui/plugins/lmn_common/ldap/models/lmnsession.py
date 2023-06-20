@@ -5,4 +5,5 @@ from datetime import datetime
 class LMNSession:
     sid: str
     name: str
-    participants: list
+    members: list
+    membersCount: int

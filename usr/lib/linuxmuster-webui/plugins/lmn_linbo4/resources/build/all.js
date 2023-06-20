@@ -101,6 +101,7 @@
   angular.module('lmn.linbo4').controller('LMLINBO4ImageModalController', function($scope, $uibModal, $uibModalInstance, $http, gettext, filesystem, messagebox, image, images) {
     var x;
     $scope.image = image;
+    console.log(image);
     $scope.desc_textarea_rows = $scope.image.desc ? $scope.image.desc.split(/\r\n|\r|\n/).length + 1 : 1;
     $scope.info_textarea_rows = $scope.image.info ? $scope.image.info.split(/\r\n|\r|\n/).length + 1 : 1;
     $scope.imagesWithReg = (function() {
@@ -870,7 +871,7 @@
     };
     $scope.deleteImage = function(image) {
       return messagebox.show({
-        text: `Delete '${image.name}'?`,
+        text: `Delete the full image '${image.name}'?`,
         positive: 'Delete',
         negative: 'Cancel'
       }).then(function() {
@@ -884,13 +885,26 @@
     };
     $scope.deleteBackupImage = function(image, date) {
       return messagebox.show({
-        text: `Delete '${image.name}'?`,
+        text: `Delete the backup '${image.name}'?`,
         positive: 'Delete',
         negative: 'Cancel'
       }).then(function() {
         return $http.post(`/api/lmn/linbo4/deleteBackupImage/${image.name}`, {
           date: date
         }).then(function() {
+          return $scope.restartServices();
+        }).catch(function(err) {
+          return notify.error(gettext("Failed to delete backup :") + err.data.message);
+        });
+      });
+    };
+    $scope.deleteDiffImage = function(image) {
+      return messagebox.show({
+        text: `Delete '${image.name}' differential image?`,
+        positive: 'Delete',
+        negative: 'Cancel'
+      }).then(function() {
+        return $http.delete(`/api/lmn/linbo4/deleteDiffImage/${image.name}`).then(function() {
           return $scope.restartServices();
         }).catch(function(err) {
           return notify.error(gettext("Failed to delete backup :") + err.data.message);
@@ -991,7 +1005,10 @@
             return $scope.restartServices();
           });
         } else {
-          return $http.post(`/api/lmn/linbo4/images/${image.name}`, result).then(function(resp) {
+          return $http.post(`/api/lmn/linbo4/images/${image.name}`, {
+            data: result,
+            diff: image.diff
+          }).then(function(resp) {
             notify.success(gettext('Saved'));
             return $scope.restartServices();
           });

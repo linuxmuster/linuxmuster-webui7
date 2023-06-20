@@ -15,8 +15,9 @@ def lmnapi(pattern):
     return decorator
 
 class LMNLdapRequests:
-    def __init__(self):
-        self.lc = LdapConnector()
+    def __init__(self, context):
+        self.context = context
+        self.lc = LdapConnector(self.context)
         self.methods = [getattr(self,method) for method in dir(self) if method.startswith('get_')]
 
     def get(self, url, **kwargs):
@@ -38,7 +39,6 @@ class LMNLdapRequests:
         Get all details from a specific user.
         Return a LMNUser data object.
         """
-
         ldap_filter = f"""(&
                                     (cn={username})
                                     (objectClass=user)
@@ -52,7 +52,7 @@ class LMNLdapRequests:
 
         return self.lc.get_single(LMNUser, ldap_filter, **kwargs)
 
-    @lmnapi(r'/schoolclass/(?P<schoolclass>\w*)')
+    @lmnapi(r'/schoolclass/(?P<schoolclass>[\w ]*)')
     def get_schoolclass(self, schoolclass, **kwargs):
         """
         Get all details from a specific schoolclass.
@@ -101,6 +101,17 @@ class LMNLdapRequests:
 
         return self.lc.get_collection(LMNSchoolClass, ldap_filter, **kwargs)
 
+    @lmnapi(r'/schoolclasses/search/(?P<query>\w*)')
+    def get_results_search_schoolclasses(self, query, **kwargs):
+        """
+        Get all details from a search about schoolclasses.
+        Return a list of LMNSchoolClass data objects.
+        """
+
+        ldap_filter = f"""(&(objectClass=group)(sophomorixType=adminclass)(cn=*{query}*))"""
+
+        return self.lc.get_collection(LMNSchoolClass, ldap_filter, **kwargs)
+
     @lmnapi(r'/projects')
     def get_all_projects(self, **kwargs):
         """
@@ -120,5 +131,39 @@ class LMNLdapRequests:
         """
 
         ldap_filter = f"(&(objectClass=user)(sophomorixRole={role}))"
+
+        return self.lc.get_collection(LMNUser, ldap_filter, **kwargs)
+
+    @lmnapi(r'/users/search/(?P<selection>\w*)/(?P<query>\w*)')
+    def get_results_search_user(self, query, selection=[], **kwargs):
+        """
+        Get all details from a search on a specific user login scheme and a
+        selection of roles.
+        Return a list of LMNUser data object.
+        """
+
+        role_filter = {
+            'all': """
+                    (sophomorixRole=globaladministrator)
+                    (sophomorixRole=schooladministrator)
+                    (sophomorixRole=teacher)
+                    (sophomorixRole=student)
+                """,
+            'admins': """
+                    (sophomorixRole=globaladministrator)
+                    (sophomorixRole=schooladministrator)
+                """,
+        }
+
+        for role in ['globaladministrator', 'schooladministrator', 'teacher', 'student']:
+            role_filter[role] = f'(sophomorixRole={role})'
+
+        ldap_filter = f"""(&
+                                    (sAMAccountName=*{query}*)
+                                    (objectClass=user)
+                                    (|
+                                        {role_filter[selection]}
+                                    )
+                                )"""
 
         return self.lc.get_collection(LMNUser, ldap_filter, **kwargs)

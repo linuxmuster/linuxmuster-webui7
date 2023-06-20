@@ -9,6 +9,9 @@ from aj.plugins.lmn_common.ldap.models import *
 
 class LdapConnector:
 
+    def __init__(self, context):
+        self.context = context
+
     def get_single(self, objectclass, ldap_filter, dict=True):
         """
         Handle a single result from a ldap request (with required ldap filter)
@@ -24,13 +27,18 @@ class LdapConnector:
 
         result = self._request(ldap_filter)[0][1]
         data = {}
-        for field in fields(objectclass):
-            if field.init:
-                value = result.get(field.name, None)
-                data[field.name] = self._filter_value(field, value)
-        if dict:
-            return asdict(objectclass(**data))
-        return objectclass(**data)
+        # TODO : not all requests are school oriented
+        school_node = f",OU={self.context.schoolmgr.school},"
+        dn = result.get('distinguishedName', [b''])[0].decode()
+        if school_node in dn:
+            for field in fields(objectclass):
+                if field.init:
+                    value = result.get(field.name, None)
+                    data[field.name] = self._filter_value(field, value)
+            if dict:
+                return asdict(objectclass(**data))
+            return objectclass(**data)
+        return {}
         
     def get_collection(self, objectclass, ldap_filter, dict=True, sortkey=None):
         """
@@ -52,14 +60,18 @@ class LdapConnector:
         for result in results:
             if result[0] is not None:
                 data = {}
-                for field in fields(objectclass):
-                    if field.init:
-                        value = result[1].get(field.name, None)
-                        data[field.name] = self._filter_value(field, value)
-                if dict:
-                    response.append(asdict(objectclass(**data)))
-                else:
-                    response.append(objectclass(**data))
+                # TODO : not all requests are school oriented
+                school_node = f",OU={self.context.schoolmgr.school},"
+                dn = result.get('distinguishedName', [b''])[0].decode()
+                if school_node in dn:
+                    for field in fields(objectclass):
+                        if field.init:
+                            value = result[1].get(field.name, None)
+                            data[field.name] = self._filter_value(field, value)
+                    if dict:
+                        response.append(asdict(objectclass(**data)))
+                    else:
+                        response.append(objectclass(**data))
         if sortkey is not None:
             if dict:
                 return sorted(response, key=lambda d: d.get(sortkey, None))
@@ -112,8 +124,9 @@ class LdapConnector:
                 result = []
                 for v in value:
                     data = v.decode().split(';')
-                    participants = data[2].split(',') if data[2] else []
-                    result.append(LMNSession(data[0], data[1], participants))
+                    members = data[2].split(',') if data[2] else []
+                    membersCount = len(members)
+                    result.append(LMNSession(data[0], data[1], members, membersCount))
                 return result
 
         if value is None:
@@ -132,8 +145,8 @@ class LdapConnector:
         l = ldap.initialize("ldap://localhost:389/")
         l.set_option(ldap.OPT_REFERRALS, 0)
         l.protocol_version = ldap.VERSION3
-        l.bind_s(params['binddn'], params['bindpw'])
+        l.bind(params['binddn'], params['bindpw'])
         res = l.search_s(params['searchdn'], ldap.SCOPE_SUBTREE, ldap_filter, attrlist=['*'])
-        l.unbind_s()
+        l.unbind()
         return res
 

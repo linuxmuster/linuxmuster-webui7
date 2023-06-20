@@ -1,11 +1,12 @@
 angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $http, $location, $route, $uibModal, $window, $interval, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem, validation, $rootScope, wait, userPassword, lmnSession) ->
 
-    $scope.changeState = false
+    $scope.stateChanged = false
+    $scope.sessionChanged = false
     $scope.addParticipant = ''
     $scope.addSchoolClass = ''
 
     $window.onbeforeunload = (event) ->
-        if $scope.session.sid == '' or $scope.session.participants.length == 0
+        if !$scope.sessionChanged
             return
         # Confirm before page reload
         return "Eventually not refreshing"
@@ -18,7 +19,8 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
     )
 
     $scope.$on("$locationChangeStart", (event) ->
-        if $scope.session.sid != '' and $scope.session.participants.length > 0
+        # TODO : handle logout if session is changed
+        if $scope.sessionChanged
             if !confirm(gettext('Do you really want to quit this session ? You can restart it later if you want.'))
                 event.preventDefault()
                 return
@@ -58,19 +60,12 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         transfer:
             visible: true
             name: gettext('Transfer')
-        examModeSupervisor:
+        workDirectory:
             visible: true
-            name: gettext('Exam-Supervisor')
+            name: gettext('')
         sophomorixRole:
             visible: false
             name: gettext('sophomorixRole')
-        exammode:
-            visible: true
-            icon:"fa fa-graduation-cap"
-            title: gettext('Exam-Mode')
-            checkboxAll: false
-            examBox: true
-            checkboxStatus: false
         wifi:
             visible: true
             icon:"fa fa-wifi"
@@ -124,7 +119,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         $http.get('/api/lmn/session/userInRoom').then (resp) ->
             if resp.data.usersList.length != 0
                 $http.post("/api/lmn/session/userinfo", {users:resp.data.usersList}).then (rp) ->
-                    $scope.session.participants = rp.data
+                    $scope.session.members = rp.data
 
     $scope.stopRefresh = () ->
         $interval.cancel($scope.refresh)
@@ -139,13 +134,13 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         $scope.startRefresh()
 
     $scope.setManagementGroup = (group, participant) ->
-        $scope.changeState = true
+        $scope.stateChanged = true
         if participant[group] == true
             group = "no#{group}"
         user = [participant.sAMAccountName]
         $http.post('/api/lmn/managementgroup', {group:group, users:user}).then (resp) ->
             notify.success("Group #{group} changed for #{user[0]}")
-            $scope.changeState = false
+            $scope.stateChanged = false
 
     $scope.selectAll = (id) ->
         console.log('later')
@@ -153,20 +148,22 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
     #            managementgroup = 'exammode_boolean'
 
     $scope.setManagementGroupAll = (group) ->
-        $scope.changeState = true
+        $scope.stateChanged = true
         usersList = []
         new_value = !$scope.fields[group].checkboxStatus
 
-        for participant in $scope.session.participants
-            participant[group] = new_value
-            usersList.push(participant.sAMAccountName)
+        for participant in $scope.session.members
+            # Only change management group for student, and not others teachers
+            if participant.sophomorixRole == 'student'
+                participant[group] = new_value
+                usersList.push(participant.sAMAccountName)
 
         if new_value == false
             group = "no#{group}"
 
         $http.post('/api/lmn/managementgroup', {group:group, users:usersList}).then (resp) ->
             notify.success("Group #{group} changed for #{usersList.join()}")
-            $scope.changeState = false
+            $scope.stateChanged = false
 
     $scope.renameSession = () ->
         lmnSession.rename($scope.session.sid, $scope.session.name).then (resp) ->
@@ -177,7 +174,8 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
             $scope.backToSessionList()
 
     $scope.saveAsSession = () ->
-        lmnSession.new($scope.session.participants).then () ->
+        lmnSession.new($scope.session.members).then () ->
+            $scope.sessionChanged = false
             # TODO : would be better to get the session id and simply set the current session
             # instead of going back to the sessions list
             # But for this sophomorix needs to return the session id when creating a new one
@@ -223,28 +221,33 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
                 if !$scope.session.generated
                     # Real session: must be added in LDAP
                     $http.post('/api/lmn/session/participants', {'users':[new_participant.sAMAccountName], 'session': $scope.session.sid})
-                $scope.session.participants.push(new_participant)
+                else
+                    $scope.sessionChanged = true
+                $scope.session.members.push(new_participant)
 
     $scope.$watch 'addSchoolClass', () ->
         if $scope.addSchoolClass
-            members = Object.keys($scope.addSchoolClass.members)
+            members = $scope.addSchoolClass.sophomorixMembers
             $http.post('/api/lmn/session/userinfo', {'users':members}).then (resp) ->
                 new_participants = resp.data
                 $scope.addSchoolClass = ''
                 if !$scope.session.generated
                     # Real session: must be added in LDAP
                     $http.post('/api/lmn/session/participants', {'users':members, 'session': $scope.session.sid})
-                $scope.session.participants = $scope.session.participants.concat(new_participants)
+                else
+                    $scope.sessionChanged = true
+                $scope.session.members = $scope.session.members.concat(new_participants)
 
     $scope.removeParticipant = (participant) ->
-        deleteIndex = $scope.session.participants.indexOf(participant)
+        deleteIndex = $scope.session.members.indexOf(participant)
         if deleteIndex != -1
             if $scope.session.generated
                 # Not a real session, just removing from participants list displayed
-                $scope.session.participants.splice(deleteIndex, 1)
+                $scope.session.members.splice(deleteIndex, 1)
+                $scope.sessionChanged = true
             else
                 $http.patch('/api/lmn/session/participants', {'users':[participant.sAMAccountName], 'session': $scope.session.sid}).then () ->
-                    $scope.session.participants.splice(deleteIndex, 1)
+                    $scope.session.members.splice(deleteIndex, 1)
 
     $scope.changeExamSupervisor = (participant, supervisor) ->
         $http.post('/api/lmn/session/sessions', {action: 'change-exam-supervisor', supervisor: supervisor, participant: participant}).then (resp) ->
@@ -418,7 +421,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
 
     $scope.websessionStart = () ->
         tempparticipants = []
-        for participant in $scope.session.participants
+        for participant in $scope.session.members
             tempparticipants.push(participant.sAMAccountName)
 
         $http.post('/api/lmn/websession/webConferences', {sessionname: $scope.session.name + "-" + $scope.session.sid, sessiontype: "private", sessionpassword: "", participants: tempparticipants}).then (resp) ->

@@ -31,6 +31,7 @@ EXTRA_PERMISSIONS_MAPPING = {
     'prestart': 0o664,
 }
 IMAGE = "qcow2"
+DIFF_IMAGE = "qdiff"
 
 def date2timestamp(date):
     return datetime.strptime(date, DATE_UI_FMT).strftime(TIMESTAMP_FMT)
@@ -43,15 +44,16 @@ class LinboImage:
     A class to manage a linbo image or a backup image
     """
 
-    def __init__(self, name, backup=False, timestamp=None):
+    def __init__(self, name, backup=False, timestamp=None, diff=False):
         self.name = name
         self.backup = backup
+        self.diff = diff
         self.timestamp = timestamp
         self.load_info()
 
     def _torrent_stop(self):
         try:
-            subprocess.check_call(['/usr/sbin/linbo-torrent', 'stop', f'{self.image}.torrent'])
+            subprocess.check_call(['/usr/sbin/linbo-torrent', 'stop', os.path.join(self.path, f'{self.image}.torrent')])
         except Exception as e:
             logging.error(f'Unable to stop torrent service for {self.image} : {e}')
 
@@ -68,7 +70,10 @@ class LinboImage:
         Prepare all variables to manage the image object ( path, name, extra files )
         """
 
-        self.image = f"{self.name}.{IMAGE}"
+        if self.diff:
+            self.image = f"{self.name}.{DIFF_IMAGE}"
+        else:
+            self.image = f"{self.name}.{IMAGE}"
 
         if self.backup:
             self.path = os.path.join(LINBO_PATH, self.name, 'backups', self.timestamp)
@@ -101,6 +106,8 @@ class LinboImage:
                     os.chmod(extra_file, EXTRA_PERMISSIONS_MAPPING[extra])
 
         for extra in EXTRA_COMMON_FILES:
+            if self.diff and extra == 'postsync':
+                continue
             extra_file = os.path.join(self.path, f"{self.name}.{extra}")
             if os.path.isfile(extra_file):
                 with LMNFile(extra_file, 'r') as f:
@@ -137,23 +144,28 @@ class LinboImage:
                 os.unlink(path)
 
         for extra in EXTRA_COMMON_FILES:
+            if self.diff and extra == 'postsync':
+                continue
             path = os.path.join(self.path, f"{self.name}.{extra}")
             if os.path.exists(path):
                 os.unlink(path)
 
     def delete(self):
         """
-        Completely remove an image an its directory.
+        Completely remove an image and its directory.
         """
 
-        self.delete_files()
-        self._torrent_stop()
+        if not self.backup:
+            self._torrent_stop()
 
-        # Remove directory
-        try:
-            os.rmdir(self.path)
-        except OSError as e:
-            raise EndpointError(e)
+        self.delete_files()
+
+        if not self.diff:
+            # Remove directory
+            try:
+                os.rmdir(self.path)
+            except OSError as e:
+                raise EndpointError(e)
 
     def rename(self, new_name):
         """
@@ -187,7 +199,7 @@ class LinboImage:
 
                 os.rename(actual, os.path.join(self.path, f"{new_image_name}.{extra}"))
 
-        for extra in EXTRA_COMMON_FILES + EXTRA_NONEDITABLE_COMMON_FILES:
+        for extra in EXTRA_COMMON_FILES:
             actual = os.path.join(self.path, f"{self.name}.{extra}")
             if os.path.exists(actual):
                 os.rename(actual, os.path.join(self.path, f"{new_name}.{extra}"))
@@ -238,10 +250,11 @@ class LinboImage:
             'desc': self.extras['desc'],
             'info': self.extras['info'],
             'reg': self.extras['reg'],
-            'postsync': self.extras['postsync'],
+            'postsync': self.extras.get('postsync', ''),
             'vdi': self.extras['vdi'],
             'prestart': self.extras['prestart'],
             'backup': self.backup,
+            'diff': self.diff,
             'timestamp': self.timestamp,
             'date': self.date,
         }
@@ -261,6 +274,7 @@ class LinboImageGroup:
         self.backups = {}
         self.base = LinboImage(self.name)
         self.get_backups()
+        self.get_diff()
 
     def get_backups(self):
         """
@@ -282,6 +296,16 @@ class LinboImageGroup:
                             backup=True,
                             timestamp=timestamp
                         )
+
+    def get_diff(self):
+        """
+        Browse current tree to find a differential image.
+        """
+
+        if os.path.exists(os.path.join(LINBO_PATH, self.name, f'{self.name}.{DIFF_IMAGE}')):
+            self.diff_image = LinboImage(self.name, diff=True)
+        else:
+            self.diff_image = None
 
     def rename(self, new_name):
         """
@@ -305,11 +329,14 @@ class LinboImageGroup:
 
     def delete(self):
         """
-        Delete basic image, all backups and all config files.
+        Delete basic image, all backups, diff image and all config files.
         """
 
         for timestamp, backup in self.backups.items():
             backup.delete()
+
+        if self.diff_image:
+            self.diff_image.delete()
 
         if os.path.isdir(self.backup_path):
             try:
@@ -321,6 +348,7 @@ class LinboImageGroup:
 
     def to_dict(self):
         result = self.base.to_dict()
+        result['diff_image'] = self.diff_image.to_dict() if self.diff_image else {}
         result['backups'] = {
             timestamp: backup.to_dict()
             for timestamp, backup in self.backups.items()
@@ -352,19 +380,24 @@ class LinboImageManager:
                     if file == f'{dir}.{IMAGE}':
                         self.linboImageGroups[dir] = LinboImageGroup(dir)
 
-    def delete(self, group, date=0):
+    def delete(self, group, date=0, diff=False):
         """
         Delete a whole image and its backups. If date is given, only delete an
-        associated backup.
+        associated backup. date and diff parameter excludes each other.
 
         :param group: Name of the linbo image
         :type group: str
         :param date: timestamp of a backup
         :type date: str
+        :param diff: only delete a differential image
+        :type diff: bool
         """
 
         if group in self.linboImageGroups:
-            if date in self.linboImageGroups[group].backups:
+            if diff:
+                # Only delete a differential image
+                self.linboImageGroups[group].diff.delete()
+            elif date in self.linboImageGroups[group].backups:
                 # The object to delete is only a backup
                 self.linboImageGroups[group].backups[date].delete()
                 self.linboImageGroups[group].load()
@@ -428,8 +461,10 @@ class LinboImageManager:
                 self.linboImageGroups[group].load()
                 imageGroup.base._torrent_create()
 
-    def save_extras(self, group, data, timestamp=None):
+    def save_extras(self, group, data, timestamp=None, diff=False):
         """
+        Save extra files for a base image, a backup or a differential
+        image. timestamp and diff parameters excludes each other.
 
         :param group: Name of the linbo image
         :type group: str
@@ -437,6 +472,8 @@ class LinboImageManager:
         :type data: dict
         :param timestamp: timestamp of a backup
         :type timestamp: str
+        :param diff: data onlyc concern a diff image
+        :type diff: bool
         """
 
         if timestamp:
@@ -445,8 +482,9 @@ class LinboImageManager:
             date = 0
         if group in self.linboImageGroups:
             imageGroup = self.linboImageGroups[group]
-            if date in imageGroup.backups:
+            if diff:
+                imageGroup.diff.save_extras(data)
+            elif date in imageGroup.backups:
                 imageGroup.backups[date].save_extras(data)
             else:
                 imageGroup.base.save_extras(data)
-

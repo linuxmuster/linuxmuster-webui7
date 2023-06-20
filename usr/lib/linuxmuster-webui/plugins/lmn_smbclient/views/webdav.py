@@ -82,7 +82,7 @@ class Handler(HttpPlugin):
             else:
                 http_context.respond_ok()
 
-            http_context.add_header('Content-Disposition', (f'attachment; filename={name}'))
+            http_context.add_header('Content-Disposition', (f'attachment; filename={quote(name)}'))
 
             fd = smbclient._os.open_file(smb_path, 'rb')
             fd.seek(range_from or 0, smbclient._os.os.SEEK_SET)
@@ -185,9 +185,9 @@ class Handler(HttpPlugin):
         else:
             url_path = self._convert_path(path).replace('/', '\\')
             smb_path = f"{self.context.schoolmgr.schoolShare}{url_path}"
-            smb_entity = smbclient._os.SMBDirEntry.from_path(smb_path)
 
             try:
+                smb_entity = smbclient._os.SMBDirEntry.from_path(smb_path)
                 if smb_entity.is_dir():
                     # Listing a directory
                     for item in smbclient.scandir(smb_path):
@@ -351,13 +351,10 @@ class Handler(HttpPlugin):
         try:
             dst = self._convert_path(path).replace('/', '\\')
             dst = f'{self.context.schoolmgr.schoolShare}{dst}'
-            if not smbclient.path.isfile(dst):
-                content = http_context.body if http_context.body else b''
-                with smbclient.open_file(dst, mode='wb') as f:
-                    f.write(content)
-                http_context.respond_ok()
-            else:
-                http_context.respond('412 Precondition Failed')
+            content = http_context.body if http_context.body else b''
+            with smbclient.open_file(dst, mode='wb') as f:
+                f.write(content)
+            http_context.respond_ok()
         except (ValueError, SMBOSError, NotFound) as e:
             if 'STATUS_ACCESS_DENIED' in e.strerror:
                 http_context.respond_forbidden()

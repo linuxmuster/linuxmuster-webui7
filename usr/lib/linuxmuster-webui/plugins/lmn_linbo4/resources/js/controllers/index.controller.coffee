@@ -71,6 +71,7 @@ angular.module('lmn.linbo4').controller 'LMLINBO4BackupsModalController', ($scop
 
 angular.module('lmn.linbo4').controller 'LMLINBO4ImageModalController', ($scope, $uibModal, $uibModalInstance, $http, gettext, filesystem, messagebox, image, images) ->
     $scope.image = image
+    console.log(image)
     $scope.desc_textarea_rows = if $scope.image.desc then $scope.image.desc.split(/\r\n|\r|\n/).length + 1 else 1
     $scope.info_textarea_rows = if $scope.image.info then $scope.image.info.split(/\r\n|\r|\n/).length + 1 else 1
     $scope.imagesWithReg = (x for x in images when x.reg)
@@ -678,7 +679,7 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
             notify.error(gettext("Failed to restart multicast and torrent services. Please see the log files"))
 
     $scope.deleteImage = (image) ->
-        messagebox.show(text: "Delete '#{image.name}'?", positive: 'Delete', negative: 'Cancel').then () ->
+        messagebox.show(text: "Delete the full image '#{image.name}'?", positive: 'Delete', negative: 'Cancel').then () ->
             $http.delete("/api/lmn/linbo4/images/#{image.name}").then () ->
                 $scope.restartServices()
                 $location.hash("images")
@@ -686,8 +687,15 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
                 notify.error(gettext("Failed to delete image :") + err.data.message)
 
     $scope.deleteBackupImage = (image, date) ->
-        messagebox.show(text: "Delete '#{image.name}'?", positive: 'Delete', negative: 'Cancel').then () ->
+        messagebox.show(text: "Delete the backup '#{image.name}'?", positive: 'Delete', negative: 'Cancel').then () ->
             $http.post("/api/lmn/linbo4/deleteBackupImage/#{image.name}", {date: date}).then () ->
+                $scope.restartServices()
+            .catch (err) ->
+                notify.error(gettext("Failed to delete backup :") + err.data.message)
+
+    $scope.deleteDiffImage = (image) ->
+        messagebox.show(text: "Delete '#{image.name}' differential image?", positive: 'Delete', negative: 'Cancel').then () ->
+            $http.delete("/api/lmn/linbo4/deleteDiffImage/#{image.name}").then () ->
                 $scope.restartServices()
             .catch (err) ->
                 notify.error(gettext("Failed to delete backup :") + err.data.message)
@@ -741,7 +749,7 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
                     notify.success gettext('Backup saved')
                     $scope.restartServices()
             else
-                $http.post("/api/lmn/linbo4/images/#{image.name}", result).then (resp) ->
+                $http.post("/api/lmn/linbo4/images/#{image.name}", {data: result, diff: image.diff}).then (resp) ->
                     notify.success gettext('Saved')
                     $scope.restartServices()
 

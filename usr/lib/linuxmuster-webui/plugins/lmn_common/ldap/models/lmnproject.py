@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
 
 @dataclass
@@ -28,3 +28,7 @@ class LMNProject:
     sophomorixSchoolname: str
     sophomorixStatus: str
     sophomorixType: str
+    membersCount: int = field(init=False)
+
+    def __post_init__(self):
+        self.membersCount = len(self.sophomorixMembers)

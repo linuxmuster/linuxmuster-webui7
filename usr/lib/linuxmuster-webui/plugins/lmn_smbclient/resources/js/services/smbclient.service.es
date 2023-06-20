@@ -1,9 +1,12 @@
-angular.module('lmn.smbclient').service('smbclient', function($rootScope, $http, $q, gettext, notify) {
+angular.module('lmn.smbclient').service('smbclient', function($rootScope, $http, $q, gettext, notify, messagebox) {
     this.shares = (user) =>
       $http.get(`/api/lmn/smbclient/shares/${user}`).then(response => response.data)
 
     this.list = (path) =>
         $http.post(`/api/lmn/smbclient/list`, {'path': path}).then(response => response.data)
+
+    this.listhome = (user) =>
+        $http.post(`/api/lmn/smbclient/listhome`, {'user': user}).then(response => response.data)
 
     this.delete_file = (path) =>
         $http.post(`/api/lmn/smbclient/unlink`, {'path': path}).then(response => response.data)
@@ -69,6 +72,19 @@ angular.module('lmn.smbclient').service('smbclient', function($rootScope, $http,
         })
         $flow.upload()
         return q.promise
+    }
+
+    this.refresh_krbcc = () => {
+        return messagebox.prompt("Please give your password:").then((msg) => {
+            return $http.post('/api/lmn/smbclient/refresh_krbcc', {'pw': msg.value}).then((resp) => {
+                if (resp.data.type == "error") {
+                    notify.error(resp.data.msg);
+                    return $q.reject();
+                } else {
+                    notify.success(resp.data.msg);
+                }
+            });
+        });
     }
 
     return this;

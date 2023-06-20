@@ -92,6 +92,17 @@ class SchoolManager:
         Main method of the object : load all schools specific options when
         switching to another school.
         """
+<<<<<<< HEAD
+        if lmn_is_installed():
+            from aj.plugins.lmn_common.samba_tool import GPOS
+            self.policy = GPOS[f"sophomorix:school:{self.school}"]['gpo']
+            self.get_configpath()
+            self.load_custom_fields()
+            self.load_holidays()
+            self.load_school_dfs_shares()
+            self.get_share_prefix()
+            self.load_drives()
+=======
 
         self.policy = GPOS.get(f"sophomorix:school:{self.school}", {}).get('gpo', '')
         self.get_configpath()
@@ -100,6 +111,7 @@ class SchoolManager:
         self.load_school_dfs_shares()
         self.get_share_prefix()
         self.load_drives()
+>>>>>>> upstream-lmn72
 
     def switch(self, school):
         """

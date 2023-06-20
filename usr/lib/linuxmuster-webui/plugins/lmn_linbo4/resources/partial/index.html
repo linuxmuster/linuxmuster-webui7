@@ -67,7 +67,8 @@
             <table class="table" ng:show="images.length > 0">
                 <tr>
                     <th> </th>
-                    <th style="min-width:100px" translate>Name / Size</th>
+                    <th style="min-width:100px" translate>Name</th>
+                    <th style="min-width:100px" translate>Differential image</th>
                     <th translate>Used in group ...</th>
                     <th colspan="3" translate>Actions</th>
                 </tr>
@@ -79,6 +80,19 @@
                         <b>{{image.name}}</b>
                         <br />
                         <i>{{image.size|bytes}}</i>
+                    </td>
+                    <td>
+                        <b>
+                            {{image.diff_image.name}}
+                            <button class="btn btn-default btn-xs" ng:click="editImage(image.diff_image)" ng:show="image.diff_image.name">
+                                <i class="fa fa-cog fa-xs"></i>
+                            </button>
+                            <button class="btn btn-default btn-xs" ng:click="deleteDiffImage(image.diff_image)" ng:show="image.diff_image.name">
+                                <i class="fa fa-trash-o fa-xs"></i>
+                            </button>
+                        </b>
+                        <br />
+                        <i>{{image.diff_image.size|bytes}}</i>
                     </td>
                     <td>
                         <span ng:repeat="conf in image.used_in" class="label label-success" style="display:inline-block;">{{conf}}</span>

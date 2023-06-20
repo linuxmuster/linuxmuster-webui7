@@ -18,6 +18,6 @@ resources:
     - 'resources/partial/sessionsList.html'
     - 'resources/partial/selectFile.modal.html'
     - 'resources/partial/roomDetails.modal.html'
-    - 'resources/styles.less'
+    - 'resources/styles.scss'
     - 'ng:lmn.session_new'
 

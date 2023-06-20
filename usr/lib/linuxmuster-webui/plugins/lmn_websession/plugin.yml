@@ -14,5 +14,5 @@ resources:
     - 'resources/partial/index.html'
     - 'resources/partial/public.html'
     - 'resources/partial/createSession.modal.html'
-    - 'resources/styles.less'
+    - 'resources/styles.scss'
     - 'ng:lmn.websession'

@@ -1,13 +1,13 @@
 <br/>
 <div samba-access>
 
-    <progress-spinner ng:show="changeState"></progress-spinner>
+    <progress-spinner ng:show="stateChanged"></progress-spinner>
 
     <div class="alert alert-warning">This plugin is actually under heavy development and only published for tests purpose.</div>
 
     <div class="input-group">
         <input type="text" style="width:70%" placeholder="{{translation.addStudent}}" ng:model="addParticipant" typeahead-editable=false typeahead-min-length="2" uib-typeahead="user as user.sophomorixAdminClass+' '+user.sn+ ' '+user.givenName+ ' ('+user.sAMAccountName+')'  for user in findUsers($viewValue) | limitTo:10" class="form-control" />
-        <input type="text" style="width:30%" placeholder="{{translation.addClass}}" ng:model="addSchoolClass" typeahead-editable=false typeahead-min-length="1" uib-typeahead="schoolClass as schoolClass.sophomorixAdminClass+' ('+schoolClass.count+')' for schoolClass in findSchoolClasses($viewValue) | limitTo:10" class="form-control" />
+        <input type="text" style="width:30%" placeholder="{{translation.addClass}}" ng:model="addSchoolClass" typeahead-editable=false typeahead-min-length="1" uib-typeahead="schoolClass as schoolClass.cn+' ('+schoolClass.membersCount+')' for schoolClass in findSchoolClasses($viewValue) | limitTo:10" class="form-control" />
 
         <div uib-dropdown class="input-group-btn" >
             <button class="btn btn-default"  uib-dropdown-toggle>
@@ -84,23 +84,23 @@
         <span style="float: right;"> <h6 style="display:{{visible.sessionname}}">{{currentSession.name}}</h6></span>
     </div>
 
-    <div class="alert alert-info" ng:show="session.participants.length == 0" translate>
+    <div class="alert alert-info" ng:show="session.members.length == 0" translate>
         There's currently no student in this group. You can add these with the input above.
     </div>
 
-    <table class="table" style="margin-bottom:60px;" ng:class="{'lmn-blurred': blurred}" ng:show="session.participants.length > 0">
+    <table class="table" style="margin-bottom:60px;" ng:class="{'lmn-blurred': blurred}" ng:show="session.members.length > 0">
         <tr>
             <th ng:repeat="(id, field) in fields" ng:if="field.visible">
                 <div title="{{field.title}}" class="{{field.icon}}" style="font-size:20px;"></div>
                 <br /> {{field.name}}
-                <span ng:if="id == 'sAMAccountName'" class="label label-info pull-right">{{session.participants.length}}</span>
-                <span checkbox style="float:right;" id="{{id}}.all" ng:if="field.examBox" ng-click="selectAll('exammode')" ng:model=field.checkboxStatus>"</span>
+                <span ng:if="id == 'sAMAccountName'" class="label label-info pull-right">{{session.members.length}}</span>
+<!--                <span checkbox style="float:right;" id="{{id}}.all" ng:if="field.examBox" ng-click="selectAll('exammode')" ng:model=field.checkboxStatus>"</span>-->
                 <span checkbox style="float:right;" id="{{id}}.all" ng:if="field.checkboxAll" ng-click="setManagementGroupAll(id)" ng:model=field.checkboxStatus>"</span>
             </th>
             <th></th>
             <th></th>
         </tr>
-        <tr style="display:;"  ng:repeat="participant in session.participants|orderBy:[sort.fx]">
+        <tr style="display:;"  ng:repeat="participant in session.members|orderBy:[sort.fx]">
             <td class="ng-binding">
                 <span class="label label-default pull-right">{{participant.sophomorixAdminClass}}</span>
                 <a>
@@ -135,35 +135,59 @@
             </td>
 
             <td class="ng-binding">
-                <span style="display:inline-block; width:100px; font-size:100%"  class="label label-danger" ng:show="participant.sophomorixRole == 'examuser'"><i class="fa fa-graduation-cap"></i> {{participant.sophomorixExamMode}}</span></td>
-            <td width="1" style="text-align:center;">
-                <span title="Exam-Mode" checkbox id="{{participant.sAMAccountName}}.exammode" ng-click="changeClass('exammode', participant)" ng:model="participant.exammode_boolean" ng:show="participant.sophomorixExamMode == identity.user || participant.sophomorixExamMode == '---'"></span>
-                <span uib-dropdown>
-                    <button class="btn btn-primary btn-xs" style="color:orange; background:white; font-size:20px" ng:show="participant.sophomorixExamMode != identity.user && participant.sophomorixExamMode != '---'" uib-dropdown-toggle>
-                        <i class="fa fa-exclamation-triangle"></i>
-                    </button>
-                    <ul uib-dropdown-menu class="dropdown-menu-right" >
-                        <li>
-                            <a ng:click="endExam(participant.sAMAccountName, identity.user,currentSession.name, currentSession.comment)">
-                                <span translate> End running exam</span>
-                            </a>
-                        </li>
-                    </ul>
+                <span style="display:inline-block; width:100px; font-size:100%"  class="label label-danger" ng:show="participant.sophomorixRole == 'examuser'">
+                    <i class="fa fa-graduation-cap"></i>
+                    {{participant.sophomorixExamMode}}
+                </span>
             </td>
-            <td width="1" style="text-align:center;" ng:show=fields.wifi.visible>
-                <span checkbox id="{{participant.sAMAccountName}}.wifiaccess" ng-click="setManagementGroup('wifi', participant)" ng:model="participant.wifi"></span>
+<!--            <td width="1" style="text-align:center;">-->
+<!--                <span title="Exam-Mode" checkbox id="{{participant.sAMAccountName}}.exammode" ng-click="changeClass('exammode', participant)" ng:model="participant.exammode_boolean" ng:show="participant.sophomorixExamMode == identity.user || participant.sophomorixExamMode == '-&#45;&#45;'"></span>-->
+<!--                <span uib-dropdown>-->
+<!--                    <button class="btn btn-primary btn-xs" style="color:orange; background:white; font-size:20px" ng:show="participant.sophomorixExamMode != identity.user && participant.sophomorixExamMode != '-&#45;&#45;'" uib-dropdown-toggle>-->
+<!--                        <i class="fa fa-exclamation-triangle"></i>-->
+<!--                    </button>-->
+<!--                    <ul uib-dropdown-menu class="dropdown-menu-right" >-->
+<!--                        <li>-->
+<!--                            <a ng:click="endExam(participant.sAMAccountName, identity.user,currentSession.name, currentSession.comment)">-->
+<!--                                <span translate> End running exam</span>-->
+<!--                            </a>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--            </td>-->
+            <td width="1" style="text-align:center;" ng:show="fields.wifi.visible">
+                <span checkbox id="{{participant.sAMAccountName}}.wifiaccess"
+                      ng:click="setManagementGroup('wifi', participant)"
+                      ng:model="participant.wifi"
+                      ng:show="participant.sophomorixRole == 'student'">
+                </span>
             </td>
-            <td width="1" style="text-align:center;" ng:show=fields.internet.visible>
-                <span checkbox id="{{participant.sAMAccountName}}.internetaccess" ng-click="setManagementGroup('internet', participant)" ng:model="participant.internet"></span>
+            <td width="1" style="text-align:center;" ng:show="fields.internet.visible">
+                <span checkbox id="{{participant.sAMAccountName}}.internetaccess"
+                      ng:click="setManagementGroup('internet', participant)"
+                      ng:model="participant.internet"
+                      ng:show="participant.sophomorixRole == 'student'">
+                </span>
             </td>
-            <td width="1" style="text-align:center;" ng:show=fields.intranet.visible>
-                <span checkbox id="{{participant.sAMAccountName}}.intranetaccess" ng-click="setManagementGroup('intranet', participant)" ng:model="participant.intranet"></span>
+            <td width="1" style="text-align:center;" ng:show="fields.intranet.visible">
+                <span checkbox id="{{participant.sAMAccountName}}.intranetaccess"
+                      ng:click="setManagementGroup('intranet', participant)"
+                      ng:model="participant.intranet"
+                      ng:show="participant.sophomorixRole == 'student'">
+                </span>
             </td>
-            <td width="1" style="text-align:center;" ng:show=fields.webfilter.visible>
-                <span checkbox id="{{participant.sAMAccountName}}.webfilter" ng-click="setManagementGroup('webfilter', participant)" ng:model="participant.webfilter"></span>
+            <td width="1" style="text-align:center;" ng:show="fields.webfilter.visible">
+                <span checkbox id="{{participant.sAMAccountName}}.webfilter"
+                      ng:click="setManagementGroup('webfilter', participant)"
+                      ng:model="participant.webfilter"
+                      ng:disabled="participant.sophomorixRole == 'student'">
+                </span>
             </td>
-            <td width="1" style="text-align:center;" ng:show=fields.printing.visible>
-                <span checkbox id="{{participant.sAMAccountName}}.printing" ng-click="setManagementGroup('printing', participant)" ng:model="participant.printing" ></span>
+            <td width="1" style="text-align:center;" ng:show="fields.printing.visible">
+                <span checkbox id="{{participant.sAMAccountName}}.printing"
+                      ng:click="setManagementGroup('printing', participant)"
+                      ng:model="participant.printing"
+                      ng:show="participant.sophomorixRole == 'student'">
+                </span>
             </td>
             <td width="1">
                 <span  uib-dropdown class="dropup" >
@@ -219,7 +243,7 @@
                     <i class="fa fa-file"></i> <span translate>Share</span><i class="fa fa-caret-up"></i>
                 </button>
                 <ul uib-dropdown-menu class="scrollable">
-                    <li><a ng:click="shareTrans('share', [identity.user], session.participants, currentSession.comment)" translate>Share file(s) from transfer directory with all participants</a></li>
+                    <li><a ng:click="shareTrans('share', [identity.user], session.members, currentSession.comment)" translate>Share file(s) from transfer directory with all members</a></li>
                 </ul>
             </div>
             <div style="display:{{visible.participanttable}};" uib-dropdown ng:show="currentSession.name != ''" class="dropup">
@@ -228,8 +252,8 @@
                 </button>
                 <ul uib-dropdown-menu class="scrollable">
                     <!--                        <li><a flow-btn class="btn btn-default btn-flat" test-bind="uploadButton" translate>Upload file to share</a></li>-->
-                    <li><a ng:click="collectTrans('copy', session.participants, [identity.user], currentSession.comment)" translate>Copy transfer directory with all participants</a></li>
-                    <li><a ng:click="collectTrans('move', session.participants, [identity.user], currentSession.comment)" translate>Move transfer directory with all participants</a></li>
+                    <li><a ng:click="collectTrans('copy', session.members, [identity.user], currentSession.comment)" translate>Copy transfer directory with all members</a></li>
+                    <li><a ng:click="collectTrans('move', session.members, [identity.user], currentSession.comment)" translate>Move transfer directory with all members</a></li>
                 </ul>
             </div>
             <button ng:click="backToSessionList()" class="btn btn-lmn pull-right" translate>Close</button>

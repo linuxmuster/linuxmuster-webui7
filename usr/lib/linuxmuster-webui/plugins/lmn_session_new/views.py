@@ -14,7 +14,7 @@ from aj.plugins.lmn_common.ldap.requests import LMNLdapRequests
 class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
-        self.lr = LMNLdapRequests()
+        self.lr = LMNLdapRequests(self.context)
 
     @get(r'/api/lmn/session/sessions')
     @authorize('lm:users:students:read')
@@ -27,8 +27,8 @@ class Handler(HttpPlugin):
             s = {
                 'sid': session.sid,
                 'name': session.name,
-                'participants_count': len(session.participants),
-                'participants': session.participants,
+                'membersCount': session.membersCount,
+                'members': session.members,
                 'type': 'session'
             }
             sessionsList.append(s)
@@ -45,8 +45,8 @@ class Handler(HttpPlugin):
             details = self.lr.get(f'/schoolclass/{schoolclass}', dict=False)
             s = {
                 'name': details.cn,
-                'participants_count': len(details.sophomorixMembers),
-                'participants': details.sophomorixMembers,
+                'membersCount': len(details.sophomorixMembers),
+                'members': details.sophomorixMembers,
                 'type': 'schoolclass'
             }
             schoolclassesList.append(s)
@@ -63,8 +63,8 @@ class Handler(HttpPlugin):
             details = self.lr.get(f'/project/{project}', dict=False)
             s = {
                 'name': details.cn,
-                'participants_count': len(details.sophomorixMembers),
-                'participants': details.sophomorixMembers,
+                'membersCount': len(details.sophomorixMembers),
+                'members': details.sophomorixMembers,
                 'type': 'project'
             }
             projectsList.append(s)
@@ -96,10 +96,10 @@ class Handler(HttpPlugin):
         supervisor = self.context.identity
         sophomorixCommand = ['sophomorix-session', '--create', '--supervisor', supervisor, '-j', '--comment', session]
 
-        if "participants" in http_context.json_body():
-            participants = http_context.json_body()['participants']
-            participantsList = [p['sAMAccountName'] for p in participants]
-            sophomorixCommand.extend(['--participants', ','.join(participantsList)])
+        if "members" in http_context.json_body():
+            members = http_context.json_body()['members']
+            membersList = [p['sAMAccountName'] for p in members]
+            sophomorixCommand.extend(['--participants', ','.join(membersList)])
 
         result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
         return result
@@ -258,14 +258,7 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_ldap_user_search(self, http_context, query=''):
         schoolname = self.context.schoolmgr.school
-        try:
-            sophomorixCommand = ['sophomorix-query', '-jj', '--schoolbase', schoolname, '--student', '--user-basic', '--anyname', f'*{query}*']
-            users = lmn_getSophomorixValue(sophomorixCommand, 'USER', True)
-        except Exception:
-            return 0
-        userList = []
-        for user in users:
-            userList.append(users[user])
+        userList = self.lr.get(f'/users/search/student/{query}')
         return sorted(userList, key=lambda d: f"{d['sophomorixAdminClass']}{d['sn']}{d['givenName']}")
 
     @get(r'/api/lmn/session/schoolClass-search/(?P<query>.*)')
@@ -273,19 +266,7 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_ldap_group_search(self, http_context, query=''):
         schoolname = self.context.schoolmgr.school
-        try:
-            sophomorixCommand = ['sophomorix-query', '-jj', '--schoolbase', schoolname, '--class', '--group-members', '--user-full', '--sam', f'*{query}*']
-            schoolClasses = lmn_getSophomorixValue(sophomorixCommand, 'MEMBERS', True)
-        except Exception:
-            return 0
-        schoolClassList = []
-        for schoolClass in schoolClasses:
-            schoolClassJson = {}
-            schoolClassJson['sophomorixAdminClass'] = schoolClass
-            schoolClassJson['members'] = schoolClasses[schoolClass]
-            schoolClassJson['count'] = len(schoolClasses[schoolClass])
-            schoolClassList.append(schoolClassJson)
-        return sorted(schoolClassList, key=lambda d: d['sophomorixAdminClass'])
+        return self.lr.get(f'/schoolclasses/search/{query}', sortkey='cn')
 
     @post(r'/api/lmn/session/moveFileToHome')  ## TODO authorize
     @endpoint(api=True)

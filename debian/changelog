@@ -1,3 +1,9 @@
+linuxmuster-webui7 (17.2.19.7) lmn72-testing; urgency=low
+
+  * Merged Upstream-LMN72
+
+ -- Andreas Till <andreas.till@netzint.de>  Tue, 20 Jun 2023 18:28:19 +0200
+
 linuxmuster-webui7 (17.2.19.6) lmn72-testing; urgency=low
 
   * Fixed handling of multischool.py schoolmanager when loading gpos

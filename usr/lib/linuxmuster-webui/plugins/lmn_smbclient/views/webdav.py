@@ -185,9 +185,9 @@ class Handler(HttpPlugin):
         else:
             url_path = self._convert_path(path).replace('/', '\\')
             smb_path = f"{self.context.schoolmgr.schoolShare}{url_path}"
-            smb_entity = smbclient._os.SMBDirEntry.from_path(smb_path)
 
             try:
+                smb_entity = smbclient._os.SMBDirEntry.from_path(smb_path)
                 if smb_entity.is_dir():
                     # Listing a directory
                     for item in smbclient.scandir(smb_path):

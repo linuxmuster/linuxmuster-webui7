@@ -82,7 +82,7 @@ class Handler(HttpPlugin):
             else:
                 http_context.respond_ok()
 
-            http_context.add_header('Content-Disposition', (f'attachment; filename={name}'))
+            http_context.add_header('Content-Disposition', (f'attachment; filename={quote(name)}'))
 
             fd = smbclient._os.open_file(smb_path, 'rb')
             fd.seek(range_from or 0, smbclient._os.os.SEEK_SET)

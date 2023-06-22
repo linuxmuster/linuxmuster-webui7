@@ -390,6 +390,8 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function ($
                     notify.success('Deleted !');
                     $scope.clear_selection();
                     $scope.reload();
+                }).catch(function (err) {
+                    return notify.error(err);
                 });
             })
         );

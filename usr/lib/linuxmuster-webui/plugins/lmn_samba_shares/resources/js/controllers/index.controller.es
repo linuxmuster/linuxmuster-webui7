@@ -190,7 +190,7 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function($s
                 notify.success('Deleted !');
                 $scope.clear_selection();
                 $scope.reload();
-            });
+            }).catch((err => notify.error(err)));
         })
 
     $scope.delete_dir = (path) => {

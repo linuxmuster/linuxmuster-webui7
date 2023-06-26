@@ -6,7 +6,8 @@ from configobj import ConfigObj
 from subprocess import check_output
 import xml.etree.ElementTree as ElementTree
 
-from aj.plugins.lmn_common.api import samba_realm, samba_netbios, samba_override, lmn_getSophomorixValue, lmn_is_installed
+from aj.plugins.lmn_common.api import samba_realm, samba_netbios, samba_override, lmn_getSophomorixValue
+from aj.plugins.lmn_common.samba_tool import GPOS
 
 
 class Drives:

@@ -180,13 +180,17 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function($s
             let items = $scope.items.filter((item) => item.selected);
             promises = []
             for (let item of items) {
-                promises.push(smbclient.delete_file(item.path));
+                if (item.isDir) {
+                    promises.push(smbclient.delete_dir(item.path));
+                } else {
+                    promises.push(smbclient.delete_file(item.path));
+                }
             }
             $q.all(promises).then(() => {
                 notify.success('Deleted !');
                 $scope.clear_selection();
                 $scope.reload();
-            });
+            }).catch((err => notify.error(err)));
         })
 
     $scope.delete_dir = (path) => {

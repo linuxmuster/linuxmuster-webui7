@@ -75,7 +75,7 @@ angular.module('lmn.smbclient').service('smbclient', function($rootScope, $http,
     }
 
     this.refresh_krbcc = () => {
-        return messagebox.prompt("Please give your password:").then((msg) => {
+        return messagebox.prompt("Please give your password:", "", "password").then((msg) => {
             return $http.post('/api/lmn/smbclient/refresh_krbcc', {'pw': msg.value}).then((resp) => {
                 if (resp.data.type == "error") {
                     notify.error(resp.data.msg);

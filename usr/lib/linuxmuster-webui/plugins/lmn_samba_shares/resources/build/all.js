@@ -365,7 +365,11 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function ($
                     for (var _iterator8 = items[Symbol.iterator](), _step8; !(_iteratorNormalCompletion8 = (_step8 = _iterator8.next()).done); _iteratorNormalCompletion8 = true) {
                         var _item3 = _step8.value;
 
-                        promises.push(smbclient.delete_file(_item3.path));
+                        if (_item3.isDir) {
+                            promises.push(smbclient.delete_dir(_item3.path));
+                        } else {
+                            promises.push(smbclient.delete_file(_item3.path));
+                        }
                     }
                 } catch (err) {
                     _didIteratorError8 = true;
@@ -386,6 +390,8 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function ($
                     notify.success('Deleted !');
                     $scope.clear_selection();
                     $scope.reload();
+                }).catch(function (err) {
+                    return notify.error(err);
                 });
             })
         );

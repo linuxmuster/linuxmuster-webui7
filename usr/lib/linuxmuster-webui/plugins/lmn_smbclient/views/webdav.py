@@ -12,9 +12,9 @@ from spnego.exceptions import BadMechanismError
 from jadi import component
 import xml.etree.ElementTree as ElementTree
 import qrcode
-import pyotp
 import base64
 from io import BytesIO
+import json
 
 from aj.api.http import url, get, post, mkcol, options, copy, move, put, propfind, delete, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
@@ -400,7 +400,7 @@ class Handler(HttpPlugin):
             border=4,
         )
 
-        qr.add_data(data)
+        qr.add_data(json.dumps(data))
         qr.make(fit=True)
         img = qr.make_image(fill_color="black", back_color="white").convert('RGB')
 

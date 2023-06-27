@@ -387,7 +387,7 @@ class Handler(HttpPlugin):
 
         data = {
             "displayName": self.context.schoolmgr.schoolname,
-            "url": f"{env['wsgi.url_scheme']}://{env['HTTP_HOST']}/webdav/",
+            "url": f"{env['wsgi.url_scheme']}://{env['HTTP_HOST']}/webdav",
             "username": self.context.identity,
             "password": "",
             "token": ""

@@ -1,0 +1,17 @@
+ <div class="modal-header">
+    <h4><span translate>Webapp QR code</span></h4>
+</div>
+<div class="modal-body">
+    <label translate>User:</label>
+    <span>{{identity.user}}</span>
+
+    <hr />
+
+    <img ng:src="data:image/png;base64, {{tmp_qr}}" />
+
+    <hr />
+
+</div>
+<div class="modal-footer">
+    <button ng:click="close()" class="btn btn-default btn-flat pull-right" translate>Close</button>
+</div>

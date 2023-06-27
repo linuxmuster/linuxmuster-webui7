@@ -351,7 +351,8 @@ class LMAuthenticationProvider(AuthenticationProvider):
                 profil['activeSchool'] = profil['sophomorixSchoolname']
 
             if lmsetup_schoolname:
-                profil['pageTitle'] = lmsetup_schoolname
+                # TODO : use .self.context.schoolmgr.schoolname if available
+                profil['schoolname'] = lmsetup_schoolname
             return json.loads(json.dumps(profil))
         except Exception as e:
             logging.error(e)

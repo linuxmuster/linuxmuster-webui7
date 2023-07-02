@@ -1,3 +1,25 @@
+linuxmuster-webui7 (7.2.16) lmn72; urgency=medium
+
+  * Add ldap connector and ldap reader to speed up requests
+  * Convert less to scss for Ajenti 3
+  * Upgrade to Ajenti 2.2.6
+  * Upgrade cryptography modules
+  * [groupmembership] Add length for projects
+  * [groupmembership] Possiblity to refresh kerberos ticket on change
+  * [linbo] Fix problem with empty config file
+  * [linbo] Add support for differential images
+  * [linbo] Fix torrent restart 
+  * [smbclient] Delete directory recursively
+  * [session] Fix exam mode for new user
+  * [session_new] Many work to improve the new module
+  * [setup] Do not load gpos when install is not done
+  * [users] Show and edit comment for bind users
+  * [webdav] Replace file on put
+  * [webdav] Delete directory recursively
+  * [webdav] Display QR code for mobile app
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 02 Jul 2023 16:30:18 +0200
+
 linuxmuster-webui7 (7.2.15) lmn72; urgency=medium
 
   * Upgrade some libraries for Python 3.10

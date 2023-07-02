@@ -57,14 +57,6 @@ class LinboImage:
         except Exception as e:
             logging.error(f'Unable to stop torrent service for {self.image} : {e.output}')
 
-    def _torrent_create(self, image=None):
-        if not image:
-            image = self.image
-        try:
-            subprocess.check_call(['/usr/sbin/linbo-torrent', 'create', image])
-        except Exception as e:
-            logging.error(f'Unable to create torrent file for {image} : {e}')
-
     def load_info(self):
         """
         Prepare all variables to manage the image object ( path, name, extra files )
@@ -198,7 +190,7 @@ class LinboImage:
                 # Need to generate a new torrent file
                 if extra == "torrent":
                     os.unlink(actual)
-                    self._torrent_create(new_image_name)
+
                     continue
 
                 os.rename(actual, os.path.join(self.path, f"{new_image_name}.{extra}"))
@@ -466,7 +458,6 @@ class LinboImageManager:
                 # Cleanup and reload
                 imageGroup.backups[date].delete()
                 self.linboImageGroups[group].load()
-                imageGroup.base._torrent_create()
 
     def save_extras(self, group, data, timestamp=None, diff=False):
         """

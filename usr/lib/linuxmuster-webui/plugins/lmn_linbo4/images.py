@@ -172,9 +172,12 @@ class LinboImage:
         Rename a LinboImage and all its files.
         """
 
-        new_image_name = f"{new_name}.{IMAGE}"
+        if self.diff:
+            new_image_name = f"{new_name}.{DIFF_IMAGE}"
+        else:
+            new_image_name = f"{new_name}.{IMAGE}"
 
-        if not self.backup and not self.diff:
+        if not self.backup:
             self._torrent_stop()
 
         # Rename image

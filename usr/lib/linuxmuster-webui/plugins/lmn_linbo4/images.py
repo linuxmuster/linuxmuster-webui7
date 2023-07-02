@@ -53,9 +53,9 @@ class LinboImage:
 
     def _torrent_stop(self):
         try:
-            subprocess.check_call(['/usr/sbin/linbo-torrent', 'stop', os.path.join(self.path, f'{self.image}.torrent')])
+            subprocess.check_output(['/usr/sbin/linbo-torrent', 'stop', os.path.join(self.path, f'{self.image}.torrent')])
         except Exception as e:
-            logging.error(f'Unable to stop torrent service for {self.image} : {e}')
+            logging.error(f'Unable to stop torrent service for {self.image} : {e.output}')
 
     def _torrent_create(self, image=None):
         if not image:
@@ -174,11 +174,12 @@ class LinboImage:
 
         new_image_name = f"{new_name}.{IMAGE}"
 
+        if not self.backup and not self.diff:
+            self._torrent_stop()
+
         # Rename image
         os.rename(os.path.join(self.path, self.image),
                   os.path.join(self.path, new_image_name))
-
-        self._torrent_stop()
 
         # Rename extra files
         for extra in EXTRA_IMAGE_FILES:
@@ -205,7 +206,7 @@ class LinboImage:
                 os.rename(actual, os.path.join(self.path, f"{new_name}.{extra}"))
 
         # Move directory
-        if not self.backup:
+        if not self.backup and not self.diff:
             os.rename(self.path, os.path.join(LINBO_PATH, new_name))
 
         # Refresh informations
@@ -314,6 +315,9 @@ class LinboImageGroup:
 
         for timestamp, backup in self.backups.items():
             backup.rename(new_name)
+
+        if self.diff_image:
+            self.diff_image.rename(new_name)
 
         self.base.rename(new_name)
 

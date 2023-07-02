@@ -185,7 +185,7 @@ class LinboImage:
                   os.path.join(self.path, new_image_name))
 
         # Rename extra files
-        for extra in EXTRA_IMAGE_FILES:
+        for extra in EXTRA_IMAGE_FILES + EXTRA_NONEDITABLE_IMAGE_FILES:
             actual = os.path.join(self.path, f"{self.image}.{extra}")
             if os.path.exists(actual):
                 # Replace image name in .info file

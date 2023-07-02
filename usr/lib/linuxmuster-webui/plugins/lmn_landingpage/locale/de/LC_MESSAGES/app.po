@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-27 15:03+0100\n"
-"PO-Revision-Date: 2023-02-24 09:26\n"
+"POT-Creation-Date: 2023-07-02 16:53+0200\n"
+"PO-Revision-Date: 2023-07-02 15:06\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -17,51 +17,52 @@ msgstr ""
 "X-Crowdin-File: /2.0/lmn_landingpage.po\n"
 "X-Crowdin-File-ID: 124\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:26
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:31
 msgid "Account Information"
 msgstr "Konto Informationen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:17
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:22
 msgid "But keep in mind:"
 msgstr "Aber denken Sie daran:"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:97
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:102
 msgid "Change my data"
 msgstr "Meine Daten ändern"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:34
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:39
 msgid "Change password"
 msgstr "Passwort ändern"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/customFields.modal.html:73
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/webappqr.modal.html:16
 msgid "Close"
 msgstr "Schließen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:59
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:64
 msgid "Cloudquota Calculated in MB:"
 msgstr "Cloudquota berechnet in MB:"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:66
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:71
 msgid "Groups"
 msgstr "Gruppen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:10
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:15
 msgid "Hello {{user.givenName}} {{user.sn}},"
 msgstr "Hallo {{user.givenName}} {{user.sn}},"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:30
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:35
 msgid "Mail:"
 msgstr "E-Mail:"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:60
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:65
 msgid "Mailquota Calculated in MB:"
 msgstr "Mailquota berechnet in MB:"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:80
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:85
 msgid "My informations"
 msgstr "Meine Informationen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:29
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:34
 msgid "Name:"
 msgstr "Name:"
 
@@ -69,19 +70,19 @@ msgstr "Name:"
 msgid "Properties"
 msgstr "Eigenschaften"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:42
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:47
 msgid "Quotas"
 msgstr "Quotas"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:32
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:37
 msgid "Role:"
 msgstr "Rolle:"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:31
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:36
 msgid "School:"
 msgstr "Schule:"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:16
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:21
 msgid "Use the sidebar to navigate through the options."
 msgstr "Benutzen Sie die Seitenleiste, um durch die Optionen zu navigieren."
 
@@ -89,15 +90,24 @@ msgstr "Benutzen Sie die Seitenleiste, um durch die Optionen zu navigieren."
 msgid "User Details"
 msgstr "Benutzerdetails"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:2
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/webappqr.modal.html:5
+msgid "User:"
+msgstr "Benutzer:"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:4
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/webappqr.modal.html:2
+msgid "Webapp QR code"
+msgstr "Webapp QR code"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:7
 msgid "Welcome to Linuxmuster.net version 7!"
 msgstr "Willkommen zu Linuxmuster.net 7!"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:18
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:23
 msgid "With great power comes great responsibility!"
 msgstr "Aus großer Macht folgt große Verantwortung!"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:13
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:18
 msgid "use the sidebar to navigate through the options. You can start by using the Enroll module to subscribe to your classes."
 msgstr "verwenden Sie die Seitenleiste, um in den Einstellungen zu navigieren. Sie könnten damit beginnen, sich mit Hilfe des Einschreiben-Moduls in Ihre Klassen einzutragen."
 
@@ -109,19 +119,19 @@ msgstr "Hauptseite"
 msgid "NO LIMIT"
 msgstr "UNBEGRENZT"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:75
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:84
 msgid "Class"
 msgstr "Klasse"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:77
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:86
 msgid "Teachers"
 msgstr "Lehrer"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:79
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:88
 msgid "Printers"
 msgstr "Drucker"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:81
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:90
 msgid "Project"
 msgstr "Projekt"
 

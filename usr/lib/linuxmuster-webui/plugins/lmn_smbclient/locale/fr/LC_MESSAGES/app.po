@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-23 15:10+0100\n"
-"PO-Revision-Date: 2023-02-24 09:26\n"
+"POT-Creation-Date: 2023-07-02 16:53+0200\n"
+"PO-Revision-Date: 2023-07-02 15:06\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -21,15 +21,23 @@ msgstr ""
 msgid "Delete Samba files"
 msgstr "Supprimer les fichiers Samba"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/views/smbclient.py:562
+msgid "Ticket successfully refreshed"
+msgstr "Ticket actualisé avec succès"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/views/smbclient.py:565
+msgid "Timeout while trying to get a kerberos ticket"
+msgstr "Délai d'attente écoulé en essayant d'obtenir un ticket kerberos"
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/resources/js/directives/smbupload.directive.coffee:48
 msgid "Uploaded "
 msgstr "Téléversé "
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/resources/js/services/smbclient.service.es:13
+#: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/resources/js/services/smbclient.service.es:16
 msgid " moved!"
 msgstr " déplacé !"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/resources/js/services/smbclient.service.es:22
+#: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/resources/js/services/smbclient.service.es:25
 msgid " copied!"
 msgstr " copié !"
 

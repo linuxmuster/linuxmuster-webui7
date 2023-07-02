@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-27 15:03+0100\n"
-"PO-Revision-Date: 2023-02-23 14:41\n"
+"POT-Creation-Date: 2023-07-02 16:53+0200\n"
+"PO-Revision-Date: 2023-07-02 15:06\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -17,51 +17,52 @@ msgstr ""
 "X-Crowdin-File: /2.0/lmn_landingpage.po\n"
 "X-Crowdin-File-ID: 124\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:26
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:31
 msgid "Account Information"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:17
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:22
 msgid "But keep in mind:"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:97
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:102
 msgid "Change my data"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:34
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:39
 msgid "Change password"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/customFields.modal.html:73
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/webappqr.modal.html:16
 msgid "Close"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:59
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:64
 msgid "Cloudquota Calculated in MB:"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:66
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:71
 msgid "Groups"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:10
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:15
 msgid "Hello {{user.givenName}} {{user.sn}},"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:30
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:35
 msgid "Mail:"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:60
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:65
 msgid "Mailquota Calculated in MB:"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:80
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:85
 msgid "My informations"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:29
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:34
 msgid "Name:"
 msgstr ""
 
@@ -69,19 +70,19 @@ msgstr ""
 msgid "Properties"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:42
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:47
 msgid "Quotas"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:32
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:37
 msgid "Role:"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:31
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:36
 msgid "School:"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:16
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:21
 msgid "Use the sidebar to navigate through the options."
 msgstr ""
 
@@ -89,15 +90,24 @@ msgstr ""
 msgid "User Details"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:2
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/webappqr.modal.html:5
+msgid "User:"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:4
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/webappqr.modal.html:2
+msgid "Webapp QR code"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:7
 msgid "Welcome to Linuxmuster.net version 7!"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:18
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:23
 msgid "With great power comes great responsibility!"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:13
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:18
 msgid "use the sidebar to navigate through the options. You can start by using the Enroll module to subscribe to your classes."
 msgstr ""
 
@@ -109,19 +119,19 @@ msgstr ""
 msgid "NO LIMIT"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:75
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:84
 msgid "Class"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:77
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:86
 msgid "Teachers"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:79
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:88
 msgid "Printers"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:81
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:90
 msgid "Project"
 msgstr ""
 

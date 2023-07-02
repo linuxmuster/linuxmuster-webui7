@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-23 15:10+0100\n"
-"PO-Revision-Date: 2023-02-23 14:41\n"
+"POT-Creation-Date: 2023-07-02 16:53+0200\n"
+"PO-Revision-Date: 2023-07-02 15:06\n"
 "Last-Translator: \n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -221,9 +221,21 @@ msgstr ""
 msgid "user(s)"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/main.py:14
+#: usr/lib/linuxmuster-webui/plugins/lmn_session/main.py:16
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:104
 msgid "Session"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_session/main.py:23
+msgid "Print Passwords"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_session/main.py:37
+msgid "Write students"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_session/main.py:42
+msgid "Transfer Files in Session"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:23

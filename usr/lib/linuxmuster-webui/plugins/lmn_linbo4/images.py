@@ -481,7 +481,7 @@ class LinboImageManager:
         if group in self.linboImageGroups:
             imageGroup = self.linboImageGroups[group]
             if diff:
-                imageGroup.diff.save_extras(data)
+                imageGroup.diff_image.save_extras(data)
             elif date in imageGroup.backups:
                 imageGroup.backups[date].save_extras(data)
             else:

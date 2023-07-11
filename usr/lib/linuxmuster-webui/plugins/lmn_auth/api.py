@@ -101,7 +101,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
         try:
             l.set_option(ldap.OPT_REFERRALS, 0)
             l.protocol_version = ldap.VERSION3
-            l.bind(params['binddn'], params['bindpw'])
+            l.bind_s(params['binddn'], params['bindpw'])
         except Exception as e:
             logging.error(str(e))
             raise KeyError(e)
@@ -117,7 +117,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
         except ldap.LDAPError as e:
             print(e)
 
-        l.unbind()
+        l.unbind_s()
         return userAttrs
 
     def prepare_environment(self, username):
@@ -208,7 +208,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
             l = ldap.initialize('ldap://' + params['host'])
             l.set_option(ldap.OPT_REFERRALS, 0)
             l.protocol_version = ldap.VERSION3
-            l.bind(userAttrs['dn'], password)
+            l.bind_s(userAttrs['dn'], password)
         except Exception as e:
             logging.error(str(e))
             return False
@@ -389,7 +389,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
         try:
             l.set_option(ldap.OPT_REFERRALS, 0)
             l.protocol_version = ldap.VERSION3
-            l.bind(params['binddn'], params['bindpw'])
+            l.bind_s(params['binddn'], params['bindpw'])
         except Exception as e:
             logging.error(str(e))
             raise KeyError(e)
@@ -403,7 +403,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
         except (ldap.LDAPError, KeyError):
             return False
 
-        l.unbind()
+        l.unbind_s()
         return False
 
     def check_password_complexity(self, password):
@@ -519,7 +519,7 @@ class UserLdapConfig(UserConfigProvider):
             try:
                 l.set_option(ldap.OPT_REFERRALS, 0)
                 l.protocol_version = ldap.VERSION3
-                l.bind("CN=Administrator,CN=Users,"+params['searchdn'], admin_pw)
+                l.bind_s("CN=Administrator,CN=Users,"+params['searchdn'], admin_pw)
             except Exception as e:
                 logging.error(str(e))
                 raise KeyError(e)
@@ -536,7 +536,7 @@ class UserLdapConfig(UserConfigProvider):
 
             ldif = modlist.modifyModlist(userconfig_old,userconfig_new)
             l.modify_s(dn,ldif)
-            l.unbind()
+            l.unbind_s()
 
     def harden(self):
         """

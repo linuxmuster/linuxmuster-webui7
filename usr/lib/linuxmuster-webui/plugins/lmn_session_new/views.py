@@ -1,11 +1,11 @@
 from concurrent import futures
-import logging
 from time import localtime, strftime  # needed for timestamp in collect transfer
+import smbclient
 
 from jadi import component
 from aj.api.http import get, post, put, patch, delete, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
-from aj.auth import authorize
+from aj.auth import authorize, AuthenticationService
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue
 from aj.plugins.lmn_common.ldap.requests import LMNLdapRequests
 
@@ -281,6 +281,37 @@ class Handler(HttpPlugin):
         except Exception:
             return 0
 
+    @get(r'/api/lmn/session/mkdir')
+    @endpoint(api=True)
+    def handle_api_mkdir_session(self, http_context):
+        user = self.context.identity
+        profil = AuthenticationService.get(self.context).get_provider().get_profile('frayka')
+        user_context = {
+            'user': user,
+            'role': profil['sophomorixRole'],
+            'adminclass': profil['sophomorixAdminClass'],
+            'home': profil['homeDirectory'],
+        }
+        home = self.context.schoolmgr.get_homepath(user_context)
+        new_dir = f'{home}\\transfer\\test_mkdir'
+
+        smbclient.mkdir(new_dir)
+
+    @get(r'/api/lmn/session/ckdir')
+    @endpoint(api=True)
+    def handle_api_ckdir_session(self, http_context):
+        user = self.context.identity
+        profil = AuthenticationService.get(self.context).get_provider().get_profile('frayka')
+        user_context = {
+            'user': user,
+            'role': profil['sophomorixRole'],
+            'adminclass': profil['sophomorixAdminClass'],
+            'home': profil['homeDirectory'],
+        }
+        home = self.context.schoolmgr.get_homepath(user_context)
+        path = f'{home}\\transfer\\test_mkdir'
+        return smbclient._os.SMBDirEntry.from_path(path).is_dir()
+
     @post(r'/api/lmn/session/trans-list-files')
     @endpoint(api=True)
     def handle_api_session_file_trans_list(self, http_context):
@@ -299,6 +330,7 @@ class Handler(HttpPlugin):
             return availableFiles, []
         for availableFile in availableFiles['TREE']:
             availableFilesList.append(availableFile)
+        print(availableFiles, availableFilesList)
         return availableFiles, availableFilesList
 
     @post(r'/api/lmn/session/share')
@@ -375,7 +407,7 @@ class Handler(HttpPlugin):
         command = http_context.json_body()['command']
         receivers = http_context.json_body()['receivers']
         files = http_context.json_body()['files']
-        session = http_context.json_body()['session']
+        session = "testtrans" #http_context.json_body()['session']
         now = strftime("%Y%m%d_%H-%M-%S", localtime())
 
         def shareFiles(file):

@@ -60,9 +60,9 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         transfer:
             visible: true
             name: gettext('Transfer')
-        workDirectory:
+        workingDirectory:
             visible: true
-            name: gettext('')
+            name: gettext('Working directory')
         sophomorixRole:
             visible: false
             name: gettext('sophomorixRole')
@@ -327,7 +327,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
               senders: () -> senders
               receivers: () -> receivers
               command: () -> command
-              sessionComment: () -> sessioncomment
+              sessionComment: () -> $scope.session.name
         ).result.then (result) ->
            if result.response is 'accept'
                wait.modal(gettext('Sharing files...'), 'progressbar')
@@ -360,7 +360,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
               senders: () -> senders
               receivers: () -> receivers
               command: () -> command
-              sessionComment: () -> sessioncomment
+              sessionComment: () -> $scope.session.name
         ).result.then (result) ->
             if result.response is 'accept'
                 #return
@@ -447,7 +447,7 @@ angular.module('lmn.session_new').controller 'LMNRoomDetailsController', ($scope
         $scope.close = () ->
             $uibModalInstance.dismiss()
 
-angular.module('lmn.session_new').controller 'LMNSessionFileSelectModalController', ($scope, $uibModalInstance, gettext, notify, $http, bulkMode, senders, receivers, action, command, sessionComment, messagebox) ->
+angular.module('lmn.session_new').controller 'LMNSessionFileSelectModalController', ($scope, $uibModalInstance, gettext, notify, $http, bulkMode, senders, receivers, action, command, sessionComment, messagebox, smbclient) ->
     $scope.bulkMode = bulkMode
     $scope.senders = senders
     $scope.receivers = receivers
@@ -461,7 +461,6 @@ angular.module('lmn.session_new').controller 'LMNSessionFileSelectModalControlle
         # create tmp dir for upload
         $scope.createDir($scope.transferPath)
         $scope.owner = username
-
 
     $scope.save = () ->
         filesToTrans =  []

@@ -1,4 +1,4 @@
-angular.module('lmn.session_new').service('lmnSession', function($http, $uibModal, $q, $location, identity, messagebox, validation, notify, gettext) {
+angular.module('lmn.session_new').service('lmnSession', function($http, $uibModal, $q, $location, messagebox, validation, notify, gettext) {
 
     this.sessions = [];
 
@@ -23,12 +23,11 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
     }
 
     this.start = (session) => {
-        this.current = session;console.log(session); console.log(identity.user);
+        this.current = session;
         $http.post('/api/lmn/session/userinfo', {'users': this.current.members}).then((resp) => {
             this.current.members = resp.data;
             this.current.generated = false;
             this.current.type = 'session';
-            this.current.working_dir = `${identity.user}_group_${session.name}`;
             $location.path('/view/lmn/session');
         });
     }
@@ -52,7 +51,6 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
             'members': members,
             'generated': true,
             'type': session_type, // May be room or schoolclass or project
-            'working_dir':`${identity.user}_${session_type}_${groupname}`,
         };
         this.current = generatedSession;
         $location.path('/view/lmn/session');

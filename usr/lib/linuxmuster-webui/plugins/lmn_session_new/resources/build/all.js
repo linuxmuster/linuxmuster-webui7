@@ -21,7 +21,7 @@ angular.module('lmn.session_new').config(function ($routeProvider) {
 
 'use strict';
 
-angular.module('lmn.session_new').service('lmnSession', function ($http, $uibModal, $q, $location, identity, messagebox, validation, notify, gettext) {
+angular.module('lmn.session_new').service('lmnSession', function ($http, $uibModal, $q, $location, messagebox, validation, notify, gettext) {
     var _this = this;
 
     this.sessions = [];
@@ -49,12 +49,11 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     };
 
     this.start = function (session) {
-        _this.current = session;console.log(session);console.log(identity.user);
+        _this.current = session;
         $http.post('/api/lmn/session/userinfo', { 'users': _this.current.members }).then(function (resp) {
             _this.current.members = resp.data;
             _this.current.generated = false;
             _this.current.type = 'session';
-            _this.current.working_dir = identity.user + '_group_' + session.name;
             $location.path('/view/lmn/session');
         });
     };
@@ -77,8 +76,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
             'name': groupname,
             'members': members,
             'generated': true,
-            'type': session_type, // May be room or schoolclass or project
-            'working_dir': identity.user + '_' + session_type + '_' + groupname
+            'type': session_type // May be room or schoolclass or project
         };
         _this.current = generatedSession;
         $location.path('/view/lmn/session');
@@ -223,9 +221,9 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         visible: true,
         name: gettext('Transfer')
       },
-      workingDirectory: {
+      workDirectory: {
         visible: true,
-        name: gettext('Working directory')
+        name: gettext('')
       },
       sophomorixRole: {
         visible: false,
@@ -594,7 +592,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
             return command;
           },
           sessionComment: function() {
-            return $scope.session.name;
+            return sessioncomment;
           }
         }
       }).result.then(function(result) {
@@ -650,7 +648,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
             return command;
           },
           sessionComment: function() {
-            return $scope.session.name;
+            return sessioncomment;
           }
         }
       }).result.then(function(result) {
@@ -795,7 +793,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     };
   });
 
-  angular.module('lmn.session_new').controller('LMNSessionFileSelectModalController', function($scope, $uibModalInstance, gettext, notify, $http, bulkMode, senders, receivers, action, command, sessionComment, messagebox, smbclient) {
+  angular.module('lmn.session_new').controller('LMNSessionFileSelectModalController', function($scope, $uibModalInstance, gettext, notify, $http, bulkMode, senders, receivers, action, command, sessionComment, messagebox) {
     $scope.bulkMode = bulkMode;
     $scope.senders = senders;
     $scope.receivers = receivers;

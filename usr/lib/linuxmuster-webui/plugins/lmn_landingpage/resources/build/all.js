@@ -207,7 +207,7 @@
   angular.module('lmn.landingpage').controller('LMNUserWebAppQRController', function($scope, $route, $uibModal, $uibModalInstance, $http, gettext, pageTitle, user) {
     $scope.user = user;
     $http.get("/api/webdav/qrcode").then(function(resp) {
-      return $scope.tmp_qr = resp.data;
+      return $scope.qrdata = resp.data;
     });
     return $scope.close = function() {
       return $uibModalInstance.dismiss();

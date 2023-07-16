@@ -407,4 +407,9 @@ class Handler(HttpPlugin):
         buffer = BytesIO()
         img.save(buffer, format='PNG')
 
-        return base64.b64encode(buffer.getvalue()).decode('utf-8')
+        return {
+            "displayName": self.context.schoolmgr.schoolname,
+            "qrcode": base64.b64encode(buffer.getvalue()).decode('utf-8'),
+            "url": f"{env['wsgi.url_scheme']}://{env['HTTP_HOST']}/webdav",
+            "username": self.context.identity
+        }

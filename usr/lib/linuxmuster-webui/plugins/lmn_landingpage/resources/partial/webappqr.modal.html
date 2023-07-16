@@ -15,10 +15,10 @@
     </p>
 
     <div class="webdav-ios-tuto">
-        <p>SCHULE</p>
-        <p>URL</p>
-        <p>USERNAME</p>
-        <p>PASSWORD</p>
+        <p>{{qrdata.displayName}}</p>
+        <p>{{qrdata.url}}</p>
+        <p>{{qrdata.username}}</p>
+        <p translate>Your password</p>
     </div>
 
     <h3 translate>Easy setup</h3>
@@ -28,7 +28,7 @@
     </p>
 
     <p style="text-align: center;">
-        <img class="centered" ng:src="data:image/png;base64, {{tmp_qr}}" />
+        <img class="centered" ng:src="data:image/png;base64, {{qrdata.qrcode}}" />
     </p>
 
 </div>

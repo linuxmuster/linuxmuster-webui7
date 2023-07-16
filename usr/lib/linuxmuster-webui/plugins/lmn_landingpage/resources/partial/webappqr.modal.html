@@ -1,15 +1,35 @@
  <div class="modal-header">
-    <h4><span translate>Webapp QR code</span></h4>
+    <h2><span translate>Mobile access</span></h2>
 </div>
 <div class="modal-body">
-    <label translate>User:</label>
-    <span>{{identity.user}}</span>
+    <i class="fab fa-apple fa-3x pull-right"></i>
 
-    <hr />
+    <h3 translate>Setup guide for iOS</h3>
+    <p translate>
+        To set up mobile access to the school server from iOS based devices, please proceed as follows:
+    </p>
 
-    <img ng:src="data:image/png;base64, {{tmp_qr}}" />
+    <p>
+        <img width="100px" src="/resources/lmn_common/resources/img/app-store-badge.svg" />
+        <span>QR CODE TO APPSTORE</span>
+    </p>
 
-    <hr />
+    <div class="webdav-ios-tuto">
+        <p>SCHULE</p>
+        <p>URL</p>
+        <p>USERNAME</p>
+        <p>PASSWORD</p>
+    </div>
+
+    <h3 translate>Easy setup</h3>
+
+    <p translate>
+        For easy setup, please scan your personal code in the app:<br />
+    </p>
+
+    <p style="text-align: center;">
+        <img class="centered" ng:src="data:image/png;base64, {{tmp_qr}}" />
+    </p>
 
 </div>
 <div class="modal-footer">

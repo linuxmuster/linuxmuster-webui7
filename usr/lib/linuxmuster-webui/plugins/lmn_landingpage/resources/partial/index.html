@@ -1,8 +1,8 @@
 <div samba-access>
-    <button style="margin-top:20px;" class="btn btn-primary pull-right" ng:click="showWebappQR()">
-        <i class="fas fa-qrcode"></i>
-        <span translate>Webapp QR code</span>
-    </button>
+<!--    <button style="margin-top:20px;" class="btn btn-primary pull-right" ng:click="showWebappQR()">-->
+<!--        <i class="fas fa-qrcode"></i>-->
+<!--        <span translate>Webapp QR code</span>-->
+<!--    </button>-->
 
     <h2 translate>Welcome to Linuxmuster.net version 7! </h2>
 
@@ -103,6 +103,21 @@
                     </button>
                 </div>
             </div>
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4 translate>Mobile access</h4>
+                </div>
+                <div class="panel-body">
+                    <p translate>
+                        You can access the school server from many mobile devices.
+                        Select your operating system to see how it works.
+                    </p>
+                    <a ng:click="showWebappQR()">
+                        <i class="fab fa-apple fa-3x"></i>
+                    </a>
+                </div>
+            </div
         </div>
     </div>
 

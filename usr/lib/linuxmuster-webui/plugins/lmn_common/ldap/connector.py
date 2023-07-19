@@ -25,7 +25,7 @@ class LdapConnector:
         :type dict: bool
         """
 
-        result = self._request(ldap_filter)[0][1]
+        result = self._get(ldap_filter)[0][1]
         data = {}
         # TODO : not all requests are school oriented
         school_node = f",OU={self.context.schoolmgr.school},"
@@ -55,7 +55,7 @@ class LdapConnector:
         :type sortkey: basestring
         """
 
-        results = self._request(ldap_filter)
+        results = self._get(ldap_filter)
         response = []
         for result in results:
             if result[0] is not None:
@@ -132,7 +132,7 @@ class LdapConnector:
         if value is None:
             return None
 
-    def _request(self, ldap_filter):
+    def _get(self, ldap_filter):
         """
         Connect to ldap and perform the request.
 

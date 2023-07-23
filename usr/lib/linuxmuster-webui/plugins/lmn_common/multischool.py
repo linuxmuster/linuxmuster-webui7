@@ -138,6 +138,8 @@ class SchoolManager:
         self.holidays = {}
         if os.path.isfile(config):
             try:
+                # Enforce read permissions for crontab users
+                os.chmod(config, 0o644)
                 with open(config, 'r') as f:
                     self.holidays = yaml.load(f, Loader=yaml.SafeLoader)
             except Exception as e:

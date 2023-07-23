@@ -2,6 +2,7 @@ angular.module('lmn.crontab').controller('CrontabIndexController', function($sco
     pageTitle.set(gettext('Cron'));
 
     $scope.title = gettext('Cron');
+    $scope.crontab_user_selected = 'globaladministrator';
     $scope.modifyJob = null;
     $scope.new = {
         'normal_tasks': {
@@ -35,6 +36,15 @@ angular.module('lmn.crontab').controller('CrontabIndexController', function($sco
     }
     $scope.special = ['@reboot', '@yearly', '@annually', '@monthly', '@weekly', '@daily', '@hourly']
 
+    $scope.switchCrontab = () => {
+        if ($scope.crontab_user_selected == 'root') {
+           $scope.crontabs['globaladministrator'] = $scope.crontab;
+        } else {
+           $scope.crontabs['root'] = $scope.crontab;
+        }
+        $scope.crontab = $scope.crontabs[$scope.crontab_user_selected];
+    }
+
     $scope.add = (type) => {
         job = angular.copy($scope.new[type]);
         job.school = $scope.school;
@@ -47,8 +57,13 @@ angular.module('lmn.crontab').controller('CrontabIndexController', function($sco
     }
 
     $http.get('/api/lmn/crontab').then( (resp) => {
-        $scope.crontab = resp.data[0];
-        $scope.school = resp.data[1];
+        $scope.crontabs = {
+            'globaladministrator': resp.data[0],
+            'root': resp.data[1],
+        };
+        $scope.school = resp.data[2];
+
+        $scope.crontab = $scope.crontabs.globaladministrator;
     });
 
     $scope.modify = (type, job) => {
@@ -68,7 +83,10 @@ angular.module('lmn.crontab').controller('CrontabIndexController', function($sco
     }
 
     $scope.save = () => {
-        $http.post('/api/lmn/crontab', {'crontab': $scope.crontab}).then((resp) => {
+        $http.post('/api/lmn/crontab', {
+            'globaladministrator': $scope.crontabs.globaladministrator,
+            'root': $scope.crontabs.root
+        }).then((resp) => {
             notify.success(gettext('Crontab successfully saved !'));
         }, error => {
             $log.log('Failed to save crontab', error);

@@ -1,6 +1,21 @@
 <br/>
 
 <div global-admin-access>
+
+   <div class="form-group" style="margin-bottom:50px;">
+       <div class="row">
+           <div class="col-md-4">
+               <label translate>Choose which crontab you want to edit: </label>
+               <select class="form-control" ng:model="crontab_user_selected" ng:change="switchCrontab()">
+                   <option value="globaladministrator" translate>As globaladministrator</option>
+                   <option value="root" translate>As root</option>
+               </select>
+           </div>
+       </div>
+    </div>
+
+    <hr class="clearfix" />
+
     <uib:tabset active="activeTab">
         <uib:tab heading="{{'Jobs'|translate}}">
             <br/>

@@ -30,16 +30,7 @@ class Handler(HttpPlugin):
         :rtype: dict
         """
 
-        school = self.context.schoolmgr.school
-
-        user = self.context.identity
-        profil = AuthenticationService.get(self.context).get_provider().get_profile(user)
-
-        if profil['sophomorixRole'] == 'globaladministrator':
-            # Load global-admin crontab for all global admins
-            crontab = CronManager.get(self.context).load_tab('global-admin')
-            crontab_dict = crontab.tree.to_dict()
-
+        def _parse_crontab_dict(crontab_dict):
             for job in crontab_dict['normal_tasks']:
                 job['school'] = 'default-school'
                 if job['command'].startswith(HOLIDAY_PREFIX_TEST):
@@ -62,7 +53,22 @@ class Handler(HttpPlugin):
                 else:
                     job['disable_holiday'] = False
 
-            return crontab_dict, school
+            return crontab_dict
+
+        school = self.context.schoolmgr.school
+
+        user = self.context.identity
+        profil = AuthenticationService.get(self.context).get_provider().get_profile(user)
+
+        if profil['sophomorixRole'] == 'globaladministrator':
+            # Load global-admin and root crontabs for all global admins
+            crontab = CronManager.get(self.context).load_tab('global-admin')
+            crontab_dict = crontab.tree.to_dict()
+
+            crontabRoot = CronManager.get(self.context).load_tab('root')
+            crontab_root_dict = crontabRoot.tree.to_dict()
+
+            return _parse_crontab_dict(crontab_dict), _parse_crontab_dict(crontab_root_dict), school
 
     @post(r'/api/lmn/crontab')
     @authorize('lm:crontab:write')
@@ -100,24 +106,33 @@ class Handler(HttpPlugin):
                 setattr(obj, k, v)
             return obj
 
+        def fill_crontab(crontab, data):
+            for _type, values_list in data.items():
+                for values in values_list:
+                    if _type == 'normal_tasks':
+                        crontab.tree.normal_tasks.append(setTask(CrontabNormalTaskData(), values))
+                    elif _type == 'special_tasks':
+                        crontab.tree.special_tasks.append(setTask(CrontabSpecialTaskData(), values))
+                    elif _type == 'env_settings':
+                        crontab.tree.env_settings.append(setTask(CrontabEnvSettingData(), values))
+            return crontab
+
         # Create empty config
         user = self.context.identity
-        crontab = CronManager.get(self.context).load_tab(None)
-        new_crontab = http_context.json_body()['crontab']
-        for _type, values_list in new_crontab.items():
-            for values in values_list:
-                if _type == 'normal_tasks':
-                    crontab.tree.normal_tasks.append(setTask(CrontabNormalTaskData(), values))
-                elif _type == 'special_tasks':
-                    crontab.tree.special_tasks.append(setTask(CrontabSpecialTaskData(), values))
-                elif _type == 'env_settings':
-                    crontab.tree.env_settings.append(setTask(CrontabEnvSettingData(), values))
+        crontabs =  http_context.json_body()
+
+        crontabGA = CronManager.get(self.context).load_tab(None)
+        crontabGA = fill_crontab(crontabGA, crontabs['globaladministrator'])
+
+        crontabRoot = CronManager.get(self.context).load_tab(None)
+        crontabRoot = fill_crontab(crontabRoot, crontabs['root'])
 
         profil = AuthenticationService.get(self.context).get_provider().get_profile(user)
 
         try:
             if profil['sophomorixRole'] == 'globaladministrator':
-                CronManager.get(self.context).save_tab('global-admin', crontab)
+                CronManager.get(self.context).save_tab('global-admin', crontabGA)
+                CronManager.get(self.context).save_tab('root', crontabRoot)
                 return True
             return False
         except Exception as e:

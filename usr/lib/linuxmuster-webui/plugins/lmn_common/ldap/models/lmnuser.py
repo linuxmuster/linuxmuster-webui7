@@ -67,6 +67,7 @@ class LMNUser:
     projects: list = field(init=False)
     schoolclasses: list = field(init=False)
     dn: str = field(init=False)
+    permissions: list = field(init=False)
 
     def split_dn(self, dn):
         # 'CN=11c,OU=11c,OU=Students,OU=default-school,OU=SCHOOLS...' becomes :
@@ -107,9 +108,17 @@ class LMNUser:
                 if dn.startswith(f"CN={group},OU=Management"):
                     setattr(self, group, True)
 
+    def parse_permissions(self):
+        self.permissions = {}
+
+        for perm in self.sophomorixWebuiPermissionsCalculated:
+            module, value = perm.split(': ')
+            self.permissions[module] = value == 'true'
+
     def __post_init__(self):
         self.schoolclasses = self.extract_schoolclasses(self.memberOf)
         self.projects = self.extract_projects(self.memberOf)
         self.dn = self.distinguishedName
         self.extract_management()
+        self.parse_permissions()
 

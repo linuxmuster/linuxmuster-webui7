@@ -23,6 +23,7 @@ from aj.config import UserConfigProvider
 from aj.plugins.lmn_common.api import ldap_config as params, lmsetup_schoolname, pwreset_config
 from aj.plugins.lmn_common.multischool import SchoolManager
 from aj.api.endpoint import EndpointError
+from aj.plugins.lmn_common.ldap.requests import LMNLdapRequests
 
 
 @component(AuthenticationProvider)
@@ -37,6 +38,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
     def __init__(self, context):
         self.context = context
+        self.lr = LMNLdapRequests(self.context)
 
     def get_ldap_user(self, username, context=""):
         """
@@ -246,6 +248,26 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
         if username == 'root':
             return True
+
+        ## When 2FA is activated, auth_info is missing in prepare_session
+        ## Must be fixed in Ajenti
+        if self.context.session.auth_info is None:
+            permissions = {}
+            webuiPermissions = self.lr.get(f'/user/{username}', dict=False).sophomorixWebuiPermissionsCalculated
+            for perm in webuiPermissions:
+                module, value = perm.split(': ')
+                try:
+                    permissions[module] = value == 'true'
+                except Exception as e:
+                    logging.error(str(e))
+                    raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(e))
+
+            # Populating session.auth_info for further use
+            self.context.session.auth_info = {
+                'username': username,
+                'permissions':  permissions
+            }
+
         return self.context.session.auth_info['permissions'].get(permission['id'], False)
 
     def change_password(self, username, password, new_password):

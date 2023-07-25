@@ -66,6 +66,7 @@ class LMNUser:
     wifi: bool = field(init=False)
     projects: list = field(init=False)
     schoolclasses: list = field(init=False)
+    dn: str = field(init=False)
 
     def split_dn(self, dn):
         # 'CN=11c,OU=11c,OU=Students,OU=default-school,OU=SCHOOLS...' becomes :
@@ -109,5 +110,6 @@ class LMNUser:
     def __post_init__(self):
         self.schoolclasses = self.extract_schoolclasses(self.memberOf)
         self.projects = self.extract_projects(self.memberOf)
+        self.dn = self.distinguishedName
         self.extract_management()
 

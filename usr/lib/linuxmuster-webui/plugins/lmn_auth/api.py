@@ -40,7 +40,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
         self.context = context
         self.lr = LMNLdapRequests(self.context)
 
-    def get_ldap_user(self, username, context=""):
+    def get_ldap_user(self, username):
         """
         Get the user's informations to initialize his session.
 
@@ -52,75 +52,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
         :rtype: dict
         """
 
-        ldap_filter = """(&
-                            (cn=%s)
-                            (objectClass=user)
-                            (|
-                                (sophomorixRole=globaladministrator)
-                                (sophomorixRole=schooladministrator)
-                                (sophomorixRole=teacher)
-                                (sophomorixRole=student)
-                            )
-                        )"""
-
-        ldap_attrs = [
-            'sophomorixQuota',
-            'givenName',
-            'DN',
-            'sophomorixRole',
-            'memberOf',
-            'sophomorixAdminClass',
-            'sAMAccountName',
-            'sn',
-            'mail',
-            'sophomorixSchoolname',
-            'homeDirectory',
-            'proxyAddresses',
-            'sophomorixCustom1',
-            'sophomorixCustom2',
-            'sophomorixCustom3',
-            'sophomorixCustom4',
-            'sophomorixCustom5',
-            'sophomorixCustomMulti1',
-            'sophomorixCustomMulti2',
-            'sophomorixCustomMulti3',
-            'sophomorixCustomMulti4',
-            'sophomorixCustomMulti5',
-            'sophomorixSessions',
-        ]
-
-        if context == "auth":
-            ldap_attrs.append('sophomorixWebuiPermissionsCalculated')
-
-        if context == "userconfig":
-            ldap_attrs = ['sophomorixWebuiDashboard']
-
-        # Apply escape chars on username value
-        searchFilter = ldap.filter.filter_format(ldap_filter, [username])
-
-        l = ldap.initialize('ldap://' + params['host'])
-        # Binduser bind to the  server
-        try:
-            l.set_option(ldap.OPT_REFERRALS, 0)
-            l.protocol_version = ldap.VERSION3
-            l.bind_s(params['binddn'], params['bindpw'])
-        except Exception as e:
-            logging.error(str(e))
-            raise KeyError(e)
-        try:
-            res = l.search_s(params['searchdn'], ldap.SCOPE_SUBTREE, searchFilter, attrlist=ldap_attrs)
-            if res[0][0] is None:
-                raise KeyError
-            userAttrs = {
-                attr:( value[0] if isinstance(value, list) and len(value) == 1 else value )
-                for attr, value in res[0][1].items()
-            }
-            userAttrs['dn'] = res[0][0]
-        except ldap.LDAPError as e:
-            print(e)
-
-        l.unbind_s()
-        return userAttrs
+        return self.lr.get(f'/user/{username}', school_oriented=False)
 
     def prepare_environment(self, username):
         """
@@ -201,7 +133,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
         # Does the user exist in LDAP ?
         try:
-            userAttrs = self.get_ldap_user(username, context="auth")
+            userAttrs = self.get_ldap_user(username)
         except KeyError as e:
             return False
 
@@ -215,23 +147,12 @@ class LMAuthenticationProvider(AuthenticationProvider):
             logging.error(str(e))
             return False
 
-        webuiPermissions = userAttrs['sophomorixWebuiPermissionsCalculated']
-        permissions = {}
-        # convert python list we get from AD to dict
-        for perm in webuiPermissions:
-            module, value = perm.decode('utf-8').split(': ')
-            try:
-                permissions[module] = value == 'true'
-            except Exception as e:
-                logging.error(str(e))
-                raise Exception('Bad value in LDAP field SophomorixUserPermissions! Python error:\n' + str(e))
-
         self._get_krb_ticket(username, password)
 
         return {
             'username': username,
             'password': password,
-            'permissions': permissions,
+            'permissions': userAttrs['permissions'],
             }
 
     def authorize(self, username, permission):
@@ -302,7 +223,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
             return 0
         # GROUP CONTEXT
         try:
-            groupmembership = b''.join(self.get_ldap_user(username)['memberOf']).decode('utf8')
+            groupmembership = ''.join(self.get_ldap_user(username)['memberOf'])
         except Exception:
             groupmembership = ''
         if 'role-globaladministrator' in groupmembership or 'role-schooladministrator' in groupmembership:
@@ -335,8 +256,9 @@ class LMAuthenticationProvider(AuthenticationProvider):
             return 0
         # USER CONTEXT
         try:
-            groupmembership = b''.join(self.get_ldap_user(username)['memberOf']).decode('utf8')
-        except Exception:
+            groupmembership = ''.join(self.get_ldap_user(username)['memberOf'])
+        except Exception as e:
+            logging.error(e)
             groupmembership = ''
 
         if 'role-globaladministrator' in groupmembership or 'role-schooladministrator' in groupmembership:
@@ -365,9 +287,9 @@ class LMAuthenticationProvider(AuthenticationProvider):
             return {'activeSchool': 'default-school'}
         try:
             profil = self.get_ldap_user(username)
-            profil['isAdmin'] = b"administrator" in profil['sophomorixRole']
+            profil['isAdmin'] = "administrator" in profil['sophomorixRole']
             # Test purpose for multischool
-            if profil['sophomorixSchoolname'] == b'global':
+            if profil['sophomorixSchoolname'] == 'global':
                 profil['activeSchool'] = "default-school"
             else:
                 profil['activeSchool'] = profil['sophomorixSchoolname']
@@ -495,7 +417,7 @@ class UserLdapConfig(UserConfigProvider):
             self.data = yaml.load(open('/root/.config/ajenti.yml'), Loader=yaml.SafeLoader)
         else:
             ## Load ldap attribute webuidashboard
-            userAttrs = AuthenticationService.get(self.context).get_provider().get_ldap_user(self.user, context="userconfig")
+            userAttrs = AuthenticationService.get(self.context).get_provider().get_ldap_user(self.user)
             try:
                 self.data = json.loads(userAttrs['sophomorixWebuiDashboard'])
             except Exception:

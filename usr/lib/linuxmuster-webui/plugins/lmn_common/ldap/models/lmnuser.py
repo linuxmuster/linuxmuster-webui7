@@ -81,6 +81,14 @@ class LMNUser:
         except KeyError:
             return ''
 
+    @staticmethod
+    def _check_schoolclass_number(s):
+        n = re.findall(r'\d+', s)
+        if n:
+            return int(n[0])
+        else:
+            return 10**10 # just a big number
+
     def extract_schoolclasses(self, membership):
         schoolclasses = []
         for dn in membership:
@@ -88,7 +96,7 @@ class LMNUser:
                 schoolclass = self.common_name(dn)
                 if schoolclass:
                     schoolclasses.append(schoolclass)
-        schoolclasses = sorted(schoolclasses, key=lambda s: int(re.findall(r'\d+', s)[0]))
+        schoolclasses = sorted(schoolclasses, key=lambda s: (self._check_schoolclass_number(s), s))
         return schoolclasses
 
     def extract_projects(self, membership):

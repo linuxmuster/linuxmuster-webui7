@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.2.20) lmn72; urgency=medium
+
+  * Fix dependency conflict with Ajenti. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Tue, 01 Aug 2023 19:06:38 +0200
+
 linuxmuster-webui7 (7.2.19) lmn72; urgency=medium
 
   * Fix 2FA authentication

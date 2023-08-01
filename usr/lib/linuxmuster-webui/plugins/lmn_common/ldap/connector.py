@@ -63,16 +63,17 @@ class LdapConnector:
         response = []
         for result in results:
             if result[0] is not None:
+                raw_data = result[1]
                 data = {}
                 school_node = ""
                 if school_oriented:
                     school_node = f",OU={self.context.schoolmgr.school},"
 
-                dn = result.get('distinguishedName', [b''])[0].decode()
+                dn = raw_data.get('distinguishedName', [b''])[0].decode()
                 if school_node in dn:
                     for field in fields(objectclass):
                         if field.init:
-                            value = result[1].get(field.name, None)
+                            value = raw_data[1].get(field.name, None)
                             data[field.name] = self._filter_value(field, value)
                     if dict:
                         response.append(asdict(objectclass(**data)))

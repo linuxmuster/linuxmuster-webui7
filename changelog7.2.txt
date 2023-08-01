@@ -1,0 +1,69 @@
+This file describes the changes for thee Webui between version 7.1 and version
+7.2:
+
+  * Add config entry for host in smbclient
+  * Add ldap connector and ldap reader to speed up requests
+  * Add missing chars for passwords. Fix #254.
+  * A lot of pre-work on new session plugin, currently disabled
+  * Compatibility with Python 3.10 and Ubuntu 22.04
+  * Convert less to scss for Ajenti 3
+  * Fix 2FA authentication
+  * Fix drag and drop in old session plugin.
+  * Fix looking for dfs proxies
+  * Fix security issue with ldap
+  * Fix wrong dependency on dateutil. 
+  * Test script for smbclient will now test all common hosts
+  * Upgrade Ajenti 2.2.4
+  * Upgrade cryptography.
+  * [auth] Partially use ldap reader
+  * [clients] Edit Drives.xml Fix #228
+  * [crontab] Fix permissions of holiday file
+  * [crontab] Add possibility to edit crontab as root
+  * [devices] Sort by padded ips. Fix #249
+  * [dhcp] Fix empty mac
+  * [groupmembership] Add length for projects
+  * [groupmembership] Add option to kill an empty schoolclass
+  * [groupmembership] Add schoolclass size
+  * [groupmembership] Always add teachers as admins in classes
+  * [groupmembership] Fix double teacher role
+  * [groupmembership] Possiblity to refresh kerberos ticket on change
+  * [groupmembership] Refresh members list when adding a teacher in class
+  * [landingpage] Fix injector error
+  * [landingpage] Add tutorial for iOS configuration (webdav)
+  * [linbo4] Hide configs from other schools in multischool env
+  * [linbo] Add support for differential images
+  * [linbo] Fix problem with empty config file
+  * [linbo] Fix torrent restart 
+  * [linbosync] Add support for multischool. Fix #250
+  * [linbosync] Fix duplicate host entries in command
+  * [session] Add button to directly rename/delete a session
+  * [session] Fix exam mode for new user
+  * [session] Fix session for actual room. 
+  * [session] Fix user list in exam modus. 
+  * [session_new] Many work to improve the new module
+  * [session] Sort username by lastname and firstname. Fix #127
+  * [settings] Fix typo in saving smtp config.  
+  * [setup] Do not load gpos when install is not done
+  * [smbclient] Cut, copy, move, delete can now handle directories
+  * [smbclient] Delete directory recursively
+  * [smbclient] Fix download with special chars
+  * [smbclient] Load GPOS directly from samba
+  * [smbclient] Preparation for webdav support.  
+  * [smbclient] Use directory names instead of label names for GPO. 
+  * [smbclient] Use homepath in LDAP
+  * [smbclient] Use samba realm instead of samba domain to access samba shares
+  * [users] Avoid conflict between extrastudent login and schoolclass
+  * [users] Better handle some errors on sophomorix-check and encoding detecting
+  * [users] Blur background if modal window with password is shown
+  * [users] Fix adding teachers in empty list. 
+  * [users] Fix missing config for custom fields display
+  * [users] Fix pdf passwords generation. 
+  * [users] Show and edit comment for bind users
+  * [vdi] Diverses fixs on run commands
+  * [webdav] Allow cut, copy, delete on directories
+  * [webdav] Better status codes for created entries
+  * [webdav] Delete directory recursively
+  * [webdav] Display QR code for mobile app
+  * [webdav] Fix diverse encoding issues
+  * [webdav] Move directories
+  * [webdav] Replace file on put

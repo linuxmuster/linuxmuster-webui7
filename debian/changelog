@@ -1,3 +1,15 @@
+linuxmuster-webui7 (7.2.19) lmn72; urgency=medium
+
+  * Fix 2FA authentication
+  * [auth] Partially use ldap reader
+  * [crontab] Fix permissions of holiday file
+  * [crontab] Add possibility to edit crontab as root
+  * [dhcp] Fix empty mac
+  * [landingpage] Add tutorial for iOS configuration (webdav)
+  * [linbosync] Fix duplicate host entries in command 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Tue, 01 Aug 2023 15:45:54 +0200
+
 linuxmuster-webui7 (7.2.18) lmn72; urgency=medium
 
   * Fix drag and drop in old session plugin. 

@@ -273,7 +273,7 @@ angular.module('lmn.linbo_sync').config(function ($routeProvider) {
             $scope.linbo_command[group]['cmd'].push($scope.linbo_remote + ' -i ' + ip + timeout + autostart + cmd);
             cmd_parameters['target']['type'] = 'host';
             cmd_parameters['target']['host'] = ip;
-            $scope.linbo_command[group]['cmd_parameters'].push(cmd_parameters);
+            $scope.linbo_command[group]['cmd_parameters'].push(angular.copy(cmd_parameters));
           }
         }
         return $scope.linbo_command[group]['show'] = true;

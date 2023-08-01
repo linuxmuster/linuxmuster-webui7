@@ -25,21 +25,23 @@ class LdapConnector:
         :type dict: bool
         """
 
-        result = self._get(ldap_filter)[0][1]
-        data = {}
-        school_node = ""
-        if school_oriented:
-            school_node = f",OU={self.context.schoolmgr.school},"
+        result = self._get(ldap_filter)[0]
+        if result[0] is not None:
+            raw_data = result[1]
+            data = {}
+            school_node = ""
+            if school_oriented:
+                school_node = f",OU={self.context.schoolmgr.school},"
 
-        dn = result.get('distinguishedName', [b''])[0].decode()
-        if school_node in dn:
-            for field in fields(objectclass):
-                if field.init:
-                    value = result.get(field.name, None)
-                    data[field.name] = self._filter_value(field, value)
-            if dict:
-                return asdict(objectclass(**data))
-            return objectclass(**data)
+            dn = raw_data.get('distinguishedName', [b''])[0].decode()
+            if school_node in dn:
+                for field in fields(objectclass):
+                    if field.init:
+                        value = raw_data.get(field.name, None)
+                        data[field.name] = self._filter_value(field, value)
+                if dict:
+                    return asdict(objectclass(**data))
+                return objectclass(**data)
         return {}
         
     def get_collection(self, objectclass, ldap_filter, dict=True, sortkey=None, school_oriented=True):

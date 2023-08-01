@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-26 21:41+0200\n"
-"PO-Revision-Date: 2023-07-02 15:06\n"
+"POT-Creation-Date: 2023-08-01 15:32+0200\n"
+"PO-Revision-Date: 2023-08-01 13:42\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -169,7 +169,7 @@ msgstr ""
 msgid "DHCP"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/js/controllers/index.controller.es:78
+#: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/js/controllers/index.controller.es:80
 msgid "Device successfully saved in devices.csv!"
 msgstr ""
 

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-02 16:53+0200\n"
-"PO-Revision-Date: 2023-07-02 15:06\n"
+"POT-Creation-Date: 2023-08-01 15:32+0200\n"
+"PO-Revision-Date: 2023-08-01 13:42\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -25,7 +25,7 @@ msgstr "Information sur le compte"
 msgid "But keep in mind:"
 msgstr "Gardez à l'esprit :"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:102
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:88
 msgid "Change my data"
 msgstr "Modifier mes données"
 
@@ -34,7 +34,7 @@ msgid "Change password"
 msgstr "Changer le mot de passe"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/customFields.modal.html:73
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/webappqr.modal.html:16
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/webappqr.modal.html:36
 msgid "Close"
 msgstr "Fermer"
 
@@ -42,7 +42,15 @@ msgstr "Fermer"
 msgid "Cloudquota Calculated in MB:"
 msgstr "Quota cloud calculé en MB:"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:71
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/webappqr.modal.html:24
+msgid "Easy setup"
+msgstr "Configuration rapide"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/webappqr.modal.html:26
+msgid "For easy setup, please scan your personal code in the app:<br>"
+msgstr "Pour une installation rapide, veuillez scanner votre code personnel dans l'application:<br>"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:110
 msgid "Groups"
 msgstr "Groupes"
 
@@ -58,7 +66,12 @@ msgstr "E-mail:"
 msgid "Mailquota Calculated in MB:"
 msgstr "Quota mail calculé en MB:"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:85
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:95
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/webappqr.modal.html:2
+msgid "Mobile access"
+msgstr "Accès mobile"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:71
 msgid "My informations"
 msgstr "Mes informations"
 
@@ -82,6 +95,14 @@ msgstr "Rôle :"
 msgid "School:"
 msgstr "Ecole :"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/webappqr.modal.html:7
+msgid "Setup guide for iOS"
+msgstr "Guide d'installation pour iOS"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/webappqr.modal.html:8
+msgid "To set up mobile access to the school server from iOS based devices, please proceed as follows:"
+msgstr "Pour configurer l'accès mobile au serveur scolaire à partir des appareils basés sur iOS, veuillez procéder comme suit :"
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:21
 msgid "Use the sidebar to navigate through the options."
 msgstr "Utilisez la barre latérale pour naviguer dans les options."
@@ -90,15 +111,6 @@ msgstr "Utilisez la barre latérale pour naviguer dans les options."
 msgid "User Details"
 msgstr "Détails de l'utilisateur"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/webappqr.modal.html:5
-msgid "User:"
-msgstr "Utilisateur:"
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:4
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/webappqr.modal.html:2
-msgid "Webapp QR code"
-msgstr "Webapp QR code"
-
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:7
 msgid "Welcome to Linuxmuster.net version 7!"
 msgstr "Bienvenue sur Linuxmuster.net version 7 !"
@@ -106,6 +118,16 @@ msgstr "Bienvenue sur Linuxmuster.net version 7 !"
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:23
 msgid "With great power comes great responsibility!"
 msgstr "Un grand pouvoir implique une grande responsabilité!"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:98
+msgid "You can access the school server from many mobile devices.\n"
+"                        Select your operating system to see how it works."
+msgstr "Vous pouvez accéder au serveur de l'école à partir de nombreux appareils mobiles.\n"
+"                        Sélectionnez votre système d'exploitation pour voir comment cela fonctionne."
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/webappqr.modal.html:21
+msgid "Your password"
+msgstr "Votre mot de passe"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:18
 msgid "use the sidebar to navigate through the options. You can start by using the Enroll module to subscribe to your classes."

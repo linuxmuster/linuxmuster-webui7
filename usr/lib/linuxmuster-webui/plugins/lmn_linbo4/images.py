@@ -395,7 +395,7 @@ class LinboImageManager:
         if group in self.linboImageGroups:
             if diff:
                 # Only delete a differential image
-                self.linboImageGroups[group].diff.delete()
+                self.linboImageGroups[group].diff_image.delete()
             elif date in self.linboImageGroups[group].backups:
                 # The object to delete is only a backup
                 self.linboImageGroups[group].backups[date].delete()

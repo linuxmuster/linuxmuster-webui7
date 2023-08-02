@@ -33,12 +33,13 @@ class LMNLdapRequests:
 
 
     # SINGLE ENTRIES
-    @lmnapi(r'/user/(?P<username>\w*)')
+    @lmnapi(r'/user/(?P<username>[\w\-]*)')
     def get_user(self, username, **kwargs):
         """
         Get all details from a specific user.
         Return a LMNUser data object.
         """
+
         ldap_filter = f"""(&
                                     (cn={username})
                                     (objectClass=user)

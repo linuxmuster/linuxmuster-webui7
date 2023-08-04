@@ -73,7 +73,7 @@ class LdapConnector:
                 if school_node in dn:
                     for field in fields(objectclass):
                         if field.init:
-                            value = raw_data[1].get(field.name, None)
+                            value = raw_data.get(field.name, None)
                             data[field.name] = self._filter_value(field, value)
                     if dict:
                         response.append(asdict(objectclass(**data)))

@@ -1,3 +1,9 @@
+linuxmuster-webui7 (17.2.22) lmn72; urgency=low
+
+  * Merge branch 'upstream-lmn72' into lmn72-testing
+
+ -- Andreas Till <andreas.till@netzint.de>  Mon, 07 Aug 2023 18:20:08 +0200
+
 linuxmuster-webui7 (7.2.22) lmn72; urgency=medium
 
   * [ldapreader] Fix missing char for user login

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-23 15:10+0100\n"
+"POT-Creation-Date: 2023-08-03 15:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -227,9 +227,21 @@ msgstr ""
 msgid "user(s)"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/main.py:14
+#: usr/lib/linuxmuster-webui/plugins/lmn_session/main.py:16
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:104
 msgid "Session"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_session/main.py:23
+msgid "Print Passwords"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_session/main.py:37
+msgid "Write students"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_session/main.py:42
+msgid "Transfer Files in Session"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:23

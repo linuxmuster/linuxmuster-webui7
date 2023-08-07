@@ -8,6 +8,7 @@ import xml.etree.ElementTree as ElementTree
 
 from aj.plugins.lmn_common.api import samba_realm, samba_netbios, samba_override, lmn_getSophomorixValue
 from aj.plugins.lmn_common.samba_tool import GPOS
+from aj.plugins.lmn_common.lmnfile import LMNFile
 
 
 class Drives:
@@ -85,6 +86,7 @@ class SchoolManager:
 
     def __init__(self):
         self.school = 'default-school'
+        self.schoolname = self.school
         self.schoolShare = f'\\\\{samba_realm}\\{self.school}\\'
         self.load()
 
@@ -101,6 +103,7 @@ class SchoolManager:
         self.load_school_dfs_shares()
         self.get_share_prefix()
         self.load_drives()
+        self.get_schoolname()
 
     def switch(self, school):
         """
@@ -135,6 +138,8 @@ class SchoolManager:
         self.holidays = {}
         if os.path.isfile(config):
             try:
+                # Enforce read permissions for crontab users
+                os.chmod(config, 0o644)
                 with open(config, 'r') as f:
                     self.holidays = yaml.load(f, Loader=yaml.SafeLoader)
             except Exception as e:
@@ -149,6 +154,18 @@ class SchoolManager:
             self.configpath = '/etc/linuxmuster/sophomorix/default-school/'
         else:
             self.configpath = f'/etc/linuxmuster/sophomorix/{self.school}/{self.school}.'
+
+    def get_schoolname(self):
+        """
+        Read the school name from school.conf.
+        """
+
+
+        try:
+            with LMNFile(f'{self.configpath}school.conf', 'r') as f:
+                self.schoolname = f.data['school']['SCHOOL_LONGNAME']
+        except Exception:
+            pass
 
     def load_school_dfs_shares(self):
         """

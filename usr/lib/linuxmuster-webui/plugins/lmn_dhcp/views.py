@@ -63,7 +63,10 @@ class Handler(HttpPlugin):
         used = []
         with LMNFile(self.path, 'r', fieldnames=self.fieldnames) as devices:
             for host in devices.read():
-                if host["hostname"] != None or host["mac"] != None:
+                if host["hostname"] != None and \
+                   host["mac"] != None and \
+                   host["ip"] != None and \
+                   host["room"][0] != "#":
                     used.append({
                         'mac':host['mac'],
                         'ip': host['ip'],

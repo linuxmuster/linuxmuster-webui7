@@ -12,7 +12,7 @@ class LdapConnector:
     def __init__(self, context):
         self.context = context
 
-    def get_single(self, objectclass, ldap_filter, dict=True):
+    def get_single(self, objectclass, ldap_filter, dict=True, school_oriented=True):
         """
         Handle a single result from a ldap request (with required ldap filter)
         and convert it in the given object class.
@@ -25,22 +25,26 @@ class LdapConnector:
         :type dict: bool
         """
 
-        result = self._request(ldap_filter)[0][1]
-        data = {}
-        # TODO : not all requests are school oriented
-        school_node = f",OU={self.context.schoolmgr.school},"
-        dn = result.get('distinguishedName', [b''])[0].decode()
-        if school_node in dn:
-            for field in fields(objectclass):
-                if field.init:
-                    value = result.get(field.name, None)
-                    data[field.name] = self._filter_value(field, value)
-            if dict:
-                return asdict(objectclass(**data))
-            return objectclass(**data)
+        result = self._get(ldap_filter)[0]
+        if result[0] is not None:
+            raw_data = result[1]
+            data = {}
+            school_node = ""
+            if school_oriented:
+                school_node = f",OU={self.context.schoolmgr.school},"
+
+            dn = raw_data.get('distinguishedName', [b''])[0].decode()
+            if school_node in dn:
+                for field in fields(objectclass):
+                    if field.init:
+                        value = raw_data.get(field.name, None)
+                        data[field.name] = self._filter_value(field, value)
+                if dict:
+                    return asdict(objectclass(**data))
+                return objectclass(**data)
         return {}
         
-    def get_collection(self, objectclass, ldap_filter, dict=True, sortkey=None):
+    def get_collection(self, objectclass, ldap_filter, dict=True, sortkey=None, school_oriented=True):
         """
         Handle multiples results from a ldap request (with required ldap filter)
         and convert it in a list of given object class.
@@ -55,18 +59,21 @@ class LdapConnector:
         :type sortkey: basestring
         """
 
-        results = self._request(ldap_filter)
+        results = self._get(ldap_filter)
         response = []
         for result in results:
             if result[0] is not None:
+                raw_data = result[1]
                 data = {}
-                # TODO : not all requests are school oriented
-                school_node = f",OU={self.context.schoolmgr.school},"
-                dn = result.get('distinguishedName', [b''])[0].decode()
+                school_node = ""
+                if school_oriented:
+                    school_node = f",OU={self.context.schoolmgr.school},"
+
+                dn = raw_data.get('distinguishedName', [b''])[0].decode()
                 if school_node in dn:
                     for field in fields(objectclass):
                         if field.init:
-                            value = result[1].get(field.name, None)
+                            value = raw_data.get(field.name, None)
                             data[field.name] = self._filter_value(field, value)
                     if dict:
                         response.append(asdict(objectclass(**data)))
@@ -132,7 +139,7 @@ class LdapConnector:
         if value is None:
             return None
 
-    def _request(self, ldap_filter):
+    def _get(self, ldap_filter):
         """
         Connect to ldap and perform the request.
 

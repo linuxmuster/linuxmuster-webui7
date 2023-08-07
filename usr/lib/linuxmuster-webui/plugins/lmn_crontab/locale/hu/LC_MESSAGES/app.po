@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-23 16:24+0100\n"
-"PO-Revision-Date: 2023-02-23 14:40\n"
+"POT-Creation-Date: 2023-08-01 15:32+0200\n"
+"PO-Revision-Date: 2023-08-01 13:42\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -17,116 +17,128 @@ msgstr ""
 "X-Crowdin-File: /2.0/lmn_crontab.po\n"
 "X-Crowdin-File-ID: 203\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:100
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:42
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:73
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:115
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:57
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:88
 msgid "Add"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:141
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:161
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:177
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:10
+msgid "As globaladministrator"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:11
+msgid "As root"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:156
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:176
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:192
 msgid "Cancel"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:129
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:149
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:16
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:51
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:8
+msgid "Choose which crontab you want to edit:"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:144
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:164
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:31
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:66
 msgid "Command"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:133
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:153
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:173
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:148
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:168
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:188
 msgid "Comment"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:13
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:28
 msgid "Day (month)"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:15
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:30
 msgid "Day (week)"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:117
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:132
 msgid "Day of the month"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:125
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:140
 msgid "Day of the week"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:10
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:138
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:158
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:49
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:153
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:173
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:25
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:64
 msgid "Disable holidays"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:75
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:90
 msgid "Environment variables"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:113
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:12
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:128
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:27
 msgid "Hour"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:5
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:20
 msgid "Jobs"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:109
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:11
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:124
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:26
 msgid "Minute"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:105
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:120
 msgid "Modify"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:121
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:14
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:136
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:29
 msgid "Month"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:165
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:80
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:180
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:95
 msgid "Name"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:142
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:162
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:178
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:157
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:177
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:193
 msgid "OK"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:183
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:198
 msgid "Save"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:145
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:44
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:50
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:160
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:59
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:65
 msgid "Special"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:7
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:22
 msgid "There is no cronjob."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:46
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:61
 msgid "There is no special task."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:77
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:92
 msgid "There is no variables environment set."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:169
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:81
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:184
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:96
 msgid "Value"
 msgstr ""
 
@@ -143,23 +155,23 @@ msgstr ""
 msgid "Cron"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/js/controllers/index.controller.es:32
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/js/controllers/index.controller.es:33
 msgid "normal task"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/js/controllers/index.controller.es:33
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/js/controllers/index.controller.es:34
 msgid "special task"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/js/controllers/index.controller.es:34
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/js/controllers/index.controller.es:35
 msgid "environment variable"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/js/controllers/index.controller.es:72
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/js/controllers/index.controller.es:90
 msgid "Crontab successfully saved !"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/js/controllers/index.controller.es:75
+#: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/js/controllers/index.controller.es:93
 msgid "Failed to save crontab"
 msgstr ""
 

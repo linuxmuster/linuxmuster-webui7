@@ -8,7 +8,9 @@ angular.module('lmn.dhcp').controller('ExtraDhcpIndexController', function($scop
 
     $scope.alreadyIn = (mac) => {
         for (device of $scope.used) {
-            if (device.mac.toUpperCase() == mac.toUpperCase()) return true;
+            if (device.mac) {
+                if (device.mac.toUpperCase() == mac.toUpperCase()) return true;
+            }
         }
         return false;
     }

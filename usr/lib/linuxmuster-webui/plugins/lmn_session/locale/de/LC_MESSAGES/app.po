@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-23 15:10+0100\n"
-"PO-Revision-Date: 2023-02-24 09:26\n"
+"POT-Creation-Date: 2023-07-02 16:53+0200\n"
+"PO-Revision-Date: 2023-08-03 13:02\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -221,10 +221,22 @@ msgstr "Websitzung"
 msgid "user(s)"
 msgstr "Benutzer"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/main.py:14
+#: usr/lib/linuxmuster-webui/plugins/lmn_session/main.py:16
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:104
 msgid "Session"
 msgstr "Unterricht"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_session/main.py:23
+msgid "Print Passwords"
+msgstr "Passwörter drucken"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_session/main.py:37
+msgid "Write students"
+msgstr "Schüler schreiben"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_session/main.py:42
+msgid "Transfer Files in Session"
+msgstr "Dateien in der Sitzung übertragen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:23
 msgid "Please select at least one file!"

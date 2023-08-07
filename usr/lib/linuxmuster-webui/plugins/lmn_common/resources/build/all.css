@@ -301,7 +301,7 @@ tr.leaders td span + span {
   flex-wrap: wrap;
 }
 .info-cards > div {
-  min-width: 400px;
+  width: 46%;
   border-color: #eee;
   margin: 10px;
   text-align: left;
@@ -435,5 +435,20 @@ floating-toolbar.accented .bar .btn-flat {
   position: relative;
   top: 20px;
   left: 370px;
+}
+
+.webdav-ios-tuto {
+  background-image: url("/resources/lmn_common/resources/img/webdav-app-ios-empty.png");
+  width: 500px;
+  height: 893px;
+  margin: 0 auto;
+  color: #ff8f00;
+  padding-top: 275px;
+  padding-left: 50px;
+}
+.webdav-ios-tuto p {
+  margin: 75px 0;
+  font-size: 20px;
+  font-weight: bold;
 }
 

@@ -66,6 +66,8 @@ class LMNUser:
     wifi: bool = field(init=False)
     projects: list = field(init=False)
     schoolclasses: list = field(init=False)
+    dn: str = field(init=False)
+    permissions: list = field(init=False)
 
     def split_dn(self, dn):
         # 'CN=11c,OU=11c,OU=Students,OU=default-school,OU=SCHOOLS...' becomes :
@@ -79,6 +81,14 @@ class LMNUser:
         except KeyError:
             return ''
 
+    @staticmethod
+    def _check_schoolclass_number(s):
+        n = re.findall(r'\d+', s)
+        if n:
+            return int(n[0])
+        else:
+            return 10**10 # just a big number
+
     def extract_schoolclasses(self, membership):
         schoolclasses = []
         for dn in membership:
@@ -86,7 +96,7 @@ class LMNUser:
                 schoolclass = self.common_name(dn)
                 if schoolclass:
                     schoolclasses.append(schoolclass)
-        schoolclasses = sorted(schoolclasses, key=lambda s: int(re.findall(r'\d+', s)[0]))
+        schoolclasses = sorted(schoolclasses, key=lambda s: (self._check_schoolclass_number(s), s))
         return schoolclasses
 
     def extract_projects(self, membership):
@@ -106,8 +116,17 @@ class LMNUser:
                 if dn.startswith(f"CN={group},OU=Management"):
                     setattr(self, group, True)
 
+    def parse_permissions(self):
+        self.permissions = {}
+
+        for perm in self.sophomorixWebuiPermissionsCalculated:
+            module, value = perm.split(': ')
+            self.permissions[module] = value == 'true'
+
     def __post_init__(self):
         self.schoolclasses = self.extract_schoolclasses(self.memberOf)
         self.projects = self.extract_projects(self.memberOf)
+        self.dn = self.distinguishedName
         self.extract_management()
+        self.parse_permissions()
 

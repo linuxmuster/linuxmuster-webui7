@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-27 15:03+0100\n"
-"PO-Revision-Date: 2023-02-23 14:40\n"
+"POT-Creation-Date: 2023-08-03 15:00+0200\n"
+"PO-Revision-Date: 2023-08-03 13:02\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -17,51 +17,65 @@ msgstr ""
 "X-Crowdin-File: /2.0/lmn_landingpage.po\n"
 "X-Crowdin-File-ID: 124\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:26
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:31
 msgid "Account Information"
 msgstr "계좌 정보"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:17
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:22
 msgid "But keep in mind:"
 msgstr "그러나 주의하십시오:"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:97
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:88
 msgid "Change my data"
 msgstr "내 데이터 변경"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:34
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:39
 msgid "Change password"
 msgstr "비밀번호 변경"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/customFields.modal.html:73
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/webappqr.modal.html:36
 msgid "Close"
 msgstr "닫기"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:59
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:64
 msgid "Cloudquota Calculated in MB:"
 msgstr "Cloudquota가 MB에서 계산되었습니다:"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:66
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/webappqr.modal.html:24
+msgid "Easy setup"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/webappqr.modal.html:26
+msgid "For easy setup, please scan your personal code in the app:<br>"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:110
 msgid "Groups"
 msgstr "그룹"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:10
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:15
 msgid "Hello {{user.givenName}} {{user.sn}},"
 msgstr "안녕하세요 {{user.givenName}} {{user.sn}},"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:30
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:35
 msgid "Mail:"
 msgstr "메일:"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:60
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:65
 msgid "Mailquota Calculated in MB:"
 msgstr "Mailquota가 MB에서 계산되었습니다:"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:80
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:95
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/webappqr.modal.html:2
+msgid "Mobile access"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:71
 msgid "My informations"
 msgstr "내 정보"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:29
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:34
 msgid "Name:"
 msgstr "이름:"
 
@@ -69,19 +83,27 @@ msgstr "이름:"
 msgid "Properties"
 msgstr "속성"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:42
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:47
 msgid "Quotas"
 msgstr "할당량"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:32
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:37
 msgid "Role:"
 msgstr "역할:"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:31
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:36
 msgid "School:"
 msgstr "학교:"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:16
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/webappqr.modal.html:7
+msgid "Setup guide for iOS"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/webappqr.modal.html:8
+msgid "To set up mobile access to the school server from iOS based devices, please proceed as follows:"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:21
 msgid "Use the sidebar to navigate through the options."
 msgstr "사이드바를 사용하여 옵션을 탐색하십시오."
 
@@ -89,15 +111,24 @@ msgstr "사이드바를 사용하여 옵션을 탐색하십시오."
 msgid "User Details"
 msgstr "사용자 상세정보"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:2
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:7
 msgid "Welcome to Linuxmuster.net version 7!"
-msgstr "Linuxmuster.net version 7에 오신걸 환영합니다!"
+msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:18
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:23
 msgid "With great power comes great responsibility!"
 msgstr "큰 힘에는 큰 책임이 따릅니다!"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:13
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:98
+msgid "You can access the school server from many mobile devices.\n"
+"                        Select your operating system to see how it works."
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/webappqr.modal.html:21
+msgid "Your password"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:18
 msgid "use the sidebar to navigate through the options. You can start by using the Enroll module to subscribe to your classes."
 msgstr "사이드바를 사용하여 옵션을 탐색하십시오. 등록 모듈을 이용하여 학급을 가입시켜 시작하실 수 있습니다."
 
@@ -109,19 +140,19 @@ msgstr "홈"
 msgid "NO LIMIT"
 msgstr "무제한"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:75
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:84
 msgid "Class"
 msgstr "학급"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:77
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:86
 msgid "Teachers"
 msgstr "교사"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:79
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:88
 msgid "Printers"
 msgstr "프린터"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:81
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:90
 msgid "Project"
 msgstr "프로젝트"
 

@@ -53,17 +53,9 @@ class LinboImage:
 
     def _torrent_stop(self):
         try:
-            subprocess.check_call(['/usr/sbin/linbo-torrent', 'stop', os.path.join(self.path, f'{self.image}.torrent')])
+            subprocess.check_output(['/usr/sbin/linbo-torrent', 'stop', os.path.join(self.path, f'{self.image}.torrent')])
         except Exception as e:
-            logging.error(f'Unable to stop torrent service for {self.image} : {e}')
-
-    def _torrent_create(self, image=None):
-        if not image:
-            image = self.image
-        try:
-            subprocess.check_call(['/usr/sbin/linbo-torrent', 'create', image])
-        except Exception as e:
-            logging.error(f'Unable to create torrent file for {image} : {e}')
+            logging.error(f'Unable to stop torrent service for {self.image} : {e.output}')
 
     def load_info(self):
         """
@@ -172,16 +164,20 @@ class LinboImage:
         Rename a LinboImage and all its files.
         """
 
-        new_image_name = f"{new_name}.{IMAGE}"
+        if self.diff:
+            new_image_name = f"{new_name}.{DIFF_IMAGE}"
+        else:
+            new_image_name = f"{new_name}.{IMAGE}"
+
+        if not self.backup:
+            self._torrent_stop()
 
         # Rename image
         os.rename(os.path.join(self.path, self.image),
                   os.path.join(self.path, new_image_name))
 
-        self._torrent_stop()
-
         # Rename extra files
-        for extra in EXTRA_IMAGE_FILES:
+        for extra in EXTRA_IMAGE_FILES + EXTRA_NONEDITABLE_IMAGE_FILES:
             actual = os.path.join(self.path, f"{self.image}.{extra}")
             if os.path.exists(actual):
                 # Replace image name in .info file
@@ -194,7 +190,7 @@ class LinboImage:
                 # Need to generate a new torrent file
                 if extra == "torrent":
                     os.unlink(actual)
-                    self._torrent_create(new_image_name)
+
                     continue
 
                 os.rename(actual, os.path.join(self.path, f"{new_image_name}.{extra}"))
@@ -205,7 +201,7 @@ class LinboImage:
                 os.rename(actual, os.path.join(self.path, f"{new_name}.{extra}"))
 
         # Move directory
-        if not self.backup:
+        if not self.backup and not self.diff:
             os.rename(self.path, os.path.join(LINBO_PATH, new_name))
 
         # Refresh informations
@@ -315,6 +311,9 @@ class LinboImageGroup:
         for timestamp, backup in self.backups.items():
             backup.rename(new_name)
 
+        if self.diff_image:
+            self.diff_image.rename(new_name)
+
         self.base.rename(new_name)
 
         # Refresh informations
@@ -396,7 +395,7 @@ class LinboImageManager:
         if group in self.linboImageGroups:
             if diff:
                 # Only delete a differential image
-                self.linboImageGroups[group].diff.delete()
+                self.linboImageGroups[group].diff_image.delete()
             elif date in self.linboImageGroups[group].backups:
                 # The object to delete is only a backup
                 self.linboImageGroups[group].backups[date].delete()
@@ -459,7 +458,6 @@ class LinboImageManager:
                 # Cleanup and reload
                 imageGroup.backups[date].delete()
                 self.linboImageGroups[group].load()
-                imageGroup.base._torrent_create()
 
     def save_extras(self, group, data, timestamp=None, diff=False):
         """
@@ -483,7 +481,7 @@ class LinboImageManager:
         if group in self.linboImageGroups:
             imageGroup = self.linboImageGroups[group]
             if diff:
-                imageGroup.diff.save_extras(data)
+                imageGroup.diff_image.save_extras(data)
             elif date in imageGroup.backups:
                 imageGroup.backups[date].save_extras(data)
             else:

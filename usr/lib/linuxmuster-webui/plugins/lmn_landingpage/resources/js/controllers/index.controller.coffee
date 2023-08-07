@@ -51,6 +51,15 @@ angular.module('lmn.landingpage').controller 'LMNLandingController', ($scope, $h
              ).closed.then () ->
                 $route.reload()
 
+    $scope.showWebappQR = () ->
+       $uibModal.open(
+          templateUrl: '/lmn_landingpage:resources/partial/webappqr.modal.html'
+          controller: 'LMNUserWebAppQRController'
+          size: 'lg'
+          resolve:
+             user: () -> $scope.user
+             )
+
     $scope.$watch 'identity.user', ->
         if $scope.identity.user is undefined
            return
@@ -117,6 +126,15 @@ angular.module('lmn.landingpage').controller 'LMNUserCustomFieldsController', ($
         customFields.addProxyAddresses($scope.id).then (resp) ->
             if resp
                 custom.value.push(resp)
+
+    $scope.close = () ->
+        $uibModalInstance.dismiss()
+
+angular.module('lmn.landingpage').controller 'LMNUserWebAppQRController', ($scope, $route, $uibModal, $uibModalInstance, $http, gettext, pageTitle, user) ->
+
+    $scope.user = user
+    $http.get("/api/webdav/qrcode").then (resp) ->
+        $scope.qrdata = resp.data
 
     $scope.close = () ->
         $uibModalInstance.dismiss()

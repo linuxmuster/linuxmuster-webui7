@@ -87,6 +87,18 @@
         return $route.reload();
       });
     };
+    $scope.showWebappQR = function() {
+      return $uibModal.open({
+        templateUrl: '/lmn_landingpage:resources/partial/webappqr.modal.html',
+        controller: 'LMNUserWebAppQRController',
+        size: 'lg',
+        resolve: {
+          user: function() {
+            return $scope.user;
+          }
+        }
+      });
+    };
     return $scope.$watch('identity.user', function() {
       var category, cn, dn, i, len, ref;
       if ($scope.identity.user === void 0) {
@@ -187,6 +199,16 @@
         }
       });
     };
+    return $scope.close = function() {
+      return $uibModalInstance.dismiss();
+    };
+  });
+
+  angular.module('lmn.landingpage').controller('LMNUserWebAppQRController', function($scope, $route, $uibModal, $uibModalInstance, $http, gettext, pageTitle, user) {
+    $scope.user = user;
+    $http.get("/api/webdav/qrcode").then(function(resp) {
+      return $scope.qrdata = resp.data;
+    });
     return $scope.close = function() {
       return $uibModalInstance.dismiss();
     };

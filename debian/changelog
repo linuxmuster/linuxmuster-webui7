@@ -1,3 +1,11 @@
+linuxmuster-webui7 (7.2.22) lmn72; urgency=medium
+
+  * [ldapreader] Fix missing char for user login
+  * [linbo4] Fix wrong diff attribute 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Wed, 02 Aug 2023 12:31:31 +0200
+
+
 linuxmuster-webui7 (17.2.19.8) lmn72-testing; urgency=low
 
   * Merge branch 'upstream-lmn72' into lmn72-testing
@@ -51,6 +59,66 @@ linuxmuster-webui7 (17.2.19) lmn72-testing; urgency=low
   * Merged 7.2.15 upstream
 
  -- Andreas Till <andreas.till@netzint.de>  Thu, 20 Apr 2023 10:39:04 +0200
+
+linuxmuster-webui7 (7.2.21) lmn72; urgency=medium
+
+  * Fix schoolclasses sorting in ldap reader
+  * Fix dn and empty responses in ldap reader. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Tue, 01 Aug 2023 22:32:50 +0200
+
+linuxmuster-webui7 (7.2.20) lmn72; urgency=medium
+
+  * Fix dependency conflict with Ajenti. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Tue, 01 Aug 2023 19:06:38 +0200
+
+linuxmuster-webui7 (7.2.19) lmn72; urgency=medium
+
+  * Fix 2FA authentication
+  * [auth] Partially use ldap reader
+  * [crontab] Fix permissions of holiday file
+  * [crontab] Add possibility to edit crontab as root
+  * [dhcp] Fix empty mac
+  * [landingpage] Add tutorial for iOS configuration (webdav)
+  * [linbosync] Fix duplicate host entries in command 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Tue, 01 Aug 2023 15:45:54 +0200
+
+linuxmuster-webui7 (7.2.18) lmn72; urgency=medium
+
+  * Fix drag and drop in old session plugin. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Tue, 11 Jul 2023 15:33:29 +0200
+
+linuxmuster-webui7 (7.2.17) lmn72; urgency=medium
+
+  * Fix security issue with ldap
+  * Update dependency 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Tue, 11 Jul 2023 11:50:08 +0200
+
+linuxmuster-webui7 (7.2.16) lmn72; urgency=medium
+
+  * Add ldap connector and ldap reader to speed up requests
+  * Convert less to scss for Ajenti 3
+  * Upgrade to Ajenti 2.2.6
+  * Upgrade cryptography modules
+  * [groupmembership] Add length for projects
+  * [groupmembership] Possiblity to refresh kerberos ticket on change
+  * [linbo] Fix problem with empty config file
+  * [linbo] Add support for differential images
+  * [linbo] Fix torrent restart 
+  * [smbclient] Delete directory recursively
+  * [session] Fix exam mode for new user
+  * [session_new] Many work to improve the new module
+  * [setup] Do not load gpos when install is not done
+  * [users] Show and edit comment for bind users
+  * [webdav] Replace file on put
+  * [webdav] Delete directory recursively
+  * [webdav] Display QR code for mobile app
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 02 Jul 2023 16:30:18 +0200
 
 linuxmuster-webui7 (7.2.15) lmn72; urgency=medium
 

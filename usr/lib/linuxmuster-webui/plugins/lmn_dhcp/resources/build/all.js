@@ -33,7 +33,9 @@ angular.module('lmn.dhcp').controller('ExtraDhcpIndexController', function ($sco
             for (var _iterator = $scope.used[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
                 device = _step.value;
 
-                if (device.mac.toUpperCase() == mac.toUpperCase()) return true;
+                if (device.mac) {
+                    if (device.mac.toUpperCase() == mac.toUpperCase()) return true;
+                }
             }
         } catch (err) {
             _didIteratorError = true;

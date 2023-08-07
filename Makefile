@@ -33,6 +33,10 @@ pull-crowdin:
 	ajenti-dev-multitool --pull-crowdin
 	ajenti-dev-multitool --msgfmt
 
+add-crowdin:
+	ajenti-dev-multitool --xgettext
+	ajenti-dev-multitool --add-crowdin
+
 doc:
 	sphinx-build -b html -d docs/doctrees  docs_src docs
 

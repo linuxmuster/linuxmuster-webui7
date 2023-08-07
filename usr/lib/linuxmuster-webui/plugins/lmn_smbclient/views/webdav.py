@@ -11,6 +11,10 @@ from smbprotocol.exceptions import SMBOSError, NotFound, SMBAuthenticationError,
 from spnego.exceptions import BadMechanismError
 from jadi import component
 import xml.etree.ElementTree as ElementTree
+import qrcode
+import base64
+from io import BytesIO
+import json
 
 from aj.api.http import url, get, post, mkcol, options, copy, move, put, propfind, delete, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
@@ -373,3 +377,39 @@ class Handler(HttpPlugin):
             http_context.respond_server_error()
 
         return ''
+
+
+    @get(r'/api/webdav/qrcode')
+    @endpoint(api=True)
+    def handle_api_webdav_get_qrcode(self, http_context):
+
+        env = http_context.env
+
+        data = {
+            "displayName": self.context.schoolmgr.schoolname,
+            "url": f"{env['wsgi.url_scheme']}://{env['HTTP_HOST']}/webdav",
+            "username": self.context.identity,
+            "password": "",
+            "token": ""
+        }
+
+        qr = qrcode.QRCode(
+            version=1,
+            error_correction=qrcode.constants.ERROR_CORRECT_L,
+            box_size=5,
+            border=4,
+        )
+
+        qr.add_data(json.dumps(data))
+        qr.make(fit=True)
+        img = qr.make_image(fill_color="black", back_color="white").convert('RGB')
+
+        buffer = BytesIO()
+        img.save(buffer, format='PNG')
+
+        return {
+            "displayName": self.context.schoolmgr.schoolname,
+            "qrcode": base64.b64encode(buffer.getvalue()).decode('utf-8'),
+            "url": f"{env['wsgi.url_scheme']}://{env['HTTP_HOST']}/webdav",
+            "username": self.context.identity
+        }

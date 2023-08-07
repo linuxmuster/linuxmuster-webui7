@@ -222,7 +222,7 @@ angular.module('lmn.linbo_sync').controller 'SyncIndexController', ($scope, $htt
 
                     cmd_parameters['target']['type'] = 'host'
                     cmd_parameters['target']['host'] = ip
-                    $scope.linbo_command[group]['cmd_parameters'].push(cmd_parameters)
+                    $scope.linbo_command[group]['cmd_parameters'].push(angular.copy(cmd_parameters))
 
             $scope.linbo_command[group]['show'] = true
         else

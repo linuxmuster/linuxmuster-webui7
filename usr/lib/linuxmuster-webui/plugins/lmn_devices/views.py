@@ -14,24 +14,6 @@ from aj.auth import authorize
 class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
-        self.fieldnames = [
-            'room',
-            'hostname',
-            'group',
-            'mac',
-            'ip',
-            'officeKey',
-            'windowsKey',
-            'dhcpOptions',
-            'sophomorixRole',
-            'lmnReserved10',
-            'pxeFlag',
-            'lmnReserved12',
-            'lmnReserved13',
-            'lmnReserved14',
-            'sophomorixComment',
-            'options',
-        ]
 
     @get(r'/api/lmn/devices')
     @authorize('lm:devices')
@@ -51,7 +33,7 @@ class Handler(HttpPlugin):
         if os.path.isfile(path) is False:
             os.mknod(path)
 
-        with LMNFile(path, 'r', fieldnames=self.fieldnames) as devices:
+        with LMNFile(path, 'r') as devices:
             return devices.read()
 
     @post(r'/api/lmn/devices')
@@ -76,7 +58,7 @@ class Handler(HttpPlugin):
         for item in data:
             item.pop('_isNew', None)
             item.pop('null', None)
-        with LMNFile(path, 'w', fieldnames=self.fieldnames) as f:
+        with LMNFile(path, 'w') as f:
             f.write(data)
 
     @post(r'/api/lmn/devices/import')

@@ -125,26 +125,7 @@ def devices_reader(configpath, school):
     :rtype: dict
     """
 
-    fieldnames = [
-        'room',
-        'hostname',
-        'group',
-        'mac',
-        'ip',
-        'officeKey',
-        'windowsKey',
-        'dhcpOptions',
-        'sophomorixRole',
-        'lmnReserved10',
-        'pxeFlag',
-        'lmnReserved12',
-        'lmnReserved13',
-        'lmnReserved14',
-        'sophomorixComment',
-        'options',
-    ]
-
-    with LMNFile(configpath, 'r', fieldnames=fieldnames) as devices_csv:
+    with LMNFile(configpath, 'r') as devices_csv:
         devices = devices_csv.read()
 
     return devices

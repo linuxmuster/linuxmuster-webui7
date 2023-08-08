@@ -16,24 +16,6 @@ class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
         self.path = '/etc/linuxmuster/sophomorix/default-school/devices.csv'
-        self.fieldnames = [
-            'room',
-            'hostname',
-            'group',
-            'mac',
-            'ip',
-            'officeKey',
-            'windowsKey',
-            'dhcpOptions',
-            'sophomorixRole',
-            'lmnReserved10',
-            'pxeFlag',
-            'lmnReserved12',
-            'lmnReserved13',
-            'lmnReserved14',
-            'sophomorixComment',
-            'options',
-        ]
 
     @get(r'/api/lmn/dhcp/leases')
     @authorize('lm:devices')
@@ -61,7 +43,7 @@ class Handler(HttpPlugin):
             })
 
         used = []
-        with LMNFile(self.path, 'r', fieldnames=self.fieldnames) as devices:
+        with LMNFile(self.path, 'r') as devices:
             for host in devices.read():
                 if host["hostname"] != None and \
                    host["mac"] != None and \
@@ -88,7 +70,7 @@ class Handler(HttpPlugin):
         """
 
         new_device = http_context.json_body()['device']
-        with LMNFile(self.path, 'w+', fieldnames=self.fieldnames) as devices:
+        with LMNFile(self.path, 'w+') as devices:
             content = devices.read()
             content.append(new_device)
             devices.write(content)

@@ -11,7 +11,7 @@ import ast
 import logging
 from pprint import pformat
 from .lmnfile import LMNFile
-from configparser import SafeConfigParser
+from configparser import ConfigParser
 from time import time
 
 # Load Webui settings
@@ -38,7 +38,7 @@ else:
     logging.error("Without config.yml the users will not be able to login.")
 
 # Load samba domain
-smbconf = SafeConfigParser()
+smbconf = ConfigParser()
 try:
     smbconf.read('/etc/samba/smb.conf')
     samba_realm = smbconf["global"]["realm"].lower()

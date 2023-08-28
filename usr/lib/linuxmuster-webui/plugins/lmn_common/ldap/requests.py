@@ -33,9 +33,7 @@ class LMNLdapRequests:
 
 
     # SINGLE ENTRIES
-    # TODO : . in username should not be allowed here because it may cause some problems with CLI
-    # (like chown). It's allowed only for compatibility reasons in some schools.
-    @lmnapi(r'/user/(?P<username>[\w\-\.]*)')
+    @lmnapi(r'/user/(?P<username>[\w\-]*)')
     def get_user(self, username, **kwargs):
         """
         Get all details from a specific user.

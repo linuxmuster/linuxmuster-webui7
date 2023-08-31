@@ -185,17 +185,8 @@ class Handler(HttpPlugin):
         """
 
         path = '/etc/linuxmuster/subnets.csv'
-        fieldnames = [
-            'network',
-            'routerIp',
-            'beginRange',
-            'endRange',
-            'nameServer',
-            'nextServer',
-            'setupFlag',
-        ]
 
-        with LMNFile(path, 'r', fieldnames=fieldnames) as s:
+        with LMNFile(path, 'r') as s:
             subnets = list(s.data)
         return subnets
 
@@ -213,18 +204,9 @@ class Handler(HttpPlugin):
         """
 
         path = '/etc/linuxmuster/subnets.csv'
-        fieldnames = [
-            'network',
-            'routerIp',
-            'beginRange',
-            'endRange',
-            'nameServer',
-            'nextServer',
-            'setupFlag',
-        ]
 
         data = http_context.json_body()
-        with LMNFile(path, 'w', fieldnames=fieldnames) as f:
+        with LMNFile(path, 'w') as f:
             f.write(data)
 
         try:

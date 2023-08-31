@@ -36,27 +36,9 @@ class SambaToolDNS():
         """
 
         path = '/etc/linuxmuster/sophomorix/default-school/devices.csv'
-        fieldnames = [
-            'room',
-            'hostname',
-            'group',
-            'mac',
-            'ip',
-            'officeKey',
-            'windowsKey',
-            'dhcpOptions',
-            'sophomorixRole',
-            'lmnReserved10',
-            'pxeFlag',
-            'lmnReserved12',
-            'lmnReserved13',
-            'lmnReserved14',
-            'sophomorixComment',
-            'options',
-        ]
 
         self.lmn_hosts = []
-        with LMNFile(path, 'r', fieldnames=fieldnames) as devices:
+        with LMNFile(path, 'r') as devices:
             for device in devices.data:
                 # Ignore comment lines
                 if device['hostname'] is not None:

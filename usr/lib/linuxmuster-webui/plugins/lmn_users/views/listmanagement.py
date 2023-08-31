@@ -20,13 +20,6 @@ from aj.plugins.lmn_common.lmnfile import LMNFile
 class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
-        self.fieldnames = {
-            'students': ['class','last_name','first_name','birthday','id'],
-            'teachers': ['class','last_name','first_name','birthday','login','password','usertoken','quota','mailquota','reserved'],
-            'extrastudents': ['class','last_name','first_name','birthday','login','reserved'],
-            'extraclasses': ['course','base_name','count','birthday','gecos','password','removal_date']
-        }
-
 
     @post(r'/api/lmn/users/lists/import')
     @endpoint(api=True)
@@ -192,7 +185,7 @@ class Handler(HttpPlugin):
             os.mknod(path)
 
         with authorize(f'lm:users:{role}:read'):
-            with LMNFile(path, 'r', fieldnames=self.fieldnames[role]) as list:
+            with LMNFile(path, 'r') as list:
                 return list.read()
 
     @post(r'/api/lmn/users/lists/(?P<role>\b(?:students|teachers|extraclasses|extrastudents)\b)')
@@ -219,7 +212,7 @@ class Handler(HttpPlugin):
             for item in data:
                 item.pop('_isNew', None)
                 item.pop('null', None)
-            with LMNFile(path, 'w', fieldnames=self.fieldnames[role]) as f:
+            with LMNFile(path, 'w') as f:
                 f.write(data)
 
     @get(r'/api/lmn/users/lists/check')

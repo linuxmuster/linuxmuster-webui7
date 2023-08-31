@@ -1,3 +1,9 @@
+linuxmuster-webui7 (17.2.22-2) lmn72; urgency=low
+
+  * Bump
+
+ -- Andreas Till <andreas.till@netzint.de>  Thu, 31 Aug 2023 10:14:20 +0200
+
 linuxmuster-webui7 (17.2.22-1) lmn72; urgency=low
 
   * Merged Upstream

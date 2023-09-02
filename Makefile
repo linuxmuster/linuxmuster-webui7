@@ -4,7 +4,7 @@ CONFIGFILE := ''
 all: build
 
 deb:
-	dpkg-buildpackage -rfakeroot -tc -sa -us -uc -I".directory" -I".git" -I"buildpackage.sh" -I".crowdin.key"
+	dpkg-buildpackage -rfakeroot -tc -sa -us -uc -I".github" -I".git" -I"buildpackage.sh" -I".crowdin.key" -I".deepsource.toml" -I"docs" -I"docs_src" 
 
 bower:
 	ajenti-dev-multitool --bower install

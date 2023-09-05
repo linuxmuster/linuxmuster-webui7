@@ -37,7 +37,7 @@ class Handler(HttpPlugin):
             return lmn_getSophomorixValue(sophomorixCommand, jsonpath)
         return {}
 
-    @get(r'/api/lmn/quota/usermap/(?P<user>[a-z0-9\-]*)')
+    @get(r'/api/lmn/quota/usermap/(?P<user>[a-z0-9\-_]*)')
     @authorize('lm:users:passwords')
     @endpoint(api=True)
     def handle_group_quota(self, http_context, user=None):

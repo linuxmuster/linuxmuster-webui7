@@ -289,7 +289,7 @@ class Handler(HttpPlugin):
             return http_context.respond_forbidden()
         return http_context.file(path, inline=False, name=name.encode())
 
-    @get(r'/api/lmn/users/(?P<user>[a-z0-9\-]*)/first-password-set')
+    @get(r'/api/lmn/users/(?P<user>[a-z0-9\-_]*)/first-password-set')
     @authorize('lm:users:passwords')
     @endpoint(api=True)
     def handle_api_users_test_password(self, http_context, user):
@@ -309,7 +309,7 @@ class Handler(HttpPlugin):
         line = subprocess.check_output(['sudo', 'sophomorix-passwd', '--test-firstpassword', '-u', user]).splitlines()[-4]
         return b'1 OK' in line
 
-    @get(r'/api/lmn/users/(?P<binduser>[a-z0-9\-]*)/bindpassword')
+    @get(r'/api/lmn/users/(?P<binduser>[a-z0-9\-_]*)/bindpassword')
     @authorize('lm:users:globaladmins:create')
     @endpoint(api=True)
     def handle_api_users_showpw_binduser(self, http_context, binduser):

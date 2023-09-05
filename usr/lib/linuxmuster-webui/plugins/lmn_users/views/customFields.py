@@ -16,7 +16,7 @@ class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
 
-    @post(r'/api/lmn/users/(?P<user>[a-z0-9\-]*)/custom/(?P<index>[1-5])')
+    @post(r'/api/lmn/users/(?P<user>[a-z0-9\-_]*)/custom/(?P<index>[1-5])')
     @authorize('lm:users:customfields:write')
     @endpoint(api=True)
     def handle_update_custom(self, http_context, user, index):
@@ -41,7 +41,7 @@ class Handler(HttpPlugin):
             # No error output from sophomorix yet
             raise EndpointError(None)
 
-    @post(r'/api/lmn/users/(?P<user>[a-z0-9\-]*)/custommulti/(?P<index>[1-5])')
+    @post(r'/api/lmn/users/(?P<user>[a-z0-9\-_]*)/custommulti/(?P<index>[1-5])')
     @authorize('lm:users:customfields:write')
     @endpoint(api=True)
     def handle_custom_mutli_add(self, http_context, user, index):
@@ -66,7 +66,7 @@ class Handler(HttpPlugin):
             # No error output from sophomorix yet
             raise EndpointError(None)
 
-    @patch(r'/api/lmn/users/(?P<user>[a-z0-9\-]*)/custommulti/(?P<index>[1-5])')
+    @patch(r'/api/lmn/users/(?P<user>[a-z0-9\-_]*)/custommulti/(?P<index>[1-5])')
     @authorize('lm:users:customfields:write')
     @endpoint(api=True)
     def handle_custom_multi_remove(self, http_context, user, index):
@@ -91,7 +91,7 @@ class Handler(HttpPlugin):
             # No error output from sophomorix yet
             raise EndpointError(None)
 
-    @post(r'/api/lmn/users/(?P<user>[a-z0-9\-]*)/proxyaddresses')
+    @post(r'/api/lmn/users/(?P<user>[a-z0-9\-_]*)/proxyaddresses')
     @authorize('lm:users:customfields:write')
     @endpoint(api=True)
     def handle_add_proxy_addresses(self, http_context, user):
@@ -116,7 +116,7 @@ class Handler(HttpPlugin):
             # No error output from sophomorix yet
             raise EndpointError(None)
 
-    @patch(r'/api/lmn/users/(?P<user>[a-z0-9\-]*)/proxyaddresses')
+    @patch(r'/api/lmn/users/(?P<user>[a-z0-9\-_]*)/proxyaddresses')
     @authorize('lm:users:customfields:write')
     @endpoint(api=True)
     def handle_remove_proxy_addresses(self, http_context, user):
@@ -142,7 +142,7 @@ class Handler(HttpPlugin):
             # No error output from sophomorix yet
             raise EndpointError(None)
 
-    @get(r'/api/lmn/users/(?P<user>[a-z0-9\-]*)/customfields')
+    @get(r'/api/lmn/users/(?P<user>[a-z0-9\-_]*)/customfields')
     @authorize('lm:users:customfields:read')
     @endpoint(api=True)
     def handle_get_custom_fields(self, http_context, user):

@@ -1,3 +1,11 @@
+linuxmuster-webui7 (7.2.23) lmn72; urgency=medium
+
+  * Upgrade Ajenti 2.2.7
+  * Allow underscore in login
+  * [Groupmembership] Exclude a group to be self member 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Tue, 05 Sep 2023 21:57:19 +0200
+
 linuxmuster-webui7 (7.2.22) lmn72; urgency=medium
 
   * [ldapreader] Fix missing char for user login

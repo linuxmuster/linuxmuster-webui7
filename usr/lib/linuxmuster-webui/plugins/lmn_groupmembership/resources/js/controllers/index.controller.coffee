@@ -525,7 +525,12 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
                 return resp.data
         $scope.findGroups = (q) ->
             return $http.get("/api/lmn/find/group/" + q).then (resp) ->
-                return resp.data
+                groups = resp.data
+                position = groups.indexOf($scope.groupName)
+                console.log($scope.groupName, position)
+                if position >= 0
+                  groups.splice(position, 1)
+                return groups
         $scope.findUsersGroup = (q) ->
             return $http.get("/api/lmn/find/usergroup/" + q).then (resp) ->
                 return resp.data

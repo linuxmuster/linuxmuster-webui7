@@ -770,7 +770,14 @@
     };
     $scope.findGroups = function(q) {
       return $http.get("/api/lmn/find/group/" + q).then(function(resp) {
-        return resp.data;
+        var groups, position;
+        groups = resp.data;
+        position = groups.indexOf($scope.groupName);
+        console.log($scope.groupName, position);
+        if (position >= 0) {
+          groups.splice(position, 1);
+        }
+        return groups;
       });
     };
     $scope.findUsersGroup = function(q) {

@@ -1,10 +1,10 @@
-aj==2.2.6
-ajenti-panel==2.2.6
+aj==2.2.7
+ajenti-panel==2.2.7
 ajenti.plugin.ace==0.32
-ajenti.plugin.core==0.106
+ajenti.plugin.core==0.107
 ajenti.plugin.dashboard==0.42
 ajenti.plugin.filesystem==0.50
-ajenti.plugin.plugins==0.50
+ajenti.plugin.plugins==0.51
 ajenti.plugin.settings==0.34
 ajenti.plugin.session-list==0.6
 configparser==3.5.0

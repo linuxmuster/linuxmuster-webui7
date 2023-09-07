@@ -506,7 +506,7 @@ angular.module('core').directive('teacherAccess', function (identity) {
     this.isValidLogin = function(name) {
       var error_msg, regExp, validName;
       error_msg = name + gettext(' can only contain alphanumeric chars or -');
-      regExp = /^[a-z0-9\-]*$/i;
+      regExp = /^[a-z0-9\-_]*$/i;
       validName = regExp.test(name);
       if (!validName) {
         return error_msg;

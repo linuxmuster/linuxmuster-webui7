@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.1.53) lmn71; urgency=medium
+
+  * Default policy value 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Thu, 07 Sep 2023 22:44:40 +0200
+
 linuxmuster-webui7 (7.1.52) lmn71; urgency=medium
 
   * Allow underscore in login 

@@ -2,13 +2,15 @@
 Manage per user or group quota configuration.
 """
 
+import os
+import pwd
 import subprocess
 
 from jadi import component
 from aj.api.http import get, post, HttpPlugin
 from aj.auth import authorize
 from aj.api.endpoint import endpoint, EndpointError
-from aj.plugins.lmn_common.api import lmn_getSophomorixValue
+from aj.plugins.lmn_common.api import lmn_getSophomorixValue, samba_workgroup
 from aj.plugins.lmn_common.lmnfile import LMNFile
 from configparser import ConfigParser
 
@@ -296,3 +298,45 @@ class Handler(HttpPlugin):
             subprocess.check_call('sophomorix-quota > /tmp/apply-sophomorix.log', shell=True)
         except Exception as e:
             raise EndpointError(None, message=str(e))
+
+    @get(r'/api/lmn/quota/check/(?P<user>[a-z0-9\-_]*)')
+    @authorize('lm:quotas:apply')
+    @endpoint(api=True)
+    def handle_api_check_quota(self, http_context, user=''):
+        """
+        Lists main directories used quota for a given user.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :param user: user login
+        :type user: basestring
+        :return: directories containing user's files and the total size used
+        :rtype: dict
+        """
+
+        path = '/srv/samba'
+        user = f'{samba_workgroup}\\{user}'
+
+        directories = {}
+
+        for root, dirs, files in os.walk(path):
+            for f in files:
+                stats = os.stat(os.path.join(root, f))
+                owner = pwd.getpwuid(stats.st_uid).pw_name
+                size = stats.st_size
+                if owner == user:
+                    for directory, _ in directories.items():
+                        if root.startswith(directory):
+                            directories[directory] += size
+                            break
+                    else:
+                        directories[root] = size
+
+        total = 0
+        for directory, size in directories.items():
+            total += size
+            mega = round(size / 1024 /1024, 2)
+            directories[directory] = mega
+
+        return directories, round(total / 1024 / 1024, 2)
+

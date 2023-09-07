@@ -48,6 +48,7 @@ smbconf = ConfigParser()
 try:
     smbconf.read('/etc/samba/smb.conf')
     samba_realm = smbconf["global"]["realm"].lower()
+    samba_workgroup = smbconf["global"]["workgroup"]
     samba_netbios = smbconf["global"]["netbios name"].lower()
     samba_domain = f'{samba_netbios}.{samba_realm}'
 except Exception:

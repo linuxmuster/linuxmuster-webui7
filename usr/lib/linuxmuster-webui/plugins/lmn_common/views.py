@@ -13,6 +13,7 @@ from jadi import component
 from aj.api.http import get, post, HttpPlugin
 from aj.api.endpoint import endpoint
 from aj.plugins.lmn_common.lmnfile import LMNFile
+from aj.plugins.lmn_common.api import display_options
 
 
 @component(HttpPlugin)
@@ -215,3 +216,17 @@ class Handler(HttpPlugin):
         """
 
         return self.context.schoolmgr.school
+
+    @get(r'/api/lmn/display_options')
+    @endpoint(api=True)
+    def handle_get_display_options(self, http_context):
+        """
+        Provide display options stored in the webui config file.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: display options
+        :rtype: dict
+        """
+
+        return display_options

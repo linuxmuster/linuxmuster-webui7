@@ -6,6 +6,9 @@ angular.module('lmn.landingpage').config ($routeProvider) ->
 angular.module('lmn.landingpage').controller 'LMNLandingController', ($scope, $http, $uibModal, $location, $route, gettext, notify, pageTitle, customFields) ->
     pageTitle.set(gettext('Home'))
 
+    $http.get("/api/lmn/display_options").then (resp) ->
+        $scope.show_webdav = resp.data['show_webdav']
+
     $scope.getData = (user) ->
         customFields.load_user_fields(user).then (resp) ->
             $scope.custom_fields = resp

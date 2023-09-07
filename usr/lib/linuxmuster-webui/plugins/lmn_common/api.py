@@ -31,10 +31,16 @@ if os.path.isfile(config_path):
         # Samba config to eventually override the share prefix
         samba_override = lmconfig['linuxmuster'].get('samba', {})
         samba_override['share_prefix'] = samba_override.get('share_prefix', '')
+
+        # Display options
+        display_options = lmconfig['linuxmuster'].get('display', {})
+        display_options['show_webdav'] = display_options.get('show_webdav', True)
 else:
     lmconfig = {}
     ldap_config = {}
     pwreset_config = {}
+    samba_override = {}
+    display_options = {}
     logging.error("Without config.yml the users will not be able to login.")
 
 # Load samba domain

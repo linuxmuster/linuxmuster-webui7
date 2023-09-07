@@ -65,6 +65,7 @@ class SchoolManager:
     def __init__(self):
         self.school = 'default-school'
         self.schoolShare = f'\\\\{samba_realm}\\{self.school}\\'
+        self.policy = ''
         self.load()
 
     def load(self):

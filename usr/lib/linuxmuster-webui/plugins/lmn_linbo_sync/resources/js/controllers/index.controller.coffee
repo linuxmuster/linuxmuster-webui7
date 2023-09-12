@@ -158,7 +158,7 @@ angular.module('lmn.linbo_sync').controller 'SyncIndexController', ($scope, $htt
             cmd = ' -c '
 
         if $scope.groups[group]['auto']['partition'] > 0
-            cmd += ' partition'
+            cmd += ' partition,format'
             cmd_parameters['partition'] = true
 
         for os, index in $scope.groups[group]['os']

@@ -204,7 +204,7 @@ angular.module('lmn.linbo_sync').config(function ($routeProvider) {
         cmd = ' -c ';
       }
       if ($scope.groups[group]['auto']['partition'] > 0) {
-        cmd += ' partition';
+        cmd += ' partition,format';
         cmd_parameters['partition'] = true;
       }
       ref = $scope.groups[group]['os'];

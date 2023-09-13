@@ -60,6 +60,7 @@
         <div ng:show="types.schoolclass.checkbox">
             <button class="btn btn-danger pull-right" ng:click="resetAll('class')" ng:show="identity.profile.isAdmin" translate><i class="fas fa-undo"></i></button>
             <h3 translate>Schoolclasses</h3>
+            <br />
             <div ng-if="classes.length== 0" class="alert alert-info">
                 <i class="fa fa-info-circle"></i>
                 <span translate> There are no schoolclasses available. Ask the administrator to import students</span>
@@ -73,15 +74,17 @@
                             <span translate>Class</span>
                             <b style="word-wrap: break-word; -ms-word-break: break-all">{{classe.groupname}}</b>
                         </a>
-                        <span class="badge pull-right">{{classe.members.length}}</span>
+                        <span class="label label-default pull-right" title="Members">{{classe.members.length}}</span>
                     </div>
                 </div>
             </div>
         </div>
 
+        <hr />
 
         <div ng:show="types.printergroup.checkbox">
             <h3 translate>Printer</h3>
+            <br />
             <div ng-if="printers.length == 0" class="alert alert-info">
                 <i class="fa fa-info-circle"></i>
                 <span translate> There are no printers configured yet. Ask your administrator to configure one.</span>
@@ -101,9 +104,12 @@
             </div>
         </div>
 
+        <hr />
+
         <div ng:show="types.project.checkbox">
             <button class="btn btn-danger pull-right" ng:click="resetAll('project')" ng:show="identity.profile.isAdmin" translate><i class="fas fa-undo"></i></button>
             <h3 translate>Projects</h3>
+            <br />
             <div ng-if="projects.length == 0" class="alert alert-info">
                 <i class="fa fa-info-circle"></i>
                 <span translate> There are no projects yet. You can create a new project using the menu bar.</span>
@@ -114,10 +120,10 @@
                         <input id={{project.groupname}} type="checkbox" ng:show="projectIsJoinable(project)" ng:click='setMembership(project)' ng:checked="project.membership">
                         <i class="fa fa-flask"></i>
                         <a href="#" ng-click='showGroupDetails($index, project.type, project.groupname)'>
-                            <span translate>Project</span>
                             <b style="word-wrap: break-word; -ms-word-break: break-all">{{project.groupname}}</b>
                         </a>
-                        <span class="badge pull-right">{{project.members.length}}</span>
+                        <span class="label label-danger pull-right" title="Admins">{{project.members.length}}</span>
+                        <span class="label label-default pull-right" title="Members">{{project.members.length}}</span>
                     </div>
                 </div>
             </div>

@@ -24,6 +24,7 @@ from aj.plugins.lmn_common.api import ldap_config as params, lmsetup_schoolname,
 from aj.plugins.lmn_common.multischool import SchoolManager
 from aj.api.endpoint import EndpointError
 from aj.plugins.lmn_common.ldap.requests import LMNLdapRequests
+from linuxmusterTools.ldapconnector import LMNLdapReader
 
 
 @component(AuthenticationProvider)
@@ -68,6 +69,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
         schoolmgr = SchoolManager()
         schoolmgr.switch(active_school)
         self.context.schoolmgr = schoolmgr
+        self.context.ldapreader = LMNLdapReader
  
         # Permissions for kerberos ticket
         uid = self.get_isolation_uid(username)

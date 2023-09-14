@@ -43,27 +43,30 @@ class Handler(HttpPlugin):
                 usergroups.append(group.split(',')[0].split('=')[1])
 
         # get all available classes and projects
-        sophomorixCommand = ['sophomorix-query', '--class', '--project', '--schoolbase', schoolname, '--group-full', '-jj']
-        groups = lmn_getSophomorixValue(sophomorixCommand, '')
+        # sophomorixCommand = ['sophomorix-query', '--class', '--project', '--schoolbase', schoolname, '--group-full', '-jj']
+        # groups = lmn_getSophomorixValue(sophomorixCommand, '')
         # get all available groups TODO
+        groups = self.context.ldapreader.get('/projects', dict=False) + self.context.ldapreader.get('/schoolclasses', dict=False)
 
         # build membershipList with membership status
-        for group in groups['LISTS']['GROUP']:
+        for group in groups:
             membershipDict = {}
-            groupDetails = groups['GROUP'][group]
 
-            if group in usergroups or isAdmin or groupDetails['sophomorixHidden'] == "FALSE":
-                membershipDict['groupname'] = group
-                membershipDict['membership'] = group in usergroups or isAdmin
-                membershipDict['admin'] = username in groupDetails['sophomorixAdmins'] or isAdmin
-                membershipDict['joinable'] = groupDetails['sophomorixJoinable']
-                membershipDict['DN'] = groupDetails['DN']
-                membershipDict['members'] = groupDetails['sophomorixMembers']
+            if group.cn in usergroups or isAdmin or not group.sophomorixHidden:
+                membershipDict['groupname'] = group.cn
+                membershipDict['membership'] = group.cn in usergroups or isAdmin
+                membershipDict['admin'] = username in group.sophomorixAdmins or isAdmin
+                membershipDict['joinable'] = group.sophomorixJoinable
+                membershipDict['DN'] = group.dn
+                membershipDict['members'] = group.sophomorixMembers
 
                 # Project name always starts with p_, but not classname
-                if group[:2] == "p_":
+                if group.cn.startswith("p_"):
                     membershipDict['type'] = 'project'
                     membershipDict['typename'] = 'Project'
+                    group.get_all_members()
+                    membershipDict['membersCount'] = group.membersCount
+                    membershipDict['adminsCount'] = group.adminsCount
                 else:
                     membershipDict['type'] = 'schoolclass'
                     membershipDict['typename'] = 'Class'

@@ -254,7 +254,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
             $http.get('/api/lmn/groupmembership/groups/' + groupName).then (resp) ->
                 $scope.groupName    = groupName
 
-                if !(groupName in resp.data)
+                if !resp.data.hasOwnProperty('GROUP')
                     notify.error(gettext("Can not read properties of this project."))
                     $scope.close()
                     return

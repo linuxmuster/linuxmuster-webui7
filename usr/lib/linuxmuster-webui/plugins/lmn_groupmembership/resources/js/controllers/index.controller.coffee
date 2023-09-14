@@ -253,6 +253,12 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
             groupName = group[1]
             $http.get('/api/lmn/groupmembership/groups/' + groupName).then (resp) ->
                 $scope.groupName    = groupName
+
+                if !(groupName in resp.data)
+                    notify.error(gettext("Can not read properties of this project."))
+                    $scope.close()
+                    return
+
                 $scope.groupDetails = resp.data['GROUP'][groupName]
                 $scope.adminList = resp.data['GROUP'][groupName]['sophomorixAdmins']
                 if groupType == 'printergroup'

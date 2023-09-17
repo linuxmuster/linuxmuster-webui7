@@ -180,7 +180,7 @@
       });
     };
     $scope.projectIsJoinable = function(project) {
-      return project['joinable'] === 'TRUE' || project.admin || $scope.identity.isAdmin || $scope.identity.profile.memberOf.indexOf(project['DN']) > -1;
+      return project['joinable'] || project.admin || $scope.identity.isAdmin || $scope.identity.profile.memberOf.indexOf(project['DN']) > -1;
     };
     $scope.resetAll = function(type) {
       var warning;

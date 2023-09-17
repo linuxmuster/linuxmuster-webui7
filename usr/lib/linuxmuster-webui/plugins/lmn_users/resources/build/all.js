@@ -1339,29 +1339,41 @@
         return notify.warning(gettext("It's not possible to print all users and a class at the same time."));
       }
     };
+    $scope.sort_schoolclasses = function(schoolclasses) {
+      schoolclasses.sort(function(a, b) {
+        var anum, bnum;
+        anum = parseInt(a, 10);
+        bnum = parseInt(b, 10);
+        if (anum > bnum) {
+          return 1;
+        }
+        if (anum < bnum) {
+          return -1;
+        }
+        return 0;
+      });
+      return schoolclasses;
+    };
     $scope.getGroups = function(username) {
-      var classname, i, len, membership, ref, results;
+      var classname, i, len, membership, ref;
       if ($scope.identity.user === 'root' || $scope.identity.profile.sophomorixRole === 'globaladministrator' || $scope.identity.profile.sophomorixRole === 'schooladministrator') {
         return $http.get('/api/lmn/users/classes').then(function(resp) {
-          $scope.classes = resp.data;
+          $scope.classes = $scope.sort_schoolclasses(resp.data);
           return $scope.admin_warning = true;
         });
       } else {
         $scope.admin_warning = false;
         $scope.classes = [];
         ref = $scope.identity.profile.memberOf;
-        results = [];
         for (i = 0, len = ref.length; i < len; i++) {
           membership = ref[i];
           if (membership.indexOf("OU=Students") > -1) {
             // Split "CN=10b,OU=10b,OU=Students,..."
             classname = membership.split(',')[0].split('=')[1];
-            results.push($scope.classes.push(classname));
-          } else {
-            results.push(void 0);
+            $scope.classes.push(classname);
           }
         }
-        return results;
+        return $scope.classes = $scope.sort_schoolclasses($scope.classes);
       }
     };
     return $scope.$watch('identity.user', function() {

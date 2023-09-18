@@ -433,7 +433,7 @@ class LinboImageManager:
         if group in self.linboImageGroups:
             imageGroup = self.linboImageGroups[group]
             if date in imageGroup.backups:
-                timestamp = imageGroup.base.timestamp
+                timestamp = datetime.now().strftime(TIMESTAMP_FMT)
                 new_backup_dir = os.path.join(
                     imageGroup.base.path,
                     'backups',

@@ -978,6 +978,8 @@
           date: date
         }).then(function(resp) {
           return $scope.restartServices();
+        }).catch(function(err) {
+          return notify.error(gettext("Failed to restore backup! ") + err.data.message);
         });
       });
     };

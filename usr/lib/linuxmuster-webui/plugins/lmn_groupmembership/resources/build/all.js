@@ -126,7 +126,6 @@
     $scope.getGroups = function(username) {
       return $http.get('/api/lmn/groupmembership/groups').then(function(resp) {
         $scope.groups = resp.data[0];
-        $scope.identity.isAdmin = resp.data[1];
         $scope.classes = $scope.groups.filter($scope.filterGroupType('schoolclass'));
         $scope.projects = $scope.groups.filter($scope.filterGroupType('project'));
         return $scope.printers = $scope.groups.filter($scope.filterGroupType('printergroup'));
@@ -180,7 +179,7 @@
       });
     };
     $scope.projectIsJoinable = function(project) {
-      return project['joinable'] || project.admin || $scope.identity.isAdmin || $scope.identity.profile.memberOf.indexOf(project['DN']) > -1;
+      return project['joinable'] || project.admin || identity.profile.isAdmin || $scope.identity.profile.memberOf.indexOf(project['DN']) > -1;
     };
     $scope.resetAll = function(type) {
       var warning;
@@ -422,7 +421,7 @@
         $scope.maillist = resp.data['GROUP'][groupName]['sophomorixMailList'] === 'TRUE';
         // Admin or admin of the project can edit members of a project
         // Only admins can change hide and join option for a class
-        if ($scope.identity.isAdmin) {
+        if (identity.profile.isAdmin) {
           $scope.editGroup = true;
         } else if ((groupType === 'project') && ($scope.adminList.indexOf($scope.identity.user) >= 0)) {
           $scope.editGroup = true;

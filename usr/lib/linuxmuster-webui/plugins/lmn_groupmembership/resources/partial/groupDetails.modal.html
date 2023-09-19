@@ -7,7 +7,7 @@
 </div>
 <progress-spinner ng:show="groupDetails == null || changeState == true"></progress-spinner>
 <div style="padding: 0 20px;" ng:show="groupDetails != null">
-    <div class="alert alert-warning" ng:show="identity.isAdmin && type == 'class' && members.length == 0">
+    <div class="alert alert-warning" ng:show="identity.profile.isAdmin && type == 'class' && members.length == 0">
         <a class="btn btn-danger pull-right" ng:click="killSchoolclass(groupDetails['description'])">
             <i class="fa fa-trash"></i>
         </a>

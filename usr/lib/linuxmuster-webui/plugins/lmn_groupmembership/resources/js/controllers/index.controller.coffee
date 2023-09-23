@@ -8,23 +8,9 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
   $scope.need_krbcc_refresh = false
 
   pageTitle.set(gettext('Enrolle'))
-  $scope.types = {
-    schoolclass:
-      typename: gettext('Schoolclass')
-      name: gettext('Groupname')
-      checkbox: true
-      type: 'schoolclass'
-
-    printergroup:
-      typename: gettext('Printer')
-      checkbox: true
-      type: 'printergroup'
-
-    project:
-      typename: gettext('Projects')
-      checkbox: true
-      type: 'project'
-  }
+  $scope.show_schoolclasses = true
+  $scope.show_projects = true
+  $scope.show_printers = true
 
   $scope.sorts = [
     {
@@ -41,18 +27,6 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
   $scope.paging =
     page: 1
     pageSize: 20
-
-  $scope.isActive = (group) ->
-    if  group.type is 'printergroup'
-      if $scope.types.printergroup.checkbox is true
-        return true
-    if  group.type is 'schoolclass'
-      if $scope.types.schoolclass.checkbox is true
-        return true
-    if  group.type is 'project'
-      if $scope.types.schoolclass.checkbox is true
-        return true
-    return false
 
   $scope.checkInverse = (sort ,currentSort) ->
     if sort == currentSort
@@ -93,7 +67,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
 
   $scope.getGroups = (username) ->
     $http.get('/api/lmn/groupmembership/groups').then (resp) ->
-      $scope.groups = resp.data[0]
+      $scope.groups = resp.data
       $scope.classes = $scope.groups.filter($scope.filterGroupType('schoolclass'))
       $scope.projects = $scope.groups.filter($scope.filterGroupType('project'))
       $scope.printers = $scope.groups.filter($scope.filterGroupType('printergroup'))

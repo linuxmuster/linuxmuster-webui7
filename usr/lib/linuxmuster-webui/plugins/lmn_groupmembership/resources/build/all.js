@@ -16,24 +16,9 @@
   angular.module('lmn.groupmembership').controller('LMNGroupMembershipController', function($rootScope, $scope, $http, identity, $uibModal, gettext, notify, pageTitle, messagebox, validation, smbclient) {
     $scope.need_krbcc_refresh = false;
     pageTitle.set(gettext('Enrolle'));
-    $scope.types = {
-      schoolclass: {
-        typename: gettext('Schoolclass'),
-        name: gettext('Groupname'),
-        checkbox: true,
-        type: 'schoolclass'
-      },
-      printergroup: {
-        typename: gettext('Printer'),
-        checkbox: true,
-        type: 'printergroup'
-      },
-      project: {
-        typename: gettext('Projects'),
-        checkbox: true,
-        type: 'project'
-      }
-    };
+    $scope.show_schoolclasses = true;
+    $scope.show_projects = true;
+    $scope.show_printers = true;
     $scope.sorts = [
       {
         name: gettext('Groupname'),
@@ -53,24 +38,6 @@
     $scope.paging = {
       page: 1,
       pageSize: 20
-    };
-    $scope.isActive = function(group) {
-      if (group.type === 'printergroup') {
-        if ($scope.types.printergroup.checkbox === true) {
-          return true;
-        }
-      }
-      if (group.type === 'schoolclass') {
-        if ($scope.types.schoolclass.checkbox === true) {
-          return true;
-        }
-      }
-      if (group.type === 'project') {
-        if ($scope.types.schoolclass.checkbox === true) {
-          return true;
-        }
-      }
-      return false;
     };
     $scope.checkInverse = function(sort, currentSort) {
       if (sort === currentSort) {
@@ -125,7 +92,7 @@
     };
     $scope.getGroups = function(username) {
       return $http.get('/api/lmn/groupmembership/groups').then(function(resp) {
-        $scope.groups = resp.data[0];
+        $scope.groups = resp.data;
         $scope.classes = $scope.groups.filter($scope.filterGroupType('schoolclass'));
         $scope.projects = $scope.groups.filter($scope.filterGroupType('project'));
         return $scope.printers = $scope.groups.filter($scope.filterGroupType('printergroup'));

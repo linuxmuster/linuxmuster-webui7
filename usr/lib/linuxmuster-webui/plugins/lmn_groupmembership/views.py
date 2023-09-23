@@ -17,6 +17,48 @@ class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
 
+    @get(r'/api/lmn/groupmembership/projects')
+    @authorize('lmn:groupmembership')
+    @endpoint(api=True)
+    def handle_api_list_projects(self, http_context):
+        """
+        List all projects.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: List of groups or result for actions kill and create
+        :rtype: dict or tuple
+        """
+
+        username = self.context.identity
+        user_profile = AuthenticationService.get(self.context).get_provider().get_profile(username)
+        isAdmin = user_profile['isAdmin']
+
+        membershipList = []
+
+        projects = self.context.ldapreader.get('/projects', dict=False)
+
+        # build membershipList with membership status
+        for project in projects:
+            membershipDict = {}
+            member = project.cn in user_profile['projects'] or isAdmin
+
+            if member or not project.sophomorixHidden:
+                membershipDict['groupname'] = project.cn
+                membershipDict['membership'] = member
+                membershipDict['admin'] = username in project.sophomorixAdmins or isAdmin
+                membershipDict['joinable'] = project.sophomorixJoinable
+                membershipDict['DN'] = project.dn
+                membershipDict['members'] = project.sophomorixMembers
+                membershipDict['type'] = 'project'
+
+                project.get_all_members()
+                membershipDict['membersCount'] = project.membersCount
+                membershipDict['adminsCount'] = project.adminsCount
+
+                membershipList.append(membershipDict)
+        return membershipList
+
     @get(r'/api/lmn/groupmembership/groups')
     @authorize('lmn:groupmembership')
     @endpoint(api=True)

@@ -65,10 +65,11 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
       dict['type'] == val
 
   $scope.getGroups = (username) ->
+    $http.get('/api/lmn/groupmembership/projects').then (resp) ->
+      $scope.projects = resp.data
     $http.get('/api/lmn/groupmembership/groups').then (resp) ->
       $scope.groups = resp.data
       $scope.classes = $scope.groups.filter($scope.filterGroupType('schoolclass'))
-      $scope.projects = $scope.groups.filter($scope.filterGroupType('project'))
       $scope.printers = $scope.groups.filter($scope.filterGroupType('printergroup'))
 
   $scope.createProject = () ->

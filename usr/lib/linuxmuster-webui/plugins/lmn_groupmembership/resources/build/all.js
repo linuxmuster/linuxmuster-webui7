@@ -50,14 +50,12 @@
     $scope.setMembership = function(group) {
       var action, type;
       $scope.changeState = true;
-      action = group.membership ? 'removeadmins' : 'addadmins';
-      if (group.typename === 'Class') {
-        type = 'class';
-      } else if (group.typename === 'Printer') {
+      if (group.type === 'printer') {
         type = 'group';
         action = group.membership ? 'removemembers' : 'addmembers';
       } else {
-        type = 'project';
+        type = group.type;
+        action = group.membership ? 'removeadmins' : 'addadmins';
       }
       return $http.post('/api/lmn/groupmembership/membership', {
         action: action,
@@ -91,10 +89,12 @@
       };
     };
     $scope.getGroups = function(username) {
+      $http.get('/api/lmn/groupmembership/projects').then(function(resp) {
+        return $scope.projects = resp.data;
+      });
       return $http.get('/api/lmn/groupmembership/groups').then(function(resp) {
         $scope.groups = resp.data;
         $scope.classes = $scope.groups.filter($scope.filterGroupType('schoolclass'));
-        $scope.projects = $scope.groups.filter($scope.filterGroupType('project'));
         return $scope.printers = $scope.groups.filter($scope.filterGroupType('printergroup'));
       });
     };

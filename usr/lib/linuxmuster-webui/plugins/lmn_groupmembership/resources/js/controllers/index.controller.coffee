@@ -43,6 +43,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
         action = if group.membership then 'removemembers' else 'addmembers'
     else
         type = group.type
+        # TODO: seems to be wrong here
         action = if group.membership then 'removeadmins' else 'addadmins'
 
     $http.post('/api/lmn/groupmembership/membership', {action: action, entity: $scope.identity.user, groupname: group.groupname, type: type}).then (resp) ->
@@ -106,7 +107,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
         $scope.getGroups ($scope.identity.user)
 
   $scope.projectIsJoinable = (project) ->
-    return project['joinable'] or project.admin or identity.profile.isAdmin or $scope.identity.profile.memberOf.indexOf(project['DN']) > -1
+    return project['sophomorixJoinable'] or project.admin or identity.profile.isAdmin or $scope.identity.profile.projects.indexOf(project['cn']) > -1
 
   $scope.resetAll = (type) ->
       warning = gettext('Are you sure to reset all admin memberships for this? This is actually only necessary to start a new empty school year. This cannot be undone!')

@@ -22,42 +22,37 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_list_projects(self, http_context):
         """
-        List all projects.
+        List all projects visible for the current user.
 
         :param http_context: HttpContext
         :type http_context: HttpContext
-        :return: List of groups or result for actions kill and create
-        :rtype: dict or tuple
+        :return: List of projects
+        :rtype: list
         """
 
         username = self.context.identity
         user_profile = AuthenticationService.get(self.context).get_provider().get_profile(username)
-        isAdmin = user_profile['isAdmin']
-
-        membershipList = []
 
         projects = self.context.ldapreader.get('/projects', dict=False)
+        user_projects = []
 
         # build membershipList with membership status
         for project in projects:
-            membershipDict = {}
-            member = project.cn in user_profile['projects'] or isAdmin
+            member = project.cn in user_profile['projects'] or user_profile['isAdmin']
 
             if member or not project.sophomorixHidden:
-                membershipDict['groupname'] = project.cn
-                membershipDict['membership'] = member
-                membershipDict['admin'] = username in project.sophomorixAdmins or isAdmin
-                membershipDict['joinable'] = project.sophomorixJoinable
-                membershipDict['DN'] = project.dn
-                membershipDict['members'] = project.sophomorixMembers
-                membershipDict['type'] = 'project'
-
                 project.get_all_members()
-                membershipDict['membersCount'] = project.membersCount
-                membershipDict['adminsCount'] = project.adminsCount
+                projectDict = project.asdict()
 
-                membershipList.append(membershipDict)
-        return membershipList
+                projectDict['groupname'] = project.cn
+                projectDict['membership'] = member
+                projectDict['admin'] = username in project.sophomorixAdmins or user_profile['isAdmin']
+                projectDict['members'] = project.sophomorixMembers
+                projectDict['type'] = 'project'
+
+                user_projects.append(projectDict)
+
+        return user_projects
 
     @get(r'/api/lmn/groupmembership/groups')
     @authorize('lmn:groupmembership')
@@ -94,7 +89,6 @@ class Handler(HttpPlugin):
                 membershipDict['groupname'] = group.cn
                 membershipDict['membership'] = group.cn in usergroups or isAdmin
                 membershipDict['admin'] = username in group.sophomorixAdmins or isAdmin
-                membershipDict['joinable'] = group.sophomorixJoinable
                 membershipDict['DN'] = group.dn
                 membershipDict['members'] = group.sophomorixMembers
 

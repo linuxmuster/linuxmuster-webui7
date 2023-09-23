@@ -55,6 +55,7 @@
         action = group.membership ? 'removemembers' : 'addmembers';
       } else {
         type = group.type;
+        // TODO: seems to be wrong here
         action = group.membership ? 'removeadmins' : 'addadmins';
       }
       return $http.post('/api/lmn/groupmembership/membership', {
@@ -146,7 +147,7 @@
       });
     };
     $scope.projectIsJoinable = function(project) {
-      return project['joinable'] || project.admin || identity.profile.isAdmin || $scope.identity.profile.memberOf.indexOf(project['DN']) > -1;
+      return project['sophomorixJoinable'] || project.admin || identity.profile.isAdmin || $scope.identity.profile.projects.indexOf(project['cn']) > -1;
     };
     $scope.resetAll = function(type) {
       var warning;

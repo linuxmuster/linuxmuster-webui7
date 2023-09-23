@@ -42,10 +42,6 @@ class Handler(HttpPlugin):
             for group in user_details['memberOf']:
                 usergroups.append(group.split(',')[0].split('=')[1])
 
-        # get all available classes and projects
-        # sophomorixCommand = ['sophomorix-query', '--class', '--project', '--schoolbase', schoolname, '--group-full', '-jj']
-        # groups = lmn_getSophomorixValue(sophomorixCommand, '')
-        # get all available groups TODO
         groups = self.context.ldapreader.get('/projects', dict=False) + self.context.ldapreader.get('/schoolclasses', dict=False)
 
         # build membershipList with membership status
@@ -63,13 +59,11 @@ class Handler(HttpPlugin):
                 # Project name always starts with p_, but not classname
                 if group.cn.startswith("p_"):
                     membershipDict['type'] = 'project'
-                    membershipDict['typename'] = 'Project'
                     group.get_all_members()
                     membershipDict['membersCount'] = group.membersCount
                     membershipDict['adminsCount'] = group.adminsCount
                 else:
                     membershipDict['type'] = 'schoolclass'
-                    membershipDict['typename'] = 'Class'
 
                 membershipList.append(membershipDict)
 
@@ -79,10 +73,10 @@ class Handler(HttpPlugin):
 
         for printergroup in printergroups:
           if printergroup in usergroups or isAdmin:
-            membershipList.append({'type': 'printergroup', 'typename': 'Printer', 'groupname': printergroup, 'membership': True})
+            membershipList.append({'type': 'printergroup', 'groupname': printergroup, 'membership': True})
           else:
-            membershipList.append({'type': 'printergroup', 'typename': 'Printer', 'groupname': printergroup, 'membership': False})
-        return membershipList, isAdmin, user_details
+            membershipList.append({'type': 'printergroup', 'groupname': printergroup, 'membership': False})
+        return membershipList
 
     @get(r'/api/lmn/groupmembership/groups/(?P<groupName>.+)')
     @authorize('lmn:groupmemberships:write')

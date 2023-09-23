@@ -38,14 +38,13 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
 
   $scope.setMembership = (group) ->
     $scope.changeState = true
-    action = if group.membership then 'removeadmins' else 'addadmins'
-    if group.typename == 'Class'
-        type = 'class'
-    else if group.typename == 'Printer'
+    if group.type == 'printer'
         type = 'group'
         action = if group.membership then 'removemembers' else 'addmembers'
     else
-        type = 'project'
+        type = group.type
+        action = if group.membership then 'removeadmins' else 'addadmins'
+
     $http.post('/api/lmn/groupmembership/membership', {action: action, entity: $scope.identity.user, groupname: group.groupname, type: type}).then (resp) ->
         if resp['data'][0] == 'ERROR'
             notify.error (resp['data'][1])

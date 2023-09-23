@@ -21,4 +21,4 @@ angular.module('lmn.auth').controller 'LMNPasswordChangeCtrl', ($scope, $http, p
             notify.success gettext('Password changed')
             window.location.replace('landingpage')
         .catch (e) ->
-            notify.error gettext('Password change failed')
+            notify.error(gettext('Password change failed: ') + e.data.message)

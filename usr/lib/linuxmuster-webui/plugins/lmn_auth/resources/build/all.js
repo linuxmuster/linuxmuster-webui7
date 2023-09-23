@@ -50,7 +50,7 @@
         notify.success(gettext('Password changed'));
         return window.location.replace('landingpage');
       }).catch(function(e) {
-        return notify.error(gettext('Password change failed'));
+        return notify.error(gettext('Password change failed: ') + e.data.message);
       });
     };
   });

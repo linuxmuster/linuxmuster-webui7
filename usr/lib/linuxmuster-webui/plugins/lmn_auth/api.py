@@ -299,7 +299,6 @@ class LMAuthenticationProvider(AuthenticationProvider):
             return {'activeSchool': 'default-school'}
         try:
             profil = self.get_ldap_user(username)
-            profil['isAdmin'] = "administrator" in profil['sophomorixRole']
             # Test purpose for multischool
             if profil['sophomorixSchoolname'] == 'global':
                 profil['activeSchool'] = "default-school"

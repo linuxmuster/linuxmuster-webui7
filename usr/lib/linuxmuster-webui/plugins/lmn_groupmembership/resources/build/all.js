@@ -19,6 +19,9 @@
     $scope.show_schoolclasses = true;
     $scope.show_projects = true;
     $scope.show_printers = true;
+    $scope.loading_schoolclasses = true;
+    $scope.loading_projects = true;
+    $scope.loading_printers = true;
     $scope.sorts = [
       {
         name: gettext('Groupname'),
@@ -48,21 +51,24 @@
     };
     $scope.changeState = false;
     $scope.setMembership = function(group) {
-      var action, type;
+      var action, sophomorix_type_map;
       $scope.changeState = true;
+      sophomorix_type_map = {
+        'printer': 'group',
+        'schoolclass': 'class',
+        'project': 'project'
+      };
       if (group.type === 'printer') {
-        type = 'group';
         action = group.membership ? 'removemembers' : 'addmembers';
       } else {
-        type = group.type;
-        // TODO: seems to be wrong here
+        // TODO: seems to be wrong for projects
         action = group.membership ? 'removeadmins' : 'addadmins';
       }
       return $http.post('/api/lmn/groupmembership/membership', {
         action: action,
         entity: $scope.identity.user,
         groupname: group.groupname,
-        type: type
+        type: sophomorix_type_map[group.type]
       }).then(function(resp) {
         if (resp['data'][0] === 'ERROR') {
           notify.error(resp['data'][1]);
@@ -91,12 +97,16 @@
     };
     $scope.getGroups = function(username) {
       $http.get('/api/lmn/groupmembership/projects').then(function(resp) {
-        return $scope.projects = resp.data;
+        $scope.projects = resp.data;
+        return $scope.loading_projects = false;
       });
-      return $http.get('/api/lmn/groupmembership/groups').then(function(resp) {
-        $scope.groups = resp.data;
-        $scope.classes = $scope.groups.filter($scope.filterGroupType('schoolclass'));
-        return $scope.printers = $scope.groups.filter($scope.filterGroupType('printergroup'));
+      $http.get('/api/lmn/groupmembership/printers').then(function(resp) {
+        $scope.printers = resp.data;
+        return $scope.loading_printers = false;
+      });
+      return $http.get('/api/lmn/groupmembership/schoolclasses').then(function(resp) {
+        $scope.classes = resp.data;
+        return $scope.loading_schoolclasses = false;
       });
     };
     $scope.createProject = function() {

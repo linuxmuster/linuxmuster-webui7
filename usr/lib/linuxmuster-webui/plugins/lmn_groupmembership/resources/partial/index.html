@@ -3,7 +3,7 @@
 
 <div samba-access>
 
-    <progress-spinner ng:show="(groups == null) || (changeState)"></progress-spinner>
+    <progress-spinner ng:show="changeState"></progress-spinner>
 
     <div class="alert alert-info" ng:show="need_krbcc_refresh" translate>
         These changes can only take effect if the session is renewed, otherwise it will be active after the next
@@ -11,7 +11,7 @@
         <a class="btn btn-default" ng:click="refresh_krbcc()"translate>Do it now</a>
     </div>
 
-    <div ng:show="groups != null">
+    <div>
         <div class="input-group">
 
             <input ng:model="filter" type="search" autofocus class="form-control" placeholder="Filter" typeahead-min-length="1" />
@@ -69,6 +69,7 @@
             <button class="btn btn-danger pull-right" ng:click="resetAll('class')" ng:show="identity.profile.isAdmin" translate><i class="fas fa-undo"></i></button>
             <h3 translate>Schoolclasses</h3>
             <br />
+            <progress-spinner ng:show="loading_schoolclasses"></progress-spinner>
             <div ng-if="classes.length== 0" class="alert alert-info">
                 <i class="fa fa-info-circle"></i>
                 <span translate> There are no schoolclasses available. Ask the administrator to import students</span>
@@ -93,6 +94,7 @@
         <div ng:show="show_printers">
             <h3 translate>Printer</h3>
             <br />
+            <progress-spinner ng:show="loading_printers"></progress-spinner>
             <div ng-if="printers.length == 0" class="alert alert-info">
                 <i class="fa fa-info-circle"></i>
                 <span translate> There are no printers configured yet. Ask your administrator to configure one.</span>
@@ -118,6 +120,7 @@
             <button class="btn btn-danger pull-right" ng:click="resetAll('project')" ng:show="identity.profile.isAdmin" translate><i class="fas fa-undo"></i></button>
             <h3 translate>Projects</h3>
             <br />
+            <progress-spinner ng:show="loading_projects"></progress-spinner>
             <div ng-if="projects.length == 0" class="alert alert-info">
                 <i class="fa fa-info-circle"></i>
                 <span translate> There are no projects yet. You can create a new project using the menu bar.</span>

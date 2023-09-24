@@ -11,6 +11,9 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
   $scope.show_schoolclasses = true
   $scope.show_projects = true
   $scope.show_printers = true
+  $scope.loading_schoolclasses = true
+  $scope.loading_projects = true
+  $scope.loading_printers = true
 
   $scope.sorts = [
     {
@@ -38,15 +41,18 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
 
   $scope.setMembership = (group) ->
     $scope.changeState = true
+    sophomorix_type_map = {'printer': 'group', 'schoolclass': 'class', 'project': 'project'}
     if group.type == 'printer'
-        type = 'group'
         action = if group.membership then 'removemembers' else 'addmembers'
     else
-        type = group.type
-        # TODO: seems to be wrong here
+        # TODO: seems to be wrong for projects
         action = if group.membership then 'removeadmins' else 'addadmins'
 
-    $http.post('/api/lmn/groupmembership/membership', {action: action, entity: $scope.identity.user, groupname: group.groupname, type: type}).then (resp) ->
+    $http.post('/api/lmn/groupmembership/membership', {
+        action: action,
+        entity: $scope.identity.user,
+        groupname: group.groupname,
+        type: sophomorix_type_map[group.type]}).then (resp) ->
         if resp['data'][0] == 'ERROR'
             notify.error (resp['data'][1])
         if resp['data'][0] == 'LOG'
@@ -68,10 +74,13 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
   $scope.getGroups = (username) ->
     $http.get('/api/lmn/groupmembership/projects').then (resp) ->
       $scope.projects = resp.data
-    $http.get('/api/lmn/groupmembership/groups').then (resp) ->
-      $scope.groups = resp.data
-      $scope.classes = $scope.groups.filter($scope.filterGroupType('schoolclass'))
-      $scope.printers = $scope.groups.filter($scope.filterGroupType('printergroup'))
+      $scope.loading_projects = false
+    $http.get('/api/lmn/groupmembership/printers').then (resp) ->
+      $scope.printers = resp.data
+      $scope.loading_printers = false
+    $http.get('/api/lmn/groupmembership/schoolclasses').then (resp) ->
+      $scope.classes = resp.data
+      $scope.loading_schoolclasses = false
 
   $scope.createProject = () ->
     messagebox.prompt(gettext('Project Name'), '').then (msg) ->

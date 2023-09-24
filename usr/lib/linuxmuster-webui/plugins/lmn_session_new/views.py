@@ -19,9 +19,8 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_get_sessions(self, http_context):
         user = self.context.identity
-        schoolname = self.context.schoolmgr.school
 
-        sessions = self.context.ldapreader.get(f'/users/{user}', dict=False, school=schoolname).sophomorixSessions
+        sessions = self.context.ldapreader.schoolget(f'/users/{user}', dict=False).sophomorixSessions
         sessionsList = []
         for session in sessions:
             s = {
@@ -39,12 +38,11 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_get_schoolclasses(self, http_context):
         user = self.context.identity
-        schoolname = self.context.schoolmgr.school
 
-        schoolclasses = self.context.ldapreader.get(f'/users/{user}', dict=False, school=schoolname).schoolclasses
+        schoolclasses = self.context.ldapreader.schoolget(f'/users/{user}', dict=False).schoolclasses
         schoolclassesList = []
         for schoolclass in schoolclasses:
-            details = self.context.ldapreader.get(f'/schoolclass/{schoolclass}', dict=False, school=schoolname)
+            details = self.context.ldapreader.schoolget(f'/schoolclass/{schoolclass}', dict=False)
             s = {
                 'name': details.cn,
                 'membersCount': len(details.sophomorixMembers),
@@ -59,12 +57,11 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_get_projects(self, http_context):
         user = self.context.identity
-        schoolname = self.context.schoolmgr.school
 
-        projects = self.context.ldapreader.get(f'/users/{user}', dict=False, school=schoolname).projects
+        projects = self.context.ldapreader.schoolget(f'/users/{user}', dict=False).projects
         projectsList = []
         for project in projects:
-            details = self.context.ldapreader.get(f'/projects/{project}', dict=False, school=schoolname)
+            details = self.context.ldapreader.schoolget(f'/projects/{project}', dict=False)
             s = {
                 'name': details.cn,
                 'membersCount': len(details.sophomorixMembers),
@@ -81,10 +78,9 @@ class Handler(HttpPlugin):
     def handle_api_userinfo(self, http_context):
 
         result = []
-        schoolname = self.context.schoolmgr.school
 
         def get_user_info(user):
-            details = self.context.ldapreader.get(f'/users/{user}', school=schoolname)
+            details = self.context.ldapreader.schoolget(f'/users/{user}')
             details['changed'] = False
             details['exammode-changed'] = False
             result.append(details)
@@ -262,16 +258,14 @@ class Handler(HttpPlugin):
     @authorize('lm:users:students:read')
     @endpoint(api=True)
     def handle_api_ldap_user_search(self, http_context, query=''):
-        schoolname = self.context.schoolmgr.school
-        userList = self.context.ldapreader.get(f'/users/search/student/{query}', school=schoolname)
+        userList = self.context.ldapreader.schoolget(f'/users/search/student/{query}')
         return sorted(userList, key=lambda d: f"{d['sophomorixAdminClass']}{d['sn']}{d['givenName']}")
 
     @get(r'/api/lmn/session/schoolClass-search/(?P<query>.*)')
     @authorize('lm:users:students:read')
     @endpoint(api=True)
     def handle_api_ldap_group_search(self, http_context, query=''):
-        schoolname = self.context.schoolmgr.school
-        return self.context.ldapreader.get(f'/schoolclasses/search/{query}', sortkey='cn', school=schoolname)
+        return self.context.ldapreader.schoolget(f'/schoolclasses/search/{query}', sortkey='cn')
 
     @post(r'/api/lmn/session/moveFileToHome')  ## TODO authorize
     @endpoint(api=True)

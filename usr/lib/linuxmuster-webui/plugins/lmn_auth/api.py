@@ -69,6 +69,17 @@ class LMAuthenticationProvider(AuthenticationProvider):
         schoolmgr.switch(active_school)
         self.context.schoolmgr = schoolmgr
         self.context.ldapreader = LMNLdapReader
+
+        def schoolget(*args, **kwargs):
+            """
+            This alias allow to automatically pass the school context for school
+            specific requests.
+            """
+
+            result = self.context.ldapreader.get(*args,**kwargs, school=self.context.schoolmgr.school)
+            return result
+
+        self.context.ldapreader.schoolget = schoolget
  
         # Permissions for kerberos ticket
         uid = self.get_isolation_uid(username)

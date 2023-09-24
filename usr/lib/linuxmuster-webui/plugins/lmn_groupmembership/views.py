@@ -30,11 +30,10 @@ class Handler(HttpPlugin):
         :rtype: list
         """
 
-        schoolname = self.context.schoolmgr.school
         username = self.context.identity
         user_profile = AuthenticationService.get(self.context).get_provider().get_profile(username)
 
-        projects = self.context.ldapreader.get('/projects', dict=False, school=schoolname)
+        projects = self.context.ldapreader.schoolget('/projects', dict=False)
         user_projects = []
 
         for project in projects:
@@ -67,10 +66,9 @@ class Handler(HttpPlugin):
         :rtype: list
         """
 
-        schoolname = self.context.schoolmgr.school
         username = self.context.identity
         user_profile = AuthenticationService.get(self.context).get_provider().get_profile(username)
-        printers = self.context.ldapreader.get('/printers', school=schoolname)
+        printers = self.context.ldapreader.schoolget('/printers')
 
         for printer in printers:
             printer['type'] = 'printergroup'
@@ -92,11 +90,10 @@ class Handler(HttpPlugin):
         :rtype: dict or tuple
         """
 
-        schoolname = self.context.schoolmgr.school
         username = self.context.identity
         user_profile = AuthenticationService.get(self.context).get_provider().get_profile(username)
 
-        schoolclasses = self.context.ldapreader.get('/schoolclasses', school=schoolname)
+        schoolclasses = self.context.ldapreader.schoolget('/schoolclasses')
 
         for schoolclass in schoolclasses:
             member = schoolclass['cn'] in user_profile['schoolclasses'] or user_profile['isAdmin']

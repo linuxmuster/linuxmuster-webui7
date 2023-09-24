@@ -36,7 +36,6 @@ class Handler(HttpPlugin):
         projects = self.context.ldapreader.get('/projects', dict=False)
         user_projects = []
 
-        # build membershipList with membership status
         for project in projects:
             member = project.cn in user_profile['projects'] or user_profile['isAdmin']
 
@@ -53,6 +52,33 @@ class Handler(HttpPlugin):
                 user_projects.append(projectDict)
 
         return user_projects
+
+    @get(r'/api/lmn/groupmembership/printers')
+    @authorize('lmn:groupmembership')
+    @endpoint(api=True)
+    def handle_api_list_printers(self, http_context):
+        """
+        List all printers.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: List of printers
+        :rtype: list
+        """
+
+        schoolname = self.context.schoolmgr.school
+        username = self.context.identity
+        user_profile = AuthenticationService.get(self.context).get_provider().get_profile(username)
+        printers = self.context.ldapreader.get('/printers', school=schoolname)
+        from pprint import pprint
+        pprint(list(user_profile.keys()))
+
+        for printer in printers:
+            printer['type'] = 'printergroup'
+            printer['groupname'] = printer['cn']
+            printer['membership'] = printer['cn'] in user_profile['printers'] or user_profile['isAdmin']
+
+        return printers
 
     @get(r'/api/lmn/groupmembership/groups')
     @authorize('lmn:groupmembership')
@@ -79,7 +105,7 @@ class Handler(HttpPlugin):
             for group in user_details['memberOf']:
                 usergroups.append(group.split(',')[0].split('=')[1])
 
-        groups = self.context.ldapreader.get('/projects', dict=False) + self.context.ldapreader.get('/schoolclasses', dict=False)
+        groups = self.context.ldapreader.get('/schoolclasses', dict=False)
 
         # build membershipList with membership status
         for group in groups:
@@ -103,15 +129,6 @@ class Handler(HttpPlugin):
 
                 membershipList.append(membershipDict)
 
-        #get printers
-        sophomorixCommand = ['sophomorix-query', '--printergroup', '--schoolbase', schoolname, '-jj']
-        printergroups = lmn_getSophomorixValue(sophomorixCommand, 'LISTS/GROUP')
-
-        for printergroup in printergroups:
-          if printergroup in usergroups or isAdmin:
-            membershipList.append({'type': 'printergroup', 'groupname': printergroup, 'membership': True})
-          else:
-            membershipList.append({'type': 'printergroup', 'groupname': printergroup, 'membership': False})
         return membershipList
 
     @get(r'/api/lmn/groupmembership/groups/(?P<groupName>.+)')

@@ -18,7 +18,6 @@ from aj.api.http import url, get, post, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
 from aj.auth import authorize, AuthenticationService
 from aj.plugins.lmn_common.mimetypes import content_mimetypes
-from aj.plugins.lmn_common.ldap.requests import LMNLdapRequests
 
 
 # TODO
@@ -31,7 +30,6 @@ from aj.plugins.lmn_common.ldap.requests import LMNLdapRequests
 class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
-        self.lr = LMNLdapRequests(context)
 
     @get(r'/api/lmn/smbclient/shares/(?P<user>.+)')
     @endpoint(api=True)
@@ -87,7 +85,7 @@ class Handler(HttpPlugin):
         """
 
         user = http_context.json_body().get('user', self.context.identity)
-        homepath = self.lr.get(f'/user/{user}', dict=False).homeDirectory
+        homepath = self.context.ldapreader.get(f'/users/{user}', dict=False).homeDirectory
         return self._smb_list_path(homepath)
 
 

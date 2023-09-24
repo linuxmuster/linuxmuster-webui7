@@ -23,7 +23,6 @@ from aj.config import UserConfigProvider
 from aj.plugins.lmn_common.api import ldap_config as params, lmsetup_schoolname, pwreset_config
 from aj.plugins.lmn_common.multischool import SchoolManager
 from aj.api.endpoint import EndpointError
-from aj.plugins.lmn_common.ldap.requests import LMNLdapRequests
 from linuxmusterTools.ldapconnector import LMNLdapReader
 
 
@@ -39,7 +38,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
     def __init__(self, context):
         self.context = context
-        self.lr = LMNLdapRequests(self.context)
+        self.lr = LMNLdapReader
 
     def get_ldap_user(self, username):
         """
@@ -53,7 +52,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
         :rtype: dict
         """
 
-        return self.lr.get(f'/user/{username}', school_oriented=False)
+        return self.lr.get(f'/users/{username}')
 
     def prepare_environment(self, username):
         """
@@ -176,7 +175,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
         ## Must be fixed in Ajenti
         if self.context.session.auth_info is None:
             permissions = {}
-            webuiPermissions = self.lr.get(f'/user/{username}', dict=False).sophomorixWebuiPermissionsCalculated
+            webuiPermissions = self.lr.get(f'/users/{username}', dict=False).sophomorixWebuiPermissionsCalculated
             for perm in webuiPermissions:
                 module, value = perm.split(': ')
                 try:

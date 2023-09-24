@@ -61,6 +61,10 @@ li.cardlist span.cardbtn button.cardbtn, li.cardlist div.cardbtn button.cardbtn,
   color: #ff8f00;
 }
 
+.bg-orange {
+  background-color: #ffecd3;
+}
+
 .color-theme {
   color: #233c4c;
 }
@@ -353,7 +357,7 @@ tr.leaders td span + span {
 .lmn-container-list > div {
   text-align: left;
   margin-left: 10px;
-  width: 220px;
+  width: 210px;
 }
 
 .lmn-container-list-separated {

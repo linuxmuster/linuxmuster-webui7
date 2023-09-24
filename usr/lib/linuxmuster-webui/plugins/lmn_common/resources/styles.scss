@@ -5,6 +5,7 @@ $theme-color: #233c4c;
 $theme-color-weak: #ABDEFF;
 $theme-color-orange:#ff8f00 ;
 $theme-color-orange-weak: #ffab40;
+$theme-color-orange-light: #ffecd3;
 
 //// maincontainer wider
 //@media (min-width: 1200px)
@@ -88,6 +89,10 @@ li.cardlist, span.cardlist {
 
 .color-orange {
     color: $theme-color-orange;
+}
+
+.bg-orange {
+    background-color: $theme-color-orange-light;
 }
 
 .color-theme {
@@ -427,7 +432,7 @@ tr.leaders {
 .lmn-container-list > div {
     text-align: left;
     margin-left: 10px;
-    width: 220px;
+    width: 210px;
 }
 
 .lmn-container-list-separated {

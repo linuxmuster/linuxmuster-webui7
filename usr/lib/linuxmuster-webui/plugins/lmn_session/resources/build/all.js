@@ -465,10 +465,8 @@
         }
       };
       //get groups
-      $http.get('/api/lmn/groupmembership/groups').then(function(resp) {
-        $scope.groups = resp.data[0];
-        $scope.identity.isAdmin = resp.data[1];
-        $scope.classes = $scope.groups.filter($scope.filterGroupType('schoolclass'));
+      $http.get('/api/lmn/groupmembership/schoolclasses').then(function(resp) {
+        $scope.classes = resp.data;
         return $scope.classes = $scope.classes.filter($scope.filterMembership(true));
       });
       return $http.get('/api/lmn/oldsession/sessions').then(function(resp) {
@@ -480,11 +478,6 @@
           return $scope.sessions = resp.data;
         }
       });
-    };
-    $scope.filterGroupType = function(val) {
-      return function(dict) {
-        return dict['type'] === val;
-      };
     };
     $scope.filterMembership = function(val) {
       return function(dict) {

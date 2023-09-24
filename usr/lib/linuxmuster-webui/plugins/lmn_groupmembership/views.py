@@ -30,10 +30,11 @@ class Handler(HttpPlugin):
         :rtype: list
         """
 
+        schoolname = self.context.schoolmgr.school
         username = self.context.identity
         user_profile = AuthenticationService.get(self.context).get_provider().get_profile(username)
 
-        projects = self.context.ldapreader.get('/projects', dict=False)
+        projects = self.context.ldapreader.get('/projects', dict=False, school=schoolname)
         user_projects = []
 
         for project in projects:
@@ -70,8 +71,6 @@ class Handler(HttpPlugin):
         username = self.context.identity
         user_profile = AuthenticationService.get(self.context).get_provider().get_profile(username)
         printers = self.context.ldapreader.get('/printers', school=schoolname)
-        from pprint import pprint
-        pprint(list(user_profile.keys()))
 
         for printer in printers:
             printer['type'] = 'printergroup'
@@ -80,56 +79,36 @@ class Handler(HttpPlugin):
 
         return printers
 
-    @get(r'/api/lmn/groupmembership/groups')
+    @get(r'/api/lmn/groupmembership/schoolclasses')
     @authorize('lmn:groupmembership')
     @endpoint(api=True)
     def handle_api_list_groups(self, http_context):
         """
-        List all groups.
+        List all schoolclasses and the current user's membership.
 
         :param http_context: HttpContext
         :type http_context: HttpContext
-        :return: List of groups or result for actions kill and create
+        :return: List of schoolclasses
         :rtype: dict or tuple
         """
 
         schoolname = self.context.schoolmgr.school
         username = self.context.identity
-        user_details = AuthenticationService.get(self.context).get_provider().get_profile(username)
-        isAdmin = "administrator" in user_details['sophomorixRole']
+        user_profile = AuthenticationService.get(self.context).get_provider().get_profile(username)
 
-        membershipList = []
-        usergroups = []
-        if not isAdmin:
-            # get groups specified user is member of
-            for group in user_details['memberOf']:
-                usergroups.append(group.split(',')[0].split('=')[1])
+        schoolclasses = self.context.ldapreader.get('/schoolclasses', school=schoolname)
 
-        groups = self.context.ldapreader.get('/schoolclasses', dict=False)
+        for schoolclass in schoolclasses:
+            member = schoolclass['cn'] in user_profile['schoolclasses'] or user_profile['isAdmin']
 
-        # build membershipList with membership status
-        for group in groups:
-            membershipDict = {}
+            if member or not schoolclass['sophomorixHidden']:
+                schoolclass['groupname'] = schoolclass['cn']
+                schoolclass['membership'] = member
+                schoolclass['admin'] = username in schoolclass['sophomorixAdmins'] or user_profile['isAdmin']
+                schoolclass['members'] = schoolclass['sophomorixMembers']
+                schoolclass['type'] = 'schoolclass'
 
-            if group.cn in usergroups or isAdmin or not group.sophomorixHidden:
-                membershipDict['groupname'] = group.cn
-                membershipDict['membership'] = group.cn in usergroups or isAdmin
-                membershipDict['admin'] = username in group.sophomorixAdmins or isAdmin
-                membershipDict['DN'] = group.dn
-                membershipDict['members'] = group.sophomorixMembers
-
-                # Project name always starts with p_, but not classname
-                if group.cn.startswith("p_"):
-                    membershipDict['type'] = 'project'
-                    group.get_all_members()
-                    membershipDict['membersCount'] = group.membersCount
-                    membershipDict['adminsCount'] = group.adminsCount
-                else:
-                    membershipDict['type'] = 'schoolclass'
-
-                membershipList.append(membershipDict)
-
-        return membershipList
+        return schoolclasses
 
     @get(r'/api/lmn/groupmembership/groups/(?P<groupName>.+)')
     @authorize('lmn:groupmemberships:write')

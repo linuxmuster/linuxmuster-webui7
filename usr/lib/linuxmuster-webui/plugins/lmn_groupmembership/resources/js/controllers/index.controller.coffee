@@ -52,7 +52,8 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
         action: action,
         entity: $scope.identity.user,
         groupname: group.groupname,
-        type: sophomorix_type_map[group.type]}).then (resp) ->
+        type: sophomorix_type_map[group.type]
+    }).then (resp) ->
         if resp['data'][0] == 'ERROR'
             notify.error (resp['data'][1])
         if resp['data'][0] == 'LOG'

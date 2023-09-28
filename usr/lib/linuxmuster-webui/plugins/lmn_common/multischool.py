@@ -194,30 +194,35 @@ class SchoolManager:
             'path' : f'{self.share_prefix}\\students',
             'icon' : 'fas fa-user-graduate',
             'active': False,
+            'id': 'students',
         }
         share = {
             'name' : get_share_label('share', 'Share'),
             'path' : f'{self.share_prefix}\\share',
             'icon' : 'fas fa-hand-holding',
             'active': False,
+            'id': 'share',
         }
         program = {
             'name' : get_share_label('program', 'Programs'),
             'path' : f'{self.share_prefix}\\program',
             'icon' : 'fas fa-desktop',
             'active': False,
+            'id': 'program',
         }
         iso = {
             'name' : get_share_label('iso', 'ISO'),
             'path' : f'{self.share_prefix}\\iso',
             'icon' : 'fas fa-compact-disc',
             'active': False,
+            'id': 'iso',
         }
         projects = {
             'name' : get_share_label('projects', 'Projects'),
             'path' : f'{self.share_prefix}\\share\\projects',
             'icon' : 'fas fa-atlas',
             'active': False,
+            'id': 'projects',
         }
 
         shares = {
@@ -238,27 +243,14 @@ class SchoolManager:
             ]
         }
 
-        # TODO: Use GPO to determine if the share should be shown
-        # Must be rewritten
-        try:
-            if not self.drives.drives_dict['program']['disabled']:
-                shares['teacher'].append(program)
-                shares['student'].append(program)
-        except KeyError:
-            # Programs not in Drives.xml, ignoring
-            pass
-        try:
-            if not self.drives.drives_dict['share']['disabled']:
-                shares['teacher'].append(share)
-                shares['student'].append(share)
-        except KeyError:
-            # Shares not in Drives.xml, ignoring
-            pass
-        try:
-            if not self.drives.drives_dict['students']['disabled']:
+        # TODO: Missing filters
+        # TODO: Missing user defined shares
+        for standard_share in [program, iso, projects, share]:
+            if not self.drives.drives_dict.get(standard_share['id'], {}).get('disabled', False):
+                shares['teacher'].append(standard_share)
+                shares['student'].append(standard_share)
+
+        if not self.drives.drives_dict.get('students', {}).get('disabled', False):
                 shares['teacher'].append(students)
-        except KeyError:
-            # Students-Home not in Drives.xml ?? Ignoring
-            pass
 
         return shares[role]

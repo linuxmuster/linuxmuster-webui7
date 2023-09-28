@@ -162,6 +162,9 @@ class SchoolManager:
         home_path = self.get_homepath(user_context)
         role = user_context['role']
 
+        def get_share_label(share_name, default):
+            return self.drives.drives_dict.get(share_name, {}).get('label', default)
+
         home = {
             'name' : 'Home',
             'path' : home_path,
@@ -187,31 +190,31 @@ class SchoolManager:
         #     'active': False,
         # }
         students = {
-            'name' : 'Students',
+            'name' : get_share_label('students', 'Students'),
             'path' : f'{self.share_prefix}\\students',
             'icon' : 'fas fa-user-graduate',
             'active': False,
         }
         share = {
-            'name' : 'Share',
+            'name' : get_share_label('share', 'Share'),
             'path' : f'{self.share_prefix}\\share',
             'icon' : 'fas fa-hand-holding',
             'active': False,
         }
         program = {
-            'name' : 'Programs',
+            'name' : get_share_label('program', 'Programs'),
             'path' : f'{self.share_prefix}\\program',
             'icon' : 'fas fa-desktop',
             'active': False,
         }
         iso = {
-            'name' : 'ISO',
+            'name' : get_share_label('iso', 'ISO'),
             'path' : f'{self.share_prefix}\\iso',
             'icon' : 'fas fa-compact-disc',
             'active': False,
         }
         projects = {
-            'name' : 'Projects',
+            'name' : get_share_label('projects', 'Projects'),
             'path' : f'{self.share_prefix}\\share\\projects',
             'icon' : 'fas fa-atlas',
             'active': False,

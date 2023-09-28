@@ -79,9 +79,9 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_get_samba_drives(self, http_context):
 
-        self.context.schoolmgr.Drives.load()
-        drives = self.context.schoolmgr.Drives.drives
-        usedLetters = self.context.schoolmgr.Drives.usedLetters
+        self.context.schoolmgr.drivemgr.load()
+        drives = self.context.schoolmgr.drivemgr.aslist()
+        usedLetters = self.context.schoolmgr.drivemgr.usedLetters
 
         availableDriveLetters = [ {
             'letter': l,
@@ -98,5 +98,5 @@ class Handler(HttpPlugin):
     def handle_api_post_samba_drives(self, http_context):
 
         drives_config = http_context.json_body()['drives']
-        self.context.schoolmgr.Drives.save(drives_config)
+        self.context.schoolmgr.drivemgr.save(drives_config)
 

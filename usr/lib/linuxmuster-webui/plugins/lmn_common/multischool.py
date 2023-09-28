@@ -204,12 +204,18 @@ class SchoolManager:
             'icon' : 'fas fa-desktop',
             'active': False,
         }
-        # iso = {
-        #     'name' : 'ISO',
-        #     'path' : f'{share_prefix}\\iso',
-        #     'icon' : 'fas fa-compact-disc',
-        #     'active': False,
-        # }
+        iso = {
+            'name' : 'ISO',
+            'path' : f'{self.share_prefix}\\iso',
+            'icon' : 'fas fa-compact-disc',
+            'active': False,
+        }
+        projects = {
+            'name' : 'Projects',
+            'path' : f'{self.share_prefix}\\share\\projects',
+            'icon' : 'fas fa-atlas',
+            'active': False,
+        }
 
         shares = {
             'globaladministrator': [

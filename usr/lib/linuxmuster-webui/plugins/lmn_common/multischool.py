@@ -123,7 +123,7 @@ class SchoolManager:
         Load Drives.xml content from school policies
         """
 
-        self.gpo = self.gpomgr.gpos.get(f"sophomorix:schol:{self.school}", None)
+        self.gpo = self.gpomgr.gpos.get(f"sophomorix:school:{self.school}", None)
         if self.gpo:
             self.drives = self.gpo.drives
         else:

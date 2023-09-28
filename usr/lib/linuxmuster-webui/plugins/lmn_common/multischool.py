@@ -4,7 +4,7 @@ import logging
 from io import StringIO
 from configobj import ConfigObj
 from subprocess import check_output
-from linuxmusterTools.sambaTool import Drives, GPOManager
+from linuxmusterTools.sambaTool import DriveManager, GPOManager
 
 from aj.plugins.lmn_common.api import samba_realm, samba_netbios, samba_override, lmn_getSophomorixValue
 from aj.plugins.lmn_common.lmnfile import LMNFile
@@ -125,9 +125,11 @@ class SchoolManager:
 
         self.gpo = self.gpomgr.gpos.get(f"sophomorix:school:{self.school}", None)
         if self.gpo:
-            self.drives = self.gpo.drives
+            self.drivemgr = self.gpo.drivemgr
         else:
-            self.drives = Drives(None)
+            self.drivemgr = DriveManager(None)
+
+        self.drives = self.drivemgr.drives
 
     def get_share_prefix(self):
 
@@ -163,7 +165,9 @@ class SchoolManager:
         role = user_context['role']
 
         def get_share_label(share_name, default):
-            return self.drives.drives_dict.get(share_name, {}).get('label', default)
+            for drive in self.drives:
+                if share_name == drive.id:
+                    return drive.label or default
 
         home = {
             'name' : 'Home',
@@ -245,12 +249,12 @@ class SchoolManager:
 
         # TODO: Missing filters
         # TODO: Missing user defined shares
-        for standard_share in [program, iso, projects, share]:
-            if not self.drives.drives_dict.get(standard_share['id'], {}).get('disabled', False):
-                shares['teacher'].append(standard_share)
-                shares['student'].append(standard_share)
-
-        if not self.drives.drives_dict.get('students', {}).get('disabled', False):
-                shares['teacher'].append(students)
+        for standard_share in [program, iso, projects, share, students]:
+            for drive in self.drives:
+                if standard_share['id'] == drive.id:
+                    if drive.visible('teachers'):
+                        shares['teacher'].append(standard_share)
+                    if drive.visible('students'):
+                        shares['student'].append(standard_share)
 
         return shares[role]

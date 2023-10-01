@@ -169,6 +169,11 @@ class SchoolManager:
                 if share_name == drive.id:
                     return drive.label or default
 
+        def get_share_disabled(share_id):
+            for drive in self.drives:
+                if share_id == drive.id:
+                    return drive.disabled
+
         home = {
             'name' : 'Home',
             'path' : home_path,
@@ -229,7 +234,15 @@ class SchoolManager:
             'id': 'projects',
         }
 
-        shares = {
+        standard_shares = {
+            'projects': projects,
+            'iso': iso,
+            'program': program,
+            'share':share,
+            'students':students,
+        }
+
+        roles_shares = {
             'globaladministrator': [
                 home,
                 linuxmuster_global,
@@ -238,7 +251,8 @@ class SchoolManager:
             'schooladministrator': [
                 home,
                 all_schools,
-            ],
+            ]
+            ,
             'teacher': [
                 home,
             ],
@@ -247,14 +261,19 @@ class SchoolManager:
             ]
         }
 
-        # TODO: Missing filters
+        # TODO: Use visible method from lmntools, but first when it interprets
+        # the filter correctly. Something like:
+        # drive.visible(user)
+        # where user is a user object from ldapreader, containing all infos.
         # TODO: Missing user defined shares
-        for standard_share in [program, iso, projects, share, students]:
-            for drive in self.drives:
-                if standard_share['id'] == drive.id:
-                    if drive.visible('teachers'):
-                        shares['teacher'].append(standard_share)
-                    if drive.visible('students'):
-                        shares['student'].append(standard_share)
+        for share_id,standard_share in standard_shares.items():
+            # This basic test only get the disabled attribute.
+            if share_id != 'students':
+                if not get_share_disabled(share_id):
+                    roles_shares['teacher'].append(standard_share)
+                    roles_shares['student'].append(standard_share)
 
-        return shares[role]
+        if not get_share_disabled('students'):
+            roles_shares['teacher'].append(students)
+
+        return roles_shares[role]

@@ -17,7 +17,7 @@ from jadi import component
 from aj.api.http import url, get, post, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
 from aj.auth import authorize, AuthenticationService
-from aj.plugins.lmn_common.mimetypes import content_mimetypes
+from aj.plugins.lmn_common.mimetypes import content_mimetypes, content_filetypes
 
 
 # TODO
@@ -113,6 +113,7 @@ class Handler(HttpPlugin):
             items = []
             for item in smbclient.scandir(path):
                 item_path = os.path.join(path, item.name) # TODO
+                ext = os.path.splitext(item.name)[1]
 
                 data = {
                     'name': item.name,
@@ -122,6 +123,7 @@ class Handler(HttpPlugin):
                     'isDir': item.is_dir(),
                     'isFile': item.is_file(),
                     'isLink': item.is_symlink(),
+                    'filetype': content_filetypes.get(ext, 'file'),
                 }
 
                 try:

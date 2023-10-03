@@ -72,7 +72,8 @@
                     {{item.name}}
                 </a>
                 <span class="list-group-main" ng:if="item.isFile">
-                    <i class="fa fa-fw fa-file-o"></i>
+<!--                    <i class="fa fa-fw fa-file-o"></i>-->
+                    <i ng:class="get_file_icon(item.filetype)"></i>
                     {{item.name}}
                     <span class="subtle">{{item.size|bytes}}</span>
                 </span>

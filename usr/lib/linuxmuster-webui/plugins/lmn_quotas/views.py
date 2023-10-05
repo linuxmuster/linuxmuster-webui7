@@ -335,8 +335,8 @@ class Handler(HttpPlugin):
         total = 0
         for directory, size in directories.items():
             total += size
-            mega = round(size / 1024 /1024, 2)
-            directories[directory] = mega
+            mega = size / 1024 /1024
+            directories[directory] = f"{mega:.2f}"
 
-        return directories, round(total / 1024 / 1024, 2)
+        return directories, f"{total / 1024 / 1024:.2f}"
 

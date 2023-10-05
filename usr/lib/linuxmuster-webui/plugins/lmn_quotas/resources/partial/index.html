@@ -174,11 +174,11 @@
                     </tr>
                     <tr ng:repeat="(dir, size) in user_directories">
                         <td>{{dir}}</td>
-                        <td>{{size}}</td>
+                        <td style="text-align: right;">{{size}} MiB</td>
                     </tr>
                     <tr>
                         <th translate>Total</th>
-                        <th>{{user_total_size}}</th>
+                        <th style="text-align: right;">{{user_total_size}} MiB</th>
                     </tr>
                 </table>
             </div>

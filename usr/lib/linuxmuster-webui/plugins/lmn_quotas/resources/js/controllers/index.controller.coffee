@@ -29,13 +29,15 @@ angular.module('lmn.quotas').controller 'LMQuotasController', ($scope, $http, $u
     $scope.UserSearchVisible = false
     $scope.tabs = ['student', 'teacher', 'schooladministrator', 'schoolclass', 'project', 'quota_check']
 
-
     $scope.quota_check_init = () ->
         $scope.show_table_user_quota_check = false
         $scope.checking_quota_user = false
         $scope._.quota_user_check = ''
         $scope.user_directories = {}
         $scope.user_total_size = 0
+
+    $scope.clearQuotaCheckSelect = () ->
+       $scope._.quota_user_check = ''
 
     $scope.toChange = {
         'teacher': {},
@@ -52,7 +54,7 @@ angular.module('lmn.quotas').controller 'LMQuotasController', ($scope, $http, $u
         addNewSpecial: null,
         quota_user_check: ''
 
-    $scope.searchText = gettext('Search user by login, firstname or lastname (min. 3 chars), without special char.')
+    $scope.searchText = gettext('Search user by login, firstname or lastname (min. 3 chars)')
 
     # Need an array to keep the order ...
     $scope.quota_types = [

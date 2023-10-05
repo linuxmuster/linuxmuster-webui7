@@ -44,6 +44,9 @@
       $scope.user_directories = {};
       return $scope.user_total_size = 0;
     };
+    $scope.clearQuotaCheckSelect = function() {
+      return $scope._.quota_user_check = '';
+    };
     $scope.toChange = {
       'teacher': {},
       'student': {},
@@ -57,7 +60,7 @@
       addNewSpecial: null,
       quota_user_check: ''
     };
-    $scope.searchText = gettext('Search user by login, firstname or lastname (min. 3 chars), without special char.');
+    $scope.searchText = gettext('Search user by login, firstname or lastname (min. 3 chars)');
     // Need an array to keep the order ...
     $scope.quota_types = [
       {

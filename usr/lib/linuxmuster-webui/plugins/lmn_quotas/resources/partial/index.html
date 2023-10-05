@@ -152,20 +152,23 @@
             </form>
             <progress-spinner ng:show="checking_quota_user"></progress-spinner>
             <hr />
-            <table class="table" ng:show="show_table_user_quota_check">
-                <tr>
-                    <th translate>Directory</th>
-                    <th translate>Size (MiB)</th>
-                </tr>
-                <tr ng:repeat="(dir, size) in user_directories">
-                    <td>{{dir}}</td>
-                    <td>{{size}}</td>
-                </tr>
-                <tr>
-                    <th translate>Total</th>
-                    <th>{{user_total_size}}</th>
-                </tr>
-            </table>
+            <div ng:show="show_table_user_quota_check">
+                <h3 translate>Main quota use for the user {{_.quota_user_check.label}}</h3>
+                <table class="table" ng:show="show_table_user_quota_check">
+                    <tr>
+                        <th translate>Directory</th>
+                        <th translate>Size (MiB)</th>
+                    </tr>
+                    <tr ng:repeat="(dir, size) in user_directories">
+                        <td>{{dir}}</td>
+                        <td>{{size}}</td>
+                    </tr>
+                    <tr>
+                        <th translate>Total</th>
+                        <th>{{user_total_size}}</th>
+                    </tr>
+                </table>
+            </div>
         </uib:tab>
     </uib:tabset>
 

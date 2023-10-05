@@ -141,7 +141,7 @@
             <form ng:submit="quota_check()">
                 <div class="row">
                     <label class="col-md-3" translate>List main directories for user:</label>
-                    <input type="text" placeholder="{{searchText}}" ng:model="_.quota_user_check" typeahead-editable="false" typeahead-min-length="3" uib-typeahead="user as user.label for user in findUsers($viewValue)" class="col-md-7" autofocus />
+                    <input type="text" placeholder="{{searchText}}" ng:model="_.quota_user_check" typeahead-on-select="quota_check()" typeahead-editable="false" typeahead-min-length="3" uib-typeahead="user as user.label for user in findUsers($viewValue)" class="col-md-7" autofocus />
                     <div class="col-md-2">
                         <button ng:click="quota_check()" class="btn btn-default">
                             Check

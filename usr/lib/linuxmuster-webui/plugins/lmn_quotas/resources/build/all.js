@@ -149,6 +149,9 @@
       });
     };
     $scope.quota_check = function() {
+      if (!$scope._.quota_user_check) {
+        return;
+      }
       $scope.checking_quota_user = true;
       $scope.show_table_user_quota_check = false;
       return $http.get(`/api/lmn/quota/check/${$scope._.quota_user_check.login}`).then(function(resp) {

@@ -117,6 +117,8 @@ angular.module('lmn.quotas').controller 'LMQuotasController', ($scope, $http, $u
             return resp.data
 
     $scope.quota_check = () ->
+        if (!$scope._.quota_user_check)
+            return
         $scope.checking_quota_user = true
         $scope.show_table_user_quota_check = false
         $http.get("/api/lmn/quota/check/#{$scope._.quota_user_check.login}").then (resp) ->

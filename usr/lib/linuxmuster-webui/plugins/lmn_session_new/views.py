@@ -20,7 +20,7 @@ class Handler(HttpPlugin):
     def handle_api_get_sessions(self, http_context):
         user = self.context.identity
 
-        sessions = self.context.ldapreader.schoolget(f'/users/{user}', dict=False).sophomorixSessions
+        sessions = self.context.ldapreader.schoolget(f'/users/{user}', dict=False).lmnsessions
         sessionsList = []
         for session in sessions:
             s = {
@@ -42,7 +42,7 @@ class Handler(HttpPlugin):
         schoolclasses = self.context.ldapreader.schoolget(f'/users/{user}', dict=False).schoolclasses
         schoolclassesList = []
         for schoolclass in schoolclasses:
-            details = self.context.ldapreader.schoolget(f'/schoolclass/{schoolclass}', dict=False)
+            details = self.context.ldapreader.schoolget(f'/schoolclasses/{schoolclass}', dict=False)
             s = {
                 'name': details.cn,
                 'membersCount': len(details.sophomorixMembers),

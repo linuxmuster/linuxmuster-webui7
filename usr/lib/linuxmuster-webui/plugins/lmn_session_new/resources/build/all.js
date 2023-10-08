@@ -82,6 +82,16 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         $location.path('/view/lmn/session');
     };
 
+    this.getExamUsers = function () {
+        users = _this.current.members.map(function (user) {
+            return user.cn;
+        });
+        $http.post('/api/lmn/session/exam/userinfo', { 'users': users }).then(function (resp) {
+            _this.current.members = resp.data;console.log(resp.data, _this.current);
+            $location.path('/view/lmn/session');
+        });
+    };
+
     this.new = function () {
         var members = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 
@@ -157,6 +167,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     $scope.sessionChanged = false;
     $scope.addParticipant = '';
     $scope.addSchoolClass = '';
+    $scope.examMode = false;
     $window.onbeforeunload = function(event) {
       if (!$scope.sessionChanged) {
         return;
@@ -268,6 +279,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       return $location.path('/view/lmn/sessionsList');
     };
     $scope.session = lmnSession.current;
+    console.log($scope.session);
     if ($scope.session.type === 'schoolclass') {
       title = " > " + gettext("Schoolclass") + ` ${$scope.session.name}`;
     } else if ($scope.session.type === 'room') {
@@ -478,21 +490,24 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         }
       }
     };
-    $scope.changeExamSupervisor = function(participant, supervisor) {
-      return $http.post('/api/lmn/session/sessions', {
-        action: 'change-exam-supervisor',
-        supervisor: supervisor,
-        participant: participant
-      }).then(function(resp) {});
-    };
-    $scope.endExam = function(participant, supervisor, session, sessionName) {
-      return $http.patch(`/api/lmn/session/exam/${sessionName}`, {
-        supervisor: supervisor,
-        participant: participant
+    $scope.startExam = function() {
+      // End exam for a whole group
+      return $http.patch("/api/lmn/session/exam/start", {
+        session: $scope.session
       }).then(function(resp) {
-        return $scope.getParticipants(session);
+        $scope.examMode = true;
+        return lmnSession.getExamUsers();
       });
     };
+    $scope.stopExam = function() {
+      // End exam for a whole group
+      return $http.patch("/api/lmn/session/exam/stop", {
+        session: $scope.session
+      }).then(function(resp) {
+        return $scope.examMode = false;
+      });
+    };
+    // reload session
     $scope._checkExamUser = function(username) {
       if (username.endsWith('-exam')) {
         messagebox.show({
@@ -983,12 +998,6 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       return $scope.getSessions();
     });
   });
-
-  //angular.module('lmn.session_new').controller 'LMNRoomDetailsController', ($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, usersInRoom) ->
-//        $scope.usersInRoom = usersInRoom
-
-//        $scope.close = () ->
-//            $uibModalInstance.dismiss()
 
 }).call(this);
 

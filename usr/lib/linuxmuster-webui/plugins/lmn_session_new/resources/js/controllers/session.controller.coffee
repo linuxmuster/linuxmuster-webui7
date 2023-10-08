@@ -4,6 +4,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
     $scope.sessionChanged = false
     $scope.addParticipant = ''
     $scope.addSchoolClass = ''
+    $scope.examMode = false
 
     $window.onbeforeunload = (event) ->
         if !$scope.sessionChanged
@@ -101,6 +102,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         $location.path('/view/lmn/sessionsList')
 
     $scope.session = lmnSession.current
+    console.log($scope.session)
 
     if $scope.session.type == 'schoolclass'
         title = " > " + gettext("Schoolclass") + " #{$scope.session.name}"
@@ -249,12 +251,17 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
                 $http.patch('/api/lmn/session/participants', {'users':[participant.sAMAccountName], 'session': $scope.session.sid}).then () ->
                     $scope.session.members.splice(deleteIndex, 1)
 
-    $scope.changeExamSupervisor = (participant, supervisor) ->
-        $http.post('/api/lmn/session/sessions', {action: 'change-exam-supervisor', supervisor: supervisor, participant: participant}).then (resp) ->
+    $scope.startExam = () ->
+        # End exam for a whole group
+        $http.patch("/api/lmn/session/exam/start", {session: $scope.session}).then (resp) ->
+            $scope.examMode = true
+            lmnSession.getExamUsers()
 
-    $scope.endExam = (participant, supervisor,session, sessionName) ->
-        $http.patch("/api/lmn/session/exam/#{sessionName}", {supervisor: supervisor, participant: participant}).then (resp) ->
-            $scope.getParticipants(session)
+    $scope.stopExam = () ->
+        # End exam for a whole group
+        $http.patch("/api/lmn/session/exam/stop", {session: $scope.session}).then (resp) ->
+            $scope.examMode = false
+            # reload session
 
     $scope._checkExamUser = (username) ->
         if username.endsWith('-exam')

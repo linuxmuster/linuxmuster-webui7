@@ -81,13 +81,34 @@ class Handler(HttpPlugin):
 
         def get_user_info(user):
             details = self.context.ldapreader.schoolget(f'/users/{user}')
-            details['changed'] = False
-            details['exammode-changed'] = False
+            details['changed'] = False # TODO: usefull ?
+            details['exammode-changed'] = False # TODO : usefull ?
             result.append(details)
 
         users = http_context.json_body()['users']
         with futures.ThreadPoolExecutor() as executor:
             infos = executor.map(get_user_info, users)
+        return(result)
+
+    # TODO : post is wrong here
+    @post(r'/api/lmn/session/exam/userinfo')
+    @authorize('lm:users:students:read')
+    @endpoint(api=True)
+    def handle_api_exam_userinfo(self, http_context):
+
+        result = []
+
+        def get_exam_user_info(user):
+            details = self.context.ldapreader.schoolget(f'/users/exam/{user}')
+            details['changed'] = False # TODO : usefull ?
+            details['exammode-changed'] = False # TODO : TODO : usefull ?
+            result.append(details)
+
+        users = http_context.json_body()['users']
+        print(users)
+        with futures.ThreadPoolExecutor() as executor:
+            infos = executor.map(get_exam_user_info, users)
+        print(result)
         return(result)
 
     @put(r'/api/lmn/session/sessions/(?P<session>[\w\+\-]*)')
@@ -118,7 +139,8 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_start_exam(self, http_context):
         supervisor = self.context.identity
-        participants = http_context.json_body()['participants']
+        session = http_context.json_body()['session']
+        participants = ','.join([member['cn'] for member in session['members']])
 
         try:
             sophomorixCommand = [
@@ -136,9 +158,10 @@ class Handler(HttpPlugin):
     @authorize('lm:users:students:read')
     @endpoint(api=True)
     def handle_api_stop_exam(self, http_context):
-        participants = http_context.json_body()['participants']
-        group_type = _(http_context.json_body()['group_type'])
-        group_name = http_context.json_body()['group_name']
+        session = http_context.json_body()['session']
+        participants = ','.join([member['cn'] for member in session['members']])
+        group_type = _(session['type'])
+        group_name = session['name']
 
         now = strftime("%Y%m%d_%H-%M-%S", localtime())
         target = f'EXAM_{group_type}_{group_name}_{now}'

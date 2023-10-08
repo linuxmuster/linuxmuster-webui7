@@ -56,6 +56,14 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
         $location.path('/view/lmn/session');
     }
 
+    this.getExamUsers = () => {
+       users = this.current.members.map((user) => user.cn);
+       $http.post('/api/lmn/session/exam/userinfo', {'users': users}).then((resp) => {
+            this.current.members = resp.data;console.log(resp.data, this.current);
+            $location.path('/view/lmn/session');
+        });
+    }
+
     this.new = (members = []) => {
         return messagebox.prompt(gettext('Session Name'), '').then((msg) => {
             if (!msg.value) {return}

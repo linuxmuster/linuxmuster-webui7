@@ -184,7 +184,8 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
         ## When 2FA is activated, auth_info is missing in prepare_session
         ## Must be fixed in Ajenti
-        if self.context.session.auth_info is None:
+        auth_info = getattr(self.context.session, 'auth_info', None)
+        if auth_info is None:
             permissions = {}
             webuiPermissions = self.lr.get(f'/users/{username}', dict=False).sophomorixWebuiPermissionsCalculated
             for perm in webuiPermissions:
@@ -235,7 +236,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
             return 0
         # GROUP CONTEXT
         try:
-            groupmembership = ''.join(self.get_ldap_user(username)['memberOf'])
+            groupmembership = ''.join(self.get_ldap_user(username).get('memberOf', []))
         except Exception:
             groupmembership = ''
         if 'role-globaladministrator' in groupmembership or 'role-schooladministrator' in groupmembership:
@@ -268,7 +269,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
             return 0
         # USER CONTEXT
         try:
-            groupmembership = ''.join(self.get_ldap_user(username)['memberOf'])
+            groupmembership = ''.join(self.get_ldap_user(username).get('memberOf', []))
         except Exception as e:
             logging.error(e)
             groupmembership = ''

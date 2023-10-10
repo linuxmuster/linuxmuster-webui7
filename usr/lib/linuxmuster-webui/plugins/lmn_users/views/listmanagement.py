@@ -230,7 +230,6 @@ class Handler(HttpPlugin):
         """
 
         sophomorixCommand = ['sophomorix-check', '-jj']
-        print("ici")
         results = lmn_getSophomorixValue(sophomorixCommand, '')
         ## Remove UPDATE entries which are also in KILL ( necessary to show it in KILL and UPDATE ? )
 

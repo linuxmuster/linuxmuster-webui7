@@ -105,10 +105,8 @@ class Handler(HttpPlugin):
             result.append(details)
 
         users = http_context.json_body()['users']
-        print(users)
         with futures.ThreadPoolExecutor() as executor:
             infos = executor.map(get_exam_user_info, users)
-        print(result)
         return(result)
 
     @put(r'/api/lmn/session/sessions/(?P<session>[\w\+\-]*)')

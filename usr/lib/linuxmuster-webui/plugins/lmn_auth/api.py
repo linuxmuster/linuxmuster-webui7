@@ -182,12 +182,15 @@ class LMAuthenticationProvider(AuthenticationProvider):
         if username == 'root':
             return True
 
+        if not username:
+            return False
+
         ## When 2FA is activated, auth_info is missing in prepare_session
         ## Must be fixed in Ajenti
         auth_info = getattr(self.context.session, 'auth_info', None)
         if auth_info is None:
             permissions = {}
-            webuiPermissions = self.lr.get(f'/users/{username}', dict=False).sophomorixWebuiPermissionsCalculated
+            webuiPermissions = self.lr.get(f'/users/{username}').get('sophomorixWebuiPermissionsCalculated', [])
             for perm in webuiPermissions:
                 module, value = perm.split(': ')
                 try:

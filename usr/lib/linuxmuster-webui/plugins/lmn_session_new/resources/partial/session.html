@@ -102,7 +102,7 @@
         </tr>
         <tr style="display:;"  ng:repeat="participant in session.members|orderBy:[sort.fx]">
             <td class="ng-binding">
-                <span class="label pull-right" ng:class="(participant.sophomorixExamMode != '---' ) ? 'label-danger' : 'label-default'">{{participant.sophomorixAdminClass}} - {{participant.sophomorixExamMode}}</span>
+                <span class="label label-default pull-right">{{participant.sophomorixAdminClass}}</span>
                 <a>
                     <b> {{participant.sn}}, {{participant.givenName}} </b>
                 </a>
@@ -135,25 +135,18 @@
             </td>
 
             <td class="ng-binding">
-                <span style="display:inline-block; width:100px; font-size:100%"  class="label label-danger" ng:show="participant.sophomorixRole == 'examuser'">
-                    <i class="fa fa-graduation-cap"></i>
-                    {{participant.sophomorixExamMode}}
-                </span>
+                <div ng:show="participant.sophomorixExamMode != '---'">
+                    <a style="display:inline-block; width:100px; font-size:100%"
+                       class="label label-danger"
+                       ng:click="stopUserExam(participant)"
+                       title="Stop exam from {{participant.sophomorixExamMode[0]}}"
+                    >
+                        <i class="fa fa-graduation-cap"></i>
+                        {{participant.sophomorixExamMode[0]}}
+                        <i class="fas fa-stop pull-right"></i>
+                    </a>
+                </div>
             </td>
-<!--            <td width="1" style="text-align:center;">-->
-<!--                <span title="Exam-Mode" checkbox id="{{participant.sAMAccountName}}.exammode" ng-click="changeClass('exammode', participant)" ng:model="participant.exammode_boolean" ng:show="participant.sophomorixExamMode == identity.user || participant.sophomorixExamMode == '-&#45;&#45;'"></span>-->
-<!--                <span uib-dropdown>-->
-<!--                    <button class="btn btn-primary btn-xs" style="color:orange; background:white; font-size:20px" ng:show="participant.sophomorixExamMode != identity.user && participant.sophomorixExamMode != '-&#45;&#45;'" uib-dropdown-toggle>-->
-<!--                        <i class="fa fa-exclamation-triangle"></i>-->
-<!--                    </button>-->
-<!--                    <ul uib-dropdown-menu class="dropdown-menu-right" >-->
-<!--                        <li>-->
-<!--                            <a ng:click="endExam(participant.sAMAccountName, identity.user,currentSession.name, currentSession.comment)">-->
-<!--                                <span translate> End running exam</span>-->
-<!--                            </a>-->
-<!--                        </li>-->
-<!--                    </ul>-->
-<!--            </td>-->
             <td width="1" style="text-align:center;" ng:show="fields.wifi.visible">
                 <span checkbox id="{{participant.sAMAccountName}}.wifiaccess"
                       ng:click="setManagementGroup('wifi', participant)"

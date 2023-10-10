@@ -87,7 +87,17 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
             return user.cn;
         });
         $http.post('/api/lmn/session/exam/userinfo', { 'users': users }).then(function (resp) {
-            _this.current.members = resp.data;console.log(resp.data, _this.current);
+            _this.current.members = resp.data;
+            $location.path('/view/lmn/session');
+        });
+    };
+
+    this.refreshUsers = function () {
+        users = _this.current.members.map(function (user) {
+            return user.cn;
+        });
+        $http.post('/api/lmn/session/userinfo', { 'users': users }).then(function (resp) {
+            _this.current.members = resp.data;
             $location.path('/view/lmn/session');
         });
     };
@@ -507,7 +517,30 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         return $scope.examMode = false;
       });
     };
-    // reload session
+    $scope.stopUserExam = function(user) {
+      var exam_student, exam_teacher;
+      // End exam for a specific user
+      exam_teacher = user.sophomorixExamMode[0];
+      exam_student = user.displayName;
+      return messagebox.show({
+        text: gettext('Do you really want to remove ' + exam_student + ' from the exam of ' + exam_teacher + '?'),
+        positive: gettext('End exam mode'),
+        negative: gettext('Cancel')
+      }).then(function() {
+        var uniqSession;
+        uniqSession = {
+          'members': [user],
+          'name': `${user.sophomorixAdminClass}_${user.sAMAccountName}_ENDED_FROM_${identity.user}`,
+          'type': ''
+        };
+        return $http.patch("/api/lmn/session/exam/stop", {
+          session: uniqSession
+        }).then(function(resp) {
+          lmnSession.refreshUsers();
+          return notify.success(gettext('Exam mode stopped for user ') + exam_student);
+        });
+      });
+    };
     $scope._checkExamUser = function(username) {
       if (username.endsWith('-exam')) {
         messagebox.show({

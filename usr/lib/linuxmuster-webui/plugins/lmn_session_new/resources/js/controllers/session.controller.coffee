@@ -261,7 +261,24 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         # End exam for a whole group
         $http.patch("/api/lmn/session/exam/stop", {session: $scope.session}).then (resp) ->
             $scope.examMode = false
-            # reload session
+
+    $scope.stopUserExam = (user) ->
+        # End exam for a specific user
+        exam_teacher = user.sophomorixExamMode[0]
+        exam_student = user.displayName
+        messagebox.show({
+            text: gettext('Do you really want to remove ' + exam_student + ' from the exam of ' + exam_teacher + '?'),
+            positive: gettext('End exam mode'),
+            negative: gettext('Cancel')
+        }).then () ->
+            uniqSession = {
+                'members': [user],
+                'name': "#{user.sophomorixAdminClass}_#{user.sAMAccountName}_ENDED_FROM_#{identity.user}",
+                'type': '',
+            }
+            $http.patch("/api/lmn/session/exam/stop", {session: uniqSession}).then (resp) ->
+                lmnSession.refreshUsers()
+                notify.success(gettext('Exam mode stopped for user ') + exam_student)
 
     $scope._checkExamUser = (username) ->
         if username.endsWith('-exam')

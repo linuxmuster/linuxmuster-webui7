@@ -80,6 +80,7 @@ class Handler(HttpPlugin):
         result = []
 
         def get_user_info(user):
+            user = user.replace('-exam', '')
             details = self.context.ldapreader.schoolget(f'/users/{user}')
             details['changed'] = False # TODO: usefull ?
             details['exammode-changed'] = False # TODO : usefull ?

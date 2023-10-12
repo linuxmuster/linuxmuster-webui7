@@ -511,10 +511,17 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     };
     $scope.stopExam = function() {
       // End exam for a whole group
-      return $http.patch("/api/lmn/session/exam/stop", {
-        session: $scope.session
-      }).then(function(resp) {
-        return $scope.examMode = false;
+      return messagebox.show({
+        text: gettext('Do you really want to end the current exam?'),
+        positive: gettext('End exam mode'),
+        negative: gettext('Cancel')
+      }).then(function() {
+        return $http.patch("/api/lmn/session/exam/stop", {
+          session: $scope.session
+        }).then(function(resp) {
+          lmnSession.refreshUsers();
+          return $scope.examMode = false;
+        });
       });
     };
     $scope.stopUserExam = function(user) {

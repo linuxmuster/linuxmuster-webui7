@@ -259,8 +259,14 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
 
     $scope.stopExam = () ->
         # End exam for a whole group
-        $http.patch("/api/lmn/session/exam/stop", {session: $scope.session}).then (resp) ->
-            $scope.examMode = false
+        messagebox.show({
+            text: gettext('Do you really want to end the current exam?'),
+            positive: gettext('End exam mode'),
+            negative: gettext('Cancel')
+        }).then () ->
+            $http.patch("/api/lmn/session/exam/stop", {session: $scope.session}).then (resp) ->
+                lmnSession.refreshUsers()
+                $scope.examMode = false
 
     $scope.stopUserExam = (user) ->
         # End exam for a specific user

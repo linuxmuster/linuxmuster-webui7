@@ -217,7 +217,8 @@ class LinboImage:
 
         for extra in EXTRA_IMAGE_FILES:
             path = os.path.join(self.path, f"{self.image}.{extra}")
-            if extra in data and ( data[extra] or extra == 'desc' ):
+            extra_content = data.get(extra, '')
+            if extra_content or (extra == "desc" and extra_content is not None):
                 with LMNFile(path, 'w') as f:
                     f.write(data[extra])
                 os.chmod(path, EXTRA_PERMISSIONS_MAPPING[extra])
@@ -227,7 +228,8 @@ class LinboImage:
 
         for extra in EXTRA_COMMON_FILES:
             path = os.path.join(self.path, f"{self.name}.{extra}")
-            if extra in data and data[extra]:
+            extra_content = data.get(extra, '')
+            if extra_content:
                 with LMNFile(path, 'w') as f:
                     f.write(data[extra])
                 os.chmod(path, EXTRA_PERMISSIONS_MAPPING[extra])

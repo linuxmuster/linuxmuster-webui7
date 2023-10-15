@@ -38,9 +38,6 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
 
         promiseList.push($http.get('/api/lmn/session/sessions').then(function (resp) {
             _this.sessions = resp.data;
-            if (resp.data.length == 0) {
-                _this.info.message = gettext("There are no sessions yet. Create a session using the 'New Session' button at the top!");
-            }
         }));
 
         return $q.all(promiseList).then(function () {
@@ -165,13 +162,6 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
             return $http.delete('/api/lmn/session/sessions/' + sessionID).then(function (resp) {
                 notify.success(gettext(resp.data));
             });
-        });
-    };
-
-    this.getParticipants = function () {
-        // TODO : URL does not exist anymore
-        return $http.get('/api/lmn/session/sessions/' + _this.current.sid).then(function (resp) {
-            return resp.data;
         });
     };
 

@@ -1,4 +1,4 @@
-angular.module('lmn.session_new').service('lmnSession', function($http, $uibModal, $q, $location, messagebox, validation, notify, gettext) {
+angular.module('lmn.session_new').service('lmnSession', function($http, $uibModal, $q, $location, $window, messagebox, validation, notify, gettext, identity) {
 
     this.sessions = [];
 
@@ -22,12 +22,17 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
         return $q.all(promiseList).then(() => {return [this.schoolclasses, this.projects, this.sessions]});
     }
 
+    this.getExtExamUsers = () => {
+        this.extExamUsers = this.current.members.filter((user) => !['---', identity.user].includes(user.sophomorixExamMode[0]));
+    }
+
     this.start = (session) => {
         this.current = session;
         $http.post('/api/lmn/session/userinfo', {'users': this.current.members}).then((resp) => {
             this.current.members = resp.data;
             this.current.generated = false;
             this.current.type = 'session';
+            this.getExtExamUsers();
             $location.path('/view/lmn/session');
         });
     }
@@ -53,6 +58,7 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
             'type': session_type, // May be room or schoolclass or project
         };
         this.current = generatedSession;
+        this.getExtExamUsers();
         $location.path('/view/lmn/session');
     }
 
@@ -60,14 +66,16 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
        users = this.current.members.map((user) => user.cn);
        $http.post('/api/lmn/session/exam/userinfo', {'users': users}).then((resp) => {
             this.current.members = resp.data;
+            this.getExtExamUsers();
             $location.path('/view/lmn/session');
         });
     }
 
     this.refreshUsers = () => {
         users = this.current.members.map((user) => user.cn);
-        $http.post('/api/lmn/session/userinfo', {'users': users}).then((resp) => {
+        return $http.post('/api/lmn/session/userinfo', {'users': users}).then((resp) => {
             this.current.members = resp.data;
+            this.getExtExamUsers();
             $location.path('/view/lmn/session');
         });
     }

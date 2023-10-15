@@ -21,7 +21,7 @@ angular.module('lmn.session_new').config(function ($routeProvider) {
 
 'use strict';
 
-angular.module('lmn.session_new').service('lmnSession', function ($http, $uibModal, $q, $location, messagebox, validation, notify, gettext) {
+angular.module('lmn.session_new').service('lmnSession', function ($http, $uibModal, $q, $location, $window, messagebox, validation, notify, gettext, identity) {
     var _this = this;
 
     this.sessions = [];
@@ -48,12 +48,19 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         });
     };
 
+    this.getExtExamUsers = function () {
+        _this.extExamUsers = _this.current.members.filter(function (user) {
+            return !['---', identity.user].includes(user.sophomorixExamMode[0]);
+        });
+    };
+
     this.start = function (session) {
         _this.current = session;
         $http.post('/api/lmn/session/userinfo', { 'users': _this.current.members }).then(function (resp) {
             _this.current.members = resp.data;
             _this.current.generated = false;
             _this.current.type = 'session';
+            _this.getExtExamUsers();
             $location.path('/view/lmn/session');
         });
     };
@@ -79,6 +86,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
             'type': session_type // May be room or schoolclass or project
         };
         _this.current = generatedSession;
+        _this.getExtExamUsers();
         $location.path('/view/lmn/session');
     };
 
@@ -88,6 +96,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         });
         $http.post('/api/lmn/session/exam/userinfo', { 'users': users }).then(function (resp) {
             _this.current.members = resp.data;
+            _this.getExtExamUsers();
             $location.path('/view/lmn/session');
         });
     };
@@ -96,8 +105,9 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         users = _this.current.members.map(function (user) {
             return user.cn;
         });
-        $http.post('/api/lmn/session/userinfo', { 'users': users }).then(function (resp) {
+        return $http.post('/api/lmn/session/userinfo', { 'users': users }).then(function (resp) {
             _this.current.members = resp.data;
+            _this.getExtExamUsers();
             $location.path('/view/lmn/session');
         });
     };
@@ -289,9 +299,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       return $location.path('/view/lmn/sessionsList');
     };
     $scope.session = lmnSession.current;
-    $scope.examUsers = $scope.session.members.filter((user) => {
-      return !['---', identity.user].includes(user.sophomorixExamMode[0]);
-    });
+    $scope.extExamUsers = lmnSession.extExamUsers;
     if ($scope.session.type === 'schoolclass') {
       title = " > " + gettext("Schoolclass") + ` ${$scope.session.name}`;
     } else if ($scope.session.type === 'room') {
@@ -563,13 +571,15 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       }).then(function() {
         var i, len, promises, ref, user;
         promises = [];
-        ref = $scope.examUsers;
+        ref = $scope.extExamUsers;
         for (i = 0, len = ref.length; i < len; i++) {
           user = ref[i];
           promises.push($scope._stopUserExam(user));
         }
         return $q.all(promises).then(function() {
-          lmnSession.refreshUsers();
+          lmnSession.refreshUsers().then(function() {
+            return $scope.extExamUsers = lmnSession.extExamUsers;
+          });
           return notify.success(gettext('Exam mode stopped for all users.'));
         });
       });

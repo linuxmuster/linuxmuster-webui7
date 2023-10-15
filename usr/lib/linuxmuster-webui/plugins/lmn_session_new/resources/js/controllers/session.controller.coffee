@@ -102,7 +102,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         $location.path('/view/lmn/sessionsList')
 
     $scope.session = lmnSession.current
-    $scope.examUsers = $scope.session.members.filter((user) => !['---', identity.user].includes(user.sophomorixExamMode[0]))
+    $scope.extExamUsers = lmnSession.extExamUsers
 
     if $scope.session.type == 'schoolclass'
         title = " > " + gettext("Schoolclass") + " #{$scope.session.name}"
@@ -298,10 +298,11 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
             negative: gettext('Cancel')
         }).then () ->
             promises = []
-            for user in $scope.examUsers
+            for user in $scope.extExamUsers
                 promises.push($scope._stopUserExam(user))
             $q.all(promises).then () ->
-                lmnSession.refreshUsers()
+                lmnSession.refreshUsers().then () ->
+                    $scope.extExamUsers = lmnSession.extExamUsers
                 notify.success(gettext('Exam mode stopped for all users.'))
 
     $scope._checkExamUser = (username) ->

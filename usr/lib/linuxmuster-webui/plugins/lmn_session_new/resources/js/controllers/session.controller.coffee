@@ -253,12 +253,15 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
 
     $scope.startExam = () ->
         # End exam for a whole group
+        $scope.stateChanged = true
         $http.patch("/api/lmn/session/exam/start", {session: $scope.session}).then (resp) ->
             $scope.examMode = true
+            $scope.stateChanged = false
             lmnSession.getExamUsers()
 
     $scope.stopExam = () ->
         # End exam for a whole group
+        $scope.stateChanged = true
         messagebox.show({
             text: gettext('Do you really want to end the current exam?'),
             positive: gettext('End exam mode'),
@@ -267,6 +270,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
             $http.patch("/api/lmn/session/exam/stop", {session: $scope.session}).then (resp) ->
                 lmnSession.refreshUsers()
                 $scope.examMode = false
+                $scope.stateChanged = false
 
     $scope._stopUserExam = (user) ->
         # End exam for a specific user: backend promise without messagebox

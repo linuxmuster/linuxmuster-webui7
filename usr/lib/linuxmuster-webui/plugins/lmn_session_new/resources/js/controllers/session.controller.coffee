@@ -312,6 +312,8 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
             promises = []
             for user in $scope.extExamUsers
                 promises.push($scope._stopUserExam(user))
+            for user in $scope.examUsers
+                promises.push($scope._stopUserExam(user))
             $q.all(promises).then () ->
                 $scope.refreshUsers()
                 notify.success(gettext('Exam mode stopped for all users.'))

@@ -249,8 +249,8 @@
                     <li><a ng:click="collectTrans('move', session.members, [identity.user], currentSession.comment)" translate>Move transfer directory with all members</a></li>
                 </ul>
             </div>
-            <button ng:click="startExam()" class="btn btn-lmn-success" ng:if="!examMode && extExamUsers.length == 0" translate>Start exam</button>
-            <button ng:click="stopRunningExams()" class="btn btn-lmn-danger" ng:if="!examMode && extExamUsers.length > 0" translate>Stop running exams</button>
+            <button ng:click="startExam()" class="btn btn-lmn-success" ng:if="!examMode && extExamUsers.length + examUsers.length == 0" translate>Start exam</button>
+            <button ng:click="stopRunningExams()" class="btn btn-lmn-danger" ng:if="!examMode && extExamUsers.length + examUsers.length > 0" translate>Stop running exams</button>
             <button ng:click="stopExam()" class="btn btn-lmn-danger" ng:if="examMode" translate>Stop exam</button>
             <button ng:click="backToSessionList()" class="btn btn-lmn pull-right" translate>Close</button>
         </div>

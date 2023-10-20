@@ -103,6 +103,12 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
 
     $scope.session = lmnSession.current
     $scope.extExamUsers = lmnSession.extExamUsers
+    $scope.examUsers = lmnSession.examUsers
+
+    $scope.refreshUsers = () ->
+       lmnSession.refreshUsers().then () ->
+            $scope.extExamUsers = lmnSession.extExamUsers
+            $scope.examUsers = lmnSession.examUsers
 
     if $scope.session.type == 'schoolclass'
         title = " > " + gettext("Schoolclass") + " #{$scope.session.name}"
@@ -226,8 +232,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
                 else
                     $scope.sessionChanged = true
                 $scope.session.members.push(new_participant)
-                lmnSession.refreshUsers().then () ->
-                    $scope.extExamUsers = lmnSession.extExamUsers
+                $scope.refreshUsers()
 
     $scope.$watch 'addSchoolClass', () ->
         if $scope.addSchoolClass
@@ -241,8 +246,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
                 else
                     $scope.sessionChanged = true
                 $scope.session.members = $scope.session.members.concat(new_participants)
-                lmnSession.refreshUsers().then () ->
-                    $scope.extExamUsers = lmnSession.extExamUsers
+                $scope.refreshUsers()
 
     $scope.removeParticipant = (participant) ->
         deleteIndex = $scope.session.members.indexOf(participant)
@@ -272,7 +276,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
             negative: gettext('Cancel')
         }).then () ->
             $http.patch("/api/lmn/session/exam/stop", {session: $scope.session}).then (resp) ->
-                lmnSession.refreshUsers()
+                $scope.refreshUsers()
                 $scope.examMode = false
                 $scope.stateChanged = false
 
@@ -295,7 +299,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
             negative: gettext('Cancel')
         }).then () ->
             $scope._stopUserExam(user).then () ->
-                lmnSession.refreshUsers()
+                $scope.refreshUsers()
                 notify.success(gettext('Exam mode stopped for user ') + exam_student)
 
     $scope.stopRunningExams = () ->
@@ -309,8 +313,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
             for user in $scope.extExamUsers
                 promises.push($scope._stopUserExam(user))
             $q.all(promises).then () ->
-                lmnSession.refreshUsers().then () ->
-                    $scope.extExamUsers = lmnSession.extExamUsers
+                $scope.refreshUsers()
                 notify.success(gettext('Exam mode stopped for all users.'))
 
     $scope._checkExamUser = (username) ->

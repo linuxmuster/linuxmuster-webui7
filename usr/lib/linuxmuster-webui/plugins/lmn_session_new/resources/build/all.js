@@ -293,6 +293,13 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     };
     $scope.session = lmnSession.current;
     $scope.extExamUsers = lmnSession.extExamUsers;
+    $scope.examUsers = lmnSession.examUsers;
+    $scope.refreshUsers = function() {
+      return lmnSession.refreshUsers().then(function() {
+        $scope.extExamUsers = lmnSession.extExamUsers;
+        return $scope.examUsers = lmnSession.examUsers;
+      });
+    };
     if ($scope.session.type === 'schoolclass') {
       title = " > " + gettext("Schoolclass") + ` ${$scope.session.name}`;
     } else if ($scope.session.type === 'room') {
@@ -459,9 +466,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
             $scope.sessionChanged = true;
           }
           $scope.session.members.push(new_participant);
-          return lmnSession.refreshUsers().then(function() {
-            return $scope.extExamUsers = lmnSession.extExamUsers;
-          });
+          return $scope.refreshUsers();
         });
       }
     });
@@ -485,9 +490,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
             $scope.sessionChanged = true;
           }
           $scope.session.members = $scope.session.members.concat(new_participants);
-          return lmnSession.refreshUsers().then(function() {
-            return $scope.extExamUsers = lmnSession.extExamUsers;
-          });
+          return $scope.refreshUsers();
         });
       }
     });
@@ -531,7 +534,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         return $http.patch("/api/lmn/session/exam/stop", {
           session: $scope.session
         }).then(function(resp) {
-          lmnSession.refreshUsers();
+          $scope.refreshUsers();
           $scope.examMode = false;
           return $scope.stateChanged = false;
         });
@@ -560,7 +563,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         negative: gettext('Cancel')
       }).then(function() {
         return $scope._stopUserExam(user).then(function() {
-          lmnSession.refreshUsers();
+          $scope.refreshUsers();
           return notify.success(gettext('Exam mode stopped for user ') + exam_student);
         });
       });
@@ -580,9 +583,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
           promises.push($scope._stopUserExam(user));
         }
         return $q.all(promises).then(function() {
-          lmnSession.refreshUsers().then(function() {
-            return $scope.extExamUsers = lmnSession.extExamUsers;
-          });
+          $scope.refreshUsers();
           return notify.success(gettext('Exam mode stopped for all users.'));
         });
       });

@@ -455,7 +455,10 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
           } else {
             $scope.sessionChanged = true;
           }
-          return $scope.session.members.push(new_participant);
+          $scope.session.members.push(new_participant);
+          return lmnSession.refreshUsers().then(function() {
+            return $scope.extExamUsers = lmnSession.extExamUsers;
+          });
         });
       }
     });
@@ -478,7 +481,10 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
           } else {
             $scope.sessionChanged = true;
           }
-          return $scope.session.members = $scope.session.members.concat(new_participants);
+          $scope.session.members = $scope.session.members.concat(new_participants);
+          return lmnSession.refreshUsers().then(function() {
+            return $scope.extExamUsers = lmnSession.extExamUsers;
+          });
         });
       }
     });

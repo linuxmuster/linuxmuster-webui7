@@ -226,6 +226,8 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
                 else
                     $scope.sessionChanged = true
                 $scope.session.members.push(new_participant)
+                lmnSession.refreshUsers().then () ->
+                    $scope.extExamUsers = lmnSession.extExamUsers
 
     $scope.$watch 'addSchoolClass', () ->
         if $scope.addSchoolClass
@@ -239,6 +241,8 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
                 else
                     $scope.sessionChanged = true
                 $scope.session.members = $scope.session.members.concat(new_participants)
+                lmnSession.refreshUsers().then () ->
+                    $scope.extExamUsers = lmnSession.extExamUsers
 
     $scope.removeParticipant = (participant) ->
         deleteIndex = $scope.session.members.indexOf(participant)

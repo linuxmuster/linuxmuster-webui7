@@ -162,7 +162,7 @@ class Handler(HttpPlugin):
         group_type = _(session['type'])
         group_name = session['name']
 
-        now = strftime("%Y%m%d_%H-%M-%S", localtime())
+        now = strftime("%Y-%m-%d_%Hh%Mm%S", localtime())
         target = f'EXAM_{group_type}_{group_name}_{now}'
 
         try:
@@ -306,7 +306,7 @@ class Handler(HttpPlugin):
         receivers = http_context.json_body()['receivers']
         files = http_context.json_body()['files']
         session = http_context.json_body()['session']
-        now = strftime("%Y%m%d_%H-%M-%S", localtime())
+        now = strftime("%Y-%m-%d_%Hh%Mm%S", localtime())
 
         def shareFiles(data):
             file, receiver = data
@@ -338,7 +338,7 @@ class Handler(HttpPlugin):
         files = http_context.json_body()['files']
         mode = http_context.json_body()['mode']
         session = http_context.json_body()['session']
-        now = strftime("%Y%m%d_%H-%M-%S", localtime())
+        now = strftime("%Y-%m-%d_%Hh%Mm%S", localtime())
 
         if mode not in ['scopy', 'move']:
             return # TODO
@@ -373,7 +373,7 @@ class Handler(HttpPlugin):
         receivers = http_context.json_body()['receivers']
         files = http_context.json_body()['files']
         session = http_context.json_body()['session']
-        now = strftime("%Y%m%d_%H-%M-%S", localtime())
+        now = strftime("%Y-%m-%d_%Hh%Mm%S", localtime())
 
         def shareFiles(file):
             sophomorixCommand = [

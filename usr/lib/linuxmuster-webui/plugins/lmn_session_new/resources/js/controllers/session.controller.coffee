@@ -1,9 +1,10 @@
-angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $http, $location, $route, $uibModal, $window, $interval, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem, validation, $rootScope, wait, userPassword, lmnSession) ->
+angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $http, $location, $route, $uibModal, $window, $q, $interval, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem, validation, $rootScope, wait, userPassword, lmnSession) ->
 
     $scope.stateChanged = false
     $scope.sessionChanged = false
     $scope.addParticipant = ''
     $scope.addSchoolClass = ''
+    $scope.examMode = false
 
     $window.onbeforeunload = (event) ->
         if !$scope.sessionChanged
@@ -101,6 +102,13 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         $location.path('/view/lmn/sessionsList')
 
     $scope.session = lmnSession.current
+    $scope.extExamUsers = lmnSession.extExamUsers
+    $scope.examUsers = lmnSession.examUsers
+
+    $scope.refreshUsers = () ->
+       lmnSession.refreshUsers().then () ->
+            $scope.extExamUsers = lmnSession.extExamUsers
+            $scope.examUsers = lmnSession.examUsers
 
     if $scope.session.type == 'schoolclass'
         title = " > " + gettext("Schoolclass") + " #{$scope.session.name}"
@@ -224,6 +232,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
                 else
                     $scope.sessionChanged = true
                 $scope.session.members.push(new_participant)
+                $scope.refreshUsers()
 
     $scope.$watch 'addSchoolClass', () ->
         if $scope.addSchoolClass
@@ -237,6 +246,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
                 else
                     $scope.sessionChanged = true
                 $scope.session.members = $scope.session.members.concat(new_participants)
+                $scope.refreshUsers()
 
     $scope.removeParticipant = (participant) ->
         deleteIndex = $scope.session.members.indexOf(participant)
@@ -249,12 +259,64 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
                 $http.patch('/api/lmn/session/participants', {'users':[participant.sAMAccountName], 'session': $scope.session.sid}).then () ->
                     $scope.session.members.splice(deleteIndex, 1)
 
-    $scope.changeExamSupervisor = (participant, supervisor) ->
-        $http.post('/api/lmn/session/sessions', {action: 'change-exam-supervisor', supervisor: supervisor, participant: participant}).then (resp) ->
+    $scope.startExam = () ->
+        # End exam for a whole group
+        $scope.stateChanged = true
+        $http.patch("/api/lmn/session/exam/start", {session: $scope.session}).then (resp) ->
+            $scope.examMode = true
+            $scope.stateChanged = false
+            lmnSession.getExamUsers()
 
-    $scope.endExam = (participant, supervisor,session, sessionName) ->
-        $http.patch("/api/lmn/session/exam/#{sessionName}", {supervisor: supervisor, participant: participant}).then (resp) ->
-            $scope.getParticipants(session)
+    $scope.stopExam = () ->
+        # End exam for a whole group
+        $scope.stateChanged = true
+        messagebox.show({
+            text: gettext('Do you really want to end the current exam?'),
+            positive: gettext('End exam mode'),
+            negative: gettext('Cancel')
+        }).then () ->
+            $http.patch("/api/lmn/session/exam/stop", {session: $scope.session}).then (resp) ->
+                $scope.refreshUsers()
+                $scope.examMode = false
+                $scope.stateChanged = false
+
+    $scope._stopUserExam = (user) ->
+        # End exam for a specific user: backend promise without messagebox
+        uniqSession = {
+            'members': [user],
+            'name': "#{user.sophomorixAdminClass}_#{user.sAMAccountName}_ENDED_FROM_#{identity.user}",
+            'type': '',
+        }
+        return $http.patch("/api/lmn/session/exam/stop", {session: uniqSession})
+
+    $scope.stopUserExam = (user) ->
+        # End exam for a specific user
+        exam_teacher = user.sophomorixExamMode[0]
+        exam_student = user.displayName
+        messagebox.show({
+            text: gettext('Do you really want to remove ' + exam_student + ' from the exam of ' + exam_teacher + '?'),
+            positive: gettext('End exam mode'),
+            negative: gettext('Cancel')
+        }).then () ->
+            $scope._stopUserExam(user).then () ->
+                $scope.refreshUsers()
+                notify.success(gettext('Exam mode stopped for user ') + exam_student)
+
+    $scope.stopRunningExams = () ->
+        # End all running extern exams (run by other teachers)
+        messagebox.show({
+            text: gettext('Do you really want to end all running exams?'),
+            positive: gettext('End exam mode'),
+            negative: gettext('Cancel')
+        }).then () ->
+            promises = []
+            for user in $scope.extExamUsers
+                promises.push($scope._stopUserExam(user))
+            for user in $scope.examUsers
+                promises.push($scope._stopUserExam(user))
+            $q.all(promises).then () ->
+                $scope.refreshUsers()
+                notify.success(gettext('Exam mode stopped for all users.'))
 
     $scope._checkExamUser = (username) ->
         if username.endsWith('-exam')

@@ -61,6 +61,10 @@ li.cardlist span.cardbtn button.cardbtn, li.cardlist div.cardbtn button.cardbtn,
   color: #ff8f00;
 }
 
+.bg-orange {
+  background-color: #ffecd3;
+}
+
 .color-theme {
   color: #233c4c;
 }
@@ -353,7 +357,7 @@ tr.leaders td span + span {
 .lmn-container-list > div {
   text-align: left;
   margin-left: 10px;
-  width: 220px;
+  width: 210px;
 }
 
 .lmn-container-list-separated {
@@ -403,7 +407,7 @@ floating-toolbar.accented .bar .btn-flat {
 
 /* Button LMN
 ---------------------------- */
-.btn-lmn {
+.btn-lmn, .btn-lmn-success, .btn-lmn-danger {
   color: #233c4c;
   background-color: #fff;
   border-color: #233c4c;
@@ -412,23 +416,31 @@ floating-toolbar.accented .bar .btn-flat {
   margin: 0 3px;
   border-radius: 5px;
 }
-
-.btn-lmn:focus {
+.btn-lmn:focus, .btn-lmn:hover, .btn-lmn-success:focus, .btn-lmn-success:hover, .btn-lmn-danger:focus, .btn-lmn-danger:hover {
   color: #233c4c;
   background-color: #ffc876;
   border-color: #1b272f;
 }
-
-.btn-lmn:hover {
-  color: #233c4c;
-  background-color: #ffc876;
-  border-color: #1b272f;
-}
-
-.btn-lmn:active {
+.btn-lmn:active, .btn-lmn-success:active, .btn-lmn-danger:active {
   color: #333;
   background-color: #ffc876;
   border-color: #1b272f;
+}
+
+.btn-lmn-success {
+  background-color: #4CAF50;
+  color: white;
+}
+.btn-lmn-success:focus, .btn-lmn-success:hover, .btn-lmn-success:active {
+  background-color: #4CAF50;
+}
+
+.btn-lmn-danger {
+  background-color: #F44336;
+  color: white;
+}
+.btn-lmn-danger:focus, .btn-lmn-danger:hover, .btn-lmn-danger:active {
+  background-color: #F44336;
 }
 
 .btn-upload {

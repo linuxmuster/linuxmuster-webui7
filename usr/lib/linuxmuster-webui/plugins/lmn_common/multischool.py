@@ -4,79 +4,11 @@ import logging
 from io import StringIO
 from configobj import ConfigObj
 from subprocess import check_output
-import xml.etree.ElementTree as ElementTree
+from linuxmusterTools.sambaTool import DriveManager, GPOManager
 
 from aj.plugins.lmn_common.api import samba_realm, samba_netbios, samba_override, lmn_getSophomorixValue
-from aj.plugins.lmn_common.samba_tool import GPOS
 from aj.plugins.lmn_common.lmnfile import LMNFile
 
-
-class Drives:
-    """
-    Object to store data from Drives.xml
-    """
-
-    def __init__(self, policy):
-        self.policy = policy
-        self.path = f'/var/lib/samba/sysvol/{samba_realm}/Policies/{self.policy}/User/Preferences/Drives/Drives.xml'
-        self.usedLetters = []
-        self.load()
-
-    def load(self):
-        """
-        Parse the Drives.xml in the policy directory in order to get all shares
-        properties.
-        """
-
-        self.drives = []
-        self.drives_dict = {}
-
-        try:
-            self.tree = ElementTree.parse(self.path)
-        except FileNotFoundError:
-            return
-
-        for drive in self.tree.findall('Drive'):
-            drive_attr = {'properties': {}}
-            drive_attr['disabled'] = bool(int(drive.attrib.get('disabled', '0')))
-            for prop in drive.findall('Properties'):
-                drive_attr['properties']['useLetter'] = bool(int(prop.get('useLetter', '0')))
-                drive_attr['properties']['letter'] = prop.get('letter', '')
-                drive_attr['properties']['label'] = prop.get('label', 'Unknown')
-                drive_attr['properties']['path'] = prop.get('path', None)
-                self.usedLetters.append(drive_attr['properties']['letter'])
-
-            self.drives.append(drive_attr)
-            if drive_attr['properties']['path'] is not None:
-                drive_id = drive_attr['properties']['path'].split('\\')[-1]
-                self.drives_dict[drive_id] = {
-                    'userLetter': drive_attr['properties']['useLetter'],
-                    'letter': drive_attr['properties']['letter'],
-                    'disabled': drive_attr['disabled'],
-                    'label': drive_attr['properties']['label'],
-                }
-
-    def save(self, content):
-        """
-        Save all configuration and properties from the drives and then reload
-        the configuration.
-
-        :param content: All drives configuration and properties
-        :type content: dict
-        """
-
-        self.tree.write(f'{self.path}.bak', encoding='utf-8', xml_declaration=True)
-
-        for drive in self.tree.findall('Drive'):
-            for prop in drive.findall('Properties'):
-                for newDrive in content:
-                    if newDrive['properties']['label'] == prop.get('label', 'Unknown'):
-                        prop.set('letter', newDrive['properties']['letter'])
-                        prop.set('useLetter', str(int(newDrive['properties']['useLetter'])))
-                        drive.set('disabled', str(int(newDrive['disabled'])))
-
-        self.tree.write(self.path, encoding='utf-8', xml_declaration=True)
-        self.load()
 
 class SchoolManager:
     """
@@ -88,6 +20,7 @@ class SchoolManager:
         self.school = 'default-school'
         self.schoolname = self.school
         self.schoolShare = f'\\\\{samba_realm}\\{self.school}\\'
+        self.gpomgr = GPOManager()
         self.load()
 
     def load(self):
@@ -96,7 +29,6 @@ class SchoolManager:
         switching to another school.
         """
 
-        self.policy = GPOS.get(f"sophomorix:school:{self.school}", {}).get('gpo', '')
         self.get_configpath()
         self.load_custom_fields()
         self.load_holidays()
@@ -191,7 +123,13 @@ class SchoolManager:
         Load Drives.xml content from school policies
         """
 
-        self.Drives = Drives(self.policy)
+        self.gpo = self.gpomgr.gpos.get(f"sophomorix:school:{self.school}", None)
+        if self.gpo:
+            self.drivemgr = self.gpo.drivemgr
+        else:
+            self.drivemgr = DriveManager(None)
+
+        self.drives = self.drivemgr.drives
 
     def get_share_prefix(self):
 
@@ -226,6 +164,16 @@ class SchoolManager:
         home_path = self.get_homepath(user_context)
         role = user_context['role']
 
+        def get_share_label(share_name, default):
+            for drive in self.drives:
+                if share_name == drive.id:
+                    return drive.label or default
+
+        def get_share_disabled(share_id):
+            for drive in self.drives:
+                if share_id == drive.id:
+                    return drive.disabled
+
         home = {
             'name' : 'Home',
             'path' : home_path,
@@ -251,31 +199,50 @@ class SchoolManager:
         #     'active': False,
         # }
         students = {
-            'name' : 'Students',
+            'name' : get_share_label('students', 'Students'),
             'path' : f'{self.share_prefix}\\students',
             'icon' : 'fas fa-user-graduate',
             'active': False,
+            'id': 'students',
         }
         share = {
-            'name' : 'Share',
+            'name' : get_share_label('share', 'Share'),
             'path' : f'{self.share_prefix}\\share',
             'icon' : 'fas fa-hand-holding',
             'active': False,
+            'id': 'share',
         }
         program = {
-            'name' : 'Programs',
+            'name' : get_share_label('program', 'Programs'),
             'path' : f'{self.share_prefix}\\program',
             'icon' : 'fas fa-desktop',
             'active': False,
+            'id': 'program',
         }
-        # iso = {
-        #     'name' : 'ISO',
-        #     'path' : f'{share_prefix}\\iso',
-        #     'icon' : 'fas fa-compact-disc',
-        #     'active': False,
-        # }
+        iso = {
+            'name' : get_share_label('iso', 'ISO'),
+            'path' : f'{self.share_prefix}\\iso',
+            'icon' : 'fas fa-compact-disc',
+            'active': False,
+            'id': 'iso',
+        }
+        projects = {
+            'name' : get_share_label('projects', 'Projects'),
+            'path' : f'{self.share_prefix}\\share\\projects',
+            'icon' : 'fas fa-atlas',
+            'active': False,
+            'id': 'projects',
+        }
 
-        shares = {
+        standard_shares = {
+            'projects': projects,
+            'iso': iso,
+            'program': program,
+            'share':share,
+            'students':students,
+        }
+
+        roles_shares = {
             'globaladministrator': [
                 home,
                 linuxmuster_global,
@@ -284,7 +251,8 @@ class SchoolManager:
             'schooladministrator': [
                 home,
                 all_schools,
-            ],
+            ]
+            ,
             'teacher': [
                 home,
             ],
@@ -293,27 +261,19 @@ class SchoolManager:
             ]
         }
 
-        # Use GPO to determine if the share should be shown
-        # Must be rewritten
-        try:
-            if not self.Drives.drives_dict['program']['disabled']:
-                shares['teacher'].append(program)
-                shares['student'].append(program)
-        except KeyError:
-            # Programs not in Drives.xml, ignoring
-            pass
-        try:
-            if not self.Drives.drives_dict['share']['disabled']:
-                shares['teacher'].append(share)
-                shares['student'].append(share)
-        except KeyError:
-            # Shares not in Drives.xml, ignoring
-            pass
-        try:
-            if not self.Drives.drives_dict['students']['disabled']:
-                shares['teacher'].append(students)
-        except KeyError:
-            # Students-Home not in Drives.xml ?? Ignoring
-            pass
+        # TODO: Use visible method from lmntools, but first when it interprets
+        # the filter correctly. Something like:
+        # drive.visible(user)
+        # where user is a user object from ldapreader, containing all infos.
+        # TODO: Missing user defined shares
+        for share_id,standard_share in standard_shares.items():
+            # This basic test only get the disabled attribute.
+            if share_id != 'students':
+                if not get_share_disabled(share_id):
+                    roles_shares['teacher'].append(standard_share)
+                    roles_shares['student'].append(standard_share)
 
-        return shares[role]
+        if not get_share_disabled('students'):
+            roles_shares['teacher'].append(students)
+
+        return roles_shares[role]

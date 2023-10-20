@@ -3,7 +3,7 @@
 
 <div samba-access>
 
-    <progress-spinner ng:show="(groups == null) || (changeState)"></progress-spinner>
+    <progress-spinner ng:show="changeState"></progress-spinner>
 
     <div class="alert alert-info" ng:show="need_krbcc_refresh" translate>
         These changes can only take effect if the session is renewed, otherwise it will be active after the next
@@ -11,7 +11,7 @@
         <a class="btn btn-default" ng:click="refresh_krbcc()"translate>Do it now</a>
     </div>
 
-    <div ng:show="groups != null">
+    <div>
         <div class="input-group">
 
             <input ng:model="filter" type="search" autofocus class="form-control" placeholder="Filter" typeahead-min-length="1" />
@@ -28,18 +28,26 @@
                     <span class="caret"></span>
                 </button>
                 <ul uib-dropdown-menu class="dropdown-menu" style="width:150px" ng-click="$event.stopPropagation()">
-                    <li ng:repeat="type in types">
+                    <li>
                         <div>
-                            <span  checkbox ng:model="type.checkbox"> </span>
-                            <span ng-if="type.type == 'schoolclass'"> <i class="fa fa-users"></i> <span translate>Classes</span></span>
-                            <span ng-if="type.type == 'printergroup'"><i class="fa fa-fw fa-print"></i><span translate>Printers</span> </span>
-                            <span ng-if="type.type == 'project'"> <i class="fa fa-fw fa-flask"></i><span translate>Projects</span> </span>
+                            <span checkbox ng:model="show_schoolclasses"> </span>
+                            <span translate><i class="fa fa-users"></i> Classes</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <span checkbox ng:model="show_printers"> </span>
+                            <span translate><i class="fa fa-fw fa-print"></i> Printers</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <span checkbox ng:model="show_projects"> </span>
+                            <span translate><i class="fa fa-fw fa-flask"></i> Projects</span>
                         </div>
                     </li>
                 </ul>
             </div>
-
-
 
             <div uib-dropdown class="input-group-btn">
                 <button class="btn btn-default" uib-dropdown-toggle>
@@ -57,9 +65,11 @@
         </div>
         <br>
 
-        <div ng:show="types.schoolclass.checkbox">
+        <div ng:show="show_schoolclasses">
             <button class="btn btn-danger pull-right" ng:click="resetAll('class')" ng:show="identity.profile.isAdmin" translate><i class="fas fa-undo"></i></button>
             <h3 translate>Schoolclasses</h3>
+            <br />
+            <progress-spinner ng:show="loading_schoolclasses"></progress-spinner>
             <div ng-if="classes.length== 0" class="alert alert-info">
                 <i class="fa fa-info-circle"></i>
                 <span translate> There are no schoolclasses available. Ask the administrator to import students</span>
@@ -73,15 +83,18 @@
                             <span translate>Class</span>
                             <b style="word-wrap: break-word; -ms-word-break: break-all">{{classe.groupname}}</b>
                         </a>
-                        <span class="badge pull-right">{{classe.members.length}}</span>
+                        <span class="label label-default pull-right" title="Members">{{classe.members.length}}</span>
                     </div>
                 </div>
             </div>
         </div>
 
+        <hr />
 
-        <div ng:show="types.printergroup.checkbox">
+        <div ng:show="show_printers">
             <h3 translate>Printer</h3>
+            <br />
+            <progress-spinner ng:show="loading_printers"></progress-spinner>
             <div ng-if="printers.length == 0" class="alert alert-info">
                 <i class="fa fa-info-circle"></i>
                 <span translate> There are no printers configured yet. Ask your administrator to configure one.</span>
@@ -101,9 +114,13 @@
             </div>
         </div>
 
-        <div ng:show="types.project.checkbox">
+        <hr />
+
+        <div ng:show="show_projects">
             <button class="btn btn-danger pull-right" ng:click="resetAll('project')" ng:show="identity.profile.isAdmin" translate><i class="fas fa-undo"></i></button>
             <h3 translate>Projects</h3>
+            <br />
+            <progress-spinner ng:show="loading_projects"></progress-spinner>
             <div ng-if="projects.length == 0" class="alert alert-info">
                 <i class="fa fa-info-circle"></i>
                 <span translate> There are no projects yet. You can create a new project using the menu bar.</span>
@@ -114,10 +131,10 @@
                         <input id={{project.groupname}} type="checkbox" ng:show="projectIsJoinable(project)" ng:click='setMembership(project)' ng:checked="project.membership">
                         <i class="fa fa-flask"></i>
                         <a href="#" ng-click='showGroupDetails($index, project.type, project.groupname)'>
-                            <span translate>Project</span>
                             <b style="word-wrap: break-word; -ms-word-break: break-all">{{project.groupname}}</b>
                         </a>
-                        <span class="badge pull-right">{{project.members.length}}</span>
+                        <span class="label label-danger pull-right" title="{{project.adminsCount}} admin(s)">{{project.adminsCount}}</span>
+                        <span class="label label-default pull-right" title="{{project.membersCount}} member(s)">{{project.membersCount}}</span>
                     </div>
                 </div>
             </div>

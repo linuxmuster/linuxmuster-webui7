@@ -8,23 +8,12 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
   $scope.need_krbcc_refresh = false
 
   pageTitle.set(gettext('Enrolle'))
-  $scope.types = {
-    schoolclass:
-      typename: gettext('Schoolclass')
-      name: gettext('Groupname')
-      checkbox: true
-      type: 'schoolclass'
-
-    printergroup:
-      typename: gettext('Printer')
-      checkbox: true
-      type: 'printergroup'
-
-    project:
-      typename: gettext('Projects')
-      checkbox: true
-      type: 'project'
-  }
+  $scope.show_schoolclasses = true
+  $scope.show_projects = true
+  $scope.show_printers = true
+  $scope.loading_schoolclasses = true
+  $scope.loading_projects = true
+  $scope.loading_printers = true
 
   $scope.sorts = [
     {
@@ -42,18 +31,6 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
     page: 1
     pageSize: 20
 
-  $scope.isActive = (group) ->
-    if  group.type is 'printergroup'
-      if $scope.types.printergroup.checkbox is true
-        return true
-    if  group.type is 'schoolclass'
-      if $scope.types.schoolclass.checkbox is true
-        return true
-    if  group.type is 'project'
-      if $scope.types.schoolclass.checkbox is true
-        return true
-    return false
-
   $scope.checkInverse = (sort ,currentSort) ->
     if sort == currentSort
       $scope.sortReverse = !$scope.sortReverse
@@ -64,15 +41,19 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
 
   $scope.setMembership = (group) ->
     $scope.changeState = true
-    action = if group.membership then 'removeadmins' else 'addadmins'
-    if group.typename == 'Class'
-        type = 'class'
-    else if group.typename == 'Printer'
-        type = 'group'
+    sophomorix_type_map = {'printer': 'group', 'schoolclass': 'class', 'project': 'project'}
+    if group.type == 'printer'
         action = if group.membership then 'removemembers' else 'addmembers'
     else
-        type = 'project'
-    $http.post('/api/lmn/groupmembership/membership', {action: action, entity: $scope.identity.user, groupname: group.groupname, type: type}).then (resp) ->
+        # TODO: seems to be wrong for projects
+        action = if group.membership then 'removeadmins' else 'addadmins'
+
+    $http.post('/api/lmn/groupmembership/membership', {
+        action: action,
+        entity: $scope.identity.user,
+        groupname: group.groupname,
+        type: sophomorix_type_map[group.type]
+    }).then (resp) ->
         if resp['data'][0] == 'ERROR'
             notify.error (resp['data'][1])
         if resp['data'][0] == 'LOG'
@@ -92,12 +73,15 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
       dict['type'] == val
 
   $scope.getGroups = (username) ->
-    $http.get('/api/lmn/groupmembership/groups').then (resp) ->
-      $scope.groups = resp.data[0]
-      $scope.identity.isAdmin = resp.data[1]
-      $scope.classes = $scope.groups.filter($scope.filterGroupType('schoolclass'))
-      $scope.projects = $scope.groups.filter($scope.filterGroupType('project'))
-      $scope.printers = $scope.groups.filter($scope.filterGroupType('printergroup'))
+    $http.get('/api/lmn/groupmembership/projects').then (resp) ->
+      $scope.projects = resp.data
+      $scope.loading_projects = false
+    $http.get('/api/lmn/groupmembership/printers').then (resp) ->
+      $scope.printers = resp.data
+      $scope.loading_printers = false
+    $http.get('/api/lmn/groupmembership/schoolclasses').then (resp) ->
+      $scope.classes = resp.data
+      $scope.loading_schoolclasses = false
 
   $scope.createProject = () ->
     messagebox.prompt(gettext('Project Name'), '').then (msg) ->
@@ -133,7 +117,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
         $scope.getGroups ($scope.identity.user)
 
   $scope.projectIsJoinable = (project) ->
-    return project['joinable'] == 'TRUE' or project.admin or $scope.identity.isAdmin or $scope.identity.profile.memberOf.indexOf(project['DN']) > -1
+    return project['sophomorixJoinable'] or project.admin or identity.profile.isAdmin or $scope.identity.profile.projects.indexOf(project['cn']) > -1
 
   $scope.resetAll = (type) ->
       warning = gettext('Are you sure to reset all admin memberships for this? This is actually only necessary to start a new empty school year. This cannot be undone!')
@@ -253,6 +237,12 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
             groupName = group[1]
             $http.get('/api/lmn/groupmembership/groups/' + groupName).then (resp) ->
                 $scope.groupName    = groupName
+
+                if !resp.data.hasOwnProperty('GROUP')
+                    notify.error(gettext("Can not read properties of this project."))
+                    $scope.close()
+                    return
+
                 $scope.groupDetails = resp.data['GROUP'][groupName]
                 $scope.adminList = resp.data['GROUP'][groupName]['sophomorixAdmins']
                 if groupType == 'printergroup'
@@ -298,7 +288,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
 
                 # Admin or admin of the project can edit members of a project
                 # Only admins can change hide and join option for a class
-                if $scope.identity.isAdmin
+                if identity.profile.isAdmin
                     $scope.editGroup = true
                 else if (groupType == 'project') and ($scope.adminList.indexOf($scope.identity.user) >= 0)
                     $scope.editGroup = true
@@ -525,7 +515,12 @@ angular.module('lmn.groupmembership').controller 'LMNGroupDetailsController', ($
                 return resp.data
         $scope.findGroups = (q) ->
             return $http.get("/api/lmn/find/group/" + q).then (resp) ->
-                return resp.data
+                groups = resp.data
+                position = groups.indexOf($scope.groupName)
+                console.log($scope.groupName, position)
+                if position >= 0
+                  groups.splice(position, 1)
+                return groups
         $scope.findUsersGroup = (q) ->
             return $http.get("/api/lmn/find/usergroup/" + q).then (resp) ->
                 return resp.data

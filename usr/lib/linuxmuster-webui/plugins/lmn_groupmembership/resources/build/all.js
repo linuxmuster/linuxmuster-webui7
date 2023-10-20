@@ -16,24 +16,12 @@
   angular.module('lmn.groupmembership').controller('LMNGroupMembershipController', function($rootScope, $scope, $http, identity, $uibModal, gettext, notify, pageTitle, messagebox, validation, smbclient) {
     $scope.need_krbcc_refresh = false;
     pageTitle.set(gettext('Enrolle'));
-    $scope.types = {
-      schoolclass: {
-        typename: gettext('Schoolclass'),
-        name: gettext('Groupname'),
-        checkbox: true,
-        type: 'schoolclass'
-      },
-      printergroup: {
-        typename: gettext('Printer'),
-        checkbox: true,
-        type: 'printergroup'
-      },
-      project: {
-        typename: gettext('Projects'),
-        checkbox: true,
-        type: 'project'
-      }
-    };
+    $scope.show_schoolclasses = true;
+    $scope.show_projects = true;
+    $scope.show_printers = true;
+    $scope.loading_schoolclasses = true;
+    $scope.loading_projects = true;
+    $scope.loading_printers = true;
     $scope.sorts = [
       {
         name: gettext('Groupname'),
@@ -54,24 +42,6 @@
       page: 1,
       pageSize: 20
     };
-    $scope.isActive = function(group) {
-      if (group.type === 'printergroup') {
-        if ($scope.types.printergroup.checkbox === true) {
-          return true;
-        }
-      }
-      if (group.type === 'schoolclass') {
-        if ($scope.types.schoolclass.checkbox === true) {
-          return true;
-        }
-      }
-      if (group.type === 'project') {
-        if ($scope.types.schoolclass.checkbox === true) {
-          return true;
-        }
-      }
-      return false;
-    };
     $scope.checkInverse = function(sort, currentSort) {
       if (sort === currentSort) {
         return $scope.sortReverse = !$scope.sortReverse;
@@ -81,22 +51,24 @@
     };
     $scope.changeState = false;
     $scope.setMembership = function(group) {
-      var action, type;
+      var action, sophomorix_type_map;
       $scope.changeState = true;
-      action = group.membership ? 'removeadmins' : 'addadmins';
-      if (group.typename === 'Class') {
-        type = 'class';
-      } else if (group.typename === 'Printer') {
-        type = 'group';
+      sophomorix_type_map = {
+        'printer': 'group',
+        'schoolclass': 'class',
+        'project': 'project'
+      };
+      if (group.type === 'printer') {
         action = group.membership ? 'removemembers' : 'addmembers';
       } else {
-        type = 'project';
+        // TODO: seems to be wrong for projects
+        action = group.membership ? 'removeadmins' : 'addadmins';
       }
       return $http.post('/api/lmn/groupmembership/membership', {
         action: action,
         entity: $scope.identity.user,
         groupname: group.groupname,
-        type: type
+        type: sophomorix_type_map[group.type]
       }).then(function(resp) {
         if (resp['data'][0] === 'ERROR') {
           notify.error(resp['data'][1]);
@@ -124,12 +96,17 @@
       };
     };
     $scope.getGroups = function(username) {
-      return $http.get('/api/lmn/groupmembership/groups').then(function(resp) {
-        $scope.groups = resp.data[0];
-        $scope.identity.isAdmin = resp.data[1];
-        $scope.classes = $scope.groups.filter($scope.filterGroupType('schoolclass'));
-        $scope.projects = $scope.groups.filter($scope.filterGroupType('project'));
-        return $scope.printers = $scope.groups.filter($scope.filterGroupType('printergroup'));
+      $http.get('/api/lmn/groupmembership/projects').then(function(resp) {
+        $scope.projects = resp.data;
+        return $scope.loading_projects = false;
+      });
+      $http.get('/api/lmn/groupmembership/printers').then(function(resp) {
+        $scope.printers = resp.data;
+        return $scope.loading_printers = false;
+      });
+      return $http.get('/api/lmn/groupmembership/schoolclasses').then(function(resp) {
+        $scope.classes = resp.data;
+        return $scope.loading_schoolclasses = false;
       });
     };
     $scope.createProject = function() {
@@ -180,7 +157,7 @@
       });
     };
     $scope.projectIsJoinable = function(project) {
-      return project['joinable'] === 'TRUE' || project.admin || $scope.identity.isAdmin || $scope.identity.profile.memberOf.indexOf(project['DN']) > -1;
+      return project['sophomorixJoinable'] || project.admin || identity.profile.isAdmin || $scope.identity.profile.projects.indexOf(project['cn']) > -1;
     };
     $scope.resetAll = function(type) {
       var warning;
@@ -369,6 +346,11 @@
       return $http.get('/api/lmn/groupmembership/groups/' + groupName).then(function(resp) {
         var admin, i, len, member, name, ref, ref1;
         $scope.groupName = groupName;
+        if (!resp.data.hasOwnProperty('GROUP')) {
+          notify.error(gettext("Can not read properties of this project."));
+          $scope.close();
+          return;
+        }
         $scope.groupDetails = resp.data['GROUP'][groupName];
         $scope.adminList = resp.data['GROUP'][groupName]['sophomorixAdmins'];
         if (groupType === 'printergroup') {
@@ -417,7 +399,7 @@
         $scope.maillist = resp.data['GROUP'][groupName]['sophomorixMailList'] === 'TRUE';
         // Admin or admin of the project can edit members of a project
         // Only admins can change hide and join option for a class
-        if ($scope.identity.isAdmin) {
+        if (identity.profile.isAdmin) {
           $scope.editGroup = true;
         } else if ((groupType === 'project') && ($scope.adminList.indexOf($scope.identity.user) >= 0)) {
           $scope.editGroup = true;
@@ -770,7 +752,14 @@
     };
     $scope.findGroups = function(q) {
       return $http.get("/api/lmn/find/group/" + q).then(function(resp) {
-        return resp.data;
+        var groups, position;
+        groups = resp.data;
+        position = groups.indexOf($scope.groupName);
+        console.log($scope.groupName, position);
+        if (position >= 0) {
+          groups.splice(position, 1);
+        }
+        return groups;
       });
     };
     $scope.findUsersGroup = function(q) {

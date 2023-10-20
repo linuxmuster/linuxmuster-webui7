@@ -31,7 +31,7 @@ class Handler(HttpPlugin):
             'M' : {'tag':'Managed', 'color': 'info'},
         }
 
-    @get(r'/api/lmn/sophomorixUsers/teachers((?P<user>/[a-z0-9\-]*))?')
+    @get(r'/api/lmn/sophomorixUsers/teachers((?P<user>/[a-z0-9\-_]*))?')
     @authorize('lm:users:teachers:read')
     @endpoint(api=True)
     def handle_api_sophomorix_teachers(self, http_context, user=None):
@@ -67,7 +67,7 @@ class Handler(HttpPlugin):
             return teachersList
         return ["none"]
 
-    @get(r'/api/lmn/sophomorixUsers/students((?P<user>/[a-z0-9\-]*))?')
+    @get(r'/api/lmn/sophomorixUsers/students((?P<user>/[a-z0-9\-_]*))?')
     @authorize('lm:users:students:read')
     @endpoint(api=True)
     def handle_api_sophomorix_students(self, http_context, user=None):
@@ -105,7 +105,7 @@ class Handler(HttpPlugin):
             return studentsList
         return ["none"]
 
-    @get(r'/api/lmn/sophomorixUsers/schooladmins((?P<user>/[a-z0-9\-]*))?')
+    @get(r'/api/lmn/sophomorixUsers/schooladmins((?P<user>/[a-z0-9\-_]*))?')
     @authorize('lm:users:schooladmins:read')
     @endpoint(api=True)
     def handle_api_sophomorix_schooladmins(self, http_context, user=None):
@@ -134,7 +134,7 @@ class Handler(HttpPlugin):
             return schooladminsList
         return ["none"]
 
-    @get(r'/api/lmn/sophomorixUsers/globaladmins((?P<user>/[a-z0-9\-]*))?')
+    @get(r'/api/lmn/sophomorixUsers/globaladmins((?P<user>/[a-z0-9\-_]*))?')
     @authorize('lm:users:globaladmins:read')
     @endpoint(api=True)
     def handle_api_sophomorix_globaladmins(self, http_context, user=None):
@@ -183,7 +183,7 @@ class Handler(HttpPlugin):
         result = lmn_getSophomorixValue(sophomorixCommand, '')
         return result['COMMENT_EN']
 
-    @post(r'/api/lmn/sophomorixUsers/(?P<user>[a-z0-9\-]*)/comment')
+    @post(r'/api/lmn/sophomorixUsers/(?P<user>[a-z0-9\-_]*)/comment')
     @authorize('lm:users:schooladmins:create')
     @endpoint(api=True)
     def handle_api_users_add_comment(self, http_context, user):

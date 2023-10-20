@@ -36,8 +36,17 @@
   angular.module('lmn.quotas').controller('LMQuotasController', function($scope, $http, $uibModal, $location, $q, gettext, hotkeys, lmEncodingMap, notify, pageTitle, lmFileBackups, $rootScope, wait) {
     pageTitle.set(gettext('Quotas'));
     $scope.UserSearchVisible = false;
-    $scope.activeTab = 0;
-    $scope.tabs = ['teacher', 'student', 'schooladministrator', 'adminclass', 'project'];
+    $scope.tabs = ['student', 'teacher', 'schooladministrator', 'schoolclass', 'project', 'quota_check'];
+    $scope.quota_check_init = function() {
+      $scope.show_table_user_quota_check = false;
+      $scope.checking_quota_user = false;
+      $scope._.quota_user_check = '';
+      $scope.user_directories = {};
+      return $scope.user_total_size = 0;
+    };
+    $scope.clearQuotaCheckSelect = function() {
+      return $scope._.quota_user_check = '';
+    };
     $scope.toChange = {
       'teacher': {},
       'student': {},
@@ -48,9 +57,10 @@
       'project': {}
     };
     $scope._ = {
-      addNewSpecial: null
+      addNewSpecial: null,
+      quota_user_check: ''
     };
-    $scope.searchText = gettext('Search user by login, firstname or lastname (min. 3 chars), without special char.');
+    $scope.searchText = gettext('Search user by login, firstname or lastname (min. 3 chars)');
     // Need an array to keep the order ...
     $scope.quota_types = [
       {
@@ -127,12 +137,28 @@
     };
     $scope.findUsers = function(q) {
       var role;
-      role = $scope.tabs[$scope.activeTab];
+      role = '';
+      if ($scope.activeTab < 3) {
+        role = $scope.tabs[$scope.activeTab];
+      }
       return $http.post("/api/lmn/ldap-search", {
         role: role,
         login: q
       }).then(function(resp) {
         return resp.data;
+      });
+    };
+    $scope.quota_check = function() {
+      if (!$scope._.quota_user_check) {
+        return;
+      }
+      $scope.checking_quota_user = true;
+      $scope.show_table_user_quota_check = false;
+      return $http.get(`/api/lmn/quota/check/${$scope._.quota_user_check.login}`).then(function(resp) {
+        $scope.checking_quota_user = false;
+        $scope.show_table_user_quota_check = true;
+        $scope.user_directories = resp.data[0];
+        return $scope.user_total_size = resp.data[1];
       });
     };
     $scope.changeUser = function(role, login, quota) {

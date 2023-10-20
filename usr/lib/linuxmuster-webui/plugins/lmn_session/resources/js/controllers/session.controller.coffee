@@ -359,10 +359,8 @@ angular.module('lmn.session').controller 'LMNOldSessionController', ($scope, $ht
               checkboxStatus: false
         }
         #get groups
-        $http.get('/api/lmn/groupmembership/groups').then (resp) ->
-            $scope.groups = resp.data[0]
-            $scope.identity.isAdmin = resp.data[1]
-            $scope.classes = $scope.groups.filter($scope.filterGroupType('schoolclass'))
+        $http.get('/api/lmn/groupmembership/schoolclasses').then (resp) ->
+            $scope.classes = resp.data
             $scope.classes = $scope.classes.filter($scope.filterMembership(true))
 
         $http.get('/api/lmn/oldsession/sessions').then (resp) ->
@@ -372,10 +370,6 @@ angular.module('lmn.session').controller 'LMNOldSessionController', ($scope, $ht
             else
                 $scope.visible.sessiontable = 'show'
                 $scope.sessions = resp.data
-
-    $scope.filterGroupType = (val) ->
-            return (dict) ->
-                dict['type'] == val
 
     $scope.filterMembership = (val) ->
             return (dict) ->

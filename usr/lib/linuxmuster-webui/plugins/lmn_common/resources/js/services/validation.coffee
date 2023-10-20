@@ -58,7 +58,7 @@ angular.module('lmn.common').service 'validation', (gettext) ->
     # Login can only have alphanumeric chars ( lowercase or uppercase ) or -
     this.isValidLogin = (name) ->
         error_msg = name + gettext(' can only contain alphanumeric chars or -')
-        regExp =  /^[a-z0-9\-]*$/i
+        regExp =  /^[a-z0-9\-_]*$/i
         validName = regExp.test(name)
         if !validName
             return error_msg

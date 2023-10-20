@@ -7,6 +7,20 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function($s
     $scope.newFileDialogVisible = false;
     $scope.clipboardVisible = false;
     $scope.uploadProgress = [];
+    $scope.file_icon = {
+        'powerpoint': "far fa-file-powerpoint",
+        'text': "far fa-file-alt",
+        'code': "far fa-file-code",
+        'word': "far fa-file-word",
+        'pdf': "far fa-file-pdf",
+        'excel': "far fa-file-excel",
+        'audio': "far fa-file-audio",
+        'archive': "far fa-file-archive",
+        'video': "far fa-file-video",
+        'image': "far fa-file-image",
+        'file': "far fa-file",
+    }
+
 
     identity.promise.then(() => {
         if (identity.user == 'root') {
@@ -77,6 +91,10 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function($s
                 $scope.loading = false
             });
     };
+
+    $scope.get_file_icon = (filetype) => {
+        return $scope.file_icon[filetype];
+    }
 
     $scope.rename = (item) => {
         old_path = item.path;

@@ -23,7 +23,7 @@ from aj.config import UserConfigProvider
 from aj.plugins.lmn_common.api import ldap_config as params, lmsetup_schoolname, pwreset_config, lmn_is_installed
 from aj.plugins.lmn_common.multischool import SchoolManager
 from aj.api.endpoint import EndpointError
-from aj.plugins.lmn_common.ldap.requests import LMNLdapRequests
+from linuxmusterTools.ldapconnector import LMNLdapReader
 
 
 @component(AuthenticationProvider)
@@ -38,7 +38,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
     def __init__(self, context):
         self.context = context
-        self.lr = LMNLdapRequests(self.context)
+        self.lr = LMNLdapReader
 
     def get_ldap_user(self, username):
         """
@@ -52,7 +52,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
         :rtype: dict
         """
 
-        return self.lr.get(f'/user/{username}', school_oriented=False)
+        return self.lr.get(f'/users/{username}')
 
     def prepare_environment(self, username):
         """
@@ -63,23 +63,34 @@ class LMAuthenticationProvider(AuthenticationProvider):
         :type username: string
         """
 
-        if lmn_is_installed():
-            # Initialize school manager
-            active_school = self.get_profile(username)['activeSchool']
-            schoolmgr = SchoolManager()
-            schoolmgr.switch(active_school)
-            self.context.schoolmgr = schoolmgr
+        # Initialize school manager
+        active_school = self.get_profile(username)['activeSchool']
+        schoolmgr = SchoolManager()
+        schoolmgr.switch(active_school)
+        self.context.schoolmgr = schoolmgr
+        self.context.ldapreader = LMNLdapReader
 
-            # Permissions for kerberos ticket
-            uid = self.get_isolation_uid(username)
+        def schoolget(*args, **kwargs):
+            """
+            This alias allow to automatically pass the school context for school
+            specific requests.
+            """
 
-            if os.path.isfile(f'/tmp/krb5cc_{uid}'):
-                os.unlink(f'/tmp/krb5cc_{uid}')
+            result = self.context.ldapreader.get(*args,**kwargs, school=self.context.schoolmgr.school)
+            return result
 
-            if os.path.isfile(f'/tmp/krb5cc_{uid}{uid}'):
-                os.rename(f'/tmp/krb5cc_{uid}{uid}', f'/tmp/krb5cc_{uid}')
-                logging.warning(f"Changing kerberos ticket rights for {username}")
-                os.chown(f'/tmp/krb5cc_{uid}', uid, 100)
+        self.context.ldapreader.schoolget = schoolget
+ 
+        # Permissions for kerberos ticket
+        uid = self.get_isolation_uid(username)
+
+        if os.path.isfile(f'/tmp/krb5cc_{uid}'):
+            os.unlink(f'/tmp/krb5cc_{uid}')
+
+        if os.path.isfile(f'/tmp/krb5cc_{uid}{uid}'):
+            os.rename(f'/tmp/krb5cc_{uid}{uid}', f'/tmp/krb5cc_{uid}')
+            logging.warning(f"Changing kerberos ticket rights for {username}")
+            os.chown(f'/tmp/krb5cc_{uid}', uid, 100)
 
     def _get_krb_ticket(self, username, password):
         """
@@ -171,11 +182,15 @@ class LMAuthenticationProvider(AuthenticationProvider):
         if username == 'root':
             return True
 
+        if not username:
+            return False
+
         ## When 2FA is activated, auth_info is missing in prepare_session
         ## Must be fixed in Ajenti
-        if self.context.session.auth_info is None:
+        auth_info = getattr(self.context.session, 'auth_info', None)
+        if auth_info is None:
             permissions = {}
-            webuiPermissions = self.lr.get(f'/user/{username}', dict=False).sophomorixWebuiPermissionsCalculated
+            webuiPermissions = self.lr.get(f'/users/{username}').get('sophomorixWebuiPermissionsCalculated', [])
             for perm in webuiPermissions:
                 module, value = perm.split(': ')
                 try:
@@ -224,7 +239,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
             return 0
         # GROUP CONTEXT
         try:
-            groupmembership = ''.join(self.get_ldap_user(username)['memberOf'])
+            groupmembership = ''.join(self.get_ldap_user(username).get('memberOf', []))
         except Exception:
             groupmembership = ''
         if 'role-globaladministrator' in groupmembership or 'role-schooladministrator' in groupmembership:
@@ -257,7 +272,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
             return 0
         # USER CONTEXT
         try:
-            groupmembership = ''.join(self.get_ldap_user(username)['memberOf'])
+            groupmembership = ''.join(self.get_ldap_user(username).get('memberOf', []))
         except Exception as e:
             logging.error(e)
             groupmembership = ''
@@ -288,7 +303,6 @@ class LMAuthenticationProvider(AuthenticationProvider):
             return {'activeSchool': 'default-school'}
         try:
             profil = self.get_ldap_user(username)
-            profil['isAdmin'] = "administrator" in profil['sophomorixRole']
             # Test purpose for multischool
             if profil['sophomorixSchoolname'] == 'global':
                 profil['activeSchool'] = "default-school"

@@ -7,21 +7,20 @@ from aj.api.http import get, post, put, patch, delete, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue
-from aj.plugins.lmn_common.ldap.requests import LMNLdapRequests
 
 
 @component(HttpPlugin)
 class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
-        self.lr = LMNLdapRequests(self.context)
 
     @get(r'/api/lmn/session/sessions')
     @authorize('lm:users:students:read')
     @endpoint(api=True)
     def handle_api_get_sessions(self, http_context):
         user = self.context.identity
-        sessions = self.lr.get(f'/user/{user}', dict=False).sophomorixSessions
+
+        sessions = self.context.ldapreader.schoolget(f'/users/{user}', dict=False).lmnsessions
         sessionsList = []
         for session in sessions:
             s = {
@@ -39,10 +38,11 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_get_schoolclasses(self, http_context):
         user = self.context.identity
-        schoolclasses = self.lr.get(f'/user/{user}', dict=False).schoolclasses
+
+        schoolclasses = self.context.ldapreader.schoolget(f'/users/{user}', dict=False).schoolclasses
         schoolclassesList = []
         for schoolclass in schoolclasses:
-            details = self.lr.get(f'/schoolclass/{schoolclass}', dict=False)
+            details = self.context.ldapreader.schoolget(f'/schoolclasses/{schoolclass}', dict=False)
             s = {
                 'name': details.cn,
                 'membersCount': len(details.sophomorixMembers),
@@ -57,10 +57,11 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_get_projects(self, http_context):
         user = self.context.identity
-        projects = self.lr.get(f'/user/{user}', dict=False).projects
+
+        projects = self.context.ldapreader.schoolget(f'/users/{user}', dict=False).projects
         projectsList = []
         for project in projects:
-            details = self.lr.get(f'/project/{project}', dict=False)
+            details = self.context.ldapreader.schoolget(f'/projects/{project}', dict=False)
             s = {
                 'name': details.cn,
                 'membersCount': len(details.sophomorixMembers),
@@ -79,14 +80,34 @@ class Handler(HttpPlugin):
         result = []
 
         def get_user_info(user):
-            details = self.lr.get(f'/user/{user}')
-            details['changed'] = False
-            details['exammode-changed'] = False
+            user = user.replace('-exam', '')
+            details = self.context.ldapreader.schoolget(f'/users/{user}')
+            details['changed'] = False # TODO: usefull ?
+            details['exammode-changed'] = False # TODO : usefull ?
             result.append(details)
 
         users = http_context.json_body()['users']
         with futures.ThreadPoolExecutor() as executor:
             infos = executor.map(get_user_info, users)
+        return(result)
+
+    # TODO : post is wrong here
+    @post(r'/api/lmn/session/exam/userinfo')
+    @authorize('lm:users:students:read')
+    @endpoint(api=True)
+    def handle_api_exam_userinfo(self, http_context):
+
+        result = []
+
+        def get_exam_user_info(user):
+            details = self.context.ldapreader.schoolget(f'/users/exam/{user}')
+            details['changed'] = False # TODO : usefull ?
+            details['exammode-changed'] = False # TODO : TODO : usefull ?
+            result.append(details)
+
+        users = http_context.json_body()['users']
+        with futures.ThreadPoolExecutor() as executor:
+            infos = executor.map(get_exam_user_info, users)
         return(result)
 
     @put(r'/api/lmn/session/sessions/(?P<session>[\w\+\-]*)')
@@ -112,15 +133,46 @@ class Handler(HttpPlugin):
         result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
         return result
 
-    @patch(r'/api/lmn/session/exam/(?P<session>[\w\+\-]*)')
+    @patch(r'/api/lmn/session/exam/start')
     @authorize('lm:users:students:read')
     @endpoint(api=True)
-    def handle_api_end_exam(self, http_context, session=None):
-        supervisor = http_context.json_body()['supervisor']
-        participant = http_context.json_body()['participant']
-        now = strftime("%Y%m%d_%H-%M-%S", localtime())
+    def handle_api_start_exam(self, http_context):
+        supervisor = self.context.identity
+        session = http_context.json_body()['session']
+        participants = ','.join([member['cn'] for member in session['members']])
+
         try:
-            sophomorixCommand = ['sophomorix-exam-mode', '--unset', '--subdir', 'transfer/collected/'+now+'-'+session+'-ended-by-'+supervisor+'/exam', '-j', '--participants', participant]
+            sophomorixCommand = [
+                'sophomorix-exam-mode',
+                '--set',
+                '--supervisor', supervisor,
+                '-j',
+                '--participants', participants
+            ]
+            lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
+        except Exception as e:
+            raise Exception('Error:\n' + str(e))
+
+    @patch(r'/api/lmn/session/exam/stop')
+    @authorize('lm:users:students:read')
+    @endpoint(api=True)
+    def handle_api_stop_exam(self, http_context):
+        session = http_context.json_body()['session']
+        participants = ','.join([member['cn'] for member in session['members']])
+        group_type = _(session['type'])
+        group_name = session['name']
+
+        now = strftime("%Y-%m-%d_%Hh%Mm%S", localtime())
+        target = f'EXAM_{group_type}_{group_name}_{now}'
+
+        try:
+            sophomorixCommand = [
+                'sophomorix-exam-mode',
+                '--unset',
+                '--subdir', f'transfer/{target}',
+                '-j',
+                '--participants', participants
+            ]
             lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
         except Exception as e:
             raise Exception('Error:\n' + str(e))
@@ -174,59 +226,6 @@ class Handler(HttpPlugin):
         result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
         return result
 
-        # if action == 'update-session':
-        #     supervisor = http_context.json_body()['username']
-        #     sessionID = http_context.json_body()['sessionID']
-        #     if "participants" in http_context.json_body():
-        #         participantsArray = http_context.json_body()['participants']
-        #         participants = ','.join(participantsArray)
-        #         sophomorixCommand = ['sophomorix-session', '--session', sessionID, '--supervisor', supervisor,  '-j', '--participants', participants]
-        #     else:
-        #         sophomorixCommand = ['sophomorix-session', '--session', sessionID, '--supervisor', supervisor,  '-j', '--participants', '']
-        #     result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
-        #     return result
-        #
-        # if action == 'save-session':
-        #     session = http_context.json_body()['session']
-        #     sessionName = http_context.json_body()['sessionName']
-        #     supervisor = http_context.json_body()['username']
-        #     participants = http_context.json_body()['participants']
-        #     participantsList = []
-        #     now = strftime("%Y%m%d_%H-%M-%S", localtime())
-        #
-        #     examModeList, noExamModeList = [], []
-        #
-        #     for participant in participants:
-        #         name = participant['sAMAccountName'].replace('-exam', '')
-        #         participantsList.append(name)
-        #
-        #         # Only check for exammode if this value was changed in WEBUI
-        #         if participant['exammode-changed'] is True:
-        #             examModeList.append(name) if participant['exammode_boolean'] is True else noExamModeList.append(name)
-        #
-        #     # Save session members
-        #     try:
-        #         sophomorixCommand = ['sophomorix-session', '--session', session,  '-j', '--participants', ','.join(participantsList)]
-        #         result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
-        #     except Exception:
-        #         raise Exception(f'Error:\nsophomorix-session --session {session} -j --participants {",".join(participantsList)}')
-        #     # Put chosen members in exam mode
-        #     try:
-        #         if examModeList:
-        #             sophomorixCommand = ['sophomorix-exam-mode', '--set', '--supervisor', supervisor, '-j', '--participants', ','.join(examModeList)]
-        #             result = lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
-        #     except Exception:
-        #         raise Exception(f'Error:\nsophomorix-exam-mode --set --supervisor {supervisor} -j --participants {",".join(examModeList)}')
-        #     # Remove chosen members from exam mode
-        #     try:
-        #         if noExamModeList:
-        #             sophomorixCommand = ['sophomorix-exam-mode', '--unset', '--subdir', f'transfer/collected/{now}-{sessionName}/exam', '-j', '--participants', ','.join(noExamModeList)]
-        #             result = lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
-        #     except Exception:
-        #         raise Exception(f'Error:\nsophomorix-exam-mode --unset --subdir {session} -j --participants {",".join(noExamModeList)}')
-        #     return result
-        # return 0
-
     @get(r'/api/lmn/session/userInRoom')
     @authorize('lm:users:students:read')
     @endpoint(api=True)
@@ -257,16 +256,14 @@ class Handler(HttpPlugin):
     @authorize('lm:users:students:read')
     @endpoint(api=True)
     def handle_api_ldap_user_search(self, http_context, query=''):
-        schoolname = self.context.schoolmgr.school
-        userList = self.lr.get(f'/users/search/student/{query}')
+        userList = self.context.ldapreader.schoolget(f'/users/search/student/{query}')
         return sorted(userList, key=lambda d: f"{d['sophomorixAdminClass']}{d['sn']}{d['givenName']}")
 
     @get(r'/api/lmn/session/schoolClass-search/(?P<query>.*)')
     @authorize('lm:users:students:read')
     @endpoint(api=True)
     def handle_api_ldap_group_search(self, http_context, query=''):
-        schoolname = self.context.schoolmgr.school
-        return self.lr.get(f'/schoolclasses/search/{query}', sortkey='cn')
+        return self.context.ldapreader.schoolget(f'/schoolclasses/search/{query}', sortkey='cn')
 
     @post(r'/api/lmn/session/moveFileToHome')  ## TODO authorize
     @endpoint(api=True)
@@ -309,7 +306,7 @@ class Handler(HttpPlugin):
         receivers = http_context.json_body()['receivers']
         files = http_context.json_body()['files']
         session = http_context.json_body()['session']
-        now = strftime("%Y%m%d_%H-%M-%S", localtime())
+        now = strftime("%Y-%m-%d_%Hh%Mm%S", localtime())
 
         def shareFiles(data):
             file, receiver = data
@@ -341,7 +338,7 @@ class Handler(HttpPlugin):
         files = http_context.json_body()['files']
         mode = http_context.json_body()['mode']
         session = http_context.json_body()['session']
-        now = strftime("%Y%m%d_%H-%M-%S", localtime())
+        now = strftime("%Y-%m-%d_%Hh%Mm%S", localtime())
 
         if mode not in ['scopy', 'move']:
             return # TODO
@@ -376,7 +373,7 @@ class Handler(HttpPlugin):
         receivers = http_context.json_body()['receivers']
         files = http_context.json_body()['files']
         session = http_context.json_body()['session']
-        now = strftime("%Y%m%d_%H-%M-%S", localtime())
+        now = strftime("%Y-%m-%d_%Hh%Mm%S", localtime())
 
         def shareFiles(file):
             sophomorixCommand = [

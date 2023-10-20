@@ -134,6 +134,55 @@
                 </tr>
             </table>
         </uib:tab>
+        <uib:tab heading="{{'Quota check'|translate}}" ng:click="quota_check_init()">
+            <br />
+            <p class="alert alert-warning" translate>This functionality is actually under development and displays imprecise values. It will not work with DFS shares or in multischool environment.</p>
+            <br />
+            <div style="margin-bottom:30px;height:50px;">
+                <form ng:submit="quota_check()">
+                    <label class="col-md-3" translate>List main directories for user:</label>
+                    <div class="has-feedback col-md-6">
+                        <input type="text" placeholder="{{searchText}}"
+                               ng:model="_.quota_user_check"
+                               typeahead-on-select="quota_check()"
+                               typeahead-editable="false"
+                               typeahead-min-length="3"
+                               uib-typeahead="user as user.label for user in findUsers($viewValue)"
+                               class="col-md-7 form-control" autofocus />
+                        <span ng:click="clearQuotaCheckSelect()"
+                              ng:show="_.quota_user_check != ''"
+                              class="far fa-times-circle form-control-feedback"
+                              style="cursor: pointer; pointer-events: all; line-height:34px;right:17px;"></span>
+                    </div>
+                    <div class="col-md-2">
+                        <button ng:click="quota_check()" class="btn btn-success">
+                            Check
+                            <i class="fas fa-check"></i>
+                        </button>
+                    </div>
+                </form>
+                &nbsp;
+            </div>
+            <progress-spinner ng:show="checking_quota_user"></progress-spinner>
+            <hr class="clearfix" />
+            <div ng:show="show_table_user_quota_check">
+                <h3 translate>Main quota use for the user {{_.quota_user_check.label}}</h3>
+                <table class="table" ng:show="show_table_user_quota_check">
+                    <tr>
+                        <th translate>Directory</th>
+                        <th translate>Size (MiB)</th>
+                    </tr>
+                    <tr ng:repeat="(dir, size) in user_directories">
+                        <td>{{dir}}</td>
+                        <td style="text-align: right;">{{size}} MiB</td>
+                    </tr>
+                    <tr>
+                        <th translate>Total</th>
+                        <th style="text-align: right;">{{user_total_size}} MiB</th>
+                    </tr>
+                </table>
+            </div>
+        </uib:tab>
     </uib:tabset>
 
     <dialog ng:show="UserSearchVisible">
@@ -154,7 +203,7 @@
 
     <floating-toolbar>
         <a href="/view/lmn/schoolsettings#quota" class="btn btn-lmn pull-right" translate>Configure default quota</a>
-        <button ng:click="saveApply()" class="btn btn-lmn" translate>Save & apply</button>
+        <button ng:click="saveApply()" ng:show="activeTab <= 4 " class="btn btn-lmn" translate>Save & apply</button>
         <a ng:click="showUserSearch()" ng:show="activeTab <= 2" class="btn btn-lmn" translate>Search & add user</a>
     </floating-toolbar>
 </div>

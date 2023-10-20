@@ -1,4 +1,4 @@
-angular.module('lmn.session_new').service('lmnSession', function($http, $uibModal, $q, $location, messagebox, validation, notify, gettext) {
+angular.module('lmn.session_new').service('lmnSession', function($http, $uibModal, $q, $location, $window, messagebox, validation, notify, gettext, identity) {
 
     this.sessions = [];
 
@@ -14,12 +14,14 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
 
         promiseList.push($http.get('/api/lmn/session/sessions').then((resp) => {
             this.sessions = resp.data;
-            if (resp.data.length == 0) {
-                this.info.message = gettext("There are no sessions yet. Create a session using the 'New Session' button at the top!");
-            }
         }));
 
         return $q.all(promiseList).then(() => {return [this.schoolclasses, this.projects, this.sessions]});
+    }
+
+    this.filterExamUsers = () => {
+        this.extExamUsers = this.current.members.filter((user) => !['---', identity.user].includes(user.sophomorixExamMode[0]));
+        this.examUsers = this.current.members.filter((user) => [identity.user].includes(user.sophomorixExamMode[0]));
     }
 
     this.start = (session) => {
@@ -28,6 +30,7 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
             this.current.members = resp.data;
             this.current.generated = false;
             this.current.type = 'session';
+            this.filterExamUsers();
             $location.path('/view/lmn/session');
         });
     }
@@ -53,7 +56,26 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
             'type': session_type, // May be room or schoolclass or project
         };
         this.current = generatedSession;
+        this.filterExamUsers();
         $location.path('/view/lmn/session');
+    }
+
+    this.getExamUsers = () => {
+       users = this.current.members.map((user) => user.cn);
+       $http.post('/api/lmn/session/exam/userinfo', {'users': users}).then((resp) => {
+            this.current.members = resp.data;
+            this.filterExamUsers();
+            $location.path('/view/lmn/session');
+        });
+    }
+
+    this.refreshUsers = () => {
+        users = this.current.members.map((user) => user.cn);
+        return $http.post('/api/lmn/session/userinfo', {'users': users}).then((resp) => {
+            this.current.members = resp.data;
+            this.filterExamUsers();
+            $location.path('/view/lmn/session');
+        });
     }
 
     this.new = (members = []) => {
@@ -103,13 +125,6 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
             return $http.delete(`/api/lmn/session/sessions/${sessionID}`).then((resp) => {
                 notify.success(gettext(resp.data));
             });
-        });
-    }
-
-    this.getParticipants = () => {
-        // TODO : URL does not exist anymore
-        return $http.get(`/api/lmn/session/sessions/${this.current.sid}`).then((resp) => {
-            return resp.data;
         });
     }
 

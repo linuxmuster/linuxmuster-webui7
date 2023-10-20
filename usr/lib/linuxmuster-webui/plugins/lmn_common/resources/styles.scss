@@ -5,6 +5,7 @@ $theme-color: #233c4c;
 $theme-color-weak: #ABDEFF;
 $theme-color-orange:#ff8f00 ;
 $theme-color-orange-weak: #ffab40;
+$theme-color-orange-light: #ffecd3;
 
 //// maincontainer wider
 //@media (min-width: 1200px)
@@ -88,6 +89,10 @@ li.cardlist, span.cardlist {
 
 .color-orange {
     color: $theme-color-orange;
+}
+
+.bg-orange {
+    background-color: $theme-color-orange-light;
 }
 
 .color-theme {
@@ -427,7 +432,7 @@ tr.leaders {
 .lmn-container-list > div {
     text-align: left;
     margin-left: 10px;
-    width: 220px;
+    width: 210px;
 }
 
 .lmn-container-list-separated {
@@ -481,7 +486,7 @@ floating-toolbar {
 
 /* Button LMN
 ---------------------------- */
-.btn-lmn {
+.btn-lmn, .btn-lmn-success, .btn-lmn-danger {
     color: #233c4c;
     background-color: #fff;
     border-color: #233c4c;
@@ -489,22 +494,38 @@ floating-toolbar {
     font-weight: bold;
     margin: 0 3px;
     border-radius: 5px;
+
+    &:focus, &:hover {
+        color: #233c4c;
+        background-color: #ffc876;
+        border-color: #1b272f;
+    }
+
+    &:active {
+        color: #333;
+        background-color: #ffc876;
+        border-color: #1b272f;
+    }
 }
-.btn-lmn:focus {
-    color: #233c4c;
-    background-color: #ffc876;
-    border-color: #1b272f;
+
+.btn-lmn-success {
+    background-color: #4CAF50;
+    color:white;
+
+    &:focus, &:hover, &:active {
+        background-color: #4CAF50;
+    }
 }
-.btn-lmn:hover {
-    color: #233c4c;
-    background-color: #ffc876;
-    border-color: #1b272f;
+
+.btn-lmn-danger {
+    background-color: #F44336;
+    color:white;
+
+    &:focus, &:hover, &:active {
+        background-color: #F44336;
+    }
 }
-.btn-lmn:active {
-    color: #333;
-    background-color: #ffc876;
-    border-color: #1b272f;
-}
+
 .btn-upload {
     position:relative;
     top:20px;

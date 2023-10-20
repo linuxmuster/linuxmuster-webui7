@@ -353,7 +353,7 @@ def build_linbo_command(cmd_parameters):
     actions = ''
     # Partition
     if cmd_parameters['partition']:
-        actions = 'partition'
+        actions = 'partition,format'
 
     # Format, sync, start
     for action in ['format', 'sync', 'start']:

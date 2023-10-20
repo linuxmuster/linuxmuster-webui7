@@ -17,69 +17,95 @@ class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
 
-    @get(r'/api/lmn/groupmembership/groups')
+    @get(r'/api/lmn/groupmembership/projects')
+    @authorize('lmn:groupmembership')
+    @endpoint(api=True)
+    def handle_api_list_projects(self, http_context):
+        """
+        List all projects visible for the current user.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: List of projects
+        :rtype: list
+        """
+
+        username = self.context.identity
+        user_profile = AuthenticationService.get(self.context).get_provider().get_profile(username)
+
+        projects = self.context.ldapreader.schoolget('/projects', dict=False)
+        user_projects = []
+
+        for project in projects:
+            member = project.cn in user_profile['projects'] or user_profile['isAdmin']
+
+            if member or not project.sophomorixHidden:
+                project.get_all_members()
+                projectDict = project.asdict()
+
+                projectDict['groupname'] = project.cn
+                projectDict['membership'] = member
+                projectDict['admin'] = username in project.sophomorixAdmins or user_profile['isAdmin']
+                projectDict['members'] = project.sophomorixMembers
+                projectDict['type'] = 'project'
+
+                user_projects.append(projectDict)
+
+        return user_projects
+
+    @get(r'/api/lmn/groupmembership/printers')
+    @authorize('lmn:groupmembership')
+    @endpoint(api=True)
+    def handle_api_list_printers(self, http_context):
+        """
+        List all printers.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: List of printers
+        :rtype: list
+        """
+
+        username = self.context.identity
+        user_profile = AuthenticationService.get(self.context).get_provider().get_profile(username)
+        printers = self.context.ldapreader.schoolget('/printers')
+
+        for printer in printers:
+            printer['type'] = 'printergroup'
+            printer['groupname'] = printer['cn']
+            printer['membership'] = printer['cn'] in user_profile['printers'] or user_profile['isAdmin']
+
+        return printers
+
+    @get(r'/api/lmn/groupmembership/schoolclasses')
     @authorize('lmn:groupmembership')
     @endpoint(api=True)
     def handle_api_list_groups(self, http_context):
         """
-        List all groups.
+        List all schoolclasses and the current user's membership.
 
         :param http_context: HttpContext
         :type http_context: HttpContext
-        :return: List of groups or result for actions kill and create
+        :return: List of schoolclasses
         :rtype: dict or tuple
         """
 
-        schoolname = self.context.schoolmgr.school
         username = self.context.identity
-        user_details = AuthenticationService.get(self.context).get_provider().get_profile(username)
-        isAdmin = "administrator" in user_details['sophomorixRole']
+        user_profile = AuthenticationService.get(self.context).get_provider().get_profile(username)
 
-        membershipList = []
-        usergroups = []
-        if not isAdmin:
-            # get groups specified user is member of
-            for group in user_details['memberOf']:
-                usergroups.append(group.split(',')[0].split('=')[1])
+        schoolclasses = self.context.ldapreader.schoolget('/schoolclasses')
 
-        # get all available classes and projects
-        sophomorixCommand = ['sophomorix-query', '--class', '--project', '--schoolbase', schoolname, '--group-full', '-jj']
-        groups = lmn_getSophomorixValue(sophomorixCommand, '')
-        # get all available groups TODO
+        for schoolclass in schoolclasses:
+            member = schoolclass['cn'] in user_profile['schoolclasses'] or user_profile['isAdmin']
 
-        # build membershipList with membership status
-        for group in groups['LISTS']['GROUP']:
-            membershipDict = {}
-            groupDetails = groups['GROUP'][group]
+            if member or not schoolclass['sophomorixHidden']:
+                schoolclass['groupname'] = schoolclass['cn']
+                schoolclass['membership'] = member
+                schoolclass['admin'] = username in schoolclass['sophomorixAdmins'] or user_profile['isAdmin']
+                schoolclass['members'] = schoolclass['sophomorixMembers']
+                schoolclass['type'] = 'schoolclass'
 
-            if group in usergroups or isAdmin or groupDetails['sophomorixHidden'] == "FALSE":
-                membershipDict['groupname'] = group
-                membershipDict['membership'] = group in usergroups or isAdmin
-                membershipDict['admin'] = username in groupDetails['sophomorixAdmins'] or isAdmin
-                membershipDict['joinable'] = groupDetails['sophomorixJoinable']
-                membershipDict['DN'] = groupDetails['DN']
-                membershipDict['members'] = groupDetails['sophomorixMembers']
-
-                # Project name always starts with p_, but not classname
-                if group[:2] == "p_":
-                    membershipDict['type'] = 'project'
-                    membershipDict['typename'] = 'Project'
-                else:
-                    membershipDict['type'] = 'schoolclass'
-                    membershipDict['typename'] = 'Class'
-
-                membershipList.append(membershipDict)
-
-        #get printers
-        sophomorixCommand = ['sophomorix-query', '--printergroup', '--schoolbase', schoolname, '-jj']
-        printergroups = lmn_getSophomorixValue(sophomorixCommand, 'LISTS/GROUP')
-
-        for printergroup in printergroups:
-          if printergroup in usergroups or isAdmin:
-            membershipList.append({'type': 'printergroup', 'typename': 'Printer', 'groupname': printergroup, 'membership': True})
-          else:
-            membershipList.append({'type': 'printergroup', 'typename': 'Printer', 'groupname': printergroup, 'membership': False})
-        return membershipList, isAdmin, user_details
+        return schoolclasses
 
     @get(r'/api/lmn/groupmembership/groups/(?P<groupName>.+)')
     @authorize('lmn:groupmemberships:write')

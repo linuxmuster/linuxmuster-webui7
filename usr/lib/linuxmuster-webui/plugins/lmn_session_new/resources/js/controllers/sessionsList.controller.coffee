@@ -50,9 +50,3 @@ angular.module('lmn.session_new').controller 'LMNSessionsListController', ($scop
         if $scope.identity.user is 'root'
             return
         $scope.getSessions()
-
-#angular.module('lmn.session_new').controller 'LMNRoomDetailsController', ($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, usersInRoom) ->
-#        $scope.usersInRoom = usersInRoom
-#
-#        $scope.close = () ->
-#            $uibModalInstance.dismiss()

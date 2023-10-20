@@ -1,3 +1,12 @@
+linuxmuster-webui7 (17.2.23) lmn72-testing; urgency=low
+
+  * Merge 7.2.23 to 17.2.23
+    * Upgrade Ajenti 2.2.7
+    * Allow underscore in login
+    * [Groupmembership] Exclude a group to be self member 
+
+ -- Lukas Spitznagel <lukas.spitznagel@netzint.de>  Fri, 20 Oct 2023 16:32:02 +0200
+
 linuxmuster-webui7 (17.2.22-3) lmn72-testing; urgency=low
 
   * bump

@@ -19,8 +19,9 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
         return $q.all(promiseList).then(() => {return [this.schoolclasses, this.projects, this.sessions]});
     }
 
-    this.getExtExamUsers = () => {
+    this.filterExamUsers = () => {
         this.extExamUsers = this.current.members.filter((user) => !['---', identity.user].includes(user.sophomorixExamMode[0]));
+        this.examUsers = this.current.members.filter((user) => [identity.user].includes(user.sophomorixExamMode[0]));
     }
 
     this.start = (session) => {
@@ -29,7 +30,7 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
             this.current.members = resp.data;
             this.current.generated = false;
             this.current.type = 'session';
-            this.getExtExamUsers();
+            this.filterExamUsers();
             $location.path('/view/lmn/session');
         });
     }
@@ -55,7 +56,7 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
             'type': session_type, // May be room or schoolclass or project
         };
         this.current = generatedSession;
-        this.getExtExamUsers();
+        this.filterExamUsers();
         $location.path('/view/lmn/session');
     }
 
@@ -63,7 +64,7 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
        users = this.current.members.map((user) => user.cn);
        $http.post('/api/lmn/session/exam/userinfo', {'users': users}).then((resp) => {
             this.current.members = resp.data;
-            this.getExtExamUsers();
+            this.filterExamUsers();
             $location.path('/view/lmn/session');
         });
     }
@@ -72,7 +73,7 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
         users = this.current.members.map((user) => user.cn);
         return $http.post('/api/lmn/session/userinfo', {'users': users}).then((resp) => {
             this.current.members = resp.data;
-            this.getExtExamUsers();
+            this.filterExamUsers();
             $location.path('/view/lmn/session');
         });
     }

@@ -45,9 +45,12 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         });
     };
 
-    this.getExtExamUsers = function () {
+    this.filterExamUsers = function () {
         _this.extExamUsers = _this.current.members.filter(function (user) {
             return !['---', identity.user].includes(user.sophomorixExamMode[0]);
+        });
+        _this.examUsers = _this.current.members.filter(function (user) {
+            return [identity.user].includes(user.sophomorixExamMode[0]);
         });
     };
 
@@ -57,7 +60,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
             _this.current.members = resp.data;
             _this.current.generated = false;
             _this.current.type = 'session';
-            _this.getExtExamUsers();
+            _this.filterExamUsers();
             $location.path('/view/lmn/session');
         });
     };
@@ -83,7 +86,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
             'type': session_type // May be room or schoolclass or project
         };
         _this.current = generatedSession;
-        _this.getExtExamUsers();
+        _this.filterExamUsers();
         $location.path('/view/lmn/session');
     };
 
@@ -93,7 +96,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         });
         $http.post('/api/lmn/session/exam/userinfo', { 'users': users }).then(function (resp) {
             _this.current.members = resp.data;
-            _this.getExtExamUsers();
+            _this.filterExamUsers();
             $location.path('/view/lmn/session');
         });
     };
@@ -104,7 +107,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         });
         return $http.post('/api/lmn/session/userinfo', { 'users': users }).then(function (resp) {
             _this.current.members = resp.data;
-            _this.getExtExamUsers();
+            _this.filterExamUsers();
             $location.path('/view/lmn/session');
         });
     };

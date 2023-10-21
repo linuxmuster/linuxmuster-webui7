@@ -239,7 +239,7 @@ class Handler(HttpPlugin):
             room = response[username]['ROOM']
             response.pop(username, None)
             return {
-                "usersList": response.keys() if response else [],
+                "usersList": list(response.keys()) if response else [],
                 "name": room,
                 "objects": response,
             }

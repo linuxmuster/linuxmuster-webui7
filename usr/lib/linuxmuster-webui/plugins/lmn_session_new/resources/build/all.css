@@ -46,8 +46,8 @@ body::after {
   box-shadow: 3px 3px 3px silver;
 }
 
-.session_hr {
-  border-bottom: 1px solid #eeeeee;
+.session_new_hr {
+  border-bottom: 1px solid #999;
   width: 100%;
 }
 

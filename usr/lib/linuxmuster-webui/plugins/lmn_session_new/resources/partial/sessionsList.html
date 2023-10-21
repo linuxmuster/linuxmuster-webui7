@@ -18,12 +18,12 @@
             <span translate>This Room</span>
         </h3>
 
-        <div class="alert alert-info" ng:show="room.usersList.length == 0 && !loading">
+        <div class="alert alert-info" ng:show="room.name == '' && !loading">
             <span translate>
                 Currenty it's not possible to determine your room, are you logged on a school computer ?
             </span>
         </div>
-        <div class="flex-container lmn-container-list" ng:show="room.usersList.length > 0">
+        <div class="flex-container lmn-container-list" ng:show="room.name != ''">
             <div class="list-group-item">
                 <div>
                     <span style="float:right;width:50%;">

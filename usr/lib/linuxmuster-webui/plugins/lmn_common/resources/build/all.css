@@ -353,11 +353,14 @@ tr.leaders td span + span {
   display: flex;
   flex-wrap: wrap;
 }
-
 .lmn-container-list > div {
   text-align: left;
   margin-left: 10px;
   width: 210px;
+}
+.lmn-container-list > .list-group-item {
+  border: solid 1px #999;
+  border-radius: 5px;
 }
 
 .lmn-container-list-separated {

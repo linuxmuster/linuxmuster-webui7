@@ -1,12 +1,16 @@
+$theme-color: #233c4c;
+$theme-color-weak: #ABDEFF;
+$theme-color-orange:#ff8f00 ;
+$theme-color-orange-weak: #ffab40;
+$theme-color-orange-light: #ffecd3;
+
 .changed{
     color:green !important;
     background-color:yellow !important;
 }
 
-
-
 .class-img-container{
-position:relative;
+  position:relative;
 }
 
 .class-img-container .btn{
@@ -38,6 +42,14 @@ body::after{
 
 .session_container {
   padding-top: 5px;
+}
+
+.session-flex-item {
+  margin-bottom:10px;
+
+  &:hover {
+    background-color:$theme-color-orange-light;
+  }
 }
 
 .session_btn {

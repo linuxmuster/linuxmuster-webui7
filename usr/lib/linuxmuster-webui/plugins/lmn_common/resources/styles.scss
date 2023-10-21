@@ -427,12 +427,17 @@ tr.leaders {
 .lmn-container-list {
     display: flex;
     flex-wrap: wrap;
-}
 
-.lmn-container-list > div {
-    text-align: left;
-    margin-left: 10px;
-    width: 210px;
+    > div {
+        text-align: left;
+        margin-left: 10px;
+        width: 210px;
+    }
+
+    > .list-group-item {
+        border: solid 1px #999;
+        border-radius: 5px;
+    }
 }
 
 .lmn-container-list-separated {

@@ -1025,12 +1025,14 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       $scope.room = resp.data;
       return $scope.loading = false;
     });
-    $scope.renameSession = function(session) {
+    $scope.renameSession = function(session, e) {
+      e.stopPropagation();
       return lmnSession.rename(session.sid, session.name).then(function(resp) {
         return session.name = resp;
       });
     };
-    $scope.killSession = function(session) {
+    $scope.killSession = function(session, e) {
+      e.stopPropagation();
       return lmnSession.kill(session.sid, session.name).then(function() {
         var position;
         position = $scope.sessions.indexOf(session);

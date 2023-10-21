@@ -9,11 +9,13 @@ angular.module('lmn.session_new').controller 'LMNSessionsListController', ($scop
         $scope.room = resp.data
         $scope.loading = false
 
-    $scope.renameSession = (session) ->
+    $scope.renameSession = (session, e) ->
+        e.stopPropagation()
         lmnSession.rename(session.sid, session.name).then (resp) ->
             session.name = resp
 
-    $scope.killSession = (session) ->
+    $scope.killSession = (session, e) ->
+        e.stopPropagation()
         lmnSession.kill(session.sid, session.name).then () ->
             position = $scope.sessions.indexOf(session)
             $scope.sessions.splice(position, 1)

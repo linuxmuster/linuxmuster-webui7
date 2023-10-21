@@ -26,6 +26,13 @@ body::after {
   padding-top: 5px;
 }
 
+.session-flex-item {
+  margin-bottom: 10px;
+}
+.session-flex-item:hover {
+  background-color: #ffecd3;
+}
+
 .session_btn {
   border: 1px solid #eeeeee;
   background-color: white;

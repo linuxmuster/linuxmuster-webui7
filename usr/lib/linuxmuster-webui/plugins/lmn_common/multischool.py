@@ -4,7 +4,7 @@ import logging
 from io import StringIO
 from configobj import ConfigObj
 from subprocess import check_output
-from linuxmusterTools.sambaTool import DriveManager, GPOManager
+from linuxmusterTools.samba import DriveManager, GPOManager
 
 from aj.plugins.lmn_common.api import samba_realm, samba_netbios, samba_override, lmn_getSophomorixValue
 from aj.plugins.lmn_common.lmnfile import LMNFile

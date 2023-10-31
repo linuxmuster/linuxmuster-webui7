@@ -422,6 +422,40 @@ class LinboImageManager:
             self.linboImageGroups[new_name] = LinboImageGroup(new_name)
             del self.linboImageGroups[group]
 
+    def duplicate(self, group, new_name):
+        """
+        Duplicate a whole linbo image without backups.
+
+        :param group: Name of the linbo image to duplicate
+        :type group: str
+        :param new_name: New name for the linbo image
+        :type new_name: str
+        """
+
+        if os.path.isdir(os.path.join(LINBO_PATH, new_name)):
+            raise EndpointError(f"Directory {new_name} already exists")
+
+        if group in self.linboImageGroups:
+            shutil.copytree(
+                os.path.join(LINBO_PATH, group),
+                os.path.join(LINBO_PATH, new_name),
+                ignore=lambda x,y: 'backups'
+            )
+
+            old_prefix = f'{group}.'
+            new_prefix = f'{new_name}.'
+
+            for file in os.listdir(os.path.join(LINBO_PATH, new_name)):
+                if file.startswith(old_prefix):
+                    os.rename(
+                       os.path.join(LINBO_PATH, new_name, file),
+                       os.path.join(LINBO_PATH, new_name, file.replace(old_prefix, new_prefix)),
+                    )
+
+
+            self.linboImageGroups[new_name] = LinboImageGroup(new_name)
+            self.linboImageGroups[new_name].rename(new_name)
+
     def restore(self, group, date):
         """
         Delete a basic linbo image and restore a backup.

@@ -215,6 +215,14 @@ class Handler(HttpPlugin):
         new_name = http_context.json_body()['new_name']
         self.mgr.rename(image, new_name)
 
+    @post(r'/api/lmn/linbo4/duplicateImage/(?P<image>.+)')
+    @authorize('lm:linbo:images')
+    @endpoint(api=True)
+    def handle_api_rename_image(self, http_context, image=None):
+
+        new_name = http_context.json_body()['new_name']
+        self.mgr.duplicate(image, new_name)
+
     @post(r'/api/lmn/linbo4/restoreBackupImage/(?P<image>.+)')
     @authorize('lm:linbo:images')
     @endpoint(api=True)

@@ -730,6 +730,16 @@ angular.module('lmn.linbo4').controller 'LMLINBO4Controller', ($q, $scope, $http
             else
                 notify.error(gettext(new_name + " is not a valid name for a linbo image."))
 
+    $scope.duplicateImage = (image) ->
+        messagebox.prompt('New name', image.name).then (msg) ->
+            new_name = msg.value
+            validName = validation.isValidImage(new_name)
+            if validName == true
+                $http.post("/api/lmn/linbo4/duplicateImage/#{image.name}", {new_name:new_name}).then (resp) ->
+                    $scope.restartServices()
+            else
+                notify.error(gettext(new_name + " is not a valid name for a linbo image."))
+
     $scope.restoreBackup = (image, date) ->
         messagebox.show(text: "Do you really want to restore the backup at '#{date}'? This will move the actual image to a backup.", positive: 'Restore', negative: 'Cancel').then () ->
             $http.post("/api/lmn/linbo4/restoreBackupImage/#{image.name}", {date: date}).then (resp) ->

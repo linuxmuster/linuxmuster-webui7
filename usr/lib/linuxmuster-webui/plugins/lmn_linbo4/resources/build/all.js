@@ -968,6 +968,22 @@
         }
       });
     };
+    $scope.duplicateImage = function(image) {
+      return messagebox.prompt('New name', image.name).then(function(msg) {
+        var new_name, validName;
+        new_name = msg.value;
+        validName = validation.isValidImage(new_name);
+        if (validName === true) {
+          return $http.post(`/api/lmn/linbo4/duplicateImage/${image.name}`, {
+            new_name: new_name
+          }).then(function(resp) {
+            return $scope.restartServices();
+          });
+        } else {
+          return notify.error(gettext(new_name + " is not a valid name for a linbo image."));
+        }
+      });
+    };
     $scope.restoreBackup = function(image, date) {
       return messagebox.show({
         text: `Do you really want to restore the backup at '${date}'? This will move the actual image to a backup.`,

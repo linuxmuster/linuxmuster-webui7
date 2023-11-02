@@ -24,8 +24,18 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
         this.examUsers = this.current.members.filter((user) => [identity.user].includes(user.sophomorixExamMode[0]));
     }
 
+    this.createWorkingDirectory = (users) => {
+        var promiseList = [];
+        for (user of users) {
+            promiseList.push($http.post('/api/lmn/smbclient/createSessionWorkingDirectory', {'user': user})
+                .catch((err => notify.error(err.data.message))));
+        }
+        $q.all(promiseList);
+    }
+
     this.start = (session) => {
         this.current = session;
+        this.createWorkingDirectory(this.current.members);
         $http.post('/api/lmn/session/userinfo', {'users': this.current.members}).then((resp) => {
             this.current.members = resp.data;
             this.current.generated = false;
@@ -48,6 +58,8 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
     this.reset();
 
     this.startGenerated = (groupname, members, session_type) =>  {
+        var users = members.map((user) => user.cn);
+        this.createWorkingDirectory(users);
         generatedSession = {
             'sid': Date.now(),
             'name': groupname,

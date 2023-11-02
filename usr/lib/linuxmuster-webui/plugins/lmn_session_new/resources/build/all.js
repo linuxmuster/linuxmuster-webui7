@@ -54,8 +54,41 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         });
     };
 
+    this.createWorkingDirectory = function (users) {
+        var promiseList = [];
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+            for (var _iterator = users[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                user = _step.value;
+
+                promiseList.push($http.post('/api/lmn/smbclient/createSessionWorkingDirectory', { 'user': user }).catch(function (err) {
+                    return notify.error(err.data.message);
+                }));
+            }
+        } catch (err) {
+            _didIteratorError = true;
+            _iteratorError = err;
+        } finally {
+            try {
+                if (!_iteratorNormalCompletion && _iterator.return) {
+                    _iterator.return();
+                }
+            } finally {
+                if (_didIteratorError) {
+                    throw _iteratorError;
+                }
+            }
+        }
+
+        $q.all(promiseList);
+    };
+
     this.start = function (session) {
         _this.current = session;
+        _this.createWorkingDirectory(_this.current.members);
         $http.post('/api/lmn/session/userinfo', { 'users': _this.current.members }).then(function (resp) {
             _this.current.members = resp.data;
             _this.current.generated = false;
@@ -78,6 +111,10 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     this.reset();
 
     this.startGenerated = function (groupname, members, session_type) {
+        var users = members.map(function (user) {
+            return user.cn;
+        });
+        _this.createWorkingDirectory(users);
         generatedSession = {
             'sid': Date.now(),
             'name': groupname,
@@ -322,6 +359,9 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
           });
         }
       });
+    };
+    $scope.isStudent = function(user) {
+      return ['student', 'examuser'].indexOf(user.sophomorixRole) > -1;
     };
     $scope.stopRefresh = function() {
       $interval.cancel($scope.refresh);
@@ -653,14 +693,8 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         return notify.success(gettext(resp['data'][1]));
       }
     };
-    $scope.shareTrans = function(command, senders, receivers, sessioncomment) {
-      var bulkMode, i, len, participantsArray, receiver;
-      // When share with session we get the whole session as an array.
-      // The function on the other hand waits for an array containing just the  usernames so we extract
-      // these into an array
-      // If share option is triggered with just one user we get this user  as a string. If so we also have
-      // to put it in an array
-      bulkMode = 'false';
+    $scope.shareTrans = function(participants) {
+      var bulkMode, i, len, participantsArray, receiver, receivers;
       participantsArray = [];
       if (typeIsArray(receivers)) {
         bulkMode = 'true';
@@ -711,7 +745,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         }
       });
     };
-    $scope.collectTrans = function(command, senders, receivers, sessioncomment) {
+    return $scope.collectTrans = function(command, senders, receivers, sessioncomment) {
       var bulkMode, participantsArray, transTitle;
       // When collect from session we already get the users in an array containing the user objects.
       // If collect option is triggered with just on use we get this user as an object. If so we also
@@ -781,115 +815,6 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
           }
         }
       });
-    };
-    $scope.notImplemented = function(user) {
-      return messagebox.show({
-        title: gettext('Not implemented'),
-        positive: 'OK'
-      });
-    };
-    // Websession part
-    $scope.getWebConferenceEnabled = function() {
-      return $http.get('/api/lmn/websession/webConferenceEnabled').then(function(resp) {
-        if (resp.data === true) {
-          $scope.websessionEnabled = true;
-          return $scope.websessionGetStatus();
-        } else {
-          return $scope.websessionEnabled = false;
-        }
-      });
-    };
-    $scope.getWebConferenceEnabled();
-    $scope.websessionIsRunning = false;
-    $scope.websessionGetStatus = function() {
-      var sessionname;
-      sessionname = $scope.session.name + "-" + $scope.session.sid;
-      return $http.get(`/api/lmn/websession/webConference/${sessionname}`).then(function(resp) {
-        if (resp.data["status"] === "SUCCESS") {
-          if (resp.data["data"]["status"] === "started") {
-            $scope.websessionIsRunning = true;
-          } else {
-            $scope.websessionIsRunning = false;
-          }
-          $scope.websessionID = resp.data["data"]["id"];
-          $scope.websessionAttendeePW = resp.data["data"]["attendeepw"];
-          return $scope.websessionModeratorPW = resp.data["data"]["moderatorpw"];
-        } else {
-          return $scope.websessionIsRunning = false;
-        }
-      });
-    };
-    $scope.websessionToggle = function() {
-      if ($scope.websessionIsRunning === false) {
-        return $scope.websessionStart();
-      } else {
-        return $scope.websessionStop();
-      }
-    };
-    $scope.websessionStop = function() {
-      return $http.post('/api/lmn/websession/endWebConference', {
-        id: $scope.websessionID,
-        moderatorpw: $scope.websessionModeratorPW
-      }).then(function(resp) {
-        return $http.delete(`/api/lmn/websession/webConference/${$scope.websessionID}`).then(function(resp) {
-          if (resp.data["status"] === "SUCCESS") {
-            notify.success(gettext("Successfully stopped!"));
-            return $scope.websessionIsRunning = false;
-          } else {
-            return notify.error(gettext('Cannot stop entry!'));
-          }
-        });
-      });
-    };
-    return $scope.websessionStart = function() {
-      var i, len, participant, ref, tempparticipants;
-      tempparticipants = [];
-      ref = $scope.session.members;
-      for (i = 0, len = ref.length; i < len; i++) {
-        participant = ref[i];
-        tempparticipants.push(participant.sAMAccountName);
-      }
-      return $http.post('/api/lmn/websession/webConferences', {
-        sessionname: $scope.session.name + "-" + $scope.session.sid,
-        sessiontype: "private",
-        sessionpassword: "",
-        participants: tempparticipants
-      }).then(function(resp) {
-        if (resp.data["status"] === "SUCCESS") {
-          $scope.websessionID = resp.data["id"];
-          $scope.websessionAttendeePW = resp.data["attendeepw"];
-          $scope.websessionModeratorPW = resp.data["moderatorpw"];
-          return $http.post('/api/lmn/websession/startWebConference', {
-            sessionname: $scope.session.name + "-" + $scope.session.sid,
-            id: $scope.websessionID,
-            attendeepw: $scope.websessionAttendeePW,
-            moderatorpw: $scope.websessionModeratorPW
-          }).then(function(resp) {
-            if (resp.data["returncode"] === "SUCCESS") {
-              return $http.post('/api/lmn/websession/joinWebConference', {
-                id: $scope.websessionID,
-                password: $scope.websessionModeratorPW,
-                name: $scope.identity.profile.sn + ", " + $scope.identity.profile.givenName
-              }).then(function(resp) {
-                $scope.websessionIsRunning = true;
-                return window.open(resp.data, '_blank');
-              });
-            } else {
-              return notify.error(gettext('Cannot start websession! Try to reload page!'));
-            }
-          });
-        } else {
-          return notify.error(gettext("Create session failed! Try again later!"));
-        }
-      });
-    };
-  });
-
-  // Websession part
-  angular.module('lmn.session_new').controller('LMNRoomDetailsController', function($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, usersInRoom) {
-    $scope.usersInRoom = usersInRoom;
-    return $scope.close = function() {
-      return $uibModalInstance.dismiss();
     };
   });
 

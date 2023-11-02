@@ -112,20 +112,30 @@
             </td>
             <td>
                 <div class="button-group">
-                    <button type="button" class="btn btn-default" ng:click="shareTrans('share', [identity.user], participant, currentSession.comment)"translate > <a>Share</a></button>
+                    <button type="button" class="btn btn-default" ng:click="shareTrans('share', [identity.user], participant, currentSession.comment)">
+                        <a>
+                            <i class="fas fa-file-export"></i>
+                            <span translate>Share</span>
+                        </a>
+                    </button>
                     <span uib-dropdown>
                         <button class="btn btn-default" uib-dropdown-toggle>
-                            <a translate>Collect</a>
+                            <a>
+                                <i class="fas fa-file-import"></i>
+                                <span translate>Collect</span>
+                            </a>
                         </button>
                         <ul uib-dropdown-menu class="dropdown-menu-right">
                             <li>
-                                <a ng:click="collectTrans('copy', participant, [identity.user], currentSession.comment)" translate>
-                                    Copy
+                                <a ng:click="collectTrans('copy', participant, [identity.user], currentSession.comment)">
+                                    <i class="fas fa-copy"></i>
+                                    <span translate>Copy</span>
                                 </a>
                             </li>
                             <li>
-                                <a ng:click="collectTrans('move', participant, [identity.user], currentSession.comment)" translate>
-                                    Move
+                                <a ng:click="collectTrans('move', participant, [identity.user], currentSession.comment)">
+                                    <i class="fas fa-cut"></i>
+                                    <span translate>Move</span>
                                 </a>
                             </li>
                         </ul>

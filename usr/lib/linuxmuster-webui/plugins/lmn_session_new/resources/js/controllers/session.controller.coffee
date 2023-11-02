@@ -129,6 +129,9 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
                 $http.post("/api/lmn/session/userinfo", {users:resp.data.usersList}).then (rp) ->
                     $scope.session.members = rp.data
 
+    $scope.isStudent = (user) ->
+        return ['student', 'examuser'].indexOf(user.sophomorixRole) > -1
+
     $scope.stopRefresh = () ->
         $interval.cancel($scope.refresh)
         $scope.autorefresh = false
@@ -353,7 +356,6 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
                 role: () -> 'students'
         )
 
-
     typeIsArray = Array.isArray || ( value ) -> return {}.toString.call( value ) is '[object Array]'
 
     validateResult = (resp) ->
@@ -362,15 +364,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         if resp['data'][0] == 'LOG'
             notify.success gettext(resp['data'][1])
 
-
-
-    $scope.shareTrans = (command, senders, receivers, sessioncomment) ->
-        # When share with session we get the whole session as an array.
-        # The function on the other hand waits for an array containing just the  usernames so we extract
-        # these into an array
-        # If share option is triggered with just one user we get this user  as a string. If so we also have
-        # to put it in an array
-        bulkMode = 'false'
+    $scope.shareTrans = (participants) ->
         participantsArray = []
         if typeIsArray receivers
             bulkMode = 'true'
@@ -435,79 +429,6 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
                     $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers, files: result.files, session: sessioncomment}).then (resp) ->
                         $rootScope.$emit('updateWaiting', 'done')
                         validateResult(resp)
-
-
-    $scope.notImplemented = (user) ->
-                messagebox.show(title: gettext('Not implemented'), positive: 'OK')
-
-    # Websession part
-
-    $scope.getWebConferenceEnabled = () ->
-        $http.get('/api/lmn/websession/webConferenceEnabled').then (resp) ->
-            if resp.data == true
-                $scope.websessionEnabled = true
-                $scope.websessionGetStatus()
-            else
-                $scope.websessionEnabled = false;
-    $scope.getWebConferenceEnabled()
-    $scope.websessionIsRunning = false
-
-    $scope.websessionGetStatus = () ->
-        sessionname = $scope.session.name + "-" + $scope.session.sid
-        $http.get("/api/lmn/websession/webConference/#{sessionname}").then (resp) ->
-            if resp.data["status"] is "SUCCESS"
-                if resp.data["data"]["status"] == "started"
-                    $scope.websessionIsRunning = true
-                else
-                    $scope.websessionIsRunning = false
-                $scope.websessionID = resp.data["data"]["id"]
-                $scope.websessionAttendeePW = resp.data["data"]["attendeepw"]
-                $scope.websessionModeratorPW = resp.data["data"]["moderatorpw"]
-            else
-                $scope.websessionIsRunning = false
-
-    $scope.websessionToggle = () ->
-        if $scope.websessionIsRunning == false
-            $scope.websessionStart()
-        else
-            $scope.websessionStop()
-
-    $scope.websessionStop = () ->
-        $http.post('/api/lmn/websession/endWebConference', {id: $scope.websessionID, moderatorpw: $scope.websessionModeratorPW}).then (resp) ->
-            $http.delete("/api/lmn/websession/webConference/#{$scope.websessionID}").then (resp) ->
-                if resp.data["status"] == "SUCCESS"
-                    notify.success gettext("Successfully stopped!")
-                    $scope.websessionIsRunning = false
-                else
-                    notify.error gettext('Cannot stop entry!')
-
-    $scope.websessionStart = () ->
-        tempparticipants = []
-        for participant in $scope.session.members
-            tempparticipants.push(participant.sAMAccountName)
-
-        $http.post('/api/lmn/websession/webConferences', {sessionname: $scope.session.name + "-" + $scope.session.sid, sessiontype: "private", sessionpassword: "", participants: tempparticipants}).then (resp) ->
-            if resp.data["status"] is "SUCCESS"
-                $scope.websessionID = resp.data["id"]
-                $scope.websessionAttendeePW = resp.data["attendeepw"]
-                $scope.websessionModeratorPW = resp.data["moderatorpw"]
-                $http.post('/api/lmn/websession/startWebConference', {sessionname: $scope.session.name + "-" + $scope.session.sid, id: $scope.websessionID, attendeepw: $scope.websessionAttendeePW, moderatorpw: $scope.websessionModeratorPW}).then (resp) ->
-                    if resp.data["returncode"] is "SUCCESS"
-                        $http.post('/api/lmn/websession/joinWebConference', {id: $scope.websessionID, password: $scope.websessionModeratorPW, name: $scope.identity.profile.sn + ", " + $scope.identity.profile.givenName}).then (resp) ->
-                            $scope.websessionIsRunning = true
-                            window.open(resp.data, '_blank')
-                    else
-                        notify.error gettext('Cannot start websession! Try to reload page!')
-            else
-                notify.error gettext("Create session failed! Try again later!")
-
-# Websession part
-
-angular.module('lmn.session_new').controller 'LMNRoomDetailsController', ($scope, $route, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, usersInRoom) ->
-        $scope.usersInRoom = usersInRoom
-
-        $scope.close = () ->
-            $uibModalInstance.dismiss()
 
 angular.module('lmn.session_new').controller 'LMNSessionFileSelectModalController', ($scope, $uibModalInstance, gettext, notify, $http, bulkMode, senders, receivers, action, command, sessionComment, messagebox) ->
     $scope.bulkMode = bulkMode

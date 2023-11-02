@@ -150,35 +150,35 @@
                 <span checkbox id="{{participant.sAMAccountName}}.wifiaccess"
                       ng:click="setManagementGroup('wifi', participant)"
                       ng:model="participant.wifi"
-                      ng:show="participant.sophomorixRole == 'student'">
+                      ng:show="isStudent(participant)">
                 </span>
             </td>
             <td width="1" style="text-align:center;" ng:show="fields.internet.visible">
                 <span checkbox id="{{participant.sAMAccountName}}.internetaccess"
                       ng:click="setManagementGroup('internet', participant)"
                       ng:model="participant.internet"
-                      ng:show="participant.sophomorixRole == 'student'">
+                      ng:show="isStudent(participant)">
                 </span>
             </td>
             <td width="1" style="text-align:center;" ng:show="fields.intranet.visible">
                 <span checkbox id="{{participant.sAMAccountName}}.intranetaccess"
                       ng:click="setManagementGroup('intranet', participant)"
                       ng:model="participant.intranet"
-                      ng:show="participant.sophomorixRole == 'student'">
+                      ng:show="isStudent(participant)">
                 </span>
             </td>
             <td width="1" style="text-align:center;" ng:show="fields.webfilter.visible">
                 <span checkbox id="{{participant.sAMAccountName}}.webfilter"
                       ng:click="setManagementGroup('webfilter', participant)"
                       ng:model="participant.webfilter"
-                      ng:disabled="participant.sophomorixRole == 'student'">
+                      ng:disabled="isStudent(participant)">
                 </span>
             </td>
             <td width="1" style="text-align:center;" ng:show="fields.printing.visible">
                 <span checkbox id="{{participant.sAMAccountName}}.printing"
                       ng:click="setManagementGroup('printing', participant)"
                       ng:model="participant.printing"
-                      ng:show="participant.sophomorixRole == 'student'">
+                      ng:show="isStudent(participant)">
                 </span>
             </td>
             <td width="1">

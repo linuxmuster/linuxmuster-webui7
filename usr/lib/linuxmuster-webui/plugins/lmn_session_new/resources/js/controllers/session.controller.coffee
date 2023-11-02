@@ -1,10 +1,23 @@
-angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $http, $location, $route, $uibModal, $window, $q, $interval, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem, validation, $rootScope, wait, userPassword, lmnSession) ->
+angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $http, $location, $route, $uibModal, $window, $q, $interval, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem, validation, $rootScope, wait, userPassword, lmnSession, smbclient) ->
 
     $scope.stateChanged = false
     $scope.sessionChanged = false
     $scope.addParticipant = ''
     $scope.addSchoolClass = ''
     $scope.examMode = false
+    $scope.file_icon = {
+        'powerpoint': "far fa-file-powerpoint",
+        'text': "far fa-file-alt",
+        'code': "far fa-file-code",
+        'word': "far fa-file-word",
+        'pdf': "far fa-file-pdf",
+        'excel': "far fa-file-excel",
+        'audio': "far fa-file-audio",
+        'archive': "far fa-file-archive",
+        'video': "far fa-file-video",
+        'image': "far fa-file-image",
+        'file': "far fa-file",
+    }
 
     $window.onbeforeunload = (event) ->
         if !$scope.sessionChanged
@@ -14,8 +27,10 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
 
     $scope.$on("$destroy", () ->
         # Avoid confirmation on others controllers
-        if $scope.refresh != undefined
-            $interval.cancel($scope.refresh)
+        if $scope.refresh_participants != undefined
+            $interval.cancel($scope.refresh_participants)
+        if $scope.refresh_files != undefined
+            $interval.cancel($scope.refresh_files)
         $window.onbeforeunload = undefined
     )
 
@@ -126,26 +141,50 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
     if $scope.session.sid == ''
         $scope.backToSessionList()
 
+    $scope.isStudent = (user) ->
+        return ['student', 'examuser'].indexOf(user.sophomorixRole) > -1
+
+    # Refresh room users
+
     $scope.updateParticipants = () ->
         $http.get('/api/lmn/session/userInRoom').then (resp) ->
             if resp.data.usersList.length != 0
                 $http.post("/api/lmn/session/userinfo", {users:resp.data.usersList}).then (rp) ->
                     $scope.session.members = rp.data
 
-    $scope.isStudent = (user) ->
-        return ['student', 'examuser'].indexOf(user.sophomorixRole) > -1
+    $scope.stopRefreshParticipants = () ->
+        $interval.cancel($scope.refresh_participants)
+        $scope.autorefresh_participants = false
 
-    $scope.stopRefresh = () ->
-        $interval.cancel($scope.refresh)
-        $scope.autorefresh = false
-
-    $scope.startRefresh = () ->
+    $scope.startRefreshParticipants = () ->
         $scope.updateParticipants()
-        $scope.refresh = $interval($scope.updateParticipants, 5000, 0)
-        $scope.autorefresh = true
+        $scope.refresh_participants = $interval($scope.updateParticipants, 5000, 0)
+        $scope.autorefresh_participants = true
 
     if $scope.session.type == 'room'
-        $scope.startRefresh()
+        $scope.startRefreshParticipants()
+
+    # List working directory files
+
+    $scope.get_file_icon = (filetype) ->
+        return $scope.file_icon[filetype]
+
+    $scope._updateFileList = (participant) ->
+        path = "#{participant.homeDirectory}\\transfer\\#{$scope.identity.user}\\_collect"
+        smbclient.list(path).then((data) -> participant.files = data.items)
+
+    $scope.updateFileList = () ->
+        for participant in $scope.session.members
+            $scope._updateFileList(participant)
+
+    $scope.stopRefreshFiles = () ->
+        $interval.cancel($scope.refresh_files)
+        $scope.autorefresh_files = false
+
+    $scope.startRefreshFiles = () ->
+        $scope.updateFileList()
+        $scope.refresh_files = $interval($scope.updateFileList, 5000, 0)
+        $scope.autorefresh_files = true
 
     $scope.setManagementGroup = (group, participant) ->
         $scope.stateChanged = true

@@ -8,7 +8,6 @@ from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue
 
-
 @component(HttpPlugin)
 class Handler(HttpPlugin):
     def __init__(self, context):
@@ -268,7 +267,11 @@ class Handler(HttpPlugin):
     @post(r'/api/lmn/session/moveFileToHome')  ## TODO authorize
     @endpoint(api=True)
     def handle_api_create_dir(self, http_context):
-        """Create directory with given path, ignoring errors"""
+        """
+        Create directory with given path, ignoring errors
+        Only used in upload service. Deprecated ?
+        """
+
         user = http_context.json_body()['user']
         filepath = http_context.json_body()['filepath']
         subdir = http_context.json_body()['subdir']

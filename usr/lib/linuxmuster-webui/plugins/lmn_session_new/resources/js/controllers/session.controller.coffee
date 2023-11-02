@@ -169,8 +169,9 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         return $scope.file_icon[filetype]
 
     $scope._updateFileList = (participant) ->
-        path = "#{participant.homeDirectory}\\transfer\\#{$scope.identity.user}\\_collect"
-        smbclient.list(path).then((data) -> participant.files = data.items)
+        if participant.files != 'ERROR'
+            path = "#{participant.homeDirectory}\\transfer\\#{$scope.identity.user}\\_collect"
+            smbclient.list(path).then((data) -> participant.files = data.items)
 
     $scope.updateFileList = () ->
         for participant in $scope.session.members

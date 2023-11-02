@@ -54,8 +54,14 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         });
     };
 
+    this._createWorkingDirectory = function (user) {
+        $http.post('/api/lmn/smbclient/createSessionWorkingDirectory', { 'user': user.cn }).catch(function (err) {
+            notify.error(err.data.message);
+            user.files = 'ERROR';
+        });
+    };
+
     this.createWorkingDirectory = function (users) {
-        var promiseList = [];
         var _iteratorNormalCompletion = true;
         var _didIteratorError = false;
         var _iteratorError = undefined;
@@ -64,9 +70,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
             for (var _iterator = users[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
                 user = _step.value;
 
-                promiseList.push($http.post('/api/lmn/smbclient/createSessionWorkingDirectory', { 'user': user }).catch(function (err) {
-                    return notify.error(err.data.message);
-                }));
+                _this._createWorkingDirectory(user);
             }
         } catch (err) {
             _didIteratorError = true;
@@ -82,15 +86,13 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
                 }
             }
         }
-
-        $q.all(promiseList);
     };
 
     this.start = function (session) {
         _this.current = session;
-        _this.createWorkingDirectory(_this.current.members);
         $http.post('/api/lmn/session/userinfo', { 'users': _this.current.members }).then(function (resp) {
             _this.current.members = resp.data;
+            _this.createWorkingDirectory(_this.current.members);
             _this.current.generated = false;
             _this.current.type = 'session';
             _this.filterExamUsers();
@@ -111,10 +113,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     this.reset();
 
     this.startGenerated = function (groupname, members, session_type) {
-        var users = members.map(function (user) {
-            return user.cn;
-        });
-        _this.createWorkingDirectory(users);
+        _this.createWorkingDirectory(members);
         generatedSession = {
             'sid': Date.now(),
             'name': groupname,
@@ -403,10 +402,12 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     };
     $scope._updateFileList = function(participant) {
       var path;
-      path = `${participant.homeDirectory}\\transfer\\${$scope.identity.user}\\_collect`;
-      return smbclient.list(path).then(function(data) {
-        return participant.files = data.items;
-      });
+      if (participant.files !== 'ERROR') {
+        path = `${participant.homeDirectory}\\transfer\\${$scope.identity.user}\\_collect`;
+        return smbclient.list(path).then(function(data) {
+          return participant.files = data.items;
+        });
+      }
     };
     $scope.updateFileList = function() {
       var i, len, participant, ref, results;

@@ -170,17 +170,21 @@
             </td>
 
             <td>
-                <div ng:repeat="item in participant.files|orderBy:['-isDir', 'name']">
-                    <span ng:if="item.isDir">
-                        <i class="fa fa-fw fa-folder"></i>
-                        {{item.name}}
-                    </span>
-                    <span ng:if="item.isFile">
-                        <i ng:class="get_file_icon(item.filetype)"></i>
-                        {{item.name}}
-                        <span class="subtle">{{item.size|bytes}}</span>
-                    </span>
-
+                <div ng:if="participant.files == 'ERROR'" class="alert alert-danger" style="width:220px;" translate>
+                    Missing permissions, please first join the schoolclass {{participant.sophomorixAdminClass}}
+                </div>
+                <div ng:if="participant.files != 'ERROR'">
+                    <div ng:repeat="item in participant.files|orderBy:['-isDir', 'name']" ng:if="participant.files != 'ERROR'">
+                        <span ng:if="item.isDir">
+                            <i class="fa fa-fw fa-folder"></i>
+                            {{item.name}}
+                        </span>
+                        <span ng:if="item.isFile">
+                            <i ng:class="get_file_icon(item.filetype)"></i>
+                            {{item.name}}
+                            <span class="subtle">{{item.size|bytes}}</span>
+                        </span>
+                    </div>
                 </div>
             </td>
 

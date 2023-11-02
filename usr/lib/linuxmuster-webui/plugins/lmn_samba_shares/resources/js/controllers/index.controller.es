@@ -21,7 +21,6 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function($s
         'file': "far fa-file",
     }
 
-
     identity.promise.then(() => {
         if (identity.user == 'root') {
             $scope.loading = false;

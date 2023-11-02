@@ -563,3 +563,30 @@ class Handler(HttpPlugin):
         except pexpect.exceptions.TIMEOUT:
             logging.error(f"Was not able to initialize Kerberos ticket for {username}")
             return {'type': "error", 'msg': _("Timeout while trying to get a kerberos ticket")}
+
+    @post(r'/api/lmn/smbclient/createSessionWorkingDirectory')
+    @endpoint(api=True)
+    def handle_api_create_working_dir(self, http_context):
+        """
+        Create a working directory for each user in a session with path `user/transfer/TEACHERNAME/_collect`.
+        """
+
+        user = http_context.json_body()['user']
+        user_data = self.context.ldapreader.get(f'/users/{user}', attributes=['homeDirectory', 'sophomorixAdminClass'])
+        homeDirectory, schoolclass = user_data['homeDirectory'], user_data['sophomorixAdminClass']
+        path = f'{homeDirectory}/transfer/{self.context.identity}/_collect'
+
+        try:
+            smbclient.makedirs(path)
+        except SMBOSError as e:
+            if 'File exists' in str(e):
+                pass
+            elif 'STATUS_ACCESS_DENIED' in str(e):
+                raise EndpointError(e, message=f"You are not member of the schoolclass {schoolclass}, please first join this schoolclass in order to create the working directory.")
+            else:
+                raise EndpointError(e)
+        except (ValueError, NotFound) as e:
+            raise EndpointError(e)
+        except InvalidParameter as e:
+            raise EndpointError(f'Problem with path {path} : {e}')
+

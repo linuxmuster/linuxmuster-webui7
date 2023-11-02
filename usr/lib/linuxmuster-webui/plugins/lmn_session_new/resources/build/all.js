@@ -282,9 +282,13 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         visible: true,
         name: gettext('Transfer')
       },
-      workDirectory: {
+      examMode: {
         visible: true,
         name: gettext('')
+      },
+      workingDirectory: {
+        visible: true,
+        name: gettext('Working directory')
       },
       sophomorixRole: {
         visible: false,

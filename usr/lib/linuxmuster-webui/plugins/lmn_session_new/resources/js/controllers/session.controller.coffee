@@ -61,9 +61,12 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         transfer:
             visible: true
             name: gettext('Transfer')
-        workDirectory:
+        examMode:
             visible: true
             name: gettext('')
+        workingDirectory:
+            visible: true
+            name: gettext('Working directory')
         sophomorixRole:
             visible: false
             name: gettext('sophomorixRole')

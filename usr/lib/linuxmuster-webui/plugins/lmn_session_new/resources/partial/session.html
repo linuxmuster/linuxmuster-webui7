@@ -92,10 +92,11 @@
         <tr>
             <th ng:repeat="(id, field) in fields" ng:if="field.visible">
                 <div title="{{field.title}}" class="{{field.icon}}" style="font-size:20px;"></div>
-                <br /> {{field.name}}
-                <span ng:if="id == 'sAMAccountName'" class="label label-info pull-right">{{session.members.length}}</span>
-<!--                <span checkbox style="float:right;" id="{{id}}.all" ng:if="field.examBox" ng-click="selectAll('exammode')" ng:model=field.checkboxStatus>"</span>-->
-                <span checkbox style="float:right;" id="{{id}}.all" ng:if="field.checkboxAll" ng-click="setManagementGroupAll(id)" ng:model=field.checkboxStatus>"</span>
+                <span ng:if="id == 'sAMAccountName'" class="label label-info pull-right" style="font-size:12px;">{{session.members.length}}</span>
+                {{field.name}}
+                <br />
+                <span ng:if="id == 'workingDirectory'" class="label label-info" style="font-size:12px;">transfer/{{identity.user}}/_collect</span>
+                <span checkbox style="float:right;" id="{{id}}.all" ng:if="field.checkboxAll" ng-click="setManagementGroupAll(id)" ng:model=field.checkboxStatus></span>
             </th>
             <th></th>
             <th></th>
@@ -112,14 +113,14 @@
             </td>
             <td>
                 <div class="button-group">
-                    <button type="button" class="btn btn-default" ng:click="shareTrans('share', [identity.user], participant, currentSession.comment)">
+                    <button type="button" class="btn btn-default active" ng:click="shareTrans('share', [identity.user], participant, currentSession.comment)">
                         <a>
                             <i class="fas fa-file-export"></i>
                             <span translate>Share</span>
                         </a>
                     </button>
                     <span uib-dropdown>
-                        <button class="btn btn-default" uib-dropdown-toggle>
+                        <button class="btn btn-default active" uib-dropdown-toggle>
                             <a>
                                 <i class="fas fa-file-import"></i>
                                 <span translate>Collect</span>
@@ -145,7 +146,7 @@
 
             <td class="ng-binding">
                 <div ng:show="participant.sophomorixExamMode != '---'">
-                    <a style="display:inline-block; width:100px; font-size:100%"
+                    <a style="display:inline-block; width:80px; font-size:100%"
                        class="label label-danger"
                        ng:click="stopUserExam(participant)"
                        title="Stop exam from {{participant.sophomorixExamMode[0]}}"
@@ -156,6 +157,9 @@
                     </a>
                 </div>
             </td>
+
+            <td> </td>
+
             <td width="1" style="text-align:center;" ng:show="fields.wifi.visible">
                 <span checkbox id="{{participant.sAMAccountName}}.wifiaccess"
                       ng:click="setManagementGroup('wifi', participant)"

@@ -133,6 +133,9 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         });
         $http.post('/api/lmn/session/exam/userinfo', { 'users': users }).then(function (resp) {
             _this.current.members = resp.data;
+            _this.createWorkingDirectory(_this.current.members.map(function (user) {
+                return user.cn;
+            }));
             _this.filterExamUsers();
             $location.path('/view/lmn/session');
         });
@@ -240,12 +243,8 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     };
     $scope.$on("$destroy", function() {
       // Avoid confirmation on others controllers
-      if ($scope.refresh_participants !== void 0) {
-        $interval.cancel($scope.refresh_participants);
-      }
-      if ($scope.refresh_files !== void 0) {
-        $interval.cancel($scope.refresh_files);
-      }
+      $scope.stopRefreshFiles();
+      $scope.stopRefreshParticipants();
       return $window.onbeforeunload = void 0;
     });
     $scope.$on("$locationChangeStart", function(event) {
@@ -385,7 +384,9 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       });
     };
     $scope.stopRefreshParticipants = function() {
-      $interval.cancel($scope.refresh_participants);
+      if ($scope.refresh_participants !== void 0) {
+        $interval.cancel($scope.refresh_participants);
+      }
       return $scope.autorefresh_participants = false;
     };
     $scope.startRefreshParticipants = function() {
@@ -418,7 +419,9 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       return results;
     };
     $scope.stopRefreshFiles = function() {
-      $interval.cancel($scope.refresh_files);
+      if ($scope.refresh_files !== void 0) {
+        $interval.cancel($scope.refresh_files);
+      }
       return $scope.autorefresh_files = false;
     };
     $scope.startRefreshFiles = function() {
@@ -611,7 +614,8 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       }).then(function(resp) {
         $scope.examMode = true;
         $scope.stateChanged = false;
-        return lmnSession.getExamUsers();
+        lmnSession.getExamUsers();
+        return $scope.stopRefreshFiles();
       });
     };
     $scope.stopExam = function() {
@@ -622,13 +626,14 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         positive: gettext('End exam mode'),
         negative: gettext('Cancel')
       }).then(function() {
-        return $http.patch("/api/lmn/session/exam/stop", {
+        $http.patch("/api/lmn/session/exam/stop", {
           session: $scope.session
         }).then(function(resp) {
           $scope.refreshUsers();
           $scope.examMode = false;
           return $scope.stateChanged = false;
         });
+        return $scope.stopRefreshFiles();
       });
     };
     $scope._stopUserExam = function(user) {

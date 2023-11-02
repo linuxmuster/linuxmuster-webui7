@@ -27,10 +27,8 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
 
     $scope.$on("$destroy", () ->
         # Avoid confirmation on others controllers
-        if $scope.refresh_participants != undefined
-            $interval.cancel($scope.refresh_participants)
-        if $scope.refresh_files != undefined
-            $interval.cancel($scope.refresh_files)
+        $scope.stopRefreshFiles()
+        $scope.stopRefreshParticipants()
         $window.onbeforeunload = undefined
     )
 
@@ -153,7 +151,8 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
                     $scope.session.members = rp.data
 
     $scope.stopRefreshParticipants = () ->
-        $interval.cancel($scope.refresh_participants)
+        if $scope.refresh_participants != undefined
+            $interval.cancel($scope.refresh_participants)
         $scope.autorefresh_participants = false
 
     $scope.startRefreshParticipants = () ->
@@ -178,7 +177,8 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
             $scope._updateFileList(participant)
 
     $scope.stopRefreshFiles = () ->
-        $interval.cancel($scope.refresh_files)
+        if $scope.refresh_files != undefined
+            $interval.cancel($scope.refresh_files)
         $scope.autorefresh_files = false
 
     $scope.startRefreshFiles = () ->
@@ -311,6 +311,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
             $scope.examMode = true
             $scope.stateChanged = false
             lmnSession.getExamUsers()
+            $scope.stopRefreshFiles()
 
     $scope.stopExam = () ->
         # End exam for a whole group
@@ -324,6 +325,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
                 $scope.refreshUsers()
                 $scope.examMode = false
                 $scope.stateChanged = false
+            $scope.stopRefreshFiles()
 
     $scope._stopUserExam = (user) ->
         # End exam for a specific user: backend promise without messagebox

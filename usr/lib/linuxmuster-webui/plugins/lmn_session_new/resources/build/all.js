@@ -58,8 +58,12 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     this._createWorkingDirectory = function (user) {
         return $http.post('/api/lmn/smbclient/createSessionWorkingDirectory', { 'user': user.cn }).catch(function (err) {
             // notify.error(err.data.message);
-            user.files = 'ERROR';
-            _this.user_missing_membership.push(user);
+            if (user.sophomorixAdminClass == 'teachers') {
+                user.files = 'ERROR-teacher';
+            } else {
+                user.files = 'ERROR';
+                _this.user_missing_membership.push(user);
+            }
         });
     };
 
@@ -444,7 +448,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     };
     $scope._updateFileList = function(participant) {
       var path;
-      if (participant.files !== 'ERROR') {
+      if (participant.files !== 'ERROR' && participant.files !== 'ERROR-teacher') {
         path = `${participant.homeDirectory}\\transfer\\${$scope.identity.user}\\_collect`;
         return smbclient.list(path).then(function(data) {
           return participant.files = data.items;

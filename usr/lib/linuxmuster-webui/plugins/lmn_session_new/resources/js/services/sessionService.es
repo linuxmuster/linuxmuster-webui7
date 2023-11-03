@@ -29,8 +29,12 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
         return $http.post('/api/lmn/smbclient/createSessionWorkingDirectory', {'user': user.cn})
             .catch(err => {
                 // notify.error(err.data.message);
-                user.files = 'ERROR';
-                this.user_missing_membership.push(user);
+                if (user.sophomorixAdminClass == 'teachers') {
+                    user.files = 'ERROR-teacher';
+                } else {
+                    user.files = 'ERROR';
+                    this.user_missing_membership.push(user);
+                }
             });
     }
 

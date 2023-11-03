@@ -170,12 +170,17 @@
             </td>
 
             <td>
+                <div ng:if="participant.files == 'ERROR-teacher'" style="width:220px;" class="alert alert-danger">
+                    <span translate>
+                        Can not create share directory in other teacher's home
+                    </span>
+                </div>
                 <div ng:if="participant.files == 'ERROR'" style="width:220px;">
                     <a style="inline-block" class="btn btn-danger" ng:click="fixMembership()">
                         <span translate>Join {{missing_schoolclasses}} to share</span>
                     </a>
                 </div>
-                <div ng:if="participant.files != 'ERROR'">
+                <div ng:if="participant.files != 'ERROR' && participant.files != 'ERROR-teacher'">
                     <div ng:repeat="item in participant.files|orderBy:['-isDir', 'name']" ng:if="participant.files != 'ERROR'">
                         <span ng:if="item.isDir">
                             <i class="fa fa-fw fa-folder"></i>

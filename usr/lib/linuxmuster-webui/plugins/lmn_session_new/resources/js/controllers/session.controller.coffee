@@ -1,4 +1,4 @@
-angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $http, $location, $route, $uibModal, $window, $q, $interval, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem, validation, $rootScope, wait, userPassword, lmnSession, smbclient) ->
+angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $http, $location, $route, $uibModal, $window, $q, $interval, gettext, notify, messagebox, pageTitle, lmFileEditor, lmEncodingMap, filesystem, validation, identity, $rootScope, wait, userPassword, lmnSession, smbclient) ->
 
     $scope.stateChanged = false
     $scope.sessionChanged = false
@@ -120,6 +120,8 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
     $scope.session = lmnSession.current
     $scope.extExamUsers = lmnSession.extExamUsers
     $scope.examUsers = lmnSession.examUsers
+    lmnSession.createWorkingDirectory($scope.session.members).then () ->
+        $scope.missing_schoolclasses = lmnSession.user_missing_membership.map((user) -> user.sophomorixAdminClass).join(',')
 
     $scope.refreshUsers = () ->
        lmnSession.refreshUsers().then () ->
@@ -141,6 +143,30 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
 
     $scope.isStudent = (user) ->
         return ['student', 'examuser'].indexOf(user.sophomorixRole) > -1
+
+    $scope.fixMembership = (group) ->
+        $http.post('/api/lmn/groupmembership/membership', {
+            action: 'addadmins',
+            entity: $scope.identity.user,
+            groupname: $scope.missing_schoolclasses,
+            type: 'class'
+        }).then (resp) ->
+            if resp['data'][0] == 'ERROR'
+                notify.error (resp['data'][1])
+            if resp['data'][0] == 'LOG'
+                notify.success gettext(resp['data'][1])
+                $rootScope.identity = identity
+                $scope.refresh_krbcc()
+
+    $scope.refresh_krbcc = () ->
+        smbclient.refresh_krbcc().then () ->
+            for user in lmnSession.user_missing_membership
+                position = $scope.session.members.indexOf(user)
+                $scope.session.members[position].files = []
+                lmnSession._createWorkingDirectory(user)
+            identity.init().then () ->
+                console.log("Identity renewed !")
+                $scope.missing_schoolclasses = []
 
     # Refresh room users
 

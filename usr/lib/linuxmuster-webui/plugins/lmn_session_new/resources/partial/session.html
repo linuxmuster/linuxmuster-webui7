@@ -158,7 +158,7 @@
             <td class="ng-binding">
                 <div ng:show="participant.sophomorixExamMode != '---'">
                     <a style="display:inline-block; width:80px; font-size:100%"
-                       class="label label-danger"
+                       class="btn btn-danger"
                        ng:click="stopUserExam(participant)"
                        title="Stop exam from {{participant.sophomorixExamMode[0]}}"
                     >
@@ -170,8 +170,10 @@
             </td>
 
             <td>
-                <div ng:if="participant.files == 'ERROR'" class="alert alert-danger" style="width:220px;" translate>
-                    Missing permissions, please first join the schoolclass {{participant.sophomorixAdminClass}}
+                <div ng:if="participant.files == 'ERROR'" style="width:220px;">
+                    <a style="inline-block" class="btn btn-danger" ng:click="fixMembership()">
+                        <span translate>Join {{missing_schoolclasses}} to share</span>
+                    </a>
                 </div>
                 <div ng:if="participant.files != 'ERROR'">
                     <div ng:repeat="item in participant.files|orderBy:['-isDir', 'name']" ng:if="participant.files != 'ERROR'">

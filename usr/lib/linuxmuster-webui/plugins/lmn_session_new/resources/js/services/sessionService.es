@@ -1,6 +1,7 @@
 angular.module('lmn.session_new').service('lmnSession', function($http, $uibModal, $q, $location, $window, messagebox, validation, notify, gettext, identity) {
 
     this.sessions = [];
+    this.user_missing_membership = [];
 
     this.load = () => {
         var promiseList = [];
@@ -25,24 +26,27 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
     }
 
     this._createWorkingDirectory = (user) => {
-        $http.post('/api/lmn/smbclient/createSessionWorkingDirectory', {'user': user.cn})
+        return $http.post('/api/lmn/smbclient/createSessionWorkingDirectory', {'user': user.cn})
             .catch(err => {
-                notify.error(err.data.message);
+                // notify.error(err.data.message);
                 user.files = 'ERROR';
+                this.user_missing_membership.push(user);
             });
     }
 
     this.createWorkingDirectory = (users) => {
+        this.user_missing_membership = [];
+        var promises = [];
         for (user of users) {
-            this._createWorkingDirectory(user);
+            promises.push(this._createWorkingDirectory(user));
         }
+        return $q.all(promises);
     }
 
     this.start = (session) => {
         this.current = session;
         $http.post('/api/lmn/session/userinfo', {'users': this.current.members}).then((resp) => {
             this.current.members = resp.data;
-            this.createWorkingDirectory(this.current.members);
             this.current.generated = false;
             this.current.type = 'session';
             this.filterExamUsers();
@@ -63,7 +67,6 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
     this.reset();
 
     this.startGenerated = (groupname, members, session_type) =>  {
-        this.createWorkingDirectory(members);
         generatedSession = {
             'sid': Date.now(),
             'name': groupname,

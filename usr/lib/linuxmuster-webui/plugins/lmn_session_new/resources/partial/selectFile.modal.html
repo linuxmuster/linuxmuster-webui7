@@ -1,11 +1,8 @@
 <div class="modal-header">
-    <span ng-if="action == 'share'">
-        <h4 translate>Share files</h4>
-    </span>
-    <span ng-if="action == 'collect'">
-        <h4 translate>Collect files</h4>
-    </span>
+    <h4 ng-if="action == 'share'" translate>Share files</h4>
+    <h4 ng-if="action == 'collect'" translate>Collect files</h4>
 </div>
+
 <div class="modal-body">
 
     <div style="margin-bottom:20px;text-align:center;">
@@ -58,14 +55,14 @@
         <h4 translate>Upload file</h4>
         <lm-drag-upload uploadpath="transferPath" movetohome="'true'" subdir="'transfer'" owner="owner" group="'users'" refresh="share"></lm-drag-upload>
     </span>
+</div>
 
-    <div class="modal-footer">
-        <span ng:if="action == 'share'">
-            <a class="btn btn-default btn-flat" ng:click="save()" translate>Share</a>
-        </span>
-        <span ng:if="action == 'move' || action == 'copy'">
-            <a class="btn btn-default btn-flat" ng:click="save()" translate>Collect from User</a>
-        </span>
-        <a class="btn btn-default btn-flat" ng:click="close()" translate>Cancel</a>
-    </div>
+<div class="modal-footer">
+    <span ng:if="action == 'share'">
+        <a class="btn btn-default btn-flat" ng:click="save()" translate>Share</a>
+    </span>
+    <span ng:if="action == 'move' || action == 'copy'">
+        <a class="btn btn-default btn-flat" ng:click="save()" translate>Collect from User</a>
+    </span>
+    <a class="btn btn-default btn-flat" ng:click="close()" translate>Cancel</a>
 </div>

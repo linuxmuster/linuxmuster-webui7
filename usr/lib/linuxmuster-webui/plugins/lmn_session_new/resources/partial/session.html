@@ -122,7 +122,13 @@
                 <i>{{participant.sAMAccountName}}</i>
                 <div ng-show="showDetails"> <!--<img src="https://openclipart.org/image/2400px/svg_to_png/211821/matt-icons_preferences-desktop-personal.png" style="height:75px;"</img>--> </div>
             </td>
-            <td>
+            <td ng:show="!isStudent(participant)" colspan="7">
+                <div class="alert alert-danger" translate>
+                    It's currently not possible to create share directory in other teacher's home or to handle their management groups.
+                </div>
+            </td>
+
+            <td ng:show="isStudent(participant)">
                 <div class="button-group">
                     <button type="button" class="btn btn-default active" ng:click="share(participant)">
                         <i class="fas fa-file-export"></i>
@@ -147,7 +153,7 @@
                 </div>
             </td>
 
-            <td class="ng-binding">
+            <td class="ng-binding" ng:show="isStudent(participant)">
                 <div ng:show="participant.sophomorixExamMode != '---'">
                     <a style="display:inline-block; width:80px; font-size:100%"
                        class="btn btn-danger"
@@ -161,12 +167,7 @@
                 </div>
             </td>
 
-            <td>
-                <div ng:if="participant.files == 'ERROR-teacher'" style="width:220px;" class="alert alert-danger">
-                    <span translate>
-                        Can not create share directory in other teacher's home
-                    </span>
-                </div>
+            <td ng:show="isStudent(participant)">
                 <div ng:if="participant.files == 'ERROR'" style="width:220px;">
                     <a style="inline-block" class="btn btn-danger" ng:click="fixMembership()">
                         <span translate>Join {{missing_schoolclasses}} to share</span>
@@ -187,42 +188,37 @@
                 </div>
             </td>
 
-            <td width="1" style="text-align:center;" ng:show="fields.wifi.visible">
+            <td width="1" style="text-align:center;" ng:show="fields.wifi.visible && isStudent(participant)">
                 <span checkbox id="{{participant.sAMAccountName}}.wifiaccess"
                       ng:click="setManagementGroup('wifi', participant)"
-                      ng:model="participant.wifi"
-                      ng:show="isStudent(participant)">
+                      ng:model="participant.wifi">
                 </span>
             </td>
-            <td width="1" style="text-align:center;" ng:show="fields.internet.visible">
+            <td width="1" style="text-align:center;" ng:show="fields.internet.visible && isStudent(participant)">
                 <span checkbox id="{{participant.sAMAccountName}}.internetaccess"
                       ng:click="setManagementGroup('internet', participant)"
-                      ng:model="participant.internet"
-                      ng:show="isStudent(participant)">
+                      ng:model="participant.internet">
                 </span>
             </td>
-            <td width="1" style="text-align:center;" ng:show="fields.intranet.visible">
+            <td width="1" style="text-align:center;" ng:show="fields.intranet.visible && isStudent(participant)">
                 <span checkbox id="{{participant.sAMAccountName}}.intranetaccess"
                       ng:click="setManagementGroup('intranet', participant)"
-                      ng:model="participant.intranet"
-                      ng:show="isStudent(participant)">
+                      ng:model="participant.intranet">
                 </span>
             </td>
-            <td width="1" style="text-align:center;" ng:show="fields.webfilter.visible">
+            <td width="1" style="text-align:center;" ng:show="fields.webfilter.visible && isStudent(participant)">
                 <span checkbox id="{{participant.sAMAccountName}}.webfilter"
                       ng:click="setManagementGroup('webfilter', participant)"
-                      ng:model="participant.webfilter"
-                      ng:disabled="isStudent(participant)">
+                      ng:model="participant.webfilter">
                 </span>
             </td>
-            <td width="1" style="text-align:center;" ng:show="fields.printing.visible">
+            <td width="1" style="text-align:center;" ng:show="fields.printing.visible && isStudent(participant)">
                 <span checkbox id="{{participant.sAMAccountName}}.printing"
                       ng:click="setManagementGroup('printing', participant)"
-                      ng:model="participant.printing"
-                      ng:show="isStudent(participant)">
+                      ng:model="participant.printing">
                 </span>
             </td>
-            <td width="1">
+            <td width="1" ng:show="isStudent(participant)">
                 <span  uib-dropdown class="dropup" >
                     <button class="btn btn-default"  uib-dropdown-toggle>
                         <i class="fa fa-cog"></i>
@@ -261,7 +257,11 @@
                     </ul>
                 </span>
             </td>
-            <td><button class="btn btn-default" ng:click="removeParticipant(participant)"> <i class="fa fa-trash"></i></td>
+            <td>
+                <button class="btn btn-default" ng:click="removeParticipant(participant)">
+                    <i class="fa fa-trash"></i>
+                </button>
+            </td>
         </tr>
     </table>
 

@@ -834,9 +834,13 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     $scope.action = action;
     $scope.init_path = path;
     $scope.current_path = path;
+    $scope.parent_path = path;
     $scope.load_path = function(path) {
       return smbclient.list(path).then(function(data) {
-        return $scope.items = data.items;
+        $scope.items = data.items;
+        console.log(data.parent);
+        $scope.parent_path = $scope.current_path;
+        return $scope.current_path = path;
       });
     };
     $scope.load_path($scope.init_path);

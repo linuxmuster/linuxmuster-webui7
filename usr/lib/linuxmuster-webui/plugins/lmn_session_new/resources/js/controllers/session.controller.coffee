@@ -452,10 +452,14 @@ angular.module('lmn.session_new').controller 'LMNSessionFileSelectModalControlle
     $scope.action = action
     $scope.init_path = path
     $scope.current_path = path
+    $scope.parent_path = path
 
     $scope.load_path = (path) ->
         smbclient.list(path).then (data) ->
             $scope.items = data.items
+            console.log(data.parent)
+            $scope.parent_path = $scope.current_path
+            $scope.current_path = path
 
     $scope.load_path($scope.init_path)
 

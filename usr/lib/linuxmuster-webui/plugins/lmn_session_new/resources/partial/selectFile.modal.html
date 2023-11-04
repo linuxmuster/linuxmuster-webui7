@@ -8,9 +8,13 @@
 </div>
 <div class="modal-body">
 
-    <div style="margin-bottom:20px;">
+    <div style="margin-bottom:20px;text-align:center;">
         <a ng:click="create_dir()" class="pull-right">
             <i class="fas fa-folder-plus fa-2x"></i>
+        </a>
+
+        <a ng:click="load_path(parent_path)" ng:show="current_path != init_path" class="pull-left">
+            <i class="fas fa-arrow-left"></i>
         </a>
 
         <span ng-if="action == 'share'" translate>Select files you want to share</span>

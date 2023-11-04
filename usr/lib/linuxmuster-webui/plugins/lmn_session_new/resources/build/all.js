@@ -832,13 +832,14 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
 
   angular.module('lmn.session_new').controller('LMNSessionFileSelectModalController', function($scope, $uibModalInstance, gettext, notify, $http, action, path, messagebox, smbclient) {
     $scope.action = action;
-    $scope.path = path;
+    $scope.init_path = path;
+    $scope.current_path = path;
     $scope.load_path = function(path) {
       return smbclient.list(path).then(function(data) {
         return $scope.items = data.items;
       });
     };
-    $scope.load_path($scope.path);
+    $scope.load_path($scope.init_path);
     $scope.save = function() {
       var filesToTrans;
       filesToTrans = [];
@@ -865,47 +866,45 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         filepath: path
       });
     };
-    $scope.removeFile = function(file) {
-      var role, school;
-      role = $scope.identity.profile.sophomorixRole;
-      school = $scope.identity.profile.activeSchool;
-      path = $scope.identity.profile.homeDirectory + '\\transfer\\' + file;
+    $scope.delete_file = function(path) {
       return messagebox.show({
-        text: gettext('Are you sure you want to delete permanently the file ' + file + '?'),
+        text: gettext('Are you sure you want to delete permanently the file ' + path + '?'),
         positive: gettext('Delete'),
         negative: gettext('Cancel')
       }).then(function() {
-        return $http.post('/api/lmn/smbclient/unlink', {
-          path: path
-        }).then(function(resp) {
-          var pos;
-          notify.success(gettext("File " + file + " removed"));
-          delete $scope.files['TREE'][file];
-          $scope.files['COUNT']['files'] = $scope.files['COUNT']['files'] - 1;
-          pos = $scope.filesList.indexOf(file);
-          return $scope.filesList.splice(pos, 1);
+        return smbclient.delete_file(path).then(function(data) {
+          notify.success(path + gettext(' deleted !'));
+          return $scope.load_path($scope.current_path);
+        }).catch(function(resp) {
+          return notify.error(gettext('Error during deleting : '), resp.data.message);
         });
       });
     };
-    return $scope.removeDir = function(file) {
-      var role, school;
-      role = $scope.identity.profile.sophomorixRole;
-      school = $scope.identity.profile.activeSchool;
-      path = '/srv/samba/schools/' + school + '/' + role + '/' + $scope.identity.user + '/transfer/' + file;
+    $scope.delete_dir = function(path) {
       return messagebox.show({
-        text: gettext('Are you sure you want to delete permanently this directory and its content: ' + file + '?'),
+        text: gettext('Are you sure you want to delete permanently the directory ' + path + '?'),
         positive: gettext('Delete'),
         negative: gettext('Cancel')
       }).then(function() {
-        return $http.post('/api/lmn/remove-dir', {
-          filepath: path
-        }).then(function(resp) {
-          var pos;
-          notify.success(gettext("Directory " + file + " removed"));
-          delete $scope.files['TREE'][file];
-          $scope.files['COUNT']['files'] = $scope.files['COUNT']['files'] - 1;
-          pos = $scope.filesList.indexOf(file);
-          return $scope.filesList.splice(pos, 1);
+        return smbclient.delete_dir(path).then(function(data) {
+          notify.success(path + gettext(' deleted !'));
+          return $scope.load_path($scope.current_path);
+        }).catch(function(resp) {
+          return notify.error(gettext('Error during deleting : '), resp.data.message);
+        });
+      });
+    };
+    return $scope.rename = function(item) {
+      var old_path;
+      old_path = item.path;
+      return messagebox.prompt(gettext('New name :'), item.name).then(function(msg) {
+        var new_path;
+        new_path = $scope.current_path + '/' + msg.value;
+        return smbclient.move(old_path, new_path).then(function(data) {
+          notify.success(old_path + gettext(' renamed to ') + new_path);
+          return $scope.load_path($scope.current_path);
+        }).catch(function(resp) {
+          return notify.error(gettext('Error during renaming: '), resp.data.message);
         });
       });
     };

@@ -56,16 +56,11 @@
     </span>
 
     <div class="modal-footer">
-        <span ng-if="action == 'share'" ng-show="filesList.length > 0">
+        <span ng:if="action == 'share'">
             <a class="btn btn-default btn-flat" ng:click="save()" translate>Share</a>
         </span>
-        <span ng-if="action == 'collect'">
-            <span ng-if="bulkMode == 'false'">
+        <span ng:if="action == 'move' || action == 'copy'">
             <a class="btn btn-default btn-flat" ng:click="save()" translate>Collect from User</a>
-            </span>
-            <span ng-if="bulkMode == 'true'">
-            <a class="btn btn-default btn-flat" ng:click="saveBulk()" translate>Collect from Session</a>
-            </span>
         </span>
         <a class="btn btn-default btn-flat" ng:click="close()" translate>Cancel</a>
     </div>

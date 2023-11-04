@@ -450,13 +450,14 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
 angular.module('lmn.session_new').controller 'LMNSessionFileSelectModalController', ($scope, $uibModalInstance, gettext, notify, $http, action, path, messagebox, smbclient) ->
 
     $scope.action = action
-    $scope.path = path
+    $scope.init_path = path
+    $scope.current_path = path
 
     $scope.load_path = (path) ->
         smbclient.list(path).then (data) ->
             $scope.items = data.items
 
-    $scope.load_path($scope.path)
+    $scope.load_path($scope.init_path)
 
     $scope.save = () ->
         filesToTrans =  []
@@ -474,35 +475,37 @@ angular.module('lmn.session_new').controller 'LMNSessionFileSelectModalControlle
     $scope.createDir = (path) ->
         $http.post('/api/lmn/create-dir', {filepath: path})
 
-    $scope.removeFile = (file) ->
-        role = $scope.identity.profile.sophomorixRole
-        school = $scope.identity.profile.activeSchool
-        path = $scope.identity.profile.homeDirectory+'\\transfer\\'+file
+    $scope.delete_file = (path) ->
         messagebox.show({
-            text: gettext('Are you sure you want to delete permanently the file ' + file + '?'),
+            text: gettext('Are you sure you want to delete permanently the file ' + path + '?'),
             positive: gettext('Delete'),
             negative: gettext('Cancel')
         }).then () ->
-            $http.post('/api/lmn/smbclient/unlink', {path: path}).then (resp) ->
-                notify.success(gettext("File " + file + " removed"))
-                delete $scope.files['TREE'][file]
-                $scope.files['COUNT']['files'] = $scope.files['COUNT']['files'] - 1
-                pos = $scope.filesList.indexOf(file)
-                $scope.filesList.splice(pos, 1)
+            smbclient.delete_file(path).then (data) ->
+                notify.success(path + gettext(' deleted !'))
+                $scope.load_path($scope.current_path)
+            .catch (resp) ->
+                notify.error(gettext('Error during deleting : '), resp.data.message)
 
-    $scope.removeDir = (file) ->
-        role = $scope.identity.profile.sophomorixRole
-        school = $scope.identity.profile.activeSchool
-        path = '/srv/samba/schools/'+school+'/'+role+'/'+$scope.identity.user+'/transfer/'+file
+    $scope.delete_dir = (path) ->
         messagebox.show({
-            text: gettext('Are you sure you want to delete permanently this directory and its content: ' + file + '?'),
+            text: gettext('Are you sure you want to delete permanently the directory ' + path + '?'),
             positive: gettext('Delete'),
             negative: gettext('Cancel')
         }).then () ->
-            $http.post('/api/lmn/remove-dir', {filepath: path}).then (resp) ->
-                notify.success(gettext("Directory " + file + " removed"))
-                delete $scope.files['TREE'][file]
-                $scope.files['COUNT']['files'] = $scope.files['COUNT']['files'] - 1
-                pos = $scope.filesList.indexOf(file)
-                $scope.filesList.splice(pos, 1)
+            smbclient.delete_dir(path).then (data) ->
+                notify.success(path + gettext(' deleted !'))
+                $scope.load_path($scope.current_path)
+            .catch (resp) ->
+                notify.error(gettext('Error during deleting : '), resp.data.message)
 
+
+    $scope.rename = (item) ->
+        old_path = item.path
+        messagebox.prompt(gettext('New name :'), item.name).then (msg) ->
+            new_path = $scope.current_path + '/' + msg.value
+            smbclient.move(old_path, new_path).then (data) ->
+                notify.success(old_path + gettext(' renamed to ') + new_path)
+                $scope.load_path($scope.current_path)
+            .catch (resp) ->
+                notify.error(gettext('Error during renaming: '), resp.data.message)

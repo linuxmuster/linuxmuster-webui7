@@ -8,14 +8,14 @@
 </div>
 <div class="modal-body">
 
-    <div ng-if="action == 'share'" translate>
-        Select files you want to share
-    </div>
-    <div ng-if="action == 'copy'"  translate>
-        Select files you want to copy
-    </div>
-    <div ng-if="action == 'move'"  translate>
-        Select files you want to move
+    <div style="margin-bottom:20px;">
+        <a ng:click="create_dir()" class="pull-right">
+            <i class="fas fa-folder-plus fa-2x"></i>
+        </a>
+
+        <span ng-if="action == 'share'" translate>Select files you want to share</span>
+        <span ng-if="action == 'copy'"  translate>Select files you want to copy</span>
+        <span ng-if="action == 'move'"  translate>Select files you want to move</span>
     </div>
 
     <progress-spinner ng:show="items == null"></progress-spinner>

@@ -861,9 +861,16 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     $scope.close = function() {
       return $uibModalInstance.dismiss();
     };
-    $scope.createDir = function(path) {
-      return $http.post('/api/lmn/create-dir', {
-        filepath: path
+    $scope.create_dir = function(path) {
+      return messagebox.prompt(gettext('Directory name :'), '').then(function(msg) {
+        var new_path;
+        new_path = $scope.current_path + '/' + msg.value;
+        return smbclient.createDirectory(new_path).then(function(data) {
+          notify.success(new_path + gettext(' created '));
+          return $scope.load_path($scope.current_path);
+        }).catch(function(resp) {
+          return notify.error(gettext('Error during creating: '), resp.data.message);
+        });
       });
     };
     $scope.delete_file = function(path) {

@@ -472,8 +472,14 @@ angular.module('lmn.session_new').controller 'LMNSessionFileSelectModalControlle
     $scope.close = () ->
         $uibModalInstance.dismiss()
 
-    $scope.createDir = (path) ->
-        $http.post('/api/lmn/create-dir', {filepath: path})
+    $scope.create_dir = (path) ->
+        messagebox.prompt(gettext('Directory name :'), '').then (msg) ->
+            new_path = $scope.current_path + '/' + msg.value
+            smbclient.createDirectory(new_path).then (data) ->
+                notify.success(new_path + gettext(' created '))
+                $scope.load_path($scope.current_path)
+            .catch (resp) ->
+                notify.error(gettext('Error during creating: '), resp.data.message)
 
     $scope.delete_file = (path) ->
         messagebox.show({

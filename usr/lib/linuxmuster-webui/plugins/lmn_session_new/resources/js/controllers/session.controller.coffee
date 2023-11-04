@@ -398,6 +398,21 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         if not $scope._checkExamUser(user.sAMAccountName)
             userPassword.setCustomPassword(user, pwtype)
 
+    $scope._leading_zero = (int) ->
+        if "#{int}".length == 1
+            return "0#{int}"
+        return int
+
+    $scope.now = () ->
+        date = new Date()
+        year = date.getFullYear()
+        month = $scope._leading_zero(date.getMonth())
+        day = $scope._leading_zero(date.getDate())
+        hours = $scope._leading_zero(date.getHours())
+        minutes = $scope._leading_zero(date.getMinutes())
+        seconds = $scope._leading_zero(date.getSeconds())
+        return "#{year}#{month}#{day}-#{hours}#{minutes}#{seconds}"
+
     $scope.share = (participants) ->
         # participants is an array containing one or all participants
         path = "#{identity.profile.homeDirectory}\\transfer"
@@ -415,6 +430,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
                    $rootScope.$emit('updateWaiting', 'done')
 
     $scope.collectAll = (command) ->
+        collect_path = "#{identity.profile.homeDirectory}\\transfer"
         smbclient.createDirectory('')
         for user in $scope.session.members
             path = "#{user.homeDirectory}\\transfer\\#{$scope.identity.user}\\_collect"
@@ -426,26 +442,31 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
     $scope.collectUser = (command, participant) ->
         # participant is only one user
         # command is copy or move
-        path = "#{participant.homeDirectory}\\transfer\\#{$scope.identity.user}\\_collect"
+
+        now = $scope.now()
+        transfer_directory = "#{$scope.session.type}_#{$scope.session.name}_#{now}"
+        collect_path = "#{identity.profile.homeDirectory}\\transfer\\#{transfer_directory}\\#{participant.sAMAccountName}"
+        smbclient.createDirectory(collect_path)
+
         $uibModal.open(
            templateUrl: '/lmn_session_new:resources/partial/selectFile.modal.html'
            controller: 'LMNSessionFileSelectModalController'
            scope: $scope
            resolve:
               action: () -> command
-              path: () -> path
+              path: () -> "#{participant.homeDirectory}\\transfer\\#{$scope.identity.user}\\_collect"
         ).result.then (result) ->
             if result.response is 'accept'
                 #return
-                wait.modal(gettext('Collecting files...'), 'progressbar')
+#                wait.modal(gettext('Collecting files...'), 'progressbar')
                 if command is 'copy'
-                    $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers, files: result.files, session: sessioncomment}).then (resp) ->
-                        $rootScope.$emit('updateWaiting', 'done')
-                        validateResult(resp)
+                    for file in result.files
+                        smbclient.copy(file.path, collect_path + '/' + file.name)
+#                        $rootScope.$emit('updateWaiting', 'done')
                 if command is 'move'
-                    $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers, files: result.files, session: sessioncomment}).then (resp) ->
-                        $rootScope.$emit('updateWaiting', 'done')
-                        validateResult(resp)
+                    for file in result.files
+                        smbclient.move(file.path, collect_path)
+#                        $rootScope.$emit('updateWaiting', 'done')
 
 angular.module('lmn.session_new').controller 'LMNSessionFileSelectModalController', ($scope, $uibModalInstance, gettext, notify, $http, action, path, messagebox, smbclient) ->
 
@@ -457,7 +478,6 @@ angular.module('lmn.session_new').controller 'LMNSessionFileSelectModalControlle
     $scope.load_path = (path) ->
         smbclient.list(path).then (data) ->
             $scope.items = data.items
-            console.log(data.parent)
             $scope.parent_path = $scope.current_path
             $scope.current_path = path
 
@@ -465,13 +485,13 @@ angular.module('lmn.session_new').controller 'LMNSessionFileSelectModalControlle
 
     $scope.save = () ->
         filesToTrans =  []
-        angular.forEach $scope.files['TREE'], (file, id) ->
-            if file['checked'] is true
-                filesToTrans.push(id)
+        for item in $scope.items
+            if item['selected']
+                filesToTrans.push(item)
         if filesToTrans.length == 0
             notify.info(gettext('Please select at least one file!'))
             return
-        $uibModalInstance.close(response: 'accept', files: filesToTrans, bulkMode: bulkMode)
+        $uibModalInstance.close(response: 'accept', files: filesToTrans)
 
     $scope.close = () ->
         $uibModalInstance.dismiss()

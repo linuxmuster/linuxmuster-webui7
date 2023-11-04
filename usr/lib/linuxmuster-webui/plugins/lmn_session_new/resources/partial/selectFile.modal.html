@@ -24,29 +24,31 @@
         <span translate>No files or directories found in transfer.</span>
     </div>
 
-    <div ng:repeat="item in items|orderBy:['-isDir', 'name']" class="list-group-item list-group-item-small" test-bind-item="{{item.name}}" ng:style="item.selected && {'background':'#ffc876'}">
-        <a ng:click="delete_file(item.path)" class="btn btn-default pull-right" ng:if="item.isFile">
-            <i class="fa fa-trash"></i>
-        </a>
-        <a ng:click="delete_dir(item.path)" class="btn btn-default pull-right" ng:if="item.isDir">
-            <i class="fa fa-trash"></i>
-        </a>
-        <a ng:click="rename(item)" class="btn btn-default pull-right">
-            <i class="fa fa-pen"></i>
-        </a>
-        <div class="list-group-addon pull-left">
-            <span class="subtle" checkbox ng:model="item.selected"></span>
+    <div class="list-group">
+        <div ng:repeat="item in items|orderBy:['-isDir', 'name']" class="list-group-item list-group-item-small" test-bind-item="{{item.name}}" ng:style="item.selected && {'background':'#ffc876'}">
+            <a ng:click="delete_file(item.path)" class="list-group-btn" ng:if="item.isFile">
+                <i class="fa fa-trash"></i>
+            </a>
+            <a ng:click="delete_dir(item.path)" class="list-group-btn" ng:if="item.isDir">
+                <i class="fa fa-trash"></i>
+            </a>
+            <a ng:click="rename(item)" class="list-group-btn">
+                <i class="fa fa-pen"></i>
+            </a>
+            <div class="list-group-addon pull-left">
+                <span class="subtle" checkbox ng:model="item.selected"></span>
+            </div>
+            <a ng:click="load_path(item.path)" class="list-group-main" ng:if="item.isDir">
+                <i class="fa fa-fw fa-folder"></i>
+                {{item.name}}
+            </a>
+            <span class="list-group-main" ng:if="item.isFile">
+                <i ng:class="get_file_icon(item.filetype)"></i>
+                {{item.name}}
+                <span class="subtle">{{item.size|bytes}}</span>
+            </span>
         </div>
-        <a ng:click="load_path(item.path)" class="list-group-main" ng:if="item.isDir">
-            <i class="fa fa-fw fa-folder"></i>
-            {{item.name}}
-        </a>
-        <span class="list-group-main" ng:if="item.isFile">
-            <i ng:class="get_file_icon(item.filetype)"></i>
-            {{item.name}}
-            <span class="subtle">{{item.size|bytes}}</span>
-        </span>
-    </div
+    </div>
 
     <span ng-if="action == 'share'">
         <h4 translate>Upload file</h4>

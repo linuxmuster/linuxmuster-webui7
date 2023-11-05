@@ -473,13 +473,20 @@ angular.module('lmn.session_new').controller 'LMNSessionFileSelectModalControlle
     $scope.action = action
     $scope.init_path = path
     $scope.current_path = path
-    $scope.parent_path = path
+    $scope.parent_path = []
 
     $scope.load_path = (path) ->
         smbclient.list(path).then (data) ->
             $scope.items = data.items
-            $scope.parent_path = $scope.current_path
+            $scope.parent_path.push($scope.current_path)
             $scope.current_path = path
+
+    $scope.back = () ->
+        path = $scope.parent_path.at(-1)
+        smbclient.list(path).then (data) ->
+            $scope.items = data.items
+            $scope.current_path = path
+            $scope.parent_path.pop()
 
     $scope.load_path($scope.init_path)
 

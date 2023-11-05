@@ -850,12 +850,20 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     $scope.action = action;
     $scope.init_path = path;
     $scope.current_path = path;
-    $scope.parent_path = path;
+    $scope.parent_path = [];
     $scope.load_path = function(path) {
       return smbclient.list(path).then(function(data) {
         $scope.items = data.items;
-        $scope.parent_path = $scope.current_path;
+        $scope.parent_path.push($scope.current_path);
         return $scope.current_path = path;
+      });
+    };
+    $scope.back = function() {
+      path = $scope.parent_path.at(-1);
+      return smbclient.list(path).then(function(data) {
+        $scope.items = data.items;
+        $scope.current_path = path;
+        return $scope.parent_path.pop();
       });
     };
     $scope.load_path($scope.init_path);

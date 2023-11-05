@@ -748,7 +748,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       seconds = $scope._leading_zero(date.getSeconds());
       return `${year}${month}${day}-${hours}${minutes}${seconds}`;
     };
-    $scope.choose_files = function(path, command) {
+    $scope.choose_items = function(path, command) {
       return $uibModal.open({
         templateUrl: '/lmn_session_new:resources/partial/selectFile.modal.html',
         controller: 'LMNSessionFileSelectModalController',
@@ -767,15 +767,15 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       var choose_path;
       // participants is an array containing one or all participants
       choose_path = `${identity.profile.homeDirectory}\\transfer`;
-      return $scope.choose_files(choose_path, 'share').then(function(result) {
-        var file, i, len, promises, ref, share_path;
+      return $scope.choose_items(choose_path, 'share').then(function(result) {
+        var i, item, len, promises, ref, share_path;
         if (result.response === 'accept') {
           share_path = `${participant.homeDirectory}\\transfer\\${identity.profile.sAMAccountName}`;
           promises = [];
-          ref = result.files;
+          ref = result.items;
           for (i = 0, len = ref.length; i < len; i++) {
-            file = ref[i];
-            promises.push(smbclient.copy(file.path, share_path + '/' + file.name));
+            item = ref[i];
+            promises.push(smbclient.copy(item.path, share_path + '/' + item.name));
           }
           return $q.all(promises).then(function() {
             return notify.success(gettext("Files shared!"));
@@ -811,25 +811,22 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       collect_path = `${identity.profile.homeDirectory}\\transfer\\${transfer_directory}\\${participant.sAMAccountName}`;
       smbclient.createDirectory(collect_path);
       choose_path = `${participant.homeDirectory}\\transfer\\${$scope.identity.user}\\_collect`;
-      return $scope.choose_files(choose_path, command).then(function(result) {
-        var file, i, j, len, len1, ref, ref1, results;
+      return $scope.choose_items(choose_path, command).then(function(result) {
+        var i, item, j, len, len1, ref, ref1, results;
         if (result.response === 'accept') {
-          //return
-          //                wait.modal(gettext('Collecting files...'), 'progressbar')
           if (command === 'copy') {
-            ref = result.files;
+            ref = result.items;
             for (i = 0, len = ref.length; i < len; i++) {
-              file = ref[i];
-              smbclient.copy(file.path, collect_path + '/' + file.name);
+              item = ref[i];
+              smbclient.copy(item.path, collect_path + '/' + item.name);
             }
           }
-          //                        $rootScope.$emit('updateWaiting', 'done')
           if (command === 'move') {
-            ref1 = result.files;
+            ref1 = result.items;
             results = [];
             for (j = 0, len1 = ref1.length; j < len1; j++) {
-              file = ref1[j];
-              results.push(smbclient.move(file.path, collect_path));
+              item = ref1[j];
+              results.push(smbclient.move(item.path, collect_path + '/' + item.name));
             }
             return results;
           }
@@ -838,7 +835,6 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     };
   });
 
-  //                        $rootScope.$emit('updateWaiting', 'done')
   angular.module('lmn.session_new').controller('LMNSessionFileSelectModalController', function($scope, $uibModalInstance, gettext, notify, $http, action, path, messagebox, smbclient) {
     $scope.action = action;
     $scope.init_path = path;
@@ -861,22 +857,22 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     };
     $scope.load_path($scope.init_path);
     $scope.save = function() {
-      var filesToTrans, i, item, len, ref;
-      filesToTrans = [];
+      var i, item, itemsToTrans, len, ref;
+      itemsToTrans = [];
       ref = $scope.items;
       for (i = 0, len = ref.length; i < len; i++) {
         item = ref[i];
         if (item['selected']) {
-          filesToTrans.push(item);
+          itemsToTrans.push(item);
         }
       }
-      if (filesToTrans.length === 0) {
+      if (itemsToTrans.length === 0) {
         notify.info(gettext('Please select at least one file!'));
         return;
       }
       return $uibModalInstance.close({
         response: 'accept',
-        files: filesToTrans
+        items: itemsToTrans
       });
     };
     $scope.close = function() {

@@ -748,33 +748,37 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       seconds = $scope._leading_zero(date.getSeconds());
       return `${year}${month}${day}-${hours}${minutes}${seconds}`;
     };
-    $scope.share = function(participants) {
-      var path;
-      // participants is an array containing one or all participants
-      path = `${identity.profile.homeDirectory}\\transfer`;
+    $scope.choose_files = function(path, command) {
       return $uibModal.open({
         templateUrl: '/lmn_session_new:resources/partial/selectFile.modal.html',
         controller: 'LMNSessionFileSelectModalController',
         scope: $scope,
         resolve: {
           action: function() {
-            return 'share';
+            return command;
           },
           path: function() {
             return path;
           }
         }
-      }).result.then(function(result) {
+      }).result;
+    };
+    $scope.shareUser = function(participant) {
+      var choose_path;
+      // participants is an array containing one or all participants
+      choose_path = `${identity.profile.homeDirectory}\\transfer`;
+      return $scope.choose_files(choose_path, 'share').then(function(result) {
+        var file, i, len, promises, ref, share_path;
         if (result.response === 'accept') {
-          wait.modal(gettext('Sharing files...'), 'progressbar');
-          return $http.post('/api/lmn/session/trans', {
-            command: command,
-            senders: senders,
-            receivers: receivers,
-            files: result.files,
-            session: sessioncomment
-          }).then(function(resp) {
-            return $rootScope.$emit('updateWaiting', 'done');
+          share_path = `${participant.homeDirectory}\\transfer\\${identity.profile.sAMAccountName}`;
+          promises = [];
+          ref = result.files;
+          for (i = 0, len = ref.length; i < len; i++) {
+            file = ref[i];
+            promises.push(smbclient.copy(file.path, share_path + '/' + file.name));
+          }
+          return $q.all(promises).then(function() {
+            return notify.success(gettext("Files shared!"));
           });
         }
       });
@@ -799,26 +803,15 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       return results;
     };
     return $scope.collectUser = function(command, participant) {
-      var collect_path, now, transfer_directory;
+      var choose_path, collect_path, now, transfer_directory;
       // participant is only one user
       // command is copy or move
       now = $scope.now();
       transfer_directory = `${$scope.session.type}_${$scope.session.name}_${now}`;
       collect_path = `${identity.profile.homeDirectory}\\transfer\\${transfer_directory}\\${participant.sAMAccountName}`;
       smbclient.createDirectory(collect_path);
-      return $uibModal.open({
-        templateUrl: '/lmn_session_new:resources/partial/selectFile.modal.html',
-        controller: 'LMNSessionFileSelectModalController',
-        scope: $scope,
-        resolve: {
-          action: function() {
-            return command;
-          },
-          path: function() {
-            return `${participant.homeDirectory}\\transfer\\${$scope.identity.user}\\_collect`;
-          }
-        }
-      }).result.then(function(result) {
+      choose_path = `${participant.homeDirectory}\\transfer\\${$scope.identity.user}\\_collect`;
+      return $scope.choose_files(choose_path, command).then(function(result) {
         var file, i, j, len, len1, ref, ref1, results;
         if (result.response === 'accept') {
           //return

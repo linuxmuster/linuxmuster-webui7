@@ -413,21 +413,28 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         seconds = $scope._leading_zero(date.getSeconds())
         return "#{year}#{month}#{day}-#{hours}#{minutes}#{seconds}"
 
-    $scope.share = (participants) ->
-        # participants is an array containing one or all participants
-        path = "#{identity.profile.homeDirectory}\\transfer"
-        $uibModal.open(
+    $scope.choose_files = (path, command) ->
+        return $uibModal.open(
            templateUrl: '/lmn_session_new:resources/partial/selectFile.modal.html'
            controller: 'LMNSessionFileSelectModalController'
            scope: $scope
            resolve:
-              action: () -> 'share'
+              action: () -> command
               path: () -> path
-        ).result.then (result) ->
-           if result.response is 'accept'
-               wait.modal(gettext('Sharing files...'), 'progressbar')
-               $http.post('/api/lmn/session/trans', {command: command, senders: senders, receivers: receivers, files: result.files, session: sessioncomment}).then (resp) ->
-                   $rootScope.$emit('updateWaiting', 'done')
+        ).result
+
+    $scope.shareUser = (participant) ->
+        # participants is an array containing one or all participants
+        choose_path = "#{identity.profile.homeDirectory}\\transfer"
+        $scope.choose_files(choose_path, 'share').then (result) ->
+            if result.response is 'accept'
+
+                share_path = "#{participant.homeDirectory}\\transfer\\#{identity.profile.sAMAccountName}"
+                promises = []
+                for file in result.files
+                    promises.push(smbclient.copy(file.path, share_path + '/' + file.name))
+                $q.all(promises).then () ->
+                    notify.success(gettext("Files shared!"))
 
     $scope.collectAll = (command) ->
         collect_path = "#{identity.profile.homeDirectory}\\transfer"
@@ -447,15 +454,9 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         transfer_directory = "#{$scope.session.type}_#{$scope.session.name}_#{now}"
         collect_path = "#{identity.profile.homeDirectory}\\transfer\\#{transfer_directory}\\#{participant.sAMAccountName}"
         smbclient.createDirectory(collect_path)
+        choose_path = "#{participant.homeDirectory}\\transfer\\#{$scope.identity.user}\\_collect"
 
-        $uibModal.open(
-           templateUrl: '/lmn_session_new:resources/partial/selectFile.modal.html'
-           controller: 'LMNSessionFileSelectModalController'
-           scope: $scope
-           resolve:
-              action: () -> command
-              path: () -> "#{participant.homeDirectory}\\transfer\\#{$scope.identity.user}\\_collect"
-        ).result.then (result) ->
+        $scope.choose_files(choose_path, command).then (result) ->
             if result.response is 'accept'
                 #return
 #                wait.modal(gettext('Collecting files...'), 'progressbar')

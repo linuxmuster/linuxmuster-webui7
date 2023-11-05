@@ -52,7 +52,7 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
         $http.post('/api/lmn/session/userinfo', {'users': this.current.members}).then((resp) => {
             this.current.members = resp.data;
             this.current.generated = false;
-            this.current.type = 'session';
+            this.current.type = 'group';
             this.filterExamUsers();
             $location.path('/view/lmn/session');
         });

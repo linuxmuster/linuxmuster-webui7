@@ -27,7 +27,7 @@ class Handler(HttpPlugin):
                 'name': session.name,
                 'membersCount': session.membersCount,
                 'members': session.members,
-                'type': 'session'
+                'type': 'group'
             }
             sessionsList.append(s)
         return sessionsList

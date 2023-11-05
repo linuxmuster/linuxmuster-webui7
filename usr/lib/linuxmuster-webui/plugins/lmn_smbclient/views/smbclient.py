@@ -572,7 +572,11 @@ class Handler(HttpPlugin):
         """
 
         user = http_context.json_body()['user']
-        user_data = self.context.ldapreader.get(f'/users/{user}', attributes=['homeDirectory', 'sophomorixAdminClass'])
+        if user.endswith('-exam'):
+            user_data = self.context.ldapreader.get(f'/users/exam/'
+                                                    f'{user}', attributes=['homeDirectory', 'sophomorixAdminClass'])
+        else:
+            user_data = self.context.ldapreader.get(f'/users/{user}', attributes=['homeDirectory', 'sophomorixAdminClass'])
         homeDirectory, schoolclass = user_data['homeDirectory'], user_data['sophomorixAdminClass']
         path = f'{homeDirectory}/transfer/{self.context.identity}/_collect'
 

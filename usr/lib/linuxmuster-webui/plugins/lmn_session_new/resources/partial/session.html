@@ -275,22 +275,29 @@
 
     <floating-toolbar >
         <div class="button-group">
-            <div style="display:{{visible.participanttable}};" uib-dropdown ng:show="currentSession.name != ''" class="dropup">
+            <button class="btn btn-lmn pull-left" ng:click="shareAll()">
+                <i class="fas fa-file-export"></i>
+                <span translate>Share to all</span>
+            </button>
+            <div style="display:{{visible.participanttable}};" uib-dropdown class="dropup">
                 <button class="btn btn-lmn pull-left" uib-dropdown-toggle>
-                    <i class="fa fa-file"></i> <span translate>Share</span><i class="fa fa-caret-up"></i>
+                    <i class="fa fa-file-import"></i>
+                    <span style="padding-left: 2px;" translate>Collect from all</span>
+                    <i class="fa fa-caret-up"></i>
                 </button>
                 <ul uib-dropdown-menu class="scrollable">
-                    <li><a ng:click="shareTrans('share', [identity.user], session.members, currentSession.comment)" translate>Share file(s) from transfer directory with all members</a></li>
-                </ul>
-            </div>
-            <div style="display:{{visible.participanttable}};" uib-dropdown ng:show="currentSession.name != ''" class="dropup">
-                <button class="btn btn-lmn pull-left" uib-dropdown-toggle>
-                    <i class="fa fa-file"></i><span style="padding-left: 2px;" translate> Collect</span><i class="fa fa-caret-down"></i>
-                </button>
-                <ul uib-dropdown-menu class="scrollable">
-                    <!--                        <li><a flow-btn class="btn btn-default btn-flat" test-bind="uploadButton" translate>Upload file to share</a></li>-->
-                    <li><a ng:click="collectTrans('copy', session.members, [identity.user], currentSession.comment)" translate>Copy transfer directory with all members</a></li>
-                    <li><a ng:click="collectTrans('move', session.members, [identity.user], currentSession.comment)" translate>Move transfer directory with all members</a></li>
+                    <li>
+                        <a ng:click="collectAll('copy')" translate>
+                            <i class="fas fa-copy"></i>
+                            Copy _collect directory from all members
+                        </a>
+                    </li>
+                    <li>
+                        <a ng:click="collectAll('move')" translate>
+                            <i class="fas fa-cut"></i>
+                            Move _collect directory from all members
+                        </a>
+                    </li>
                 </ul>
             </div>
             <button ng:click="startExam()" class="btn btn-lmn-success"

@@ -763,23 +763,41 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         }
       }).result;
     };
+    $scope._share = function(participant, items) {
+      var i, item, len, promises, share_path;
+      share_path = `${participant.homeDirectory}\\transfer\\${identity.profile.sAMAccountName}`;
+      promises = [];
+      for (i = 0, len = items.length; i < len; i++) {
+        item = items[i];
+        promises.push(smbclient.copy(item.path, share_path + '/' + item.name));
+      }
+      return $q.all(promises).then(function() {
+        return notify.success(gettext("Files shared!"));
+      });
+    };
     $scope.shareUser = function(participant) {
       var choose_path;
       // participants is an array containing one or all participants
       choose_path = `${identity.profile.homeDirectory}\\transfer`;
       return $scope.choose_items(choose_path, 'share').then(function(result) {
-        var i, item, len, promises, ref, share_path;
         if (result.response === 'accept') {
-          share_path = `${participant.homeDirectory}\\transfer\\${identity.profile.sAMAccountName}`;
-          promises = [];
-          ref = result.items;
+          return $scope._share(participant, result.items);
+        }
+      });
+    };
+    $scope.shareAll = function() {
+      var choose_path;
+      choose_path = `${identity.profile.homeDirectory}\\transfer`;
+      return $scope.choose_items(choose_path, 'share').then(function(result) {
+        var i, len, participant, ref, results;
+        if (result.response === 'accept') {
+          ref = $scope.session.members;
+          results = [];
           for (i = 0, len = ref.length; i < len; i++) {
-            item = ref[i];
-            promises.push(smbclient.copy(item.path, share_path + '/' + item.name));
+            participant = ref[i];
+            results.push($scope._share(participant, result.items));
           }
-          return $q.all(promises).then(function() {
-            return notify.success(gettext("Files shared!"));
-          });
+          return results;
         }
       });
     };

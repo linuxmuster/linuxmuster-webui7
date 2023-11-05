@@ -423,18 +423,27 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
               path: () -> path
         ).result
 
+    $scope._share = (participant, items) ->
+        share_path = "#{participant.homeDirectory}\\transfer\\#{identity.profile.sAMAccountName}"
+        promises = []
+        for item in items
+            promises.push(smbclient.copy(item.path, share_path + '/' + item.name))
+        $q.all(promises).then () ->
+            notify.success(gettext("Files shared!"))
+
     $scope.shareUser = (participant) ->
         # participants is an array containing one or all participants
         choose_path = "#{identity.profile.homeDirectory}\\transfer"
         $scope.choose_items(choose_path, 'share').then (result) ->
             if result.response is 'accept'
+                $scope._share(participant, result.items)
 
-                share_path = "#{participant.homeDirectory}\\transfer\\#{identity.profile.sAMAccountName}"
-                promises = []
-                for item in result.items
-                    promises.push(smbclient.copy(item.path, share_path + '/' + item.name))
-                $q.all(promises).then () ->
-                    notify.success(gettext("Files shared!"))
+    $scope.shareAll = () ->
+        choose_path = "#{identity.profile.homeDirectory}\\transfer"
+        $scope.choose_items(choose_path, 'share').then (result) ->
+            if result.response is 'accept'
+                for participant in $scope.session.members
+                    $scope._share(participant, result.items)
 
     $scope.collectAll = (command) ->
         collect_path = "#{identity.profile.homeDirectory}\\transfer"
@@ -454,8 +463,8 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         transfer_directory = "#{$scope.session.type}_#{$scope.session.name}_#{now}"
         collect_path = "#{identity.profile.homeDirectory}\\transfer\\#{transfer_directory}\\#{participant.sAMAccountName}"
         smbclient.createDirectory(collect_path)
-        choose_path = "#{participant.homeDirectory}\\transfer\\#{$scope.identity.user}\\_collect"
 
+        choose_path = "#{participant.homeDirectory}\\transfer\\#{$scope.identity.user}\\_collect"
         $scope.choose_items(choose_path, command).then (result) ->
             if result.response is 'accept'
                 if command is 'copy'

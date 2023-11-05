@@ -731,23 +731,6 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         return userPassword.setCustomPassword(user, pwtype);
       }
     };
-    $scope._leading_zero = function(int) {
-      if (`${int}`.length === 1) {
-        return `0${int}`;
-      }
-      return int;
-    };
-    $scope.now = function() {
-      var date, day, hours, minutes, month, seconds, year;
-      date = new Date();
-      year = date.getFullYear();
-      month = $scope._leading_zero(date.getMonth());
-      day = $scope._leading_zero(date.getDate());
-      hours = $scope._leading_zero(date.getHours());
-      minutes = $scope._leading_zero(date.getMinutes());
-      seconds = $scope._leading_zero(date.getSeconds());
-      return `${year}${month}${day}-${hours}${minutes}${seconds}`;
-    };
     $scope.choose_items = function(path, command) {
       return $uibModal.open({
         templateUrl: '/lmn_session_new:resources/partial/selectFile.modal.html',
@@ -801,24 +784,68 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         }
       });
     };
-    $scope.collectAll = function(command) {
-      var collect_path, i, len, path, ref, results, user;
-      collect_path = `${identity.profile.homeDirectory}\\transfer`;
-      smbclient.createDirectory('');
-      ref = $scope.session.members;
-      results = [];
-      for (i = 0, len = ref.length; i < len; i++) {
-        user = ref[i];
-        path = `${user.homeDirectory}\\transfer\\${$scope.identity.user}\\_collect`;
-        if (command = 'move') {
-          results.push(smbclient.move('', ''));
-        } else if (command = 'copy') {
-          results.push(smbclient.copy('', ''));
-        } else {
-          results.push(void 0);
+    $scope._leading_zero = function(int) {
+      if (`${int}`.length === 1) {
+        return `0${int}`;
+      }
+      return int;
+    };
+    $scope.now = function() {
+      var date, day, hours, minutes, month, seconds, year;
+      // Formating date for collect directory
+      date = new Date();
+      year = date.getFullYear();
+      month = $scope._leading_zero(date.getMonth());
+      day = $scope._leading_zero(date.getDate());
+      hours = $scope._leading_zero(date.getHours());
+      minutes = $scope._leading_zero(date.getMinutes());
+      seconds = $scope._leading_zero(date.getSeconds());
+      return `${year}${month}${day}-${hours}${minutes}${seconds}`;
+    };
+    $scope._collect = function(command, items, collect_path) {
+      var i, item, j, len, len1;
+      if (command === 'copy') {
+        for (i = 0, len = items.length; i < len; i++) {
+          item = items[i];
+          return smbclient.copy(item.path, collect_path + '/' + item.name);
         }
       }
-      return results;
+      if (command === 'move') {
+        for (j = 0, len1 = items.length; j < len1; j++) {
+          item = items[j];
+          return smbclient.move(item.path, collect_path + '/' + item.name);
+        }
+      }
+    };
+    $scope.collectAll = function(command) {
+      var collect_path, dst, i, items, len, now, participant, promises, ref, transfer_directory;
+      // command is copy or move
+      promises = [];
+      now = $scope.now();
+      transfer_directory = `${$scope.session.type}_${$scope.session.name}_${now}`;
+      collect_path = `${identity.profile.homeDirectory}\\transfer\\${transfer_directory}`;
+      smbclient.createDirectory(collect_path);
+      ref = $scope.session.members;
+      for (i = 0, len = ref.length; i < len; i++) {
+        participant = ref[i];
+        dst = `${collect_path}\\${participant.sAMAccountName}`;
+        items = [
+          {
+            "path": `${participant.homeDirectory}\\transfer\\${$scope.identity.user}\\_collect`,
+            "name": ""
+          }
+        ];
+        promises.push($scope._collect(command, items, dst));
+      }
+      return $q.all(promises).then(function() {
+        // _collect directory was moved, so recreating empty working diretories for all
+        lmnSession.createWorkingDirectory($scope.session.members).then(function() {
+          return $scope.missing_schoolclasses = lmnSession.user_missing_membership.map(function(user) {
+            return user.sophomorixAdminClass;
+          }).join(',');
+        });
+        return notify.success(gettext("Files collected!"));
+      });
     };
     return $scope.collectUser = function(command, participant) {
       var choose_path, collect_path, now, transfer_directory;
@@ -826,28 +853,12 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       // command is copy or move
       now = $scope.now();
       transfer_directory = `${$scope.session.type}_${$scope.session.name}_${now}`;
-      collect_path = `${identity.profile.homeDirectory}\\transfer\\${transfer_directory}\\${participant.sAMAccountName}`;
+      collect_path = `${identity.profile.homeDirectory}\\transfer\\${transfer_directory}\\${name}`;
       smbclient.createDirectory(collect_path);
       choose_path = `${participant.homeDirectory}\\transfer\\${$scope.identity.user}\\_collect`;
       return $scope.choose_items(choose_path, command).then(function(result) {
-        var i, item, j, len, len1, ref, ref1, results;
         if (result.response === 'accept') {
-          if (command === 'copy') {
-            ref = result.items;
-            for (i = 0, len = ref.length; i < len; i++) {
-              item = ref[i];
-              smbclient.copy(item.path, collect_path + '/' + item.name);
-            }
-          }
-          if (command === 'move') {
-            ref1 = result.items;
-            results = [];
-            for (j = 0, len1 = ref1.length; j < len1; j++) {
-              item = ref1[j];
-              results.push(smbclient.move(item.path, collect_path + '/' + item.name));
-            }
-            return results;
-          }
+          return $scope._collect(command, result.items, collect_path);
         }
       });
     };

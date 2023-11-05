@@ -398,21 +398,6 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         if not $scope._checkExamUser(user.sAMAccountName)
             userPassword.setCustomPassword(user, pwtype)
 
-    $scope._leading_zero = (int) ->
-        if "#{int}".length == 1
-            return "0#{int}"
-        return int
-
-    $scope.now = () ->
-        date = new Date()
-        year = date.getFullYear()
-        month = $scope._leading_zero(date.getMonth())
-        day = $scope._leading_zero(date.getDate())
-        hours = $scope._leading_zero(date.getHours())
-        minutes = $scope._leading_zero(date.getMinutes())
-        seconds = $scope._leading_zero(date.getSeconds())
-        return "#{year}#{month}#{day}-#{hours}#{minutes}#{seconds}"
-
     $scope.choose_items = (path, command) ->
         return $uibModal.open(
            templateUrl: '/lmn_session_new:resources/partial/selectFile.modal.html'
@@ -445,15 +430,51 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
                 for participant in $scope.session.members
                     $scope._share(participant, result.items)
 
+    $scope._leading_zero = (int) ->
+        if "#{int}".length == 1
+            return "0#{int}"
+        return int
+
+    $scope.now = () ->
+        # Formating date for collect directory
+        date = new Date()
+        year = date.getFullYear()
+        month = $scope._leading_zero(date.getMonth())
+        day = $scope._leading_zero(date.getDate())
+        hours = $scope._leading_zero(date.getHours())
+        minutes = $scope._leading_zero(date.getMinutes())
+        seconds = $scope._leading_zero(date.getSeconds())
+        return "#{year}#{month}#{day}-#{hours}#{minutes}#{seconds}"
+
+    $scope._collect = (command, items, collect_path) ->
+        if command is 'copy'
+            for item in items
+                return smbclient.copy(item.path, collect_path + '/' + item.name)
+        if command is 'move'
+            for item in items
+                return smbclient.move(item.path, collect_path + '/' + item.name)
+
     $scope.collectAll = (command) ->
-        collect_path = "#{identity.profile.homeDirectory}\\transfer"
-        smbclient.createDirectory('')
-        for user in $scope.session.members
-            path = "#{user.homeDirectory}\\transfer\\#{$scope.identity.user}\\_collect"
-            if command = 'move'
-                smbclient.move('', '')
-            else if command = 'copy'
-                smbclient.copy('', '')
+        # command is copy or move
+
+        promises = []
+        now = $scope.now()
+        transfer_directory = "#{$scope.session.type}_#{$scope.session.name}_#{now}"
+        collect_path = "#{identity.profile.homeDirectory}\\transfer\\#{transfer_directory}"
+        smbclient.createDirectory(collect_path)
+
+        for participant in $scope.session.members
+            dst = "#{collect_path}\\#{participant.sAMAccountName}"
+            items = [{
+                "path": "#{participant.homeDirectory}\\transfer\\#{$scope.identity.user}\\_collect",
+                "name": ""
+            }]
+            promises.push($scope._collect(command, items, dst))
+        $q.all(promises).then () ->
+            # _collect directory was moved, so recreating empty working diretories for all
+            lmnSession.createWorkingDirectory($scope.session.members).then () ->
+                $scope.missing_schoolclasses = lmnSession.user_missing_membership.map((user) -> user.sophomorixAdminClass).join(',')
+            notify.success(gettext("Files collected!"))
 
     $scope.collectUser = (command, participant) ->
         # participant is only one user
@@ -461,18 +482,13 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
 
         now = $scope.now()
         transfer_directory = "#{$scope.session.type}_#{$scope.session.name}_#{now}"
-        collect_path = "#{identity.profile.homeDirectory}\\transfer\\#{transfer_directory}\\#{participant.sAMAccountName}"
+        collect_path = "#{identity.profile.homeDirectory}\\transfer\\#{transfer_directory}\\#{name}"
         smbclient.createDirectory(collect_path)
 
         choose_path = "#{participant.homeDirectory}\\transfer\\#{$scope.identity.user}\\_collect"
         $scope.choose_items(choose_path, command).then (result) ->
             if result.response is 'accept'
-                if command is 'copy'
-                    for item in result.items
-                        smbclient.copy(item.path, collect_path + '/' + item.name)
-                if command is 'move'
-                    for item in result.items
-                        smbclient.move(item.path, collect_path + '/' + item.name)
+                $scope._collect(command, result.items, collect_path)
 
 angular.module('lmn.session_new').controller 'LMNSessionFileSelectModalController', ($scope, $uibModalInstance, gettext, notify, $http, action, path, messagebox, smbclient) ->
 

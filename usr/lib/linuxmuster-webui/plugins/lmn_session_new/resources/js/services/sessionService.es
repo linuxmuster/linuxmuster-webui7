@@ -87,7 +87,7 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
        users = this.current.members.map((user) => user.cn);
        $http.post('/api/lmn/session/exam/userinfo', {'users': users}).then((resp) => {
             this.current.members = resp.data;
-            this.createWorkingDirectory(this.current.members.map((user) => user.cn));
+            this.createWorkingDirectory(this.current.members);
             this.filterExamUsers();
             $location.path('/view/lmn/session');
         });

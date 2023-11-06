@@ -11,18 +11,22 @@ angular.module('lmn.smbclient').service('smbclient', function($rootScope, $http,
     this.delete_file = (path) =>
         $http.post(`/api/lmn/smbclient/unlink`, {'path': path}).then(response => response.data)
 
-    this.move = (src, dst) => {
+    this.move = (src, dst, notify_success=true) => {
         return $http.post(`/api/lmn/smbclient/move`, {'src': src, 'dst':dst}).then((response) => {
-            notify.success(src + gettext(' moved!'));
+            if (notify_success) {
+                notify.success(src + gettext(' moved!'));
+            }
             return response.data;
         }, (response) => {
             notify.error(response.data.message);
         });
     };
 
-    this.copy = (src, dst) => {
+    this.copy = (src, dst, notify_success=true) => {
         return $http.post(`/api/lmn/smbclient/copy`, {'src': src, 'dst':dst}).then((response) => {
-            notify.success(src + gettext(' copied!'));
+            if (notify_success) {
+                notify.success(src + gettext(' copied!'));
+            }
             return response.data;
         }, (response) => {
             notify.error(response.data.message);

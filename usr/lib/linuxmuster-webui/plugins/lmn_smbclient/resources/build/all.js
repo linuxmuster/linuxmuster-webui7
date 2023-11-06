@@ -31,8 +31,12 @@ angular.module('lmn.smbclient').service('smbclient', function ($rootScope, $http
     };
 
     this.move = function (src, dst) {
+        var notify_success = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+
         return $http.post('/api/lmn/smbclient/move', { 'src': src, 'dst': dst }).then(function (response) {
-            notify.success(src + gettext(' moved!'));
+            if (notify_success) {
+                notify.success(src + gettext(' moved!'));
+            }
             return response.data;
         }, function (response) {
             notify.error(response.data.message);
@@ -40,8 +44,12 @@ angular.module('lmn.smbclient').service('smbclient', function ($rootScope, $http
     };
 
     this.copy = function (src, dst) {
+        var notify_success = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+
         return $http.post('/api/lmn/smbclient/copy', { 'src': src, 'dst': dst }).then(function (response) {
-            notify.success(src + gettext(' copied!'));
+            if (notify_success) {
+                notify.success(src + gettext(' copied!'));
+            }
             return response.data;
         }, function (response) {
             notify.error(response.data.message);

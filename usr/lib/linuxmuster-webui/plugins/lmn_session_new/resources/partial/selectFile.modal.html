@@ -5,25 +5,7 @@
 
 <div class="modal-body">
 
-    <div style="margin-bottom:20px;text-align:center;">
-        <a ng:click="create_dir()" class="pull-right">
-            <i class="fas fa-folder-plus fa-2x"></i>
-        </a>
-
-        <a ng:click="back()" ng:show="current_path != init_path" class="pull-left">
-            <i class="fas fa-arrow-left"></i>
-        </a>
-
-        <span ng-if="action == 'share'" translate>Select files you want to share</span>
-        <span ng-if="action == 'copy'"  translate>Select files you want to copy</span>
-        <span ng-if="action == 'move'"  translate>Select files you want to move</span>
-    </div>
-
     <progress-spinner ng:show="items == null"></progress-spinner>
-
-    <div class="alert alert-info" ng:show="files.length == 0">
-        <span translate>No files or directories found in transfer.</span>
-    </div>
 
     <div class="list-group" ng:hide="loading && root" keyboard-focus
          flow-init="{target: '/api/lmn/smbclient/upload', chunkSize: 1024 * 1024}"
@@ -33,6 +15,26 @@
          ng:style="style"
          style="min-height:600px;"
          flow-drop >
+
+         <div style="margin-bottom:20px;text-align:center;">
+            <a ng:click="create_dir()" class="pull-right">
+                <i class="fas fa-folder-plus fa-2x"></i>
+            </a>
+            <span class="upload pull-right" flow-btn style="margin-right:20px;">
+                <i class="fas fa-cloud-upload-alt" style="font-size:1.8em;"></i>
+            </span>
+            <a ng:click="back()" ng:show="current_path != init_path" class="pull-left">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+
+            <span ng-if="action == 'share'" translate>Select files you want to share</span>
+            <span ng-if="action == 'copy'"  translate>Select files you want to copy</span>
+            <span ng-if="action == 'move'"  translate>Select files you want to move</span>
+        </div>
+
+        <div class="alert alert-info" ng:show="items.length == 0">
+            <span translate>No files or directories found in transfer.</span>
+        </div>
 
         <div ng:show="!areUploadsFinished()" class="uploads">
             <h3 translate>Uploading ... </h3>

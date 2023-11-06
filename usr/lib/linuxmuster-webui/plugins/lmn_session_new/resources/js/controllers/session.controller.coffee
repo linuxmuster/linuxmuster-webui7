@@ -502,6 +502,7 @@ angular.module('lmn.session_new').controller 'LMNSessionFileSelectModalControlle
     $scope.parent_path = []
     $scope.toggleAllStatus = false
     $scope.count_selected = 0
+    $scope.uploadProgress = []
 
     $scope.load_path = (path) ->
         smbclient.list(path).then (data) ->
@@ -581,3 +582,27 @@ angular.module('lmn.session_new').controller 'LMNSessionFileSelectModalControlle
                 $scope.load_path($scope.current_path)
             .catch (resp) ->
                 notify.error(gettext('Error during renaming: '), resp.data.message)
+
+    $scope.areUploadsFinished = () ->
+        numUploads = $scope.uploadProgress.length
+        if numUploads == 0
+            return true
+
+        globalProgress = 0
+        for p in $scope.uploadProgress
+            globalProgress += p.progress
+
+        return numUploads * 100 == globalProgress
+
+    $scope.sambaSharesUploadBegin = ($flow) ->
+        $scope.uploadProgress = []
+        $scope.uploadFiles = []
+        for file in $flow.files
+            $scope.uploadFiles.push(file.name)
+
+        $scope.files_list = $scope.uploadFiles.join(', ')
+        smbclient.startFlowUpload($flow, $scope.current_path).then (resp) ->
+            notify.success(gettext('Uploaded ') + $scope.files_list)
+            $scope.load_path($scope.current_path)
+        , null, (progress) ->
+            $scope.uploadProgress = progress.sort((a, b) -> a.name > b.name)

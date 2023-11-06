@@ -25,7 +25,23 @@
         <span translate>No files or directories found in transfer.</span>
     </div>
 
-    <div class="list-group">
+    <div class="list-group" ng:hide="loading && root" keyboard-focus
+         flow-init="{target: '/api/lmn/smbclient/upload', chunkSize: 1024 * 1024}"
+         flow-files-submitted="sambaSharesUploadBegin($flow)"
+         flow-drag-enter="style={border: 'solid 2px #234c4c'}"
+         flow-drag-leave="style={}"
+         ng:style="style"
+         style="min-height:600px;"
+         flow-drop >
+
+        <div ng:show="!areUploadsFinished()" class="uploads">
+            <h3 translate>Uploading ... </h3>
+            <div ng-repeat="p in uploadProgress" style="margin-top:10px;" ng-show='p.progress < 100'>
+                <span>{{p.name}} ({{p.progress}} %) </span>
+                <smart-progress type="warning" max="100" value="p.progress"></smart-progress>
+            </div>
+        </div>
+
         <div class="list-group-item list-group-item-small">
             <div class="list-group-addon pull-left" ng:if="action != 'share'">
                 <span checkbox ng:model="toggleAllStatus" ng:click="toggleAll()"></span>
@@ -58,11 +74,6 @@
             </span>
         </div>
     </div>
-
-    <span ng-if="action == 'share'">
-        <h4 translate>Upload file</h4>
-        <lm-drag-upload uploadpath="transferPath" movetohome="'true'" subdir="'transfer'" owner="owner" group="'users'" refresh="share"></lm-drag-upload>
-    </span>
 </div>
 
 <div class="modal-footer">

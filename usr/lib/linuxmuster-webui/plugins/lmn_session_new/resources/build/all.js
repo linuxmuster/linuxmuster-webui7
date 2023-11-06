@@ -876,6 +876,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     $scope.parent_path = [];
     $scope.toggleAllStatus = false;
     $scope.count_selected = 0;
+    $scope.uploadProgress = [];
     $scope.load_path = function(path) {
       return smbclient.list(path).then(function(data) {
         $scope.items = data.items;
@@ -969,7 +970,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         });
       });
     };
-    return $scope.rename = function(item) {
+    $scope.rename = function(item) {
       var old_path;
       old_path = item.path;
       return messagebox.prompt(gettext('New name :'), item.name).then(function(msg) {
@@ -980,6 +981,39 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
           return $scope.load_path($scope.current_path);
         }).catch(function(resp) {
           return notify.error(gettext('Error during renaming: '), resp.data.message);
+        });
+      });
+    };
+    $scope.areUploadsFinished = function() {
+      var globalProgress, i, len, numUploads, p, ref;
+      numUploads = $scope.uploadProgress.length;
+      if (numUploads === 0) {
+        return true;
+      }
+      globalProgress = 0;
+      ref = $scope.uploadProgress;
+      for (i = 0, len = ref.length; i < len; i++) {
+        p = ref[i];
+        globalProgress += p.progress;
+      }
+      return numUploads * 100 === globalProgress;
+    };
+    return $scope.sambaSharesUploadBegin = function($flow) {
+      var file, i, len, ref;
+      $scope.uploadProgress = [];
+      $scope.uploadFiles = [];
+      ref = $flow.files;
+      for (i = 0, len = ref.length; i < len; i++) {
+        file = ref[i];
+        $scope.uploadFiles.push(file.name);
+      }
+      $scope.files_list = $scope.uploadFiles.join(', ');
+      return smbclient.startFlowUpload($flow, $scope.current_path).then(function(resp) {
+        notify.success(gettext('Uploaded ') + $scope.files_list);
+        return $scope.load_path($scope.current_path);
+      }, null, function(progress) {
+        return $scope.uploadProgress = progress.sort(function(a, b) {
+          return a.name > b.name;
         });
       });
     };

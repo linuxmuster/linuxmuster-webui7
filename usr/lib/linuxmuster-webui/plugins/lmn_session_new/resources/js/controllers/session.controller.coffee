@@ -439,7 +439,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         # Formating date for collect directory
         date = new Date()
         year = date.getFullYear()
-        month = $scope._leading_zero(date.getMonth())
+        month = $scope._leading_zero(date.getMonth()+1)
         day = $scope._leading_zero(date.getDate())
         hours = $scope._leading_zero(date.getHours())
         minutes = $scope._leading_zero(date.getMinutes())

@@ -412,7 +412,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         share_path = "#{participant.homeDirectory}\\transfer\\#{identity.profile.sAMAccountName}"
         promises = []
         for item in items
-            promises.push(smbclient.copy(item.path, share_path + '/' + item.name))
+            promises.push(smbclient.copy(item.path, share_path + '/' + item.name, notify_success=false))
         $q.all(promises).then () ->
             notify.success(gettext("Files shared!"))
 
@@ -447,12 +447,14 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         return "#{year}#{month}#{day}-#{hours}#{minutes}#{seconds}"
 
     $scope._collect = (command, items, collect_path) ->
+        promises = []
         if command is 'copy'
             for item in items
-                return smbclient.copy(item.path, collect_path + '/' + item.name)
+                promises.push(smbclient.copy(item.path, collect_path + '/' + item.name, notify_success=false))
         if command is 'move'
             for item in items
-                return smbclient.move(item.path, collect_path + '/' + item.name)
+                promises.push(smbclient.move(item.path, collect_path + '/' + item.name, notify_success=false))
+        return $q.all(promises)
 
     $scope.collectAll = (command) ->
         # command is copy or move
@@ -463,6 +465,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         collect_path = "#{identity.profile.homeDirectory}\\transfer\\#{transfer_directory}"
         smbclient.createDirectory(collect_path)
 
+        promises = []
         for participant in $scope.session.members
             dst = "#{collect_path}\\#{participant.sAMAccountName}"
             items = [{
@@ -488,7 +491,8 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         choose_path = "#{participant.homeDirectory}\\transfer\\#{$scope.identity.user}\\_collect"
         $scope.choose_items(choose_path, command).then (result) ->
             if result.response is 'accept'
-                $scope._collect(command, result.items, collect_path)
+                $scope._collect(command, result.items, collect_path).then () ->
+                    notify.success(gettext("Files collected!"))
 
 angular.module('lmn.session_new').controller 'LMNSessionFileSelectModalController', ($scope, $uibModalInstance, gettext, notify, $http, action, path, messagebox, smbclient) ->
 

@@ -747,12 +747,12 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       }).result;
     };
     $scope._share = function(participant, items) {
-      var i, item, len, promises, share_path;
+      var i, item, len, notify_success, promises, share_path;
       share_path = `${participant.homeDirectory}\\transfer\\${identity.profile.sAMAccountName}`;
       promises = [];
       for (i = 0, len = items.length; i < len; i++) {
         item = items[i];
-        promises.push(smbclient.copy(item.path, share_path + '/' + item.name));
+        promises.push(smbclient.copy(item.path, share_path + '/' + item.name, notify_success = false));
       }
       return $q.all(promises).then(function() {
         return notify.success(gettext("Files shared!"));
@@ -803,19 +803,21 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       return `${year}${month}${day}-${hours}${minutes}${seconds}`;
     };
     $scope._collect = function(command, items, collect_path) {
-      var i, item, j, len, len1;
+      var i, item, j, len, len1, notify_success, promises;
+      promises = [];
       if (command === 'copy') {
         for (i = 0, len = items.length; i < len; i++) {
           item = items[i];
-          return smbclient.copy(item.path, collect_path + '/' + item.name);
+          promises.push(smbclient.copy(item.path, collect_path + '/' + item.name, notify_success = false));
         }
       }
       if (command === 'move') {
         for (j = 0, len1 = items.length; j < len1; j++) {
           item = items[j];
-          return smbclient.move(item.path, collect_path + '/' + item.name);
+          promises.push(smbclient.move(item.path, collect_path + '/' + item.name, notify_success = false));
         }
       }
+      return $q.all(promises);
     };
     $scope.collectAll = function(command) {
       var collect_path, dst, i, items, len, now, participant, promises, ref, transfer_directory;
@@ -825,6 +827,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       transfer_directory = `${$scope.session.type}_${$scope.session.name}_${now}`;
       collect_path = `${identity.profile.homeDirectory}\\transfer\\${transfer_directory}`;
       smbclient.createDirectory(collect_path);
+      promises = [];
       ref = $scope.session.members;
       for (i = 0, len = ref.length; i < len; i++) {
         participant = ref[i];
@@ -858,14 +861,16 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       choose_path = `${participant.homeDirectory}\\transfer\\${$scope.identity.user}\\_collect`;
       return $scope.choose_items(choose_path, command).then(function(result) {
         if (result.response === 'accept') {
-          return $scope._collect(command, result.items, collect_path);
+          return $scope._collect(command, result.items, collect_path).then(function() {
+            return notify.success(gettext("Files collected!"));
+          });
         }
       });
     };
   });
 
   angular.module('lmn.session_new').controller('LMNSessionFileSelectModalController', function($scope, $uibModalInstance, gettext, notify, $http, action, path, messagebox, smbclient) {
-    $scope.action = action;
+    $scope.action = action; // copy, move or share
     $scope.init_path = path;
     $scope.current_path = path;
     $scope.parent_path = [];

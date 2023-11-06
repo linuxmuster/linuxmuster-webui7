@@ -209,12 +209,13 @@ html body.customized .nav-tabs > li.active > a:hover {
   font-size: 14px;
 }
 
-a {
+a, span.upload {
   color: #233c4c;
 }
 
-a:hover {
+a:hover, span.upload:hover {
   color: #ff8f00;
+  cursor: pointer;
 }
 
 html body.customized .form-control:focus {

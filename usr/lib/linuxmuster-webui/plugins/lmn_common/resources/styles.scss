@@ -247,13 +247,13 @@ html body.customized .nav-tabs > li.active > a:hover {
     font-size:14px;
 }
 
-a {
+a, span.upload {
     color: $theme-color;
 
 }
-a:hover {
+a:hover, span.upload:hover {
     color:$theme-color-orange;
-
+    cursor:pointer;
 }
 
 html body.customized .form-control:focus {

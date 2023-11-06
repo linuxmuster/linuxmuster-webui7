@@ -501,6 +501,7 @@ angular.module('lmn.session_new').controller 'LMNSessionFileSelectModalControlle
     $scope.current_path = path
     $scope.parent_path = []
     $scope.toggleAllStatus = false
+    $scope.count_selected = 0
 
     $scope.load_path = (path) ->
         smbclient.list(path).then (data) ->
@@ -511,6 +512,9 @@ angular.module('lmn.session_new').controller 'LMNSessionFileSelectModalControlle
     $scope.toggleAll = () ->
         for item in $scope.items
             item.selected = !item.selected
+
+    $scope.refreshSelected = () ->
+        $scope.count_selected = $scope.items.filter((item) -> item.selected == true).length
 
     $scope.back = () ->
         path = $scope.parent_path.at(-1)

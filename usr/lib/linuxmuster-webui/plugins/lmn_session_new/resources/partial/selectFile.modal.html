@@ -26,10 +26,13 @@
     </div>
 
     <div class="list-group">
-        <div ng:if="action != 'share'" class="list-group-item list-group-item-small">
-            <div class="list-group-addon pull-left">
+        <div class="list-group-item list-group-item-small">
+            <div class="list-group-addon pull-left" ng:if="action != 'share'">
                 <span checkbox ng:model="toggleAllStatus" ng:click="toggleAll()"></span>
             </div>
+            <span class="list-group-main pull-right">
+                {{count_selected}} <span translate>item(s) selected</span>
+            </span>
         </div>
         <div ng:repeat="item in items|orderBy:['-isDir', 'name']" class="list-group-item list-group-item-small" test-bind-item="{{item.name}}" ng:style="item.selected && {'background':'#ffc876'}">
             <a ng:click="delete_file(item.path)" class="list-group-btn" ng:if="item.isFile">
@@ -42,7 +45,7 @@
                 <i class="fa fa-pen"></i>
             </a>
             <div class="list-group-addon pull-left">
-                <span class="subtle" checkbox ng:model="item.selected"></span>
+                <span class="subtle" checkbox ng:model="item.selected" ng:change="refreshSelected()"></span>
             </div>
             <a ng:click="load_path(item.path)" class="list-group-main" ng:if="item.isDir">
                 <i class="fa fa-fw fa-folder"></i>

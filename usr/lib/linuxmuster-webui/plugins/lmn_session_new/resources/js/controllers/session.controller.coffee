@@ -492,16 +492,21 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
 
 angular.module('lmn.session_new').controller 'LMNSessionFileSelectModalController', ($scope, $uibModalInstance, gettext, notify, $http, action, path, messagebox, smbclient) ->
 
-    $scope.action = action
+    $scope.action = action # copy, move or share
     $scope.init_path = path
     $scope.current_path = path
     $scope.parent_path = []
+    $scope.toggleAllStatus = false
 
     $scope.load_path = (path) ->
         smbclient.list(path).then (data) ->
             $scope.items = data.items
             $scope.parent_path.push($scope.current_path)
             $scope.current_path = path
+
+    $scope.toggleAll = () ->
+        for item in $scope.items
+            item.selected = !item.selected
 
     $scope.back = () ->
         path = $scope.parent_path.at(-1)

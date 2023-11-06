@@ -1,6 +1,6 @@
 <div class="modal-header">
     <h4 ng-if="action == 'share'" translate>Share files</h4>
-    <h4 ng-if="action == 'collect'" translate>Collect files</h4>
+    <h4 ng-if="action != 'share'" translate>Collect files</h4>
 </div>
 
 <div class="modal-body">
@@ -26,6 +26,11 @@
     </div>
 
     <div class="list-group">
+        <div ng:if="action != 'share'" class="list-group-item list-group-item-small">
+            <div class="list-group-addon pull-left">
+                <span checkbox ng:model="toggleAllStatus" ng:click="toggleAll()"></span>
+            </div>
+        </div>
         <div ng:repeat="item in items|orderBy:['-isDir', 'name']" class="list-group-item list-group-item-small" test-bind-item="{{item.name}}" ng:style="item.selected && {'background':'#ffc876'}">
             <a ng:click="delete_file(item.path)" class="list-group-btn" ng:if="item.isFile">
                 <i class="fa fa-trash"></i>

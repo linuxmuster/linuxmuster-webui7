@@ -485,7 +485,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
 
         now = $scope.now()
         transfer_directory = "#{$scope.session.type}_#{$scope.session.name}_#{now}"
-        collect_path = "#{identity.profile.homeDirectory}\\transfer\\#{transfer_directory}\\#{name}"
+        collect_path = "#{identity.profile.homeDirectory}\\transfer\\#{transfer_directory}\\#{participant.sAMAccountName}"
         smbclient.createDirectory(collect_path)
 
         choose_path = "#{participant.homeDirectory}\\transfer\\#{$scope.identity.user}\\_collect"

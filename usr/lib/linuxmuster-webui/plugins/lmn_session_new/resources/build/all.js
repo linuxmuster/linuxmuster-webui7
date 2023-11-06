@@ -856,7 +856,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       // command is copy or move
       now = $scope.now();
       transfer_directory = `${$scope.session.type}_${$scope.session.name}_${now}`;
-      collect_path = `${identity.profile.homeDirectory}\\transfer\\${transfer_directory}\\${name}`;
+      collect_path = `${identity.profile.homeDirectory}\\transfer\\${transfer_directory}\\${participant.sAMAccountName}`;
       smbclient.createDirectory(collect_path);
       choose_path = `${participant.homeDirectory}\\transfer\\${$scope.identity.user}\\_collect`;
       return $scope.choose_items(choose_path, command).then(function(result) {

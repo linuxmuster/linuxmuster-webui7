@@ -438,6 +438,12 @@ tr.leaders {
         border: solid 1px #999;
         border-radius: 5px;
     }
+
+    > .list-group-item:hover {
+        border-color:$theme-color;
+        background-color: $theme-color-orange-light;
+        color:$theme-color;
+    }
 }
 
 .lmn-container-list-separated {

@@ -363,6 +363,11 @@ tr.leaders td span + span {
   border: solid 1px #999;
   border-radius: 5px;
 }
+.lmn-container-list > .list-group-item:hover {
+  border-color: #233c4c;
+  background-color: #ffecd3;
+  color: #233c4c;
+}
 
 .lmn-container-list-separated {
   display: flex;

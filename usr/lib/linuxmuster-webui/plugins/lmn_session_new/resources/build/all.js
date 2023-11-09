@@ -356,9 +356,10 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     $scope.extExamUsers = lmnSession.extExamUsers;
     $scope.examUsers = lmnSession.examUsers;
     lmnSession.createWorkingDirectory($scope.session.members).then(function() {
-      return $scope.missing_schoolclasses = lmnSession.user_missing_membership.map(function(user) {
+      $scope.missing_schoolclasses = lmnSession.user_missing_membership.map(function(user) {
         return user.sophomorixAdminClass;
-      }).join(',');
+      });
+      return $scope.missing_schoolclasses = [...new Set($scope.missing_schoolclasses)].join(',');
     });
     $scope.refreshUsers = function() {
       return lmnSession.refreshUsers().then(function() {

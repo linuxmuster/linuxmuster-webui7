@@ -121,7 +121,8 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
     $scope.extExamUsers = lmnSession.extExamUsers
     $scope.examUsers = lmnSession.examUsers
     lmnSession.createWorkingDirectory($scope.session.members).then () ->
-        $scope.missing_schoolclasses = lmnSession.user_missing_membership.map((user) -> user.sophomorixAdminClass).join(',')
+        $scope.missing_schoolclasses = lmnSession.user_missing_membership.map((user) -> user.sophomorixAdminClass)
+        $scope.missing_schoolclasses = [... new Set($scope.missing_schoolclasses)].join(',')
 
     $scope.refreshUsers = () ->
        lmnSession.refreshUsers().then () ->

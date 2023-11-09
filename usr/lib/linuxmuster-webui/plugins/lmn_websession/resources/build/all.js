@@ -239,3 +239,116 @@
 
 }).call(this);
 
+'use strict';
+
+angular.module('lmn.websession').service('webSession', function ($http, $window, notify, gettext, identity) {
+    var _this = this;
+
+    this.websessionIsRunning = false;
+
+    this.getWebConferenceEnabled = function () {
+        $http.get('/api/lmn/websession/webConferenceEnabled').then(function (resp) {
+            if (resp.data == true) {
+                _this.websessionEnabled = true;
+                _this.websessionGetStatus();
+            } else {
+                _this.websessionEnabled = false;
+            }
+        });
+    };
+
+    this.status = function (session) {
+        sessionname = session.name + "-" + session.sid;
+        $http.get("/api/lmn/websession/webConference/#{sessionname}").then(function (resp) {
+            if (resp.data["status"] == "SUCCESS") {
+                if (resp.data["data"]["status"] == "started") {
+                    _this.websessionIsRunning = true;
+                } else {
+                    _this.websessionIsRunning = false;
+                }
+                _this.websessionID = resp.data["data"]["id"];
+                _this.websessionAttendeePW = resp.data["data"]["attendeepw"];
+                _this.websessionModeratorPW = resp.data["data"]["moderatorpw"];
+            } else {
+                _this.websessionIsRunning = false;
+            }
+        });
+    };
+
+    this.toggle = function () {
+        if (_this.websessionIsRunning == false) {
+            _this.start();
+        } else {
+            _this.stop();
+        }
+    };
+
+    this.stop = function () {
+        $http.post('/api/lmn/websession/endWebConference', { id: _this.websessionID, moderatorpw: _this.websessionModeratorPW }).then(function (resp) {
+            $http.delete("/api/lmn/websession/webConference/#{this.websessionID}").then(function (resp) {
+                if (resp.data["status"] == "SUCCESS") {
+                    notify.success(gettext("Successfully stopped!"));
+                    _this.websessionIsRunning = false;
+                } else {
+                    notify.error(gettext('Cannot stop entry!'));
+                }
+            });
+        });
+    };
+
+    this.start = function (session) {
+        tempparticipants = [];
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+            for (var _iterator = session.members[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                participant = _step.value;
+
+                tempparticipants.push(participant.sAMAccountName);
+            }
+        } catch (err) {
+            _didIteratorError = true;
+            _iteratorError = err;
+        } finally {
+            try {
+                if (!_iteratorNormalCompletion && _iterator.return) {
+                    _iterator.return();
+                }
+            } finally {
+                if (_didIteratorError) {
+                    throw _iteratorError;
+                }
+            }
+        }
+
+        ;
+
+        sessionname = session.name + "-" + session.sid;
+
+        $http.post('/api/lmn/websession/webConferences', { sessionname: sessionname, sessiontype: "private", sessionpassword: "", participants: tempparticipants }).then(function (resp) {
+            if (resp.data["status"] == "SUCCESS") {
+                _this.websessionID = resp.data["id"];
+                _this.websessionAttendeePW = resp.data["attendeepw"];
+                _this.websessionModeratorPW = resp.data["moderatorpw"];
+                $http.post('/api/lmn/websession/startWebConference', { sessionname: sessionname, id: _this.websessionID, attendeepw: _this.websessionAttendeePW, moderatorpw: _this.websessionModeratorPW }).then(function (resp) {
+                    if (resp.data["returncode"] == "SUCCESS") {
+                        $http.post('/api/lmn/websession/joinWebConference', { id: _this.websessionID, password: _this.websessionModeratorPW, name: _this.identity.profile.sn + ", " + _this.identity.profile.givenName }).then(function (resp) {
+                            _this.websessionIsRunning = true;
+                            window.open(resp.data, '_blank');
+                        });
+                    } else {
+                        notify.error(gettext('Cannot start websession! Try to reload page!'));
+                    }
+                });
+            } else {
+                notify.error(gettext("Create session failed! Try again later!"));
+            }
+        });
+    };
+
+    return this;
+});
+
+

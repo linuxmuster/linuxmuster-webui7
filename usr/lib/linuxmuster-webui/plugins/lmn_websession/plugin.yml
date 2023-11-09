@@ -11,6 +11,7 @@ dependencies:
 resources:
     - 'resources/js/module.coffee'
     - 'resources/js/controllers/index.controller.coffee'
+    - 'resources/js/services/websessionService.es'
     - 'resources/partial/index.html'
     - 'resources/partial/public.html'
     - 'resources/partial/createSession.modal.html'

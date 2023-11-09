@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-02 16:53+0200\n"
+"POT-Creation-Date: 2023-11-09 13:04+0100\n"
 "PO-Revision-Date: 2023-08-01 13:42\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
@@ -17,13 +17,34 @@ msgstr ""
 "X-Crowdin-File: /2.0/lmn_groupmembership.po\n"
 "X-Crowdin-File-ID: 120\n"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:46
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:46
+#, fuzzy
+msgid "<i class=\"fa fa-fw fa-flask\"></i> Projects"
+msgstr "<i class=\"fas fa-undo\"></i>"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:40
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:40
+#, fuzzy
+msgid "<i class=\"fa fa-fw fa-print\"></i> Printers"
+msgstr "<i class=\"fas fa-undo\"></i>"
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:183
-msgid "<i class=\"fa fa-trash\"></i>\n"
+msgid ""
+"<i class=\"fa fa-trash\"></i>\n"
 "            Delete Project"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:105
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:61
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:34
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:34
+#, fuzzy
+msgid "<i class=\"fa fa-users\"></i> Classes"
+msgstr "<i class=\"fas fa-undo\"></i>"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:126
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:71
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:120
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:69
 msgid "<i class=\"fas fa-undo\"></i>"
 msgstr "<i class=\"fas fa-undo\"></i>"
 
@@ -51,13 +72,9 @@ msgstr "적용하기"
 msgid "Cancel"
 msgstr "취소"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:73
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:83
 msgid "Class"
 msgstr "학급"
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:34
-msgid "Classes"
-msgstr "학급들"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:187
 msgid "Close"
@@ -67,6 +84,7 @@ msgstr "닫기"
 msgid "Creationdate:"
 msgstr "생성일:"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:11
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:11
 msgid "Do it now"
 msgstr ""
@@ -96,8 +114,20 @@ msgstr "그룹"
 msgid "Hidden:"
 msgstr "숨겨진 정보:"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:138
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:82
+#, fuzzy
+msgid "Join"
+msgstr "가입가능 여부:"
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:36
 msgid "Joinable:"
+msgstr "가입가능 여부:"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:139
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:83
+#, fuzzy
+msgid "Joined"
 msgstr "가입가능 여부:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:48
@@ -108,6 +138,7 @@ msgstr "메일 목록:"
 msgid "Members"
 msgstr "멤버"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:23
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:23
 msgid "New Project"
 msgstr "새로운 프로젝트"
@@ -130,27 +161,20 @@ msgstr "구성원 없음"
 msgid "No results found ..."
 msgstr "검색 결과 없음 ..."
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:27
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:27
 msgid "Objectsfilter"
 msgstr "객체 필터"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:84
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:102
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:114
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:108
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:95
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:19
 msgid "Printer"
 msgstr "프린터"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:35
-msgid "Printers"
-msgstr "프린터"
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:117
-msgid "Project"
-msgstr "프로젝트"
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:106
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:36
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:24
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:127
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:121
 msgid "Projects"
 msgstr "프로젝트"
 
@@ -158,7 +182,8 @@ msgstr "프로젝트"
 msgid "Properties"
 msgstr "속성"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:62
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:72
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:70
 msgid "Schoolclasses"
 msgstr "학교 학급"
 
@@ -182,22 +207,38 @@ msgstr "학급에서 학생 선택하기"
 msgid "Sophomorix Status:"
 msgstr "Sophomorix 상태:"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:87
-msgid "There are no printers configured yet. Ask your administrator to configure one."
-msgstr "구성된 프린터가 아직 없습니다. 하나 구성하려면 운영자에게 문의하십시오."
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:106
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:100
+msgid ""
+"There are no printers configured yet. Ask your administrator to configure "
+"one."
+msgstr ""
+"구성된 프린터가 아직 없습니다. 하나 구성하려면 운영자에게 문의하십시오."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:109
-msgid "There are no projects yet. You can create a new project using the menu bar."
-msgstr "프로젝트가 아직 없습니다. 메뉴바를 이용해서 새로운 프로젝트를 생성할 수 있습니다."
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:131
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:126
+msgid ""
+"There are no projects yet. You can create a new project using the menu bar."
+msgstr ""
+"프로젝트가 아직 없습니다. 메뉴바를 이용해서 새로운 프로젝트를 생성할 수 있습"
+"니다."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:65
-msgid "There are no schoolclasses available. Ask the administrator to import students"
-msgstr "이용 가능한 학급이 없습니다. 학생을 추가하려면 운영자에게 문의하십시오."
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:76
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:75
+msgid ""
+"There are no schoolclasses available. Ask the administrator to import "
+"students"
+msgstr ""
+"이용 가능한 학급이 없습니다. 학생을 추가하려면 운영자에게 문의하십시오."
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:8
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:8
-msgid "These changes can only take effect if the session is renewed, otherwise it will be active after the next\n"
+msgid ""
+"These changes can only take effect if the session is renewed, otherwise it "
+"will be active after the next\n"
 "        logout/login.\n"
-"        <a class=\"btn btn-default\" ng:click=\"refresh_krbcc()\" translate=\"\">Do it now</a>"
+"        <a class=\"btn btn-default\" ng:click=\"refresh_krbcc()\" "
+"translate=\"\">Do it now</a>"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:139
@@ -224,6 +265,18 @@ msgstr "그룹(들)."
 msgid "user(s) and"
 msgstr "사용자(들) 그리고"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:91
+msgid "{{classe.members.length}} student(s)"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:148
+msgid "{{project.adminsCount}} admin(s)"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:151
+msgid "{{project.membersCount}} member(s)"
+msgstr ""
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/main.py:15
 msgid "Enroll"
 msgstr "등록"
@@ -240,68 +293,82 @@ msgstr "그룹 수정"
 msgid "Enrolle"
 msgstr "등록"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:13
-msgid "Schoolclass"
-msgstr "학교 학급"
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:14
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:31
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:20
 msgid "Groupname"
 msgstr "그룹 이름"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:35
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:24
 msgid "Membership"
 msgstr "회원"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:103
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:87
 msgid "Project Name"
 msgstr "프로젝트이름"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:115
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:99
 msgid "Project Created"
 msgstr "프로젝트가 생성되었습니다"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:120
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:104
 msgid "Something unusual happened"
 msgstr "문제가 발생했습니다."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:139
-msgid "Are you sure to reset all admin memberships for this? This is actually only necessary to start a new empty school year. This cannot be undone!"
-msgstr "정말 운영자 구성원을 모두 초기화 하시겠습니까? 이 활동은 학기의 새로운 해를 시작할 때만 필수적입니다. 이 활동은 실행될 수 없습니다!"
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:123
+msgid ""
+"Are you sure to reset all admin memberships for this? This is actually only "
+"necessary to start a new empty school year. This cannot be undone!"
+msgstr ""
+"정말 운영자 구성원을 모두 초기화 하시겠습니까? 이 활동은 학기의 새로운 해를 "
+"시작할 때만 필수적입니다. 이 활동은 실행될 수 없습니다!"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:152
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:136
 msgid "Admin membership reset"
 msgstr "운영자 그룹 회원 초기화"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:173
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:157
 msgid "Hide"
 msgstr "숨기기"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:174
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:158
 msgid "Show"
 msgstr "표시"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:219
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:203
 msgid "Move to admin group"
 msgstr "운영자 그룹으로 이동"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:220
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:204
 msgid "Remove from admin group"
 msgstr "운영자 그룹에서 제거하기"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:221
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:205
 msgid "Remove"
 msgstr "제거"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:515
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:242
+msgid "Can not read properties of this project."
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:505
 msgid "Type a name or login"
 msgstr "이름을 입력하거나 로그인"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:516
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:506
 msgid "Type the class, e.g. 10a"
 msgstr "학급을 입력하십시오, 예시. 10a"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:517
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:507
 msgid "Type the group name, e.g. p_wifi"
 msgstr "그룹 이름을 입력하십시오, 예시. p_wifi"
 
+#~ msgid "Classes"
+#~ msgstr "학급들"
+
+#~ msgid "Printers"
+#~ msgstr "프린터"
+
+#~ msgid "Project"
+#~ msgstr "프로젝트"
+
+#~ msgid "Schoolclass"
+#~ msgstr "학교 학급"

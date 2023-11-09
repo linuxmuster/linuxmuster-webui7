@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-02 16:53+0200\n"
+"POT-Creation-Date: 2023-11-09 13:04+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,10 +33,10 @@ msgstr ""
 msgid "Uploaded "
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/resources/js/services/smbclient.service.es:16
+#: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/resources/js/services/smbclient.service.es:17
 msgid " moved!"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/resources/js/services/smbclient.service.es:25
+#: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/resources/js/services/smbclient.service.es:28
 msgid " copied!"
 msgstr ""

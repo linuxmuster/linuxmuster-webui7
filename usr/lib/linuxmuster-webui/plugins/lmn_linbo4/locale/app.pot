@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-03 15:00+0200\n"
+"POT-Creation-Date: 2023-11-09 13:04+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -128,7 +128,7 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/index.html:119
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/index.html:124
 msgid "Delete selected images"
 msgstr ""
 
@@ -586,13 +586,18 @@ msgid "Failed to delete backup :"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:731
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:741
 msgid " is not a valid name for a linbo image."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:750
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:748
+msgid "Failed to restore backup! "
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:762
 msgid "Backup saved"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:754
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:766
 msgid "Saved"
 msgstr ""

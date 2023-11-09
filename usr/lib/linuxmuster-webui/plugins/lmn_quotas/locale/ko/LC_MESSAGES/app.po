@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-24 20:23+0100\n"
+"POT-Creation-Date: 2023-11-09 13:04+0100\n"
 "PO-Revision-Date: 2023-08-01 13:42\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Crowdin-File: /2.0/lmn_quotas.po\n"
 "X-Crowdin-File-ID: 102\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:141
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:190
 msgid "Add special quota"
 msgstr "특별 할당량 추가"
 
@@ -30,11 +30,11 @@ msgid "Classes"
 msgstr "학급들"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/apply.modal.html:11
-#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:147
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:196
 msgid "Close"
 msgstr "닫기"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:156
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:205
 msgid "Configure default quota"
 msgstr "기본 할당량으로 설정"
 
@@ -48,9 +48,21 @@ msgstr "기본값:"
 msgid "Details"
 msgstr "상세 정보"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:172
+msgid "Directory"
+msgstr ""
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/apply.modal.html:10
 msgid "Hide details"
 msgstr "세부 정보 숨기기"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:143
+msgid "List main directories for user:"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:169
+msgid "Main quota use for the user {{_.quota_user_check.label}}"
+msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:118
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:12
@@ -67,7 +79,11 @@ msgstr "이름 (로그인)"
 msgid "Projects"
 msgstr "프로젝트"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:157
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:137
+msgid "Quota check"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:206
 msgid "Save & apply"
 msgstr "적용 및 저장"
 
@@ -75,9 +91,13 @@ msgstr "적용 및 저장"
 msgid "Schooladmins"
 msgstr "학교 관리자"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:158
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:207
 msgid "Search & add user"
 msgstr "사용자 검색 그리고 추가"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:173
+msgid "Size (MiB)"
+msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:35
 msgid "Students"
@@ -92,6 +112,16 @@ msgstr "교사"
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:9
 msgid "There is no special quota here."
 msgstr "특별한 할당량이 없습니다."
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:139
+msgid ""
+"This functionality is actually under development and displays imprecise "
+"values. It will not work with DFS shares or in multischool environment."
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:180
+msgid "Total"
+msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/main.py:15
 msgid "Extra-Quotas"
@@ -121,50 +151,51 @@ msgstr "업데이트 실패"
 msgid "Quotas"
 msgstr "할당량"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:47
-msgid "Search user by login, firstname or lastname (min. 3 chars), without special char."
-msgstr "특수 문자 없이, 사용자를 로그인, 성 또는 이름(최소 3글자)으로 검색합니다."
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:57
+#, fuzzy
+msgid "Search user by login, firstname or lastname (min. 3 chars)"
+msgstr ""
+"특수 문자 없이, 사용자를 로그인, 성 또는 이름(최소 3글자)으로 검색합니다."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:51
-#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:59
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:61
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:69
 msgid "Quota default global (MiB)"
 msgstr "전체 기본 할당량(MiB)"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:52
-#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:63
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:62
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:73
 msgid "Quota default school (MiB)"
 msgstr "학교 기본 할당량(MiB)"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:53
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:63
 msgid "Cloudquota (%)"
 msgstr "클라우드 할당량( %)"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:54
-#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:67
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:64
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:77
 msgid "Mailquota default (MiB)"
 msgstr "메일 기본 할당량(MiB)"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:60
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:70
 msgid "Add to default global (MiB)"
 msgstr "전체 기본 할당량에 추가(MiB)"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:64
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:74
 msgid "Add to default school (MiB)"
 msgstr "학교 기본 할당량에 추가(MiB)"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:68
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:78
 msgid "Add to mailquota (MiB)"
 msgstr "메일 할당량에 추가(MiB)"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:74
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:84
 msgid "Retrieving groups quotas ..."
 msgstr "그룹 할당량 회수중 ..."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:94
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:104
 msgid " added with default values in the list."
 msgstr " 가 목록에 있는 기본값들과 함께 추가됨."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:152
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:175
 msgid "Saving quotas ..."
 msgstr "할당량 저장중 ..."
-

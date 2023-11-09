@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-02 16:53+0200\n"
+"POT-Creation-Date: 2023-11-09 13:04+0100\n"
 "PO-Revision-Date: 2023-08-03 13:02\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
@@ -29,12 +29,12 @@ msgstr "Alle"
 msgid "Apply"
 msgstr "Übernehmen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:115
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:128
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:116
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:129
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/properties.html:188
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:161
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:178
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:200
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:195
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:217
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -42,24 +42,24 @@ msgstr "Abbrechen"
 msgid "Change permissions"
 msgstr "Berechtigungen ändern"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:134
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:135
 msgid "Clipboard"
 msgstr "Zwischenablage"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:156
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:157
 msgid "Close"
 msgstr "Schließen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:100
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:101
 msgid "Copy"
 msgstr "Kopieren"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:114
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:127
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:115
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:128
 msgid "Create"
 msgstr "Erstellen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:99
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:100
 msgid "Cut"
 msgstr "Ausschneiden"
 
@@ -67,14 +67,14 @@ msgstr "Ausschneiden"
 msgid "DIRECTORY"
 msgstr "VERZEICHNIS"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:101
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:160
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:102
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:177
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:199
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:194
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:216
 msgid "Delete"
 msgstr "Löschen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:124
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:125
 msgid "Directory name"
 msgstr "Verzeichnisname"
 
@@ -94,7 +94,7 @@ msgstr "Extra"
 msgid "FILE"
 msgstr "DATEI"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:111
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:112
 msgid "File name"
 msgstr "Dateiname"
 
@@ -123,13 +123,13 @@ msgstr "Geändert"
 msgid "Name"
 msgstr "Name"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:121
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:87
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:122
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:88
 msgid "New directory"
 msgstr "Neues Verzeichnis"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:108
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:86
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:109
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:87
 msgid "New file"
 msgstr "Neue Datei"
 
@@ -137,7 +137,7 @@ msgstr "Neue Datei"
 msgid "Owner"
 msgstr "Besitzer"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:91
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:92
 msgid "Paste here"
 msgstr "Hier einfügen"
 
@@ -149,11 +149,11 @@ msgstr "Berechtigungsbits"
 msgid "READ"
 msgstr "LESEN"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:139
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:140
 msgid "Remove"
 msgstr "Entfernen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:155
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:156
 msgid "Remove all items"
 msgstr "Alle Elemente entfernen"
 
@@ -165,7 +165,7 @@ msgstr "Größe"
 msgid "Type"
 msgstr "Typ"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:89
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:90
 msgid "Upload"
 msgstr "Hochladen"
 
@@ -181,7 +181,7 @@ msgstr "Benutzer"
 msgid "WRITE"
 msgstr "SCHREIBEN"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:96
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:97
 msgid "items selected"
 msgstr "ausgewählte Elemente"
 
@@ -201,61 +201,65 @@ msgstr "Datei-Modus gespeichert"
 msgid "Samba shares"
 msgstr "Samba-Freigaben"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:75
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:88
 msgid "Could not load directory : "
 msgstr "Konnte Verzeichnis nicht laden: "
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:83
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:100
 msgid "New name :"
 msgstr "Neuer Name:"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:86
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:103
 msgid " renamed to "
 msgstr " umbenannt in "
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:89
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:106
 msgid "Error during renaming: "
 msgstr "Fehler beim Umbenennen: "
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:132
-msgid "A file/directory with this name already exists, please give a new name :"
-msgstr "Eine Datei/Verzeichnis mit diesem Namen existiert bereits, bitte geben Sie einen neuen Namen an:"
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:149
+msgid ""
+"A file/directory with this name already exists, please give a new name :"
+msgstr ""
+"Eine Datei/Verzeichnis mit diesem Namen existiert bereits, bitte geben Sie "
+"einen neuen Namen an:"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:159
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:176
 msgid "Do you really want to delete this file?"
 msgstr "Möchten Sie diese Datei wirklich löschen?"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:164
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:203
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:181
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:220
 msgid " deleted !"
 msgstr " gelöscht!"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:167
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:206
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:184
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:223
 msgid "Error during deleting : "
 msgstr "Fehler beim Löschen : "
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:176
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:193
 msgid "Delete selected items?"
 msgstr "Ausgewählte Elemente löschen?"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:198
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:215
 msgid "Do you really want to delete this directory?"
 msgstr "Möchten Sie dieses Verzeichnis wirklich löschen?"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:238
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:255
 msgid "Could not create file"
 msgstr "Datei konnte nicht erstellt werden"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:258
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:275
 msgid "Could not create directory"
 msgstr "Verzeichnis konnte nicht erstellt werden"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:266
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:283
 msgid "File not found, may be due to special chars in the file name."
-msgstr "Datei nicht gefunden, möglicherweise aufgrund von Sonderzeichen im Dateinamen."
+msgstr ""
+"Datei nicht gefunden, möglicherweise aufgrund von Sonderzeichen im "
+"Dateinamen."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:291
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:308
 msgid "Uploaded "
 msgstr "Hochgeladen "
-

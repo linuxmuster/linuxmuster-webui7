@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-24 20:23+0100\n"
+"POT-Creation-Date: 2023-11-09 13:04+0100\n"
 "PO-Revision-Date: 2023-08-03 13:02\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Crowdin-File: /2.0/lmn_quotas.po\n"
 "X-Crowdin-File-ID: 102\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:141
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:190
 msgid "Add special quota"
 msgstr "Sonderquota hinzufügen"
 
@@ -30,11 +30,11 @@ msgid "Classes"
 msgstr "Klassen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/apply.modal.html:11
-#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:147
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:196
 msgid "Close"
 msgstr "Schließen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:156
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:205
 msgid "Configure default quota"
 msgstr "Standardquota konfigurieren"
 
@@ -48,9 +48,21 @@ msgstr "Standard:"
 msgid "Details"
 msgstr "Details"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:172
+msgid "Directory"
+msgstr ""
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/apply.modal.html:10
 msgid "Hide details"
 msgstr "Details ausblenden"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:143
+msgid "List main directories for user:"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:169
+msgid "Main quota use for the user {{_.quota_user_check.label}}"
+msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:118
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:12
@@ -67,7 +79,11 @@ msgstr "Name (Login)"
 msgid "Projects"
 msgstr "Projekte"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:157
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:137
+msgid "Quota check"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:206
 msgid "Save & apply"
 msgstr "Speichern & Übernehmen"
 
@@ -75,9 +91,13 @@ msgstr "Speichern & Übernehmen"
 msgid "Schooladmins"
 msgstr "Schul-Administratoren"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:158
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:207
 msgid "Search & add user"
 msgstr "Benutzer suchen & hinzufügen"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:173
+msgid "Size (MiB)"
+msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:35
 msgid "Students"
@@ -92,6 +112,16 @@ msgstr "Lehrer"
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:9
 msgid "There is no special quota here."
 msgstr "Es existiert keine Sonderquota."
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:139
+msgid ""
+"This functionality is actually under development and displays imprecise "
+"values. It will not work with DFS shares or in multischool environment."
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:180
+msgid "Total"
+msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/main.py:15
 msgid "Extra-Quotas"
@@ -121,50 +151,52 @@ msgstr "Update fehlgeschlagen"
 msgid "Quotas"
 msgstr "Quotas"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:47
-msgid "Search user by login, firstname or lastname (min. 3 chars), without special char."
-msgstr "Suche Benutzer nach Benutzername, Vor- oder Nachname (min. 3 Zeichen), ohne Sonderzeichen."
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:57
+#, fuzzy
+msgid "Search user by login, firstname or lastname (min. 3 chars)"
+msgstr ""
+"Suche Benutzer nach Benutzername, Vor- oder Nachname (min. 3 Zeichen), ohne "
+"Sonderzeichen."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:51
-#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:59
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:61
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:69
 msgid "Quota default global (MiB)"
 msgstr "Standardquota global (MiB)"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:52
-#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:63
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:62
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:73
 msgid "Quota default school (MiB)"
 msgstr "Standardquota Schule (MiB)"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:53
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:63
 msgid "Cloudquota (%)"
 msgstr "Cloudquota (%)"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:54
-#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:67
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:64
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:77
 msgid "Mailquota default (MiB)"
 msgstr "Standard Mailquota (MiB)"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:60
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:70
 msgid "Add to default global (MiB)"
 msgstr "Zu Standardquota global hinzufügen (MiB)"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:64
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:74
 msgid "Add to default school (MiB)"
 msgstr "Zu Standardquota Schule hinzufügen (MiB)"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:68
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:78
 msgid "Add to mailquota (MiB)"
 msgstr "Zu Mailquota hinzufügen (MiB)"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:74
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:84
 msgid "Retrieving groups quotas ..."
 msgstr "Rufe Gruppenquota ab ..."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:94
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:104
 msgid " added with default values in the list."
 msgstr " mit Standardwerten in der Liste hinzugefügt."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:152
+#: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:175
 msgid "Saving quotas ..."
 msgstr "Speichere Quotas ..."
-

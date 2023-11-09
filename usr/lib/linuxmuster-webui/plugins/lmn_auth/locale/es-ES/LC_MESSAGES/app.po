@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-01 15:32+0200\n"
+"POT-Creation-Date: 2023-11-09 13:04+0100\n"
 "PO-Revision-Date: 2023-08-01 13:42\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
@@ -30,8 +30,12 @@ msgid "Current password"
 msgstr "Contraseña actual"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:4
-msgid "Minimal length is 7 characters. Use upper, lower and special characters or numbers. (e.g. Muster!)"
-msgstr "La longitud mínima es de 7 caracteres. Utilice caracteres o números superiores, inferiores y especiales. (por ejemplo, Muster!)"
+msgid ""
+"Minimal length is 7 characters. Use upper, lower and special characters or "
+"numbers. (e.g. Muster!)"
+msgstr ""
+"La longitud mínima es de 7 caracteres. Utilice caracteres o números "
+"superiores, inferiores y especiales. (por ejemplo, Muster!)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:21
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:26
@@ -54,11 +58,13 @@ msgstr ""
 msgid "Linux Muster LDAP"
 msgstr "Linux Muster LDAP"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:364
-msgid "Minimal length is 7 characters. Use upper, lower and special characters or numbers. (e.g. Muster!)."
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:379
+msgid ""
+"Minimal length is 7 characters. Use upper, lower and special characters or "
+"numbers. (e.g. Muster!)."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:394
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:409
 msgid "Linuxmuster LDAP user config"
 msgstr "Configuración de usuario LDAP del Linuxmuster"
 
@@ -71,6 +77,6 @@ msgid "Password changed"
 msgstr "Contraseña modificada"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:24
-msgid "Password change failed"
+#, fuzzy
+msgid "Password change failed: "
 msgstr "El cambio de la contraseña ha fallado"
-

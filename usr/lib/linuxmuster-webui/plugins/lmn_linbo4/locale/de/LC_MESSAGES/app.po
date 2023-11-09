@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-02 16:53+0200\n"
+"POT-Creation-Date: 2023-11-09 13:04+0100\n"
 "PO-Revision-Date: 2023-08-03 13:02\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
@@ -128,7 +128,7 @@ msgstr "Daten"
 msgid "Default"
 msgstr "Standard Start"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/index.html:119
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/index.html:124
 msgid "Delete selected images"
 msgstr "Ausgewählte Bilder löschen"
 
@@ -445,7 +445,8 @@ msgstr "Die Farbe des Vordergrunds wird automatisch angepasst"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:48
 msgid "The icon format used here is png and you should change this to svg."
-msgstr "Das hier verwendete Symbolformat ist png und Sie sollten dies in svg ändern."
+msgstr ""
+"Das hier verwendete Symbolformat ist png und Sie sollten dies in svg ändern."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/index.html:64
 msgid "There's no image on the server yet."
@@ -545,8 +546,12 @@ msgid "LINBO Cache"
 msgstr "LINBO Cache"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:539
-msgid "You should call an import devices process to apply the new changes, quit this page anyway ?"
-msgstr "Sie sollten einen Import-Geräte-Prozess aufrufen, um die neuen Änderungen anzuwenden. Diese Seite trotzdem verlassen ?"
+msgid ""
+"You should call an import devices process to apply the new changes, quit "
+"this page anyway ?"
+msgstr ""
+"Sie sollten einen Import-Geräte-Prozess aufrufen, um die neuen Änderungen "
+"anzuwenden. Diese Seite trotzdem verlassen ?"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:585
 msgid "A config file with this name already exists!"
@@ -569,8 +574,11 @@ msgid "Multicast and torrent services restarted"
 msgstr "Multicast- und Torrent-Dienste neu gestartet"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:680
-msgid "Failed to restart multicast and torrent services. Please see the log files"
-msgstr "Multicast und Torrent-Dienste konnten nicht neu gestartet werden. Bitte lesen Sie die Log-Dateien"
+msgid ""
+"Failed to restart multicast and torrent services. Please see the log files"
+msgstr ""
+"Multicast und Torrent-Dienste konnten nicht neu gestartet werden. Bitte "
+"lesen Sie die Log-Dateien"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:688
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:714
@@ -583,14 +591,19 @@ msgid "Failed to delete backup :"
 msgstr "Fehler beim Löschen der Sicherung:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:731
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:741
 msgid " is not a valid name for a linbo image."
 msgstr " ist kein gültiger Name für ein Linbo-Bild."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:750
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:748
+#, fuzzy
+msgid "Failed to restore backup! "
+msgstr "Fehler beim Löschen der Sicherung:"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:762
 msgid "Backup saved"
 msgstr "Sicherung gespeichert"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:754
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:766
 msgid "Saved"
 msgstr "Gespeichert"
-

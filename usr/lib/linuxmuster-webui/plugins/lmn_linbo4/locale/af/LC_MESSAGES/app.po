@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-02 16:53+0200\n"
+"POT-Creation-Date: 2023-11-09 13:04+0100\n"
 "PO-Revision-Date: 2023-08-01 13:42\n"
 "Last-Translator: \n"
 "Language-Team: Afrikaans\n"
@@ -128,7 +128,7 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/index.html:119
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/index.html:124
 msgid "Delete selected images"
 msgstr ""
 
@@ -545,7 +545,9 @@ msgid "LINBO Cache"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:539
-msgid "You should call an import devices process to apply the new changes, quit this page anyway ?"
+msgid ""
+"You should call an import devices process to apply the new changes, quit "
+"this page anyway ?"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:585
@@ -569,7 +571,8 @@ msgid "Multicast and torrent services restarted"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:680
-msgid "Failed to restart multicast and torrent services. Please see the log files"
+msgid ""
+"Failed to restart multicast and torrent services. Please see the log files"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:688
@@ -583,14 +586,18 @@ msgid "Failed to delete backup :"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:731
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:741
 msgid " is not a valid name for a linbo image."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:750
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:748
+msgid "Failed to restore backup! "
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:762
 msgid "Backup saved"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:754
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:766
 msgid "Saved"
 msgstr ""
-

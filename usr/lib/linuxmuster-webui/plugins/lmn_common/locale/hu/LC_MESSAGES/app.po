@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-23 15:10+0100\n"
+"POT-Creation-Date: 2023-11-09 13:04+0100\n"
 "PO-Revision-Date: 2023-08-01 13:42\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
@@ -91,7 +91,7 @@ msgstr ""
 msgid "TFA"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/lmnfile.py:166
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/lmnfile.py:178
 msgid "Access refused."
 msgstr ""
 
@@ -188,11 +188,14 @@ msgid "Copying files: %s."
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:13
-msgid "Passwords must contain at least one lowercase, one uppercase, one special char or number, and at least 7 chars"
+msgid ""
+"Passwords must contain at least one lowercase, one uppercase, one special "
+"char or number, and at least 7 chars"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:22
-msgid "Password is not valid. Password can only contains a-zA-Z0-9?!@#§+-$%&*{}()]["
+msgid ""
+"Password is not valid. Password can only contains a-zA-Z0-9?!@#§+-$%&*{}()]["
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:42
@@ -259,4 +262,3 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/lmFileBackups.coffee:83
 msgid "Confirmation"
 msgstr ""
-

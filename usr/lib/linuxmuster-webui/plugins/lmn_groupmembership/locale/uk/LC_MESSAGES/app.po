@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-02 16:53+0200\n"
+"POT-Creation-Date: 2023-11-09 13:04+0100\n"
 "PO-Revision-Date: 2023-08-01 13:42\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
@@ -10,20 +10,40 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
+"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 "
+"&& n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 "
+"&& n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
 "X-Crowdin-Project: linuxmusternet\n"
 "X-Crowdin-Project-ID: 325271\n"
 "X-Crowdin-Language: uk\n"
 "X-Crowdin-File: /2.0/lmn_groupmembership.po\n"
 "X-Crowdin-File-ID: 120\n"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:46
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:46
+msgid "<i class=\"fa fa-fw fa-flask\"></i> Projects"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:40
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:40
+msgid "<i class=\"fa fa-fw fa-print\"></i> Printers"
+msgstr ""
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:183
-msgid "<i class=\"fa fa-trash\"></i>\n"
+msgid ""
+"<i class=\"fa fa-trash\"></i>\n"
 "            Delete Project"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:105
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:61
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:34
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:34
+msgid "<i class=\"fa fa-users\"></i> Classes"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:126
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:71
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:120
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:69
 msgid "<i class=\"fas fa-undo\"></i>"
 msgstr ""
 
@@ -51,12 +71,8 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:73
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:83
 msgid "Class"
-msgstr ""
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:34
-msgid "Classes"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:187
@@ -67,6 +83,7 @@ msgstr ""
 msgid "Creationdate:"
 msgstr ""
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:11
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:11
 msgid "Do it now"
 msgstr ""
@@ -96,8 +113,18 @@ msgstr ""
 msgid "Hidden:"
 msgstr ""
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:138
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:82
+msgid "Join"
+msgstr ""
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:36
 msgid "Joinable:"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:139
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:83
+msgid "Joined"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:48
@@ -108,6 +135,7 @@ msgstr ""
 msgid "Members"
 msgstr ""
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:23
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:23
 msgid "New Project"
 msgstr ""
@@ -130,27 +158,20 @@ msgstr ""
 msgid "No results found ..."
 msgstr ""
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:27
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:27
 msgid "Objectsfilter"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:84
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:102
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:114
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:108
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:95
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:19
 msgid "Printer"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:35
-msgid "Printers"
-msgstr ""
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:117
-msgid "Project"
-msgstr ""
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:106
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:36
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:24
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:127
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:121
 msgid "Projects"
 msgstr ""
 
@@ -158,7 +179,8 @@ msgstr ""
 msgid "Properties"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:62
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:72
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:70
 msgid "Schoolclasses"
 msgstr ""
 
@@ -182,22 +204,34 @@ msgstr ""
 msgid "Sophomorix Status:"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:87
-msgid "There are no printers configured yet. Ask your administrator to configure one."
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:106
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:100
+msgid ""
+"There are no printers configured yet. Ask your administrator to configure "
+"one."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:109
-msgid "There are no projects yet. You can create a new project using the menu bar."
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:131
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:126
+msgid ""
+"There are no projects yet. You can create a new project using the menu bar."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:65
-msgid "There are no schoolclasses available. Ask the administrator to import students"
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:76
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:75
+msgid ""
+"There are no schoolclasses available. Ask the administrator to import "
+"students"
 msgstr ""
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:8
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:8
-msgid "These changes can only take effect if the session is renewed, otherwise it will be active after the next\n"
+msgid ""
+"These changes can only take effect if the session is renewed, otherwise it "
+"will be active after the next\n"
 "        logout/login.\n"
-"        <a class=\"btn btn-default\" ng:click=\"refresh_krbcc()\" translate=\"\">Do it now</a>"
+"        <a class=\"btn btn-default\" ng:click=\"refresh_krbcc()\" "
+"translate=\"\">Do it now</a>"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:139
@@ -224,6 +258,18 @@ msgstr ""
 msgid "user(s) and"
 msgstr ""
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:91
+msgid "{{classe.members.length}} student(s)"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:148
+msgid "{{project.adminsCount}} admin(s)"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:151
+msgid "{{project.membersCount}} member(s)"
+msgstr ""
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/main.py:15
 msgid "Enroll"
 msgstr ""
@@ -240,68 +286,68 @@ msgstr ""
 msgid "Enrolle"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:13
-msgid "Schoolclass"
-msgstr ""
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:14
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:31
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:20
 msgid "Groupname"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:35
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:24
 msgid "Membership"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:103
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:87
 msgid "Project Name"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:115
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:99
 msgid "Project Created"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:120
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:104
 msgid "Something unusual happened"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:139
-msgid "Are you sure to reset all admin memberships for this? This is actually only necessary to start a new empty school year. This cannot be undone!"
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:123
+msgid ""
+"Are you sure to reset all admin memberships for this? This is actually only "
+"necessary to start a new empty school year. This cannot be undone!"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:152
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:136
 msgid "Admin membership reset"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:173
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:157
 msgid "Hide"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:174
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:158
 msgid "Show"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:219
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:203
 msgid "Move to admin group"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:220
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:204
 msgid "Remove from admin group"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:221
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:205
 msgid "Remove"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:515
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:242
+msgid "Can not read properties of this project."
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:505
 msgid "Type a name or login"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:516
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:506
 msgid "Type the class, e.g. 10a"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:517
+#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:507
 msgid "Type the group name, e.g. p_wifi"
 msgstr ""
-

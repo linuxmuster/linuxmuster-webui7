@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-03 15:00+0200\n"
+"POT-Creation-Date: 2023-11-09 13:04+0100\n"
 "PO-Revision-Date: 2023-08-03 13:02\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
@@ -48,7 +48,9 @@ msgstr "Configuration rapide"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/webappqr.modal.html:26
 msgid "For easy setup, please scan your personal code in the app:<br>"
-msgstr "Pour une installation rapide, veuillez scanner votre code personnel dans l'application:<br>"
+msgstr ""
+"Pour une installation rapide, veuillez scanner votre code personnel dans "
+"l'application:<br>"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:110
 msgid "Groups"
@@ -100,8 +102,12 @@ msgid "Setup guide for iOS"
 msgstr "Guide d'installation pour iOS"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/webappqr.modal.html:8
-msgid "To set up mobile access to the school server from iOS based devices, please proceed as follows:"
-msgstr "Pour configurer l'accès mobile au serveur scolaire à partir des appareils basés sur iOS, veuillez procéder comme suit :"
+msgid ""
+"To set up mobile access to the school server from iOS based devices, please "
+"proceed as follows:"
+msgstr ""
+"Pour configurer l'accès mobile au serveur scolaire à partir des appareils "
+"basés sur iOS, veuillez procéder comme suit :"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:21
 msgid "Use the sidebar to navigate through the options."
@@ -120,40 +126,47 @@ msgid "With great power comes great responsibility!"
 msgstr "Un grand pouvoir implique une grande responsabilité!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:98
-msgid "You can access the school server from many mobile devices.\n"
+msgid ""
+"You can access the school server from many mobile devices.\n"
 "                        Select your operating system to see how it works."
-msgstr "Vous pouvez accéder au serveur de l'école à partir de nombreux appareils mobiles.\n"
-"                        Sélectionnez votre système d'exploitation pour voir comment cela fonctionne."
+msgstr ""
+"Vous pouvez accéder au serveur de l'école à partir de nombreux appareils "
+"mobiles.\n"
+"                        Sélectionnez votre système d'exploitation pour voir "
+"comment cela fonctionne."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/webappqr.modal.html:21
 msgid "Your password"
 msgstr "Votre mot de passe"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:18
-msgid "use the sidebar to navigate through the options. You can start by using the Enroll module to subscribe to your classes."
-msgstr "utilisez la barre latérale pour naviguer dans les options. Vous pouvez commencer en utilisant le module Adhésion pour vous abonner à vos classes."
+msgid ""
+"use the sidebar to navigate through the options. You can start by using the "
+"Enroll module to subscribe to your classes."
+msgstr ""
+"utilisez la barre latérale pour naviguer dans les options. Vous pouvez "
+"commencer en utilisant le module Adhésion pour vous abonner à vos classes."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:7
 msgid "Home"
 msgstr "Accueil"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:25
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:28
 msgid "NO LIMIT"
 msgstr "AUCUNE LIMITE"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:84
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:87
 msgid "Class"
 msgstr "Classe"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:86
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:89
 msgid "Teachers"
 msgstr "Enseignants"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:88
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:91
 msgid "Printers"
 msgstr "Imprimantes"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:90
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:93
 msgid "Project"
 msgstr "Projets"
-

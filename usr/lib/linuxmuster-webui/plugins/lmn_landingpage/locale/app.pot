@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-03 15:00+0200\n"
+"POT-Creation-Date: 2023-11-09 13:04+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -141,22 +141,22 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:25
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:28
 msgid "NO LIMIT"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:84
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:87
 msgid "Class"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:86
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:89
 msgid "Teachers"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:88
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:91
 msgid "Printers"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:90
+#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:93
 msgid "Project"
 msgstr ""

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ajenti\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-23 15:10+0100\n"
+"POT-Creation-Date: 2023-11-09 13:04+0100\n"
 "PO-Revision-Date: 2016-05-21 17:19-0400\n"
 "Last-Translator: eugenepankov <john.pankov@gmail.com>\n"
 "Language-Team: Klingon\n"
@@ -90,7 +90,7 @@ msgstr ""
 msgid "TFA"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/lmnfile.py:166
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/lmnfile.py:178
 msgid "Access refused."
 msgstr ""
 

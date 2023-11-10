@@ -293,62 +293,6 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       }
     ];
     $scope.sort = $scope.sorts[0];
-    $scope.fields = {
-      sAMAccountName: {
-        visible: true,
-        name: gettext('Userdata')
-      },
-      transfer: {
-        visible: true,
-        name: gettext('Transfer')
-      },
-      examMode: {
-        visible: true,
-        name: gettext('')
-      },
-      workingDirectory: {
-        visible: true,
-        name: gettext('Working directory')
-      },
-      sophomorixRole: {
-        visible: false,
-        name: gettext('sophomorixRole')
-      },
-      wifi: {
-        visible: true,
-        icon: "fa fa-wifi",
-        title: gettext('Wifi-Access'),
-        checkboxAll: true,
-        checkboxStatus: false
-      },
-      internet: {
-        visible: true,
-        icon: "fa fa-globe",
-        title: gettext('Internet-Access'),
-        checkboxAll: true,
-        checkboxStatus: false
-      },
-      intranet: {
-        visible: false,
-        icon: "fa fa-server",
-        title: gettext('Intranet Access'),
-        checkboxAll: true
-      },
-      webfilter: {
-        visible: false,
-        icon: "fa fa-filter",
-        title: gettext('Webfilter'),
-        checkboxAll: true,
-        checkboxStatus: false
-      },
-      printing: {
-        visible: true,
-        icon: "fa fa-print",
-        title: gettext('Printing'),
-        checkboxAll: true,
-        checkboxStatus: false
-      }
-    };
     $scope.backToSessionList = function() {
       return $location.path('/view/lmn/sessionsList');
     };

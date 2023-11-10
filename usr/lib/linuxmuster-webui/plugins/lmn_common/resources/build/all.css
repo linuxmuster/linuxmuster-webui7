@@ -444,12 +444,47 @@ floating-toolbar.accented .bar .btn-flat {
   background-color: #4CAF50;
 }
 
+.btn-lmn-success-inv {
+  background-color: white;
+  color: #4CAF50;
+}
+.btn-lmn-success-inv:focus, .btn-lmn-success-inv:hover, .btn-lmn-success-inv:active {
+  background-color: #ddd;
+  color: #4CAF50;
+}
+
 .btn-lmn-danger {
   background-color: #F44336;
   color: white;
 }
 .btn-lmn-danger:focus, .btn-lmn-danger:hover, .btn-lmn-danger:active {
   background-color: #F44336;
+}
+
+.btn-lmn-danger-inv {
+  background-color: white;
+  color: #F44336;
+}
+.btn-lmn-danger-inv:focus, .btn-lmn-danger-inv:hover, .btn-lmn-danger-inv:active {
+  background-color: #ddd;
+  color: #F44336;
+}
+
+.btn-lmn-warning {
+  background-color: #FFC107;
+  color: white;
+}
+.btn-lmn-warning:focus, .btn-lmn-warning:hover, .btn-lmn-warning:active {
+  background-color: #FFC107;
+}
+
+.btn-lmn-warning-inv {
+  background-color: white;
+  color: #FFC107;
+}
+.btn-lmn-warning-inv:focus, .btn-lmn-warning-inv:hover, .btn-lmn-warning-inv:active {
+  background-color: #ddd;
+  color: #FFC107;
 }
 
 .btn-upload {

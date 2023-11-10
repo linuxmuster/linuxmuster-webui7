@@ -528,12 +528,51 @@ floating-toolbar {
     }
 }
 
+.btn-lmn-success-inv {
+    background-color: white;
+    color: #4CAF50;
+
+    &:focus, &:hover, &:active {
+        background-color: #ddd;
+        color: #4CAF50;
+    }
+}
+
 .btn-lmn-danger {
     background-color: #F44336;
     color:white;
 
     &:focus, &:hover, &:active {
         background-color: #F44336;
+    }
+}
+
+.btn-lmn-danger-inv {
+    background-color: white;
+    color: #F44336;
+
+    &:focus, &:hover, &:active {
+        background-color: #ddd;
+        color: #F44336;
+    }
+}
+
+.btn-lmn-warning {
+    background-color: #FFC107;
+    color: white;
+
+    &:focus, &:hover, &:active {
+        background-color: #FFC107;
+    }
+}
+
+.btn-lmn-warning-inv {
+    background-color: white;
+    color: #FFC107;
+
+    &:focus, &:hover, &:active {
+        background-color: #ddd;
+        color: #FFC107;
     }
 }
 

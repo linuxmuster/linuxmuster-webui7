@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-09 13:04+0100\n"
+"POT-Creation-Date: 2023-11-14 15:37+0100\n"
 "PO-Revision-Date: 2023-08-03 13:02\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
@@ -16,10 +16,6 @@ msgstr ""
 "X-Crowdin-Language: fr\n"
 "X-Crowdin-File: /2.0/lmn_smbclient.po\n"
 "X-Crowdin-File-ID: 226\n"
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/tasks.py:9
-msgid "Delete Samba files"
-msgstr "Supprimer les fichiers Samba"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/views/smbclient.py:562
 msgid "Ticket successfully refreshed"
@@ -40,3 +36,6 @@ msgstr " déplacé !"
 #: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/resources/js/services/smbclient.service.es:28
 msgid " copied!"
 msgstr " copié !"
+
+#~ msgid "Delete Samba files"
+#~ msgstr "Supprimer les fichiers Samba"

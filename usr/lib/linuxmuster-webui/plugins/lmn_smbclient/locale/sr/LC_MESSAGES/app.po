@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-09 13:04+0100\n"
+"POT-Creation-Date: 2023-11-14 15:37+0100\n"
 "PO-Revision-Date: 2023-08-01 13:42\n"
 "Last-Translator: \n"
 "Language-Team: Serbian (Cyrillic)\n"
@@ -17,10 +17,6 @@ msgstr ""
 "X-Crowdin-Language: sr\n"
 "X-Crowdin-File: /2.0/lmn_smbclient.po\n"
 "X-Crowdin-File-ID: 226\n"
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/tasks.py:9
-msgid "Delete Samba files"
-msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/views/smbclient.py:562
 msgid "Ticket successfully refreshed"

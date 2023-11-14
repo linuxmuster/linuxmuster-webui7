@@ -18,6 +18,11 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         'image': "far fa-file-image",
         'file': "far fa-file",
     }
+    $scope.management = {
+        'wifi': false,
+        'internet': false,
+        'printing': false,
+    }
 
     $window.onbeforeunload = (event) ->
         if !$scope.sessionChanged
@@ -183,15 +188,15 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
     $scope.setManagementGroupAll = (group) ->
         $scope.stateChanged = true
         usersList = []
-        new_value = !$scope.fields[group].checkboxStatus
+        $scope.management[group] = !$scope.management[group]
 
         for participant in $scope.session.members
             # Only change management group for student, and not others teachers
             if participant.sophomorixRole == 'student'
-                participant[group] = new_value
+                participant[group] = $scope.management[group]
                 usersList.push(participant.sAMAccountName)
 
-        if new_value == false
+        if $scope.management[group] == false
             group = "no#{group}"
 
         $http.post('/api/lmn/managementgroup', {group:group, users:usersList}).then (resp) ->

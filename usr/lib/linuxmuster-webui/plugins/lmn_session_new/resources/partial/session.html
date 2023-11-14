@@ -134,15 +134,35 @@
                 </button>
             </th>
             <th style="text-align:center;">
-                <span title="wifi" class="fa fa-wifi" style="font-size:20px;line-height:3em;"></span>
+                <button class="btn" ng:click="setManagementGroupAll('wifi')"
+                        ng:class="{
+                        'btn-lmn-success-inv': (session.members | filter:{wifi: true}).length == session.members.length,
+                        'btn-lmn-danger-inv': (session.members | filter:{wifi: true}).length == 0,
+                        'btn-default': (session.members | filter:{wifi: true}).length < session.members.length,
+                        }" style="font-size:20px;">
+                    <i class="fas fa-wifi"></i>
+                </button>
             </th>
             <th style="text-align:center;">
-                <span title="internet" class="fa fa-globe" style="font-size:20px;line-height:3em;"></span>
+                <button class="btn" ng:click="setManagementGroupAll('internet')"
+                        ng:class="{
+                        'btn-lmn-success-inv': (session.members | filter:{internet: true}).length == session.members.length,
+                        'btn-lmn-danger-inv': (session.members | filter:{internet: true}).length == 0,
+                        'btn-default': (session.members | filter:{internet: true}).length < session.members.length,
+                        }" style="font-size:20px;">
+                    <i class="fa fa-globe"></i>
+                </button>
             </th>
             <th style="text-align:center;">
-                <span title="print" class="fa fa-print" style="font-size:20px;line-height:3em;"></span>
+                <button class="btn" ng:click="setManagementGroupAll('printing')"
+                        ng:class="{
+                        'btn-lmn-success-inv': (session.members | filter:{printing: true}).length == session.members.length,
+                        'btn-lmn-danger-inv': (session.members | filter:{printing: true}).length == 0,
+                        'btn-default': (session.members | filter:{printing: true}).length < session.members.length,
+                        }" style="font-size:20px;">
+                    <i class="fa fa-print"></i>
+                </button>
             </th>
-
             <th></th>
             <th></th>
         </tr>

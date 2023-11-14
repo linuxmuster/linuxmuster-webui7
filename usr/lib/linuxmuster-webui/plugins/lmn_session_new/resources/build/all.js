@@ -239,6 +239,11 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       'image': "far fa-file-image",
       'file': "far fa-file"
     };
+    $scope.management = {
+      'wifi': false,
+      'internet': false,
+      'printing': false
+    };
     $window.onbeforeunload = function(event) {
       if (!$scope.sessionChanged) {
         return;
@@ -437,20 +442,20 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       });
     };
     $scope.setManagementGroupAll = function(group) {
-      var i, len, new_value, participant, ref, usersList;
+      var i, len, participant, ref, usersList;
       $scope.stateChanged = true;
       usersList = [];
-      new_value = !$scope.fields[group].checkboxStatus;
+      $scope.management[group] = !$scope.management[group];
       ref = $scope.session.members;
       for (i = 0, len = ref.length; i < len; i++) {
         participant = ref[i];
         // Only change management group for student, and not others teachers
         if (participant.sophomorixRole === 'student') {
-          participant[group] = new_value;
+          participant[group] = $scope.management[group];
           usersList.push(participant.sAMAccountName);
         }
       }
-      if (new_value === false) {
+      if ($scope.management[group] === false) {
         group = `no${group}`;
       }
       return $http.post('/api/lmn/managementgroup', {

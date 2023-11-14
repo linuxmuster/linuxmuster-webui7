@@ -92,12 +92,13 @@
         <tr>
             <th style="text-align:center;">
                 <div translate>Users</div>
+                <br />
                 <div class="label label-info" style="font-size:12px;">
                     {{session.members.length}}
                     <span translate> student(s)</span>
                 </div>
             </th>
-            <th style="text-align:center;line-height:3em;">
+            <th style="text-align:center;">
                 <div translate>Transfer</div>
             </th>
             <th style="text-align:center;">
@@ -115,19 +116,22 @@
                 </button>
             </th>
             <th style="text-align:center;">
-                <div translate>Working directory</div>
-                <button class="btn btn-lmn-success-inv pull-right"
+                <div style="float:left;">
+                    <span translate>Working directory</span>
+                    <br /><br />
+                    <span class="label label-default" style="font-size:12px;">
+                        transfer/{{identity.user}}/_collect
+                    </span>
+                </div>
+                <button class="btn btn-default pull-right"
                         ng:click="startRefreshFiles()"
                         ng:show="!autorefresh_files"
                 >
                     <i class="fas fa-sync"></i>
                 </button>
-                <button class="btn btn-lmn-danger-inv pull-right" ng:click="stopRefreshFiles()" ng:show="autorefresh_files">
+                <button class="btn btn-default pull-right" ng:click="stopRefreshFiles()" ng:show="autorefresh_files">
                     <i class="fas fa-sync fa-spin"></i>
                 </button>
-                <span class="label label-default" style="font-size:12px;">
-                    transfer/{{identity.user}}/_collect
-                </span>
             </th>
             <th style="text-align:center;">
                 <span title="wifi" class="fa fa-wifi" style="font-size:20px;line-height:3em;"></span>

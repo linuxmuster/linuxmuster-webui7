@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.2.25-testinh) lmn72-testing; urgency=medium
+
+  * [session_new] Better design
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Tue, 14 Nov 2023 15:34:46 +0100
+
 linuxmuster-webui7 (7.2.24-testing) lmn72-testing; urgency=medium
 
   * Partially moving to linuxmuster-tools (new dependency)

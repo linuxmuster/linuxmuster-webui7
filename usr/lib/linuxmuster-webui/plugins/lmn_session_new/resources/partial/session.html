@@ -101,21 +101,21 @@
             <th style="text-align:center;">
                 <div translate>Transfer</div>
             </th>
-            <th style="text-align:center;">
-                <div style="float:left;">
-                    <span translate>Working directory</span>
-                    <br /><br />
-                    <span class="label label-default" style="font-size:12px;">
-                        transfer/{{identity.user}}/_collect
-                    </span>
-                </div>
-                <button class="btn btn-default pull-right"
+            <th style="text-align:center;border-right:None;">
+                <span translate>Working directory</span>
+                <br /><br />
+                <span class="label label-default" style="font-size:12px;">
+                    transfer/{{identity.user}}/_collect
+                </span>
+            </th>
+            <th style="text-align:center;border-left:None;">
+                <button class="btn btn-default"
                         ng:click="startRefreshFiles()"
                         ng:show="!autorefresh_files"
                 >
                     <i class="fas fa-sync"></i>
                 </button>
-                <button class="btn btn-default pull-right" ng:click="stopRefreshFiles()" ng:show="autorefresh_files">
+                <button class="btn btn-default" ng:click="stopRefreshFiles()" ng:show="autorefresh_files">
                     <i class="fas fa-sync fa-spin"></i>
                 </button>
             </th>
@@ -210,7 +210,7 @@
                 </div>
             </td>
 
-            <td ng:show="isStudent(participant)">
+            <td ng:show="isStudent(participant)" colspan="2">
                 <div ng:if="participant.files == 'ERROR'" style="width:220px;">
                     <a style="inline-block" class="btn btn-danger" ng:click="fixMembership()">
                         <span translate>Join {{missing_schoolclasses}} to share</span>

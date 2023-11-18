@@ -102,20 +102,6 @@
                 <div translate>Transfer</div>
             </th>
             <th style="text-align:center;">
-                <div translate>Exam</div>
-                <button ng:click="startExam()" class="btn btn-lmn-success-inv"
-                        ng:if="!examMode && extExamUsers.length + examUsers.length == 0 && session.type != 'room'">
-                    <i class="fas fa-play"></i>
-                </button>
-                <button ng:click="stopRunningExams()" class="btn btn-lmn-danger-inv"
-                        ng:if="!examMode && extExamUsers.length + examUsers.length > 0" translate>
-                    <i class="fas fa-stop"></i>
-                </button>
-                <button ng:click="stopExam()" class="btn btn-lmn-danger-inv" ng:if="examMode" translate>
-                    <i class="fas fa-stop"></i>
-                </button>
-            </th>
-            <th style="text-align:center;">
                 <div style="float:left;">
                     <span translate>Working directory</span>
                     <br /><br />
@@ -131,6 +117,20 @@
                 </button>
                 <button class="btn btn-default pull-right" ng:click="stopRefreshFiles()" ng:show="autorefresh_files">
                     <i class="fas fa-sync fa-spin"></i>
+                </button>
+            </th>
+            <th style="text-align:center;">
+                <div translate>Exam</div>
+                <button ng:click="startExam()" class="btn btn-lmn-success-inv"
+                        ng:if="!examMode && extExamUsers.length + examUsers.length == 0 && session.type != 'room'">
+                    <i class="fas fa-play"></i>
+                </button>
+                <button ng:click="stopRunningExams()" class="btn btn-lmn-danger-inv"
+                        ng:if="!examMode && extExamUsers.length + examUsers.length > 0" translate>
+                    <i class="fas fa-stop"></i>
+                </button>
+                <button ng:click="stopExam()" class="btn btn-lmn-danger-inv" ng:if="examMode" translate>
+                    <i class="fas fa-stop"></i>
                 </button>
             </th>
             <th style="text-align:center;">
@@ -211,20 +211,6 @@
                 </div>
             </td>
 
-            <td class="ng-binding" ng:show="isStudent(participant)">
-                <div ng:show="participant.sophomorixExamMode != '---'">
-                    <a style="display:inline-block; width:80px; font-size:100%"
-                       class="btn btn-danger"
-                       ng:click="stopUserExam(participant)"
-                       title="Stop exam from {{participant.sophomorixExamMode[0]}}"
-                    >
-                        <i class="fa fa-graduation-cap"></i>
-                        {{participant.sophomorixExamMode[0]}}
-<!--                        <i class="fas fa-stop pull-right"></i>-->
-                    </a>
-                </div>
-            </td>
-
             <td ng:show="isStudent(participant)">
                 <div ng:if="participant.files == 'ERROR'" style="width:220px;">
                     <a style="inline-block" class="btn btn-danger" ng:click="fixMembership()">
@@ -243,6 +229,20 @@
                             <span class="subtle">{{item.size|bytes}}</span>
                         </span>
                     </div>
+                </div>
+            </td>
+
+            <td class="ng-binding" ng:show="isStudent(participant)">
+                <div ng:show="participant.sophomorixExamMode != '---'" style="text-align: center;">
+                    <a style="display:inline-block; width:80px; font-size:100%"
+                       class="btn btn-danger"
+                       ng:click="stopUserExam(participant)"
+                       title="Stop exam from {{participant.sophomorixExamMode[0]}}"
+                    >
+                        <i class="fa fa-graduation-cap"></i>
+                        {{participant.sophomorixExamMode[0]}}
+                        <!--                        <i class="fas fa-stop pull-right"></i>-->
+                    </a>
                 </div>
             </td>
 

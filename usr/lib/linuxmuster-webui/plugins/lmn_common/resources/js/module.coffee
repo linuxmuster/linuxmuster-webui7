@@ -15,6 +15,9 @@ angular.module('lmn.common').run (customization) ->
     customization.plugins.core.hidePersonaLogin = true
     customization.plugins.core.enableMixpanel = false
 
+angular.module('lmn.common').run ($localStorage) ->
+    $localStorage.isWidescreen = true
+
 angular.module('lmn.common').constant 'lmEncodingMap', {
     '': 'utf-8'
     'ascii': 'ascii'

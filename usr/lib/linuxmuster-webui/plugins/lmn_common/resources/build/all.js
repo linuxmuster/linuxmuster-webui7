@@ -14,6 +14,10 @@
     return customization.plugins.core.enableMixpanel = false;
   });
 
+  angular.module('lmn.common').run(function($localStorage) {
+    return $localStorage.isWidescreen = true;
+  });
+
   angular.module('lmn.common').constant('lmEncodingMap', {
     '': 'utf-8',
     'ascii': 'ascii',

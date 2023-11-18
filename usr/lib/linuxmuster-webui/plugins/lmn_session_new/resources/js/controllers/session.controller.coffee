@@ -198,7 +198,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
 
         for participant in $scope.session.members
             # Only change management group for student, and not others teachers
-            if participant.sophomorixRole == 'student'
+            if participant.sophomorixRole == 'student' or participant.sophomorixRole == 'examuser'
                 participant[group] = $scope.management[group]
                 usersList.push(participant.sAMAccountName)
 

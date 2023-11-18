@@ -454,7 +454,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       for (i = 0, len = ref.length; i < len; i++) {
         participant = ref[i];
         // Only change management group for student, and not others teachers
-        if (participant.sophomorixRole === 'student') {
+        if (participant.sophomorixRole === 'student' || participant.sophomorixRole === 'examuser') {
           participant[group] = $scope.management[group];
           usersList.push(participant.sAMAccountName);
         }

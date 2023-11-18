@@ -1,3 +1,10 @@
+linuxmuster-webui7 (7.2.26-testing) lmn72; urgency=medium
+
+  * Widescreen as default display.
+  * [session-new] Fix some errors and design issues.
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 18 Nov 2023 22:42:39 +0100
+
 linuxmuster-webui7 (7.2.25-testinh) lmn72-testing; urgency=medium
 
   * [session_new] Better design

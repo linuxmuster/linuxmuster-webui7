@@ -168,7 +168,7 @@ class Handler(HttpPlugin):
             sophomorixCommand = [
                 'sophomorix-exam-mode',
                 '--unset',
-                '--subdir', f'transfer/{target}',
+                '--subdir', f'transfer/collected/{target}',
                 '-j',
                 '--participants', participants
             ]

@@ -401,6 +401,10 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         path = `${participant.homeDirectory}\\transfer\\${$scope.identity.user}\\_collect`;
         return smbclient.list(path).then(function(data) {
           return participant.files = data.items;
+        }).catch(function(err) {
+          // Working directory probably deleted, trying to recreate it
+          lmnSession._createWorkingDirectory(participant);
+          return notify.error(gettext("Can not list directory from ") + participant.displayName);
         });
       }
     };

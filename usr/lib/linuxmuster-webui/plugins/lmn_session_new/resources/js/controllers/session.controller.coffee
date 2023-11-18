@@ -158,7 +158,13 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
     $scope._updateFileList = (participant) ->
         if participant.files != 'ERROR' and participant.files != 'ERROR-teacher'
             path = "#{participant.homeDirectory}\\transfer\\#{$scope.identity.user}\\_collect"
-            smbclient.list(path).then((data) -> participant.files = data.items)
+            smbclient.list(path).then((data) ->
+                participant.files = data.items
+            ).catch((err) ->
+                # Working directory probably deleted, trying to recreate it
+                lmnSession._createWorkingDirectory(participant)
+                notify.error(gettext("Can not list directory from ") + participant.displayName)
+            )
 
     $scope.updateFileList = () ->
         for participant in $scope.session.members

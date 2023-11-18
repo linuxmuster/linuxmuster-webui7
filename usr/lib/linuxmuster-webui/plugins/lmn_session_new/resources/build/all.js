@@ -679,7 +679,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         return userPassword.setCustomPassword(user, pwtype);
       }
     };
-    $scope.choose_items = function(path, command) {
+    $scope.choose_items = function(path, command, user) {
       return $uibModal.open({
         templateUrl: '/lmn_session_new:resources/partial/selectFile.modal.html',
         controller: 'LMNSessionFileSelectModalController',
@@ -690,6 +690,9 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
           },
           path: function() {
             return path;
+          },
+          user: function() {
+            return user;
           }
         }
       }).result;
@@ -710,7 +713,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       var choose_path;
       // participants is an array containing one or all participants
       choose_path = `${identity.profile.homeDirectory}\\transfer`;
-      return $scope.choose_items(choose_path, 'share').then(function(result) {
+      return $scope.choose_items(choose_path, 'share', participant.sAMAccountName).then(function(result) {
         if (result.response === 'accept') {
           return $scope._share(participant, result.items);
         }
@@ -719,7 +722,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     $scope.shareAll = function() {
       var choose_path;
       choose_path = `${identity.profile.homeDirectory}\\transfer`;
-      return $scope.choose_items(choose_path, 'share').then(function(result) {
+      return $scope.choose_items(choose_path, 'share', 'all').then(function(result) {
         var i, len, participant, ref, results;
         if (result.response === 'accept') {
           ref = $scope.session.members;
@@ -807,7 +810,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       collect_path = `${identity.profile.homeDirectory}\\transfer\\${transfer_directory}\\${participant.sAMAccountName}`;
       smbclient.createDirectory(collect_path);
       choose_path = `${participant.homeDirectory}\\transfer\\${$scope.identity.user}\\_collect`;
-      return $scope.choose_items(choose_path, command).then(function(result) {
+      return $scope.choose_items(choose_path, command, participant.sAMAccountName).then(function(result) {
         if (result.response === 'accept') {
           return $scope._collect(command, result.items, collect_path).then(function() {
             return notify.success(gettext("Files collected!"));
@@ -817,7 +820,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     };
   });
 
-  angular.module('lmn.session_new').controller('LMNSessionFileSelectModalController', function($scope, $uibModalInstance, gettext, notify, $http, action, path, messagebox, smbclient) {
+  angular.module('lmn.session_new').controller('LMNSessionFileSelectModalController', function($scope, $uibModalInstance, gettext, notify, $http, action, path, messagebox, smbclient, user) {
     $scope.action = action; // copy, move or share
     $scope.init_path = path;
     $scope.current_path = path;
@@ -825,6 +828,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     $scope.toggleAllStatus = false;
     $scope.count_selected = 0;
     $scope.uploadProgress = [];
+    $scope.user = user;
     $scope.load_path = function(path) {
       return smbclient.list(path).then(function(data) {
         $scope.items = data.items;

@@ -447,6 +447,7 @@ floating-toolbar.accented .bar .btn-flat {
 .btn-lmn-success-inv {
   background-color: white;
   color: #4CAF50;
+  border-color: #eee;
 }
 .btn-lmn-success-inv:focus, .btn-lmn-success-inv:hover, .btn-lmn-success-inv:active {
   background-color: #ddd;
@@ -464,6 +465,7 @@ floating-toolbar.accented .bar .btn-flat {
 .btn-lmn-danger-inv {
   background-color: white;
   color: #F44336;
+  border-color: #eee;
 }
 .btn-lmn-danger-inv:focus, .btn-lmn-danger-inv:hover, .btn-lmn-danger-inv:active {
   background-color: #ddd;
@@ -481,6 +483,7 @@ floating-toolbar.accented .bar .btn-flat {
 .btn-lmn-warning-inv {
   background-color: white;
   color: #FFC107;
+  border-color: #eee;
 }
 .btn-lmn-warning-inv:focus, .btn-lmn-warning-inv:hover, .btn-lmn-warning-inv:active {
   background-color: #ddd;

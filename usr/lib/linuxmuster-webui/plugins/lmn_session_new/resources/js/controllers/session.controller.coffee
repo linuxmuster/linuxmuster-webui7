@@ -357,7 +357,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         if not $scope._checkExamUser(user.sAMAccountName)
             userPassword.setCustomPassword(user, pwtype)
 
-    $scope.choose_items = (path, command, user) ->
+    $scope.choose_items = (path, print_path, command, user) ->
         return $uibModal.open(
            templateUrl: '/lmn_session_new:resources/partial/selectFile.modal.html'
            controller: 'LMNSessionFileSelectModalController'
@@ -365,6 +365,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
            resolve:
               action: () -> command
               path: () -> path
+              print_path: () -> print_path
               user: () -> user
         ).result
 
@@ -379,13 +380,15 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
     $scope.shareUser = (participant) ->
         # participants is an array containing one or all participants
         choose_path = "#{identity.profile.homeDirectory}\\transfer"
-        $scope.choose_items(choose_path, 'share', participant.sAMAccountName).then (result) ->
+        print_path = "transfer"
+        $scope.choose_items(choose_path, print_path, 'share', participant.sAMAccountName).then (result) ->
             if result.response is 'accept'
                 $scope._share(participant, result.items)
 
     $scope.shareAll = () ->
         choose_path = "#{identity.profile.homeDirectory}\\transfer"
-        $scope.choose_items(choose_path, 'share', 'all').then (result) ->
+        print_path = "transfer"
+        $scope.choose_items(choose_path, print_path,'share', 'all').then (result) ->
             if result.response is 'accept'
                 for participant in $scope.session.members
                     $scope._share(participant, result.items)
@@ -449,12 +452,13 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         smbclient.createDirectory(collect_path)
 
         choose_path = "#{participant.homeDirectory}\\transfer\\#{$scope.identity.user}\\_collect"
-        $scope.choose_items(choose_path, command, participant.sAMAccountName).then (result) ->
+        print_path = "transfer/#{$scope.identity.user}/_collect"
+        $scope.choose_items(choose_path, print_path, command, participant.sAMAccountName).then (result) ->
             if result.response is 'accept'
                 $scope._collect(command, result.items, collect_path).then () ->
                     notify.success(gettext("Files collected!"))
 
-angular.module('lmn.session_new').controller 'LMNSessionFileSelectModalController', ($scope, $uibModalInstance, gettext, notify, $http, action, path, messagebox, smbclient, user) ->
+angular.module('lmn.session_new').controller 'LMNSessionFileSelectModalController', ($scope, $uibModalInstance, gettext, notify, $http, action, path, messagebox, smbclient, user, print_path) ->
 
     $scope.action = action # copy, move or share
     $scope.init_path = path
@@ -464,6 +468,7 @@ angular.module('lmn.session_new').controller 'LMNSessionFileSelectModalControlle
     $scope.count_selected = 0
     $scope.uploadProgress = []
     $scope.user = user
+    $scope.print_path = print_path
 
     $scope.load_path = (path) ->
         smbclient.list(path).then (data) ->

@@ -1,9 +1,9 @@
 <div class="modal-header" ng:show="user != 'all'">
-    <h4 ng-if="action == 'share'" translate>Share files to {{user}}</h4>
-    <h4 ng-if="action != 'share'" translate>Collect files from {{user}}</h4>
+    <h4 ng-if="action == 'share'" translate>Share files to {{user}} from directory {{print_path}}</h4>
+    <h4 ng-if="action != 'share'" translate>Collect files from {{user}} from directory {{print_path}}</h4>
 </div>
 <div class="modal-header" ng:show="user == 'all'">
-    <h4 ng-if="action == 'share'" translate>Share files to all participants</h4>
+    <h4 ng-if="action == 'share'" translate>Share files to all participants from directory {{print_path}}</h4>
 </div>
 
 <div class="modal-body">

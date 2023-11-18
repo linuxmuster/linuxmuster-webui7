@@ -679,7 +679,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         return userPassword.setCustomPassword(user, pwtype);
       }
     };
-    $scope.choose_items = function(path, command, user) {
+    $scope.choose_items = function(path, print_path, command, user) {
       return $uibModal.open({
         templateUrl: '/lmn_session_new:resources/partial/selectFile.modal.html',
         controller: 'LMNSessionFileSelectModalController',
@@ -690,6 +690,9 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
           },
           path: function() {
             return path;
+          },
+          print_path: function() {
+            return print_path;
           },
           user: function() {
             return user;
@@ -710,19 +713,21 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       });
     };
     $scope.shareUser = function(participant) {
-      var choose_path;
+      var choose_path, print_path;
       // participants is an array containing one or all participants
       choose_path = `${identity.profile.homeDirectory}\\transfer`;
-      return $scope.choose_items(choose_path, 'share', participant.sAMAccountName).then(function(result) {
+      print_path = "transfer";
+      return $scope.choose_items(choose_path, print_path, 'share', participant.sAMAccountName).then(function(result) {
         if (result.response === 'accept') {
           return $scope._share(participant, result.items);
         }
       });
     };
     $scope.shareAll = function() {
-      var choose_path;
+      var choose_path, print_path;
       choose_path = `${identity.profile.homeDirectory}\\transfer`;
-      return $scope.choose_items(choose_path, 'share', 'all').then(function(result) {
+      print_path = "transfer";
+      return $scope.choose_items(choose_path, print_path, 'share', 'all').then(function(result) {
         var i, len, participant, ref, results;
         if (result.response === 'accept') {
           ref = $scope.session.members;
@@ -802,7 +807,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       });
     };
     return $scope.collectUser = function(command, participant) {
-      var choose_path, collect_path, now, transfer_directory;
+      var choose_path, collect_path, now, print_path, transfer_directory;
       // participant is only one user
       // command is copy or move
       now = $scope.now();
@@ -810,7 +815,8 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       collect_path = `${identity.profile.homeDirectory}\\transfer\\${transfer_directory}\\${participant.sAMAccountName}`;
       smbclient.createDirectory(collect_path);
       choose_path = `${participant.homeDirectory}\\transfer\\${$scope.identity.user}\\_collect`;
-      return $scope.choose_items(choose_path, command, participant.sAMAccountName).then(function(result) {
+      print_path = `transfer/${$scope.identity.user}/_collect`;
+      return $scope.choose_items(choose_path, print_path, command, participant.sAMAccountName).then(function(result) {
         if (result.response === 'accept') {
           return $scope._collect(command, result.items, collect_path).then(function() {
             return notify.success(gettext("Files collected!"));
@@ -820,7 +826,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     };
   });
 
-  angular.module('lmn.session_new').controller('LMNSessionFileSelectModalController', function($scope, $uibModalInstance, gettext, notify, $http, action, path, messagebox, smbclient, user) {
+  angular.module('lmn.session_new').controller('LMNSessionFileSelectModalController', function($scope, $uibModalInstance, gettext, notify, $http, action, path, messagebox, smbclient, user, print_path) {
     $scope.action = action; // copy, move or share
     $scope.init_path = path;
     $scope.current_path = path;
@@ -829,6 +835,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     $scope.count_selected = 0;
     $scope.uploadProgress = [];
     $scope.user = user;
+    $scope.print_path = print_path;
     $scope.load_path = function(path) {
       return smbclient.list(path).then(function(data) {
         $scope.items = data.items;

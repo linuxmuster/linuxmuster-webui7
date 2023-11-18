@@ -18,13 +18,13 @@ class ItemProvider(SidebarItemProvider):
             'url': '/view/lmn/oldsession',
             'weight': 15,
             },
-            {
-            'attach': 'category:class',
-            'name': _('Print Passwords'),
-            'icon': 'key',
-            'url': '/view/lmn/users/print-passwords',
-            'weight': 40,
-            }
+            # {
+            # 'attach': 'category:class',
+            # 'name': _('Print Passwords'),
+            # 'icon': 'key',
+            # 'url': '/view/lmn/users/print-passwords',
+            # 'weight': 40,
+            # }
         ]
 
 

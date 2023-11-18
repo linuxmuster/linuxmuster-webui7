@@ -120,17 +120,16 @@
                 </button>
             </th>
             <th style="text-align:center;">
-                <div translate>Exam</div>
-                <button ng:click="startExam()" class="btn btn-lmn-success-inv"
-                        ng:if="!examMode && extExamUsers.length + examUsers.length == 0 && session.type != 'room'">
-                    <i class="fas fa-play"></i>
+                <button ng:click="startExam()" class="btn btn-default" title="Start exam mode"
+                        ng:if="!examMode && extExamUsers.length + examUsers.length == 0 && session.type != 'room'" style="font-size:20px;">
+                    <i class="fa fa-graduation-cap"></i>
                 </button>
-                <button ng:click="stopRunningExams()" class="btn btn-lmn-danger-inv"
-                        ng:if="!examMode && extExamUsers.length + examUsers.length > 0" translate>
-                    <i class="fas fa-stop"></i>
+                <button ng:click="stopRunningExams()" class="btn btn-lmn-danger-inv" title="Stop exam mode"
+                        ng:if="!examMode && extExamUsers.length + examUsers.length > 0"  style="font-size:20px;">
+                    <i class="fa fa-graduation-cap"></i>
                 </button>
-                <button ng:click="stopExam()" class="btn btn-lmn-danger-inv" ng:if="examMode" translate>
-                    <i class="fas fa-stop"></i>
+                <button ng:click="stopExam()" class="btn btn-lmn-danger-inv" ng:if="examMode" title="Stop exam mode" style="font-size:20px;">
+                    <i class="fa fa-graduation-cap"></i>
                 </button>
             </th>
             <th style="text-align:center;">

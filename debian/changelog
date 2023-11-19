@@ -1,3 +1,52 @@
+linuxmuster-webui7 (17.2.24-testing) lmn72-testing; urgency=medium
+
+  * Partially moving to linuxmuster-tools (new dependency)
+  * A lot of fix and view improvements
+  * [landingpage] Option to hide webdav box
+  * [session_new] Exam mode, share, collect, upload, list files
+  * [linbo4] Format with partition command
+  * [linbo4] Fix backup restore error
+  * [quota] Quota check per user
+  * [samba_shares] Fix missing projects and iso shares
+  * [session_new] Better design
+  * Widescreen as default display.
+  * [session-new] Fix some errors and design issues.
+
+ -- Lukas Spitznagel <lukas.spitznagel@netzint.de>  Sat, 19 Nov 2023 16:32:02 +0200
+
+linuxmuster-webui7 (17.2.23) lmn72-testing; urgency=low
+
+  * Merge 7.2.23 to 17.2.23
+    * Upgrade Ajenti 2.2.7
+    * Allow underscore in login
+    * [Groupmembership] Exclude a group to be self member 
+
+ -- Lukas Spitznagel <lukas.spitznagel@netzint.de>  Fri, 20 Oct 2023 16:32:02 +0200
+
+linuxmuster-webui7 (17.2.22-3) lmn72-testing; urgency=low
+
+  * bump
+
+ -- Andreas Till <andreas.till@netzint.de>  Thu, 31 Aug 2023 10:16:42 +0200
+
+linuxmuster-webui7 (17.2.22-2) lmn72; urgency=low
+
+  * Bump
+
+ -- Andreas Till <andreas.till@netzint.de>  Thu, 31 Aug 2023 10:14:20 +0200
+
+linuxmuster-webui7 (17.2.22-1) lmn72; urgency=low
+
+  * Merged Upstream
+
+ -- Andreas Till <andreas.till@netzint.de>  Thu, 31 Aug 2023 09:41:58 +0200
+
+linuxmuster-webui7 (17.2.22) lmn72; urgency=low
+
+  * Merge branch 'upstream-lmn72' into lmn72-testing
+
+ -- Andreas Till <andreas.till@netzint.de>  Mon, 07 Aug 2023 18:20:08 +0200
+ 
 linuxmuster-webui7 (7.2.26-testing) lmn72; urgency=medium
 
   * Widescreen as default display.
@@ -38,6 +87,61 @@ linuxmuster-webui7 (7.2.22) lmn72; urgency=medium
   * [linbo4] Fix wrong diff attribute 
 
  -- Arnaud Kientz <arnaud@linuxmuster.net>  Wed, 02 Aug 2023 12:31:31 +0200
+
+
+linuxmuster-webui7 (17.2.19.8) lmn72-testing; urgency=low
+
+  * Merge branch 'upstream-lmn72' into lmn72-testing
+
+ -- Andreas Till <andreas.till@netzint.de>  Mon, 26 Jun 2023 19:53:29 +0200
+
+linuxmuster-webui7 (17.2.19.7) lmn72-testing; urgency=low
+
+  * Merged Upstream-LMN72
+
+ -- Andreas Till <andreas.till@netzint.de>  Tue, 20 Jun 2023 18:28:19 +0200
+
+linuxmuster-webui7 (17.2.19.6) lmn72-testing; urgency=low
+
+  * Fixed handling of multischool.py schoolmanager when loading gpos
+
+ -- Andreas Till <andreas.till@netzint.de>  Mon, 15 May 2023 19:40:12 +0200
+
+linuxmuster-webui7 (17.2.19.5) lmn72-testing; urgency=low
+
+  * Added another fix for .installed flag in setup process
+
+ -- Andreas Till <andreas.till@netzint.de>  Mon, 15 May 2023 19:09:54 +0200
+
+linuxmuster-webui7 (17.2.19.4) lmn72-testing; urgency=low
+
+  * Remove adding .installed file on start
+
+ -- Andreas Till <andreas.till@netzint.de>  Mon, 15 May 2023 18:15:09 +0200
+
+linuxmuster-webui7 (17.2.19.3) lmn72-testing; urgency=low
+
+  * Fixed typo in auth module
+
+ -- Andreas Till <andreas.till@netzint.de>  Mon, 15 May 2023 18:01:18 +0200
+
+linuxmuster-webui7 (17.2.19.2) lmn72-testing; urgency=low
+
+  * Fixed to load kerberos environment and schoolmanager only if installed
+
+ -- Andreas Till <andreas.till@netzint.de>  Mon, 15 May 2023 17:47:12 +0200
+
+linuxmuster-webui7 (17.2.19.1) lmn72-testing; urgency=low
+
+  * Added Multischool bugfixes and updated system dependencies
+
+ -- Andreas Till <andreas.till@netzint.de>  Mon, 15 May 2023 16:48:28 +0200
+
+linuxmuster-webui7 (17.2.19) lmn72-testing; urgency=low
+
+  * Merged 7.2.15 upstream
+
+ -- Andreas Till <andreas.till@netzint.de>  Thu, 20 Apr 2023 10:39:04 +0200
 
 linuxmuster-webui7 (7.2.21) lmn72; urgency=medium
 
@@ -121,6 +225,36 @@ linuxmuster-webui7 (7.2.15) lmn72; urgency=medium
   * [webdav] Allow cut, copy, delete on directories
 
  -- Arnaud Kientz <arnaud@linuxmuster.net>  Thu, 23 Mar 2023 11:37:05 +0100
+
+linuxmuster-webui7 (17.2.18-1) lmn72-testing; urgency=low
+
+  * Removed unneccessary console logging in frontend
+
+ -- Andreas Till <andreas.till@netzint.de>  Tue, 14 Mar 2023 19:41:57 +0200
+
+linuxmuster-webui7 (17.2.18) lmn72-testing; urgency=low
+
+  * Reimplemented hiding linbo configs from other schools
+
+ -- Andreas Till <andreas.till@netzint.de>  Tue, 14 Mar 2023 16:08:08 +0200
+
+linuxmuster-webui7 (17.2.17) lmn72-testing; urgency=low
+
+  * Fixed mispelling maximum in linbo4 vdi part
+
+ -- Andreas Till <andreas.till@netzint.de>  Thu, 02 Mar 2023 17:49:08 +0200
+
+linuxmuster-webui7 (17.2.16) lmn72-testing; urgency=low
+
+  *  Merged Upstream
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri, 24 Feb 2023 10:06:01 +0200
+
+linuxmuster-webui7 (17.2.15) lmn72-testing; urgency=low
+
+  * Merged 7.2.14 from Upstream
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri, 17 Feb 2023 10:40:19 +0200
 
 linuxmuster-webui7 (7.2.14) lmn72; urgency=medium
 
@@ -209,6 +343,12 @@ linuxmuster-webui7 (7.2.3) lmn72; urgency=medium
   * [Users] Blur background if modal window with password is shown
 
  -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 07 Jan 2023 10:37:16 +0100
+
+linuxmuster-webui7 (17.2.2) lmn72; urgency=low
+
+  * Merged Upstream 
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri, 30 Dec 2022 10:58:21 +0200
 
 linuxmuster-webui7 (7.2.2) lmn72; urgency=medium
 
@@ -308,6 +448,52 @@ linuxmuster-webui7 (7.1.39) lmn71; urgency=medium
   * [Users] Blur background if modal window with password is shown
 
  -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 07 Jan 2023 10:29:01 +0100
+
+linuxmuster-webui7 (17.1.38.8) lmn72-testing; urgency=low
+
+  * Add missing chars for strong password. See #254.
+  * Load GPOs at login.
+  * Right config api URL.
+  * Display samba shares only if enabled in the GPO. Fix #247
+  * Harden use of custom fields.
+  * Add permissions for custom fields.
+
+ -- Andreas Till <andreas.till@netzint.de>  Thu, 29 Dec 2022 14:44:31 +0200
+
+linuxmuster-webui7 (17.1.38.6) lmn71-testing; urgency=low
+
+  * Updaded Upstream
+
+ -- Andreas Till <andreas.till@netzint.de>  Tue, 27 Dec 2022 18:32:21 +0200
+
+linuxmuster-webui7 (17.1.38.4) lmn71-testing; urgency=low
+
+  * Fixed Session collect files empty transfer folder issue
+  * merged upstream content
+
+ -- Andreas Till <andreas.till@netzint.de>  Thu, 01 Dec 2022 17:51:38 +0200
+
+linuxmuster-webui7 (17.1.38.3) lmn71-testing; urgency=low
+
+  * Fixed Homeplugin when using dfs
+
+ -- Andreas Till <andreas.till@netzint.de>  Thu, 29 Sep 2022 19:55:02 +0200
+
+linuxmuster-webui7 (17.1.38.2) lmn71-testing; urgency=low
+
+  * Add multischool support in linbo-remote
+  * sort padded ips
+  * Consider firstname when sorting per lastname
+
+ -- Andreas Till <andreas.till@netzint.de>  Thu, 29 Sep 2022 18:44:08 +0200
+
+linuxmuster-webui7 (17.1.38.1) lmn71-testing; urgency=medium
+  * [devices] Filter leading zeros in IPs too
+  * [home] Fix students home path
+  * [clients] Fix script list in linux
+  * [common] Rise field limit for csv
+  * [groupmembership] Better projects alignment 
+  * [users] Add user ID to user details 
 
 linuxmuster-webui7 (7.1.38) lmn71; urgency=medium
 
@@ -412,6 +598,12 @@ linuxmuster-webui7 (7.1.27) lmn71; urgency=medium
 
  -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 25 Jul 2022 19:52:37 +0200
 
+linuxmuster-webui7 (17.1.26) lmn71; urgency=low
+
+  *  Merged upstream
+
+ -- Andreas Till <andreas.till@netzint.de>  Sat, 30 Jul 2022 15:19:58 +0200
+
 linuxmuster-webui7 (7.1.26) lmn71; urgency=medium
 
   * Upgrade Ajenti 2.2.0
@@ -423,6 +615,18 @@ linuxmuster-webui7 (7.1.26) lmn71; urgency=medium
 
  -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 16 Jul 2022 11:50:36 +0200
 
+linuxmuster-webui7 (17.1.25) lmn71; urgency=low
+
+  * Merged to netzint
+
+ -- Andreas Till <andreas.till@netzint.de>  Thu, 11 Aug 2022 18:50:15 +0200
+
+linuxmuster-webui7 (17.1.25) lmn71; urgency=low
+
+  * Fixed Multischool support in lmn_quotas and lmn_linbo_sync
+
+ -- Andreas Till <andreas.till@netzint.de>  Tue, 14 Jun 2022 18:46:59 +0200
+
 linuxmuster-webui7 (7.1.25) lmn71; urgency=medium
 
   * [linbo_sync, quotas, devices] Add multischool support (@PlanB2008)
@@ -432,6 +636,11 @@ linuxmuster-webui7 (7.1.25) lmn71; urgency=medium
   * Proper handling of question mark in passwords 
 
  -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 24 Jun 2022 14:57:08 +0200
+<<<<<<< HEAD
+>>>>>>> upstream-lmn
+=======
+>>>>>>> test123
+>>>>>>> 6ecf9a6310662b060c0089345be78aa594e94fe8
 
 linuxmuster-webui7 (7.1.24) lmn71; urgency=medium
 
@@ -496,6 +705,30 @@ linuxmuster-webui7 (7.1.17) lmn71; urgency=medium
   * Use concurrency to accelerate transfers in session plugin
 
  -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 01 May 2022 11:32:34 +0200
+ 
+linuxmuster-webui7 (17.1.17.2) lmn71; urgency=low
+
+  * Allow schooladmins to delete projects
+
+ -- Andreas Till <andreas.till@netzint.de>  Mon, 16 May 2022 16:13:58 +0200
+
+linuxmuster-webui7 (17.1.17.1) lmn71; urgency=medium
+ 
+ * Merge changes + New build
+ 
+ -- Lukas Spitznagel <lukas.spitznagel@netzint.de>  Tue, 10 May 2022 17:31:45 +0100
+
+linuxmuster-webui7 (17.1.16.1) lmn71; urgency=medium
+ 
+ * New build
+ 
+ -- Andreas Till <andreas.till@netzint.de>  Wed, 13 Apr 2022 18:20:45 +0100
+
+linuxmuster-webui7 (17.1.5.1) lmn71; urgency=medium
+
+ * New build
+
+ -- Andreas Till <andreas.till@netzint.de>  Wed, 15 Feb 2022 15:24:45 +0100
 
 linuxmuster-webui7 (7.1.16) lmn71; urgency=medium
 
@@ -601,6 +834,55 @@ linuxmuster-webui7 (7.1.5) lmn71; urgency=medium
 
  -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 14 Feb 2022 09:43:20 +0100
 
+linuxmuster-webui7 (17.1.4.5) lmn71; urgency=low
+
+  * fixed writing vdi files back
+
+ -- Andreas Till <andreas.till@netzint.de>  Tue, 15 Feb 2022 13:32:02 +0200
+
+linuxmuster-webui7 (17.1.4.4) lmn71; urgency=low
+
+  * fixed vdi filehandling
+
+ -- Andreas Till <andreas.till@netzint.de>  Tue, 15 Feb 2022 13:22:55 +0200
+
+linuxmuster-webui7 (17.1.4.3) lmn71; urgency=medium
+
+    * Added students to possible vdi dashboard permissions
+
+ -- Andreas Till <andreas.till@netzint.de>  Thu, 10 Feb 2022 18:56:45 +0100
+
+linuxmuster-webui7 (17.1.4.2) lmn71; urgency=medium
+
+    * added permissions.yml for vdi plugins
+
+ -- Andreas Till <andreas.till@netzint.de>  Thu, 10 Feb 2022 18:10:45 +0100
+
+linuxmuster-webui7 (17.1.4.1) lmn71; urgency=medium
+
+    * lmn_linbo_sync use common librarys
+    - rewritten list workstations to use common linuxmuster libraries
+      (fixes occuring error with empty lines in devices.csv)
+    - added multischool support
+    - removed nmap check
+
+ -- Andreas Till <andreas.till@netzint.de>  Wed, 09 Feb 2022 11:37:45 +0100
+
+linuxmuster-webui7 (17.1.99.4) lmn71; urgency=medium
+
+    * Improved Linbo Sync Module
+      - Set Boot timeout to minimal 1 (wont work otherwise)
+      - Added option to run commands without sending WOL package
+      - Added option to use prestart (-p instead of -w argument)
+
+ -- Andreas Till <andreas.till@netzint.de>  Mon, 07 Feb 2022 18:50:45 +0100
+
+linuxmuster-webui7 (7.1.99.4) lmn71; urgency=medium
+
+ * New build
+
+ -- Andreas Till <andreas.till@netzint.de>  Wed, 02 Feb 2022 18:52:45 +0100
+
 linuxmuster-webui7 (7.1.4) lmn71; urgency=medium
 
   * Fix creation of webuiUpload directory by upgrade
@@ -650,6 +932,139 @@ linuxmuster-webui7 (7.1.0) lmn71; urgency=medium
 
  -- Arnaud Kientz <arnaud@linuxmuster.net>  Tue, 28 Dec 2021 12:28:26 +0100
 
+linuxmuster-webui7 (1.0.169rc5) bionic; urgency=medium
+
+  * Current snapshot build dc886580c367399f4d1837655df98ee553f998d0
+  *     added vdi basic permissions
+
+ -- Andreas Till <andreas.till@netzint.de>  Tue, 23 Nov 2021 10:38:32 +0000
+
+linuxmuster-webui7 (1.0.169rc4) bionic; urgency=medium
+
+  * Current snapshot build 651de861f11b9c8f5ab4f61ba2a2e61fbfba546d
+  *     added vdi basic permissions
+
+ -- Andreas Till <andreas.till@netzint.de>  Tue, 23 Nov 2021 10:14:32 +0000
+
+linuxmuster-webui7 (1.0.169rc3) bionic; urgency=medium
+
+  * Current snapshot build 177b60cac1bfadc99778f8e84bee729b01e909e1
+  * Fixed private start.conf handling
+
+ -- Andreas Till <andreas.till@netzint.de>  Tue, 23 Nov 2021 10:01:32 +0000
+
+linuxmuster-webui7 (1.0.169rc2) bionic; urgency=medium
+
+  * Current snapshot build 7747169edabe829b3484dced243ff3cbbb6dc785
+  * Added possibility for private start.confs per school
+
+ -- Andreas Till <andreas.till@netzint.de>  Tue, 23 Nov 2021 09:05:32 +0000
+
+linuxmuster-webui7 (1.0.169~1) bionic; urgency=medium
+
+  * Current snapshot build 7747169edabe829b3484dced243ff3cbbb6dc785
+  * Added possibility for private start.confs per school
+
+ -- Andreas Till <andreas.till@netzint.de>  Tue, 23 Nov 2021 08:50:32 +0000
+
+linuxmuster-webui7 (1.0.168-1) bionic; urgency=medium
+
+  * Current snapshot build fac37af4df344c4b64dc71474778bedf7ce2dbbc
+  * fixed issues in printing password with no users
+
+ -- Andreas Till <andreas.till@netzint.de>  Tue, 02 Nov 2021 19:58:32 +0000
+
+linuxmuster-webui7 (1.0.167-1) bionic; urgency=medium
+
+  * Current snapshot build 04e8c018c663a74968af7149ad8e059fa4d0256f
+  * fixed issues in several moduls which occur when no user exist
+
+ -- Andreas Till <andreas.till@netzint.de>  Tue, 02 Nov 2021 14:47:19 +0000
+
+linuxmuster-webui7 (1.0.166-2) bionic; urgency=medium
+
+  * Current snapshot build 4e848cb279af77b34ba6b10209ae9b3edef2e9bc
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri, 29 Oct 2021 18:31:33 +0000
+
+linuxmuster-webui7 (1.0.166) bionic; urgency=medium
+
+  * Current snapshot build 973adcb9da529122217b498456253f47ef2c736e
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri, 29 Oct 2021 17:59:33 +0000
+
+linuxmuster-webui7 (1.0.165-rc01) bionic-testing; urgency=medium
+
+  * GUI enhancements
+  * Maildomain for project fix
+  * Differenciate save and saveCustom.
+  *  Add basic ssh test with paramiko. See linuxmuster#186. 
+
+ -- Andreas Till <andreas.till@netzint.de>  Thu 22 Jul 11:31:27 CET 2021
+
+linuxmuster-webui7 (1.0.164-release) bionic; urgency=medium
+
+  * move to release
+
+ -- Dorian Zedler <dorian@itsblue.de>  Mon 21 Jun 16:07:38 CET 2021
+
+linuxmuster-webui7 (1.0.164-rc06) bionic-testing; urgency=medium
+
+  * Current snapshot build 47f9c71c8d2b534c18a238bbb6ddb988f0749cc3
+
+ -- Andreas Till <andreas.till@netzint.de>  Mon 1 Jun 16:07:38 CET 2021
+
+linuxmuster-webui7 (1.0.164-rc05) bionic-testing; urgency=medium
+
+  * Current snapshot build 558899528ef78257a25b2cf178d66d3323430b40
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri 19 May 13:03:33 CET 2021
+
+linuxmuster-webui7 (1.0.164-rc04) bionic-testing; urgency=medium
+
+  * Current snapshot build c11c81f6a2bb3ee9394cf8a0fa3880aa01e29872
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri 18 May 19:03:18 CET 2021
+
+linuxmuster-webui7 (1.0.164-rc03) bionic-testing; urgency=medium
+
+  * Current snapshot build 099eb10deab2c2ebad31c2ab1a8a776af88edea3
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri 18 May 17:38:41 CET 2021
+
+linuxmuster-webui7 (1.0.164-rc02) bionic-testing; urgency=medium
+
+  * Current snapshot build 8d5fd7112cbc477a5b31df9a93b0fa25e60bab16
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri 18 May 13:13:43 CET 2021
+
+linuxmuster-webui7 (1.0.164-rc01) bionic-testing; urgency=medium
+
+  * Current snapshot build 3083684829a3df25eb7cf667116e6d26d85803ea
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri 18 May 12:24:52 CET 2021
+
+linuxmuster-webui7 (1.0.164-rc) bionic-testing; urgency=medium
+
+  * Current snapshot build f51eb9572828b954100544e7d6823e518a099c40
+  * Changed package method to install
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri 10 May 12:16:41 CET 2021
+
+linuxmuster-webui7 (1.0.163-rc) bionic-testing; urgency=medium
+
+  * Current snapshot build f51eb9572828b954100544e7d6823e518a099c40
+  * Fixed release Name
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri 10 May 11:48:25 CET 2021
+
+linuxmuster-webui7 (1.0.163) lmn7-testing; urgency=medium
+
+  * Current snapshot build f51eb9572828b954100544e7d6823e518a099c40
+  * Fixed lmp permissions
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri 07 May 16:52:23 CET 2021
+
 linuxmuster-webui7 (1.0.163~7) lmn71; urgency=medium
 
   * Add docker plugin
@@ -684,6 +1099,7 @@ linuxmuster-webui7 (1.0.163~4) lmn71; urgency=medium
 
  -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 10 Dec 2021 13:20:05 +0100
 
+
 linuxmuster-webui7 (1.0.163~3) lmn71; urgency=medium
 
   * Properly restart torrent service after changing image
@@ -717,6 +1133,20 @@ linuxmuster-webui7 (1.0.162~1) lmn71; urgency=medium
 
  -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 07 Nov 2021 17:12:20 +0100
 
+linuxmuster-webui7 (1.0.162) lmn7-testing; urgency=medium
+
+  * Current snapshot build f51eb9572828b954100544e7d6823e518a099c40
+  * Fixed schooladministrator permissions
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri 07 May 13:49:07 CET 2021
+
+linuxmuster-webui7 (1.0.161) lmn7-testing; urgency=medium
+
+  * Current snapshot build 169bc01d9d0ba6569a02b17393a276a2d57d7494
+  * Added multischool support to all modules
+
+ -- Andreas Till <andreas.till@netzint.de>  Fri 07 May 12:59:57 CET 2021
+
 linuxmuster-webui7 (1.0.161~1) lmn7-testing; urgency=medium
 
   - Multischool support
@@ -732,6 +1162,7 @@ linuxmuster-webui7 (1.0.161~1) lmn7-testing; urgency=medium
   - A lot of bug fixes and even more
 
  -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 08 Oct 2021 10:18:41 +0200
+
 
 linuxmuster-webui7 (1.0.160) lmn7-testing; urgency=medium
 

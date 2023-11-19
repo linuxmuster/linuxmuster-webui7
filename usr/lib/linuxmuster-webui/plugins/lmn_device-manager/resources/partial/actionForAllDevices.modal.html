@@ -1,0 +1,27 @@
+<div class="modal-header">
+    <h3>{{action.charAt(0).toUpperCase()}}{{action.slice(1);}} <span translate>all devices</span></h3>
+</div>
+<div class="modal-body">
+    <uib-progressbar class="progress" max="deviceListFilteredChecked.length" value="actionCounter">
+        {{actionCounter}} / {{deviceListFilteredChecked.length}}
+    </uib-progressbar>
+    <div style="text-align: center;" ng:show="!currentItem">
+        <span translate>Starting...</span>...
+    </div>
+    <div style="text-align: center;" ng:show="currentItem && currentItem != 'finished'">
+        <span translate>Now processing</span> {{currentItem.hostname}}...
+    </div>
+    <div style="text-align: center;" ng:show="currentItem == 'finished'">
+        <span translate>Finished!</span>
+        <span ng:show="errorCounter > 0" style="color:red;">
+            <br>
+            <br>
+            {{errorCounter}} <span translate>error(s) occourt!</span>
+            <pre style="width:100%;height: 100px;overflow-y:scroll;text-align: left;border:1px solid black;border-radius: 2px;padding:5px;margin-top: 10px;">{{errorText}}</pre>
+        </span>
+    </div>
+</div>
+<div class="modal-footer">
+    <button ng:show="currentItem == 'finished'" ng:click="close()" class="btn btn-default" translate>Close</button>
+    <button ng:show="currentItem != 'finished'" class="btn btn-default" disabled translate>Close</button>
+</div>

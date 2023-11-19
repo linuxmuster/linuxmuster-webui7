@@ -1,0 +1,70 @@
+<div class="modal-header">
+    <h3><span translate>Linbo-Remote</span> - {{linboRemoteSelectedDevice.hostname}}</h3>
+</div>
+<div class="modal-body">
+    <h5>Image options</h5>
+    <table class="table">
+        <tr>
+            <th translate>Baseimage</th>
+            <th translate>Last sync</th>
+            <th></th>
+        </tr>
+        <tr ng:repeat="os in linboRemoteSelectedDevice.linboconfig">
+            <td style="vertical-align: middle;">{{os.BaseImage}}</td>
+            <td style="vertical-align: middle;">
+                <i class="fas fa-circle" style="color: red;" ng:if="linboRemoteSelectedDevice.lastsync.status == 'danger'"></i> 
+                <i class="fas fa-circle" style="color: orange;" ng:if="linboRemoteSelectedDevice.lastsync.status == 'warning'"></i> 
+                <i class="fas fa-circle" style="color: green;" ng:if="linboRemoteSelectedDevice.lastsync.status == 'success'"></i> 
+                {{linboRemoteSelectedDevice.lastsync.date}}
+            </td>
+            <td style="line-height: 40px;">
+                <button ng:click="toggleImageOption(os, 'format')" class="btn btn-danger">
+                    <i class="fas fa-eraser ng-scope"></i>
+                </button>
+                <button ng:click="toggleImageOption(os, 'sync')" class="btn btn-warning">
+                    <i class="fas fa-sync-alt ng-scope"></i>
+                </button>
+                <button ng:click="toggleImageOption(os, 'start')" class="btn btn-success">
+                    <i class="fas fa-play ng-scope"></i>
+                </button>
+            </td>
+        </tr>
+    </table>
+    <h5>Global options</h5>
+    <table class="table" style="border: 0;">
+        <tr>
+            <td>
+                <button ng:click="toggleGlobalOption(linboRemoteSelectedDevice, 'format')" class="btn btn-danger" style="width: 100%">
+                    <i class="fas fa-eraser ng-scope"></i> Format
+                </button>
+            </td>
+            <td>
+                <button ng:click="toggleGlobalOption(linboRemoteSelectedDevice, 'partition')" class="btn btn-info" style="width: 100%">
+                    <i class="fas fa-eraser ng-scope"></i> Partition
+                </button>
+            </td>
+            <td>
+                <button ng:click="toggleGlobalOption(linboRemoteSelectedDevice, 'initcache')" class="btn btn-default" style="width: 100%">
+                    <i class="fas fa-sync-alt ng-scope"></i> Init cache
+                </button>
+            </td>
+            <td>
+                <button ng:click="toggleGlobalOption(linboRemoteSelectedDevice, 'disablegui')" ng:if="linbocommand.length > 0" class="btn btn-default" style="width: 100%">
+                    <i class="fas fa-terminal ng-scope"></i> Disable GUI
+                </button>
+                <button ng:click="toggleGlobalOption(linboRemoteSelectedDevice, 'disablegui')" ng:if="!linbocommand || linbocommand.length == 0" class="btn btn-default" style="width: 100%" disabled>
+                    <i class="fas fa-terminal ng-scope"></i> Disable GUI
+                </button>
+            </td>
+        </tr>
+    </table>
+    <div style="width: 100%;" class="alert alert-info" ng:if="linbocommand.length > 0">
+        {{linbocommand}}
+    </div>
+    <textarea onchange="this.scrollTop = this.scrollHeight;" id="linbocommandlog" class="form-control" rows="10" style="width: 100%;resize: none;" ng:model="linbocommandresult" ng:if="linbocommandresult.length > 0" disabled></textarea>
+</div>
+<div class="modal-footer">
+    <button ng:click="run()" ng:if="linbocommand.length > 0" class="btn btn-default" translate>Run</button>
+    <button ng:if="!linbocommand || linbocommand.length == 0" class="btn btn-default" disabled translate>Run</button>
+    <button ng:click="close()" class="btn btn-default" translate>Cancel</button>
+</div>

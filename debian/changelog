@@ -1,4 +1,4 @@
-linuxmuster-webui7 (17.2.24-testing) lmn72-testing; urgency=medium
+linuxmuster-webui7 (17.2.24) lmn72-testing; urgency=medium
 
   * Partially moving to linuxmuster-tools (new dependency)
   * A lot of fix and view improvements

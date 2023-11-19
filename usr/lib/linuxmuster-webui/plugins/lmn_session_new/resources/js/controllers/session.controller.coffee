@@ -356,7 +356,9 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         userPassword.showFirstPassword(username).then((resp) ->
             $scope.blurred = false
         )
+
     $scope.resetFirstPassword = (username) ->
+        userPassword.resetFirstPassword(username)
         if not $scope._checkExamUser(username)
             userPassword.resetFirstPassword(username)
 
@@ -366,6 +368,10 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
 
     $scope.setCustomPassword = (user, pwtype) ->
         if not $scope._checkExamUser(user.sAMAccountName)
+            userPassword.setCustomPassword(user, pwtype)
+
+    $scope.setExamCustomPassword = (user, pwtype) ->
+        if $scope._checkExamUser(user.sAMAccountName)
             userPassword.setCustomPassword(user, pwtype)
 
     $scope.choose_items = (path, print_path, command, user) ->

@@ -294,6 +294,11 @@
                                 Set actual user password
                             </a>
                         </li>
+                        <li ng:show="participant.sophomorixExamMode != '---'">
+                            <a ng:click="setExamCustomPassword(participant, 'current')" translate>
+                                Set exam user (only!) password
+                            </a>
+                        </li>
                         <li>
                             <a ng:click="userInfo(participant.sAMAccountName)" translate>
                                 User information

@@ -675,6 +675,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       });
     };
     $scope.resetFirstPassword = function(username) {
+      userPassword.resetFirstPassword(username);
       if (!$scope._checkExamUser(username)) {
         return userPassword.resetFirstPassword(username);
       }
@@ -686,6 +687,11 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     };
     $scope.setCustomPassword = function(user, pwtype) {
       if (!$scope._checkExamUser(user.sAMAccountName)) {
+        return userPassword.setCustomPassword(user, pwtype);
+      }
+    };
+    $scope.setExamCustomPassword = function(user, pwtype) {
+      if ($scope._checkExamUser(user.sAMAccountName)) {
         return userPassword.setCustomPassword(user, pwtype);
       }
     };

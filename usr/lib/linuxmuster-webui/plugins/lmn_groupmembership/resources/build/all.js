@@ -58,7 +58,7 @@
         'schoolclass': 'class',
         'project': 'project'
       };
-      if (group.type === 'printer') {
+      if (group.sophomorixType === 'printer') {
         action = group.membership ? 'removemembers' : 'addmembers';
       } else {
         // TODO: seems to be wrong for projects
@@ -68,7 +68,7 @@
         action: action,
         entity: $scope.identity.user,
         groupname: group.groupname,
-        type: sophomorix_type_map[group.type]
+        type: sophomorix_type_map[group.sophomorixType]
       }).then(function(resp) {
         if (resp['data'][0] === 'ERROR') {
           notify.error(resp['data'][1]);

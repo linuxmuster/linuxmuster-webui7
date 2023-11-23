@@ -12,8 +12,8 @@ class ItemProvider(SidebarItemProvider):
         return [
             {
             'attach': 'category:class',
-            'name': _('Session-new Preview'),
-            'icon': 'fa-solid fa-school-lock',
+            'name': _('Session PREVIEW'),
+            'icon': 'chalkboard-teacher',
             'url': '/view/lmn/sessionsList',
             'weight': 20,
             },

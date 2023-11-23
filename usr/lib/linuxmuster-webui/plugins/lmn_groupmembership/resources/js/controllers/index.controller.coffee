@@ -42,7 +42,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
   $scope.setMembership = (group) ->
     $scope.changeState = true
     sophomorix_type_map = {'printer': 'group', 'schoolclass': 'class', 'project': 'project'}
-    if group.type == 'printer'
+    if group.sophomorixType == 'printer'
         action = if group.membership then 'removemembers' else 'addmembers'
     else
         # TODO: seems to be wrong for projects
@@ -52,7 +52,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
         action: action,
         entity: $scope.identity.user,
         groupname: group.groupname,
-        type: sophomorix_type_map[group.type]
+        type: sophomorix_type_map[group.sophomorixType]
     }).then (resp) ->
         if resp['data'][0] == 'ERROR'
             notify.error (resp['data'][1])

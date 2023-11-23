@@ -232,14 +232,14 @@
             </td>
 
             <td class="ng-binding" ng:show="isStudent(participant)">
-                <div ng:show="participant.sophomorixExamMode != '---'" style="text-align: center;">
+                <div ng:show="participant.examMode" style="text-align: center;">
                     <a style="display:inline-block; width:80px; font-size:100%"
                        class="btn btn-danger"
                        ng:click="stopUserExam(participant)"
-                       title="Stop exam from {{participant.sophomorixExamMode[0]}}"
+                       title="Stop exam from {{participant.examTeacher}}"
                     >
                         <i class="fa fa-graduation-cap"></i>
-                        {{participant.sophomorixExamMode[0]}}
+                        {{participant.examTeacher}}
                         <!--                        <i class="fas fa-stop pull-right"></i>-->
                     </a>
                 </div>
@@ -292,11 +292,6 @@
                         <li>
                             <a ng:click="setCustomPassword(participant, 'current')" translate>
                                 Set actual user password
-                            </a>
-                        </li>
-                        <li ng:show="participant.sophomorixExamMode != '---'">
-                            <a ng:click="setExamCustomPassword(participant, 'current')" translate>
-                                Set exam user (only!) password
                             </a>
                         </li>
                         <li>

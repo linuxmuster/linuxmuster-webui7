@@ -314,16 +314,14 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
 
     $scope.stopUserExam = (user) ->
         # End exam for a specific user
-        exam_teacher = user.sophomorixExamMode[0]
-        exam_student = user.displayName
         messagebox.show({
-            text: gettext('Do you really want to remove ' + exam_student + ' from the exam of ' + exam_teacher + '?'),
+            text: gettext('Do you really want to remove ' + user.displayName + ' from the exam of ' + user.examTeacher + '?'),
             positive: gettext('End exam mode'),
             negative: gettext('Cancel')
         }).then () ->
             $scope._stopUserExam(user).then () ->
                 $scope.refreshUsers()
-                notify.success(gettext('Exam mode stopped for user ') + exam_student)
+                notify.success(gettext('Exam mode stopped for user ') + user.displayName)
 
     $scope.stopRunningExams = () ->
         # End all running extern exams (run by other teachers)

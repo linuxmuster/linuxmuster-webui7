@@ -48,10 +48,10 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
 
     this.filterExamUsers = function () {
         _this.extExamUsers = _this.current.members.filter(function (user) {
-            return !['---', identity.user].includes(user.sophomorixExamMode[0]);
+            return user.examMode && user.examTeacher != identity.user;
         });
         _this.examUsers = _this.current.members.filter(function (user) {
-            return [identity.user].includes(user.sophomorixExamMode[0]);
+            return user.examTeacher == identity.user;
         });
     };
 
@@ -614,18 +614,15 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       });
     };
     $scope.stopUserExam = function(user) {
-      var exam_student, exam_teacher;
       // End exam for a specific user
-      exam_teacher = user.sophomorixExamMode[0];
-      exam_student = user.displayName;
       return messagebox.show({
-        text: gettext('Do you really want to remove ' + exam_student + ' from the exam of ' + exam_teacher + '?'),
+        text: gettext('Do you really want to remove ' + user.displayName + ' from the exam of ' + user.examTeacher + '?'),
         positive: gettext('End exam mode'),
         negative: gettext('Cancel')
       }).then(function() {
         return $scope._stopUserExam(user).then(function() {
           $scope.refreshUsers();
-          return notify.success(gettext('Exam mode stopped for user ') + exam_student);
+          return notify.success(gettext('Exam mode stopped for user ') + user.displayName);
         });
       });
     };

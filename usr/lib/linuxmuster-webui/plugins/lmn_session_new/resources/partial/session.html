@@ -264,7 +264,7 @@
                 </span>
             </td>
             <td width="1" ng:show="isStudent(participant)">
-                <span  uib-dropdown class="dropup" >
+                <span  uib-dropdown class="dropup" ng:show="!(participant.examMode && participant.examTeacher != identity.user)">
                     <button class="btn btn-default"  uib-dropdown-toggle>
                         <i class="fa fa-cog"></i>
                     </button>

@@ -107,9 +107,9 @@
         </div>
         <div style="margin-bottom: 10px;">
             <span translate>Rooms:</span><br>
-            <span style="font-weight: bold;padding-left:10px;" ng:repeat="room in roomList" ng:click="refreshDeviceListFiltered()">
-                <input type="checkbox" ng:model="room.checked" /> {{room.name}}<br>
-            </span>
+            <div style="font-weight: bold;padding-left:10px;" ng:repeat="room in roomList">
+                <input type="checkbox" ng:model="room.checked" ng:change="refreshDeviceListFiltered()" /> {{room.name}}<br>
+            </div>
         </div>
     </div>
 </div>

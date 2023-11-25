@@ -270,35 +270,45 @@
                     </button>
                     <ul uib-dropdown-menu class="dropdown-menu-right" style=" margin-bottom: -30px; margin-right: 40px; z-index: 4000;">
                         <li>
-                            <a ng:click="showFirstPassword(participant.sAMAccountName)" translate>
-                                Show initial password
+                            <a ng:click="showFirstPassword(participant.cn)" translate>
+                                Show <b>{{participant.cn}}</b>'s default password
                             </a>
                         </li>
-                        <li>
-                            <a ng:click="resetFirstPassword(participant.sAMAccountName)" translate>
-                                Restore initial password
+                        <li ng:show="!participant.examMode">
+                            <a ng:click="resetFirstPassword(participant)" translate>
+                                Restore <b>{{participant.cn}}</b>'s default password
                             </a>
                         </li>
-                        <li>
-                            <a ng:click="setRandomFirstPassword(participant.sAMAccountName)" translate>
-                                Set random initial password
+                        <li ng:show="participant.examMode">
+                            <a ng:click="resetFirstPassword(participant, exam=true)" translate>
+                                Restore <b>{{participant.cn}}</b>'s and <b>{{participant.examBaseCn}}</b>'s default password
                             </a>
                         </li>
-                        <li>
+                        <li ng:show="!participant.examMode">
+                            <a ng:click="setRandomFirstPassword(participant.cn)" translate>
+                                Set random default password for <b>{{participant.cn}}</b>
+                            </a>
+                        </li>
+                        <li ng:show="!participant.examMode">
                             <a ng:click="setCustomPassword(participant, 'first')" translate>
-                                Set custom initial password
+                                Set default password for <b>{{participant.cn}}</b>
                             </a>
                         </li>
                         <li>
                             <a ng:click="setCustomPassword(participant, 'current')" translate>
-                                Set actual user password
+                                Set actual password for <b>{{participant.cn}}</b>
                             </a>
                         </li>
-                        <li>
-                            <a ng:click="userInfo(participant.sAMAccountName)" translate>
-                                User information
+                        <li ng:show="participant.examMode">
+                            <a ng:click="setCustomPassword(participant, 'current', exam=true)" translate>
+                                Set actual password for <b>{{participant.cn}}</b> and <b>{{participant.examBaseCn}}</b>
                             </a>
                         </li>
+<!--                        <li>-->
+<!--                            <a ng:click="userInfo(participant.sAMAccountName)" translate>-->
+<!--                                {{participant.cn}} informations-->
+<!--                            </a>-->
+<!--                        </li>-->
                     </ul>
                 </span>
             </td>

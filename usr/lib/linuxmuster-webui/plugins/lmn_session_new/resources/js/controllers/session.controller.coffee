@@ -355,22 +355,26 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
             $scope.blurred = false
         )
 
-    $scope.resetFirstPassword = (username) ->
-        userPassword.resetFirstPassword(username)
-        if not $scope._checkExamUser(username)
-            userPassword.resetFirstPassword(username)
+    $scope.resetFirstPassword = (user, exam=false) ->
+        userPassword.resetFirstPassword(user.cn)
+        if exam
+            userPassword.resetFirstPassword(user.examBaseCn)
 
     $scope.setRandomFirstPassword = (username) ->
         if not $scope._checkExamUser(username)
             userPassword.setRandomFirstPassword(username)
 
-    $scope.setCustomPassword = (user, pwtype) ->
-        if not $scope._checkExamUser(user.sAMAccountName)
-            userPassword.setCustomPassword(user, pwtype)
-
-    $scope.setExamCustomPassword = (user, pwtype) ->
-        if $scope._checkExamUser(user.sAMAccountName)
-            userPassword.setCustomPassword(user, pwtype)
+    $scope.setCustomPassword = (user, pwtype, exam=false) ->
+        userList = [user]
+        if exam
+            examUser = {
+                'sophomorixAdminClass': user.sophomorixAdminClass.slice(0,-5),
+                'sn': user.sn,
+                'givenName': user.givenName,
+                'sAMAccountName': user.sAMAccountName.slice(0,-5)
+            }
+            userList.push(examUser)
+        userPassword.setCustomPassword(userList, pwtype, exam)
 
     $scope.choose_items = (path, print_path, command, user) ->
         return $uibModal.open(

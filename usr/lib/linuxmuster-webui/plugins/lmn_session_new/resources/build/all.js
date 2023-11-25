@@ -671,10 +671,10 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         return $scope.blurred = false;
       });
     };
-    $scope.resetFirstPassword = function(username) {
-      userPassword.resetFirstPassword(username);
-      if (!$scope._checkExamUser(username)) {
-        return userPassword.resetFirstPassword(username);
+    $scope.resetFirstPassword = function(user, exam = false) {
+      userPassword.resetFirstPassword(user.cn);
+      if (exam) {
+        return userPassword.resetFirstPassword(user.examBaseCn);
       }
     };
     $scope.setRandomFirstPassword = function(username) {
@@ -682,15 +682,19 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         return userPassword.setRandomFirstPassword(username);
       }
     };
-    $scope.setCustomPassword = function(user, pwtype) {
-      if (!$scope._checkExamUser(user.sAMAccountName)) {
-        return userPassword.setCustomPassword(user, pwtype);
+    $scope.setCustomPassword = function(user, pwtype, exam = false) {
+      var examUser, userList;
+      userList = [user];
+      if (exam) {
+        examUser = {
+          'sophomorixAdminClass': user.sophomorixAdminClass.slice(0, -5),
+          'sn': user.sn,
+          'givenName': user.givenName,
+          'sAMAccountName': user.sAMAccountName.slice(0, -5)
+        };
+        userList.push(examUser);
       }
-    };
-    $scope.setExamCustomPassword = function(user, pwtype) {
-      if ($scope._checkExamUser(user.sAMAccountName)) {
-        return userPassword.setCustomPassword(user, pwtype);
-      }
+      return userPassword.setCustomPassword(userList, pwtype, exam);
     };
     $scope.choose_items = function(path, print_path, command, user) {
       return $uibModal.open({

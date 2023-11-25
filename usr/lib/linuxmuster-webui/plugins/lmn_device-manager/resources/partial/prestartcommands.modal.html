@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <h3>{{preStartCommands.length}} <span translate>Linbo-Pre-Start Command(s)</span></h3>
+</div>
+<div class="modal-body">
+    <div style="width: 100%;" class="alert alert-info" ng:if="!preStartCommands || preStartCommands.length == 0" translate>
+        Currently no Linbo-Pre-Start Command's defined!
+    </div>
+    <table class="table" ng:if="preStartCommands.length > 0">
+        <tr>
+            <th translate>Name</th>
+            <th translate>Command</th>
+            <th></th>
+        </tr>
+        <tr ng:repeat="preStartCommand in preStartCommands">
+            <td style="vertical-align: middle;">{{preStartCommand.name}}</td>
+            <td style="vertical-align: middle;">{{preStartCommand.content}}</td>
+            
+            <td style="line-height: 40px;text-align: right;">
+                <button ng:click="editPreStartCommand(preStartCommand)" class="btn btn-default">
+                    <i class="fas fa-pencil ng-scope"></i> Edit
+                </button>
+                <button ng:click="removePreStartCommand(preStartCommand)" class="btn btn-danger">
+                    <i class="fas fa-times ng-scope"></i> Delete
+                </button>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="modal-footer">
+    <button ng:click="getPrestartCommands()" class="btn btn-default" translate>Refresh</button>
+    <button ng:click="close()" class="btn btn-default" translate>Close</button>
+</div>

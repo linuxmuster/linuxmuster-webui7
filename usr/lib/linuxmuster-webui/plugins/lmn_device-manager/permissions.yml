@@ -1,0 +1,11 @@
+globaladministrator:
+    - 'sidebar:view:/view/lmn/device-manager: true'
+
+schooladministrator:
+    - 'sidebar:view:/view/lmn/device-manager: true'
+
+teacher:
+    - 'sidebar:view:/view/lmn/device-manager: false'
+
+student:
+    - 'sidebar:view:/view/lmn/device-manager: false'

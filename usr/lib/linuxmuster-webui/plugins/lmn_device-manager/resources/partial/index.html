@@ -1,0 +1,124 @@
+<div id="siteContent" style="padding-top: 20px;">
+    <div id="deviceList" style="width: 75%;float:left;" class="alert alert-info" ng:show="deviceListFiltered.length == 0" translate>
+        Please select a room to display devices!
+    </div>
+    <div id="deviceList" style="width: 75%;float:left;" ng:show="deviceListFiltered.length > 0">
+        <div ng:repeat="device in deviceListFiltered" class="lmp_deviceBoxSM">
+            <div class="lmp_deviceBoxSM_topBar">
+                <div style="float: left;">
+                    <input type="checkbox" ng:model="device.checked" ng:click="checkCheckedDevices()" />
+                    <i class="fas fa-circle" style="color:green;" title="{{device.online}}" ng:show="device.online == 'up'"></i>
+                    <i class="fas fa-circle" style="color:red;" title="{{device.online}}" ng:show="device.online == 'down'"></i>
+                    <i class="fas fa-circle" style="color:grey;" title="{{device.online}}" ng:show="device.online == 'unknown'"></i>
+                </div>
+                <div uib-dropdown class="input-group-btn" auto-close="outsideClick" style="float:right;margin-right: 25px;">
+                    <button class="btn btn-default btn-sm" style="padding:3px 8px;" title="{{'Options'|translate}}" uib-dropdown-toggle>
+                        <i class="fas fa-bars" style="color:black;"></i>
+                    </button>
+                    <div uib-dropdown-menu class="dropdown-menu-left multi-level">
+                        <li class="dropdown-item" ng:show="device.online == 'down' && !device.remoteBlock">
+                            <a ng:click="deviceStart(device)"><i class="fa fa-power-off"></i> {{'Start'|translate}}</a>
+                        </li>
+                        <li class="dropdown-item disabled" ng:show="device.online == 'up' || device.online == 'unknown'">
+                            <a><i class="fa fa-power-off"></i> {{'Start'|translate}}</a>
+                        </li>
+                        <li class="dropdown-item" ng:show="device.os != 'Unknown' && !device.remoteBlock">
+                            <a ng:click="deviceShutdown(device)"><i class="fa fa-power-off"></i> {{'Shutdown'|translate}}</a>
+                        </li>
+                        <li class="dropdown-item" ng:show="device.os != 'Unknown' && !device.remoteBlock">
+                            <a ng:click="deviceReboot(device)"><i class="fa fa-refresh"></i> {{'Reboot'|translate}}</a>
+                        </li>
+                        <li class="dropdown-item disabled" ng:show="device.os == 'Unknown' || device.remoteBlock">
+                            <a><i class="fa fa-power-off"></i> {{'Shutdown'|translate}}</a>
+                        </li>
+                        <li class="dropdown-item disabled" ng:show="device.os == 'Unknown' || device.remoteBlock">
+                            <a><i class="fa fa-refresh"></i> {{'Reboot'|translate}}</a>
+                        </li>
+                        <li class="dropdown-item" ng:show="device.os == 'Linbo'">
+                            <a ng:click="deviceLinboRemote(device, false)"><i class="fa fa-hospital-o"></i> Linbo-Remote</a>
+                        </li>
+                        <li class="dropdown-item disabled" ng:show="device.os != 'Linbo'">
+                            <a><i class="fa fa-hospital-o"></i> Linbo-Remote</a>
+                        </li>
+                        <li class="dropdown-item" ng:show="!device.remoteBlock">
+                            <a ng:click="deviceLinboRemote(device, true)"><i class="fa fa-hospital-o"></i> Linbo-Remote (Prestart)</a>
+                        </li>
+                        <li class="dropdown-item disabled" ng:show="device.remoteBlock">
+                            <a><i class="fa fa-hospital-o"></i> Linbo-Remote (Prestart)</a>
+                        </li>
+                    </div>
+                </div>
+                <div uib-dropdown class="input-group-btn" auto-close="outsideClick" style="float:right;margin-right: 30px;">
+                    <button class="btn btn-default btn-sm" style="padding:3px 8px;" title="{{'Infos'|translate}}" uib-dropdown-toggle>
+                        <i class="fas fa-question-circle" style="color:black;"></i>
+                    </button>
+                    <ul uib-dropdown-menu class="dropdown-menu-left">
+                        <li class="dropdown-item" style="padding-left:5px;padding-right:5px;">{{'Room'|translate}}: {{device.room}}</li>
+                        <li class="dropdown-item" style="padding-left:5px;padding-right:5px;">{{'Hostname'|translate}}: {{device.hostname}}</li>
+                        <li class="dropdown-item" style="padding-left:5px;padding-right:5px;">{{'IP'|translate}}: {{device.ip}}</li>
+                        <li class="dropdown-item" style="padding-left:5px;padding-right:5px;">{{'MAC'|translate}}: {{device.mac}}</li>
+                        <li class="dropdown-item" style="padding-left:5px;padding-right:5px;">{{'Group'|translate}}: {{device.group}}</li>
+                        <li class="dropdown-item" style="padding-left:5px;padding-right:5px;">{{'Type'|translate}}: {{device.type}}</li>
+                        <li class="dropdown-item" style="padding-left:5px;padding-right:5px;">{{'OS'|translate}}: {{device.os}}</li>
+                        <li class="dropdown-item" style="padding-left:5px;padding-right:5px;">{{'Online'|translate}}: {{device.online}}</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="OSArea" style="text-align: center;">
+                <i class="fa fa-linux" style="color:black;font-size:35px;height:40px;width:40px;" ng:show="device.os == 'Linux'" title="{{device.os}}"></i>
+                <i class="fa fa-windows" style="color:black;font-size:35px;height:40px;width:40px;" ng:show="device.os == 'Windows'" title="{{device.os}}"></i>
+                <i class="fa fa-hospital-o" style="color:black;font-size:35px;height:40px;width:40px;" ng:show="device.os == 'Linbo'" title="{{device.os}}"></i>
+                <i class="fa fa-question-circle" style="color:black;font-size:35px;height:40px;width:40px;" ng:show="device.os == 'Unknown'" title="{{device.os}}"></i>
+            </div>
+            <div style="text-align: center;width: 100%;">
+                <span style="font-weight: bold;">{{device.hostname}}</span><br>
+                {{device.ip}}
+            </div>
+        </div>
+    </div>
+    
+    <div id="sideBar" style="width: 20%;float: right;padding:5px;">
+        <div style="margin-bottom: 10px;">
+            <button class="btn btn-lmn ng-scope" ng:click="openRunningProcesses()" style="width: 100%;text-align: left;" title="{{'Linbo-Remote Processes currently running'|translate}}">
+                <span class="badge badge-secondary" style="margin-right: 10px;">{{runningLinboRemoteCommands.length}}</span><span translate>LR-Processes</span>
+            </button>
+        </div>
+        <div style="margin-bottom: 10px;">
+            <button class="btn btn-lmn ng-scope" ng:click="openPreStartCommands()" style="width: 100%;text-align: left;" title="{{'Commands to use when device starts in linbo'|translate}}">
+                <span class="badge badge-secondary" style="margin-right: 10px;">{{preStartCommands.length}}</span><span translate>LR-Prestart's</span>
+            </button>
+        </div>
+        <hr>
+        <div style="margin-bottom: 10px;">
+            <button class="btn btn-lmn ng-scope" ng:click="checkStatus()" style="width: 100%;" translate>Refresh</button>
+        </div>
+        <div style="margin-bottom: 10px;">
+            <input type="checkbox" ng:model="autoRefreshStatus" /> <span translate>Auto-Refresh</span><br>
+            <div class="input-group" style="margin-top: 10px;margin-bottom: 10px;">
+                <input type="number" style="width: 60%;" ng:model="autoRefreshStatusTimerStart" class="form-control" aria-label="autoRefreshStatusTimerStart" aria-describedby="basic-addon2">
+                <button style="margin-left: 10px;width: calc(40% - 15px);" ng:click="updateAutoRefreshStatusTimer()" class="btn btn-lmn btn-sm ng-scope" type="button">Set</button>
+            </div>
+            <span translate>Next refresh in</span> {{autoRefreshStatusTimerCurrent}} <span translate>seconds!</span>
+        </div>
+        <hr>
+        <div style="margin-bottom: 10px;">
+            <span translate>Current school:</span><br>
+            <span style="font-weight: bold;padding-left:10px;">{{identity.profile.activeSchool}}</span>
+        </div>
+        <div style="margin-bottom: 10px;">
+            <span translate>Rooms:</span><br>
+            <span style="font-weight: bold;padding-left:10px;" ng:repeat="room in roomList" ng:click="refreshDeviceListFiltered()">
+                <input type="checkbox" ng:model="room.checked" /> {{room.name}}<br>
+            </span>
+        </div>
+    </div>
+</div>
+<floating-toolbar>
+    <button ng:show="deviceListFilteredChecked.length > 0" ng:click="deviceActionForAll('start')" class="btn btn-lmn"><i class="fa fa-power-off"></i> {{'Start'|translate}}</button>
+    <button ng:show="deviceListFilteredChecked.length > 0" ng:click="deviceActionForAll('shutdown')" class="btn btn-lmn"><i class="fa fa-power-off"></i> {{'Shutdown'|translate}}</button>
+    <button ng:show="deviceListFilteredChecked.length > 0" ng:click="deviceActionForAll('reboot')" class="btn btn-lmn"><i class="fa fa-refresh"></i> {{'Reboot'|translate}}</button>
+    <!-- <button ng:show="deviceListFilteredChecked.length > 0" class="btn btn-lmn"><i class="fa fa-hospital-o"></i> Linbo-Remote</button>
+    <button ng:show="deviceListFilteredChecked.length > 0" class="btn btn-lmn"><i class="fa fa-hospital-o"></i> Linbo-Remote (Prestart)</button> -->
+
+    <button ng:show="deviceListFiltered.length > 0" ng:click="devicesToggleSelection()" class="btn btn-lmn pull-right">{{deviceListFilteredChecked.length}} {{'devices selected'|translate}}</button>
+</floating-toolbar>

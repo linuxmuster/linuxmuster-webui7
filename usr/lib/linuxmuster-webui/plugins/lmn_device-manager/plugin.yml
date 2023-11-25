@@ -1,0 +1,23 @@
+name: lmn.device-manager
+author: Netzint
+email: lukas.spitznagel@netzint.de
+url: https://www.netzint.de
+version: '1.0'
+title: 'Device Manager'
+icon: laptop
+dependencies:
+    - !PluginDependency { plugin_name: core }
+    - !PluginDependency { plugin_name: lmn_common }
+resources:
+    - 'resources/js/module.es'
+    - 'resources/js/routing.es'
+    - 'resources/js/controllers/index.controller.es'
+    - 'resources/partial/index.html'
+    - 'resources/partial/linboremote.modal.html'
+    - 'resources/partial/runningprocesses.modal.html'
+    - 'resources/partial/actionForAllDevices.modal.html'
+    - 'resources/partial/prestartcommands.modal.html'
+    - 'resources/style.less'
+    - 'main.py'
+    - 'views.py'
+    - 'ng:lmn.device-manager'

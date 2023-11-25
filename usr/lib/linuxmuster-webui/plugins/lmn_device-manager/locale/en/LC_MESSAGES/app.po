@@ -1,0 +1,263 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-11-25 17:48+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/runningprocesses.modal.html:10
+msgid "#"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:96
+msgid "Auto-Refresh"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/linboremote.modal.html:8
+msgid "Baseimage"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/linboremote.modal.html:69
+msgid "Cancel"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/actionForAllDevices.modal.html:25
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/actionForAllDevices.modal.html:26
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/prestartcommands.modal.html:31
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/runningprocesses.modal.html:34
+msgid "Close"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/prestartcommands.modal.html:11
+msgid "Command"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:87
+msgid "Commands to use when device starts in linbo"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:105
+msgid "Current school:"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/prestartcommands.modal.html:5
+msgid "Currently no Linbo-Pre-Start Command's defined!"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/runningprocesses.modal.html:5
+msgid "Currently no linbo-remote processes running!"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/actionForAllDevices.modal.html:15
+msgid "Finished!"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:60
+msgid "Group"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:57
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/runningprocesses.modal.html:11
+msgid "Hostname"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:58
+msgid "IP"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:52
+msgid "Infos"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:88
+msgid "LR-Prestart's"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:83
+msgid "LR-Processes"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/linboremote.modal.html:9
+msgid "Last sync"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/prestartcommands.modal.html:2
+msgid "Linbo-Pre-Start Command(s)"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/linboremote.modal.html:2
+msgid "Linbo-Remote"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:82
+msgid "Linbo-Remote Processes currently running"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:59
+msgid "MAC"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/prestartcommands.modal.html:10
+msgid "Name"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:101
+msgid "Next refresh in"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/actionForAllDevices.modal.html:12
+msgid "Now processing"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:62
+msgid "OS"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:63
+msgid "Online"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:15
+msgid "Options"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:2
+msgid "Please select a room to display devices!"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:119
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:29
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:35
+msgid "Reboot"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:93
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/prestartcommands.modal.html:30
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/runningprocesses.modal.html:33
+msgid "Refresh"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:56
+msgid "Room"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:109
+msgid "Rooms:"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/linboremote.modal.html:67
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/linboremote.modal.html:68
+msgid "Run"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:118
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:26
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:32
+msgid "Shutdown"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:117
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:20
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:23
+msgid "Start"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/actionForAllDevices.modal.html:9
+msgid "Starting..."
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/runningprocesses.modal.html:12
+msgid "Timestamp"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:61
+msgid "Type"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/actionForAllDevices.modal.html:2
+msgid "all devices"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:123
+msgid "devices selected"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/actionForAllDevices.modal.html:19
+msgid "error(s) occourt!"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/runningprocesses.modal.html:2
+msgid "running processes"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:101
+msgid "seconds!"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/js/controllers/index.controller.es:2
+msgid "Device Manager"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/js/controllers/index.controller.es:114
+msgid "Device shutdown successful initiated!"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/js/controllers/index.controller.es:120
+msgid "Device shutdown failed!"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/js/controllers/index.controller.es:126
+msgid "Device reboot successful initiated!"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/js/controllers/index.controller.es:132
+msgid "Device reboot failed!"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/js/controllers/index.controller.es:138
+msgid "Device start successful initiated!"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/js/controllers/index.controller.es:144
+msgid "Device start failed!"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/js/controllers/index.controller.es:319
+msgid "Command successfully stored!"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/js/controllers/index.controller.es:337
+msgid "Command failed!"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/js/controllers/index.controller.es:374
+msgid "Command deleted successfully!"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/js/controllers/index.controller.es:377
+msgid "Failed to delete: "
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/js/controllers/index.controller.es:384
+msgid "Edit Linbo-Pre-Start Command"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/js/controllers/index.controller.es:387
+msgid "Command edited successfully!"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/js/controllers/index.controller.es:390
+msgid "Failed to edit: "
+msgstr ""

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-14 15:37+0100\n"
+"POT-Creation-Date: 2023-11-25 17:48+0100\n"
 "PO-Revision-Date: 2023-08-01 13:42\n"
 "Last-Translator: \n"
 "Language-Team: Norwegian\n"
@@ -17,11 +17,11 @@ msgstr ""
 "X-Crowdin-File: /2.0/lmn_smbclient.po\n"
 "X-Crowdin-File-ID: 226\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/views/smbclient.py:562
+#: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/views/smbclient.py:564
 msgid "Ticket successfully refreshed"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/views/smbclient.py:565
+#: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/views/smbclient.py:567
 msgid "Timeout while trying to get a kerberos ticket"
 msgstr ""
 

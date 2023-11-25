@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-09 13:04+0100\n"
+"POT-Creation-Date: 2023-11-25 17:48+0100\n"
 "PO-Revision-Date: 2023-08-03 13:02\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
@@ -239,10 +239,6 @@ msgstr "utilisateur(s)"
 msgid "Session"
 msgstr "Cours"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/main.py:23
-msgid "Print Passwords"
-msgstr "Imprimer les mots de passe"
-
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/main.py:37
 msgid "Write students"
 msgstr "Ecriture élèves"
@@ -469,3 +465,6 @@ msgstr "Récupère les fichiers ..."
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:757
 msgid "Not implemented"
 msgstr "Non implémenté"
+
+#~ msgid "Print Passwords"
+#~ msgstr "Imprimer les mots de passe"

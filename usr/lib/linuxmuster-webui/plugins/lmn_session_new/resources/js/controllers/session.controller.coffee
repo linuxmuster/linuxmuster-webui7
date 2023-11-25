@@ -18,6 +18,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         'image': "far fa-file-image",
         'file': "far fa-file",
     }
+
     $scope.management = {
         'wifi': false,
         'internet': false,

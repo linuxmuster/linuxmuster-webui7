@@ -79,10 +79,10 @@ class Handler(HttpPlugin):
         result = []
 
         def get_user_info(user):
-            user = user.replace('-exam', '')
-            details = self.context.ldapreader.schoolget(f'/users/{user}')
-            details['changed'] = False # TODO: usefull ?
-            details['exammode-changed'] = False # TODO : usefull ?
+            baseUser = user.replace('-exam', '')
+            details = self.context.ldapreader.schoolget(f'/users/{baseUser}')
+            if self.context.identity in details['sophomorixExamMode']:
+                details = self.context.ldapreader.schoolget(f'/users/exam/{user}')
             result.append(details)
 
         users = http_context.json_body()['users']
@@ -100,8 +100,6 @@ class Handler(HttpPlugin):
 
         def get_exam_user_info(user):
             details = self.context.ldapreader.schoolget(f'/users/exam/{user}')
-            details['changed'] = False # TODO : usefull ?
-            details['exammode-changed'] = False # TODO : TODO : usefull ?
             result.append(details)
 
         users = http_context.json_body()['users']

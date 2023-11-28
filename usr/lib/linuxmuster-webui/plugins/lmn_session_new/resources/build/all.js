@@ -48,10 +48,10 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
 
     this.filterExamUsers = function () {
         _this.extExamUsers = _this.current.members.filter(function (user) {
-            return !['---', identity.user].includes(user.sophomorixExamMode[0]);
+            return user.examMode && user.examTeacher != identity.user;
         });
         _this.examUsers = _this.current.members.filter(function (user) {
-            return [identity.user].includes(user.sophomorixExamMode[0]);
+            return user.examTeacher == identity.user;
         });
     };
 
@@ -614,18 +614,15 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       });
     };
     $scope.stopUserExam = function(user) {
-      var exam_student, exam_teacher;
       // End exam for a specific user
-      exam_teacher = user.sophomorixExamMode[0];
-      exam_student = user.displayName;
       return messagebox.show({
-        text: gettext('Do you really want to remove ' + exam_student + ' from the exam of ' + exam_teacher + '?'),
+        text: gettext('Do you really want to remove ' + user.displayName + ' from the exam of ' + user.examTeacher + '?'),
         positive: gettext('End exam mode'),
         negative: gettext('Cancel')
       }).then(function() {
         return $scope._stopUserExam(user).then(function() {
           $scope.refreshUsers();
-          return notify.success(gettext('Exam mode stopped for user ') + exam_student);
+          return notify.success(gettext('Exam mode stopped for user ') + user.displayName);
         });
       });
     };
@@ -674,9 +671,10 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         return $scope.blurred = false;
       });
     };
-    $scope.resetFirstPassword = function(username) {
-      if (!$scope._checkExamUser(username)) {
-        return userPassword.resetFirstPassword(username);
+    $scope.resetFirstPassword = function(user, exam = false) {
+      userPassword.resetFirstPassword(user.cn);
+      if (exam) {
+        return userPassword.resetFirstPassword(user.examBaseCn);
       }
     };
     $scope.setRandomFirstPassword = function(username) {
@@ -684,11 +682,21 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         return userPassword.setRandomFirstPassword(username);
       }
     };
-    $scope.setCustomPassword = function(user, pwtype) {
-      if (!$scope._checkExamUser(user.sAMAccountName)) {
-        return userPassword.setCustomPassword(user, pwtype);
+    $scope.setCustomPassword = function(user, pwtype, exam = false) {
+      var examUser, userList;
+      userList = [user];
+      if (exam) {
+        examUser = {
+          'sophomorixAdminClass': user.sophomorixAdminClass.slice(0, -5),
+          'sn': user.sn,
+          'givenName': user.givenName,
+          'sAMAccountName': user.sAMAccountName.slice(0, -5)
+        };
+        userList.push(examUser);
       }
+      return userPassword.setCustomPassword(userList, pwtype, exam);
     };
+    // Share and collect
     $scope.choose_items = function(path, print_path, command, user) {
       return $uibModal.open({
         templateUrl: '/lmn_session_new:resources/partial/selectFile.modal.html',
@@ -791,7 +799,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       promises = [];
       now = $scope.now();
       transfer_directory = `${$scope.session.type}_${$scope.session.name}_${now}`;
-      collect_path = `${identity.profile.homeDirectory}\\transfer\\${transfer_directory}`;
+      collect_path = `${identity.profile.homeDirectory}\\transfer\\collected\\${transfer_directory}`;
       smbclient.createDirectory(collect_path);
       promises = [];
       ref = $scope.session.members;
@@ -822,7 +830,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       // command is copy or move
       now = $scope.now();
       transfer_directory = `${$scope.session.type}_${$scope.session.name}_${now}`;
-      collect_path = `${identity.profile.homeDirectory}\\transfer\\${transfer_directory}\\${participant.sAMAccountName}`;
+      collect_path = `${identity.profile.homeDirectory}\\transfer\\collected\\${transfer_directory}\\${participant.sAMAccountName}`;
       smbclient.createDirectory(collect_path);
       choose_path = `${participant.homeDirectory}\\transfer\\${$scope.identity.user}\\_collect`;
       print_path = `transfer/${$scope.identity.user}/_collect`;

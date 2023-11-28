@@ -1,3 +1,18 @@
+linuxmuster-webui7 (17.2.28) lmn72-testing; urgency=medium
+
+  * New plugin device manager (thanks hermanntoast!)
+  * [groupmembership] Fix sophomorixType (thanks hermanntoast!)
+  * [groupmembership] Question about kerberos renew more visible
+  * [session_new] Fix collected path
+  * [session_new] Recognize own students in exam mode
+  * [session_new] Custom menu for passwords. Change password in exam mode.
+  * [session-new] Fix some errors and design issues.
+  * Widescreen as default display.
+  * [session-new] Fix some errors and design issues.
+  * [session_new] Better design
+
+ -- Lukas Spitznagel <lukas.spitznagel@netzint.de>  Thu, 28 Nov 2023 16:32:02 +0200
+
 linuxmuster-webui7 (17.2.24) lmn72-testing; urgency=medium
 
   * Partially moving to linuxmuster-tools (new dependency)
@@ -47,6 +62,23 @@ linuxmuster-webui7 (17.2.22) lmn72; urgency=low
 
  -- Andreas Till <andreas.till@netzint.de>  Mon, 07 Aug 2023 18:20:08 +0200
  
+linuxmuster-webui7 (7.2.28-testing) lmn72; urgency=medium
+
+  * New plugin device manager (thanks hermanntoast!)
+  * [groupmembership] Fix sophomorixType (thanks hermanntoast!)
+  * [groupmembership] Question about kerberos renew more visible
+  * [session_new] Fix collected path
+  * [session_new] Recognize own students in exam mode
+  * [session_new] Custom menu for passwords. Change password in exam mode.
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 26 Nov 2023 16:27:35 +0100
+
+linuxmuster-webui7 (7.2.27-testing) lmn72; urgency=medium
+
+  * [session-new] Fix some errors and design issues.
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 19 Nov 2023 15:16:34 +0100
+
 linuxmuster-webui7 (7.2.26-testing) lmn72; urgency=medium
 
   * Widescreen as default display.

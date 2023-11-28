@@ -1,0 +1,35 @@
+<div class="modal-header">
+    <h3>{{runningLinboRemoteCommands.length}} <span translate>running processes</span></h3>
+</div>
+<div class="modal-body">
+    <div style="width: 100%;" class="alert alert-info" ng:if="!runningLinboRemoteCommands || runningLinboRemoteCommands.length == 0" translate>
+        Currently no linbo-remote processes running!
+    </div>
+    <table class="table" ng:if="runningLinboRemoteCommands.length > 0">
+        <tr>
+            <th translate>#</th>
+            <th translate>Hostname</th>
+            <th translate>Timestamp</th>
+            <th></th>
+        </tr>
+        <tr ng:repeat="process in runningLinboRemoteCommands">
+            <td style="vertical-align: middle;">{{process.id}}</td>
+            <td style="vertical-align: middle;">{{process.hostname}}</td>
+            <td style="vertical-align: middle;">{{process.startdate}} {{process.starttime}}</td>
+            <td style="line-height: 40px;text-align: right;">
+                <button ng:click="loadLog(process.hostname)" class="btn btn-default">
+                    <i class="fas fa-terminal ng-scope"></i> Show
+                </button>
+                <button ng:click="" class="btn btn-danger">
+                    <i class="fas fa-times ng-scope"></i> Kill
+                </button>
+            </td>
+        </tr>
+    </table>
+    <progress-spinner ng:show="linboRemoteLogIsLoading"></progress-spinner>
+    <textarea onchange="this.scrollTop = this.scrollHeight;" id="linbocommandlog" class="form-control" rows="10" style="width: 100%;resize: none;" ng:model="linbocommandresult" ng:if="linbocommandresult.length > 0" disabled></textarea>
+</div>
+<div class="modal-footer">
+    <button ng:click="getRunningLinboRemoteCommands()" class="btn btn-default" translate>Refresh</button>
+    <button ng:click="close()" class="btn btn-default" translate>Close</button>
+</div>

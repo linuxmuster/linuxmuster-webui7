@@ -13,7 +13,7 @@
     });
   });
 
-  angular.module('lmn.groupmembership').controller('LMNGroupMembershipController', function($rootScope, $scope, $http, identity, $uibModal, gettext, notify, pageTitle, messagebox, validation, smbclient) {
+  angular.module('lmn.groupmembership').controller('LMNGroupMembershipController', function($rootScope, $scope, $http, $window, identity, $uibModal, gettext, notify, pageTitle, messagebox, validation, smbclient) {
     $scope.need_krbcc_refresh = false;
     pageTitle.set(gettext('Enrolle'));
     $scope.show_schoolclasses = true;
@@ -22,6 +22,19 @@
     $scope.loading_schoolclasses = true;
     $scope.loading_projects = true;
     $scope.loading_printers = true;
+    $scope.$on("$destroy", function() {
+      var warning;
+      warning = "These changes can only take effect if the session is renewed, otherwise it will be active after the next logout/login. It could be useful for the session plugin to do it now.";
+      if ($scope.need_krbcc_refresh) {
+        return messagebox.show({
+          text: warning,
+          positive: 'Do it now',
+          negative: 'Later'
+        }).then(function() {
+          return $scope.refresh_krbcc();
+        });
+      }
+    });
     $scope.sorts = [
       {
         name: gettext('Groupname'),
@@ -55,10 +68,10 @@
       $scope.changeState = true;
       sophomorix_type_map = {
         'printer': 'group',
-        'schoolclass': 'class',
+        'adminclass': 'class',
         'project': 'project'
       };
-      if (group.type === 'printer') {
+      if (group.sophomorixType === 'printer') {
         action = group.membership ? 'removemembers' : 'addmembers';
       } else {
         // TODO: seems to be wrong for projects
@@ -68,7 +81,7 @@
         action: action,
         entity: $scope.identity.user,
         groupname: group.groupname,
-        type: sophomorix_type_map[group.type]
+        type: sophomorix_type_map[group.sophomorixType]
       }).then(function(resp) {
         if (resp['data'][0] === 'ERROR') {
           notify.error(resp['data'][1]);

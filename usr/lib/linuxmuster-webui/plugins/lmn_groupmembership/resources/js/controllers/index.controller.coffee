@@ -3,7 +3,7 @@ angular.module('lmn.groupmembership').config ($routeProvider) ->
     controller: 'LMNGroupMembershipController'
     templateUrl: '/lmn_groupmembership:resources/partial/index.html'
 
-angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController', ($rootScope, $scope, $http, identity, $uibModal, gettext, notify, pageTitle, messagebox, validation, smbclient) ->
+angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController', ($rootScope, $scope, $http, $window, identity, $uibModal, gettext, notify, pageTitle, messagebox, validation, smbclient) ->
 
   $scope.need_krbcc_refresh = false
 
@@ -14,6 +14,14 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
   $scope.loading_schoolclasses = true
   $scope.loading_projects = true
   $scope.loading_printers = true
+
+  $scope.$on("$destroy", () ->
+    warning = "These changes can only take effect if the session is renewed, otherwise it will be active after the next
+        logout/login. It could be useful for the session plugin to do it now."
+    if $scope.need_krbcc_refresh
+      messagebox.show(text: warning, positive: 'Do it now', negative: 'Later').then () ->
+        $scope.refresh_krbcc()
+  )
 
   $scope.sorts = [
     {
@@ -41,8 +49,8 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
 
   $scope.setMembership = (group) ->
     $scope.changeState = true
-    sophomorix_type_map = {'printer': 'group', 'schoolclass': 'class', 'project': 'project'}
-    if group.type == 'printer'
+    sophomorix_type_map = {'printer': 'group', 'adminclass': 'class', 'project': 'project'}
+    if group.sophomorixType == 'printer'
         action = if group.membership then 'removemembers' else 'addmembers'
     else
         # TODO: seems to be wrong for projects
@@ -52,7 +60,7 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
         action: action,
         entity: $scope.identity.user,
         groupname: group.groupname,
-        type: sophomorix_type_map[group.type]
+        type: sophomorix_type_map[group.sophomorixType]
     }).then (resp) ->
         if resp['data'][0] == 'ERROR'
             notify.error (resp['data'][1])

@@ -7,7 +7,7 @@ from jadi import component
 from aj.api.http import get, post, delete, put, patch, HttpPlugin
 from aj.auth import authorize
 from aj.api.endpoint import endpoint, EndpointError
-from aj.plugins.lmn_samba_dns.smbtool import SambaToolDNS
+from linuxmusterTools.samba import SambaToolDNS
 
 @component(HttpPlugin)
 class Handler(HttpPlugin):
@@ -31,7 +31,7 @@ class Handler(HttpPlugin):
         :rtype: list
         """
 
-        return [self.dns.get_list(), self.dns.zone]
+        return [self.dns.list(), self.dns.zone]
 
     @patch(r'/api/lmn/dns')
     @authorize('lm:samba_dns:write')

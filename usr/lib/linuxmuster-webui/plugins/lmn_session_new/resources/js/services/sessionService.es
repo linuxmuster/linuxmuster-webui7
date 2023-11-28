@@ -21,8 +21,8 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
     }
 
     this.filterExamUsers = () => {
-        this.extExamUsers = this.current.members.filter((user) => !['---', identity.user].includes(user.sophomorixExamMode[0]));
-        this.examUsers = this.current.members.filter((user) => [identity.user].includes(user.sophomorixExamMode[0]));
+        this.extExamUsers = this.current.members.filter((user) => user.examMode && user.examTeacher != identity.user);
+        this.examUsers = this.current.members.filter((user) => user.examTeacher == identity.user);
     }
 
     this._createWorkingDirectory = (user) => {

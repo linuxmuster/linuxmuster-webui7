@@ -18,6 +18,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         'image': "far fa-file-image",
         'file': "far fa-file",
     }
+
     $scope.management = {
         'wifi': false,
         'internet': false,
@@ -314,16 +315,14 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
 
     $scope.stopUserExam = (user) ->
         # End exam for a specific user
-        exam_teacher = user.sophomorixExamMode[0]
-        exam_student = user.displayName
         messagebox.show({
-            text: gettext('Do you really want to remove ' + exam_student + ' from the exam of ' + exam_teacher + '?'),
+            text: gettext('Do you really want to remove ' + user.displayName + ' from the exam of ' + user.examTeacher + '?'),
             positive: gettext('End exam mode'),
             negative: gettext('Cancel')
         }).then () ->
             $scope._stopUserExam(user).then () ->
                 $scope.refreshUsers()
-                notify.success(gettext('Exam mode stopped for user ') + exam_student)
+                notify.success(gettext('Exam mode stopped for user ') + user.displayName)
 
     $scope.stopRunningExams = () ->
         # End all running extern exams (run by other teachers)
@@ -356,17 +355,29 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         userPassword.showFirstPassword(username).then((resp) ->
             $scope.blurred = false
         )
-    $scope.resetFirstPassword = (username) ->
-        if not $scope._checkExamUser(username)
-            userPassword.resetFirstPassword(username)
+
+    $scope.resetFirstPassword = (user, exam=false) ->
+        userPassword.resetFirstPassword(user.cn)
+        if exam
+            userPassword.resetFirstPassword(user.examBaseCn)
 
     $scope.setRandomFirstPassword = (username) ->
         if not $scope._checkExamUser(username)
             userPassword.setRandomFirstPassword(username)
 
-    $scope.setCustomPassword = (user, pwtype) ->
-        if not $scope._checkExamUser(user.sAMAccountName)
-            userPassword.setCustomPassword(user, pwtype)
+    $scope.setCustomPassword = (user, pwtype, exam=false) ->
+        userList = [user]
+        if exam
+            examUser = {
+                'sophomorixAdminClass': user.sophomorixAdminClass.slice(0,-5),
+                'sn': user.sn,
+                'givenName': user.givenName,
+                'sAMAccountName': user.sAMAccountName.slice(0,-5)
+            }
+            userList.push(examUser)
+        userPassword.setCustomPassword(userList, pwtype, exam)
+
+    # Share and collect
 
     $scope.choose_items = (path, print_path, command, user) ->
         return $uibModal.open(
@@ -436,7 +447,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         promises = []
         now = $scope.now()
         transfer_directory = "#{$scope.session.type}_#{$scope.session.name}_#{now}"
-        collect_path = "#{identity.profile.homeDirectory}\\transfer\\#{transfer_directory}"
+        collect_path = "#{identity.profile.homeDirectory}\\transfer\\collected\\#{transfer_directory}"
         smbclient.createDirectory(collect_path)
 
         promises = []
@@ -459,7 +470,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
 
         now = $scope.now()
         transfer_directory = "#{$scope.session.type}_#{$scope.session.name}_#{now}"
-        collect_path = "#{identity.profile.homeDirectory}\\transfer\\#{transfer_directory}\\#{participant.sAMAccountName}"
+        collect_path = "#{identity.profile.homeDirectory}\\transfer\\collected\\#{transfer_directory}\\#{participant.sAMAccountName}"
         smbclient.createDirectory(collect_path)
 
         choose_path = "#{participant.homeDirectory}\\transfer\\#{$scope.identity.user}\\_collect"

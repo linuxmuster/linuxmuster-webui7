@@ -52,6 +52,9 @@ class LMAuthenticationProvider(AuthenticationProvider):
         :rtype: dict
         """
 
+        if username.endswith('-exam'):
+            return self.lr.get(f'/users/exam/{username}')
+
         return self.lr.get(f'/users/{username}')
 
     def prepare_environment(self, username):

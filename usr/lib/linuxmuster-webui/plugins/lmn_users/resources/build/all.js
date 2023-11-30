@@ -1552,18 +1552,22 @@
     var user;
     $scope.username = username;
     user = $scope.username.replace("-exam", '');
+    $scope.passwordStatus = '';
     $http.get('/api/lmn/users/passwords/' + user).then(function(resp) {
       return $scope.password = resp.data;
     });
-    $http.get(`/api/lmn/users/${user}/first-password-set`).then(function(response) {
-      if (response.data === true) {
-        $scope.passwordStatus = gettext('Still Set');
-        return $scope.passwordStatusColor = 'green';
-      } else {
-        $scope.passwordStatus = gettext('Changed from user');
-        return $scope.passwordStatusColor = 'red';
-      }
-    });
+    if ($scope.username === user) {
+      // Not an exam user, sophomorix can check the first password.
+      $http.get(`/api/lmn/users/${user}/first-password-set`).then(function(response) {
+        if (response.data === true) {
+          $scope.passwordStatus = gettext('Still Set');
+          return $scope.passwordStatusColor = 'green';
+        } else {
+          $scope.passwordStatus = gettext('Changed from user');
+          return $scope.passwordStatusColor = 'red';
+        }
+      });
+    }
     return $scope.close = function() {
       return $uibModalInstance.close();
     };

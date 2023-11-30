@@ -18,7 +18,7 @@ Pillow
 pyspnego==0.5.2
 python-ldap
 python-dateutil
-python-magic==0.4.15 # used to determine encoding in linbo files and csv uploads
+python-magic # used to determine encoding in linbo files and csv uploads
 python-nmap
 pytz
 requests

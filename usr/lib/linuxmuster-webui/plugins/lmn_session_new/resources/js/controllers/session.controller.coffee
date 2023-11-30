@@ -351,7 +351,6 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
     $scope.showFirstPassword = (username) ->
         $scope.blurred = true
         # if user is exam user show InitialPassword of real user
-        username = username.replace('-exam', '')
         userPassword.showFirstPassword(username).then((resp) ->
             $scope.blurred = false
         )

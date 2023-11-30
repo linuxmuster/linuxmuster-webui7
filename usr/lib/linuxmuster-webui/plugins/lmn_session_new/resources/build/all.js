@@ -666,7 +666,6 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     $scope.showFirstPassword = function(username) {
       $scope.blurred = true;
       // if user is exam user show InitialPassword of real user
-      username = username.replace('-exam', '');
       return userPassword.showFirstPassword(username).then(function(resp) {
         return $scope.blurred = false;
       });

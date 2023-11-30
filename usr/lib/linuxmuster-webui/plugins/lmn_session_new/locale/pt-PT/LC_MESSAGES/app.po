@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-11-25 17:48+0100\n"
-"PO-Revision-Date: 2023-08-01 13:42\n"
+"PO-Revision-Date: 2023-11-30 22:10\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -18,14 +18,12 @@ msgstr ""
 "X-Crowdin-File-ID: 231\n"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:341
-msgid ""
-"<i class=\"fas fa-copy\"></i>\n"
+msgid "<i class=\"fas fa-copy\"></i>\n"
 "                            Copy _collect directory from all members"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:347
-msgid ""
-"<i class=\"fas fa-cut\"></i>\n"
+msgid "<i class=\"fas fa-cut\"></i>\n"
 "                            Move _collect directory from all members"
 msgstr ""
 
@@ -66,9 +64,7 @@ msgid "Copy"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/sessionsList.html:19
-msgid ""
-"Currenty it's not possible to determine your room, are you logged on a "
-"school computer ?"
+msgid "Currenty it's not possible to determine your room, are you logged on a school computer ?"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:38
@@ -84,9 +80,7 @@ msgid "Edit members"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:179
-msgid ""
-"It's currently not possible to create share directory in other teacher's "
-"home or to handle their management groups."
+msgid "It's currently not possible to create share directory in other teacher's home or to handle their management groups."
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:216
@@ -130,9 +124,7 @@ msgid "Rename group"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:283
-msgid ""
-"Restore <b>{{participant.cn}}</b>'s and <b>{{participant.examBaseCn}}</b>'s "
-"default password"
+msgid "Restore <b>{{participant.cn}}</b>'s and <b>{{participant.examBaseCn}}</b>'s default password"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:278
@@ -164,9 +156,7 @@ msgid "Set actual password for <b>{{participant.cn}}</b>"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:303
-msgid ""
-"Set actual password for <b>{{participant.cn}}</b> and <b>{{participant."
-"examBaseCn}}</b>"
+msgid "Set actual password for <b>{{participant.cn}}</b> and <b>{{participant.examBaseCn}}</b>"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:293
@@ -207,15 +197,11 @@ msgid "Stop autorefresh"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/sessionsList.html:86
-msgid ""
-"There are n group yet. Create a new group using the 'New group' button "
-"bellow!"
+msgid "There are n group yet. Create a new group using the 'New group' button bellow!"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:87
-msgid ""
-"There's currently no student in this group. You can add these with the input "
-"above."
+msgid "There's currently no student in this group. You can add these with the input above."
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/sessionsList.html:16
@@ -255,15 +241,11 @@ msgid "Working directory"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/sessionsList.html:51
-msgid ""
-"You are not member of any schoolclass. You can change your membership in the "
-"<a href=\"/view/lmn/groupmembership/\">\"Enroll\" page</a>."
+msgid "You are not member of any schoolclass. You can change your membership in the <a href=\"/view/lmn/groupmembership/\">\"Enroll\" page</a>."
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/sessionsList.html:121
-msgid ""
-"You don't own any project. You can create your project in the <a href=\"/"
-"view/lmn/groupmembership/\">\"Enroll\" page</a>."
+msgid "You don't own any project. You can create your project in the <a href=\"/view/lmn/groupmembership/\">\"Enroll\" page</a>."
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/selectFile.modal.html:55
@@ -327,9 +309,7 @@ msgid "Delete"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:44
-msgid ""
-"Do you really want to quit this session ? You can restart it later if you "
-"want."
+msgid "Do you really want to quit this session ? You can restart it later if you want."
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:51
@@ -488,3 +468,4 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/sessionsList.controller.coffee:5
 msgid "Start session containing all users in this room"
 msgstr ""
+

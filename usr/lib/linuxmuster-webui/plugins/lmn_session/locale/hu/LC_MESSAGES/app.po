@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-11-25 17:48+0100\n"
-"PO-Revision-Date: 2023-08-01 13:42\n"
+"PO-Revision-Date: 2023-11-30 22:10\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -136,21 +136,15 @@ msgid "Save &amp; apply"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/selectFile.modal.html:30
-msgid ""
-"Select files you want to copy from <b>{{senders[0]['givenName']}} "
-"{{senders[0]['sn']}}</b>"
+msgid "Select files you want to copy from <b>{{senders[0]['givenName']}} {{senders[0]['sn']}}</b>"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/selectFile.modal.html:33
-msgid ""
-"Select files you want to move from <b>{{senders[0]['givenName']}} "
-"{{senders[0]['sn']}}</b>"
+msgid "Select files you want to move from <b>{{senders[0]['givenName']}} {{senders[0]['sn']}}</b>"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/selectFile.modal.html:23
-msgid ""
-"Select files you want to share with <b>{{receivers[0]['givenName']}} "
-"{{receivers[0]['sn']}}</b>"
+msgid "Select files you want to share with <b>{{receivers[0]['givenName']}} {{receivers[0]['sn']}}</b>"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/selectFile.modal.html:41
@@ -259,8 +253,7 @@ msgid "File "
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:70
-msgid ""
-"Are you sure you want to delete permanently this directory and its content: "
+msgid "Are you sure you want to delete permanently this directory and its content: "
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:75
@@ -387,9 +380,7 @@ msgid "Printing"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:369
-msgid ""
-"There are no sessions yet. Create a session using the 'New Session' button "
-"at the top!"
+msgid "There are no sessions yet. Create a session using the 'New Session' button at the top!"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:391
@@ -399,9 +390,7 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:391
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:473
-msgid ""
-"Currenty its not possible to determine your room, try to login into your "
-"computer again."
+msgid "Currenty its not possible to determine your room, try to login into your computer again."
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:421
@@ -409,9 +398,7 @@ msgid "Session Renamed"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:437
-msgid ""
-"This session appears to be empty. Start adding users by using the top search "
-"bar!"
+msgid "This session appears to be empty. Start adding users by using the top search bar!"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:483
@@ -448,3 +435,4 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:757
 msgid "Not implemented"
 msgstr ""
+

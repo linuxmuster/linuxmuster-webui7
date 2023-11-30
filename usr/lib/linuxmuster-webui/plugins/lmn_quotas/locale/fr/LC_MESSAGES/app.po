@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-11-09 13:04+0100\n"
-"PO-Revision-Date: 2023-08-03 13:02\n"
+"PO-Revision-Date: 2023-11-30 22:10\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -114,9 +114,7 @@ msgid "There is no special quota here."
 msgstr "Il n'y a pas de quota spécial ici."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:139
-msgid ""
-"This functionality is actually under development and displays imprecise "
-"values. It will not work with DFS shares or in multischool environment."
+msgid "This functionality is actually under development and displays imprecise values. It will not work with DFS shares or in multischool environment."
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:180
@@ -152,11 +150,8 @@ msgid "Quotas"
 msgstr "Objectifs"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:57
-#, fuzzy
 msgid "Search user by login, firstname or lastname (min. 3 chars)"
 msgstr ""
-"Rechercher un utilisateur par identifiant, prénom ou nom de famille (min. 3 "
-"caractères), sans caractère spécial."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:61
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:69
@@ -200,3 +195,4 @@ msgstr " ajouté avec les valeurs par défaut dans la liste."
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:175
 msgid "Saving quotas ..."
 msgstr "Sauvegarde des quotas..."
+

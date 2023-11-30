@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-11-09 13:04+0100\n"
-"PO-Revision-Date: 2023-08-03 13:02\n"
+"PO-Revision-Date: 2023-11-30 22:10\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -445,8 +445,7 @@ msgstr "La couleur du premier plan sera ajustée automatiquement"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:48
 msgid "The icon format used here is png and you should change this to svg."
-msgstr ""
-"Le format d'icône utilisé ici est png et vous devriez le changer en svg."
+msgstr "Le format d'icône utilisé ici est png et vous devriez le changer en svg."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/index.html:64
 msgid "There's no image on the server yet."
@@ -546,12 +545,8 @@ msgid "LINBO Cache"
 msgstr "Cache LINBO"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:539
-msgid ""
-"You should call an import devices process to apply the new changes, quit "
-"this page anyway ?"
-msgstr ""
-"Vous devriez appeler le processus d'importation pour appliquer les nouvelles "
-"modifications, quitter cette page quand même ?"
+msgid "You should call an import devices process to apply the new changes, quit this page anyway ?"
+msgstr "Vous devriez appeler le processus d'importation pour appliquer les nouvelles modifications, quitter cette page quand même ?"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:585
 msgid "A config file with this name already exists!"
@@ -574,11 +569,8 @@ msgid "Multicast and torrent services restarted"
 msgstr "Services multicast et torrent redémarrés"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:680
-msgid ""
-"Failed to restart multicast and torrent services. Please see the log files"
-msgstr ""
-"Impossible de redémarrer les services multicast et torrents. Veuillez "
-"consulter les fichiers journaux"
+msgid "Failed to restart multicast and torrent services. Please see the log files"
+msgstr "Impossible de redémarrer les services multicast et torrents. Veuillez consulter les fichiers journaux"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:688
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:714
@@ -596,9 +588,8 @@ msgid " is not a valid name for a linbo image."
 msgstr " n'est pas un nom valide pour une image linbo."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:748
-#, fuzzy
 msgid "Failed to restore backup! "
-msgstr "Échec de la suppression de la sauvegarde :"
+msgstr "Échec de la restauration de la sauvegarde ! "
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:762
 msgid "Backup saved"
@@ -607,3 +598,4 @@ msgstr "Sauvegarde effectuée"
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:766
 msgid "Saved"
 msgstr "Sauvegardé"
+

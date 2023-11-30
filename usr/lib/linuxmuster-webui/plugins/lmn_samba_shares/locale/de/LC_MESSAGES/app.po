@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-11-09 13:04+0100\n"
-"PO-Revision-Date: 2023-08-03 13:02\n"
+"PO-Revision-Date: 2023-11-30 22:10\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -218,11 +218,8 @@ msgid "Error during renaming: "
 msgstr "Fehler beim Umbenennen: "
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:149
-msgid ""
-"A file/directory with this name already exists, please give a new name :"
-msgstr ""
-"Eine Datei/Verzeichnis mit diesem Namen existiert bereits, bitte geben Sie "
-"einen neuen Namen an:"
+msgid "A file/directory with this name already exists, please give a new name :"
+msgstr "Eine Datei/Verzeichnis mit diesem Namen existiert bereits, bitte geben Sie einen neuen Namen an:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:176
 msgid "Do you really want to delete this file?"
@@ -256,10 +253,9 @@ msgstr "Verzeichnis konnte nicht erstellt werden"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:283
 msgid "File not found, may be due to special chars in the file name."
-msgstr ""
-"Datei nicht gefunden, möglicherweise aufgrund von Sonderzeichen im "
-"Dateinamen."
+msgstr "Datei nicht gefunden, möglicherweise aufgrund von Sonderzeichen im Dateinamen."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:308
 msgid "Uploaded "
 msgstr "Hochgeladen "
+

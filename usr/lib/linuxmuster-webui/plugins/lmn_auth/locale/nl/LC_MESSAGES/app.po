@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-25 17:48+0100\n"
-"PO-Revision-Date: 2023-08-01 13:42\n"
+"POT-Creation-Date: 2023-08-01 15:32+0200\n"
+"PO-Revision-Date: 2023-11-30 22:10\n"
 "Last-Translator: \n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
@@ -30,12 +30,8 @@ msgid "Current password"
 msgstr "Huidig wachtwoord"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:4
-msgid ""
-"Minimal length is 7 characters. Use upper, lower and special characters or "
-"numbers. (e.g. Muster!)"
-msgstr ""
-"Minimale lengte is 7 letters. Gebruik hoofdletters, kleine letters, speciale "
-"tekens of nummers. (bijv. Muster!)"
+msgid "Minimal length is 7 characters. Use upper, lower and special characters or numbers. (e.g. Muster!)"
+msgstr "Minimale lengte is 7 letters. Gebruik hoofdletters, kleine letters, speciale tekens of nummers. (bijv. Muster!)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:21
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:26
@@ -58,13 +54,11 @@ msgstr ""
 msgid "Linux Muster LDAP"
 msgstr "Linux Muster LDAP"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:382
-msgid ""
-"Minimal length is 7 characters. Use upper, lower and special characters or "
-"numbers. (e.g. Muster!)."
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:364
+msgid "Minimal length is 7 characters. Use upper, lower and special characters or numbers. (e.g. Muster!)."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:412
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:394
 msgid "Linuxmuster LDAP user config"
 msgstr ""
 
@@ -77,6 +71,6 @@ msgid "Password changed"
 msgstr "Wachtwoord is gewijzigd"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:24
-#, fuzzy
-msgid "Password change failed: "
+msgid "Password change failed"
 msgstr "Het wijzigen van het wachtwoord is mislukt"
+

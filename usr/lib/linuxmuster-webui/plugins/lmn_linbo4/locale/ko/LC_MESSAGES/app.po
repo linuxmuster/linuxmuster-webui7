@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-11-09 13:04+0100\n"
-"PO-Revision-Date: 2023-08-01 13:42\n"
+"PO-Revision-Date: 2023-11-30 22:10\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -545,12 +545,8 @@ msgid "LINBO Cache"
 msgstr "LINBO 캐시"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:539
-msgid ""
-"You should call an import devices process to apply the new changes, quit "
-"this page anyway ?"
-msgstr ""
-"새로운 변경 사항들을 적용하려면 장치 불러오기 프로세스를 불러와야 하는데, 페"
-"이지를 그래도 종료하시겠습니까?"
+msgid "You should call an import devices process to apply the new changes, quit this page anyway ?"
+msgstr "새로운 변경 사항들을 적용하려면 장치 불러오기 프로세스를 불러와야 하는데, 페이지를 그래도 종료하시겠습니까?"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:585
 msgid "A config file with this name already exists!"
@@ -573,8 +569,7 @@ msgid "Multicast and torrent services restarted"
 msgstr "멀티캐스트 와 토렌트 서비스 재시작됨"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:680
-msgid ""
-"Failed to restart multicast and torrent services. Please see the log files"
+msgid "Failed to restart multicast and torrent services. Please see the log files"
 msgstr "멀티캐스트와 토렌트 서비스 재시작 실패. 로그 파일을 보십시오."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:688
@@ -593,9 +588,8 @@ msgid " is not a valid name for a linbo image."
 msgstr " 는 림보 이미지를 위한 유효한 이미지가 아닙니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:748
-#, fuzzy
 msgid "Failed to restore backup! "
-msgstr "백업 삭제 실패 :"
+msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:762
 msgid "Backup saved"
@@ -604,3 +598,4 @@ msgstr "백업 저장됨"
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:766
 msgid "Saved"
 msgstr "저장 완료"
+

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-11-25 17:48+0100\n"
-"PO-Revision-Date: 2023-08-01 13:42\n"
+"PO-Revision-Date: 2023-11-30 22:10\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -136,28 +136,16 @@ msgid "Save &amp; apply"
 msgstr "&amp;저장후 적용"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/selectFile.modal.html:30
-msgid ""
-"Select files you want to copy from <b>{{senders[0]['givenName']}} "
-"{{senders[0]['sn']}}</b>"
-msgstr ""
-"<b>{{senders[0]['givenName']}}{{senders[0]['sn']}}</b>로부터 복사하고 싶은 파"
-"일을 선택하세요"
+msgid "Select files you want to copy from <b>{{senders[0]['givenName']}} {{senders[0]['sn']}}</b>"
+msgstr "<b>{{senders[0]['givenName']}}{{senders[0]['sn']}}</b>로부터 복사하고 싶은 파일을 선택하세요"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/selectFile.modal.html:33
-msgid ""
-"Select files you want to move from <b>{{senders[0]['givenName']}} "
-"{{senders[0]['sn']}}</b>"
-msgstr ""
-"<b>{{senders[0]['givenName']}}{{senders[0]['sn']}}</b>로부터 이동하고 싶은 파"
-"일을 선택하세요"
+msgid "Select files you want to move from <b>{{senders[0]['givenName']}} {{senders[0]['sn']}}</b>"
+msgstr "<b>{{senders[0]['givenName']}}{{senders[0]['sn']}}</b>로부터 이동하고 싶은 파일을 선택하세요"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/selectFile.modal.html:23
-msgid ""
-"Select files you want to share with <b>{{receivers[0]['givenName']}} "
-"{{receivers[0]['sn']}}</b>"
-msgstr ""
-"<b>{{receivers[0]['givenName']}}{{receivers[0]['sn']}}</b>로부터 공유하고 싶"
-"은 파일을 선택하세요"
+msgid "Select files you want to share with <b>{{receivers[0]['givenName']}} {{receivers[0]['sn']}}</b>"
+msgstr "<b>{{receivers[0]['givenName']}}{{receivers[0]['sn']}}</b>로부터 공유하고 싶은 파일을 선택하세요"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/partial/selectFile.modal.html:41
 msgid "Select files you want to share with Session"
@@ -265,8 +253,7 @@ msgid "File "
 msgstr "파일 "
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:70
-msgid ""
-"Are you sure you want to delete permanently this directory and its content: "
+msgid "Are you sure you want to delete permanently this directory and its content: "
 msgstr "이 디렉토리와 안의 내용을 정말 영구적으로 삭제하시겠습니까: "
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:75
@@ -393,11 +380,8 @@ msgid "Printing"
 msgstr "인쇄"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:369
-msgid ""
-"There are no sessions yet. Create a session using the 'New Session' button "
-"at the top!"
-msgstr ""
-"세션이 아직 없습니다. 상단의 \"New Session\"버튼을 눌러서 세션을 생성하세요!"
+msgid "There are no sessions yet. Create a session using the 'New Session' button at the top!"
+msgstr "세션이 아직 없습니다. 상단의 \"New Session\"버튼을 눌러서 세션을 생성하세요!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:391
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:473
@@ -406,24 +390,16 @@ msgstr "정보"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:391
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:473
-msgid ""
-"Currenty its not possible to determine your room, try to login into your "
-"computer again."
-msgstr ""
-"현재 당신의 방을 확인할 수 없습니다. 당신의 컴퓨터로 로그인을 다시 시도해보세"
-"요."
+msgid "Currenty its not possible to determine your room, try to login into your computer again."
+msgstr "현재 당신의 방을 확인할 수 없습니다. 당신의 컴퓨터로 로그인을 다시 시도해보세요."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:421
 msgid "Session Renamed"
 msgstr "세션 이름 다시 설정됨"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:437
-msgid ""
-"This session appears to be empty. Start adding users by using the top search "
-"bar!"
-msgstr ""
-"이 세션은 비어있는 것 같습니다. 상단의 검색 바를 이용해 사용자 추가를 시작하"
-"세요!"
+msgid "This session appears to be empty. Start adding users by using the top search bar!"
+msgstr "이 세션은 비어있는 것 같습니다. 상단의 검색 바를 이용해 사용자 추가를 시작하세요!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:483
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:495
@@ -446,9 +422,7 @@ msgstr "시험 보는 중인 사용자"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:637
 msgid "This user seems to be in exam. End exam mode before changing password!"
-msgstr ""
-"이 사용자는 시험을 보는 중인것 같습니다. 비밀번호를 변경하기 전에 시험 모드"
-"를 종료하세요!"
+msgstr "이 사용자는 시험을 보는 중인것 같습니다. 비밀번호를 변경하기 전에 시험 모드를 종료하세요!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:710
 msgid "Sharing files..."
@@ -461,3 +435,4 @@ msgstr "파일 수집중..."
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:757
 msgid "Not implemented"
 msgstr "구현되지 않았습니다"
+

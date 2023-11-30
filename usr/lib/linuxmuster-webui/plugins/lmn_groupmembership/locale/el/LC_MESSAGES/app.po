@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-11-25 17:48+0100\n"
-"PO-Revision-Date: 2023-08-01 13:42\n"
+"PO-Revision-Date: 2023-11-30 22:10\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -28,8 +28,7 @@ msgid "<i class=\"fa fa-fw fa-print\"></i> Printers"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:183
-msgid ""
-"<i class=\"fa fa-trash\"></i>\n"
+msgid "<i class=\"fa fa-trash\"></i>\n"
 "            Delete Project"
 msgstr ""
 
@@ -204,32 +203,24 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:106
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:100
-msgid ""
-"There are no printers configured yet. Ask your administrator to configure "
-"one."
+msgid "There are no printers configured yet. Ask your administrator to configure one."
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:131
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:126
-msgid ""
-"There are no projects yet. You can create a new project using the menu bar."
+msgid "There are no projects yet. You can create a new project using the menu bar."
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:76
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:75
-msgid ""
-"There are no schoolclasses available. Ask the administrator to import "
-"students"
+msgid "There are no schoolclasses available. Ask the administrator to import students"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:8
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:8
-msgid ""
-"These changes can only take effect if the session is renewed, otherwise it "
-"will be active after the next\n"
+msgid "These changes can only take effect if the session is renewed, otherwise it will be active after the next\n"
 "        logout/login.\n"
-"        <a class=\"btn btn-default\" ng:click=\"refresh_krbcc()\" "
-"translate=\"\">Do it now</a>"
+"        <a class=\"btn btn-default\" ng:click=\"refresh_krbcc()\" translate=\"\">Do it now</a>"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:139
@@ -305,9 +296,7 @@ msgid "Something unusual happened"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:131
-msgid ""
-"Are you sure to reset all admin memberships for this? This is actually only "
-"necessary to start a new empty school year. This cannot be undone!"
+msgid "Are you sure to reset all admin memberships for this? This is actually only necessary to start a new empty school year. This cannot be undone!"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:144
@@ -350,5 +339,3 @@ msgstr ""
 msgid "Type the group name, e.g. p_wifi"
 msgstr ""
 
-#~ msgid "Printers"
-#~ msgstr "Εκτυπωτές"

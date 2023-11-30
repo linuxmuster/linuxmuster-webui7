@@ -1,15 +1,17 @@
 angular.module('lmn.users').controller 'LMNUsersShowPasswordController', ($scope, $uibModal, $uibModalInstance, $http, gettext, notify, messagebox, pageTitle, username) ->
     $scope.username = username
+    user = $scope.username.replace("-exam", '')
 
-    $http.get('/api/lmn/users/passwords/' + $scope.username).then (resp) ->
+    $http.get('/api/lmn/users/passwords/' + user).then (resp) ->
         $scope.password = resp.data
-        $http.get("/api/lmn/users/#{$scope.username}/first-password-set").then (response) ->
-            if response.data == true
-                $scope.passwordStatus = gettext('Still Set')
-                $scope.passwordStatusColor = 'green'
-            else
-                $scope.passwordStatus = gettext('Changed from user')
-                $scope.passwordStatusColor = 'red'
+
+    $http.get("/api/lmn/users/#{user}/first-password-set").then (response) ->
+        if response.data == true
+            $scope.passwordStatus = gettext('Still Set')
+            $scope.passwordStatusColor = 'green'
+        else
+            $scope.passwordStatus = gettext('Changed from user')
+            $scope.passwordStatusColor = 'red'
 
     $scope.close = () ->
         $uibModalInstance.close()

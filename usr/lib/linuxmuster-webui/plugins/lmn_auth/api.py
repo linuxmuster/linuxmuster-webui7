@@ -149,6 +149,8 @@ class LMAuthenticationProvider(AuthenticationProvider):
         # Does the user exist in LDAP ?
         try:
             userAttrs = self.get_ldap_user(username)
+            if not userAttrs or not userAttrs.get('dn', ''):
+                return False
         except KeyError as e:
             return False
 

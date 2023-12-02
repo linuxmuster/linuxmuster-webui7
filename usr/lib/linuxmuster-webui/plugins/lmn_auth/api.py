@@ -40,7 +40,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
         self.context = context
         self.lr = LMNLdapReader
 
-    def get_ldap_user(self, username):
+    def get_ldap_user(self, username, attributes=[]):
         """
         Get the user's informations to initialize his session.
 
@@ -53,9 +53,9 @@ class LMAuthenticationProvider(AuthenticationProvider):
         """
 
         if username.endswith('-exam'):
-            return self.lr.get(f'/users/exam/{username}')
+            return self.lr.get(f'/users/exam/{username}', attributes=attributes)
 
-        return self.lr.get(f'/users/{username}')
+        return self.lr.get(f'/users/{username}', attributes=attributes)
 
     def prepare_environment(self, username):
         """
@@ -129,6 +129,34 @@ class LMAuthenticationProvider(AuthenticationProvider):
             logging.error(
                 f"Was not able to initialize Kerberos ticket for {username}")
 
+    def _check_password(self, username, password, dn=''):
+        """
+        Check username's password against LDAP server
+
+        :param username: Username
+        :type username: string
+        :param password: Password
+        :type password: string
+        :param dn: User's DN
+        :type dn: string
+        :return: User's permissions
+        :rtype: bool
+        """
+
+        if not dn:
+            dn = self.get_ldap_user(username, attributes=['dn'])
+
+        # Is the password right ?
+        try:
+            l = ldap.initialize('ldap://' + params['host'])
+            l.set_option(ldap.OPT_REFERRALS, 0)
+            l.protocol_version = ldap.VERSION3
+            l.bind_s(dn, password)
+            return True
+        except Exception as e:
+            logging.error(str(e))
+            return False
+
     def authenticate(self, username, password):
         """
         Test credentials against LDAP and parse permissions for the session.
@@ -148,20 +176,13 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
         # Does the user exist in LDAP ?
         try:
-            userAttrs = self.get_ldap_user(username)
+            userAttrs = self.get_ldap_user(username, attributes=['dn', 'sophomorixWebuiPermissionsCalculated', 'permissions'])
             if not userAttrs or not userAttrs.get('dn', ''):
                 return False
         except KeyError as e:
             return False
 
-        # Is the password right ?
-        try:
-            l = ldap.initialize('ldap://' + params['host'])
-            l.set_option(ldap.OPT_REFERRALS, 0)
-            l.protocol_version = ldap.VERSION3
-            l.bind_s(userAttrs['dn'], password)
-        except Exception as e:
-            logging.error(str(e))
+        if not self._check_password(username, password, dn=userAttrs['dn']):
             return False
 
         self._get_krb_ticket(username, password)

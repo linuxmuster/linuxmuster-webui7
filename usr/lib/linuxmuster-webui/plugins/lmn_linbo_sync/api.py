@@ -54,22 +54,28 @@ def last_sync(workstation, image):
     """
 
     statusfile = f'/var/log/linuxmuster/linbo/{workstation}_image.status'
-    last = False
+    image_last_sync, diff_last_sync = '0','0'
+    diff_image = image.replace('.qcow2', '.qdiff')
 
     if os.path.isfile(statusfile) and os.stat(statusfile).st_size != 0:
         for line in open(statusfile, 'r').readlines():
             if image in line:
-                last = line.rstrip()
-                break
+                image_last_sync = line.rstrip().split(' ')[0]
+            if diff_image in line:
+                diff_last_sync = line.strip().split(' ')[0]
 
-    if last:
-        ## Linbo locale is en_GB, not necessarily the server locale
-        saved = locale.setlocale(locale.LC_ALL)
-        locale.setlocale(locale.LC_ALL, 'C.UTF-8')
-        last = datetime.strptime(last.split(' ')[0], '%Y%m%d%H%M')
-        locale.setlocale(locale.LC_ALL, saved)
+    last = max(image_last_sync, diff_last_sync)
 
-        last = time.mktime(last.timetuple())
+    if last == '0':
+        return False
+
+    ## Linbo locale is en_GB, not necessarily the server locale
+    saved = locale.setlocale(locale.LC_ALL)
+    locale.setlocale(locale.LC_ALL, 'C.UTF-8')
+    last = datetime.strptime(last, '%Y%m%d%H%M')
+    locale.setlocale(locale.LC_ALL, saved)
+
+    last = time.mktime(last.timetuple())
     return last
 
 def group_os(workstations):

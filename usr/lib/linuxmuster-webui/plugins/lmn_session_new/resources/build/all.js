@@ -26,6 +26,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
 
     this.sessions = [];
     this.user_missing_membership = [];
+    this.examMode = false;
 
     this.load = function () {
         var promiseList = [];
@@ -47,12 +48,17 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     };
 
     this.filterExamUsers = function () {
+        _this.examMode = false;
         _this.extExamUsers = _this.current.members.filter(function (user) {
             return user.examMode && user.examTeacher != identity.user;
         });
         _this.examUsers = _this.current.members.filter(function (user) {
             return user.examTeacher == identity.user;
         });
+        if (_this.examUsers.length > 0 && _this.extExamUsers.length == 0) {
+            // Only exam users from the current teacher
+            _this.examMode = true;
+        }
     };
 
     this._createWorkingDirectory = function (user) {
@@ -304,6 +310,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     $scope.session = lmnSession.current;
     $scope.extExamUsers = lmnSession.extExamUsers;
     $scope.examUsers = lmnSession.examUsers;
+    $scope.examMode = lmnSession.examMode;
     lmnSession.createWorkingDirectory($scope.session.members).then(function() {
       $scope.missing_schoolclasses = lmnSession.user_missing_membership.map(function(user) {
         return user.sophomorixAdminClass;

@@ -79,6 +79,8 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
     $scope.session = lmnSession.current
     $scope.extExamUsers = lmnSession.extExamUsers
     $scope.examUsers = lmnSession.examUsers
+    $scope.examMode = lmnSession.examMode
+
     lmnSession.createWorkingDirectory($scope.session.members).then () ->
         $scope.missing_schoolclasses = lmnSession.user_missing_membership.map((user) -> user.sophomorixAdminClass)
         $scope.missing_schoolclasses = [... new Set($scope.missing_schoolclasses)].join(',')

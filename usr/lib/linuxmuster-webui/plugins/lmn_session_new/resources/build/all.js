@@ -574,12 +574,12 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     // Exam mode
     $scope.startExam = function() {
       // End exam for a whole group
-      $scope.stateChanged = true;
       return messagebox.show({
         text: gettext('Do you really want to start a new exam?'),
         positive: gettext('Start exam mode'),
         negative: gettext('Cancel')
       }).then(function() {
+        $scope.stateChanged = true;
         return $http.patch("/api/lmn/session/exam/start", {
           session: $scope.session
         }).then(function(resp) {
@@ -592,12 +592,12 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     };
     $scope.stopExam = function() {
       // End exam for a whole group
-      $scope.stateChanged = true;
       return messagebox.show({
         text: gettext('Do you really want to end the current exam?'),
         positive: gettext('End exam mode'),
         negative: gettext('Cancel')
       }).then(function() {
+        $scope.stateChanged = true;
         $http.patch("/api/lmn/session/exam/stop", {
           session: $scope.session
         }).then(function(resp) {

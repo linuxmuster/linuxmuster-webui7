@@ -1,3 +1,12 @@
+linuxmuster-webui7 (7.2.29-testing) lmn72; urgency=medium
+
+  * Update translations (thanks @cibomato)
+  * [common] Fix undefined samba var
+  * [linbo_sync] Read qdiff last synchronisation date
+  * [session_new] Diverses fixs for passwords and exams
+  
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 08 Dec 2023 10:02:41 +0100
+
 linuxmuster-webui7 (7.2.28-testing) lmn72; urgency=medium
 
   * New plugin device manager (thanks hermanntoast!)

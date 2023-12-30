@@ -16,13 +16,6 @@ class ItemProvider(SidebarItemProvider):
             'icon': 'chalkboard-teacher',
             'url': '/view/lmn/sessionsList',
             'weight': 20,
-            },
-            {
-            'attach': 'category:class',
-            'name': _('Print Passwords'),
-            'icon': 'key',
-            'url': '/view/lmn/users/print-passwords',
-            'weight': 40,
             }
         ]
 

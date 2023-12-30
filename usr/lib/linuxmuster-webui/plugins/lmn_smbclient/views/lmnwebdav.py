@@ -7,7 +7,8 @@ from urllib.parse import quote, unquote
 import locale
 import gevent
 import smbclient
-from smbprotocol.exceptions import SMBOSError, NotFound, SMBAuthenticationError, InvalidParameter
+import logging
+from smbprotocol.exceptions import SMBOSError, NotFound, SMBAuthenticationError, InvalidParameter, SMBException
 from spnego.exceptions import BadMechanismError
 from jadi import component
 import xml.etree.ElementTree as ElementTree

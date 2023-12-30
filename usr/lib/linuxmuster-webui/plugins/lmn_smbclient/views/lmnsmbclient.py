@@ -10,7 +10,7 @@ import pexpect
 import smbclient
 import pwd
 from urllib.parse import quote, unquote
-from smbprotocol.exceptions import SMBOSError, NotFound, SMBAuthenticationError, InvalidParameter
+from smbprotocol.exceptions import SMBOSError, NotFound, SMBAuthenticationError, InvalidParameter, SMBException
 from spnego.exceptions import BadMechanismError
 from jadi import component
 

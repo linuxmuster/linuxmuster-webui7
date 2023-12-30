@@ -253,6 +253,7 @@ class Handler(HttpPlugin):
     @authorize('lm:users:students:read')
     @endpoint(api=True)
     def handle_api_ldap_user_search(self, http_context, query=''):
+        query = query.encode("latin-1").decode("utf-8")
         userList = self.context.ldapreader.schoolget(f'/users/search/student/{query}')
         return sorted(userList, key=lambda d: f"{d['sophomorixAdminClass']}{d['sn']}{d['givenName']}")
 
@@ -260,6 +261,7 @@ class Handler(HttpPlugin):
     @authorize('lm:users:students:read')
     @endpoint(api=True)
     def handle_api_ldap_group_search(self, http_context, query=''):
+        query = query.encode("latin-1").decode("utf-8")
         return self.context.ldapreader.schoolget(f'/schoolclasses/search/{query}', sortkey='cn')
 
     @post(r'/api/lmn/session/moveFileToHome')  ## TODO authorize

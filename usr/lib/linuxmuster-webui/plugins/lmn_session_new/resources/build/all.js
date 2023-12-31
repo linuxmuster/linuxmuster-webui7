@@ -489,6 +489,15 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         return $scope.backToSessionList();
       });
     };
+    $scope.cloneSession = function() {
+      var memberslist;
+      memberslist = $scope.session.members.map((user) => {
+        return user.cn;
+      });
+      return lmnSession.new(memberslist).then(function() {
+        return $scope.backToSessionList();
+      });
+    };
     $scope.saveAsSession = function() {
       return lmnSession.new($scope.session.members).then(function() {
         $scope.sessionChanged = false;
@@ -1028,6 +1037,12 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         var position;
         position = $scope.sessions.indexOf(session);
         return $scope.sessions.splice(position, 1);
+      });
+    };
+    $scope.cloneSession = function(session, e) {
+      e.stopPropagation();
+      return lmnSession.new(session.members).then(function() {
+        return $scope.getSessions();
       });
     };
     $scope.newSession = function() {

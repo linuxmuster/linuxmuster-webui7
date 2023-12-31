@@ -222,6 +222,11 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         lmnSession.kill($scope.session.sid, $scope.session.name).then () ->
             $scope.backToSessionList()
 
+    $scope.cloneSession = () ->
+        memberslist = $scope.session.members.map((user) => user.cn);
+        lmnSession.new(memberslist).then () ->
+            $scope.backToSessionList()
+
     $scope.saveAsSession = () ->
         lmnSession.new($scope.session.members).then () ->
             $scope.sessionChanged = false

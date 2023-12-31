@@ -30,14 +30,23 @@
             </button>
             <ul uib-dropdown-menu class="dropdown-menu-right" >
                 <li>
-                    <a ng:click="renameSession()" translate>
-                        Rename group
+                    <a ng:click="renameSession()">
+                        <i class="fa fa-pencil"></i>
+                        <span translate>Rename group</span>
                     </a>
                 </li>
                 <li>
-                    <a ng:click="killSession()" translate>
-                        Delete group
+                    <a ng:click="cloneSession()">
+                        <i class="fa-regular fa-copy"></i>
+                        <span translate>Duplicate group</span>
                     </a>
+                </li>
+                <li>
+                    <a ng:click="killSession()">
+                        <i class="fa fa-trash"></i>
+                        <span translate>Delete group</span>
+                    </a>
+                </li>
             </ul>
         </div>
 

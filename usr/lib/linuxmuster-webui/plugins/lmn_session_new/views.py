@@ -116,8 +116,7 @@ class Handler(HttpPlugin):
 
         if "members" in http_context.json_body():
             members = http_context.json_body()['members']
-            membersList = [p['sAMAccountName'] for p in members]
-            sophomorixCommand.extend(['--participants', ','.join(membersList)])
+            sophomorixCommand.extend(['--participants', ','.join(members)])
 
         result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
         return result

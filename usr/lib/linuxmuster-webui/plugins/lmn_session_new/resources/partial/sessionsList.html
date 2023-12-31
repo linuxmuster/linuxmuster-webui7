@@ -99,12 +99,17 @@
                         <div class="session_hr"></div>
                         <i class="fa fa-users"></i>
                         <span>{{session.membersCount}}</span>
-                        <a ng:click="killSession(session, $event)" class="btn btn-flat pull-right" style="padding:6px;">
-                            <i class="fa fa-trash"></i>
-                        </a>
-                        <a ng:click="renameSession(session, $event)" class="btn btn-flat pull-right" style="padding:6px;">
-                            <i class="fa fa-pencil"></i>
-                        </a>
+                        <div>
+                            <a ng:click="killSession(session, $event)" class="btn btn-flat pull-right" style="padding:6px;">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                            <a ng:click="cloneSession(session, $event)" class="btn btn-flat pull-right" style="padding:6px;">
+                                <i class="fa-regular fa-copy"></i>
+                            </a>
+                            <a ng:click="renameSession(session, $event)" class="btn btn-flat pull-right" style="padding:6px;">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

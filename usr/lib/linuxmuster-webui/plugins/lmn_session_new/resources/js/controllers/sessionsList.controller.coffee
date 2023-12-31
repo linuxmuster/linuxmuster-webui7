@@ -20,6 +20,11 @@ angular.module('lmn.session_new').controller 'LMNSessionsListController', ($scop
             position = $scope.sessions.indexOf(session)
             $scope.sessions.splice(position, 1)
 
+    $scope.cloneSession = (session, e) ->
+        e.stopPropagation()
+        lmnSession.new(session.members).then () ->
+            $scope.getSessions()
+
     $scope.newSession = () ->
         lmnSession.new().then () ->
             $scope.getSessions()

@@ -258,7 +258,7 @@ angular.module('lmn.setup_wizard').controller('InitSetupController', function ($
     };
 });
 
-angular.module('lmn.setup_wizard').controller('InitDoneController', function ($window, $http, gettext, pageTitle, core, notify, $timeout, messagebox) {
+angular.module('lmn.setup_wizard').controller('InitDoneController', function ($window, $http, gettext, pageTitle, core, notify, $timeout, messageboxi, $q) {
     var _this7 = this;
 
     pageTitle.set(gettext('Setup Done'));

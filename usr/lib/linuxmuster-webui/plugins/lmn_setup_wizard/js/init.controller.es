@@ -247,7 +247,7 @@ angular.module('lmn.setup_wizard').controller('InitDoneController', function ($w
 
     this.restartUI = () => {
         let msg = messagebox.show({progress: true, title: gettext('Restarting')});
-        return $http.get('/api/core/restart-master').then(() => {
+        return $http.post('/api/core/restart-master').then(() => {
             return $timeout(() => {
                 msg.close();
                 messagebox.show({title: gettext('Restarted'), text: gettext('Please wait')});

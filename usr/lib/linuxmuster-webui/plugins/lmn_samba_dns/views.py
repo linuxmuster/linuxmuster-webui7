@@ -7,7 +7,7 @@ from jadi import component
 from aj.api.http import get, post, delete, put, patch, HttpPlugin
 from aj.auth import authorize
 from aj.api.endpoint import endpoint, EndpointError
-from linuxmusterTools.samba import SambaToolDNS
+from linuxmusterTools.samba_util import SambaToolDNS
 
 @component(HttpPlugin)
 class Handler(HttpPlugin):

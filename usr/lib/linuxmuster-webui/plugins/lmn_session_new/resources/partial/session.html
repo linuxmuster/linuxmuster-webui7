@@ -3,7 +3,7 @@
 
     <progress-spinner ng:show="stateChanged"></progress-spinner>
 
-    <div class="alert alert-warning">This plugin is actually under heavy development and only published for testing purposes.</div>
+<!--    <div class="alert alert-warning">This plugin is actually under heavy development and only published for testing purposes.</div>-->
 
     <div class="input-group">
         <input type="text" style="width:70%" placeholder="{{translation.addStudent}}" ng:model="addParticipant" typeahead-editable=false typeahead-min-length="2" uib-typeahead="user as user.sophomorixAdminClass+' '+user.sn+ ' '+user.givenName+ ' ('+user.sAMAccountName+')'  for user in findUsers($viewValue) | limitTo:10" class="form-control" />

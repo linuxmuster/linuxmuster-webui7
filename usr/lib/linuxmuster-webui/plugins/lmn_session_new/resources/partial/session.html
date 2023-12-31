@@ -167,11 +167,11 @@
         </tr>
         <tr style="display:;"  ng:repeat="participant in session.members|orderBy:[sort.fx]">
             <td class="ng-binding">
-                <span class="label label-default pull-right">{{participant.sophomorixAdminClass}}</span>
                 <a>
                     <b> {{participant.sn}}, {{participant.givenName}} </b>
                 </a>
                 <br />
+                <span class="label label-default pull-right">{{participant.sophomorixAdminClass}}</span>
                 <i>{{participant.sAMAccountName}}</i>
                 <div ng-show="showDetails"> <!--<img src="https://openclipart.org/image/2400px/svg_to_png/211821/matt-icons_preferences-desktop-personal.png" style="height:75px;"</img>--> </div>
             </td>

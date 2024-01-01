@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-25 17:48+0100\n"
-"PO-Revision-Date: 2023-11-30 22:10\n"
+"POT-Creation-Date: 2024-01-01 23:12+0100\n"
+"PO-Revision-Date: 2024-01-01 22:19\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -222,9 +222,8 @@ msgid "user(s)"
 msgstr "Benutzer"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/main.py:16
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:104
-msgid "Session"
-msgstr "Unterricht"
+msgid "Session deprecated"
+msgstr "Kurs (veraltete Version)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/main.py:37
 msgid "Write students"
@@ -259,6 +258,10 @@ msgstr "Sind Sie sicher, dass Sie dieses Verzeichnis und dessen Inhalt unwiderru
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:75
 msgid "Directory "
 msgstr "Verzeichnis "
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:104
+msgid "Session"
+msgstr "Unterricht"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:107
 msgid "Regenerate this session"

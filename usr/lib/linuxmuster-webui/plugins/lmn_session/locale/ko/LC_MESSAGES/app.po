@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-25 17:48+0100\n"
-"PO-Revision-Date: 2023-11-30 22:10\n"
+"POT-Creation-Date: 2024-01-01 23:12+0100\n"
+"PO-Revision-Date: 2024-01-01 22:19\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -222,9 +222,8 @@ msgid "user(s)"
 msgstr "사용자"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/main.py:16
-#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:104
-msgid "Session"
-msgstr "세션"
+msgid "Session deprecated"
+msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/main.py:37
 msgid "Write students"
@@ -259,6 +258,10 @@ msgstr "이 디렉토리와 안의 내용을 정말 영구적으로 삭제하시
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:75
 msgid "Directory "
 msgstr "디렉토리 "
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:104
+msgid "Session"
+msgstr "세션"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session/resources/js/controllers/session.controller.coffee:107
 msgid "Regenerate this session"

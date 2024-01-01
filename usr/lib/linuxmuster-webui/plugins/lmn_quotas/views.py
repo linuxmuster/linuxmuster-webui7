@@ -301,7 +301,7 @@ class Handler(HttpPlugin):
             raise EndpointError(None, message=str(e))
 
     @get(r'/api/lmn/quota/check/(?P<user>[a-z0-9\-_]*)')
-    # @authorize('lm:quotas:apply') TODO
+    @authorize('lm:quotas:apply')
     @endpoint(api=True)
     def handle_api_check_quota(self, http_context, user=''):
         """

@@ -126,7 +126,6 @@ angular.module('lmn.quotas').controller 'LMQuotasController', ($scope, $http, $u
             $scope.show_table_user_quota_check = true
             $scope.user_directories = resp.data['directories']
             $scope.user_total_size = resp.data['total']
-            console.log(resp.data)
 
     $scope.changeUser = (role, login, quota) ->
         delete $scope.toChange[role][login+"_"+quota]

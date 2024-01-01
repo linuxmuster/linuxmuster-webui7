@@ -158,8 +158,7 @@
         $scope.checking_quota_user = false;
         $scope.show_table_user_quota_check = true;
         $scope.user_directories = resp.data['directories'];
-        $scope.user_total_size = resp.data['total'];
-        return console.log(resp.data);
+        return $scope.user_total_size = resp.data['total'];
       });
     };
     $scope.changeUser = function(role, login, quota) {

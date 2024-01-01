@@ -1,3 +1,16 @@
+linuxmuster-webui7 (7.2.30) lmn72; urgency=medium
+
+  * [samba] Avoid library conflict.
+  * [session] Clone group.
+  * [session] Fix error with encoded search queries.
+  * [session] Switch to new session plugin. Add tags to switch back.
+  * [session] Recheck working directory when refreshing users list.
+  * [setup] Fix restart problem after setup.
+  * [smbclient] Fix library conflict.
+  * [smbclient] Patch smbprotocol to catch 0 credits errors.
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 01 Jan 2024 23:02:07 +0100
+
 linuxmuster-webui7 (7.2.29-testing) lmn72; urgency=medium
 
   * Update translations (thanks @cibomato)

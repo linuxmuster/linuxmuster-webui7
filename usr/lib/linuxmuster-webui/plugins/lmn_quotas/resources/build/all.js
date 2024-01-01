@@ -157,8 +157,9 @@
       return $http.get(`/api/lmn/quota/check/${$scope._.quota_user_check.login}`).then(function(resp) {
         $scope.checking_quota_user = false;
         $scope.show_table_user_quota_check = true;
-        $scope.user_directories = resp.data[0];
-        return $scope.user_total_size = resp.data[1];
+        $scope.user_directories = resp.data['directories'];
+        $scope.user_total_size = resp.data['total'];
+        return console.log(resp.data);
       });
     };
     $scope.changeUser = function(role, login, quota) {

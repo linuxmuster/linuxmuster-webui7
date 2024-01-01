@@ -172,9 +172,9 @@
                         <th translate>Directory</th>
                         <th translate>Size (MiB)</th>
                     </tr>
-                    <tr ng:repeat="(dir, size) in user_directories">
+                    <tr ng:repeat="(dir, details) in user_directories">
                         <td>{{dir}}</td>
-                        <td style="text-align: right;">{{size}} MiB</td>
+                        <td style="text-align: right;">{{details.total}} MiB</td>
                     </tr>
                     <tr>
                         <th translate>Total</th>

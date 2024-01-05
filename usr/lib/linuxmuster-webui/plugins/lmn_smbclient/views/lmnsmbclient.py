@@ -605,10 +605,11 @@ class Handler(HttpPlugin):
         path = f'{homeDirectory}/transfer/{self.context.identity}/_collect'
 
         try:
-            smbclient.makedirs(path)
+            if not smbclient.path.isdir(path):
+                smbclient.makedirs(path)
         except SMBOSError as e:
-            if 'File exists' in str(e):
-                pass
+            if 'NtStatus 0xc0000035' in str(e):
+                pass # Should not appear again
             elif 'STATUS_ACCESS_DENIED' in str(e):
                 raise EndpointError(e, message=f"{self.context.identity} is not member of the group {schoolclass}.")
             else:

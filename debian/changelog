@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.2.32) lmn72; urgency=medium
+
+  * Update to Ajenti 2.2.8 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 05 Jan 2024 13:15:16 +0100
+
 linuxmuster-webui7 (7.2.31) lmn72; urgency=medium
 
   * [smbclient] Catch error by code and not by locale. 

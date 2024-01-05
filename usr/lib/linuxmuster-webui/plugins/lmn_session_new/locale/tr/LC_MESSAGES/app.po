@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-01 23:12+0100\n"
-"PO-Revision-Date: 2024-01-01 22:19\n"
+"POT-Creation-Date: 2024-01-05 13:09+0100\n"
+"PO-Revision-Date: 2024-01-05 12:14\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -201,7 +201,7 @@ msgid "Stop autorefresh"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/sessionsList.html:86
-msgid "There are n group yet. Create a new group using the 'New group' button bellow!"
+msgid "There are no group yet. Create a new group using the 'New group' button bellow!"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:96

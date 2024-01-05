@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-11-14 15:37+0100\n"
-"PO-Revision-Date: 2023-11-30 22:10\n"
+"PO-Revision-Date: 2024-01-05 12:14\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -127,11 +127,11 @@ msgstr "aucun mot de passe"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/services/websessionService.es:46
 msgid "Successfully stopped!"
-msgstr ""
+msgstr "Arrêt réussi !"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/services/websessionService.es:49
 msgid "Cannot stop entry!"
-msgstr ""
+msgstr "Impossible d'arrêter l'entrée !"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/services/websessionService.es:75
 #: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:38

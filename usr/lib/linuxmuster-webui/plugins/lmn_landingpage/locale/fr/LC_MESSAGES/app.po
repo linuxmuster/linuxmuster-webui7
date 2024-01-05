@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-11-25 17:48+0100\n"
-"PO-Revision-Date: 2023-11-30 22:10\n"
+"PO-Revision-Date: 2024-01-05 12:14\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -113,7 +113,7 @@ msgstr "Détails de l'utilisateur"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:7
 msgid "Welcome to Linuxmuster.net version 7.2 !"
-msgstr ""
+msgstr "Bienvenue sur Linuxmuster.net version 7.2 !"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:23
 msgid "With great power comes great responsibility!"

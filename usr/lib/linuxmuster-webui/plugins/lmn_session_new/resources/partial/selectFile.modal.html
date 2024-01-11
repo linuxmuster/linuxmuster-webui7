@@ -55,7 +55,11 @@
                 {{count_selected}} <span translate>item(s) selected</span>
             </span>
         </div>
-        <div ng:repeat="item in items|orderBy:['-isDir', 'name']" class="list-group-item list-group-item-small" test-bind-item="{{item.name}}" ng:style="item.selected && {'background':'#ffc876'}">
+        <div ng:repeat="item in items|orderBy:['-isDir', 'name']" class="list-group-item list-group-item-small"
+             test-bind-item="{{item.name}}"
+             ng:style="item.selected && {'background':'#ffc876'}"
+             ng:if="item.name != 'collected'"
+        >
             <a ng:click="delete_file(item.path)" class="list-group-btn" ng:if="item.isFile">
                 <i class="fa fa-trash"></i>
             </a>

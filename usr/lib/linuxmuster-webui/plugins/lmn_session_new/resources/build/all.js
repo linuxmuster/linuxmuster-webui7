@@ -768,7 +768,11 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
           results = [];
           for (i = 0, len = ref.length; i < len; i++) {
             participant = ref[i];
-            results.push($scope._share(participant, result.items));
+            if ($scope.isStudent(participant)) {
+              results.push($scope._share(participant, result.items));
+            } else {
+              results.push(void 0);
+            }
           }
           return results;
         }
@@ -821,14 +825,16 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       ref = $scope.session.members;
       for (i = 0, len = ref.length; i < len; i++) {
         participant = ref[i];
-        dst = `${collect_path}\\${participant.sAMAccountName}`;
-        items = [
-          {
-            "path": `${participant.homeDirectory}\\transfer\\${$scope.identity.user}\\_collect`,
-            "name": ""
-          }
-        ];
-        promises.push($scope._collect(command, items, dst));
+        if ($scope.isStudent(participant)) {
+          dst = `${collect_path}\\${participant.sAMAccountName}`;
+          items = [
+            {
+              "path": `${participant.homeDirectory}\\transfer\\${$scope.identity.user}\\_collect`,
+              "name": ""
+            }
+          ];
+          promises.push($scope._collect(command, items, dst));
+        }
       }
       return $q.all(promises).then(function() {
         // _collect directory was moved, so recreating empty working diretories for all

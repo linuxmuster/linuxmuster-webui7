@@ -846,7 +846,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         return notify.success(gettext("Files collected!"));
       });
     };
-    return $scope.collectUser = function(command, participant) {
+    $scope.collectUser = function(command, participant) {
       var choose_path, collect_path, now, print_path, transfer_directory;
       // participant is only one user
       // command is copy or move
@@ -861,6 +861,29 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
           return $scope._collect(command, result.items, collect_path).then(function() {
             return notify.success(gettext("Files collected!"));
           });
+        }
+      });
+    };
+    return $scope.browseCollected = function() {
+      var collect_path;
+      collect_path = `${identity.profile.homeDirectory}\\transfer\\collected`;
+      return $uibModal.open({
+        templateUrl: '/lmn_session_new:resources/partial/selectFile.modal.html',
+        controller: 'LMNSessionFileSelectModalController',
+        scope: $scope,
+        resolve: {
+          action: function() {
+            return '';
+          },
+          path: function() {
+            return collect_path;
+          },
+          print_path: function() {
+            return collect_path;
+          },
+          user: function() {
+            return '';
+          }
         }
       });
     };

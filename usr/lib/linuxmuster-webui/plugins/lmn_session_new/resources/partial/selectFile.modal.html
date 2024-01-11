@@ -48,7 +48,7 @@
         </div>
 
         <div class="list-group-item list-group-item-small">
-            <div class="list-group-addon pull-left" ng:if="action != 'share'">
+            <div class="list-group-addon pull-left" ng:if="action && action != 'share'">
                 <span checkbox ng:model="toggleAllStatus" ng:click="toggleAll()"></span>
             </div>
             <span class="list-group-main pull-right">
@@ -69,7 +69,7 @@
             <a ng:click="rename(item)" class="list-group-btn">
                 <i class="fa fa-pen"></i>
             </a>
-            <div class="list-group-addon pull-left">
+            <div class="list-group-addon pull-left" ng:if="action">
                 <span class="subtle" checkbox ng:model="item.selected" ng:change="refreshSelected()"></span>
             </div>
             <a ng:click="load_path(item.path)" class="list-group-main" ng:if="item.isDir">
@@ -92,5 +92,5 @@
     <span ng:if="action == 'move' || action == 'copy'">
         <a class="btn btn-default btn-flat" ng:click="save()" translate>Collect from User</a>
     </span>
-    <a class="btn btn-default btn-flat" ng:click="close()" translate>Cancel</a>
+    <a class="btn btn-default btn-flat" ng:click="close()" translate>Close</a>
 </div>

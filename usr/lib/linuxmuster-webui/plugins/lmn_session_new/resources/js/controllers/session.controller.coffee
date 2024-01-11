@@ -488,6 +488,19 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
                 $scope._collect(command, result.items, collect_path).then () ->
                     notify.success(gettext("Files collected!"))
 
+    $scope.browseCollected = () ->
+        collect_path = "#{identity.profile.homeDirectory}\\transfer\\collected"
+        $uibModal.open(
+           templateUrl: '/lmn_session_new:resources/partial/selectFile.modal.html'
+           controller: 'LMNSessionFileSelectModalController'
+           scope: $scope
+           resolve:
+              action: () -> ''
+              path: () -> collect_path
+              print_path: () -> collect_path
+              user: () -> ''
+        )
+
 angular.module('lmn.session_new').controller 'LMNSessionFileSelectModalController', ($scope, $uibModalInstance, gettext, notify, $http, action, path, messagebox, smbclient, user, print_path) ->
 
     $scope.action = action # copy, move or share

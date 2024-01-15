@@ -79,6 +79,8 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
     $scope.session = lmnSession.current
     $scope.extExamUsers = lmnSession.extExamUsers
     $scope.examUsers = lmnSession.examUsers
+    $scope.examMode = lmnSession.examMode
+
     lmnSession.createWorkingDirectory($scope.session.members).then () ->
         $scope.missing_schoolclasses = lmnSession.user_missing_membership.map((user) -> user.sophomorixAdminClass)
         $scope.missing_schoolclasses = [... new Set($scope.missing_schoolclasses)].join(',')
@@ -220,6 +222,11 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         lmnSession.kill($scope.session.sid, $scope.session.name).then () ->
             $scope.backToSessionList()
 
+    $scope.cloneSession = () ->
+        memberslist = $scope.session.members.map((user) => user.cn);
+        lmnSession.new(memberslist).then () ->
+            $scope.backToSessionList()
+
     $scope.saveAsSession = () ->
         lmnSession.new($scope.session.members).then () ->
             $scope.sessionChanged = false
@@ -278,12 +285,12 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
 
     $scope.startExam = () ->
         # End exam for a whole group
-        $scope.stateChanged = true
         messagebox.show({
             text: gettext('Do you really want to start a new exam?'),
             positive: gettext('Start exam mode'),
             negative: gettext('Cancel')
         }).then () ->
+            $scope.stateChanged = true
             $http.patch("/api/lmn/session/exam/start", {session: $scope.session}).then (resp) ->
                 $scope.examMode = true
                 $scope.stateChanged = false
@@ -292,12 +299,12 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
 
     $scope.stopExam = () ->
         # End exam for a whole group
-        $scope.stateChanged = true
         messagebox.show({
             text: gettext('Do you really want to end the current exam?'),
             positive: gettext('End exam mode'),
             negative: gettext('Cancel')
         }).then () ->
+            $scope.stateChanged = true
             $http.patch("/api/lmn/session/exam/stop", {session: $scope.session}).then (resp) ->
                 $scope.refreshUsers()
                 $scope.examMode = false
@@ -351,7 +358,6 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
     $scope.showFirstPassword = (username) ->
         $scope.blurred = true
         # if user is exam user show InitialPassword of real user
-        username = username.replace('-exam', '')
         userPassword.showFirstPassword(username).then((resp) ->
             $scope.blurred = false
         )
@@ -413,7 +419,8 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         $scope.choose_items(choose_path, print_path,'share', 'all').then (result) ->
             if result.response is 'accept'
                 for participant in $scope.session.members
-                    $scope._share(participant, result.items)
+                    if $scope.isStudent(participant)
+                        $scope._share(participant, result.items)
 
     $scope._leading_zero = (int) ->
         if "#{int}".length == 1
@@ -452,12 +459,13 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
 
         promises = []
         for participant in $scope.session.members
-            dst = "#{collect_path}\\#{participant.sAMAccountName}"
-            items = [{
-                "path": "#{participant.homeDirectory}\\transfer\\#{$scope.identity.user}\\_collect",
-                "name": ""
-            }]
-            promises.push($scope._collect(command, items, dst))
+            if $scope.isStudent(participant)
+                dst = "#{collect_path}\\#{participant.sAMAccountName}"
+                items = [{
+                    "path": "#{participant.homeDirectory}\\transfer\\#{$scope.identity.user}\\_collect",
+                    "name": ""
+                }]
+                promises.push($scope._collect(command, items, dst))
         $q.all(promises).then () ->
             # _collect directory was moved, so recreating empty working diretories for all
             lmnSession.createWorkingDirectory($scope.session.members).then () ->
@@ -479,6 +487,19 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
             if result.response is 'accept'
                 $scope._collect(command, result.items, collect_path).then () ->
                     notify.success(gettext("Files collected!"))
+
+    $scope.browseCollected = () ->
+        collect_path = "#{identity.profile.homeDirectory}\\transfer\\collected"
+        $uibModal.open(
+           templateUrl: '/lmn_session_new:resources/partial/selectFile.modal.html'
+           controller: 'LMNSessionFileSelectModalController'
+           scope: $scope
+           resolve:
+              action: () -> ''
+              path: () -> collect_path
+              print_path: () -> collect_path
+              user: () -> ''
+        )
 
 angular.module('lmn.session_new').controller 'LMNSessionFileSelectModalController', ($scope, $uibModalInstance, gettext, notify, $http, action, path, messagebox, smbclient, user, print_path) ->
 

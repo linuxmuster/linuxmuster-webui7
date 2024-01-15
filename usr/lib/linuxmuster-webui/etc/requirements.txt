@@ -1,7 +1,7 @@
-aj==2.2.7
-ajenti-panel==2.2.7
+aj==2.2.8
+ajenti-panel==2.2.8
 ajenti.plugin.ace==0.32
-ajenti.plugin.core==0.107
+ajenti.plugin.core==0.108
 ajenti.plugin.dashboard==0.42
 ajenti.plugin.filesystem==0.50
 ajenti.plugin.plugins==0.51
@@ -13,12 +13,12 @@ dpath==2.0.6         # used for getSophomorixValue
 gssapi==1.7.3
 isc_dhcp_leases
 krb5==0.3.0
-paramiko==3.0.0
+paramiko==3.4.0
 Pillow
 pyspnego==0.5.2
 python-ldap
 python-dateutil
-python-magic==0.4.15 # used to determine encoding in linbo files and csv uploads
+python-magic # used to determine encoding in linbo files and csv uploads
 python-nmap
 pytz
 requests

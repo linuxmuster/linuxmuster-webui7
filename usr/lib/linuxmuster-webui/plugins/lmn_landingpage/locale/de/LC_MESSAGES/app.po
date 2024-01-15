@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-11-25 17:48+0100\n"
-"PO-Revision-Date: 2023-08-03 13:02\n"
+"PO-Revision-Date: 2024-01-11 17:56\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -48,9 +48,7 @@ msgstr "Einfaches Setup"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/webappqr.modal.html:26
 msgid "For easy setup, please scan your personal code in the app:<br>"
-msgstr ""
-"Für die einfache einrichtung Scannen Sie bitte Ihren persönlichen Code in "
-"der App ein:<br>"
+msgstr "Für die einfache einrichtung Scannen Sie bitte Ihren persönlichen Code in der App ein:<br>"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:110
 msgid "Groups"
@@ -102,11 +100,8 @@ msgid "Setup guide for iOS"
 msgstr "Anleitung für die Einrichtung unter iOS"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/webappqr.modal.html:8
-msgid ""
-"To set up mobile access to the school server from iOS based devices, please "
-"proceed as follows:"
-msgstr ""
-"Um den mobilen Zugriff auf den Schulserver von iOS\n"
+msgid "To set up mobile access to the school server from iOS based devices, please proceed as follows:"
+msgstr "Um den mobilen Zugriff auf den Schulserver von iOS\n"
 "basierten geräten einzurichten gehen Sie bitte wie folgt vor:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:21
@@ -118,34 +113,25 @@ msgid "User Details"
 msgstr "Benutzerdetails"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:7
-#, fuzzy
 msgid "Welcome to Linuxmuster.net version 7.2 !"
-msgstr "Willkommen auf Linuxmuster.net Version 7!"
+msgstr "Willkommen zu Linuxmuster.net Version 7.2 !"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:23
 msgid "With great power comes great responsibility!"
 msgstr "Aus großer Macht folgt große Verantwortung!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:98
-msgid ""
-"You can access the school server from many mobile devices.\n"
+msgid "You can access the school server from many mobile devices.\n"
 "                        Select your operating system to see how it works."
-msgstr ""
-"Sie können von beliebigen Systemen von Mobil auf den Schulserver zugreifen. "
-"Wählen Sie ihr Betriebssystem aus um anzuzeigen wie es geht."
+msgstr "Sie können von beliebigen Systemen von Mobil auf den Schulserver zugreifen. Wählen Sie ihr Betriebssystem aus um anzuzeigen wie es geht."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/webappqr.modal.html:21
 msgid "Your password"
 msgstr "Ihr Passwort"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:18
-msgid ""
-"use the sidebar to navigate through the options. You can start by using the "
-"Enroll module to subscribe to your classes."
-msgstr ""
-"verwenden Sie die Seitenleiste, um in den Einstellungen zu navigieren. Sie "
-"könnten damit beginnen, sich mit Hilfe des Einschreiben-Moduls in Ihre "
-"Klassen einzutragen."
+msgid "use the sidebar to navigate through the options. You can start by using the Enroll module to subscribe to your classes."
+msgstr "verwenden Sie die Seitenleiste, um in den Einstellungen zu navigieren. Sie könnten damit beginnen, sich mit Hilfe des Einschreiben-Moduls in Ihre Klassen einzutragen."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:7
 msgid "Home"
@@ -170,3 +156,4 @@ msgstr "Drucker"
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:93
 msgid "Project"
 msgstr "Projekt"
+

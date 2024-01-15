@@ -12,7 +12,8 @@ from aj.auth import authorize
 from aj.api.endpoint import endpoint, EndpointError
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue, samba_workgroup
 from aj.plugins.lmn_common.lmnfile import LMNFile
-from configparser import ConfigParser
+from linuxmusterTools.quotas import list_user_files
+
 
 @component(HttpPlugin)
 class Handler(HttpPlugin):
@@ -314,29 +315,7 @@ class Handler(HttpPlugin):
         :rtype: dict
         """
 
-        path = '/srv/samba'
-        user = f'{samba_workgroup}\\{user}'
+        # if isAdmin or user == self.context.identity
 
-        directories = {}
-
-        for root, dirs, files in os.walk(path):
-            for f in files:
-                stats = os.stat(os.path.join(root, f))
-                owner = pwd.getpwuid(stats.st_uid).pw_name
-                size = stats.st_size
-                if owner == user:
-                    for directory, _ in directories.items():
-                        if root.startswith(directory):
-                            directories[directory] += size
-                            break
-                    else:
-                        directories[root] = size
-
-        total = 0
-        for directory, size in directories.items():
-            total += size
-            mega = size / 1024 /1024
-            directories[directory] = f"{mega:.2f}"
-
-        return directories, f"{total / 1024 / 1024:.2f}"
+        return list_user_files(user)
 

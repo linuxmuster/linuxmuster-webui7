@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-11-09 13:04+0100\n"
-"PO-Revision-Date: 2023-08-03 13:02\n"
+"PO-Revision-Date: 2024-01-11 17:56\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -50,7 +50,7 @@ msgstr "Details"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:172
 msgid "Directory"
-msgstr ""
+msgstr "Verzeichnis"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/apply.modal.html:10
 msgid "Hide details"
@@ -58,11 +58,11 @@ msgstr "Details ausblenden"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:143
 msgid "List main directories for user:"
-msgstr ""
+msgstr "Hauptverzeichnisse für Benutzer auflisten:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:169
 msgid "Main quota use for the user {{_.quota_user_check.label}}"
-msgstr ""
+msgstr "Haupt-Quota Verwendung für Benutzer {{_.quota_user_check.label}}"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:118
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:12
@@ -81,7 +81,7 @@ msgstr "Projekte"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:137
 msgid "Quota check"
-msgstr ""
+msgstr "Quota-Prüfung"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:206
 msgid "Save & apply"
@@ -97,7 +97,7 @@ msgstr "Benutzer suchen & hinzufügen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:173
 msgid "Size (MiB)"
-msgstr ""
+msgstr "Größe (MiB)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:35
 msgid "Students"
@@ -114,14 +114,12 @@ msgid "There is no special quota here."
 msgstr "Es existiert keine Sonderquota."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:139
-msgid ""
-"This functionality is actually under development and displays imprecise "
-"values. It will not work with DFS shares or in multischool environment."
-msgstr ""
+msgid "This functionality is actually under development and displays imprecise values. It will not work with DFS shares or in multischool environment."
+msgstr "Diese Funktionalität befindet sich in der Entwicklung und zeigt ungenaue Werte an. Sie wird nicht mit DFS-Freigaben oder in Multischold-Umgebung funktionieren."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:180
 msgid "Total"
-msgstr ""
+msgstr "Gesamt"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/main.py:15
 msgid "Extra-Quotas"
@@ -152,11 +150,8 @@ msgid "Quotas"
 msgstr "Quotas"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:57
-#, fuzzy
 msgid "Search user by login, firstname or lastname (min. 3 chars)"
-msgstr ""
-"Suche Benutzer nach Benutzername, Vor- oder Nachname (min. 3 Zeichen), ohne "
-"Sonderzeichen."
+msgstr "Suche Benutzer nach Benutzername, Vor- oder Nachname (min. 3 Zeichen)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:61
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:69
@@ -200,3 +195,4 @@ msgstr " mit Standardwerten in der Liste hinzugefügt."
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:175
 msgid "Saving quotas ..."
 msgstr "Speichere Quotas ..."
+

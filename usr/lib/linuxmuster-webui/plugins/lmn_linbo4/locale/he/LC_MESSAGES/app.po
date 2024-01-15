@@ -3,15 +3,14 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-11-09 13:04+0100\n"
-"PO-Revision-Date: 2023-08-01 13:42\n"
+"PO-Revision-Date: 2023-11-30 22:10\n"
 "Last-Translator: \n"
 "Language-Team: Hebrew\n"
 "Language: he_IL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
-"n%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3;\n"
 "X-Crowdin-Project: linuxmusternet\n"
 "X-Crowdin-Project-ID: 325271\n"
 "X-Crowdin-Language: he\n"
@@ -546,9 +545,7 @@ msgid "LINBO Cache"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:539
-msgid ""
-"You should call an import devices process to apply the new changes, quit "
-"this page anyway ?"
+msgid "You should call an import devices process to apply the new changes, quit this page anyway ?"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:585
@@ -572,8 +569,7 @@ msgid "Multicast and torrent services restarted"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:680
-msgid ""
-"Failed to restart multicast and torrent services. Please see the log files"
+msgid "Failed to restart multicast and torrent services. Please see the log files"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:688
@@ -602,3 +598,4 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:766
 msgid "Saved"
 msgstr ""
+

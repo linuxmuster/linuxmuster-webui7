@@ -7,7 +7,8 @@ from urllib.parse import quote, unquote
 import locale
 import gevent
 import smbclient
-from smbprotocol.exceptions import SMBOSError, NotFound, SMBAuthenticationError, InvalidParameter
+import logging
+from smbprotocol.exceptions import SMBOSError, NotFound, SMBAuthenticationError, InvalidParameter, SMBException
 from spnego.exceptions import BadMechanismError
 from jadi import component
 import xml.etree.ElementTree as ElementTree
@@ -21,6 +22,27 @@ from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
 from aj.auth import authorize, AuthenticationService
 from aj.plugins.lmn_common.mimetypes import content_mimetypes
 from aj.plugins.lmn_smbclient.davxml import WebdavXMLResponse
+
+
+# Wrapper for smbclient methods in order to avoid empty credits error
+def credit_wrapper(func):
+    def new_func(*args, **kwargs):
+        retry = 0
+        while retry < 5:
+            try:
+                return func(*args, **kwargs)
+            except SMBException as e:
+                if '0 credits are available' in str(e):
+                    retry += 1
+                    gevent.sleep(0.1)
+                else:
+                    raise
+        # 5 attempts was not enough ?
+        raise EndpointError("Still not enough credits to create working directory after five attempts. Please contact your administrator.")
+    return new_func
+
+for method in ['copyfile', 'rename', 'makedirs', 'mkdir', 'renames', 'remove', 'removedirs']:
+    setattr(smbclient, method, credit_wrapper(getattr(smbclient, method)))
 
 
 @component(HttpPlugin)

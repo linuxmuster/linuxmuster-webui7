@@ -13,7 +13,7 @@ class ItemProvider(SidebarItemProvider):
         return [
             {
             'attach': 'category:class',
-            'name': _('Session'),
+            'name': _('Session deprecated'),
             'icon': 'chalkboard-teacher',
             'url': '/view/lmn/oldsession',
             'weight': 15,

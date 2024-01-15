@@ -53,7 +53,7 @@ try:
     samba_domain = f'{samba_netbios}.{samba_realm}'
 except Exception:
     logging.error("Can not read realm and domain from smb.conf")
-    samba_domain, samba_realm, samba_netbios = ['']*3
+    samba_domain, samba_realm, samba_netbios, samba_workgroup = ['']*4
 
 # Fix missing entries in the lmconfig. Should be later refactored
 # and the config file should be splitted

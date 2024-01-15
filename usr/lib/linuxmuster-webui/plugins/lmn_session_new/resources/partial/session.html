@@ -3,7 +3,7 @@
 
     <progress-spinner ng:show="stateChanged"></progress-spinner>
 
-    <div class="alert alert-warning">This plugin is actually under heavy development and only published for testing purposes.</div>
+<!--    <div class="alert alert-warning">This plugin is actually under heavy development and only published for testing purposes.</div>-->
 
     <div class="input-group">
         <input type="text" style="width:70%" placeholder="{{translation.addStudent}}" ng:model="addParticipant" typeahead-editable=false typeahead-min-length="2" uib-typeahead="user as user.sophomorixAdminClass+' '+user.sn+ ' '+user.givenName+ ' ('+user.sAMAccountName+')'  for user in findUsers($viewValue) | limitTo:10" class="form-control" />
@@ -30,14 +30,23 @@
             </button>
             <ul uib-dropdown-menu class="dropdown-menu-right" >
                 <li>
-                    <a ng:click="renameSession()" translate>
-                        Rename group
+                    <a ng:click="renameSession()">
+                        <i class="fa fa-pencil"></i>
+                        <span translate>Rename group</span>
                     </a>
                 </li>
                 <li>
-                    <a ng:click="killSession()" translate>
-                        Delete group
+                    <a ng:click="cloneSession()">
+                        <i class="fa-regular fa-copy"></i>
+                        <span translate>Duplicate group</span>
                     </a>
+                </li>
+                <li>
+                    <a ng:click="killSession()">
+                        <i class="fa fa-trash"></i>
+                        <span translate>Delete group</span>
+                    </a>
+                </li>
             </ul>
         </div>
 
@@ -167,22 +176,22 @@
         </tr>
         <tr style="display:;"  ng:repeat="participant in session.members|orderBy:[sort.fx]">
             <td class="ng-binding">
-                <span class="label label-default pull-right">{{participant.sophomorixAdminClass}}</span>
                 <a>
                     <b> {{participant.sn}}, {{participant.givenName}} </b>
                 </a>
                 <br />
+                <span class="label label-default pull-right">{{participant.sophomorixAdminClass}}</span>
                 <i>{{participant.sAMAccountName}}</i>
                 <div ng-show="showDetails"> <!--<img src="https://openclipart.org/image/2400px/svg_to_png/211821/matt-icons_preferences-desktop-personal.png" style="height:75px;"</img>--> </div>
             </td>
-            <td ng:show="!isStudent(participant)" colspan="7">
+            <td ng:show="!isStudent(participant)" colspan="8">
                 <div class="alert alert-danger" translate>
                     It's currently not possible to create share directory in other teacher's home or to handle their management groups.
                 </div>
             </td>
 
             <td ng:show="isStudent(participant)" style="text-align:center;">
-                <div class="button-group">
+                <div class="button-group" ng:if="participant.files != 'ERROR'">
                     <button type="button" class="btn btn-default active" ng:click="shareUser(participant)">
                         <i class="fas fa-file-export"></i>
                         <span translate>Share</span>
@@ -210,8 +219,8 @@
                 </div>
             </td>
 
-            <td ng:show="isStudent(participant)" colspan="2">
-                <div ng:if="participant.files == 'ERROR'" style="width:220px;">
+            <td ng:show="isStudent(participant)" colspan="2" style="text-align: center;">
+                <div ng:if="participant.files == 'ERROR'">
                     <a style="inline-block" class="btn btn-danger" ng:click="fixMembership()">
                         <span translate>Join {{missing_schoolclasses}} to share</span>
                     </a>
@@ -351,6 +360,10 @@
                     </li>
                 </ul>
             </div>
+            <button class="btn btn-lmn pull-left" ng:click="browseCollected()">
+                <i class="fa-solid fa-file-arrow-down"></i>
+                <span translate>Browse collected files</span>
+            </button>
             <button ng:click="backToSessionList()" class="btn btn-lmn pull-right" translate>Close</button>
         </div>
     </floating-toolbar>

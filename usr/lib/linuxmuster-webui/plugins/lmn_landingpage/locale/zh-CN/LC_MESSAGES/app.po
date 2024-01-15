@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-11-25 17:48+0100\n"
-"PO-Revision-Date: 2023-08-03 13:02\n"
+"PO-Revision-Date: 2023-11-30 22:10\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -100,9 +100,7 @@ msgid "Setup guide for iOS"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/webappqr.modal.html:8
-msgid ""
-"To set up mobile access to the school server from iOS based devices, please "
-"proceed as follows:"
+msgid "To set up mobile access to the school server from iOS based devices, please proceed as follows:"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:21
@@ -122,8 +120,7 @@ msgid "With great power comes great responsibility!"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:98
-msgid ""
-"You can access the school server from many mobile devices.\n"
+msgid "You can access the school server from many mobile devices.\n"
 "                        Select your operating system to see how it works."
 msgstr ""
 
@@ -132,9 +129,7 @@ msgid "Your password"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:18
-msgid ""
-"use the sidebar to navigate through the options. You can start by using the "
-"Enroll module to subscribe to your classes."
+msgid "use the sidebar to navigate through the options. You can start by using the Enroll module to subscribe to your classes."
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:7
@@ -160,3 +155,4 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:93
 msgid "Project"
 msgstr ""
+

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-11-09 13:04+0100\n"
-"PO-Revision-Date: 2023-08-01 13:42\n"
+"PO-Revision-Date: 2023-11-30 22:10\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -114,9 +114,7 @@ msgid "There is no special quota here."
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:139
-msgid ""
-"This functionality is actually under development and displays imprecise "
-"values. It will not work with DFS shares or in multischool environment."
+msgid "This functionality is actually under development and displays imprecise values. It will not work with DFS shares or in multischool environment."
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:180
@@ -197,3 +195,4 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:175
 msgid "Saving quotas ..."
 msgstr ""
+

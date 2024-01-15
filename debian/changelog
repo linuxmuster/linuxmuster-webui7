@@ -1,3 +1,9 @@
+linuxmuster-webui7 (17.2.32) lmn72-testing; urgency=medium
+
+  * Merge new commit from linuxmuster.net
+
+ -- Lukas Spitznagel <lukas.spitznagel@netzint.de>  Mon, 15 Jan 2024 16:32:02 +0200
+
 linuxmuster-webui7 (17.2.28) lmn72-testing; urgency=medium
 
   * New plugin device manager (thanks hermanntoast!)
@@ -62,6 +68,40 @@ linuxmuster-webui7 (17.2.22) lmn72; urgency=low
 
  -- Andreas Till <andreas.till@netzint.de>  Mon, 07 Aug 2023 18:20:08 +0200
  
+linuxmuster-webui7 (7.2.32) lmn72; urgency=medium
+
+  * Update to Ajenti 2.2.8 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 05 Jan 2024 13:15:16 +0100
+
+linuxmuster-webui7 (7.2.31) lmn72; urgency=medium
+
+  * [smbclient] Catch error by code and not by locale. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 05 Jan 2024 10:24:08 +0100
+
+linuxmuster-webui7 (7.2.30) lmn72; urgency=medium
+
+  * [samba] Avoid library conflict.
+  * [session] Clone group.
+  * [session] Fix error with encoded search queries.
+  * [session] Switch to new session plugin. Add tags to switch back.
+  * [session] Recheck working directory when refreshing users list.
+  * [setup] Fix restart problem after setup.
+  * [smbclient] Fix library conflict.
+  * [smbclient] Patch smbprotocol to catch 0 credits errors.
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 01 Jan 2024 23:02:07 +0100
+
+linuxmuster-webui7 (7.2.29-testing) lmn72; urgency=medium
+
+  * Update translations (thanks @cibomato)
+  * [common] Fix undefined samba var
+  * [linbo_sync] Read qdiff last synchronisation date
+  * [session_new] Diverses fixs for passwords and exams
+  
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 08 Dec 2023 10:02:41 +0100
+
 linuxmuster-webui7 (7.2.28-testing) lmn72; urgency=medium
 
   * New plugin device manager (thanks hermanntoast!)

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-11-14 15:37+0100\n"
-"PO-Revision-Date: 2023-08-03 13:02\n"
+"PO-Revision-Date: 2024-01-11 17:56\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -119,23 +119,19 @@ msgstr "Utilisateurs"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:9
 msgid "Websession-Module not enabled! Please check Config-File!"
-msgstr ""
-"Le module Websession-Module n'est pas activé! Veuillez vérifier le fichier "
-"de configuration !"
+msgstr "Le module Websession-Module n'est pas activé! Veuillez vérifier le fichier de configuration !"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:44
 msgid "no password"
 msgstr "aucun mot de passe"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/services/websessionService.es:46
-#, fuzzy
 msgid "Successfully stopped!"
-msgstr "Supprimé avec succès !"
+msgstr "Arrêt réussi !"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/services/websessionService.es:49
-#, fuzzy
 msgid "Cannot stop entry!"
-msgstr "Impossible de supprimer l'entrée !"
+msgstr "Impossible d'arrêter l'entrée !"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/services/websessionService.es:75
 #: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:38
@@ -174,3 +170,4 @@ msgstr "Impossible de supprimer l'entrée !"
 #: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:74
 msgid "Copied!"
 msgstr "Copié !"
+

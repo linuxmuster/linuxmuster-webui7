@@ -26,6 +26,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
 
     this.sessions = [];
     this.user_missing_membership = [];
+    this.examMode = false;
 
     this.load = function () {
         var promiseList = [];
@@ -47,12 +48,17 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     };
 
     this.filterExamUsers = function () {
+        _this.examMode = false;
         _this.extExamUsers = _this.current.members.filter(function (user) {
             return user.examMode && user.examTeacher != identity.user;
         });
         _this.examUsers = _this.current.members.filter(function (user) {
             return user.examTeacher == identity.user;
         });
+        if (_this.examUsers.length > 0 && _this.extExamUsers.length == 0) {
+            // Only exam users from the current teacher
+            _this.examMode = true;
+        }
     };
 
     this._createWorkingDirectory = function (user) {
@@ -152,6 +158,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         });
         return $http.post('/api/lmn/session/userinfo', { 'users': users }).then(function (resp) {
             _this.current.members = resp.data;
+            _this.createWorkingDirectory(_this.current.members);
             _this.filterExamUsers();
             $location.path('/view/lmn/session');
         });
@@ -304,6 +311,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     $scope.session = lmnSession.current;
     $scope.extExamUsers = lmnSession.extExamUsers;
     $scope.examUsers = lmnSession.examUsers;
+    $scope.examMode = lmnSession.examMode;
     lmnSession.createWorkingDirectory($scope.session.members).then(function() {
       $scope.missing_schoolclasses = lmnSession.user_missing_membership.map(function(user) {
         return user.sophomorixAdminClass;
@@ -481,6 +489,15 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         return $scope.backToSessionList();
       });
     };
+    $scope.cloneSession = function() {
+      var memberslist;
+      memberslist = $scope.session.members.map((user) => {
+        return user.cn;
+      });
+      return lmnSession.new(memberslist).then(function() {
+        return $scope.backToSessionList();
+      });
+    };
     $scope.saveAsSession = function() {
       return lmnSession.new($scope.session.members).then(function() {
         $scope.sessionChanged = false;
@@ -567,12 +584,12 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     // Exam mode
     $scope.startExam = function() {
       // End exam for a whole group
-      $scope.stateChanged = true;
       return messagebox.show({
         text: gettext('Do you really want to start a new exam?'),
         positive: gettext('Start exam mode'),
         negative: gettext('Cancel')
       }).then(function() {
+        $scope.stateChanged = true;
         return $http.patch("/api/lmn/session/exam/start", {
           session: $scope.session
         }).then(function(resp) {
@@ -585,12 +602,12 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     };
     $scope.stopExam = function() {
       // End exam for a whole group
-      $scope.stateChanged = true;
       return messagebox.show({
         text: gettext('Do you really want to end the current exam?'),
         positive: gettext('End exam mode'),
         negative: gettext('Cancel')
       }).then(function() {
+        $scope.stateChanged = true;
         $http.patch("/api/lmn/session/exam/stop", {
           session: $scope.session
         }).then(function(resp) {
@@ -666,7 +683,6 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     $scope.showFirstPassword = function(username) {
       $scope.blurred = true;
       // if user is exam user show InitialPassword of real user
-      username = username.replace('-exam', '');
       return userPassword.showFirstPassword(username).then(function(resp) {
         return $scope.blurred = false;
       });
@@ -752,7 +768,11 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
           results = [];
           for (i = 0, len = ref.length; i < len; i++) {
             participant = ref[i];
-            results.push($scope._share(participant, result.items));
+            if ($scope.isStudent(participant)) {
+              results.push($scope._share(participant, result.items));
+            } else {
+              results.push(void 0);
+            }
           }
           return results;
         }
@@ -805,14 +825,16 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       ref = $scope.session.members;
       for (i = 0, len = ref.length; i < len; i++) {
         participant = ref[i];
-        dst = `${collect_path}\\${participant.sAMAccountName}`;
-        items = [
-          {
-            "path": `${participant.homeDirectory}\\transfer\\${$scope.identity.user}\\_collect`,
-            "name": ""
-          }
-        ];
-        promises.push($scope._collect(command, items, dst));
+        if ($scope.isStudent(participant)) {
+          dst = `${collect_path}\\${participant.sAMAccountName}`;
+          items = [
+            {
+              "path": `${participant.homeDirectory}\\transfer\\${$scope.identity.user}\\_collect`,
+              "name": ""
+            }
+          ];
+          promises.push($scope._collect(command, items, dst));
+        }
       }
       return $q.all(promises).then(function() {
         // _collect directory was moved, so recreating empty working diretories for all
@@ -824,7 +846,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         return notify.success(gettext("Files collected!"));
       });
     };
-    return $scope.collectUser = function(command, participant) {
+    $scope.collectUser = function(command, participant) {
       var choose_path, collect_path, now, print_path, transfer_directory;
       // participant is only one user
       // command is copy or move
@@ -839,6 +861,29 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
           return $scope._collect(command, result.items, collect_path).then(function() {
             return notify.success(gettext("Files collected!"));
           });
+        }
+      });
+    };
+    return $scope.browseCollected = function() {
+      var collect_path;
+      collect_path = `${identity.profile.homeDirectory}\\transfer\\collected`;
+      return $uibModal.open({
+        templateUrl: '/lmn_session_new:resources/partial/selectFile.modal.html',
+        controller: 'LMNSessionFileSelectModalController',
+        scope: $scope,
+        resolve: {
+          action: function() {
+            return '';
+          },
+          path: function() {
+            return collect_path;
+          },
+          print_path: function() {
+            return collect_path;
+          },
+          user: function() {
+            return '';
+          }
         }
       });
     };
@@ -1021,6 +1066,12 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         var position;
         position = $scope.sessions.indexOf(session);
         return $scope.sessions.splice(position, 1);
+      });
+    };
+    $scope.cloneSession = function(session, e) {
+      e.stopPropagation();
+      return lmnSession.new(session.members).then(function() {
+        return $scope.getSessions();
       });
     };
     $scope.newSession = function() {

@@ -4,8 +4,8 @@ import smbprotocol
 import spnego
 
 from .main import *
-from .views.smbclient import *
-from .views.webdav import *
+from .views.lmnsmbclient import *
+from .views.lmnwebdav import *
 
 # Disable DEBUG/INFO level because of incompatibility with ajenti logger
 logging.getLogger('smbprotocol').setLevel(logging.WARNING)

@@ -2,28 +2,26 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-25 17:48+0100\n"
-"PO-Revision-Date: 2023-08-01 13:42\n"
+"POT-Creation-Date: 2024-01-01 23:12+0100\n"
+"PO-Revision-Date: 2024-01-01 22:19\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 "
-"&& n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 "
-"&& n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
+"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
 "X-Crowdin-Project: linuxmusternet\n"
 "X-Crowdin-Project-ID: 325271\n"
 "X-Crowdin-Language: ru\n"
 "X-Crowdin-File: /2.0/lmn_smbclient.po\n"
 "X-Crowdin-File-ID: 226\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/views/smbclient.py:564
+#: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/views/lmnsmbclient.py:586
 msgid "Ticket successfully refreshed"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/views/smbclient.py:567
+#: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/views/lmnsmbclient.py:589
 msgid "Timeout while trying to get a kerberos ticket"
 msgstr ""
 
@@ -38,3 +36,4 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/resources/js/services/smbclient.service.es:28
 msgid " copied!"
 msgstr ""
+

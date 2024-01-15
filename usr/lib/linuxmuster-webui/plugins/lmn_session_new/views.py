@@ -116,8 +116,7 @@ class Handler(HttpPlugin):
 
         if "members" in http_context.json_body():
             members = http_context.json_body()['members']
-            membersList = [p['sAMAccountName'] for p in members]
-            sophomorixCommand.extend(['--participants', ','.join(membersList)])
+            sophomorixCommand.extend(['--participants', ','.join(members)])
 
         result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
         return result
@@ -253,6 +252,11 @@ class Handler(HttpPlugin):
     @authorize('lm:users:students:read')
     @endpoint(api=True)
     def handle_api_ldap_user_search(self, http_context, query=''):
+        query = query.encode("latin-1").decode("utf-8")
+        for char in query:
+            # Ignoring non alnum queries like "ger¨"
+            if not char.isalnum():
+                return
         userList = self.context.ldapreader.schoolget(f'/users/search/student/{query}')
         return sorted(userList, key=lambda d: f"{d['sophomorixAdminClass']}{d['sn']}{d['givenName']}")
 
@@ -260,6 +264,11 @@ class Handler(HttpPlugin):
     @authorize('lm:users:students:read')
     @endpoint(api=True)
     def handle_api_ldap_group_search(self, http_context, query=''):
+        query = query.encode("latin-1").decode("utf-8")
+        for char in query:
+            # Ignoring non alnum queries like "ger¨"
+            if not char.isalnum():
+                return
         return self.context.ldapreader.schoolget(f'/schoolclasses/search/{query}', sortkey='cn')
 
     @post(r'/api/lmn/session/moveFileToHome')  ## TODO authorize

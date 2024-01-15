@@ -1,6 +1,7 @@
 <div class="modal-header" ng:show="user != 'all'">
     <h4 ng-if="action == 'share'" translate>Share files to {{user}} from directory {{print_path}}</h4>
-    <h4 ng-if="action != 'share'" translate>Collect files from {{user}} from directory {{print_path}}</h4>
+    <h4 ng-if="action && action != 'share'" translate>Collect files from {{user}} from directory {{print_path}}</h4>
+    <h4 ng:if="!action" translate>Browse collected files</h4>
 </div>
 <div class="modal-header" ng:show="user == 'all'">
     <h4 ng-if="action == 'share'" translate>Share files to all participants from directory {{print_path}}</h4>
@@ -29,14 +30,14 @@
             <a ng:click="back()" ng:show="current_path != init_path" class="pull-left">
                 <i class="fas fa-arrow-left"></i>
             </a>
-
+            &nbsp;
             <span ng-if="action == 'share'" translate>Select files you want to share</span>
             <span ng-if="action == 'copy'"  translate>Select files you want to copy</span>
             <span ng-if="action == 'move'"  translate>Select files you want to move</span>
         </div>
 
         <div class="alert alert-info" ng:show="items.length == 0">
-            <span translate>No files or directories found in transfer.</span>
+            <span translate>Empty directory.</span>
         </div>
 
         <div ng:show="!areUploadsFinished()" class="uploads">
@@ -47,15 +48,20 @@
             </div>
         </div>
 
-        <div class="list-group-item list-group-item-small">
-            <div class="list-group-addon pull-left" ng:if="action != 'share'">
+        <div class="list-group-item list-group-item-small" ng:if="items.length > 0">
+            <div class="list-group-addon pull-left" ng:if="action && action != 'share'">
                 <span checkbox ng:model="toggleAllStatus" ng:click="toggleAll()"></span>
             </div>
             <span class="list-group-main pull-right">
                 {{count_selected}} <span translate>item(s) selected</span>
             </span>
         </div>
-        <div ng:repeat="item in items|orderBy:['-isDir', 'name']" class="list-group-item list-group-item-small" test-bind-item="{{item.name}}" ng:style="item.selected && {'background':'#ffc876'}">
+
+        <div ng:repeat="item in items|orderBy:['-isDir', 'name']" class="list-group-item list-group-item-small"
+             test-bind-item="{{item.name}}"
+             ng:style="item.selected && {'background':'#ffc876'}"
+             ng:if="item.name != 'collected'"
+        >
             <a ng:click="delete_file(item.path)" class="list-group-btn" ng:if="item.isFile">
                 <i class="fa fa-trash"></i>
             </a>
@@ -65,7 +71,7 @@
             <a ng:click="rename(item)" class="list-group-btn">
                 <i class="fa fa-pen"></i>
             </a>
-            <div class="list-group-addon pull-left">
+            <div class="list-group-addon pull-left" ng:if="action">
                 <span class="subtle" checkbox ng:model="item.selected" ng:change="refreshSelected()"></span>
             </div>
             <a ng:click="load_path(item.path)" class="list-group-main" ng:if="item.isDir">
@@ -88,5 +94,5 @@
     <span ng:if="action == 'move' || action == 'copy'">
         <a class="btn btn-default btn-flat" ng:click="save()" translate>Collect from User</a>
     </span>
-    <a class="btn btn-default btn-flat" ng:click="close()" translate>Cancel</a>
+    <a class="btn btn-default btn-flat" ng:click="close()" translate>Close</a>
 </div>

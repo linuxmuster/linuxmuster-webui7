@@ -41,7 +41,7 @@ def credit_wrapper(func):
         raise EndpointError("Still not enough credits to create working directory after five attempts. Please contact your administrator.")
     return new_func
 
-for method in ['copyfile', 'rename', 'makedirs', 'mkdir', 'renames', 'remove', 'removedirs']:
+for method in ['copyfile', 'rename', 'makedirs', 'mkdir', 'renames', 'remove', 'removedirs', 'scandir']:
     setattr(smbclient, method, credit_wrapper(getattr(smbclient, method)))
 
 

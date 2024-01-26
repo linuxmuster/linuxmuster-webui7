@@ -34,16 +34,17 @@ def credit_wrapper(func):
             except SMBException as e:
                 if '0 credits are available' in str(e):
                     retry += 1
-                    gevent.sleep(0.1)
+                    gevent.sleep(1)
                 else:
                     raise
         # 5 attempts was not enough ?
         raise EndpointError("Still not enough credits to create working directory after five attempts. Please contact your administrator.")
     return new_func
 
-for method in ['copyfile', 'rename', 'makedirs', 'mkdir', 'renames', 'remove', 'removedirs', 'scandir']:
+for method in ['copyfile', 'rename', 'makedirs', 'mkdir', 'renames', 'remove', 'removedirs', 'scandir', 'stat']:
     setattr(smbclient, method, credit_wrapper(getattr(smbclient, method)))
-
+setattr(smbclient._os.SMBDirEntry, 'from_path', credit_wrapper(getattr(smbclient._os.SMBDirEntry, 'from_path')))
+setattr(smbclient._os, 'SMBDirectoryIO', credit_wrapper(getattr(smbclient._os, 'SMBDirectoryIO')))
 
 @component(HttpPlugin)
 class Handler(HttpPlugin):

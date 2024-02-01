@@ -1,3 +1,13 @@
+linuxmuster-webui7 (7.2.33) lmn72; urgency=medium
+
+  * Security fixes in common and quota. 
+  * Temporary disable session-list until a new version is published.
+  * [session] Browse collected files.
+  * [session] Hide collect directory when sharing.
+  * [smbclient] Pathc more smbclient method to avoid credits error. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Thu, 01 Feb 2024 20:20:38 +0100
+
 linuxmuster-webui7 (7.2.32) lmn72; urgency=medium
 
   * Update to Ajenti 2.2.8 

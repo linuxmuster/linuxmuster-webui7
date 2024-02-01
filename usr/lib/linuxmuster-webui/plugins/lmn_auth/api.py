@@ -114,9 +114,18 @@ class LMAuthenticationProvider(AuthenticationProvider):
             # No ticket for root user
             return
 
-        logging.warning(f'Initializing Kerberos ticket for {username}')
+        krb_cache = f'/tmp/krb5cc_{uid}{uid}'
+
         try:
-            child = pexpect.spawn('/usr/bin/kinit', ['-c', f'/tmp/krb5cc_{uid}{uid}', username])
+            subprocess.check_call(["klist", "-s", krb_cache])
+            return
+        except subprocess.CalledProcessError as e:
+            # Kerberos ticket not available, continuing
+            pass
+
+        try:
+            logging.warning(f'Initializing Kerberos ticket for {username}')
+            child = pexpect.spawn('/usr/bin/kinit', ['-c', krb_cache, username])
             child.expect('.*:', timeout=2)
             child.sendline(password)
             child.expect(pexpect.EOF)

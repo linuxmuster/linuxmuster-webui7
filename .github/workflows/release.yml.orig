@@ -51,7 +51,11 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           tag_name: ${{ github.ref }}
+<<<<<<< HEAD
           release_name: Release ${{ github.ref }}
+=======
+          name: Release ${{ env.VERSION }} (${{ env.DISTRIBUTION }})
+>>>>>>> linuxmuster.net/lmn72
           draft: false
           prerelease: false
           body_path: ./current-changes

@@ -1,9 +1,4 @@
-linuxmuster-webui7 (17.2.33) lmn72-testing; urgency=medium
-
-  * Merge new commit from linuxmuster.net
-
- -- Lukas Spitznagel <lukas.spitznagel@netzint.de>  Thu, 01 Feb 2024 21:45:02 +0200
-
+<<<<<<< HEAD
 linuxmuster-webui7 (17.2.32) lmn72-testing; urgency=medium
 
   * Merge new commit from linuxmuster.net
@@ -74,6 +69,7 @@ linuxmuster-webui7 (17.2.22) lmn72; urgency=low
 
  -- Andreas Till <andreas.till@netzint.de>  Mon, 07 Aug 2023 18:20:08 +0200
  
+=======
 linuxmuster-webui7 (7.2.33) lmn72; urgency=medium
 
   * Security fixes in common and quota. 
@@ -84,6 +80,7 @@ linuxmuster-webui7 (7.2.33) lmn72; urgency=medium
 
  -- Arnaud Kientz <arnaud@linuxmuster.net>  Thu, 01 Feb 2024 20:20:38 +0100
 
+>>>>>>> linuxmuster.net/lmn72
 linuxmuster-webui7 (7.2.32) lmn72; urgency=medium
 
   * Update to Ajenti 2.2.8 

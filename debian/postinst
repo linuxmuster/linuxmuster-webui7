@@ -98,7 +98,7 @@ Updating linuxmuster-webui
             /usr/bin/python3 -m pip install pip -U
 
             msg "Remove deprecated plugins"
-            /usr/bin/python3 -m pip uninstall -y ajenti.plugin.auth-users
+            /usr/bin/python3 -m pip uninstall -y ajenti.plugin.auth-users ajenti.plugin.session-list
 
             # Always backup config file if things are going bad
             msg "Backing up and updating config.yml"

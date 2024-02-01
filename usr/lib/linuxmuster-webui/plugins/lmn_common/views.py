@@ -38,55 +38,61 @@ class Handler(HttpPlugin):
         :rtype: string
         """
 
-        if not os.path.exists(path):
+        if os.getuid() != 0:
+            http_context.respond_forbidden()
             return ''
+
+        if not os.path.exists(path):
+            http_context.respond_not_found()
+            return ''
+
         with open(path) as f:
             f.seek(int(http_context.query.get('offset', '0')))
             return f.read()
 
-    ## TODO authorize
+    ## DEPRECATED
     ## Used in lmn_session/resources/js/controllers/session.controller.coffee:76
-    @post(r'/api/lmn/create-dir')
-    @endpoint(api=True)
-    def handle_api_create_dir(self, http_context):
-        """
-        Create directory with given path, ignoring errors.
+    # @post(r'/api/lmn/create-dir')
+    # @endpoint(api=True)
+    # def handle_api_create_dir(self, http_context):
+    #     """
+    #     Create directory with given path, ignoring errors.
+    #
+    #     :param http_context: HttpContext
+    #     :type http_context: HttpContext
+    #     :return: True if success
+    #     :rtype: bool or None
+    #     """
+    #
+    #     filepath = http_context.json_body()['filepath']
+    #     if not os.path.exists(filepath):
+    #         os.makedirs(filepath)
+    #         return True
+    #     return
 
-        :param http_context: HttpContext
-        :type http_context: HttpContext
-        :return: True if success
-        :rtype: bool or None
-        """
-
-        filepath = http_context.json_body()['filepath']
-        if not os.path.exists(filepath):
-            os.makedirs(filepath)
-            return True
-        return
-
-    ## TODO authorize
-    ## Used in lmn_session/resources/js/controllers/session.controller.coffee:76
-    @post(r'/api/lmn/remove-dir')
-    @endpoint(api=True)
-    def handle_api_remove_dir(self, http_context):
-        """
-        Remove directory and its content with given path, ignoring errors.
-
-        :param http_context: HttpContext
-        :type http_context: HttpContext
-        :return: True if success
-        :rtype: bool or None
-        """
-
-        filepath = http_context.json_body()['filepath']
-        if not os.path.exists(filepath):
-            return
-        shutil.rmtree(filepath, ignore_errors=True)
-        return True
+    ## DEPRECATED
+    # ## Used in lmn_session/resources/js/controllers/session.controller.coffee:76
+    # @post(r'/api/lmn/remove-dir')
+    # @endpoint(api=True)
+    # def handle_api_remove_dir(self, http_context):
+    #     """
+    #     Remove directory and its content with given path, ignoring errors.
+    #
+    #     :param http_context: HttpContext
+    #     :type http_context: HttpContext
+    #     :return: True if success
+    #     :rtype: bool or None
+    #     """
+    #
+    #     filepath = http_context.json_body()['filepath']
+    #     if not os.path.exists(filepath):
+    #         return
+    #     shutil.rmtree(filepath, ignore_errors=True)
+    #     return True
 
     ## TODO authorize
     ## Used in directive upload, lmFileBackups and lmn_session/resources/js/controllers/session.controller.coffee:60
-    @post(r'/api/lmn/remove-file') ## TODO authorize
+    @post(r'/api/lmn/remove-file')
     @endpoint(api=True)
     def handle_api_remove_file(self, http_context):
         """
@@ -98,38 +104,44 @@ class Handler(HttpPlugin):
         :rtype: bool or None
         """
 
+        if os.getuid() != 0:
+            http_context.respond_forbidden()
+            return ''
+
         filepath = http_context.json_body()['filepath']
         if not os.path.exists(filepath):
-            return
+            http_context.respond_not_found()
+            return ''
+
         os.unlink(filepath)
         return True
 
-    ## TODO authorize
+    ## DEPRECATED
     ## Used in directive upload
-    @post(r'/api/lmn/chown') ## TODO authorize
-    @endpoint(api=True)
-    def handle_api_chown(self, http_context):
-        """
-        Chown file with given path, owner and group.
-
-        :param http_context: HttpContext
-        :type http_context: HttpContext
-        :return: True if success
-        :rtype: bool or None
-        """
-
-        filepath = http_context.json_body()['filepath']
-        owner = http_context.json_body()['owner']
-        group = http_context.json_body()['group']
-        if not os.path.exists(filepath):
-            return
-        try:
-            user_id  = pwd.getpwnam(owner).pw_uid
-            group_id = grp.getgrnam(group).gr_gid
-            os.chown(filepath, user_id, group_id)
-            return True
-        except:
-            return
+    # @post(r'/api/lmn/chown')
+    # @endpoint(api=True)
+    # def handle_api_chown(self, http_context):
+    #     """
+    #     Chown file with given path, owner and group.
+    #
+    #     :param http_context: HttpContext
+    #     :type http_context: HttpContext
+    #     :return: True if success
+    #     :rtype: bool or None
+    #     """
+    #
+    #     filepath = http_context.json_body()['filepath']
+    #     owner = http_context.json_body()['owner']
+    #     group = http_context.json_body()['group']
+    #     if not os.path.exists(filepath):
+    #         return
+    #     try:
+    #         user_id  = pwd.getpwnam(owner).pw_uid
+    #         group_id = grp.getgrnam(group).gr_gid
+    #         os.chown(filepath, user_id, group_id)
+    #         return True
+    #     except:
+    #         return
 
     ## TODO authorize : authorize possible with setup_wizard ?
     @get(r'/api/lmn/read-config-setup')
@@ -164,6 +176,9 @@ class Handler(HttpPlugin):
         :rtype: list
         """
 
+        if os.getuid() != 0:
+            http_context.respond_forbiddent()
+            return ''
 
         file1 = http_context.json_body()['file1']
         file2 = http_context.json_body()['file2']

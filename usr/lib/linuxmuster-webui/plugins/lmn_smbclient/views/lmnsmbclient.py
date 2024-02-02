@@ -10,6 +10,9 @@ import pexpect
 import smbclient
 import gevent
 import pwd
+import time
+import random
+from functools import wraps
 from urllib.parse import quote, unquote
 from smbprotocol.exceptions import SMBOSError, NotFound, SMBAuthenticationError, InvalidParameter, SMBException
 from spnego.exceptions import BadMechanismError
@@ -27,25 +30,29 @@ from aj.plugins.lmn_common.mimetypes import content_mimetypes, content_filetypes
 # - download selected resources as zip
 # - UPLOAD non empty directory
 
-# Wrapper for smbclient methods in order to avoid empty credits error
-def credit_wrapper(func):
-    def new_func(*args, **kwargs):
-        retry = 0
-        while retry < 5:
-            try:
-                return func(*args, **kwargs)
-            except SMBException as e:
-                if '0 credits are available' in str(e):
-                    retry += 1
-                    gevent.sleep(0.1)
-                else:
-                    raise
-        # 5 attempts was not enough ?
-        raise EndpointError("Still not enough credits to create working directory after five attempts. Please contact your administrator.")
-    return new_func
-
-for method in ['copyfile', 'rename', 'makedirs', 'mkdir', 'renames', 'remove', 'removedirs']:
-    setattr(smbclient, method, credit_wrapper(getattr(smbclient, method)))
+def retry_on_smb_credit_exception(retry_attempts=10, retry_delay_random_from=2, renty_delay_random_to=15):
+    """
+    Decorator to retry a function in case of SMBException 0 credits are available.
+    """
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            for attempt in range(retry_attempts):
+                try:
+                    return func(*args, **kwargs)
+                except SMBException as e:
+                    if '0 credits are available' in str(e):
+                        if attempt < retry_attempts + 1:
+                            sleep_time = random.randint(retry_delay_random_from, renty_delay_random_to)
+                            logging.debug(f"0 credits are available starts new run for {func} in {sleep_time}")
+                            time.sleep(sleep_time)
+                            continue
+                        else:
+                            raise EndpointError(e, message=f"All retry attempts failed: {str(e)}")
+                    else:
+                        raise EndpointError(e)
+        return wrapper
+    return decorator
 
 
 @component(HttpPlugin)
@@ -110,7 +117,6 @@ class Handler(HttpPlugin):
         homepath = self.context.ldapreader.get(f'/users/{user}', dict=False).homeDirectory
         return self._smb_list_path(homepath)
 
-
     def _smb_list_path(self, path):
         """
         Return a list of objects (files, directories, ...) from a specific path.
@@ -131,7 +137,8 @@ class Handler(HttpPlugin):
 
             return os.path.join(root, *list(filter(None, path.split('/')))[2:])
 
-        try:
+        @retry_on_smb_credit_exception()
+        def handel_list_path():
             items = []
             for item in smbclient.scandir(path):
                 item_path = os.path.join(path, item.name) # TODO
@@ -163,6 +170,9 @@ class Handler(HttpPlugin):
                     #     data['brokenLink'] = True
 
                 items.append(data)
+            return items
+        try:
+            items = handel_list_path()
         except (BadMechanismError, SMBAuthenticationError) as e:
             raise EndpointError(f"There's a problem with the kerberos authentication : {e}")
         except InvalidParameter as e:
@@ -188,8 +198,12 @@ class Handler(HttpPlugin):
 
         path = http_context.json_body()['path']
 
-        try:
+        @retry_on_smb_credit_exception()
+        def make_dirs():
             smbclient.makedirs(path)
+
+        try:
+            make_dirs()
         except (ValueError, SMBOSError, NotFound) as e:
             raise EndpointError(e)
         except InvalidParameter as e:
@@ -209,9 +223,13 @@ class Handler(HttpPlugin):
 
         path = http_context.json_body()['path']
 
-        try:
+        @retry_on_smb_credit_exception()
+        def handle_file_open():
             with smbclient.open_file(path, 'w') as towrite:
                 pass
+
+        try:
+            handle_file_open()
         except (ValueError, SMBOSError, NotFound) as e:
             raise EndpointError(e)
         except InvalidParameter as e:
@@ -232,8 +250,12 @@ class Handler(HttpPlugin):
         src = http_context.json_body()['src']
         dst = http_context.json_body()['dst']
 
-        try:
+        @retry_on_smb_credit_exception()
+        def handel_rename():
             smbclient.rename(src, dst)
+
+        try:
+            handel_rename()
         except (ValueError, SMBOSError, NotFound) as e:
             raise EndpointError(e)
 
@@ -252,7 +274,8 @@ class Handler(HttpPlugin):
         src = http_context.json_body()['src']
         dst = http_context.json_body()['dst']
 
-        try:
+        @retry_on_smb_credit_exception()
+        def handel_copy():
             if smbclient.path.isfile(src):
                 smbclient.copyfile(src, dst)
             elif smbclient.path.isdir(src):
@@ -271,6 +294,8 @@ class Handler(HttpPlugin):
                         smbpathsrc = f"{smbpath}\\{file}"
                         smbpathdst = smbpathsrc.replace(src, dst)
                         smbclient.copyfile(smbpathsrc, smbpathdst)
+        try:
+            handel_copy()
         except (ValueError, SMBOSError, NotFound) as e:
             raise EndpointError(e)
 
@@ -289,7 +314,8 @@ class Handler(HttpPlugin):
 
         path = http_context.json_body()['path']
 
-        try:
+        @retry_on_smb_credit_exception()
+        def handle_rmdir():
             # First pass : delete files
             for item in smbclient.walk(path):
                 # item like (SMBPATH, [List of subdir], [List of files])
@@ -300,6 +326,9 @@ class Handler(HttpPlugin):
             # Second pass : delete directories from bottom
             for directory in smbclient.walk(path, topdown=False):
                 smbclient.rmdir(directory[0])
+
+        try:
+            handle_rmdir()
         except (ValueError, SMBOSError, NotFound) as e:
             raise EndpointError(e)
 
@@ -317,8 +346,12 @@ class Handler(HttpPlugin):
 
         path = http_context.json_body()['path']
 
-        try:
+        @retry_on_smb_credit_exception()
+        def handel_unlink():
             smbclient.unlink(path)
+
+        try:
+            handel_unlink()
         except (ValueError, SMBOSError, NotFound) as e:
             raise EndpointError(e)
 
@@ -346,7 +379,8 @@ class Handler(HttpPlugin):
                 }
         # unix permissions ?
 
-        try:
+        @retry_on_smb_credit_exception()
+        def handel_stat():
             stat = smb_file.stat()
             data.update({
                 'mode': stat.st_mode,
@@ -355,6 +389,9 @@ class Handler(HttpPlugin):
                 'gid': stat.st_gid,
                 'size': stat.st_size,
             })
+
+        try:
+            handel_stat()
         except (ValueError, SMBOSError, NotFound) as e:
             data['accessError'] = str(e)
 
@@ -588,6 +625,7 @@ class Handler(HttpPlugin):
             logging.error(f"Was not able to initialize Kerberos ticket for {username}")
             return {'type': "error", 'msg': _("Timeout while trying to get a kerberos ticket")}
 
+
     @post(r'/api/lmn/smbclient/createSessionWorkingDirectory')
     @endpoint(api=True)
     def handle_api_create_working_dir(self, http_context):
@@ -604,9 +642,12 @@ class Handler(HttpPlugin):
         homeDirectory, schoolclass = user_data['homeDirectory'], user_data['sophomorixAdminClass']
         path = f'{homeDirectory}/transfer/{self.context.identity}/_collect'
 
-        try:
+        @retry_on_smb_credit_exception()
+        def make_dirs():
             if not smbclient.path.isdir(path):
                 smbclient.makedirs(path)
+        try:
+            make_dirs()
         except SMBOSError as e:
             if 'NtStatus 0xc0000035' in str(e):
                 pass # Should not appear again

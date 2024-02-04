@@ -1,11 +1,16 @@
 globaladministrator:
     - 'sidebar:view:/view/lmn/device-manager: true'
-
+    - 'lm:device-manager:read: true'
+    - 'lm:device-manager:modify: true'
 schooladministrator:
     - 'sidebar:view:/view/lmn/device-manager: true'
-
+    - 'lm:device-manager:read: true'
+    - 'lm:device-manager:modify: true'
 teacher:
     - 'sidebar:view:/view/lmn/device-manager: false'
-
+    - 'lm:device-manager:read: false'
+    - 'lm:device-manager:modify: false'
 student:
     - 'sidebar:view:/view/lmn/device-manager: false'
+    - 'lm:device-manager:read: false'
+    - 'lm:device-manager:modify: false'

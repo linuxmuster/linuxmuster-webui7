@@ -1,5 +1,6 @@
 from jadi import component
 
+from aj.auth import authorize
 from aj.api.http import post, get, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
 from aj.plugins.lmn_common.lmnfile import LMNFile
@@ -19,6 +20,7 @@ class Handler(HttpPlugin):
         self.context = context
 
     @post(r'/api/lmn/device-manager/getdevices')
+    @authorize('lm:device-manager:read')
     @endpoint(api=True)
     def handle_api_lmn_devicemanager_getdevices(self, http_context):
         fieldnames = [
@@ -69,6 +71,7 @@ class Handler(HttpPlugin):
         return returnArray
 
     @post(r'/api/lmn/device-manager/checkOnline')
+    @authorize('lm:device-manager:read')
     @endpoint(api=True)
     def handle_api_lmn_devicemanager_checkOnline(self, http_context):
         device = http_context.json_body()['device']
@@ -79,6 +82,7 @@ class Handler(HttpPlugin):
         return "down"
 
     @post(r'/api/lmn/device-manager/checkOS')
+    @authorize('lm:device-manager:read')
     @endpoint(api=True)
     def handle_api_lmn_devicemanager_checkOS(self, http_context):
         device = http_context.json_body()['device']
@@ -95,6 +99,7 @@ class Handler(HttpPlugin):
         return "Unknown"
 
     @post(r'/api/lmn/device-manager/shutdown')
+    @authorize('lm:device-manager:modify')
     @endpoint(api=True)
     def handle_api_lmn_devicemanager_shutdown(self, http_context):
         device = http_context.json_body()['device']
@@ -121,6 +126,7 @@ class Handler(HttpPlugin):
         return {"status": False, "exitcode": r.returncode, "message": result}
 
     @post(r'/api/lmn/device-manager/reboot')
+    @authorize('lm:device-manager:modify')
     @endpoint(api=True)
     def handle_api_lmn_devicemanager_reboot(self, http_context):
         device = http_context.json_body()['device']
@@ -147,6 +153,7 @@ class Handler(HttpPlugin):
         return {"status": False, "exitcode": r.returncode, "message": result}
 
     @post(r'/api/lmn/device-manager/start')
+    @authorize('lm:device-manager:modify')
     @endpoint(api=True)
     def handle_api_lmn_devicemanager_start(self, http_context):
         device = http_context.json_body()['device']
@@ -161,6 +168,7 @@ class Handler(HttpPlugin):
         return {"status": False, "exitcode": r.returncode, "message": result}
 
     @post(r'/api/lmn/device-manager/run')
+    @authorize('lm:device-manager:modify')
     @endpoint(api=True)
     def handle_api_lmn_devicemanager_run(self, http_context):
         command = http_context.json_body()['command']
@@ -174,6 +182,7 @@ class Handler(HttpPlugin):
         return {"status": False, "exitcode": r.returncode, "message": result}
 
     @post(r'/api/lmn/device-manager/getlinboconfig')
+    @authorize('lm:device-manager:read')
     @endpoint(api=True)
     def handle_api_lmn_devicemanager_getlinboconfig(self, http_context):
         device = http_context.json_body()['device']
@@ -198,6 +207,7 @@ class Handler(HttpPlugin):
         return None
 
     @post(r'/api/lmn/device-manager/getlastsync')
+    @authorize('lm:device-manager:read')
     @endpoint(api=True)
     def handle_api_lmn_devicemanager_getlastsync(self, http_context):
         device = http_context.json_body()['device']
@@ -238,6 +248,7 @@ class Handler(HttpPlugin):
         return tmpDict
 
     @post(r'/api/lmn/device-manager/getlinboremotelog')
+    @authorize('lm:device-manager:read')
     @endpoint(api=True)
     def handle_api_lmn_devicemanager_getlinboremotelog(self, http_context):
         device = http_context.json_body()['device']
@@ -251,6 +262,7 @@ class Handler(HttpPlugin):
         return None
 
     @get(r'/api/lmn/device-manager/getrunninglinboremotecommands')
+    @authorize('lm:device-manager:read')
     @endpoint(api=True)
     def handle_api_lmn_devicemanager_getrunninglinboremotecommands(self, http_context):
         result = []
@@ -266,6 +278,7 @@ class Handler(HttpPlugin):
         return result
 
     @get(r'/api/lmn/device-manager/getPrestartCommands')
+    @authorize('lm:device-manager:read')
     @endpoint(api=True)
     def handle_api_lmn_devicemanager_getPrestartCommands(self, http_context):
         result = []
@@ -279,6 +292,7 @@ class Handler(HttpPlugin):
         return result
 
     @post(r'/api/lmn/device-manager/removePrestartCommands')
+    @authorize('lm:device-manager:modify')
     @endpoint(api=True)
     def handle_api_lmn_devicemanager_removePrestartCommands(self, http_context):
         preStartCommand = http_context.json_body()['preStartCommand']
@@ -288,6 +302,7 @@ class Handler(HttpPlugin):
         return {"status": False, "message": "File not found!"}
 
     @post(r'/api/lmn/device-manager/editPrestartCommands')
+    @authorize('lm:device-manager:modify')
     @endpoint(api=True)
     def handle_api_lmn_devicemanager_editPrestartCommands(self, http_context):
         preStartCommand = http_context.json_body()['preStartCommand']

@@ -1,5 +1,6 @@
 from jadi import component
 
+from aj.auth import PermissionProvider
 from aj.plugins.core.api.sidebar import SidebarItemProvider
 
 
@@ -19,4 +20,20 @@ class ItemProvider(SidebarItemProvider):
                 'weight': '10',
                 'children': []
             }
+        ]
+
+@component(PermissionProvider)
+class Permissions (PermissionProvider):
+    def provide(self):
+        return [
+            {
+                'id': 'lm:device-manager:read',
+                'name': _('View actual status and config of LINBO devices'), # skipcq: PYL-E0602
+                'default': False,
+            },
+            {
+                'id': 'lm:device-manager:modify',
+                'name': _('Manage LINBO devices'), # skipcq: PYL-E0602
+                'default': False,
+            },
         ]

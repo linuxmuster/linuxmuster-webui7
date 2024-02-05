@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.1.54) lmn71; urgency=medium
+
+  * Security fixs. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 05 Feb 2024 18:03:32 +0100
+
 linuxmuster-webui7 (7.1.53) lmn71; urgency=medium
 
   * Default policy value 

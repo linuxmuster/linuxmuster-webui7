@@ -3,6 +3,7 @@ Manage per user or group quota configuration.
 """
 
 import subprocess
+import os
 
 from jadi import component
 from aj.api.http import get, post, HttpPlugin
@@ -31,10 +32,20 @@ class Handler(HttpPlugin):
         :rtype: dict
         """
 
+        if user != self.context.identity and os.getuid() != 0:
+            http_context.respond_forbidden()
+            return {}
+
         if user != 'root':
             sophomorixCommand = ['sophomorix-query', '--sam', user, '--user-full', '--quota-usage', '-jj']
             jsonpath = 'USER/' + user
             return lmn_getSophomorixValue(sophomorixCommand, jsonpath)
+            data = lmn_getSophomorixValue(sophomorixCommand, jsonpath)
+            return {
+                'QUOTA_USAGE_BY_SHARE': data['QUOTA_USAGE_BY_SHARE'],
+                'sophomorixCloudQuotaCalculated': data['sophomorixCloudQuotaCalculated'],
+                'sophomorixMailQuotaCalculated': data['sophomorixMailQuotaCalculated'],
+            }
         return {}
 
     @get(r'/api/lmn/quota/usermap/(?P<user>[a-z0-9\-_]*)')

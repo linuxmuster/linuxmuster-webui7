@@ -37,6 +37,10 @@ class Handler(HttpPlugin):
         :rtype: string
         """
 
+        if os.getuid() != 0:
+            http_context.respond_forbidden()
+            return ''
+
         if not os.path.exists(path):
             return ''
         with open(path) as f:
@@ -143,6 +147,10 @@ class Handler(HttpPlugin):
         :rtype: dict
         """
 
+        if os.getuid() != 0:
+            http_context.respond_forbidden()
+            return ''
+
         try:
             path = '/var/lib/linuxmuster/setup.ini'
             with LMNFile(path, 'r') as setup:
@@ -163,6 +171,9 @@ class Handler(HttpPlugin):
         :rtype: list
         """
 
+        if os.getuid() != 0:
+            http_context.respond_forbidden()
+            return ''
 
         file1 = http_context.json_body()['file1']
         file2 = http_context.json_body()['file2']

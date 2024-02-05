@@ -156,6 +156,10 @@ class Handler(HttpPlugin):
         :rtype: dict
         """
 
+        if os.getuid() != 0:
+            http_context.respond_forbidden()
+            return ''
+        
         try:
             path = '/var/lib/linuxmuster/setup.ini'
             with LMNFile(path, 'r') as setup:

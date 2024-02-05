@@ -1,3 +1,10 @@
+linuxmuster-webui7 (7.2.34) lmn72; urgency=medium
+
+  * Update session list plugin.
+  * Security fixes in device manager and common. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 05 Feb 2024 20:34:46 +0100
+
 linuxmuster-webui7 (7.2.33) lmn72; urgency=medium
 
   * Security fixes in common and quota. 

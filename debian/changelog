@@ -1,3 +1,9 @@
+linuxmuster-webui7 (17.1.54) lmn71-testing; urgency=medium
+
+  * Security fixs. 
+
+ -- Lukas Spitznagel <lukas.spitznagel@netzint.de>  Wed, 07 Feb 2024 09:31:32 +0100
+
 linuxmuster-webui7 (7.1.54) lmn71; urgency=medium
 
   * Security fixs. 

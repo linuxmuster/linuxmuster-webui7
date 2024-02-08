@@ -190,9 +190,13 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         if participant[group] == true
             group = "no#{group}"
         user = [participant.sAMAccountName]
-        $http.post('/api/lmn/managementgroup', {group:group, users:user}).then (resp) ->
+        $http.post('/api/lmn/managementgroup', {group:group, users:user}).then((resp) ->
             notify.success("Group #{group} changed for #{user[0]}")
             $scope.stateChanged = false
+        ).catch((err) ->
+            notify.error(err.data.message)
+            $scope.stateChanged = false
+        )
 
     $scope.setManagementGroupAll = (group) ->
         $scope.stateChanged = true
@@ -208,9 +212,13 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         if $scope.management[group] == false
             group = "no#{group}"
 
-        $http.post('/api/lmn/managementgroup', {group:group, users:usersList}).then (resp) ->
+        $http.post('/api/lmn/managementgroup', {group:group, users:usersList}).then((resp) ->
             notify.success("Group #{group} changed for #{usersList.join()}")
             $scope.stateChanged = false
+        ).catch((err) ->
+            notify.error(err.data.message)
+            $scope.stateChanged = false
+        )
 
     # Manage session
 

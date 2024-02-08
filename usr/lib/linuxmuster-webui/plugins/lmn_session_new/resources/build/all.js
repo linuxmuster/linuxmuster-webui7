@@ -451,6 +451,9 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       }).then(function(resp) {
         notify.success(`Group ${group} changed for ${user[0]}`);
         return $scope.stateChanged = false;
+      }).catch(function(err) {
+        notify.error(err.data.message);
+        return $scope.stateChanged = false;
       });
     };
     $scope.setManagementGroupAll = function(group) {
@@ -475,6 +478,9 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         users: usersList
       }).then(function(resp) {
         notify.success(`Group ${group} changed for ${usersList.join()}`);
+        return $scope.stateChanged = false;
+      }).catch(function(err) {
+        notify.error(err.data.message);
         return $scope.stateChanged = false;
       });
     };

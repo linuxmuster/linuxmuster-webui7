@@ -1,5 +1,6 @@
 from concurrent import futures
 import logging
+import subprocess
 from time import localtime, strftime  # needed for timestamp in collect transfer
 
 from jadi import component
@@ -7,6 +8,7 @@ from aj.api.http import get, post, put, patch, delete, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
 from aj.auth import authorize
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue
+
 
 @component(HttpPlugin)
 class Handler(HttpPlugin):
@@ -183,14 +185,26 @@ class Handler(HttpPlugin):
 
         groups = ['wifi', 'internet', 'intranet', 'webfilter', 'printing']
         valid_groups = groups + [f'no{g}' for g in groups]
+
         if group not in valid_groups:
             return
 
-        try:
-            sophomorixCommand = ['sophomorix-managementgroup', f'--{group}', usersList, '-jj']
-            lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0/LOG')
-        except Exception as e:
-            raise Exception(f'Error:\n{" ".join(sophomorixCommand)}\n Error was: {e}')
+        action = "--add-members"
+        if group.startswith("no"):
+            action = "--remove-members"
+            group = group[2:]
+
+        p = subprocess.Popen([
+            'sudo',
+            '/srv/dev/linuxmuster-tools/usr/local/sbin/lmntools-managementgroup',
+            '-g', group,
+            action, usersList],
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=False,
+        )
+        stdout, stderr = p.communicate()
+
+        if stderr:
+            raise Exception(stderr.decode())
 
     @post(r'/api/lmn/session/participants')
     @authorize('lm:users:students:read')

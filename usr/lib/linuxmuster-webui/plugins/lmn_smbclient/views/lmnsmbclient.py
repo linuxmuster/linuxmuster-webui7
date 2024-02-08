@@ -31,13 +31,13 @@ from aj.plugins.lmn_common.mimetypes import content_mimetypes, content_filetypes
 def credit_wrapper(func):
     def new_func(*args, **kwargs):
         retry = 0
-        while retry < 5:
+        while retry < 10:
             try:
                 return func(*args, **kwargs)
             except SMBException as e:
                 if '0 credits are available' in str(e):
                     retry += 1
-                    gevent.sleep(0.1)
+                    gevent.sleep(2)
                 else:
                     raise
         # 5 attempts was not enough ?

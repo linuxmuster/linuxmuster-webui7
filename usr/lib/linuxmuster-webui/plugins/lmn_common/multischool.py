@@ -235,7 +235,7 @@ class SchoolManager:
         }
 
         standard_shares = {
-            'projects': projects,
+            #'projects': projects,
             'iso': iso,
             'program': program,
             'share':share,

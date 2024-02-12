@@ -21,6 +21,7 @@ from aj.api.http import url, get, post, mkcol, options, copy, move, put, propfin
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
 from aj.auth import authorize, AuthenticationService
 from aj.plugins.lmn_common.mimetypes import content_mimetypes
+from aj.plugins.lmn_common.api import samba_realm, samba_netbios
 from aj.plugins.lmn_smbclient.davxml import WebdavXMLResponse
 
 
@@ -211,7 +212,10 @@ class Handler(HttpPlugin):
             for share in shares:
                 item = smbclient._os.SMBDirEntry.from_path(share['path'])
 
-                item_path = share['path'].replace(self.context.schoolmgr.schoolShare, '').replace('\\', '/') # TODO
+                item_path = share['path'].replace(samba_netbios, samba_realm)
+                item_path = item_path.replace(self.context.schoolmgr.schoolShare, '')
+                item_path = item_path.replace('\\', '/') # TODO
+
                 if share['name'] == "Home":
                     item_path = item_path.rsplit('/', 1)[0]
 

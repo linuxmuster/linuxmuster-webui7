@@ -196,7 +196,7 @@ class Handler(HttpPlugin):
 
         p = subprocess.Popen([
             'sudo',
-            '/srv/dev/linuxmuster-tools/usr/local/sbin/lmntools-managementgroup',
+            '/usr/local/sbin/lmntools-managementgroup',
             '-g', group,
             action, usersList],
             stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=False,

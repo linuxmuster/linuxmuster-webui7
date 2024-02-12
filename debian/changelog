@@ -1,3 +1,11 @@
+linuxmuster-webui7 (7.2.36) lmn72; urgency=medium
+
+  * [session] Fix lmntools-managementgroup path
+  * [webdav] Fix samba netbios path
+  * [webdav] Remove deprecated projects share. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 12 Feb 2024 10:12:06 +0100
+
 linuxmuster-webui7 (7.2.35) lmn72; urgency=medium
 
   * [session] Use group manager 

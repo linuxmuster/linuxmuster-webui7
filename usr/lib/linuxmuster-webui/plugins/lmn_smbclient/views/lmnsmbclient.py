@@ -512,8 +512,12 @@ class Handler(HttpPlugin):
                     with smbclient.open_file(chunk_file, mode='rb') as chunk:
                         f.write(chunk.read())
                     smbclient.remove(chunk_file)
-
-            smbclient.rmdir(chunk_dir)
+            
+            try:
+                smbclient.rmdir(chunk_dir)
+            except AttributeError as e:
+                # See https://github.com/jborean93/smbprotocol/issues/269
+                logging.warning(f"Was not able to delete {chunk_dir}, bug of smbprotocol ?")
 
             targets.append({
                 'name': name,

@@ -1,3 +1,10 @@
+linuxmuster-webui7 (7.2.37) lmn72; urgency=medium
+
+  * [smbclient] Bring back projects
+  * [smbclient] Catch _delete problem in smbprotocol 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Tue, 13 Feb 2024 10:54:38 +0100
+
 linuxmuster-webui7 (7.2.36) lmn72; urgency=medium
 
   * [session] Fix lmntools-managementgroup path

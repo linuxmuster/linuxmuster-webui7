@@ -44,8 +44,6 @@ def credit_wrapper(func):
 
 for method in ['copyfile', 'rename', 'makedirs', 'mkdir', 'renames', 'remove', 'removedirs', 'scandir', 'stat']:
     setattr(smbclient, method, credit_wrapper(getattr(smbclient, method)))
-setattr(smbclient._os.SMBDirEntry, 'from_path', credit_wrapper(getattr(smbclient._os.SMBDirEntry, 'from_path')))
-setattr(smbclient._os, 'SMBDirectoryIO', credit_wrapper(getattr(smbclient._os, 'SMBDirectoryIO')))
 
 @component(HttpPlugin)
 class Handler(HttpPlugin):

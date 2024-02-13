@@ -599,27 +599,36 @@ class Handler(HttpPlugin):
         Create a working directory for each user in a session with path `user/transfer/TEACHERNAME/_collect`.
         """
 
-        user = http_context.json_body()['user']
-        if user.endswith('-exam'):
-            user_data = self.context.ldapreader.get(f'/users/exam/'
-                                                    f'{user}', attributes=['homeDirectory', 'sophomorixAdminClass'])
-        else:
-            user_data = self.context.ldapreader.get(f'/users/{user}', attributes=['homeDirectory', 'sophomorixAdminClass'])
-        homeDirectory, schoolclass = user_data['homeDirectory'], user_data['sophomorixAdminClass']
-        path = f'{homeDirectory}/transfer/{self.context.identity}/_collect'
+        users = http_context.json_body()['users']
+        if isinstance(users, str):
+            users = [users]
 
-        try:
-            if not smbclient.path.isdir(path):
-                smbclient.makedirs(path)
-        except SMBOSError as e:
-            if 'NtStatus 0xc0000035' in str(e):
-                pass # Should not appear again
-            elif 'STATUS_ACCESS_DENIED' in str(e):
-                raise EndpointError(e, message=f"{self.context.identity} is not member of the group {schoolclass}.")
+        errors = {}
+
+        for user in users:
+            if user.endswith('-exam'):
+                user_data = self.context.ldapreader.get(f'/users/exam/'
+                                                        f'{user}', attributes=['homeDirectory', 'sophomorixAdminClass', 'sophomorixRole'])
             else:
-                raise EndpointError(e)
-        except (ValueError, NotFound) as e:
-            raise EndpointError(e)
-        except InvalidParameter as e:
-            raise EndpointError(f'Problem with path {path} : {e}')
+                user_data = self.context.ldapreader.get(f'/users/{user}', attributes=['homeDirectory', 'sophomorixAdminClass', 'sophomorixRole'])
+
+            homeDirectory, schoolclass = user_data['homeDirectory'], user_data['sophomorixAdminClass']
+            path = f'{homeDirectory}/transfer/{self.context.identity}/_collect'
+
+            try:
+                if not smbclient.path.isdir(path):
+                    smbclient.makedirs(path)
+            except SMBOSError as e:
+                if 'NtStatus 0xc0000035' in str(e):
+                    pass # Should not appear again
+                elif 'STATUS_ACCESS_DENIED' in str(e):
+                    errors[user] = f"{self.context.identity} is not member of the group {schoolclass}."
+                else:
+                    errors[user] = e
+            except (ValueError, NotFound) as e:
+                errors[user] = e
+            except InvalidParameter as e:
+                errors[user] = f'Problem with path {path} : {e}'
+
+        return errors
 

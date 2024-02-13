@@ -61,21 +61,8 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         }
     };
 
-    this._createWorkingDirectory = function (user) {
-        return $http.post('/api/lmn/smbclient/createSessionWorkingDirectory', { 'user': user.cn }).catch(function (err) {
-            // notify.error(err.data.message);
-            if (user.sophomorixAdminClass == 'teachers') {
-                user.files = 'ERROR-teacher';
-            } else {
-                user.files = 'ERROR';
-                _this.user_missing_membership.push(user);
-            }
-        });
-    };
-
     this.createWorkingDirectory = function (users) {
-        _this.user_missing_membership = [];
-        var promises = [];
+        cn_list = [];
         var _iteratorNormalCompletion = true;
         var _didIteratorError = false;
         var _iteratorError = undefined;
@@ -84,7 +71,11 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
             for (var _iterator = users[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
                 user = _step.value;
 
-                promises.push(_this._createWorkingDirectory(user));
+                if (user.sophomorixAdminClass == 'teachers') {
+                    user.files = 'ERROR-teacher';
+                } else {
+                    cn_list.push(user.cn);
+                };
             }
         } catch (err) {
             _didIteratorError = true;
@@ -101,7 +92,37 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
             }
         }
 
-        return $q.all(promises);
+        ;
+        return $http.post('/api/lmn/smbclient/createSessionWorkingDirectory', { 'users': cn_list }).then(function (resp) {
+            errors = resp.data;
+            var _iteratorNormalCompletion2 = true;
+            var _didIteratorError2 = false;
+            var _iteratorError2 = undefined;
+
+            try {
+                for (var _iterator2 = users[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                    user = _step2.value;
+
+                    if (user.cn in resp.data) {
+                        user.files = 'ERROR'; // Could do more since the error message is complete
+                        _this.user_missing_membership.push(user);
+                    }
+                }
+            } catch (err) {
+                _didIteratorError2 = true;
+                _iteratorError2 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                        _iterator2.return();
+                    }
+                } finally {
+                    if (_didIteratorError2) {
+                        throw _iteratorError2;
+                    }
+                }
+            }
+        });
     };
 
     this.start = function (session) {
@@ -365,7 +386,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
           user = ref[i];
           position = $scope.session.members.indexOf(user);
           $scope.session.members[position].files = [];
-          lmnSession._createWorkingDirectory(user);
+          lmnSession.createWorkingDirectory([user]);
         }
         return identity.init().then(function() {
           console.log("Identity renewed !");
@@ -411,7 +432,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
           return participant.files = data.items;
         }).catch(function(err) {
           // Working directory probably deleted, trying to recreate it
-          lmnSession._createWorkingDirectory(participant);
+          lmnSession.createWorkingDirectory([participant]);
           return notify.error(gettext("Can not list directory from ") + participant.displayName);
         });
       }

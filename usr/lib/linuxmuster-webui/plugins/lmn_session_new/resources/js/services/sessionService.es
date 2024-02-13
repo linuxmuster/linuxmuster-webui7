@@ -31,26 +31,24 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
         }
     }
 
-    this._createWorkingDirectory = (user) => {
-        return $http.post('/api/lmn/smbclient/createSessionWorkingDirectory', {'user': user.cn})
-            .catch(err => {
-                // notify.error(err.data.message);
-                if (user.sophomorixAdminClass == 'teachers') {
-                    user.files = 'ERROR-teacher';
-                } else {
-                    user.files = 'ERROR';
+    this.createWorkingDirectory = (users) => {
+        cn_list = [];
+        for (user of users) {
+            if (user.sophomorixAdminClass == 'teachers') {
+                user.files = 'ERROR-teacher';
+            } else {
+                cn_list.push(user.cn);
+            };
+        };
+        return $http.post('/api/lmn/smbclient/createSessionWorkingDirectory', {'users': cn_list}).then((resp) => {
+            errors = resp.data;
+            for (user of users) {
+                if (user.cn in resp.data) {
+                    user.files = 'ERROR'; // Could do more since the error message is complete
                     this.user_missing_membership.push(user);
                 }
-            });
-    }
-
-    this.createWorkingDirectory = (users) => {
-        this.user_missing_membership = [];
-        var promises = [];
-        for (user of users) {
-            promises.push(this._createWorkingDirectory(user));
-        }
-        return $q.all(promises);
+            }
+        });
     }
 
     this.start = (session) => {

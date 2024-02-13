@@ -127,7 +127,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
             for user in lmnSession.user_missing_membership
                 position = $scope.session.members.indexOf(user)
                 $scope.session.members[position].files = []
-                lmnSession._createWorkingDirectory(user)
+                lmnSession.createWorkingDirectory([user])
             identity.init().then () ->
                 console.log("Identity renewed !")
                 $scope.missing_schoolclasses = []
@@ -165,7 +165,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
                 participant.files = data.items
             ).catch((err) ->
                 # Working directory probably deleted, trying to recreate it
-                lmnSession._createWorkingDirectory(participant)
+                lmnSession.createWorkingDirectory([participant])
                 notify.error(gettext("Can not list directory from ") + participant.displayName)
             )
 

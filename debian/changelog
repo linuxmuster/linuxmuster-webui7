@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.2.39) lmn72; urgency=medium
+
+  * [users] Harden access on passwords reset 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Wed, 14 Feb 2024 11:58:55 +0100
+
 linuxmuster-webui7 (7.2.38) lmn72; urgency=medium
 
   * [smbclient] Fix rmdir.

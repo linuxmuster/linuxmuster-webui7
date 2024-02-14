@@ -86,7 +86,9 @@ class Handler(HttpPlugin):
 
         users = http_context.json_body()['users']
         for user in users.split(','):
-            self._checkPasswordPermissions(http_context, user)
+            # If one user fails the test, responding forbidden
+            if not self._checkPasswordPermissions(http_context, user):
+                return http_context.respond_forbidden()
 
         sophomorixCommand = ['sophomorix-passwd', '--set-firstpassword', '-jj', '-u', users, '--use-smbpasswd']
         return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
@@ -106,7 +108,9 @@ class Handler(HttpPlugin):
 
         users = http_context.json_body()['users']
         for user in users.split(','):
-            self._checkPasswordPermissions(http_context, user)
+            # If one user fails the test, responding forbidden
+            if not self._checkPasswordPermissions(http_context, user):
+                return http_context.respond_forbidden()
 
         # TODO: Password length should be read from school settings
         password_length = '8'
@@ -130,7 +134,9 @@ class Handler(HttpPlugin):
         password = http_context.json_body()['password']
 
         for user in users.split(','):
-            self._checkPasswordPermissions(http_context, user)
+            # If one user fails the test, responding forbidden
+            if not self._checkPasswordPermissions(http_context, user):
+                return http_context.respond_forbidden()
 
         sophomorixCommand = ['sophomorix-passwd', '-u', users, '--pass', password, '-jj', '--use-smbpasswd']
         return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN', sensitive=True)
@@ -152,7 +158,9 @@ class Handler(HttpPlugin):
         password = http_context.json_body()['password']
 
         for user in users.split(','):
-            self._checkPasswordPermissions(http_context, user)
+            # If one user fails the test, responding forbidden
+            if not self._checkPasswordPermissions(http_context, user):
+                return http_context.respond_forbidden()
 
         sophomorixCommand = ['sophomorix-passwd', '-u', users, '--pass', password, '--nofirstpassupdate', '--hide', '-jj', '--use-smbpasswd']
         return lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN', sensitive=True)
@@ -325,7 +333,8 @@ class Handler(HttpPlugin):
         :rtype: bool
         """
 
-        self._checkPasswordPermissions(http_context, user)
+        if not self._checkPasswordPermissions(http_context, user):
+            return http_context.respond_forbidden()
 
         line = subprocess.check_output(['sudo', 'sophomorix-passwd', '--test-firstpassword', '-u', user]).splitlines()[-4]
         return b'1 OK' in line

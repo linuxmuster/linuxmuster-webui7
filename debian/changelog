@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.2.40) lmn72; urgency=medium
+
+  * Avoid setting ACLs on webuiUpload folder when not configured 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Wed, 14 Feb 2024 14:00:59 +0100
+
 linuxmuster-webui7 (7.2.39) lmn72; urgency=medium
 
   * [users] Harden access on passwords reset 

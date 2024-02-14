@@ -27,7 +27,7 @@ angular.module('lmn.quotas').controller 'LMQuotasController', ($scope, $http, $u
     pageTitle.set(gettext('Quotas'))
 
     $scope.UserSearchVisible = false
-    $scope.tabs = ['student', 'teacher', 'schooladministrator', 'schoolclass', 'project', 'quota_check']
+    $scope.tabs = ['teacher', 'student', 'schooladministrator', 'schoolclass', 'project', 'quota_check']
 
     $scope.quota_check_init = () ->
         $scope.show_table_user_quota_check = false

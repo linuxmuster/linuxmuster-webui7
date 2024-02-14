@@ -36,7 +36,7 @@
   angular.module('lmn.quotas').controller('LMQuotasController', function($scope, $http, $uibModal, $location, $q, gettext, hotkeys, lmEncodingMap, notify, pageTitle, lmFileBackups, $rootScope, wait) {
     pageTitle.set(gettext('Quotas'));
     $scope.UserSearchVisible = false;
-    $scope.tabs = ['student', 'teacher', 'schooladministrator', 'schoolclass', 'project', 'quota_check'];
+    $scope.tabs = ['teacher', 'student', 'schooladministrator', 'schoolclass', 'project', 'quota_check'];
     $scope.quota_check_init = function() {
       $scope.show_table_user_quota_check = false;
       $scope.checking_quota_user = false;

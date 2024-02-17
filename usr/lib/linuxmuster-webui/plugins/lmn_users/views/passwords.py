@@ -24,6 +24,7 @@ class Handler(HttpPlugin):
             'schooladministrator': 3,
             'teacher': 2,
             'student': 1,
+            'examuser': 1,
         }
 
         identity = self.context.identity
@@ -33,7 +34,10 @@ class Handler(HttpPlugin):
         if identity_role == 'globaladministrator':
             return True
 
-        user_role = self.context.ldapreader.getval(f'/users/{user}', 'sophomorixRole')
+        if user.endswith('-exam'):
+            user_role = "examuser"
+        else:
+            user_role = self.context.ldapreader.getval(f'/users/{user}', 'sophomorixRole')
 
         ## Some additional security checks
         # Access forbidden for students
@@ -47,7 +51,8 @@ class Handler(HttpPlugin):
                 return False
         else:
             # Check if the role rank of the user is greater than the user logged in
-            if role_rank[user_role] > role_rank[identity_role]:
+            # If the role of the user can not be found, access forbidden
+            if role_rank.get(user_role, 5) > role_rank[identity_role]:
                 return False
 
         return True

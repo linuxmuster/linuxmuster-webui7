@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.2.42) lmn72; urgency=medium
+
+  * [users] Add permissions for exam users passwords. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 17 Feb 2024 20:51:44 +0100
+
 linuxmuster-webui7 (7.2.41) lmn72; urgency=medium
 
   * [quota] Fix student-teacher order.

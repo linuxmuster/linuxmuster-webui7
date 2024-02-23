@@ -20,6 +20,7 @@ class SchoolManager:
         self.school = 'default-school'
         self.schoolname = self.school
         self.schoolShare = f'\\\\{samba_realm}\\{self.school}\\'
+        self.schoolGlobalShare = f'\\\\{samba_realm}\\linuxmuster-global\\'
         self.gpomgr = GPOManager()
         self.load()
 
@@ -164,6 +165,11 @@ class SchoolManager:
         home_path = self.get_homepath(user_context)
         role = user_context['role']
 
+        if role == 'globaladministrator':
+            home_webdav = f"global/management/{user_context['user']}"
+        else:
+            home_webdav = home_path.replace(self.share_prefix, '').replace("\\", "/").strip('/')
+
         def get_share_label(share_name, default):
             for drive in self.drives:
                 if share_name == drive.id:
@@ -177,30 +183,35 @@ class SchoolManager:
         home = {
             'name' : 'Home',
             'path' : home_path,
+            'webdav_url': home_webdav,
             'icon' : 'fas fa-home',
             'active': False,
         }
         linuxmuster_global = {
             'name' : 'Linuxmuster-Global',
             'path' : f'\\\\{samba_netbios}\\linuxmuster-global',
+            'webdav_url': 'global',
             'icon' : 'fas fa-globe',
             'active': False,
         }
-        all_schools = {
+        school = {
             'name' : self.school,
             'path' : self.share_prefix,
+            'webdav_url': self.school,
             'icon' : 'fas fa-school',
             'active': False,
         }
         # teachers = {
         #     'name' : 'Teachers',
         #     'path' : f'{share_prefix}\\teachers',
+        #     'webdav_url': f"teachers/",
         #     'icon' : 'fas fa-chalkboard-teacher',
         #     'active': False,
         # }
         students = {
             'name' : get_share_label('students', 'Students'),
             'path' : f'{self.share_prefix}\\students',
+            'webdav_url': "students",
             'icon' : 'fas fa-user-graduate',
             'active': False,
             'id': 'students',
@@ -208,6 +219,7 @@ class SchoolManager:
         share = {
             'name' : get_share_label('share', 'Share'),
             'path' : f'{self.share_prefix}\\share',
+            'webdav_url': "share",
             'icon' : 'fas fa-hand-holding',
             'active': False,
             'id': 'share',
@@ -215,6 +227,7 @@ class SchoolManager:
         program = {
             'name' : get_share_label('program', 'Programs'),
             'path' : f'{self.share_prefix}\\program',
+            'webdav_url': "program",
             'icon' : 'fas fa-desktop',
             'active': False,
             'id': 'program',
@@ -222,6 +235,7 @@ class SchoolManager:
         iso = {
             'name' : get_share_label('iso', 'ISO'),
             'path' : f'{self.share_prefix}\\iso',
+            'webdav_url': "iso",
             'icon' : 'fas fa-compact-disc',
             'active': False,
             'id': 'iso',
@@ -229,6 +243,7 @@ class SchoolManager:
         projects = {
             'name' : get_share_label('projects', 'Projects'),
             'path' : f'{self.share_prefix}\\share\\projects',
+            'webdav_url': "share/projects",
             'icon' : 'fas fa-atlas',
             'active': False,
             'id': 'projects',
@@ -246,11 +261,11 @@ class SchoolManager:
             'globaladministrator': [
                 home,
                 linuxmuster_global,
-                all_schools,
+                school,
             ],
             'schooladministrator': [
                 home,
-                all_schools,
+                school,
             ]
             ,
             'teacher': [

@@ -225,6 +225,10 @@ class Handler(HttpPlugin):
                     # TODO: not working in multischool env
                     url_path = '\\'.join(url_path.split('\\')[1:])
                     smb_path = f"{self.context.schoolmgr.schoolShare}{url_path}"
+            elif profil['sophomorixRole'] == 'schooladministrator':
+                if path.startswith(self.context.schoolmgr.school):
+                    url_path = url_path.replace(f"{self.context.schoolmgr.school}", "")
+                smb_path = f"{self.context.schoolmgr.schoolShare}{url_path}"
             else:
                 smb_path = f"{self.context.schoolmgr.schoolShare}{url_path}"
 

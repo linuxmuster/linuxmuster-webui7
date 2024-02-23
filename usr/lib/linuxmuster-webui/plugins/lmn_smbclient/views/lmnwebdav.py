@@ -209,20 +209,24 @@ class Handler(HttpPlugin):
             shares = self.context.schoolmgr.get_shares(user_context)
             for share in shares:
                 item = smbclient._os.SMBDirEntry.from_path(share['path'])
+                webdav_path = share['webdav_url']
 
-                item_path = share['path'].replace(samba_netbios, samba_realm)
-                item_path = item_path.replace(self.context.schoolmgr.schoolShare, '')
-                item_path = item_path.replace('\\', '/') # TODO
-
-                if share['name'] == "Home":
-                    item_path = item_path.rsplit('/', 1)[0]
-
-                href = quote(f'{baseUrl}{item_path}/', encoding='utf-8')
+                href = quote(f'{baseUrl}{webdav_path}/', encoding='utf-8')
                 items[href] = response.convert_samba_entry_properties(item)
                 items[href]['displayname'] = share['name']
         else:
             url_path = self._convert_path(path).replace('/', '\\')
-            smb_path = f"{self.context.schoolmgr.schoolShare}{url_path}"
+            if profil['sophomorixRole'] == 'globaladministrator':
+                if path.startswith('global/'):
+                    url_path = url_path.replace('global\\', '')
+                    smb_path = f"{self.context.schoolmgr.schoolGlobalShare}{url_path}"
+                else:
+                    # Surfing in the school
+                    # TODO: not working in multischool env
+                    url_path = '\\'.join(url_path.split('\\')[1:])
+                    smb_path = f"{self.context.schoolmgr.schoolShare}{url_path}"
+            else:
+                smb_path = f"{self.context.schoolmgr.schoolShare}{url_path}"
 
             try:
                 smb_entity = smbclient._os.SMBDirEntry.from_path(smb_path)

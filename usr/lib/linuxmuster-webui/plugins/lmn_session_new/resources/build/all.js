@@ -342,7 +342,8 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     $scope.refreshUsers = function() {
       return lmnSession.refreshUsers().then(function() {
         $scope.extExamUsers = lmnSession.extExamUsers;
-        return $scope.examUsers = lmnSession.examUsers;
+        $scope.examUsers = lmnSession.examUsers;
+        return $scope.examMode = lmnSession.examMode;
       });
     };
     if ($scope.session.type === 'schoolclass') {
@@ -676,10 +677,10 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       }).then(function() {
         wait.modal(gettext("Stopping exam mode ..."), "spinner");
         return $scope._stopUserExam(user).then(function() {
-          $scope.refreshUsers();
-          lmnSession.getExamUsers();
-          $rootScope.$emit('updateWaiting', 'done');
-          return notify.success(gettext('Exam mode stopped for user ') + user.displayName);
+          return $scope.refreshUsers().then(function() {
+            $rootScope.$emit('updateWaiting', 'done');
+            return notify.success(gettext('Exam mode stopped for user ') + user.displayName);
+          });
         });
       });
     };

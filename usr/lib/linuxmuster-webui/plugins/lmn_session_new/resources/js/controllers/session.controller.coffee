@@ -86,9 +86,10 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         $scope.missing_schoolclasses = [... new Set($scope.missing_schoolclasses)].join(',')
 
     $scope.refreshUsers = () ->
-       lmnSession.refreshUsers().then () ->
+       return lmnSession.refreshUsers().then () ->
             $scope.extExamUsers = lmnSession.extExamUsers
             $scope.examUsers = lmnSession.examUsers
+            $scope.examMode = lmnSession.examMode
 
     if $scope.session.type == 'schoolclass'
         title = " > " + gettext("Schoolclass") + " #{$scope.session.name}"
@@ -347,10 +348,9 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         }).then () ->
             wait.modal(gettext("Stopping exam mode ..."), "spinner")
             $scope._stopUserExam(user).then () ->
-                $scope.refreshUsers()
-                lmnSession.getExamUsers()
-                $rootScope.$emit('updateWaiting', 'done')
-                notify.success(gettext('Exam mode stopped for user ') + user.displayName)
+                $scope.refreshUsers().then () ->
+                    $rootScope.$emit('updateWaiting', 'done')
+                    notify.success(gettext('Exam mode stopped for user ') + user.displayName)
 
     $scope.stopRunningExams = () ->
         # End all running extern exams (run by other teachers)

@@ -5,6 +5,7 @@ from io import StringIO
 from configobj import ConfigObj
 from subprocess import check_output
 from linuxmusterTools.samba_util import DriveManager, GPOManager
+from linuxmusterTools.ldapconnector import LMNLdapReader as lr
 
 from aj.plugins.lmn_common.api import samba_realm, samba_netbios, samba_override, lmn_getSophomorixValue
 from aj.plugins.lmn_common.lmnfile import LMNFile
@@ -18,9 +19,10 @@ class SchoolManager:
 
     def __init__(self):
         self.school = 'default-school'
+        self.schools = [school['ou'] for school in lr.get('/schools')]
         self.schoolname = self.school
         self.schoolShare = f'\\\\{samba_realm}\\{self.school}\\'
-        self.schoolGlobalShare = f'\\\\{samba_realm}\\linuxmuster-global\\'
+        self.schoolGlobalShare = f'\\\\{samba_realm}\\global\\'
         self.gpomgr = GPOManager()
         self.load()
 
@@ -132,14 +134,28 @@ class SchoolManager:
 
         self.drives = self.drivemgr.drives
 
-    def get_share_prefix(self):
+    def get_share_prefix(self, school=None):
 
-        if self.school in self.dfs.keys():
-            self.share_prefix = self.dfs[self.school]['dfs_proxy']
-        elif samba_override['share_prefix']:
-            self.share_prefix = f'\\\\{samba_override["share_prefix"]}\\{self.school}'
+        if school is None:
+            school = self.school
+            other_school = False
         else:
-            self.share_prefix = f'\\\\{samba_netbios}\\{self.school}'
+            other_school = True
+
+        if school not in self.schools:
+            return
+
+        if school in self.dfs.keys():
+            share_prefix = self.dfs[school]['dfs_proxy']
+        elif samba_override['share_prefix']:
+            share_prefix = f'\\\\{samba_override["share_prefix"]}\\{school}'
+        else:
+            share_prefix = f'\\\\{samba_netbios}\\{school}'
+
+        if other_school:
+            return share_prefix
+
+        self.share_prefix = share_prefix
 
     def get_homepath(self, user_context):
 
@@ -201,6 +217,16 @@ class SchoolManager:
             'icon' : 'fas fa-school',
             'active': False,
         }
+        all_schools = [
+            {
+            'name' : s,
+            'path' : self.get_share_prefix(school=s),
+            'webdav_url': s,
+            'icon' : 'fas fa-school',
+            'active': False,
+            } for s in self.schools
+        ]
+
         # teachers = {
         #     'name' : 'Teachers',
         #     'path' : f'{share_prefix}\\teachers',
@@ -261,8 +287,7 @@ class SchoolManager:
             'globaladministrator': [
                 home,
                 linuxmuster_global,
-                school,
-            ],
+            ] + all_schools,
             'schooladministrator': [
                 home,
                 school,

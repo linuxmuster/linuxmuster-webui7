@@ -345,8 +345,11 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
             positive: gettext('End exam mode'),
             negative: gettext('Cancel')
         }).then () ->
+            wait.modal(gettext("Stopping exam mode ..."), "spinner")
             $scope._stopUserExam(user).then () ->
                 $scope.refreshUsers()
+                lmnSession.getExamUsers()
+                $rootScope.$emit('updateWaiting', 'done')
                 notify.success(gettext('Exam mode stopped for user ') + user.displayName)
 
     $scope.stopRunningExams = () ->
@@ -361,8 +364,10 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
                 promises.push($scope._stopUserExam(user))
             for user in $scope.examUsers
                 promises.push($scope._stopUserExam(user))
+            wait.modal(gettext("Stopping exam mode ..."), "spinner")
             $q.all(promises).then () ->
                 $scope.refreshUsers()
+                $rootScope.$emit('updateWaiting', 'done')
                 notify.success(gettext('Exam mode stopped for all users.'))
 
     $scope._checkExamUser = (username) ->

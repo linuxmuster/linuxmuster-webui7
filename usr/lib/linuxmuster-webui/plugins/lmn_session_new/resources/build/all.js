@@ -674,8 +674,11 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         positive: gettext('End exam mode'),
         negative: gettext('Cancel')
       }).then(function() {
+        wait.modal(gettext("Stopping exam mode ..."), "spinner");
         return $scope._stopUserExam(user).then(function() {
           $scope.refreshUsers();
+          lmnSession.getExamUsers();
+          $rootScope.$emit('updateWaiting', 'done');
           return notify.success(gettext('Exam mode stopped for user ') + user.displayName);
         });
       });
@@ -699,8 +702,10 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
           user = ref1[j];
           promises.push($scope._stopUserExam(user));
         }
+        wait.modal(gettext("Stopping exam mode ..."), "spinner");
         return $q.all(promises).then(function() {
           $scope.refreshUsers();
+          $rootScope.$emit('updateWaiting', 'done');
           return notify.success(gettext('Exam mode stopped for all users.'));
         });
       });

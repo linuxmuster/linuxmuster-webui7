@@ -301,12 +301,14 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
             positive: gettext('Start exam mode'),
             negative: gettext('Cancel')
         }).then () ->
+            wait.modal(gettext("Starting exam mode ..."), "spinner")
             $scope.stateChanged = true
             $scope.examMode = true
             $http.patch("/api/lmn/session/exam/start", {session: $scope.session}).then (resp) ->
                 $scope.stateChanged = false
                 lmnSession.getExamUsers()
                 $scope.stopRefreshFiles()
+                $rootScope.$emit('updateWaiting', 'done')
 
     $scope.stopExam = () ->
         if !$scope.examMode
@@ -318,11 +320,13 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
             positive: gettext('End exam mode'),
             negative: gettext('Cancel')
         }).then () ->
+            wait.modal(gettext("Stopping exam mode ..."), "spinner")
             $scope.stateChanged = true
             $scope.examMode = false
             $http.patch("/api/lmn/session/exam/stop", {session: $scope.session}).then (resp) ->
                 $scope.refreshUsers()
                 $scope.stateChanged = false
+                $rootScope.$emit('updateWaiting', 'done')
             $scope.stopRefreshFiles()
 
     $scope._stopUserExam = (user) ->

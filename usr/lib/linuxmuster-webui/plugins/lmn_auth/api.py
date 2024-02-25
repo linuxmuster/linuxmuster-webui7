@@ -188,6 +188,9 @@ class LMAuthenticationProvider(AuthenticationProvider):
             userAttrs = self.get_ldap_user(username, attributes=['dn', 'sophomorixWebuiPermissionsCalculated', 'permissions'])
             if not userAttrs or not userAttrs.get('dn', ''):
                 return False
+            # TODO authorize access to exam users ?
+            # if userAttrs.get('sophomorixRole', '') == 'examuser':
+            #     return False
         except KeyError as e:
             return False
 

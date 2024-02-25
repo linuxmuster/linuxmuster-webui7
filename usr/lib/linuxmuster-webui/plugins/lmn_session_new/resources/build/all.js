@@ -425,28 +425,42 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     $scope.get_file_icon = function(filetype) {
       return $scope.file_icon[filetype];
     };
-    $scope._updateFileList = function(participant) {
-      var path;
-      if (participant.files !== 'ERROR' && participant.files !== 'ERROR-teacher') {
-        path = `${participant.homeDirectory}\\transfer\\${$scope.identity.user}\\_collect`;
-        return smbclient.list(path).then(function(data) {
-          return participant.files = data.items;
-        }).catch(function(err) {
-          // Working directory probably deleted, trying to recreate it
-          lmnSession.createWorkingDirectory([participant]);
-          return notify.error(gettext("Can not list directory from ") + participant.displayName);
-        });
-      }
-    };
     $scope.updateFileList = function() {
-      var i, len, participant, ref, results;
-      ref = $scope.session.members;
-      results = [];
-      for (i = 0, len = ref.length; i < len; i++) {
-        participant = ref[i];
-        results.push($scope._updateFileList(participant));
-      }
-      return results;
+      var participants;
+      participants = $scope.session.members.filter((user) => {
+        return user.files !== 'ERROR' && user.files !== 'ERROR-teacher';
+      });
+      return $http.post('/api/lmn/smbclient/listCollectDir', {
+        participants: participants
+      }).then(function(resp) {
+        var files, participant, ref, results, user;
+        ref = resp.data;
+        results = [];
+        for (participant in ref) {
+          files = ref[participant];
+          results.push((function() {
+            var i, len, ref1, results1;
+            ref1 = $scope.session.members;
+            results1 = [];
+            for (i = 0, len = ref1.length; i < len; i++) {
+              user = ref1[i];
+              if (user.cn === participant) {
+                if (typeof files.items === 'undefined') {
+                  // Error from backend
+                  notify.error(gettext("Can not list directory from ") + user.displayName + ": " + files);
+                } else {
+                  user.files = files.items;
+                }
+                break;
+              } else {
+                results1.push(void 0);
+              }
+            }
+            return results1;
+          })());
+        }
+        return results;
+      });
     };
     $scope.stopRefreshFiles = function() {
       if ($scope.refresh_files !== void 0) {

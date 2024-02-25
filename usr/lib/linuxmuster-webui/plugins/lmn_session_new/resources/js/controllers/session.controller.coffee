@@ -159,20 +159,18 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
     $scope.get_file_icon = (filetype) ->
         return $scope.file_icon[filetype]
 
-    $scope._updateFileList = (participant) ->
-        if participant.files != 'ERROR' and participant.files != 'ERROR-teacher'
-            path = "#{participant.homeDirectory}\\transfer\\#{$scope.identity.user}\\_collect"
-            smbclient.list(path).then((data) ->
-                participant.files = data.items
-            ).catch((err) ->
-                # Working directory probably deleted, trying to recreate it
-                lmnSession.createWorkingDirectory([participant])
-                notify.error(gettext("Can not list directory from ") + participant.displayName)
-            )
-
     $scope.updateFileList = () ->
-        for participant in $scope.session.members
-            $scope._updateFileList(participant)
+        participants = $scope.session.members.filter((user) => user.files != 'ERROR' && user.files != 'ERROR-teacher');
+        $http.post('/api/lmn/smbclient/listCollectDir', {participants:participants}).then (resp) ->
+            for participant,files of resp.data
+                for user in $scope.session.members
+                    if user.cn == participant
+                        if (typeof files.items == 'undefined')
+                            # Error from backend
+                            notify.error(gettext("Can not list directory from ") + user.displayName + ": " + files)
+                        else
+                            user.files = files.items
+                        break
 
     $scope.stopRefreshFiles = () ->
         if $scope.refresh_files != undefined

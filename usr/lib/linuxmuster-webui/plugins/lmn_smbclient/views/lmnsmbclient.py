@@ -606,6 +606,9 @@ class Handler(HttpPlugin):
         errors = {}
 
         for user in users:
+            if user is None:
+                continue
+
             if user.endswith('-exam'):
                 user_data = self.context.ldapreader.get(f'/users/exam/'
                                                         f'{user}', attributes=['homeDirectory', 'sophomorixAdminClass', 'sophomorixRole'])

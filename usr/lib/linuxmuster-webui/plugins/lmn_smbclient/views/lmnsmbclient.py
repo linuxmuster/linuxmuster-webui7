@@ -635,3 +635,37 @@ class Handler(HttpPlugin):
 
         return errors
 
+    @post(r'/api/lmn/smbclient/listCollectDir')
+    @endpoint(api=True)
+    def handle_api_list_collect_dir(self, http_context):
+        """
+        List content of `user/transfer/TEACHERNAME/_collect` for each participants.
+        """
+
+        participants = http_context.json_body()['participants']
+
+        files = {}
+
+        for participant in participants:
+            cn = participant['cn']
+            collect_path = f"{participant['homeDirectory']}/transfer/{self.context.identity}/_collect"
+
+            try:
+                if not smbclient.path.isdir(collect_path):
+                    smbclient.makedirs(collect_path)
+
+                files[cn] = self._smb_list_path(collect_path)
+
+            except SMBOSError as e:
+                if 'NtStatus 0xc0000035' in str(e):
+                    pass # Should not appear again
+                elif 'STATUS_ACCESS_DENIED' in str(e):
+                    files[cn] = f"{self.context.identity} is not member of the group {participant['adminClass']}."
+                else:
+                    files[cn] = e
+            except (ValueError, NotFound) as e:
+                files[cn] = e
+            except InvalidParameter as e:
+                files[cn] = f'Problem with path {collect_path} : {e}'
+
+        return files

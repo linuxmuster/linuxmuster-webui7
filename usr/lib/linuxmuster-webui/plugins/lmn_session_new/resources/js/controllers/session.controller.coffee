@@ -292,6 +292,9 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
     # Exam mode
 
     $scope.startExam = () ->
+        if $scope.examMode
+            return
+
         # End exam for a whole group
         messagebox.show({
             text: gettext('Do you really want to start a new exam?'),
@@ -299,13 +302,16 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
             negative: gettext('Cancel')
         }).then () ->
             $scope.stateChanged = true
+            $scope.examMode = true
             $http.patch("/api/lmn/session/exam/start", {session: $scope.session}).then (resp) ->
-                $scope.examMode = true
                 $scope.stateChanged = false
                 lmnSession.getExamUsers()
                 $scope.stopRefreshFiles()
 
     $scope.stopExam = () ->
+        if !$scope.examMode
+            return
+
         # End exam for a whole group
         messagebox.show({
             text: gettext('Do you really want to end the current exam?'),
@@ -313,9 +319,9 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
             negative: gettext('Cancel')
         }).then () ->
             $scope.stateChanged = true
+            $scope.examMode = false
             $http.patch("/api/lmn/session/exam/stop", {session: $scope.session}).then (resp) ->
                 $scope.refreshUsers()
-                $scope.examMode = false
                 $scope.stateChanged = false
             $scope.stopRefreshFiles()
 

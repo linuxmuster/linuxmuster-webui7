@@ -610,6 +610,9 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     };
     // Exam mode
     $scope.startExam = function() {
+      if ($scope.examMode) {
+        return;
+      }
       // End exam for a whole group
       return messagebox.show({
         text: gettext('Do you really want to start a new exam?'),
@@ -617,10 +620,10 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         negative: gettext('Cancel')
       }).then(function() {
         $scope.stateChanged = true;
+        $scope.examMode = true;
         return $http.patch("/api/lmn/session/exam/start", {
           session: $scope.session
         }).then(function(resp) {
-          $scope.examMode = true;
           $scope.stateChanged = false;
           lmnSession.getExamUsers();
           return $scope.stopRefreshFiles();
@@ -628,6 +631,9 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       });
     };
     $scope.stopExam = function() {
+      if (!$scope.examMode) {
+        return;
+      }
       // End exam for a whole group
       return messagebox.show({
         text: gettext('Do you really want to end the current exam?'),
@@ -635,11 +641,11 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         negative: gettext('Cancel')
       }).then(function() {
         $scope.stateChanged = true;
+        $scope.examMode = false;
         $http.patch("/api/lmn/session/exam/stop", {
           session: $scope.session
         }).then(function(resp) {
           $scope.refreshUsers();
-          $scope.examMode = false;
           return $scope.stateChanged = false;
         });
         return $scope.stopRefreshFiles();

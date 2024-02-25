@@ -1,3 +1,12 @@
+linuxmuster-webui7 (7.2.43) lmn72; urgency=medium
+
+  * [multischool] Add all schools shares for global admins
+  * [session] Block window while starting or stopping exam mode
+  * [session] List collect folder sequentially
+  * [webdav] Better handle global admins and school admins PROPFIND
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 25 Feb 2024 18:29:27 +0100
+
 linuxmuster-webui7 (7.2.42) lmn72; urgency=medium
 
   * [users] Add permissions for exam users passwords. 

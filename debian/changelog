@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.2.44) lmn72; urgency=medium
+
+  * Upgrade Ajenti 2.2.9 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 01 Mar 2024 10:12:02 +0100
+
 linuxmuster-webui7 (7.2.43) lmn72; urgency=medium
 
   * [multischool] Add all schools shares for global admins

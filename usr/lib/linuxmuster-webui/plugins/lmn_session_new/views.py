@@ -209,7 +209,7 @@ class Handler(HttpPlugin):
     @post(r'/api/lmn/session/participants')
     @authorize('lm:users:students:read')
     @endpoint(api=True)
-    def handle_api_session_add_particpants(self, http_context):
+    def handle_api_session_add_participants(self, http_context):
         sessionID = http_context.json_body()['session']
         users = ','.join(http_context.json_body()['users'])
         sophomorixCommand = ['sophomorix-session', '-j', '--session', sessionID, '--add-participants', users]
@@ -219,7 +219,7 @@ class Handler(HttpPlugin):
     @patch(r'/api/lmn/session/participants')
     @authorize('lm:users:students:read')
     @endpoint(api=True)
-    def handle_api_session_remove_particpants(self, http_context):
+    def handle_api_session_remove_participants(self, http_context):
         sessionID = http_context.json_body()['session']
         users = ','.join(http_context.json_body()['users'])
         sophomorixCommand = ['sophomorix-session', '-j', '--session', sessionID, '--remove-participants', users]

@@ -627,11 +627,11 @@ class Handler(HttpPlugin):
                 elif 'STATUS_ACCESS_DENIED' in str(e):
                     errors[user] = f"{self.context.identity} is not member of the group {schoolclass}."
                 else:
-                    errors[user] = e
+                    errors[user] = str(e)
             except (ValueError, NotFound) as e:
-                errors[user] = e
+                errors[user] = str(e)
             except InvalidParameter as e:
-                errors[user] = f'Problem with path {path} : {e}'
+                errors[user] = f'Problem with path {path} : {str(e)}'
 
         return errors
 

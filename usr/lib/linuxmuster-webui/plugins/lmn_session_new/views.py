@@ -198,6 +198,7 @@ class Handler(HttpPlugin):
             'sudo',
             '/usr/local/sbin/lmntools-managementgroup',
             '-g', group,
+            '-s', self.context.schoolmgr.school,
             action, usersList],
             stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=False,
         )

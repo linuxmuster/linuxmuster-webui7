@@ -117,7 +117,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
         krb_cache = f'/tmp/krb5cc_{uid}{uid}'
 
         try:
-            subprocess.check_call(["klist", "-s", krb_cache])
+            subprocess.check_call(["klist", "-s", f'/tmp/krb5cc_{uid}'])
             return
         except subprocess.CalledProcessError as e:
             # Kerberos ticket not available, continuing

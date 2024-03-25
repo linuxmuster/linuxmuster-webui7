@@ -72,7 +72,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
                 user = _step.value;
 
                 if (user.sophomorixAdminClass == 'teachers') {
-                    user.files = 'ERROR-teacher';
+                    user.files_error = 'ERROR-teacher';
                 } else {
                     cn_list.push(user.cn);
                 };
@@ -95,6 +95,9 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         ;
         return $http.post('/api/lmn/smbclient/createSessionWorkingDirectory', { 'users': cn_list }).then(function (resp) {
             errors = resp.data;
+            if (errors.global) {
+                notify.error(errors.global);
+            }
             var _iteratorNormalCompletion2 = true;
             var _didIteratorError2 = false;
             var _iteratorError2 = undefined;
@@ -104,8 +107,12 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
                     user = _step2.value;
 
                     if (user.cn in resp.data) {
-                        user.files = 'ERROR'; // Could do more since the error message is complete
+                        user.files_error = 'NOTJOINED'; // Could do more since the error message is complete
                         _this.user_missing_membership.push(user);
+                    } else if (errors.global) {
+                        user.files_error = errors.global;
+                    } else {
+                        user.files_error = "";
                     }
                 }
             } catch (err) {

@@ -603,7 +603,7 @@ class Handler(HttpPlugin):
         if isinstance(users, str):
             users = [users]
 
-        errors = {}
+        errors = {'global':''}
 
         for user in users:
             if user is None:
@@ -626,6 +626,8 @@ class Handler(HttpPlugin):
                     pass # Should not appear again
                 elif 'STATUS_ACCESS_DENIED' in str(e):
                     errors[user] = f"{self.context.identity} is not member of the group {schoolclass}."
+                elif 'STATUS_DISK_FULL' in str(e):
+                    errors['global'] = "Your quota is full, please free some space in order to share files."
                 else:
                     errors[user] = str(e)
             except (ValueError, NotFound) as e:

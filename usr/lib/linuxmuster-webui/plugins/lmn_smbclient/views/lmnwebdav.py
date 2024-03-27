@@ -23,6 +23,7 @@ from aj.auth import authorize, AuthenticationService
 from aj.plugins.lmn_common.mimetypes import content_mimetypes
 from aj.plugins.lmn_common.api import samba_realm, samba_netbios
 from aj.plugins.lmn_smbclient.davxml import WebdavXMLResponse
+from linuxmusterTools.quotas import samba_list_user_files
 
 
 # Wrapper for smbclient methods in order to avoid empty credits error
@@ -54,6 +55,11 @@ class Handler(HttpPlugin):
         # In gevent, headers are decoded with latin-1
         # Dirty fix for it
         return path.encode('latin-1').decode('utf-8')
+
+    @get(r'/api/webdav/list')
+    @endpoint(api=True)
+    def handle_full_files_list(self, http_context):
+        return samba_list_user_files(self.context.identity)
 
     @get(r'/webdav/(?P<path>.*)')
     @endpoint(page=True)

@@ -87,10 +87,10 @@ class LMAuthenticationProvider(AuthenticationProvider):
         # Permissions for kerberos ticket
         uid = self.get_isolation_uid(username)
 
-        if os.path.isfile(f'/tmp/krb5cc_{uid}'):
-            os.unlink(f'/tmp/krb5cc_{uid}')
-
         if os.path.isfile(f'/tmp/krb5cc_{uid}{uid}'):
+            if os.path.isfile(f'/tmp/krb5cc_{uid}'):
+                os.unlink(f'/tmp/krb5cc_{uid}')
+
             os.rename(f'/tmp/krb5cc_{uid}{uid}', f'/tmp/krb5cc_{uid}')
             logging.warning(f"Changing kerberos ticket rights for {username}")
             os.chown(f'/tmp/krb5cc_{uid}', uid, 100)

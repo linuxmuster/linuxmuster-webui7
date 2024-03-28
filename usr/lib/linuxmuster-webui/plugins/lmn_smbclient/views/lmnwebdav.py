@@ -23,7 +23,7 @@ from aj.auth import authorize, AuthenticationService
 from aj.plugins.lmn_common.mimetypes import content_mimetypes
 from aj.plugins.lmn_common.api import samba_realm, samba_netbios
 from aj.plugins.lmn_smbclient.davxml import WebdavXMLResponse
-from linuxmusterTools.quotas import samba_list_user_files
+from linuxmusterTools.quotas import samba_root_tree
 
 
 # Wrapper for smbclient methods in order to avoid empty credits error
@@ -59,7 +59,7 @@ class Handler(HttpPlugin):
     @get(r'/api/webdav/list')
     @endpoint(api=True)
     def handle_full_files_list(self, http_context):
-        return samba_list_user_files(self.context.identity)
+        return samba_root_tree(self.context.identity)
 
     @get(r'/webdav/(?P<path>.*)')
     @endpoint(page=True)

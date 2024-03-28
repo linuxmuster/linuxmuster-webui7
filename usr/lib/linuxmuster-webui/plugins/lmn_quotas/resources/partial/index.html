@@ -170,15 +170,15 @@
                 <table class="table" ng:show="show_table_user_quota_check">
                     <tr>
                         <th translate>Directory</th>
-                        <th translate>Size (MiB)</th>
+                        <th style="text-align: right;" translate>Size</th>
                     </tr>
                     <tr ng:repeat="(dir, details) in user_directories">
                         <td>{{dir}}</td>
-                        <td style="text-align: right;">{{details.total}} MiB</td>
+                        <td style="text-align: right;">{{details.total}}</td>
                     </tr>
                     <tr>
                         <th translate>Total</th>
-                        <th style="text-align: right;">{{user_total_size}} MiB</th>
+                        <th style="text-align: right;">{{user_total_size}}</th>
                     </tr>
                 </table>
             </div>

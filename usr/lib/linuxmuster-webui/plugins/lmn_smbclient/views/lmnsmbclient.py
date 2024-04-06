@@ -662,7 +662,8 @@ class Handler(HttpPlugin):
                 if 'NtStatus 0xc0000035' in str(e):
                     pass # Should not appear again
                 elif 'STATUS_ACCESS_DENIED' in str(e):
-                    files[cn] = f"{self.context.identity} is not member of the group {participant['adminClass']}."
+                    if participant['sophomorixAdminClass'] != 'teachers':
+                        files[cn] = f"{self.context.identity} is not member of the group {participant['sophomorixAdminClass']}."
                 else:
                     files[cn] = e
             except (ValueError, NotFound) as e:

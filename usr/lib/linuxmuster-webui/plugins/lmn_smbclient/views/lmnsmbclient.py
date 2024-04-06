@@ -6,10 +6,12 @@ import logging
 import os
 import re
 import subprocess
+import tempfile
 import pexpect
 import smbclient
 import gevent
 import pwd
+from zipfile import ZipFile
 from urllib.parse import quote, unquote
 from smbprotocol.exceptions import SMBOSError, NotFound, SMBAuthenticationError, InvalidParameter, SMBException
 from spnego.exceptions import BadMechanismError
@@ -539,7 +541,8 @@ class Handler(HttpPlugin):
             return http_context.respond_forbidden()
 
         try:
-            smbclient.path.isfile(path)
+            isfile = smbclient.path.isfile(path)
+            isdir = smbclient.path.isdir(path)
             # Head request to handle 404 in Angular
             if http_context.method == 'HEAD':
                 http_context.respond('200 OK')
@@ -549,22 +552,49 @@ class Handler(HttpPlugin):
             return
 
         name = path.split('/')[-1]
-        ext = os.path.splitext(name)[1]
 
-        if ext in content_mimetypes:
-            http_context.add_header('Content-Type', content_mimetypes[ext])
-        else:
-            http_context.add_header('Content-Type', 'application/octet-stream')
+        if isfile:
+            ext = os.path.splitext(name)[1]
 
-        try:
-            content = smbclient.open_file(path, 'rb').read()
-        except (ValueError, SMBOSError, NotFound):
-            http_context.respond_not_found()
-            return
+            if ext in content_mimetypes:
+                http_context.add_header('Content-Type', content_mimetypes[ext])
+            else:
+                http_context.add_header('Content-Type', 'application/octet-stream')
 
-        http_context.add_header('Content-Disposition', (f'attachment; filename="{quote(name)}"'))
+            try:
+                content = smbclient.open_file(path, 'rb').read()
+            except (ValueError, SMBOSError, NotFound):
+                http_context.respond_not_found()
+                return
 
-        yield http_context.gzip(content)
+            http_context.add_header('Content-Disposition', (f'attachment; filename="{quote(name)}"'))
+
+            yield http_context.gzip(content)
+
+        if isdir:
+            zip_name = f'{quote(name)}.zip'
+            tmp_dir = tempfile.mkdtemp()
+            zip_path = f'{tmp_dir}/{zip_name}'
+
+            with ZipFile(zip_path, 'w') as zip_obj:
+                for root, folders, files in smbclient.walk(path):
+                    for f in files:
+                        relative_path = root.replace(path, '').replace('\\', '/')[1:]
+                        relative_path = f"{relative_path}/{f}"
+                        smb_path = f"{root}\\{f}"
+                        with smbclient.open_file(smb_path, 'rb') as file_io:
+                            content = file_io.read()
+                        zip_obj.writestr(relative_path, content)
+
+            http_context.add_header('Content-Type', 'application/zip')
+            http_context.add_header('Content-Disposition', (f'attachment; filename="{zip_name}"'))
+
+            with open(zip_path, 'rb') as zip_tmp:
+                content = zip_tmp.read()
+            yield http_context.gzip(content)
+
+            os.unlink(zip_path)
+            os.rmdir(tmp_dir)
 
     @post(r'/api/lmn/smbclient/refresh_krbcc')
     @endpoint(api=True)

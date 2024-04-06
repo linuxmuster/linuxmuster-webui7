@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.2.47) lmn72; urgency=medium
+
+  * [smbclient] Download folder as zip 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 06 Apr 2024 17:03:13 +0200
+
 linuxmuster-webui7 (7.2.46) lmn72; urgency=medium
 
   * [smbclient] Fix list collect folder. 

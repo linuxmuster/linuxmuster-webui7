@@ -3,8 +3,11 @@ Tools to handle files, directories and uploads.
 """
 
 import os
+import tempfile
 from urllib.parse import quote, unquote
 import locale
+from zipfile import ZipFile
+
 import gevent
 import smbclient
 import logging
@@ -75,10 +78,11 @@ class Handler(HttpPlugin):
         smb_path = f'{self.context.schoolmgr.schoolShare}{smb_path}'
 
         try:
-            smbclient.path.isfile(smb_path)
+            isfile = smbclient.path.isfile(smb_path)
+            isdir = smbclient.path.isdir(smb_path)
             # Head request to handle 404
             if http_context.method == 'HEAD':
-                if smbclient.path.isfile(smb_path) or smbclient.path.isdir(smb_path):
+                if isfile or isdir:
                     http_context.respond_ok()
                     return ''
                 else:
@@ -87,6 +91,22 @@ class Handler(HttpPlugin):
         except (ValueError, SMBOSError, NotFound):
             http_context.respond_not_found()
             return ''
+
+        if isdir:
+            zip_name = f'{quote(name)}.zip'
+            tmp_dir = tempfile.mkdtemp()
+            zip_path = f'{tmp_dir}/{zip_name}'
+
+            with ZipFile(zip_path, 'w') as zip_obj:
+                for root, folders, files in smbclient.walk(smb_path):
+                    for f in files:
+                        relative_path = root.replace(path, '').replace('\\', '/')[1:]
+                        relative_path = f"{relative_path}/{f}"
+                        smb_file_path = f"{root}\\{f}"
+                        with smbclient.open_file(smb_file_path, 'rb') as file_io:
+                            content = file_io.read()
+                        zip_obj.writestr(relative_path, content)
+            ext = '.zip'
 
         if ext in content_mimetypes:
             http_context.add_header('Content-Type', content_mimetypes[ext])
@@ -98,7 +118,10 @@ class Handler(HttpPlugin):
 
         try:
             if http_range and http_range.startswith('bytes'):
-                rsize = smbclient.stat(smb_path).st_size
+                if isdir:
+                    rsize = os.stat(zip_path).st_size
+                else:
+                    rsize = smbclient.stat(smb_path).st_size
                 range_from, range_to = http_range.split('=')[1].split('-')
                 range_from = int(range_from) if range_from else 0
                 range_to = int(range_to) if range_to else (rsize - 1)
@@ -114,10 +137,15 @@ class Handler(HttpPlugin):
             else:
                 http_context.respond_ok()
 
-            http_context.add_header('Content-Disposition', (f'attachment; filename={quote(name)}'))
+            if isdir:
+                http_context.add_header('Content-Disposition', (f'attachment; filename={zip_name}'))
+                fd = open(zip_path, 'rb')
+                fd.seek(range_from or 0, os.SEEK_SET)
+            else:
+                http_context.add_header('Content-Disposition', (f'attachment; filename={quote(name)}'))
+                fd = smbclient._os.open_file(smb_path, 'rb')
+                fd.seek(range_from or 0, smbclient._os.os.SEEK_SET)
 
-            fd = smbclient._os.open_file(smb_path, 'rb')
-            fd.seek(range_from or 0, smbclient._os.os.SEEK_SET)
             bufsize = 100 * 1024
             read = range_from
             buf = 1
@@ -136,8 +164,14 @@ class Handler(HttpPlugin):
                 http_context.respond_forbidden()
             else:
                 http_context.respond_not_found()
+            if isdir:
+                os.unlink(zip_path)
+                os.rmdir(tmp_dir)
             return ''
 
+        if isdir:
+            os.unlink(zip_path)
+            os.rmdir(tmp_dir)
 
     @delete(r'/webdav/(?P<path>.*)')
     @endpoint()

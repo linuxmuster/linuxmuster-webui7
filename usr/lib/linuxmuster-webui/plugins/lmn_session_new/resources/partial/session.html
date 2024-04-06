@@ -230,8 +230,8 @@
                         <span translate>{{participant.files_error}}</span>
                     </a>
                 </div>
-                <div ng:if="participant.files_error != ''">
-                    <div ng:repeat="item in participant.files|orderBy:['-isDir', 'name']" ng:if="participant.files_error !=''">
+                <div ng:if="participant.files_error == ''">
+                    <div ng:repeat="item in participant.files|orderBy:['-isDir', 'name']" ng:if="participant.files_error == ''">
                         <span ng:if="item.isDir">
                             <i class="fa fa-fw fa-folder"></i>
                             {{item.name}}

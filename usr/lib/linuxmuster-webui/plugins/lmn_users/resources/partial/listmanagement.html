@@ -70,7 +70,7 @@
                 <th ng:repeat="(id, field) in students_fields" ng:if="field.visible">{{field.name}}</th>
                 <th></th>
             </tr>
-            <tr  ng:repeat="student in students|filter:students_filter|orderBy:['-_isNew', sort.fx]|page:paging.page_students:paging.pageSize" ng:show="student.class[0] != '#'">
+            <tr  ng:repeat="student in students|filter:students_filter|orderBy:['-_isNew', sort.fx]|page:paging.page_students:paging.pageSize" ng:if="student.class[0] != '#'">
                 <td ng:if="students_fields.class.visible" class="form-group" ng:class="validateField('TODOclass', student.class, student._isNew, $index, 'students')">
                     <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="student.class" placeholder="Class" class="form-control"/>
                 </td>
@@ -187,7 +187,7 @@
                 <th ng:repeat="(id, field) in teachers_fields" ng:if="field.visible">{{field.name}}</th>
                 <th></th>
             </tr>
-            <tr ng:repeat="teacher in teachers|filter:teachers_filter|orderBy:['-_isNew', sort.fx]|page:paging.page_teachers:paging.pageSize" ng:show="teacher.class[0] != '#'">
+            <tr ng:repeat="teacher in teachers|filter:teachers_filter|orderBy:['-_isNew', sort.fx]|page:paging.page_teachers:paging.pageSize" ng:if="teacher.class[0] != '#'">
                 <td ng:if="teachers_fields.last_name.visible" class="form-group" ng:class="validateField('TODOlast', teacher.last_name, teacher._isNew, $index, 'teachers')">
                     <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="teacher.last_name" placeholder="Last name" class="form-control" />
                 </td>
@@ -306,7 +306,7 @@
                 <th ng:repeat="(id, field) in extrastudents_fields" ng:if="field.visible">{{field.name}}</th>
                 <th></th>
             </tr>
-            <tr ng:repeat="extrastudent in extrastudents|filter:extrastudents_filter|orderBy:['-_isNew', sort.fx]|page:paging.page_extrastudents:paging.pageSize" ng:show="extrastudent.class[0] != '#'">
+            <tr ng:repeat="extrastudent in extrastudents|filter:extrastudents_filter|orderBy:['-_isNew', sort.fx]|page:paging.page_extrastudents:paging.pageSize" ng:if="extrastudent.class[0] != '#'">
                 <td ng:if="extrastudents_fields.class.visible" class="form-group" ng:class="validateField('TODOclass', extrastudent.class, extrastudent._isNew, $index, 'extrastudents')">
                     <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="extrastudent.class" placeholder="Class" class="form-control" />
                 </td>

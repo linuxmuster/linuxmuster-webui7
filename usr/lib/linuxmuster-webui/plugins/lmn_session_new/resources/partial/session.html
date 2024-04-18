@@ -176,6 +176,7 @@
         </tr>
         <tr style="display:;"  ng:repeat="participant in session.members|orderBy:[sort.fx]">
             <td class="ng-binding">
+                <span ng:if="participant.computer" class="label label-success pull-right">{{participant.computer}}</span>
                 <a>
                     <b> {{participant.sn}}, {{participant.givenName}} </b>
                 </a>

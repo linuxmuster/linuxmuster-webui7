@@ -409,7 +409,16 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
           return $http.post("/api/lmn/session/userinfo", {
             users: resp.data.usersList
           }).then(function(rp) {
-            return $scope.session.members = rp.data;
+            var i, len, ref, results, user, userDetails;
+            $scope.session.members = rp.data;
+            ref = $scope.session.members;
+            results = [];
+            for (i = 0, len = ref.length; i < len; i++) {
+              userDetails = ref[i];
+              user = userDetails.cn;
+              results.push(userDetails.computer = resp.data.objects[user].COMPUTER);
+            }
+            return results;
           });
         }
       });

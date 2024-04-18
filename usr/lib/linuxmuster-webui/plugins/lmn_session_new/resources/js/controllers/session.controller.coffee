@@ -140,6 +140,9 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
             if resp.data.usersList.length != 0
                 $http.post("/api/lmn/session/userinfo", {users:resp.data.usersList}).then (rp) ->
                     $scope.session.members = rp.data
+                    for userDetails in $scope.session.members
+                        user = userDetails.cn
+                        userDetails.computer = resp.data.objects[user].COMPUTER 
 
     $scope.stopRefreshParticipants = () ->
         if $scope.refresh_participants != undefined

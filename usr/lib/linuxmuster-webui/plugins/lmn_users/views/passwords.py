@@ -237,6 +237,47 @@ class Handler(HttpPlugin):
         filename = f'user-{self.context.identity}.pdf'
         return filename
 
+    @post(r'/api/lmn/users/print_csv')
+    @authorize('lm:users:passwords')
+    @endpoint(api=True)
+    def handle_api_users_print_csv(self, http_context):
+        """
+        Print passwords as CSV
+        Method POST: all passwords.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        """
+
+        school = self.context.schoolmgr.school
+
+        user = http_context.json_body()['user']
+        schoolclass = http_context.json_body()['schoolclass']
+
+        # Trick: to avoid latex compilation and spare time, sending ls command, which does nothing
+        sophomorixCommand = ['sudo', 'sophomorix-print', '--school', school, '--caller', str(user), '--command', 'ls']
+
+        if schoolclass:
+            sophomorixCommand.extend(['--class', schoolclass])
+        # sophomorix-print needs the json parameter at the very end
+        sophomorixCommand.extend(['-jj'])
+        # check permissions
+        if not schoolclass:
+            # double check if user is allowed to print all passwords
+            with authorize('lm:users:teachers:read'):
+                pass
+        # double check if user is allowed to print teacher passwords
+        if schoolclass == 'teachers':
+            with authorize('lm:users:teachers:read'):
+                pass
+        # generate real shell environment for sophomorix print
+        shell_env = {'TERM': 'xterm', 'SHELL': '/bin/bash',  'PATH': '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',  'HOME': '/root', '_': '/usr/bin/python3'}
+        try:
+            subprocess.check_call(sophomorixCommand, shell=False, env=shell_env)
+        except subprocess.CalledProcessError as e:
+            return f'Error {e}'
+        return 'success'
+
     @post(r'/api/lmn/users/print')
     @authorize('lm:users:passwords')
     @endpoint(api=True)

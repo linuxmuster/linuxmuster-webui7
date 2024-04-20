@@ -1376,6 +1376,25 @@
         return $scope.classes = $scope.sort_schoolclasses($scope.classes);
       }
     };
+    $scope.printCSV = function(schoolclass) {
+      var msg;
+      msg = messagebox.show({
+        progress: true
+      });
+      return $http.post('/api/lmn/users/print_csv', {
+        user: $scope.identity.user,
+        schoolclass: schoolclass
+      }).then(function(resp) {
+        if (resp.data === 'success') {
+          notify.success(gettext("Created password csv"));
+          return location.href = `/api/lmn/users/passwords/download/${schoolclass}-${$scope.identity.user}.csv`;
+        } else {
+          return notify.error(gettext("Could not create password csv"));
+        }
+      }).finally(function() {
+        return msg.close();
+      });
+    };
     return $scope.$watch('identity.user', function() {
       if ($scope.identity.user === void 0) {
         return;

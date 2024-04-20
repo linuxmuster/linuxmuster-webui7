@@ -118,6 +118,17 @@ angular.module('lmn.users').controller 'LMUsersPrintPasswordsController', ($scop
                     $scope.classes.push(classname)
             $scope.classes = $scope.sort_schoolclasses($scope.classes)
 
+    $scope.printCSV = (schoolclass) ->
+        msg = messagebox.show(progress: true)
+        $http.post('/api/lmn/users/print_csv', {user: $scope.identity.user, schoolclass:schoolclass}).then (resp) ->
+            if resp.data == 'success'
+                notify.success(gettext("Created password csv"))
+                location.href = "/api/lmn/users/passwords/download/#{schoolclass}-#{$scope.identity.user}.csv"
+            else
+                notify.error(gettext("Could not create password csv"))
+        .finally () ->
+            msg.close()
+
     $scope.$watch 'identity.user', ->
         if $scope.identity.user is undefined
             return

@@ -1,3 +1,10 @@
+linuxmuster-webui7 (7.2.49) lmn72; urgency=medium
+
+  * [session] Add missing computer for user in room 
+  * [user] Button to directly print passwords as CSV
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 20 Apr 2024 16:02:24 +0200
+
 linuxmuster-webui7 (7.2.48) lmn72; urgency=medium
 
   * [users] Ignore validation for empty lines 

@@ -22,7 +22,7 @@ class SchoolManager:
         self.schools = [school['ou'] for school in lr.get('/schools')]
         self.schoolname = self.school
         self.schoolShare = f'\\\\{samba_realm}\\{self.school}\\'
-        self.schoolGlobalShare = f'\\\\{samba_realm}\\global\\'
+        self.schoolGlobalShare = f'\\\\{samba_realm}\\linuxmuster-global\\'
         self.gpomgr = GPOManager()
         self.load()
 

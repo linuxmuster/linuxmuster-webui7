@@ -74,8 +74,26 @@ class Handler(HttpPlugin):
         name = path.split('/')[-1]
         ext = os.path.splitext(name)[1]
 
-        smb_path = path.replace('/', '\\')
-        smb_path = f'{self.context.schoolmgr.schoolShare}{smb_path}'
+        user = self.context.identity
+        profil = AuthenticationService.get(self.context).get_provider().get_profile(user)
+        url_path = self._convert_path(path).replace('/', '\\')
+        if profil['sophomorixRole'] == 'globaladministrator':
+            if path.startswith('global/') or path == 'global':
+                url_path = url_path.replace('global\\', '')
+                if url_path == 'global':
+                    url_path = ''
+                smb_path = f"{self.context.schoolmgr.schoolGlobalShare}{url_path}"
+            else:
+                # Surfing in the school
+                # TODO: not working in multischool env
+                url_path = '\\'.join(url_path.split('\\')[1:])
+                smb_path = f"{self.context.schoolmgr.schoolShare}{url_path}"
+        elif profil['sophomorixRole'] == 'schooladministrator':
+            if path.startswith(self.context.schoolmgr.school):
+                url_path = url_path.replace(f"{self.context.schoolmgr.school}", "")
+            smb_path = f"{self.context.schoolmgr.schoolShare}{url_path}"
+        else:
+            smb_path = f"{self.context.schoolmgr.schoolShare}{url_path}"
 
         try:
             isfile = smbclient.path.isfile(smb_path)
@@ -88,7 +106,7 @@ class Handler(HttpPlugin):
                 else:
                     http_context.respond_not_found()
                     return ''
-        except (ValueError, SMBOSError, NotFound):
+        except (ValueError, SMBOSError, NotFound) as e:
             http_context.respond_not_found()
             return ''
 

@@ -1,3 +1,10 @@
+linuxmuster-webui7 (7.2.51) lmn72; urgency=medium
+
+  * [auth] Fix default pw_reset value
+  * [webdav] unquote dir url paths 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Wed, 08 May 2024 18:13:58 +0200
+
 linuxmuster-webui7 (7.2.50) lmn72; urgency=medium
 
   * [webdav] Fix paths for get requests. 

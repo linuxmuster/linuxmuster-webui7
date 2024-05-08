@@ -34,7 +34,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
     id = 'lm'
     name = _('Linux Muster LDAP') # skipcq: PYL-E0602
-    pw_reset = pwreset_config['activate']
+    pw_reset = pwreset_config.get('activate', False)
 
     def __init__(self, context):
         self.context = context

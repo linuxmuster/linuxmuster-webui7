@@ -57,7 +57,7 @@ class Handler(HttpPlugin):
     def _convert_path(self, path):
         # In gevent, headers are decoded with latin-1
         # Dirty fix for it
-        return path.encode('latin-1').decode('utf-8')
+        return unquote(path.encode('latin-1').decode('utf-8'))
 
     @get(r'/api/webdav/list')
     @endpoint(api=True)
@@ -273,7 +273,8 @@ class Handler(HttpPlugin):
                 items[href] = response.convert_samba_entry_properties(item)
                 items[href]['displayname'] = share['name']
         else:
-            url_path = self._convert_path(path).replace('/', '\\')
+            path = self._convert_path(path)
+            url_path = path.replace('/', '\\')
             if profil['sophomorixRole'] == 'globaladministrator':
                 if path.startswith('global/'):
                     url_path = url_path.replace('global\\', '')

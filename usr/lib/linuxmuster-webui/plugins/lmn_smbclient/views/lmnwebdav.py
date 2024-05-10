@@ -70,13 +70,13 @@ class Handler(HttpPlugin):
         if '..' in path:
             return http_context.respond_forbidden()
 
-        path = self._convert_path(unquote(path))
+        path = self._convert_path(path)
         name = path.split('/')[-1]
         ext = os.path.splitext(name)[1]
 
         user = self.context.identity
         profil = AuthenticationService.get(self.context).get_provider().get_profile(user)
-        url_path = self._convert_path(path).replace('/', '\\')
+        url_path = path.replace('/', '\\')
         if profil['sophomorixRole'] == 'globaladministrator':
             if path.startswith('global/') or path == 'global':
                 url_path = url_path.replace('global\\', '')

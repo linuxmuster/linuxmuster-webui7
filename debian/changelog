@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.2.52) lmn72; urgency=medium
+
+  * [webdav] Fix encoding in get requests 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 10 May 2024 13:28:27 +0200
+
 linuxmuster-webui7 (7.2.51) lmn72; urgency=medium
 
   * [auth] Fix default pw_reset value

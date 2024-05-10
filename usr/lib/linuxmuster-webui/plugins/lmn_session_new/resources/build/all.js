@@ -807,18 +807,24 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         }
       }).result;
     };
-    $scope._share = function(participant, items) {
-      var i, item, len, notify_success, promises, share_path;
-      share_path = `${participant.homeDirectory}\\transfer\\${identity.profile.sAMAccountName}`;
-      promises = [];
-      for (i = 0, len = items.length; i < len; i++) {
-        item = items[i];
-        promises.push(smbclient.copy(item.path, share_path + '/' + item.name, notify_success = false));
-      }
-      return $q.all(promises).then(function() {
-        return notify.success(gettext("Files shared!"));
+    $scope.smbcopy_notify = function(src, dst, name, user) {
+      var notify_success;
+      return smbclient.copy(src, dst, notify_success = false).then(function() {
+        return notify.success(gettext(`File ${name} shared to ${user}!`));
       });
     };
+    $scope._share = function(participant, items) {
+      var i, item, len, results, share_path;
+      share_path = `${participant.homeDirectory}\\transfer\\${identity.profile.sAMAccountName}`;
+      results = [];
+      for (i = 0, len = items.length; i < len; i++) {
+        item = items[i];
+        results.push($scope.smbcopy_notify(item.path, share_path + '/' + item.name, item.name, participant.sAMAccountName));
+      }
+      return results;
+    };
+    //        $q.all(promises).then () ->
+    //            notify.success(gettext("Files shared!"))
     $scope.shareUser = function(participant) {
       var choose_path, print_path;
       // participants is an array containing one or all participants

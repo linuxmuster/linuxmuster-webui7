@@ -421,13 +421,17 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
               user: () -> user
         ).result
 
+    $scope.smbcopy_notify = (src, dst, name, user) ->
+       smbclient.copy(src, dst, notify_success=false).then () ->
+            notify.success(gettext("File #{name} shared to #{user}!"))
+
     $scope._share = (participant, items) ->
         share_path = "#{participant.homeDirectory}\\transfer\\#{identity.profile.sAMAccountName}"
-        promises = []
         for item in items
-            promises.push(smbclient.copy(item.path, share_path + '/' + item.name, notify_success=false))
-        $q.all(promises).then () ->
-            notify.success(gettext("Files shared!"))
+            $scope.smbcopy_notify(item.path, share_path + '/' + item.name, item.name, participant.sAMAccountName )
+
+#        $q.all(promises).then () ->
+#            notify.success(gettext("Files shared!"))
 
     $scope.shareUser = (participant) ->
         # participants is an array containing one or all participants

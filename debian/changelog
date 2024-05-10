@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.2.53) lmn72; urgency=medium
+
+  * [session] Migrate parallel copy to sequential 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 10 May 2024 15:32:16 +0200
+
 linuxmuster-webui7 (7.2.52) lmn72; urgency=medium
 
   * [webdav] Fix encoding in get requests 

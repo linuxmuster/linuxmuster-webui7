@@ -498,6 +498,13 @@ angular.module('lmn.linbo4').controller 'LMLINBO4ConfigModalController', ($scope
                 angular.copy(result.os, os)
             $scope.rebuildDisks()
 
+    $scope.addVDIMasterVMID = (vmid) ->
+        $scope.vdiconfig["vmids"].push(vmid)
+
+    $scope.removeVDIMasterVMID = (index) ->
+        $scope.vdiconfig["vmids"].splice(index, 1)
+
+
     $scope.save = () ->
         $scope.config.partitions = []
         for disk in $scope.disks
@@ -510,7 +517,7 @@ angular.module('lmn.linbo4').controller 'LMLINBO4ConfigModalController', ($scope
         if $scope.config.config.LINBO.BackgroundColor
             $scope.config.config.LINBO.BackgroundColor = $scope.config.config.LINBO.BackgroundColor.substring(1)
 
-        $uibModalInstance.close([$scope.config, vdiconfig, config_change])
+        $uibModalInstance.close([$scope.config, $scope.vdiconfig, config_change])
 
     $scope.backups = () ->
         lmFileBackups.show('/srv/linbo/start.conf.' + $scope.config.config.LINBO.Group).then () ->

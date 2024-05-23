@@ -121,15 +121,6 @@ class Handler(HttpPlugin):
         if os.path.exists(path):
             with LMNFile(path, 'r') as settings:
                 vdiSettings = settings.read()
-
-            vdiSettings["cores"] = int(vdiSettings["cores"])
-            vdiSettings["memory"] = int(vdiSettings["memory"])
-            vdiSettings["tag"] = int(vdiSettings["tag"])
-            vdiSettings["minimum_vms"] = int(vdiSettings["minimum_vms"])
-            vdiSettings["maximum_vms"] = int(vdiSettings["maximum_vms"])
-            vdiSettings["prestarted_vms"] = int(vdiSettings["prestarted_vms"])
-            vdiSettings["timeout_building_master"] = int(vdiSettings["timeout_building_master"])
-            vdiSettings["timeout_building_clone"] = int(vdiSettings["timeout_building_clone"])
         else:
             vdiSettings = None
         return vdiSettings
@@ -141,8 +132,8 @@ class Handler(HttpPlugin):
         path = os.path.join(self.LINBO_PATH, name)
         if os.path.exists(path):
             data = http_context.json_body()
-            with LMNFile(path, 'w') as settings:
-                settings.write(json.dumps(data, indent=4))
+            with open(path, 'w') as settings:
+                json.dump(data, settings, indent=4)
             os.chmod(path, 0o755)
 
     @get(r'/api/lmn/linbo4/config/(?P<name>.+)')

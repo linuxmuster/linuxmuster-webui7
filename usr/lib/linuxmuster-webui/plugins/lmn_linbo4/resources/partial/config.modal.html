@@ -217,7 +217,6 @@
         <uib:tab heading="{{'Virtual Desktop (VDI)'|translate}}" ng:hide="vdiconfig == null">
             <br />
             <div class="form-group">
-                <label translate>VDI</label>
                 <br>
                 <span checkbox ng:model="vdiconfig.activated" text="{{'Activated'|translate}}" />
                 <br>
@@ -283,7 +282,7 @@
                             <tr style="height: 80px;">
                                 <td style="width:49%">
                                     <label translate>MAC-Address</label>
-                                    <input ng:model="vdiconfig.macaddress" type="text" class="form-control" />
+                                    <input ng:model="vdiconfig.mac" type="text" class="form-control" />
                                 </td>
                                 <td style="width:10px"></td>
                                 <td style="width:49%">
@@ -318,10 +317,16 @@
                             </tr>
                             <tr style="height: 80px;">
                                 <td style="width:49%">
-                                    <label translate>SCSI 0</label>
-                                    <input ng:model="vdiconfig.scsi0" type="text" class="form-control" />
+                                    <label translate>Disk size</label>
+                                    <input ng:model="vdiconfig.size" type="text" class="form-control" />
                                 </td>
                                 <td style="width:10px"></td>
+                                <td style="width:49%">
+                                    <label translate>Storage</label>
+                                    <input ng:model="vdiconfig.storage" type="text" class="form-control" />
+                                </td>
+                            </tr>
+                            <tr ng:if="expert" style="height: 80px;">
                                 <td style="width:49%" ng:if="expert">
                                     <label translate>SCSI Hardware</label><span> (Expert)</span>
                                     <select ng:model="vdiconfig.scsihw" class="form-control">
@@ -332,12 +337,6 @@
                                         <option value="virtio-scsi-single">VirtIO SCSI single</option>
                                         <option value="pvscsi">VMware PVSCSI</option>
                                     </select>
-                                </td>
-                            </tr>
-                            <tr ng:if="expert" style="height: 80px;">
-                                <td style="width:49%">
-                                    <label translate>Storage</label><span> (Expert)</span>
-                                    <input ng:model="vdiconfig.storage" type="text" class="form-control" />
                                 </td>
                                 <td style="width:10px"></td>
                                 <td style="width:49%">
@@ -390,17 +389,19 @@
                     </div>
                 </div>
                 <div class="panel panel-default">
-                    <div class="panel-heading"><span translate>Reserved VM-IDs</span></div>
+                    <div class="panel-heading"><span translate>Reserved Master VM-IDs</span></div>
                     <div class="panel-body">
                         <table width="100%">
-                            <tr style="height: 80px;">
+                            <tr style="height: 80px;vertical-align: top;">
                                 <td style="width:49%">
-                                    <label translate>VM IDs</label>
-                                    <input ng:model="vdiconfig.vmids" type="text" class="form-control" />
+                                    <ul class="list-group" ng:repeat="vmid in vdiconfig.vmids">
+                                        <li class="list-group-item">{{vmid}} <span class="badge pull-right" ng:click="removeVDIMasterVMID($index)" style="background-color: red;"><i class="fa fa-minus"></i></span></li>
+                                    </ul>
                                 </td>
                                 <td style="width:10px"></td>
-                                <td style="width:49%">
-
+                                <td style="width:49%;vertical-align: top;">
+                                    <input ng:model="newvmid" type="number" class="form-control" />
+                                    <button style="margin-top: 10px;" class="btn" ng:click="addVDIMasterVMID(newvmid);newvmid=null"><i class="fa fa-plus"></i> <span translate>Add new VMID</span></span>
                                 </td>
                             </tr>
                         </table>

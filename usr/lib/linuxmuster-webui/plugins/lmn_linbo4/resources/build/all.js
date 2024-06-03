@@ -601,6 +601,12 @@
         return $scope.rebuildDisks();
       });
     };
+    $scope.addVDIMasterVMID = function(vmid) {
+      return $scope.vdiconfig["vmids"].push(vmid);
+    };
+    $scope.removeVDIMasterVMID = function(index) {
+      return $scope.vdiconfig["vmids"].splice(index, 1);
+    };
     $scope.save = function() {
       var config_change, k, l, len2, len3, partition, ref2, ref3;
       $scope.config.partitions = [];
@@ -618,7 +624,7 @@
       if ($scope.config.config.LINBO.BackgroundColor) {
         $scope.config.config.LINBO.BackgroundColor = $scope.config.config.LINBO.BackgroundColor.substring(1);
       }
-      return $uibModalInstance.close([$scope.config, vdiconfig, config_change]);
+      return $uibModalInstance.close([$scope.config, $scope.vdiconfig, config_change]);
     };
     $scope.backups = function() {
       return lmFileBackups.show('/srv/linbo/start.conf.' + $scope.config.config.LINBO.Group).then(function() {

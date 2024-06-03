@@ -159,20 +159,17 @@ class SchoolManager:
 
     def get_homepath(self, user_context):
 
-        if samba_override['share_prefix']:
-            user = user_context['user']
-            role = user_context['role']
-            adminclass = user_context['adminclass']
-            if role == 'globaladministrator':
-                home_path = f'\\\\{samba_override["share_prefix"]}\\linuxmuster-global\\management\\{user}'
-            elif role == 'schooladministrator':
-                home_path = f'{self.share_prefix}\\management\\{user}'
-            elif role == "teacher":
-                home_path = f'{self.share_prefix}\\{role}s\\{user}'
-            else:
-                home_path = f'{self.share_prefix}\\{role}s\\{adminclass}\\{user}'
+        user = user_context['user']
+        role = user_context['role']
+        adminclass = user_context['adminclass']
+        if role == 'globaladministrator':
+            home_path = f'\\\\{samba_netbios}\\linuxmuster-global\\management\\{user}'
+        elif role == 'schooladministrator':
+            home_path = f'{self.share_prefix}\\management\\{user}'
+        elif role == "teacher":
+            home_path = f'{self.share_prefix}\\{role}s\\{user}'
         else:
-            home_path = user_context['home']
+            home_path = f'{self.share_prefix}\\{role}s\\{adminclass}\\{user}'
 
         return home_path
 

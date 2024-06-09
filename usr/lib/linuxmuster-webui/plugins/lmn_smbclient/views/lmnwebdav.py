@@ -4,13 +4,13 @@ Tools to handle files, directories and uploads.
 
 import os
 import tempfile
-from urllib.parse import quote, unquote
 import locale
+from datetime import datetime
 from zipfile import ZipFile
+from urllib.parse import quote, unquote
 
 import gevent
 import smbclient
-import logging
 from smbprotocol.exceptions import SMBOSError, NotFound, SMBAuthenticationError, InvalidParameter, SMBException
 from spnego.exceptions import BadMechanismError
 from jadi import component
@@ -112,7 +112,8 @@ class Handler(HttpPlugin):
 
         if isdir:
             zip_name = f'{quote(name)}.zip'
-            tmp_dir = tempfile.mkdtemp()
+            now = datetime.now().strftime('%Y%m%d%H%M')
+            tmp_dir = tempfile.mkdtemp(prefix=f"{user}_", suffix=f"_{now}", dir="/srv/.webdav")
             zip_path = f'{tmp_dir}/{zip_name}'
 
             with ZipFile(zip_path, 'w') as zip_obj:

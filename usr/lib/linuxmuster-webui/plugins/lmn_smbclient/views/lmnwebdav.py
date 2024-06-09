@@ -111,20 +111,28 @@ class Handler(HttpPlugin):
             return ''
 
         if isdir:
-            zip_name = f'{quote(name)}.zip'
-            now = datetime.now().strftime('%Y%m%d%H%M')
-            tmp_dir = tempfile.mkdtemp(prefix=f"{user}_", suffix=f"_{now}", dir="/srv/.webdav")
-            zip_path = f'{tmp_dir}/{zip_name}'
+            try:
+                zip_name = f'{quote(name)}.zip'
+                now = datetime.now().strftime('%Y%m%d%H%M')
+                tmp_dir = tempfile.mkdtemp(prefix=f"{user}_", suffix=f"_{now}", dir="/srv/.webdav")
+                zip_path = f'{tmp_dir}/{zip_name}'
 
-            with ZipFile(zip_path, 'w') as zip_obj:
-                for root, folders, files in smbclient.walk(smb_path):
-                    for f in files:
-                        relative_path = root.replace(path, '').replace('\\', '/')[1:]
-                        relative_path = f"{relative_path}/{f}"
-                        smb_file_path = f"{root}\\{f}"
-                        with smbclient.open_file(smb_file_path, 'rb') as file_io:
-                            content = file_io.read()
-                        zip_obj.writestr(relative_path, content)
+                with ZipFile(zip_path, 'w') as zip_obj:
+                    for root, folders, files in smbclient.walk(smb_path):
+                        for f in files:
+                            relative_path = root.replace(path, '').replace('\\', '/')[1:]
+                            relative_path = f"{relative_path}/{f}"
+                            smb_file_path = f"{root}\\{f}"
+                            with smbclient.open_file(smb_file_path, 'rb') as file_io:
+                                content = file_io.read()
+                            zip_obj.writestr(relative_path, content)
+            except Exception as e:
+                # Could be a quota error : OSError: [Errno 122] Disk quota exceeded
+                os.unlink(zip_path)
+                os.rmdir(tmp_dir)
+                http_context.respond('507 Insufficient Storage')
+                return ''
+
             ext = '.zip'
 
         if ext in content_mimetypes:

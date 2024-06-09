@@ -43,6 +43,9 @@ Installing linuxmuster-webui
                 cp -a $ajcfg $ajcfg.bak
             fi
 
+            mkdir -p /srv/.webdav
+            chmod 777 /srv/.webdav
+
             # Update 7.1.11, same scheme for all directories, prefer underscore to hyphen
             if [ -d "/etc/linuxmuster/webui/email-templates" ] ; then
                 mv /etc/linuxmuster/webui/email-templates /etc/linuxmuster/webui/email_templates
@@ -130,6 +133,9 @@ Updating linuxmuster-webui
             # Recreate upload folder using the right permissions
             msg "Verifying upload folder"
             bash $install_scripts/create_webuiUploadFolder.sh
+
+            mkdir -p /srv/.webdav
+            chmod 777 /srv/.webdav
 
             # Avoid empty smtp config file until Ajenti 2.2.1
             if  [ ! -f /etc/ajenti/smtp.yml ] ; then

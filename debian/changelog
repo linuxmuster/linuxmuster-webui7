@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.2.55) lmn72; urgency=medium
+
+  * [webdav] New location for zip download
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Tue, 11 Jun 2024 15:56:21 +0200
+
 linuxmuster-webui7 (7.2.54) lmn72; urgency=medium
 
   * [common] Fix homepath in multischool env.

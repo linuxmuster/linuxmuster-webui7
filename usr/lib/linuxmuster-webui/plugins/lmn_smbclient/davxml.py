@@ -19,6 +19,7 @@ class WebdavXMLResponse:
         'getcontenttype',
         'displayname',
         'creationdate',
+        'mode',
     }
     # Missing:
     # - getcontentlanguage
@@ -92,4 +93,5 @@ class WebdavXMLResponse:
             'getcontenttype': None if item.is_dir() else content_type,
             'getetag': etag,
             'displayname': item.name,
+            'mode': oct(stat.st_mode)[2:]
         }

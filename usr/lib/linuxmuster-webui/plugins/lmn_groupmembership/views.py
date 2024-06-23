@@ -422,7 +422,7 @@ class Handler(HttpPlugin):
             sophomorixCommand = ['sophomorix-class', '--kill', '--class', schoolclass, '-jj']
             result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
             if result['TYPE'] == "ERROR":
-                return result['TYPE']['LOG']
+                return ['ERROR', result['MESSAGE_EN']]
             # Try to return last result to frontend
             return result['TYPE'], result['LOG']
         # TODO: This should be done by sophomorix

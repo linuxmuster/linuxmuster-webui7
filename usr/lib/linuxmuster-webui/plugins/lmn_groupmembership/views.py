@@ -5,6 +5,7 @@ environment.
 
 # coding=utf-8
 from jadi import component
+from urllib.parse import quote, unquote
 
 from aj.api.http import get, post, delete, HttpPlugin
 from aj.api.endpoint import endpoint
@@ -120,7 +121,8 @@ class Handler(HttpPlugin):
         :rtype: dict
         """
 
-        sophomorixCommand = ['sophomorix-query', '--group-members', '--group-full', '--sam', groupName, '-jj']
+        group = unquote(groupName.encode('latin-1'))
+        sophomorixCommand = ['sophomorix-query', '--group-members', '--group-full', '--sam', group, '-jj']
         groupDetails = lmn_getSophomorixValue(sophomorixCommand, '')
         if not 'MEMBERS' in groupDetails.keys():
             groupDetails['MEMBERS'] = {}

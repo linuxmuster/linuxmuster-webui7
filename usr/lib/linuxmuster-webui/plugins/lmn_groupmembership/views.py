@@ -145,11 +145,12 @@ class Handler(HttpPlugin):
         username = self.context.identity
         user_details = AuthenticationService.get(self.context).get_provider().get_profile(username)
 
-        sophomorixCommand = ['sophomorix-project', '-i', '-p', project, '-jj']
-        groupAdmins = lmn_getSophomorixValue(sophomorixCommand, f'GROUPS/{project}/sophomorixAdmins')
+        projectName = unquote(project.encode('latin-1'))
+        sophomorixCommand = ['sophomorix-project', '-i', '-p', projectName, '-jj']
+        groupAdmins = lmn_getSophomorixValue(sophomorixCommand, f'GROUPS/{projectName}/sophomorixAdmins')
 
         if username in groupAdmins or user_details['sophomorixRole'] in ['globaladministrator', 'schooladministrator']:
-            sophomorixCommand = ['sophomorix-project', '--kill', '-p', project, '-jj']
+            sophomorixCommand = ['sophomorix-project', '--kill', '-p', projectName, '-jj']
             result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
             if result['TYPE'] == "ERROR":
                 return result['TYPE']['LOG']
@@ -174,8 +175,9 @@ class Handler(HttpPlugin):
         schoolname = self.context.schoolmgr.school
         username = self.context.identity
 
+        projectName = unquote(project.encode('latin-1'))
         ## Projectname must be in lowercase to avoid conflicts
-        sophomorixCommand = ['sophomorix-project',  '--admins', username, '--create', '-p', project.lower(), '--school', schoolname, '-jj']
+        sophomorixCommand = ['sophomorix-project',  '--admins', username, '--create', '-p', projectName.lower(), '--school', schoolname, '-jj']
         result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
         if result['TYPE'] == "ERROR":
             return result['TYPE'],result['MESSAGE_EN']
@@ -198,7 +200,8 @@ class Handler(HttpPlugin):
         groupType = http_context.json_body()['type']
 
         if groupType == "project":
-            sophomorixCommand = ['sophomorix-project',  option, '--project', group, '-jj']
+            projectName = unquote(group.encode('latin-1'))
+            sophomorixCommand = ['sophomorix-project',  option, '--project', projectName, '-jj']
         else:
             # Class
             sophomorixCommand = ['sophomorix-class',  option, '--class', group, '-jj']

@@ -1,3 +1,10 @@
+linuxmuster-webui7 (7.2.56) lmn72; urgency=medium
+
+  * [groupmembership] Handle projects with special chars. 
+  * [groupmembership] Right error message when deleting a schoolclass. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 28 Jun 2024 09:18:38 +0200
+
 linuxmuster-webui7 (7.2.55) lmn72; urgency=medium
 
   * [webdav] New location for zip download

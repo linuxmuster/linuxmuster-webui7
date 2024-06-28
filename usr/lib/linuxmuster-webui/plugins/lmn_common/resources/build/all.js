@@ -488,7 +488,8 @@ angular.module('core').directive('teacherAccess', function (identity) {
     this.isValidProjectName = function(name) {
       var error_msg, regExp, validName;
       error_msg = name + gettext(' can only contain lowercase chars or numbers');
-      regExp = /^[a-z0-9_\-]*$/;
+      // Dirty solution to accept special chars in Germany and France ...
+      regExp = /^[a-zA-Z0-9_\-äëïöüÄËÏÖÜßéàèùçÀÉÈÇÙâêîôûÂÊÛÔÎ]*$/;
       validName = regExp.test(name);
       if (!validName) {
         return error_msg;

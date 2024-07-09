@@ -1,3 +1,11 @@
+linuxmuster-webui7 (7.2.57) lmn72; urgency=medium
+
+  * [landingpage] Fix overflow for custom fields
+  * [session] Fix save as group
+  * [session] Start exam mode for single user
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Tue, 09 Jul 2024 12:37:30 +0200
+
 linuxmuster-webui7 (7.2.56) lmn72; urgency=medium
 
   * [groupmembership] Handle projects with special chars. 

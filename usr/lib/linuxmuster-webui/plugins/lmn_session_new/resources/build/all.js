@@ -557,7 +557,11 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       });
     };
     $scope.saveAsSession = function() {
-      return lmnSession.new($scope.session.members).then(function() {
+      var memberslist;
+      memberslist = $scope.session.members.map((user) => {
+        return user.cn;
+      });
+      return lmnSession.new(memberslist).then(function() {
         $scope.sessionChanged = false;
         // TODO : would be better to get the session id and simply set the current session
         // instead of going back to the sessions list

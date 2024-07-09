@@ -238,7 +238,8 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
             $scope.backToSessionList()
 
     $scope.saveAsSession = () ->
-        lmnSession.new($scope.session.members).then () ->
+        memberslist = $scope.session.members.map((user) => user.cn);
+        lmnSession.new(memberslist).then () ->
             $scope.sessionChanged = false
             # TODO : would be better to get the session id and simply set the current session
             # instead of going back to the sessions list

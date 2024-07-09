@@ -17,12 +17,12 @@
             <td>{{custom.title}}</td>
 
             <td ng:if="custom.attr == 'proxyAddresses' && custom.editable">
-                <span ng:repeat="value in custom.value" class="label label-info" ng:click="removeProxyAddresses(custom, value)">
+                <span ng:repeat="value in custom.value" class="label label-info" ng:click="removeProxyAddresses(custom, value)" style="display:inline-block;">
                     {{value}}
                     <i class="far fa-times-circle"></i>
                 </span>
             </td>
-            <td ng:if="custom.attr == 'proxyAddresses' && !custom.editable">
+            <td ng:if="custom.attr == 'proxyAddresses' && !custom.editable" style="display:inline-block;">
                 <span ng:repeat="value in custom.value" class="label label-info" >
                     {{value}}
                 </span>
@@ -35,13 +35,13 @@
             </td>
             <td ng:if="custom.attr == 'proxyAddresses' && !custom.editable"> </td>
 
-            <td ng:if="custom.attr != 'proxyAddresses' && isListAttr(custom.attr) && custom.editable">
+            <td ng:if="custom.attr != 'proxyAddresses' && isListAttr(custom.attr) && custom.editable" style="display:inline-block;">
                 <span ng:repeat="value in custom.value" class="label label-info" ng:click="removeCustomMulti(custom, value)">
                     {{value}}
                     <i class="far fa-times-circle"></i>
                 </span>
             </td>
-            <td ng:if="custom.attr != 'proxyAddresses' && isListAttr(custom.attr) && !custom.editable">
+            <td ng:if="custom.attr != 'proxyAddresses' && isListAttr(custom.attr) && !custom.editable" style="display:inline-block;">
                 <span ng:repeat="value in custom.value" class="label label-info" >
                     {{value}}
                 </span>

@@ -62,7 +62,7 @@
                 <b ng:show="!proxyAddresses.title">Proxy addresses</b>
             </td>
             <td>
-                <span ng:repeat="value in userDetails['proxyAddresses']" class="label label-info" ng:click="removeProxyAddresses(value)">
+                <span ng:repeat="value in userDetails['proxyAddresses']" class="label label-info" ng:click="removeProxyAddresses(value)" style="display:inline-block;">
                     {{value}}
                     <i class="far fa-times-circle"></i>
                 </span>
@@ -91,7 +91,7 @@
                 <b ng:show="!customMulti[n].title">Multi Custom {{n}}</b>
             </td>
             <td>
-                <span ng:repeat="value in userDetails['sophomorixCustomMulti'+n]" class="label label-info" ng:click="removeCustomMulti(n, value)">
+                <span ng:repeat="value in userDetails['sophomorixCustomMulti'+n]" class="label label-info" ng:click="removeCustomMulti(n, value)" style="display:inline-block;">
                     {{value}}
                     <i class="far fa-times-circle"></i>
                 </span>

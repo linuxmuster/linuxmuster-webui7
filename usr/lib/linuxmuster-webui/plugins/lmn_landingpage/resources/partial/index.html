@@ -77,8 +77,8 @@
                             <span style="position:absolute;right:10px;" ng:show="!isListAttr(custom.attr)">
                                 {{custom.value}}
                             </span>
-                            <div ng:show="isListAttr(custom.attr)" style="position:absolute;right:10px;">
-                                <span ng:repeat="value in custom.value track by $index">
+                            <div ng:show="isListAttr(custom.attr)" style="float:right;padding-right:10px;text-align:right;">
+                                <span ng:repeat="value in custom.value track by $index" style="display:inline-block;">
                                     {{value}}
                                 </span>
                             </div>

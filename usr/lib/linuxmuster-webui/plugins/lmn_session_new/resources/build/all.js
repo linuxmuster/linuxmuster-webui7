@@ -168,16 +168,27 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         $location.path('/view/lmn/session');
     };
 
-    this.getExamUsers = function () {
+    this.getExamUsers = function (single_user) {
         users = _this.current.members.map(function (user) {
             return user.cn;
         });
-        $http.post('/api/lmn/session/exam/userinfo', { 'users': users }).then(function (resp) {
-            _this.current.members = resp.data;
-            _this.createWorkingDirectory(_this.current.members);
-            _this.filterExamUsers();
-            $location.path('/view/lmn/session');
-        });
+        if (single_user) {
+            pos = users.indexOf(single_user);
+            _this.current.members.splice(pos, 1);
+            $http.post('/api/lmn/session/exam/userinfo', { 'users': [single_user] }).then(function (resp) {
+                _this.current.members.push(resp.data[0]);
+                _this.createWorkingDirectory(_this.current.members);
+                _this.filterExamUsers();
+                $location.path('/view/lmn/session');
+            });
+        } else {
+            $http.post('/api/lmn/session/exam/userinfo', { 'users': users }).then(function (resp) {
+                _this.current.members = resp.data;
+                _this.createWorkingDirectory(_this.current.members);
+                _this.filterExamUsers();
+                $location.path('/view/lmn/session');
+            });
+        }
     };
 
     this.refreshUsers = function () {
@@ -644,8 +655,8 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       }
     };
     // Exam mode
-    $scope.startExam = function() {
-      if ($scope.examMode) {
+    $scope.startExam = function(user) {
+      if ($scope.examMode && !user) {
         return;
       }
       // End exam for a whole group
@@ -654,14 +665,26 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         positive: gettext('Start exam mode'),
         negative: gettext('Cancel')
       }).then(function() {
+        var session;
         wait.modal(gettext("Starting exam mode ..."), "spinner");
         $scope.stateChanged = true;
-        $scope.examMode = true;
+        if (user) {
+          session = {
+            "members": [
+              {
+                'cn': user
+              }
+            ]
+          };
+        } else {
+          session = $scope.session;
+          $scope.examMode = true;
+        }
         return $http.patch("/api/lmn/session/exam/start", {
-          session: $scope.session
+          session: session
         }).then(function(resp) {
           $scope.stateChanged = false;
-          lmnSession.getExamUsers();
+          lmnSession.getExamUsers(user);
           $scope.stopRefreshFiles();
           return $rootScope.$emit('updateWaiting', 'done');
         });

@@ -294,8 +294,8 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
 
     # Exam mode
 
-    $scope.startExam = () ->
-        if $scope.examMode
+    $scope.startExam = (user) ->
+        if $scope.examMode and !user
             return
 
         # End exam for a whole group
@@ -306,10 +306,15 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         }).then () ->
             wait.modal(gettext("Starting exam mode ..."), "spinner")
             $scope.stateChanged = true
-            $scope.examMode = true
-            $http.patch("/api/lmn/session/exam/start", {session: $scope.session}).then (resp) ->
+            if user
+                session = {"members":[{'cn': user}]}
+            else
+                session = $scope.session
+                $scope.examMode = true
+
+            $http.patch("/api/lmn/session/exam/start", {session: session}).then (resp) ->
                 $scope.stateChanged = false
-                lmnSession.getExamUsers()
+                lmnSession.getExamUsers(user)
                 $scope.stopRefreshFiles()
                 $rootScope.$emit('updateWaiting', 'done')
 

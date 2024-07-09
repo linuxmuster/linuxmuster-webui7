@@ -96,14 +96,25 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
         $location.path('/view/lmn/session');
     }
 
-    this.getExamUsers = () => {
-       users = this.current.members.map((user) => user.cn);
-       $http.post('/api/lmn/session/exam/userinfo', {'users': users}).then((resp) => {
-            this.current.members = resp.data;
-            this.createWorkingDirectory(this.current.members);
-            this.filterExamUsers();
-            $location.path('/view/lmn/session');
-        });
+    this.getExamUsers = (single_user) => {
+        users = this.current.members.map((user) => user.cn);
+        if (single_user) {
+            pos = users.indexOf(single_user);
+            this.current.members.splice(pos, 1);
+            $http.post('/api/lmn/session/exam/userinfo', {'users': [single_user]}).then((resp) => {
+                this.current.members.push(resp.data[0]);
+                this.createWorkingDirectory(this.current.members);
+                this.filterExamUsers();
+                $location.path('/view/lmn/session');
+            });
+        } else {
+            $http.post('/api/lmn/session/exam/userinfo', {'users': users}).then((resp) => {
+                this.current.members = resp.data;
+                this.createWorkingDirectory(this.current.members);
+                this.filterExamUsers();
+                $location.path('/view/lmn/session');
+            });
+        }
     }
 
     this.refreshUsers = () => {

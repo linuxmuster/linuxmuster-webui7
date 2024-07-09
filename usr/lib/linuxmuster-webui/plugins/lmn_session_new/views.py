@@ -156,7 +156,7 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_stop_exam(self, http_context):
         session = http_context.json_body()['session']
-        participants = ','.join([member['cn'] for member in session['members']])
+        participants = ','.join([member['cn'] for member in session['members'] if member['cn'].endswith('-exam')])
         group_type = _(session['type'])
         group_name = session['name']
 

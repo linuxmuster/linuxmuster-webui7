@@ -95,12 +95,37 @@ class SchoolManager:
         Read the school name from school.conf.
         """
 
-
         try:
             with LMNFile(f'{self.configpath}school.conf', 'r') as f:
                 self.schoolname = f.data['school']['SCHOOL_LONGNAME']
         except Exception:
             pass
+
+    def get_schoolname_by_school(self, school):
+        """
+        Returns schoolname by school
+        """
+
+        if school == "default-school":
+            configpath = '/etc/linuxmuster/sophomorix/default-school/'
+        else:
+            configpath = f'/etc/linuxmuster/sophomorix/{school}/{school}.'
+
+        try:
+            with LMNFile(f'{self.configpath}school.conf', 'r') as f:
+                return f.data['school']['SCHOOL_LONGNAME']
+        except Exception:
+            return None
+
+    def get_schools(self):
+        """
+        Returns array of all schools with schoolname
+        """
+
+        allSchools = []
+        for school in self.schools:
+            allSchools.append({"school": school, "schoolname": self.get_schoolname_by_school(school)})
+        return sorted(allSchools, key=lambda d: d['school'])
 
     def load_school_dfs_shares(self):
         """

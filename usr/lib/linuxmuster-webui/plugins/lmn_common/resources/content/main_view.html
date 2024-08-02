@@ -108,6 +108,11 @@
                     <i class="fa fa-hdd-o"></i> {{ identity.machine.name }}
                 </p>
                 <span ng:if="identity.user && resttime >= 0" translate class="pull-right sessiontime hide-phone">Session time : {{ counter[0] }}:{{ counter[1] }}:{{ counter[2] }}</span>
+
+                <p class="navbar-text pull-right hide-phone" ng:if="identity.user && identity.profile.school_show">
+                    <i class="fa fa-school"></i> {{ identity.profile.activeSchool}} <a href="/view/lmn/change-school" style="color:white">(<span translate>change</span>)</a><br>
+                </p>
+                <span ng:if="identity.user && identity.profile.school_show" class="pull-right sessiontime hide-phone">{{ identity.profile.schoolname }}</span>
             </div>
         </nav>
         <div class="container" ng:show="showIframe">

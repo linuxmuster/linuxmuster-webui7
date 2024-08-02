@@ -600,3 +600,7 @@ floating-toolbar {
         font-weight: bold;
     }
 }
+
+.school-item:hover { // for schoolswitcher plugin
+    background-color: lightgray;
+}

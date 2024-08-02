@@ -839,3 +839,40 @@ angular.module('core').directive('teacherAccess', function (identity) {
 
 }).call(this);
 
+'use strict';
+
+angular.module('lmn.common').config(function ($routeProvider) {
+    $routeProvider.when('/view/lmn/change-school', {
+        templateUrl: '/lmn_common:resources/partial/schoolswitcher.html',
+        controller: 'LMNSchoolSwitcherController'
+    });
+});
+
+angular.module('lmn.common').controller('LMNSchoolSwitcherController', function ($scope, $http, pageTitle, gettext, notify, $uibModal, $window) {
+    pageTitle.set(gettext('Schoolswitcher'));
+
+    $scope.load = function () {
+        $http.get('/api/lmn/activeschool').then(function (resp) {
+            $scope.activeschool = resp.data;
+        });
+
+        $http.get('/api/lmn/list-schools').then(function (resp) {
+            $scope.schools = resp.data;
+        });
+    };
+
+    $scope.switchSchool = function (school) {
+        $http.post('/api/lmn/change-school', { school: school }).then(function (resp) {
+            if (resp.data) {
+                notify.success("School changed successfully");
+            } else {
+                notify.error("Failed to change school!");
+            }
+            $scope.load();
+        });
+    };
+
+    $scope.load();
+});
+
+

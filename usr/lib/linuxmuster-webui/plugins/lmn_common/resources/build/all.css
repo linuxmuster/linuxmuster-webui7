@@ -171,7 +171,8 @@ html body.customized *[checkbox].active i.on {
 }
 
 html body.customized smart-progress .progress .progress-bar-warning {
-  background: #ffab40; /*#DC6D1D;*/
+  background: #ffab40;
+  /*#DC6D1D;*/
 }
 html body.customized smart-progress .progress .progress-bar-danger {
   background: #d9534a;

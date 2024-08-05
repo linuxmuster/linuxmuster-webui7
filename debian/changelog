@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.2.59) lmn72; urgency=medium
+
+  * [multischool] Add multischoolswitcher (@hermanntoast) 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 05 Aug 2024 14:03:42 +0200
+
 linuxmuster-webui7 (7.2.58) lmn72; urgency=medium
 
   * [samba_share] Sequential delete (samba credits problem) 

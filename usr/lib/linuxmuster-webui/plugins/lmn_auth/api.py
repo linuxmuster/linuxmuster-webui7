@@ -344,7 +344,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
         """
 
         if username in ["root",None]:
-            return {'activeSchool': 'default-school'}
+            return {'activeSchool': 'default-school', 'school_show': True, 'schoolname': "Default School"}
         try:
             profil = self.get_ldap_user(username)
             
@@ -356,7 +356,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
                 else:
                     profil['activeSchool'] = profil['sophomorixSchoolname']
 
-            if self.context.schoolmgr.schools and len(self.context.schoolmgr.schools) > 1 and "role-globaladministrator" in profil.get('memberOf', []):
+            if self.context.schoolmgr.schools and len(self.context.schoolmgr.schools) > 1 and "role-globaladministrator" in ''.join(profil.get('memberOf', [])):
                 profil['school_show'] = True
             else:
                 profil['school_show'] = False

@@ -853,7 +853,10 @@ angular.module('lmn.common').controller('LMNSchoolSwitcherController', function 
 
     $scope.load = function () {
         $http.get('/api/lmn/activeschool').then(function (resp) {
-            $scope.activeschool = resp.data;
+            $scope.identity.profile.activeSchool = resp.data;
+            $http.post('/api/lmn/get-schoolname', { school: $scope.identity.profile.activeSchool }).then(function (resp) {
+                $scope.identity.profile.schoolname = resp.data;
+            });
         });
 
         $http.get('/api/lmn/list-schools').then(function (resp) {

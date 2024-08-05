@@ -252,7 +252,7 @@ class Handler(HttpPlugin):
     
     @post(r'/api/lmn/change-school')
     @endpoint(api=True)
-    def handle_get_changeschool(self, http_context):
+    def handle_post_changeschool(self, http_context):
         """
         Switch active school
 
@@ -268,6 +268,25 @@ class Handler(HttpPlugin):
             return True
         except:
             return False
+        
+    @post(r'/api/lmn/get-schoolname')
+    @endpoint(api=True)
+    def handle_post_getschoolname(self, http_context):
+        """
+        Get schoolname by school
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: Schoolname
+        :rtype: string 
+        """
+
+        school = http_context.json_body()['school']
+        try:
+            result = self.context.schoolmgr.get_schoolname_by_school(school)
+            return result
+        except:
+            return None
 
     @get(r'/api/lmn/display_options')
     @endpoint(api=True)

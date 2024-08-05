@@ -112,7 +112,7 @@ class SchoolManager:
             configpath = f'/etc/linuxmuster/sophomorix/{school}/{school}.'
 
         try:
-            with LMNFile(f'{self.configpath}school.conf', 'r') as f:
+            with LMNFile(f'{configpath}school.conf', 'r') as f:
                 return f.data['school']['SCHOOL_LONGNAME']
         except Exception:
             return None

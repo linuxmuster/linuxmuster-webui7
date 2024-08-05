@@ -10,7 +10,10 @@ angular.module('lmn.common').controller('LMNSchoolSwitcherController', function 
 
     $scope.load = () => {
         $http.get('/api/lmn/activeschool').then((resp) => {
-            $scope.activeschool = resp.data;
+            $scope.identity.profile.activeSchool = resp.data;
+            $http.post('/api/lmn/get-schoolname', {school: $scope.identity.profile.activeSchool}).then((resp) => {
+                $scope.identity.profile.schoolname = resp.data;
+            });
         });
     
         $http.get('/api/lmn/list-schools').then((resp) => {

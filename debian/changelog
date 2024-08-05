@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.2.58) lmn72; urgency=medium
+
+  * [samba_share] Sequential delete (samba credits problem) 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 05 Aug 2024 10:25:52 +0200
+
 linuxmuster-webui7 (7.2.57) lmn72; urgency=medium
 
   * [landingpage] Fix overflow for custom fields

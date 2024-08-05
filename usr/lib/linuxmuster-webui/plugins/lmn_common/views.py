@@ -235,6 +235,58 @@ class Handler(HttpPlugin):
         """
 
         return self.context.schoolmgr.school
+    
+    @get(r'/api/lmn/list-schools')
+    @endpoint(api=True)
+    def handle_get_listSchools(self, http_context):
+        """
+        Get list of all schools
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: Array containing all schools
+        :rtype: array 
+        """
+
+        return self.context.schoolmgr.get_schools()
+    
+    @post(r'/api/lmn/change-school')
+    @endpoint(api=True)
+    def handle_post_changeschool(self, http_context):
+        """
+        Switch active school
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: Switch school successful or not
+        :rtype: boolean 
+        """
+
+        school = http_context.json_body()['school']
+        try:
+            self.context.schoolmgr.switch(school)
+            return True
+        except:
+            return False
+        
+    @post(r'/api/lmn/get-schoolname')
+    @endpoint(api=True)
+    def handle_post_getschoolname(self, http_context):
+        """
+        Get schoolname by school
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: Schoolname
+        :rtype: string 
+        """
+
+        school = http_context.json_body()['school']
+        try:
+            result = self.context.schoolmgr.get_schoolname_by_school(school)
+            return result
+        except:
+            return None
 
     @get(r'/api/lmn/display_options')
     @endpoint(api=True)

@@ -591,7 +591,15 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       });
     };
     $scope.$watch('addParticipant', function() {
+      var current_users;
       if ($scope.addParticipant) {
+        current_users = $scope.session.members.map((user) => {
+          return user.cn;
+        });
+        if (current_users.includes($scope.addParticipant.sAMAccountName)) {
+          notify.success($scope.addParticipant.sAMAccountName + gettext(" is already member of the course."));
+          return;
+        }
         return $http.post('/api/lmn/session/userinfo', {
           'users': [$scope.addParticipant.sAMAccountName]
         }).then(function(resp) {
@@ -613,9 +621,22 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       }
     });
     $scope.$watch('addSchoolClass', function() {
-      var members;
+      var current_users, i, len, member, members, ref;
       if ($scope.addSchoolClass) {
-        members = $scope.addSchoolClass.sophomorixMembers;
+        members = [];
+        current_users = $scope.session.members.map((user) => {
+          return user.cn;
+        });
+        ref = $scope.addSchoolClass.sophomorixMembers;
+        for (i = 0, len = ref.length; i < len; i++) {
+          member = ref[i];
+          if (!current_users.includes(member)) {
+            members.push(member);
+          }
+        }
+        if (members.length === 0) {
+          return;
+        }
         return $http.post('/api/lmn/session/userinfo', {
           'users': members
         }).then(function(resp) {

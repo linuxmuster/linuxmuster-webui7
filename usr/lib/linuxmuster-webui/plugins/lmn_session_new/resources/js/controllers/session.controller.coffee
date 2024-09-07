@@ -256,20 +256,35 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
 
     $scope.$watch 'addParticipant', () ->
         if $scope.addParticipant
+            current_users = $scope.session.members.map((user) => user.cn)
+            if current_users.includes($scope.addParticipant.sAMAccountName)
+                notify.success($scope.addParticipant.sAMAccountName + gettext(" is already member of the course."))
+                return
+
             $http.post('/api/lmn/session/userinfo', {'users':[$scope.addParticipant.sAMAccountName]}).then (resp) ->
                 new_participant = resp.data[0]
                 $scope.addParticipant = ''
+
                 if !$scope.session.generated
                     # Real session: must be added in LDAP
                     $http.post('/api/lmn/session/participants', {'users':[new_participant.sAMAccountName], 'session': $scope.session.sid})
                 else
                     $scope.sessionChanged = true
+
                 $scope.session.members.push(new_participant)
                 $scope.refreshUsers()
 
     $scope.$watch 'addSchoolClass', () ->
         if $scope.addSchoolClass
-            members = $scope.addSchoolClass.sophomorixMembers
+            members = []
+            current_users = $scope.session.members.map((user) => user.cn)
+            for member in $scope.addSchoolClass.sophomorixMembers
+                if !current_users.includes(member)
+                    members.push(member)
+
+            if members.length == 0
+                return
+
             $http.post('/api/lmn/session/userinfo', {'users':members}).then (resp) ->
                 new_participants = resp.data
                 $scope.addSchoolClass = ''

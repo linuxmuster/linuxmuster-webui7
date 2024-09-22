@@ -106,13 +106,9 @@ class SchoolManager:
         Returns schoolname by school
         """
 
-        if school == "default-school":
-            configpath = '/etc/linuxmuster/sophomorix/default-school/'
-        else:
-            configpath = f'/etc/linuxmuster/sophomorix/{school}/{school}.'
 
         try:
-            with LMNFile(f'{configpath}school.conf', 'r') as f:
+            with LMNFile(f'{self.configpath}school.conf', 'r') as f:
                 return f.data['school']['SCHOOL_LONGNAME']
         except Exception:
             return None

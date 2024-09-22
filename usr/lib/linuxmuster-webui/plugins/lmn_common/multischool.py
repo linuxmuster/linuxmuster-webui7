@@ -186,7 +186,12 @@ class SchoolManager:
 
         user = user_context['user']
         role = user_context['role']
+
         adminclass = user_context['adminclass']
+        if self.school != 'default-school':
+            # Remove prefix from adminclass in home path.
+            adminclass = adminclass.lstrip(f"{self.school}-")
+
         if role == 'globaladministrator':
             home_path = f'\\\\{samba_netbios}\\linuxmuster-global\\management\\{user}'
         elif role == 'schooladministrator':

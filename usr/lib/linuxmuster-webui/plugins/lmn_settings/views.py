@@ -227,12 +227,21 @@ class Handler(HttpPlugin):
         :rtype: dict
         """
 
-        def ensure_config_structure(config, role=None):
+        base_display_dict = {
+            'teachers': {1: '', 2: '', 3:''},
+            'students': {1: '', 2: '', 3: ''},
+        }
+
+        def ensure_config_structure(config, number, role=None):
             base_custom_dict = {'show': False, 'editable': False, 'title': ''}
-            base_role_dict = {
-                str(i+1):base_custom_dict
-                for i in range(3)
-            }
+            if number:
+                base_role_dict = {
+                    str(i+1):base_custom_dict
+                    for i in range(number)
+                }
+            else:
+                base_role_dict = base_custom_dict
+
             base_config_dict = {
                 'globaladministrators': {},
                 'schooladministrators': {},
@@ -245,7 +254,7 @@ class Handler(HttpPlugin):
                     role_dict = config.get(role, {})
 
                     if role_dict:
-                        for i in range(3):
+                        for i in range(number):
                             idx = str(i+1)
                             role_dict[idx] = role_dict.get(idx, base_custom_dict)
                             for key, value in base_custom_dict.items():
@@ -258,7 +267,7 @@ class Handler(HttpPlugin):
                 role_dict = config.get(role, {})
 
                 if role_dict:
-                    for i in range(3):
+                    for i in range(number):
                         idx = str(i+1)
                         role_dict[idx] = role_dict.get(idx, base_custom_dict)
                         for key, value in base_custom_dict.items():
@@ -280,19 +289,19 @@ class Handler(HttpPlugin):
         password_templates['individual'] = password_templates.get('individual', '')
 
         config_dict = {
-            'custom': ensure_config_structure(custom_config.get('custom', {})),
-            'customMulti': ensure_config_structure(custom_config.get('customMulti', {})),
-            'customDisplay': custom_config.get('customDisplay', {1:'', 2:'', 3:''}),
-            'proxyAddresses': ensure_config_structure(custom_config.get('proxyAddresses', {})),
+            'custom': ensure_config_structure(custom_config.get('custom', {}), 5),
+            'customMulti': ensure_config_structure(custom_config.get('customMulti', {}), 5),
+            'customDisplay': custom_config.get('customDisplay', base_display_dict),
+            'proxyAddresses': ensure_config_structure(custom_config.get('proxyAddresses', {}), 0),
             'passwordTemplates': password_templates,
         }
 
         if role:
             role_dict = {
-                'custom': ensure_config_structure(config_dict['custom'], role),
-                'customMulti': ensure_config_structure(config_dict['customMulti'], role),
-                'customDisplay': config_dict['customDisplay'].get(role, {1:'', 2:'', 3:''}),
-                'proxyAddresses': ensure_config_structure(config_dict['proxyAddresses'], role),
+                'custom': ensure_config_structure(config_dict['custom'], 5, role),
+                'customMulti': ensure_config_structure(config_dict['customMulti'], 5, role),
+                'customDisplay': config_dict['customDisplay'].get(role, {1: '', 2: '', 3:''}),
+                'proxyAddresses': ensure_config_structure(config_dict['proxyAddresses'], 0, role),
             }
             return role_dict
         return config_dict

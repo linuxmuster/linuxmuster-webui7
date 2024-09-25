@@ -67,39 +67,47 @@ class LMAuthenticationProvider(AuthenticationProvider):
         """
 
         # Initialize school manager
-        profil = self.get_ldap_user(username)
-        # Test purpose for multischool
-        if username in ["root", None] or profil['sophomorixSchoolname'] == 'global':
+        if username in ["root", None]:
             active_school = "default-school"
         else:
-            active_school = profil['sophomorixSchoolname']
+            profil = self.get_ldap_user(username)
+            # Test purpose for multischool
+            if profil['sophomorixSchoolname'] == 'global':
+                active_school = "default-school"
+            else:
+                active_school = profil['sophomorixSchoolname']
+
         #active_school = self.get_profile(username)['activeSchool']
-        schoolmgr = SchoolManager()
-        schoolmgr.switch(active_school)
-        self.context.schoolmgr = schoolmgr
-        self.context.ldapreader = LMNLdapReader
 
-        def schoolget(*args, **kwargs):
-            """
-            This alias allow to automatically pass the school context for school
-            specific requests.
-            """
+        try:
+            schoolmgr = SchoolManager()
+            schoolmgr.switch(active_school)
+            self.context.schoolmgr = schoolmgr
+            self.context.ldapreader = LMNLdapReader
 
-            result = self.context.ldapreader.get(*args,**kwargs, school=self.context.schoolmgr.school)
-            return result
+            def schoolget(*args, **kwargs):
+                """
+                This alias allow to automatically pass the school context for school
+                specific requests.
+                """
 
-        self.context.ldapreader.schoolget = schoolget
- 
-        # Permissions for kerberos ticket
-        uid = self.get_isolation_uid(username)
+                result = self.context.ldapreader.get(*args,**kwargs, school=self.context.schoolmgr.school)
+                return result
 
-        if os.path.isfile(f'/tmp/krb5cc_{uid}{uid}'):
-            if os.path.isfile(f'/tmp/krb5cc_{uid}'):
-                os.unlink(f'/tmp/krb5cc_{uid}')
+            self.context.ldapreader.schoolget = schoolget
 
-            os.rename(f'/tmp/krb5cc_{uid}{uid}', f'/tmp/krb5cc_{uid}')
-            logging.warning(f"Changing kerberos ticket rights for {username}")
-            os.chown(f'/tmp/krb5cc_{uid}', uid, 100)
+            # Permissions for kerberos ticket
+            uid = self.get_isolation_uid(username)
+
+            if os.path.isfile(f'/tmp/krb5cc_{uid}{uid}'):
+                if os.path.isfile(f'/tmp/krb5cc_{uid}'):
+                    os.unlink(f'/tmp/krb5cc_{uid}')
+
+                os.rename(f'/tmp/krb5cc_{uid}{uid}', f'/tmp/krb5cc_{uid}')
+                logging.warning(f"Changing kerberos ticket rights for {username}")
+                os.chown(f'/tmp/krb5cc_{uid}', uid, 100)
+        except Exception as e:
+            logging.warning(str(e))
 
     def _get_krb_ticket(self, username, password):
         """

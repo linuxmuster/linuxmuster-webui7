@@ -1,3 +1,14 @@
+linuxmuster-webui7 (7.2.60) lmn72; urgency=medium
+
+  * Update dependencies
+  * [auth] Fix root login at install
+  * [multischool] Fix adminclass in homepath
+  * [session] Avoid duplicates users
+  * [settings] Fix custom fields structure
+  * [settings] Reset custom display config 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Wed, 25 Sep 2024 22:21:39 +0200
+
 linuxmuster-webui7 (7.2.59) lmn72; urgency=medium
 
   * [multischool] Add multischoolswitcher (@hermanntoast) 

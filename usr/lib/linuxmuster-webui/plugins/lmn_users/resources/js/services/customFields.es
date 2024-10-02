@@ -1,6 +1,7 @@
 angular.module('lmn.common').service('customFields', function($http, messagebox, gettext, notify) {
 
     this.customDisplayOptions = [
+        '',
         'proxyAddresses',
         'sophomorixCustom1',
         'sophomorixCustom2',

@@ -7,6 +7,7 @@ ajenti.plugin.filesystem==0.50
 ajenti.plugin.plugins==0.52
 ajenti.plugin.settings==0.34
 ajenti.plugin.session-list==0.7
+configobj
 configparser==3.5.0
 cryptography>=41.0.0
 dpath==2.0.6         # used for getSophomorixValue

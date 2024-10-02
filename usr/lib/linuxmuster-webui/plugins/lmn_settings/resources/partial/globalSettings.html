@@ -212,7 +212,85 @@
                         </div>
                     </div>
                 </div>
-            </div
+            </div>
+        </uib:tab>
+        <uib:tab heading="Edulution UI" ng:click="checkEdulution()">
+            <br>
+            <!-- <div class="alert alert-info">
+                <span translate>Here you can copy your connection string for your edulution UI. Put this data in your Edulution installation wizard or send it to your
+                Edulution hoster.</span><br>
+                <br>
+                <span translate>This token is only valid for one day!</span><br>
+                <br>
+                <button class="btn btn-default" ng:click="getEdulutionHash()" translate>Click to connect to your EdulutionUI</button>
+            </div>
+            <pre>lkhjfklsdflkh</pre> -->
+            <div class="card" style="width: 100%;">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" style="display: flex; align-items: center; height: 80px;">
+                        <span style="width: 50px;">
+                            <progress-spinner ng:show="edulutionStatus.api_installed == null"></progress-spinner>
+                            <i class="fas fa-check-circle" style="font-size: 20px; color: green;" ng:show="edulutionStatus.api_installed"></i>
+                            <i class="fas fa-times-circle" style="font-size: 20px; color: red;" ng:show="edulutionStatus.api_installed == false"></i>
+                        </span>
+                        <span style="margin-left: 10px;" translate>
+                            Check if API is installed
+                        </span>
+                    </li>
+                </ul>
+            </div>
+            <div class="card" style="width: 100%;">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" style="display: flex; align-items: center; height: 80px;">
+                        <span style="width: 50px;">
+                            <progress-spinner ng:show="edulutionStatus.api_running == null"></progress-spinner>
+                            <i class="fas fa-check-circle" style="font-size: 20px; color: green;" ng:show="edulutionStatus.api_running"></i>
+                            <i class="fas fa-times-circle" style="font-size: 20px; color: red;" ng:show="edulutionStatus.api_running == false"></i>
+                        </span>
+                        <span style="margin-left: 10px;" translate>
+                            Check if API is running
+                        </span>
+                    </li>
+                </ul>
+            </div>
+            <div class="card" style="width: 100%;">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" style="display: flex; align-items: center; height: 80px;">
+                        <span style="width: 50px;">
+                            <progress-spinner ng:show="edulutionStatus.binduser_created == null"></progress-spinner>
+                            <i class="fas fa-check-circle" style="font-size: 20px; color: green;" ng:show="edulutionStatus.binduser_created"></i>
+                            <i class="fas fa-times-circle" style="font-size: 20px; color: red;" ng:show="edulutionStatus.binduser_created == false"></i>
+                        </span>
+                        <span style="margin-left: 10px;" translate>
+                            Check if a Bind-User exists for edulution
+                        </span>
+                        <button class="btn btn-lmn" style="margin-left: auto; " ng:click="createEdulutionBinduser()" ng:show="edulutionStatus.binduser_created == false">Create binduser</button>
+                    </li>
+                </ul>
+            </div>
+            <div class="card" style="width: 100%;">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" style="display: flex; align-items: center; height: 80px;">
+                        <span style="width: 50px;">
+                            <i class="fas fa-check-circle" style="font-size: 20px; color: green;"></i>
+                        </span>
+                        <span style="margin-left: 10px;">
+                            <span translate>External Domain</span>: <input style="margin-left: 15px;" type="text" ng:model="edulutionStatus.external_domain"> (The domain under which the Linuxmuster-Server is accessible from outside.)
+                        </span>
+                    </li>
+                </ul>
+            </div>
+            <button class="btn btn-lmn" ng:click="generateEdulutionSetupToken()" ng:show="edulutionStatus.api_installed && edulutionStatus.api_running && edulutionStatus.binduser_created">Generate edulution Setup Token</button>
+            <pre ng:show="edulutionToken" style="margin-top: 20px; white-space:pre-wrap;">{{edulutionToken}}</pre>
+            <button class="btn btn-lmn" style="margin-top: 10px;" ng:click="copyEdulutionSetupToken()" ng:show="edulutionToken">Copy</button>
+            
+            <div class="alert alert-info" ng:show="edulutionToken" style="margin-top: 20px;">
+                <i class="fa fa-info-circle"></i>
+                <span translate>
+                    The server must be accessible from the edulution server via port <b>443 (https)</b>, port <b>8001 (API)</b> and port <b>389 (LDAP)</b> or <b>636 (LDAPs)</b>. 
+                    Ask your IT-Administrator if you need support here!
+                </span>
+            </div>
         </uib:tab>
     </uib:tabset>
 

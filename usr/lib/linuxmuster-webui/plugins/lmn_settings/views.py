@@ -8,9 +8,12 @@ import subprocess
 from jadi import component
 import re
 from glob import glob
+import base64
+import json
+import time
 
 from aj.api.http import get, post, HttpPlugin
-from aj.api.endpoint import endpoint, EndpointError
+from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
 from aj.auth import authorize
 from aj.plugins.lmn_common.lmnfile import LMNFile
 
@@ -367,3 +370,71 @@ class Handler(HttpPlugin):
         }
         with LMNFile(path, 'w') as f:
             f.write(holidays)
+
+    @get(r'/api/lmn/edulution/api-status')
+    @endpoint(api=True)
+    def handle_api_get_edulution_status(self, http_context):
+        """
+        Check the status of edulution requirements
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: Status of api
+        :rtype: dict
+        """
+
+        status = {
+            "api_installed": False,
+            "api_running": False
+        }
+
+        if os.path.exists("/etc/linuxmuster/api/config.yml"):
+            status['api_installed'] = True
+
+        try:
+            if os.system('systemctl is-active --quiet linuxmuster-api') == 0:
+                status['api_running'] = True
+        except:
+            pass
+
+        return status
+    
+    @post(r'/api/lmn/edulution/generate')
+    @endpoint(api=True)
+    def handle_api_get_edulution_generate(self, http_context):
+        """
+        Generate the edulution setup hash
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: Edulution Setup Hash
+        :rtype: str
+        """
+        
+        if os.getuid() != 0:
+            return EndpointReturn(403)
+        
+        external_domain = http_context.json_body()['external_domain']
+        binduser_name = http_context.json_body()['binduser_name']
+        binduser_dn = http_context.json_body()['binduser_dn']
+
+        secret_path = os.path.join('/etc/linuxmuster/.secret/', binduser_name)
+
+        if not os.path.isfile(secret_path):
+            return EndpointReturn(403)
+        else:
+            with open(secret_path, 'r') as f:
+                binduser_password = f.read()
+
+        data = json.dumps({
+            "external_domain": external_domain,
+            "binduser_name": binduser_name,
+            "binduser_dn": binduser_dn,
+            "binduser_password": binduser_password,
+            "timestamp": time.time()
+        })
+
+        return base64.b64encode(data.encode('utf-8'))
+
+
+

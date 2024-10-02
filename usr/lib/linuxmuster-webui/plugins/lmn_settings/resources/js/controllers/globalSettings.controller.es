@@ -73,7 +73,7 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope,
             positive: gettext('Delete'),
             negative: gettext('Cancel')
         }).then(() => {
-            pos = $scope.config.data.trusted_proxies.indexOf(proxy);
+            var pos = $scope.config.data.trusted_proxies.indexOf(proxy);
             $scope.config.data.trusted_proxies.splice(pos, 1);
             notify.success(gettext(`${proxy} removed`));
         });
@@ -86,7 +86,7 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope,
             positive: gettext('Delete'),
             negative: gettext('Cancel')
         }).then(() => {
-            pos = $scope.config.data.trusted_domains.indexOf(domain);
+            var pos = $scope.config.data.trusted_domains.indexOf(domain);
             $scope.config.data.trusted_domains.splice(pos, 1);
             notify.success(gettext(`${domain} removed`));
         });
@@ -123,7 +123,7 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope,
         }
     }
 
-    $scope.createNewServerCertificate = () =>
+    $scope.createNewServerCertificate = () => {
        messagebox.show({
           title: gettext('Self-signed certificate'),
           text: gettext('Generating a new certificate will void all existing client authentication certificates!'),
@@ -139,9 +139,65 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope,
              config.data.ssl.client_auth.certificates = [];
              $scope.save();
           }, (err) => notify.error(gettext('Certificate generation failed'), err.message));
-       })
-    ;
+       });
+    }
 
     $scope.restart = () => core.restart();
+
+    $scope.checkEdulution = () => {
+
+        $scope.edulutionStatus = {
+            api_installed: null,
+            api_running: null,
+            binduser_created: null,
+            binduser: null,
+            external_domain: window.location.hostname
+        }
+
+        $http.get('/api/lmn/edulution/api-status').then((res) => {
+            $scope.edulutionStatus["api_installed"] = res.data["api_installed"]
+            $scope.edulutionStatus["api_running"] = res.data["api_running"]
+        });
+        $http.get('/api/lmn/sophomorixUsers/bindusers/global').then((res) => {
+            angular.forEach(res.data, function(value, key) {
+                if (value.sAMAccountName == "edulutionui-binduser") {
+                    $scope.edulutionStatus["binduser_created"] = true;
+                    $scope.edulutionStatus["binduser"] = value;
+                    console.log(value)
+                }
+            });
+            if ($scope.edulutionStatus["binduser_created"] == null) {
+                $scope.edulutionStatus["binduser_created"] = false;
+            }
+        });
+    }
+
+    $scope.createEdulutionBinduser = () => {
+        $http.post('/api/lmn/sophomorixUsers/bindusers/global', {binduser: "edulutionui-binduser"}).then((res) => {
+            console.log(res.data);
+            $scope.checkEdulution();
+        });
+    }
+
+    $scope.generateEdulutionSetupToken = () => {
+        if($scope.edulutionStatus["binduser"] != null) {
+            $http.post('/api/lmn/edulution/generate', {
+                external_domain: $scope.edulutionStatus["external_domain"],
+                binduser_name: $scope.edulutionStatus["binduser"].sAMAccountName, 
+                binduser_dn: $scope.edulutionStatus["binduser"].DN, 
+            }).then((res) => {
+                console.log(res.data);
+                $scope.edulutionToken = res.data;
+            });
+        }        
+    }
+
+    $scope.copyEdulutionSetupToken = () => {
+        navigator.clipboard.writeText($scope.edulutionToken).then(() => {
+            notify.success("Copied to clipboard!");
+        }).catch(() => {
+            notify.error("Failed to copy!")
+        });
+    }
 });
  

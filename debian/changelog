@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.2.62) lmn72; urgency=medium
+
+  * For version purpose. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 07 Oct 2024 08:43:20 +0200
+
 linuxmuster-webui7 (7.2.61) lmn72; urgency=medium
 
   * [settings] Add tab for migration to Edulution (@hermanntoast) 

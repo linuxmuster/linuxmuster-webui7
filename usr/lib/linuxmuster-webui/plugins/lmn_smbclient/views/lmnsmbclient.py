@@ -274,6 +274,8 @@ class Handler(HttpPlugin):
                         smbpathdst = smbpathsrc.replace(src, dst)
                         smbclient.copyfile(smbpathsrc, smbpathdst)
         except (ValueError, SMBOSError, NotFound) as e:
+            if 'STATUS_DISK_FULL' in str(e):
+                raise EndpointError(_("Your quota is full, please free enough place in order to share these files again."))
             raise EndpointError(e)
 
     @post(r'/api/lmn/smbclient/rmdir') # TODO : bad method, should be delete

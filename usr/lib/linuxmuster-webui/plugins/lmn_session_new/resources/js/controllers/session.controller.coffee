@@ -448,11 +448,11 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
 
     $scope._share = (participant, items) ->
         share_path = "#{participant.homeDirectory}\\transfer\\#{identity.profile.sAMAccountName}"
+        # Fake Promise to create a real sequential mode
+        sharePromise = new Promise((resolve, reject) -> resolve())
         for item in items
-            return $scope.smbcopy_notify(item.path, share_path + '/' + item.name, item.name, participant.sAMAccountName )
-
-#        $q.all(promises).then () ->
-#            notify.success(gettext("Files shared!"))
+            await $scope.smbcopy_notify(item.path, share_path + '/' + item.name, item.name, participant.sAMAccountName )
+        return sharePromise
 
     $scope.shareUser = (participant) ->
         # participants is an array containing one or all participants

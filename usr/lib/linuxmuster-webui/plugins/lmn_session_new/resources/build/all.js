@@ -861,16 +861,19 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         return notify.success(gettext(`File ${name} shared to ${user}!`));
       });
     };
-    $scope._share = function(participant, items) {
-      var i, item, len, share_path;
+    $scope._share = async function(participant, items) {
+      var i, item, len, sharePromise, share_path;
       share_path = `${participant.homeDirectory}\\transfer\\${identity.profile.sAMAccountName}`;
+      // Fake Promise to create a real sequential mode
+      sharePromise = new Promise(function(resolve, reject) {
+        return resolve();
+      });
       for (i = 0, len = items.length; i < len; i++) {
         item = items[i];
-        return $scope.smbcopy_notify(item.path, share_path + '/' + item.name, item.name, participant.sAMAccountName);
+        await $scope.smbcopy_notify(item.path, share_path + '/' + item.name, item.name, participant.sAMAccountName);
       }
+      return sharePromise;
     };
-    //        $q.all(promises).then () ->
-    //            notify.success(gettext("Files shared!"))
     $scope.shareUser = function(participant) {
       var choose_path, print_path;
       // participants is an array containing one or all participants

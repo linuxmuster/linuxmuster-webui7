@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-01 23:12+0100\n"
-"PO-Revision-Date: 2024-01-11 17:56\n"
+"POT-Creation-Date: 2024-10-14 11:07+0200\n"
+"PO-Revision-Date: 2024-10-14 09:24\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -17,11 +17,15 @@ msgstr ""
 "X-Crowdin-File: /2.0/lmn_smbclient.po\n"
 "X-Crowdin-File-ID: 226\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/views/lmnsmbclient.py:586
+#: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/views/lmnsmbclient.py:278
+msgid "Your quota is full, please free enough place in order to share these files again."
+msgstr "Votre quota est plein, veuillez libérer suffisamment d'espace pour partager à nouveau ces fichiers."
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/views/lmnsmbclient.py:622
 msgid "Ticket successfully refreshed"
 msgstr "Ticket actualisé avec succès"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/views/lmnsmbclient.py:589
+#: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/views/lmnsmbclient.py:625
 msgid "Timeout while trying to get a kerberos ticket"
 msgstr "Délai d'attente écoulé en essayant d'obtenir un ticket kerberos"
 

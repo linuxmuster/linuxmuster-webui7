@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-01 23:12+0100\n"
-"PO-Revision-Date: 2024-01-01 22:19\n"
+"POT-Creation-Date: 2024-10-14 11:07+0200\n"
+"PO-Revision-Date: 2024-10-14 09:24\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -18,7 +18,7 @@ msgstr ""
 "X-Crowdin-File-ID: 108\n"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:29
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:48
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:51
 msgid "<i class=\"fa fa-asterisk\"></i> All users {{identity.profile.activeSchool}}"
 msgstr ""
 
@@ -138,8 +138,8 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/customPassword.modal.html:21
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.options.modal.html:81
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/result.modal.html:142
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:78
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:103
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:79
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:104
 msgid "Cancel"
 msgstr ""
 
@@ -421,7 +421,7 @@ msgstr ""
 msgid "Passwords per page:"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:60
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:66
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.options.modal.html:80
 msgid "Print"
 msgstr ""
@@ -792,55 +792,55 @@ msgstr ""
 msgid "Read custom fields values"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:63
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:88
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:64
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:89
 msgid "New value"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:65
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:66
 msgid "Value updated !"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:68
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:83
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:93
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:108
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:119
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:69
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:84
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:94
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:109
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:120
 msgid "Error, please verify the user and/or your values."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:75
-msgid "Remove custom field value"
-msgstr ""
-
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:76
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:101
-msgid "Do you really want to remove "
+msgid "Remove custom field value"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:77
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:102
+msgid "Do you really want to remove "
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:78
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:103
 msgid "OK"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:81
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:106
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:82
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:107
 msgid "Value removed !"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:90
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:91
 msgid "Value added !"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:100
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:101
 msgid "Remove proxy address"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:114
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:115
 msgid "New address"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:116
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/services/customFields.es:117
 msgid "Address added !"
 msgstr ""
 
@@ -1095,5 +1095,13 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/printPasswords.controller.coffee:72
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/printPasswords.controller.coffee:92
 msgid "It's not possible to print all users and a class at the same time."
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/printPasswords.controller.coffee:125
+msgid "Created password csv"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/printPasswords.controller.coffee:128
+msgid "Could not create password csv"
 msgstr ""
 

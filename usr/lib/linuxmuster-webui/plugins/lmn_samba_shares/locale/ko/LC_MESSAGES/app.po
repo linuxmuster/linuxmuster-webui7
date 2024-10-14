@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-09 13:04+0100\n"
-"PO-Revision-Date: 2023-11-30 22:10\n"
+"POT-Creation-Date: 2024-10-14 11:07+0200\n"
+"PO-Revision-Date: 2024-10-14 09:24\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -34,7 +34,7 @@ msgstr "적용하기"
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/properties.html:188
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:178
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:195
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:217
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:213
 msgid "Cancel"
 msgstr "취소"
 
@@ -70,7 +70,7 @@ msgstr "디렉토리"
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:102
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:177
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:194
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:216
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:212
 msgid "Delete"
 msgstr "삭제"
 
@@ -226,12 +226,12 @@ msgid "Do you really want to delete this file?"
 msgstr "정말로 이 파일을 제거할까요?"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:181
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:220
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:216
 msgid " deleted !"
 msgstr " 삭제됨!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:184
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:223
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:219
 msgid "Error during deleting : "
 msgstr "삭제하는 동안 에러 발생 : "
 
@@ -239,23 +239,23 @@ msgstr "삭제하는 동안 에러 발생 : "
 msgid "Delete selected items?"
 msgstr "선택한 항목을 삭제할까요?"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:215
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:211
 msgid "Do you really want to delete this directory?"
 msgstr "정말로 이 디렉토리를 제거할까요?"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:255
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:251
 msgid "Could not create file"
 msgstr "파일을 생성할 수 없습니다."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:275
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:271
 msgid "Could not create directory"
 msgstr "디렉토리를 만들 수 없습니다."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:283
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:279
 msgid "File not found, may be due to special chars in the file name."
 msgstr "파일을 찾을 수 없습니다. 아마도 파일 이름에 있는 특수 문자가 원인일 수 있습니다."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:308
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:304
 msgid "Uploaded "
 msgstr "업로드됨 "
 

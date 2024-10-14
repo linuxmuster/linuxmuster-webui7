@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-11 18:47+0100\n"
+"POT-Creation-Date: 2024-10-14 11:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -56,13 +56,13 @@ msgstr ""
 msgid "Linux Muster LDAP"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:405
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:441
 msgid ""
 "Minimal length is 7 characters. Use upper, lower and special characters or "
 "numbers. (e.g. Muster!)."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:435
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:471
 msgid "Linuxmuster LDAP user config"
 msgstr ""
 

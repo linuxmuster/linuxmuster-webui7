@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-09 13:04+0100\n"
-"PO-Revision-Date: 2024-01-11 17:56\n"
+"POT-Creation-Date: 2024-10-14 11:07+0200\n"
+"PO-Revision-Date: 2024-10-14 09:24\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -34,7 +34,7 @@ msgstr "Übernehmen"
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/properties.html:188
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:178
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:195
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:217
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:213
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -70,7 +70,7 @@ msgstr "VERZEICHNIS"
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/partial/index.html:102
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:177
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:194
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:216
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:212
 msgid "Delete"
 msgstr "Löschen"
 
@@ -226,12 +226,12 @@ msgid "Do you really want to delete this file?"
 msgstr "Möchten Sie diese Datei wirklich löschen?"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:181
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:220
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:216
 msgid " deleted !"
 msgstr " gelöscht!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:184
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:223
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:219
 msgid "Error during deleting : "
 msgstr "Fehler beim Löschen : "
 
@@ -239,23 +239,23 @@ msgstr "Fehler beim Löschen : "
 msgid "Delete selected items?"
 msgstr "Ausgewählte Elemente löschen?"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:215
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:211
 msgid "Do you really want to delete this directory?"
 msgstr "Möchten Sie dieses Verzeichnis wirklich löschen?"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:255
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:251
 msgid "Could not create file"
 msgstr "Datei konnte nicht erstellt werden"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:275
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:271
 msgid "Could not create directory"
 msgstr "Verzeichnis konnte nicht erstellt werden"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:283
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:279
 msgid "File not found, may be due to special chars in the file name."
 msgstr "Datei nicht gefunden, möglicherweise aufgrund von Sonderzeichen im Dateinamen."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:308
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_shares/resources/js/controllers/index.controller.es:304
 msgid "Uploaded "
 msgstr "Hochgeladen "
 

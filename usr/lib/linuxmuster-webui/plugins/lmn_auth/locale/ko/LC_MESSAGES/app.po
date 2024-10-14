@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-01 15:32+0200\n"
+"POT-Creation-Date: 2024-10-14 11:24+0200\n"
 "PO-Revision-Date: 2023-11-30 22:10\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
@@ -30,8 +30,12 @@ msgid "Current password"
 msgstr "현재 비밀번호"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:4
-msgid "Minimal length is 7 characters. Use upper, lower and special characters or numbers. (e.g. Muster!)"
-msgstr "최소 길이는 7글자입니다. 대문자, 소문자와 특수문자 또는 숫자를 사용하시오.(예시. Muster!)"
+msgid ""
+"Minimal length is 7 characters. Use upper, lower and special characters or "
+"numbers. (e.g. Muster!)"
+msgstr ""
+"최소 길이는 7글자입니다. 대문자, 소문자와 특수문자 또는 숫자를 사용하시오.(예"
+"시. Muster!)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:21
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:26
@@ -54,11 +58,15 @@ msgstr "유효한 문자는 : a-z A-Z 0-9 ?!§+-@#$%&amp;*( )[ ]{ } 입니다."
 msgid "Linux Muster LDAP"
 msgstr "리눅스 머스터 LDAP"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:364
-msgid "Minimal length is 7 characters. Use upper, lower and special characters or numbers. (e.g. Muster!)."
-msgstr "최소 길이는 7글자입니다. 대문자, 소문자와 특수문자 또는 숫자를 사용하시오.(예시. Muster!)."
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:441
+msgid ""
+"Minimal length is 7 characters. Use upper, lower and special characters or "
+"numbers. (e.g. Muster!)."
+msgstr ""
+"최소 길이는 7글자입니다. 대문자, 소문자와 특수문자 또는 숫자를 사용하시오.(예"
+"시. Muster!)."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:394
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:471
 msgid "Linuxmuster LDAP user config"
 msgstr "리눅스 머스터 LDAP 사용자 구성"
 
@@ -71,6 +79,6 @@ msgid "Password changed"
 msgstr "비밀번호가 변경되었습니다"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:24
-msgid "Password change failed"
+#, fuzzy
+msgid "Password change failed: "
 msgstr "비밀번호 변경에 실패했습니다"
-

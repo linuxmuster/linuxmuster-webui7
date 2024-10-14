@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-25 17:48+0100\n"
-"PO-Revision-Date: 2024-01-11 17:56\n"
+"POT-Creation-Date: 2024-10-14 11:07+0200\n"
+"PO-Revision-Date: 2024-10-14 09:24\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -205,6 +205,14 @@ msgstr "laufende Prozesse"
 #: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:101
 msgid "seconds!"
 msgstr "Sekunden!"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/main.py:31
+msgid "View actual status and config of LINBO devices"
+msgstr "Aktuellen Status und Konfiguration von LINBO-Geräten anzeigen"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/main.py:36
+msgid "Manage LINBO devices"
+msgstr "LINBO-Geräte verwalten"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/js/controllers/index.controller.es:2
 msgid "Device Manager"

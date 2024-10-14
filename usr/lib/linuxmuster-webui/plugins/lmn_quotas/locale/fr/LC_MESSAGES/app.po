@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-09 13:04+0100\n"
-"PO-Revision-Date: 2024-01-11 17:56\n"
+"POT-Creation-Date: 2024-10-14 11:07+0200\n"
+"PO-Revision-Date: 2024-10-14 09:24\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -96,8 +96,8 @@ msgid "Search & add user"
 msgstr "Rechercher & ajouter utilisateur"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:173
-msgid "Size (MiB)"
-msgstr "Taille (MB)"
+msgid "Size"
+msgstr "Taille"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:35
 msgid "Students"

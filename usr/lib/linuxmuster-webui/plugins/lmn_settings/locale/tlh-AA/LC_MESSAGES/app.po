@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ajenti\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-01 15:32+0200\n"
+"POT-Creation-Date: 2024-10-14 11:07+0200\n"
 "PO-Revision-Date: 2016-05-21 17:19-0400\n"
 "Last-Translator: eugenepankov <john.pankov@gmail.com>\n"
 "Language-Team: Klingon\n"
@@ -45,6 +45,18 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:112
 msgid "Begin lease range"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:236
+msgid "Check if API is installed"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:250
+msgid "Check if API is running"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:264
+msgid "Check if a Bind-User exists for edulution"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:530
@@ -96,6 +108,10 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:113
 msgid "End lease range"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:278
+msgid "External Domain"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:120
@@ -262,8 +278,8 @@ msgstr ""
 msgid "Replace slash(/) in classname by hypen(-)"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:226
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:229
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:304
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:307
 msgid "Restart WebUI"
 msgstr ""
 
@@ -299,8 +315,8 @@ msgstr ""
 msgid "SSL certificate file"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:225
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:228
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:303
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:306
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:805
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:806
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:807
@@ -312,7 +328,7 @@ msgstr ""
 msgid "Save &amp; Apply Quota"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:227
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:305
 msgid "Save &amp; Apply Subnets"
 msgstr ""
 
@@ -387,6 +403,14 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:209
 msgid "Template email reset"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:289
+msgid ""
+"The server must be accessible from the edulution server via port <b>443 "
+"(https)</b>, port <b>8001 (API)</b> and port <b>389 (LDAP)</b> or <b>636 "
+"(LDAPs)</b>. \n"
+"                    Ask your IT-Administrator if you need support here!"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:165

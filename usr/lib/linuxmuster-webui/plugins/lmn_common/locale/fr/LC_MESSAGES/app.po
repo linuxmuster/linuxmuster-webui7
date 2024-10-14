@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-23 15:10+0100\n"
-"PO-Revision-Date: 2024-01-11 17:56\n"
+"POT-Creation-Date: 2024-10-14 11:24+0200\n"
+"PO-Revision-Date: 2024-10-14 09:24\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Crowdin-File: /2.0/lmn_common.po\n"
 "X-Crowdin-File-ID: 96\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:160
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:164
 msgid "A bootstrap error has occured"
 msgstr "Une erreur « bootstrap » est survenue"
 
@@ -35,6 +35,10 @@ msgstr "Annuler"
 msgid "Close"
 msgstr "Fermer"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/schoolswitcher.html:14
+msgid "Current"
+msgstr ""
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/lmFileBackupsDiff.modal.html:2
 msgid "Differences"
 msgstr "Différences"
@@ -47,7 +51,7 @@ msgstr "Télécharger le CSV"
 msgid "Drop a CSV file here to import"
 msgstr "Dépose un fichier CSV ici pour l'importer"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:143
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:147
 msgid "Enter"
 msgstr "Entrer"
 
@@ -63,15 +67,15 @@ msgstr "Aucune copie de sauvegarde existante"
 msgid "No differences detected"
 msgstr "Aucune différence détectée"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:184
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:188
 msgid "OK"
 msgstr "OK"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:163
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:167
 msgid "Please see browser console"
 msgstr "Veuillez consulter la console JavaScript du navigateur"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:139
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:143
 msgid "Quick search"
 msgstr "Recherche rapide"
 
@@ -83,15 +87,31 @@ msgstr "Sauvegarder"
 msgid "School Console"
 msgstr "Webconsole"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/schoolswitcher.html:10
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/controllers/schoolswitcher.controller.es:9
+msgid "Schoolswitcher"
+msgstr ""
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:110
 msgid "Session time : {{ counter[0] }}:{{ counter[1] }}:{{ counter[2] }}"
-msgstr "Durée de la session : {{ counter[0] }}:{{ counter[1] }}:{{ counter[2] }}"
+msgstr ""
+"Durée de la session : {{ counter[0] }}:{{ counter[1] }}:{{ counter[2] }}"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:90
 msgid "TFA"
 msgstr "A2F"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/lmnfile.py:166
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/schoolswitcher.html:4
+msgid ""
+"This is not a multi-school setup or you are not allowed to see another "
+"school!"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:113
+msgid "change"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/lmnfile.py:178
 msgid "Access refused."
 msgstr "Accès refusé."
 
@@ -188,59 +208,68 @@ msgid "Copying files: %s."
 msgstr "Copie des fichiers : %s."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:13
-msgid "Passwords must contain at least one lowercase, one uppercase, one special char or number, and at least 7 chars"
-msgstr "Les mots de passe doivent contenir au moins un minuscule, un majuscule, un caractère spécial ou un chiffre, et au moins 7 caractères"
+msgid ""
+"Passwords must contain at least one lowercase, one uppercase, one special "
+"char or number, and at least 7 chars"
+msgstr ""
+"Les mots de passe doivent contenir au moins un minuscule, un majuscule, un "
+"caractère spécial ou un chiffre, et au moins 7 caractères"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:22
-msgid "Password is not valid. Password can only contains a-zA-Z0-9?!@#§+-$%&*{}()]["
-msgstr "Le mot de passe n'est pas valide. Le mot de passe ne peut contenir que a-zA-Z0-9?!@#§+-$%&*{}()]["
+msgid ""
+"Password is not valid. Password can only contains a-zA-Z0-9?!@#§+-$%&*{}()]["
+msgstr ""
+"Le mot de passe n'est pas valide. Le mot de passe ne peut contenir que a-zA-"
+"Z0-9?!@#§+-$%&*{}()]["
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:42
 msgid " can only contain lowercase chars or numbers"
 msgstr " ne peut contenir que des minuscules ou des chiffres"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:51
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:52
 msgid " can only contain alphanumeric chars or _+-"
 msgstr " ne peut contenir que des caractères alphanumériques ou _+-"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:60
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:61
 msgid " can only contain alphanumeric chars or -"
 msgstr " ne peut contenir que des caractères alphanumériques ou -"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:69
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:70
 msgid " can only contain alphanumeric chars or -, space and _"
 msgstr " ne peut contenir que des caractères alphanumériques ou -, espace et _"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:78
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:79
 msgid " can only contain alphanumeric chars"
 msgstr " ne peut contenir que des caractères alphanumériques"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:87
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:88
 msgid " is not a valid number"
 msgstr " n'est pas un nombre valide"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:98
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:99
 msgid " is not a valid date"
 msgstr " n'est pas une date valide"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:108
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:136
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:109
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:137
 msgid " is not valid or duplicated"
 msgstr " n'est pas valide ou en double"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:145
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:146
 msgid " does not contain valid chars, is duplicated or too long (>15 chars)"
-msgstr " ne contient pas de caractères valides, est dupliqué ou trop long (>15 caractères)"
+msgstr ""
+" ne contient pas de caractères valides, est dupliqué ou trop long (>15 "
+"caractères)"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:156
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:157
 msgid " does not contain valid chars or is duplicated"
 msgstr " ne contient pas de caractères valides ou est en double"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:169
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:170
 msgid " is not a valid role"
 msgstr " n'est pas un rôle valide"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:192
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:193
 msgid " is not a valid domain"
 msgstr " n'est pas un domaine valide"
 
@@ -259,4 +288,3 @@ msgstr "Voulez-vous vraiment supprimer"
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/lmFileBackups.coffee:83
 msgid "Confirmation"
 msgstr "Confirmation"
-

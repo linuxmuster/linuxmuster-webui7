@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-01 15:32+0200\n"
-"PO-Revision-Date: 2024-01-11 17:56\n"
+"POT-Creation-Date: 2024-10-14 11:07+0200\n"
+"PO-Revision-Date: 2024-10-14 09:24\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -46,6 +46,18 @@ msgstr "Description de l'administrateur"
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:112
 msgid "Begin lease range"
 msgstr "Début plage DHCP"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:236
+msgid "Check if API is installed"
+msgstr "Vérifier si l'API est installée"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:250
+msgid "Check if API is running"
+msgstr "Vérifier si l'API est en cours d'exécution"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:264
+msgid "Check if a Bind-User exists for edulution"
+msgstr "Vérifier si un Bind-User existe pour la planification"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:530
 msgid "Choose a role to configure"
@@ -97,6 +109,10 @@ msgstr "Fin"
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:113
 msgid "End lease range"
 msgstr "Fin plage DHCP"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:278
+msgid "External Domain"
+msgstr "Domaine externe"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:120
 msgid "Firstname Chars"
@@ -252,8 +268,8 @@ msgstr "Suppression après le départ (jours)"
 msgid "Replace slash(/) in classname by hypen(-)"
 msgstr "Remplacer slash(/) dans le nom de classe par un trait d'union(-)"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:226
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:229
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:304
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:307
 msgid "Restart WebUI"
 msgstr "Redémarrer WebUI"
 
@@ -289,8 +305,8 @@ msgstr "Fichier de certificat SSL FQDN"
 msgid "SSL certificate file"
 msgstr "Certificat SSL"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:225
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:228
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:303
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:306
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:805
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:806
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:807
@@ -302,7 +318,7 @@ msgstr "Sauvegarder"
 msgid "Save &amp; Apply Quota"
 msgstr "Enregistrer &amp; Appliquer le quota"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:227
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:305
 msgid "Save &amp; Apply Subnets"
 msgstr "Enregistrer &amp; Appliquer les sous-réseaux"
 
@@ -378,6 +394,12 @@ msgstr "Professeur"
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:209
 msgid "Template email reset"
 msgstr "Modèle d'email de réinitialisation de mot de passe"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:289
+msgid "The server must be accessible from the edulution server via port <b>443 (https)</b>, port <b>8001 (API)</b> and port <b>389 (LDAP)</b> or <b>636 (LDAPs)</b>. \n"
+"                    Ask your IT-Administrator if you need support here!"
+msgstr "Le serveur doit être accessible par le serveur edulution via le port <b>443 (https)</b>, le port <b>8001 (API)</b> et le  port <b>389 (LDAP)</b> ou <b>636 (LDAPs)</b>. \n"
+"                    Demandez à votre administrateur si vous avez besoin d'aide!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:165
 msgid "The smtp.yml config file seems to be empty. Currently it's ont possible to send emails with this configuration."

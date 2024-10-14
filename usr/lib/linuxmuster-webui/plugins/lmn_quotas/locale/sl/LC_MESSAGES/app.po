@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ajenti\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-09 13:04+0100\n"
+"POT-Creation-Date: 2024-10-14 11:07+0200\n"
 "PO-Revision-Date: 2016-04-29 05:23-0400\n"
 "Last-Translator: eugenepankov <john.pankov@gmail.com>\n"
 "Language-Team: Slovenian\n"
@@ -96,7 +96,7 @@ msgid "Search & add user"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:173
-msgid "Size (MiB)"
+msgid "Size"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:35

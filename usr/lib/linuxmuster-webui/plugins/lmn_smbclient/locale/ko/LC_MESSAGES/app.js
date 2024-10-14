@@ -1,1 +1,1 @@
-{"": "", "Ticket successfully refreshed": "", "Timeout while trying to get a kerberos ticket": "", "Uploaded ": "", " moved!": " \uc774\ub3d9 \uc644\ub8cc!", " copied!": " \ubcf5\uc0ac\ub428!"}
+{"": "", "Your quota is full, please free enough place in order to share these files again.": "", "Ticket successfully refreshed": "", "Timeout while trying to get a kerberos ticket": "", "Uploaded ": "", " moved!": " \uc774\ub3d9 \uc644\ub8cc!", " copied!": " \ubcf5\uc0ac\ub428!"}

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-01 15:32+0200\n"
+"POT-Creation-Date: 2024-10-14 11:24+0200\n"
 "PO-Revision-Date: 2023-11-30 22:10\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
@@ -10,7 +10,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
+"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 "
+"&& n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 "
+"&& n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
 "X-Crowdin-Project: linuxmusternet\n"
 "X-Crowdin-Project-ID: 325271\n"
 "X-Crowdin-Language: ru\n"
@@ -30,8 +32,12 @@ msgid "Current password"
 msgstr "Текущий пароль"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:4
-msgid "Minimal length is 7 characters. Use upper, lower and special characters or numbers. (e.g. Muster!)"
-msgstr "Минимальная длина - 7 символов. Используйте верхние, нижние и специальные символы или цифры (например, Muster!)"
+msgid ""
+"Minimal length is 7 characters. Use upper, lower and special characters or "
+"numbers. (e.g. Muster!)"
+msgstr ""
+"Минимальная длина - 7 символов. Используйте верхние, нижние и специальные "
+"символы или цифры (например, Muster!)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:21
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:26
@@ -54,11 +60,13 @@ msgstr ""
 msgid "Linux Muster LDAP"
 msgstr "Linux Muster LDAP"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:364
-msgid "Minimal length is 7 characters. Use upper, lower and special characters or numbers. (e.g. Muster!)."
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:441
+msgid ""
+"Minimal length is 7 characters. Use upper, lower and special characters or "
+"numbers. (e.g. Muster!)."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:394
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:471
 msgid "Linuxmuster LDAP user config"
 msgstr ""
 
@@ -71,6 +79,6 @@ msgid "Password changed"
 msgstr "Пароль изменён"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:24
-msgid "Password change failed"
+#, fuzzy
+msgid "Password change failed: "
 msgstr "Не удалось изменить пароль"
-

@@ -1,1 +1,1 @@
-{"": "", "Ticket successfully refreshed": "", "Timeout while trying to get a kerberos ticket": "", "Uploaded ": "", " moved!": "", " copied!": ""}
+{"": "", "Your quota is full, please free enough place in order to share these files again.": "", "Ticket successfully refreshed": "", "Timeout while trying to get a kerberos ticket": "", "Uploaded ": "", " moved!": "", " copied!": ""}

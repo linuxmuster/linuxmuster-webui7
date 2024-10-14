@@ -228,7 +228,7 @@
                 </div>
                 <div ng:if="participant.files_error != 'NOTJOINED' && participant.files_error">
                     <a style="inline-block" class="btn btn-danger" ng:click="fixMembership()">
-                        <span translate>{{participant.files_error}}</span>
+                        <span>{{participant.files_error}}</span>
                     </a>
                 </div>
                 <div ng:if="participant.files_error == ''">

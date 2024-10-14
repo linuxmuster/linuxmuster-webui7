@@ -1,3 +1,12 @@
+linuxmuster-webui7 (7.2.63) lmn72; urgency=medium
+
+  * Update translations
+  * Update to latest smbprotocol
+  * [session] Handle full quota when sharing files 
+  * [session] Await response from server for each copy 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 14 Oct 2024 18:16:31 +0200
+
 linuxmuster-webui7 (7.2.62) lmn72; urgency=medium
 
   * For version purpose. 

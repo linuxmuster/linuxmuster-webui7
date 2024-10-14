@@ -26,6 +26,6 @@ requests
 reconfigure
 scrypt
 simplejson==3.17.0
-smbprotocol==1.9.0
+smbprotocol==1.14.0
 unicodecsv==0.14.1
 xmltodict

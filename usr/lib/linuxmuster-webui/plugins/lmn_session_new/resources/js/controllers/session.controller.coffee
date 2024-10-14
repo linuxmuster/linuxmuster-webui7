@@ -443,13 +443,13 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         ).result
 
     $scope.smbcopy_notify = (src, dst, name, user) ->
-       smbclient.copy(src, dst, notify_success=false).then () ->
+       return smbclient.copy(src, dst, notify_success=false).then () ->
             notify.success(gettext("File #{name} shared to #{user}!"))
 
     $scope._share = (participant, items) ->
         share_path = "#{participant.homeDirectory}\\transfer\\#{identity.profile.sAMAccountName}"
         for item in items
-            $scope.smbcopy_notify(item.path, share_path + '/' + item.name, item.name, participant.sAMAccountName )
+            return $scope.smbcopy_notify(item.path, share_path + '/' + item.name, item.name, participant.sAMAccountName )
 
 #        $q.all(promises).then () ->
 #            notify.success(gettext("Files shared!"))
@@ -469,7 +469,7 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
             if result.response is 'accept'
                 for participant in $scope.session.members
                     if $scope.isStudent(participant)
-                        $scope._share(participant, result.items)
+                        await $scope._share(participant, result.items)
 
     $scope._leading_zero = (int) ->
         if "#{int}".length == 1

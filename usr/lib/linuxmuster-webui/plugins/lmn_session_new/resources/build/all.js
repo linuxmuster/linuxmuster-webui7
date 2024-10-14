@@ -862,14 +862,12 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       });
     };
     $scope._share = function(participant, items) {
-      var i, item, len, results, share_path;
+      var i, item, len, share_path;
       share_path = `${participant.homeDirectory}\\transfer\\${identity.profile.sAMAccountName}`;
-      results = [];
       for (i = 0, len = items.length; i < len; i++) {
         item = items[i];
-        results.push($scope.smbcopy_notify(item.path, share_path + '/' + item.name, item.name, participant.sAMAccountName));
+        return $scope.smbcopy_notify(item.path, share_path + '/' + item.name, item.name, participant.sAMAccountName);
       }
-      return results;
     };
     //        $q.all(promises).then () ->
     //            notify.success(gettext("Files shared!"))
@@ -888,7 +886,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       var choose_path, print_path;
       choose_path = `${identity.profile.homeDirectory}\\transfer`;
       print_path = "transfer";
-      return $scope.choose_items(choose_path, print_path, 'share', 'all').then(function(result) {
+      return $scope.choose_items(choose_path, print_path, 'share', 'all').then(async function(result) {
         var i, len, participant, ref, results;
         if (result.response === 'accept') {
           ref = $scope.session.members;
@@ -896,7 +894,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
           for (i = 0, len = ref.length; i < len; i++) {
             participant = ref[i];
             if ($scope.isStudent(participant)) {
-              results.push($scope._share(participant, result.items));
+              results.push((await $scope._share(participant, result.items)));
             } else {
               results.push(void 0);
             }

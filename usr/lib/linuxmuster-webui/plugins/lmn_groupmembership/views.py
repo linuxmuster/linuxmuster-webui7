@@ -95,6 +95,7 @@ class Handler(HttpPlugin):
         user_profile = AuthenticationService.get(self.context).get_provider().get_profile(username)
 
         schoolclasses = self.context.ldapreader.schoolget('/schoolclasses')
+        to_remove = []
 
         for schoolclass in schoolclasses:
             member = schoolclass['cn'] in user_profile['schoolclasses'] or user_profile['isAdmin']
@@ -105,6 +106,11 @@ class Handler(HttpPlugin):
                 schoolclass['admin'] = username in schoolclass['sophomorixAdmins'] or user_profile['isAdmin']
                 schoolclass['members'] = schoolclass['sophomorixMembers']
                 schoolclass['type'] = 'schoolclass'
+            else:
+                to_remove.append(schoolclass)
+
+        for schoolclass in to_remove:
+            schoolclasses.remove(schoolclass)
 
         return schoolclasses
 

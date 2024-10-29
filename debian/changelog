@@ -1,3 +1,10 @@
+linuxmuster-webui7 (7.2.64) lmn72; urgency=medium
+
+  * Pin old setuptools version for install compatibility
+  * [groupmembership] Remove hidden schoolclasses from view
+ 
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Tue, 29 Oct 2024 09:41:12 +0100
+
 linuxmuster-webui7 (7.2.63) lmn72; urgency=medium
 
   * Update translations

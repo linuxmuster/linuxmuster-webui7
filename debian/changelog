@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.2.66) lmn72; urgency=medium
+
+  * No upgrade for setuptools in postinst. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 02 Nov 2024 11:54:17 +0100
+
 linuxmuster-webui7 (7.2.65) lmn72; urgency=medium
 
   * Typo error. 

@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.2.67) lmn72; urgency=medium
+
+  * Lower requirements for upgrade compatibility. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 10 Nov 2024 23:34:12 +0100
+
 linuxmuster-webui7 (7.2.66) lmn72; urgency=medium
 
   * No upgrade for setuptools in postinst. 

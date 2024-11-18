@@ -1,3 +1,17 @@
+linuxmuster-webui7 (7.2.68) lmn72; urgency=medium
+
+  * [common] Add sophomorix version
+  * [common] Load samba config with right delimiter (thanks @hermanntoast)
+  * [device_manager] Fix Popen call (thanks @hermanntoast)
+  * [devices] Better button place to add device
+  * [devices] Modal window to add device 
+  * [settings] Add linuxmuster.net package's version
+  * [users] Better button place to add user
+  * [users] Modal window to add user 
+  * [users] Desired login specified instead of login
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 18 Nov 2024 15:31:25 +0100
+
 linuxmuster-webui7 (7.2.67) lmn72; urgency=medium
 
   * Lower requirements for upgrade compatibility. 

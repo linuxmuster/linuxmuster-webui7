@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-14 11:07+0200\n"
-"PO-Revision-Date: 2024-10-14 09:24\n"
+"POT-Creation-Date: 2024-11-18 15:15+0100\n"
+"PO-Revision-Date: 2024-11-18 14:21\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -47,15 +47,15 @@ msgstr "Admin-Beschreibung"
 msgid "Begin lease range"
 msgstr "Lease-Bereich Beginn"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:236
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:235
 msgid "Check if API is installed"
 msgstr "Prüfen, ob API installiert ist"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:250
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:249
 msgid "Check if API is running"
 msgstr "Überprüfen Sie, ob die API läuft"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:264
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:263
 msgid "Check if a Bind-User exists for edulution"
 msgstr "Überprüfen Sie, ob ein Bind-Benutzer für die Planung vorhanden ist"
 
@@ -110,7 +110,7 @@ msgstr "Ende"
 msgid "End lease range"
 msgstr "Lease-Bereich Ende"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:278
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:277
 msgid "External Domain"
 msgstr "Externe Domain"
 
@@ -202,6 +202,10 @@ msgstr "Neuer Proxy"
 msgid "No holidays found!"
 msgstr "Keine Feiertage gefunden!"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:298
+msgid "Package"
+msgstr "Paket"
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:134
 msgid "Password Length"
 msgstr "Passwortlänge"
@@ -268,8 +272,8 @@ msgstr "Tage bis zum endgültigen Löschen"
 msgid "Replace slash(/) in classname by hypen(-)"
 msgstr "Ersetze Schrägstrich(/) in Klassenname durch Bindestrich(-)"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:304
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:307
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:313
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:316
 msgid "Restart WebUI"
 msgstr "Schulkonsole neu starten"
 
@@ -305,8 +309,8 @@ msgstr "SSL-FQDN-Zertifikatsdatei"
 msgid "SSL certificate file"
 msgstr "SSL-Zertifikats-Datei"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:303
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:306
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:312
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:315
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:805
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:806
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:807
@@ -318,7 +322,7 @@ msgstr "Speichern"
 msgid "Save &amp; Apply Quota"
 msgstr "Speichern &amp; Quota übernehmen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:305
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:314
 msgid "Save &amp; Apply Subnets"
 msgstr "Speichern &amp; Subnetze übernehmen"
 
@@ -395,7 +399,7 @@ msgstr "Lehrer"
 msgid "Template email reset"
 msgstr "E-Mail Vorlage für Passwortreset"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:289
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:288
 msgid "The server must be accessible from the edulution server via port <b>443 (https)</b>, port <b>8001 (API)</b> and port <b>389 (LDAP)</b> or <b>636 (LDAPs)</b>. \n"
 "                    Ask your IT-Administrator if you need support here!"
 msgstr "Der Server muss vom Edulutionsserver über Port <b>443 (https)</b>erreichbar sein, Port <b>8001 (API)</b> und Port <b>389 (LDAP)</b> oder <b>636 (LDAPs)</b>. \n"
@@ -441,6 +445,10 @@ msgstr "Benutzer kann bearbeiten"
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:82
 msgid "Username and Passwords"
 msgstr "Benutzername und Passwörter"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:299
+msgid "Version"
+msgstr "Version"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:446
 msgid "Webmail"

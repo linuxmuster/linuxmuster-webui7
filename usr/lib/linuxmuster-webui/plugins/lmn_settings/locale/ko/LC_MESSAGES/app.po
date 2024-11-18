@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-14 11:07+0200\n"
-"PO-Revision-Date: 2024-10-14 09:24\n"
+"POT-Creation-Date: 2024-11-18 15:15+0100\n"
+"PO-Revision-Date: 2024-11-18 14:21\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -46,15 +46,15 @@ msgstr "관리자 서술"
 msgid "Begin lease range"
 msgstr "임대 범위 시작"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:236
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:235
 msgid "Check if API is installed"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:250
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:249
 msgid "Check if API is running"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:264
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:263
 msgid "Check if a Bind-User exists for edulution"
 msgstr ""
 
@@ -109,7 +109,7 @@ msgstr "끝"
 msgid "End lease range"
 msgstr "임대 범위 종료"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:278
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:277
 msgid "External Domain"
 msgstr ""
 
@@ -201,6 +201,10 @@ msgstr "새로운 프록시"
 msgid "No holidays found!"
 msgstr "공휴일을 찾을 수 없습니다!"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:298
+msgid "Package"
+msgstr ""
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:134
 msgid "Password Length"
 msgstr "비밀번호 길이"
@@ -267,8 +271,8 @@ msgstr "도착 후에 제거(일)"
 msgid "Replace slash(/) in classname by hypen(-)"
 msgstr "학급 이름의 슬래시(/) 를 하이픈(-) 으로 대체하세요"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:304
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:307
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:313
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:316
 msgid "Restart WebUI"
 msgstr "WebUI를 재시작하세요"
 
@@ -304,8 +308,8 @@ msgstr "SSL FQDN 인증서 파일"
 msgid "SSL certificate file"
 msgstr "SSL 인증서 파일"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:303
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:306
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:312
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:315
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:805
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:806
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:807
@@ -317,7 +321,7 @@ msgstr "저장"
 msgid "Save &amp; Apply Quota"
 msgstr "&amp; 저장 후 할당량 적용"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:305
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:314
 msgid "Save &amp; Apply Subnets"
 msgstr "&amp; 저장 후 서브넷 적용"
 
@@ -394,7 +398,7 @@ msgstr "교사"
 msgid "Template email reset"
 msgstr "템플릿 이메일 재설정"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:289
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:288
 msgid "The server must be accessible from the edulution server via port <b>443 (https)</b>, port <b>8001 (API)</b> and port <b>389 (LDAP)</b> or <b>636 (LDAPs)</b>. \n"
 "                    Ask your IT-Administrator if you need support here!"
 msgstr ""
@@ -439,6 +443,10 @@ msgstr "유저가 수정 가능"
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:82
 msgid "Username and Passwords"
 msgstr "사용자 이름 및 암호"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:299
+msgid "Version"
+msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:446
 msgid "Webmail"

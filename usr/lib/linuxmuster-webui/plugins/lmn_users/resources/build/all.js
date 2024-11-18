@@ -2246,6 +2246,7 @@
     $scope.students = '';
     $scope.extrastudents = '';
     $scope.courses = '';
+    $scope.csvlogin_notldap = gettext("This entry is directly read from the CSV file and could differ from the actual login of the user (saved in LDAP)");
     $scope.students_add = function() {
       $scope.newUser = {
         _isNew: true,

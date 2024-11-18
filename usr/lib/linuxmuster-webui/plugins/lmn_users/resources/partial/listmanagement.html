@@ -194,7 +194,7 @@
                         {{field.name | translate}}
                         <i  ng:show="id == 'login'"
                             class="fas fa-question-circle"
-                            title="This entry is directly read from the CSV file and could differ from the actual login of the user (saved in LDAP)">
+                            title="{{csvlogin_notldap | translate}}">
                         </i>
                     </th>
                     <th></th>
@@ -319,7 +319,7 @@
                         {{field.name | translate}}
                         <i  ng:show="id == 'login'"
                             class="fas fa-question-circle"
-                            title="This entry is directly read from the CSV file and could differ from the actual login of the user (saved in LDAP)">
+                            title="{{csvlogin_notldap | translate}}">
                         </i>
                     </th>
                     <th></th>

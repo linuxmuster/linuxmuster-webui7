@@ -10,345 +10,346 @@
     
     <uib:tabset active="activeTab">
     <uib:tab heading="{{'Students'|translate}}" ng-click="getstudents()">
-    <br/>
+        <br/>
 
-    <progress-spinner ng:show="students == null"></progress-spinner>
-    <div ng:show="students != null"~
-             flow-init='{target: "/api/filesystem/upload", chunkSize: 1024 * 1024}'
-             flow-files-submitted="onUploadBegin($flow)"
-             ng-style="style">
-        <div class="input-group">
-            <input ng:model="students_filter" type="search" autofocus class="form-control" placeholder="Filter" />
-            <div uib-dropdown class="input-group-btn">
-                <button class="btn btn-default" uib-dropdown-toggle>
-                    <i class="fa fa-sort-amount-asc"></i> {{sort.name}}
-                    <span class="caret"></span>
+        <progress-spinner ng:show="students == null"></progress-spinner>
+        <div ng:show="students != null"~
+                 flow-init='{target: "/api/filesystem/upload", chunkSize: 1024 * 1024}'
+                 flow-files-submitted="onUploadBegin($flow)"
+                 ng-style="style">
+            <div>
+                <button class="btn btn-success pull-right" ng:click="students_add()">
+                    <i class="fa fa-plus"></i> <span translate>Add a student</span>
                 </button>
-                <ul uib-dropdown-menu class="dropdown-menu-right" style="width:150px">
-                    <li ng:repeat="sort in students_sorts">
-                        <a ng:click="$parent.sort = sort">
+
+                <div class="input-group">
+                    <input ng:model="students_filter" type="search" autofocus class="form-control" placeholder="Filter" />
+                    <div uib-dropdown class="input-group-btn">
+                        <button class="btn btn-default" uib-dropdown-toggle>
                             <i class="fa fa-sort-amount-asc"></i> {{sort.name}}
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div uib-dropdown class="input-group-btn" auto-close="outsideClick">
-                <button class="btn btn-default" uib-dropdown-toggle>
-                    <i class="fa fa-ellipsis-h"></i> <span translate>Fields</span> <span class="caret"></span>
-                </button>
-                <ul uib-dropdown-menu class="dropdown-menu-right" style="width:150px">
-                    <li ng:repeat="(id, field) in students_fields">
-                        <span checkbox ng:model="field.visible" text="{{field.name}}"></span>
-                    </li>
-                </ul>
+                            <span class="caret"></span>
+                        </button>
+                        <ul uib-dropdown-menu class="dropdown-menu-right" style="width:150px">
+                            <li ng:repeat="sort in students_sorts">
+                                <a ng:click="$parent.sort = sort">
+                                    <i class="fa fa-sort-amount-asc"></i> {{sort.name}}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div uib-dropdown class="input-group-btn" auto-close="outsideClick">
+                        <button class="btn btn-default" uib-dropdown-toggle>
+                            <i class="fa fa-ellipsis-h"></i> <span translate>Fields</span> <span class="caret"></span>
+                        </button>
+                        <ul uib-dropdown-menu class="dropdown-menu-right" style="width:150px">
+                            <li ng:repeat="(id, field) in students_fields">
+                                <span checkbox ng:model="field.visible" text="{{field.name}}"></span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div uib-dropdown class="input-group-btn" auto-close="outsideClick">
+                        <button class="btn btn-default" uib-dropdown-toggle>
+                            <i class="fa fa-list-ol"></i> {{'Rows'|translate}}
+                            <span class="caret"></span>
+                        </button>
+                        <ul uib-dropdown-menu class="dropdown-menu-right" style="width:200px">
+                            <li ng:repeat="size in [10, 50, 100, 500, 1000]">
+                                <a ng:click="paging.pageSize = size"><i class="fa fa-list-ol"></i> {{size}} students</a>
+                            </li>
+                            <li>
+                                <div class="input-group" style="display: table">
+                                    <div class="input-group-addon">
+                                        Other:
+                                    </div>
+                                    <input ng:model="paging.pageSize" type="number" autofocus class="form-control" />
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
 
-            <div uib-dropdown class="input-group-btn" auto-close="outsideClick">
-                <button class="btn btn-default" uib-dropdown-toggle>
-                    <i class="fa fa-list-ol"></i> {{'Rows'|translate}}
-                    <span class="caret"></span>
+            <br/>
+            <table class="lm-table lm-table-inputs">
+                <tr>
+                    <th ng:repeat="(id, field) in students_fields" ng:if="field.visible">{{field.name}}</th>
+                    <th></th>
+                </tr>
+                <tr  ng:repeat="student in students|filter:students_filter|orderBy:['-_isNew', sort.fx]|page:paging.page_students:paging.pageSize" ng:if="student.class[0] != '#'">
+                    <td ng:if="students_fields.class.visible" class="form-group" ng:class="validateField('TODOclass', student.class, student._isNew, $index, 'students')">
+                        <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="student.class" placeholder="Class" class="form-control"/>
+                    </td>
+                    <td ng:if="students_fields.last_name.visible" class="form-group" ng:class="validateField('TODOlast', student.last_name, student._isNew, $index, 'students')">
+                        <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="student.last_name" placeholder="Last name" class="form-control" />
+                    </td>
+                    <td ng:if="students_fields.first_name.visible" class="form-group" ng:class="validateField('TODOfirst', student.first_name, student._isNew, $index, 'students')">
+                        <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="student.first_name" placeholder="First name" class="form-control" />
+                    </td>
+                    <td width="150" ng:if="students_fields.birthday.visible" class="form-group" ng:class="validateField('Date', student.birthday, student._isNew, $index, 'students')">
+                        <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="student.birthday" placeholder="Birthday" class="form-control"/>
+                    </td>
+                    <td width="150" ng:if="students_fields.id.visible" class="form-group" >
+                        <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="student.id" placeholder="Student ID (optional)" class="form-control" />
+                    </td>
+                        <td width="1">
+                            <button class="btn btn-default" ng:click="students_remove(student, $index)" title="Remove">
+                                <i class="fa fa-trash-o"></i>
+                            </button>
+                        </td>
+                </tr>
+            </table>
+
+            <br/>
+            <ul uib-pagination ng:show="students.length > paging.pageSize"  ng-model="paging.page_students" total-items="students.length" items-per-page="paging.pageSize" max-size="10" rotate="true" boundary-links="true"></ul>
+
+            <div class="floating-toolbar-padder"></div>
+            <floating-toolbar>
+                <button ng:click="backups('students')" class="btn btn-lmn pull-right">
+                    <i class="fa fa-history"></i>
                 </button>
-                <ul uib-dropdown-menu class="dropdown-menu-right" style="width:200px">
-                    <li ng:repeat="size in [10, 50, 100, 500, 1000]">
-                        <a ng:click="paging.pageSize = size"><i class="fa fa-list-ol"></i> {{size}} students</a>
-                    </li>
-                    <li>
-                        <div class="input-group" style="display: table">
-                            <div class="input-group-addon">
-                                Other:
-                            </div>
-                            <input ng:model="paging.pageSize" type="number" autofocus class="form-control" />
-                        </div>
-                    </li>
-                </ul>
-            </div>
+                <button ng:click="students_save()" class="btn btn-lmn" translate>Save</button>
+                <button ng:click="saveAndCheck('students')" class="btn btn-lmn" translate>Save &amp; check</button>
+                <div uib-dropdown class="btn-group dropup">
+                    <button uib-dropdown-toggle class="btn btn-lmn" translate>
+                        CSV
+                        <span class="caret"></span>
+                    </button>
+                    <ul uib-dropdown-menu class="dropdown-menu-left">
+                        <li>
+                            <a ng:click="editCSV('students')" translate>Edit CSV</a>
+                        </li>
+                        <li>
+                            <a ng:click="confirmUpload('students')" translate>Upload CSV</a>
+                        </li>
+                    </ul>
+                    <br />
+                </div>
+            </floating-toolbar>
         </div>
 
-        <br/>
-        <table class="lm-table lm-table-inputs">
-            <tr>
-                <th ng:repeat="(id, field) in students_fields" ng:if="field.visible">{{field.name}}</th>
-                <th></th>
-            </tr>
-            <tr  ng:repeat="student in students|filter:students_filter|orderBy:['-_isNew', sort.fx]|page:paging.page_students:paging.pageSize" ng:if="student.class[0] != '#'">
-                <td ng:if="students_fields.class.visible" class="form-group" ng:class="validateField('TODOclass', student.class, student._isNew, $index, 'students')">
-                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="student.class" placeholder="Class" class="form-control"/>
-                </td>
-                <td ng:if="students_fields.last_name.visible" class="form-group" ng:class="validateField('TODOlast', student.last_name, student._isNew, $index, 'students')">
-                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="student.last_name" placeholder="Last name" class="form-control" />
-                </td>
-                <td ng:if="students_fields.first_name.visible" class="form-group" ng:class="validateField('TODOfirst', student.first_name, student._isNew, $index, 'students')">
-                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="student.first_name" placeholder="First name" class="form-control" />
-                </td>
-                <td width="150" ng:if="students_fields.birthday.visible" class="form-group" ng:class="validateField('Date', student.birthday, student._isNew, $index, 'students')">
-                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="student.birthday" placeholder="Birthday" class="form-control"/>
-                </td>
-                <td width="150" ng:if="students_fields.id.visible" class="form-group" >
-                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="student.id" placeholder="Student ID (optional)" class="form-control" />
-                </td>
-                    <td width="1">
-                        <button class="btn btn-default" ng:click="students_remove(student, $index)" title="Remove">
-                            <i class="fa fa-trash-o"></i>
-                        </button>
-                    </td>
-            </tr>
-        </table>
-
-        <br/>
-
-        <button class="btn btn-default" ng:click="students_add()">
-            <i class="fa fa-plus"></i> <span translate>Add a student</span>
-        </button>
-
-        <br/>
-        <ul uib-pagination ng:show="students.length > paging.pageSize"  ng-model="paging.page_students" total-items="students.length" items-per-page="paging.pageSize" max-size="10" rotate="true" boundary-links="true"></ul>
-
         <div class="floating-toolbar-padder"></div>
-        <floating-toolbar>
-            <button ng:click="backups('students')" class="btn btn-lmn pull-right">
-                <i class="fa fa-history"></i>
-            </button>
-            <button ng:click="students_save()" class="btn btn-lmn" translate>Save</button>
-            <button ng:click="saveAndCheck('students')" class="btn btn-lmn" translate>Save &amp; check</button>
-            <div uib-dropdown class="btn-group dropup">
-                <button uib-dropdown-toggle class="btn btn-lmn" translate>
-                    CSV
-                    <span class="caret"></span>
-                </button>
-                <ul uib-dropdown-menu class="dropdown-menu-left">
-                    <li>
-                        <a ng:click="editCSV('students')" translate>Edit CSV</a>
-                    </li>
-                    <li>
-                        <a ng:click="confirmUpload('students')" translate>Upload CSV</a>
-                    </li>
-                </ul>
-                <br />
-            </div>
-        </floating-toolbar>
-    </div>
-
-    <div class="floating-toolbar-padder"></div>
     </uib:tab>
 
     <uib:tab heading="{{'Teachers'|translate}}" ng-click="getteachers()">
-    <br/>
+        <br/>
 
-    <progress-spinner ng:show="teachers == null"></progress-spinner>
+        <progress-spinner ng:show="teachers == null"></progress-spinner>
 
-    <div ng:if="teachers != null"
-             flow-init='{target: "/api/filesystem/upload", chunkSize: 1024 * 1024}'
-             flow-files-submitted="onUploadBegin($flow)"
-             ng-style="style">
-        <div class="input-group">
-            <input ng:model="teachers_filter" type="search" autofocus class="form-control" placeholder="Filter" />
-            <div uib-dropdown class="input-group-btn">
-                <button class="btn btn-default" uib-dropdown-toggle>
-                    <i class="fa fa-sort-amount-asc"></i> {{sort.name}}
-                    <span class="caret"></span>
+        <div ng:if="teachers != null"
+                 flow-init='{target: "/api/filesystem/upload", chunkSize: 1024 * 1024}'
+                 flow-files-submitted="onUploadBegin($flow)"
+                 ng-style="style">
+            <div>
+                <button class="btn btn-success pull-right" ng:click="teachers_add()">
+                    <i class="fa fa-plus"></i> <span translate>Add a teacher</span>
                 </button>
-                <ul uib-dropdown-menu class="dropdown-menu-right" style="width:150px">
-                    <li ng:repeat="sort in teachers_sorts">
-                        <a ng:click="$parent.sort = sort">
+
+                <div class="input-group">
+                    <input ng:model="teachers_filter" type="search" autofocus class="form-control" placeholder="Filter" />
+                    <div uib-dropdown class="input-group-btn">
+                        <button class="btn btn-default" uib-dropdown-toggle>
                             <i class="fa fa-sort-amount-asc"></i> {{sort.name}}
-                        </a>
-                    </li>
-                </ul>
+                            <span class="caret"></span>
+                        </button>
+                        <ul uib-dropdown-menu class="dropdown-menu-right" style="width:150px">
+                            <li ng:repeat="sort in teachers_sorts">
+                                <a ng:click="$parent.sort = sort">
+                                    <i class="fa fa-sort-amount-asc"></i> {{sort.name}}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div uib-dropdown class="input-group-btn" auto-close="outsideClick">
+                        <button class="btn btn-default" uib-dropdown-toggle>
+                            <i class="fa fa-ellipsis-h"></i> <span translate>Fields</span> <span class="caret"></span>
+                        </button>
+                        <ul uib-dropdown-menu class="dropdown-menu-right" style="width:150px">
+                            <li ng:repeat="(id, field) in teachers_fields">
+                                <span checkbox ng:model="field.visible" text="{{field.name}}"></span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div uib-dropdown class="input-group-btn" auto-close="outsideClick">
+                        <button class="btn btn-default" uib-dropdown-toggle>
+                            <i class="fa fa-list-ol"></i> {{'Rows'|translate}}
+                            <span class="caret"></span>
+                        </button>
+                        <ul uib-dropdown-menu class="dropdown-menu-right" style="width:150px">
+                            <li><a ng:click="paging.pageSize = 10"><i class="fa fa-list-ol"></i> 10</a></li>
+                            <li><a ng:click="paging.pageSize = 50"><i class="fa fa-list-ol"></i> 50</a></li>
+                            <li><a ng:click="paging.pageSize = 100"><i class="fa fa-list-ol"></i> 100</a></li>
+                            <li><a ng:click="paging.pageSize = 500"><i class="fa fa-list-ol"></i> 500</a></li>
+                            <li><input ng:model="paging.pageSize" type="number" autofocus class="form-control" /></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <div uib-dropdown class="input-group-btn" auto-close="outsideClick">
-                <button class="btn btn-default" uib-dropdown-toggle>
-                    <i class="fa fa-ellipsis-h"></i> <span translate>Fields</span> <span class="caret"></span>
-                </button>
-                <ul uib-dropdown-menu class="dropdown-menu-right" style="width:150px">
-                    <li ng:repeat="(id, field) in teachers_fields">
-                        <span checkbox ng:model="field.visible" text="{{field.name}}"></span>
-                    </li>
-                </ul>
-            </div>
-            <div uib-dropdown class="input-group-btn" auto-close="outsideClick">
-                <button class="btn btn-default" uib-dropdown-toggle>
-                    <i class="fa fa-list-ol"></i> {{'Rows'|translate}}
-                    <span class="caret"></span>
-                </button>
-                <ul uib-dropdown-menu class="dropdown-menu-right" style="width:150px">
-                    <li><a ng:click="paging.pageSize = 10"><i class="fa fa-list-ol"></i> 10</a></li>
-                    <li><a ng:click="paging.pageSize = 50"><i class="fa fa-list-ol"></i> 50</a></li>
-                    <li><a ng:click="paging.pageSize = 100"><i class="fa fa-list-ol"></i> 100</a></li>
-                    <li><a ng:click="paging.pageSize = 500"><i class="fa fa-list-ol"></i> 500</a></li>
-                    <li><input ng:model="paging.pageSize" type="number" autofocus class="form-control" /></li>
-                </ul>
-            </div>
-        </div>
 
-        <br/>
+            <br/>
 
-        <table class="lm-table lm-table-inputs">
-            <tr>
-                <th ng:repeat="(id, field) in teachers_fields" ng:if="field.visible">{{field.name}}</th>
-                <th></th>
-            </tr>
-            <tr ng:repeat="teacher in teachers|filter:teachers_filter|orderBy:['-_isNew', sort.fx]|page:paging.page_teachers:paging.pageSize" ng:if="teacher.class[0] != '#'">
-                <td ng:if="teachers_fields.last_name.visible" class="form-group" ng:class="validateField('TODOlast', teacher.last_name, teacher._isNew, $index, 'teachers')">
-                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="teacher.last_name" placeholder="Last name" class="form-control" />
-                </td>
-                <td ng:if="teachers_fields.first_name.visible" class="form-group" ng:class="validateField('TODOfirst', teacher.first_name, teacher._isNew, $index, 'teachers')">
-                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="teacher.first_name" placeholder="First name" class="form-control" />
-                </td>
-                <td ng:if="teachers_fields.birthday.visible" width="150" class="form-group" ng:class="validateField('Date', teacher.birthday, teacher._isNew, $index, 'teachers')">
-                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="teacher.birthday" placeholder="Birthday" class="form-control" />
-                </td>
-                <td ng:if="teachers_fields.password.visible" class="form-group" ng:class="validateField('Password', teacher.password, teacher._isNew, $index, 'teachers')">
-                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="teacher.password" placeholder="Desired Password" class="form-control" />
-                </td>
-                <td ng:if="teachers_fields.login.visible" class="form-group" ng:class="validateField('Login', teacher.login, teacher._isNew, $index, 'teachers', 'teachers')">
-                    <input type="text" ng:model="teacher.login" ng:disabled="!teacher._isNew" placeholder="Login" class="form-control" />
-                </td>
-                <td width="1">
-                    <button class="btn btn-default" ng:click="teachers_remove(teacher, $index)" title="Remove">
-                        <i class="fa fa-trash-o"></i>
+            <table class="lm-table lm-table-inputs">
+                <tr>
+                    <th ng:repeat="(id, field) in teachers_fields" ng:if="field.visible">{{field.name}}</th>
+                    <th></th>
+                </tr>
+                <tr ng:repeat="teacher in teachers|filter:teachers_filter|orderBy:['-_isNew', sort.fx]|page:paging.page_teachers:paging.pageSize" ng:if="teacher.class[0] != '#'">
+                    <td ng:if="teachers_fields.last_name.visible" class="form-group" ng:class="validateField('TODOlast', teacher.last_name, teacher._isNew, $index, 'teachers')">
+                        <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="teacher.last_name" placeholder="Last name" class="form-control" />
+                    </td>
+                    <td ng:if="teachers_fields.first_name.visible" class="form-group" ng:class="validateField('TODOfirst', teacher.first_name, teacher._isNew, $index, 'teachers')">
+                        <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="teacher.first_name" placeholder="First name" class="form-control" />
+                    </td>
+                    <td ng:if="teachers_fields.birthday.visible" width="150" class="form-group" ng:class="validateField('Date', teacher.birthday, teacher._isNew, $index, 'teachers')">
+                        <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="teacher.birthday" placeholder="Birthday" class="form-control" />
+                    </td>
+                    <td ng:if="teachers_fields.password.visible" class="form-group" ng:class="validateField('Password', teacher.password, teacher._isNew, $index, 'teachers')">
+                        <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="teacher.password" placeholder="Desired Password" class="form-control" />
+                    </td>
+                    <td ng:if="teachers_fields.login.visible" class="form-group" ng:class="validateField('Login', teacher.login, teacher._isNew, $index, 'teachers', 'teachers')">
+                        <input type="text" ng:model="teacher.login" ng:disabled="!teacher._isNew" placeholder="Login" class="form-control" />
+                    </td>
+                    <td width="1">
+                        <button class="btn btn-default" ng:click="teachers_remove(teacher, $index)" title="Remove">
+                            <i class="fa fa-trash-o"></i>
+                        </button>
+                    </td>
+                </tr>
+            </table>
+
+            <br/>
+            <ul uib-pagination ng:show="teachers.length > paging.pageSize"  ng-model="paging.page_teachers" total-items="teachers.length" items-per-page="paging.pageSize" max-size="10" rotate="true" boundary-links="true"></ul>
+
+            <div class="floating-toolbar-padder"></div>
+
+            <floating-toolbar>
+                <button ng:click="backups('teachers')" class="btn btn-lmn pull-right">
+                    <i class="fa fa-history"></i>
+                </button>
+                <button ng:click="teachers_save()" class="btn btn-lmn" translate>Save</button>
+                <button ng:click="saveAndCheck('teachers')" class="btn btn-lmn" translate>Save &amp; check</button>
+                <div uib-dropdown class="btn-group dropup">
+                    <button uib-dropdown-toggle class="btn btn-lmn" translate>
+                        CSV
+                        <span class="caret"></span>
                     </button>
-                </td>
-            </tr>
-        </table>
-
-        <br/>
-
-        <button class="btn btn-default" ng:click="teachers_add()">
-            <i class="fa fa-plus"></i> <span translate>Add a teacher</span>
-        </button>
-
-        <br/>
-        <ul uib-pagination ng:show="teachers.length > paging.pageSize"  ng-model="paging.page_teachers" total-items="teachers.length" items-per-page="paging.pageSize" max-size="10" rotate="true" boundary-links="true"></ul>
-
-        <div class="floating-toolbar-padder"></div>
-
-        <floating-toolbar>
-            <button ng:click="backups('teachers')" class="btn btn-lmn pull-right">
-                <i class="fa fa-history"></i>
-            </button>
-            <button ng:click="teachers_save()" class="btn btn-lmn" translate>Save</button>
-            <button ng:click="saveAndCheck('teachers')" class="btn btn-lmn" translate>Save &amp; check</button>
-            <div uib-dropdown class="btn-group dropup">
-                <button uib-dropdown-toggle class="btn btn-lmn" translate>
-                    CSV
-                    <span class="caret"></span>
-                </button>
-                <ul uib-dropdown-menu class="dropdown-menu-left">
-                    <li>
-                        <a ng:click="editCSV('teachers')" translate>Edit CSV</a>
-                    </li>
-                    <li>
-                        <a ng:click="confirmUpload('teachers')" translate>Upload CSV</a>
-                    </li>
-                </ul>
-                <br />
-            </div>
-        </floating-toolbar>
-    </div>
-
-
+                    <ul uib-dropdown-menu class="dropdown-menu-left">
+                        <li>
+                            <a ng:click="editCSV('teachers')" translate>Edit CSV</a>
+                        </li>
+                        <li>
+                            <a ng:click="confirmUpload('teachers')" translate>Upload CSV</a>
+                        </li>
+                    </ul>
+                    <br />
+                </div>
+            </floating-toolbar>
+        </div>
     </uib:tab>
     <uib:tab heading="{{'Extra-Students'|translate}}" ng-click="getextrastudents()">
-    <br/>
-    <progress-spinner ng:show="extrastudents == null"></progress-spinner>
+        <br/>
+        <progress-spinner ng:show="extrastudents == null"></progress-spinner>
 
-    <div ng:show="extrastudents != null">
-        <div class="input-group">
-            <input ng:model="extrastudents_filter" type="search" autofocus class="form-control" placeholder="Filter" />
-            <div uib-dropdown class="input-group-btn">
-                <button class="btn btn-default" uib-dropdown-toggle>
-                    <i class="fa fa-sort-amount-asc"></i> {{sort.name}}
-                    <span class="caret"></span>
+        <div ng:show="extrastudents != null">
+
+            <div>
+
+                <button class="btn btn-success pull-right" ng:click="extrastudents_add()">
+                    <i class="fa fa-plus"></i> <span translate>Add a student</span>
                 </button>
-                <ul uib-dropdown-menu class="dropdown-menu-right" style="width:150px">
-                    <li ng:repeat="sort in extrastudents_sorts">
-                        <a ng:click="$parent.sort = sort">
+
+                <div class="input-group">
+                    <input ng:model="extrastudents_filter" type="search" autofocus class="form-control" placeholder="Filter" />
+                    <div uib-dropdown class="input-group-btn">
+                        <button class="btn btn-default" uib-dropdown-toggle>
                             <i class="fa fa-sort-amount-asc"></i> {{sort.name}}
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div uib-dropdown class="input-group-btn" auto-close="outsideClick">
-                <button class="btn btn-default" uib-dropdown-toggle>
-                    <i class="fa fa-ellipsis-h"></i> <span translate>Fields</span> <span class="caret"></span>
-                </button>
-                <ul uib-dropdown-menu class="dropdown-menu-right" style="width:150px">
-                    <li ng:repeat="(id, field) in extrastudents_fields">
-                        <span checkbox ng:model="field.visible" text="{{field.name}}"></span>
-                    </li>
-                </ul>
+                            <span class="caret"></span>
+                        </button>
+                        <ul uib-dropdown-menu class="dropdown-menu-right" style="width:150px">
+                            <li ng:repeat="sort in extrastudents_sorts">
+                                <a ng:click="$parent.sort = sort">
+                                    <i class="fa fa-sort-amount-asc"></i> {{sort.name}}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div uib-dropdown class="input-group-btn" auto-close="outsideClick">
+                        <button class="btn btn-default" uib-dropdown-toggle>
+                            <i class="fa fa-ellipsis-h"></i> <span translate>Fields</span> <span class="caret"></span>
+                        </button>
+                        <ul uib-dropdown-menu class="dropdown-menu-right" style="width:150px">
+                            <li ng:repeat="(id, field) in extrastudents_fields">
+                                <span checkbox ng:model="field.visible" text="{{field.name}}"></span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div uib-dropdown class="input-group-btn" auto-close="outsideClick">
+                        <button class="btn btn-default" uib-dropdown-toggle>
+                            <i class="fa fa-list-ol"></i> {{'Rows'|translate}}
+                            <span class="caret"></span>
+                        </button>
+                        <ul uib-dropdown-menu class="dropdown-menu-right" style="width:200px">
+                            <li ng:repeat="size in [10, 50, 100, 500, 1000]">
+                                <a ng:click="paging.pageSize = size"><i class="fa fa-list-ol"></i> {{size}} extrastudents</a>
+                            </li>
+                            <li>
+                                <div class="input-group" style="display: table">
+                                    <div class="input-group-addon">
+                                        Other:
+                                    </div>
+                                    <input ng:model="paging.pageSize" type="number" autofocus class="form-control" />
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
 
-            <div uib-dropdown class="input-group-btn" auto-close="outsideClick">
-                <button class="btn btn-default" uib-dropdown-toggle>
-                    <i class="fa fa-list-ol"></i> {{'Rows'|translate}}
-                    <span class="caret"></span>
+            <br/>
+            <table class="lm-table lm-table-inputs">
+                <tr>
+                    <th ng:repeat="(id, field) in extrastudents_fields" ng:if="field.visible">{{field.name}}</th>
+                    <th></th>
+                </tr>
+                <tr ng:repeat="extrastudent in extrastudents|filter:extrastudents_filter|orderBy:['-_isNew', sort.fx]|page:paging.page_extrastudents:paging.pageSize" ng:if="extrastudent.class[0] != '#'">
+                    <td ng:if="extrastudents_fields.class.visible" class="form-group" ng:class="validateField('TODOclass', extrastudent.class, extrastudent._isNew, $index, 'extrastudents')">
+                        <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="extrastudent.class" placeholder="Class" class="form-control" />
+                    </td>
+                    <td ng:if="extrastudents_fields.last_name.visible" class="form-group" ng:class="validateField('TODOlast', extrastudent.last_name, student._isNew, $index, 'extrastudents')">
+                        <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="extrastudent.last_name" placeholder="Last name" class="form-control" />
+                    </td>
+                    <td  ng:if="extrastudents_fields.first_name.visible" class="form-group" ng:class="validateField('TODOfirst', extrastudent.first_name, student._isNew, $index, 'extrastudents')">
+                        <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="extrastudent.first_name" placeholder="First name" class="form-control" />
+                    </td>
+                    <td ng:if="extrastudents_fields.birthday.visible" width="150" class="form-group" ng:class="validateField('Date', extrastudent.birthday, student._isNew, $index, 'extrastudents')">
+                        <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="extrastudent.birthday" placeholder="Birthday" class="form-control" />
+                    </td>
+                    <td ng:if="extrastudents_fields.login.visible" class="form-group" ng:class="validateField('Login', extrastudent.login, extrastudent._isNew, $index, 'extrastudents', 'extrastudents')">
+                        <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="extrastudent.login" placeholder="Login" class="form-control" />
+                    </td>
+                    <td width="1">
+                        <button class="btn btn-default" ng:click="extrastudents_remove(extrastudent, $index)" title="{{'Remove'|translate}}">
+                            <i class="fa fa-trash-o"></i>
+                        </button>
+                    </td>
+                </tr>
+            </table>
+
+
+            <br/>
+            <ul uib-pagination ng:show="extrastudents.length > paging.pageSize"  ng-model="paging.page_extrastudents" total-items="extrastudents.length" items-per-page="paging.pageSize" max-size="10" rotate="true" boundary-links="true"></ul>
+            <div class="floating-toolbar-padder"></div>
+
+            <floating-toolbar>
+                <button ng:click="backups('extrastudents')" class="btn btn-lmn pull-right">
+                    <i class="fa fa-history"></i>
                 </button>
-                <ul uib-dropdown-menu class="dropdown-menu-right" style="width:200px">
-                    <li ng:repeat="size in [10, 50, 100, 500, 1000]">
-                        <a ng:click="paging.pageSize = size"><i class="fa fa-list-ol"></i> {{size}} extrastudents</a>
-                    </li>
-                    <li>
-                        <div class="input-group" style="display: table">
-                            <div class="input-group-addon">
-                                Other:
-                            </div>
-                            <input ng:model="paging.pageSize" type="number" autofocus class="form-control" />
-                        </div>
-                    </li>
-                </ul>
-            </div>
+                <button ng:click="extrastudents_save()" class="btn btn-lmn" translate>Save</button>
+                <button ng:click="saveAndCheck('extrastudents')" class="btn btn-lmn" translate>Save &amp; check</button>
+                <button ng:click="editCSV('extrastudents')" class="btn btn-lmn" translate>Edit CSV</button>
+            </floating-toolbar>
         </div>
-
-        <br/>
-        <table class="lm-table lm-table-inputs">
-            <tr>
-                <th ng:repeat="(id, field) in extrastudents_fields" ng:if="field.visible">{{field.name}}</th>
-                <th></th>
-            </tr>
-            <tr ng:repeat="extrastudent in extrastudents|filter:extrastudents_filter|orderBy:['-_isNew', sort.fx]|page:paging.page_extrastudents:paging.pageSize" ng:if="extrastudent.class[0] != '#'">
-                <td ng:if="extrastudents_fields.class.visible" class="form-group" ng:class="validateField('TODOclass', extrastudent.class, extrastudent._isNew, $index, 'extrastudents')">
-                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="extrastudent.class" placeholder="Class" class="form-control" />
-                </td>
-                <td ng:if="extrastudents_fields.last_name.visible" class="form-group" ng:class="validateField('TODOlast', extrastudent.last_name, student._isNew, $index, 'extrastudents')">
-                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="extrastudent.last_name" placeholder="Last name" class="form-control" />
-                </td>
-                <td  ng:if="extrastudents_fields.first_name.visible" class="form-group" ng:class="validateField('TODOfirst', extrastudent.first_name, student._isNew, $index, 'extrastudents')">
-                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="extrastudent.first_name" placeholder="First name" class="form-control" />
-                </td>
-                <td ng:if="extrastudents_fields.birthday.visible" width="150" class="form-group" ng:class="validateField('Date', extrastudent.birthday, student._isNew, $index, 'extrastudents')">
-                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="extrastudent.birthday" placeholder="Birthday" class="form-control" />
-                </td>
-                <td ng:if="extrastudents_fields.login.visible" class="form-group" ng:class="validateField('Login', extrastudent.login, extrastudent._isNew, $index, 'extrastudents', 'extrastudents')">
-                    <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="extrastudent.login" placeholder="Login" class="form-control" />
-                </td>
-                <td width="1">
-                    <button class="btn btn-default" ng:click="extrastudents_remove(extrastudent, $index)" title="{{'Remove'|translate}}">
-                        <i class="fa fa-trash-o"></i>
-                    </button>
-                </td>
-            </tr>
-        </table>
-
-        <br/>
-
-        <button class="btn btn-default" ng:click="extrastudents_add()">
-            <i class="fa fa-plus"></i> <span translate>Add a student</span>
-        </button>
-
-        <br/>
-        <ul uib-pagination ng:show="extrastudents.length > paging.pageSize"  ng-model="paging.page_extrastudents" total-items="extrastudents.length" items-per-page="paging.pageSize" max-size="10" rotate="true" boundary-links="true"></ul>
-        <div class="floating-toolbar-padder"></div>
-
-        <floating-toolbar>
-            <button ng:click="backups('extrastudents')" class="btn btn-lmn pull-right">
-                <i class="fa fa-history"></i>
-            </button>
-            <button ng:click="extrastudents_save()" class="btn btn-lmn" translate>Save</button>
-            <button ng:click="saveAndCheck('extrastudents')" class="btn btn-lmn" translate>Save &amp; check</button>
-            <button ng:click="editCSV('extrastudents')" class="btn btn-lmn" translate>Edit CSV</button>
-        </floating-toolbar>
-    </div>
     </uib:tab>
 <!-- TODO: Removed extra courses till this function is properly implemented in backend
     <uib:tab heading="{{'Extra-Courses'|translate}}" ng-click="getcourses()">

@@ -73,7 +73,7 @@
             <br/>
             <table class="lm-table lm-table-inputs">
                 <tr>
-                    <th ng:repeat="(id, field) in students_fields" ng:if="field.visible">{{field.name}}</th>
+                    <th ng:repeat="(id, field) in students_fields" ng:if="field.visible">{{field.name | translate}}</th>
                     <th></th>
                 </tr>
                 <tr  ng:repeat="student in students|filter:students_filter|orderBy:['-_isNew', sort.fx]|page:paging.page_students:paging.pageSize" ng:if="student.class[0] != '#'">
@@ -191,7 +191,7 @@
             <table class="lm-table lm-table-inputs">
                 <tr>
                     <th ng:repeat="(id, field) in teachers_fields" ng:if="field.visible">
-                        {{field.name}}
+                        {{field.name | translate}}
                         <i  ng:show="id == 'login'"
                             class="fas fa-question-circle"
                             title="This entry is directly read from the CSV file and could differ from the actual login of the user (saved in LDAP)">
@@ -316,7 +316,7 @@
             <table class="lm-table lm-table-inputs">
                 <tr>
                     <th ng:repeat="(id, field) in extrastudents_fields" ng:if="field.visible">
-                        {{field.name}}
+                        {{field.name | translate}}
                         <i  ng:show="id == 'login'"
                             class="fas fa-question-circle"
                             title="This entry is directly read from the CSV file and could differ from the actual login of the user (saved in LDAP)">

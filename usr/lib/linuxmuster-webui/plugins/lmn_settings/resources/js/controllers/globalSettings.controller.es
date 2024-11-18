@@ -199,5 +199,13 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope,
             notify.error("Failed to copy!")
         });
     }
+
+    $scope.getLMNVersion = () => {
+        $http.get('/api/lmn/version').then((res) => {
+            $scope.LMNVersion = res.data;
+            console.log(res);
+        })
+    }
+
 });
  

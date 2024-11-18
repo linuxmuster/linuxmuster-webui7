@@ -223,8 +223,7 @@
                 <span translate>This token is only valid for one day!</span><br>
                 <br>
                 <button class="btn btn-default" ng:click="getEdulutionHash()" translate>Click to connect to your EdulutionUI</button>
-            </div>
-            <pre>lkhjfklsdflkh</pre> -->
+            </div> -->
             <div class="card" style="width: 100%;">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item" style="display: flex; align-items: center; height: 80px;">
@@ -292,10 +291,20 @@
                 </span>
             </div>
         </uib:tab>
+        <uib:tab heading="About Linuxmuster.net" ng:click="getLMNVersion()">
+            <br />
+            <table class="table">
+                <tr>
+                    <th translate>Package</th>
+                    <th translate>Version</th>
+                </tr>
+                <tr ng:repeat="(package, version) in LMNVersion">
+                    <td>{{package}}</td>
+                    <td><span class="label label-success">{{version}}</span></td>
+                </tr>
+            </table>
+           </uib:tab>
     </uib:tabset>
-
-
-
 
     <div class="floating-toolbar-padder"></div>
 

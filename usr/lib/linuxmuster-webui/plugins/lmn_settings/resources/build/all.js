@@ -417,6 +417,13 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', function
             notify.error("Failed to copy!");
         });
     };
+
+    $scope.getLMNVersion = function () {
+        $http.get('/api/lmn/version').then(function (res) {
+            $scope.LMNVersion = res.data;
+            console.log(res);
+        });
+    };
 });
 
 

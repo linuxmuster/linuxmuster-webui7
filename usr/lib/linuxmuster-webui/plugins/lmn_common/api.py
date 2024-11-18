@@ -44,7 +44,7 @@ else:
     logging.error("Without config.yml the users will not be able to login.")
 
 # Load samba domain
-smbconf = ConfigParser()
+smbconf = ConfigParser(delimiters=("=",))
 try:
     smbconf.read('/etc/samba/smb.conf')
     samba_realm = smbconf["global"]["realm"].lower()

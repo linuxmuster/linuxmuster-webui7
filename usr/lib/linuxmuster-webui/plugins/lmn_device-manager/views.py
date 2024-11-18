@@ -10,6 +10,7 @@ import nmap
 import subprocess
 import locale
 import time
+import logging
 
 from datetime import datetime
 
@@ -108,18 +109,23 @@ class Handler(HttpPlugin):
                        "-i", device["hostname"], "-c", "halt"]
 
         elif device["os"] == "Linux":
-            command = ["ssh", device["hostname"], "-l", "root", "'init 0'"]
+            command = ["ssh", device["hostname"], "-l", "root", "init 0"]
 
         elif device["os"] == "Windows":
+            try:
+                with open("/etc/linuxmuster/.secret/administrator", "r") as f:
+                    password = f.read().strip()
+            except FileNotFoundError:
+                return {"status": False, "exitcode": None, "message": "Administrator password file not found!"}
             command = ["net", "rpc", "-S", device["hostname"], "-U",
-                       "administrator%$(cat /etc/linuxmuster/.secret/administrator)", "shutdown", "-t", "1", "-f"]
+                       f"administrator%{password}", "shutdown", "-t", "1", "-f"]
 
         else:
             return {"status": False, "exitcode": None, "message": "Could not determine os!"}
 
-        r = subprocess.Popen(
-            command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=False)
+        r = subprocess.Popen(command, sensitive=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         result = r.stdout.read().decode("utf-8")
+        logging.debug("Shutdown-Command-Result: %s" % result)
         (err, out) = r.communicate()
         if r.returncode == 0:
             return {"status": True, "exitcode": r.returncode, "message": result}
@@ -130,23 +136,29 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_lmn_devicemanager_reboot(self, http_context):
         device = http_context.json_body()['device']
+
         if device["os"] == "Linbo":
             command = ["linbo-remote", "-s", device["school"],
                        "-i", device["hostname"], "-c", "reboot"]
 
         elif device["os"] == "Linux":
-            command = ["ssh", device["hostname"], "-l", "root", "'init 6'"]
+            command = ["ssh", device["hostname"], "-l", "root", "init 6"]
 
         elif device["os"] == "Windows":
+            try:
+                with open("/etc/linuxmuster/.secret/administrator", "r") as f:
+                    password = f.read().strip()
+            except FileNotFoundError:
+                return {"status": False, "exitcode": None, "message": "Administrator password file not found!"}
             command = ["net", "rpc", "-S", device["hostname"], "-U",
-                       "administrator%$(cat /etc/linuxmuster/.secret/administrator)", "shutdown", "-r", "-t", "1", "-f"]
+                       f"administrator%{password}", "shutdown", "-r", "-t", "1", "-f"]
 
         else:
             return {"status": False, "exitcode": None, "message": "Could not determine os!"}
 
-        r = subprocess.Popen(
-            command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=False)
+        r = subprocess.Popen(command, sensitive=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         result = r.stdout.read().decode("utf-8")
+        logging.debug("Reboot-Command-Result: %s" % result)
         (err, out) = r.communicate()
         if r.returncode == 0:
             return {"status": True, "exitcode": r.returncode, "message": result}

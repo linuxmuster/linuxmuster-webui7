@@ -22,6 +22,16 @@ angular.module('lmn.devices').controller 'LMDevicesApplyModalController', ($scop
         $uibModalInstance.close()
 
 
+angular.module('lmn.devices').controller 'DevicesAddController', ($scope, $http, pageTitle, gettext, notify, validation, $uibModalInstance, $uibModal) ->
+
+    $scope.save = () ->
+        $scope.devices.unshift($scope.newDevice)
+        $scope.devices_without_comment.unshift($scope.newDevice)
+        $scope.close()
+
+    $scope.close = () ->
+        $uibModalInstance.close()
+
 
 angular.module('lmn.devices').controller 'LMDevicesController', ($scope, $http, $uibModal, $route, $location, $anchorScroll, gettext, hotkeys, notify, pageTitle, lmFileEditor, lmFileBackups, validation) ->
     pageTitle.set(gettext('Devices'))
@@ -107,29 +117,44 @@ angular.module('lmn.devices').controller 'LMDevicesController', ($scope, $http, 
             return true
         return value.room and value.room[0] != '#'
 
-    $scope.add = () ->
-        $scope.filter = ''
-        $scope.devices.unshift({
+    $scope.add = ()->
+        $scope.newDevice = {
             _isNew: true,
             room: '',
             hostname: '',
             group: '',
             mac: '',
             ip: '',
+            pxeFlag: '0',
+            officeKey: '',
+            windowsKey: '',
+            dhcpOptions: '',
             sophomorixRole: 'classroom-studentcomputer',
-            pxeFlag: '1',
+            lmnReserved10: '',
+            lmnReserved12: '',
+            lmnReserved13: '',
+            lmnReserved14: '',
+            sophomorixComment: '',
+        }
+
+        $uibModal.open({
+            templateUrl: '/lmn_devices:resources/partial/addDevice.modal.html',
+            controller: 'DevicesAddController',
+            size: 'mg',
+            scope: $scope,
         })
-        # Return to first page after adding the new device
-        $scope.paging.page = 1
 
     $scope.duplicate = (device) ->
-        newDevice = angular.copy(device)
-        newDevice._isNew = true
-        # New device is added at first place
-        $scope.devices.unshift(newDevice)
-        $scope.devices_without_comment.unshift(newDevice)
-        # Return to first page after adding the new device
-        $scope.paging.page = 1
+        $scope.newDevice = angular.copy(device)
+        $scope.newDevice._isNew = true
+
+        $uibModal.open({
+            templateUrl: '/lmn_devices:resources/partial/addDevice.modal.html',
+            controller: 'DevicesAddController',
+            size: 'mg',
+            scope: $scope,
+        })
+
 
     $scope.fields = {
         room:

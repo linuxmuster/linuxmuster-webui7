@@ -1,0 +1,76 @@
+<div class="modal-header">
+    <h3 translate>Add device</h3>
+</div>
+<div class="modal-body">
+    <form class="form-group">
+        <table class="table">
+            <tr>
+                <td>
+                    <span translate>Room: </span>
+                    <input class="form-control" type="text" ng:model="newDevice.room">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate>Hostname </span>
+                    <input class="form-control" type="text" ng:model="newDevice.hostname">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate>Group: </span>
+                    <input class="form-control" type="text" ng:model="newDevice.group">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate>Mac: </span>
+                    <input class="form-control" type="text" ng:model="newDevice.mac">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>IP: </span>
+                    <input class="form-control" type="text" ng:model="newDevice.ip">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate>Sophomorix role: </span>
+                    <select ng:model="newDevice.sophomorixRole" class="form-control">
+                        <option value="classroom-studentcomputer" translate>classroom-studentcomputer</option>
+                        <option value="classroom-teachercomputer" translate>classroom-teachercomputer</option>
+                        <option value="staffcomputer" translate>Staffcomputer</option>
+                        <option value="faculty-teachercomputer" translate>Faculty-Teachercomputer</option>
+                        <option value="server" translate>Server</option>
+                        <option value="router" translate>router</option>
+                        <option value="switch" translate>Switch</option>
+                        <option value="printer" translate>Printer</option>
+                        <option value="thinclient" translate>Thinclient</option>
+                        <option value="byod" translate>BYOD</option>
+                        <option value="voip" translate>VOIP</option>
+                        <option value="wlan" translate>WLan</option>
+                        <option value="iponly" translate>IP-Only</option>
+                        <option value="mobile" translate>Mobile</option>
+                        <option value="addc" translate>Domain-Controller</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate>PXE Boot: </span>
+                    <select ng:model="newDevice.pxeFlag" class="form-control">
+                        <option value="0" translate>No PXE</option>
+                        <option value="1" translate>Linbo-PXE</option>
+                        <option value="2" translate>Linbo-PXE + OPSI-MGMT</option>
+                        <option value="3" translate>OPSI-PXE</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div class="modal-footer">
+    <button ng:click="save()" class="btn btn-default" translate>Add</button>
+    <button ng:click="close()" class="btn btn-default" translate>Cancel</button>
+</div>

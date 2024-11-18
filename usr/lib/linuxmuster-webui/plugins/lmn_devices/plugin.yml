@@ -12,5 +12,6 @@ resources:
     - 'resources/js/module.coffee'
     - 'resources/js/controllers/index.controller.coffee'
     - 'resources/partial/index.html'
+    - 'resources/partial/addDevice.modal.html'
     - 'resources/partial/apply.modal.html'
     - 'ng:lmn.devices'

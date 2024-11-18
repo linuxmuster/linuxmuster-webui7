@@ -32,6 +32,17 @@
     };
   });
 
+  angular.module('lmn.devices').controller('DevicesAddController', function($scope, $http, pageTitle, gettext, notify, validation, $uibModalInstance, $uibModal) {
+    $scope.save = function() {
+      $scope.devices.unshift($scope.newDevice);
+      $scope.devices_without_comment.unshift($scope.newDevice);
+      return $scope.close();
+    };
+    return $scope.close = function() {
+      return $uibModalInstance.close();
+    };
+  });
+
   angular.module('lmn.devices').controller('LMDevicesController', function($scope, $http, $uibModal, $route, $location, $anchorScroll, gettext, hotkeys, notify, pageTitle, lmFileEditor, lmFileBackups, validation) {
     pageTitle.set(gettext('Devices'));
     $scope.error_msg = {};
@@ -131,29 +142,40 @@
       return value.room && value.room[0] !== '#';
     };
     $scope.add = function() {
-      $scope.filter = '';
-      $scope.devices.unshift({
+      $scope.newDevice = {
         _isNew: true,
         room: '',
         hostname: '',
         group: '',
         mac: '',
         ip: '',
+        pxeFlag: '0',
+        officeKey: '',
+        windowsKey: '',
+        dhcpOptions: '',
         sophomorixRole: 'classroom-studentcomputer',
-        pxeFlag: '1'
+        lmnReserved10: '',
+        lmnReserved12: '',
+        lmnReserved13: '',
+        lmnReserved14: '',
+        sophomorixComment: ''
+      };
+      return $uibModal.open({
+        templateUrl: '/lmn_devices:resources/partial/addDevice.modal.html',
+        controller: 'DevicesAddController',
+        size: 'mg',
+        scope: $scope
       });
-      // Return to first page after adding the new device
-      return $scope.paging.page = 1;
     };
     $scope.duplicate = function(device) {
-      var newDevice;
-      newDevice = angular.copy(device);
-      newDevice._isNew = true;
-      // New device is added at first place
-      $scope.devices.unshift(newDevice);
-      $scope.devices_without_comment.unshift(newDevice);
-      // Return to first page after adding the new device
-      return $scope.paging.page = 1;
+      $scope.newDevice = angular.copy(device);
+      $scope.newDevice._isNew = true;
+      return $uibModal.open({
+        templateUrl: '/lmn_devices:resources/partial/addDevice.modal.html',
+        controller: 'DevicesAddController',
+        size: 'mg',
+        scope: $scope
+      });
     };
     $scope.fields = {
       room: {

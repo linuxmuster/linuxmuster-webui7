@@ -2192,7 +2192,7 @@
       },
       login: {
         visible: true,
-        name: gettext('Login')
+        name: gettext('Desired login')
       }
     };
     $scope.extrastudents_fields = {
@@ -2214,7 +2214,7 @@
       },
       login: {
         visible: true,
-        name: gettext('Login')
+        name: gettext('Desired login')
       }
     };
     $scope.teachers_first_save = false;

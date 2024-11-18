@@ -147,7 +147,7 @@ angular.module('lmn.users').controller 'LMUsersListManagementController', ($scop
           name: gettext('Desired Password')
        login:
           visible: true
-          name: gettext('Login')
+          name: gettext('Desired login')
     }
 
     $scope.extrastudents_fields = {
@@ -165,7 +165,7 @@ angular.module('lmn.users').controller 'LMUsersListManagementController', ($scop
             name: gettext('Birthday')
         login:
             visible: true
-            name: gettext('Login')
+            name: gettext('Desired login')
     }
 
 

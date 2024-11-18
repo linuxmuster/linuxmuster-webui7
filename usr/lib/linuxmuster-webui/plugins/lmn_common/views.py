@@ -219,7 +219,7 @@ class Handler(HttpPlugin):
         :rtype: dict
         """
 
-        packages = subprocess.check_output("dpkg -l | grep linuxmuster- | awk 'BEGIN {OFS=\"=\";} {print $2,$3}'", shell=True).decode().split()
+        packages = subprocess.check_output("dpkg -l | grep 'linuxmuster-\|sophomorix' | awk 'BEGIN {OFS=\"=\";} {print $2,$3}'", shell=True).decode().split()
         return dict([package.split('=') for package in packages])
 
     @get(r'/api/lmn/activeschool')

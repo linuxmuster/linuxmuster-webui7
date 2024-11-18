@@ -4,6 +4,26 @@ angular.module('lmn.users').config ($routeProvider) ->
        templateUrl: '/lmn_users:resources/partial/listmanagement.html'
 
 
+angular.module('lmn.users').controller 'UsersAddController', ($scope, $http, pageTitle, gettext, notify, $uibModalInstance, $uibModal) ->
+
+    $scope.save = (type) ->
+
+        role = $scope.newUser.role
+        delete $scope.newUser.role
+
+        if role == 'student'
+            $scope.students.unshift($scope.newUser)
+
+        if role == 'teacher'
+            $scope.teachers.unshift($scope.newUser)
+
+        if role == 'extrastudent'
+            $scope.extrastudents.unshift($scope.newUser)
+
+        $scope.close()
+
+    $scope.close = () ->
+        $uibModalInstance.close()
 
 angular.module('lmn.users').controller 'LMUsersListManagementController', ($scope, $http, $location, $route, $uibModal, gettext, hotkeys, notify, lmEncodingMap, messagebox, pageTitle, lmFileEditor, lmFileBackups, filesystem, validation) ->
     pageTitle.set(gettext('Listmanagement'))
@@ -99,8 +119,6 @@ angular.module('lmn.users').controller 'LMUsersListManagementController', ($scop
         }
     ]
 
-
-
     $scope.students_sort = $scope.students_sorts[0]
     $scope.teachers_sort = $scope.teachers_sorts[0]
     $scope.extrastudents_sort = $scope.students_sorts[0]
@@ -180,22 +198,58 @@ angular.module('lmn.users').controller 'LMUsersListManagementController', ($scop
     $scope.courses = ''
 
     $scope.students_add = () ->
-        if $scope.students.length > 0
-            $scope.paging.page_students = Math.floor(($scope.students.length - 1) / $scope.paging.pageSize) + 1
-        $scope.students_filter = ''
-        $scope.students.push { '_isNew': true, 'first_name': '', 'last_name': '', 'class': ''}
+        $scope.newUser = {
+            _isNew: true,
+            role: 'student',
+            class: '',
+            last_name: '',
+            first_name: '',
+            birthday: '',
+            id: '',
+        }
+
+        $uibModal.open({
+            templateUrl: '/lmn_users:resources/partial/addUser.modal.html',
+            controller: 'UsersAddController',
+            size: 'mg',
+            scope: $scope,
+        })
 
     $scope.teachers_add = () ->
-        if $scope.teachers.length > 0
-            $scope.paging.page_teachers = Math.floor(($scope.teachers.length - 1) / $scope.paging.pageSize) + 1
-        $scope.teachers_filter = ''
-        $scope.teachers.push {class: 'Lehrer', _isNew: true}
+        $scope.newUser = {
+            _isNew: true,
+            class: 'Lehrer',
+            role: 'teacher',
+            last_name: '',
+            first_name: '',
+            birthday: '',
+            login: '',
+        }
+
+        $uibModal.open({
+            templateUrl: '/lmn_users:resources/partial/addUser.modal.html',
+            controller: 'UsersAddController',
+            size: 'mg',
+            scope: $scope,
+        })
 
     $scope.extrastudents_add = () ->
-       if $scope.extrastudents.length > 0
-          $scope.paging.page_extrastudents = Math.floor(($scope.extrastudents.length - 1) / $scope.paging.pageSize) + 1
-       $scope.extrastudents_filter = ''
-       $scope.extrastudents.push {_isNew: true}
+        $scope.newUser = {
+            _isNew: true,
+            role: 'extrastudent',
+            class: '',
+            last_name: '',
+            first_name: '',
+            birthday: '',
+            login: '',
+        }
+
+        $uibModal.open({
+            templateUrl: '/lmn_users:resources/partial/addUser.modal.html',
+            controller: 'UsersAddController',
+            size: 'mg',
+            scope: $scope,
+        })
 
     $scope.courses_add = () ->
         if $scope.courses.length > 0

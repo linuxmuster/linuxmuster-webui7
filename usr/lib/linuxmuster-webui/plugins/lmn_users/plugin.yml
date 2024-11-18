@@ -42,4 +42,5 @@ resources:
     - 'resources/partial/showPassword.modal.html'
     - 'resources/partial/userDetails.modal.html'
     - 'resources/partial/addAdmin.modal.html'
+    - 'resources/partial/addUser.modal.html'
     - 'ng:lmn.users'

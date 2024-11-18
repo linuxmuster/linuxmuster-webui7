@@ -22,7 +22,7 @@ angular.module('lmn.devices').controller 'LMDevicesApplyModalController', ($scop
         $uibModalInstance.close()
 
 
-angular.module('lmn.devices').controller 'DevicesAddController', ($scope, $http, pageTitle, gettext, notify, validation, $uibModalInstance, $uibModal) ->
+angular.module('lmn.devices').controller 'DevicesAddController', ($scope, $http, pageTitle, gettext, notify, $uibModalInstance, $uibModal) ->
 
     $scope.save = () ->
         $scope.devices.unshift($scope.newDevice)

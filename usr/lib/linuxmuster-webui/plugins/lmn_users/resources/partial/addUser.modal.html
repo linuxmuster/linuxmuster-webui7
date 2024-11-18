@@ -1,0 +1,49 @@
+<div class="modal-header">
+    <h3><span translate>Add</span> {{newUser.role | translate}}</h3>
+</div>
+<div class="modal-body">
+    <form class="form-group">
+        <table class="table">
+            <tr ng:show="newUser.role == 'extrastudent' || newUser.role == 'student'">
+                <td>
+                    <span translate>Schoolclass: </span>
+                    <input class="form-control" type="text" ng:model="newUser.class">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate>Last name: </span>
+                    <input class="form-control" type="text" ng:model="newUser.last_name">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate>First name: </span>
+                    <input class="form-control" type="text" ng:model="newUser.first_name">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate>Birthday: </span>
+                    <input class="form-control" type="text" ng:model="newUser.birthday">
+                </td>
+            </tr>
+            <tr ng:show="newUser.role == 'student'">
+                <td>
+                    <span translate>Student-ID: </span>
+                    <input class="form-control" type="text" ng:model="newUser.id">
+                </td>
+            </tr>
+            <tr ng:show="newUser.role == 'extrastudent' || newUser.role == 'teacher'">
+                <td>
+                    <span translate>Desired Login: </span>
+                    <input class="form-control" type="text" ng:model="newUser.login">
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div class="modal-footer">
+    <button ng:click="save()" class="btn btn-default" translate>Add</button>
+    <button ng:click="close()" class="btn btn-default" translate>Cancel</button>
+</div>

@@ -32,7 +32,7 @@
     };
   });
 
-  angular.module('lmn.devices').controller('DevicesAddController', function($scope, $http, pageTitle, gettext, notify, validation, $uibModalInstance, $uibModal) {
+  angular.module('lmn.devices').controller('DevicesAddController', function($scope, $http, pageTitle, gettext, notify, $uibModalInstance, $uibModal) {
     $scope.save = function() {
       $scope.devices.unshift($scope.newDevice);
       $scope.devices_without_comment.unshift($scope.newDevice);

@@ -285,11 +285,6 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       'image': "far fa-file-image",
       'file': "far fa-file"
     };
-    $scope.management = {
-      'wifi': false,
-      'internet': false,
-      'printing': false
-    };
     $window.onbeforeunload = function(event) {
       if (!$scope.sessionChanged) {
         return;
@@ -351,6 +346,17 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
     $scope.extExamUsers = lmnSession.extExamUsers;
     $scope.examUsers = lmnSession.examUsers;
     $scope.examMode = lmnSession.examMode;
+    $scope.management = {
+      'wifi': $scope.session.members.filter((user) => {
+        return user.wifi === true;
+      }).length === $scope.session.members.length,
+      'internet': $scope.session.members.filter((user) => {
+        return user.internet === true;
+      }).length === $scope.session.members.length,
+      'printing': $scope.session.members.filter((user) => {
+        return user.printing === true;
+      }).length === $scope.session.members.length
+    };
     lmnSession.createWorkingDirectory($scope.session.members).then(function() {
       $scope.missing_schoolclasses = lmnSession.user_missing_membership.map(function(user) {
         return user.sophomorixAdminClass;

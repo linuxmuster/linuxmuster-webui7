@@ -19,12 +19,6 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         'file': "far fa-file",
     }
 
-    $scope.management = {
-        'wifi': false,
-        'internet': false,
-        'printing': false,
-    }
-
     $window.onbeforeunload = (event) ->
         if !$scope.sessionChanged
             return
@@ -80,6 +74,12 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
     $scope.extExamUsers = lmnSession.extExamUsers
     $scope.examUsers = lmnSession.examUsers
     $scope.examMode = lmnSession.examMode
+
+    $scope.management = {
+        'wifi': $scope.session.members.filter((user) => user.wifi == true).length == $scope.session.members.length,
+        'internet': $scope.session.members.filter((user) => user.internet == true).length == $scope.session.members.length,
+        'printing': $scope.session.members.filter((user) => user.printing == true).length == $scope.session.members.length,
+    }
 
     lmnSession.createWorkingDirectory($scope.session.members).then () ->
         $scope.missing_schoolclasses = lmnSession.user_missing_membership.map((user) -> user.sophomorixAdminClass)

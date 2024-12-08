@@ -381,16 +381,15 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
             positive: gettext('End exam mode'),
             negative: gettext('Cancel')
         }).then () ->
-            promises = []
-            for user in $scope.extExamUsers
-                promises.push($scope._stopUserExam(user))
-            for user in $scope.examUsers
-                promises.push($scope._stopUserExam(user))
             wait.modal(gettext("Stopping exam mode ..."), "spinner")
-            $q.all(promises).then () ->
-                $scope.refreshUsers()
-                $rootScope.$emit('updateWaiting', 'done')
-                notify.success(gettext('Exam mode stopped for all users.'))
+            for user in $scope.extExamUsers
+                await $scope._stopUserExam(user)
+            for user in $scope.examUsers
+                await $scope._stopUserExam(user)
+
+            $scope.refreshUsers()
+            $rootScope.$emit('updateWaiting', 'done')
+            notify.success(gettext('Exam mode stopped for all users.'))
 
     $scope._checkExamUser = (username) ->
         if username.endsWith('-exam')

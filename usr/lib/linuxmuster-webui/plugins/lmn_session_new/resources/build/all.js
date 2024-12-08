@@ -774,25 +774,22 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         text: gettext('Do you really want to end all running exams?'),
         positive: gettext('End exam mode'),
         negative: gettext('Cancel')
-      }).then(function() {
-        var i, j, len, len1, promises, ref, ref1, user;
-        promises = [];
+      }).then(async function() {
+        var i, j, len, len1, ref, ref1, user;
+        wait.modal(gettext("Stopping exam mode ..."), "spinner");
         ref = $scope.extExamUsers;
         for (i = 0, len = ref.length; i < len; i++) {
           user = ref[i];
-          promises.push($scope._stopUserExam(user));
+          await $scope._stopUserExam(user);
         }
         ref1 = $scope.examUsers;
         for (j = 0, len1 = ref1.length; j < len1; j++) {
           user = ref1[j];
-          promises.push($scope._stopUserExam(user));
+          await $scope._stopUserExam(user);
         }
-        wait.modal(gettext("Stopping exam mode ..."), "spinner");
-        return $q.all(promises).then(function() {
-          $scope.refreshUsers();
-          $rootScope.$emit('updateWaiting', 'done');
-          return notify.success(gettext('Exam mode stopped for all users.'));
-        });
+        $scope.refreshUsers();
+        $rootScope.$emit('updateWaiting', 'done');
+        return notify.success(gettext('Exam mode stopped for all users.'));
       });
     };
     $scope._checkExamUser = function(username) {

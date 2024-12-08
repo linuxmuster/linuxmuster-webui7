@@ -500,13 +500,11 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
     $scope.collectAll = (command) ->
         # command is copy or move
 
-        promises = []
         now = $scope.now()
         transfer_directory = "#{$scope.session.type}_#{$scope.session.name}_#{now}"
         collect_path = "#{identity.profile.homeDirectory}\\transfer\\collected\\#{transfer_directory}"
         smbclient.createDirectory(collect_path)
 
-        promises = []
         for participant in $scope.session.members
             if $scope.isStudent(participant)
                 dst = "#{collect_path}\\#{participant.sAMAccountName}"
@@ -514,12 +512,12 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
                     "path": "#{participant.homeDirectory}\\transfer\\#{$scope.identity.user}\\_collect",
                     "name": ""
                 }]
-                promises.push($scope._collect(command, items, dst))
-        $q.all(promises).then () ->
-            # _collect directory was moved, so recreating empty working diretories for all
-            lmnSession.createWorkingDirectory($scope.session.members).then () ->
-                $scope.missing_schoolclasses = lmnSession.user_missing_membership.map((user) -> user.sophomorixAdminClass).join(',')
-            notify.success(gettext("Files collected!"))
+                await $scope._collect(command, items, dst)
+
+        # _collect directory was moved, so recreating empty working diretories for all
+        lmnSession.createWorkingDirectory($scope.session.members).then () ->
+            $scope.missing_schoolclasses = lmnSession.user_missing_membership.map((user) -> user.sophomorixAdminClass).join(',')
+        notify.success(gettext("Files collected!"))
 
     $scope.collectUser = (command, participant) ->
         # participant is only one user

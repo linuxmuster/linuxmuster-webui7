@@ -949,15 +949,13 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       }
       return collectPromise;
     };
-    $scope.collectAll = function(command) {
-      var collect_path, dst, i, items, len, now, participant, promises, ref, transfer_directory;
+    $scope.collectAll = async function(command) {
+      var collect_path, dst, i, items, len, now, participant, ref, transfer_directory;
       // command is copy or move
-      promises = [];
       now = $scope.now();
       transfer_directory = `${$scope.session.type}_${$scope.session.name}_${now}`;
       collect_path = `${identity.profile.homeDirectory}\\transfer\\collected\\${transfer_directory}`;
       smbclient.createDirectory(collect_path);
-      promises = [];
       ref = $scope.session.members;
       for (i = 0, len = ref.length; i < len; i++) {
         participant = ref[i];
@@ -969,18 +967,16 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
               "name": ""
             }
           ];
-          promises.push($scope._collect(command, items, dst));
+          await $scope._collect(command, items, dst);
         }
       }
-      return $q.all(promises).then(function() {
-        // _collect directory was moved, so recreating empty working diretories for all
-        lmnSession.createWorkingDirectory($scope.session.members).then(function() {
-          return $scope.missing_schoolclasses = lmnSession.user_missing_membership.map(function(user) {
-            return user.sophomorixAdminClass;
-          }).join(',');
-        });
-        return notify.success(gettext("Files collected!"));
+      // _collect directory was moved, so recreating empty working diretories for all
+      lmnSession.createWorkingDirectory($scope.session.members).then(function() {
+        return $scope.missing_schoolclasses = lmnSession.user_missing_membership.map(function(user) {
+          return user.sophomorixAdminClass;
+        }).join(',');
       });
+      return notify.success(gettext("Files collected!"));
     };
     $scope.collectUser = function(command, participant) {
       var choose_path, collect_path, now, print_path, transfer_directory;

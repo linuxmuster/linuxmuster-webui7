@@ -930,22 +930,24 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
       seconds = $scope._leading_zero(date.getSeconds());
       return `${year}${month}${day}-${hours}${minutes}${seconds}`;
     };
-    $scope._collect = function(command, items, collect_path) {
-      var i, item, j, len, len1, notify_success, promises;
-      promises = [];
+    $scope._collect = async function(command, items, collect_path) {
+      var collectPromise, i, item, j, len, len1, notify_success;
+      collectPromise = new Promise(function(resolve, reject) {
+        return resolve();
+      });
       if (command === 'copy') {
         for (i = 0, len = items.length; i < len; i++) {
           item = items[i];
-          promises.push(smbclient.copy(item.path, collect_path + '/' + item.name, notify_success = false));
+          await smbclient.copy(item.path, collect_path + '/' + item.name, notify_success = false);
         }
       }
       if (command === 'move') {
         for (j = 0, len1 = items.length; j < len1; j++) {
           item = items[j];
-          promises.push(smbclient.move(item.path, collect_path + '/' + item.name, notify_success = false));
+          await smbclient.move(item.path, collect_path + '/' + item.name, notify_success = false);
         }
       }
-      return $q.all(promises);
+      return collectPromise;
     };
     $scope.collectAll = function(command) {
       var collect_path, dst, i, items, len, now, participant, promises, ref, transfer_directory;

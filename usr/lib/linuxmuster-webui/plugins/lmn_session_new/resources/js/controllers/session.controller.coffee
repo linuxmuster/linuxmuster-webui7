@@ -488,14 +488,14 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
         return "#{year}#{month}#{day}-#{hours}#{minutes}#{seconds}"
 
     $scope._collect = (command, items, collect_path) ->
-        promises = []
+        collectPromise = new Promise((resolve, reject) -> resolve())
         if command is 'copy'
             for item in items
-                promises.push(smbclient.copy(item.path, collect_path + '/' + item.name, notify_success=false))
+                await smbclient.copy(item.path, collect_path + '/' + item.name, notify_success=false)
         if command is 'move'
             for item in items
-                promises.push(smbclient.move(item.path, collect_path + '/' + item.name, notify_success=false))
-        return $q.all(promises)
+                await smbclient.move(item.path, collect_path + '/' + item.name, notify_success=false)
+        return collectPromise
 
     $scope.collectAll = (command) ->
         # command is copy or move

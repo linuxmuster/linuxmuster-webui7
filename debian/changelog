@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.2.70) lmn72; urgency=medium
+
+  * [session] Sequential mode for collect. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 08 Dec 2024 14:35:49 +0100
+
 linuxmuster-webui7 (7.2.69) lmn72; urgency=medium
 
   * [session] Fix first managmeentgroup setting. 

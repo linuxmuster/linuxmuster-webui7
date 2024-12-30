@@ -25,7 +25,6 @@ pytz
 requests
 reconfigure
 scrypt
-setuptools==58.2.0
 simplejson>=3.16.0
 smbprotocol==1.14.0
 unicodecsv==0.14.1

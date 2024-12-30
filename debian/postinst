@@ -22,7 +22,9 @@ create_ajenti_venv()
 migrate_to_venv()
 {
     # Checking if Ajenti is already installed in a venv
-    . /opt/ajenti/bin/activate 2>/dev/null && return
+    if [ -f /opt/ajenti/bin/activate ] ; then
+      return
+    fi
 
     /usr/bin/python3 -m pip uninstall -y aj ajenti-panel ajenti.plugin.ace ajenti.plugin.core ajenti.plugin.dashboard ajenti.plugin.filesystem ajenti.plugin.plugins ajenti.plugin.settings ajenti.plugin.session-list
     create_ajenti_venv
@@ -182,7 +184,7 @@ EOF
             systemctl daemon-reload
             systemctl start linuxmuster-webui
             msg "---------------------------------------------------------------
-Updating linuxmuster-webui ..done
+Updating linuxmuster-webui ...done
 ---------------------------------------------------------------"
         fi
     ;;

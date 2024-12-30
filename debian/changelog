@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.2.76) lmn72-testing; urgency=medium
+
+  *  Handle pip dependencies and rename venv.
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 30 Dec 2024 19:07:35 +0100
+
 linuxmuster-webui7 (7.2.75) lmn72-testing; urgency=medium
 
   * Update Kerberos dependencies.

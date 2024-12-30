@@ -5,7 +5,7 @@ After=network.target
 [Service]
 Type=forking
 PIDFile=/var/run/ajenti.pid
-ExecStart=/opt/ajenti/bin/python3 /opt/ajenti/bin/ajenti-panel -d --stock-plugins --plugins /usr/lib/linuxmuster-webui/plugins
+ExecStart=/opt/linuxmuster/bin/python3 /opt/linuxmuster/bin/ajenti-panel -d --stock-plugins --plugins /usr/lib/linuxmuster-webui/plugins
 
 [Install]
 WantedBy=multi-user.target

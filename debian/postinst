@@ -13,21 +13,21 @@ msg()
     echo
 }
 
-create_ajenti_venv()
+create_linuxmuster_venv()
 {
     msg "Setting up virtual env in /opt"
-    /usr/bin/python3 -m venv /opt/ajenti --system-site-packages
+    /usr/bin/python3 -m venv /opt/linuxmuster --system-site-packages
 }
 
 migrate_to_venv()
 {
     # Checking if Ajenti is already installed in a venv
-    if [ -f /opt/ajenti/bin/activate ] ; then
+    if [ -f /opt/linuxmuster/bin/activate ] ; then
       return
     fi
 
     /usr/bin/python3 -m pip uninstall -y aj ajenti-panel ajenti.plugin.ace ajenti.plugin.core ajenti.plugin.dashboard ajenti.plugin.filesystem ajenti.plugin.plugins ajenti.plugin.settings ajenti.plugin.session-list
-    create_ajenti_venv
+    create_linuxmuster_venv
 }
 
 case "$1" in
@@ -50,9 +50,9 @@ case "$1" in
 Installing linuxmuster-webui
 --------------------------------------------------------------------"
 
-            create_ajenti_venv
-            . /opt/ajenti/bin/activate
-            PYTHON3=/opt/ajenti/bin/python3
+            create_linuxmuster_venv
+            . /opt/linuxmuster/bin/activate
+            PYTHON3=/opt/linuxmuster/bin/python3
 
             # do first install
             $PYTHON3 -m pip install -U pip wheel #setuptools #distribute
@@ -127,8 +127,8 @@ Updating linuxmuster-webui
             systemctl stop linuxmuster-webui
 
             migrate_to_venv
-            . /opt/ajenti/bin/activate
-            PYTHON3=/opt/ajenti/bin/python3
+            . /opt/linuxmuster/bin/activate
+            PYTHON3=/opt/linuxmuster/bin/python3
 
             msg "Upgrade pip to latest version"
             $PYTHON3 -m pip install pip -U

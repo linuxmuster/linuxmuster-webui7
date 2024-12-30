@@ -1,5 +1,8 @@
-#!/bin/sh
+#! /bin/sh
 set -e
+
+# Hide root warning for pip
+export PIP_ROOT_USER_ACTION=ignore
 
 msg()
 {
@@ -8,6 +11,21 @@ msg()
     # Bold and orange font for linuxmuster.net
     echo "\e[1m\e[38;5;214m$message\e[39m\e[0m"
     echo
+}
+
+create_ajenti_venv()
+{
+    msg "Setting up virtual env in /opt"
+    /usr/bin/python3 -m venv /opt/ajenti --system-site-packages
+}
+
+migrate_to_venv()
+{
+    # Checking if Ajenti is already installed in a venv
+    source /opt/ajenti/bin/activate 2>/dev/null && return
+
+    /usr/bin/python3 -m pip uninstall -y aj ajenti-panel ajenti.plugin.ace ajenti.plugin.core ajenti.plugin.dashboard ajenti.plugin.filesystem ajenti.plugin.plugins ajenti.plugin.settings ajenti.plugin.session-list
+    create_ajenti_venv
 }
 
 case "$1" in
@@ -26,14 +44,18 @@ case "$1" in
 
         if [ ! -f $webuietc/.installed ];
         then
-            msg "---------------------------------------------------------------
+            msg "--------------------------------------------------------------------
 Installing linuxmuster-webui
----------------------------------------------------------------"
+--------------------------------------------------------------------"
+
+            create_ajenti_venv
+            source /opt/ajenti/bin/activate
+            PYTHON3=/opt/ajenti/bin/python3
 
             # do first install
-            /usr/bin/python3 -m pip install -U pip wheel #setuptools #distribute
+            $PYTHON3 -m pip install -U pip wheel #setuptools #distribute
             hash -r
-            /usr/bin/python3 -m pip install -r $webuietc/requirements.txt
+            $PYTHON3 -m pip install -r $webuietc/requirements.txt
 
             msg "Copy default config files for webui"
             mkdir -p /etc/linuxmuster/webui/
@@ -80,28 +102,34 @@ EOF
             systemctl restart linuxmuster-webui
 
             # generate permissions file
-            /usr/bin/python3 $update_scripts/merge-permissions.py
+            $PYTHON3 $update_scripts/merge-permissions.py
 
             touch $webuietc/.installed
             ipaddress=$(hostname --ip-address)
-            msg "---------------------------------------------------------------
-linuxmuster-webui is now installed but not initialised!  http://$ipaddress
-----------------------------------------------------------------"
+            msg "--------------------------------------------------------------------
+linuxmuster-webui is now installed but not initialised!
+
+Please open http://$ipaddress in a browser to end the configuration
+--------------------------------------------------------------------"
 
         else
             # do update
-            msg "---------------------------------------------------------------
+            msg "--------------------------------------------------------------------
 Updating linuxmuster-webui
----------------------------------------------------------------"
+--------------------------------------------------------------------"
 
             msg "Stop linuxmuster-webui"
             systemctl stop linuxmuster-webui
 
+            migrate_to_venv
+            source /opt/ajenti/bin/activate
+            PYTHON3=/opt/ajenti/bin/python3
+
             msg "Upgrade pip to latest version"
-            /usr/bin/python3 -m pip install pip -U
+            $PYTHON3 -m pip install pip -U
 
             msg "Remove deprecated plugins"
-            /usr/bin/python3 -m pip uninstall -y ajenti.plugin.auth-users ajenti.plugin.session-list
+            $PYTHON3 -m pip uninstall -y ajenti.plugin.auth-users
 
             # Always backup config file if things are going bad
             msg "Backing up and updating config.yml"
@@ -109,10 +137,10 @@ Updating linuxmuster-webui
             cp -a $wucfg $wucfg.bak
 
             # Add new email parameters if needed ( Ajenti 2.1.44 )
-            /usr/bin/python3 $update_scripts/update_ajenti_config.py
+            $PYTHON3 $update_scripts/update_ajenti_config.py
 
             # Split custom fields to /etc/linuxmuster/sophomorix/default-school (multischool-7.1.11)
-            /usr/bin/python3 $update_scripts/clean_webui_config.py
+            $PYTHON3 $update_scripts/clean_webui_config.py
 
             # Eventually move existing holiday file to /etc/linuxmuster/sophomorix/default-school (multischool-7.1.11)
             if [ -f /etc/linuxmuster/holidays.yml ] ; then
@@ -121,19 +149,20 @@ Updating linuxmuster-webui
 
             msg "Check requirements"
             # Update Ajenti 2.1.44 : remove deprecated socketio library to avoid conflicts
-            /usr/bin/python3 -m pip uninstall -y gevent-socketio-hartwork
+            $PYTHON3 -c 'from socketio import mixins' 2>/dev/null && $PYTHON3 -m pip uninstall -y gevent-socketio-hartwork
 
             # Requirements must always be checked
-            /usr/bin/python3 -m pip install -r $webuietc/requirements.txt
+            $PYTHON3 -m pip install -r $webuietc/requirements.txt
             
             msg "Set default sophomorix webui rights"
-            /usr/bin/python3 $update_scripts/merge-permissions.py
+            $PYTHON3 $update_scripts/merge-permissions.py
             /usr/sbin/sophomorix-ui
             
             # Recreate upload folder using the right permissions
             msg "Verifying upload folder"
             bash $install_scripts/create_webuiUploadFolder.sh
 
+            # Temporary folder for webdav downloads
             mkdir -p /srv/.webdav
             chmod 777 /srv/.webdav
 

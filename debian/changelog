@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.2.74) lmn72-testing; urgency=medium
+
+  * Conventional file test for venv. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 30 Dec 2024 16:23:30 +0100
+
 linuxmuster-webui7 (7.2.73) lmn72-testing; urgency=medium
 
   * Remove source for shell compatibility.

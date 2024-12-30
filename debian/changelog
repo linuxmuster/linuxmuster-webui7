@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.2.73) lmn72-testing; urgency=medium
+
+  * Remove source for shell compatibility.
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 30 Dec 2024 15:55:21 +0100
+
 linuxmuster-webui7 (7.2.72) lmn72-testing; urgency=medium
 
   * Install Ajenti in a venv.

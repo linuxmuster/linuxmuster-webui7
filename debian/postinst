@@ -22,7 +22,7 @@ create_ajenti_venv()
 migrate_to_venv()
 {
     # Checking if Ajenti is already installed in a venv
-    source /opt/ajenti/bin/activate 2>/dev/null && return
+    . /opt/ajenti/bin/activate 2>/dev/null && return
 
     /usr/bin/python3 -m pip uninstall -y aj ajenti-panel ajenti.plugin.ace ajenti.plugin.core ajenti.plugin.dashboard ajenti.plugin.filesystem ajenti.plugin.plugins ajenti.plugin.settings ajenti.plugin.session-list
     create_ajenti_venv
@@ -49,7 +49,7 @@ Installing linuxmuster-webui
 --------------------------------------------------------------------"
 
             create_ajenti_venv
-            source /opt/ajenti/bin/activate
+            . /opt/ajenti/bin/activate
             PYTHON3=/opt/ajenti/bin/python3
 
             # do first install
@@ -122,7 +122,7 @@ Updating linuxmuster-webui
             systemctl stop linuxmuster-webui
 
             migrate_to_venv
-            source /opt/ajenti/bin/activate
+            . /opt/ajenti/bin/activate
             PYTHON3=/opt/ajenti/bin/python3
 
             msg "Upgrade pip to latest version"

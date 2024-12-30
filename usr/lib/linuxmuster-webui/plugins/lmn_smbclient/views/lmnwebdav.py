@@ -238,10 +238,14 @@ class Handler(HttpPlugin):
     @options(r'/webdav/(?P<path>.*)')
     @endpoint(api=True, auth=False)
     def handle_api_webdav_options(self, http_context, path=''):
-        http_context.add_header("Allow", "OPTIONS, GET, HEAD, PUT, DELETE, COPY, MOVE")
-        http_context.add_header("Allow", "MKCOL, PROPFIND")
+        http_context.add_header("Allow", "OPTIONS, GET, HEAD, PUT, DELETE, COPY, MOVE, MKCOL, PROPFIND")
         http_context.add_header("DAV", "1, 3")
         return ''
+
+    @options(r'/webdav')
+    @endpoint(api=True, auth=False)
+    def handle_api_webdav_bulk_options(self, http_context):
+        return self.handle_api_webdav_options(http_context, path='')
 
     @propfind(r'/webdav/(?P<path>.*)')
     @endpoint()
@@ -329,6 +333,11 @@ class Handler(HttpPlugin):
         http_context.add_header('Content-Type', 'application/xml; charset="utf-8"')
 
         return response.make_propfind_response(items)
+
+    @propfind(r'/webdav')
+    @endpoint()
+    def handle_api_webdav_bulk_propfind(self, http_context):
+        return self.handle_api_webdav_propfind(http_context, path='')
 
     @mkcol(r'/webdav/(?P<path>.*)')
     @endpoint()

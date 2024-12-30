@@ -41,7 +41,7 @@ class WebdavXMLResponse:
             xml_href.text = href
             self._make_item_propstat(xml_response, properties)
 
-        return etree.tostring(xml_root).decode()
+        return '<?xml version="1.0"?>\n' + etree.tostring(xml_root).decode()
 
     def _make_item_propstat(self, xml_response, properties):
         propstat_200 = etree.SubElement(xml_response, "{DAV:}propstat")

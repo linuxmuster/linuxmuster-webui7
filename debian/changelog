@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.2.72) lmn72-testing; urgency=medium
+
+  * Install Ajenti in a venv.
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 30 Dec 2024 15:26:56 +0100
+
 linuxmuster-webui7 (7.2.71) lmn72; urgency=medium
 
   * [session] Don't filter samaccountname in stop exam.  

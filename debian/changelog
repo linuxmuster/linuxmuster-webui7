@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.2.75) lmn72-testing; urgency=medium
+
+  * Update Kerberos dependencies.
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 30 Dec 2024 16:58:09 +0100
+
 linuxmuster-webui7 (7.2.74) lmn72-testing; urgency=medium
 
   * Conventional file test for venv. 

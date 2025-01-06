@@ -35,6 +35,10 @@ if os.path.isfile(config_path):
         # Display options
         display_options = lmconfig['linuxmuster'].get('display', {})
         display_options['show_webdav'] = display_options.get('show_webdav', True)
+
+        # Roles auth
+        auth_config = lmconfig['linuxmuster'].get('auth', {})
+        allowed_roles = auth_config.get('allowed_roles', ['globaladministrator', 'schooladministrator', 'teacher', 'student'])
 else:
     lmconfig = {}
     ldap_config = {}

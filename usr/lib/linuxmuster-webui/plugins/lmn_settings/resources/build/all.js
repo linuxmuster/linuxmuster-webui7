@@ -362,6 +362,54 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', function
         return core.restart();
     };
 
+    $scope.getTfaConfig = function () {
+        config.getTfaConfig().then(function (tfaConfig) {
+            $scope.tfa_config = tfaConfig;
+            $scope.tfaList = [];
+            Object.entries($scope.tfa_config).forEach(function (_ref) {
+                var _ref2 = babelHelpers.slicedToArray(_ref, 2),
+                    user_prov = _ref2[0],
+                    totp = _ref2[1];
+
+                user = user_prov.split("@")[0];
+                authprov = user_prov.split("@")[1];
+                var _iteratorNormalCompletion = true;
+                var _didIteratorError = false;
+                var _iteratorError = undefined;
+
+                try {
+                    for (var _iterator = totp.totp[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                        tfa = _step.value;
+
+                        $scope.tfaList.push({ "user": user, "provider": authprov, "created": tfa.created, "desc": tfa.description });
+                    }
+                } catch (err) {
+                    _didIteratorError = true;
+                    _iteratorError = err;
+                } finally {
+                    try {
+                        if (!_iteratorNormalCompletion && _iterator.return) {
+                            _iterator.return();
+                        }
+                    } finally {
+                        if (_didIteratorError) {
+                            throw _iteratorError;
+                        }
+                    }
+                }
+            });
+        });
+    };
+
+    $scope.deleteTfa = function (tfa) {
+        data = { 'type': 'delete', 'userid': tfa.user + '@' + tfa.provider, 'timestamp': '' + tfa.created };
+        config.deleteTfa(data).then(function () {
+            notify.success("Deleted !");
+            index = $scope.tfaList.indexOf(tfa);
+            $scope.tfaList.splice(index, 1);
+        });
+    };
+
     $scope.checkEdulution = function () {
 
         $scope.edulutionStatus = {

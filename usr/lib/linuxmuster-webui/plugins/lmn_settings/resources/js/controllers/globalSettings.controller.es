@@ -144,6 +144,29 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope,
 
     $scope.restart = () => core.restart();
 
+    $scope.getTfaConfig = () => {
+        config.getTfaConfig().then((tfaConfig) => {
+            $scope.tfa_config = tfaConfig;
+            $scope.tfaList = [];
+            Object.entries($scope.tfa_config).forEach(([user_prov, totp]) => {
+                user = user_prov.split("@")[0];
+                authprov = user_prov.split("@")[1];
+                for (tfa of totp.totp) {
+                    $scope.tfaList.push({"user": user, "provider": authprov, "created": tfa.created, "desc": tfa.description});
+                }
+            });
+        });
+    };
+
+    $scope.deleteTfa = (tfa) => {
+        data = {'type':'delete', 'userid': `${tfa.user}@${tfa.provider}`, 'timestamp': `${tfa.created}`};
+        config.deleteTfa(data).then(() => {
+            notify.success("Deleted !");
+            index = $scope.tfaList.indexOf(tfa);
+            $scope.tfaList.splice(index, 1);
+        });
+    };
+
     $scope.checkEdulution = () => {
 
         $scope.edulutionStatus = {

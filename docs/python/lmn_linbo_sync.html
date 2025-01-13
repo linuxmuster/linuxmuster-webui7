@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>API: aj.plugins.lmn_linbo_sync &mdash; linuxmuster-webui7 7.2.14 documentation</title>
+  <title>API: aj.plugins.lmn_linbo_sync &mdash; linuxmuster-webui7 7.2.71 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
@@ -37,7 +37,7 @@
               <img src="../_static/logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                7.2.14
+                7.2.71
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -61,7 +61,6 @@
 <li class="toctree-l1"><a class="reference internal" href="lmn_docker.html">API: aj.plugins.lmn_docker</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_groupmembership.html">API: aj.plugins.lmn_groupmembership</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_landingpage.html">API: aj.plugins.lmn_landingpage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lmn_linbo.html">API: aj.plugins.lmn_linbo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_linbo4.html">API: aj.plugins.lmn_linbo4</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">API: aj.plugins.lmn_linbo_sync</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#module-aj.plugins.lmn_linbo_sync.api">LMN Linbo Sync Api</a></li>
@@ -109,7 +108,7 @@
 <dd><p>Check command parameters sent to linbo-remote command and build whole command.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>cmd_parameters</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – All parameters to call linbo-remote</p>
+<dd class="field-odd"><p><strong>cmd_parameters</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – All parameters to call linbo-remote</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>One line linbo-remote command</p>
@@ -135,7 +134,7 @@
 <dd class="field-even"><p>Devices list</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)">dict</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -146,7 +145,7 @@
 <dd><p>Convert a dict of ports to an OS string.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>openPorts</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – The dict of open ports (key: port number, value: port state)</p>
+<dd class="field-odd"><p><strong>openPorts</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – The dict of open ports (key: port number, value: port state)</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>OS type (Linbo, OS Linux, OS Windows, OS Unknown)</p>
@@ -164,13 +163,13 @@
 The workstations dict is set in the function list_workstations().</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>workstations</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Dict containing all workstations</p>
+<dd class="field-odd"><p><strong>workstations</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – Dict containing all workstations</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Completed workstations dict with linbo informations</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)">dict</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -182,13 +181,13 @@ The workstations dict is set in the function list_workstations().</p>
 The criteria for Linbo is, that ONLY port 2222 is open</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>openPorts</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – The dict of open ports (key: port number, value: port state)</p>
+<dd class="field-odd"><p><strong>openPorts</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – The dict of open ports (key: port number, value: port state)</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Whether it’s a Linbo host</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -200,13 +199,13 @@ The criteria for Linbo is, that ONLY port 2222 is open</p>
 The criteria for Linux is, that port 22 is open and 135 is closed.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>openPorts</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – The dict of open ports (key: port number, value: port state)</p>
+<dd class="field-odd"><p><strong>openPorts</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – The dict of open ports (key: port number, value: port state)</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Whether it’s a Linux host</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -218,13 +217,13 @@ The criteria for Linux is, that port 22 is open and 135 is closed.</p>
 The criteria for Windows is, that port 135 is open and 22 is not open.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>openPorts</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – The dict of open ports (key: port number, value: port state)</p>
+<dd class="field-odd"><p><strong>openPorts</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – The dict of open ports (key: port number, value: port state)</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Whether it’s a Windows host</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -256,13 +255,13 @@ The criteria for Windows is, that port 135 is open and 22 is not open.</p>
 and status attribute to use as class for bootstrap.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>workstations</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Dict of workstations set in list_workstations().</p>
+<dd class="field-odd"><p><strong>workstations</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – Dict of workstations set in list_workstations().</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Completed dict of workstations</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)">dict</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -279,7 +278,7 @@ and status attribute to use as class for bootstrap.</p>
 <dd class="field-even"><p>Dict with all linbo informations for all workstations.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)">dict</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -307,7 +306,7 @@ and status attribute to use as class for bootstrap.</p>
 <dd><p>Run linbo command.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>command</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – Linbo command</p>
+<dd class="field-odd"><p><strong>command</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – Linbo command</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Error as string if down, or 0 if successfull</p>
@@ -354,7 +353,7 @@ and status attribute to use as class for bootstrap.</p>
 <dd class="field-even"><p>Workstations dict with all linbo informations</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)">dict</a> or <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)">list</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a> or <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -412,7 +411,7 @@ and status attribute to use as class for bootstrap.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright Andreas Till &amp; Arnaud Kientz - 2023.</p>
+    <p>&#169; Copyright Andreas Till &amp; Arnaud Kientz - 2025.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

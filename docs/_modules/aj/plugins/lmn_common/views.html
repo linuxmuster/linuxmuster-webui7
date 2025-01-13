@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>aj.plugins.lmn_common.views &mdash; linuxmuster-webui7 7.2.14 documentation</title>
+  <title>aj.plugins.lmn_common.views &mdash; linuxmuster-webui7 7.2.71 documentation</title>
       <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/theme_overrides.css" type="text/css" />
@@ -34,7 +34,7 @@
               <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                7.2.14
+                7.2.71
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
@@ -58,7 +58,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_docker.html">API: aj.plugins.lmn_docker</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_groupmembership.html">API: aj.plugins.lmn_groupmembership</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_landingpage.html">API: aj.plugins.lmn_landingpage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_linbo.html">API: aj.plugins.lmn_linbo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_linbo4.html">API: aj.plugins.lmn_linbo4</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_linbo_sync.html">API: aj.plugins.lmn_linbo_sync</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_quotas.html">API: aj.plugins.lmn_quotas</a></li>
@@ -108,6 +107,7 @@
 <span class="kn">from</span> <span class="nn">aj.api.http</span> <span class="kn">import</span> <span class="n">get</span><span class="p">,</span> <span class="n">post</span><span class="p">,</span> <span class="n">HttpPlugin</span>
 <span class="kn">from</span> <span class="nn">aj.api.endpoint</span> <span class="kn">import</span> <span class="n">endpoint</span>
 <span class="kn">from</span> <span class="nn">aj.plugins.lmn_common.lmnfile</span> <span class="kn">import</span> <span class="n">LMNFile</span>
+<span class="kn">from</span> <span class="nn">aj.plugins.lmn_common.api</span> <span class="kn">import</span> <span class="n">display_options</span>
 
 
 <div class="viewcode-block" id="Handler"><a class="viewcode-back" href="../../../../python/lmn_common.html#aj.plugins.lmn_common.views.Handler">[docs]</a><span class="nd">@component</span><span class="p">(</span><span class="n">HttpPlugin</span><span class="p">)</span>
@@ -120,7 +120,7 @@
 <div class="viewcode-block" id="Handler.handle_api_log"><a class="viewcode-back" href="../../../../python/lmn_common.html#aj.plugins.lmn_common.views.Handler.handle_api_log">[docs]</a>    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/log(?P&lt;path&gt;.+)&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Query a part of a log file to simulate a continuously flow on the</span>
 <span class="sd">        frontend.</span>
 
@@ -132,58 +132,64 @@
 <span class="sd">        :rtype: string</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">getuid</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">http_context</span><span class="o">.</span><span class="n">respond_forbidden</span><span class="p">()</span>
             <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+            <span class="n">http_context</span><span class="o">.</span><span class="n">respond_not_found</span><span class="p">()</span>
+            <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">http_context</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;offset&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">)))</span>
             <span class="k">return</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span></div>
 
-    <span class="c1">## TODO authorize</span>
+    <span class="c1">## DEPRECATED</span>
     <span class="c1">## Used in lmn_session/resources/js/controllers/session.controller.coffee:76</span>
-<div class="viewcode-block" id="Handler.handle_api_create_dir"><a class="viewcode-back" href="../../../../python/lmn_common.html#aj.plugins.lmn_common.views.Handler.handle_api_create_dir">[docs]</a>    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/create-dir&#39;</span><span class="p">)</span>
-    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">handle_api_create_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Create directory with given path, ignoring errors.</span>
+    <span class="c1"># @post(r&#39;/api/lmn/create-dir&#39;)</span>
+    <span class="c1"># @endpoint(api=True)</span>
+    <span class="c1"># def handle_api_create_dir(self, http_context):</span>
+    <span class="c1">#     &quot;&quot;&quot;</span>
+    <span class="c1">#     Create directory with given path, ignoring errors.</span>
+    <span class="c1">#</span>
+    <span class="c1">#     :param http_context: HttpContext</span>
+    <span class="c1">#     :type http_context: HttpContext</span>
+    <span class="c1">#     :return: True if success</span>
+    <span class="c1">#     :rtype: bool or None</span>
+    <span class="c1">#     &quot;&quot;&quot;</span>
+    <span class="c1">#</span>
+    <span class="c1">#     filepath = http_context.json_body()[&#39;filepath&#39;]</span>
+    <span class="c1">#     if not os.path.exists(filepath):</span>
+    <span class="c1">#         os.makedirs(filepath)</span>
+    <span class="c1">#         return True</span>
+    <span class="c1">#     return</span>
 
-<span class="sd">        :param http_context: HttpContext</span>
-<span class="sd">        :type http_context: HttpContext</span>
-<span class="sd">        :return: True if success</span>
-<span class="sd">        :rtype: bool or None</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="n">filepath</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;filepath&#39;</span><span class="p">]</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
-            <span class="k">return</span> <span class="kc">True</span>
-        <span class="k">return</span></div>
-
-    <span class="c1">## TODO authorize</span>
-    <span class="c1">## Used in lmn_session/resources/js/controllers/session.controller.coffee:76</span>
-<div class="viewcode-block" id="Handler.handle_api_remove_dir"><a class="viewcode-back" href="../../../../python/lmn_common.html#aj.plugins.lmn_common.views.Handler.handle_api_remove_dir">[docs]</a>    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/remove-dir&#39;</span><span class="p">)</span>
-    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">handle_api_remove_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Remove directory and its content with given path, ignoring errors.</span>
-
-<span class="sd">        :param http_context: HttpContext</span>
-<span class="sd">        :type http_context: HttpContext</span>
-<span class="sd">        :return: True if success</span>
-<span class="sd">        :rtype: bool or None</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="n">filepath</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;filepath&#39;</span><span class="p">]</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
-            <span class="k">return</span>
-        <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">ignore_errors</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="k">return</span> <span class="kc">True</span></div>
+    <span class="c1">## DEPRECATED</span>
+    <span class="c1"># ## Used in lmn_session/resources/js/controllers/session.controller.coffee:76</span>
+    <span class="c1"># @post(r&#39;/api/lmn/remove-dir&#39;)</span>
+    <span class="c1"># @endpoint(api=True)</span>
+    <span class="c1"># def handle_api_remove_dir(self, http_context):</span>
+    <span class="c1">#     &quot;&quot;&quot;</span>
+    <span class="c1">#     Remove directory and its content with given path, ignoring errors.</span>
+    <span class="c1">#</span>
+    <span class="c1">#     :param http_context: HttpContext</span>
+    <span class="c1">#     :type http_context: HttpContext</span>
+    <span class="c1">#     :return: True if success</span>
+    <span class="c1">#     :rtype: bool or None</span>
+    <span class="c1">#     &quot;&quot;&quot;</span>
+    <span class="c1">#</span>
+    <span class="c1">#     filepath = http_context.json_body()[&#39;filepath&#39;]</span>
+    <span class="c1">#     if not os.path.exists(filepath):</span>
+    <span class="c1">#         return</span>
+    <span class="c1">#     shutil.rmtree(filepath, ignore_errors=True)</span>
+    <span class="c1">#     return True</span>
 
     <span class="c1">## TODO authorize</span>
     <span class="c1">## Used in directive upload, lmFileBackups and lmn_session/resources/js/controllers/session.controller.coffee:60</span>
-<div class="viewcode-block" id="Handler.handle_api_remove_file"><a class="viewcode-back" href="../../../../python/lmn_common.html#aj.plugins.lmn_common.views.Handler.handle_api_remove_file">[docs]</a>    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/remove-file&#39;</span><span class="p">)</span> <span class="c1">## TODO authorize</span>
+<div class="viewcode-block" id="Handler.handle_api_remove_file"><a class="viewcode-back" href="../../../../python/lmn_common.html#aj.plugins.lmn_common.views.Handler.handle_api_remove_file">[docs]</a>    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/remove-file&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_remove_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Remove file with given path.</span>
 
 <span class="sd">        :param http_context: HttpContext</span>
@@ -192,44 +198,50 @@
 <span class="sd">        :rtype: bool or None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">getuid</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">http_context</span><span class="o">.</span><span class="n">respond_forbidden</span><span class="p">()</span>
+            <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+
         <span class="n">filepath</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;filepath&#39;</span><span class="p">]</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
-            <span class="k">return</span>
+            <span class="n">http_context</span><span class="o">.</span><span class="n">respond_not_found</span><span class="p">()</span>
+            <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+
         <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">True</span></div>
 
-    <span class="c1">## TODO authorize</span>
+    <span class="c1">## DEPRECATED</span>
     <span class="c1">## Used in directive upload</span>
-<div class="viewcode-block" id="Handler.handle_api_chown"><a class="viewcode-back" href="../../../../python/lmn_common.html#aj.plugins.lmn_common.views.Handler.handle_api_chown">[docs]</a>    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/chown&#39;</span><span class="p">)</span> <span class="c1">## TODO authorize</span>
-    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">handle_api_chown</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Chown file with given path, owner and group.</span>
-
-<span class="sd">        :param http_context: HttpContext</span>
-<span class="sd">        :type http_context: HttpContext</span>
-<span class="sd">        :return: True if success</span>
-<span class="sd">        :rtype: bool or None</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="n">filepath</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;filepath&#39;</span><span class="p">]</span>
-        <span class="n">owner</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;owner&#39;</span><span class="p">]</span>
-        <span class="n">group</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;group&#39;</span><span class="p">]</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
-            <span class="k">return</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">user_id</span>  <span class="o">=</span> <span class="n">pwd</span><span class="o">.</span><span class="n">getpwnam</span><span class="p">(</span><span class="n">owner</span><span class="p">)</span><span class="o">.</span><span class="n">pw_uid</span>
-            <span class="n">group_id</span> <span class="o">=</span> <span class="n">grp</span><span class="o">.</span><span class="n">getgrnam</span><span class="p">(</span><span class="n">group</span><span class="p">)</span><span class="o">.</span><span class="n">gr_gid</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">chown</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">group_id</span><span class="p">)</span>
-            <span class="k">return</span> <span class="kc">True</span>
-        <span class="k">except</span><span class="p">:</span>
-            <span class="k">return</span></div>
+    <span class="c1"># @post(r&#39;/api/lmn/chown&#39;)</span>
+    <span class="c1"># @endpoint(api=True)</span>
+    <span class="c1"># def handle_api_chown(self, http_context):</span>
+    <span class="c1">#     &quot;&quot;&quot;</span>
+    <span class="c1">#     Chown file with given path, owner and group.</span>
+    <span class="c1">#</span>
+    <span class="c1">#     :param http_context: HttpContext</span>
+    <span class="c1">#     :type http_context: HttpContext</span>
+    <span class="c1">#     :return: True if success</span>
+    <span class="c1">#     :rtype: bool or None</span>
+    <span class="c1">#     &quot;&quot;&quot;</span>
+    <span class="c1">#</span>
+    <span class="c1">#     filepath = http_context.json_body()[&#39;filepath&#39;]</span>
+    <span class="c1">#     owner = http_context.json_body()[&#39;owner&#39;]</span>
+    <span class="c1">#     group = http_context.json_body()[&#39;group&#39;]</span>
+    <span class="c1">#     if not os.path.exists(filepath):</span>
+    <span class="c1">#         return</span>
+    <span class="c1">#     try:</span>
+    <span class="c1">#         user_id  = pwd.getpwnam(owner).pw_uid</span>
+    <span class="c1">#         group_id = grp.getgrnam(group).gr_gid</span>
+    <span class="c1">#         os.chown(filepath, user_id, group_id)</span>
+    <span class="c1">#         return True</span>
+    <span class="c1">#     except:</span>
+    <span class="c1">#         return</span>
 
     <span class="c1">## TODO authorize : authorize possible with setup_wizard ?</span>
 <div class="viewcode-block" id="Handler.handle_api_read_setup_ini"><a class="viewcode-back" href="../../../../python/lmn_common.html#aj.plugins.lmn_common.views.Handler.handle_api_read_setup_ini">[docs]</a>    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/read-config-setup&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_read_setup_ini</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Read linuxmuster setup file for linbo and setup wizard.</span>
 
 <span class="sd">        :param http_context: HttpContext</span>
@@ -238,6 +250,10 @@
 <span class="sd">        :rtype: dict</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">getuid</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">http_context</span><span class="o">.</span><span class="n">respond_forbidden</span><span class="p">()</span>
+            <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+        
         <span class="k">try</span><span class="p">:</span>
             <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;/var/lib/linuxmuster/setup.ini&#39;</span>
             <span class="k">with</span> <span class="n">LMNFile</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">setup</span><span class="p">:</span>
@@ -249,7 +265,7 @@
 <div class="viewcode-block" id="Handler.handle_api_diff"><a class="viewcode-back" href="../../../../python/lmn_common.html#aj.plugins.lmn_common.views.Handler.handle_api_diff">[docs]</a>    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/diff&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_diff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check differences between two files.</span>
 
 <span class="sd">        :param http_context: HttpContext</span>
@@ -258,6 +274,9 @@
 <span class="sd">        :rtype: list</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">getuid</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">http_context</span><span class="o">.</span><span class="n">respond_forbiddent</span><span class="p">()</span>
+            <span class="k">return</span> <span class="s1">&#39;&#39;</span>
 
         <span class="n">file1</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;file1&#39;</span><span class="p">]</span>
         <span class="n">file2</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;file2&#39;</span><span class="p">]</span>
@@ -285,7 +304,7 @@
 <div class="viewcode-block" id="Handler.handle_api_version"><a class="viewcode-back" href="../../../../python/lmn_common.html#aj.plugins.lmn_common.views.Handler.handle_api_version">[docs]</a>    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/version&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the versions of the installed LMN packages using dpkg.</span>
 
 <span class="sd">        :param http_context: HttpContext</span>
@@ -294,13 +313,13 @@
 <span class="sd">        :rtype: dict</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">packages</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="s2">&quot;dpkg -l | grep linuxmuster- | awk &#39;BEGIN {OFS=</span><span class="se">\&quot;</span><span class="s2">=</span><span class="se">\&quot;</span><span class="s2">;} {print $2,$3}&#39;&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="n">packages</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="s2">&quot;dpkg -l | grep &#39;linuxmuster-\|sophomorix&#39; | awk &#39;BEGIN {OFS=</span><span class="se">\&quot;</span><span class="s2">=</span><span class="se">\&quot;</span><span class="s2">;} {print $2,$3}&#39;&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
         <span class="k">return</span> <span class="nb">dict</span><span class="p">([</span><span class="n">package</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">package</span> <span class="ow">in</span> <span class="n">packages</span><span class="p">])</span></div>
 
 <div class="viewcode-block" id="Handler.handle_get_activeSchool"><a class="viewcode-back" href="../../../../python/lmn_common.html#aj.plugins.lmn_common.views.Handler.handle_get_activeSchool">[docs]</a>    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/activeschool&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_get_activeSchool</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get  activeSchool.</span>
 
 <span class="sd">        :param http_context: HttpContext</span>
@@ -309,7 +328,73 @@
 <span class="sd">        :rtype: string </span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">school</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">school</span></div>
+    
+<div class="viewcode-block" id="Handler.handle_get_listSchools"><a class="viewcode-back" href="../../../../python/lmn_common.html#aj.plugins.lmn_common.views.Handler.handle_get_listSchools">[docs]</a>    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/list-schools&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">handle_get_listSchools</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get list of all schools</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :return: Array containing all schools</span>
+<span class="sd">        :rtype: array </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">get_schools</span><span class="p">()</span></div>
+    
+<div class="viewcode-block" id="Handler.handle_post_changeschool"><a class="viewcode-back" href="../../../../python/lmn_common.html#aj.plugins.lmn_common.views.Handler.handle_post_changeschool">[docs]</a>    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/change-school&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">handle_post_changeschool</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Switch active school</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :return: Switch school successful or not</span>
+<span class="sd">        :rtype: boolean </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">school</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;school&#39;</span><span class="p">]</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">switch</span><span class="p">(</span><span class="n">school</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+        
+<div class="viewcode-block" id="Handler.handle_post_getschoolname"><a class="viewcode-back" href="../../../../python/lmn_common.html#aj.plugins.lmn_common.views.Handler.handle_post_getschoolname">[docs]</a>    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/get-schoolname&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">handle_post_getschoolname</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get schoolname by school</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :return: Schoolname</span>
+<span class="sd">        :rtype: string </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">school</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;school&#39;</span><span class="p">]</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">schoolmgr</span><span class="o">.</span><span class="n">get_schoolname_by_school</span><span class="p">(</span><span class="n">school</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">result</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="Handler.handle_get_display_options"><a class="viewcode-back" href="../../../../python/lmn_common.html#aj.plugins.lmn_common.views.Handler.handle_get_display_options">[docs]</a>    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/display_options&#39;</span><span class="p">)</span>
+    <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">handle_get_display_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Provide display options stored in the webui config file.</span>
+
+<span class="sd">        :param http_context: HttpContext</span>
+<span class="sd">        :type http_context: HttpContext</span>
+<span class="sd">        :return: display options</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">display_options</span></div></div>
 </pre></div>
 
            </div>
@@ -319,7 +404,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright Andreas Till &amp; Arnaud Kientz - 2023.</p>
+    <p>&#169; Copyright Andreas Till &amp; Arnaud Kientz - 2025.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

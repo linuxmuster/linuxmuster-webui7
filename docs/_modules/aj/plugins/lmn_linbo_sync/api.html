@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>aj.plugins.lmn_linbo_sync.api &mdash; linuxmuster-webui7 7.2.14 documentation</title>
+  <title>aj.plugins.lmn_linbo_sync.api &mdash; linuxmuster-webui7 7.2.71 documentation</title>
       <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/theme_overrides.css" type="text/css" />
@@ -34,7 +34,7 @@
               <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                7.2.14
+                7.2.71
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
@@ -58,7 +58,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_docker.html">API: aj.plugins.lmn_docker</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_groupmembership.html">API: aj.plugins.lmn_groupmembership</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_landingpage.html">API: aj.plugins.lmn_landingpage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_linbo.html">API: aj.plugins.lmn_linbo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_linbo4.html">API: aj.plugins.lmn_linbo4</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_linbo_sync.html">API: aj.plugins.lmn_linbo_sync</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_quotas.html">API: aj.plugins.lmn_quotas</a></li>
@@ -107,7 +106,7 @@
 <span class="n">LINBO_PATH</span> <span class="o">=</span> <span class="s1">&#39;/srv/linbo&#39;</span>
 
 <div class="viewcode-block" id="read_config"><a class="viewcode-back" href="../../../../python/lmn_linbo_sync.html#aj.plugins.lmn_linbo_sync.api.read_config">[docs]</a><span class="k">def</span> <span class="nf">read_config</span><span class="p">(</span><span class="n">group</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get the os config from linbo config file start.conf.&lt;group&gt;</span>
 
 <span class="sd">    :param group: Linbo group</span>
@@ -137,7 +136,7 @@
     <span class="k">return</span> <span class="kc">None</span></div>
 
 <div class="viewcode-block" id="last_sync"><a class="viewcode-back" href="../../../../python/lmn_linbo_sync.html#aj.plugins.lmn_linbo_sync.api.last_sync">[docs]</a><span class="k">def</span> <span class="nf">last_sync</span><span class="p">(</span><span class="n">workstation</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get the date of the last sync date for a workstation w.</span>
 
 <span class="sd">    :param w: Workstation</span>
@@ -149,26 +148,32 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">statusfile</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;/var/log/linuxmuster/linbo/</span><span class="si">{</span><span class="n">workstation</span><span class="si">}</span><span class="s1">_image.status&#39;</span>
-    <span class="n">last</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">image_last_sync</span><span class="p">,</span> <span class="n">diff_last_sync</span> <span class="o">=</span> <span class="s1">&#39;0&#39;</span><span class="p">,</span><span class="s1">&#39;0&#39;</span>
+    <span class="n">diff_image</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.qcow2&#39;</span><span class="p">,</span> <span class="s1">&#39;.qdiff&#39;</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">statusfile</span><span class="p">)</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="n">statusfile</span><span class="p">)</span><span class="o">.</span><span class="n">st_size</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="n">statusfile</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
-                <span class="n">last</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
-                <span class="k">break</span>
+                <span class="n">image_last_sync</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">diff_image</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                <span class="n">diff_last_sync</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 
-    <span class="k">if</span> <span class="n">last</span><span class="p">:</span>
-        <span class="c1">## Linbo locale is en_GB, not necessarily the server locale</span>
-        <span class="n">saved</span> <span class="o">=</span> <span class="n">locale</span><span class="o">.</span><span class="n">setlocale</span><span class="p">(</span><span class="n">locale</span><span class="o">.</span><span class="n">LC_ALL</span><span class="p">)</span>
-        <span class="n">locale</span><span class="o">.</span><span class="n">setlocale</span><span class="p">(</span><span class="n">locale</span><span class="o">.</span><span class="n">LC_ALL</span><span class="p">,</span> <span class="s1">&#39;C.UTF-8&#39;</span><span class="p">)</span>
-        <span class="n">last</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">last</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;%Y%m</span><span class="si">%d</span><span class="s1">%H%M&#39;</span><span class="p">)</span>
-        <span class="n">locale</span><span class="o">.</span><span class="n">setlocale</span><span class="p">(</span><span class="n">locale</span><span class="o">.</span><span class="n">LC_ALL</span><span class="p">,</span> <span class="n">saved</span><span class="p">)</span>
+    <span class="n">last</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">image_last_sync</span><span class="p">,</span> <span class="n">diff_last_sync</span><span class="p">)</span>
 
-        <span class="n">last</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">mktime</span><span class="p">(</span><span class="n">last</span><span class="o">.</span><span class="n">timetuple</span><span class="p">())</span>
+    <span class="k">if</span> <span class="n">last</span> <span class="o">==</span> <span class="s1">&#39;0&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="c1">## Linbo locale is en_GB, not necessarily the server locale</span>
+    <span class="n">saved</span> <span class="o">=</span> <span class="n">locale</span><span class="o">.</span><span class="n">setlocale</span><span class="p">(</span><span class="n">locale</span><span class="o">.</span><span class="n">LC_ALL</span><span class="p">)</span>
+    <span class="n">locale</span><span class="o">.</span><span class="n">setlocale</span><span class="p">(</span><span class="n">locale</span><span class="o">.</span><span class="n">LC_ALL</span><span class="p">,</span> <span class="s1">&#39;C.UTF-8&#39;</span><span class="p">)</span>
+    <span class="n">last</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">last</span><span class="p">,</span> <span class="s1">&#39;%Y%m</span><span class="si">%d</span><span class="s1">%H%M&#39;</span><span class="p">)</span>
+    <span class="n">locale</span><span class="o">.</span><span class="n">setlocale</span><span class="p">(</span><span class="n">locale</span><span class="o">.</span><span class="n">LC_ALL</span><span class="p">,</span> <span class="n">saved</span><span class="p">)</span>
+
+    <span class="n">last</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">mktime</span><span class="p">(</span><span class="n">last</span><span class="o">.</span><span class="n">timetuple</span><span class="p">())</span>
     <span class="k">return</span> <span class="n">last</span></div>
 
 <div class="viewcode-block" id="group_os"><a class="viewcode-back" href="../../../../python/lmn_linbo_sync.html#aj.plugins.lmn_linbo_sync.api.group_os">[docs]</a><span class="k">def</span> <span class="nf">group_os</span><span class="p">(</span><span class="n">workstations</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get all os infos from linbo config file and inject it in workstations dict.</span>
 <span class="sd">    The workstations dict is set in the function list_workstations().</span>
 
@@ -209,7 +214,7 @@
     <span class="k">return</span> <span class="n">workstations</span></div>
 
 <div class="viewcode-block" id="devices_reader"><a class="viewcode-back" href="../../../../python/lmn_linbo_sync.html#aj.plugins.lmn_linbo_sync.api.devices_reader">[docs]</a><span class="k">def</span> <span class="nf">devices_reader</span><span class="p">(</span><span class="n">configpath</span><span class="p">,</span> <span class="n">school</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Read devices.csv for actual school and return the devices list.</span>
 
 <span class="sd">    :param configpath: Path of devices.csv</span>
@@ -220,32 +225,13 @@
 <span class="sd">    :rtype: dict</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">fieldnames</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;room&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;hostname&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;group&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;mac&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;ip&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;officeKey&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;windowsKey&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;dhcpOptions&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;sophomorixRole&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;lmnReserved10&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;pxeFlag&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;lmnReserved12&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;lmnReserved13&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;lmnReserved14&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;sophomorixComment&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;options&#39;</span><span class="p">,</span>
-    <span class="p">]</span>
-
-    <span class="k">with</span> <span class="n">LMNFile</span><span class="p">(</span><span class="n">configpath</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">fieldnames</span><span class="o">=</span><span class="n">fieldnames</span><span class="p">)</span> <span class="k">as</span> <span class="n">devices_csv</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">LMNFile</span><span class="p">(</span><span class="n">configpath</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">devices_csv</span><span class="p">:</span>
         <span class="n">devices</span> <span class="o">=</span> <span class="n">devices_csv</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 
     <span class="k">return</span> <span class="n">devices</span></div>
 
 <div class="viewcode-block" id="list_workstations"><a class="viewcode-back" href="../../../../python/lmn_linbo_sync.html#aj.plugins.lmn_linbo_sync.api.list_workstations">[docs]</a><span class="k">def</span> <span class="nf">list_workstations</span><span class="p">(</span><span class="n">configpath</span><span class="p">,</span> <span class="n">school</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generate a dict with workstations and parameters out of devices file</span>
 
 <span class="sd">    :param context: user context set in views.py</span>
@@ -269,7 +255,7 @@
     <span class="k">return</span> <span class="n">group_os</span><span class="p">(</span><span class="n">devices_dict</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="last_sync_all"><a class="viewcode-back" href="../../../../python/lmn_linbo_sync.html#aj.plugins.lmn_linbo_sync.api.last_sync_all">[docs]</a><span class="k">def</span> <span class="nf">last_sync_all</span><span class="p">(</span><span class="n">workstations</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Add last synchronisation informations into the workstations dict,</span>
 <span class="sd">    and status attribute to use as class for bootstrap.</span>
 
@@ -301,7 +287,7 @@
 
 
 <div class="viewcode-block" id="test_online"><a class="viewcode-back" href="../../../../python/lmn_linbo_sync.html#aj.plugins.lmn_linbo_sync.api.test_online">[docs]</a><span class="k">def</span> <span class="nf">test_online</span><span class="p">(</span><span class="n">host</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Launch a nmap on a host to test if the os is up, and return OS type.</span>
 
 <span class="sd">    :param host: Hostname</span>
@@ -338,7 +324,7 @@
     <span class="k">return</span> <span class="n">get_os_from_ports</span><span class="p">(</span><span class="n">ports</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="get_os_from_ports"><a class="viewcode-back" href="../../../../python/lmn_linbo_sync.html#aj.plugins.lmn_linbo_sync.api.get_os_from_ports">[docs]</a><span class="k">def</span> <span class="nf">get_os_from_ports</span><span class="p">(</span><span class="n">ports</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Convert a dict of ports to an OS string.</span>
 
 <span class="sd">    :param openPorts: The dict of open ports (key: port number, value: port state)</span>
@@ -356,7 +342,7 @@
     <span class="k">return</span> <span class="s2">&quot;OS Unknown&quot;</span></div>
 
 <div class="viewcode-block" id="is_port_signature_linbo"><a class="viewcode-back" href="../../../../python/lmn_linbo_sync.html#aj.plugins.lmn_linbo_sync.api.is_port_signature_linbo">[docs]</a><span class="k">def</span> <span class="nf">is_port_signature_linbo</span><span class="p">(</span><span class="n">ports</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Check if a dict of ports belongs to a Linbo host.</span>
 <span class="sd">    The criteria for Linbo is, that ONLY port 2222 is open</span>
 <span class="sd">    </span>
@@ -377,7 +363,7 @@
     <span class="p">)</span></div>
 
 <div class="viewcode-block" id="is_port_signature_linux"><a class="viewcode-back" href="../../../../python/lmn_linbo_sync.html#aj.plugins.lmn_linbo_sync.api.is_port_signature_linux">[docs]</a><span class="k">def</span> <span class="nf">is_port_signature_linux</span><span class="p">(</span><span class="n">ports</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Check if a dict of ports belongs to a Linux host.</span>
 <span class="sd">    The criteria for Linux is, that port 22 is open and 135 is closed.</span>
 <span class="sd">    </span>
@@ -397,7 +383,7 @@
     <span class="p">)</span></div>
 
 <div class="viewcode-block" id="is_port_signature_windows"><a class="viewcode-back" href="../../../../python/lmn_linbo_sync.html#aj.plugins.lmn_linbo_sync.api.is_port_signature_windows">[docs]</a><span class="k">def</span> <span class="nf">is_port_signature_windows</span><span class="p">(</span><span class="n">ports</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Check if a dict of ports belongs to a Windows host.</span>
 <span class="sd">    The criteria for Windows is, that port 135 is open and 22 is not open.</span>
 <span class="sd">    </span>
@@ -417,7 +403,7 @@
     <span class="p">)</span></div>
 
 <div class="viewcode-block" id="build_linbo_command"><a class="viewcode-back" href="../../../../python/lmn_linbo_sync.html#aj.plugins.lmn_linbo_sync.api.build_linbo_command">[docs]</a><span class="k">def</span> <span class="nf">build_linbo_command</span><span class="p">(</span><span class="n">cmd_parameters</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Check command parameters sent to linbo-remote command and build whole command.</span>
 
 <span class="sd">    :param cmd_parameters: All parameters to call linbo-remote</span>
@@ -467,7 +453,7 @@
     <span class="n">actions</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
     <span class="c1"># Partition</span>
     <span class="k">if</span> <span class="n">cmd_parameters</span><span class="p">[</span><span class="s1">&#39;partition&#39;</span><span class="p">]:</span>
-        <span class="n">actions</span> <span class="o">=</span> <span class="s1">&#39;partition&#39;</span>
+        <span class="n">actions</span> <span class="o">=</span> <span class="s1">&#39;partition,format&#39;</span>
 
     <span class="c1"># Format, sync, start</span>
     <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;format&#39;</span><span class="p">,</span> <span class="s1">&#39;sync&#39;</span><span class="p">,</span> <span class="s1">&#39;start&#39;</span><span class="p">]:</span>
@@ -494,7 +480,7 @@
 
 
 <div class="viewcode-block" id="run"><a class="viewcode-back" href="../../../../python/lmn_linbo_sync.html#aj.plugins.lmn_linbo_sync.api.run">[docs]</a><span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">cmd_parameters</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Run linbo command.</span>
 
 <span class="sd">    :param command: Linbo command</span>
@@ -528,7 +514,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright Andreas Till &amp; Arnaud Kientz - 2023.</p>
+    <p>&#169; Copyright Andreas Till &amp; Arnaud Kientz - 2025.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

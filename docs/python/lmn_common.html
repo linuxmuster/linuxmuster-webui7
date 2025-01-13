@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>API: aj.plugins.lmn_common &mdash; linuxmuster-webui7 7.2.14 documentation</title>
+  <title>API: aj.plugins.lmn_common &mdash; linuxmuster-webui7 7.2.71 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
@@ -37,7 +37,7 @@
               <img src="../_static/logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                7.2.14
+                7.2.71
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -66,7 +66,6 @@
 <li class="toctree-l1"><a class="reference internal" href="lmn_docker.html">API: aj.plugins.lmn_docker</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_groupmembership.html">API: aj.plugins.lmn_groupmembership</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_landingpage.html">API: aj.plugins.lmn_landingpage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lmn_linbo.html">API: aj.plugins.lmn_linbo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_linbo4.html">API: aj.plugins.lmn_linbo4</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_linbo_sync.html">API: aj.plugins.lmn_linbo_sync</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_quotas.html">API: aj.plugins.lmn_quotas</a></li>
@@ -129,16 +128,16 @@ option (output as json) through a SophomorixProcess and parse the results.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>sophomorixCommand</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – Command with options to run</p></li>
+<li><p><strong>sophomorixCommand</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – Command with options to run</p></li>
 <li><p><strong>jsonpath</strong> (<em>string</em>) – Key to search in the resulted dict, e.g. /USERS/doe</p></li>
-<li><p><strong>ignoreErrors</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Quiet mode</p></li>
+<li><p><strong>ignoreErrors</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Quiet mode</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Whole output or key if jsonpath is defined</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)">dict</a> or value (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)">list</a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)">dict</a>, integer, string)</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a> or value (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a>, integer, string)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -151,40 +150,6 @@ option (output as json) through a SophomorixProcess and parse the results.</p>
 <dt class="sig sig-object py" id="aj.plugins.lmn_common.views.Handler">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aj.plugins.lmn_common.views.</span></span><span class="sig-name descname"><span class="pre">Handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_common/views.html#Handler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_common.views.Handler" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="py method">
-<dt class="sig sig-object py" id="aj.plugins.lmn_common.views.Handler.handle_api_chown">
-<span class="sig-name descname"><span class="pre">handle_api_chown</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">http_context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_common/views.html#Handler.handle_api_chown"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_common.views.Handler.handle_api_chown" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chown file with given path, owner and group.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>True if success</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a> or <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)">None</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="aj.plugins.lmn_common.views.Handler.handle_api_create_dir">
-<span class="sig-name descname"><span class="pre">handle_api_create_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">http_context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_common/views.html#Handler.handle_api_create_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_common.views.Handler.handle_api_create_dir" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create directory with given path, ignoring errors.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>True if success</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a> or <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)">None</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="aj.plugins.lmn_common.views.Handler.handle_api_diff">
 <span class="sig-name descname"><span class="pre">handle_api_diff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">http_context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_common/views.html#Handler.handle_api_diff"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_common.views.Handler.handle_api_diff" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check differences between two files.</p>
@@ -196,7 +161,7 @@ option (output as json) through a SophomorixProcess and parse the results.</p>
 <dd class="field-even"><p>Lines that differ</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)">list</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -234,24 +199,7 @@ frontend.</p>
 <dd class="field-even"><p>Config content</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)">dict</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="aj.plugins.lmn_common.views.Handler.handle_api_remove_dir">
-<span class="sig-name descname"><span class="pre">handle_api_remove_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">http_context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_common/views.html#Handler.handle_api_remove_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_common.views.Handler.handle_api_remove_dir" title="Permalink to this definition">¶</a></dt>
-<dd><p>Remove directory and its content with given path, ignoring errors.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>True if success</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a> or <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)">None</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -268,7 +216,7 @@ frontend.</p>
 <dd class="field-even"><p>True if success</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a> or <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)">None</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a> or <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)">None</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -285,7 +233,7 @@ frontend.</p>
 <dd class="field-even"><p>List of packages with informations</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)">dict</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -300,6 +248,74 @@ frontend.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>String containing active school</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aj.plugins.lmn_common.views.Handler.handle_get_display_options">
+<span class="sig-name descname"><span class="pre">handle_get_display_options</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">http_context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_common/views.html#Handler.handle_get_display_options"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_common.views.Handler.handle_get_display_options" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provide display options stored in the webui config file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>display options</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aj.plugins.lmn_common.views.Handler.handle_get_listSchools">
+<span class="sig-name descname"><span class="pre">handle_get_listSchools</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">http_context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_common/views.html#Handler.handle_get_listSchools"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_common.views.Handler.handle_get_listSchools" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get list of all schools</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Array containing all schools</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aj.plugins.lmn_common.views.Handler.handle_post_changeschool">
+<span class="sig-name descname"><span class="pre">handle_post_changeschool</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">http_context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_common/views.html#Handler.handle_post_changeschool"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_common.views.Handler.handle_post_changeschool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Switch active school</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Switch school successful or not</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>boolean</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aj.plugins.lmn_common.views.Handler.handle_post_getschoolname">
+<span class="sig-name descname"><span class="pre">handle_post_getschoolname</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">http_context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_common/views.html#Handler.handle_post_getschoolname"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_common.views.Handler.handle_post_getschoolname" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get schoolname by school</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>http_context</strong> (<em>HttpContext</em>) – HttpContext</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Schoolname</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>string</p>
@@ -345,7 +361,7 @@ Backup files names scheme is <cite>.&lt;name&gt;.bak.&lt;timestamp&gt;</cite></p
 <dd class="field-odd"><p>File path in allowed paths.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -376,7 +392,7 @@ Backup files names scheme is <cite>.&lt;name&gt;.bak.&lt;timestamp&gt;</cite></p
 <dd class="field-even"><p>File handled or not</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -414,7 +430,7 @@ Backup files names scheme is <cite>.&lt;name&gt;.bak.&lt;timestamp&gt;</cite></p
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright Andreas Till &amp; Arnaud Kientz - 2023.</p>
+    <p>&#169; Copyright Andreas Till &amp; Arnaud Kientz - 2025.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

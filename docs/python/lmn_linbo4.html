@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>API: aj.plugins.lmn_linbo4 &mdash; linuxmuster-webui7 7.2.14 documentation</title>
+  <title>API: aj.plugins.lmn_linbo4 &mdash; linuxmuster-webui7 7.2.71 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
@@ -21,7 +21,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="API: aj.plugins.lmn_linbo_sync" href="lmn_linbo_sync.html" />
-    <link rel="prev" title="API: aj.plugins.lmn_linbo" href="lmn_linbo.html" /> 
+    <link rel="prev" title="API: aj.plugins.lmn_landingpage" href="lmn_landingpage.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -37,7 +37,7 @@
               <img src="../_static/logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                7.2.14
+                7.2.71
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -61,7 +61,6 @@
 <li class="toctree-l1"><a class="reference internal" href="lmn_docker.html">API: aj.plugins.lmn_docker</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_groupmembership.html">API: aj.plugins.lmn_groupmembership</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lmn_landingpage.html">API: aj.plugins.lmn_landingpage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lmn_linbo.html">API: aj.plugins.lmn_linbo</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">API: aj.plugins.lmn_linbo4</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#module-aj.plugins.lmn_linbo4.images">LMN Linbo 4 Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-aj.plugins.lmn_linbo4.views">LMN Linbo 4 Views</a></li>
@@ -105,12 +104,12 @@
 <span id="lmn-linbo-4-images"></span><h2>LMN Linbo 4 Images<a class="headerlink" href="#module-aj.plugins.lmn_linbo4.images" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="aj.plugins.lmn_linbo4.images.LinboImage">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aj.plugins.lmn_linbo4.images.</span></span><span class="sig-name descname"><span class="pre">LinboImage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backup</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_linbo4/images.html#LinboImage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_linbo4.images.LinboImage" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aj.plugins.lmn_linbo4.images.</span></span><span class="sig-name descname"><span class="pre">LinboImage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backup</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_linbo4/images.html#LinboImage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_linbo4.images.LinboImage" title="Permalink to this definition">¶</a></dt>
 <dd><p>A class to manage a linbo image or a backup image</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="aj.plugins.lmn_linbo4.images.LinboImage.delete">
 <span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_linbo4/images.html#LinboImage.delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_linbo4.images.LinboImage.delete" title="Permalink to this definition">¶</a></dt>
-<dd><p>Completely remove an image an its directory.</p>
+<dd><p>Completely remove an image and its directory.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -143,7 +142,7 @@
 <dd><p>Save all extra files content.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Data to save</p>
+<dd class="field-odd"><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – Data to save</p>
 </dd>
 </dl>
 </dd></dl>
@@ -163,13 +162,19 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="aj.plugins.lmn_linbo4.images.LinboImageGroup.delete">
 <span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_linbo4/images.html#LinboImageGroup.delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_linbo4.images.LinboImageGroup.delete" title="Permalink to this definition">¶</a></dt>
-<dd><p>Delete basic image, all backups and all config files.</p>
+<dd><p>Delete basic image, all backups, diff image and all config files.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="aj.plugins.lmn_linbo4.images.LinboImageGroup.get_backups">
 <span class="sig-name descname"><span class="pre">get_backups</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_linbo4/images.html#LinboImageGroup.get_backups"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_linbo4.images.LinboImageGroup.get_backups" title="Permalink to this definition">¶</a></dt>
 <dd><p>Browse current tree to find all backups image.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aj.plugins.lmn_linbo4.images.LinboImageGroup.get_diff">
+<span class="sig-name descname"><span class="pre">get_diff</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_linbo4/images.html#LinboImageGroup.get_diff"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_linbo4.images.LinboImageGroup.get_diff" title="Permalink to this definition">¶</a></dt>
+<dd><p>Browse current tree to find a differential image.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -186,14 +191,29 @@
 <dd><p>Manager for all Linbo Images.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="aj.plugins.lmn_linbo4.images.LinboImageManager.delete">
-<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_linbo4/images.html#LinboImageManager.delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_linbo4.images.LinboImageManager.delete" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_linbo4/images.html#LinboImageManager.delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_linbo4.images.LinboImageManager.delete" title="Permalink to this definition">¶</a></dt>
 <dd><p>Delete a whole image and its backups. If date is given, only delete an
-associated backup.</p>
+associated backup. date and diff parameter excludes each other.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>group</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Name of the linbo image</p></li>
-<li><p><strong>date</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – timestamp of a backup</p></li>
+<li><p><strong>group</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Name of the linbo image</p></li>
+<li><p><strong>date</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – timestamp of a backup</p></li>
+<li><p><strong>diff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – only delete a differential image</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aj.plugins.lmn_linbo4.images.LinboImageManager.duplicate">
+<span class="sig-name descname"><span class="pre">duplicate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_linbo4/images.html#LinboImageManager.duplicate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_linbo4.images.LinboImageManager.duplicate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Duplicate a whole linbo image without backups.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>group</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Name of the linbo image to duplicate</p></li>
+<li><p><strong>new_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – New name for the linbo image</p></li>
 </ul>
 </dd>
 </dl>
@@ -212,8 +232,8 @@ associated backup.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>group</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Name of the linbo image</p></li>
-<li><p><strong>new_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – New name for the linbo image</p></li>
+<li><p><strong>group</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Name of the linbo image</p></li>
+<li><p><strong>new_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – New name for the linbo image</p></li>
 </ul>
 </dd>
 </dl>
@@ -226,8 +246,8 @@ associated backup.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>group</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Name of the linbo image</p></li>
-<li><p><strong>date</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – timestamp of a backup</p></li>
+<li><p><strong>group</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Name of the linbo image</p></li>
+<li><p><strong>date</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – timestamp of a backup</p></li>
 </ul>
 </dd>
 </dl>
@@ -235,13 +255,16 @@ associated backup.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="aj.plugins.lmn_linbo4.images.LinboImageManager.save_extras">
-<span class="sig-name descname"><span class="pre">save_extras</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_linbo4/images.html#LinboImageManager.save_extras"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_linbo4.images.LinboImageManager.save_extras" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
+<span class="sig-name descname"><span class="pre">save_extras</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/aj/plugins/lmn_linbo4/images.html#LinboImageManager.save_extras"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aj.plugins.lmn_linbo4.images.LinboImageManager.save_extras" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save extra files for a base image, a backup or a differential
+image. timestamp and diff parameters excludes each other.</p>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>group</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Name of the linbo image</p></li>
-<li><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Content of the extra files</p></li>
-<li><p><strong>timestamp</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – timestamp of a backup</p></li>
+<li><p><strong>group</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Name of the linbo image</p></li>
+<li><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – Content of the extra files</p></li>
+<li><p><strong>timestamp</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – timestamp of a backup</p></li>
+<li><p><strong>diff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – data onlyc concern a diff image</p></li>
 </ul>
 </dd>
 </dl>
@@ -279,7 +302,7 @@ Needed if there was some changes on a image.</p>
 <dd class="field-even"><p>List of linbo4 groups</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)">list</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -293,14 +316,14 @@ Needed if there was some changes on a image.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="lmn_linbo.html" class="btn btn-neutral float-left" title="API: aj.plugins.lmn_linbo" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="lmn_landingpage.html" class="btn btn-neutral float-left" title="API: aj.plugins.lmn_landingpage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="lmn_linbo_sync.html" class="btn btn-neutral float-right" title="API: aj.plugins.lmn_linbo_sync" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright Andreas Till &amp; Arnaud Kientz - 2023.</p>
+    <p>&#169; Copyright Andreas Till &amp; Arnaud Kientz - 2025.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

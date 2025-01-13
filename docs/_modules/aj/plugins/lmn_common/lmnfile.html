@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>aj.plugins.lmn_common.lmnfile &mdash; linuxmuster-webui7 7.2.14 documentation</title>
+  <title>aj.plugins.lmn_common.lmnfile &mdash; linuxmuster-webui7 7.2.71 documentation</title>
       <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/theme_overrides.css" type="text/css" />
@@ -34,7 +34,7 @@
               <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                7.2.14
+                7.2.71
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
@@ -58,7 +58,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_docker.html">API: aj.plugins.lmn_docker</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_groupmembership.html">API: aj.plugins.lmn_groupmembership</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_landingpage.html">API: aj.plugins.lmn_landingpage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_linbo.html">API: aj.plugins.lmn_linbo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_linbo4.html">API: aj.plugins.lmn_linbo4</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_linbo_sync.html">API: aj.plugins.lmn_linbo_sync</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_quotas.html">API: aj.plugins.lmn_quotas</a></li>
@@ -108,6 +107,8 @@
 <span class="kn">import</span> <span class="nn">yaml</span>
 <span class="kn">from</span> <span class="nn">configobj</span> <span class="kn">import</span> <span class="n">ConfigObj</span>
 
+<span class="kn">from</span> <span class="nn">.fieldnames</span> <span class="kn">import</span> <span class="n">csv_fieldnames</span>
+
 
 <span class="c1"># Allow 1 MiB for csv</span>
 <span class="n">csv</span><span class="o">.</span><span class="n">field_size_limit</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="mi">20</span><span class="p">)</span>
@@ -141,13 +142,13 @@
 
 
 <div class="viewcode-block" id="LMNFile"><a class="viewcode-back" href="../../../../python/lmn_common.html#aj.plugins.lmn_common.lmnfile.LMNFile">[docs]</a><span class="k">class</span> <span class="nc">LMNFile</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Meta class to handle all type of config file used in linuxmuster&#39;s project,</span>
 <span class="sd">    e.g. ini, csv, linbo config files.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;;&#39;</span><span class="p">,</span> <span class="n">fieldnames</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Parse the extension of the file and choose the right subclass to handle</span>
 <span class="sd">        the file.</span>
 
@@ -183,11 +184,21 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">comments</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">check_allowed_path</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">delimiter</span> <span class="o">=</span> <span class="n">delimiter</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fieldnames</span> <span class="o">=</span> <span class="n">fieldnames</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.csv&#39;</span><span class="p">):</span>
+            <span class="c1"># Fieldnames aliases for some common CSV files</span>
+            <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">csv_fieldnames</span><span class="p">):</span>
+                <span class="c1"># dict must be sorted, because students is a prefix of extrastudents</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;/etc/linuxmuster/&#39;</span><span class="p">)</span> \
+                    <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">model</span><span class="si">}</span><span class="s1">.csv&#39;</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">fieldnames</span> <span class="o">=</span> <span class="n">csv_fieldnames</span><span class="p">[</span><span class="n">model</span><span class="p">]</span>
+                    <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">fieldnames</span> <span class="o">=</span> <span class="n">fieldnames</span>
 
 <div class="viewcode-block" id="LMNFile.hasExtension"><a class="viewcode-back" href="../../../../python/lmn_common.html#aj.plugins.lmn_common.lmnfile.LMNFile.hasExtension">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">hasExtension</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">ext</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Determine if file should be handled here.</span>
 
 <span class="sd">        :param ext: Extension of a file, e.g. ini</span>
@@ -212,7 +223,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span>
 
 <div class="viewcode-block" id="LMNFile.backup"><a class="viewcode-back" href="../../../../python/lmn_common.html#aj.plugins.lmn_common.lmnfile.LMNFile.backup">[docs]</a>    <span class="k">def</span> <span class="nf">backup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a backup of a file if in allowed paths, but on ly keeps 10 backups.</span>
 <span class="sd">        Backup files names scheme is `.&lt;name&gt;.bak.&lt;timestamp&gt;`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -243,7 +254,7 @@
     <span class="c1">#     raise NotImplementedError</span>
 
 <div class="viewcode-block" id="LMNFile.check_allowed_path"><a class="viewcode-back" href="../../../../python/lmn_common.html#aj.plugins.lmn_common.lmnfile.LMNFile.check_allowed_path">[docs]</a>    <span class="k">def</span> <span class="nf">check_allowed_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check path before modifying files for security reasons.</span>
 
 <span class="sd">        :return: File path in allowed paths.</span>
@@ -261,7 +272,7 @@
         <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Access refused.&quot;</span><span class="p">))</span>  <span class="c1"># skipcq: PYL-E0602</span></div>
 
 <div class="viewcode-block" id="LMNFile.detect_encoding"><a class="viewcode-back" href="../../../../python/lmn_common.html#aj.plugins.lmn_common.lmnfile.LMNFile.detect_encoding">[docs]</a>    <span class="k">def</span> <span class="nf">detect_encoding</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Try to detect encoding of the file through magic numbers.</span>
 
 <span class="sd">        :return: Detected encoding</span>
@@ -269,19 +280,19 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">):</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Detected encoding for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="si">}</span><span class="s1"> : no file, using utf-8&#39;</span><span class="p">)</span>
+            <span class="c1">#logging.debug(f&#39;Detected encoding for {self.file} : no file, using utf-8&#39;)</span>
             <span class="k">return</span> <span class="s1">&#39;utf-8&#39;</span>
         <span class="n">loader</span> <span class="o">=</span> <span class="n">magic</span><span class="o">.</span><span class="n">Magic</span><span class="p">(</span><span class="n">mime_encoding</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">encoding</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">)</span>
         <span class="k">if</span> <span class="s1">&#39;ascii&#39;</span> <span class="ow">in</span> <span class="n">encoding</span> <span class="ow">or</span> <span class="n">encoding</span> <span class="o">==</span> <span class="s2">&quot;binary&quot;</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Detected encoding for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="si">}</span><span class="s1"> : ascii, but using utf-8&#39;</span><span class="p">)</span>
+            <span class="c1">#logging.debug(f&#39;Detected encoding for {self.file} : ascii, but using utf-8&#39;)</span>
             <span class="k">return</span> <span class="s1">&#39;utf-8&#39;</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Detected encoding for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="si">}</span><span class="s1"> : </span><span class="si">{</span><span class="n">encoding</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="c1">#logging.debug(f&#39;Detected encoding for {self.file} : {encoding}&#39;)</span>
         <span class="k">return</span> <span class="n">encoding</span></div></div>
 
 
 <div class="viewcode-block" id="LinboLoader"><a class="viewcode-back" href="../../../../python/lmn_common.html#aj.plugins.lmn_common.lmnfile.LinboLoader">[docs]</a><span class="k">class</span> <span class="nc">LinboLoader</span><span class="p">(</span><span class="n">LMNFile</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Handler for linbo&#39;s cloop informations files.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -296,7 +307,7 @@
 
 
 <div class="viewcode-block" id="YAMLLoader"><a class="viewcode-back" href="../../../../python/lmn_common.html#aj.plugins.lmn_common.lmnfile.YAMLLoader">[docs]</a><span class="k">class</span> <span class="nc">YAMLLoader</span><span class="p">(</span><span class="n">LMNFile</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Handler for yaml files.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -334,7 +345,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">opened</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="CSVLoader"><a class="viewcode-back" href="../../../../python/lmn_common.html#aj.plugins.lmn_common.lmnfile.CSVLoader">[docs]</a><span class="k">class</span> <span class="nc">CSVLoader</span><span class="p">(</span><span class="n">LMNFile</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Handler for csv files.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -502,7 +513,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright Andreas Till &amp; Arnaud Kientz - 2023.</p>
+    <p>&#169; Copyright Andreas Till &amp; Arnaud Kientz - 2025.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

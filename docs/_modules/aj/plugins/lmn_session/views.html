@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>aj.plugins.lmn_session.views &mdash; linuxmuster-webui7 7.2.14 documentation</title>
+  <title>aj.plugins.lmn_session.views &mdash; linuxmuster-webui7 7.2.71 documentation</title>
       <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/theme_overrides.css" type="text/css" />
@@ -34,7 +34,7 @@
               <img src="../../../../_static/logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                7.2.14
+                7.2.71
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
@@ -58,7 +58,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_docker.html">API: aj.plugins.lmn_docker</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_groupmembership.html">API: aj.plugins.lmn_groupmembership</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_landingpage.html">API: aj.plugins.lmn_landingpage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_linbo.html">API: aj.plugins.lmn_linbo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_linbo4.html">API: aj.plugins.lmn_linbo4</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_linbo_sync.html">API: aj.plugins.lmn_linbo_sync</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../python/lmn_quotas.html">API: aj.plugins.lmn_quotas</a></li>
@@ -108,7 +107,7 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">context</span>
 
-    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/session/sessions&#39;</span><span class="p">)</span>
+    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/oldsession/sessions&#39;</span><span class="p">)</span>
     <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:users:students:read&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_get_sessions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
@@ -134,7 +133,7 @@
             <span class="n">sessionsList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sessionJson</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">sessionsList</span>
 
-    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/session/sessions/(?P&lt;session&gt;[\w\+\-]*)&#39;</span><span class="p">)</span>
+    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/oldsession/sessions/(?P&lt;session&gt;[\w\+\-]*)&#39;</span><span class="p">)</span>
     <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:users:students:read&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_get_session</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -156,7 +155,7 @@
             <span class="n">participantList</span> <span class="o">=</span> <span class="s1">&#39;empty&#39;</span>
         <span class="k">return</span> <span class="n">participantList</span>
 
-    <span class="nd">@put</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/session/sessions/(?P&lt;session&gt;[\w\+\-]*)&#39;</span><span class="p">)</span>
+    <span class="nd">@put</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/oldsession/sessions/(?P&lt;session&gt;[\w\+\-]*)&#39;</span><span class="p">)</span>
     <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:users:students:read&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_put_session</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -170,7 +169,7 @@
         <span class="n">result</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;OUTPUT/0/LOG&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span>
 
-    <span class="nd">@delete</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/session/sessions/(?P&lt;session&gt;[\w\+\-]*)&#39;</span><span class="p">)</span>
+    <span class="nd">@delete</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/oldsession/sessions/(?P&lt;session&gt;[\w\+\-]*)&#39;</span><span class="p">)</span>
     <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:users:students:read&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_delete_session</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -178,7 +177,7 @@
         <span class="n">result</span> <span class="o">=</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;OUTPUT/0/LOG&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span>
 
-    <span class="nd">@patch</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/session/exam/(?P&lt;session&gt;[\w\+\-]*)&#39;</span><span class="p">)</span>
+    <span class="nd">@patch</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/oldsession/exam/(?P&lt;session&gt;[\w\+\-]*)&#39;</span><span class="p">)</span>
     <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:users:students:read&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_end_exam</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -191,7 +190,7 @@
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Error:</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
 
-    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/session/sessions&#39;</span><span class="p">)</span>
+    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/oldsession/sessions&#39;</span><span class="p">)</span>
     <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:users:students:read&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_session_sessions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
@@ -283,7 +282,7 @@
             <span class="k">return</span> <span class="n">result</span>
         <span class="k">return</span> <span class="mi">0</span>
 
-    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/session/userInRoom&#39;</span><span class="p">)</span>
+    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/oldsession/userInRoom&#39;</span><span class="p">)</span>
     <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:users:students:read&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_get_user_in_room</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
@@ -303,7 +302,7 @@
         <span class="k">except</span> <span class="ne">IndexError</span> <span class="k">as</span> <span class="n">e</span> <span class="p">:</span>
             <span class="k">return</span> <span class="mi">0</span>
 
-    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/session/user-search/(?P&lt;query&gt;.*)&#39;</span><span class="p">)</span>
+    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/oldsession/user-search/(?P&lt;query&gt;.*)&#39;</span><span class="p">)</span>
     <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:users:students:read&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_ldap_user_search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
@@ -318,7 +317,7 @@
             <span class="n">userList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">users</span><span class="p">[</span><span class="n">user</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">userList</span>
 
-    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/session/schoolClass-search/(?P&lt;query&gt;.*)&#39;</span><span class="p">)</span>
+    <span class="nd">@get</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/oldsession/schoolClass-search/(?P&lt;query&gt;.*)&#39;</span><span class="p">)</span>
     <span class="nd">@authorize</span><span class="p">(</span><span class="s1">&#39;lm:users:students:read&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_ldap_group_search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
@@ -336,10 +335,10 @@
             <span class="n">schoolClassList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">schoolClassJson</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">schoolClassList</span>
 
-<div class="viewcode-block" id="Handler.handle_api_create_dir"><a class="viewcode-back" href="../../../../python/lmn_session.html#aj.plugins.lmn_session.views.Handler.handle_api_create_dir">[docs]</a>    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/session/moveFileToHome&#39;</span><span class="p">)</span>  <span class="c1">## TODO authorize</span>
+<div class="viewcode-block" id="Handler.handle_api_create_dir"><a class="viewcode-back" href="../../../../python/lmn_session.html#aj.plugins.lmn_session.views.Handler.handle_api_create_dir">[docs]</a>    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/oldsession/moveFileToHome&#39;</span><span class="p">)</span>  <span class="c1">## TODO authorize</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_create_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Create directory with given path, ignoring errors&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create directory with given path, ignoring errors&quot;&quot;&quot;</span>
         <span class="n">user</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;user&#39;</span><span class="p">]</span>
         <span class="n">filepath</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;filepath&#39;</span><span class="p">]</span>
         <span class="n">subdir</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;subdir&#39;</span><span class="p">]</span>
@@ -349,7 +348,7 @@
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="k">return</span> <span class="mi">0</span></div>
 
-    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/session/trans-list-files&#39;</span><span class="p">)</span>
+    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/oldsession/trans-list-files&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_session_file_trans_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
         <span class="n">user</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;user&#39;</span><span class="p">]</span>
@@ -369,7 +368,7 @@
             <span class="n">availableFilesList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">availableFile</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">availableFiles</span><span class="p">,</span> <span class="n">availableFilesList</span>
 
-    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/session/trans&#39;</span><span class="p">)</span>
+    <span class="nd">@post</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;/api/lmn/oldsession/trans&#39;</span><span class="p">)</span>
     <span class="nd">@endpoint</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">handle_api_session_file_trans</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_context</span><span class="p">):</span>
         <span class="n">senders</span> <span class="o">=</span> <span class="n">http_context</span><span class="o">.</span><span class="n">json_body</span><span class="p">()[</span><span class="s1">&#39;senders&#39;</span><span class="p">]</span>
@@ -417,7 +416,7 @@
             <span class="p">]</span>
             <span class="k">return</span> <span class="n">lmn_getSophomorixValue</span><span class="p">(</span><span class="n">sophomorixCommand</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
 
-        <span class="k">with</span> <span class="n">authorize</span><span class="p">(</span><span class="s1">&#39;lmn:session:trans&#39;</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">authorize</span><span class="p">(</span><span class="s1">&#39;lmn:oldsession:trans&#39;</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">command</span> <span class="o">==</span> <span class="s1">&#39;share&#39;</span><span class="p">:</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="k">for</span> <span class="n">sender</span> <span class="ow">in</span> <span class="n">senders</span><span class="p">:</span>
@@ -479,7 +478,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright Andreas Till &amp; Arnaud Kientz - 2023.</p>
+    <p>&#169; Copyright Andreas Till &amp; Arnaud Kientz - 2025.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

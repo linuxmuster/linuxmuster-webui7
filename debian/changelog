@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.2.77) lmn72-testing; urgency=medium
+
+  * Allow pip to remove Ajenti
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 27 Jan 2025 15:31:09 +0100
+
 linuxmuster-webui7 (7.2.76) lmn72-testing; urgency=medium
 
   *  Handle pip dependencies and rename venv.

@@ -3,6 +3,7 @@ set -e
 
 # Hide root warning for pip
 export PIP_ROOT_USER_ACTION=ignore
+export PIP_BREAK_SYSTEM_PACKAGES=1
 
 msg()
 {

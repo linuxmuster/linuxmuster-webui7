@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.3.1) lmn73; urgency=medium
+
+  * New package for lmn7.3.
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 02 Feb 2025 14:52:55 +0100
+
 linuxmuster-webui7 (7.2.71) lmn72; urgency=medium
 
   * [session] Don't filter samaccountname in stop exam.  

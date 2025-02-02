@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.3.2) lmn73; urgency=medium
+
+  * Update Gh Workflow.
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 02 Feb 2025 15:12:32 +0100
+
 linuxmuster-webui7 (7.2.77) lmn72-testing; urgency=medium
 
   * Allow pip to remove Ajenti

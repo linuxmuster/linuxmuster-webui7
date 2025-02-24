@@ -447,6 +447,8 @@ class Handler(HttpPlugin):
                         smbpathsrc = f"{smbpath}\\{file}"
                         smbpathdst = smbpathsrc.replace(src, dst)
                         smbclient.copyfile(smbpathsrc, smbpathdst)
+                
+                http_context.respond('204 No Content')
             else:
                 if not smbclient.path.isfile(dst):
                     smbclient.copyfile(src, dst)

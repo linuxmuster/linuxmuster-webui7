@@ -13,7 +13,7 @@ from aj.api.http import get, post, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
 from aj.auth import authorize, AuthenticationService
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue
-from aj.plugins.lmn_common.lmnfile import LMNFile
+from linuxmusterTools.lmnfile import LMNFile
 
 
 @component(HttpPlugin)
@@ -165,7 +165,7 @@ class Handler(HttpPlugin):
                 with authorize('lm:users:students:read'):
                     return (coloumns)
 
-    @get(r'/api/lmn/users/lists/(?P<role>\b(?:students|teachers|extraclasses|extrastudents)\b)')
+    @get(r'/api/lmn/users/lists/(?P<role>\b(?:students|teachers|parents|extraclasses|extrastudents)\b)')
     @endpoint(api=True)
     def handle_api_get_lists(self, http_context, role):
         """
@@ -188,7 +188,7 @@ class Handler(HttpPlugin):
             with LMNFile(path, 'r') as list:
                 return list.read()
 
-    @post(r'/api/lmn/users/lists/(?P<role>\b(?:students|teachers|extraclasses|extrastudents)\b)')
+    @post(r'/api/lmn/users/lists/(?P<role>\b(?:students|teachers|parents|extraclasses|extrastudents)\b)')
     @endpoint(api=True)
     def handle_api_post_lists(self, http_context, role):
         """

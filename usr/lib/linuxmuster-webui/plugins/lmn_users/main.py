@@ -27,7 +27,7 @@ class ItemProvider(SidebarItemProvider):
             {
                 'attach': 'category:usermanagement',
                 'name': _('Parents'), # skipcq: PYL-E0602
-                'icon': 'user-graduate',
+                'icon': 'hands-holding-child',
                 'url': '/view/lmn/users/parents',
                 'weight': 16,
             },

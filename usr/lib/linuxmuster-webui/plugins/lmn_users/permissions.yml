@@ -26,6 +26,7 @@ globaladministrator:
 - 'sidebar:view:/view/lmn/users/print-passwords: true'
 - 'sidebar:view:/view/lmn/users/schooladmins: true'
 - 'sidebar:view:/view/lmn/users/students: true'
+- 'sidebar:view:/view/lmn/users/parents: true'
 - 'sidebar:view:/view/lmn/users/teachers: true'
 schooladministrator:
 - 'lm:users:apply: true'
@@ -52,6 +53,7 @@ schooladministrator:
 - 'sidebar:view:/view/lmn/users/print-passwords: true'
 - 'sidebar:view:/view/lmn/users/schooladmins: false'
 - 'sidebar:view:/view/lmn/users/students: true'
+- 'sidebar:view:/view/lmn/users/parents: true'
 - 'sidebar:view:/view/lmn/users/teachers: true'
 student:
 - 'lm:users:apply: false'
@@ -69,6 +71,7 @@ student:
 - 'sidebar:view:/view/lmn/users/print-passwords: false'
 - 'sidebar:view:/view/lmn/users/schooladmins: false'
 - 'sidebar:view:/view/lmn/users/students: false'
+- 'sidebar:view:/view/lmn/users/parents: false'
 - 'sidebar:view:/view/lmn/users/teachers: false'
 teacher:
 - 'lm:users:apply: false'
@@ -92,4 +95,5 @@ teacher:
 - 'sidebar:view:/view/lmn/users/print-passwords: true'
 - 'sidebar:view:/view/lmn/users/schooladmins: false'
 - 'sidebar:view:/view/lmn/users/students: false'
+- 'sidebar:view:/view/lmn/users/parents: false'
 - 'sidebar:view:/view/lmn/users/teachers: false'

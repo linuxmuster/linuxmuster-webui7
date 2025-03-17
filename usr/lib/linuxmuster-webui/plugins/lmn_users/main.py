@@ -15,7 +15,7 @@ class ItemProvider(SidebarItemProvider):
                 'name': _('Teachers'), # skipcq: PYL-E0602
                 'icon': 'user-tie',
                 'url': '/view/lmn/users/teachers',
-                'weight': 15,
+                'weight': 14,
             },
             {
                 'attach': 'category:usermanagement',
@@ -23,6 +23,13 @@ class ItemProvider(SidebarItemProvider):
                 'icon': 'user-graduate',
                 'url': '/view/lmn/users/students',
                 'weight': 15,
+            },
+            {
+                'attach': 'category:usermanagement',
+                'name': _('Parents'), # skipcq: PYL-E0602
+                'icon': 'user-graduate',
+                'url': '/view/lmn/users/parents',
+                'weight': 16,
             },
             {
                 'attach': 'category:usermanagement',
@@ -43,7 +50,7 @@ class ItemProvider(SidebarItemProvider):
                 'name': _('Listmanagement'), # skipcq: PYL-E0602
                 'icon': 'list',
                 'url': '/view/lmn/users/listmanagement',
-                'weight': 21,
+                'weight': 22,
             },
             {
                 'attach': 'category:class',
@@ -67,6 +74,16 @@ class Permissions (PermissionProvider):
             {
                 'id': 'lm:users:students:write',
                 'name': _('Write students'), # skipcq: PYL-E0602
+                'default': False,
+            },
+            {
+                'id': 'lm:users:parents:read',
+                'name': _('Read parents'), # skipcq: PYL-E0602
+                'default': False,
+            },
+            {
+                'id': 'lm:users:parents:write',
+                'name': _('Write parents'), # skipcq: PYL-E0602
                 'default': False,
             },
             {

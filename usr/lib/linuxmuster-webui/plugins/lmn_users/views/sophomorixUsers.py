@@ -121,27 +121,30 @@ class Handler(HttpPlugin):
         """
 
         schoolname = self.context.schoolmgr.school
-
         studentsList = []
+
         if user is None:
-            sophomorixCommand = ['sophomorix-query', '--student', '--schoolbase', schoolname, '--user-full', '-jj']
+            students = self.lr.get('/roles/student', school=schoolname)
         else:
-            # sophomorixCommand = ['sophomorix-query', '--student', '--schoolbase', schoolname, '--user-full', '-jj', '--sam', user]
-            sophomorixCommand = ['sophomorix-query', '--user-full', '-jj', '--sam', user[1:]]
-        result = lmn_getSophomorixValue(sophomorixCommand, '')
-        if 'USER' in result.keys():
-            students = result['USER']
-            for _, details in students.items():
-                # TODO: get a better way to remove Birthay from user detail page
-                details['sophomorixBirthdate'] = 'hidden'
-                if details['sophomorixStatus'] in self.userStatus.keys():
-                    details['sophomorixStatus'] = self.userStatus[details['sophomorixStatus']]
-                else:
-                    details['sophomorixStatus'] = {'tag': details['sophomorixStatus'], 'color': 'default'}
-                details['selected'] = False
-                studentsList.append(details)
-            return studentsList
-        return ["none"]
+            student = user[1:]
+            students = [self.lr.get(f'/users/{student}', school=schoolname)]
+
+        if not students[0]:
+            return ["none"]
+
+        for student in students:
+            if student['sophomorixStatus'] in self.userStatus.keys():
+                student['sophomorixStatus'] = self.userStatus[
+                    student['sophomorixStatus']]
+            else:
+                student['sophomorixStatus'] = {'tag': student['sophomorixStatus'],
+                                              'color': 'default'}
+            student['selected'] = False
+
+            # TODO: get a better way to remove Birthday from user detail page
+            student['sophomorixBirthdate'] = 'hidden'
+            studentsList.append(student)
+        return studentsList
 
     @get(r'/api/lmn/sophomorixUsers/schooladmins((?P<user>/[a-z0-9\-_]*))?')
     @authorize('lm:users:schooladmins:read')

@@ -52,7 +52,7 @@ class Handler(HttpPlugin):
         teachersList = []
 
         if user is None:
-            teachers= self.lr.get('/roles/teacher', school=schoolname)
+            teachers = self.lr.get('/roles/teacher', school=schoolname)
         else:
             teacher = user[1:]
             teachers = [self.lr.get(f'/users/{teacher}', school=schoolname)]
@@ -68,6 +68,42 @@ class Handler(HttpPlugin):
             teacher['selected'] = False
             teachersList.append(teacher)
         return teachersList
+
+    @get(r'/api/lmn/sophomorixUsers/parents((?P<user>/[a-z0-9\-_]*))?')
+    @authorize('lm:users:parents:read')
+    @endpoint(api=True)
+    def handle_api_sophomorix_parents(self, http_context, user=None):
+        """
+        Get parents list from LDAP tree.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :param user: if provided, user to show (containing / at the beginning)
+        :type user: str
+        :return: List of parents with details, one parent per dict.
+        :rtype: list of dict
+        """
+
+        schoolname = self.context.schoolmgr.school
+        parentsList = []
+
+        if user is None:
+            parents = self.lr.get('/roles/parent', school=schoolname)
+        else:
+            parent = user[1:]
+            parents = [self.lr.get(f'/users/{parent}', school=schoolname)]
+
+        if not parents[0]:
+            return ["none"]
+
+        for parent in parents:
+            if parent['sophomorixStatus'] in self.userStatus.keys():
+                parent['sophomorixStatus'] = self.userStatus[parent['sophomorixStatus']]
+            else:
+                parent['sophomorixStatus'] = {'tag': parent['sophomorixStatus'], 'color': 'default'}
+            parent['selected'] = False
+            parentsList.append(parent)
+        return parentsList
 
     @get(r'/api/lmn/sophomorixUsers/students((?P<user>/[a-z0-9\-_]*))?')
     @authorize('lm:users:students:read')

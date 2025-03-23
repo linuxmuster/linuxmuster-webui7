@@ -35,7 +35,7 @@ angular.module('lmn.samba_dns').controller('SambaDnsIndexController', function($
 
     $scope.add = (sub) => {
         $scope.showNew = true;
-        $scope.new = {'host':'', 'type':'A', 'value':''};
+        $scope.new = {'host':'', 'type':'A', 'value':'', 'ttl':900};
     }
 
     $scope.show_update = (sub) => {

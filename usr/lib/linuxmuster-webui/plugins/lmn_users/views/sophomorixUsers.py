@@ -161,19 +161,29 @@ class Handler(HttpPlugin):
         :rtype: list of dict
         """
 
+        schoolname = self.context.schoolmgr.school
         schooladminsList = []
+
         if user is None:
-            sophomorixCommand = ['sophomorix-query', '--schooladministrator', '--user-full', '-jj']
+            schooladmins = self.lr.get('/roles/schooladmin', school=schoolname)
         else:
-            sophomorixCommand = ['sophomorix-query', '--schooladministrator', '--user-full', '-jj', '--sam', user[1:]]
-        result = lmn_getSophomorixValue(sophomorixCommand, '')
-        if 'USER' in result.keys():
-            schooladmins = result['USER']
-            for _, details in schooladmins.items():
-                details['selected'] = False
-                schooladminsList.append(details)
-            return schooladminsList
-        return ["none"]
+            schooladmin = user[1:]
+            schooladmins = [self.lr.get(f'/users/{schooladmin}', school=schoolname)]
+
+        if not schooladmins[0]:
+            return ["none"]
+
+        for schooladmin in schooladmins:
+            if schooladmin['sophomorixStatus'] in self.userStatus.keys():
+                schooladmin['sophomorixStatus'] = self.userStatus[
+                    schooladmin['sophomorixStatus']]
+            else:
+                schooladmin['sophomorixStatus'] = {'tag': schooladmin['sophomorixStatus'],
+                                               'color': 'default'}
+            schooladmin['selected'] = False
+
+            schooladminsList.append(schooladmin)
+        return schooladminsList
 
     @get(r'/api/lmn/sophomorixUsers/globaladmins((?P<user>/[a-z0-9\-_]*))?')
     @authorize('lm:users:globaladmins:read')

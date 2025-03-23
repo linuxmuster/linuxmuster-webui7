@@ -165,7 +165,7 @@ class Handler(HttpPlugin):
         schooladminsList = []
 
         if user is None:
-            schooladmins = self.lr.get('/roles/schooladmin', school=schoolname)
+            schooladmins = self.lr.get('/roles/schooladministrator', school=schoolname)
         else:
             schooladmin = user[1:]
             schooladmins = [self.lr.get(f'/users/{schooladmin}', school=schoolname)]
@@ -201,18 +201,27 @@ class Handler(HttpPlugin):
         """
 
         globaladminsList = []
+
         if user is None:
-            sophomorixCommand = ['sophomorix-query', '--globaladministrator', '--user-full', '-jj']
+            globaladmins = self.lr.get('/roles/globaladministrator')
         else:
-            sophomorixCommand = ['sophomorix-query', '--globaladministrator', '--user-full', '-jj', '--sam', user[1:]]
-        result = lmn_getSophomorixValue(sophomorixCommand, '')
-        if 'USER' in result.keys():
-            globaladmins = result['USER']
-            for _, details in globaladmins.items():
-                details['selected'] = False
-                globaladminsList.append(details)
-            return globaladminsList
-        return ["none"]
+            globaladmin = user[1:]
+            globaladmins = [self.lr.get(f'/users/{globaladmin}')]
+
+        if not globaladmins[0]:
+            return ["none"]
+
+        for globaladmin in globaladmins:
+            if globaladmin['sophomorixStatus'] in self.userStatus.keys():
+                globaladmin['sophomorixStatus'] = self.userStatus[
+                    globaladmin['sophomorixStatus']]
+            else:
+                globaladmin['sophomorixStatus'] = {'tag': globaladmin['sophomorixStatus'],
+                                                   'color': 'default'}
+            globaladmin['selected'] = False
+
+            globaladminsList.append(globaladmin)
+        return globaladminsList
 
     @post(r'/api/lmn/sophomorixUsers/schooladmins')
     @authorize('lm:users:schooladmins:create')

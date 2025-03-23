@@ -1,4 +1,4 @@
-<br />
+<br xmlns:ng="http://www.w3.org/1999/xhtml"/>
 <progress-spinner ng:show="schooladmins == null"></progress-spinner>
 
 <div ng:show="schooladmins != null">
@@ -49,7 +49,12 @@
 
     <br />
 
-    <h3 translate>School admins</h3>
+    <h3>
+        <button class="btn btn-success pull-right" ng:click="addSchoolAdmin()">
+            <i class="fa fa-plus"></i> <span translate>Add school administrator</span>
+        </button>
+        <span>School admins</span>
+    </h3>
 
     <br />
 
@@ -157,7 +162,12 @@
 
     <hr />
 
-    <h3 translate>School bind users</h3>
+    <h3>
+        <button class="btn btn-success pull-right" ng:click="addSchoolBinduser()">
+            <i class="fa fa-plus"></i> <span translate>Add school bind user</span>
+        </button>
+        <span translate>School bind users</span>
+    </h3>
 
     <br />
 
@@ -204,21 +214,6 @@
 
 <div class="floating-toolbar-padder"></div>
 <floating-toolbar>
-    <div uib-dropdown class="btn-group dropup">
-        <button uib-dropdown-toggle class="btn btn-lmn" translate>
-            <i class="fa fa-user-plus"></i> Add
-            <span class="caret"></span>
-        </button>
-        <ul uib-dropdown-menu class="dropdown-menu-left">
-            <li>
-                <a ng:click="addSchoolAdmin()" translate>Add school administrator</a>
-            </li>
-            <li>
-                <a ng:click="addSchoolBinduser()" translate>Add school bind user</a>
-            </li>
-        </ul>
-        <br />
-    </div>
     <div uib-dropdown class="btn-group dropup pull-right" ng:show="haveSelection()">
         <button uib-dropdown-toggle class="btn btn-lmn" translate>
             <i class="fa fa-key"></i> For selected

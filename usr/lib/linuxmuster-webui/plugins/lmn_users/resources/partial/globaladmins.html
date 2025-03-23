@@ -50,7 +50,12 @@
 
     <br />
 
-    <h3 translate>Global admins</h3>
+     <h3>
+        <button class="btn btn-success pull-right" ng:click="addGlobalAdmin()">
+            <i class="fa fa-plus"></i> <span translate>Add global administrator</span>
+        </button>
+        <span translate>Global admins</span>
+    </h3>
 
     <br />
 
@@ -158,7 +163,12 @@
 
     <hr />
 
-    <h3 translate>Global bind users</h3>
+    <h3>
+        <button class="btn btn-success pull-right" ng:click="addGlobalBinduser()">
+            <i class="fa fa-plus"></i> <span translate>Add global bind user</span>
+        </button>
+        <span translate>Global bind users</span>
+    </h3>
 
     <br />
     <div class="alert alert-info" ng:show="globalbindusers.length == 0" translate>
@@ -208,21 +218,6 @@
 
 <div class="floating-toolbar-padder"></div>
 <floating-toolbar>
-    <div uib-dropdown class="btn-group dropup">
-        <button uib-dropdown-toggle class="btn btn-lmn" translate>
-            <i class="fa fa-user-plus"></i> Add
-            <span class="caret"></span>
-        </button>
-        <ul uib-dropdown-menu class="dropdown-menu-left">
-            <li>
-                <a ng:click="addGlobalAdmin()" translate>Add global administrator</a>
-            </li>
-            <li>
-                <a ng:click="addGlobalBinduser()" translate>Add global bind user</a>
-            </li>
-        </ul>
-        <br />
-    </div>
     <div uib-dropdown class="btn-group dropup pull-right" ng:show="haveSelection()">
         <button uib-dropdown-toggle class="btn btn-lmn" translate>
             <i class="fa fa-key"></i> For selected

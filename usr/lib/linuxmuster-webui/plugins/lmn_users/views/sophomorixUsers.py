@@ -9,12 +9,14 @@ from aj.api.http import get, post, patch, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
 from aj.auth import authorize, AuthenticationService
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue
+from linuxmusterTools.ldapconnector import LMNLdapReader
 
 
 @component(HttpPlugin)
 class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
+        self.lr = LMNLdapReader
         self.userStatus = {
             'A' : {'tag':'Activated', 'color':'success'},
             'U' : {'tag':'Usable', 'color':'success'},
@@ -50,22 +52,22 @@ class Handler(HttpPlugin):
         teachersList = []
 
         if user is None:
-                # TODO: This could run with --user-basic but not all memberOf are filled. Needs verification
-                sophomorixCommand = ['sophomorix-query', '--teacher', '--schoolbase', schoolname, '--user-full', '-jj']
+            teachers= self.lr.get('/roles/teacher', school=schoolname)
         else:
-                sophomorixCommand = ['sophomorix-query', '--teacher', '--schoolbase', schoolname, '--user-full', '-jj', '--sam', user[1:]]
-        result = lmn_getSophomorixValue(sophomorixCommand, '')
-        if 'USER' in result.keys():
-            teachers = result['USER']
-            for _, details in teachers.items():
-                if details['sophomorixStatus'] in self.userStatus.keys():
-                    details['sophomorixStatus'] = self.userStatus[details['sophomorixStatus']]
-                else:
-                    details['sophomorixStatus'] = {'tag': details['sophomorixStatus'], 'color': 'default'}
-                details['selected'] = False
-                teachersList.append(details)
-            return teachersList
-        return ["none"]
+            teacher = user[1:]
+            teachers = [self.lr.get(f'/users/{teacher}', school=schoolname)]
+
+        if not teachers[0]:
+            return ["none"]
+
+        for teacher in teachers:
+            if teacher['sophomorixStatus'] in self.userStatus.keys():
+                teacher['sophomorixStatus'] = self.userStatus[teacher['sophomorixStatus']]
+            else:
+                teacher['sophomorixStatus'] = {'tag': teacher['sophomorixStatus'], 'color': 'default'}
+            teacher['selected'] = False
+            teachersList.append(teacher)
+        return teachersList
 
     @get(r'/api/lmn/sophomorixUsers/students((?P<user>/[a-z0-9\-_]*))?')
     @authorize('lm:users:students:read')

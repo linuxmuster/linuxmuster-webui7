@@ -35,6 +35,7 @@ if os.path.isfile(config_path):
         # Display options
         display_options = lmconfig['linuxmuster'].get('display', {})
         display_options['show_webdav'] = display_options.get('show_webdav', True)
+        display_options['show_wireguard'] = display_options.get('show_wireguard', False)
 
         # Roles auth
         auth_config = lmconfig['linuxmuster'].get('auth', {})

@@ -1,0 +1,32 @@
+<h1>Wireguard</h1>
+<div class="alert alert-warning" role="alert" ng:if="!peers">
+    Connection to wireguard server is not possible! Please check the server or your configuration!
+</div>  
+<div ng:if="peers" style="margin-bottom: 100px;">
+    <div class="card" style="width: 100%;">
+        <ul class="list-group list-group-flush" ng:repeat="peer in peers">
+            <li class="list-group-item" ng:style="{ 'border-left' : (status[peer.name].status == 'connected') ? '7px solid green' : '7px solid red' }">
+                <div style="font-size: larger;font-weight: bold;">{{peer.name}}</div>
+                <div><b translate>Public-Key</b>: {{peer.public_key}} | <b translate>IP-Address</b>: {{peer.ip}}</div>
+                <div><b translate>Routes</b>: <span class="badge bg-secondary" ng:repeat="route in peer.routes">{{route}}</span></div>
+                <div ng:if="status[peer.name].status == 'connected'">
+                    <b translate>Endpoint</b>: {{status[peer.name].endpoint}}
+                    <b translate>Last Handshake</b>: {{status[peer.name].latest_handshake_difference | number:0}} <span translate></span>seconds ago</span> | 
+                    <i class="fa fa-arrow-down"></i> {{status[peer.name].transfer.received | number:2}} MiB | <i class="fa fa-arrow-up"></i> {{status[peer.name].transfer.send | number:2}} MiB
+                </div>
+                <div style="margin-top:10px;">
+                    <button ng:click="showConfig(peer.name)" class="btn btn-lmn"><span translate>Configuration</span></button>
+                    <button ng:click="showQRCode(peer.name)" class="btn btn-lmn"><span translate>Show QR-Code</span></button>
+                    <button ng:click="delete(peer.name)" class="btn btn-danger"><span translate>Delete</span></button>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<floating-toolbar ng:if="peers">
+    <button ng:if="peers" ng:click="create()" class="btn btn-success"><i class="fa fa-plus" title="Add"></i></button>
+    <button ng:if="peers" ng:click="import()" class="btn btn-success"><i class="fa fa-upload" title="Import"></i></button>
+    <button ng:click="restart()" class="btn btn-danger pull-right"><i class="fa fa-power-off"></i> <span translate>Restart</span></button>
+    <button ng:click="loadStatus()" class="btn btn-lmn pull-right"><i class="fa fa-refresh"></i> <span translate>Query status</span></button>
+</floating-toolbar>

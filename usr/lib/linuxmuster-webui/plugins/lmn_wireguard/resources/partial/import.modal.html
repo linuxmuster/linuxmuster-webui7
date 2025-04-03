@@ -1,0 +1,47 @@
+<div class="modal-header">
+    <h3><span translate>Import users</span></h3>
+</div>
+<div class="modal-body">
+    <ol style="line-height: 1.5em;">
+        <li>Found {{users.length}} users on server <button class="btn btn-sm" ng:click="checkUser()">Check users</button></li>
+        <li>Found {{userstoimport.length}} users to import and {{peerstodelete.length}} users to delete              
+            <div ng:if="userstoimport.length > 0">
+                <h4>Users to import</h4>
+                <table class="table table-bordered" style="background-color: #2af9231c;">
+                    <tr>
+                        <th>Username</th>
+                        <th>Firstname</th>
+                        <th>Lastname</th>
+                    </tr>
+                    <tr ng:repeat="user in userstoimport">
+                        <td>{{user.sAMAccountName}}</td>
+                        <td>{{user.givenName}}</td>
+                        <td>{{user.sn}}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div ng:if="peerstodelete.length > 0">
+                <h4>Peers to delete</h4>
+                <table class="table table-bordered" style="background-color: #c202021c;">
+                    <tr>
+                        <th>Peer-Name</th>
+                    </tr>
+                    <tr ng:repeat="peer in peerstodelete">
+                        <td>{{peer.name}}</td>
+                    </tr>
+                </table>
+            </div>
+        </li>
+        <li>Run import or import and delete!</li>
+    </ol>
+    <br>
+    <div class="progress" ng:if="importstatus">
+        <div class="progress-bar progress-bar-striped" role="progressbar" ng-style="{'width': importprogress + '%'}" aria-valuenow="{{importprogress}}" aria-valuemin="0" aria-valuemax="100">{{importstatus}} / {{importmax}}</div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button ng:disabled="!userstoimport || userstoimport.length == 0" ng:click="run(true)" class="btn btn-success" translate>Import</button>
+    <button ng:disabled="!userstoimport || peerstodelete.length == 0" ng:click="run()" class="btn btn-success" translate>Import + Delete</button>
+    <button ng:click="close()" class="btn btn-default" translate>Close</button>
+</div>

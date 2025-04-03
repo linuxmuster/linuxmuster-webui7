@@ -1,0 +1,22 @@
+name: lmn_wireguard
+author: Lukas Spitznagel
+email: lukas.spitznagel@netzint.de
+url: https://netzint.de
+version: '1.0'
+title: 'Wireguard'
+icon: network-wired
+# dependency on Core is required for UI plugins
+dependencies:
+    - !PluginDependency {
+        plugin_name: core
+    }
+    - !PluginDependency { 
+        plugin_name: lmn_common 
+    }
+resources:
+    - 'resources/js/module.es'
+    - 'resources/js/routing.es'
+    - 'resources/js/controllers/index.controller.es'
+    - 'resources/partial/index.html'
+    - 'resources/partial/import.modal.html'
+    - 'ng:lmn.wireguard'

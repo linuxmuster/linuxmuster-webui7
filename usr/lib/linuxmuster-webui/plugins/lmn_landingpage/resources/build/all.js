@@ -13,10 +13,11 @@
     });
   });
 
-  angular.module('lmn.landingpage').controller('LMNLandingController', function($scope, $http, $uibModal, $location, $route, gettext, notify, pageTitle, customFields) {
+  angular.module('lmn.landingpage').controller('LMNLandingController', function($scope, $http, $uibModal, $location, $route, $interval, gettext, notify, pageTitle, customFields) {
     pageTitle.set(gettext('Home'));
     $http.get("/api/lmn/display_options").then(function(resp) {
-      return $scope.show_webdav = resp.data['show_webdav'];
+      $scope.show_webdav = resp.data['show_webdav'];
+      return $scope.show_wireguard = resp.data['show_wireguard'];
     });
     $scope.getData = function(user) {
       customFields.load_user_fields(user).then(function(resp) {
@@ -102,6 +103,63 @@
         }
       });
     };
+    $scope.showWireguardConfig = function() {
+      var peer;
+      peer = "lmn-user_" + $scope.identity.user;
+      return $http.post('/api/lmn/wireguard', {
+        "url": "/api/wireguard/peers/" + peer + "/config",
+        "method": "GET"
+      }).then(function(resp) {
+        if (!resp.data) {
+          return $uibModal.open({
+            template: "<div style='margin:10px;'><h2>Wireguard-Konfiguration \"" + peer + "\"</h2><div class='alert alert-warning' role='alert'>No configuration is available for this user. Please contact an administrator.</div></div>",
+            size: 'mg'
+          });
+        } else {
+          return $uibModal.open({
+            template: "<div style='margin:10px;'><h2>Wireguard-Konfiguration \"" + peer + "\"</h2><pre>" + resp.data.data + "</pre></div>",
+            size: 'mg'
+          });
+        }
+      });
+    };
+    $scope.showWireguardQR = function() {
+      var peer;
+      peer = "lmn-user_" + $scope.identity.user;
+      return $http.post('/api/lmn/wireguard', {
+        "url": "/api/wireguard/peers/" + peer + "/qr/b64",
+        "method": "GET"
+      }).then(function(resp) {
+        if (!resp.data) {
+          return $uibModal.open({
+            template: "<div style='margin:10px;'><h2>Wireguard-Konfiguration \"" + peer + "\"</h2><div class='alert alert-warning' role='alert'>No configuration is available for this user. Please contact an administrator.</div></div>",
+            size: 'mg'
+          });
+        } else {
+          return $uibModal.open({
+            template: "<div style='margin:10px;'><h2>Wireguard-Konfiguration \"" + peer + "\"</h2><img style='width:100%;' src='data:image/png;base64," + resp.data + "'/></div>",
+            size: 'mg'
+          });
+        }
+      });
+    };
+    $scope.loadWireguardConnectionStatus = function() {
+      var peer;
+      peer = "lmn-user_" + $scope.identity.user;
+      return $http.post('/api/lmn/wireguard', {
+        "url": "/api/wireguard/peers/" + peer + "/status",
+        "method": "GET"
+      }).then(function(resp) {
+        console.log(resp.data);
+        return $scope.wireguardConnectionStatus = resp.data;
+      });
+    };
+    $scope.$watch('show_wireguard', function() {
+      if ($scope.show_wireguard) {
+        $scope.loadWireguardConnectionStatus();
+        return $interval($scope.loadWireguardConnectionStatus, 30000, 0);
+      }
+    });
     return $scope.$watch('identity.user', function() {
       var category, cn, dn, i, len, ref;
       if ($scope.identity.user === void 0) {

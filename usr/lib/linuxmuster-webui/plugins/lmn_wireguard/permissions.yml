@@ -1,0 +1,8 @@
+globaladministrator:
+- 'sidebar:view:/view/lmn/wireguard: true'
+schooladministrator:
+- 'sidebar:view:/view/lmn/wireguard: true'
+student:
+- 'sidebar:view:/view/lmn/wireguard: false'
+teacher:
+- 'sidebar:view:/view/lmn/wireguard: false'

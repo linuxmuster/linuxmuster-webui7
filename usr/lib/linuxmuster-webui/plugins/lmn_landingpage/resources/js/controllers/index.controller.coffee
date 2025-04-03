@@ -3,11 +3,12 @@ angular.module('lmn.landingpage').config ($routeProvider) ->
         controller: 'LMNLandingController'
         templateUrl: '/lmn_landingpage:resources/partial/index.html'
 
-angular.module('lmn.landingpage').controller 'LMNLandingController', ($scope, $http, $uibModal, $location, $route, gettext, notify, pageTitle, customFields) ->
+angular.module('lmn.landingpage').controller 'LMNLandingController', ($scope, $http, $uibModal, $location, $route, $interval, gettext, notify, pageTitle, customFields) ->
     pageTitle.set(gettext('Home'))
 
     $http.get("/api/lmn/display_options").then (resp) ->
         $scope.show_webdav = resp.data['show_webdav']
+        $scope.show_wireguard = resp.data['show_wireguard']
 
     $scope.getData = (user) ->
         customFields.load_user_fields(user).then (resp) ->
@@ -62,6 +63,45 @@ angular.module('lmn.landingpage').controller 'LMNLandingController', ($scope, $h
           resolve:
              user: () -> $scope.user
              )
+
+    $scope.showWireguardConfig = () ->
+        peer = "lmn-user_" + $scope.identity.user
+        $http.post('/api/lmn/wireguard', { "url": "/api/wireguard/peers/" + peer + "/config", "method": "GET" }).then (resp) ->
+            if !resp.data
+                $uibModal.open(
+                    template: "<div style='margin:10px;'><h2>Wireguard-Konfiguration \"" + peer + "\"</h2><div class='alert alert-warning' role='alert'>No configuration is available for this user. Please contact an administrator.</div></div>",
+                    size: 'mg'
+                )
+            else
+                $uibModal.open(
+                    template: "<div style='margin:10px;'><h2>Wireguard-Konfiguration \"" + peer + "\"</h2><pre>" + resp.data.data + "</pre></div>",
+                    size: 'mg'
+                )
+
+    $scope.showWireguardQR = () ->
+        peer = "lmn-user_" + $scope.identity.user
+        $http.post('/api/lmn/wireguard', { "url": "/api/wireguard/peers/" + peer + "/qr/b64", "method": "GET" }).then (resp) ->
+            if !resp.data
+                $uibModal.open(
+                    template: "<div style='margin:10px;'><h2>Wireguard-Konfiguration \"" + peer + "\"</h2><div class='alert alert-warning' role='alert'>No configuration is available for this user. Please contact an administrator.</div></div>",
+                    size: 'mg'
+                )
+            else
+                $uibModal.open(
+                    template: "<div style='margin:10px;'><h2>Wireguard-Konfiguration \"" + peer + "\"</h2><img style='width:100%;' src='data:image/png;base64," + resp.data + "'/></div>",
+                    size: 'mg'
+                )
+
+    $scope.loadWireguardConnectionStatus = () ->
+        peer = "lmn-user_" + $scope.identity.user
+        $http.post('/api/lmn/wireguard', { "url": "/api/wireguard/peers/" + peer + "/status", "method": "GET" }).then (resp) ->
+            console.log(resp.data)
+            $scope.wireguardConnectionStatus = resp.data
+
+    $scope.$watch 'show_wireguard', ->
+        if $scope.show_wireguard
+            $scope.loadWireguardConnectionStatus()
+            $interval($scope.loadWireguardConnectionStatus, 30000, 0)
 
     $scope.$watch 'identity.user', ->
         if $scope.identity.user is undefined

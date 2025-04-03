@@ -118,6 +118,43 @@
                     </ul>
                 </div>
             </div>
+
+            <div class="panel panel-info" ng:if="show_wireguard">
+                <div class="panel-heading">
+                    <h4 translate>Wireguard VPN</h4>
+                </div>
+                <div class="panel-body">
+                    <p translate>
+                        You can access the school network by using wireguard. You can download the client for the
+                        following operating systems:
+                    </p>
+                    <a href="https://download.wireguard.com/windows-client/wireguard-installer.exe" target="_blank" style="margin-right: 10px;" title="Windows">
+                        <i class="fab fa-windows fa-3x"></i>
+                    </a>
+                    <a href="https://www.wireguard.com/install/" target="_blank" style="margin-right: 10px;" title="Linux">
+                        <i class="fab fa-linux fa-3x"></i>
+                    </a>
+                    <a href="https://play.google.com/store/apps/details?id=com.wireguard.android" target="_blank" style="margin-right: 10px;" title="Android">
+                        <i class="fab fa-android fa-3x"></i>
+                    </a>
+                    <a href="https://itunes.apple.com/us/app/wireguard/id1441195209?ls=1&mt=8" target="_blank" style="margin-right: 10px;" title="iOS">
+                        <i class="fab fa-apple fa-3x"></i>
+                    </a>
+
+                    <a ng:click="showWireguardQR()" class="pull-right" style="margin-right: 10px;" title="Show QR-Code">
+                        <i class="fa fa-qrcode fa-3x"></i>
+                    </a>
+                    <a ng:click="showWireguardConfig()" class="pull-right" style="margin-right: 10px;" title="Show Configuration">
+                        <i class="fa fa-download fa-3x"></i>
+                    </a>
+
+                    <div class="alert alert-success" role="alert" ng:if="wireguardConnectionStatus.status == 'connected'" style="margin-top: 20px;">
+                        <b translate>Endpoint</b>: {{wireguardConnectionStatus.endpoint}}
+                        <b translate>Last Handshake</b>: {{wireguardConnectionStatus.latest_handshake_difference | number:0}} <span translate></span>seconds ago</span> | 
+                        <i class="fa fa-arrow-down"></i> {{wireguardConnectionStatus.transfer.received | number:2}} MiB | <i class="fa fa-arrow-up"></i> {{wireguardConnectionStatus.transfer.send | number:2}} MiB
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

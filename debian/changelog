@@ -1,4 +1,4 @@
-linuxmuster-webui7 (7.2.72) lmn72; urgency=medium
+linuxmuster-webui7 (7.2.78) lmn72; urgency=medium
 
   * Fix boot flag for cache partition. 
 

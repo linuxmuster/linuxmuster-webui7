@@ -361,7 +361,7 @@ angular.module('lmn.linbo4').controller 'LMLINBO4ConfigModalController', ($scope
 
     $scope.addCache = (disk) ->
         disk.partitions.push {
-            Bootable: yes
+            Bootable: false
             FSType: 'ext4'
             Id: '83'
             Size: ''

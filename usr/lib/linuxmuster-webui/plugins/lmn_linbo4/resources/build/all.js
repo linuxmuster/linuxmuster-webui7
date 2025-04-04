@@ -429,7 +429,7 @@
     };
     $scope.addCache = function(disk) {
       disk.partitions.push({
-        Bootable: true,
+        Bootable: false,
         FSType: 'ext4',
         Id: '83',
         Size: '',

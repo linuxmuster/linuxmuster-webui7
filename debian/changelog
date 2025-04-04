@@ -1,3 +1,10 @@
+linuxmuster-webui7 (7.3.4) lmn73; urgency=medium
+
+  * Add wireguard plugin (@hermanntoast)
+  * [linbo] Fix boot flag for cache partition 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 04 Apr 2025 21:02:01 +0200
+
 linuxmuster-webui7 (7.3.3) lmn73; urgency=medium
 
   * For implementations of lmntools

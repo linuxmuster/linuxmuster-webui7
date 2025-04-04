@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.3.2) lmn72; urgency=medium
+
+  * Fix boot flag for cache partition. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 04 Apr 2025 20:58:20 +0200
+
 linuxmuster-webui7 (7.3.1) lmn73; urgency=medium
 
   * New package for lmn7.3.

@@ -171,18 +171,18 @@ angular.module('lmn.users').controller 'LMUsersListManagementController', ($scop
     }
 
     $scope.parents_fields = {
-        class:
-            visible: true
-            name: gettext('Class')
+#        class:
+#            visible: true
+#            name: gettext('Class')
         last_name:
             visible: true
             name: gettext('Last Name')
         first_name:
             visible: true
             name: gettext('First Name')
-        birthday:
-            visible: true
-            name: gettext('Birthday')
+#        birthday:
+#            visible: true
+#            name: gettext('Birthday')
         id:
             visible: false
             name: gettext('Parent ID')
@@ -261,10 +261,10 @@ angular.module('lmn.users').controller 'LMUsersListManagementController', ($scop
         $scope.newUser = {
             _isNew: true,
             role: 'parent',
-            class: '',
+            class: 'Parents',
             last_name: '',
             first_name: '',
-            birthday: '',
+            birthday: '01.01.1930',
             id: '',
         }
 

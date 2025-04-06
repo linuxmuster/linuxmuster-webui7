@@ -22,7 +22,7 @@
                     <input class="form-control" type="text" ng:model="newUser.first_name">
                 </td>
             </tr>
-            <tr>
+            <tr ng:show="newUser.role != 'parent'">
                 <td>
                     <span translate>Birthday: </span>
                     <input class="form-control" type="text" ng:model="newUser.birthday">

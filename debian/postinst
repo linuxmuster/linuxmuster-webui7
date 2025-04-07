@@ -166,7 +166,13 @@ Updating linuxmuster-webui
             msg "Set default sophomorix webui rights"
             $PYTHON3 $update_scripts/merge-permissions.py
             /usr/sbin/sophomorix-ui
-            
+
+            if grep -Fxq "parents_groups_checked" $webuietc/.installed ; then
+                msg "Parents groups already checked!"
+            else
+                /usr/sbin/lmncli check_parents && echo "parents_groups_checked" >> $webuietc/.installed
+            fi
+
             # Recreate upload folder using the right permissions
             msg "Verifying upload folder"
             bash $install_scripts/create_webuiUploadFolder.sh

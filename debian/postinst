@@ -111,6 +111,9 @@ EOF
             $PYTHON3 $update_scripts/merge-permissions.py
 
             touch $webuietc/.installed
+            # No need to check the parents groups for the first install
+            echo "parents_groups_checked" >> $webuietc/.installed
+
             ipaddress=$(hostname --ip-address)
             msg "--------------------------------------------------------------------
 linuxmuster-webui is now installed but not initialised!

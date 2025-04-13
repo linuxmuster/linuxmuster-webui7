@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.2.79) lmn72; urgency=medium
+
+  * [session] Fix double exam users. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 13 Apr 2025 10:58:02 +0200
+
 linuxmuster-webui7 (7.2.78) lmn72; urgency=medium
 
   * Fix boot flag for cache partition. 

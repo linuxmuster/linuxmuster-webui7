@@ -137,7 +137,10 @@ class Handler(HttpPlugin):
     def handle_api_start_exam(self, http_context):
         supervisor = self.context.identity
         session = http_context.json_body()['session']
-        participants = ','.join([member['cn'] for member in session['members']])
+        participants = ','.join([ member['cn']
+                                  for member in session['members']
+                                  if not member['cn'].endswith("-exam")
+                                  ])
 
         try:
             sophomorixCommand = [

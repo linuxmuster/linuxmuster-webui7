@@ -59,6 +59,9 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
             // Only exam users from the current teacher
             _this.examMode = true;
         }
+        if (_this.examUsers.length == _this.current.members.length) {
+            _this.examMode = true;
+        }
     };
 
     this.createWorkingDirectory = function (users) {
@@ -705,13 +708,13 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
           };
         } else {
           session = $scope.session;
-          $scope.examMode = true;
         }
         return $http.patch("/api/lmn/session/exam/start", {
           session: session
         }).then(function(resp) {
           $scope.stateChanged = false;
           lmnSession.getExamUsers(user);
+          $scope.examMode = lmnSession.examMode;
           $scope.stopRefreshFiles();
           return $rootScope.$emit('updateWaiting', 'done');
         });

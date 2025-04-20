@@ -142,17 +142,18 @@ class Handler(HttpPlugin):
                                   if not member['cn'].endswith("-exam")
                                   ])
 
-        try:
-            sophomorixCommand = [
-                'sophomorix-exam-mode',
-                '--set',
-                '--supervisor', supervisor,
-                '-j',
-                '--participants', participants
-            ]
-            lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
-        except Exception as e:
-            raise Exception('Error:\n' + str(e))
+        if participants:
+            try:
+                sophomorixCommand = [
+                    'sophomorix-exam-mode',
+                    '--set',
+                    '--supervisor', supervisor,
+                    '-j',
+                    '--participants', participants
+                ]
+                lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
+            except Exception as e:
+                raise Exception('Error:\n' + str(e))
 
     @patch(r'/api/lmn/session/exam/stop')
     @authorize('lm:users:students:read')
@@ -166,17 +167,18 @@ class Handler(HttpPlugin):
         now = strftime("%Y-%m-%d_%Hh%Mm%S", localtime())
         target = f'EXAM_{group_type}_{group_name}_{now}'
 
-        try:
-            sophomorixCommand = [
-                'sophomorix-exam-mode',
-                '--unset',
-                '--subdir', f'transfer/collected/{target}',
-                '-j',
-                '--participants', participants
-            ]
-            lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
-        except Exception as e:
-            raise Exception('Error:\n' + str(e))
+        if participants:
+            try:
+                sophomorixCommand = [
+                    'sophomorix-exam-mode',
+                    '--unset',
+                    '--subdir', f'transfer/collected/{target}',
+                    '-j',
+                    '--participants', participants
+                ]
+                lmn_getSophomorixValue(sophomorixCommand, 'COMMENT_EN')
+            except Exception as e:
+                raise Exception('Error:\n' + str(e))
 
     @post(r'/api/lmn/managementgroup')
     @authorize('lm:users:students:read')

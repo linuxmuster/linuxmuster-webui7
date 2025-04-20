@@ -325,11 +325,11 @@ angular.module('lmn.session_new').controller 'LMNSessionController', ($scope, $h
                 session = {"members":[{'cn': user}]}
             else
                 session = $scope.session
-                $scope.examMode = true
 
             $http.patch("/api/lmn/session/exam/start", {session: session}).then (resp) ->
                 $scope.stateChanged = false
                 lmnSession.getExamUsers(user)
+                $scope.examMode = lmnSession.examMode
                 $scope.stopRefreshFiles()
                 $rootScope.$emit('updateWaiting', 'done')
 

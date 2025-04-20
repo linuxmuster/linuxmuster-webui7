@@ -29,6 +29,9 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
             // Only exam users from the current teacher
             this.examMode = true;
         }
+        if (this.examUsers.length == this.current.members.length) {
+            this.examMode = true;
+        }
     }
 
     this.createWorkingDirectory = (users) => {

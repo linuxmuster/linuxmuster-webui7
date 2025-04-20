@@ -55,10 +55,7 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         _this.examUsers = _this.current.members.filter(function (user) {
             return user.examTeacher == identity.user;
         });
-        if (_this.examUsers.length > 0 && _this.extExamUsers.length == 0) {
-            // Only exam users from the current teacher
-            _this.examMode = true;
-        }
+
         if (_this.examUsers.length == _this.current.members.length) {
             _this.examMode = true;
         }
@@ -178,14 +175,14 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
         if (single_user) {
             pos = users.indexOf(single_user);
             _this.current.members.splice(pos, 1);
-            $http.post('/api/lmn/session/exam/userinfo', { 'users': [single_user] }).then(function (resp) {
+            return $http.post('/api/lmn/session/exam/userinfo', { 'users': [single_user] }).then(function (resp) {
                 _this.current.members.push(resp.data[0]);
                 _this.createWorkingDirectory(_this.current.members);
                 _this.filterExamUsers();
                 $location.path('/view/lmn/session');
             });
         } else {
-            $http.post('/api/lmn/session/exam/userinfo', { 'users': users }).then(function (resp) {
+            return $http.post('/api/lmn/session/exam/userinfo', { 'users': users }).then(function (resp) {
                 _this.current.members = resp.data;
                 _this.createWorkingDirectory(_this.current.members);
                 _this.filterExamUsers();
@@ -713,10 +710,11 @@ angular.module('lmn.session_new').service('lmnSession', function ($http, $uibMod
           session: session
         }).then(function(resp) {
           $scope.stateChanged = false;
-          lmnSession.getExamUsers(user);
-          $scope.examMode = lmnSession.examMode;
-          $scope.stopRefreshFiles();
-          return $rootScope.$emit('updateWaiting', 'done');
+          return lmnSession.getExamUsers(user).then(function() {
+            $scope.examMode = lmnSession.examMode;
+            $scope.stopRefreshFiles();
+            return $rootScope.$emit('updateWaiting', 'done');
+          });
         });
       });
     };

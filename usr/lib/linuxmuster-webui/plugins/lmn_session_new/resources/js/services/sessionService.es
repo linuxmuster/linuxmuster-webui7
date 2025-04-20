@@ -25,10 +25,7 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
         this.examMode = false;
         this.extExamUsers = this.current.members.filter((user) => user.examMode && user.examTeacher != identity.user);
         this.examUsers = this.current.members.filter((user) => user.examTeacher == identity.user);
-        if (this.examUsers.length > 0 && this.extExamUsers.length == 0)  {
-            // Only exam users from the current teacher
-            this.examMode = true;
-        }
+
         if (this.examUsers.length == this.current.members.length) {
             this.examMode = true;
         }
@@ -104,14 +101,14 @@ angular.module('lmn.session_new').service('lmnSession', function($http, $uibModa
         if (single_user) {
             pos = users.indexOf(single_user);
             this.current.members.splice(pos, 1);
-            $http.post('/api/lmn/session/exam/userinfo', {'users': [single_user]}).then((resp) => {
+            return $http.post('/api/lmn/session/exam/userinfo', {'users': [single_user]}).then((resp) => {
                 this.current.members.push(resp.data[0]);
                 this.createWorkingDirectory(this.current.members);
                 this.filterExamUsers();
                 $location.path('/view/lmn/session');
             });
         } else {
-            $http.post('/api/lmn/session/exam/userinfo', {'users': users}).then((resp) => {
+            return $http.post('/api/lmn/session/exam/userinfo', {'users': users}).then((resp) => {
                 this.current.members = resp.data;
                 this.createWorkingDirectory(this.current.members);
                 this.filterExamUsers();

@@ -2,13 +2,16 @@
         <h3 translate>Add Administrator</h3>
     </div>
     <div  style="height: 200px;" class="modal-body scrollable">
-       <div class="form-group">
-          <label> New {{role}}: </label>
-          <input ng:model="username"  class="form-control" placeholder="username" />
+        <div class="form-group">
+            <form name="form">
+                <label> New {{role}}: </label>
+                <input ng:model="username" ng:pattern="/^[a-z0-9\-_]*$/" name="username" id="username" class="form-control" placeholder="username" />
+                <p ng:show="!form.username.$valid" style="color:red;margin-top:10px;" translate>Please only use lowercase characters, digits, hyphen or underscore. </p>
+            </form>
        </div>
     </div>
     <div class="modal-footer">
        <a class="btn btn-default btn-flat" ng:click="close()" translate>Cancel</a>
-       <a class="btn btn-default btn-flat" ng:click="save([username])" translate>Accept</a>
+       <a class="btn btn-default btn-flat" ng:click="save([username])" ng:disabled="!form.username.$valid" translate>Accept</a>
     </div>
 

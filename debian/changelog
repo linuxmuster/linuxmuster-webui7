@@ -1,3 +1,10 @@
+linuxmuster-webui7 (7.3.6) lmn73; urgency=medium
+
+  * [auth] Catch exception from gpomgr. 
+  * [user] Check uppercase in admin login. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 26 Apr 2025 13:22:42 +0200
+
 linuxmuster-webui7 (7.3.5) lmn73; urgency=medium
 
   * [session] Fix start and stop events for exam mode. 

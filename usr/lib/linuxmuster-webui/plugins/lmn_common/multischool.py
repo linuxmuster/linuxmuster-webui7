@@ -23,8 +23,11 @@ class SchoolManager:
         self.schoolname = self.school
         self.schoolShare = f'\\\\{samba_realm}\\{self.school}\\'
         self.schoolGlobalShare = f'\\\\{samba_realm}\\linuxmuster-global\\'
-        self.gpomgr = GPOManager()
-        self.load()
+        try:
+            self.gpomgr = GPOManager()
+            self.load()
+        except Exception as e:
+            logging.error(str(e))
 
     def load(self):
         """

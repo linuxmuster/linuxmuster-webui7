@@ -108,7 +108,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
                 logging.warning(f"Changing kerberos ticket rights for {username}")
                 os.chown(f'/tmp/krb5cc_{uid}', uid, 100)
         except Exception as e:
-            logging.warning(str(e))
+            logging.error(str(e))
 
     def _get_krb_ticket(self, username, password):
         """

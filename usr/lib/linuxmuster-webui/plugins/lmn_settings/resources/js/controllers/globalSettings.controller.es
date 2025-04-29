@@ -142,6 +142,9 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope,
        });
     }
 
+    $scope.showSMTPPassword = false;
+    $scope.toggleShowSMTPPassword = () => $scope.showSMTPPassword = !$scope.showSMTPPassword;
+
     $scope.restart = () => core.restart();
 
     $scope.getTfaConfig = () => {

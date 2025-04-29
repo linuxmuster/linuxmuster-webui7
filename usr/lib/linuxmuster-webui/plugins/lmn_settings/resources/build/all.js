@@ -358,6 +358,11 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', function
         });
     };
 
+    $scope.showSMTPPassword = false;
+    $scope.toggleShowSMTPPassword = function () {
+        return $scope.showSMTPPassword = !$scope.showSMTPPassword;
+    };
+
     $scope.restart = function () {
         return core.restart();
     };

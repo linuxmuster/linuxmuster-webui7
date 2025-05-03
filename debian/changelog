@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.3.7) lmn73; urgency=medium
+
+  * [wireguard] Fix angular bootstrap (@hermanntoast) 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 03 May 2025 15:26:21 +0200
+
 linuxmuster-webui7 (7.3.6) lmn73; urgency=medium
 
   * [auth] Catch exception from gpomgr. 

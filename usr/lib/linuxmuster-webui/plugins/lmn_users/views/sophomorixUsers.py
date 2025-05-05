@@ -57,7 +57,10 @@ class Handler(HttpPlugin):
             teacher = user[1:]
             teachers = [self.lr.get(f'/users/{teacher}', school=schoolname)]
 
-        if not teachers[0]:
+
+        if not teachers:
+            return ["none"]
+        elif not teachers[0]:
             return ["none"]
 
         for teacher in teachers:
@@ -93,7 +96,9 @@ class Handler(HttpPlugin):
             parent = user[1:]
             parents = [self.lr.get(f'/users/{parent}', school=schoolname)]
 
-        if not parents[0]:
+        if not parents:
+            return ["none"]
+        elif not parents[0]:
             return ["none"]
 
         for parent in parents:
@@ -129,7 +134,9 @@ class Handler(HttpPlugin):
             student = user[1:]
             students = [self.lr.get(f'/users/{student}', school=schoolname)]
 
-        if not students[0]:
+        if not students:
+            return ["none"]
+        elif not students[0]:
             return ["none"]
 
         for student in students:
@@ -170,7 +177,9 @@ class Handler(HttpPlugin):
             schooladmin = user[1:]
             schooladmins = [self.lr.get(f'/users/{schooladmin}', school=schoolname)]
 
-        if not schooladmins[0]:
+        if not schooladmins:
+            return ["none"]
+        elif not schooladmins[0]:
             return ["none"]
 
         for schooladmin in schooladmins:
@@ -208,7 +217,9 @@ class Handler(HttpPlugin):
             globaladmin = user[1:]
             globaladmins = [self.lr.get(f'/users/{globaladmin}')]
 
-        if not globaladmins[0]:
+        if not globaladmins:
+            return ["none"]
+        elif not globaladmins[0]:
             return ["none"]
 
         for globaladmin in globaladmins:

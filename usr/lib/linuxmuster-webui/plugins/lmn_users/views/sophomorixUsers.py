@@ -110,6 +110,44 @@ class Handler(HttpPlugin):
             parentsList.append(parent)
         return parentsList
 
+    @get(r'/api/lmn/sophomorixUsers/staff((?P<user>/[a-z0-9\-_]*))?')
+    @authorize('lm:users:staff:read')
+    @endpoint(api=True)
+    def handle_api_sophomorix_staff(self, http_context, user=None):
+        """
+        Get staff list from LDAP tree.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :param user: if provided, user to show (containing / at the beginning)
+        :type user: str
+        :return: List of staff with details, one st per dict.
+        :rtype: list of dict
+        """
+
+        schoolname = self.context.schoolmgr.school
+        staffList = []
+
+        if user is None:
+            staff = self.lr.get('/roles/staff', school=schoolname)
+        else:
+            st = user[1:]
+            staff = [self.lr.get(f'/users/{st}', school=schoolname)]
+
+        if not staff:
+            return ["none"]
+        elif not staff[0]:
+            return ["none"]
+
+        for st in staff:
+            if st['sophomorixStatus'] in self.userStatus.keys():
+                st['sophomorixStatus'] = self.userStatus[st['sophomorixStatus']]
+            else:
+                st['sophomorixStatus'] = {'tag': st['sophomorixStatus'], 'color': 'default'}
+            st['selected'] = False
+            staffList.append(st)
+        return staffList
+
     @get(r'/api/lmn/sophomorixUsers/students((?P<user>/[a-z0-9\-_]*))?')
     @authorize('lm:users:students:read')
     @endpoint(api=True)

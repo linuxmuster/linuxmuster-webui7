@@ -165,7 +165,7 @@ class Handler(HttpPlugin):
                 with authorize('lm:users:students:read'):
                     return (coloumns)
 
-    @get(r'/api/lmn/users/lists/(?P<role>\b(?:students|teachers|parents|extraclasses|extrastudents)\b)')
+    @get(r'/api/lmn/users/lists/(?P<role>\b(?:students|teachers|parents|staff|extraclasses|extrastudents)\b)')
     @endpoint(api=True)
     def handle_api_get_lists(self, http_context, role):
         """
@@ -188,7 +188,7 @@ class Handler(HttpPlugin):
             with LMNFile(path, 'r') as list:
                 return list.read()
 
-    @post(r'/api/lmn/users/lists/(?P<role>\b(?:students|teachers|parents|extraclasses|extrastudents)\b)')
+    @post(r'/api/lmn/users/lists/(?P<role>\b(?:students|teachers|parents|staff|extraclasses|extrastudents)\b)')
     @endpoint(api=True)
     def handle_api_post_lists(self, http_context, role):
         """

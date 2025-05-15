@@ -17,6 +17,9 @@ angular.module('lmn.users').controller 'UsersAddController', ($scope, $http, pag
         if role == 'parent'
             $scope.parents.unshift($scope.newUser)
 
+        if role == 'staff'
+            $scope.staff.unshift($scope.newUser)
+
         if role == 'teacher'
             $scope.teachers.unshift($scope.newUser)
 
@@ -69,6 +72,25 @@ angular.module('lmn.users').controller 'LMUsersListManagementController', ($scop
         }
         {
             name: gettext('Parent ID')
+            fx: (x) -> x.id
+        }
+    ]
+
+    $scope.staff_sorts = [
+        {
+            name: gettext('Category')
+            fx: (x) -> x.class
+        }
+        {
+            name: gettext('First name')
+            fx: (x) -> x.first_name
+        }
+        {
+            name: gettext('Last name')
+            fx: (x) -> x.last_name
+        }
+        {
+            name: gettext('Staff ID')
             fx: (x) -> x.id
         }
     ]
@@ -139,6 +161,7 @@ angular.module('lmn.users').controller 'LMUsersListManagementController', ($scop
 
     $scope.students_sort = $scope.students_sorts[0]
     $scope.parents_sort = $scope.parents_sorts[0]
+    $scope.staff_sort = $scope.staff_sorts[0]
     $scope.teachers_sort = $scope.teachers_sorts[0]
     $scope.extrastudents_sort = $scope.students_sorts[0]
     $scope.courses_sort= $scope.teachers_sorts[0]
@@ -146,6 +169,7 @@ angular.module('lmn.users').controller 'LMUsersListManagementController', ($scop
     $scope.paging = {
         page_students: 1,
         page_parents: 1,
+        page_staff: 1,
         page_teachers:1,
         page_extrastudents:1,
         page_courses:1,
@@ -171,21 +195,30 @@ angular.module('lmn.users').controller 'LMUsersListManagementController', ($scop
     }
 
     $scope.parents_fields = {
-#        class:
-#            visible: true
-#            name: gettext('Class')
         last_name:
             visible: true
             name: gettext('Last Name')
         first_name:
             visible: true
             name: gettext('First Name')
-#        birthday:
-#            visible: true
-#            name: gettext('Birthday')
         id:
             visible: false
             name: gettext('Parent ID')
+    }
+
+    $scope.staff_fields = {
+        class:
+            visible: true
+            name: gettext('Category')
+        last_name:
+            visible: true
+            name: gettext('Last Name')
+        first_name:
+            visible: true
+            name: gettext('First Name')
+        id:
+            visible: false
+            name: gettext('Staff ID')
     }
 
     $scope.teachers_fields = {
@@ -228,12 +261,14 @@ angular.module('lmn.users').controller 'LMUsersListManagementController', ($scop
     $scope.teachers_first_save = false
     $scope.students_first_save = false
     $scope.parents_first_save = false
+    $scope.staff_first_save = false
     $scope.extrastudents_first_save = false
     $scope.courses_first_save= false
 
     $scope.teachers = ''
     $scope.students = ''
     $scope.parents = ''
+    $scope.staff = ''
     $scope.extrastudents = ''
     $scope.courses = ''
 
@@ -264,7 +299,25 @@ angular.module('lmn.users').controller 'LMUsersListManagementController', ($scop
             class: 'Parents',
             last_name: '',
             first_name: '',
-            birthday: '01.01.1930',
+            birthday: '01.01.1970',
+            id: '',
+        }
+
+        $uibModal.open({
+            templateUrl: '/lmn_users:resources/partial/addUser.modal.html',
+            controller: 'UsersAddController',
+            size: 'mg',
+            scope: $scope,
+        })
+
+    $scope.staff_add = () ->
+        $scope.newUser = {
+            _isNew: true,
+            role: 'staff',
+            class: '',
+            last_name: '',
+            first_name: '',
+            birthday: '01.01.1970',
             id: '',
         }
 
@@ -334,6 +387,11 @@ angular.module('lmn.users').controller 'LMUsersListManagementController', ($scop
             $scope.cleanupEmptyRow(index, "parents")
         $scope.parents.remove(parent)
 
+    $scope.staff_remove = (st, index) ->
+        if st._isNew
+            $scope.cleanupEmptyRow(index, "staff")
+        $scope.staff.remove(st)
+
     $scope.teachers_remove= (teacher, index) ->
         if teacher._isNew
             $scope.cleanupEmptyRow(index, "teachers")
@@ -358,6 +416,11 @@ angular.module('lmn.users').controller 'LMUsersListManagementController', ($scop
         if !$scope.parents || force
             $http.get("/api/lmn/users/lists/parents").then (resp) ->
                 $scope.parents = resp.data
+
+    $scope.getstaff = (force=false) ->
+        if !$scope.staff || force
+            $http.get("/api/lmn/users/lists/staff").then (resp) ->
+                $scope.staff = resp.data
 
     $scope.getteachers = (force=false) ->
         if !$scope.teachers || force
@@ -402,6 +465,18 @@ angular.module('lmn.users').controller 'LMUsersListManagementController', ($scop
         $scope.show_errors = false
         $scope.parents_first_save = false
         return $http.post("/api/lmn/users/lists/parents?encoding=#{$scope.parents_encoding}", $scope.parents).then () ->
+            notify.success(gettext('Saved'))
+
+    $scope.staff_save = () ->
+        if $scope.numErrors()
+            $scope.staff_first_save = true
+            $scope.show_errors = true
+            angular.element(document.getElementsByClassName("has-error-new")).addClass('has-error')
+            notify.error(gettext('Please check the errors.'))
+            return
+        $scope.show_errors = false
+        $scope.staff_first_save = false
+        return $http.post("/api/lmn/users/lists/staff?encoding=#{$scope.parents_encoding}", $scope.staff).then () ->
             notify.success(gettext('Saved'))
 
     $scope.teachers_save = () ->

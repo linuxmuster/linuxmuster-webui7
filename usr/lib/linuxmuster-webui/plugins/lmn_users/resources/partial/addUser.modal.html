@@ -4,9 +4,10 @@
 <div class="modal-body">
     <form class="form-group">
         <table class="table">
-            <tr ng:show="newUser.role == 'extrastudent' || newUser.role == 'student'">
+            <tr ng:show="newUser.role == 'extrastudent' || newUser.role == 'student' || newUser.role == 'staff'">
                 <td>
-                    <span translate>Schoolclass: </span>
+                    <span ng:show="newUser.role != 'staff'" translate>Schoolclass: </span>
+                    <span ng:show="newUser.role == 'staff'" translate>Category: </span>
                     <input class="form-control" type="text" ng:model="newUser.class">
                 </td>
             </tr>

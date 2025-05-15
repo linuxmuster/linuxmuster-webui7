@@ -1,3 +1,10 @@
+linuxmuster-webui7 (7.3.8) lmn73; urgency=medium
+
+  * [user] Add support for staff management
+  * [user] Fix index error on new installations 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Thu, 15 May 2025 21:29:01 +0200
+
 linuxmuster-webui7 (7.3.7) lmn73; urgency=medium
 
   * [wireguard] Fix angular bootstrap (@hermanntoast) 

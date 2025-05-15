@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-18 15:15+0100\n"
+"POT-Creation-Date: 2025-05-15 21:21+0200\n"
 "PO-Revision-Date: 2024-11-18 14:21\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
@@ -26,10 +26,14 @@ msgid "<b>Template for one password entry per page:</b>"
 msgstr "<b>Vorlage für einen Passwort-Eintrag pro Seite:</b>"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:104
-msgid "<i class=\"fa fa-warning \"></i>\n"
-"                Change this values with high precaution ! A wrong value may completely block your network !"
-msgstr "<i class=\"fa fa-warning \"></i>\n"
-"            Ändern Sie diese Werte mit hoher Vorsicht ! Ein falscher Wert kann Ihr Netzwerk komplett blockieren !"
+msgid ""
+"<i class=\"fa fa-warning \"></i>\n"
+"                Change this values with high precaution ! A wrong value may "
+"completely block your network !"
+msgstr ""
+"<i class=\"fa fa-warning \"></i>\n"
+"            Ändern Sie diese Werte mit hoher Vorsicht ! Ein falscher Wert "
+"kann Ihr Netzwerk komplett blockieren !"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:147
 msgid "Add a subnet"
@@ -139,16 +143,36 @@ msgid "Holidays"
 msgstr "Feiertage"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:506
-msgid "If you want to use your own latex template, please store it in the directory /etc/linuxmuster/sophomorix/SCHOOL/latex-templates/. More informations about it <a href=\"https://github.com/linuxmuster/sophomorix4/blob/bionic/sophomorix-samba/lang/latex/README.latextemplates\">in sophomorix's wiki</a>."
-msgstr "Wenn Sie Ihr eigenes Latex-Template verwenden möchten, speichern Sie es bitte im Verzeichnis /etc/linuxmuster/sophomorix/SCHOOL/latex-templates/. Mehr Informationen dazu <a href=\"https://github.com/linuxmuster/sophomorix4/blob/bionic/sophomorix-samba/lang/latex/README.latextemplates\">im sophomorix Wiki</a>."
+msgid ""
+"If you want to use your own latex template, please store it in the "
+"directory /etc/linuxmuster/sophomorix/SCHOOL/latex-templates/. More "
+"informations about it <a href=\"https://github.com/linuxmuster/sophomorix4/"
+"blob/bionic/sophomorix-samba/lang/latex/README.latextemplates\">in "
+"sophomorix's wiki</a>."
+msgstr ""
+"Wenn Sie Ihr eigenes Latex-Template verwenden möchten, speichern Sie es "
+"bitte im Verzeichnis /etc/linuxmuster/sophomorix/SCHOOL/latex-templates/. "
+"Mehr Informationen dazu <a href=\"https://github.com/linuxmuster/sophomorix4/"
+"blob/bionic/sophomorix-samba/lang/latex/README.latextemplates\">im "
+"sophomorix Wiki</a>."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:111
 msgid "Ip router"
 msgstr "IP-Router"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:267
-msgid "It's possible to apply a filter script to your newly exported csv file. You must give here the absolute path of the script and the script must be executable.<br>Please read the full documentation in <a href=\"https://github.com/linuxmuster/sophomorix4/wiki/Export-and-Filters#filters\">sophomorix's wiki</a> about it."
-msgstr "Es ist möglich, ein Filterskript auf Ihre neu exportierte csv-Datei anzuwenden. Sie müssen hier den absoluten Pfad des Skripts angeben und das Skript muss ausführbar sein.<br>Bitte lesen Sie die vollständige Dokumentation im <a href=\"https://github.com/linuxmuster/sophomorix4/wiki/Export-and-Filters#filters\">sophomorix's Wiki</a> darüber."
+msgid ""
+"It's possible to apply a filter script to your newly exported csv file. You "
+"must give here the absolute path of the script and the script must be "
+"executable.<br>Please read the full documentation in <a href=\"https://"
+"github.com/linuxmuster/sophomorix4/wiki/Export-and-"
+"Filters#filters\">sophomorix's wiki</a> about it."
+msgstr ""
+"Es ist möglich, ein Filterskript auf Ihre neu exportierte csv-Datei "
+"anzuwenden. Sie müssen hier den absoluten Pfad des Skripts angeben und das "
+"Skript muss ausführbar sein.<br>Bitte lesen Sie die vollständige "
+"Dokumentation im <a href=\"https://github.com/linuxmuster/sophomorix4/wiki/"
+"Export-and-Filters#filters\">sophomorix's Wiki</a> darüber."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:14
 msgid "Language"
@@ -202,7 +226,7 @@ msgstr "Neuer Proxy"
 msgid "No holidays found!"
 msgstr "Keine Feiertage gefunden!"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:298
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:319
 msgid "Package"
 msgstr "Paket"
 
@@ -272,8 +296,8 @@ msgstr "Tage bis zum endgültigen Löschen"
 msgid "Replace slash(/) in classname by hypen(-)"
 msgstr "Ersetze Schrägstrich(/) in Klassenname durch Bindestrich(-)"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:313
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:316
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:334
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:337
 msgid "Restart WebUI"
 msgstr "Schulkonsole neu starten"
 
@@ -309,8 +333,8 @@ msgstr "SSL-FQDN-Zertifikatsdatei"
 msgid "SSL certificate file"
 msgstr "SSL-Zertifikats-Datei"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:312
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:315
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:333
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:336
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:805
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:806
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:807
@@ -322,7 +346,7 @@ msgstr "Speichern"
 msgid "Save &amp; Apply Quota"
 msgstr "Speichern &amp; Quota übernehmen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:314
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:335
 msgid "Save &amp; Apply Subnets"
 msgstr "Speichern &amp; Subnetze übernehmen"
 
@@ -400,14 +424,25 @@ msgid "Template email reset"
 msgstr "E-Mail Vorlage für Passwortreset"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:288
-msgid "The server must be accessible from the edulution server via port <b>443 (https)</b>, port <b>8001 (API)</b> and port <b>389 (LDAP)</b> or <b>636 (LDAPs)</b>. \n"
+msgid ""
+"The server must be accessible from the edulution server via port <b>443 "
+"(https)</b>, port <b>8001 (API)</b> and port <b>389 (LDAP)</b> or <b>636 "
+"(LDAPs)</b>. \n"
 "                    Ask your IT-Administrator if you need support here!"
-msgstr "Der Server muss vom Edulutionsserver über Port <b>443 (https)</b>erreichbar sein, Port <b>8001 (API)</b> und Port <b>389 (LDAP)</b> oder <b>636 (LDAPs)</b>. \n"
-"                    Fragen Sie Ihren IT-Administrator, ob Sie hier Unterstützung benötigen!"
+msgstr ""
+"Der Server muss vom Edulutionsserver über Port <b>443 (https)</b>erreichbar "
+"sein, Port <b>8001 (API)</b> und Port <b>389 (LDAP)</b> oder <b>636 (LDAPs)</"
+"b>. \n"
+"                    Fragen Sie Ihren IT-Administrator, ob Sie hier "
+"Unterstützung benötigen!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:165
-msgid "The smtp.yml config file seems to be empty. Currently it's ont possible to send emails with this configuration."
-msgstr "Die Konfigurationsdatei smtp.yml scheint leer zu sein. Derzeit ist es möglich, E-Mails mit dieser Konfiguration zu senden."
+msgid ""
+"The smtp.yml config file seems to be empty. Currently it's ont possible to "
+"send emails with this configuration."
+msgstr ""
+"Die Konfigurationsdatei smtp.yml scheint leer zu sein. Derzeit ist es "
+"möglich, E-Mails mit dieser Konfiguration zu senden."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:547
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:593
@@ -446,7 +481,7 @@ msgstr "Benutzer kann bearbeiten"
 msgid "Username and Passwords"
 msgstr "Benutzername und Passwörter"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:299
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:320
 msgid "Version"
 msgstr "Version"
 
@@ -520,28 +555,51 @@ msgid "Configure global settings"
 msgstr "Globale Einstellungen konfigurieren"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:17
-msgid "If Ajenti is installed behind a proxy, oder reachable by a fqdn other than provided by the host,\n"
-"you can then specify the other domains here, and by this way avoiding some resources loading problems."
-msgstr "Wenn Ajenti hinter einem Proxy installiert ist oder von einem anderen fqdn erreichbar ist, als vom Host bereitgestellt wird,\n"
-"Du kannst dann die anderen Domänen hier angeben und auf diese Weise einige Probleme beim Laden von Ressourcen vermeiden."
+msgid ""
+"If Ajenti is installed behind a proxy, oder reachable by a fqdn other than "
+"provided by the host,\n"
+"you can then specify the other domains here, and by this way avoiding some "
+"resources loading problems."
+msgstr ""
+"Wenn Ajenti hinter einem Proxy installiert ist oder von einem anderen fqdn "
+"erreichbar ist, als vom Host bereitgestellt wird,\n"
+"Du kannst dann die anderen Domänen hier angeben und auf diese Weise einige "
+"Probleme beim Laden von Ressourcen vermeiden."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:22
-msgid "If Ajenti is installed behind one or more proxies, specify the ip of these proxies here, in order to\n"
+msgid ""
+"If Ajenti is installed behind one or more proxies, specify the ip of these "
+"proxies here, in order to\n"
 "get the real client ip address."
-msgstr "Wenn Ajenti hinter einem oder mehreren Proxies installiert ist, geben Sie hier die ip dieser Proxies an um\n"
+msgstr ""
+"Wenn Ajenti hinter einem oder mehreren Proxies installiert ist, geben Sie "
+"hier die ip dieser Proxies an um\n"
 "die echte Client-Ip-Adresse zu erhalten."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:27
-msgid "This certificate is the default certificate used to create client certificate and to provide https connection.\n"
-"Using a Let's Encrypt certificate here will break the client certificate generator.\n"
+msgid ""
+"This certificate is the default certificate used to create client "
+"certificate and to provide https connection.\n"
+"Using a Let's Encrypt certificate here will break the client certificate "
+"generator.\n"
 "Using a self-generated certificate is fine here."
-msgstr "Dieses Zertifikat ist das Standardzertifikat, das zum Erstellen von Client-Zertifikaten und zur Bereitstellung von https-Verbindung verwendet wird.\\nDie Verwendung eines Let's Encrypt Zertifikats hier wird den Clientzertifikatgenerator zerstören.\\nHier ist die Verwendung eines selbstgenerierten Zertifikats in Ordnung."
+msgstr ""
+"Dieses Zertifikat ist das Standardzertifikat, das zum Erstellen von Client-"
+"Zertifikaten und zur Bereitstellung von https-Verbindung verwendet wird."
+"\\nDie Verwendung eines Let's Encrypt Zertifikats hier wird den "
+"Clientzertifikatgenerator zerstören.\\nHier ist die Verwendung eines "
+"selbstgenerierten Zertifikats in Ordnung."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:33
-msgid "If you have a special certificate for your domain, like a Let's Encrypt certificate, put it there.\n"
+msgid ""
+"If you have a special certificate for your domain, like a Let's Encrypt "
+"certificate, put it there.\n"
 "If you are not sure, just use the same certificate as the one above."
-msgstr "Wenn Sie ein spezielles Zertifikat für Ihre Domain haben, wie ein Let's Encrypt Zertifikat, setzen Sie es dorthin.\n"
-"Wenn Sie sich nicht sicher sind, verwenden Sie einfach das gleiche Zertifikat wie das obenstehende Zertifikat."
+msgstr ""
+"Wenn Sie ein spezielles Zertifikat für Ihre Domain haben, wie ein Let's "
+"Encrypt Zertifikat, setzen Sie es dorthin.\n"
+"Wenn Sie sich nicht sicher sind, verwenden Sie einfach das gleiche "
+"Zertifikat wie das obenstehende Zertifikat."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:41
 msgid "Are you sure you want to delete permanently this subnet ?"
@@ -592,8 +650,12 @@ msgid "Self-signed certificate"
 msgstr "Selbstsigniertes Zertifikat"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:129
-msgid "Generating a new certificate will void all existing client authentication certificates!"
-msgstr "Die Generierung eines neuen Zertifikats wird alle bestehenden Client-Authentifizierungszertifikate außer Kraft setzen!"
+msgid ""
+"Generating a new certificate will void all existing client authentication "
+"certificates!"
+msgstr ""
+"Die Generierung eines neuen Zertifikats wird alle bestehenden Client-"
+"Authentifizierungszertifikate außer Kraft setzen!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:130
 msgid "Generate"
@@ -642,4 +704,3 @@ msgstr "Sind Sie sicher, dass Sie diese Feiertage endgültig löschen möchten?"
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:136
 msgid "Please first correct the mal formated fields."
 msgstr "Bitte korrigieren Sie zuerst die mal formatierten Felder."
-

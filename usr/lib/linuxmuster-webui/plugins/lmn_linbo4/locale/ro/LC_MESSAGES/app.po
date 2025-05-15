@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-14 11:07+0200\n"
+"POT-Creation-Date: 2025-05-15 21:21+0200\n"
 "PO-Revision-Date: 2024-10-14 09:24\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
@@ -10,7 +10,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100>0 && n%100<20)) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100>0 && "
+"n%100<20)) ? 1 : 2);\n"
 "X-Crowdin-Project: linuxmusternet\n"
 "X-Crowdin-Project-ID: 325271\n"
 "X-Crowdin-Language: ro\n"
@@ -27,15 +28,15 @@ msgstr ""
 msgid "Actions"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:221
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:220
 msgid "Activated"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:111
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:110
 msgid "Add <span class=\"caret\"></span>"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:404
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:403
 msgid "Add new VMID"
 msgstr ""
 
@@ -47,19 +48,19 @@ msgstr ""
 msgid "Advanced"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:351
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:350
 msgid "Audio"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:59
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:58
 msgid "Auto partition formatting"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:56
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:55
 msgid "Auto partition recovery"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:62
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:61
 msgid "Auto update cache"
 msgstr ""
 
@@ -67,7 +68,7 @@ msgstr ""
 msgid "Autostart timeout"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:96
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:95
 msgid "Background color"
 msgstr ""
 
@@ -84,11 +85,11 @@ msgstr ""
 msgid "Base image"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:238
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:237
 msgid "Bios Type"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:263
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:262
 msgid "Boot"
 msgstr ""
 
@@ -96,7 +97,7 @@ msgstr ""
 msgid "Boot buttons"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:204
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:203
 msgid "Cache"
 msgstr ""
 
@@ -105,7 +106,7 @@ msgid "Cancel"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/apply.modal.html:11
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:477
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:476
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/image.backups.modal.html:66
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/image.modal.html:86
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:179
@@ -116,7 +117,7 @@ msgstr ""
 msgid "Comment"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:309
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:308
 msgid "Cores"
 msgstr ""
 
@@ -124,7 +125,7 @@ msgstr ""
 msgid "Create"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:198
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:197
 msgid "Data"
 msgstr ""
 
@@ -148,15 +149,15 @@ msgstr ""
 msgid "Differential image"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:320
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:319
 msgid "Disk size"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:360
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:359
 msgid "Display"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:75
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:74
 msgid "Display client details by default"
 msgstr ""
 
@@ -164,11 +165,11 @@ msgstr ""
 msgid "Download Linbo Boot"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:39
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:38
 msgid "Download type"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:183
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:182
 msgid "EFI"
 msgstr ""
 
@@ -176,15 +177,15 @@ msgstr ""
 msgid "Empty"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:89
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:88
 msgid "English"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:464
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:463
 msgid "Expert options"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:201
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:200
 msgid "Extended"
 msgstr ""
 
@@ -200,7 +201,7 @@ msgstr ""
 msgid "Force Opsi setup"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:90
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:89
 msgid "French"
 msgstr ""
 
@@ -209,7 +210,7 @@ msgstr ""
 msgid "General"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:88
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:87
 msgid "German"
 msgstr ""
 
@@ -221,7 +222,7 @@ msgstr ""
 msgid "Groups"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:305
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:304
 msgid "Hardware"
 msgstr ""
 
@@ -229,11 +230,11 @@ msgstr ""
 msgid "Hide details"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:273
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:272
 msgid "Hostname"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:278
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:277
 msgid "IP-Address"
 msgstr ""
 
@@ -266,7 +267,7 @@ msgstr ""
 msgid "Kernel"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:107
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:106
 msgid "Kernel options"
 msgstr ""
 
@@ -274,31 +275,31 @@ msgstr ""
 msgid "Label"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:84
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:83
 msgid "Language"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:69
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:68
 msgid "Linbo GUI customization"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:284
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:283
 msgid "MAC-Address"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:186
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:185
 msgid "MSR"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:427
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:426
 msgid "Maxmimum VMs"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:314
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:313
 msgid "Memory"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:416
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:415
 msgid "Minimum VMs"
 msgstr ""
 
@@ -311,15 +312,15 @@ msgstr ""
 msgid "Name / Size"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:269
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:268
 msgid "Network"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:289
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:288
 msgid "Network-Bridge"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:214
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:213
 msgid "New disk"
 msgstr ""
 
@@ -327,11 +328,11 @@ msgstr ""
 msgid "OS"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:247
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:246
 msgid "OS-Type"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:65
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:64
 msgid "Only available for this school"
 msgstr ""
 
@@ -347,7 +348,7 @@ msgstr ""
 msgid "Partition type"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:125
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:124
 msgid "Partitions"
 msgstr ""
 
@@ -359,7 +360,7 @@ msgstr ""
 msgid "Prestart Script"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:421
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:420
 msgid "Prestarted VMs"
 msgstr ""
 
@@ -379,11 +380,11 @@ msgstr ""
 msgid "Remove Partition?"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:179
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:178
 msgid "Remove this disk"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:392
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:391
 msgid "Reserved Master VM-IDs"
 msgstr ""
 
@@ -391,21 +392,21 @@ msgstr ""
 msgid "Restore Opsi state"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:18
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:12
 msgid "Root logout timeout"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:331
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:330
 msgid "SCSI Hardware"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:475
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:474
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/image.modal.html:85
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:177
 msgid "Save"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:229
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:228
 msgid "Settings"
 msgstr ""
 
@@ -414,11 +415,11 @@ msgstr ""
 msgid "Size"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:374
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:373
 msgid "Spice enhancements"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:53
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:52
 msgid "Start options"
 msgstr ""
 
@@ -426,24 +427,20 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:325
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:324
 msgid "Storage"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:195
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:194
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:301
 msgid "Swap"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:28
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:27
 msgid "System type"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:12
-msgid "TFTP server"
-msgstr ""
-
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:98
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:97
 msgid "The color of the foreground will be adjusted automatically"
 msgstr ""
 
@@ -455,23 +452,23 @@ msgstr ""
 msgid "There's no image on the server yet."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:445
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:444
 msgid "Timeout building clone"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:451
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:450
 msgid "Timeout building master"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:440
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:439
 msgid "Timeouts"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:343
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:342
 msgid "USB 0"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:72
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:71
 msgid "Use minimal layout"
 msgstr ""
 
@@ -483,19 +480,19 @@ msgstr ""
 msgid "Used in group ..."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:411
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:410
 msgid "VDI Konfiguration"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:295
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:294
 msgid "VLAN-Tag"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:227
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:226
 msgid "VM Template Settings"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:233
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:232
 msgid "VM-Name"
 msgstr ""
 
@@ -503,7 +500,7 @@ msgstr ""
 msgid "Version"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:217
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:216
 msgid "Virtual Desktop (VDI)"
 msgstr ""
 
@@ -541,7 +538,9 @@ msgid "LINBO Cache"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:546
-msgid "You should call an import devices process to apply the new changes, quit this page anyway ?"
+msgid ""
+"You should call an import devices process to apply the new changes, quit "
+"this page anyway ?"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:592
@@ -565,7 +564,8 @@ msgid "Multicast and torrent services restarted"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:687
-msgid "Failed to restart multicast and torrent services. Please see the log files"
+msgid ""
+"Failed to restart multicast and torrent services. Please see the log files"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:695
@@ -594,4 +594,3 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:773
 msgid "Saved"
 msgstr ""
-

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ajenti\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-18 15:15+0100\n"
+"POT-Creation-Date: 2025-05-15 21:21+0200\n"
 "PO-Revision-Date: 2016-05-21 17:18-0400\n"
 "Last-Translator: eugenepankov <john.pankov@gmail.com>\n"
 "Language-Team: Croatian\n"
@@ -213,7 +213,7 @@ msgstr ""
 msgid "No holidays found!"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:298
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:319
 msgid "Package"
 msgstr ""
 
@@ -283,8 +283,8 @@ msgstr ""
 msgid "Replace slash(/) in classname by hypen(-)"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:313
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:316
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:334
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:337
 msgid "Restart WebUI"
 msgstr ""
 
@@ -320,8 +320,8 @@ msgstr ""
 msgid "SSL certificate file"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:312
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:315
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:333
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:336
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:805
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:806
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:807
@@ -333,7 +333,7 @@ msgstr ""
 msgid "Save &amp; Apply Quota"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:314
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:335
 msgid "Save &amp; Apply Subnets"
 msgstr ""
 
@@ -461,7 +461,7 @@ msgstr ""
 msgid "Username and Passwords"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:299
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:320
 msgid "Version"
 msgstr ""
 

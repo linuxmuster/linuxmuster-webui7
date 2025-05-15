@@ -33,6 +33,13 @@ class ItemProvider(SidebarItemProvider):
             },
             {
                 'attach': 'category:usermanagement',
+                'name': _('Staff'), # skipcq: PYL-E0602
+                'icon': 'screwdriver-wrench',
+                'url': '/view/lmn/users/staff',
+                'weight': 17,
+            },
+            {
+                'attach': 'category:usermanagement',
                 'name': _('School-Admins'), # skipcq: PYL-E0602
                 'icon': 'user-ninja',
                 'url': '/view/lmn/users/schooladmins',
@@ -83,6 +90,16 @@ class Permissions (PermissionProvider):
             },
             {
                 'id': 'lm:users:parents:write',
+                'name': _('Write parents'), # skipcq: PYL-E0602
+                'default': False,
+            },
+            {
+                'id': 'lm:users:staff:read',
+                'name': _('Read parents'), # skipcq: PYL-E0602
+                'default': False,
+            },
+            {
+                'id': 'lm:users:staff:write',
                 'name': _('Write parents'), # skipcq: PYL-E0602
                 'default': False,
             },

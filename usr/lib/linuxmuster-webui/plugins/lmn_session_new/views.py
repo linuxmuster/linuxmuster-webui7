@@ -160,10 +160,22 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_stop_exam(self, http_context):
         session = http_context.json_body()['session']
-        participants = ','.join([ member['cn']
-                                  for member in session['members']
-                                    if member['cn'].endswith("-exam")
-                                  ])
+
+        valid_users_cn = []
+        identity_role = self.context.ldapreader.getval(
+            f'/users/{self.context.identity}', 'sophomorixRole')
+
+        valid_role = identity_role == 'teacher' or 'administrator' in identity_role
+
+        for member in session['members']:
+            # Regular student exam account
+            if member['cn'].endswith("-exam"):
+                valid_users_cn.append(member['cn'])
+            # Exam stopped from another teacher
+            elif member['examMode'] and valid_role:
+                valid_users_cn.append(f"{member['cn']}-exam")
+
+        participants = ','.join(valid_users_cn)
         group_type = _(session['type'])
         group_name = session['name']
 

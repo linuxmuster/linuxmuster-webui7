@@ -24,7 +24,7 @@
         return $scope.custom_fields = resp;
       });
       return $http.get(`/api/lmn/quota/user/${user}`).then(function(resp) {
-        var ref, results, share, total, type, usage, used, values;
+        var ref, results, share, total, total_txt, type, usage, used, values;
         $scope.quotas = [];
         $scope.user['sophomorixCloudQuotaCalculated'] = resp.data['sophomorixCloudQuotaCalculated'];
         $scope.user['sophomorixMailQuotaCalculated'] = resp.data['sophomorixMailQuotaCalculated'];
@@ -37,9 +37,6 @@
           used = values['USED_MiB'];
           total = values['HARD_LIMIT_MiB'];
           if (typeof total === 'string') {
-            if (total === 'NO LIMIT') {
-              total = gettext('NO LIMIT');
-            }
             results.push($scope.quotas.push({
               'share': share,
               'total': gettext(total),
@@ -48,7 +45,13 @@
               'type': "success"
             }));
           } else {
-            usage = Math.floor((100 * used) / total);
+            if (total === 0) {
+              usage = 0;
+              total_txt = gettext('NO LIMIT');
+            } else {
+              usage = Math.floor((100 * used) / total);
+              total_txt = total + " MiB";
+            }
             if (usage < 60) {
               type = "success";
             } else if (usage < 80) {
@@ -58,7 +61,7 @@
             }
             results.push($scope.quotas.push({
               'share': share,
-              'total': total + " MiB",
+              'total': total_txt,
               'used': used,
               'usage': usage,
               'type': type

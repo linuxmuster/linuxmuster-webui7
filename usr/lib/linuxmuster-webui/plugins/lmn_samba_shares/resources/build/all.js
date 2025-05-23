@@ -382,13 +382,13 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function ($
                         var item = _step8.value;
 
                         if (item.isDir) {
-                            smbclient.delete_dir(item.path).then(function () {
+                            last = smbclient.delete_dir(item.path).then(function () {
                                 return notify.success(item.name + ' deleted!');
                             }).catch(function (err) {
                                 return notify.error(err);
                             });
                         } else {
-                            smbclient.delete_file(item.path).then(function () {
+                            last = smbclient.delete_file(item.path).then(function () {
                                 return notify.success(item.name + ' deleted!');
                             }).catch(function (err) {
                                 return notify.error(err);
@@ -415,7 +415,9 @@ angular.module('lmn.samba_shares').controller('HomeIndexController', function ($
                 }
 
                 $scope.clear_selection();
-                $scope.reload();
+                last.then(function () {
+                    return $scope.reload();
+                });
             })
         );
     };

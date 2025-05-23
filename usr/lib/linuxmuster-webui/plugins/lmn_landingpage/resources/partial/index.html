@@ -53,7 +53,8 @@
                         <smart-progress type="{{quota.type}}" value="quota.usage" max="100"></smart-progress>
 
                         <div class="widget-value">
-                            {{quota.used}} MiB / {{quota.total}}
+                            {{quota.used}} MiB
+                            <span ng:show="quota.total != 0">/ {{quota.total}}</span>
                             <sup ng:show="quota.usage > 80">
                                 <span class="label label-danger">
                                     <i class="fa fa-warning"></i>

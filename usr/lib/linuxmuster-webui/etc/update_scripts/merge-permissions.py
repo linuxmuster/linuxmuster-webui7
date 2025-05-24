@@ -10,8 +10,8 @@ permissions = {
     'globaladministrator': [],
     'schooladministrator': [],
     'teacher': [],
-    'student': []
-    'parent': []
+    'student': [],
+    'parent': [],
     'staff': []
 }
 

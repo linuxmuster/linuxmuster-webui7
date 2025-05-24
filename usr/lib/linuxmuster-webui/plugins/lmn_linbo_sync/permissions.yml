@@ -18,3 +18,13 @@ teacher:
 - 'lm:sync:online: false'
 - 'lm:sync:sync: false'
 - 'sidebar:view:/view/lmn/linbo_sync: false'
+parent:
+- 'lm:sync:list: false'
+- 'lm:sync:online: false'
+- 'lm:sync:sync: false'
+- 'sidebar:view:/view/lmn/linbo_sync: false'
+staff:
+- 'lm:sync:list: false'
+- 'lm:sync:online: false'
+- 'lm:sync:sync: false'
+- 'sidebar:view:/view/lmn/linbo_sync: false'

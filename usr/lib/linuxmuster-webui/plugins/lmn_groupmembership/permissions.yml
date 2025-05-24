@@ -14,3 +14,11 @@ teacher:
 - 'lmn:groupmembership: true'
 - 'lmn:groupmemberships:write: true'
 - 'sidebar:view:/view/lmn/groupmembership: true'
+parent:
+- 'lmn:groupmembership: false'
+- 'lmn:groupmemberships:write: false'
+- 'sidebar:view:/view/lmn/groupmembership: false'
+staff:
+- 'lmn:groupmembership: false'
+- 'lmn:groupmemberships:write: false'
+- 'sidebar:view:/view/lmn/groupmembership: false'

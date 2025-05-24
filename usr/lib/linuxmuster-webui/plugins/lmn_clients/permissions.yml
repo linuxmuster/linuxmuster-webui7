@@ -10,3 +10,9 @@ student:
 teacher:
 - 'lmn:clients:config: false'
 - 'sidebar:view:/view/lmn_clients: false'
+parent:
+- 'lmn:clients:config: false'
+- 'sidebar:view:/view/lmn_clients: false'
+staff:
+- 'lmn:clients:config: false'
+- 'sidebar:view:/view/lmn_clients: false'

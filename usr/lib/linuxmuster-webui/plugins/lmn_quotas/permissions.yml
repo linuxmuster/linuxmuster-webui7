@@ -18,3 +18,13 @@ teacher:
 - 'lm:quotas:configure: false'
 - 'lm:quotas:ldap-search: false'
 - 'sidebar:view:/view/lmn/quotas: false'
+parent:
+- 'lm:quotas:apply: false'
+- 'lm:quotas:configure: false'
+- 'lm:quotas:ldap-search: false'
+- 'sidebar:view:/view/lmn/quotas: false'
+staff:
+- 'lm:quotas:apply: false'
+- 'lm:quotas:configure: false'
+- 'lm:quotas:ldap-search: false'
+- 'sidebar:view:/view/lmn/quotas: false'

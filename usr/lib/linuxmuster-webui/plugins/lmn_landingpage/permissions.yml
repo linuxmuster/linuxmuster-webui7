@@ -6,3 +6,7 @@ student:
 - 'sidebar:view:/view/lmn/landingpage: true'
 teacher:
 - 'sidebar:view:/view/lmn/landingpage: true'
+parent:
+- 'sidebar:view:/view/lmn/landingpage: true'
+staff:
+- 'sidebar:view:/view/lmn/landingpage: true'

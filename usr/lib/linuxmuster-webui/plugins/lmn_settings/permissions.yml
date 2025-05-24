@@ -18,3 +18,13 @@ teacher:
 - 'lm:schoolsettings: false'
 - 'sidebar:view:/view/lmn/globalsettings: false'
 - 'sidebar:view:/view/lmn/schoolsettings: false'
+parent:
+- 'lm:globalsettings: false'
+- 'lm:schoolsettings: false'
+- 'sidebar:view:/view/lmn/globalsettings: false'
+- 'sidebar:view:/view/lmn/schoolsettings: false'
+staff:
+- 'lm:globalsettings: false'
+- 'lm:schoolsettings: false'
+- 'sidebar:view:/view/lmn/globalsettings: false'
+- 'sidebar:view:/view/lmn/schoolsettings: false'

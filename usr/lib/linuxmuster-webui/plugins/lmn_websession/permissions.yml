@@ -6,3 +6,7 @@ student:
 - 'sidebar:view:/view/lmn/websession: false'
 teacher:
 - 'sidebar:view:/view/lmn/websession: false'
+parent:
+- 'sidebar:view:/view/lmn/websession: false'
+staff:
+- 'sidebar:view:/view/lmn/websession: false'

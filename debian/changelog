@@ -1,3 +1,13 @@
+linuxmuster-webui7 (7.2.82) lmn72; urgency=medium
+
+  * [landingpage] Handle when quota is 0 
+  * [samba_shares] Refresh when deleting a directory async
+  * [session] Fix stopping exam for extern teachers
+  * [settings] Toggle smtp password
+  * [smbclient] Relatives paths for zip archives
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 24 May 2025 22:45:02 +0200
+
 linuxmuster-webui7 (7.2.81) lmn72; urgency=medium
 
   * [auth] Catch exception from gpomgr. 

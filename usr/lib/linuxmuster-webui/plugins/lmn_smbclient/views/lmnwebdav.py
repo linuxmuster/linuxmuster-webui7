@@ -120,7 +120,10 @@ class Handler(HttpPlugin):
                 with ZipFile(zip_path, 'w') as zip_obj:
                     for root, folders, files in smbclient.walk(smb_path):
                         for f in files:
+                            # Replace backslashes and removing heading slash
                             relative_path = root.replace(path, '').replace('\\', '/')[1:]
+                            # Removing domain and school
+                            relative_path = '/'.join(relative_path.split('/')[3:])
                             relative_path = f"{relative_path}/{f}"
                             smb_file_path = f"{root}\\{f}"
                             with smbclient.open_file(smb_file_path, 'rb') as file_io:

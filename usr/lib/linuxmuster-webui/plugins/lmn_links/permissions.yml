@@ -6,3 +6,7 @@ student:
 - 'sidebar:view:/view/lmn/links: false'
 teacher:
 - 'sidebar:view:/view/lmn/links: false'
+parent:
+- 'sidebar:view:/view/lmn/links: false'
+staff:
+- 'sidebar:view:/view/lmn/links: false'

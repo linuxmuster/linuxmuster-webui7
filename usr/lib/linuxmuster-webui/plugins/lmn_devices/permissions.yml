@@ -14,3 +14,11 @@ teacher:
 - 'lm:devices: false'
 - 'lm:devices:import: false'
 - 'sidebar:view:/view/lmn/devices: false'
+parent:
+- 'lm:devices: false'
+- 'lm:devices:import: false'
+- 'sidebar:view:/view/lmn/devices: false'
+staff:
+- 'lm:devices: false'
+- 'lm:devices:import: false'
+- 'sidebar:view:/view/lmn/devices: false'

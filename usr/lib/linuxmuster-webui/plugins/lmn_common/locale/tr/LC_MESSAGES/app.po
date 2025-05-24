@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-24 18:44+0200\n"
-"PO-Revision-Date: 2023-11-30 22:10\n"
+"POT-Creation-Date: 2025-05-24 18:45+0200\n"
+"PO-Revision-Date: 2025-05-24 17:00\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -101,9 +101,7 @@ msgid "TFA"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/schoolswitcher.html:4
-msgid ""
-"This is not a multi-school setup or you are not allowed to see another "
-"school!"
+msgid "This is not a multi-school setup or you are not allowed to see another school!"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:113
@@ -207,16 +205,11 @@ msgid "Copying files: %s."
 msgstr "Şu dosyalar kopyalanıyor: %s."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:13
-msgid ""
-"Passwords must contain at least one lowercase, one uppercase, one special "
-"char or number, and at least 7 chars"
-msgstr ""
-"Şifreler en az bir küçük harf, bir büyük harf, bir özel karakter veya sayı "
-"ve en az 7 karakter içermelidir"
+msgid "Passwords must contain at least one lowercase, one uppercase, one special char or number, and at least 7 chars"
+msgstr "Şifreler en az bir küçük harf, bir büyük harf, bir özel karakter veya sayı ve en az 7 karakter içermelidir"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:22
-msgid ""
-"Password is not valid. Password can only contains a-zA-Z0-9?!@#§+-$%&*{}()]["
+msgid "Password is not valid. Password can only contains a-zA-Z0-9?!@#§+-$%&*{}()]["
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:42
@@ -233,8 +226,7 @@ msgstr " sadece alfanümerik karakterleri veya - sembolünü içerebilir"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:70
 msgid " can only contain alphanumeric chars or -, space and _"
-msgstr ""
-" sadece alfanümerik karakterleri veya -, boşluk ve _ sembollerini içerebilir"
+msgstr " sadece alfanümerik karakterleri veya -, boşluk ve _ sembollerini içerebilir"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:79
 msgid " can only contain alphanumeric chars"
@@ -284,3 +276,4 @@ msgstr "Silmek istediğinize emin misiniz"
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/lmFileBackups.coffee:83
 msgid "Confirmation"
 msgstr "Doğrulama"
+

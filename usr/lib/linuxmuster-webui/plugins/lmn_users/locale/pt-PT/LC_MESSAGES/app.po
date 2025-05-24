@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-24 18:45+0200\n"
-"PO-Revision-Date: 2024-11-18 14:27\n"
+"POT-Creation-Date: 2025-05-24 18:46+0200\n"
+"PO-Revision-Date: 2025-05-24 17:00\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -19,23 +19,20 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:29
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:51
-msgid ""
-"<i class=\"fa fa-asterisk\"></i> All users {{identity.profile.activeSchool}}"
+msgid "<i class=\"fa fa-asterisk\"></i> All users {{identity.profile.activeSchool}}"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/parents.html:154
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/staff.html:154
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students.html:154
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:169
-msgid ""
-"<i class=\"fa fa-key\"></i> For selected\n"
+msgid "<i class=\"fa fa-key\"></i> For selected\n"
 "                    <span class=\"caret\"></span>"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/globaladmins.html:222
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/schooladmins.html:218
-msgid ""
-"<i class=\"fa fa-key\"></i> For selected\n"
+msgid "<i class=\"fa fa-key\"></i> For selected\n"
 "            <span class=\"caret\"></span>"
 msgstr ""
 
@@ -146,8 +143,7 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:236
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:360
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:680
-msgid ""
-"CSV\n"
+msgid "CSV\n"
 "                            <span class=\"caret\"></span>"
 msgstr ""
 
@@ -370,10 +366,7 @@ msgid "Last name:"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/sortList.modal.html:22
-msgid ""
-"Linuxmuster needs to know which column contains which userdata. This is "
-"mandatory for importing the CSV list.<br>Please set the column into the "
-"right order."
+msgid "Linuxmuster needs to know which column contains which userdata. This is mandatory for importing the CSV list.<br>Please set the column into the right order."
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-students.html:31
@@ -391,8 +384,7 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/globaladmins.html:65
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/schooladmins.html:64
-msgid ""
-"Login\n"
+msgid "Login\n"
 "                <span ng:show=\"customTitle[1]\"> / {{customTitle[1]}}</span>"
 msgstr ""
 
@@ -420,8 +412,7 @@ msgid "Moved users"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/globaladmins.html:69
-msgid ""
-"Name\n"
+msgid "Name\n"
 "                <span ng:show=\"customTitle[2]\"> / {{customTitle[2]}}</span>"
 msgstr ""
 
@@ -431,15 +422,11 @@ msgid "Name / DN / Comment"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:11
-msgid ""
-"No classes found. You first need to join a class in the groupmembership "
-"modul in order to print passwords."
+msgid "No classes found. You first need to join a class in the groupmembership modul in order to print passwords."
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:6
-msgid ""
-"No classes found. You have to create a class by importing userlist before "
-"you can print user passwords!"
+msgid "No classes found. You have to create a class by importing userlist before you can print user passwords!"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/globaladmins.html:174
@@ -451,9 +438,7 @@ msgid "No school bind user found."
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/customPassword.modal.html:16
-msgid ""
-"Note: Minimal length is 7 characters. Use upper, lower and special "
-"characters or numbers. (e.g. Muster!)"
+msgid "Note: Minimal length is 7 characters. Use upper, lower and special characters or numbers. (e.g. Muster!)"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.options.modal.html:20
@@ -713,33 +698,23 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/globaladmins.html:9
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/schooladmins.html:8
-msgid ""
-"There are no School-Administrator to manage yet. You can add a School-"
-"Administrator using the buttons below"
+msgid "There are no School-Administrator to manage yet. You can add a School-Administrator using the buttons below"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/parents.html:9
-msgid ""
-"There are no parents to manage yet. You can add parents using the list "
-"management module"
+msgid "There are no parents to manage yet. You can add parents using the list management module"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/staff.html:9
-msgid ""
-"There are no staff members to manage yet. You can add staff members using "
-"the list management module"
+msgid "There are no staff members to manage yet. You can add staff members using the list management module"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students.html:9
-msgid ""
-"There are no students to manage yet. You can add students using the list "
-"management module"
+msgid "There are no students to manage yet. You can add students using the list management module"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/teachers.html:9
-msgid ""
-"There are no teachers to manage yet. You can add teachers using the list "
-"management module"
+msgid "There are no teachers to manage yet. You can add teachers using the list management module"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:50
@@ -787,17 +762,12 @@ msgid "Users to be updated"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/upload.modal.html:8
-msgid ""
-"Would you like to upload a list csv? This will replace your current CSV!"
-"<br>\n"
-"            It's highly recommend to check the columns after the upload "
-"instead of directly uploading your own CSV.<br>\n"
+msgid "Would you like to upload a list csv? This will replace your current CSV!<br>\n"
+"            It's highly recommend to check the columns after the upload instead of directly uploading your own CSV.<br>\n"
 "            <br>\n"
-"            After the the upload, sophomorix will try to execute the filter "
-"script configured in your school.conf.\n"
+"            After the the upload, sophomorix will try to execute the filter script configured in your school.conf.\n"
 "            Please read the full documentation at\n"
-"            <a href=\"https://github.com/linuxmuster/sophomorix4/wiki/Export-"
-"and-Filters#filters\">\n"
+"            <a href=\"https://github.com/linuxmuster/sophomorix4/wiki/Export-and-Filters#filters\">\n"
 "                sophomorix's wiki\n"
 "            </a> about it.\n"
 "            <br>\n"
@@ -805,9 +775,7 @@ msgid ""
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:16
-msgid ""
-"You can directly print the password of one class through the icon, or select "
-"multiples classes to print all at once."
+msgid "You can directly print the password of one class through the icon, or select multiples classes to print all at once."
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:6
@@ -1078,9 +1046,7 @@ msgid "Desired login"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:275
-msgid ""
-"This entry is directly read from the CSV file and could differ from the "
-"actual login of the user (saved in LDAP)"
+msgid "This entry is directly read from the CSV file and could differ from the actual login of the user (saved in LDAP)"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:451
@@ -1300,3 +1266,4 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/printPasswords.controller.coffee:128
 msgid "Could not create password csv"
 msgstr ""
+

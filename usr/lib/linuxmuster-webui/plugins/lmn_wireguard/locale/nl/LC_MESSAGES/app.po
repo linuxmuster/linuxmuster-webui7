@@ -1,0 +1,117 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: linuxmusternet\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-05-15 21:21+0200\n"
+"PO-Revision-Date: 2025-05-24 17:00\n"
+"Last-Translator: \n"
+"Language-Team: Dutch\n"
+"Language: nl_NL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Crowdin-Project: linuxmusternet\n"
+"X-Crowdin-Project-ID: 325271\n"
+"X-Crowdin-Language: nl\n"
+"X-Crowdin-File: /2.0/lmn_wireguard.po\n"
+"X-Crowdin-File-ID: 240\n"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/import.modal.html:46
+msgid "Close"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/index.html:18
+msgid "Configuration"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/index.html:20
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:51
+msgid "Delete"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/index.html:13
+msgid "Endpoint"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/index.html:10
+msgid "IP-Address"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/import.modal.html:44
+msgid "Import"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/import.modal.html:45
+msgid "Import + Delete"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/import.modal.html:2
+msgid "Import users"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/index.html:14
+msgid "Last Handshake"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/index.html:10
+msgid "Public-Key"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/index.html:31
+msgid "Query status"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/index.html:30
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:65
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:78
+msgid "Restart"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/index.html:11
+msgid "Routes"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/index.html:19
+msgid "Show QR-Code"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:2
+msgid "Wireguard"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:39
+msgid "Name"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:41
+msgid "Created succesfully!"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:50
+msgid "Do you really want to delete this peer?"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:52
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:66
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:79
+msgid "Cancel"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:55
+msgid "Deleted succesfully!"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:64
+msgid "Do you really want to restart the wireguard server? All clients have to reconnected!"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:69
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:82
+msgid "Restarted succesfully!"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:77
+msgid "The configuration has changed. Do you want to restart the server?"
+msgstr ""
+

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-24 18:44+0200\n"
-"PO-Revision-Date: 2024-11-18 14:21\n"
+"POT-Creation-Date: 2025-05-24 18:45+0200\n"
+"PO-Revision-Date: 2025-05-24 17:00\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -114,13 +114,8 @@ msgid "There is no special quota here."
 msgstr "Es existiert keine Sonderquota."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:139
-msgid ""
-"This functionality is actually under development and displays imprecise "
-"values. It will not work with DFS shares or in multischool environment."
-msgstr ""
-"Diese Funktionalität befindet sich in der Entwicklung und zeigt ungenaue "
-"Werte an. Sie wird nicht mit DFS-Freigaben oder in Multischold-Umgebung "
-"funktionieren."
+msgid "This functionality is actually under development and displays imprecise values. It will not work with DFS shares or in multischool environment."
+msgstr "Diese Funktionalität befindet sich in der Entwicklung und zeigt ungenaue Werte an. Sie wird nicht mit DFS-Freigaben oder in Multischold-Umgebung funktionieren."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:180
 msgid "Total"
@@ -200,3 +195,4 @@ msgstr " mit Standardwerten in der Liste hinzugefügt."
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:175
 msgid "Saving quotas ..."
 msgstr "Speichere Quotas ..."
+

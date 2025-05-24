@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-24 18:45+0200\n"
-"PO-Revision-Date: 2024-11-18 14:21\n"
+"POT-Creation-Date: 2025-05-24 18:46+0200\n"
+"PO-Revision-Date: 2025-05-24 17:00\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -18,12 +18,8 @@ msgstr ""
 "X-Crowdin-File-ID: 226\n"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/views/lmnsmbclient.py:278
-msgid ""
-"Your quota is full, please free enough place in order to share these files "
-"again."
-msgstr ""
-"Votre quota est plein, veuillez libérer suffisamment d'espace pour partager "
-"à nouveau ces fichiers."
+msgid "Your quota is full, please free enough place in order to share these files again."
+msgstr "Votre quota est plein, veuillez libérer suffisamment d'espace pour partager à nouveau ces fichiers."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/views/lmnsmbclient.py:622
 msgid "Ticket successfully refreshed"
@@ -44,3 +40,4 @@ msgstr " déplacé !"
 #: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/resources/js/services/smbclient.service.es:28
 msgid " copied!"
 msgstr " copié !"
+

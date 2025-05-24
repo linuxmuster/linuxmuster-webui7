@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-24 18:44+0200\n"
-"PO-Revision-Date: 2023-11-30 22:10\n"
+"POT-Creation-Date: 2025-05-24 18:45+0200\n"
+"PO-Revision-Date: 2025-05-24 17:00\n"
 "Last-Translator: \n"
 "Language-Team: Norwegian\n"
 "Language: no_NO\n"
@@ -55,17 +55,12 @@ msgid "Show letter"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:9
-msgid ""
-"The following scripts are executed by Samba when the client boots, in root "
-"context, and after the\n"
-"                    execution of the postsync script of Linbo. <br>This must "
-"be handled with caution."
+msgid "The following scripts are executed by Samba when the client boots, in root context, and after the\n"
+"                    execution of the postsync script of Linbo. <br>This must be handled with caution."
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:53
-msgid ""
-"Unable to find a Drives.xml in your policy directory. Does the file really "
-"exists ?"
+msgid "Unable to find a Drives.xml in your policy directory. Does the file really exists ?"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_clients/views.py:34
@@ -95,3 +90,4 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/js/controllers/index.controller.es:45
 msgid "Saved !"
 msgstr ""
+

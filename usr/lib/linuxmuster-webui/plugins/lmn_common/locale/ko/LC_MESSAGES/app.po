@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-24 18:44+0200\n"
-"PO-Revision-Date: 2023-11-30 22:10\n"
+"POT-Creation-Date: 2025-05-24 18:45+0200\n"
+"PO-Revision-Date: 2025-05-24 17:00\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -101,9 +101,7 @@ msgid "TFA"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/schoolswitcher.html:4
-msgid ""
-"This is not a multi-school setup or you are not allowed to see another "
-"school!"
+msgid "This is not a multi-school setup or you are not allowed to see another school!"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:113
@@ -207,19 +205,12 @@ msgid "Copying files: %s."
 msgstr "파일을 복사중입니다: %s"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:13
-msgid ""
-"Passwords must contain at least one lowercase, one uppercase, one special "
-"char or number, and at least 7 chars"
-msgstr ""
-"비밀번호는 최소 하나의 소문자, 하나의 대문자, 하나의 특수문자 또는 숫자를 포"
-"함해야 하고, 적어도 문자가 7개 이상이여야 합니다."
+msgid "Passwords must contain at least one lowercase, one uppercase, one special char or number, and at least 7 chars"
+msgstr "비밀번호는 최소 하나의 소문자, 하나의 대문자, 하나의 특수문자 또는 숫자를 포함해야 하고, 적어도 문자가 7개 이상이여야 합니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:22
-msgid ""
-"Password is not valid. Password can only contains a-zA-Z0-9?!@#§+-$%&*{}()]["
-msgstr ""
-"비밀번호가 유효하지 않습니다. 비밀번호는 a-zA-Z0-9?!@#§+-$%&*{}()][ 만 포함"
-"할 수 있습니다."
+msgid "Password is not valid. Password can only contains a-zA-Z0-9?!@#§+-$%&*{}()]["
+msgstr "비밀번호가 유효하지 않습니다. 비밀번호는 a-zA-Z0-9?!@#§+-$%&*{}()][ 만 포함할 수 있습니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:42
 msgid " can only contain lowercase chars or numbers"
@@ -285,3 +276,4 @@ msgstr "정말로 삭제 하시겠습니까?"
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/lmFileBackups.coffee:83
 msgid "Confirmation"
 msgstr "승인"
+

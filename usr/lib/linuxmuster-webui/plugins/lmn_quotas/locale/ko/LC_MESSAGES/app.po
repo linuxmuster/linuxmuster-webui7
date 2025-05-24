@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-24 18:44+0200\n"
-"PO-Revision-Date: 2024-10-14 09:24\n"
+"POT-Creation-Date: 2025-05-24 18:45+0200\n"
+"PO-Revision-Date: 2025-05-24 17:00\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -114,9 +114,7 @@ msgid "There is no special quota here."
 msgstr "특별한 할당량이 없습니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:139
-msgid ""
-"This functionality is actually under development and displays imprecise "
-"values. It will not work with DFS shares or in multischool environment."
+msgid "This functionality is actually under development and displays imprecise values. It will not work with DFS shares or in multischool environment."
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/partial/index.html:180
@@ -197,3 +195,4 @@ msgstr " 가 목록에 있는 기본값들과 함께 추가됨."
 #: usr/lib/linuxmuster-webui/plugins/lmn_quotas/resources/js/controllers/index.controller.coffee:175
 msgid "Saving quotas ..."
 msgstr "할당량 저장중 ..."
+

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-24 18:44+0200\n"
-"PO-Revision-Date: 2024-10-14 09:24\n"
+"POT-Creation-Date: 2025-05-24 18:45+0200\n"
+"PO-Revision-Date: 2025-05-24 17:00\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -537,12 +537,8 @@ msgid "LINBO Cache"
 msgstr "LINBO 캐시"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:546
-msgid ""
-"You should call an import devices process to apply the new changes, quit "
-"this page anyway ?"
-msgstr ""
-"새로운 변경 사항들을 적용하려면 장치 불러오기 프로세스를 불러와야 하는데, 페"
-"이지를 그래도 종료하시겠습니까?"
+msgid "You should call an import devices process to apply the new changes, quit this page anyway ?"
+msgstr "새로운 변경 사항들을 적용하려면 장치 불러오기 프로세스를 불러와야 하는데, 페이지를 그래도 종료하시겠습니까?"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:592
 msgid "A config file with this name already exists!"
@@ -565,8 +561,7 @@ msgid "Multicast and torrent services restarted"
 msgstr "멀티캐스트 와 토렌트 서비스 재시작됨"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:687
-msgid ""
-"Failed to restart multicast and torrent services. Please see the log files"
+msgid "Failed to restart multicast and torrent services. Please see the log files"
 msgstr "멀티캐스트와 토렌트 서비스 재시작 실패. 로그 파일을 보십시오."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:695
@@ -596,5 +591,3 @@ msgstr "백업 저장됨"
 msgid "Saved"
 msgstr "저장 완료"
 
-#~ msgid "TFTP server"
-#~ msgstr "TFTP 서버"

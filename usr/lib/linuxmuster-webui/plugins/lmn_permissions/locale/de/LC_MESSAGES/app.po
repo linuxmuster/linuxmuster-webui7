@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-24 18:44+0200\n"
-"PO-Revision-Date: 2024-11-18 14:21\n"
+"POT-Creation-Date: 2025-05-24 18:45+0200\n"
+"PO-Revision-Date: 2025-05-24 17:00\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -25,8 +25,7 @@ msgstr "Std."
 #: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:68
 #: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:81
 msgid "Elements listed in default-ui-permissions.ini but not used :"
-msgstr ""
-"Elemente in default-ui-permissions.ini aufgelistet, aber nicht verwendet:"
+msgstr "Elemente in default-ui-permissions.ini aufgelistet, aber nicht verwendet:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:94
 msgid "Export permissions file"
@@ -81,3 +80,4 @@ msgstr "URL"
 #: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/js/controllers/index.controller.coffee:2
 msgid "List all permissions"
 msgstr "Alle Berechtigungen auflisten"
+

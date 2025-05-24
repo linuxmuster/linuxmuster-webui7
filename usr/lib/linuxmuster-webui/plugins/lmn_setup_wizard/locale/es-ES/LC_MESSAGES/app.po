@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-24 18:45+0200\n"
-"PO-Revision-Date: 2023-11-30 22:10\n"
+"PO-Revision-Date: 2025-05-24 17:00\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -18,12 +18,8 @@ msgstr ""
 "X-Crowdin-File-ID: 118\n"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-welcome.html:645
-msgid ""
-"<input type=\"checkbox\" ng:model=\"$ctrl.licenseAccepted\"> I accept the "
-"license terms"
-msgstr ""
-"<input type=\"checkbox\" ng:model=\"$ctrl.licenseAccepted\"> Acepto los "
-"términos de la licencia"
+msgid "<input type=\"checkbox\" ng:model=\"$ctrl.licenseAccepted\"> I accept the license terms"
+msgstr "<input type=\"checkbox\" ng:model=\"$ctrl.licenseAccepted\"> Acepto los términos de la licencia"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-account.html:3
 msgid "Account Information"
@@ -75,16 +71,10 @@ msgid "Firewall will be <b>configured!</b>"
 msgstr "El cortafuegos será <b>configurado!</b>"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-done.html:9
-msgid ""
-"If you hit the close button you will be forwarded to a ssl encrypted version "
-"of LinuxMuster Webui. Unless you install\n"
-"                a trusted certificate you will be asked to confirm the "
-"untrusted, just created, certificate. Confirm this certificate to proceed"
-msgstr ""
-"Si pulsas el botón de cierre, serás redirigido a una versión encriptada en "
-"ssl de LinuxMuster Webui. A menos que instale\n"
-"                un certificado de confianza se le pedirá que confirme el "
-"certificado no fiable, recién creado. Confirme este certificado para proceder"
+msgid "If you hit the close button you will be forwarded to a ssl encrypted version of LinuxMuster Webui. Unless you install\n"
+"                a trusted certificate you will be asked to confirm the untrusted, just created, certificate. Confirm this certificate to proceed"
+msgstr "Si pulsas el botón de cierre, serás redirigido a una versión encriptada en ssl de LinuxMuster Webui. A menos que instale\n"
+"                un certificado de confianza se le pedirá que confirme el certificado no fiable, recién creado. Confirme este certificado para proceder"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-done.html:7
 msgid "Information"
@@ -107,23 +97,12 @@ msgid "Next"
 msgstr "Siguiente"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-account.html:8
-msgid ""
-"Note: Minimal length is 7 characters. Use upper, lower and special "
-"characters or numbers. (e.g. mUster!)"
-msgstr ""
-"Nota: La longitud mínima es de 7 caracteres. Utilice caracteres o números "
-"superiores, inferiores y especiales. (por ejemplo, mUster!)"
+msgid "Note: Minimal length is 7 characters. Use upper, lower and special characters or numbers. (e.g. mUster!)"
+msgstr "Nota: La longitud mínima es de 7 caracteres. Utilice caracteres o números superiores, inferiores y especiales. (por ejemplo, mUster!)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:41
-msgid ""
-"Note: The first part (up to the first dot) of the domain name will be used "
-"as the SAMBA domain and has a maximal length of 15 characters. We suggest to "
-"use &quot;linuxmuster&quot; or &quot;lmn&quot; and prepend it to your domain."
-msgstr ""
-"Nota: La primera parte (hasta el primer punto) del nombre de dominio se "
-"utilizará como dominio SAMBA y tiene una longitud máxima de 15 caracteres. "
-"Sugerimos usar &quot;linuxmuster&quot; o &quot;lmn&quot; y prepárelo a su "
-"dominio."
+msgid "Note: The first part (up to the first dot) of the domain name will be used as the SAMBA domain and has a maximal length of 15 characters. We suggest to use &quot;linuxmuster&quot; or &quot;lmn&quot; and prepend it to your domain."
+msgstr "Nota: La primera parte (hasta el primer punto) del nombre de dominio se utilizará como dominio SAMBA y tiene una longitud máxima de 15 caracteres. Sugerimos usar &quot;linuxmuster&quot; o &quot;lmn&quot; y prepárelo a su dominio."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-account.html:23
 msgid "Password contains invalid characters"
@@ -135,8 +114,7 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-welcome.html:7
 msgid "Please follow the next few steps to quickly configure your system"
-msgstr ""
-"Por favor, siga los siguientes pasos para configurar rápidamente su sistema"
+msgstr "Por favor, siga los siguientes pasos para configurar rápidamente su sistema"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:3
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:13
@@ -213,12 +191,8 @@ msgid "Valid characters are: a-z"
 msgstr "Los caracteres válidos son: a-z"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:8
-msgid ""
-"We got all information needed for the provisioning proccess.<br>Before "
-"proceeding please check your data <b>carefully</b>!"
-msgstr ""
-"Tenemos toda la información necesaria para el proceso de aprovisionamiento. "
-"<br>Antes de proceder, por favor, compruebe sus datos <b>cuidosamente</b>!"
+msgid "We got all information needed for the provisioning proccess.<br>Before proceeding please check your data <b>carefully</b>!"
+msgstr "Tenemos toda la información necesaria para el proceso de aprovisionamiento. <br>Antes de proceder, por favor, compruebe sus datos <b>cuidosamente</b>!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-welcome.html:3
 msgid "Welcome to linuxmuster.net V7"
@@ -272,3 +246,4 @@ msgstr "Por favor, espere"
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:263
 msgid "Could not restart"
 msgstr "No se pudo reiniciar"
+

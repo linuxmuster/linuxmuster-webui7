@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-24 18:45+0200\n"
-"PO-Revision-Date: 2023-11-30 22:10\n"
+"PO-Revision-Date: 2025-05-24 17:00\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -18,9 +18,7 @@ msgstr ""
 "X-Crowdin-File-ID: 118\n"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-welcome.html:645
-msgid ""
-"<input type=\"checkbox\" ng:model=\"$ctrl.licenseAccepted\"> I accept the "
-"license terms"
+msgid "<input type=\"checkbox\" ng:model=\"$ctrl.licenseAccepted\"> I accept the license terms"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-account.html:3
@@ -73,11 +71,8 @@ msgid "Firewall will be <b>configured!</b>"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-done.html:9
-msgid ""
-"If you hit the close button you will be forwarded to a ssl encrypted version "
-"of LinuxMuster Webui. Unless you install\n"
-"                a trusted certificate you will be asked to confirm the "
-"untrusted, just created, certificate. Confirm this certificate to proceed"
+msgid "If you hit the close button you will be forwarded to a ssl encrypted version of LinuxMuster Webui. Unless you install\n"
+"                a trusted certificate you will be asked to confirm the untrusted, just created, certificate. Confirm this certificate to proceed"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-done.html:7
@@ -101,16 +96,11 @@ msgid "Next"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-account.html:8
-msgid ""
-"Note: Minimal length is 7 characters. Use upper, lower and special "
-"characters or numbers. (e.g. mUster!)"
+msgid "Note: Minimal length is 7 characters. Use upper, lower and special characters or numbers. (e.g. mUster!)"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:41
-msgid ""
-"Note: The first part (up to the first dot) of the domain name will be used "
-"as the SAMBA domain and has a maximal length of 15 characters. We suggest to "
-"use &quot;linuxmuster&quot; or &quot;lmn&quot; and prepend it to your domain."
+msgid "Note: The first part (up to the first dot) of the domain name will be used as the SAMBA domain and has a maximal length of 15 characters. We suggest to use &quot;linuxmuster&quot; or &quot;lmn&quot; and prepend it to your domain."
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-account.html:23
@@ -200,9 +190,7 @@ msgid "Valid characters are: a-z"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:8
-msgid ""
-"We got all information needed for the provisioning proccess.<br>Before "
-"proceeding please check your data <b>carefully</b>!"
+msgid "We got all information needed for the provisioning proccess.<br>Before proceeding please check your data <b>carefully</b>!"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-welcome.html:3
@@ -257,3 +245,4 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:263
 msgid "Could not restart"
 msgstr ""
+

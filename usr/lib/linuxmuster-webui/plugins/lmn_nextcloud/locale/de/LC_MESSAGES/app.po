@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-24 18:44+0200\n"
-"PO-Revision-Date: 2024-11-18 14:21\n"
+"POT-Creation-Date: 2025-05-24 18:45+0200\n"
+"PO-Revision-Date: 2025-05-24 17:00\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -19,10 +19,9 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_nextcloud/resources/partial/index.html:4
 msgid "URL not found or not valid! Please check config file."
-msgstr ""
-"URL nicht gefunden oder ungültig! Bitte überprüfen Sie die "
-"Konfigurationsdatei."
+msgstr "URL nicht gefunden oder ungültig! Bitte überprüfen Sie die Konfigurationsdatei."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_nextcloud/resources/js/controllers/index.controller.es:2
 msgid "Nextcloud"
 msgstr "Nextcloud"
+

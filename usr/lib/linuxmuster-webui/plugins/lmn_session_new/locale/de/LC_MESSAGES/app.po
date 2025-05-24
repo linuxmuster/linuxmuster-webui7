@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-24 18:44+0200\n"
-"PO-Revision-Date: 2024-11-18 14:21\n"
+"POT-Creation-Date: 2025-05-24 18:45+0200\n"
+"PO-Revision-Date: 2025-05-24 17:00\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -18,22 +18,16 @@ msgstr ""
 "X-Crowdin-File-ID: 231\n"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:367
-msgid ""
-"<i class=\"fas fa-copy\"></i>\n"
+msgid "<i class=\"fas fa-copy\"></i>\n"
 "                            Copy _collect directory from all members"
-msgstr ""
-"<i class=\"fas fa-copy\"></i>\n"
-"                            Kopiere das Verzeichnis _collect von allen "
-"Mitgliedern"
+msgstr "<i class=\"fas fa-copy\"></i>\n"
+"                            Kopiere das Verzeichnis _collect von allen Mitgliedern"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:373
-msgid ""
-"<i class=\"fas fa-cut\"></i>\n"
+msgid "<i class=\"fas fa-cut\"></i>\n"
 "                            Move _collect directory from all members"
-msgstr ""
-"<i class=\"fas fa-cut\"></i>\n"
-"                            Verschiebe das Verzeichnis _collect von allen "
-"Mitgliedern"
+msgstr "<i class=\"fas fa-cut\"></i>\n"
+"                            Verschiebe das Verzeichnis _collect von allen Mitgliedern"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/selectFile.modal.html:4
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:382
@@ -52,9 +46,7 @@ msgstr "Einsammeln"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/selectFile.modal.html:3
 msgid "Collect files from {{user}} from directory {{print_path}}"
-msgstr ""
-"Einsammeln der Dateien des Benutzers {{user}} aus dem Verzeichnis "
-"{{print_path}}"
+msgstr "Einsammeln der Dateien des Benutzers {{user}} aus dem Verzeichnis {{print_path}}"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/selectFile.modal.html:95
 msgid "Collect from User"
@@ -69,12 +61,8 @@ msgid "Copy"
 msgstr "Kopieren"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/sessionsList.html:19
-msgid ""
-"Currenty it's not possible to determine your room, are you logged on a "
-"school computer ?"
-msgstr ""
-"Es konnte nicht ermittelt werden, in welchem Raum Sie sich befinden. Sind "
-"Sie an einem Schulrechner angemeldet ?"
+msgid "Currenty it's not possible to determine your room, are you logged on a school computer ?"
+msgstr "Es konnte nicht ermittelt werden, in welchem Raum Sie sich befinden. Sind Sie an einem Schulrechner angemeldet ?"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:47
 msgid "Delete group"
@@ -97,13 +85,8 @@ msgid "Empty directory."
 msgstr "Leeres Verzeichnis."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:189
-msgid ""
-"It's currently not possible to create share directory in other teacher's "
-"home or to handle their management groups."
-msgstr ""
-"Im Moment ist es nicht möglich, das Verzeichnis für das Teilen im Home-"
-"Verzeichnis eines anderen Lehrers zu erstellen oder ihre Verwaltungsgruppen "
-"zu verwalten."
+msgid "It's currently not possible to create share directory in other teacher's home or to handle their management groups."
+msgstr "Im Moment ist es nicht möglich, das Verzeichnis für das Teilen im Home-Verzeichnis eines anderen Lehrers zu erstellen oder ihre Verwaltungsgruppen zu verwalten."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:226
 msgid "Join {{missing_schoolclasses}} to share"
@@ -142,12 +125,8 @@ msgid "Rename group"
 msgstr "Gruppe umbenennen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:309
-msgid ""
-"Restore <b>{{participant.cn}}</b>'s and <b>{{participant.examBaseCn}}</b>'s "
-"default password"
-msgstr ""
-"<b>{{participant.cn}}</b>s und <b>{{participant.examBaseCn}}</b> "
-"Standardpasswort wiederherstellen"
+msgid "Restore <b>{{participant.cn}}</b>'s and <b>{{participant.examBaseCn}}</b>'s default password"
+msgstr "<b>{{participant.cn}}</b>s und <b>{{participant.examBaseCn}}</b> Standardpasswort wiederherstellen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:304
 msgid "Restore <b>{{participant.cn}}</b>'s default password"
@@ -178,12 +157,8 @@ msgid "Set actual password for <b>{{participant.cn}}</b>"
 msgstr "Setze das aktuelle Passwort für <b>{{participant.cn}}</b>"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:329
-msgid ""
-"Set actual password for <b>{{participant.cn}}</b> and <b>{{participant."
-"examBaseCn}}</b>"
-msgstr ""
-"Aktuelles Passwort für <b>{{participant.cn}}</b> und <b>{{participant."
-"examBaseCn}}</b> festlegen"
+msgid "Set actual password for <b>{{participant.cn}}</b> and <b>{{participant.examBaseCn}}</b>"
+msgstr "Aktuelles Passwort für <b>{{participant.cn}}</b> und <b>{{participant.examBaseCn}}</b> festlegen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:319
 msgid "Set default password for <b>{{participant.cn}}</b>"
@@ -223,20 +198,12 @@ msgid "Stop autorefresh"
 msgstr "Autorefresh stoppen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/sessionsList.html:86
-msgid ""
-"There are no group yet. Create a new group using the 'New group' button "
-"bellow!"
-msgstr ""
-"Es gibt noch keine Gruppe. Erstelle eine neue Gruppe mit der Schaltfläche "
-"'Neue Gruppe' unten!"
+msgid "There are no group yet. Create a new group using the 'New group' button bellow!"
+msgstr "Es gibt noch keine Gruppe. Erstelle eine neue Gruppe mit der Schaltfläche 'Neue Gruppe' unten!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/session.html:96
-msgid ""
-"There's currently no student in this group. You can add these with the input "
-"above."
-msgstr ""
-"Es gibt derzeit keine Schüler in dieser Gruppe. Sie können diese mit der "
-"Eingabe oben hinzufügen."
+msgid "There's currently no student in this group. You can add these with the input above."
+msgstr "Es gibt derzeit keine Schüler in dieser Gruppe. Sie können diese mit der Eingabe oben hinzufügen."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/sessionsList.html:16
 msgid "This Room"
@@ -275,20 +242,12 @@ msgid "Working directory"
 msgstr "Arbeitsverzeichnis"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/sessionsList.html:51
-msgid ""
-"You are not member of any schoolclass. You can change your membership in the "
-"<a href=\"/view/lmn/groupmembership/\">\"Enroll\" page</a>."
-msgstr ""
-"Sie sind nicht Mitglied einer Schulklasse. Sie können Ihre Mitgliedschaft "
-"auf der <a href=\"/view/lmn/groupmembership/\">\"Anmelden\"-Seite</a> ändern."
+msgid "You are not member of any schoolclass. You can change your membership in the <a href=\"/view/lmn/groupmembership/\">\"Enroll\" page</a>."
+msgstr "Sie sind nicht Mitglied einer Schulklasse. Sie können Ihre Mitgliedschaft auf der <a href=\"/view/lmn/groupmembership/\">\"Anmelden\"-Seite</a> ändern."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/sessionsList.html:126
-msgid ""
-"You don't own any project. You can create your project in the <a href=\"/"
-"view/lmn/groupmembership/\">\"Enroll\" page</a>."
-msgstr ""
-"Sie besitzen kein Projekt. Sie können Ihr Projekt auf der <a href=\"/view/"
-"lmn/groupmembership/\">\"Einschreiben\"-Seite</a> erstellen."
+msgid "You don't own any project. You can create your project in the <a href=\"/view/lmn/groupmembership/\">\"Enroll\" page</a>."
+msgstr "Sie besitzen kein Projekt. Sie können Ihr Projekt auf der <a href=\"/view/lmn/groupmembership/\">\"Einschreiben\"-Seite</a> erstellen."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/partial/selectFile.modal.html:56
 msgid "item(s) selected"
@@ -358,12 +317,8 @@ msgid "Cancel"
 msgstr "Abbrechen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:38
-msgid ""
-"Do you really want to quit this session ? You can restart it later if you "
-"want."
-msgstr ""
-"Möchten Sie diese Sitzung wirklich beenden ? Sie können sie später neu "
-"starten, wenn Sie möchten."
+msgid "Do you really want to quit this session ? You can restart it later if you want."
+msgstr "Möchten Sie diese Sitzung wirklich beenden ? Sie können sie später neu starten, wenn Sie möchten."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:45
 msgid "Add Student"
@@ -459,9 +414,7 @@ msgstr "Nutzer ist im Prüfungsmodus"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:396
 msgid "This user seems to be in exam. End exam mode before changing password!"
-msgstr ""
-"Für diesen Nutzer scheint der Prüfungsmodus aktiv zu sein. Beenden Sie den "
-"Prüfungsmodus um das Passwort ändern zu können!"
+msgstr "Für diesen Nutzer scheint der Prüfungsmodus aktiv zu sein. Beenden Sie den Prüfungsmodus um das Passwort ändern zu können!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:446
 msgid "File #{name} shared to #{user}!"
@@ -533,3 +486,4 @@ msgstr "Starte diese Sitzung mit allen Teilnehmern dieser Schulklasse"
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/sessionsList.controller.coffee:5
 msgid "Start session containing all users in this room"
 msgstr "Kurs mit allen Benutzern in diesem Raum starten"
+

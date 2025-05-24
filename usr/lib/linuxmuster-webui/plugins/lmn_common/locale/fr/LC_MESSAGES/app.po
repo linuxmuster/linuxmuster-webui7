@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-24 18:44+0200\n"
-"PO-Revision-Date: 2024-11-18 14:21\n"
+"POT-Creation-Date: 2025-05-24 18:45+0200\n"
+"PO-Revision-Date: 2025-05-24 17:00\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -37,7 +37,7 @@ msgstr "Fermer"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/schoolswitcher.html:14
 msgid "Current"
-msgstr ""
+msgstr "Actif"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/lmFileBackupsDiff.modal.html:2
 msgid "Differences"
@@ -90,26 +90,23 @@ msgstr "Webconsole"
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/schoolswitcher.html:10
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/controllers/schoolswitcher.controller.es:9
 msgid "Schoolswitcher"
-msgstr ""
+msgstr "Sélecteur d'école"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:110
 msgid "Session time : {{ counter[0] }}:{{ counter[1] }}:{{ counter[2] }}"
-msgstr ""
-"Durée de la session : {{ counter[0] }}:{{ counter[1] }}:{{ counter[2] }}"
+msgstr "Durée de la session : {{ counter[0] }}:{{ counter[1] }}:{{ counter[2] }}"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:90
 msgid "TFA"
 msgstr "A2F"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/schoolswitcher.html:4
-msgid ""
-"This is not a multi-school setup or you are not allowed to see another "
-"school!"
-msgstr ""
+msgid "This is not a multi-school setup or you are not allowed to see another school!"
+msgstr "Ce n'est pas une installation multi-école ou vous n'êtes pas autorisé à voir une autre école!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:113
 msgid "change"
-msgstr ""
+msgstr "changer"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/lmnfile.py:178
 msgid "Access refused."
@@ -208,19 +205,12 @@ msgid "Copying files: %s."
 msgstr "Copie des fichiers : %s."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:13
-msgid ""
-"Passwords must contain at least one lowercase, one uppercase, one special "
-"char or number, and at least 7 chars"
-msgstr ""
-"Les mots de passe doivent contenir au moins un minuscule, un majuscule, un "
-"caractère spécial ou un chiffre, et au moins 7 caractères"
+msgid "Passwords must contain at least one lowercase, one uppercase, one special char or number, and at least 7 chars"
+msgstr "Les mots de passe doivent contenir au moins un minuscule, un majuscule, un caractère spécial ou un chiffre, et au moins 7 caractères"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:22
-msgid ""
-"Password is not valid. Password can only contains a-zA-Z0-9?!@#§+-$%&*{}()]["
-msgstr ""
-"Le mot de passe n'est pas valide. Le mot de passe ne peut contenir que a-zA-"
-"Z0-9?!@#§+-$%&*{}()]["
+msgid "Password is not valid. Password can only contains a-zA-Z0-9?!@#§+-$%&*{}()]["
+msgstr "Le mot de passe n'est pas valide. Le mot de passe ne peut contenir que a-zA-Z0-9?!@#§+-$%&*{}()]["
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:42
 msgid " can only contain lowercase chars or numbers"
@@ -257,9 +247,7 @@ msgstr " n'est pas valide ou en double"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:146
 msgid " does not contain valid chars, is duplicated or too long (>15 chars)"
-msgstr ""
-" ne contient pas de caractères valides, est dupliqué ou trop long (>15 "
-"caractères)"
+msgstr " ne contient pas de caractères valides, est dupliqué ou trop long (>15 caractères)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/validation.coffee:157
 msgid " does not contain valid chars or is duplicated"
@@ -288,3 +276,4 @@ msgstr "Voulez-vous vraiment supprimer"
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/services/lmFileBackups.coffee:83
 msgid "Confirmation"
 msgstr "Confirmation"
+

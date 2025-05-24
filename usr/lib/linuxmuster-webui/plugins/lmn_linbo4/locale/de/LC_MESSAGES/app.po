@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-24 18:44+0200\n"
-"PO-Revision-Date: 2024-11-18 14:21\n"
+"POT-Creation-Date: 2025-05-24 18:45+0200\n"
+"PO-Revision-Date: 2025-05-24 17:00\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -445,8 +445,7 @@ msgstr "Die Farbe des Vordergrunds wird automatisch angepasst"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:48
 msgid "The icon format used here is png and you should change this to svg."
-msgstr ""
-"Das hier verwendete Symbolformat ist png und Sie sollten dies in svg ändern."
+msgstr "Das hier verwendete Symbolformat ist png und Sie sollten dies in svg ändern."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/index.html:64
 msgid "There's no image on the server yet."
@@ -538,12 +537,8 @@ msgid "LINBO Cache"
 msgstr "LINBO Cache"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:546
-msgid ""
-"You should call an import devices process to apply the new changes, quit "
-"this page anyway ?"
-msgstr ""
-"Sie sollten einen Import-Geräte-Prozess aufrufen, um die neuen Änderungen "
-"anzuwenden. Diese Seite trotzdem verlassen ?"
+msgid "You should call an import devices process to apply the new changes, quit this page anyway ?"
+msgstr "Sie sollten einen Import-Geräte-Prozess aufrufen, um die neuen Änderungen anzuwenden. Diese Seite trotzdem verlassen ?"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:592
 msgid "A config file with this name already exists!"
@@ -566,11 +561,8 @@ msgid "Multicast and torrent services restarted"
 msgstr "Multicast- und Torrent-Dienste neu gestartet"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:687
-msgid ""
-"Failed to restart multicast and torrent services. Please see the log files"
-msgstr ""
-"Multicast und Torrent-Dienste konnten nicht neu gestartet werden. Bitte "
-"lesen Sie die Log-Dateien"
+msgid "Failed to restart multicast and torrent services. Please see the log files"
+msgstr "Multicast und Torrent-Dienste konnten nicht neu gestartet werden. Bitte lesen Sie die Log-Dateien"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:695
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:721
@@ -599,5 +591,3 @@ msgstr "Sicherung gespeichert"
 msgid "Saved"
 msgstr "Gespeichert"
 
-#~ msgid "TFTP server"
-#~ msgstr "TFTP Server"

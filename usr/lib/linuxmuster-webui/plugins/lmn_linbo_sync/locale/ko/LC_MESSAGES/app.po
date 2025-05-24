@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-24 18:44+0200\n"
-"PO-Revision-Date: 2023-11-30 22:10\n"
+"POT-Creation-Date: 2025-05-24 18:45+0200\n"
+"PO-Revision-Date: 2025-05-24 17:00\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -38,13 +38,9 @@ msgid "<i class=\"fas fa-exclamation-triangle\"></i>  New"
 msgstr "<i class=\"fas fa-exclamation-triangle\"></i>새로운 것"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:107
-msgid ""
-"<i class=\"fas fa-info-circle\"></i>\n"
-"                To apply a linbo-remote command, you have to select at least "
-"one client and one command."
-msgstr ""
-"<i class=\"fas fa-info-circle\"></i>                원격 linbo 명령어를 적용"
-"하려면, 최소 하나의 클라이언트와 명령어를 선택해야 합니다."
+msgid "<i class=\"fas fa-info-circle\"></i>\n"
+"                To apply a linbo-remote command, you have to select at least one client and one command."
+msgstr "<i class=\"fas fa-info-circle\"></i>                원격 linbo 명령어를 적용하려면, 최소 하나의 클라이언트와 명령어를 선택해야 합니다."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:72
 msgid "<i class=\"fas fa-lightbulb\"></i>  Wake on lan"
@@ -142,3 +138,4 @@ msgstr "저장소로부터 첫번째 운영체제 동기화"
 #: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/js/controllers/index.controller.coffee:239
 msgid "Command successfully sent: "
 msgstr ""
+

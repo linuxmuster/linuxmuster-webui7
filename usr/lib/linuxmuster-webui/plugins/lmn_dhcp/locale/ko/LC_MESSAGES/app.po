@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-24 18:44+0200\n"
+"POT-Creation-Date: 2023-08-01 15:32+0200\n"
 "PO-Revision-Date: 2023-11-30 22:10\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
@@ -172,3 +172,4 @@ msgstr "DHCP"
 #: usr/lib/linuxmuster-webui/plugins/lmn_dhcp/resources/js/controllers/index.controller.es:80
 msgid "Device successfully saved in devices.csv!"
 msgstr "장치가 성공적으로 devices.csv에 저장되었습니다!"
+

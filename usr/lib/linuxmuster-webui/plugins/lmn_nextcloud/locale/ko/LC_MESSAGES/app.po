@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-24 18:44+0200\n"
-"PO-Revision-Date: 2023-11-30 22:10\n"
+"POT-Creation-Date: 2025-05-24 18:45+0200\n"
+"PO-Revision-Date: 2025-05-24 17:00\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -24,3 +24,4 @@ msgstr "URL을 찾을 수 없거나 유효하지 않습니다! config 파일을 
 #: usr/lib/linuxmuster-webui/plugins/lmn_nextcloud/resources/js/controllers/index.controller.es:2
 msgid "Nextcloud"
 msgstr "Nextcloud"
+

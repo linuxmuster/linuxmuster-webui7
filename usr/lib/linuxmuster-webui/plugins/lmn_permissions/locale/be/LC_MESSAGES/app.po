@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webui\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-24 17:03+0200\n"
+"POT-Creation-Date: 2025-05-24 18:44+0200\n"
 "PO-Revision-Date: 2016-11-01 18:52-0400\n"
 "Last-Translator: eugenepankov <john.pankov@gmail.com>\n"
 "Language-Team: Belarusian\n"
@@ -17,65 +17,66 @@ msgstr ""
 "X-Crowdin-Language: be\n"
 "X-Crowdin-File: /2.0/datetime.po\n"
 
-#: lmn_permissions/resources/partial/index.html:18
-#: lmn_permissions/resources/partial/index.html:51
+#: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:18
+#: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:51
 msgid "Def."
 msgstr ""
 
-#: lmn_permissions/resources/partial/index.html:68
-#: lmn_permissions/resources/partial/index.html:81
+#: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:68
+#: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:81
 msgid "Elements listed in default-ui-permissions.ini but not used :"
 msgstr ""
 
-#: lmn_permissions/resources/partial/index.html:94
+#: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:94
 msgid "Export permissions file"
 msgstr ""
 
-#: lmn_permissions/resources/partial/index.html:14
-#: lmn_permissions/resources/partial/index.html:47
+#: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:14
+#: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:47
 msgid "GlobalAdmin"
 msgstr ""
 
-#: lmn_permissions/resources/partial/index.html:35
+#: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:35
 msgid "No authorization set for this method."
 msgstr ""
 
-#: lmn_permissions/resources/partial/index.html:88
+#: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:88
 msgid "No orphan element in the permissions !"
 msgstr ""
 
-#: lmn_permissions/resources/partial/index.html:75
+#: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:75
 msgid "No orphan element in the sidebar permissions !"
 msgstr ""
 
-#: lmn_permissions/resources/partial/index.html:79 lmn_permissions/main.py:18
+#: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:79
+#: usr/lib/linuxmuster-webui/plugins/lmn_permissions/main.py:18
 msgid "Permissions"
 msgstr ""
 
-#: lmn_permissions/resources/partial/index.html:15
-#: lmn_permissions/resources/partial/index.html:48
+#: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:15
+#: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:48
 msgid "SchoolAdmin"
 msgstr ""
 
-#: lmn_permissions/resources/partial/index.html:66
+#: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:66
 msgid "Sidebar"
 msgstr ""
 
-#: lmn_permissions/resources/partial/index.html:17
-#: lmn_permissions/resources/partial/index.html:50
+#: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:17
+#: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:50
 msgid "Student"
 msgstr ""
 
-#: lmn_permissions/resources/partial/index.html:16
-#: lmn_permissions/resources/partial/index.html:49
+#: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:16
+#: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:49
 msgid "Teacher"
 msgstr ""
 
-#: lmn_permissions/resources/partial/index.html:13
-#: lmn_permissions/resources/partial/index.html:46
+#: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:13
+#: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/partial/index.html:46
 msgid "URL"
 msgstr ""
 
-#: lmn_permissions/resources/js/controllers/index.controller.coffee:2
+#: usr/lib/linuxmuster-webui/plugins/lmn_permissions/resources/js/controllers/index.controller.coffee:2
 msgid "List all permissions"
 msgstr ""

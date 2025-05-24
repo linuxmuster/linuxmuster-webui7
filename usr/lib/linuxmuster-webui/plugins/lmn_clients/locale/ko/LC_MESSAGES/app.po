@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-24 17:03+0200\n"
+"POT-Creation-Date: 2025-05-24 18:44+0200\n"
 "PO-Revision-Date: 2023-11-30 22:10\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
@@ -17,44 +17,44 @@ msgstr ""
 "X-Crowdin-File: /2.0/lmn_clients.po\n"
 "X-Crowdin-File-ID: 230\n"
 
-#: lmn_clients/resources/partial/index.html:45
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:45
 msgid "Close"
 msgstr "닫기"
 
-#: lmn_clients/resources/partial/index.html:4
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:4
 msgid "Custom scripts"
 msgstr "나만의 명령어"
 
-#: lmn_clients/resources/partial/index.html:64
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:64
 msgid "Disable"
 msgstr "사용 안 함"
 
-#: lmn_clients/resources/partial/index.html:49
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:49
 msgid "Drives"
 msgstr "드라이브"
 
-#: lmn_clients/resources/partial/index.html:38
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:38
 msgid "Edit custom script"
 msgstr "나만의 명령어 수정"
 
-#: lmn_clients/resources/partial/index.html:61
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:61
 msgid "Label"
 msgstr "레이블"
 
-#: lmn_clients/resources/partial/index.html:63
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:63
 msgid "Letter"
 msgstr "레터"
 
-#: lmn_clients/resources/partial/index.html:44
-#: lmn_clients/resources/partial/index.html:87
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:44
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:87
 msgid "Save"
 msgstr "저장"
 
-#: lmn_clients/resources/partial/index.html:62
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:62
 msgid "Show letter"
 msgstr "알림 보기"
 
-#: lmn_clients/resources/partial/index.html:9
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:9
 msgid ""
 "The following scripts are executed by Samba when the client boots, in root "
 "context, and after the\n"
@@ -65,7 +65,7 @@ msgstr ""
 "명령어 실행후에  다음의 명령어들은 Samba에 의해 실행됩니다. <br> 이것은 주의"
 "를 갖고 처리해야 합니다."
 
-#: lmn_clients/resources/partial/index.html:53
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:53
 msgid ""
 "Unable to find a Drives.xml in your policy directory. Does the file really "
 "exists ?"
@@ -73,30 +73,30 @@ msgstr ""
 "정책 디렉토리에 Drives.xml 파일을 찾을 수 없습니다. 파일이 있는지 확인 바랍니"
 "다."
 
-#: lmn_clients/views.py:34
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/views.py:34
 msgid "Unable to determine samba domain"
 msgstr "삼바 도메인을 확인할 수 없습니다."
 
-#: lmn_clients/main.py:16
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/main.py:16
 msgid "Client configuration"
 msgstr "사용자 환경설정"
 
-#: lmn_clients/main.py:29
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/main.py:29
 msgid "Configure clients features"
 msgstr "사용자 환경을 설정하세요."
 
-#: lmn_clients/resources/js/controllers/index.controller.es:2
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/js/controllers/index.controller.es:2
 msgid "Lmn_clients"
 msgstr "Lmn_사용자"
 
-#: lmn_clients/resources/js/controllers/index.controller.es:20
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/js/controllers/index.controller.es:20
 msgid "Script saved !"
 msgstr "스크립트가 저장되었습니다!"
 
-#: lmn_clients/resources/js/controllers/index.controller.es:21
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/js/controllers/index.controller.es:21
 msgid "Error while saving script"
 msgstr "스크립트를 저장하는 도중 에러가 발생했습니다."
 
-#: lmn_clients/resources/js/controllers/index.controller.es:45
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/js/controllers/index.controller.es:45
 msgid "Saved !"
 msgstr "저장되었습니다!"

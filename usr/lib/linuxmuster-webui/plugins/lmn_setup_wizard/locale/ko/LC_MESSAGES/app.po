@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-24 17:03+0200\n"
+"POT-Creation-Date: 2025-05-24 18:45+0200\n"
 "PO-Revision-Date: 2023-11-30 22:10\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Crowdin-File: /2.0/lmn_setup_wizard.po\n"
 "X-Crowdin-File-ID: 118\n"
 
-#: lmn_setup_wizard/partial/init-welcome.html:645
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-welcome.html:645
 msgid ""
 "<input type=\"checkbox\" ng:model=\"$ctrl.licenseAccepted\"> I accept the "
 "license terms"
@@ -25,56 +25,56 @@ msgstr ""
 "<input type=\"checkbox\" ng:model=\"$ctrl.licenseAccepted\">라이센스 조항에 "
 "동의합니다"
 
-#: lmn_setup_wizard/partial/init-account.html:3
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-account.html:3
 msgid "Account Information"
 msgstr "계좌 정보"
 
-#: lmn_setup_wizard/partial/init-summary.html:7
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:7
 msgid "Almost done..."
 msgstr "거의 끝났습니다..."
 
-#: lmn_setup_wizard/partial/init-account.html:34
-#: lmn_setup_wizard/partial/init-externalServices.html:14
-#: lmn_setup_wizard/partial/init-school.html:51
-#: lmn_setup_wizard/partial/init-summary.html:102
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-account.html:34
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-externalServices.html:14
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:51
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:102
 msgid "Back"
 msgstr "뒤로가기"
 
-#: lmn_setup_wizard/partial/init-done.html:17
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-done.html:17
 msgid "Close"
 msgstr "닫기"
 
-#: lmn_setup_wizard/partial/init-summary.html:84
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:84
 msgid "Configuration will be <b>skipped </b>"
 msgstr "구성이 <b>생략될 것입니다</b>"
 
-#: lmn_setup_wizard/partial/init-summary.html:39
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:39
 msgid "Country"
 msgstr "지역"
 
-#: lmn_setup_wizard/partial/init-school.html:34
-#: lmn_setup_wizard/partial/init-summary.html:59
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:34
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:59
 msgid "Domain name"
 msgstr "도메인 이름"
 
-#: lmn_setup_wizard/partial/init-externalServices.html:3
-#: lmn_setup_wizard/partial/init-summary.html:78
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-externalServices.html:3
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:78
 msgid "External Services"
 msgstr "외부 서비스"
 
-#: lmn_setup_wizard/partial/init-setup.html:10
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-setup.html:10
 msgid "Finish"
 msgstr "완료"
 
-#: lmn_setup_wizard/partial/init-summary.html:83
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:83
 msgid "Firewall"
 msgstr "방화벽"
 
-#: lmn_setup_wizard/partial/init-summary.html:85
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:85
 msgid "Firewall will be <b>configured!</b>"
 msgstr "방화벽이 <b>설정될 것입니다!</b>"
 
-#: lmn_setup_wizard/partial/init-done.html:9
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-done.html:9
 msgid ""
 "If you hit the close button you will be forwarded to a ssl encrypted version "
 "of LinuxMuster Webui. Unless you install\n"
@@ -85,27 +85,27 @@ msgstr ""
 "할 수 있는 인증서를 설치하지 않는 한, 방금 만든 인증서를 확인하라는 메시지가 "
 "표시됩니다. 계속하려면 이 인증서를 확인하세요."
 
-#: lmn_setup_wizard/partial/init-done.html:7
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-done.html:7
 msgid "Information"
 msgstr "정보"
 
-#: lmn_setup_wizard/partial/init-school.html:21
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:21
 msgid "Language"
 msgstr "언어"
 
-#: lmn_setup_wizard/partial/init-school.html:13
-#: lmn_setup_wizard/partial/init-summary.html:25
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:13
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:25
 msgid "Location"
 msgstr "위치"
 
-#: lmn_setup_wizard/partial/init-account.html:35
-#: lmn_setup_wizard/partial/init-externalServices.html:15
-#: lmn_setup_wizard/partial/init-school.html:52
-#: lmn_setup_wizard/partial/init-welcome.html:648
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-account.html:35
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-externalServices.html:15
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:52
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-welcome.html:648
 msgid "Next"
 msgstr "다음"
 
-#: lmn_setup_wizard/partial/init-account.html:8
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-account.html:8
 msgid ""
 "Note: Minimal length is 7 characters. Use upper, lower and special "
 "characters or numbers. (e.g. mUster!)"
@@ -113,7 +113,7 @@ msgstr ""
 "참고: 최소 길이는 7자입니다. 대문자, 소문자 및 특수 문자 또는 숫자를 사용합니"
 "다. (예: mUster!)"
 
-#: lmn_setup_wizard/partial/init-school.html:41
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:41
 msgid ""
 "Note: The first part (up to the first dot) of the domain name will be used "
 "as the SAMBA domain and has a maximal length of 15 characters. We suggest to "
@@ -123,93 +123,93 @@ msgstr ""
 "최대 길이는 15자입니다. &quot;linuxmuster&quot; 또는 &quot;lmn&quot;을 사용하"
 "여 도메인에 추가하는 것이 좋습니다."
 
-#: lmn_setup_wizard/partial/init-account.html:23
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-account.html:23
 msgid "Password contains invalid characters"
 msgstr "암호에 유효하지 않은 문자가 있습니다"
 
-#: lmn_setup_wizard/partial/init-account.html:26
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-account.html:26
 msgid "Password too weak"
 msgstr "암호가 너무 보안에 취약합니다"
 
-#: lmn_setup_wizard/partial/init-welcome.html:7
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-welcome.html:7
 msgid "Please follow the next few steps to quickly configure your system"
 msgstr "시스템을 빠르게 구성하려면 다음 몇 가지 단계를 따르십시오."
 
-#: lmn_setup_wizard/partial/init-school.html:3
-#: lmn_setup_wizard/partial/init-summary.html:13
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:3
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:13
 msgid "School Information"
 msgstr "학교 정보"
 
-#: lmn_setup_wizard/partial/init-summary.html:18
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:18
 msgid "School Name:"
 msgstr "학교 이름:"
 
-#: lmn_setup_wizard/partial/init-school.html:7
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:7
 msgid "School name"
 msgstr "학교 이름"
 
-#: lmn_setup_wizard/partial/init-school.html:26
-#: lmn_setup_wizard/partial/init-summary.html:47
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:26
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:47
 msgid "Server &amp; Domain Information"
 msgstr "서버 &amp; 도메인 정보"
 
-#: lmn_setup_wizard/partial/init-school.html:46
-#: lmn_setup_wizard/partial/init-summary.html:66
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:46
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:66
 msgid "Server FQDN"
 msgstr "서버 FQDN"
 
-#: lmn_setup_wizard/partial/init-school.html:30
-#: lmn_setup_wizard/partial/init-summary.html:52
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:30
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:52
 msgid "Server name"
 msgstr "서버 이름"
 
-#: lmn_setup_wizard/partial/init-setup.html:3
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-setup.html:3
 msgid "Setup"
 msgstr "설정"
 
-#: lmn_setup_wizard/partial/init-done.html:3
-#: lmn_setup_wizard/js/init.controller.es:221
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-done.html:3
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:221
 msgid "Setup complete"
 msgstr "설정 완료"
 
-#: lmn_setup_wizard/partial/init-externalServices.html:7
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-externalServices.html:7
 msgid "Skip Firewall Configuration"
 msgstr "방화벽 구성 건너뛰기"
 
-#: lmn_setup_wizard/partial/init-summary.html:103
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:103
 msgid "Start provisioning"
 msgstr "공급 시작"
 
-#: lmn_setup_wizard/partial/init-school.html:17
-#: lmn_setup_wizard/partial/init-summary.html:32
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:17
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:32
 msgid "State"
 msgstr "상태"
 
-#: lmn_setup_wizard/partial/init-summary.html:3
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:3
 msgid "Summary"
 msgstr "요약"
 
-#: lmn_setup_wizard/partial/init-welcome.html:11
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-welcome.html:11
 msgid "System language"
 msgstr "시스템 언어"
 
-#: lmn_setup_wizard/partial/init-done.html:8
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-done.html:8
 msgid "The setup was completed."
 msgstr "설정이 완료되었습니다."
 
-#: lmn_setup_wizard/partial/init-account.html:20
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-account.html:20
 msgid "The two given passwords differ"
 msgstr "입력받은 두 비밀번호가 다릅니다."
 
-#: lmn_setup_wizard/partial/init-account.html:10
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-account.html:10
 msgid "Valid characters are:"
 msgstr "유효한 문자:"
 
-#: lmn_setup_wizard/partial/init-school.html:43
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:43
 msgid "Valid characters are: a-z"
 msgstr "유효한 문자: a-z"
 
-#: lmn_setup_wizard/partial/init-summary.html:8
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-summary.html:8
 msgid ""
 "We got all information needed for the provisioning proccess.<br>Before "
 "proceeding please check your data <b>carefully</b>!"
@@ -217,55 +217,55 @@ msgstr ""
 "공급 성공에 필요한 모든 정보를 얻었습니다.<br>진행하기 전에 당신의 데이터를 "
 "체크하세요 <b>조심스럽게</b>!"
 
-#: lmn_setup_wizard/partial/init-welcome.html:3
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-welcome.html:3
 msgid "Welcome to linuxmuster.net V7"
 msgstr "Linuxmuster.net V7에 오신걸 환영합니다"
 
-#: lmn_setup_wizard/partial/init-school.html:18
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:18
 msgid "e.g.: Baden-Wuerttemberg"
 msgstr "예시: Baden-Wuerttemberg"
 
-#: lmn_setup_wizard/partial/init-school.html:14
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:14
 msgid "e.g.: Guetenbach"
 msgstr "예시: Guetenbach"
 
-#: lmn_setup_wizard/partial/init-school.html:8
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:8
 msgid "e.g.: Linuxmuster-Example School"
 msgstr "예시: Linuxmuster-Example School"
 
-#: lmn_setup_wizard/partial/init-school.html:35
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:35
 msgid "e.g.: linuxmuster.lan"
 msgstr "예시: linuxmuster.lan"
 
-#: lmn_setup_wizard/partial/init-school.html:31
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-school.html:31
 msgid "e.g.: server"
 msgstr "예시: 서버"
 
-#: lmn_setup_wizard/js/init.controller.es:47
-#: lmn_setup_wizard/js/init.controller.es:70
-#: lmn_setup_wizard/js/init.controller.es:131
-#: lmn_setup_wizard/js/init.controller.es:170
-#: lmn_setup_wizard/js/init.controller.es:205
-#: lmn_setup_wizard/js/init.controller.es:217
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:47
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:70
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:131
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:170
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:205
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:217
 msgid "Setup Wizard"
 msgstr "설치 마법사"
 
-#: lmn_setup_wizard/js/init.controller.es:232
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:232
 msgid "Setup Done"
 msgstr "설정 완료"
 
-#: lmn_setup_wizard/js/init.controller.es:249
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:249
 msgid "Restarting"
 msgstr "재시작중"
 
-#: lmn_setup_wizard/js/init.controller.es:253
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:253
 msgid "Restarted"
 msgstr "재시작됨"
 
-#: lmn_setup_wizard/js/init.controller.es:253
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:253
 msgid "Please wait"
 msgstr "잠시만 기다려 주세요"
 
-#: lmn_setup_wizard/js/init.controller.es:263
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:263
 msgid "Could not restart"
 msgstr "재시작 실패"

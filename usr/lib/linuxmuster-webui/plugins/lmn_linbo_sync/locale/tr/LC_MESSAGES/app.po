@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-24 17:03+0200\n"
+"POT-Creation-Date: 2025-05-24 18:44+0200\n"
 "PO-Revision-Date: 2023-11-30 22:10\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
@@ -17,126 +17,126 @@ msgstr ""
 "X-Crowdin-File: /2.0/lmn_linbo_sync.po\n"
 "X-Crowdin-File-ID: 207\n"
 
-#: lmn_linbo_sync/resources/partial/index.html:77
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:77
 msgid "<i class=\"fas fa-clock\"></i>  Boot timeout (in seconds):"
 msgstr ""
 
-#: lmn_linbo_sync/resources/partial/index.html:96
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:96
 msgid "<i class=\"fas fa-directions\"></i>  Bypass autostart"
 msgstr ""
 
-#: lmn_linbo_sync/resources/partial/index.html:43
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:43
 msgid "<i class=\"fas fa-eraser\"></i>  Format"
 msgstr ""
 
-#: lmn_linbo_sync/resources/partial/index.html:88
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:88
 msgid "<i class=\"fas fa-eraser\"></i>  Partition"
 msgstr ""
 
-#: lmn_linbo_sync/resources/partial/index.html:55
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:55
 msgid "<i class=\"fas fa-exclamation-triangle\"></i>  New"
 msgstr ""
 
-#: lmn_linbo_sync/resources/partial/index.html:107
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:107
 msgid ""
 "<i class=\"fas fa-info-circle\"></i>\n"
 "                To apply a linbo-remote command, you have to select at least "
 "one client and one command."
 msgstr ""
 
-#: lmn_linbo_sync/resources/partial/index.html:72
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:72
 msgid "<i class=\"fas fa-lightbulb\"></i>  Wake on lan"
 msgstr ""
 
-#: lmn_linbo_sync/resources/partial/index.html:51
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:51
 msgid "<i class=\"fas fa-play\"></i>  Start"
 msgstr ""
 
-#: lmn_linbo_sync/resources/partial/index.html:100
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:100
 msgid "<i class=\"fas fa-plug\"></i>  Use Prestart"
 msgstr ""
 
-#: lmn_linbo_sync/resources/partial/index.html:64
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:64
 msgid "<i class=\"fas fa-power-off\"></i>  Halt"
 msgstr ""
 
-#: lmn_linbo_sync/resources/partial/index.html:68
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:68
 msgid "<i class=\"fas fa-sync\"></i>  Reboot"
 msgstr ""
 
-#: lmn_linbo_sync/resources/partial/index.html:47
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:47
 msgid "<i class=\"fas fa-sync-alt\"></i>  Sync"
 msgstr ""
 
-#: lmn_linbo_sync/resources/partial/index.html:92
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:92
 msgid "<i class=\"fas fa-terminal\"></i>  Disable GUI"
 msgstr ""
 
-#: lmn_linbo_sync/resources/partial/index.html:117
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:117
 msgid "Apply"
 msgstr ""
 
-#: lmn_linbo_sync/resources/partial/index.html:116
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:116
 msgid "Check online"
 msgstr ""
 
-#: lmn_linbo_sync/resources/partial/index.html:87
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:87
 msgid "Global options"
 msgstr ""
 
-#: lmn_linbo_sync/resources/partial/index.html:12
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:12
 msgid "Hostname"
 msgstr ""
 
-#: lmn_linbo_sync/resources/partial/index.html:13
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:13
 msgid "IP"
 msgstr ""
 
-#: lmn_linbo_sync/resources/partial/index.html:15
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:15
 msgid "Last sync"
 msgstr ""
 
-#: lmn_linbo_sync/resources/partial/index.html:14
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:14
 msgid "Mac address"
 msgstr ""
 
-#: lmn_linbo_sync/resources/partial/index.html:27
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:27
 msgid "No date found."
 msgstr ""
 
-#: lmn_linbo_sync/resources/partial/index.html:16
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:16
 msgid "Online ?"
 msgstr ""
 
-#: lmn_linbo_sync/resources/partial/index.html:63
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:63
 msgid "Power management"
 msgstr ""
 
-#: lmn_linbo_sync/resources/partial/index.html:112
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:112
 msgid "Result command"
 msgstr ""
 
-#: lmn_linbo_sync/resources/partial/index.html:38
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/partial/index.html:38
 msgid "Run linbo-remote command"
 msgstr ""
 
-#: lmn_linbo_sync/main.py:17
-#: lmn_linbo_sync/resources/js/controllers/index.controller.coffee:2
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/main.py:17
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/js/controllers/index.controller.coffee:2
 msgid "Linbo synchronization"
 msgstr ""
 
-#: lmn_linbo_sync/main.py:31
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/main.py:31
 msgid "List of last sync workstations"
 msgstr ""
 
-#: lmn_linbo_sync/main.py:36
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/main.py:36
 msgid "Test if workstation is up"
 msgstr ""
 
-#: lmn_linbo_sync/main.py:41
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/main.py:41
 msgid "Synchronize first OS from workstation"
 msgstr ""
 
-#: lmn_linbo_sync/resources/js/controllers/index.controller.coffee:239
+#: usr/lib/linuxmuster-webui/plugins/lmn_linbo_sync/resources/js/controllers/index.controller.coffee:239
 msgid "Command successfully sent: "
 msgstr ""

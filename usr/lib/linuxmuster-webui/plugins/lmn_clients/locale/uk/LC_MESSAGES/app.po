@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-24 17:03+0200\n"
+"POT-Creation-Date: 2025-05-24 18:44+0200\n"
 "PO-Revision-Date: 2023-11-30 22:10\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
@@ -19,44 +19,44 @@ msgstr ""
 "X-Crowdin-File: /2.0/lmn_clients.po\n"
 "X-Crowdin-File-ID: 230\n"
 
-#: lmn_clients/resources/partial/index.html:45
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:45
 msgid "Close"
 msgstr ""
 
-#: lmn_clients/resources/partial/index.html:4
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:4
 msgid "Custom scripts"
 msgstr ""
 
-#: lmn_clients/resources/partial/index.html:64
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:64
 msgid "Disable"
 msgstr ""
 
-#: lmn_clients/resources/partial/index.html:49
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:49
 msgid "Drives"
 msgstr ""
 
-#: lmn_clients/resources/partial/index.html:38
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:38
 msgid "Edit custom script"
 msgstr ""
 
-#: lmn_clients/resources/partial/index.html:61
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:61
 msgid "Label"
 msgstr ""
 
-#: lmn_clients/resources/partial/index.html:63
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:63
 msgid "Letter"
 msgstr ""
 
-#: lmn_clients/resources/partial/index.html:44
-#: lmn_clients/resources/partial/index.html:87
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:44
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:87
 msgid "Save"
 msgstr ""
 
-#: lmn_clients/resources/partial/index.html:62
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:62
 msgid "Show letter"
 msgstr ""
 
-#: lmn_clients/resources/partial/index.html:9
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:9
 msgid ""
 "The following scripts are executed by Samba when the client boots, in root "
 "context, and after the\n"
@@ -64,36 +64,36 @@ msgid ""
 "be handled with caution."
 msgstr ""
 
-#: lmn_clients/resources/partial/index.html:53
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/partial/index.html:53
 msgid ""
 "Unable to find a Drives.xml in your policy directory. Does the file really "
 "exists ?"
 msgstr ""
 
-#: lmn_clients/views.py:34
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/views.py:34
 msgid "Unable to determine samba domain"
 msgstr ""
 
-#: lmn_clients/main.py:16
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/main.py:16
 msgid "Client configuration"
 msgstr ""
 
-#: lmn_clients/main.py:29
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/main.py:29
 msgid "Configure clients features"
 msgstr ""
 
-#: lmn_clients/resources/js/controllers/index.controller.es:2
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/js/controllers/index.controller.es:2
 msgid "Lmn_clients"
 msgstr ""
 
-#: lmn_clients/resources/js/controllers/index.controller.es:20
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/js/controllers/index.controller.es:20
 msgid "Script saved !"
 msgstr ""
 
-#: lmn_clients/resources/js/controllers/index.controller.es:21
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/js/controllers/index.controller.es:21
 msgid "Error while saving script"
 msgstr ""
 
-#: lmn_clients/resources/js/controllers/index.controller.es:45
+#: usr/lib/linuxmuster-webui/plugins/lmn_clients/resources/js/controllers/index.controller.es:45
 msgid "Saved !"
 msgstr ""

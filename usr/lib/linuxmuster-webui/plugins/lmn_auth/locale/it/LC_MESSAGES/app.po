@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-24 17:03+0200\n"
+"POT-Creation-Date: 2025-05-24 18:44+0200\n"
 "PO-Revision-Date: 2023-11-30 22:10\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
@@ -17,63 +17,63 @@ msgstr ""
 "X-Crowdin-File: /2.0/lmn_auth.po\n"
 "X-Crowdin-File-ID: 94\n"
 
-#: lmn_auth/resources/partial/index.html:8
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:8
 msgid "All fields are required"
 msgstr ""
 
-#: lmn_auth/resources/partial/index.html:39
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:39
 msgid "Change password"
 msgstr ""
 
-#: lmn_auth/resources/partial/index.html:17
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:17
 msgid "Current password"
 msgstr ""
 
-#: lmn_auth/resources/partial/index.html:4
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:4
 msgid ""
 "Minimal length is 7 characters. Use upper, lower and special characters or "
 "numbers. (e.g. Muster!)"
 msgstr ""
 
-#: lmn_auth/resources/partial/index.html:21
-#: lmn_auth/resources/partial/index.html:26
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:21
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:26
 msgid "New password"
 msgstr ""
 
-#: lmn_auth/resources/partial/index.html:31
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:31
 msgid "Repeat password"
 msgstr ""
 
-#: lmn_auth/resources/partial/index.html:36
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:36
 msgid "The two entered passwords differ"
 msgstr ""
 
-#: lmn_auth/resources/partial/index.html:6
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/partial/index.html:6
 msgid "Valid characters are: a-z A-Z 0-9 ?!§+-@#$%&amp;*( )[ ]{ }"
 msgstr ""
 
-#: lmn_auth/api.py:36
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:36
 msgid "Linux Muster LDAP"
 msgstr ""
 
-#: lmn_auth/api.py:449
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:449
 msgid ""
 "Minimal length is 7 characters. Use upper, lower and special characters or "
 "numbers. (e.g. Muster!)."
 msgstr ""
 
-#: lmn_auth/api.py:479
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/api.py:479
 msgid "Linuxmuster LDAP user config"
 msgstr ""
 
-#: lmn_auth/resources/js/controllers/index.controller.coffee:7
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:7
 msgid "Change Password"
 msgstr ""
 
-#: lmn_auth/resources/js/controllers/index.controller.coffee:21
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:21
 msgid "Password changed"
 msgstr ""
 
-#: lmn_auth/resources/js/controllers/index.controller.coffee:24
+#: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:24
 msgid "Password change failed: "
 msgstr ""

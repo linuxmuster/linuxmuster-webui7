@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-24 17:03+0200\n"
+"POT-Creation-Date: 2025-05-24 18:45+0200\n"
 "PO-Revision-Date: 2024-11-18 14:21\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
@@ -17,156 +17,156 @@ msgstr ""
 "X-Crowdin-File: /2.0/lmn_websession.po\n"
 "X-Crowdin-File-ID: 215\n"
 
-#: lmn_websession/resources/partial/createSession.modal.html:34
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/createSession.modal.html:34
 msgid "Add Class"
 msgstr "Klasse hinzufügen"
 
-#: lmn_websession/resources/partial/createSession.modal.html:29
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/createSession.modal.html:29
 msgid "Add User"
 msgstr "Benutzer hinzufügen"
 
-#: lmn_websession/resources/partial/createSession.modal.html:78
-#: lmn_websession/resources/partial/index.html:75
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/createSession.modal.html:78
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:75
 msgid "Close"
 msgstr "Schließen"
 
-#: lmn_websession/resources/partial/index.html:57
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:57
 msgid "Copy URL"
 msgstr "URL kopieren"
 
-#: lmn_websession/resources/partial/createSession.modal.html:77
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/createSession.modal.html:77
 msgid "Create"
 msgstr "Erstellen"
 
-#: lmn_websession/resources/partial/createSession.modal.html:3
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/createSession.modal.html:3
 msgid "Create new session"
 msgstr "Neue Sitzung erstellen"
 
-#: lmn_websession/resources/partial/index.html:23
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:23
 msgid "Currently no websession is running!"
 msgstr "Derzeit wird keine Websession ausgeführt!"
 
-#: lmn_websession/resources/partial/index.html:55
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:55
 msgid "Delete"
 msgstr "Löschen"
 
-#: lmn_websession/resources/partial/index.html:52
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:52
 msgid "Join as attendee"
 msgstr "Als Teilnehmer beitreten"
 
-#: lmn_websession/resources/partial/index.html:51
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:51
 msgid "Join as moderator"
 msgstr "Als Moderator beitreten"
 
-#: lmn_websession/resources/partial/index.html:29
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:29
 msgid "Moderator"
 msgstr "Moderator"
 
-#: lmn_websession/resources/partial/createSession.modal.html:9
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/createSession.modal.html:9
 msgid "Name"
 msgstr "Name"
 
-#: lmn_websession/resources/partial/createSession.modal.html:53
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/createSession.modal.html:53
 msgid "No users selected!"
 msgstr "Keine Benutzer ausgewählt!"
 
-#: lmn_websession/resources/partial/index.html:31
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:31
 msgid "Participants"
 msgstr "Teilnehmer"
 
-#: lmn_websession/resources/partial/createSession.modal.html:23
-#: lmn_websession/resources/partial/index.html:30
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/createSession.modal.html:23
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:30
 msgid "Password"
 msgstr "Passwort"
 
-#: lmn_websession/resources/partial/createSession.modal.html:17
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/createSession.modal.html:17
 msgid "Public"
 msgstr "Öffentlich"
 
-#: lmn_websession/resources/partial/index.html:15
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:15
 msgid "Running Websession"
 msgstr "Websession läuft"
 
-#: lmn_websession/resources/partial/index.html:28
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:28
 msgid "Sessionname"
 msgstr "Sessionname"
 
-#: lmn_websession/resources/partial/index.html:56
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:56
 msgid "Show URL"
 msgstr "URL anzeigen"
 
-#: lmn_websession/resources/partial/index.html:49
-#: lmn_websession/resources/partial/index.html:50
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:49
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:50
 msgid "Start"
 msgstr "Start"
 
-#: lmn_websession/resources/partial/index.html:32
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:32
 msgid "Status"
 msgstr "Status"
 
-#: lmn_websession/resources/partial/index.html:53
-#: lmn_websession/resources/partial/index.html:54
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:53
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:54
 msgid "Stop"
 msgstr "Stop"
 
-#: lmn_websession/resources/partial/createSession.modal.html:15
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/createSession.modal.html:15
 msgid "Type"
 msgstr "Typ"
 
-#: lmn_websession/resources/partial/createSession.modal.html:49
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/createSession.modal.html:49
 msgid "Users"
 msgstr "Benutzer"
 
-#: lmn_websession/resources/partial/index.html:9
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:9
 msgid "Websession-Module not enabled! Please check Config-File!"
 msgstr "Websession-Modul nicht aktiviert! Bitte Config-Datei überprüfen!"
 
-#: lmn_websession/resources/partial/index.html:44
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/partial/index.html:44
 msgid "no password"
 msgstr "kein Passwort"
 
-#: lmn_websession/resources/js/services/websessionService.es:46
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/services/websessionService.es:46
 msgid "Successfully stopped!"
 msgstr "Erfolgreich gestoppt!"
 
-#: lmn_websession/resources/js/services/websessionService.es:49
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/services/websessionService.es:49
 msgid "Cannot stop entry!"
 msgstr "Eintrag kann nicht beendet werden!"
 
-#: lmn_websession/resources/js/services/websessionService.es:75
-#: lmn_websession/resources/js/controllers/index.controller.coffee:38
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/services/websessionService.es:75
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:38
 msgid "Cannot start websession! Try to reload page!"
 msgstr "Web-Sitzung kann nicht gestartet werden! Seite neu laden!"
 
-#: lmn_websession/resources/js/services/websessionService.es:79
-#: lmn_websession/resources/js/controllers/index.controller.coffee:133
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/services/websessionService.es:79
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:133
 msgid "Create session failed! Try again later!"
 msgstr "Sitzung konnte nicht erstellt werden! Versuchen Sie es später erneut!"
 
-#: lmn_websession/resources/js/controllers/index.controller.coffee:8
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:8
 msgid "Websession"
 msgstr "Websitzung"
 
-#: lmn_websession/resources/js/controllers/index.controller.coffee:29
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:29
 msgid "Created successfully!"
 msgstr "Erfolgreich erstellt!"
 
-#: lmn_websession/resources/js/controllers/index.controller.coffee:50
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:50
 msgid "Stopped successfully!"
 msgstr "Erfolgreich gestoppt!"
 
-#: lmn_websession/resources/js/controllers/index.controller.coffee:52
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:52
 msgid "Cannot stop websession! Try to reload page!"
 msgstr "Die Web-Sitzung kann nicht beendet werden! Seite neu laden!"
 
-#: lmn_websession/resources/js/controllers/index.controller.coffee:60
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:60
 msgid "Successfully removed!"
 msgstr "Erfolgreich entfernt!"
 
-#: lmn_websession/resources/js/controllers/index.controller.coffee:62
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:62
 msgid "Cannot delete entry!"
 msgstr "Eintrag kann nicht gelöscht werden!"
 
-#: lmn_websession/resources/js/controllers/index.controller.coffee:74
+#: usr/lib/linuxmuster-webui/plugins/lmn_websession/resources/js/controllers/index.controller.coffee:74
 msgid "Copied!"
 msgstr "Kopiert!"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-24 17:03+0200\n"
+"POT-Creation-Date: 2025-05-24 18:45+0200\n"
 "PO-Revision-Date: 2024-10-14 09:24\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
@@ -17,28 +17,28 @@ msgstr ""
 "X-Crowdin-File: /2.0/lmn_smbclient.po\n"
 "X-Crowdin-File-ID: 226\n"
 
-#: lmn_smbclient/views/lmnsmbclient.py:278
+#: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/views/lmnsmbclient.py:278
 msgid ""
 "Your quota is full, please free enough place in order to share these files "
 "again."
 msgstr ""
 
-#: lmn_smbclient/views/lmnsmbclient.py:622
+#: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/views/lmnsmbclient.py:622
 msgid "Ticket successfully refreshed"
 msgstr ""
 
-#: lmn_smbclient/views/lmnsmbclient.py:625
+#: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/views/lmnsmbclient.py:625
 msgid "Timeout while trying to get a kerberos ticket"
 msgstr ""
 
-#: lmn_smbclient/resources/js/directives/smbupload.directive.coffee:48
+#: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/resources/js/directives/smbupload.directive.coffee:48
 msgid "Uploaded "
 msgstr ""
 
-#: lmn_smbclient/resources/js/services/smbclient.service.es:17
+#: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/resources/js/services/smbclient.service.es:17
 msgid " moved!"
 msgstr ""
 
-#: lmn_smbclient/resources/js/services/smbclient.service.es:28
+#: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/resources/js/services/smbclient.service.es:28
 msgid " copied!"
 msgstr ""

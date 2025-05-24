@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-24 17:03+0200\n"
+"POT-Creation-Date: 2025-05-24 18:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,102 +17,102 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: lmn_wireguard/resources/partial/import.modal.html:46
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/import.modal.html:46
 msgid "Close"
 msgstr ""
 
-#: lmn_wireguard/resources/partial/index.html:18
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/index.html:18
 msgid "Configuration"
 msgstr ""
 
-#: lmn_wireguard/resources/partial/index.html:20
-#: lmn_wireguard/resources/js/controllers/index.controller.es:51
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/index.html:20
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:51
 msgid "Delete"
 msgstr ""
 
-#: lmn_wireguard/resources/partial/index.html:13
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/index.html:13
 msgid "Endpoint"
 msgstr ""
 
-#: lmn_wireguard/resources/partial/index.html:10
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/index.html:10
 msgid "IP-Address"
 msgstr ""
 
-#: lmn_wireguard/resources/partial/import.modal.html:44
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/import.modal.html:44
 msgid "Import"
 msgstr ""
 
-#: lmn_wireguard/resources/partial/import.modal.html:45
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/import.modal.html:45
 msgid "Import + Delete"
 msgstr ""
 
-#: lmn_wireguard/resources/partial/import.modal.html:2
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/import.modal.html:2
 msgid "Import users"
 msgstr ""
 
-#: lmn_wireguard/resources/partial/index.html:14
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/index.html:14
 msgid "Last Handshake"
 msgstr ""
 
-#: lmn_wireguard/resources/partial/index.html:10
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/index.html:10
 msgid "Public-Key"
 msgstr ""
 
-#: lmn_wireguard/resources/partial/index.html:31
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/index.html:31
 msgid "Query status"
 msgstr ""
 
-#: lmn_wireguard/resources/partial/index.html:30
-#: lmn_wireguard/resources/js/controllers/index.controller.es:65
-#: lmn_wireguard/resources/js/controllers/index.controller.es:78
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/index.html:30
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:65
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:78
 msgid "Restart"
 msgstr ""
 
-#: lmn_wireguard/resources/partial/index.html:11
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/index.html:11
 msgid "Routes"
 msgstr ""
 
-#: lmn_wireguard/resources/partial/index.html:19
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/index.html:19
 msgid "Show QR-Code"
 msgstr ""
 
-#: lmn_wireguard/resources/js/controllers/index.controller.es:2
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:2
 msgid "Wireguard"
 msgstr ""
 
-#: lmn_wireguard/resources/js/controllers/index.controller.es:39
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:39
 msgid "Name"
 msgstr ""
 
-#: lmn_wireguard/resources/js/controllers/index.controller.es:41
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:41
 msgid "Created succesfully!"
 msgstr ""
 
-#: lmn_wireguard/resources/js/controllers/index.controller.es:50
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:50
 msgid "Do you really want to delete this peer?"
 msgstr ""
 
-#: lmn_wireguard/resources/js/controllers/index.controller.es:52
-#: lmn_wireguard/resources/js/controllers/index.controller.es:66
-#: lmn_wireguard/resources/js/controllers/index.controller.es:79
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:52
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:66
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:79
 msgid "Cancel"
 msgstr ""
 
-#: lmn_wireguard/resources/js/controllers/index.controller.es:55
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:55
 msgid "Deleted succesfully!"
 msgstr ""
 
-#: lmn_wireguard/resources/js/controllers/index.controller.es:64
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:64
 msgid ""
 "Do you really want to restart the wireguard server? All clients have to "
 "reconnected!"
 msgstr ""
 
-#: lmn_wireguard/resources/js/controllers/index.controller.es:69
-#: lmn_wireguard/resources/js/controllers/index.controller.es:82
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:69
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:82
 msgid "Restarted succesfully!"
 msgstr ""
 
-#: lmn_wireguard/resources/js/controllers/index.controller.es:77
+#: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:77
 msgid "The configuration has changed. Do you want to restart the server?"
 msgstr ""

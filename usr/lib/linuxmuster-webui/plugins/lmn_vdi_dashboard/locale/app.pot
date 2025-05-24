@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-24 18:18+0200\n"
+"POT-Creation-Date: 2025-05-24 18:46+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,27 +17,27 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: lmn_vdi_dashboard/resources/partial/index.html:14
-#: lmn_vdi_dashboard/resources/partial/index.html:30
+#: usr/lib/linuxmuster-webui/plugins/lmn_vdi_dashboard/resources/partial/index.html:14
+#: usr/lib/linuxmuster-webui/plugins/lmn_vdi_dashboard/resources/partial/index.html:30
 msgid "Available VMs:"
 msgstr ""
 
-#: lmn_vdi_dashboard/resources/partial/index.html:25
+#: usr/lib/linuxmuster-webui/plugins/lmn_vdi_dashboard/resources/partial/index.html:25
 msgid "No VMs avaliable!"
 msgstr ""
 
-#: lmn_vdi_dashboard/resources/partial/index.html:1
+#: usr/lib/linuxmuster-webui/plugins/lmn_vdi_dashboard/resources/partial/index.html:1
 msgid "VDI Desktops"
 msgstr ""
 
-#: lmn_vdi_dashboard/resources/partial/index.html:5
+#: usr/lib/linuxmuster-webui/plugins/lmn_vdi_dashboard/resources/partial/index.html:5
 msgid "VDI Groups"
 msgstr ""
 
-#: lmn_vdi_dashboard/main.py:30
+#: usr/lib/linuxmuster-webui/plugins/lmn_vdi_dashboard/main.py:30
 msgid "VDI Dashboard permission"
 msgstr ""
 
-#: lmn_vdi_dashboard/resources/js/controllers/index.controller.es:2
+#: usr/lib/linuxmuster-webui/plugins/lmn_vdi_dashboard/resources/js/controllers/index.controller.es:2
 msgid "Lmn_vdi_dashboard"
 msgstr ""

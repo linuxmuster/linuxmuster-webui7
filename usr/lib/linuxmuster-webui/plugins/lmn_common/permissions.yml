@@ -30,3 +30,7 @@ teacher:
 - 'filesystem:read: false'
 - 'filesystem:write: true'
 - 'sidebar:view:/view/dashboard: false'
+parent:
+- 'sidebar:view:/view/dashboard: false'
+staff:
+- 'sidebar:view:/view/dashboard: false'

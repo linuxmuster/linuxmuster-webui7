@@ -14,3 +14,11 @@ teacher:
 - 'lm:crontab:read: false'
 - 'lm:crontab:write: false'
 - 'sidebar:view:/view/lmn/crontab: false'
+parent:
+- 'lm:crontab:read: false'
+- 'lm:crontab:write: false'
+- 'sidebar:view:/view/lmn/crontab: false'
+staff:
+- 'lm:crontab:read: false'
+- 'lm:crontab:write: false'
+- 'sidebar:view:/view/lmn/crontab: false'

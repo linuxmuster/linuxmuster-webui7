@@ -6,3 +6,7 @@ student:
 - 'sidebar:view:/view/lmn/nextcloud: false'
 teacher:
 - 'sidebar:view:/view/lmn/nextcloud: false'
+parent:
+- 'sidebar:view:/view/lmn/nextcloud: false'
+staff:
+- 'sidebar:view:/view/lmn/nextcloud: false'

@@ -22,3 +22,15 @@ teacher:
 - 'lm:linbo:icons: false'
 - 'lm:linbo:images: false'
 - 'sidebar:view:/view/lmn/linbo4: false'
+parent:
+- 'lm:linbo:configs: false'
+- 'lm:linbo:examples: false'
+- 'lm:linbo:icons: false'
+- 'lm:linbo:images: false'
+- 'sidebar:view:/view/lmn/linbo4: false'
+staff:
+- 'lm:linbo:configs: false'
+- 'lm:linbo:examples: false'
+- 'lm:linbo:icons: false'
+- 'lm:linbo:images: false'
+- 'sidebar:view:/view/lmn/linbo4: false'

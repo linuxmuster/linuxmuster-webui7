@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-15 21:24+0200\n"
+"POT-Creation-Date: 2025-05-24 18:18+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,10 +17,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_nextcloud/resources/partial/index.html:4
+#: lmn_nextcloud/resources/partial/index.html:4
 msgid "URL not found or not valid! Please check config file."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_nextcloud/resources/js/controllers/index.controller.es:2
+#: lmn_nextcloud/resources/js/controllers/index.controller.es:2
 msgid "Nextcloud"
 msgstr ""

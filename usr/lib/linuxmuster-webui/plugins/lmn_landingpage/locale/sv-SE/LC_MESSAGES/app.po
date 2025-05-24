@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-15 21:21+0200\n"
+"POT-Creation-Date: 2025-05-24 17:03+0200\n"
 "PO-Revision-Date: 2023-11-30 22:10\n"
 "Last-Translator: \n"
 "Language-Team: Swedish\n"
@@ -17,165 +17,165 @@ msgstr ""
 "X-Crowdin-File: /2.0/lmn_landingpage.po\n"
 "X-Crowdin-File-ID: 124\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:31
+#: lmn_landingpage/resources/partial/index.html:31
 msgid "Account Information"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:22
+#: lmn_landingpage/resources/partial/index.html:22
 msgid "But keep in mind:"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:88
+#: lmn_landingpage/resources/partial/index.html:89
 msgid "Change my data"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:39
+#: lmn_landingpage/resources/partial/index.html:39
 msgid "Change password"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/customFields.modal.html:73
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/webappqr.modal.html:36
+#: lmn_landingpage/resources/partial/customFields.modal.html:73
+#: lmn_landingpage/resources/partial/webappqr.modal.html:36
 msgid "Close"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:64
+#: lmn_landingpage/resources/partial/index.html:65
 msgid "Cloudquota Calculated in MB:"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/webappqr.modal.html:24
+#: lmn_landingpage/resources/partial/webappqr.modal.html:24
 msgid "Easy setup"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:152
+#: lmn_landingpage/resources/partial/index.html:153
 msgid "Endpoint"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/webappqr.modal.html:26
+#: lmn_landingpage/resources/partial/webappqr.modal.html:26
 msgid "For easy setup, please scan your personal code in the app:<br>"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:110
+#: lmn_landingpage/resources/partial/index.html:111
 msgid "Groups"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:15
+#: lmn_landingpage/resources/partial/index.html:15
 msgid "Hello {{user.givenName}} {{user.sn}},"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:153
+#: lmn_landingpage/resources/partial/index.html:154
 msgid "Last Handshake"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:35
+#: lmn_landingpage/resources/partial/index.html:35
 msgid "Mail:"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:65
+#: lmn_landingpage/resources/partial/index.html:66
 msgid "Mailquota Calculated in MB:"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:95
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/webappqr.modal.html:2
+#: lmn_landingpage/resources/partial/index.html:96
+#: lmn_landingpage/resources/partial/webappqr.modal.html:2
 msgid "Mobile access"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:71
+#: lmn_landingpage/resources/partial/index.html:72
 msgid "My informations"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:34
+#: lmn_landingpage/resources/partial/index.html:34
 msgid "Name:"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/customFields.modal.html:13
+#: lmn_landingpage/resources/partial/customFields.modal.html:13
 msgid "Properties"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:47
+#: lmn_landingpage/resources/partial/index.html:47
 msgid "Quotas"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:37
+#: lmn_landingpage/resources/partial/index.html:37
 msgid "Role:"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:36
+#: lmn_landingpage/resources/partial/index.html:36
 msgid "School:"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/webappqr.modal.html:7
+#: lmn_landingpage/resources/partial/webappqr.modal.html:7
 msgid "Setup guide for iOS"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/webappqr.modal.html:8
+#: lmn_landingpage/resources/partial/webappqr.modal.html:8
 msgid ""
 "To set up mobile access to the school server from iOS based devices, please "
 "proceed as follows:"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:21
+#: lmn_landingpage/resources/partial/index.html:21
 msgid "Use the sidebar to navigate through the options."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/customFields.modal.html:3
+#: lmn_landingpage/resources/partial/customFields.modal.html:3
 msgid "User Details"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:7
+#: lmn_landingpage/resources/partial/index.html:7
 msgid "Welcome to Linuxmuster.net version 7.3 !"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:124
+#: lmn_landingpage/resources/partial/index.html:125
 msgid "Wireguard VPN"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:23
+#: lmn_landingpage/resources/partial/index.html:23
 msgid "With great power comes great responsibility!"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:127
+#: lmn_landingpage/resources/partial/index.html:128
 msgid ""
 "You can access the school network by using wireguard. You can download the "
 "client for the\n"
 "                        following operating systems:"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:98
+#: lmn_landingpage/resources/partial/index.html:99
 msgid ""
 "You can access the school server from many mobile devices.\n"
 "                        Select your operating system to see how it works."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/webappqr.modal.html:21
+#: lmn_landingpage/resources/partial/webappqr.modal.html:21
 msgid "Your password"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:18
+#: lmn_landingpage/resources/partial/index.html:18
 msgid ""
 "use the sidebar to navigate through the options. You can start by using the "
 "Enroll module to subscribe to your classes."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:7
+#: lmn_landingpage/resources/js/controllers/index.controller.coffee:7
 msgid "Home"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:29
+#: lmn_landingpage/resources/js/controllers/index.controller.coffee:32
 msgid "NO LIMIT"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:127
+#: lmn_landingpage/resources/js/controllers/index.controller.coffee:130
 msgid "Class"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:129
+#: lmn_landingpage/resources/js/controllers/index.controller.coffee:132
 msgid "Teachers"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:131
+#: lmn_landingpage/resources/js/controllers/index.controller.coffee:134
 msgid "Printers"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/js/controllers/index.controller.coffee:133
+#: lmn_landingpage/resources/js/controllers/index.controller.coffee:136
 msgid "Project"
 msgstr ""

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-26 21:41+0200\n"
+"POT-Creation-Date: 2025-05-24 17:03+0200\n"
 "PO-Revision-Date: 2023-11-30 22:10\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
@@ -17,15 +17,14 @@ msgstr ""
 "X-Crowdin-File: /2.0/lmn_links.po\n"
 "X-Crowdin-File-ID: 221\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_links/resources/partial/index.html:2
+#: lmn_links/resources/partial/index.html:2
 msgid "Currently no links defined!"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_links/resources/partial/index.html:10
+#: lmn_links/resources/partial/index.html:10
 msgid "Open"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_links/resources/js/controllers/index.controller.es:2
+#: lmn_links/resources/js/controllers/index.controller.es:2
 msgid "Links"
 msgstr ""
-

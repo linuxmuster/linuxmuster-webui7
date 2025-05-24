@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-15 21:21+0200\n"
+"POT-Creation-Date: 2025-05-24 17:03+0200\n"
 "PO-Revision-Date: 2024-10-14 09:24\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
@@ -17,526 +17,526 @@ msgstr ""
 "X-Crowdin-File: /2.0/lmn_linbo4.po\n"
 "X-Crowdin-File-ID: 225\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/image.modal.html:7
+#: lmn_linbo4/resources/partial/image.modal.html:7
 msgid "- Differential image"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/image.backups.modal.html:10
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/index.html:13
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/index.html:73
+#: lmn_linbo4/resources/partial/image.backups.modal.html:10
+#: lmn_linbo4/resources/partial/index.html:13
+#: lmn_linbo4/resources/partial/index.html:73
 msgid "Actions"
 msgstr "작업"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:220
+#: lmn_linbo4/resources/partial/config.modal.html:220
 msgid "Activated"
 msgstr "활성화됨"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:110
+#: lmn_linbo4/resources/partial/config.modal.html:110
 msgid "Add <span class=\"caret\"></span>"
 msgstr "<span class=\"caret\"></span> 추가"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:403
+#: lmn_linbo4/resources/partial/config.modal.html:403
 msgid "Add new VMID"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:153
+#: lmn_linbo4/resources/partial/partition.modal.html:153
 msgid "Additional kernel parameters"
 msgstr "추가 커널 매개 변수"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:178
+#: lmn_linbo4/resources/partial/partition.modal.html:178
 msgid "Advanced"
 msgstr "고급"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:350
+#: lmn_linbo4/resources/partial/config.modal.html:350
 msgid "Audio"
 msgstr "오디오"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:58
+#: lmn_linbo4/resources/partial/config.modal.html:58
 msgid "Auto partition formatting"
 msgstr "자동 분할 서식 설정"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:55
+#: lmn_linbo4/resources/partial/config.modal.html:55
 msgid "Auto partition recovery"
 msgstr "자동 분할 복구"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:61
+#: lmn_linbo4/resources/partial/config.modal.html:61
 msgid "Auto update cache"
 msgstr "자동 업데이트 캐시"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:133
+#: lmn_linbo4/resources/partial/partition.modal.html:133
 msgid "Autostart timeout"
 msgstr "자동시작 시간초과"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:95
+#: lmn_linbo4/resources/partial/config.modal.html:95
 msgid "Background color"
 msgstr "배경 색상"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/image.backups.modal.html:34
+#: lmn_linbo4/resources/partial/image.backups.modal.html:34
 msgid "Backup"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/image.backups.modal.html:2
+#: lmn_linbo4/resources/partial/image.backups.modal.html:2
 msgid "Backups"
 msgstr "백업"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/image.backups.modal.html:14
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:102
+#: lmn_linbo4/resources/partial/image.backups.modal.html:14
+#: lmn_linbo4/resources/partial/partition.modal.html:102
 msgid "Base image"
 msgstr "기초 이미지"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:237
+#: lmn_linbo4/resources/partial/config.modal.html:237
 msgid "Bios Type"
 msgstr "기본 입출력 시스템 타입"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:262
+#: lmn_linbo4/resources/partial/config.modal.html:262
 msgid "Boot"
 msgstr "부팅"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:122
+#: lmn_linbo4/resources/partial/partition.modal.html:122
 msgid "Boot buttons"
 msgstr "부팅 버튼"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:203
+#: lmn_linbo4/resources/partial/config.modal.html:203
 msgid "Cache"
 msgstr "캐시"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/accept.modal.html:9
+#: lmn_linbo4/resources/partial/accept.modal.html:9
 msgid "Cancel"
 msgstr "취소"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/apply.modal.html:11
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:476
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/image.backups.modal.html:66
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/image.modal.html:86
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:179
+#: lmn_linbo4/resources/partial/apply.modal.html:11
+#: lmn_linbo4/resources/partial/config.modal.html:476
+#: lmn_linbo4/resources/partial/image.backups.modal.html:66
+#: lmn_linbo4/resources/partial/image.modal.html:86
+#: lmn_linbo4/resources/partial/partition.modal.html:179
 msgid "Close"
 msgstr "닫기"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/image.backups.modal.html:9
+#: lmn_linbo4/resources/partial/image.backups.modal.html:9
 msgid "Comment"
 msgstr "설명"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:308
+#: lmn_linbo4/resources/partial/config.modal.html:308
 msgid "Cores"
 msgstr "기본형"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/index.html:53
+#: lmn_linbo4/resources/partial/index.html:53
 msgid "Create"
 msgstr "만들기"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:197
+#: lmn_linbo4/resources/partial/config.modal.html:197
 msgid "Data"
 msgstr "데이터"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:70
+#: lmn_linbo4/resources/partial/partition.modal.html:70
 msgid "Default"
 msgstr "기본값"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/index.html:124
+#: lmn_linbo4/resources/partial/index.html:124
 msgid "Delete selected images"
 msgstr "선택된 이미지를 삭제"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/image.modal.html:16
+#: lmn_linbo4/resources/partial/image.modal.html:16
 msgid "Description"
 msgstr "설명"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/apply.modal.html:10
+#: lmn_linbo4/resources/partial/apply.modal.html:10
 msgid "Details"
 msgstr "상세 정보"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/index.html:71
+#: lmn_linbo4/resources/partial/index.html:71
 msgid "Differential image"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:319
+#: lmn_linbo4/resources/partial/config.modal.html:319
 msgid "Disk size"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:359
+#: lmn_linbo4/resources/partial/config.modal.html:359
 msgid "Display"
 msgstr "표시"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:74
+#: lmn_linbo4/resources/partial/config.modal.html:74
 msgid "Display client details by default"
 msgstr "클라이언트 상세 정보를 기본값으로 표시"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/index.html:45
+#: lmn_linbo4/resources/partial/index.html:45
 msgid "Download Linbo Boot"
 msgstr "Linbo Boot를 다운로드"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:38
+#: lmn_linbo4/resources/partial/config.modal.html:38
 msgid "Download type"
 msgstr "다운로드 유형"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:182
+#: lmn_linbo4/resources/partial/config.modal.html:182
 msgid "EFI"
 msgstr "EFI"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/index.html:56
+#: lmn_linbo4/resources/partial/index.html:56
 msgid "Empty"
 msgstr "비어 있음"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:88
+#: lmn_linbo4/resources/partial/config.modal.html:88
 msgid "English"
 msgstr "영어"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:463
+#: lmn_linbo4/resources/partial/config.modal.html:463
 msgid "Expert options"
 msgstr "고급 설정"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:200
+#: lmn_linbo4/resources/partial/config.modal.html:200
 msgid "Extended"
 msgstr "확장"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:33
+#: lmn_linbo4/resources/partial/partition.modal.html:33
 msgid "Filesystem"
 msgstr "파일 시스템"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:17
+#: lmn_linbo4/resources/partial/partition.modal.html:17
 msgid "Flags"
 msgstr "플래그(flag)"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:162
+#: lmn_linbo4/resources/partial/partition.modal.html:162
 msgid "Force Opsi setup"
 msgstr "Opsi 설정을 진행"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:89
+#: lmn_linbo4/resources/partial/config.modal.html:89
 msgid "French"
 msgstr "프랑스어"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:6
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/image.modal.html:13
+#: lmn_linbo4/resources/partial/config.modal.html:6
+#: lmn_linbo4/resources/partial/image.modal.html:13
 msgid "General"
 msgstr "일반"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:87
+#: lmn_linbo4/resources/partial/config.modal.html:87
 msgid "German"
 msgstr "독일어"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/index.html:11
+#: lmn_linbo4/resources/partial/index.html:11
 msgid "Group name"
 msgstr "그룹 이름"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/index.html:7
+#: lmn_linbo4/resources/partial/index.html:7
 msgid "Groups"
 msgstr "그룹"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:304
+#: lmn_linbo4/resources/partial/config.modal.html:304
 msgid "Hardware"
 msgstr "하드웨어"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/apply.modal.html:9
+#: lmn_linbo4/resources/partial/apply.modal.html:9
 msgid "Hide details"
 msgstr "세부 정보 숨기기"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:272
+#: lmn_linbo4/resources/partial/config.modal.html:272
 msgid "Hostname"
 msgstr "호스트이름"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:277
+#: lmn_linbo4/resources/partial/config.modal.html:277
 msgid "IP-Address"
 msgstr "IP 주소"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:80
+#: lmn_linbo4/resources/partial/partition.modal.html:80
 msgid "Icon"
 msgstr "아이콘"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/index.html:62
+#: lmn_linbo4/resources/partial/index.html:62
 msgid "Images"
 msgstr "이미지"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/index.html:48
+#: lmn_linbo4/resources/partial/index.html:48
 msgid "Import devices"
 msgstr "기기 추가"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/apply.modal.html:2
+#: lmn_linbo4/resources/partial/apply.modal.html:2
 msgid "Importing device"
 msgstr "기기 추가중"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/image.modal.html:20
+#: lmn_linbo4/resources/partial/image.modal.html:20
 msgid "Info"
 msgstr "정보"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:149
+#: lmn_linbo4/resources/partial/partition.modal.html:149
 msgid "Initrd"
 msgstr "Initrd"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:137
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:145
+#: lmn_linbo4/resources/partial/partition.modal.html:137
+#: lmn_linbo4/resources/partial/partition.modal.html:145
 msgid "Kernel"
 msgstr "커널"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:106
+#: lmn_linbo4/resources/partial/config.modal.html:106
 msgid "Kernel options"
 msgstr "커널 옵션"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:9
+#: lmn_linbo4/resources/partial/partition.modal.html:9
 msgid "Label"
 msgstr "라벨"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:83
+#: lmn_linbo4/resources/partial/config.modal.html:83
 msgid "Language"
 msgstr "언어"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:68
+#: lmn_linbo4/resources/partial/config.modal.html:68
 msgid "Linbo GUI customization"
 msgstr "Linbo GUI 사용자설정"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:283
+#: lmn_linbo4/resources/partial/config.modal.html:283
 msgid "MAC-Address"
 msgstr "MAC 주소"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:185
+#: lmn_linbo4/resources/partial/config.modal.html:185
 msgid "MSR"
 msgstr "MSR"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:426
+#: lmn_linbo4/resources/partial/config.modal.html:426
 msgid "Maxmimum VMs"
 msgstr "최대 VM"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:313
+#: lmn_linbo4/resources/partial/config.modal.html:313
 msgid "Memory"
 msgstr "메모리"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:415
+#: lmn_linbo4/resources/partial/config.modal.html:415
 msgid "Minimum VMs"
 msgstr "최소 VM"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/index.html:70
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:54
+#: lmn_linbo4/resources/partial/index.html:70
+#: lmn_linbo4/resources/partial/partition.modal.html:54
 msgid "Name"
 msgstr "이름"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/image.backups.modal.html:8
+#: lmn_linbo4/resources/partial/image.backups.modal.html:8
 msgid "Name / Size"
 msgstr "이름 / 크기"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:268
+#: lmn_linbo4/resources/partial/config.modal.html:268
 msgid "Network"
 msgstr "네트워크"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:288
+#: lmn_linbo4/resources/partial/config.modal.html:288
 msgid "Network-Bridge"
 msgstr "네트워크 브리지"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:213
+#: lmn_linbo4/resources/partial/config.modal.html:213
 msgid "New disk"
 msgstr "새 디스크"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:45
+#: lmn_linbo4/resources/partial/partition.modal.html:45
 msgid "OS"
 msgstr "운영 체제"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:246
+#: lmn_linbo4/resources/partial/config.modal.html:246
 msgid "OS-Type"
 msgstr "운영체제-종류"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:64
+#: lmn_linbo4/resources/partial/config.modal.html:64
 msgid "Only available for this school"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:166
+#: lmn_linbo4/resources/partial/partition.modal.html:166
 msgid "Options"
 msgstr "옵션"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:6
+#: lmn_linbo4/resources/partial/partition.modal.html:6
 msgid "Partition"
 msgstr "분할"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:22
+#: lmn_linbo4/resources/partial/partition.modal.html:22
 msgid "Partition type"
 msgstr "분할 유형"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:124
+#: lmn_linbo4/resources/partial/config.modal.html:124
 msgid "Partitions"
 msgstr "분할"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/image.modal.html:46
+#: lmn_linbo4/resources/partial/image.modal.html:46
 msgid "Postsync Script"
 msgstr "Postsync 스크립트"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/image.modal.html:63
+#: lmn_linbo4/resources/partial/image.modal.html:63
 msgid "Prestart Script"
 msgstr "Prestart 스크립트"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:420
+#: lmn_linbo4/resources/partial/config.modal.html:420
 msgid "Prestarted VMs"
 msgstr "먼저 시작된 VM들"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/image.modal.html:28
+#: lmn_linbo4/resources/partial/image.modal.html:28
 msgid "Registry patch"
 msgstr "레지스트리 패치"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/accept.modal.html:8
+#: lmn_linbo4/resources/partial/accept.modal.html:8
 msgid "Remove"
 msgstr "제거"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/accept.modal.html:5
+#: lmn_linbo4/resources/partial/accept.modal.html:5
 msgid "Remove Partition {{partition}}"
 msgstr "Partition {{partition}} 제거"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/accept.modal.html:2
+#: lmn_linbo4/resources/partial/accept.modal.html:2
 msgid "Remove Partition?"
 msgstr "파티션을 제거하시겠습니까?"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:178
+#: lmn_linbo4/resources/partial/config.modal.html:178
 msgid "Remove this disk"
 msgstr "이 디스크를 제거"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:391
+#: lmn_linbo4/resources/partial/config.modal.html:391
 msgid "Reserved Master VM-IDs"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:157
+#: lmn_linbo4/resources/partial/partition.modal.html:157
 msgid "Restore Opsi state"
 msgstr "Opsi 상태 복구"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:12
+#: lmn_linbo4/resources/partial/config.modal.html:12
 msgid "Root logout timeout"
 msgstr "루트 로그아웃 시간초과"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:330
+#: lmn_linbo4/resources/partial/config.modal.html:330
 msgid "SCSI Hardware"
 msgstr "SCSI 하드웨어"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:474
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/image.modal.html:85
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:177
+#: lmn_linbo4/resources/partial/config.modal.html:474
+#: lmn_linbo4/resources/partial/image.modal.html:85
+#: lmn_linbo4/resources/partial/partition.modal.html:177
 msgid "Save"
 msgstr "저장"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:228
+#: lmn_linbo4/resources/partial/config.modal.html:228
 msgid "Settings"
 msgstr "설정"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/image.modal.html:24
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:13
+#: lmn_linbo4/resources/partial/image.modal.html:24
+#: lmn_linbo4/resources/partial/partition.modal.html:13
 msgid "Size"
 msgstr "크기"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:373
+#: lmn_linbo4/resources/partial/config.modal.html:373
 msgid "Spice enhancements"
 msgstr "Spice 강화"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:52
+#: lmn_linbo4/resources/partial/config.modal.html:52
 msgid "Start options"
 msgstr "설정 시작"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/image.backups.modal.html:7
+#: lmn_linbo4/resources/partial/image.backups.modal.html:7
 msgid "Status"
 msgstr "상태"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:324
+#: lmn_linbo4/resources/partial/config.modal.html:324
 msgid "Storage"
 msgstr "저장소"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:194
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:301
+#: lmn_linbo4/resources/partial/config.modal.html:194
+#: lmn_linbo4/resources/js/controllers/index.controller.coffee:301
 msgid "Swap"
 msgstr "전환"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:27
+#: lmn_linbo4/resources/partial/config.modal.html:27
 msgid "System type"
 msgstr "시스템 타입"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:97
+#: lmn_linbo4/resources/partial/config.modal.html:97
 msgid "The color of the foreground will be adjusted automatically"
 msgstr "Foregound의 색깔은 자동으로 적용될 것입니다."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:48
+#: lmn_linbo4/resources/partial/partition.modal.html:48
 msgid "The icon format used here is png and you should change this to svg."
 msgstr "여기 사용하신 아이콘 포멧은 png이고 이것을 svg로 저장해야 합니다."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/index.html:64
+#: lmn_linbo4/resources/partial/index.html:64
 msgid "There's no image on the server yet."
 msgstr "서버에 이미지가 아직 없습니다."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:444
+#: lmn_linbo4/resources/partial/config.modal.html:444
 msgid "Timeout building clone"
 msgstr "클론 빌딩 시간 초과"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:450
+#: lmn_linbo4/resources/partial/config.modal.html:450
 msgid "Timeout building master"
 msgstr "마스터 빌딩 시간 초과"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:439
+#: lmn_linbo4/resources/partial/config.modal.html:439
 msgid "Timeouts"
 msgstr "시간 초과"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:342
+#: lmn_linbo4/resources/partial/config.modal.html:342
 msgid "USB 0"
 msgstr "USB 0"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:71
+#: lmn_linbo4/resources/partial/config.modal.html:71
 msgid "Use minimal layout"
 msgstr "최소 배치를 사용"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/index.html:12
+#: lmn_linbo4/resources/partial/index.html:12
 msgid "Used images"
 msgstr "사용된 이미지들"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/index.html:72
+#: lmn_linbo4/resources/partial/index.html:72
 msgid "Used in group ..."
 msgstr "그룹에서 사용됨 ..."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:410
+#: lmn_linbo4/resources/partial/config.modal.html:410
 msgid "VDI Konfiguration"
 msgstr "VDI 컴퓨터구성"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:294
+#: lmn_linbo4/resources/partial/config.modal.html:294
 msgid "VLAN-Tag"
 msgstr "VLAN-태그"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:226
+#: lmn_linbo4/resources/partial/config.modal.html:226
 msgid "VM Template Settings"
 msgstr "VM 템플릿 설정"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:232
+#: lmn_linbo4/resources/partial/config.modal.html:232
 msgid "VM-Name"
 msgstr "VM-이름"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/partition.modal.html:60
+#: lmn_linbo4/resources/partial/partition.modal.html:60
 msgid "Version"
 msgstr "버전"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/partial/config.modal.html:216
+#: lmn_linbo4/resources/partial/config.modal.html:216
 msgid "Virtual Desktop (VDI)"
 msgstr "가상 데스크톱 (VDI)"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/main.py:15
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:532
+#: lmn_linbo4/main.py:15
+#: lmn_linbo4/resources/js/controllers/index.controller.coffee:532
 msgid "LINBO 4"
 msgstr "LINBO 4"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/main.py:30
+#: lmn_linbo4/main.py:30
 msgid "Read/write start.conf"
 msgstr "start.conf 읽기/쓰기"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/main.py:35
+#: lmn_linbo4/main.py:35
 msgid "Read/write images"
 msgstr "이미지 읽기/쓰기"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/main.py:40
+#: lmn_linbo4/main.py:40
 msgid "Read examples"
 msgstr "예시 읽기"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/main.py:45
+#: lmn_linbo4/main.py:45
 msgid "Read/write icons"
 msgstr "아이콘 읽기/쓰기"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:14
+#: lmn_linbo4/resources/js/controllers/index.controller.coffee:14
 msgid "Import complete"
 msgstr "불러오기 완료"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:16
+#: lmn_linbo4/resources/js/controllers/index.controller.coffee:16
 msgid "Import failed"
 msgstr "불러오기 실패"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:303
+#: lmn_linbo4/resources/js/controllers/index.controller.coffee:303
 msgid "LINBO Cache"
 msgstr "LINBO 캐시"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:546
+#: lmn_linbo4/resources/js/controllers/index.controller.coffee:546
 msgid ""
 "You should call an import devices process to apply the new changes, quit "
 "this page anyway ?"
@@ -544,55 +544,55 @@ msgstr ""
 "새로운 변경 사항들을 적용하려면 장치 불러오기 프로세스를 불러와야 하는데, 페"
 "이지를 그래도 종료하시겠습니까?"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:592
+#: lmn_linbo4/resources/js/controllers/index.controller.coffee:592
 msgid "A config file with this name already exists!"
 msgstr "중복 config 파일 이름입니다!"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:673
+#: lmn_linbo4/resources/js/controllers/index.controller.coffee:673
 msgid "saved"
 msgstr "저장 완료"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:676
+#: lmn_linbo4/resources/js/controllers/index.controller.coffee:676
 msgid "VDI config saved"
 msgstr "VDI config 저장 완료"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:681
+#: lmn_linbo4/resources/js/controllers/index.controller.coffee:681
 msgid "Restarting multicast and torrent services, please wait ..."
 msgstr "멀티캐스트와 토렌트 서비스를 다시 시작하는중, 잠시만 기다려주세요..."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:683
+#: lmn_linbo4/resources/js/controllers/index.controller.coffee:683
 msgid "Multicast and torrent services restarted"
 msgstr "멀티캐스트 와 토렌트 서비스 재시작됨"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:687
+#: lmn_linbo4/resources/js/controllers/index.controller.coffee:687
 msgid ""
 "Failed to restart multicast and torrent services. Please see the log files"
 msgstr "멀티캐스트와 토렌트 서비스 재시작 실패. 로그 파일을 보십시오."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:695
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:721
+#: lmn_linbo4/resources/js/controllers/index.controller.coffee:695
+#: lmn_linbo4/resources/js/controllers/index.controller.coffee:721
 msgid "Failed to delete image :"
 msgstr "이미지 삭제를 실패 :"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:702
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:709
+#: lmn_linbo4/resources/js/controllers/index.controller.coffee:702
+#: lmn_linbo4/resources/js/controllers/index.controller.coffee:709
 msgid "Failed to delete backup :"
 msgstr "백업 삭제 실패 :"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:738
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:748
+#: lmn_linbo4/resources/js/controllers/index.controller.coffee:738
+#: lmn_linbo4/resources/js/controllers/index.controller.coffee:748
 msgid " is not a valid name for a linbo image."
 msgstr " 는 림보 이미지를 위한 유효한 이미지가 아닙니다."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:755
+#: lmn_linbo4/resources/js/controllers/index.controller.coffee:755
 msgid "Failed to restore backup! "
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:769
+#: lmn_linbo4/resources/js/controllers/index.controller.coffee:769
 msgid "Backup saved"
 msgstr "백업 저장됨"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_linbo4/resources/js/controllers/index.controller.coffee:773
+#: lmn_linbo4/resources/js/controllers/index.controller.coffee:773
 msgid "Saved"
 msgstr "저장 완료"
 

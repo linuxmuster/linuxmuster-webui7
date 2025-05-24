@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-25 17:48+0100\n"
+"POT-Creation-Date: 2025-05-24 17:03+0200\n"
 "PO-Revision-Date: 2024-11-18 14:21\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
@@ -17,328 +17,351 @@ msgstr ""
 "X-Crowdin-File: /2.0/lmn_groupmembership.po\n"
 "X-Crowdin-File-ID: 120\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:46
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:46
+#: lmn_groupmembership/resources/partial/index-boxes.html:46
+#: lmn_groupmembership/resources/partial/index.html:46
 msgid "<i class=\"fa fa-fw fa-flask\"></i> Projects"
 msgstr "<i class=\"fa fa-fw fa-flask\"></i> Projekte"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:40
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:40
+#: lmn_groupmembership/resources/partial/index-boxes.html:40
+#: lmn_groupmembership/resources/partial/index.html:40
 msgid "<i class=\"fa fa-fw fa-print\"></i> Printers"
 msgstr "<i class=\"fa fa-fw fa-print\"></i> Drucker"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:183
-msgid "<i class=\"fa fa-trash\"></i>\n"
+#: lmn_groupmembership/resources/partial/groupDetails.modal.html:183
+msgid ""
+"<i class=\"fa fa-trash\"></i>\n"
 "            Delete Project"
-msgstr "<i class=\"fa fa-trash\"></i>\n"
+msgstr ""
+"<i class=\"fa fa-trash\"></i>\n"
 "            Projekt löschen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:34
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:34
+#: lmn_groupmembership/resources/partial/index-boxes.html:34
+#: lmn_groupmembership/resources/partial/index.html:34
 msgid "<i class=\"fa fa-users\"></i> Classes"
 msgstr "<i class=\"fa fa-users\"></i> Klassen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:126
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:71
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:120
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:69
+#: lmn_groupmembership/resources/partial/index-boxes.html:126
+#: lmn_groupmembership/resources/partial/index-boxes.html:71
+#: lmn_groupmembership/resources/partial/index.html:120
+#: lmn_groupmembership/resources/partial/index.html:69
 msgid "<i class=\"fas fa-undo\"></i>"
 msgstr "<i class=\"fa fa-undo\"></i>"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:155
+#: lmn_groupmembership/resources/partial/groupDetails.modal.html:155
 msgid "Add a whole group"
 msgstr "Ganze Gruppe hinzufügen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:129
+#: lmn_groupmembership/resources/partial/groupDetails.modal.html:129
 msgid "Add members and/or groups"
 msgstr "Mitglieder und/oder Gruppen hinzufügen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:188
+#: lmn_groupmembership/resources/partial/groupDetails.modal.html:188
 msgid "Add user or group"
 msgstr "Benutzer oder Gruppe hinzufügen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:64
+#: lmn_groupmembership/resources/partial/groupDetails.modal.html:64
 msgid "Admins"
 msgstr "Administratoren"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:172
+#: lmn_groupmembership/resources/partial/groupDetails.modal.html:172
 msgid "Apply"
 msgstr "Übernehmen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:175
+#: lmn_groupmembership/resources/partial/groupDetails.modal.html:175
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:83
+#: lmn_groupmembership/resources/partial/index.html:83
 msgid "Class"
 msgstr "Klasse"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:187
+#: lmn_groupmembership/resources/partial/groupDetails.modal.html:187
 msgid "Close"
 msgstr "Schließen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:20
+#: lmn_groupmembership/resources/partial/groupDetails.modal.html:20
 msgid "Creationdate:"
 msgstr "Erstellungsdatum:"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:11
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:11
+#: lmn_groupmembership/resources/partial/index-boxes.html:11
+#: lmn_groupmembership/resources/partial/index.html:11
 msgid "Do it now"
 msgstr "Jetzt ausführen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:160
+#: lmn_groupmembership/resources/partial/groupDetails.modal.html:160
 msgid "Group"
 msgstr "Gruppe"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:58
+#: lmn_groupmembership/resources/partial/groupDetails.modal.html:58
 msgid "Group Admins:"
 msgstr "Gruppenadministratoren:"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:3
+#: lmn_groupmembership/resources/partial/groupDetails.modal.html:3
 msgid "Group Details"
 msgstr "Gruppendetails"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:93
+#: lmn_groupmembership/resources/partial/groupDetails.modal.html:93
 msgid "Group Members:"
 msgstr "Gruppenmitglieder:"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:114
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:76
+#: lmn_groupmembership/resources/partial/groupDetails.modal.html:114
+#: lmn_groupmembership/resources/partial/groupDetails.modal.html:76
 msgid "Groups"
 msgstr "Gruppen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:42
+#: lmn_groupmembership/resources/partial/groupDetails.modal.html:42
 msgid "Hidden:"
 msgstr "Nicht anzeigen:"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:138
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:82
+#: lmn_groupmembership/resources/partial/index-boxes.html:138
+#: lmn_groupmembership/resources/partial/index-boxes.html:82
 msgid "Join"
 msgstr "Beitreten"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:36
+#: lmn_groupmembership/resources/partial/groupDetails.modal.html:36
 msgid "Joinable:"
 msgstr "Beitretbar:"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:139
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:83
+#: lmn_groupmembership/resources/partial/index-boxes.html:139
+#: lmn_groupmembership/resources/partial/index-boxes.html:83
 msgid "Joined"
 msgstr "Beigetreten"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:48
+#: lmn_groupmembership/resources/partial/groupDetails.modal.html:48
 msgid "Maillist:"
 msgstr "Verteiler:"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:99
+#: lmn_groupmembership/resources/partial/groupDetails.modal.html:99
 msgid "Members"
 msgstr "Mitglieder"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:23
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:23
+#: lmn_groupmembership/resources/partial/index-boxes.html:23
+#: lmn_groupmembership/resources/partial/index.html:23
 msgid "New Project"
 msgstr "Neues Projekt"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:75
+#: lmn_groupmembership/resources/partial/groupDetails.modal.html:75
 msgid "No admin"
 msgstr "Kein Admin"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:124
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:86
+#: lmn_groupmembership/resources/partial/groupDetails.modal.html:124
+#: lmn_groupmembership/resources/partial/groupDetails.modal.html:86
 msgid "No group"
 msgstr "Keine Gruppe"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:113
+#: lmn_groupmembership/resources/partial/groupDetails.modal.html:113
 msgid "No member"
 msgstr "Keine Mitglieder"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:132
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:146
+#: lmn_groupmembership/resources/partial/groupDetails.modal.html:132
+#: lmn_groupmembership/resources/partial/groupDetails.modal.html:146
 msgid "No results found ..."
 msgstr "Keine Ergebnisse gefunden ..."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:27
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:27
+#: lmn_groupmembership/resources/partial/index-boxes.html:27
+#: lmn_groupmembership/resources/partial/index.html:27
 msgid "Objectsfilter"
 msgstr "Objektfilter"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:102
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:114
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:108
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:95
+#: lmn_groupmembership/resources/partial/index-boxes.html:102
+#: lmn_groupmembership/resources/partial/index-boxes.html:114
+#: lmn_groupmembership/resources/partial/index.html:108
+#: lmn_groupmembership/resources/partial/index.html:95
 msgid "Printer"
 msgstr "Drucker"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:127
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:121
+#: lmn_groupmembership/resources/partial/index-boxes.html:127
+#: lmn_groupmembership/resources/partial/index.html:121
 msgid "Projects"
 msgstr "Projekte"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:17
+#: lmn_groupmembership/resources/partial/groupDetails.modal.html:17
 msgid "Properties"
 msgstr "Eigenschaften"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:72
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:70
+#: lmn_groupmembership/resources/partial/index-boxes.html:72
+#: lmn_groupmembership/resources/partial/index.html:70
 msgid "Schoolclasses"
 msgstr "Schulklassen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:28
+#: lmn_groupmembership/resources/partial/groupDetails.modal.html:28
 msgid "Schoolname:"
 msgstr "Schulname:"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:135
+#: lmn_groupmembership/resources/partial/groupDetails.modal.html:135
 msgid "Search for a teacher"
 msgstr "Suche nach einem Lehrer"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:149
+#: lmn_groupmembership/resources/partial/groupDetails.modal.html:149
 msgid "Search for an user"
 msgstr "Nach einem Benutzer suchen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:152
+#: lmn_groupmembership/resources/partial/groupDetails.modal.html:152
 msgid "Select a student in a class"
 msgstr "Einen Schüler aus einer Klasse auswählen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:32
+#: lmn_groupmembership/resources/partial/groupDetails.modal.html:32
 msgid "Sophomorix Status:"
 msgstr "Sophomorix-Status:"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:106
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:100
-msgid "There are no printers configured yet. Ask your administrator to configure one."
-msgstr "Es sind noch keine Drucker konfiguriert. Bitten Sie Ihren Administrator, einen zu konfigurieren."
+#: lmn_groupmembership/resources/partial/index-boxes.html:106
+#: lmn_groupmembership/resources/partial/index.html:100
+msgid ""
+"There are no printers configured yet. Ask your administrator to configure "
+"one."
+msgstr ""
+"Es sind noch keine Drucker konfiguriert. Bitten Sie Ihren Administrator, "
+"einen zu konfigurieren."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:131
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:126
-msgid "There are no projects yet. You can create a new project using the menu bar."
-msgstr "Es gibt noch keine Projekte. Sie können über die Menüleiste ein neues erstellen."
+#: lmn_groupmembership/resources/partial/index-boxes.html:131
+#: lmn_groupmembership/resources/partial/index.html:126
+msgid ""
+"There are no projects yet. You can create a new project using the menu bar."
+msgstr ""
+"Es gibt noch keine Projekte. Sie können über die Menüleiste ein neues "
+"erstellen."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:76
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:75
-msgid "There are no schoolclasses available. Ask the administrator to import students"
-msgstr "Es gibt keine Schulklassen. Bitten Sie den Administrator, Schüler zu importieren"
+#: lmn_groupmembership/resources/partial/index-boxes.html:76
+#: lmn_groupmembership/resources/partial/index.html:75
+msgid ""
+"There are no schoolclasses available. Ask the administrator to import "
+"students"
+msgstr ""
+"Es gibt keine Schulklassen. Bitten Sie den Administrator, Schüler zu "
+"importieren"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:8
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index.html:8
-msgid "These changes can only take effect if the session is renewed, otherwise it will be active after the next\n"
+#: lmn_groupmembership/resources/partial/index-boxes.html:8
+#: lmn_groupmembership/resources/partial/index.html:8
+msgid ""
+"These changes can only take effect if the session is renewed, otherwise it "
+"will be active after the next\n"
 "        logout/login.\n"
-"        <a class=\"btn btn-default\" ng:click=\"refresh_krbcc()\" translate=\"\">Do it now</a>"
-msgstr "Diese Änderungen können nur wirksam werden, wenn die Sitzung verlängert wird, andernfalls wird es nach dem nächsten\n"
+"        <a class=\"btn btn-default\" ng:click=\"refresh_krbcc()\" "
+"translate=\"\">Do it now</a>"
+msgstr ""
+"Diese Änderungen können nur wirksam werden, wenn die Sitzung verlängert "
+"wird, andernfalls wird es nach dem nächsten\n"
 "        Logout/Login aktiv sein.\n"
-"        <a class=\"btn btn-default\" ng:click=\"refresh_krbcc()\" translate=\"\">Jetzt ausführen</a>"
+"        <a class=\"btn btn-default\" ng:click=\"refresh_krbcc()\" "
+"translate=\"\">Jetzt ausführen</a>"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:139
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:158
+#: lmn_groupmembership/resources/partial/groupDetails.modal.html:139
+#: lmn_groupmembership/resources/partial/groupDetails.modal.html:158
 msgid "To add"
 msgstr "Hinzufügen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:24
+#: lmn_groupmembership/resources/partial/groupDetails.modal.html:24
 msgid "Type:"
 msgstr "Typ:"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:141
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:163
+#: lmn_groupmembership/resources/partial/groupDetails.modal.html:141
+#: lmn_groupmembership/resources/partial/groupDetails.modal.html:163
 msgid "User"
 msgstr "Benutzer"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:60
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:95
+#: lmn_groupmembership/resources/partial/groupDetails.modal.html:60
+#: lmn_groupmembership/resources/partial/groupDetails.modal.html:95
 msgid "group(s)."
 msgstr "Gruppe(n)."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:59
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:94
+#: lmn_groupmembership/resources/partial/groupDetails.modal.html:59
+#: lmn_groupmembership/resources/partial/groupDetails.modal.html:94
 msgid "user(s) and"
 msgstr "Benutzer und"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:91
+#: lmn_groupmembership/resources/partial/index-boxes.html:91
 msgid "{{classe.members.length}} student(s)"
 msgstr "{{classe.members.length}} Schüler"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:148
+#: lmn_groupmembership/resources/partial/index-boxes.html:148
 msgid "{{project.adminsCount}} admin(s)"
 msgstr "{{project.adminsCount}} Administrator(en)"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:151
+#: lmn_groupmembership/resources/partial/index-boxes.html:151
 msgid "{{project.membersCount}} member(s)"
 msgstr "{{project.membersCount}} Mitglied(er)"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/main.py:15
+#: lmn_groupmembership/main.py:15
 msgid "Enroll"
 msgstr "Einschreiben"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/main.py:31
+#: lmn_groupmembership/main.py:31
 msgid "Edit Groupmemberships"
 msgstr "Gruppenmitgliedschaft bearbeiten"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/main.py:36
+#: lmn_groupmembership/main.py:36
 msgid "Edit Groups"
 msgstr "Gruppen bearbeiten"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:10
+#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:10
 msgid "Enrolle"
 msgstr "Einschreiben"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:28
+#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:28
 msgid "Groupname"
 msgstr "Gruppenname"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:32
+#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:32
 msgid "Membership"
 msgstr "Mitgliedschaft"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:95
+#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:95
 msgid "Project Name"
 msgstr "Projektname"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:107
+#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:107
 msgid "Project Created"
 msgstr "Projekt erstellt"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:112
+#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:112
 msgid "Something unusual happened"
 msgstr "Es ist ein Problem aufgetreten"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:131
-msgid "Are you sure to reset all admin memberships for this? This is actually only necessary to start a new empty school year. This cannot be undone!"
-msgstr "Sind Sie sicher, dass Sie alle Administrator-Mitgliedschaften zurücksetzen wollen? Dies ist eigentlich nur notwendig, um ein neues leeres Schuljahr zu starten. Das kann nicht rückgängig gemacht werden!"
+#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:131
+msgid ""
+"Are you sure to reset all admin memberships for this? This is actually only "
+"necessary to start a new empty school year. This cannot be undone!"
+msgstr ""
+"Sind Sie sicher, dass Sie alle Administrator-Mitgliedschaften zurücksetzen "
+"wollen? Dies ist eigentlich nur notwendig, um ein neues leeres Schuljahr zu "
+"starten. Das kann nicht rückgängig gemacht werden!"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:144
+#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:144
 msgid "Admin membership reset"
 msgstr "Administratormitgliedschaft zurücksetzen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:165
+#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:165
 msgid "Hide"
 msgstr "Ausblenden"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:166
+#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:166
 msgid "Show"
 msgstr "Anzeigen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:211
+#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:211
 msgid "Move to admin group"
 msgstr "Zur Admin-Gruppe verschieben"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:212
+#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:212
 msgid "Remove from admin group"
 msgstr "Von der Admin-Gruppe entfernen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:213
+#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:213
 msgid "Remove"
 msgstr "Entfernen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:250
+#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:250
 msgid "Can not read properties of this project."
 msgstr "Eigenschaften dieses Projekts können nicht gelesen werden."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:513
+#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:513
 msgid "Type a name or login"
 msgstr "Name oder Login eingeben"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:514
+#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:514
 msgid "Type the class, e.g. 10a"
 msgstr "Geben Sie die Klasse ein, z.B. 10a"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/js/controllers/index.controller.coffee:515
+#: lmn_groupmembership/resources/js/controllers/index.controller.coffee:515
 msgid "Type the group name, e.g. p_wifi"
 msgstr "Geben Sie den Gruppennamen ein, z.B. p_wifi"
-

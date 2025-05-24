@@ -22,7 +22,7 @@ create_linuxmuster_venv()
 
 migrate_to_venv()
 {
-    # Checking if Ajenti is already installed in a venv
+    # Checking if the linuxmuster's venv  is already installed
     if [ -f /opt/linuxmuster/bin/activate ] ; then
       return
     fi

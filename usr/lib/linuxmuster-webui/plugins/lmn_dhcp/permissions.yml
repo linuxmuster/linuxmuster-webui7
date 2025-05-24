@@ -6,3 +6,7 @@ student:
 - 'sidebar:view:/view/lmn/dhcp: false'
 teacher:
 - 'sidebar:view:/view/lmn/dhcp: false'
+parent:
+- 'sidebar:view:/view/lmn/dhcp: false'
+staff:
+- 'sidebar:view:/view/lmn/dhcp: false'

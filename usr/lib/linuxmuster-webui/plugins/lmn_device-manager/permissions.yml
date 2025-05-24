@@ -14,3 +14,11 @@ student:
     - 'sidebar:view:/view/lmn/device-manager: false'
     - 'lm:device-manager:read: false'
     - 'lm:device-manager:modify: false'
+staff:
+    - 'sidebar:view:/view/lmn/device-manager: false'
+    - 'lm:device-manager:read: false'
+    - 'lm:device-manager:modify: false'
+parent:
+    - 'sidebar:view:/view/lmn/device-manager: false'
+    - 'lm:device-manager:read: false'
+    - 'lm:device-manager:modify: false'

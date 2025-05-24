@@ -7,3 +7,7 @@ student:
 teacher:
 - 'lmn:oldsession:trans: true'
 - 'sidebar:view:/view/lmn/oldsession: true'
+parent:
+- 'sidebar:view:/view/lmn/oldsession: false'
+staff:
+- 'sidebar:view:/view/lmn/oldsession: false'

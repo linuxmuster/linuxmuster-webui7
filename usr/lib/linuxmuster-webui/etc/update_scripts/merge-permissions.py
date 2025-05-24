@@ -11,6 +11,8 @@ permissions = {
     'schooladministrator': [],
     'teacher': [],
     'student': []
+    'parent': []
+    'staff': []
 }
 
 for plugin in os.listdir(PLUGIN_PATH):

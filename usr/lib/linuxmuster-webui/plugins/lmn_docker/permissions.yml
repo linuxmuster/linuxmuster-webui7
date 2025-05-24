@@ -14,3 +14,11 @@ teacher:
 - 'lm:docker:change: false'
 - 'lm:docker:list: false'
 - 'sidebar:view:/view/lmn/docker: false'
+parent:
+- 'lm:docker:change: false'
+- 'lm:docker:list: false'
+- 'sidebar:view:/view/lmn/docker: false'
+staff:
+- 'lm:docker:change: false'
+- 'lm:docker:list: false'
+- 'sidebar:view:/view/lmn/docker: false'

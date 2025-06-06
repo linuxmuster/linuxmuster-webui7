@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-24 18:45+0200\n"
-"PO-Revision-Date: 2025-05-24 17:00\n"
+"PO-Revision-Date: 2025-06-06 07:33\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -418,7 +418,7 @@ msgstr "Für diesen Nutzer scheint der Prüfungsmodus aktiv zu sein. Beenden Sie
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:446
 msgid "File #{name} shared to #{user}!"
-msgstr "Datei #{name} geteilt an #{user}!"
+msgstr "Datei #{name} geteilt mit #{user}!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:519
 #: usr/lib/linuxmuster-webui/plugins/lmn_session_new/resources/js/controllers/session.controller.coffee:535

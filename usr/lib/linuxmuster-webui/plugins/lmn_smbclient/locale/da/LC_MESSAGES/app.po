@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-24 18:46+0200\n"
-"PO-Revision-Date: 2025-05-24 17:00\n"
+"POT-Creation-Date: 2025-06-06 09:32+0200\n"
+"PO-Revision-Date: 2025-06-06 07:33\n"
 "Last-Translator: \n"
 "Language-Team: Danish\n"
 "Language: da_DK\n"
@@ -21,11 +21,11 @@ msgstr ""
 msgid "Your quota is full, please free enough place in order to share these files again."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/views/lmnsmbclient.py:622
+#: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/views/lmnsmbclient.py:625
 msgid "Ticket successfully refreshed"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/views/lmnsmbclient.py:625
+#: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/views/lmnsmbclient.py:628
 msgid "Timeout while trying to get a kerberos ticket"
 msgstr ""
 

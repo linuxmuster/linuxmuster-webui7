@@ -1,3 +1,15 @@
+linuxmuster-webui7 (7.3.9) lmn73; urgency=medium
+
+  * Update translations (thanks Holger)
+  * Update all permissions for staff and parents
+  * [smbclient] Relative paths for zip archives
+  * [smbclient] Resolve last promise when deleting dir
+  * [landingpage] Handle null quota
+  * [session] Remove old session plugin  
+  * [session] Fix stop exam for extern teachers (thanks Rainer)
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Fri, 06 Jun 2025 09:34:49 +0200
+
 linuxmuster-webui7 (7.3.8) lmn73; urgency=medium
 
   * [user] Add support for staff management

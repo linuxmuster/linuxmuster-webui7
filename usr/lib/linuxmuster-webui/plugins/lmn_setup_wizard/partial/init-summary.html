@@ -81,8 +81,8 @@
                 <tr class="leaders">
                     <td class="summary">
                         <span translate >Firewall</span>
-                        <span ng-if="$ctrl.ini.skipfw == true" translate> Configuration will be <b>skipped </b></span>
-                        <span ng-if="$ctrl.ini.skipfw != true" translate> Firewall will be <b>configured!</b></span>
+                        <span ng-if="$ctrl.ini.skipfw == 'True'" translate> Configuration will be <b>skipped </b></span>
+                        <span ng-if="$ctrl.ini.skipfw != 'True'" translate> Firewall will be <b>configured!</b></span>
                     </td>
                     <td class="check"> </td>
                 </tr>

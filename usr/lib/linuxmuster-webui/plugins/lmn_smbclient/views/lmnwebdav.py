@@ -3,6 +3,7 @@ Tools to handle files, directories and uploads.
 """
 
 import os
+import logging
 import tempfile
 import locale
 from datetime import datetime
@@ -243,6 +244,7 @@ class Handler(HttpPlugin):
     def handle_api_webdav_options(self, http_context, path=''):
         http_context.add_header("Allow", "OPTIONS, GET, HEAD, PUT, DELETE, COPY, MOVE, MKCOL, PROPFIND")
         http_context.add_header("DAV", "1, 3")
+        http_context.respond_ok()
         return ''
 
     @options(r'/webdav')
@@ -356,7 +358,7 @@ class Handler(HttpPlugin):
             if 'STATUS_ACCESS_DENIED' in e.strerror:
                 http_context.respond_forbidden()
             else:
-                http_context.respond_not_found()
+                http_context.respond('405 Method Not Allowed')
         except InvalidParameter as e:
             http_context.respond_server_error()
 
@@ -482,14 +484,16 @@ class Handler(HttpPlugin):
             content = http_context.body if http_context.body else b''
             with smbclient.open_file(dst, mode='wb') as f:
                 f.write(content)
-            http_context.respond_ok()
+            http_context.respond("201 Created")
         except (ValueError, SMBOSError, NotFound) as e:
             if 'STATUS_ACCESS_DENIED' in e.strerror:
                 http_context.respond_forbidden()
             else:
-                http_context.respond_not_found()
+                http_context.respond("409 Conflict")
         except InvalidParameter as e:
             http_context.respond_server_error()
+        except Exception as e:
+            logging.error(str(e))
 
         return ''
 

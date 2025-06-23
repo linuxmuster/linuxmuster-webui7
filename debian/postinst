@@ -22,12 +22,13 @@ create_linuxmuster_venv()
 
 migrate_to_venv()
 {
+    /usr/bin/python3 -m pip uninstall -y aj ajenti-panel ajenti.plugin.ace ajenti.plugin.core ajenti.plugin.dashboard ajenti.plugin.filesystem ajenti.plugin.plugins ajenti.plugin.settings ajenti.plugin.session-list
+
     # Checking if the linuxmuster's venv  is already installed
     if [ -f /opt/linuxmuster/bin/activate ] ; then
       return
     fi
 
-    /usr/bin/python3 -m pip uninstall -y aj ajenti-panel ajenti.plugin.ace ajenti.plugin.core ajenti.plugin.dashboard ajenti.plugin.filesystem ajenti.plugin.plugins ajenti.plugin.settings ajenti.plugin.session-list
     create_linuxmuster_venv
 }
 

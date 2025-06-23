@@ -131,6 +131,9 @@ Updating linuxmuster-webui
             msg "Stop linuxmuster-webui"
             systemctl stop linuxmuster-webui
 
+            # Remove old lmn_session plugin
+            rm -rf /usr/lib/linuxmuster-webui/plugins/lmn_session/
+
             migrate_to_venv
             . /opt/linuxmuster/bin/activate
             PYTHON3=/opt/linuxmuster/bin/python3

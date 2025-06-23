@@ -1,3 +1,12 @@
+linuxmuster-webui7 (7.3.10) lmn73; urgency=medium
+
+  * Fix aj conflicts in postinst 
+  * [setup] Right message when skipping firewall setup
+  * [user] Check for BOM by CSV import
+  * [webdav] Consolidate responses codes
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 23 Jun 2025 11:45:07 +0200
+
 linuxmuster-webui7 (7.3.9) lmn73; urgency=medium
 
   * Update translations (thanks Holger)

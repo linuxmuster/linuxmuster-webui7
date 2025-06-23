@@ -16,6 +16,8 @@ from aj.plugins.lmn_common.api import lmn_getSophomorixValue
 from aj.plugins.lmn_common.lmnfile import LMNFile
 
 
+UTF8_BOM = b'\xef\xbb\xbf'
+
 @component(HttpPlugin)
 class Handler(HttpPlugin):
     def __init__(self, context):
@@ -287,6 +289,11 @@ class Handler(HttpPlugin):
         tmp_path = http_context.json_body()['tmp_path']
         # E.g. students.csv
         target = http_context.json_body()['userlist']
+
+        # Check BOM
+        with open(tmp_path, "rb") as f:
+            if f.read(3).startswith(UTF8_BOM):
+                return ["ERROR", "The uploaded CSV contains a BOM at start of the file, please convert it first as plain UTF-8."]
 
         command = ['sophomorix-newfile', tmp_path, '--name', target, '-jj']
         try:

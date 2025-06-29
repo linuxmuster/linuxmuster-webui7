@@ -3,13 +3,14 @@ APIs for the management of the sophomorix's users.
 """
 
 import os
+import subprocess
 
 from jadi import component
 from aj.api.http import get, post, patch, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
 from aj.auth import authorize, AuthenticationService
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue
-from linuxmusterTools.ldapconnector import LMNLdapReader
+from linuxmusterTools.ldapconnector import LMNLdapReader, LMNStudent
 
 
 @component(HttpPlugin)
@@ -168,14 +169,28 @@ class Handler(HttpPlugin):
 
         if user is None:
             students = self.lr.get('/roles/student', school=schoolname)
+
+            if not students:
+                return ["none"]
+
         else:
             student = user[1:]
-            students = [self.lr.get(f'/users/{student}', school=schoolname)]
+            student_data = self.lr.get(f'/users/{student}', school=schoolname)
 
-        if not students:
-            return ["none"]
-        elif not students[0]:
-            return ["none"]
+            if not student_data:
+                return ["none"]
+
+            cmd = f"lmntools-student -u {student} --get-parents".split()
+            parents = subprocess.check_output(cmd).decode().strip().split('\n')
+            if parents == ['No parent found!']:
+                student_data['parents'] = []
+            else:
+                student_data['parents'] = [
+                    {'cn':parent.split(';')[0], 'displayname':parent.split(';')[1]}
+                    for parent in parents
+                ]
+
+            students = [student_data]
 
         for student in students:
             if student['sophomorixStatus'] in self.userStatus.keys():

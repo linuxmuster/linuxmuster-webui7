@@ -1,3 +1,10 @@
+linuxmuster-webui7 (7.3.11) lmn73; urgency=medium
+
+  * [user] Display and handle parents in student's details (list, add, remove)
+  * [user] Fix parent view
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 30 Jun 2025 21:12:21 +0200
+
 linuxmuster-webui7 (7.3.10) lmn73; urgency=medium
 
   * Fix aj conflicts in postinst 

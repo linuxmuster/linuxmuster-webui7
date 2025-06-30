@@ -441,3 +441,47 @@ class Handler(HttpPlugin):
                              ]
         result = lmn_getSophomorixValue(sophomorixCommand, '')
         return result['COMMENT_EN']
+
+    @post(r'/api/lmn/sophomorixUsers/add-parent')
+    @authorize('lm:users:parents:write')
+    @endpoint(api=True)
+    def handle_api_users_add_parent(self, http_context):
+        """
+        Assign an existing parent to an existing student.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        """
+
+
+        student = http_context.json_body()['student']
+        parent = http_context.json_body()['parent']
+
+        cmd = f"lmntools-student -u {student} --add-parents {parent}".split()
+        try:
+            result = subprocess.check_output(cmd)
+            return ''
+        except subprocess.CalledProcessError as e:
+            return e.output.decode()
+
+    @post(r'/api/lmn/sophomorixUsers/remove-parent')
+    @authorize('lm:users:parents:write')
+    @endpoint(api=True)
+    def handle_api_users_remove_parent(self, http_context):
+        """
+        Unassign a parent of an existing student.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        """
+
+
+        student = http_context.json_body()['student']
+        parent = http_context.json_body()['parent']
+
+        cmd = f"lmntools-student -u {student} --remove-parents {parent}".split()
+        try:
+            result = subprocess.check_output(cmd)
+            return ''
+        except subprocess.CalledProcessError as e:
+            return e.output.decode()

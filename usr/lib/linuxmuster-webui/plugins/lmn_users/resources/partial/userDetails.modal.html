@@ -56,6 +56,24 @@
             </tr>
         </table>
         <table class="table" ng:show="custom_column">
+            <tr ng:show="userDetails.sophomorixRole == 'student'">
+                <td><b translate>Parents</b></td>
+                <td ng:show="userDetails['parents'].length == 0" translate>No parents found!</td>
+                <td ng:show="userDetails['parents'].length != 0"></td>
+                <td>
+                    <a ng:click="showParentSearch()" title="Add parent">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                </td>
+            </tr>
+            <tr ng:repeat="parent in userDetails['parents']" ng:show="userDetails.sophomorixRole == 'student'">
+                <td colspan="2" style="text-align:center;border-top:none;">{{parent.displayname}}</td>
+                <td style="border-top:none;">
+                    <a ng:click="removeParent(parent)" title="Remove parent">
+                        <i class="fa fa-trash-o"></i>
+                    </a>
+                </td>
+            </tr>
             <tr ng:show="proxyAddresses.show">
                 <td>
                     <b ng:show="proxyAddresses.title">{{proxyAddresses.title}}</b>
@@ -100,24 +118,6 @@
                     <a ng:click="addCustomMulti(n)">
                         <i class="fa fa-plus"></i>
                     </a>
-                </td>
-            </tr>
-            <tr>
-                <td><b translate>Parents</b></td>
-                <td ng:show="userDetails['parents'].length == 0" translate>No parents found!</td>
-                <td ng:show="userDetails['parents'].length != 0"></td>
-                <td>
-                     <button class="btn btn-default" ng:click="showParentSearch()" title="Show parent search">
-                        <i class="fa fa-plus"></i>
-                    </button>
-                </td>
-            </tr>
-            <tr ng:repeat="parent in userDetails['parents']">
-                <td colspan="2" style="text-align:center;border-top:none;padding:0;">{{parent.displayname}}</td>
-                <td style="border-top:none;">
-                    <button class="btn btn-default" ng:click="removeParent(parent)" title="Remove">
-                        <i class="fa fa-trash-o"></i>
-                    </button>
                 </td>
             </tr>
         </table>

@@ -2126,11 +2126,19 @@
     };
     $scope.findParents = function(q) {
       return $http.post("/api/lmn/ldap-search", {
-        role: 'parent',
+        role: '',
         login: q
       }).then(function(resp) {
-        console.log(resp.data);
-        return resp.data;
+        var entry, j, len, parents_list, ref;
+        parents_list = [];
+        ref = resp.data;
+        for (j = 0, len = ref.length; j < len; j++) {
+          entry = ref[j];
+          if (entry.role !== 'student' && entry.role.indexOf('administrator') < 0 && entry.role.indexOf('binduser') < 0) {
+            parents_list.push(entry);
+          }
+        }
+        return parents_list;
       });
     };
     $scope.addParent = function(parent) {

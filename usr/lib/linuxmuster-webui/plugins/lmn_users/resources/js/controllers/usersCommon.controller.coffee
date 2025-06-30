@@ -172,9 +172,12 @@ angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $rou
         $scope.ParentSearchVisible = true
 
     $scope.findParents = (q) ->
-        return $http.post("/api/lmn/ldap-search", {role:'parent', login:q}).then (resp) ->
-            console.log(resp.data)
-            return resp.data
+        return $http.post("/api/lmn/ldap-search", {role:'', login:q}).then (resp) ->
+            parents_list = []
+            for entry in resp.data
+                if entry.role != 'student' and entry.role.indexOf('administrator') < 0 and entry.role.indexOf('binduser') < 0
+                    parents_list.push(entry)
+            return parents_list
 
     $scope.addParent = (parent) ->
         $http.post("/api/lmn/sophomorixUsers/add-parent", {student: $scope.id, parent: parent.login}).then (resp) ->

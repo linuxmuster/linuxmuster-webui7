@@ -2104,6 +2104,21 @@
         }
       });
     };
+    $scope.removeParent = function(parent) {
+      return $http.post("/api/lmn/sophomorixUsers/remove-parent", {
+        student: $scope.id,
+        parent: parent.cn
+      }).then(function(resp) {
+        var position;
+        if (resp.data !== "") {
+          return notify.error(resp.data);
+        } else {
+          notify.success(gettext(`Parent ${parent.displayname} removed from ${$scope.id}`));
+          position = $scope.userDetails['parents'].indexOf(parent);
+          return $scope.userDetails['parents'].splice(position, 1);
+        }
+      });
+    };
     return $scope.close = function() {
       return $uibModalInstance.dismiss();
     };

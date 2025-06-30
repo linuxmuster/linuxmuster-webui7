@@ -104,16 +104,17 @@
             </tr>
             <tr>
                 <td><b translate>Parents</b></td>
-                <td>
-                    <div>&nbsp;</div>
-                    <span ng:show="userDetails['parents'].length == 0" translate>
-                        No parents found!
-                    </span>
-                    <div ng:repeat="parent in userDetails['parents']">
-                        {{parent.displayname}}
-                    </div>
-                </td>
+                <td ng:show="userDetails['parents'].length == 0" translate>No parents found!</td>
+                <td ng:show="userDetails['parents'].length != 0"></td>
                 <td></td>
+            </tr>
+            <tr ng:repeat="parent in userDetails['parents']">
+                <td colspan="2" style="text-align:center;border-top:none;padding:0;">{{parent.displayname}}</td>
+                <td style="text-align:center;border-top:none;padding:0;">
+                    <button class="btn btn-default" ng:click="removeParent(parent)" title="Remove">
+                        <i class="fa fa-trash-o"></i>
+                    </button>
+                </td>
             </tr>
         </table>
     </div>

@@ -156,9 +156,18 @@ angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $rou
             if resp
                 $scope.userDetails['proxyAddresses'].push(resp)
 
+    $scope.removeParent = (parent) ->
+        $http.post("/api/lmn/sophomorixUsers/remove-parent", {student: $scope.id, parent: parent.cn}).then (resp) ->
+            if resp.data != ""
+                notify.error(resp.data)
+            else
+                notify.success(gettext("Parent #{parent.displayname} removed from #{$scope.id}"))
+                position = $scope.userDetails['parents'].indexOf(parent)
+                $scope.userDetails['parents'].splice(position, 1)
+
+
     $scope.close = () ->
         $uibModalInstance.dismiss()
-
 
 
 angular.module('lmn.users').controller 'LMUsersSortListModalController', ($scope, $window, $http, $uibModalInstance, messagebox, notify, $uibModal, gettext, filesystem, userlist, userListCSV) ->

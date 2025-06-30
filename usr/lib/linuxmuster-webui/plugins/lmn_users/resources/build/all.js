@@ -505,13 +505,13 @@
 (function() {
   angular.module('lmn.users').config(function($routeProvider) {
     return $routeProvider.when('/view/lmn/users/staff', {
-      controller: 'LMUsersParentsController',
+      controller: 'LMUsersStaffController',
       templateUrl: '/lmn_users:resources/partial/staff.html'
     });
   });
 
-  angular.module('lmn.users').controller('LMUsersParentsController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, customFields, userPassword) {
-    pageTitle.set(gettext('Parents'));
+  angular.module('lmn.users').controller('LMUsersStaffController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, customFields, userPassword) {
+    pageTitle.set(gettext('Staff'));
     $scope.sorts = [
       {
         name: gettext('Class'),

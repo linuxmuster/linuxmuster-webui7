@@ -1,10 +1,10 @@
 angular.module('lmn.users').config ($routeProvider) ->
     $routeProvider.when '/view/lmn/users/staff',
-        controller: 'LMUsersParentsController'
+        controller: 'LMUsersStaffController'
         templateUrl: '/lmn_users:resources/partial/staff.html'
 
-angular.module('lmn.users').controller 'LMUsersParentsController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, customFields, userPassword) ->
-    pageTitle.set(gettext('Parents'))
+angular.module('lmn.users').controller 'LMUsersStaffController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, customFields, userPassword) ->
+    pageTitle.set(gettext('Staff'))
 
     $scope.sorts = [
        {

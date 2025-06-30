@@ -60,6 +60,9 @@ angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $rou
     else
         custom_fields_role = role
 
+    $scope.searchText = gettext('Search user by login, firstname or lastname (min. 3 chars)')
+    $scope.parentToAdd = null
+
     identity.promise.then () ->
         if identity.profile.isAdmin || identity.user == 'root'
             customFields.load_config(custom_fields_role).then (resp) ->
@@ -165,6 +168,32 @@ angular.module('lmn.users').controller 'LMNUserDetailsController', ($scope, $rou
                 position = $scope.userDetails['parents'].indexOf(parent)
                 $scope.userDetails['parents'].splice(position, 1)
 
+    $scope.showParentSearch = () ->
+        $scope.ParentSearchVisible = true
+
+    $scope.findParents = (q) ->
+        return $http.post("/api/lmn/ldap-search", {role:'parent', login:q}).then (resp) ->
+            console.log(resp.data)
+            return resp.data
+
+    $scope.addParent = (parent) ->
+        $http.post("/api/lmn/sophomorixUsers/add-parent", {student: $scope.id, parent: parent.login}).then (resp) ->
+            if resp.data != ""
+                notify.error(resp.data)
+            else
+                notify.success(gettext("Parent #{parent.label} assigned to #{$scope.id}"))
+                parent_var = {'cn':parent.login, 'displayname':parent.displayName}
+                $scope.userDetails['parents'].push(parent_var)
+
+    $scope.$watch 'parentToAdd', () ->
+        if $scope.parentToAdd
+            parent = $scope.parentToAdd
+            $scope.addParent(parent)
+
+            $scope.parentToAdd = null
+            $scope.ParentSearchVisible = false
+
+            notify.success(parent.displayName + gettext(" added with default values in the list."))
 
     $scope.close = () ->
         $uibModalInstance.dismiss()

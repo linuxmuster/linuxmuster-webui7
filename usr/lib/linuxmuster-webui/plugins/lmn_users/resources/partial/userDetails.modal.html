@@ -106,11 +106,15 @@
                 <td><b translate>Parents</b></td>
                 <td ng:show="userDetails['parents'].length == 0" translate>No parents found!</td>
                 <td ng:show="userDetails['parents'].length != 0"></td>
-                <td></td>
+                <td>
+                     <button class="btn btn-default" ng:click="showParentSearch()" title="Show parent search">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </td>
             </tr>
             <tr ng:repeat="parent in userDetails['parents']">
                 <td colspan="2" style="text-align:center;border-top:none;padding:0;">{{parent.displayname}}</td>
-                <td style="text-align:center;border-top:none;padding:0;">
+                <td style="border-top:none;">
                     <button class="btn btn-default" ng:click="removeParent(parent)" title="Remove">
                         <i class="fa fa-trash-o"></i>
                     </button>
@@ -156,3 +160,17 @@
         <a class="btn btn-default btn-flat" ng:click="close()" translate>Close</a>
     </div>
 </div>
+
+<dialog ng:show="ParentSearchVisible">
+    <div class="modal-header">
+        <h3 class="modal-title" translate>Add parent</h3>
+    </div>
+    <div class="modal-body">
+        <input type="text" placeholder="" ng:model="$parent.parentToAdd" typeahead-editable="false" typeahead-min-length="3" uib-typeahead="user as user.label for user in findParents($viewValue)" class="form-control" autofocus />
+    </div>
+    <div class="modal-footer">
+        <a ng:click="$parent.ParentSearchVisible = false" class="btn btn-default btn-flat" translate>
+            Close
+        </a>
+    </div>
+</dialog>

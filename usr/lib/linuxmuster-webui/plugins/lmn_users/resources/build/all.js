@@ -1953,6 +1953,8 @@
     } else {
       custom_fields_role = role;
     }
+    $scope.searchText = gettext('Search user by login, firstname or lastname (min. 3 chars)');
+    $scope.parentToAdd = null;
     identity.promise.then(function() {
       if (identity.profile.isAdmin || identity.user === 'root') {
         return customFields.load_config(custom_fields_role).then(function(resp) {
@@ -2119,6 +2121,46 @@
         }
       });
     };
+    $scope.showParentSearch = function() {
+      return $scope.ParentSearchVisible = true;
+    };
+    $scope.findParents = function(q) {
+      return $http.post("/api/lmn/ldap-search", {
+        role: 'parent',
+        login: q
+      }).then(function(resp) {
+        console.log(resp.data);
+        return resp.data;
+      });
+    };
+    $scope.addParent = function(parent) {
+      return $http.post("/api/lmn/sophomorixUsers/add-parent", {
+        student: $scope.id,
+        parent: parent.login
+      }).then(function(resp) {
+        var parent_var;
+        if (resp.data !== "") {
+          return notify.error(resp.data);
+        } else {
+          notify.success(gettext(`Parent ${parent.label} assigned to ${$scope.id}`));
+          parent_var = {
+            'cn': parent.login,
+            'displayname': parent.displayName
+          };
+          return $scope.userDetails['parents'].push(parent_var);
+        }
+      });
+    };
+    $scope.$watch('parentToAdd', function() {
+      var parent;
+      if ($scope.parentToAdd) {
+        parent = $scope.parentToAdd;
+        $scope.addParent(parent);
+        $scope.parentToAdd = null;
+        $scope.ParentSearchVisible = false;
+        return notify.success(parent.displayName + gettext(" added with default values in the list."));
+      }
+    });
     return $scope.close = function() {
       return $uibModalInstance.dismiss();
     };

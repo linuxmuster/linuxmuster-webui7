@@ -16,7 +16,12 @@ class Handler(HttpPlugin):
 
     def __init__(self, context):
         self.context = context
-        self.mgr = LinboImageManager.get(self.context)
+        self._load_linboImages()
+
+    def _load_linboImages(self):
+        self.mgr = None
+        if self.context.identity is not None:
+            self.mgr = LinboImageManager.get(self.context)
 
     @get(r'/api/lmn/linbo4/groups')
     @authorize('lm:linbo:configs')

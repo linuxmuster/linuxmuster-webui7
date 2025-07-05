@@ -73,13 +73,13 @@
                 </div>
                 <div class="panel-body">
                     <ul class="list-unstyled" style="column-width:300px;padding:0;">
-                        <li style="margin: 0 15px 5px 0px;" ng:repeat="custom in custom_fields | orderBy:['title'] " class="cardlist">
-                            {{custom.title}}
-                            <span style="position:absolute;right:10px;" ng:show="!isListAttr(custom.attr)">
+                        <li style="margin: 0 15px 5px 0px;justify-content:space-between;" ng:repeat="custom in custom_fields | orderBy:['title'] " class="cardlist">
+                            <div>{{custom.title}}</div>
+                            <div ng:show="!isListAttr(custom.attr)" style="margin-right:10px;text-align:right;">
                                 {{custom.value}}
-                            </span>
-                            <div ng:show="isListAttr(custom.attr)" style="float:right;padding-right:10px;text-align:right;">
-                                <span ng:repeat="value in custom.value track by $index" style="display:inline-block;">
+                            </div>
+                            <div ng:show="isListAttr(custom.attr)" style="margin-right:10px;text-align:right;">
+                                <span ng:repeat="value in custom.value track by $index">
                                     {{value}}
                                 </span>
                             </div>

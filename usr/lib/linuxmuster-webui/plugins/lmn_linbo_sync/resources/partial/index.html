@@ -46,7 +46,7 @@
                         </button>
                         <button class="btn btn-warning" style="width:110px; margin-left:10px;" ng:click="handle_sync(group, image, 'sync')" translate>
                             <i class="fas fa-sync-alt"></i>  Sync
-                            <input type="checkbox" ng:checked="image.run_sync" class="pull-right">
+                            <input type="checkbox" ng:checked="image.run_sync == 'sync'" class="pull-right">
                         </button>
                         <button class="btn btn-success" style="width:110px; margin-left:10px;" ng:show="image.start_enabled" ng:click="handle_start(group, image, 1)" translate>
                             <i class="fas fa-play"></i>  Start

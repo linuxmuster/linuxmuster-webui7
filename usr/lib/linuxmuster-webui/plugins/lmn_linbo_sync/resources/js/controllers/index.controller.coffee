@@ -63,15 +63,21 @@ angular.module('lmn.linbo_sync').controller 'SyncIndexController', ($scope, $htt
         $scope.refresh_cmd(group)
             
     $scope.handle_sync = (group, os, value) ->
-        # Possible values : new, sync or 0
+        # Possible values for value: new or sync
         if value == 'new'
-            os.run_format = !os.run_format
-        else
-            os.run_format = 0
-        if os.run_sync == value
-            os.run_sync = 0
-        else
-            os.run_sync = value
+            if os.run_sync == 'new'
+                os.run_format = 0
+                os.run_sync = 0
+            else
+                os.run_format = 0
+                os.run_sync = 'new'
+
+        if value == 'sync'
+            if os.run_sync == 'sync'
+                os.run_sync = 0
+            else
+                os.run_sync = 'sync'
+
         $scope.refresh_cmd(group)
 
     $scope.handle_partition = (group) ->
@@ -85,6 +91,8 @@ angular.module('lmn.linbo_sync').controller 'SyncIndexController', ($scope, $htt
             os.run_format = 0
         else
             os.run_format = value
+        if os.run_format && os.run_sync == 'new'
+            os.run_sync = 0
         $scope.refresh_cmd(group)
 
     $scope.handle_start = (group, os, value) ->
@@ -170,7 +178,7 @@ angular.module('lmn.linbo_sync').controller 'SyncIndexController', ($scope, $htt
 
             # Then sync or new ( not both )
             if os.run_sync
-                sync.push('sync:' + os.position)
+                sync.push(os.run_sync + ':' + os.position)
                 cmd_parameters['actions']['sync'].push(os.position)
 
             # A little start, but only one

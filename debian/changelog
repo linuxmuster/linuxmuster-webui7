@@ -1,3 +1,16 @@
+linuxmuster-webui7 (7.2.83) lmn72; urgency=medium
+
+  * [groupmembership] Asynchron requests for projects members
+  * [landingpage] Fix display of custom fields
+  * [linbo] Fix LinboManager permissions for restricted session
+  * [linbo_sync] Always display prestart
+  * [linbo_sync] Fix sync+new logic
+  * [setup] Right message when skipping firewall setup
+  * [user] Check BOM for imported CSV
+  * [webdav] Consolidate some Webdav responses
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 06 Jul 2025 14:06:38 +0200
+
 linuxmuster-webui7 (7.2.82) lmn72; urgency=medium
 
   * [landingpage] Handle when quota is 0 

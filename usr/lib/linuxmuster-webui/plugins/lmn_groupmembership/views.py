@@ -41,7 +41,6 @@ class Handler(HttpPlugin):
             member = project.cn in user_profile['projects'] or user_profile['isAdmin']
 
             if member or not project.sophomorixHidden:
-                project.get_all_members()
                 projectDict = project.asdict()
 
                 projectDict['groupname'] = project.cn
@@ -53,6 +52,27 @@ class Handler(HttpPlugin):
                 user_projects.append(projectDict)
 
         return user_projects
+
+    @get(r'/api/lmn/groupmembership/all_members_project/(?P<project>.+)')
+    @authorize('lmn:groupmembership')
+    @endpoint(api=True)
+    def handle_api_get_all_members_projects(self, http_context, project=''):
+        """
+        Get all members of a given project.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        :return: Project data
+        :rtype: dict
+        """
+
+        projectName = unquote(project.encode('latin-1'))
+        project = self.context.ldapreader.schoolget(f'/projects/{projectName}', dict=False)
+
+        project.get_all_members()
+        projectDict = project.asdict()
+
+        return projectDict
 
     @get(r'/api/lmn/groupmembership/printers')
     @authorize('lmn:groupmembership')

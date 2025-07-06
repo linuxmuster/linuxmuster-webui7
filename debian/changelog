@@ -1,3 +1,13 @@
+linuxmuster-webui7 (7.3.12) lmn73; urgency=medium
+
+  * [groupmembership] Asynchron requests for projects members
+  * [landingpage] Fix display of custom fields
+  * [linbo] Fix LinboManager permissions for restricted session
+  * [linbo_sync] Always display prestart
+  * [linbo_sync] Fix sync+new logic 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sun, 06 Jul 2025 14:11:42 +0200
+
 linuxmuster-webui7 (7.3.11) lmn73; urgency=medium
 
   * [user] Display and handle parents in student's details (list, add, remove)

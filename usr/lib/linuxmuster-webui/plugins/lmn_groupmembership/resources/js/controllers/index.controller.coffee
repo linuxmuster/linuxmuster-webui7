@@ -3,7 +3,7 @@ angular.module('lmn.groupmembership').config ($routeProvider) ->
     controller: 'LMNGroupMembershipController'
     templateUrl: '/lmn_groupmembership:resources/partial/index.html'
 
-angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController', ($rootScope, $scope, $http, $window, identity, $uibModal, gettext, notify, pageTitle, messagebox, validation, smbclient) ->
+angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController', ($rootScope, $q, $scope, $http, $window, identity, $uibModal, gettext, notify, pageTitle, messagebox, validation, smbclient) ->
 
   $scope.need_krbcc_refresh = false
 
@@ -83,7 +83,16 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
   $scope.getGroups = (username) ->
     $http.get('/api/lmn/groupmembership/projects').then (resp) ->
       $scope.projects = resp.data
-      $scope.loading_projects = false
+      promises = []
+      for project in $scope.projects
+          promises.push($http.get('/api/lmn/groupmembership/all_members_project/' + project.cn).then (resp) ->
+              for proj in $scope.projects
+                  if proj.cn == resp.data.cn
+                    proj.membersCount = resp.data.membersCount
+                    proj.adminsCount = resp.data.adminsCount
+                    proj.all_members = resp.data.all_members
+                    proj.all_admins = resp.data.all_admins)
+      $q.all(promises).then () -> $scope.loading_projects = false
     $http.get('/api/lmn/groupmembership/printers').then (resp) ->
       $scope.printers = resp.data
       $scope.loading_printers = false

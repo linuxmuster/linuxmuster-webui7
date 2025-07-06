@@ -133,8 +133,8 @@
                         <a href="#" ng-click='showGroupDetails($index, project.type, project.groupname)'>
                             <b style="word-wrap: break-word; -ms-word-break: break-all">{{project.groupname}}</b>
                         </a>
-                        <span class="label label-danger pull-right" title="{{project.adminsCount}} admin(s)">{{project.adminsCount}}</span>
-                        <span class="label label-default pull-right" title="{{project.membersCount}} member(s)">{{project.membersCount}}</span>
+                        <span ng:show="!loading_projects" class="label label-danger pull-right" title="{{project.adminsCount}} admin(s)">{{project.adminsCount}}</span>
+                        <span ng:show="!loading_projects" class="label label-default pull-right" title="{{project.membersCount}} member(s)">{{project.membersCount}}</span>
                     </div>
                 </div>
             </div>

@@ -13,7 +13,7 @@
     });
   });
 
-  angular.module('lmn.groupmembership').controller('LMNGroupMembershipController', function($rootScope, $scope, $http, $window, identity, $uibModal, gettext, notify, pageTitle, messagebox, validation, smbclient) {
+  angular.module('lmn.groupmembership').controller('LMNGroupMembershipController', function($rootScope, $q, $scope, $http, $window, identity, $uibModal, gettext, notify, pageTitle, messagebox, validation, smbclient) {
     $scope.need_krbcc_refresh = false;
     pageTitle.set(gettext('Enrolle'));
     $scope.show_schoolclasses = true;
@@ -110,8 +110,33 @@
     };
     $scope.getGroups = function(username) {
       $http.get('/api/lmn/groupmembership/projects').then(function(resp) {
+        var i, len, project, promises, ref;
         $scope.projects = resp.data;
-        return $scope.loading_projects = false;
+        promises = [];
+        ref = $scope.projects;
+        for (i = 0, len = ref.length; i < len; i++) {
+          project = ref[i];
+          promises.push($http.get('/api/lmn/groupmembership/all_members_project/' + project.cn).then(function(resp) {
+            var j, len1, proj, ref1, results;
+            ref1 = $scope.projects;
+            results = [];
+            for (j = 0, len1 = ref1.length; j < len1; j++) {
+              proj = ref1[j];
+              if (proj.cn === resp.data.cn) {
+                proj.membersCount = resp.data.membersCount;
+                proj.adminsCount = resp.data.adminsCount;
+                proj.all_members = resp.data.all_members;
+                results.push(proj.all_admins = resp.data.all_admins);
+              } else {
+                results.push(void 0);
+              }
+            }
+            return results;
+          }));
+        }
+        return $q.all(promises).then(function() {
+          return $scope.loading_projects = false;
+        });
       });
       $http.get('/api/lmn/groupmembership/printers').then(function(resp) {
         $scope.printers = resp.data;

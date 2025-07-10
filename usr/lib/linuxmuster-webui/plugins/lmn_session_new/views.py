@@ -216,10 +216,11 @@ class Handler(HttpPlugin):
 
         p = subprocess.Popen([
             'sudo',
-            '/usr/local/sbin/lmntools-managementgroup',
-            '-g', group,
+            '/usr/sbin/lmncli', 'mgmtgroup',
             '-s', self.context.schoolmgr.school,
-            action, usersList],
+            action, usersList,
+            group,
+            ],
             stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=False,
         )
         stdout, stderr = p.communicate()

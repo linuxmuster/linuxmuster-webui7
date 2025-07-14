@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.3.13) lmn73; urgency=medium
+
+  * Use lmncli instead of lmntools 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 14 Jul 2025 21:08:19 +0200
+
 linuxmuster-webui7 (7.3.12) lmn73; urgency=medium
 
   * [groupmembership] Asynchron requests for projects members

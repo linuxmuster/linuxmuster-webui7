@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.3.14) lmn73; urgency=medium
+
+  * [settings] Configure allowed roles for auth. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Tue, 15 Jul 2025 18:31:13 +0200
+
 linuxmuster-webui7 (7.3.13) lmn73; urgency=medium
 
   * Use lmncli instead of lmntools 

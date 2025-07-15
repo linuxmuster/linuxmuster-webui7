@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-15 21:21+0200\n"
-"PO-Revision-Date: 2025-06-06 07:33\n"
+"PO-Revision-Date: 2025-07-15 13:28\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -19,99 +19,99 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/import.modal.html:46
 msgid "Close"
-msgstr ""
+msgstr "Schließen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/index.html:18
 msgid "Configuration"
-msgstr ""
+msgstr "Konfiguration"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/index.html:20
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:51
 msgid "Delete"
-msgstr ""
+msgstr "Löschen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/index.html:13
 msgid "Endpoint"
-msgstr ""
+msgstr "Endpunkt"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/index.html:10
 msgid "IP-Address"
-msgstr ""
+msgstr "IP-Adresse"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/import.modal.html:44
 msgid "Import"
-msgstr ""
+msgstr "Importieren"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/import.modal.html:45
 msgid "Import + Delete"
-msgstr ""
+msgstr "Importieren + Löschen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/import.modal.html:2
 msgid "Import users"
-msgstr ""
+msgstr "Importiere Benutzer"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/index.html:14
 msgid "Last Handshake"
-msgstr ""
+msgstr "Letzter Handshake"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/index.html:10
 msgid "Public-Key"
-msgstr ""
+msgstr "Öffentlicher Schlüssel"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/index.html:31
 msgid "Query status"
-msgstr ""
+msgstr "Abfrage-Status"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/index.html:30
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:65
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:78
 msgid "Restart"
-msgstr ""
+msgstr "Neu starten"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/index.html:11
 msgid "Routes"
-msgstr ""
+msgstr "Routen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/index.html:19
 msgid "Show QR-Code"
-msgstr ""
+msgstr "QR-Code anzeigen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:2
 msgid "Wireguard"
-msgstr ""
+msgstr "WireGuard"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:39
 msgid "Name"
-msgstr ""
+msgstr "Name"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:41
 msgid "Created succesfully!"
-msgstr ""
+msgstr "Erfolgreich erstellt!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:50
 msgid "Do you really want to delete this peer?"
-msgstr ""
+msgstr "Möchten Sie diese Gegenstelle wirklich löschen?"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:52
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:66
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:79
 msgid "Cancel"
-msgstr ""
+msgstr "Abbrechen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:55
 msgid "Deleted succesfully!"
-msgstr ""
+msgstr "Löschen erfolgreich!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:64
 msgid "Do you really want to restart the wireguard server? All clients have to reconnected!"
-msgstr ""
+msgstr "Möchten Sie den WireGuard-Server wirklich neu starten? Alle Clients müssen sich neu verbinden!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:69
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:82
 msgid "Restarted succesfully!"
-msgstr ""
+msgstr "Neustart erfolgreich!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:77
 msgid "The configuration has changed. Do you want to restart the server?"
-msgstr ""
+msgstr "Die Konfiguration hat sich geändert. Möchten Sie den Server neu starten?"
 

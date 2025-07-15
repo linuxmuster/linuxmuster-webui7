@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-24 18:45+0200\n"
-"PO-Revision-Date: 2025-06-06 07:33\n"
+"PO-Revision-Date: 2025-07-15 13:28\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -48,7 +48,7 @@ msgstr "Einfaches Setup"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:153
 msgid "Endpoint"
-msgstr ""
+msgstr "Endpunkt"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/webappqr.modal.html:26
 msgid "For easy setup, please scan your personal code in the app:<br>"
@@ -64,7 +64,7 @@ msgstr "Hallo {{user.givenName}} {{user.sn}},"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:154
 msgid "Last Handshake"
-msgstr ""
+msgstr "Letzter Handshake"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:35
 msgid "Mail:"
@@ -122,11 +122,11 @@ msgstr "Benutzerdetails"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:7
 msgid "Welcome to Linuxmuster.net version 7.3 !"
-msgstr ""
+msgstr "Willkommen zu Linuxmuster.net Version 7.3!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:125
 msgid "Wireguard VPN"
-msgstr ""
+msgstr "WireGuard VPN"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:23
 msgid "With great power comes great responsibility!"
@@ -135,7 +135,9 @@ msgstr "Aus großer Macht folgt große Verantwortung!"
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:128
 msgid "You can access the school network by using wireguard. You can download the client for the\n"
 "                        following operating systems:"
-msgstr ""
+msgstr "Sie können sich mithilfe von WireGuard mit dem Schulnetzwerk verbinden.\n"
+"Der Download des WireGuard-Clients ist für die\n"
+"                        folgenden Betriebssysteme verfügbar:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_landingpage/resources/partial/index.html:99
 msgid "You can access the school server from many mobile devices.\n"

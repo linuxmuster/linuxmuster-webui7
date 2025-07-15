@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-15 12:34+0200\n"
-"PO-Revision-Date: 2025-07-15 11:07\n"
+"PO-Revision-Date: 2025-07-15 13:28\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -65,11 +65,11 @@ msgstr "Kurs hinzufügen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:144
 msgid "Add a parent"
-msgstr ""
+msgstr "Elternteil hinzufügen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:591
 msgid "Add a staff member"
-msgstr ""
+msgstr "Mitarbeitende hinzufügen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-students.html:61
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:22
@@ -95,7 +95,7 @@ msgstr "Neue Benutzer hinzufügen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:166
 msgid "Add parent"
-msgstr ""
+msgstr "Elternteil hinzufügen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/schooladmins.html:54
 msgid "Add school administrator"
@@ -151,7 +151,8 @@ msgstr "Geburtsdatum:"
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/listmanagement.html:680
 msgid "CSV\n"
 "                            <span class=\"caret\"></span>"
-msgstr ""
+msgstr "CSV\n"
+"                             <span class=\"caret\"> </span>"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/sortList.modal.html:32
 msgid "CSV contains custom teacher password attribute (optional)"
@@ -169,7 +170,7 @@ msgstr "Abbrechen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/addUser.modal.html:10
 msgid "Category:"
-msgstr ""
+msgstr "Kategorie:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/customPassword.modal.html:2
 msgid "Change Password"
@@ -444,7 +445,7 @@ msgstr "Kein global bind Benutzer gefunden."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/userDetails.modal.html:61
 msgid "No parents found!"
-msgstr ""
+msgstr "Keine Eltern gefunden!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/schooladmins.html:174
 msgid "No school bind user found."
@@ -467,7 +468,7 @@ msgstr "Einstellungen"
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:29
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/parents.controller.coffee:7
 msgid "Parents"
-msgstr ""
+msgstr "Eltern"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/extra-courses.html:32
 msgid "Password"
@@ -491,7 +492,7 @@ msgstr "Passwörter pro Seite:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/addAdmin.modal.html:9
 msgid "Please only use lowercase characters, digits, hyphen or underscore."
-msgstr ""
+msgstr "Bitte nutzen Sie ausschließlich Kleinbuchstaben, Ziffern, einen Binde- oder Unterstrich."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:66
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.options.modal.html:80
@@ -677,7 +678,7 @@ msgstr "Liste sortieren"
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:36
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/staff.controller.coffee:7
 msgid "Staff"
-msgstr ""
+msgstr "Mitarbeitende"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/parents.html:60
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/staff.html:60
@@ -717,11 +718,11 @@ msgstr "Es gibt noch keinen Schuladministrator. Sie können einen Schuladministr
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/parents.html:9
 msgid "There are no parents to manage yet. You can add parents using the list management module"
-msgstr ""
+msgstr "Es gibt bisher keine Eltern. Eltern können über die Listenverwaltung hinzugefügt werden."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/staff.html:9
 msgid "There are no staff members to manage yet. You can add staff members using the list management module"
-msgstr ""
+msgstr "Es gibt bisher keine Mitarbeitende. Mitarbeitende können über die Listenverwaltung hinzugefügt werden."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students.html:9
 msgid "There are no students to manage yet. You can add students using the list management module"
@@ -811,7 +812,7 @@ msgstr "Globaladministratoren"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/parents.html:36
 msgid "parents"
-msgstr ""
+msgstr "Eltern"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/schooladmins.html:35
 msgid "schooladmins"
@@ -819,7 +820,7 @@ msgstr "Schuladministratoren"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/staff.html:36
 msgid "staff members"
-msgstr ""
+msgstr "Mitarbeitende"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/students.html:36
 msgid "students"
@@ -858,12 +859,12 @@ msgstr "Studenten schreiben"
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:88
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:98
 msgid "Read parents"
-msgstr ""
+msgstr "Lese Elternteile"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:93
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:103
 msgid "Write parents"
-msgstr ""
+msgstr "Schreibe Elternteile"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/main.py:108
 msgid "Read teachers"
@@ -1031,17 +1032,17 @@ msgstr "Schüler ID"
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:74
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:206
 msgid "Parent ID"
-msgstr ""
+msgstr "Eltern ID"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:81
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:212
 msgid "Category"
-msgstr ""
+msgstr "Kategorie"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:93
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:221
 msgid "Staff ID"
-msgstr ""
+msgstr "Mitarbeitenden ID"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:185
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/listmanagement.controller.coffee:200
@@ -1133,7 +1134,7 @@ msgstr "Nie"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:63
 msgid "Search user by login, firstname or lastname (min. 3 chars)"
-msgstr ""
+msgstr "Benutzer-Suche nach Login, Vor- oder Nachnamen (mind. drei Buchstaben)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:104
 msgid "Hide"
@@ -1149,15 +1150,15 @@ msgstr "UNBEGRENZT"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:167
 msgid "Parent #{parent.displayname} removed from #{$scope.id}"
-msgstr ""
+msgstr "Elternteil #{parent.displayname} von #{$scope.id} entfernt"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:187
 msgid "Parent #{parent.label} assigned to #{$scope.id}"
-msgstr ""
+msgstr "Elternteil #{parent.label} zu #{$scope.id} hinzugefügt"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:199
 msgid " added with default values in the list."
-msgstr ""
+msgstr " mit Standardwerten in die Liste aufgenommen."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/usersCommon.controller.coffee:214
 msgid "not used"

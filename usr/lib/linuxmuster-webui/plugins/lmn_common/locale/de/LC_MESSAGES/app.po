@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-15 12:52+0200\n"
-"PO-Revision-Date: 2025-07-15 11:07\n"
+"PO-Revision-Date: 2025-07-15 13:28\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -37,7 +37,7 @@ msgstr "Schließen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/schoolswitcher.html:14
 msgid "Current"
-msgstr ""
+msgstr "Aktuelle"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/lmFileBackupsDiff.modal.html:2
 msgid "Differences"
@@ -90,7 +90,7 @@ msgstr "Schulkonsole"
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/schoolswitcher.html:10
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/controllers/schoolswitcher.controller.es:9
 msgid "Schoolswitcher"
-msgstr ""
+msgstr "Schul-Umschalter"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:110
 msgid "Session time : {{ counter[0] }}:{{ counter[1] }}:{{ counter[2] }}"
@@ -102,11 +102,11 @@ msgstr "2FA"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/schoolswitcher.html:4
 msgid "This is not a multi-school setup or you are not allowed to see another school!"
-msgstr ""
+msgstr "Entweder handelt es sich um kein Multi-Schul-Setup oder Sie haben keine Rechte, um andere Schulen anzusehen!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:113
 msgid "change"
-msgstr ""
+msgstr "Änderung"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/lmnfile.py:178
 msgid "Access refused."

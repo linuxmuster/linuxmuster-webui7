@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-15 12:52+0200\n"
-"PO-Revision-Date: 2025-07-15 11:07\n"
+"PO-Revision-Date: 2025-07-15 13:28\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -114,7 +114,7 @@ msgstr "Nicht anzeigen:"
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:138
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:82
 msgid "Join"
-msgstr ""
+msgstr "Beitreten"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:36
 msgid "Joinable:"
@@ -123,7 +123,7 @@ msgstr "Beitretbar:"
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:139
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:83
 msgid "Joined"
-msgstr ""
+msgstr "Beigetreten"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/groupDetails.modal.html:48
 msgid "Maillist:"
@@ -252,15 +252,15 @@ msgstr "Benutzer und"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:91
 msgid "{{classe.members.length}} student(s)"
-msgstr ""
+msgstr "{{classe.members.length}} Lernende"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:148
 msgid "{{project.adminsCount}} admin(s)"
-msgstr ""
+msgstr "{{project.adminsCount}} Administrator(en)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/resources/partial/index-boxes.html:151
 msgid "{{project.membersCount}} member(s)"
-msgstr ""
+msgstr "{{project.membersCount}} Mitglied(er)"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_groupmembership/main.py:15
 msgid "Enroll"

@@ -16,7 +16,7 @@ from aj.api.http import get, post, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
 from aj.auth import authorize
 from aj.plugins.lmn_common.lmnfile import LMNFile
-from aj.plugins.lmn_common.api import allowed_roles, ALL_ROLES, config_path, lmconfig
+from aj.plugins.lmn_common.api import allowed_roles, ALL_ROLES, config_path
 
 
 @component(HttpPlugin)
@@ -457,6 +457,9 @@ class Handler(HttpPlugin):
         """
 
 
+        with LMNFile(config_path, 'r') as f:
+            lmconfig = f.read()
+
         return lmconfig['linuxmuster'].get('auth', {}).get('allowed_roles', ALL_ROLES)
 
     @post(r'/api/lmn/webuisettings/allowed_roles')
@@ -472,6 +475,9 @@ class Handler(HttpPlugin):
 
         posted_roles = http_context.json_body()['allowed_roles']
         valid_roles = [role for role in posted_roles if role in ALL_ROLES]
+
+        with LMNFile(config_path, 'r') as f:
+            lmconfig = f.read()
 
         if not lmconfig['linuxmuster'].get('auth', False):
             lmconfig['linuxmuster']['auth'] = {}

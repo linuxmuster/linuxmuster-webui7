@@ -233,7 +233,19 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope,
             for (role of $scope.all_roles) {
                 $scope.allowed_roles[role] = resp.data.indexOf(role) > -1;
             }
-            console.log($scope.allowed_roles);
+        });
+    }
+
+    $scope.saveWebui = () => {
+        role_to_post = [];
+        for (role of $scope.all_roles) {
+            if ($scope.allowed_roles[role]) {
+                role_to_post.push(role);
+            }
+        };
+        $http.post("/api/lmn/webuisettings/allowed_roles", {'allowed_roles': role_to_post}).then((resp) => {
+            notify.success('Roles successfully saved!');
+            $scope.restart();
         });
     }
 

@@ -499,8 +499,42 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', function
                     }
                 }
             }
+        });
+    };
 
-            console.log($scope.allowed_roles);
+    $scope.saveWebui = function () {
+        role_to_post = [];
+        var _iteratorNormalCompletion3 = true;
+        var _didIteratorError3 = false;
+        var _iteratorError3 = undefined;
+
+        try {
+            for (var _iterator3 = $scope.all_roles[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+                role = _step3.value;
+
+                if ($scope.allowed_roles[role]) {
+                    role_to_post.push(role);
+                }
+            }
+        } catch (err) {
+            _didIteratorError3 = true;
+            _iteratorError3 = err;
+        } finally {
+            try {
+                if (!_iteratorNormalCompletion3 && _iterator3.return) {
+                    _iterator3.return();
+                }
+            } finally {
+                if (_didIteratorError3) {
+                    throw _iteratorError3;
+                }
+            }
+        }
+
+        ;
+        $http.post("/api/lmn/webuisettings/allowed_roles", { 'allowed_roles': role_to_post }).then(function (resp) {
+            notify.success('Roles successfully saved!');
+            $scope.restart();
         });
     };
 

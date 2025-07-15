@@ -16,6 +16,8 @@ from time import time
 
 # Load Webui settings
 config_path = '/etc/linuxmuster/webui/config.yml'
+ALL_ROLES = ['globaladministrator', 'schooladministrator', 'teacher', 'student', 'parent', 'staff']
+
 if os.path.isfile(config_path):
     with LMNFile(config_path, 'r') as webui:
         lmconfig = webui.read()
@@ -39,7 +41,7 @@ if os.path.isfile(config_path):
 
         # Roles auth
         auth_config = lmconfig['linuxmuster'].get('auth', {})
-        allowed_roles = auth_config.get('allowed_roles', ['globaladministrator', 'schooladministrator', 'teacher', 'student'])
+        allowed_roles = auth_config.get('allowed_roles', ALL_ROLES)
 else:
     lmconfig = {}
     ldap_config = {}

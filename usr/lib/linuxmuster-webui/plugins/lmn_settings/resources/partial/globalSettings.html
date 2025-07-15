@@ -214,6 +214,25 @@
                 </div>
             </div>
         </uib:tab>
+        <uib:tab heading="Allowed roles" ng:click="getAllowedRoles()">
+            <br />
+            <p class="alert alert-info" translate>This tab allow you to configure which roles are allowed to login into the Webui</p>
+            <table class="table">
+                <tr>
+                    <th translate>Role</th>
+                    <th translate>Allowed ?</th>
+                </tr>
+                <tr ng:repeat="role in all_roles">
+                    <td>{{role}}</td>
+                    <td ng:show="role == 'globaladministrator'">
+                        <input type="checkbox" ng:model="allowed_roles[role]" disabled />
+                    </td>
+                    <td ng:show="role != 'globaladministrator'">
+                        <input type="checkbox" ng:model="allowed_roles[role]" />
+                    </td>
+                </tr>
+            </table>
+        </uib:tab>
         <uib:tab heading="Edulution UI" ng:click="checkEdulution()">
             <br>
             <!-- <div class="alert alert-info">

@@ -221,6 +221,7 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', function
 
     config.load();
     $scope.config = config;
+    $scope.all_roles = ['globaladministrator', 'schooladministrator', 'teacher', 'student', 'parent', 'staff'];
 
     $scope.newClientCertificate = {
         c: 'NA',
@@ -468,6 +469,38 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', function
             notify.success("Copied to clipboard!");
         }).catch(function () {
             notify.error("Failed to copy!");
+        });
+    };
+
+    $scope.getAllowedRoles = function () {
+        $http.get("/api/lmn/webuisettings/allowed_roles").then(function (resp) {
+            $scope.allowed_roles = {};
+            var _iteratorNormalCompletion2 = true;
+            var _didIteratorError2 = false;
+            var _iteratorError2 = undefined;
+
+            try {
+                for (var _iterator2 = $scope.all_roles[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                    role = _step2.value;
+
+                    $scope.allowed_roles[role] = resp.data.indexOf(role) > -1;
+                }
+            } catch (err) {
+                _didIteratorError2 = true;
+                _iteratorError2 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                        _iterator2.return();
+                    }
+                } finally {
+                    if (_didIteratorError2) {
+                        throw _iteratorError2;
+                    }
+                }
+            }
+
+            console.log($scope.allowed_roles);
         });
     };
 

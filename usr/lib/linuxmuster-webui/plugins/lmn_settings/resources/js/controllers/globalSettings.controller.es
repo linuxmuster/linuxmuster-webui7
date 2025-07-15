@@ -3,6 +3,7 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope,
 
     config.load();
     $scope.config = config;
+    $scope.all_roles = ['globaladministrator', 'schooladministrator', 'teacher', 'student', 'parent', 'staff']
 
     $scope.newClientCertificate = {
         c: 'NA',
@@ -223,6 +224,16 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope,
             notify.success("Copied to clipboard!");
         }).catch(() => {
             notify.error("Failed to copy!")
+        });
+    }
+
+    $scope.getAllowedRoles = () => {
+        $http.get("/api/lmn/webuisettings/allowed_roles").then((resp) => {
+            $scope.allowed_roles = {};
+            for (role of $scope.all_roles) {
+                $scope.allowed_roles[role] = resp.data.indexOf(role) > -1;
+            }
+            console.log($scope.allowed_roles);
         });
     }
 

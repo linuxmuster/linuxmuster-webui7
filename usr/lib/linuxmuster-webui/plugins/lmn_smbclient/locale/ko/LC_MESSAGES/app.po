@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-06 09:32+0200\n"
-"PO-Revision-Date: 2025-06-06 07:33\n"
+"PO-Revision-Date: 2025-07-15 11:07\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -19,19 +19,19 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/views/lmnsmbclient.py:278
 msgid "Your quota is full, please free enough place in order to share these files again."
-msgstr ""
+msgstr "저장용량이 꽉 찼습니다. 이 파일을 다시 공유하려면 저장 공간을 확보하십시오."
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/views/lmnsmbclient.py:625
 msgid "Ticket successfully refreshed"
-msgstr ""
+msgstr "티켓이 성공적으로 갱신됨"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/views/lmnsmbclient.py:628
 msgid "Timeout while trying to get a kerberos ticket"
-msgstr ""
+msgstr "Kerberos 티켓을 가져오는 중 시간이 초과되었습니다"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/resources/js/directives/smbupload.directive.coffee:48
 msgid "Uploaded "
-msgstr ""
+msgstr "업로드됨 "
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_smbclient/resources/js/services/smbclient.service.es:17
 msgid " moved!"

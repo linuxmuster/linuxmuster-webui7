@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-24 18:45+0200\n"
-"PO-Revision-Date: 2025-05-24 17:00\n"
+"POT-Creation-Date: 2025-07-15 12:52+0200\n"
+"PO-Revision-Date: 2025-07-15 11:07\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -72,5 +72,5 @@ msgstr "비밀번호가 변경되었습니다"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_auth/resources/js/controllers/index.controller.coffee:24
 msgid "Password change failed: "
-msgstr ""
+msgstr "비밀번호 변경에 실패했습니다: "
 

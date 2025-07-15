@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-24 18:45+0200\n"
-"PO-Revision-Date: 2025-05-24 17:00\n"
+"PO-Revision-Date: 2025-07-15 11:07\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -19,30 +19,30 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/runningprocesses.modal.html:10
 msgid "#"
-msgstr ""
+msgstr "#"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:96
 msgid "Auto-Refresh"
-msgstr ""
+msgstr "자동 새로고침"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/linboremote.modal.html:8
 msgid "Baseimage"
-msgstr ""
+msgstr "Baseimage"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/linboremote.modal.html:69
 msgid "Cancel"
-msgstr ""
+msgstr "취소"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/actionForAllDevices.modal.html:25
 #: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/actionForAllDevices.modal.html:26
 #: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/prestartcommands.modal.html:31
 #: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/runningprocesses.modal.html:34
 msgid "Close"
-msgstr ""
+msgstr "닫기"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/prestartcommands.modal.html:11
 msgid "Command"
-msgstr ""
+msgstr "명령"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:87
 msgid "Commands to use when device starts in linbo"
@@ -62,11 +62,11 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/actionForAllDevices.modal.html:15
 msgid "Finished!"
-msgstr ""
+msgstr "완료됨!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:60
 msgid "Group"
-msgstr ""
+msgstr "그룹"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:57
 #: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/runningprocesses.modal.html:11
@@ -75,7 +75,7 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:58
 msgid "IP"
-msgstr ""
+msgstr "IP"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:52
 msgid "Infos"
@@ -91,7 +91,7 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/linboremote.modal.html:9
 msgid "Last sync"
-msgstr ""
+msgstr "최근 동기화"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/prestartcommands.modal.html:2
 msgid "Linbo-Pre-Start Command(s)"
@@ -99,7 +99,7 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/linboremote.modal.html:2
 msgid "Linbo-Remote"
-msgstr ""
+msgstr "Linbo-Remote"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:82
 msgid "Linbo-Remote Processes currently running"
@@ -107,11 +107,11 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:59
 msgid "MAC"
-msgstr ""
+msgstr "MAC"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/prestartcommands.modal.html:10
 msgid "Name"
-msgstr ""
+msgstr "이름"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_device-manager/resources/partial/index.html:101
 msgid "Next refresh in"

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-24 18:45+0200\n"
-"PO-Revision-Date: 2025-05-24 17:00\n"
+"POT-Creation-Date: 2025-07-15 12:52+0200\n"
+"PO-Revision-Date: 2025-07-15 11:07\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -37,7 +37,7 @@ msgstr "닫기"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/schoolswitcher.html:14
 msgid "Current"
-msgstr ""
+msgstr "현재"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/lmFileBackupsDiff.modal.html:2
 msgid "Differences"
@@ -90,7 +90,7 @@ msgstr "학교 콘솔"
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/schoolswitcher.html:10
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/js/controllers/schoolswitcher.controller.es:9
 msgid "Schoolswitcher"
-msgstr ""
+msgstr "Schoolswitcher"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:110
 msgid "Session time : {{ counter[0] }}:{{ counter[1] }}:{{ counter[2] }}"
@@ -98,15 +98,15 @@ msgstr "세션 시간 : {{ counter[0] }}:{{ counter[1] }}:{{ counter[2] }}"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:90
 msgid "TFA"
-msgstr ""
+msgstr "TFA"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/partial/schoolswitcher.html:4
 msgid "This is not a multi-school setup or you are not allowed to see another school!"
-msgstr ""
+msgstr "이것이 복수 학교 설정이 아니거나, 당신이 다른 학교를 볼 권한이 없습니다!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/resources/content/main_view.html:113
 msgid "change"
-msgstr ""
+msgstr "변경"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_common/lmnfile.py:178
 msgid "Access refused."

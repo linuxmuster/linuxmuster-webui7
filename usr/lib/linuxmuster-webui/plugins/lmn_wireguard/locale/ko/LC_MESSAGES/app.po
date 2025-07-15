@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-15 21:21+0200\n"
-"PO-Revision-Date: 2025-05-24 17:00\n"
+"PO-Revision-Date: 2025-07-15 11:07\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -19,99 +19,99 @@ msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/import.modal.html:46
 msgid "Close"
-msgstr ""
+msgstr "닫기"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/index.html:18
 msgid "Configuration"
-msgstr ""
+msgstr "구성"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/index.html:20
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:51
 msgid "Delete"
-msgstr ""
+msgstr "삭제"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/index.html:13
 msgid "Endpoint"
-msgstr ""
+msgstr "엔드포인트"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/index.html:10
 msgid "IP-Address"
-msgstr ""
+msgstr "IP 주소"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/import.modal.html:44
 msgid "Import"
-msgstr ""
+msgstr "가져오기"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/import.modal.html:45
 msgid "Import + Delete"
-msgstr ""
+msgstr "가져오기 + 삭제"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/import.modal.html:2
 msgid "Import users"
-msgstr ""
+msgstr "사용자 가져오기"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/index.html:14
 msgid "Last Handshake"
-msgstr ""
+msgstr "최근 접근"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/index.html:10
 msgid "Public-Key"
-msgstr ""
+msgstr "공개 키"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/index.html:31
 msgid "Query status"
-msgstr ""
+msgstr "상태 쿼리"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/index.html:30
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:65
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:78
 msgid "Restart"
-msgstr ""
+msgstr "재시작"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/index.html:11
 msgid "Routes"
-msgstr ""
+msgstr "라우팅"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/partial/index.html:19
 msgid "Show QR-Code"
-msgstr ""
+msgstr "QR코드 보기"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:2
 msgid "Wireguard"
-msgstr ""
+msgstr "Wireguard"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:39
 msgid "Name"
-msgstr ""
+msgstr "이름"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:41
 msgid "Created succesfully!"
-msgstr ""
+msgstr "성공적으로 생성됨!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:50
 msgid "Do you really want to delete this peer?"
-msgstr ""
+msgstr "이 peer를 정말로 삭제하시겠습니까?"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:52
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:66
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:79
 msgid "Cancel"
-msgstr ""
+msgstr "취소"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:55
 msgid "Deleted succesfully!"
-msgstr ""
+msgstr "성공적으로 삭제됨!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:64
 msgid "Do you really want to restart the wireguard server? All clients have to reconnected!"
-msgstr ""
+msgstr "Wireguard 서버를 정말로 다시시작 하겠습니까? 모든 클라이언트는 재접속해야 합니다!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:69
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:82
 msgid "Restarted succesfully!"
-msgstr ""
+msgstr "성공적으로 재시작함!"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_wireguard/resources/js/controllers/index.controller.es:77
 msgid "The configuration has changed. Do you want to restart the server?"
-msgstr ""
+msgstr "구성이 변경되었습니다. 서버를 다시 시작하겠습니까?"
 

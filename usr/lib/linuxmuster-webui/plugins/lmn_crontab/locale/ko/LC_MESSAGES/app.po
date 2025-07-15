@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-24 18:45+0200\n"
-"PO-Revision-Date: 2025-05-24 17:00\n"
+"PO-Revision-Date: 2025-07-15 11:07\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -25,11 +25,11 @@ msgstr "추가"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:10
 msgid "As globaladministrator"
-msgstr ""
+msgstr "글로벌운영자 권한으로"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:11
 msgid "As root"
-msgstr ""
+msgstr "루트 권한으로"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:156
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:176
@@ -39,7 +39,7 @@ msgstr "취소"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:8
 msgid "Choose which crontab you want to edit:"
-msgstr ""
+msgstr "수정할 crontab을 선택하세요:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:144
 #: usr/lib/linuxmuster-webui/plugins/lmn_crontab/resources/partial/index.html:164

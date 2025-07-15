@@ -16,6 +16,7 @@ from aj.api.http import get, post, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
 from aj.auth import authorize
 from aj.plugins.lmn_common.lmnfile import LMNFile
+from aj.plugins.lmn_common.api import allowed_roles, ALL_ROLES, config_path, lmconfig
 
 
 @component(HttpPlugin)
@@ -444,6 +445,41 @@ class Handler(HttpPlugin):
         })
 
         return base64.b64encode(data.encode('utf-8'))
+
+    @get(r'/api/lmn/webuisettings/allowed_roles')
+    @endpoint(api=True)
+    def handle_api_get_webuisettings(self, http_context):
+        """
+        Get the allowed roles from /etc/linuxmuster/webui/config
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        """
+
+
+        return lmconfig['linuxmuster'].get('auth', {}).get('allowed_roles', ALL_ROLES)
+
+    @post(r'/api/lmn/webuisettings/allowed_roles')
+    @endpoint(api=True)
+    def handle_api_post_webuisettings(self, http_context):
+        """
+        Save the allowed roles to /etc/linuxmuster/webui/config
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        """
+
+
+        posted_roles = http_context.json_body()['allowed_roles']
+        valid_roles = [role for role in posted_roles if role in ALL_ROLES]
+
+        if not lmconfig['linuxmuster'].get('auth', False):
+            lmconfig['linuxmuster']['auth'] = {}
+
+        lmconfig['linuxmuster']['auth']['allowed_roles'] = valid_roles
+
+        with LMNFile(config_path, 'w') as f:
+            f.write(lmconfig)
 
 
 

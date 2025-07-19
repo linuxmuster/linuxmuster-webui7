@@ -256,6 +256,30 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope,
         });
     }
 
+    $scope.deleteApiKey = (keyname) => {
+        messagebox.show({
+            title: gettext('Delete Api key'),
+            text: gettext("Do you really want to delete the key "+ ( keyname ) + '?'),
+            positive: 'Delete', negative: 'Cancel'}).then(() => {
+                $http.delete(`/api/lmn/apikeys/${keyname}`).then((resp) => {
+                    delete $scope.api_keys[keyname];
+                    notify.success(gettext('Key deleted'));
+                });
+            });
+    }
+
+    $scope.showApiKey = (keyname) => {
+        messagebox.show({
+            title: gettext('Show Api key'),
+            text: gettext("Do you really want to see this secret key ? It could be a security issue!"),
+            positive: 'Show',
+            negative: 'Cancel'}).then(() => {
+                $http.get(`/api/lmn/apikeys/${keyname}/secret`).then((resp) => {
+                    messagebox.show({title: gettext('Show Api key'), text: resp.data, positive: 'OK'});
+                });
+            });
+    };
+
     $scope.getLMNVersion = () => {
         $http.get('/api/lmn/version').then((res) => {
             $scope.LMNVersion = res.data;

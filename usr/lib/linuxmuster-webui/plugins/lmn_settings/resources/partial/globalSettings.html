@@ -248,6 +248,8 @@
                         <th translate>Name</th>
                         <th translate>Ips</th>
                         <th translate>User context</th>
+                        <th></th>
+                        <th></th>
                     </tr>
                     <tr ng:repeat="(name, key) in api_keys">
                         <td>
@@ -258,6 +260,16 @@
                         </td>
                         <td>
                             <input type="text" ng:model="key.user" />
+                        </td>
+                        <td width="1">
+                            <button class="btn btn-default" ng:click="showApiKey(name)">
+                                <i class="fa fa-eye"></i>
+                            </button>
+                        </td>
+                        <td width="1">
+                            <button class="btn btn-default" ng:click="deleteApiKey(name)">
+                                <i class="fa fa-trash-o"></i>
+                            </button>
                         </td>
                     </tr>
                 </table>

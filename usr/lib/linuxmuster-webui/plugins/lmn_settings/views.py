@@ -514,44 +514,13 @@ class Handler(HttpPlugin):
                 apiconfig = f.read()
 
             config = {
-                'keys': {
-                    k: {
-                        'ips': v['ips'],
-                        'user': v['user'],
-                    }
-                    for k,v in apiconfig['host_keys'].items()},
+                'keys': apiconfig['host_keys'],
                 'enable_host_auth': apiconfig['host_key_auth']
             }
 
             apiconfig = {}
 
             return config
-
-        return None
-
-    @get(r'/api/lmn/apikeys/(?P<keyname>[^/]*)/secret')
-    @endpoint(api=True)
-    def handle_api_get_secret(self, http_context, keyname=''):
-        """
-        Get a specific api key secret from /etc/linuxmuster/api/config.yml
-
-        :param http_context: HttpContext
-        :type http_context: HttpContext
-        """
-
-
-        if os.getuid() != 0:
-            return EndpointReturn(403)
-
-        apiconfig_path = "/etc/linuxmuster/api/config.yml"
-
-        if os.path.isfile(apiconfig_path):
-            with LMNFile(apiconfig_path, 'r') as f:
-                apiconfig = f.read()
-
-            key = apiconfig.get('host_keys', {}).get(keyname, None)
-
-            return key['secret']
 
         return None
 
@@ -575,16 +544,13 @@ class Handler(HttpPlugin):
             with LMNFile(apiconfig_path, 'r') as f:
                 apiconfig = f.read()
 
-            print(keyname)
             if keyname in apiconfig['host_keys']:
-                print('OK')
                 del apiconfig['host_keys'][keyname]
 
             with LMNFile(apiconfig_path, 'w') as f:
-                print(apiconfig['host_keys'])
                 f.write(apiconfig)
 
-    @post(r'/api/lmn/apisettings')
+    @post(r'/api/lmn/apikeys')
     @endpoint(api=True)
     def handle_api_post_apisettings(self, http_context):
         """
@@ -601,4 +567,13 @@ class Handler(HttpPlugin):
         apiconfig_path = "/etc/linuxmuster/api/config.yml"
         config = http_context.json_body()['config']
 
-        print(config)
+        with LMNFile(apiconfig_path, 'r') as f:
+            apiconfig = f.read()
+
+        apiconfig['host_key_auth'] = config['enable_host_auth']
+        apiconfig['host_keys'] = config['api_keys']
+
+        with LMNFile(apiconfig_path, 'w') as f:
+            f.write(apiconfig)
+
+

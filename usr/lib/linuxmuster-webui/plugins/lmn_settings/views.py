@@ -12,7 +12,7 @@ import base64
 import json
 import time
 
-from aj.api.http import get, post, HttpPlugin
+from aj.api.http import get, post, delete, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
 from aj.auth import authorize
 from aj.plugins.lmn_common.lmnfile import LMNFile
@@ -497,7 +497,7 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_get_apisettings(self, http_context):
         """
-        Get the allowed roles from /etc/linuxmuster/api/config.yml
+        Get the api keys from /etc/linuxmuster/api/config.yml
 
         :param http_context: HttpContext
         :type http_context: HttpContext
@@ -529,11 +529,66 @@ class Handler(HttpPlugin):
 
         return None
 
+    @get(r'/api/lmn/apikeys/(?P<keyname>[^/]*)/secret')
+    @endpoint(api=True)
+    def handle_api_get_secret(self, http_context, keyname=''):
+        """
+        Get a specific api key secret from /etc/linuxmuster/api/config.yml
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        """
+
+
+        if os.getuid() != 0:
+            return EndpointReturn(403)
+
+        apiconfig_path = "/etc/linuxmuster/api/config.yml"
+
+        if os.path.isfile(apiconfig_path):
+            with LMNFile(apiconfig_path, 'r') as f:
+                apiconfig = f.read()
+
+            key = apiconfig.get('host_keys', {}).get(keyname, None)
+
+            return key['secret']
+
+        return None
+
+    @delete(r'/api/lmn/apikeys/(?P<keyname>[^/]*)')
+    @endpoint(api=True)
+    def handle_api_delete_apikey(self, http_context, keyname=''):
+        """
+        Delete a specific api key secret from /etc/linuxmuster/api/config.yml
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        """
+
+
+        if os.getuid() != 0:
+            return EndpointReturn(403)
+
+        apiconfig_path = "/etc/linuxmuster/api/config.yml"
+
+        if os.path.isfile(apiconfig_path):
+            with LMNFile(apiconfig_path, 'r') as f:
+                apiconfig = f.read()
+
+            print(keyname)
+            if keyname in apiconfig['host_keys']:
+                print('OK')
+                del apiconfig['host_keys'][keyname]
+
+            with LMNFile(apiconfig_path, 'w') as f:
+                print(apiconfig['host_keys'])
+                f.write(apiconfig)
+
     @post(r'/api/lmn/apisettings')
     @endpoint(api=True)
     def handle_api_post_apisettings(self, http_context):
         """
-        Save the allowed roles to /etc/linuxmuster/api/config.yml
+        Save the api keys to /etc/linuxmuster/api/config.yml
 
         :param http_context: HttpContext
         :type http_context: HttpContext

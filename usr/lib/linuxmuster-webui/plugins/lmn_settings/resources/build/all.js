@@ -538,6 +538,13 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', function
         });
     };
 
+    $scope.getApiConfig = function () {
+        $http.get("/api/lmn/apisettings").then(function (resp) {
+            $scope.api_keys = resp.data.keys;console.log(resp.data);
+            $scope.enable_host_auth = resp.data.enable_host_auth;
+        });
+    };
+
     $scope.getLMNVersion = function () {
         $http.get('/api/lmn/version').then(function (res) {
             $scope.LMNVersion = res.data;

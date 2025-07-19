@@ -233,6 +233,36 @@
                 </tr>
             </table>
         </uib:tab>
+        <uib:tab heading="Api Keys" ng:click="getApiConfig()">
+            <br />
+            <p class="alert alert-info" translate>This tab allow you to configure the api keys for linuxmuster-api</p>
+
+            <div>
+                <span translate>Enable host key authentication</span>
+                <input type="checkbox" ng:model="enable_host_auth" />
+            </div>
+            <div ng:show="enable_host_auth" style="margin-top:20px;">
+                <h3 translate>Hosts keys</h3>
+                <table class="table">
+                    <tr>
+                        <th translate>Name</th>
+                        <th translate>Ips</th>
+                        <th translate>User context</th>
+                    </tr>
+                    <tr ng:repeat="(name, key) in api_keys">
+                        <td>
+                            <input type="text" ng:model="name" />
+                        </td>
+                        <td>
+                            <input type="text" ng:model="key.ips" />
+                        </td>
+                        <td>
+                            <input type="text" ng:model="key.user" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </uib:tab>
         <uib:tab heading="Edulution UI" ng:click="checkEdulution()">
             <br>
             <!-- <div class="alert alert-info">

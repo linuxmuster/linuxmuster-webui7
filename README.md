@@ -35,7 +35,7 @@ Linuxmuster.net official | ✅  YES
 [Community support](https://ask.linuxmuster.net) | ✅  YES*
 Actively developed | ✅  YES
 Maintainer organisation |  Linuxmuster.net
-Primary maintainer | arnaud@linuxmuster.net  / andreas.till@netzint.de  
+Primary maintainer | [@kiarn](https://github.com/kiarn) 
     
 \* The linuxmuster community consits of people who are nice and happy to help. They are not directly involved in the development though, and might not be able to help in all cases.
 

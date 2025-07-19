@@ -21,6 +21,8 @@ csv.field_size_limit(2**20)
 
 ALLOWED_PATHS = [
                 # Webui settings
+                '/etc/linuxmuster/api/config.yml',
+                # Webui settings
                 '/etc/linuxmuster/webui/config.yml',
                 # used for school.conf or *.csv in lmn_settings, lmn_devices and lmn_users
                 '/etc/linuxmuster/sophomorix/',

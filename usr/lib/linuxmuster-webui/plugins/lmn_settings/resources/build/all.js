@@ -540,8 +540,10 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', function
 
     $scope.getApiConfig = function () {
         $http.get("/api/lmn/apisettings").then(function (resp) {
-            $scope.api_keys = resp.data.keys;console.log(resp.data);
-            $scope.enable_host_auth = resp.data.enable_host_auth;
+            $scope.api_keys = {
+                'keys': resp.data.keys,
+                'enable_host_auth': resp.data.enable_host_auth
+            };
         });
     };
 
@@ -557,22 +559,30 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', function
         });
     };
 
-    $scope.showApiKey = function (keyname) {
+    $scope.showApiKey = function (key) {
         messagebox.show({
             title: gettext('Show Api key'),
             text: gettext("Do you really want to see this secret key ? It could be a security issue!"),
             positive: 'Show',
             negative: 'Cancel' }).then(function () {
-            $http.get('/api/lmn/apikeys/' + keyname + '/secret').then(function (resp) {
-                messagebox.show({ title: gettext('Show Api key'), text: resp.data, positive: 'OK' });
-            });
+            messagebox.show({ title: gettext('Show Api key'), text: key.secret, positive: 'OK' });
+        });
+    };
+
+    $scope.saveApiKeys = function () {
+        $http.post('/api/lmn/apikeys', {
+            'config': {
+                'api_keys': $scope.api_keys.keys,
+                'enable_host_auth': $scope.api_keys.enable_host_auth
+            }
+        }).then(function (resp) {
+            notify.success(gettext('Configuration saved'));
         });
     };
 
     $scope.getLMNVersion = function () {
         $http.get('/api/lmn/version').then(function (res) {
             $scope.LMNVersion = res.data;
-            console.log(res);
         });
     };
 });

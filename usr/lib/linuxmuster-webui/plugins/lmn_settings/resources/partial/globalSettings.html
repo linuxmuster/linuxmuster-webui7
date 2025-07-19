@@ -239,9 +239,9 @@
 
             <div>
                 <span translate>Enable host key authentication</span>
-                <input type="checkbox" ng:model="enable_host_auth" />
+                <input type="checkbox" ng:model="api_keys.enable_host_auth" />
             </div>
-            <div ng:show="enable_host_auth" style="margin-top:20px;">
+            <div ng:show="api_keys.enable_host_auth" style="margin-top:20px;">
                 <h3 translate>Hosts keys</h3>
                 <table class="table">
                     <tr>
@@ -251,7 +251,7 @@
                         <th></th>
                         <th></th>
                     </tr>
-                    <tr ng:repeat="(name, key) in api_keys">
+                    <tr ng:repeat="(name, key) in api_keys.keys">
                         <td>
                             <input type="text" ng:model="name" />
                         </td>
@@ -262,7 +262,7 @@
                             <input type="text" ng:model="key.user" />
                         </td>
                         <td width="1">
-                            <button class="btn btn-default" ng:click="showApiKey(name)">
+                            <button class="btn btn-default" ng:click="showApiKey(key)">
                                 <i class="fa fa-eye"></i>
                             </button>
                         </td>
@@ -397,6 +397,7 @@
         <a ng-show="activetab == 2" ng:click="save()" class="btn btn-lmn" translate>Save</a>
         <a ng-show="activetab == 2" ng:click="restart()" class="btn btn-lmn" translate>Restart WebUI</a>
         <a ng-show="activetab == 3" ng:click="saveWebui()" class="btn btn-lmn" translate>Save</a>
+        <a ng-show="activetab == 4" ng:click="saveApiKeys()" class="btn btn-lmn" translate>Save</a>
     </floating-toolbar>
 </div>
 

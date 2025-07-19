@@ -450,12 +450,15 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_get_webuisettings(self, http_context):
         """
-        Get the allowed roles from /etc/linuxmuster/webui/config
+        Get the allowed roles from /etc/linuxmuster/webui/config.yml
 
         :param http_context: HttpContext
         :type http_context: HttpContext
         """
 
+
+        if os.getuid() != 0:
+            return EndpointReturn(403)
 
         with LMNFile(config_path, 'r') as f:
             lmconfig = f.read()
@@ -466,12 +469,15 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_post_webuisettings(self, http_context):
         """
-        Save the allowed roles to /etc/linuxmuster/webui/config
+        Save the allowed roles to /etc/linuxmuster/webui/config.yml
 
         :param http_context: HttpContext
         :type http_context: HttpContext
         """
 
+
+        if os.getuid() != 0:
+            return EndpointReturn(403)
 
         posted_roles = http_context.json_body()['allowed_roles']
         valid_roles = [role for role in posted_roles if role in ALL_ROLES]
@@ -487,5 +493,57 @@ class Handler(HttpPlugin):
         with LMNFile(config_path, 'w') as f:
             f.write(lmconfig)
 
+    @get(r'/api/lmn/apisettings')
+    @endpoint(api=True)
+    def handle_api_get_apisettings(self, http_context):
+        """
+        Get the allowed roles from /etc/linuxmuster/api/config.yml
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        """
 
 
+        if os.getuid() != 0:
+            return EndpointReturn(403)
+
+        apiconfig_path = "/etc/linuxmuster/api/config.yml"
+
+        if os.path.isfile(apiconfig_path):
+            with LMNFile(apiconfig_path, 'r') as f:
+                apiconfig = f.read()
+
+            config = {
+                'keys': {
+                    k: {
+                        'ips': v['ips'],
+                        'user': v['user'],
+                    }
+                    for k,v in apiconfig['host_keys'].items()},
+                'enable_host_auth': apiconfig['host_key_auth']
+            }
+
+            apiconfig = {}
+
+            return config
+
+        return None
+
+    @post(r'/api/lmn/apisettings')
+    @endpoint(api=True)
+    def handle_api_post_apisettings(self, http_context):
+        """
+        Save the allowed roles to /etc/linuxmuster/api/config.yml
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        """
+
+
+        if os.getuid() != 0:
+            return EndpointReturn(403)
+
+        apiconfig_path = "/etc/linuxmuster/api/config.yml"
+        config = http_context.json_body()['config']
+
+        print(config)

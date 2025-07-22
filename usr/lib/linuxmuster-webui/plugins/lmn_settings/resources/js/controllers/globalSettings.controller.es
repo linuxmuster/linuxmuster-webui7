@@ -15,7 +15,8 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope,
     $scope.showNewApiKey = false;
     $scope.showUpdateApiKey = false;
     $scope.showAddApiKeyIp = false;
-    $scope._ = {'newIp' : ''};
+    $scope._ = {'newIp' : '', 'newApiUser': {'label':''}};
+    $scope.searchText = gettext('Search user by login, firstname or lastname (min. 3 chars)');
 
     // Bad trick because validation is wrong defined
     validation.set([], 'devices')
@@ -297,6 +298,7 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope,
         $scope.old_api_key_name = name;
         $scope.showUpdateApiKey = true;
         $scope.apiKey = {'name': name, 'ips': key.ips, 'user': key.user, 'secret': key.secret};
+        $scope._.newApiUser = {'label': key.user, 'login': key.user};
     }
 
     $scope.saveApiKey = () => {
@@ -307,8 +309,9 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope,
             $scope.api_keys.keys[$scope.apiKey['name']] = {
                 'ips':$scope.apiKey['ips'],
                 'secret':$scope.apiKey['secret'],
-                'user':$scope.apiKey['user'],
+                'user':$scope._.newApiUser['login'],
             };
+            $scope._.newApiUser = {'label': ''};
         });
     }
 
@@ -345,9 +348,15 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope,
         $scope.api_keys.keys[$scope.apiKey['name']] = {
                 'ips':$scope.apiKey['ips'],
                 'secret':$scope.apiKey['secret'],
-                'user':$scope.apiKey['user'],
+                'user':$scope._.newApiUser['login'],
         };
         $scope.saveApiKeys();
+        $scope._.newApiUser = {'label': ''};
+    }
+
+    $scope.findUsers = (q) => {
+        return $http.post("/api/lmn/ldap-search", {role: '', login:q}).then((resp) => {
+            return resp.data;});
     }
 
     $scope.getLMNVersion = () => {

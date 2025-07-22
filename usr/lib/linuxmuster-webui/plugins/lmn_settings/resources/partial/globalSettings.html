@@ -433,7 +433,7 @@
                 </div>
                 <div style="margin-top:10px;">
                     <span translate>Associated user (the API will be called with this user's permissions): </span>
-                    <input type="text" ng:model="apiKey.user" class="form-control" />
+                    <input type="text" placeholder="{{searchText}}" ng:model="_.newApiUser" typeahead-editable="false" typeahead-min-length="3" uib-typeahead="user as user.label for user in findUsers($viewValue)" class="form-control" autofocus />
                 </div>
             </form>
         </div>
@@ -467,7 +467,7 @@
                 </div>
                 <div style="margin-top:10px;">
                     <span translate>Associated user (the API will be called with this user's permissions): </span>
-                    <input type="text" ng:model="apiKey.user" class="form-control" />
+                    <input type="text" placeholder="{{searchText}}" ng:model="_.newApiUser" typeahead-editable="false" typeahead-min-length="3" uib-typeahead="user as user.label for user in findUsers($viewValue)" class="form-control" autofocus />
                 </div>
             </form>
         </div>

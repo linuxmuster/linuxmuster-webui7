@@ -592,6 +592,7 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', function
 
     $scope.saveApiKey = function () {
         $scope.showNewApiKey = false;
+        $scope.apiKey.user = $scope._.newApiUser['login'];
         $http.put('/api/lmn/apikeys', { key: $scope.apiKey }).then(function (resp) {
             notify.success(gettext('Api key added !'));
             $scope.apiKey['secret'] = resp.data;

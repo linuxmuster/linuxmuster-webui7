@@ -13,6 +13,7 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope,
     };
 
     $scope.showNewApiKey = false;
+    $scope.showUpdateApiKey = false;
 
     $scope.activetab = 0;
 
@@ -282,9 +283,15 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope,
             });
     }
 
-    $scope.addApiKey = (sub) => {
+    $scope.addApiKey = () => {
         $scope.showNewApiKey = true;
         $scope.newApiKey = {'name':'', 'ips':[], 'user':''};
+    }
+
+    $scope.editApiKey = (key, name) => {
+        $scope.old_api_key_name = name;
+        $scope.showUpdateApiKey = true;
+        $scope.apiKey_to_update = {'name': name, 'ips': key.ips, 'user': key.user, 'secret': key.secret};
     }
 
     $scope.saveApiKey = () => {
@@ -293,7 +300,7 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope,
             notify.success(gettext('Api key added !'));
             $scope.newApiKey['secret'] = resp.data;
             $scope.api_keys.keys[$scope.newApiKey['name']] = {
-                'ips':$scope.newApiKey['ips'],
+                'ips':$scope.newApiKey['ips'].split(','),
                 'secret':$scope.newApiKey['secret'],
                 'user':$scope.newApiKey['user'],
             };
@@ -312,6 +319,18 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope,
     }
 
     $scope.closeAddApiKey = () => $scope.showNewApiKey = false;
+    $scope.closeUpdateApiKey = () => $scope.showUpdateApiKey = false;
+
+    $scope.updateApiKey = () => {
+        $scope.showUpdateApiKey = false;
+        delete $scope.api_keys.keys[$scope.old_api_key_name];
+        $scope.api_keys.keys[$scope.apiKey_to_update['name']] = {
+                'ips':$scope.apiKey_to_update['ips'].split(','),
+                'secret':$scope.apiKey_to_update['secret'],
+                'user':$scope.apiKey_to_update['user'],
+        };
+        $scope.saveApiKeys();
+    }
 
     $scope.getLMNVersion = () => {
         $http.get('/api/lmn/version').then((res) => {

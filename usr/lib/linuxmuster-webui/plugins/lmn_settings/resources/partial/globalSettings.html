@@ -256,16 +256,18 @@
                         <th translate>User context</th>
                         <th></th>
                         <th></th>
+                        <th></th>
                     </tr>
                     <tr ng:repeat="(name, key) in api_keys.keys">
+                        <td>{{name}}</td>
                         <td>
-                            <input type="text" ng:model="name" />
+                            <span ng:repeat="ip in key.ips" class="label label-info" style="margin-right:5px;">{{ip}}</span>
                         </td>
-                        <td>
-                            <input type="text" ng:model="key.ips" />
-                        </td>
-                        <td>
-                            <input type="text" ng:model="key.user" />
+                        <td>{{key.user}}</td>
+                        <td width="1">
+                            <button class="btn btn-default" ng:click="editApiKey(key, name)">
+                                <i class="fa fa-pencil"></i>
+                            </button>
                         </td>
                         <td width="1">
                             <button class="btn btn-default" ng:click="showApiKey(key)">
@@ -423,9 +425,28 @@
         </div>
         <div class="modal-footer">
             <a ng:click="saveApiKey()" class="btn btn-default btn-flat" translate>Save</a>
-            <a ng:click="closeAddApi()" class="btn btn-default btn-flat" translate>Close</a>
+            <a ng:click="closeAddApiKey()" class="btn btn-default btn-flat" translate>Close</a>
         </div>
     </dialog>
 
+    <dialog ng:show="showUpdateApiKey">
+        <div class="modal-header">
+            <h4 translate>Update API key</h4>
+        </div>
+        <div class="modal-body">
+            <form>
+                <span translate>Name : </span>
+                <input type="text" ng:model="apiKey_to_update.name" class="form-control" />
+                <span translate>Ips (comma separated list of ip without space and without mask) : </span>
+                <input type="text" ng:model="apiKey_to_update.ips" class="form-control" />
+                <span translate>Associated user (the API will be called with this user's permissions): </span>
+                <input type="text" ng:model="apiKey_to_update.user" class="form-control" />
+            </form>
+        </div>
+        <div class="modal-footer">
+            <a ng:click="updateApiKey()" class="btn btn-default btn-flat" translate>Save</a>
+            <a ng:click="closeUpdateApiKey()" class="btn btn-default btn-flat" translate>Close</a>
+        </div>
+    </dialog>
 </div>
 

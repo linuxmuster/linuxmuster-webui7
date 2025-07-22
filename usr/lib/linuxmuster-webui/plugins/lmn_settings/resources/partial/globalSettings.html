@@ -438,7 +438,7 @@
             </form>
         </div>
         <div class="modal-footer">
-            <a ng:click="saveApiKey()" class="btn btn-default btn-flat" translate>Save</a>
+            <a ng:click="saveApiKey()" ng:disabled="key.name == '' || !_.newApiUser.label" class="btn btn-default btn-flat" translate>Save</a>
             <a ng:click="closeAddApiKey()" class="btn btn-default btn-flat" translate>Close</a>
         </div>
     </dialog>
@@ -472,7 +472,7 @@
             </form>
         </div>
         <div class="modal-footer">
-            <a ng:click="updateApiKey()" class="btn btn-default btn-flat" translate>Save</a>
+            <a ng:click="updateApiKey()" ng:disabled="key.name == '' || !_.newApiUser.label" class="btn btn-default btn-flat" translate>Save</a>
             <a ng:click="closeUpdateApiKey()" class="btn btn-default btn-flat" translate>Close</a>
         </div>
     </dialog>

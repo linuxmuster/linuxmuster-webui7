@@ -242,7 +242,13 @@
                 <input type="checkbox" ng:model="api_keys.enable_host_auth" />
             </div>
             <div ng:show="api_keys.enable_host_auth" style="margin-top:20px;">
+
+                <button class="btn btn-success pull-right" ng:click="addApiKey()">
+                    <i class="fa fa-plus"></i> <span translate>Add a key</span>
+                </button>
+
                 <h3 translate>Hosts keys</h3>
+
                 <table class="table">
                     <tr>
                         <th translate>Name</th>
@@ -399,5 +405,27 @@
         <a ng-show="activetab == 3" ng:click="saveWebui()" class="btn btn-lmn" translate>Save</a>
         <a ng-show="activetab == 4" ng:click="saveApiKeys()" class="btn btn-lmn" translate>Save</a>
     </floating-toolbar>
+
+
+    <dialog ng:show="showNewApiKey">
+        <div class="modal-header">
+            <h4 translate>New API key</h4>
+        </div>
+        <div class="modal-body">
+            <form>
+                <span translate>Name : </span>
+                <input type="text" ng:model="newApiKey.name" class="form-control" />
+                <span translate>Ips (comma separated list of ip without space and without mask) : </span>
+                <input type="text" ng:model="newApiKey.ips" class="form-control" />
+                <span translate>Associated user (the API will be called with this user's permissions): </span>
+                <input type="text" ng:model="newApiKey.user" class="form-control" />
+            </form>
+        </div>
+        <div class="modal-footer">
+            <a ng:click="saveApiKey()" class="btn btn-default btn-flat" translate>Save</a>
+            <a ng:click="closeAddApi()" class="btn btn-default btn-flat" translate>Close</a>
+        </div>
+    </dialog>
+
 </div>
 

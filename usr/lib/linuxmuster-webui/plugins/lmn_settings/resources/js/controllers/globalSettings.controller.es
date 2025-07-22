@@ -12,6 +12,8 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope,
         cn: ''
     };
 
+    $scope.showNewApiKey = false;
+
     $scope.activetab = 0;
 
     $scope.help_trusted_domains = gettext(
@@ -264,7 +266,7 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope,
             text: gettext("Do you really want to delete the key "+ ( keyname ) + '?'),
             positive: 'Delete', negative: 'Cancel'}).then(() => {
                 $http.delete(`/api/lmn/apikeys/${keyname}`).then((resp) => {
-                    delete $scope.api_keys[keyname];
+                    delete $scope.api_keys.keys[keyname];
                     notify.success(gettext('Key deleted'));
                 });
             });
@@ -280,6 +282,24 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope,
             });
     }
 
+    $scope.addApiKey = (sub) => {
+        $scope.showNewApiKey = true;
+        $scope.newApiKey = {'name':'', 'ips':[], 'user':''};
+    }
+
+    $scope.saveApiKey = () => {
+        $scope.showNewApiKey = false;
+        $http.put('/api/lmn/apikeys', {key: $scope.newApiKey}).then((resp) => {
+            notify.success(gettext('Api key added !'));
+            $scope.newApiKey['secret'] = resp.data;
+            $scope.api_keys.keys[$scope.newApiKey['name']] = {
+                'ips':$scope.newApiKey['ips'],
+                'secret':$scope.newApiKey['secret'],
+                'user':$scope.newApiKey['user'],
+            };
+        });
+    }
+
     $scope.saveApiKeys = () => {
         $http.post(`/api/lmn/apikeys`, {
             'config': {
@@ -290,6 +310,8 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope,
                     notify.success(gettext('Configuration saved'));
         });
     }
+
+    $scope.closeAddApiKey = () => $scope.showNewApiKey = false;
 
     $scope.getLMNVersion = () => {
         $http.get('/api/lmn/version').then((res) => {

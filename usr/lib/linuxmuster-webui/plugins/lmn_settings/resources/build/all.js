@@ -230,6 +230,8 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', function
         cn: ''
     };
 
+    $scope.showNewApiKey = false;
+
     $scope.activetab = 0;
 
     $scope.help_trusted_domains = gettext("If Ajenti is installed behind a proxy, oder reachable by a fqdn other than provided by the host,\n" + "you can then specify the other domains here, and by this way avoiding some resources loading problems.");
@@ -553,7 +555,7 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', function
             text: gettext("Do you really want to delete the key " + keyname + '?'),
             positive: 'Delete', negative: 'Cancel' }).then(function () {
             $http.delete('/api/lmn/apikeys/' + keyname).then(function (resp) {
-                delete $scope.api_keys[keyname];
+                delete $scope.api_keys.keys[keyname];
                 notify.success(gettext('Key deleted'));
             });
         });
@@ -569,6 +571,24 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', function
         });
     };
 
+    $scope.addApiKey = function (sub) {
+        $scope.showNewApiKey = true;
+        $scope.newApiKey = { 'name': '', 'ips': [], 'user': '' };
+    };
+
+    $scope.saveApiKey = function () {
+        $scope.showNewApiKey = false;
+        $http.put('/api/lmn/apikeys', { key: $scope.newApiKey }).then(function (resp) {
+            notify.success(gettext('Api key added !'));
+            $scope.newApiKey['secret'] = resp.data;
+            $scope.api_keys.keys[$scope.newApiKey['name']] = {
+                'ips': $scope.newApiKey['ips'],
+                'secret': $scope.newApiKey['secret'],
+                'user': $scope.newApiKey['user']
+            };
+        });
+    };
+
     $scope.saveApiKeys = function () {
         $http.post('/api/lmn/apikeys', {
             'config': {
@@ -578,6 +598,10 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', function
         }).then(function (resp) {
             notify.success(gettext('Configuration saved'));
         });
+    };
+
+    $scope.closeAddApiKey = function () {
+        return $scope.showNewApiKey = false;
     };
 
     $scope.getLMNVersion = function () {

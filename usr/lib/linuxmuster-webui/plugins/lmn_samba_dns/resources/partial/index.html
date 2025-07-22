@@ -12,7 +12,12 @@
             <td>{{sub.value}}</td>
         </tr>
     </table>
+    <button class="btn btn-success pull-right" ng:click="add()">
+            <i class="fa fa-plus"></i> <span translate>Add an entry</span>
+    </button>
+
     <h3 translate>Subdomains</h3>
+
     <table class="table">
         <tr>
             <th translate>Host</th>
@@ -39,9 +44,7 @@
             </td>
         </tr>
     </table>
-    <button class="btn btn-default" ng:click="add()">
-        <i class="fa fa-plus"></i> <span translate>Add an entry</span>
-    </button>
+
     <dialog ng:show="showNew">
         <div class="modal-header">
             <h4 translate>New DNS entry</h4>

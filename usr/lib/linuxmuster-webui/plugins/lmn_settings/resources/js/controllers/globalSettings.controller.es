@@ -1,4 +1,4 @@
-angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope, $http, $sce, $location, notify, pageTitle, identity, messagebox, config, core, locale, gettext) => {
+angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope, $http, $sce, $location, notify, pageTitle, identity, messagebox, validation, config, core, locale, gettext) => {
     pageTitle.set(gettext('Global Settings'));
 
     config.load();
@@ -14,6 +14,11 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope,
 
     $scope.showNewApiKey = false;
     $scope.showUpdateApiKey = false;
+    $scope.showAddApiKeyIp = false;
+    $scope._ = {'newIp' : ''};
+
+    // Bad trick because validation is wrong defined
+    validation.set([], 'devices')
 
     $scope.activetab = 0;
 
@@ -285,24 +290,24 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope,
 
     $scope.addApiKey = () => {
         $scope.showNewApiKey = true;
-        $scope.newApiKey = {'name':'', 'ips':[], 'user':''};
+        $scope.apiKey = {'name':'', 'ips':[], 'user':''};
     }
 
     $scope.editApiKey = (key, name) => {
         $scope.old_api_key_name = name;
         $scope.showUpdateApiKey = true;
-        $scope.apiKey_to_update = {'name': name, 'ips': key.ips, 'user': key.user, 'secret': key.secret};
+        $scope.apiKey = {'name': name, 'ips': key.ips, 'user': key.user, 'secret': key.secret};
     }
 
     $scope.saveApiKey = () => {
         $scope.showNewApiKey = false;
-        $http.put('/api/lmn/apikeys', {key: $scope.newApiKey}).then((resp) => {
+        $http.put('/api/lmn/apikeys', {key: $scope.apiKey}).then((resp) => {
             notify.success(gettext('Api key added !'));
-            $scope.newApiKey['secret'] = resp.data;
-            $scope.api_keys.keys[$scope.newApiKey['name']] = {
-                'ips':$scope.newApiKey['ips'].split(','),
-                'secret':$scope.newApiKey['secret'],
-                'user':$scope.newApiKey['user'],
+            $scope.apiKey['secret'] = resp.data;
+            $scope.api_keys.keys[$scope.apiKey['name']] = {
+                'ips':$scope.apiKey['ips'],
+                'secret':$scope.apiKey['secret'],
+                'user':$scope.apiKey['user'],
             };
         });
     }
@@ -320,14 +325,27 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', ($scope,
 
     $scope.closeAddApiKey = () => $scope.showNewApiKey = false;
     $scope.closeUpdateApiKey = () => $scope.showUpdateApiKey = false;
+    $scope.toggleAddIp = () => $scope.showAddApiKeyIp = !$scope.showAddApiKeyIp;
+    $scope.removeApiKeyIp = (ip) => {
+        pos = $scope.apiKey.ips.indexOf(ip);
+        $scope.apiKey.ips.splice(pos, 1);
+    }
+
+    $scope.saveApiKeyIp = () => {
+        $scope.toggleAddIp();
+        $scope.apiKey.ips.push(angular.copy($scope._.newIp));
+        $scope._.newIp = '';
+    }
+
+    $scope.validateIp = () => {return validation["isValidIP"]($scope._.newIp) == true;}
 
     $scope.updateApiKey = () => {
         $scope.showUpdateApiKey = false;
         delete $scope.api_keys.keys[$scope.old_api_key_name];
-        $scope.api_keys.keys[$scope.apiKey_to_update['name']] = {
-                'ips':$scope.apiKey_to_update['ips'].split(','),
-                'secret':$scope.apiKey_to_update['secret'],
-                'user':$scope.apiKey_to_update['user'],
+        $scope.api_keys.keys[$scope.apiKey['name']] = {
+                'ips':$scope.apiKey['ips'],
+                'secret':$scope.apiKey['secret'],
+                'user':$scope.apiKey['user'],
         };
         $scope.saveApiKeys();
     }

@@ -415,12 +415,26 @@
         </div>
         <div class="modal-body">
             <form>
-                <span translate>Name : </span>
-                <input type="text" ng:model="newApiKey.name" class="form-control" />
-                <span translate>Ips (comma separated list of ip without space and without mask) : </span>
-                <input type="text" ng:model="newApiKey.ips" class="form-control" />
-                <span translate>Associated user (the API will be called with this user's permissions): </span>
-                <input type="text" ng:model="newApiKey.user" class="form-control" />
+                <div>
+                    <span translate>Name: </span>
+                    <input type="text" ng:model="apiKey.name" class="form-control" />
+                </div>
+                <div style="margin-top:10px;">
+                    <span translate>Ips: </span>
+                    <br />
+                    <span ng:repeat="ip in apiKey.ips" class="label label-info" ng:click="removeApiKeyIp(ip)"
+                          style="display:inline-block;">
+                        {{ip}}
+                        <i class="far fa-times-circle"></i>
+                    </span>
+                    <a ng:click="toggleAddIp()">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                </div>
+                <div style="margin-top:10px;">
+                    <span translate>Associated user (the API will be called with this user's permissions): </span>
+                    <input type="text" ng:model="apiKey.user" class="form-control" />
+                </div>
             </form>
         </div>
         <div class="modal-footer">
@@ -435,17 +449,47 @@
         </div>
         <div class="modal-body">
             <form>
-                <span translate>Name : </span>
-                <input type="text" ng:model="apiKey_to_update.name" class="form-control" />
-                <span translate>Ips (comma separated list of ip without space and without mask) : </span>
-                <input type="text" ng:model="apiKey_to_update.ips" class="form-control" />
-                <span translate>Associated user (the API will be called with this user's permissions): </span>
-                <input type="text" ng:model="apiKey_to_update.user" class="form-control" />
+                <div>
+                    <span translate>Name: </span>
+                    <input type="text" ng:model="apiKey.name" class="form-control" />
+                </div>
+                <div style="margin-top:10px;">
+                    <span translate>Ips: </span>
+                    <br />
+                    <span ng:repeat="ip in apiKey.ips" class="label label-info" ng:click="removeApiKeyIp(ip)"
+                          style="display:inline-block;">
+                        {{ip}}
+                        <i class="far fa-times-circle"></i>
+                    </span>
+                    <a ng:click="toggleAddIp()">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                </div>
+                <div style="margin-top:10px;">
+                    <span translate>Associated user (the API will be called with this user's permissions): </span>
+                    <input type="text" ng:model="apiKey.user" class="form-control" />
+                </div>
             </form>
         </div>
         <div class="modal-footer">
             <a ng:click="updateApiKey()" class="btn btn-default btn-flat" translate>Save</a>
             <a ng:click="closeUpdateApiKey()" class="btn btn-default btn-flat" translate>Close</a>
+        </div>
+    </dialog>
+
+    <dialog ng:show="showAddApiKeyIp">
+        <div class="modal-header">
+            <h4 translate>Add IP</h4>
+        </div>
+        <div class="modal-body">
+            <form>
+                <span translate>IP : </span>
+                <input type="text" ng:model="_.newIp" class="form-control" />
+            </form>
+        </div>
+        <div class="modal-footer">
+            <a ng:click="saveApiKeyIp()" class="btn btn-default btn-flat" ng:disabled="!validateIp(_.newIp)" translate>Save</a>
+            <a ng:click="toggleAddIp()" class="btn btn-default btn-flat" translate>Close</a>
         </div>
     </dialog>
 </div>

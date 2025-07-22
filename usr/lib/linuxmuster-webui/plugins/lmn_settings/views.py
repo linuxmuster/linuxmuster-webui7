@@ -594,7 +594,7 @@ class Handler(HttpPlugin):
         apiconfig_path = "/etc/linuxmuster/api/config.yml"
         key = http_context.json_body()['key']
 
-        key['ips']  = key['ips'].split(',')
+        key['ips']  = key['ips']
         key['secret'] = base64.b64encode(token_bytes(64)).decode()
 
         with LMNFile(apiconfig_path, 'r') as f:

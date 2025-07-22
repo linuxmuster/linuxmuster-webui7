@@ -11,8 +11,9 @@ from glob import glob
 import base64
 import json
 import time
+from secrets import token_bytes
 
-from aj.api.http import get, post, delete, HttpPlugin
+from aj.api.http import get, post, delete, put, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
 from aj.auth import authorize
 from aj.plugins.lmn_common.lmnfile import LMNFile
@@ -576,4 +577,36 @@ class Handler(HttpPlugin):
         with LMNFile(apiconfig_path, 'w') as f:
             f.write(apiconfig)
 
+    @put(r'/api/lmn/apikeys')
+    @endpoint(api=True)
+    def handle_api_put_apikey(self, http_context):
+        """
+        Generate a secret for a new key and save it in the config.yml
 
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        """
+
+
+        if os.getuid() != 0:
+            return EndpointReturn(403)
+
+        apiconfig_path = "/etc/linuxmuster/api/config.yml"
+        key = http_context.json_body()['key']
+
+        key['ips']  = key['ips'].split(',')
+        key['secret'] = base64.b64encode(token_bytes(64)).decode()
+
+        with LMNFile(apiconfig_path, 'r') as f:
+            apiconfig = f.read()
+
+        apiconfig['host_keys'][key['name']] = {
+            'ips': key['ips'],
+            'secret': key['secret'],
+            'user': key['user'],
+        }
+
+        with LMNFile(apiconfig_path, 'w') as f:
+            f.write(apiconfig)
+
+        return key['secret']

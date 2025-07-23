@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.3.15) lmn73; urgency=medium
+
+  * [settings] Configuration tab for host api keys. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Wed, 23 Jul 2025 19:18:01 +0200
+
 linuxmuster-webui7 (7.3.14) lmn73; urgency=medium
 
   * [settings] Configure allowed roles for auth. 

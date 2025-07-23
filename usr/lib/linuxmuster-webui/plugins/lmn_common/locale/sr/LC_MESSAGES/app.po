@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-15 12:52+0200\n"
-"PO-Revision-Date: 2025-07-15 11:07\n"
+"POT-Creation-Date: 2025-07-23 19:19+0200\n"
+"PO-Revision-Date: 2025-07-23 17:26\n"
 "Last-Translator: \n"
 "Language-Team: Serbian (Cyrillic)\n"
 "Language: sr_SP\n"
@@ -108,7 +108,7 @@ msgstr ""
 msgid "change"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_common/lmnfile.py:178
+#: usr/lib/linuxmuster-webui/plugins/lmn_common/lmnfile.py:180
 msgid "Access refused."
 msgstr ""
 

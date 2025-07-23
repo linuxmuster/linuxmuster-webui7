@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-24 18:45+0200\n"
-"PO-Revision-Date: 2025-07-15 13:28\n"
+"POT-Creation-Date: 2025-07-23 19:19+0200\n"
+"PO-Revision-Date: 2025-07-23 17:26\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -31,6 +31,14 @@ msgid "<i class=\"fa fa-warning \"></i>\n"
 msgstr "<i class=\"fa fa-warning \"></i>\n"
 "            Ändern Sie diese Werte mit hoher Vorsicht ! Ein falscher Wert kann Ihr Netzwerk komplett blockieren !"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:482
+msgid "Add IP"
+msgstr "IP hinzufügen"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:247
+msgid "Add a key"
+msgstr "Schlüssel hinzufügen"
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:147
 msgid "Add a subnet"
 msgstr "Subnetz hinzufügen"
@@ -43,25 +51,40 @@ msgstr "Feiertage hinzufügen"
 msgid "Admin description"
 msgstr "Admin-Beschreibung"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:223
+msgid "Allowed ?"
+msgstr "Erlaubt ?"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:435
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:469
+msgid "Associated user (the API will be called with this user's permissions):"
+msgstr "Verknüpfter Benutzer (die API wird mit den Berechtigungen dieses Benutzers aufgerufen):"
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:112
 msgid "Begin lease range"
 msgstr "Lease-Bereich Beginn"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:235
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:304
 msgid "Check if API is installed"
 msgstr "Prüfen, ob API installiert ist"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:249
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:318
 msgid "Check if API is running"
 msgstr "Überprüfen Sie, ob die API läuft"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:263
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:332
 msgid "Check if a Bind-User exists for edulution"
 msgstr "Überprüfen Sie, ob ein Bind-Benutzer für die Planung vorhanden ist"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:530
 msgid "Choose a role to configure"
 msgstr "Rolle zum Konfigurieren auswählen"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:442
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:476
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:492
+msgid "Close"
+msgstr "Schließen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:334
 msgid "Cloudquota Percentage"
@@ -98,6 +121,10 @@ msgstr "E-Mail Domäne"
 msgid "Enable email relay for notification"
 msgstr "E-Mail-Benachrichtigungen aktivieren"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:241
+msgid "Enable host key authentication"
+msgstr "Host-Schlüssel-Authentifizierung aktivieren"
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:216
 msgid "Encoding"
 msgstr "Zeichenkodierung"
@@ -110,7 +137,7 @@ msgstr "Ende"
 msgid "End lease range"
 msgstr "Lease-Bereich Ende"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:277
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:346
 msgid "External Domain"
 msgstr "Externe Domain"
 
@@ -138,6 +165,14 @@ msgstr "Globale Administratoren"
 msgid "Holidays"
 msgstr "Feiertage"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:250
+msgid "Hosts keys"
+msgstr "Hosts-Schlüssel"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:486
+msgid "IP :"
+msgstr "IP :"
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:506
 msgid "If you want to use your own latex template, please store it in the directory /etc/linuxmuster/sophomorix/SCHOOL/latex-templates/. More informations about it <a href=\"https://github.com/linuxmuster/sophomorix4/blob/bionic/sophomorix-samba/lang/latex/README.latextemplates\">in sophomorix's wiki</a>."
 msgstr "Wenn Sie Ihr eigenes Latex-Template verwenden möchten, speichern Sie es bitte im Verzeichnis /etc/linuxmuster/sophomorix/SCHOOL/latex-templates/. Mehr Informationen dazu <a href=\"https://github.com/linuxmuster/sophomorix4/blob/bionic/sophomorix-samba/lang/latex/README.latextemplates\">im sophomorix Wiki</a>."
@@ -145,6 +180,15 @@ msgstr "Wenn Sie Ihr eigenes Latex-Template verwenden möchten, speichern Sie es
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:111
 msgid "Ip router"
 msgstr "IP-Router"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:255
+msgid "Ips"
+msgstr "Ips"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:423
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:457
+msgid "Ips:"
+msgstr "Ips:"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:267
 msgid "It's possible to apply a filter script to your newly exported csv file. You must give here the absolute path of the script and the script must be executable.<br>Please read the full documentation in <a href=\"https://github.com/linuxmuster/sophomorix4/wiki/Export-and-Filters#filters\">sophomorix's wiki</a> about it."
@@ -182,13 +226,23 @@ msgstr "Maximale Sitzungsdauer"
 msgid "Moodle"
 msgstr "Moodle"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:254
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:772
 msgid "Name"
 msgstr "Name"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:419
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:453
+msgid "Name:"
+msgstr "Name:"
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:110
 msgid "Network / Prefix"
 msgstr "Netzwerk / Präfix"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:414
+msgid "New API key"
+msgstr "Neuer API-Schlüssel"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:73
 msgid "New domain"
@@ -202,7 +256,7 @@ msgstr "Neuer Proxy"
 msgid "No holidays found!"
 msgstr "Keine Feiertage gefunden!"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:319
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:388
 msgid "Package"
 msgstr "Paket"
 
@@ -272,14 +326,18 @@ msgstr "Tage bis zum endgültigen Löschen"
 msgid "Replace slash(/) in classname by hypen(-)"
 msgstr "Ersetze Schrägstrich(/) in Klassenname durch Bindestrich(-)"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:334
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:337
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:403
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:406
 msgid "Restart WebUI"
 msgstr "Schulkonsole neu starten"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:92
 msgid "Reverse Surname and Firstname in username"
 msgstr "Nachname und Vorname im Benutzernamen umkehren"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:222
+msgid "Role"
+msgstr "Rolle"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:27
 msgid "Role Students"
@@ -309,8 +367,13 @@ msgstr "SSL-FQDN-Zertifikatsdatei"
 msgid "SSL certificate file"
 msgstr "SSL-Zertifikats-Datei"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:333
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:336
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:402
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:405
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:407
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:408
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:441
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:475
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:491
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:805
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:806
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:807
@@ -322,7 +385,7 @@ msgstr "Speichern"
 msgid "Save &amp; Apply Quota"
 msgstr "Speichern &amp; Quota übernehmen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:335
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:404
 msgid "Save &amp; Apply Subnets"
 msgstr "Speichern &amp; Subnetze übernehmen"
 
@@ -399,7 +462,7 @@ msgstr "Lehrer"
 msgid "Template email reset"
 msgstr "E-Mail Vorlage für Passwortreset"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:288
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:357
 msgid "The server must be accessible from the edulution server via port <b>443 (https)</b>, port <b>8001 (API)</b> and port <b>389 (LDAP)</b> or <b>636 (LDAPs)</b>. \n"
 "                    Ask your IT-Administrator if you need support here!"
 msgstr "Der Server muss vom Edulutionsserver über Port <b>443 (https)</b>erreichbar sein, Port <b>8001 (API)</b> und Port <b>389 (LDAP)</b> oder <b>636 (LDAPs)</b>. \n"
@@ -408,6 +471,14 @@ msgstr "Der Server muss vom Edulutionsserver über Port <b>443 (https)</b>erreic
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:165
 msgid "The smtp.yml config file seems to be empty. Currently it's ont possible to send emails with this configuration."
 msgstr "Die Konfigurationsdatei smtp.yml scheint leer zu sein. Derzeit ist es möglich, E-Mails mit dieser Konfiguration zu senden."
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:238
+msgid "This tab allow you to configure the api keys for linuxmuster-api"
+msgstr ""
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:219
+msgid "This tab allow you to configure which roles are allowed to login into the Webui"
+msgstr "Auf dieser Registerkarte können Sie festlegen, welche Rollen sich in der Webui anmelden dürfen"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:547
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:593
@@ -435,6 +506,10 @@ msgstr "Vertrauenswürdige Proxies"
 msgid "URL"
 msgstr "URL"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:448
+msgid "Update API key"
+msgstr "API-Schlüssel aktualisieren"
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:549
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:595
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:641
@@ -442,11 +517,15 @@ msgstr "URL"
 msgid "User can edit"
 msgstr "Benutzer kann bearbeiten"
 
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:256
+msgid "User context"
+msgstr "Benutzerkontext"
+
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/index.html:82
 msgid "Username and Passwords"
 msgstr "Benutzername und Passwörter"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:320
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/partial/globalSettings.html:389
 msgid "Version"
 msgstr "Version"
 
@@ -519,50 +598,54 @@ msgstr "Schuleinstellungen konfigurieren"
 msgid "Configure global settings"
 msgstr "Globale Einstellungen konfigurieren"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:17
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:19
+msgid "Search user by login, firstname or lastname (min. 3 chars)"
+msgstr "Suche Benutzer nach Login, Vorname oder Nachname (min. 3 Zeichen)"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:27
 msgid "If Ajenti is installed behind a proxy, oder reachable by a fqdn other than provided by the host,\n"
 "you can then specify the other domains here, and by this way avoiding some resources loading problems."
 msgstr "Wenn Ajenti hinter einem Proxy installiert ist oder von einem anderen fqdn erreichbar ist, als vom Host bereitgestellt wird,\n"
 "Du kannst dann die anderen Domänen hier angeben und auf diese Weise einige Probleme beim Laden von Ressourcen vermeiden."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:22
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:32
 msgid "If Ajenti is installed behind one or more proxies, specify the ip of these proxies here, in order to\n"
 "get the real client ip address."
 msgstr "Wenn Ajenti hinter einem oder mehreren Proxies installiert ist, geben Sie hier die ip dieser Proxies an um\n"
 "die echte Client-Ip-Adresse zu erhalten."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:27
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:37
 msgid "This certificate is the default certificate used to create client certificate and to provide https connection.\n"
 "Using a Let's Encrypt certificate here will break the client certificate generator.\n"
 "Using a self-generated certificate is fine here."
 msgstr "Dieses Zertifikat ist das Standardzertifikat, das zum Erstellen von Client-Zertifikaten und zur Bereitstellung von https-Verbindung verwendet wird.\\nDie Verwendung eines Let's Encrypt Zertifikats hier wird den Clientzertifikatgenerator zerstören.\\nHier ist die Verwendung eines selbstgenerierten Zertifikats in Ordnung."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:33
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:43
 msgid "If you have a special certificate for your domain, like a Let's Encrypt certificate, put it there.\n"
 "If you are not sure, just use the same certificate as the one above."
 msgstr "Wenn Sie ein spezielles Zertifikat für Ihre Domain haben, wie ein Let's Encrypt Zertifikat, setzen Sie es dorthin.\n"
 "Wenn Sie sich nicht sicher sind, verwenden Sie einfach das gleiche Zertifikat wie das obenstehende Zertifikat."
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:41
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:51
 msgid "Are you sure you want to delete permanently this subnet ?"
 msgstr "Sind Sie sicher, dass Sie dieses Subnetz dauerhaft löschen möchten?"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:42
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:73
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:86
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:52
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:83
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:96
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:98
 msgid "Delete"
 msgstr "Löschen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:43
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:74
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:87
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:131
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:53
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:84
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:97
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:141
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:99
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:53
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:63
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:109
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:123
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:127
@@ -571,49 +654,78 @@ msgstr "Abbrechen"
 msgid "Saved"
 msgstr "Gespeichert"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:114
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:124
 msgid "Global config saved"
 msgstr "Globale Konfiguration gespeichert"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:116
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:126
 msgid "Could not save global config"
 msgstr "Konnte die globale Konfiguration nicht speichern"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:120
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:130
 msgid "Smtp config saved"
 msgstr "Smtp Konfiguration gespeichert"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:122
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:132
 msgid "Could not save smtp config"
 msgstr "Smtp Konfiguration konnte nicht gespeichert werden"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:128
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:138
 msgid "Self-signed certificate"
 msgstr "Selbstsigniertes Zertifikat"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:129
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:139
 msgid "Generating a new certificate will void all existing client authentication certificates!"
 msgstr "Die Generierung eines neuen Zertifikats wird alle bestehenden Client-Authentifizierungszertifikate außer Kraft setzen!"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:130
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:140
 msgid "Generate"
 msgstr "Generieren"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:134
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:144
 msgid "Generating certificate"
 msgstr "Zertifikat wird erstellt"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:134
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:144
 msgid "Please wait"
 msgstr "Bitte warten"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:136
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:146
 msgid "Certificate successfully generated"
 msgstr "Zertifikat erfolgreich erstellt"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:141
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:151
 msgid "Certificate generation failed"
 msgstr "Zertifikatserstellung fehlgeschlagen"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:272
+msgid "Delete Api key"
+msgstr "Api Key löschen"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:273
+msgid "Do you really want to delete the key "
+msgstr "Wollen Sie den Schlüssel wirklich löschen "
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:277
+msgid "Key deleted"
+msgstr "Schlüssel gelöscht"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:284
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:288
+msgid "Show Api key"
+msgstr "Api-Schlüssel anzeigen"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:285
+msgid "Do you really want to see this secret key ? It could be a security issue!"
+msgstr "Möchten Sie wirklich diesen geheimen Schlüssel sehen ? Es könnte ein Sicherheitsproblem sein!"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:308
+msgid "Api key added !"
+msgstr "Api Schlüssel hinzugefügt!"
+
+#: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/globalSettings.controller.es:326
+msgid "Configuration saved"
+msgstr "Konfiguration gespeichert"
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_settings/resources/js/controllers/index.controller.coffee:8
 msgid "Settings"

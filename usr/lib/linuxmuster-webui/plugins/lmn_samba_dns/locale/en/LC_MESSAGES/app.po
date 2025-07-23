@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-24 18:44+0200\n"
+"POT-Creation-Date: 2025-07-23 19:19+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,71 +17,71 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:43
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:16
 msgid "Add an entry"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:63
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:84
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:66
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:87
 msgid "Close"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:18
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:23
 msgid "Host"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:68
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:71
 msgid "Modify DNS entry"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:47
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:50
 msgid "New DNS entry"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:57
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:78
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:60
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:81
 msgid "Priority :"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:62
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:65
 msgid "Save"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:51
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:72
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:54
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:75
 msgid "Subdomain :"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:15
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:19
 msgid "Subdomains"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:20
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:25
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:6
 msgid "TTL"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:19
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:24
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:5
 msgid "Type"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:53
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:74
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:56
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:77
 msgid "Type :"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:83
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:86
 msgid "Update"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:21
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:26
 #: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:7
 msgid "Value"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:55
-#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:76
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:58
+#: usr/lib/linuxmuster-webui/plugins/lmn_samba_dns/resources/partial/index.html:79
 msgid "Value :"
 msgstr ""
 

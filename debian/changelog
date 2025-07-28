@@ -1,3 +1,10 @@
+linuxmuster-webui7 (7.3.16) lmn73; urgency=medium
+
+  * [linbo] Add option for uniform name 'disk'
+  * [setup] Forbid hash in admin pw 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 28 Jul 2025 18:49:28 +0200
+
 linuxmuster-webui7 (7.3.15) lmn73; urgency=medium
 
   * [settings] Configuration tab for host api keys. 

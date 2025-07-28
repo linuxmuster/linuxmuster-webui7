@@ -158,7 +158,12 @@ angular.module('lmn.setup_wizard').controller('InitAccountController', function 
     };
 
     this.validPW = function () {
-        return validCharPwd(_this3.ini.adminpw);
+        if (_this3.ini.adminpw) {
+            no_hash = _this3.ini.adminpw.indexOf('#') < 0;
+        } else {
+            no_hash = false;
+        }
+        return validCharPwd(_this3.ini.adminpw) && no_hash;
     };
 
     this.strongPW = function () {

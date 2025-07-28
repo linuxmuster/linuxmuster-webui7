@@ -220,6 +220,9 @@
       if (_partition['Dev'].indexOf("sd") !== -1) {
         _device = _partition.Dev.substring(0, '/dev/sdX'.length);
       }
+      if (_partition['Dev'].indexOf("disk") !== -1) {
+        _device = _partition.Dev.substring(0, '/dev/disk0p'.length);
+      }
       if (!diskMap[_device]) {
         if (_device.indexOf("sd") !== -1) {
           DiskType = 'sata';
@@ -229,6 +232,9 @@
         }
         if (_device.indexOf("nvme") !== -1) {
           DiskType = 'nvme';
+        }
+        if (_device.indexOf("disk") !== -1) {
+          DiskType = 'disk';
         }
         diskMap[_device] = {
           name: _device,
@@ -289,6 +295,17 @@
           break;
         }
         disk.name = `/dev/nvme${disk.name}n1p`;
+      }
+      if (newDiskType === 'disk') {
+        disk.name = '0';
+        while (true) {
+          if (diskMap[`/dev/disk${disk.name}p1`]) {
+            disk.name = String.fromCharCode(disk.name.charCodeAt(0) + 1);
+            continue;
+          }
+          break;
+        }
+        disk.name = `/dev/disk${disk.name}p1`;
       }
       //diskMap
       $scope.rebuildDisks();

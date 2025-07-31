@@ -549,10 +549,16 @@ angular.module('lmn.settings').controller('LMglobalSettingsController', function
 
     $scope.getApiConfig = function () {
         $http.get("/api/lmn/apisettings").then(function (resp) {
-            $scope.api_keys = {
-                'keys': resp.data.keys,
-                'enable_host_auth': resp.data.enable_host_auth
-            };
+            if (!resp.data) {
+                $scope.api_keys = {};
+                $scope.missing_lmnapi = true;
+            } else {
+                $scope.missing_lmnapi = false;
+                $scope.api_keys = {
+                    'keys': resp.data.keys,
+                    'enable_host_auth': resp.data.enable_host_auth
+                };
+            }
         });
     };
 

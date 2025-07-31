@@ -235,52 +235,56 @@
         </uib:tab>
         <uib:tab heading="Api Keys" ng:click="getApiConfig()">
             <br />
-            <p class="alert alert-info" translate>This tab allow you to configure the api keys for linuxmuster-api</p>
 
-            <div>
-                <span translate>Enable host key authentication</span>
-                <input type="checkbox" ng:model="api_keys.enable_host_auth" />
-            </div>
-            <div ng:show="api_keys.enable_host_auth" style="margin-top:20px;">
+            <p ng:show="missing_lmnapi" class="alert alert-info" translate>linuxmuster-api does not seem to be installed on your system.</p>
 
-                <button class="btn btn-success pull-right" ng:click="addApiKey()">
-                    <i class="fa fa-plus"></i> <span translate>Add a key</span>
-                </button>
+            <div ng:show="!missing_lmnapi">
+                <p class="alert alert-info" translate>This tab allow you to configure the api keys for linuxmuster-api</p>
+                <div>
+                    <span translate>Enable host key authentication</span>
+                    <input type="checkbox" ng:model="api_keys.enable_host_auth" />
+                </div>
+                <div ng:show="api_keys.enable_host_auth" style="margin-top:20px;">
 
-                <h3 translate>Hosts keys</h3>
+                    <button class="btn btn-success pull-right" ng:click="addApiKey()">
+                        <i class="fa fa-plus"></i> <span translate>Add a key</span>
+                    </button>
 
-                <table class="table">
-                    <tr>
-                        <th translate>Name</th>
-                        <th translate>Ips</th>
-                        <th translate>User context</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                    <tr ng:repeat="(name, key) in api_keys.keys">
-                        <td>{{name}}</td>
-                        <td>
-                            <span ng:repeat="ip in key.ips" class="label label-info" style="margin-right:5px;">{{ip}}</span>
-                        </td>
-                        <td>{{key.user}}</td>
-                        <td width="1">
-                            <button class="btn btn-default" ng:click="editApiKey(key, name)">
-                                <i class="fa fa-pencil"></i>
-                            </button>
-                        </td>
-                        <td width="1">
-                            <button class="btn btn-default" ng:click="showApiKey(key)">
-                                <i class="fa fa-eye"></i>
-                            </button>
-                        </td>
-                        <td width="1">
-                            <button class="btn btn-default" ng:click="deleteApiKey(name)">
-                                <i class="fa fa-trash-o"></i>
-                            </button>
-                        </td>
-                    </tr>
-                </table>
+                    <h3 translate>Hosts keys</h3>
+
+                    <table class="table">
+                        <tr>
+                            <th translate>Name</th>
+                            <th translate>Ips</th>
+                            <th translate>User context</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        <tr ng:repeat="(name, key) in api_keys.keys">
+                            <td>{{name}}</td>
+                            <td>
+                                <span ng:repeat="ip in key.ips" class="label label-info" style="margin-right:5px;">{{ip}}</span>
+                            </td>
+                            <td>{{key.user}}</td>
+                            <td width="1">
+                                <button class="btn btn-default" ng:click="editApiKey(key, name)">
+                                    <i class="fa fa-pencil"></i>
+                                </button>
+                            </td>
+                            <td width="1">
+                                <button class="btn btn-default" ng:click="showApiKey(key)">
+                                    <i class="fa fa-eye"></i>
+                                </button>
+                            </td>
+                            <td width="1">
+                                <button class="btn btn-default" ng:click="deleteApiKey(name)">
+                                    <i class="fa fa-trash-o"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </uib:tab>
         <uib:tab heading="{{'2FA'}}" ng:click="getTfaConfig()">

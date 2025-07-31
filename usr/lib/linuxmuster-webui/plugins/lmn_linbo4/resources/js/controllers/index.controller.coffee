@@ -245,11 +245,11 @@ angular.module('lmn.linbo4').controller 'LMLINBO4ConfigModalController', ($scope
         if newDiskType == 'disk'
             disk.name = '0'
             while true
-                if diskMap["/dev/disk#{disk.name}p1"]
+                if diskMap["/dev/disk#{disk.name}p"]
                     disk.name = String.fromCharCode(disk.name.charCodeAt(0) + 1)
                     continue
                 break
-            disk.name = "/dev/disk#{disk.name}p1"
+            disk.name = "/dev/disk#{disk.name}p"
 
         #diskMap
         $scope.rebuildDisks()

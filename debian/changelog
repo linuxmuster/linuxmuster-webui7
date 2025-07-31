@@ -1,3 +1,10 @@
+linuxmuster-webui7 (7.3.18) lmn73; urgency=medium
+
+  * [linbo4] Fix partitions numbers for /dev/disk
+  * [settings] Handle situation where api is not installed 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Thu, 31 Jul 2025 15:55:02 +0200
+
 linuxmuster-webui7 (7.3.17) lmn73; urgency=medium
 
   * Upgrade to Ajenti 2.2.11

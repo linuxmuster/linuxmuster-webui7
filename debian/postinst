@@ -61,9 +61,6 @@ Installing linuxmuster-webui
             hash -r
             $PYTHON3 -m pip install -r $webuietc/requirements.txt
 
-            # Temporary fix for gipc and gevent in Ubuntu 24.04
-            $PYTHON3 -m pip install gipc gevent -U
-
             msg "Copy default config files for webui"
             mkdir -p /etc/linuxmuster/webui/
             #
@@ -166,9 +163,6 @@ Updating linuxmuster-webui
 
             # Requirements must always be checked
             $PYTHON3 -m pip install -r $webuietc/requirements.txt
-
-            # Temporary fix for gipc and gevent in Ubuntu 24.04
-            $PYTHON3 -m pip install gipc gevent -U
 
             msg "Set default sophomorix webui rights"
             $PYTHON3 $update_scripts/merge-permissions.py

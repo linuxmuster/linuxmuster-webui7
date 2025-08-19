@@ -1,3 +1,10 @@
+linuxmuster-webui7 (7.3.19) lmn73; urgency=medium
+
+  * Remove temporary fix for gevent 
+  * [linbo] Fix access to linbo images
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Tue, 19 Aug 2025 22:54:49 +0200
+
 linuxmuster-webui7 (7.3.18) lmn73; urgency=medium
 
   * [linbo4] Fix partitions numbers for /dev/disk

@@ -1,3 +1,10 @@
+linuxmuster-webui7 (7.3.20) lmn73; urgency=medium
+
+  * Fix creation of Ajenti config dir
+  * [users] Fix print all users als CSV 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Thu, 21 Aug 2025 11:17:43 +0200
+
 linuxmuster-webui7 (7.3.19) lmn73; urgency=medium
 
   * Remove temporary fix for gevent 

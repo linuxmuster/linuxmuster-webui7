@@ -76,11 +76,15 @@ Installing linuxmuster-webui
             if [ -d "/etc/linuxmuster/webui/email-templates" ] ; then
                 mv /etc/linuxmuster/webui/email-templates /etc/linuxmuster/webui/email_templates
             fi
+            
             # Email templates will always be overwritten
             cp -a $webuietc/email_templates /etc/linuxmuster/webui/
 
             msg "Writing linuxmuster default ajenti config $ajcfg"
+            
+            mkdir -p /etc/ajenti
             cp -rf $config_templates/ajenti_default.yml $ajcfg
+            
             if [ ! -f $wucfg ]; then
                 # cp -n would be silent, but it's important to inform the user
                 cp $config_templates/webui_default.yml  $wucfg

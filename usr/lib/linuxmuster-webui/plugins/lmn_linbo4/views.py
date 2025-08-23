@@ -20,7 +20,7 @@ class Handler(HttpPlugin):
 
     def _load_linboImages(self):
         self.mgr = None
-        if self.context.identity is not None and os.getuid() == 0::
+        if self.context.identity is not None and os.getuid() == 0:
             self.mgr = LinboImageManager.get(self.context)
 
     @get(r'/api/lmn/linbo4/groups')

@@ -180,14 +180,14 @@ class Handler(HttpPlugin):
             if not student_data:
                 return ["none"]
 
-            cmd = f"lmntools-student -u {student} --get-parents".split()
+            cmd = f"/usr/sbin/lmncli --csv student --parents {student}".split()
             parents = subprocess.check_output(cmd).decode().strip().split('\n')
             if parents == ['No parent found!']:
                 student_data['parents'] = []
             else:
                 student_data['parents'] = [
                     {'cn':parent.split(';')[0], 'displayname':parent.split(';')[1]}
-                    for parent in parents
+                    for parent in parents[1:]
                 ]
 
             students = [student_data]
@@ -457,7 +457,7 @@ class Handler(HttpPlugin):
         student = http_context.json_body()['student']
         parent = http_context.json_body()['parent']
 
-        cmd = f"lmntools-student -u {student} --add-parents {parent}".split()
+        cmd = f"/usr/sbin/lmncli student --add-parents {parent} {student}".split()
         try:
             result = subprocess.check_output(cmd)
             return ''
@@ -479,7 +479,7 @@ class Handler(HttpPlugin):
         student = http_context.json_body()['student']
         parent = http_context.json_body()['parent']
 
-        cmd = f"lmntools-student -u {student} --remove-parents {parent}".split()
+        cmd = f"/usr/sbin/lmncli student --remove-parents {parent} {student}".split()
         try:
             result = subprocess.check_output(cmd)
             return ''

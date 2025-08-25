@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.3.22) lmn73; urgency=medium
+
+  * [users] Remove obsolet lmntools script 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 25 Aug 2025 23:32:54 +0200
+
 linuxmuster-webui7 (7.3.21) lmn73; urgency=medium
 
   * [linbo4] Fix typo 

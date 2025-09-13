@@ -9,7 +9,7 @@ from jadi import component
 from aj.api.http import get, post, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
 from aj.auth import authorize, AuthenticationService
-from aj.plugins.lmn_common.api import lmn_getSophomorixValue
+from aj.plugins.lmn_common.api import lmn_getSophomorixValue, _sophomorixoutput_as_dict
 
 
 @component(HttpPlugin)
@@ -273,7 +273,11 @@ class Handler(HttpPlugin):
         # generate real shell environment for sophomorix print
         shell_env = {'TERM': 'xterm', 'SHELL': '/bin/bash',  'PATH': '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',  'HOME': '/root', '_': '/usr/bin/python3'}
         try:
-            subprocess.check_call(sophomorixCommand, shell=False, env=shell_env)
+            proc = subprocess.Popen(sophomorixCommand, shell=False, env=shell_env, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            stdout, stderr = proc.communicate()
+            output = _sophomorixoutput_as_dict(stderr).get('OUTPUT', [''])[0]
+            if output.get('TYPE', '') == 'ERROR':
+                return output.get('MESSAGE_EN', 'Error')
         except subprocess.CalledProcessError as e:
             return f'Error {e}'
         return 'success'
@@ -338,11 +342,14 @@ class Handler(HttpPlugin):
         # generate real shell environment for sophomorix print
         shell_env = {'TERM': 'xterm', 'SHELL': '/bin/bash',  'PATH': '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',  'HOME': '/root', '_': '/usr/bin/python3'}
         try:
-            subprocess.check_call(sophomorixCommand, shell=False, env=shell_env)
+            proc = subprocess.Popen(sophomorixCommand, shell=False, env=shell_env, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            stdout, stderr = proc.communicate()
+            output = _sophomorixoutput_as_dict(stderr).get('OUTPUT', [''])[0]
+            if output.get('TYPE', '') == 'ERROR':
+                return output.get('MESSAGE_EN', 'Error')
         except subprocess.CalledProcessError as e:
             return f'Error {e}'
         return 'success'
-            # return lmn_getSophomorixValue(sophomorixCommand, 'JSONINFO')
 
     @get(r'/api/lmn/users/passwords/download/(?P<name>.+)')
     @authorize('lm:users:passwords')

@@ -1601,7 +1601,7 @@
           }
           location.href = `/api/lmn/users/passwords/download/${prefix}-${$scope.options.user}.${$scope.options.format}`;
         } else {
-          notify.error(gettext("Could not create password pdf"));
+          notify.error(gettext("Could not create password pdf: ") + resp.data);
         }
         return $uibModalInstance.close();
       }).finally(function() {
@@ -1699,7 +1699,7 @@
           notify.success(gettext("Created password csv"));
           return location.href = `/api/lmn/users/passwords/download/${schoolclass}-${$scope.identity.user}.csv`;
         } else {
-          return notify.error(gettext("Could not create password csv"));
+          return notify.error(gettext("Could not create password csv: ") + resp.data);
         }
       }).finally(function() {
         return msg.close();

@@ -55,7 +55,7 @@ angular.module('lmn.users').controller 'LMUsersPrintPasswordsOptionsModalControl
 
                 location.href = "/api/lmn/users/passwords/download/#{prefix}-#{$scope.options.user}.#{$scope.options.format}"
             else
-                notify.error(gettext("Could not create password pdf"))
+                notify.error(gettext("Could not create password pdf: ") + resp.data)
             $uibModalInstance.close()
         .finally () ->
             msg.close()
@@ -125,7 +125,7 @@ angular.module('lmn.users').controller 'LMUsersPrintPasswordsController', ($scop
                 notify.success(gettext("Created password csv"))
                 location.href = "/api/lmn/users/passwords/download/#{schoolclass}-#{$scope.identity.user}.csv"
             else
-                notify.error(gettext("Could not create password csv"))
+                notify.error(gettext("Could not create password csv: ") + resp.data)
         .finally () ->
             msg.close()
 

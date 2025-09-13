@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-15 12:34+0200\n"
-"PO-Revision-Date: 2025-07-15 11:07\n"
+"POT-Creation-Date: 2025-09-13 11:32+0200\n"
+"PO-Revision-Date: 2025-09-13 09:33\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -489,7 +489,7 @@ msgstr ""
 msgid "Please only use lowercase characters, digits, hyphen or underscore."
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:66
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.html:69
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/partial/print-passwords.options.modal.html:80
 msgid "Print"
 msgstr ""
@@ -1286,10 +1286,12 @@ msgid "It's not possible to print all users and a class at the same time."
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/printPasswords.controller.coffee:125
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/printPasswords.controller.coffee:136
 msgid "Created password csv"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/printPasswords.controller.coffee:128
+#: usr/lib/linuxmuster-webui/plugins/lmn_users/resources/js/controllers/printPasswords.controller.coffee:139
 msgid "Could not create password csv"
 msgstr ""
 

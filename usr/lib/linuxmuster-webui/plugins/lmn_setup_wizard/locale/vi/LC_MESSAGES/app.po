@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmusternet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-24 18:45+0200\n"
-"PO-Revision-Date: 2025-05-24 17:00\n"
+"POT-Creation-Date: 2025-09-13 11:32+0200\n"
+"PO-Revision-Date: 2025-09-13 09:33\n"
 "Last-Translator: \n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -148,7 +148,7 @@ msgid "Setup"
 msgstr ""
 
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/partial/init-done.html:3
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:221
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:226
 msgid "Setup complete"
 msgstr ""
 
@@ -220,29 +220,29 @@ msgstr ""
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:47
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:70
 #: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:131
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:170
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:205
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:217
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:175
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:210
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:222
 msgid "Setup Wizard"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:232
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:237
 msgid "Setup Done"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:249
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:254
 msgid "Restarting"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:253
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:258
 msgid "Restarted"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:253
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:258
 msgid "Please wait"
 msgstr ""
 
-#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:263
+#: usr/lib/linuxmuster-webui/plugins/lmn_setup_wizard/js/init.controller.es:268
 msgid "Could not restart"
 msgstr ""
 

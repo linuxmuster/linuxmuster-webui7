@@ -3,7 +3,6 @@ API for password management.
 """
 
 import os
-import re
 import subprocess
 
 from jadi import component
@@ -11,6 +10,7 @@ from aj.api.http import get, post, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
 from aj.auth import authorize
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue, _sophomorixoutput_as_dict
+from aj.plugins.lmn_common.tools import sort_schoolclasses
 
 
 @component(HttpPlugin)
@@ -185,13 +185,6 @@ class Handler(HttpPlugin):
         :rtype: With GET, list of dict
         """
 
-        def _check_schoolclass_number(s):
-            n = re.findall(r'\d+', s)
-            if n:
-                return int(n[0])
-            else:
-                return 10000000  # just a big number to come after all schoolclasses
-
         classes_raw = self.context.ldapreader.schoolget('/schoolclasses')
 
         classes = []
@@ -212,11 +205,10 @@ class Handler(HttpPlugin):
 
         else:
             for classe in classes_raw:
-                if classe['cn'] in self.context.profil['schoolclasses'] and len(classe["sophomorixMembers"]) > 0:
+                if classe['cn'] in self.context.profile['schoolclasses'] and len(classe["sophomorixMembers"]) > 0:
                     classes.append(classe['cn'])
 
-        classes = sorted(classes, key=lambda s: (_check_schoolclass_number(s), s))
-        return classes
+        return sort_schoolclasses(classes)
 
     @post(r'/api/lmn/users/passwords/print')
     @authorize('lm:users:teachers:read') #TODO

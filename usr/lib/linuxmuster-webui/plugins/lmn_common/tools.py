@@ -2,7 +2,29 @@
 Useful common functions for the project.
 """
 
+import re
 import paramiko
+
+# Sorting schoolclasses list
+def check_schoolclass_number(s):
+    n = re.findall(r'\d+', s)
+    if n:
+        return int(n[0])
+    else:
+        return 10000000  # just a big number to come after all schoolclasses
+
+def sort_schoolclasses(schoolclasses):
+    """
+    Sort a list of schoolclasses. The list can be a list of cn of schoolclasses, or a list of dict of schoolclasses.
+    """
+
+    if len(schoolclasses) > 0:
+        if isinstance(schoolclasses[0], dict):
+            schoolclasses = sorted(schoolclasses, key=lambda s: (check_schoolclass_number(s['cn']), s['cn']))
+        else:
+            schoolclasses = sorted(schoolclasses, key=lambda s: (check_schoolclass_number(s), s))
+
+    return schoolclasses
 
 def testSSH(host, username='root', password='Muster!', port=22):
     """

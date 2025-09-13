@@ -7,7 +7,7 @@ import xml.etree.ElementTree as ElementTree
 from aj.api.http import get, post, HttpPlugin
 from aj.auth import authorize
 from aj.api.endpoint import endpoint, EndpointError
-from aj.auth import authorize, AuthenticationService
+from aj.auth import authorize
 from aj.plugins.lmn_common.api import samba_realm
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue
 

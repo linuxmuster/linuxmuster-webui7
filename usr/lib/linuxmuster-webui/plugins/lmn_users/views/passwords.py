@@ -9,7 +9,7 @@ import subprocess
 from jadi import component
 from aj.api.http import get, post, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
-from aj.auth import authorize, AuthenticationService
+from aj.auth import authorize
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue, _sophomorixoutput_as_dict
 
 

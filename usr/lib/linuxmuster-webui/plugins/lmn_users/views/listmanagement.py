@@ -11,7 +11,7 @@ import io
 from jadi import component
 from aj.api.http import get, post, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
-from aj.auth import authorize, AuthenticationService
+from aj.auth import authorize
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue
 from linuxmusterTools.lmnfile import LMNFile
 

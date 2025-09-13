@@ -110,7 +110,9 @@ class Handler(HttpPlugin):
 
     def _filter_templates(self, filename, school=''):
         """
-        Test if the name respects the sophomorix scheme for latex templates.
+        Test if the name respects the sophomorix scheme for school-defined latex templates, something like:
+        <schoolname>.<yourname>-<LANG>-<num>-template.tex
+
         See https://github.com/linuxmuster/sophomorix4/blob/bionic/sophomorix-samba/lang/latex/README.latextemplates.
 
         :param school: school
@@ -150,6 +152,7 @@ class Handler(HttpPlugin):
         templates_individual = []
         sophomorix_default_path = '/usr/share/sophomorix/lang/latex/templates/'
 
+        # Search for school defined templates in the global dir. Should not happen, since it's not the attended dir.
         for path in glob(sophomorix_default_path + "*tex"):
             filename = path.split('/')[-1]
             template = self._filter_templates(filename)

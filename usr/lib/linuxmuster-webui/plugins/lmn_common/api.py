@@ -96,6 +96,30 @@ class SophomorixProcess(threading.Thread):
         p = subprocess.Popen(self.command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=False, sensitive=self.sensitive)
         self.stdout, self.stderr = p.communicate()
 
+def _sophomorixoutput_as_dict(output):
+    # Cleanup stderr output
+    # output = t.stderr.replace(':null,', ":\"null\",")
+    # TODO: Maybe sophomorix should provide the null value  in  a python usable format
+    s = time()
+    output = output.decode("utf8").replace(':null', ":\"null\"")
+    output = output.replace(':null}', ":\"null\"}")
+    output = output.replace(':null]', ":\"null\"]")
+
+
+    # Some comands get many dicts, we just want the first
+    output = output.replace('\n', '').split('# JSON-end')[0]
+    output = output.split('# JSON-begin')[1]
+    output = re.sub('# JSON-begin', '', output)
+    logging.debug(f"Sophomorix filter result time : {time()-s}")
+
+    # Convert str to dict
+    jsonDict = {}
+    if output:
+        s = time()
+        jsonDict = ast.literal_eval(output)
+        logging.debug(f"Sophomorix convert to dict time : {time()-s}")
+
+    return jsonDict
 
 def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False, sensitive=False):
     """
@@ -126,27 +150,7 @@ def lmn_getSophomorixValue(sophomorixCommand, jsonpath, ignoreErrors=False, sens
     t.join()
     logging.debug(f"Sophomorix command time : {time()-s}")
 
-    # Cleanup stderr output
-    # output = t.stderr.replace(':null,', ":\"null\",")
-    # TODO: Maybe sophomorix should provide the null value  in  a python usable format
-    s = time()
-    output = t.stderr.decode("utf8").replace(':null', ":\"null\"")
-    output = output.replace(':null}', ":\"null\"}")
-    output = output.replace(':null]', ":\"null\"]")
-
-
-    # Some comands get many dicts, we just want the first
-    output = output.replace('\n', '').split('# JSON-end')[0]
-    output = output.split('# JSON-begin')[1]
-    output = re.sub('# JSON-begin', '', output)
-    logging.debug(f"Sophomorix filter result time : {time()-s}")
-
-    # Convert str to dict
-    jsonDict = {}
-    if output:
-        s = time()
-        jsonDict = ast.literal_eval(output)
-        logging.debug(f"Sophomorix convert to dict time : {time()-s}")
+    jsonDict = _sophomorixoutput_as_dict(t.stderr)
 
     if debug:
         logging.debug(

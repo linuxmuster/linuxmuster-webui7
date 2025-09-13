@@ -19,16 +19,15 @@ class Handler(HttpPlugin):
     @authorize('lm:users:students:read')
     @endpoint(api=True)
     def handle_api_get_sessions(self, http_context):
-        user = self.context.identity
 
-        sessions = self.context.ldapreader.schoolget(f'/users/{user}', dict=False).lmnsessions
+        sessions = self.context.profile['lmnsessions']
         sessionsList = []
         for session in sessions:
             s = {
-                'sid': session.sid,
-                'name': session.name,
-                'membersCount': session.membersCount,
-                'members': session.members,
+                'sid': session['sid'],
+                'name': session['name'],
+                'membersCount': session['membersCount'],
+                'members': session['members'],
                 'type': 'group'
             }
             sessionsList.append(s)
@@ -40,7 +39,7 @@ class Handler(HttpPlugin):
     def handle_api_get_schoolclasses(self, http_context):
         user = self.context.identity
 
-        schoolclasses = self.context.ldapreader.schoolget(f'/users/{user}', dict=False).schoolclasses
+        schoolclasses = self.context.profile['schoolclasses']
         schoolclassesList = []
         for schoolclass in schoolclasses:
             details = self.context.ldapreader.schoolget(f'/schoolclasses/{schoolclass}', dict=False)
@@ -59,7 +58,7 @@ class Handler(HttpPlugin):
     def handle_api_get_projects(self, http_context):
         user = self.context.identity
 
-        projects = self.context.ldapreader.schoolget(f'/users/{user}', dict=False).projects
+        projects = self.context.profile['projects']
         projectsList = []
         for project in projects:
             details = self.context.ldapreader.schoolget(f'/projects/{project}', dict=False)

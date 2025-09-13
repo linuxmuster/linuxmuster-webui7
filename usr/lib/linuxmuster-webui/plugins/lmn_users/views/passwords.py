@@ -195,7 +195,7 @@ class Handler(HttpPlugin):
         classes_raw = self.context.ldapreader.schoolget('/schoolclasses')
 
         classes = []
-        if self.context.profil['isAdmin']:
+        if self.context.profile['isAdmin']:
 
             for classe in classes_raw:
                 if not classe["sophomorixHidden"] and len(classe["sophomorixMembers"]) > 0:

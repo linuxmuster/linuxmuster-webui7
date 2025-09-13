@@ -362,29 +362,29 @@ class LMAuthenticationProvider(AuthenticationProvider):
         if username in ["root",None]:
             return {'activeSchool': 'default-school', 'school_show': True, 'schoolname': "Default School"}
         try:
-            profil = self.get_ldap_user(username)
+            profile = self.get_ldap_user(username)
             
-            if profil['sophomorixSchoolname'] == 'global':
-                profil['activeSchool'] = "default-school"
+            if profile['sophomorixSchoolname'] == 'global':
+                profile['activeSchool'] = "default-school"
             else:
                 if self.context.schoolmgr.school:
-                    profil['activeSchool'] = self.context.schoolmgr.school
+                    profile['activeSchool'] = self.context.schoolmgr.school
                 else:
-                    profil['activeSchool'] = profil['sophomorixSchoolname']
+                    profile['activeSchool'] = profile['sophomorixSchoolname']
 
-            if self.context.schoolmgr.schools and len(self.context.schoolmgr.schools) > 1 and "role-globaladministrator" in ''.join(profil.get('memberOf', [])):
-                profil['school_show'] = True
+            if self.context.schoolmgr.schools and len(self.context.schoolmgr.schools) > 1 and "role-globaladministrator" in ''.join(profile.get('memberOf', [])):
+                profile['school_show'] = True
             else:
-                profil['school_show'] = False
+                profile['school_show'] = False
             
             if self.context.schoolmgr.schoolname:
-                profil['schoolname'] = self.context.schoolmgr.schoolname
+                profile['schoolname'] = self.context.schoolmgr.schoolname
             else:
-                profil['schoolname'] = lmsetup_schoolname
+                profile['schoolname'] = lmsetup_schoolname
 
-            self.context.profil = profil
+            self.context.profile = profile
 
-            return json.loads(json.dumps(profil))
+            return json.loads(json.dumps(profile))
         except Exception as e:
             logging.error(e)
             return {}

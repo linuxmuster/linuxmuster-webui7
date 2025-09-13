@@ -192,7 +192,7 @@ class Handler(HttpPlugin):
             classes_raw = lmn_getSophomorixValue(sophomorixCommand, 'GROUP')
             classes = []
             for c, details in classes_raw.items():
-                if details["sophomorixHidden"] == "FALSE":
+                if details["sophomorixHidden"] == "FALSE" and len(details["sophomorixMembers"]) > 0:
                     classes.append(c)
             with authorize('lm:users:teachers:read'):
                 # append empty element. This references to all users

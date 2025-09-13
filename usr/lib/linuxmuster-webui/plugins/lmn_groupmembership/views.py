@@ -9,7 +9,7 @@ from urllib.parse import quote, unquote
 
 from aj.api.http import get, post, delete, HttpPlugin
 from aj.api.endpoint import endpoint
-from aj.auth import authorize, AuthenticationService
+from aj.auth import authorize
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue
 
 
@@ -32,7 +32,7 @@ class Handler(HttpPlugin):
         """
 
         username = self.context.identity
-        user_profile = AuthenticationService.get(self.context).get_provider().get_profile(username)
+        user_profile = self.context.profile
 
         projects = self.context.ldapreader.schoolget('/projects', dict=False)
         user_projects = []
@@ -88,7 +88,7 @@ class Handler(HttpPlugin):
         """
 
         username = self.context.identity
-        user_profile = AuthenticationService.get(self.context).get_provider().get_profile(username)
+        user_profile = self.context.profile
         printers = self.context.ldapreader.schoolget('/printers')
 
         for printer in printers:
@@ -112,7 +112,7 @@ class Handler(HttpPlugin):
         """
 
         username = self.context.identity
-        user_profile = AuthenticationService.get(self.context).get_provider().get_profile(username)
+        user_profile = self.context.profile
 
         schoolclasses = self.context.ldapreader.schoolget('/schoolclasses')
         to_remove = []
@@ -169,7 +169,7 @@ class Handler(HttpPlugin):
         """
 
         username = self.context.identity
-        user_details = AuthenticationService.get(self.context).get_provider().get_profile(username)
+        user_details = self.context.profile
 
         projectName = unquote(project.encode('latin-1'))
         sophomorixCommand = ['sophomorix-project', '-i', '-p', projectName, '-jj']
@@ -446,7 +446,7 @@ class Handler(HttpPlugin):
         """
 
         username = self.context.identity
-        user_details = AuthenticationService.get(self.context).get_provider().get_profile(username)
+        user_details = self.context.profile
         isAdmin = "administrator" in user_details['sophomorixRole']
 
         if isAdmin:

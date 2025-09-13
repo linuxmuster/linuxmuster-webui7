@@ -5,7 +5,7 @@ Module to handle an user crontab file.
 from jadi import component
 
 from aj.api.http import get, post, HttpPlugin
-from aj.auth import authorize, AuthenticationService
+from aj.auth import authorize
 from aj.api.endpoint import endpoint, EndpointError
 from aj.plugins.lmn_crontab.manager import CronManager
 from reconfigure.items.crontab import CrontabNormalTaskData, CrontabSpecialTaskData, CrontabEnvSettingData
@@ -58,7 +58,7 @@ class Handler(HttpPlugin):
         school = self.context.schoolmgr.school
 
         user = self.context.identity
-        profil = AuthenticationService.get(self.context).get_provider().get_profile(user)
+        profil = self.context.profile
 
         if profil['sophomorixRole'] == 'globaladministrator':
             # Load global-admin and root crontabs for all global admins
@@ -127,7 +127,7 @@ class Handler(HttpPlugin):
         crontabRoot = CronManager.get(self.context).load_tab(None)
         crontabRoot = fill_crontab(crontabRoot, crontabs['root'])
 
-        profil = AuthenticationService.get(self.context).get_provider().get_profile(user)
+        profil = self.context.profile
 
         try:
             if profil['sophomorixRole'] == 'globaladministrator':

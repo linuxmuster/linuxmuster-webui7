@@ -1652,8 +1652,8 @@
     $scope.sort_schoolclasses = function(schoolclasses) {
       schoolclasses.sort(function(a, b) {
         var anum, bnum;
-        anum = parseInt(a, 10);
-        bnum = parseInt(b, 10);
+        anum = parseInt(a, 10) || 0;
+        bnum = parseInt(b, 10) || 0;
         if (anum > bnum) {
           return 1;
         }
@@ -1668,7 +1668,7 @@
       var classname, i, len, membership, ref;
       if ($scope.identity.user === 'root' || $scope.identity.profile.sophomorixRole === 'globaladministrator' || $scope.identity.profile.sophomorixRole === 'schooladministrator') {
         return $http.get('/api/lmn/users/classes').then(function(resp) {
-          $scope.classes = $scope.sort_schoolclasses(resp.data);
+          $scope.classes = resp.data;
           return $scope.admin_warning = true;
         });
       } else {

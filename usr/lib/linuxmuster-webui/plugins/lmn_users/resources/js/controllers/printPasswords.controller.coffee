@@ -93,8 +93,8 @@ angular.module('lmn.users').controller 'LMUsersPrintPasswordsController', ($scop
 
     $scope.sort_schoolclasses = (schoolclasses) ->
         schoolclasses.sort((a,b) ->
-            anum = parseInt(a, 10)
-            bnum = parseInt(b, 10)
+            anum = parseInt(a, 10) || 0
+            bnum = parseInt(b, 10) || 0
             if (anum > bnum)
                 return 1
             if (anum < bnum)
@@ -106,7 +106,7 @@ angular.module('lmn.users').controller 'LMUsersPrintPasswordsController', ($scop
     $scope.getGroups = (username) ->
         if $scope.identity.user == 'root' || $scope.identity.profile.sophomorixRole == 'globaladministrator' || $scope.identity.profile.sophomorixRole == 'schooladministrator'
             $http.get('/api/lmn/users/classes').then (resp) ->
-                $scope.classes = $scope.sort_schoolclasses(resp.data)
+                $scope.classes = resp.data
                 $scope.admin_warning = true
         else
             $scope.admin_warning = false

@@ -74,8 +74,8 @@
                 <i class="fa fa-info-circle"></i>
                 <span translate> There are no schoolclasses available. Ask the administrator to import students</span>
             </div>
-            <div class="flex-container lmn-container-list">
-                <div ng:repeat="classe in classes|orderBy:[sort.fx]:sortReverse|filter:filter" style="padding-right:10px;border-right:solid 2px #ff8f00;">
+            <div class="flex-container lmn-container-list" style="flex-direction: column;" ng:style="{'max-height': classes_max_height}">
+                <div ng:repeat="classe in classes|filter:filter" style="padding-right:10px;border-right:solid 2px #ff8f00;">
                     <div ng-class="{'color-orange': classe.membership}">
                         <input id={{classe.groupname}} type="checkbox" ng-click='setMembership(classe)' ng-checked="classe.membership"></input>
                         <i class="fa fa-users"></i>

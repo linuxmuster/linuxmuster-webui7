@@ -11,6 +11,7 @@ from aj.api.http import get, post, delete, HttpPlugin
 from aj.api.endpoint import endpoint
 from aj.auth import authorize
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue
+from aj.plugins.lmn_common.tools import sort_schoolclasses
 
 
 @component(HttpPlugin)
@@ -87,7 +88,6 @@ class Handler(HttpPlugin):
         :rtype: list
         """
 
-        username = self.context.identity
         user_profile = self.context.profile
         printers = self.context.ldapreader.schoolget('/printers')
 
@@ -132,7 +132,7 @@ class Handler(HttpPlugin):
         for schoolclass in to_remove:
             schoolclasses.remove(schoolclass)
 
-        return schoolclasses
+        return sort_schoolclasses(schoolclasses)
 
     @get(r'/api/lmn/groupmembership/groups/(?P<groupName>.+)')
     @authorize('lmn:groupmemberships:write')

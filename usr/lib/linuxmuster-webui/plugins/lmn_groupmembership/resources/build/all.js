@@ -144,6 +144,7 @@
       });
       return $http.get('/api/lmn/groupmembership/schoolclasses').then(function(resp) {
         $scope.classes = resp.data;
+        $scope.classes_max_height = 25 * resp.data.length / 4 + "px";
         return $scope.loading_schoolclasses = false;
       });
     };

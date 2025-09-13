@@ -3,6 +3,7 @@ API for password management.
 """
 
 import os
+import re
 import subprocess
 
 from jadi import component
@@ -184,6 +185,13 @@ class Handler(HttpPlugin):
         :rtype: With GET, list of dict
         """
 
+        def _check_schoolclass_number(s):
+            n = re.findall(r'\d+', s)
+            if n:
+                return int(n[0])
+            else:
+                return 10000000  # just a big number to come after all schoolclasses
+
         school = self.context.schoolmgr.school
         sophomorixCommand = ['sophomorix-query', '--class', '--schoolbase', school, '--group-full', '-jj']
 
@@ -202,6 +210,7 @@ class Handler(HttpPlugin):
                     classes.append('teachers')
                 else:
                     classes.append(f'{school}-teachers')
+            classes = sorted(classes, key=lambda s: (_check_schoolclass_number(s), s))
             return classes
 
     @post(r'/api/lmn/users/passwords/print')

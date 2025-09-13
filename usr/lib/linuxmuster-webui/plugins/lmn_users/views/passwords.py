@@ -192,26 +192,31 @@ class Handler(HttpPlugin):
             else:
                 return 10000000  # just a big number to come after all schoolclasses
 
-        school = self.context.schoolmgr.school
-        sophomorixCommand = ['sophomorix-query', '--class', '--schoolbase', school, '--group-full', '-jj']
+        classes_raw = self.context.ldapreader.schoolget('/schoolclasses')
 
-        with authorize('lm:users:students:read'):
-            # Check if there are any classes if not return empty list
-            classes_raw = lmn_getSophomorixValue(sophomorixCommand, 'GROUP')
-            classes = []
-            for c, details in classes_raw.items():
-                if details["sophomorixHidden"] == "FALSE" and len(details["sophomorixMembers"]) > 0:
-                    classes.append(c)
-            with authorize('lm:users:teachers:read'):
-                # append empty element. This references to all users
-                classes.append('')
-                # add also teachers passwords
-                if school == 'default-school':
-                    classes.append('teachers')
-                else:
-                    classes.append(f'{school}-teachers')
-            classes = sorted(classes, key=lambda s: (_check_schoolclass_number(s), s))
-            return classes
+        classes = []
+        if self.context.profil['isAdmin']:
+
+            for classe in classes_raw:
+                if not classe["sophomorixHidden"] and len(classe["sophomorixMembers"]) > 0:
+                    classes.append(classe['cn'])
+
+            # append empty element. This references to all users
+            classes.append('')
+
+            # add also teachers passwords
+            if self.context.schoolmgr.school == 'default-school':
+                classes.append('teachers')
+            else:
+                classes.append(f'{school}-teachers')
+
+        else:
+            for classe in classes_raw:
+                if classe['cn'] in self.context.profil['schoolclasses'] and len(classe["sophomorixMembers"]) > 0:
+                    classes.append(classe['cn'])
+
+        classes = sorted(classes, key=lambda s: (_check_schoolclass_number(s), s))
+        return classes
 
     @post(r'/api/lmn/users/passwords/print')
     @authorize('lm:users:teachers:read') #TODO

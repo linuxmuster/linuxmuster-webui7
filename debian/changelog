@@ -1,3 +1,10 @@
+linuxmuster-webui7 (7.3.23) lmn73; urgency=medium
+
+  * Fix import error with zope.event
+  * [settings] Add useful hints about templates 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 13 Sep 2025 11:33:49 +0200
+
 linuxmuster-webui7 (7.3.22) lmn73; urgency=medium
 
   * [users] Remove obsolet lmntools script 

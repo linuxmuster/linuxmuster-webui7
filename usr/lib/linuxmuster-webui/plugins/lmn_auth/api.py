@@ -382,6 +382,8 @@ class LMAuthenticationProvider(AuthenticationProvider):
             else:
                 profil['schoolname'] = lmsetup_schoolname
 
+            self.context.profil = profil
+
             return json.loads(json.dumps(profil))
         except Exception as e:
             logging.error(e)

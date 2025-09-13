@@ -29,3 +29,4 @@ simplejson>=3.16.0
 smbprotocol==1.14.0
 unicodecsv==0.14.1
 xmltodict
+zope.event==5.1.1 # Import problem with 6.0.0

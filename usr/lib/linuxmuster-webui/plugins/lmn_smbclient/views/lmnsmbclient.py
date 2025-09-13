@@ -19,7 +19,7 @@ from jadi import component
 
 from aj.api.http import url, get, post, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
-from aj.auth import authorize, AuthenticationService
+from aj.auth import authorize
 from aj.plugins.lmn_common.mimetypes import content_mimetypes, content_filetypes
 
 
@@ -70,7 +70,7 @@ class Handler(HttpPlugin):
         if user is None:
             user = self.context.identity
 
-        profil = AuthenticationService.get(self.context).get_provider().get_profile(user)
+        profil = self.context.profile
         user_context = {
             'user': user,
             'role': profil['sophomorixRole'],
@@ -377,7 +377,7 @@ class Handler(HttpPlugin):
         """
 
         user = self.context.identity
-        profil = AuthenticationService.get(self.context).get_provider().get_profile(user)
+        profil = self.context.profile
         user_context = {
             'user': user,
             'role': profil['sophomorixRole'],
@@ -418,7 +418,7 @@ class Handler(HttpPlugin):
         """
 
         user = self.context.identity
-        profil = AuthenticationService.get(self.context).get_provider().get_profile(user)
+        profil = self.context.profile
         user_context = {
             'user': user,
             'role': profil['sophomorixRole'],
@@ -467,7 +467,7 @@ class Handler(HttpPlugin):
         targets = []
 
         user = self.context.identity
-        profil = AuthenticationService.get(self.context).get_provider().get_profile(user)
+        profil = self.context.profile
         user_context = {
             'user': user,
             'role': profil['sophomorixRole'],

@@ -23,7 +23,7 @@ import json
 
 from aj.api.http import url, get, post, mkcol, options, copy, move, put, propfind, delete, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
-from aj.auth import authorize, AuthenticationService
+from aj.auth import authorize
 from aj.plugins.lmn_common.mimetypes import content_mimetypes
 from aj.plugins.lmn_common.api import samba_realm, samba_netbios
 from aj.plugins.lmn_smbclient.davxml import WebdavXMLResponse
@@ -76,7 +76,7 @@ class Handler(HttpPlugin):
         ext = os.path.splitext(name)[1]
 
         user = self.context.identity
-        profil = AuthenticationService.get(self.context).get_provider().get_profile(user)
+        profil = self.context.profile
         url_path = path.replace('/', '\\')
         if profil['sophomorixRole'] == 'globaladministrator':
             if path.startswith('global/') or path == 'global':
@@ -256,7 +256,7 @@ class Handler(HttpPlugin):
     @endpoint()
     def handle_api_webdav_propfind(self, http_context, path=''):
         user = self.context.identity
-        profil = AuthenticationService.get(self.context).get_provider().get_profile(user)
+        profil = self.context.profile
         user_context = {
             'user': user,
             'role': profil['sophomorixRole'],

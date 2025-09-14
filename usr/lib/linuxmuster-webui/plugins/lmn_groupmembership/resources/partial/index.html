@@ -66,7 +66,7 @@
         <br>
 
         <div ng:show="show_schoolclasses">
-            <button class="btn btn-danger pull-right" ng:click="resetAll('class')" ng:show="identity.profile.isAdmin" translate><i class="fas fa-undo"></i></button>
+            <button class="btn btn-danger pull-right" ng:click="resetAll('class')" ng:show="identity.profile.isAdmin" title="Reset all memberships" translate><i class="fas fa-undo"></i></button>
             <h3 translate>Schoolclasses</h3>
             <br />
             <progress-spinner ng:show="loading_schoolclasses"></progress-spinner>
@@ -118,7 +118,7 @@
         <hr />
 
         <div ng:show="show_projects">
-            <button class="btn btn-danger pull-right" ng:click="resetAll('project')" ng:show="identity.profile.isAdmin" translate><i class="fas fa-undo"></i></button>
+            <button class="btn btn-danger pull-right" ng:click="resetAll('project')" ng:show="identity.profile.isAdmin" title="Reset all memberships" translate><i class="fas fa-undo"></i></button>
             <h3 translate>Projects</h3>
             <br />
             <progress-spinner ng:show="loading_projects"></progress-spinner>

@@ -83,7 +83,8 @@
                             <span translate>Class</span>
                             <b style="word-wrap: break-word; -ms-word-break: break-all">{{classe.groupname}}</b>
                         </a>
-                        <span class="label label-default pull-right" title="Members">{{classe.members.length}}</span>
+                        <span class="label label-default pull-right" title="Members" ng:if="classe.members.length > 0">{{classe.members.length}}</span>
+                        <span class="label label-danger pull-right" title="Members" ng:if="classe.members.length == 0">{{classe.members.length}}</span>
                     </div>
                 </div>
             </div>

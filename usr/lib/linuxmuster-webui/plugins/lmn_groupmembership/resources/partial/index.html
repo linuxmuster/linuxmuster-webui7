@@ -75,7 +75,7 @@
                 <span translate> There are no schoolclasses available. Ask the administrator to import students</span>
             </div>
             <div class="flex-container lmn-container-list" style="flex-direction: column;" ng:style="{'max-height': classes_max_height}">
-                <div ng:repeat="classe in classes|filter:filter" style="padding-right:10px;border-right:solid 2px #ff8f00;">
+                <div ng:repeat="classe in classes|orderBy:[sort.fx]:sortReverse|filter:filter" style="padding-right:10px;border-right:solid 2px #ff8f00;min-width:300px;">
                     <div ng-class="{'color-orange': classe.membership}">
                         <input id={{classe.groupname}} type="checkbox" ng-click='setMembership(classe)' ng-checked="classe.membership"></input>
                         <i class="fa fa-users"></i>
@@ -109,7 +109,6 @@
                             <span translate>Printer</span>
                             <b style="word-wrap: break-word; -ms-word-break: break-all">{{printergroup.groupname}}</b>
                         </a>
-                        </a>
                     </div>
                 </div>
             </div>
@@ -126,16 +125,24 @@
                 <i class="fa fa-info-circle"></i>
                 <span translate> There are no projects yet. You can create a new project using the menu bar.</span>
             </div>
-            <div class="flex-container lmn-container-list" >
-                <div ng:repeat="project in projects|orderBy:[sort.fx]:sortReverse|filter:filter" style="padding-right:10px;border-right:solid 2px #ff8f00;">
+            <div class="flex-container lmn-container-list" style="flex-direction: column;" ng:style="{'max-height': projects_max_height}">
+                <div ng:repeat="project in projects|orderBy:[sort.fx]:sortReverse|filter:filter" style="padding:3px 10px 3px 0;border-right:solid 2px #ff8f00;min-width:300px;">
                     <div ng:show="!projectIsHidden(project)" ng:class="{'color-orange': project.membership}" ng:style="!projectIsJoinable(project) && {'padding-left':'17px'}">
                         <input id={{project.groupname}} type="checkbox" ng:show="projectIsJoinable(project)" ng:click='setMembership(project)' ng:checked="project.membership">
                         <i class="fa fa-flask"></i>
                         <a href="#" ng-click='showGroupDetails($index, project.type, project.groupname)'>
-                            <b style="word-wrap: break-word; -ms-word-break: break-all">{{project.groupname}}</b>
+                            <b style="word-wrap: break-word; -ms-word-break: break-all;width:100%;">{{project.groupname}}</b>
                         </a>
-                        <span ng:show="!loading_projects" class="label label-danger pull-right" title="{{project.adminsCount}} admin(s)">{{project.adminsCount}}</span>
-                        <span ng:show="!loading_projects" class="label label-default pull-right" title="{{project.membersCount}} member(s)">{{project.membersCount}}</span>
+                        <span ng:show="!loading_projects" class="label label-danger pull-right" title="{{project.adminsCount}} admin(s)">
+                            {{project.sophomorixAdmins.length}} <span translate>adm.</span>
+                            <br />
+                            {{project.sophomorixAdminGroups.length}} <span translate>gr.</span>
+                        </span>
+                        <span ng:show="!loading_projects" class="label label-default pull-right" title="{{project.membersCount}} member(s)">
+                            {{project.sophomorixMembers.length}} <span translate>adm.</span>
+                            <br />
+                            {{project.sophomorixMemberGroups.length}} <span translate>gr.</span>
+                        </span>
                     </div>
                 </div>
             </div>

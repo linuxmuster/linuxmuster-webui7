@@ -110,41 +110,29 @@
     };
     $scope.getGroups = function(username) {
       $http.get('/api/lmn/groupmembership/projects').then(function(resp) {
-        var i, len, project, promises, ref;
         $scope.projects = resp.data;
-        promises = [];
-        ref = $scope.projects;
-        for (i = 0, len = ref.length; i < len; i++) {
-          project = ref[i];
-          promises.push($http.get('/api/lmn/groupmembership/all_members_project/' + project.cn).then(function(resp) {
-            var j, len1, proj, ref1, results;
-            ref1 = $scope.projects;
-            results = [];
-            for (j = 0, len1 = ref1.length; j < len1; j++) {
-              proj = ref1[j];
-              if (proj.cn === resp.data.cn) {
-                proj.membersCount = resp.data.membersCount;
-                proj.adminsCount = resp.data.adminsCount;
-                proj.all_members = resp.data.all_members;
-                results.push(proj.all_admins = resp.data.all_admins);
-              } else {
-                results.push(void 0);
-              }
-            }
-            return results;
-          }));
-        }
-        return $q.all(promises).then(function() {
-          return $scope.loading_projects = false;
-        });
+        $scope.loading_projects = false;
+        $scope.projects_max_height = 45 * resp.data.length / 3 + "px";
+        return console.log($scope.projects_max_height);
       });
+      // Disable recursiv search of members since it's pretty slow for schools with a lot of projects.
+      //      promises = []
+      //      for project in $scope.projects
+      //          promises.push($http.get('/api/lmn/groupmembership/all_members_project/' + project.cn).then (resp) ->
+      //              for proj in $scope.projects
+      //                  if proj.cn == resp.data.cn
+      //                    proj.membersCount = resp.data.membersCount
+      //                    proj.adminsCount = resp.data.adminsCount
+      //                    proj.all_members = resp.data.all_members
+      //                    proj.all_admins = resp.data.all_admins)
+      //      $q.all(promises).then () -> $scope.loading_projects = false
       $http.get('/api/lmn/groupmembership/printers').then(function(resp) {
         $scope.printers = resp.data;
         return $scope.loading_printers = false;
       });
       return $http.get('/api/lmn/groupmembership/schoolclasses').then(function(resp) {
         $scope.classes = resp.data;
-        $scope.classes_max_height = 25 * resp.data.length / 4 + "px";
+        $scope.classes_max_height = 25 * resp.data.length / 3 + "px";
         return $scope.loading_schoolclasses = false;
       });
     };

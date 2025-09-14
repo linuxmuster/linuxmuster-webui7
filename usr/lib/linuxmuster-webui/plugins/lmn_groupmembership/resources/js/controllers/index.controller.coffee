@@ -81,25 +81,29 @@ angular.module('lmn.groupmembership').controller 'LMNGroupMembershipController',
       dict['type'] == val
 
   $scope.getGroups = (username) ->
-    $http.get('/api/lmn/groupmembership/projects').then (resp) ->
-      $scope.projects = resp.data
-      promises = []
-      for project in $scope.projects
-          promises.push($http.get('/api/lmn/groupmembership/all_members_project/' + project.cn).then (resp) ->
-              for proj in $scope.projects
-                  if proj.cn == resp.data.cn
-                    proj.membersCount = resp.data.membersCount
-                    proj.adminsCount = resp.data.adminsCount
-                    proj.all_members = resp.data.all_members
-                    proj.all_admins = resp.data.all_admins)
-      $q.all(promises).then () -> $scope.loading_projects = false
-    $http.get('/api/lmn/groupmembership/printers').then (resp) ->
-      $scope.printers = resp.data
-      $scope.loading_printers = false
-    $http.get('/api/lmn/groupmembership/schoolclasses').then (resp) ->
-      $scope.classes = resp.data
-      $scope.classes_max_height = 25 * resp.data.length / 4 + "px"
-      $scope.loading_schoolclasses = false
+      $http.get('/api/lmn/groupmembership/projects').then (resp) ->
+            $scope.projects = resp.data
+            $scope.loading_projects = false
+            $scope.projects_max_height = 45 * resp.data.length / 3 + "px"
+            console.log($scope.projects_max_height)
+            # Disable recursiv search of members since it's pretty slow for schools with a lot of projects.
+            #      promises = []
+            #      for project in $scope.projects
+            #          promises.push($http.get('/api/lmn/groupmembership/all_members_project/' + project.cn).then (resp) ->
+            #              for proj in $scope.projects
+            #                  if proj.cn == resp.data.cn
+            #                    proj.membersCount = resp.data.membersCount
+            #                    proj.adminsCount = resp.data.adminsCount
+            #                    proj.all_members = resp.data.all_members
+            #                    proj.all_admins = resp.data.all_admins)
+            #      $q.all(promises).then () -> $scope.loading_projects = false
+      $http.get('/api/lmn/groupmembership/printers').then (resp) ->
+          $scope.printers = resp.data
+          $scope.loading_printers = false
+      $http.get('/api/lmn/groupmembership/schoolclasses').then (resp) ->
+          $scope.classes = resp.data
+          $scope.classes_max_height = 25 * resp.data.length / 3 + "px"
+          $scope.loading_schoolclasses = false
 
   $scope.createProject = () ->
     messagebox.prompt(gettext('Project Name'), '').then (msg) ->

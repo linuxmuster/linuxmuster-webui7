@@ -574,6 +574,10 @@ class Handler(HttpPlugin):
         with LMNFile(apiconfig_path, 'r') as f:
             apiconfig = f.read()
 
+        for key, details in config['api_keys'].items():
+            if details.get('ips', None) == []:
+                del details['ips']
+
         apiconfig['host_key_auth'] = config['enable_host_auth']
         apiconfig['host_keys'] = config['api_keys']
 
@@ -597,17 +601,18 @@ class Handler(HttpPlugin):
         apiconfig_path = "/etc/linuxmuster/api/config.yml"
         key = http_context.json_body()['key']
 
-        key['ips']  = key['ips']
         key['secret'] = base64.b64encode(token_bytes(64)).decode()
 
         with LMNFile(apiconfig_path, 'r') as f:
             apiconfig = f.read()
 
         apiconfig['host_keys'][key['name']] = {
-            'ips': key['ips'],
             'secret': key['secret'],
             'user': key['user'],
         }
+
+        if key['ips']:
+            apiconfig['host_keys'][key['name']]['ips'] = key['ips']
 
         with LMNFile(apiconfig_path, 'w') as f:
             f.write(apiconfig)

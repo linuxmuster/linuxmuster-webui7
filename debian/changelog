@@ -1,3 +1,19 @@
+linuxmuster-webui7 (7.3.24) lmn73; urgency=medium
+
+  * [auth] Add profil to Python context
+  * [config] Fix api empty IP list
+  * [groupmembership] Faster loading time
+  * [groupmembership] Red labels for empty schoolclasses
+  * [groupmembership] Remove recursiv search of members, display groups
+    instead
+  * [groupmembership] Sort schoolclasses
+  * [session] Faster loading time for groups list
+  * [users] Catch errors when printing passwords
+  * [users] Hide empty schoolclasses in password view
+  * [users] Sort schoolclasses in password view
+ 
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Tue, 23 Sep 2025 17:43:32 +0200
+
 linuxmuster-webui7 (7.3.23) lmn73; urgency=medium
 
   * Fix import error with zope.event

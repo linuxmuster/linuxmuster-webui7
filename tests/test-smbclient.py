@@ -8,41 +8,43 @@ import smbclient
 
 from smbprotocol.exceptions import SMBOSError
 from pwinput import pwinput
-from configparser import ConfigParser
-
+from linuxmusterTools.samba_util import DFS
+from linuxmusterTools.lmnconfig import SAMBA_REALM, SAMBA_DOMAIN, SAMBA_NETBIOS
 
 def p(*args, end="\n"):
     print("\033[1m\033[38;5;214m", *args, "\033[39m\033[0m", end=end)
 
-p('This script helps to test some domains to access samba shares, and you can try your own path too.', end="\n")
+p('This script helps to test some domains to access samba shares, and you can try your own path too.', end="\n\n")
 
-smbconf = ConfigParser()
-try:
-    smbconf.read('/etc/samba/smb.conf')
-    samba_realm = smbconf["global"]["realm"].lower()
-    samba_netbios = smbconf["global"]["netbios name"].lower()
-    samba_domain = f'{samba_netbios}.{samba_realm}'
-except Exception:
-    print("Can not read configuration from smb.conf")
-    samba_domain, samba_netbios, samba_realm = '', '', ''
-
-p(f"Samba realm used by the Webui --> {samba_realm}")
-p(f"Samba netbios used by the Webui --> {samba_netbios}")
-p(f"Samba domain used by the Webui --> {samba_domain}")
+print("-"*80, "\n")
+p("## Checking Samba domains:")
+p(f"\tSamba realm used by the Webui   --> {SAMBA_REALM}")
+p(f"\tSamba netbios used by the Webui --> {SAMBA_NETBIOS}")
+p(f"\tSamba domain used by the Webui  --> {SAMBA_DOMAIN}\n")
 p("Samba domain to try (optional, something like server.linuxmuster.lan):", end="")
 domain_user = input()
 
+print("-"*80, "\n")
+p("## Authentication:")
 p("Teacher login:", end="")
 teacher = input()
+uid = pwd.getpwnam(teacher).pw_uid
+
+if not teacher:
+    print("\033[1m\033[91m Please enter a valid user login \033[39m\033[0m")
+    sys.exit()
 
 pw = pwinput(prompt="\033[1m\033[38;5;214m Password:\033[39m\033[0m")
 
-uid = pwd.getpwnam(teacher).pw_uid
+if not pw:
+    print("\033[1m\033[91m No password given, trying to authenticate via an existing Kerberos ticket \033[39m\033[0m")
 
-p("Getting Kerberos ticket")
+print("-"*80, "\n")
+p("## Getting Kerberos ticket")
 child = pexpect.spawn('/usr/bin/kinit', ['-c', f'/tmp/krb5cc_{uid}', teacher])
-child.expect('.*')
-child.sendline(pw)
+if pw:
+    child.expect('.*')
+    child.sendline(pw)
 
 # Waiting until the ticket is written
 time.sleep(2)
@@ -51,13 +53,13 @@ if not os.path.isfile(f'/tmp/krb5cc_{uid}'):
     print("\033[1m\033[91m No valid Kerberos ticket found ! \033[39m\033[0m")
     sys.exit()
 
-p(f"Setting process uid={uid} and gid=100 for Kerberos ticket")
+p(f"Setting process uid={uid} and gid=100 for Kerberos ticket /tmp/krb5cc_{uid}")
 os.chown(f'/tmp/krb5cc_{uid}', uid, 100)
 os.setgid(100)
 os.setuid(uid)
 
 report = ""
-hosts =  [samba_netbios, samba_realm, samba_domain]
+hosts =  [SAMBA_NETBIOS, SAMBA_REALM, SAMBA_DOMAIN]
 if domain_user:
     hosts.append(domain_user)
 
@@ -83,6 +85,6 @@ for host in hosts:
         print("\033[1m\033[91m", e, "\033[39m\033[0m")
     report += f"{result}\n"
 
-print("\n", "#"*80, "\n")
+print("\n", "-"*80, "\n")
 p('REPORT:', end="\n\n")
 print(report)

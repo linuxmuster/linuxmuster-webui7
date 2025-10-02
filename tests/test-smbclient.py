@@ -7,7 +7,7 @@ import time
 import smbclient
 
 from smbprotocol.exceptions import SMBOSError
-from getpass import getpass
+from pwinput import pwinput
 from configparser import ConfigParser
 
 
@@ -35,7 +35,7 @@ domain_user = input()
 p("Teacher login:", end="")
 teacher = input()
 
-pw = getpass(prompt="\033[1m\033[38;5;214m Password:\033[39m\033[0m", stream=None)
+pw = pwinput(prompt="\033[1m\033[38;5;214m Password:\033[39m\033[0m")
 
 uid = pwd.getpwnam(teacher).pw_uid
 

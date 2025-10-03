@@ -85,6 +85,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
             schoolmgr.switch(active_school)
             self.context.schoolmgr = schoolmgr
             self.context.ldapreader = LMNLdapReader
+            self.context.profile = self._get_profile(username)
 
             def schoolget(*args, **kwargs):
                 """
@@ -349,7 +350,7 @@ class LMAuthenticationProvider(AuthenticationProvider):
 
         return uid
 
-    def get_profile(self, username):
+    def _get_profile(self, username):
         """
         Prepare identity profile for angular.
 
@@ -382,12 +383,14 @@ class LMAuthenticationProvider(AuthenticationProvider):
             else:
                 profile['schoolname'] = lmsetup_schoolname
 
-            self.context.profile = profile
-
-            return json.loads(json.dumps(profile))
+            return profile
         except Exception as e:
             logging.error(e)
             return {}
+
+    def get_profile(self, username):
+
+        return json.loads(json.dumps(self._get_profile(username)))
 
     def check_mail(self, mail):
         """

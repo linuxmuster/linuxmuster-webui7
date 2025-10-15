@@ -7,7 +7,7 @@ import os
 from jadi import component
 from aj.api.http import get, post, patch, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError, EndpointReturn
-from aj.auth import authorize
+from aj.auth import authorize, AuthenticationService
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue
 
 
@@ -157,10 +157,11 @@ class Handler(HttpPlugin):
         :rtype: list
         """
 
+
         if user != 'root':
             custom_fields = self.context.schoolmgr.custom_fields
             custom_fields_to_show = []
-            profil = self.context.profile
+            profil = AuthenticationService.get(self.context).get_provider().get_profile(user)
             role = profil['sophomorixRole'] + 's'
 
             for field in ['custom', 'customMulti', 'proxyAddresses']:

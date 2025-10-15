@@ -57,10 +57,7 @@ class Handler(HttpPlugin):
 
         school = self.context.schoolmgr.school
 
-        user = self.context.identity
-        profil = self.context.profile
-
-        if profil['sophomorixRole'] == 'globaladministrator':
+        if self.context.profile['sophomorixRole'] == 'globaladministrator':
             # Load global-admin and root crontabs for all global admins
             crontab = CronManager.get(self.context).load_tab('global-admin')
             crontab_dict = crontab.tree.to_dict()
@@ -127,10 +124,8 @@ class Handler(HttpPlugin):
         crontabRoot = CronManager.get(self.context).load_tab(None)
         crontabRoot = fill_crontab(crontabRoot, crontabs['root'])
 
-        profil = self.context.profile
-
         try:
-            if profil['sophomorixRole'] == 'globaladministrator':
+            if self.context.profile['sophomorixRole'] == 'globaladministrator':
                 CronManager.get(self.context).save_tab('global-admin', crontabGA)
                 CronManager.get(self.context).save_tab('root', crontabRoot)
                 return True

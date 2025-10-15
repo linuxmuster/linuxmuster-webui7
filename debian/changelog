@@ -1,3 +1,12 @@
+linuxmuster-webui7 (7.3.25) lmn73; urgency=medium
+
+  * Move script test-smbclient to lmncli
+  * [webdav] Fix missing profile
+  * [groupmembership] Fix dynamic loading 
+  * [sessions] Fix dynamic loading 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Wed, 15 Oct 2025 12:41:44 +0200
+
 linuxmuster-webui7 (7.3.24) lmn73; urgency=medium
 
   * [auth] Add profil to Python context

@@ -9,7 +9,7 @@ from urllib.parse import quote, unquote
 
 from aj.api.http import get, post, delete, HttpPlugin
 from aj.api.endpoint import endpoint
-from aj.auth import authorize
+from aj.auth import authorize, AuthenticationService
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue
 from aj.plugins.lmn_common.tools import sort_schoolclasses
 
@@ -39,7 +39,7 @@ class Handler(HttpPlugin):
         user_projects = []
 
         for project in projects:
-            member = project.cn in user_profile['projects'] or user_profile['isAdmin']
+            member = user_profile['dn'] in project.member or user_profile['isAdmin']
 
             if member or not project.sophomorixHidden:
                 projectDict = project.asdict()
@@ -94,7 +94,7 @@ class Handler(HttpPlugin):
         for printer in printers:
             printer['type'] = 'printergroup'
             printer['groupname'] = printer['cn']
-            printer['membership'] = printer['cn'] in user_profile['printers'] or user_profile['isAdmin']
+            printer['membership'] = user_profile['dn'] in printer['dn'] or user_profile['isAdmin']
 
         return printers
 
@@ -118,7 +118,7 @@ class Handler(HttpPlugin):
         to_remove = []
 
         for schoolclass in schoolclasses:
-            member = schoolclass['cn'] in user_profile['schoolclasses'] or user_profile['isAdmin']
+            member = user_profile['dn'] in schoolclass['member'] or user_profile['isAdmin']
 
             if member or not schoolclass['sophomorixHidden']:
                 schoolclass['groupname'] = schoolclass['cn']
@@ -169,13 +169,12 @@ class Handler(HttpPlugin):
         """
 
         username = self.context.identity
-        user_details = self.context.profile
 
         projectName = unquote(project.encode('latin-1'))
         sophomorixCommand = ['sophomorix-project', '-i', '-p', projectName, '-jj']
         groupAdmins = lmn_getSophomorixValue(sophomorixCommand, f'GROUPS/{projectName}/sophomorixAdmins')
 
-        if username in groupAdmins or user_details['sophomorixRole'] in ['globaladministrator', 'schooladministrator']:
+        if username in groupAdmins or self.context.profile['isAdmin']:
             sophomorixCommand = ['sophomorix-project', '--kill', '-p', projectName, '-jj']
             result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
             if result['TYPE'] == "ERROR":
@@ -445,11 +444,8 @@ class Handler(HttpPlugin):
         :rtype: dict or tuple
         """
 
-        username = self.context.identity
-        user_details = self.context.profile
-        isAdmin = "administrator" in user_details['sophomorixRole']
 
-        if isAdmin:
+        if self.context.profile['isAdmin']:
             sophomorixCommand = ['sophomorix-class', '--kill', '--class', schoolclass, '-jj']
             result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
             if result['TYPE'] == "ERROR":

@@ -6,7 +6,7 @@ from time import localtime, strftime  # needed for timestamp in collect transfer
 from jadi import component
 from aj.api.http import get, post, put, patch, delete, HttpPlugin
 from aj.api.endpoint import endpoint, EndpointError
-from aj.auth import authorize
+from aj.auth import authorize, AuthenticationService
 from aj.plugins.lmn_common.api import lmn_getSophomorixValue
 
 
@@ -20,7 +20,9 @@ class Handler(HttpPlugin):
     @endpoint(api=True)
     def handle_api_get_sessions(self, http_context):
 
-        sessions = self.context.profile['lmnsessions']
+        profil = AuthenticationService.get(self.context).get_provider().get_profile(self.context.identity)
+        sessions = profil['lmnsessions']
+        
         sessionsList = []
         for session in sessions:
             s = {
@@ -37,10 +39,10 @@ class Handler(HttpPlugin):
     @authorize('lm:users:students:read')
     @endpoint(api=True)
     def handle_api_get_schoolclasses(self, http_context):
-        user = self.context.identity
-
-        schoolclasses = self.context.profile['schoolclasses']
+        profil = AuthenticationService.get(self.context).get_provider().get_profile(self.context.identity)
+        schoolclasses = profil['schoolclasses']
         schoolclassesList = []
+
         for schoolclass in schoolclasses:
             details = self.context.ldapreader.schoolget(f'/schoolclasses/{schoolclass}', dict=False)
             s = {
@@ -56,10 +58,10 @@ class Handler(HttpPlugin):
     @authorize('lm:users:students:read')
     @endpoint(api=True)
     def handle_api_get_projects(self, http_context):
-        user = self.context.identity
-
-        projects = self.context.profile['projects']
+        profil = AuthenticationService.get(self.context).get_provider().get_profile(self.context.identity)
+        projects = profil['projects']
         projectsList = []
+
         for project in projects:
             details = self.context.ldapreader.schoolget(f'/projects/{project}', dict=False)
             s = {

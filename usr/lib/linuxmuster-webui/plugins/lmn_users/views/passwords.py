@@ -204,8 +204,9 @@ class Handler(HttpPlugin):
                 classes.append(f'{school}-teachers')
 
         else:
+            schoolclasses_user = self.context.ldapreader.schoolget(f'/users/{self.context.identity}').get('schoolclasses', [])
             for classe in classes_raw:
-                if classe['cn'] in self.context.profile['schoolclasses'] and len(classe["sophomorixMembers"]) > 0:
+                if classe['cn'] in schoolclasses_user and len(classe["sophomorixMembers"]) > 0:
                     classes.append(classe['cn'])
 
         return sort_schoolclasses(classes)

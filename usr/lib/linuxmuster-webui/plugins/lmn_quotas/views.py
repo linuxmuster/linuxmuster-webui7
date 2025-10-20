@@ -120,8 +120,8 @@ class Handler(HttpPlugin):
         }
 
         ## Parse csv config file
-        with LMNFile(settings_path, 'r') as set:
-            settings = set.data
+        with LMNFile(settings_path, 'r') as f:
+            settings = f.data
 
         ## Get list of non default quota user, others get the default value
         ## Teachers and students are mixed in the same dict

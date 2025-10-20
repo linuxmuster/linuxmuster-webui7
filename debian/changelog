@@ -1,3 +1,11 @@
+linuxmuster-webui7 (7.3.26) lmn73; urgency=medium
+
+  * [common] Fix shares for new roles
+  * [quotas] Catch index errors on quotas 
+  * [users] Add endpoint for school.conf
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Mon, 20 Oct 2025 22:19:15 +0200
+
 linuxmuster-webui7 (7.3.25) lmn73; urgency=medium
 
   * Move script test-smbclient to lmncli

@@ -426,6 +426,9 @@ angular.module('lmn.users').controller 'LMUsersListManagementController', ($scop
         if !$scope.teachers || force
             $http.get("/api/lmn/users/lists/teachers").then (resp) ->
                 $scope.teachers = resp.data
+            $http.get("/api/lmn/users/schoolconf").then (resp) ->
+                $scope.teacher_settings = resp.data['userfile.teachers.csv']
+                $scope.teacher_login_mandatory = $scope.teacher_settings['SURNAME_CHARS'] == 0 and $scope.teacher_settings['FIRSTNAME_CHARS'] == 0
 
     $scope.getextrastudents = (force=false) ->
         if !$scope.extrastudents || force

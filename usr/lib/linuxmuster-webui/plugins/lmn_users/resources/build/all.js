@@ -2872,8 +2872,13 @@
     };
     $scope.getteachers = function(force = false) {
       if (!$scope.teachers || force) {
-        return $http.get("/api/lmn/users/lists/teachers").then(function(resp) {
+        $http.get("/api/lmn/users/lists/teachers").then(function(resp) {
           return $scope.teachers = resp.data;
+        });
+        return $http.get("/api/lmn/users/schoolconf").then(function(resp) {
+          $scope.teacher_settings = resp.data['userfile.teachers.csv'];
+          $scope.teacher_login_mandatory = $scope.teacher_settings['SURNAME_CHARS'] === 0 && $scope.teacher_settings['FIRSTNAME_CHARS'] === 0;
+          return console.log(" ---> ", $scope.teacher_login_mandatory);
         });
       }
     };

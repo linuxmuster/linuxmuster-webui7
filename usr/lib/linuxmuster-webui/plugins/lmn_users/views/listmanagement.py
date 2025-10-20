@@ -181,6 +181,7 @@ class Handler(HttpPlugin):
         :rtype: list of dict
         """
 
+
         path = f'{self.context.schoolmgr.configpath}{role}.csv'
 
         if os.path.isfile(path) is False:
@@ -189,6 +190,23 @@ class Handler(HttpPlugin):
         with authorize(f'lm:users:{role}:read'):
             with LMNFile(path, 'r') as list:
                 return list.read()
+
+    @get(r'/api/lmn/users/schoolconf')
+    @endpoint(api=True)
+    @authorize('lm:users:apply')
+    def handle_api_get_schoolconf(self, http_context):
+        """
+        Read school.conf config for frontend settings.
+
+        :param http_context: HttpContext
+        :type http_context: HttpContext
+        """
+
+
+        path = f'{self.context.schoolmgr.configpath}school.conf'
+
+        with LMNFile(path, 'r') as list:
+            return list.read()
 
     @post(r'/api/lmn/users/lists/(?P<role>\b(?:students|teachers|parents|staff|extraclasses|extrastudents)\b)')
     @endpoint(api=True)

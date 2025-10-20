@@ -324,6 +324,12 @@ class SchoolManager:
             ],
             'student': [
                 home,
+            ],
+            'parent': [
+                home,
+            ],
+            'staff': [
+                home,
             ]
         }
 
@@ -338,6 +344,8 @@ class SchoolManager:
                 if not get_share_disabled(share_id):
                     roles_shares['teacher'].append(standard_share)
                     roles_shares['student'].append(standard_share)
+                    roles_shares['parent'].append(standard_share)
+                    roles_shares['staff'].append(standard_share)
 
         if not get_share_disabled('students'):
             roles_shares['teacher'].append(students)

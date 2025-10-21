@@ -195,8 +195,10 @@ class SchoolManager:
             home_path = f'\\\\{samba_netbios}\\linuxmuster-global\\management\\{user}'
         elif role == 'schooladministrator':
             home_path = f'{self.share_prefix}\\management\\{user}'
-        elif role == "teacher":
+        elif role in ["teacher", "parent"]:
             home_path = f'{self.share_prefix}\\{role}s\\{user}'
+        elif role == 'staff':
+            home_path = f'{self.share_prefix}\\{role}\\{adminclass}\\{user}'
         else:
             home_path = f'{self.share_prefix}\\{role}s\\{adminclass}\\{user}'
 

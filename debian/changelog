@@ -1,3 +1,10 @@
+linuxmuster-webui7 (7.3.27) lmn73; urgency=medium
+
+  * [smbclient] Fix home paths for new roles
+  * [users] Revert wip. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Tue, 21 Oct 2025 09:36:21 +0200
+
 linuxmuster-webui7 (7.3.26) lmn73; urgency=medium
 
   * [common] Fix shares for new roles

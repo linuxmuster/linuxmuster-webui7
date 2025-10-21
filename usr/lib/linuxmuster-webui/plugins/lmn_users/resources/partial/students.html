@@ -60,7 +60,9 @@
                 <th translate>Status </th>
             </tr>
             <tr ng:repeat="student in students|filter:filter|orderBy:['-_isNew', sort.fx]|page:paging.page:paging.pageSize"
-                ng:show="student.class[0] != '#' && student.sophomorixAdminClass != 'attic'">
+                ng:show="student.class[0] != '#'">
+<!--            <tr ng:repeat="student in students|filter:filter|orderBy:['-_isNew', sort.fx]|page:paging.page:paging.pageSize"-->
+<!--                ng:show="student.class[0] != '#' && student.sophomorixAdminClass != 'attic'">-->
                 <td width="30" style="text-align:center;">
                     <span checkbox ng:model="student.selected"></span>
                 </td>

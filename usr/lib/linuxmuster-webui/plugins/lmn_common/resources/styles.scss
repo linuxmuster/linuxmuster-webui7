@@ -585,20 +585,26 @@ floating-toolbar {
     left:370px;
 }
 
-.webdav-ios-tuto {
-    background-image: url("/resources/lmn_common/resources/img/webdav-app-ios-empty.png");
-    width:500px;
-    height:893px;
-    margin: 0 auto;
-    color: $theme-color-orange;
-    padding-top: 275px;
-    padding-left: 50px;
+.password {
+    font-family: 'Verdana', 'Helvetica', 'Arial', sans-serif;
+    letter-spacing:1px;
+    font-weight: bold;
+}
 
-    p {
-        margin: 75px 0;
-        font-size: 20px;
-        font-weight: bold;
-    }
+.webdav-ios-tuto {
+  background-image: url("/resources/lmn_common/resources/img/webdav-app-ios-empty.png");
+  width:500px;
+  height:893px;
+  margin: 0 auto;
+  color: $theme-color-orange;
+  padding-top: 275px;
+  padding-left: 50px;
+
+  p {
+    margin: 75px 0;
+    font-size: 20px;
+    font-weight: bold;
+  }
 }
 
 .school-item:hover { // for schoolswitcher plugin

@@ -1,3 +1,9 @@
+linuxmuster-webui7 (7.2.85) lmn72; urgency=medium
+
+  * [user] More readability for passwords. 
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 01 Nov 2025 18:59:28 +0100
+
 linuxmuster-webui7 (7.2.84) lmn72; urgency=medium
 
   * [user] Fix download of csv list of passwords. 

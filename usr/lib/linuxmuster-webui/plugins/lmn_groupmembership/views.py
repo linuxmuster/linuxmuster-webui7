@@ -274,11 +274,26 @@ class Handler(HttpPlugin):
         ]
 
         if action in possible_actions:
-            sophomorixCommand = ['sophomorix-'+objtype,  '--'+action, entity, '--'+objtype, groupname, '-jj']
-            result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
-            if result['TYPE'] == "ERROR":
-                return result['TYPE'], result['MESSAGE_EN']
-            return result['TYPE'], result['LOG']
+            if len(entity) > 1 and objtype == 'group':
+                # sophomorix-group does not support multiple users assignment to a group
+                # not the best solution, can be slow
+                results = {'TYPE':'', 'LOG':''}
+                for user in entity.split(','):
+                    sophomorixCommand = ['sophomorix-group', '--' + action, user, '--group', groupname, '-jj']
+                    result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
+                    if result['TYPE'] == "ERROR":
+                        results['TYPE'] += result['TYPE'] + "\n"
+                        results['LOG'] += result['MESSAGE_EN'] + "\n"
+                    else:
+                        results['TYPE'] += result['TYPE'] + "\n"
+                        results['LOG'] += result['LOG'] + "\n"
+                return results['TYPE'], results['LOG']
+            else:
+                sophomorixCommand = ['sophomorix-'+objtype,  '--'+action, entity, '--'+objtype, groupname, '-jj']
+                result = lmn_getSophomorixValue(sophomorixCommand, 'OUTPUT/0')
+                if result['TYPE'] == "ERROR":
+                    return result['TYPE'], result['MESSAGE_EN']
+                return result['TYPE'], result['LOG']
 
     @post(r'/api/lmn/groupmembership/resetadmins')
     @authorize('lmn:groupmembership')

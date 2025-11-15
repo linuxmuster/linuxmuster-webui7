@@ -67,8 +67,12 @@
                     {{admin.sn}} {{admin.givenName}}
                     <span class="cardbtn">
                         {{admin.sophomorixAdminClass}}
-                        <button class="cardbtn" ng:show="editGroup" title="{{text.removeFromAdmin}}"><i class="fas fa-level-down-alt" ng:click="demoteMember(admin)"></i></button>
-                        <button class="cardbtn" ng:show="editGroup" title="{{text.remove}}"><i class="fas fa-trash" ng:click="removeAdmin(admin)"></i></button>
+                        <button class="cardbtn" ng:show="editGroup" title="{{text.removeFromAdmin}}">
+                            <i class="fas fa-level-down-alt" ng:click="demoteMember(admin)"></i>
+                        </button>
+                        <button class="cardbtn" ng:show="editGroup" title="{{text.remove}}">
+                            <i class="fas fa-trash" ng:click="removeAdmin(admin)"></i>
+                        </button>
                     </span>
                 </li>
             </ul>
@@ -78,8 +82,12 @@
                 <li ng:repeat="group in groupadminlist" class="cardlist">
                     {{group}}
                    <span class="cardbtn" ng:show="editGroup">
-                        <button class="cardbtn" title="{{text.removeFromAdmin}}"><i class="fas fa-level-down-alt" ng:click="demoteGroup(group)"></i></button>
-                        <button class="cardbtn" title="{{text.remove}}"><i class="fas fa-trash" ng:click="removeAdminGroup(group)"></i></button>
+                        <button class="cardbtn" title="{{text.removeFromAdmin}}">
+                            <i class="fas fa-level-down-alt" ng:click="demoteGroup(group)"></i>
+                        </button>
+                        <button class="cardbtn" title="{{text.remove}}">
+                            <i class="fas fa-trash" ng:click="removeAdminGroup(group)"></i>
+                        </button>
                    </span>
                 </li>
             </ul>
@@ -103,9 +111,15 @@
                     <div class="cardbtn">
                         {{member.sophomorixAdminClass}}
                         <span ng:show="editGroup">
-                            <button class="cardbtn" ng:show="type == 'project'" title="{{text.addAsAdmin}}"><i class="fas fa-level-up-alt" ng:click="elevateMember(member)"></i></button>
-                            <button class="cardbtn" ng:show="type == 'project' || type == 'group'" title="{{text.remove}}"><i class="fas fa-trash" ng:click="removeMember(member)"></i></button>
-                            <button class="cardbtn" ng:show="type == 'class' && member.sophomorixRole == 'teacher'" title="{{text.remove}}"><i class="fas fa-trash" ng:click="removeTeacherClass(member)"></i></button>
+                            <button class="cardbtn" ng:show="type == 'project'" title="{{text.addAsAdmin}}">
+                                <i class="fas fa-level-up-alt" ng:click="elevateMember(member)"></i>
+                            </button>
+                            <button class="cardbtn" ng:show="type == 'project' || type == 'group'" title="{{text.remove}}">
+                                <i class="fas fa-trash" ng:click="removeMember(member)"></i>
+                            </button>
+                            <button class="cardbtn" ng:show="type == 'class' && member.sophomorixRole == 'teacher'" title="{{text.remove}}">
+                                <i class="fas fa-trash" ng:click="removeTeacherClass(member)"></i>
+                            </button>
                         </span>
                     </div>
                 </li>
@@ -116,8 +130,12 @@
                 <li ng:repeat="group in groupmemberlist" class="cardlist">
                     {{group}}
                     <span class="cardbtn" ng:show="editGroup">
-                        <button class="cardbtn" ng:show="type == 'project'" title="{{text.addAsAdmin}}"><i class="fas fa-level-up-alt " ng:click="elevateGroup(group)"></i></button>
-                        <button class="cardbtn" title="{{text.remove}}"><i class="fas fa-trash" ng:click="removeMemberGroup(group)"></i></button>
+                        <button class="cardbtn" ng:show="type == 'project'" title="{{text.addAsAdmin}}">
+                            <i class="fas fa-level-up-alt " ng:click="elevateGroup(group)"></i>
+                        </button>
+                        <button class="cardbtn" title="{{text.remove}}">
+                            <i class="fas fa-trash" ng:click="removeMemberGroup(group)"></i>
+                        </button>
                     </span>
                 </li>
             </ul>
@@ -138,7 +156,9 @@
             <div ng:show="$parent._.newGroup.length + $parent._.newUser.length > 0">
                 <h3 translate>To add</h3>
                 <ul ng:show="$parent._.newUser.length > 0">
-                    <li ng:repeat="user in $parent._.newUser"><span translate>User</span> {{user.sn}} {{user.givenName}} {{user.sophomorixAdminClass}}</li>
+                    <li ng:repeat="user in $parent._.newUser">
+                        <span translate>User</span> {{user.sn}} {{user.givenName}} {{user.sophomorixAdminClass}}
+                    </li>
                 </ul>
             </div>
         </div>
@@ -157,10 +177,14 @@
             <div ng:show="$parent._.newGroup.length + $parent._.newUser.length > 0">
                 <h3 translate>To add</h3>
                 <ul ng:show="$parent._.newGroup.length > 0">
-                    <li ng:repeat="group in $parent._.newGroup"><span translate>Group</span> {{group}}</li>
+                    <li ng:repeat="group in $parent._.newGroup">
+                        <span translate>Group</span> {{group}}
+                    </li>
                 </ul>
                 <ul ng:show="$parent._.newUser.length > 0">
-                    <li ng:repeat="user in $parent._.newUser"><span translate>User</span> {{user.sn}} {{user.givenName}} {{user.sophomorixAdminClass}}</li>
+                    <li ng:repeat="user in $parent._.newUser">
+                        <span translate>User</span> {{user.sn}} {{user.givenName}} {{user.sophomorixAdminClass}}
+                    </li>
                 </ul>
             </div>
         </div>

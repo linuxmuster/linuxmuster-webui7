@@ -1,3 +1,10 @@
+linuxmuster-webui7 (7.3.28) lmn73; urgency=medium
+
+  * [groupmembership] Allow multiple users assignment for groups
+  * [users] More readability for passwords
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Sat, 15 Nov 2025 13:03:40 +0100
+
 linuxmuster-webui7 (7.3.27) lmn73; urgency=medium
 
   * [smbclient] Fix home paths for new roles

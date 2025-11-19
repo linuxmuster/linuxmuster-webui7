@@ -2661,13 +2661,13 @@
         visible: true,
         name: gettext('Birthday')
       },
-      password: {
-        visible: false,
-        name: gettext('Desired Password')
-      },
       login: {
         visible: true,
         name: gettext('Desired login')
+      },
+      id: {
+        visible: false,
+        name: gettext('Teacher ID')
       }
     };
     $scope.extrastudents_fields = {
@@ -2877,8 +2877,7 @@
         });
         return $http.get("/api/lmn/users/schoolconf").then(function(resp) {
           $scope.teacher_settings = resp.data['userfile.teachers.csv'];
-          $scope.teacher_login_mandatory = $scope.teacher_settings['SURNAME_CHARS'] === 0 && $scope.teacher_settings['FIRSTNAME_CHARS'] === 0;
-          return console.log(" ---> ", $scope.teacher_login_mandatory);
+          return $scope.teacher_login_mandatory = $scope.teacher_settings['SURNAME_CHARS'] === 0 && $scope.teacher_settings['FIRSTNAME_CHARS'] === 0;
         });
       }
     };

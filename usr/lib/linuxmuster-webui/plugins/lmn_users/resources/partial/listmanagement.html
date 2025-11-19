@@ -331,11 +331,11 @@
                         <td ng:if="teachers_fields.birthday.visible" width="150" class="form-group" ng:class="validateField('Date', teacher.birthday, teacher._isNew, $index, 'teachers')">
                             <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="teacher.birthday" placeholder="Birthday" class="form-control" />
                         </td>
-                        <td ng:if="teachers_fields.password.visible" class="form-group" ng:class="validateField('Password', teacher.password, teacher._isNew, $index, 'teachers')">
-                            <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="teacher.password" placeholder="Desired Password" class="form-control" />
-                        </td>
                         <td ng:if="teachers_fields.login.visible" class="form-group" ng:class="validateField('Login', teacher.login, teacher._isNew, $index, 'teachers', 'teachers')">
                             <input type="text" ng:model="teacher.login" ng:disabled="!teacher._isNew" placeholder="Login" class="form-control" />
+                        </td>
+                        <td ng:if="teachers_fields.id.visible" class="form-group">
+                            <input type="text" ng:model-options="{updateOn: 'blur'}" ng:model="teacher.id" placeholder="Teacher ID (optional)" class="form-control" />
                         </td>
                         <td width="1">
                             <button class="btn btn-default" ng:click="teachers_remove(teacher, $index)" title="Remove">

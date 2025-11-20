@@ -202,6 +202,8 @@
 
   angular.module('lmn.users').controller('LMUsersStudentsController', function($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, customFields, userPassword) {
     pageTitle.set(gettext('Students'));
+    $scope.activeTab = 0;
+    $scope.tabs = ['students', 'attic'];
     $scope.sorts = [
       {
         name: gettext('Class'),
@@ -239,8 +241,13 @@
       page: 1,
       pageSize: 50
     };
-    $scope.all_selected = false;
+    $scope.selected = {
+      'students': false,
+      'attic': false
+    };
     $scope.query = '';
+    $scope.show_attic = false;
+    $scope.show_students = false;
     customFields.load_display('students').then(function(resp) {
       $scope.customDisplay = resp['customDisplay'];
       return $scope.customTitle = resp['customTitle'];
@@ -249,7 +256,14 @@
       return customFields.isListAttr(attr);
     };
     $http.get('/api/lmn/sophomorixUsers/students').then(function(resp) {
-      return $scope.students = resp.data;
+      $scope.students = resp.data.filter(function(s) {
+        return s.sophomorixAdminClass !== 'attic';
+      });
+      $scope.show_students = true;
+      $scope.attic = resp.data.filter(function(s) {
+        return s.sophomorixAdminClass === 'attic';
+      });
+      return $scope.show_attic = $scope.attic.length > 0;
     });
     $scope.showFirstPassword = function(username) {
       $scope.blurred = true;
@@ -272,6 +286,18 @@
     $scope.printSelectedPasswords = function() {
       return userPassword.printSelectedPasswords($scope.students);
     };
+    $scope.batchAtticResetFirstPassword = function() {
+      return userPassword.batchPasswords($scope.attic, 'reset-first');
+    };
+    $scope.batchAtticSetRandomFirstPassword = function() {
+      return userPassword.batchPasswords($scope.attic, 'random-first');
+    };
+    $scope.batchAtticSetCustomFirstPassword = function() {
+      return userPassword.batchPasswords($scope.attic, 'custom-first');
+    };
+    $scope.printAtticSelectedPasswords = function() {
+      return userPassword.printSelectedPasswords($scope.attic);
+    };
     $scope.userInfo = function(user) {
       return $uibModal.open({
         templateUrl: '/lmn_users:resources/partial/userDetails.modal.html',
@@ -287,10 +313,23 @@
         }
       });
     };
-    $scope.haveSelection = function() {
+    $scope.studentsSelected = function() {
       var i, len, ref, x;
       if ($scope.students) {
         ref = $scope.students;
+        for (i = 0, len = ref.length; i < len; i++) {
+          x = ref[i];
+          if (x.selected) {
+            return true;
+          }
+        }
+      }
+      return false;
+    };
+    $scope.atticSelected = function() {
+      var i, len, ref, x;
+      if ($scope.attic) {
+        ref = $scope.attic;
         for (i = 0, len = ref.length; i < len; i++) {
           x = ref[i];
           if (x.selected) {
@@ -313,7 +352,7 @@
       }
       return result;
     };
-    return $scope.selectAll = function(query) {
+    $scope.selectAll = function(query) {
       var i, len, ref, results, student;
       if (query == null) {
         query = '';
@@ -323,19 +362,48 @@
       for (i = 0, len = ref.length; i < len; i++) {
         student = ref[i];
         if (query === void 0 || query === '') {
-          student.selected = $scope.all_selected;
+          student.selected = $scope.selected.students;
         }
         if (student.sn.toLowerCase().includes(query.toLowerCase())) {
-          student.selected = $scope.all_selected;
+          student.selected = $scope.selected.students;
         }
         if (student.givenName.toLowerCase().includes(query.toLowerCase())) {
-          student.selected = $scope.all_selected;
+          student.selected = $scope.selected.students;
         }
         if (student.sophomorixAdminClass.toLowerCase().includes(query.toLowerCase())) {
-          student.selected = $scope.all_selected;
+          student.selected = $scope.selected.students;
         }
         if (student.sAMAccountName.toLowerCase().includes(query.toLowerCase())) {
-          results.push(student.selected = $scope.all_selected);
+          results.push(student.selected = $scope.selected.students);
+        } else {
+          results.push(void 0);
+        }
+      }
+      return results;
+    };
+    return $scope.selectAllAttic = function(query) {
+      var i, len, ref, results, student;
+      if (query == null) {
+        query = '';
+      }
+      ref = $scope.attic;
+      results = [];
+      for (i = 0, len = ref.length; i < len; i++) {
+        student = ref[i];
+        if (query === void 0 || query === '') {
+          student.selected = $scope.selected.attic;
+        }
+        if (student.sn.toLowerCase().includes(query.toLowerCase())) {
+          student.selected = $scope.selected.attic;
+        }
+        if (student.givenName.toLowerCase().includes(query.toLowerCase())) {
+          student.selected = $scope.selected.attic;
+        }
+        if (student.sophomorixAdminClass.toLowerCase().includes(query.toLowerCase())) {
+          student.selected = $scope.selected.attic;
+        }
+        if (student.sAMAccountName.toLowerCase().includes(query.toLowerCase())) {
+          results.push(student.selected = $scope.selected.attic);
         } else {
           results.push(void 0);
         }

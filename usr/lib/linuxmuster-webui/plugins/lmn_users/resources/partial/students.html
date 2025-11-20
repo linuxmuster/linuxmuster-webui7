@@ -2,181 +2,352 @@
 
 <progress-spinner ng:show="students == null"></progress-spinner>
 
-<div ng:show="students != null">
-    <div ng:show="students[0] == 'none'">
-        <br>
-        <div class="alert alert-info">
-            <i class="fa fa-info-circle"></i> <span translate="">There are no students to manage yet. You can add students using the list management module</span>.
-        </div>
-    </div>
-    <div ng:show="students[0] != 'none'">
-        <div class="input-group">
-
-            <input ng:model="query" type="search" autofocus class="form-control" placeholder="Filter" typeahead-min-length="1" />
-            <div uib-dropdown class="input-group-btn">
-                <button class="btn btn-default" uib-dropdown-toggle>
-                    <i class="fa fa-sort-amount-asc"></i> {{sort.name}}
-                    <span class="caret"></span>
-                </button>
-                <ul uib-dropdown-menu class="dropdown-menu-right" style="width:150px">
-                    <li ng:repeat="sort in sorts">
-                        <a ng:click="$parent.sort = sort">
-                            <i class="fa fa-sort-amount-asc"></i> {{sort.name}}
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div uib-dropdown class="input-group-btn" auto-close="outsideClick">
-                <button class="btn btn-default" uib-dropdown-toggle>
-                    <i class="fa fa-list-ol"></i> {{'Rows'|translate}}
-                    <span class="caret"></span>
-                </button>
-                <ul uib-dropdown-menu class="dropdown-menu-right" style="width:200px">
-                    <li ng:repeat="size in [10, 50, 100, 500, 1000]">
-                        <a ng:click="paging.pageSize = size"><i class="fa fa-list-ol"></i> {{size}} <span translate >students</span></a>
-                    </li>
-                    <li>
-                        <div class="input-group" style="display: table">
-                            <div class="input-group-addon">
-                                Other:
-                            </div>
-                            <input ng:model="paging.pageSize" type="number" autofocus class="form-control" />
-                        </div>
-                    </li>
-                </ul>
+<uib:tabset active="activeTab">
+    <uib:tab heading="{{'Students'|translate}}" ng:show="show_students">
+        <br />
+        <div ng:show="students.length == 0">
+            <div class="alert alert-info">
+                <i class="fa fa-info-circle"></i> <span translate="">There are no students to manage yet. You can add students using the list management module</span>.
             </div>
         </div>
-        <table class="table" ng:class="{'lmn-blurred': blurred}" style="width:100%">
-            <tr><th><span checkbox ng:model="all_selected" ng:change="selectAll(query)"></span></th>
-                <th width="120"> <span translate> Login / Class </span> </th>
-                <th>
-                    Name
-                    <span ng:show="customTitle[1]"> / {{customTitle[1]}}</span>
-                </th>
-                <th><span ng:show="customTitle[2]">{{customTitle[2]}}</span></th>
-                <th><span ng:show="customTitle[3]">{{customTitle[3]}}</span></th>
-                <th> </th>
-                <th> </th>
-                <th translate>Status </th>
-            </tr>
-            <tr ng:repeat="student in students|filter:filter|orderBy:['-_isNew', sort.fx]|page:paging.page:paging.pageSize"
-                ng:show="student.class[0] != '#'">
-<!--            <tr ng:repeat="student in students|filter:filter|orderBy:['-_isNew', sort.fx]|page:paging.page:paging.pageSize"-->
-<!--                ng:show="student.class[0] != '#' && student.sophomorixAdminClass != 'attic'">-->
-                <td width="30" style="text-align:center;">
-                    <span checkbox ng:model="student.selected"></span>
-                </td>
-                <td width="1" style="text-align:left;">
-                    <i>{{student.sAMAccountName}}</i> <br> {{student.sophomorixAdminClass}}
-                </td>
-                <td>
-                    <b>{{student.sn}} {{student.givenName}}</b>
-                    <br />
-                    <div ng:show="isListAttr(customDisplay[1])">
-
-                        <span ng:repeat="custom1 in student[customDisplay[1]] track by $index" class="label label-info">
-                            {{custom1}}
-                        </span>
-                    </div>
-                    <div ng:show="!isListAttr(customDisplay[1]) && student[customDisplay[1]] != 'null'">
-                        {{student[customDisplay[1]]}}
-                    </div>
-                </td>
-                <td>
-                    <div ng:show="isListAttr(customDisplay[2])">
-                        <span ng:repeat="custom1 in student[customDisplay[2]] track by $index" class="label label-info">
-                            {{custom1}}
-                        </span>
-                    </div>
-                    <div ng:show="!isListAttr(customDisplay[2]) && student[customDisplay[2]] != 'null'">
-                        {{student[customDisplay[2]]}}
-                    </div>
-                </td>
-                <td>
-                    <div ng:show="isListAttr(customDisplay[3])">
-                        <span ng:repeat="custom1 in student[customDisplay[3]] track by $index" class="label label-info">
-                            {{custom1}}
-                        </span>
-                    </div>
-                    <div ng:show="!isListAttr(customDisplay[3]) && student[customDisplay[3]] != 'null'">
-                        {{student[customDisplay[3]]}}
-                    </div>
-                </td>
-                <td width="1">
-                    <span  uib-dropdown class="dropup" >
-                        <button class="btn btn-default" uib-dropdown-toggle>
-                            <i class="fa fa-key"></i>
-                            <span class="caret"></span>
-                        </button>
-                        <ul uib-dropdown-menu class="dropdown-menu-right" style=" margin-bottom: -30px; margin-right: 40px; z-index: 4000;">
-                            <li>
-                                <a ng:click="showFirstPassword(student.sAMAccountName)" translate>
-                                    Show initial password
-                                </a>
-                            </li>
-                            <li>
-                                <a ng:click="resetFirstPassword(student.sAMAccountName)" translate>
-                                    Restore initial password
-                                </a>
-                            </li>
-                            <li>
-                                <a ng:click="setRandomFirstPassword(student.sAMAccountName)" translate>
-                                    Set random initial password
-                                </a>
-                            </li>
-                            <li>
-                                <a ng:click="setCustomPassword(student, 'first')" translate>
-                                    Set custom first password
-                                </a>
-                            </li>
-                            <li>
-                                <a ng:click="setCustomPassword(student, 'current')" translate>
-                                    Set current user password
-                                </a>
-                            </li>
-                        </ul>
-                    </span>
-                </td>
-                <td width="1">
-                    <button class="btn btn-default" ng:click="userInfo([student])">
-                        <i class="fa fa-cog"></i>
+        <div ng:show="students.length > 0">
+            <div class="input-group">
+                <input ng:model="students_filter" type="search" autofocus class="form-control" placeholder="Filter" typeahead-min-length="1" />
+                <div uib-dropdown class="input-group-btn">
+                    <button class="btn btn-default" uib-dropdown-toggle>
+                        <i class="fa fa-sort-amount-asc"></i> {{sort.name}}
+                        <span class="caret"></span>
                     </button>
-                </td>
-                <td width="1">
-                    <span class="label label-{{student.sophomorixStatus.color}}">{{student.sophomorixStatus.tag}}</span>
-                </td>
-            </tr>
-        </table>
+                    <ul uib-dropdown-menu class="dropdown-menu-right" style="width:150px">
+                        <li ng:repeat="sort in sorts">
+                            <a ng:click="$parent.sort = sort">
+                                <i class="fa fa-sort-amount-asc"></i> {{sort.name}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div uib-dropdown class="input-group-btn" auto-close="outsideClick">
+                    <button class="btn btn-default" uib-dropdown-toggle>
+                        <i class="fa fa-list-ol"></i> {{'Rows'|translate}}
+                        <span class="caret"></span>
+                    </button>
+                    <ul uib-dropdown-menu class="dropdown-menu-right" style="width:200px">
+                        <li ng:repeat="size in [10, 50, 100, 500, 1000]">
+                            <a ng:click="paging.pageSize = size"><i class="fa fa-list-ol"></i> {{size}} <span translate >students</span></a>
+                        </li>
+                        <li>
+                            <div class="input-group" style="display: table">
+                                <div class="input-group-addon">
+                                    Other:
+                                </div>
+                                <input ng:model="paging.pageSize" type="number" autofocus class="form-control" />
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <table class="table" ng:class="{'lmn-blurred': blurred}" style="width:100%">
+                <tr><th><span checkbox ng:model="selected.students" ng:change="selectAll(students_filter)"></span></th>
+                    <th width="120"> <span translate> Login / Class </span> </th>
+                    <th>
+                        Name
+                        <span ng:show="customTitle[1]"> / {{customTitle[1]}}</span>
+                    </th>
+                    <th><span ng:show="customTitle[2]">{{customTitle[2]}}</span></th>
+                    <th><span ng:show="customTitle[3]">{{customTitle[3]}}</span></th>
+                    <th> </th>
+                    <th> </th>
+                    <th translate>Status </th>
+                </tr>
+                <tr ng:repeat="student in students|filter:students_filter|orderBy:['-_isNew', sort.fx]|page:paging.page:paging.pageSize"
+                    ng:show="student.class[0] != '#'">
+    <!--            <tr ng:repeat="student in students|filter:filter|orderBy:['-_isNew', sort.fx]|page:paging.page:paging.pageSize"-->
+    <!--                ng:show="student.class[0] != '#' && student.sophomorixAdminClass != 'attic'">-->
+                    <td width="30" style="text-align:center;">
+                        <span checkbox ng:model="student.selected"></span>
+                    </td>
+                    <td width="1" style="text-align:left;">
+                        <i>{{student.sAMAccountName}}</i> <br> {{student.sophomorixAdminClass}}
+                    </td>
+                    <td>
+                        <b>{{student.sn}} {{student.givenName}}</b>
+                        <br />
+                        <div ng:show="isListAttr(customDisplay[1])">
 
-        <br/>
-        <ul uib-pagination ng:show="students.length > paging.pageSize"  ng-model="paging.page" total-items="students.length" items-per-page="paging.pageSize" max-size="10" rotate="true" boundary-links="true"></ul>
+                            <span ng:repeat="custom1 in student[customDisplay[1]] track by $index" class="label label-info">
+                                {{custom1}}
+                            </span>
+                        </div>
+                        <div ng:show="!isListAttr(customDisplay[1]) && student[customDisplay[1]] != 'null'">
+                            {{student[customDisplay[1]]}}
+                        </div>
+                    </td>
+                    <td>
+                        <div ng:show="isListAttr(customDisplay[2])">
+                            <span ng:repeat="custom1 in student[customDisplay[2]] track by $index" class="label label-info">
+                                {{custom1}}
+                            </span>
+                        </div>
+                        <div ng:show="!isListAttr(customDisplay[2]) && student[customDisplay[2]] != 'null'">
+                            {{student[customDisplay[2]]}}
+                        </div>
+                    </td>
+                    <td>
+                        <div ng:show="isListAttr(customDisplay[3])">
+                            <span ng:repeat="custom1 in student[customDisplay[3]] track by $index" class="label label-info">
+                                {{custom1}}
+                            </span>
+                        </div>
+                        <div ng:show="!isListAttr(customDisplay[3]) && student[customDisplay[3]] != 'null'">
+                            {{student[customDisplay[3]]}}
+                        </div>
+                    </td>
+                    <td width="1">
+                        <span  uib-dropdown class="dropup" >
+                            <button class="btn btn-default" uib-dropdown-toggle>
+                                <i class="fa fa-key"></i>
+                                <span class="caret"></span>
+                            </button>
+                            <ul uib-dropdown-menu class="dropdown-menu-right" style=" margin-bottom: -30px; margin-right: 40px; z-index: 4000;">
+                                <li>
+                                    <a ng:click="showFirstPassword(student.sAMAccountName)" translate>
+                                        Show initial password
+                                    </a>
+                                </li>
+                                <li>
+                                    <a ng:click="resetFirstPassword(student.sAMAccountName)" translate>
+                                        Restore initial password
+                                    </a>
+                                </li>
+                                <li>
+                                    <a ng:click="setRandomFirstPassword(student.sAMAccountName)" translate>
+                                        Set random initial password
+                                    </a>
+                                </li>
+                                <li>
+                                    <a ng:click="setCustomPassword(student, 'first')" translate>
+                                        Set custom first password
+                                    </a>
+                                </li>
+                                <li>
+                                    <a ng:click="setCustomPassword(student, 'current')" translate>
+                                        Set current user password
+                                    </a>
+                                </li>
+                            </ul>
+                        </span>
+                    </td>
+                    <td width="1">
+                        <button class="btn btn-default" ng:click="userInfo([student])">
+                            <i class="fa fa-cog"></i>
+                        </button>
+                    </td>
+                    <td width="1">
+                        <span class="label label-{{student.sophomorixStatus.color}}">{{student.sophomorixStatus.tag}}</span>
+                    </td>
+                </tr>
+            </table>
 
-        <div class="floating-toolbar-padder"></div>
-        <floating-toolbar>
-            <div uib-dropdown ng:show="haveSelection()" class="btn-group dropup">
-                <button uib-dropdown-toggle class="btn btn-lmn" translate>
-                    <i class="fa fa-key"></i> For selected
-                    <span class="caret"></span>
-                </button>
-                <ul uib-dropdown-menu class="dropdown-menu-left">
-                    <li>
-                        <a ng:click="batchResetFirstPassword()" translate>Set initial password</a>
-                    </li>
-                    <li>
-                        <a ng:click="batchSetRandomFirstPassword()" translate>Set random password</a>
-                    </li>
-                    <li>
-                        <a ng:click="batchSetCustomFirstPassword()" translate>Set custom password</a>
-                    </li>
-                    <li>
-                        <a ng:click="printSelectedPasswords()" translate>Print passwords</a>
-                    </li>
-                </ul>
+            <br/>
+            <ul uib-pagination ng:show="students.length > paging.pageSize"  ng-model="paging.page" total-items="students.length" items-per-page="paging.pageSize" max-size="10" rotate="true" boundary-links="true"></ul>
+
+            <div class="floating-toolbar-padder"></div>
+            <floating-toolbar>
+                <div uib-dropdown ng:show="studentsSelected()" class="btn-group dropup">
+                    <button uib-dropdown-toggle class="btn btn-lmn" translate>
+                        <i class="fa fa-key"></i> For selected
+                        <span class="caret"></span>
+                    </button>
+                    <ul uib-dropdown-menu class="dropdown-menu-left">
+                        <li>
+                            <a ng:click="batchResetFirstPassword()" translate>Set initial password</a>
+                        </li>
+                        <li>
+                            <a ng:click="batchSetRandomFirstPassword()" translate>Set random password</a>
+                        </li>
+                        <li>
+                            <a ng:click="batchSetCustomFirstPassword()" translate>Set custom password</a>
+                        </li>
+                        <li>
+                            <a ng:click="printSelectedPasswords()" translate>Print passwords</a>
+                        </li>
+                    </ul>
+                    <br />
+                </div
                 <br />
-            </div
-            <br />
-        </floating-toolbar>
-    </div>
+            </floating-toolbar>
+        </div>
+    </uib:tab>
 
+    <uib:tab heading="{{'Attic'|translate}}" ng:show="show_attic">
+        <br />
+        <div>
+            <div class="input-group">
 
-</div>
+                <input ng:model="attic_filter" type="search" autofocus class="form-control" placeholder="Filter" typeahead-min-length="1" />
+                <div uib-dropdown class="input-group-btn">
+                    <button class="btn btn-default" uib-dropdown-toggle>
+                        <i class="fa fa-sort-amount-asc"></i> {{sort.name}}
+                        <span class="caret"></span>
+                    </button>
+                    <ul uib-dropdown-menu class="dropdown-menu-right" style="width:150px">
+                        <li ng:repeat="sort in sorts">
+                            <a ng:click="$parent.sort = sort">
+                                <i class="fa fa-sort-amount-asc"></i> {{sort.name}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div uib-dropdown class="input-group-btn" auto-close="outsideClick">
+                    <button class="btn btn-default" uib-dropdown-toggle>
+                        <i class="fa fa-list-ol"></i> {{'Rows'|translate}}
+                        <span class="caret"></span>
+                    </button>
+                    <ul uib-dropdown-menu class="dropdown-menu-right" style="width:200px">
+                        <li ng:repeat="size in [10, 50, 100, 500, 1000]">
+                            <a ng:click="paging.pageSize = size"><i class="fa fa-list-ol"></i> {{size}} <span translate >students</span></a>
+                        </li>
+                        <li>
+                            <div class="input-group" style="display: table">
+                                <div class="input-group-addon">
+                                    Other:
+                                </div>
+                                <input ng:model="paging.pageSize" type="number" autofocus class="form-control" />
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <table class="table" ng:class="{'lmn-blurred': blurred}" style="width:100%">
+                <tr><th><span checkbox ng:model="selected.attic" ng:change="selectAllAttic(attic_filter)"></span></th>
+                    <th width="120"> <span translate> Login / Old role </span> </th>
+                    <th>
+                        Name
+                        <span ng:show="customTitle[1]"> / {{customTitle[1]}}</span>
+                    </th>
+                    <th><span ng:show="customTitle[2]">{{customTitle[2]}}</span></th>
+                    <th><span ng:show="customTitle[3]">{{customTitle[3]}}</span></th>
+                    <th> </th>
+                    <th> </th>
+                    <th translate>Status </th>
+                </tr>
+                <tr ng:repeat="student in attic|filter:attic_filter|orderBy:['-_isNew', sort.fx]|page:paging.page:paging.pageSize"
+                    ng:show="student.class[0] != '#'">
+    <!--            <tr ng:repeat="student in attic|filter:filter|orderBy:['-_isNew', sort.fx]|page:paging.page:paging.pageSize"-->
+    <!--                ng:show="student.class[0] != '#' && student.sophomorixAdminClass != 'attic'">-->
+                    <td width="30" style="text-align:center;">
+                        <span checkbox ng:model="student.selected"></span>
+                    </td>
+                    <td width="1" style="text-align:left;">
+                        <i>{{student.sAMAccountName}}</i> <br> {{student.sophomorixExitAdminClass}}
+                    </td>
+                    <td>
+                        <b>{{student.sn}} {{student.givenName}}</b>
+                        <br />
+                        <div ng:show="isListAttr(customDisplay[1])">
+
+                            <span ng:repeat="custom1 in student[customDisplay[1]] track by $index" class="label label-info">
+                                {{custom1}}
+                            </span>
+                        </div>
+                        <div ng:show="!isListAttr(customDisplay[1]) && student[customDisplay[1]] != 'null'">
+                            {{student[customDisplay[1]]}}
+                        </div>
+                    </td>
+                    <td>
+                        <div ng:show="isListAttr(customDisplay[2])">
+                            <span ng:repeat="custom1 in student[customDisplay[2]] track by $index" class="label label-info">
+                                {{custom1}}
+                            </span>
+                        </div>
+                        <div ng:show="!isListAttr(customDisplay[2]) && student[customDisplay[2]] != 'null'">
+                            {{student[customDisplay[2]]}}
+                        </div>
+                    </td>
+                    <td>
+                        <div ng:show="isListAttr(customDisplay[3])">
+                            <span ng:repeat="custom1 in student[customDisplay[3]] track by $index" class="label label-info">
+                                {{custom1}}
+                            </span>
+                        </div>
+                        <div ng:show="!isListAttr(customDisplay[3]) && student[customDisplay[3]] != 'null'">
+                            {{student[customDisplay[3]]}}
+                        </div>
+                    </td>
+                    <td width="1">
+                        <span  uib-dropdown class="dropup" >
+                            <button class="btn btn-default" uib-dropdown-toggle>
+                                <i class="fa fa-key"></i>
+                                <span class="caret"></span>
+                            </button>
+                            <ul uib-dropdown-menu class="dropdown-menu-right" style=" margin-bottom: -30px; margin-right: 40px; z-index: 4000;">
+                                <li>
+                                    <a ng:click="showFirstPassword(student.sAMAccountName)" translate>
+                                        Show initial password
+                                    </a>
+                                </li>
+                                <li>
+                                    <a ng:click="resetFirstPassword(student.sAMAccountName)" translate>
+                                        Restore initial password
+                                    </a>
+                                </li>
+                                <li>
+                                    <a ng:click="setRandomFirstPassword(student.sAMAccountName)" translate>
+                                        Set random initial password
+                                    </a>
+                                </li>
+                                <li>
+                                    <a ng:click="setCustomPassword(student, 'first')" translate>
+                                        Set custom first password
+                                    </a>
+                                </li>
+                                <li>
+                                    <a ng:click="setCustomPassword(student, 'current')" translate>
+                                        Set current user password
+                                    </a>
+                                </li>
+                            </ul>
+                        </span>
+                    </td>
+                    <td width="1">
+                        <button class="btn btn-default" ng:click="userInfo([student])">
+                            <i class="fa fa-cog"></i>
+                        </button>
+                    </td>
+                    <td width="1">
+                        <span class="label label-{{student.sophomorixStatus.color}}">{{student.sophomorixStatus.tag}}</span>
+                    </td>
+                </tr>
+            </table>
+
+            <br/>
+            <ul uib-pagination ng:show="attic.length > paging.pageSize"  ng-model="paging.page" total-items="attic.length" items-per-page="paging.pageSize" max-size="10" rotate="true" boundary-links="true"></ul>
+
+            <div class="floating-toolbar-padder"></div>
+            <floating-toolbar>
+                <div uib-dropdown ng:show="atticSelected()" class="btn-group dropup">
+                    <button uib-dropdown-toggle class="btn btn-lmn" translate>
+                        <i class="fa fa-key"></i> For selected
+                        <span class="caret"></span>
+                    </button>
+                    <ul uib-dropdown-menu class="dropdown-menu-left">
+                        <li>
+                            <a ng:click="batchAtticResetFirstPassword()" translate>Set initial password</a>
+                        </li>
+                        <li>
+                            <a ng:click="batchAtticSetRandomFirstPassword()" translate>Set random password</a>
+                        </li>
+                        <li>
+                            <a ng:click="batchAtticSetCustomFirstPassword()" translate>Set custom password</a>
+                        </li>
+                        <li>
+                            <a ng:click="printAtticSelectedPasswords()" translate>Print passwords</a>
+                        </li>
+                    </ul>
+                    <br />
+                </div
+                <br />
+            </floating-toolbar>
+        </div>
+    </uib:tab>
+</uib:tabset>

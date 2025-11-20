@@ -6,6 +6,9 @@ angular.module('lmn.users').config ($routeProvider) ->
 angular.module('lmn.users').controller 'LMUsersStudentsController', ($scope, $http, $location, $route, $uibModal, gettext, notify, messagebox, pageTitle, customFields, userPassword) ->
     pageTitle.set(gettext('Students'))
 
+    $scope.activeTab = 0
+    $scope.tabs = ['students', 'attic']
+
     $scope.sorts = [
        {
           name: gettext('Class')
@@ -33,8 +36,14 @@ angular.module('lmn.users').controller 'LMUsersStudentsController', ($scope, $ht
        page: 1
        pageSize: 50
 
-    $scope.all_selected = false
+    $scope.selected = {
+      'students': false,
+      'attic': false
+    }
+
     $scope.query = ''
+    $scope.show_attic = false
+    $scope.show_students = false
 
     customFields.load_display('students').then (resp) ->
         $scope.customDisplay = resp['customDisplay']
@@ -44,7 +53,10 @@ angular.module('lmn.users').controller 'LMUsersStudentsController', ($scope, $ht
         return customFields.isListAttr(attr)
 
     $http.get('/api/lmn/sophomorixUsers/students').then (resp) ->
-        $scope.students = resp.data
+        $scope.students = resp.data.filter((s) -> s.sophomorixAdminClass != 'attic')
+        $scope.show_students = true
+        $scope.attic = resp.data.filter((s) -> s.sophomorixAdminClass == 'attic')
+        $scope.show_attic = $scope.attic.length > 0
 
     $scope.showFirstPassword = (username) ->
         $scope.blurred = true
@@ -59,6 +71,11 @@ angular.module('lmn.users').controller 'LMUsersStudentsController', ($scope, $ht
     $scope.batchSetCustomFirstPassword = () -> userPassword.batchPasswords($scope.students, 'custom-first')
     $scope.printSelectedPasswords = () -> userPassword.printSelectedPasswords($scope.students)
 
+    $scope.batchAtticResetFirstPassword = () -> userPassword.batchPasswords($scope.attic, 'reset-first')
+    $scope.batchAtticSetRandomFirstPassword = () -> userPassword.batchPasswords($scope.attic, 'random-first')
+    $scope.batchAtticSetCustomFirstPassword = () -> userPassword.batchPasswords($scope.attic, 'custom-first')
+    $scope.printAtticSelectedPasswords = () -> userPassword.printSelectedPasswords($scope.attic)
+
     $scope.userInfo = (user) ->
         $uibModal.open(
             templateUrl: '/lmn_users:resources/partial/userDetails.modal.html'
@@ -69,9 +86,16 @@ angular.module('lmn.users').controller 'LMUsersStudentsController', ($scope, $ht
                 role: () -> 'students'
                 )
 
-    $scope.haveSelection = () ->
+    $scope.studentsSelected = () ->
         if $scope.students
             for x in $scope.students
+                if x.selected
+                    return true
+        return false
+
+    $scope.atticSelected = () ->
+        if $scope.attic
+            for x in $scope.attic
                 if x.selected
                     return true
         return false
@@ -89,14 +113,29 @@ angular.module('lmn.users').controller 'LMUsersStudentsController', ($scope, $ht
             query = ''
         for student in $scope.students
             if query is undefined || query == ''
-                student.selected = $scope.all_selected
+                student.selected = $scope.selected.students
             if student.sn.toLowerCase().includes query.toLowerCase()
-                student.selected = $scope.all_selected
+                student.selected = $scope.selected.students
             if student.givenName.toLowerCase().includes query.toLowerCase()
-                student.selected = $scope.all_selected
+                student.selected = $scope.selected.students
             if student.sophomorixAdminClass.toLowerCase().includes query.toLowerCase()
-                student.selected = $scope.all_selected
+                student.selected = $scope.selected.students
             if student.sAMAccountName.toLowerCase().includes query.toLowerCase()
-                student.selected = $scope.all_selected
+                student.selected = $scope.selected.students
+
+    $scope.selectAllAttic = (query) ->
+        if !query?
+            query = ''
+        for student in $scope.attic
+            if query is undefined || query == ''
+                student.selected = $scope.selected.attic
+            if student.sn.toLowerCase().includes query.toLowerCase()
+                student.selected = $scope.selected.attic
+            if student.givenName.toLowerCase().includes query.toLowerCase()
+                student.selected = $scope.selected.attic
+            if student.sophomorixAdminClass.toLowerCase().includes query.toLowerCase()
+                student.selected = $scope.selected.attic
+            if student.sAMAccountName.toLowerCase().includes query.toLowerCase()
+                student.selected = $scope.selected.attic
 
 

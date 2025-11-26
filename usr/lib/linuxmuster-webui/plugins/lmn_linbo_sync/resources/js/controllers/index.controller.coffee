@@ -143,7 +143,7 @@ angular.module('lmn.linbo_sync').controller 'SyncIndexController', ($scope, $htt
                 'host' : '',
             },
             'timeout' : 0,
-            'prestart' : true,
+            'prestart' : false,
             'disable_gui' : false,
             'bypass' : false,
             'partition' : false,

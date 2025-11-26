@@ -192,7 +192,7 @@ angular.module('lmn.linbo_sync').config(function ($routeProvider) {
           'host': ''
         },
         'timeout': 0,
-        'prestart': true,
+        'prestart': false,
         'disable_gui': false,
         'bypass': false,
         'partition': false,

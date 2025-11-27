@@ -1,3 +1,15 @@
+linuxmuster-webui7 (7.3.29) lmn73; urgency=medium
+
+  * Remove some deprecated code
+  * [linbo_sync] Fix prestart default value
+  * [session] Error permanently displayed
+  * [setup] Check certificates and proper echoing 
+  * [users] Split students and attic view into tabs
+  * [users] Dot again allowed in passwords
+  * [users] Fix unid table view for teachers
+
+ -- Arnaud Kientz <arnaud@linuxmuster.net>  Thu, 27 Nov 2025 16:16:46 +0100
+
 linuxmuster-webui7 (7.3.28) lmn73; urgency=medium
 
   * [groupmembership] Allow multiple users assignment for groups
